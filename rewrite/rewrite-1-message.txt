@@ -1,0 +1,4 @@
+literal:com.klass==>cool.klass
+literal:klass.com==>klass.cool
+literal:com/klass==>cool/klass
+literal:klass/com==>klass/cool
