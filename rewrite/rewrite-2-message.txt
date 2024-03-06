@@ -1,0 +1,18 @@
+literal:Fix tests in ***REMOVED***-dropwizard-application==>Fix tests in coverage-example-dropwizard-application
+literal:Move SourceCodeResourceTest from ***REMOVED*** example project to coverage example application.==>Add SourceCodeResourceTest to coverage example application.
+literal:Use liftwizard-bundle-liquibase-migration in ***REMOVED***-dropwizard-application.==>Add liftwizard-bundle-liquibase-migration to klass-dropwizard-configuration.
+literal:Add modules ***REMOVED***-deserializer and ***REMOVED***.
+literal:[late] Add ***REMOVED*** example project.==>Small fixes.
+literal:fixup! [late] Add ***REMOVED*** example project.==>Improve CheckStyle configuration.
+literal:fixup! ==>
+literal:[early] ==>
+literal:[late] ==>
+literal:[fix] ==>
+literal:[bom] ==>
+literal:[good] ==>
+literal:[bad] ==>
+literal:[build] ==>
+literal:[idea] ==>
+literal:[fixup?] ==>
+regex: Fixes #\d+\.?==>
+regex: fixes #\d+\.?==>
