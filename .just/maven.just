@@ -59,6 +59,9 @@ compile MVN=default_mvn: (mvn MVN "verify" "" skip_tests_flags)
 [group('test')]
 test MVN=default_mvn *FLAGS="": (mvn MVN "verify" "" (default_flags + " " + FLAGS))
 
+# `mvn verify` with tests and rerecord profile
+test-rerecord MVN=default_mvn: (mvn MVN "verify" "--activate-profiles rerecord" default_flags)
+
 # `mvn install`
 [group('build')]
 install MVN=default_mvn: (mvn MVN "install" "" skip_tests_flags)
