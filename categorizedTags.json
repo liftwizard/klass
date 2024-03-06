@@ -1,0 +1,318 @@
+[
+  {
+    "category": "belt",
+    "tag": "balancer"
+  },
+  {
+    "category": "belt",
+    "tag": "prioritizer"
+  },
+  {
+    "category": "belt",
+    "tag": "tap"
+  },
+  {
+    "category": "belt",
+    "tag": "transport belt (yellow)"
+  },
+  {
+    "category": "belt",
+    "tag": "fast transport belt (red)"
+  },
+  {
+    "category": "belt",
+    "tag": "express transport belt (blue)"
+  },
+  {
+    "category": "circuit",
+    "tag": "indicator"
+  },
+  {
+    "category": "circuit",
+    "tag": "counter"
+  },
+  {
+    "category": "general",
+    "tag": "early game"
+  },
+  {
+    "category": "general",
+    "tag": "mid game"
+  },
+  {
+    "category": "general",
+    "tag": "late game (megabase)"
+  },
+  {
+    "category": "general",
+    "tag": "beaconized"
+  },
+  {
+    "category": "general",
+    "tag": "tileable"
+  },
+  {
+    "category": "general",
+    "tag": "compact"
+  },
+  {
+    "category": "general",
+    "tag": "marathon"
+  },
+  {
+    "category": "general",
+    "tag": "storage"
+  },
+  {
+    "category": "general",
+    "tag": "chunk aligned"
+  },
+  {
+    "category": "moderation",
+    "tag": "scheduled for deletion"
+  },
+  {
+    "category": "moderation",
+    "tag": "screenshot missing alt info"
+  },
+  {
+    "category": "moderation",
+    "tag": "uncropped screenshot"
+  },
+  {
+    "category": "moderation",
+    "tag": "add english translation"
+  },
+  {
+    "category": "mods",
+    "tag": "angels"
+  },
+  {
+    "category": "mods",
+    "tag": "bobs"
+  },
+  {
+    "category": "mods",
+    "tag": "creative"
+  },
+  {
+    "category": "mods",
+    "tag": "factorissimo"
+  },
+  {
+    "category": "mods",
+    "tag": "warehousing"
+  },
+  {
+    "category": "mods",
+    "tag": "lighted-electric-poles"
+  },
+  {
+    "category": "mods",
+    "tag": "other"
+  },
+  {
+    "category": "mods",
+    "tag": "vanilla"
+  },
+  {
+    "category": "mods",
+    "tag": "ltn"
+  },
+  {
+    "category": "mods",
+    "tag": "aai"
+  },
+  {
+    "category": "mods",
+    "tag": "5dim"
+  },
+  {
+    "category": "mods",
+    "tag": "seablock"
+  },
+  {
+    "category": "mods",
+    "tag": "industrial revolution"
+  },
+  {
+    "category": "mods",
+    "tag": "krastorio"
+  },
+  {
+    "category": "power",
+    "tag": "nuclear"
+  },
+  {
+    "category": "power",
+    "tag": "kovarex enrichment"
+  },
+  {
+    "category": "power",
+    "tag": "solar"
+  },
+  {
+    "category": "power",
+    "tag": "steam"
+  },
+  {
+    "category": "power",
+    "tag": "accumulator"
+  },
+  {
+    "category": "production",
+    "tag": "oil processing"
+  },
+  {
+    "category": "production",
+    "tag": "coal liquification"
+  },
+  {
+    "category": "production",
+    "tag": "electronic circuit (green)"
+  },
+  {
+    "category": "production",
+    "tag": "advanced circuit (red)"
+  },
+  {
+    "category": "production",
+    "tag": "processing unit (blue)"
+  },
+  {
+    "category": "production",
+    "tag": "batteries"
+  },
+  {
+    "category": "production",
+    "tag": "rocket parts"
+  },
+  {
+    "category": "production",
+    "tag": "science"
+  },
+  {
+    "category": "production",
+    "tag": "research (labs)"
+  },
+  {
+    "category": "production",
+    "tag": "belts"
+  },
+  {
+    "category": "production",
+    "tag": "smelting"
+  },
+  {
+    "category": "production",
+    "tag": "mining"
+  },
+  {
+    "category": "production",
+    "tag": "uranium"
+  },
+  {
+    "category": "production",
+    "tag": "plastic"
+  },
+  {
+    "category": "production",
+    "tag": "modules"
+  },
+  {
+    "category": "production",
+    "tag": "mall (make everything)"
+  },
+  {
+    "category": "production",
+    "tag": "inserters"
+  },
+  {
+    "category": "production",
+    "tag": "guns and ammo"
+  },
+  {
+    "category": "production",
+    "tag": "robots"
+  },
+  {
+    "category": "production",
+    "tag": "other"
+  },
+  {
+    "category": "production",
+    "tag": "belt based"
+  },
+  {
+    "category": "production",
+    "tag": "logistic (bot) based"
+  },
+  {
+    "category": "train",
+    "tag": "loading station"
+  },
+  {
+    "category": "train",
+    "tag": "unloading station"
+  },
+  {
+    "category": "train",
+    "tag": "pax"
+  },
+  {
+    "category": "train",
+    "tag": "junction"
+  },
+  {
+    "category": "train",
+    "tag": "roundabout"
+  },
+  {
+    "category": "train",
+    "tag": "crossing"
+  },
+  {
+    "category": "train",
+    "tag": "stacker"
+  },
+  {
+    "category": "train",
+    "tag": "track"
+  },
+  {
+    "category": "train",
+    "tag": "left-hand-drive"
+  },
+  {
+    "category": "train",
+    "tag": "right-hand-drive"
+  },
+  {
+    "category": "version",
+    "tag": "0,14"
+  },
+  {
+    "category": "version",
+    "tag": "0,15"
+  },
+  {
+    "category": "version",
+    "tag": "0,16"
+  },
+  {
+    "category": "version",
+    "tag": "unknown"
+  },
+  {
+    "category": "version",
+    "tag": "0,17"
+  },
+  {
+    "category": "version",
+    "tag": "0,18"
+  },
+  {
+    "category": "version",
+    "tag": "1,0"
+  }
+]
