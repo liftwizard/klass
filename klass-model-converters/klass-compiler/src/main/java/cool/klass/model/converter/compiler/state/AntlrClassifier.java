@@ -333,6 +333,7 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
     @Override
     @OverridingMethodsMustInvokeSuper
     public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+        this.assertOrdinals(compilerAnnotationHolder);
         this.reportDuplicatePropertyNames(compilerAnnotationHolder);
         this.reportMultiplePropertiesWithModifiers(compilerAnnotationHolder, this.declaredDataTypeProperties, "id");
         this.reportMultiplePropertiesWithModifiers(
@@ -372,6 +373,23 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
         this.reportPropertyDeclarationOrder(compilerAnnotationHolder);
         this.reportDuplicateAssociationEndSignatureNames(compilerAnnotationHolder);
         this.reportRedundantTemporalModifiers(compilerAnnotationHolder);
+    }
+
+    private void assertOrdinals(CompilerAnnotationHolder compilerAnnotationHolder) {
+        if (this.declaredMembers.isEmpty()) {
+            return;
+        }
+        MutableList<Integer> ordinals = this.declaredMembers.collect(AntlrOrdinalElement::getOrdinal);
+        MutableList<Integer> expectedOrdinals = Interval.oneTo(ordinals.size()).toList();
+        if (!ordinals.equals(expectedOrdinals)) {
+            String message = String.format(
+                "The ordinals of class '%s' are not declared in the correct order. Expected '%s' but found '%s'.",
+                this.getName(),
+                expectedOrdinals,
+                ordinals
+            );
+            compilerAnnotationHolder.add("ERR_ORD_ORD", message, this);
+        }
     }
 
     private void reportDuplicatePropertyNames(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
