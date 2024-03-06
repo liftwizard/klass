@@ -1,0 +1,16 @@
+════════════════════════════════════════ [35mERR_ORD_ORD[m ════════════════════════════════════════
+[31mError: The ordinals of class 'badClass' are not declared in the correct order. Expected '[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]' but found '[1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12]'.[m
+
+At (InvalidNamesErrorTest.klass:14)
+
+[39m 1║ [35mpackage [39mBADPACKAGE
+[39m14║ [35mclass [39mbadClass
+[39m  ║ [31m      ^^^^^^^^
+[39m15║ [36m{
+[39m33║ [36m}
+[m
+[36mLocation:  [mInvalidNamesErrorTest.klass:14[m
+[36mFile:      [mInvalidNamesErrorTest.klass[m
+[36mLine:      [m14[m
+[36mCharacter: [m7
+═════════════════════════════════════════════════════════════════════════════════════════════
