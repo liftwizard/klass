@@ -31,3 +31,15 @@ class TemporalClass
 {
     key: String key;
 }
+
+class ClassWithProjection
+{
+    key: String key;
+    value: String ;
+}
+
+projection ProjectionWithoutReference on ClassWithProjection
+{
+    key: "key",
+    value: "value",
+}
