@@ -36,6 +36,7 @@
                         <goals>
                             <goal>generate-uml-diagram-nomnoml</goal>
                         </goals>
+                        <phase>generate-resources</phase>
                     </execution>
                 </executions>
 

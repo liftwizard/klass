@@ -51,6 +51,7 @@
                         <goals>
                             <goal>generate-reladomo-merge-hooks</goal>
                         </goals>
+                        <phase>generate-sources</phase>
                     </execution>
                 </executions>
 

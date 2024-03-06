@@ -35,6 +35,7 @@
                         <goals>
                             <goal>generate-graphql-schema-query</goal>
                         </goals>
+                        <phase>generate-resources</phase>
                     </execution>
                 </executions>
 

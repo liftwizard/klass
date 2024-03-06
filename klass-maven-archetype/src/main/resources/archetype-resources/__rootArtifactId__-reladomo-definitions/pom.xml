@@ -34,6 +34,7 @@
                             <goal>generate-reladomo-object-files</goal>
                             <goal>generate-reladomo-class-list</goal>
                         </goals>
+                        <phase>generate-resources</phase>
                     </execution>
                 </executions>
                 <dependencies>

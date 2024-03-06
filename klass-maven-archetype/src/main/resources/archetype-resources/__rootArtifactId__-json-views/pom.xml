@@ -37,7 +37,7 @@
                         <goals>
                             <goal>generate-json-views</goal>
                         </goals>
-
+                        <phase>generate-sources</phase>
                     </execution>
                 </executions>
 

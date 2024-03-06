@@ -47,6 +47,7 @@
                             <connectionManagerName>h2-tcp</connectionManagerName>
                             <isTest>false</isTest>
                         </configuration>
+                        <phase>generate-resources</phase>
                     </execution>
 
                     <execution>
@@ -64,6 +65,7 @@
                             <isTest>false</isTest>
                             <cacheType>full</cacheType>
                         </configuration>
+                        <phase>generate-resources</phase>
                     </execution>
 
                 </executions>
