@@ -1,0 +1,50 @@
+package example
+
+class ClassOwningClassWithDerivedProperty
+{
+    key: String key;
+}
+
+class ClassWithDerivedProperty
+{
+    key: String key;
+    classOwningClassWithDerivedPropertyKey: String private;
+    derivedRequiredString: String derived;
+    derivedRequiredInteger: Integer derived;
+    derivedRequiredLong: Long derived;
+    derivedRequiredDouble: Double derived;
+    derivedRequiredFloat: Float derived;
+    derivedRequiredBoolean: Boolean derived;
+    derivedRequiredInstant: Instant derived;
+    derivedRequiredLocalDate: LocalDate derived;
+    derivedOptionalString: String? derived;
+    derivedOptionalInteger: Integer? derived;
+    derivedOptionalLong: Long? derived;
+    derivedOptionalDouble: Double? derived;
+    derivedOptionalFloat: Float? derived;
+    derivedOptionalBoolean: Boolean? derived;
+    derivedOptionalInstant: Instant? derived;
+    derivedOptionalLocalDate: LocalDate? derived;
+}
+
+association ClassHasClassesWithDerivedProperty
+{
+    classOwningClassWithDerivedProperty: ClassOwningClassWithDerivedProperty[1..1];
+    classWithDerivedProperties: ClassWithDerivedProperty[0..*] owned
+        orderBy: this.derivedRequiredString,
+        this.derivedRequiredInteger,
+        this.derivedRequiredLong,
+        this.derivedRequiredDouble,
+        this.derivedRequiredFloat,
+        this.derivedRequiredBoolean,
+        this.derivedRequiredInstant,
+        this.derivedRequiredLocalDate,
+        this.derivedOptionalString,
+        this.derivedOptionalInteger,
+        this.derivedOptionalLong,
+        this.derivedOptionalDouble,
+        this.derivedOptionalFloat,
+        this.derivedOptionalBoolean,
+        this.derivedOptionalInstant,
+        this.derivedOptionalLocalDate;
+}
