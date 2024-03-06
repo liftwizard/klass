@@ -71,6 +71,7 @@ public class GenerateLiquibaseSchemaMojo
         Resource resource = new Resource();
         resource.setDirectory(this.outputDirectory.getAbsolutePath());
         // TODO: Should be based on the output path
+        // TODO: I've been having to manually mark directories like klass-models/klass-model-bootstrap/klass-model-bootstrapped-liquibase-schema/target/generated-resources/liquibase-schema as generated resource roots
         this.mavenProject.addResource(resource);
     }
 }

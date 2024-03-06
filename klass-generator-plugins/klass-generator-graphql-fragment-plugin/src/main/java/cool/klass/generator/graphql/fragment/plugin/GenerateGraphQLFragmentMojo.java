@@ -53,6 +53,7 @@ public class GenerateGraphQLFragmentMojo
 
         Resource resource = new Resource();
         resource.setDirectory(this.outputDirectory.getAbsolutePath());
+        // TODO: I've been having to manually mark directories like klass-models/klass-model-bootstrap/klass-model-bootstrapped-graphql-fragment/target/generated-resources/graphql-fragment as generated resource roots
         this.mavenProject.addResource(resource);
     }
 }
