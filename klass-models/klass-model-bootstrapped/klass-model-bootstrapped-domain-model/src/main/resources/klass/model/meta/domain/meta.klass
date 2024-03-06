@@ -306,6 +306,7 @@ class Criteria
     implements Element
 {
     id: Long id key;
+    string: String derived;
 }
 
 class AllCriteria

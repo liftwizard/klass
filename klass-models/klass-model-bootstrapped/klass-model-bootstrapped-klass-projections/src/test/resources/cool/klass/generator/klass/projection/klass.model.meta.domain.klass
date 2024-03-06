@@ -257,6 +257,7 @@ projection MemberReferencePathProjection on MemberReferencePath
 projection CriteriaProjection on Criteria
 {
     id: "Criteria id",
+    string: "Criteria string",
     BinaryCriteria.left: {
         Criteria.id: "Criteria id",
     },
@@ -274,11 +275,13 @@ projection CriteriaProjection on Criteria
 projection AllCriteriaProjection on AllCriteria
 {
     id: "Criteria id",
+    string: "Criteria string",
 }
 
 projection BinaryCriteriaProjection on BinaryCriteria
 {
     id: "Criteria id",
+    string: "Criteria string",
     left: {
         id: "Criteria id",
     },
@@ -290,6 +293,7 @@ projection BinaryCriteriaProjection on BinaryCriteria
 projection AndCriteriaProjection on AndCriteria
 {
     id: "Criteria id",
+    string: "Criteria string",
     left: {
         id: "Criteria id",
     },
@@ -301,6 +305,7 @@ projection AndCriteriaProjection on AndCriteria
 projection OrCriteriaProjection on OrCriteria
 {
     id: "Criteria id",
+    string: "Criteria string",
     left: {
         id: "Criteria id",
     },
@@ -312,6 +317,7 @@ projection OrCriteriaProjection on OrCriteria
 projection OperatorCriteriaProjection on OperatorCriteria
 {
     id: "Criteria id",
+    string: "Criteria string",
     operator: "OperatorCriteria operator",
     sourceExpressionValue: ExpressionValueProjection,
     targetExpressionValue: ExpressionValueProjection,
@@ -320,6 +326,7 @@ projection OperatorCriteriaProjection on OperatorCriteria
 projection EdgePointCriteriaProjection on EdgePointCriteria
 {
     id: "Criteria id",
+    string: "Criteria string",
     memberReferencePath: {
         id: "ExpressionValue id",
     },

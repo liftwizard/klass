@@ -1140,6 +1140,21 @@
         "primitiveType": "Long",
         "minValidation": null,
         "maxValidation": null
+      },
+      {
+        "__typename": "klass.model.meta.domain.PrimitiveProperty",
+        "name": "string",
+        "optional": false,
+        "minLengthValidation": null,
+        "maxLengthValidation": null,
+        "propertyModifiers": [
+          {
+            "keyword": "derived"
+          }
+        ],
+        "primitiveType": "String",
+        "minValidation": null,
+        "maxValidation": null
       }
     ],
     "abstractClass": true,

@@ -827,6 +827,21 @@
             "primitiveType": "LONG",
             "minValidation": null,
             "maxValidation": null
+          },
+          {
+            "__typename": "PrimitiveProperty",
+            "name": "string",
+            "optional": false,
+            "minLengthValidation": null,
+            "maxLengthValidation": null,
+            "propertyModifiers": [
+              {
+                "keyword": "derived"
+              }
+            ],
+            "primitiveType": "STRING",
+            "minValidation": null,
+            "maxValidation": null
           }
         ],
         "superClass": null,
