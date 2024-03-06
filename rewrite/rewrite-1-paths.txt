@@ -1,0 +1,2 @@
+regex:(.*)/com/klass/(.*)==>\1/cool/klass/\2
+regex:(.*)/com.klass.(.*)==>\1/cool.klass.\2

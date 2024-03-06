@@ -1,0 +1,9 @@
+literal:com.klass==>cool.klass
+literal:klass.com/==>klass.cool/
+literal:com/klass==>cool/klass
+literal:klass/com==>klass/cool
+literal:com[36m.[39mklass==>cool[36m.[39mklass
+literal:<span class='klass-package-name'>com</span><span class='klass-dot'>.</span><span class='klass-package-name'>klass</span>==><span class='klass-package-name'>cool</span><span class='klass-dot'>.</span><span class='klass-package-name'>klass</span>
+literal:xyz==>klass
+literal:XYZ==>Klass
+regex:    <parent>\n        <groupId>com.klass</groupId>\n        <artifactId>xample-projects</artifactId>\n        <version>0.1.0-SNAPSHOT</version>\n    </parent>\n==>    <parent>        \n<groupId>io.liftwizard</groupId>        \n<artifactId>liftwizard-parent-build</artifactId>        \n<version>2.1.8-SNAPSHOT</version>    \n</parent>
