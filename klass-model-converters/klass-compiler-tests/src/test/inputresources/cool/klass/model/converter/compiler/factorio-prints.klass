@@ -340,9 +340,9 @@ association BlueprintHasAuthoredBy
     relationship this.createdById == FirebaseUser.userId
 }
 
-association BlueprintHasImgurImageModMappings
+association BlueprintsHaveImgurImage
 {
-    blueprint: Blueprint[0..1];
+    blueprints: Blueprint[0..*];
     imgurImage: ImgurImage[1..1];
 
     relationship this.imgurImageId == ImgurImage.imgurId
@@ -912,7 +912,6 @@ service BlueprintResource on Blueprint
 /*
 service BlueprintResource on Blueprint
 {
-    // TODO: POST should be rejected here since the type has no id property
     /blueprint
         PUT
         {
