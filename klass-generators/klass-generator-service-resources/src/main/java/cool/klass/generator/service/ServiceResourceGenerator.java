@@ -244,6 +244,11 @@ public class ServiceResourceGenerator {
             return this.getWriteSourceCode(service, index, "OperationMode.PATCH");
         }
 
+        if (service.getVerb() == Verb.PATCH)
+        {
+            return this.getPatchSourceCode(service, index);
+        }
+
         if (service.getVerb() == Verb.DELETE) {
             return this.getDeleteSourceCode(service, index);
         }
@@ -686,6 +691,190 @@ public class ServiceResourceGenerator {
                 + "\n"
                 + "        PersistentReplacer replacer           = new PersistentReplacer(mutationContext, this.dataStore);\n"
                 + "        replacer.synchronize(klass, persistentInstance, " + incomingInstanceParameterName + ");\n"
+                + "    }\n";
+        // @formatter:on
+    }
+
+    @Nonnull
+    private String getPatchSourceCode(@Nonnull Service service, int index)
+    {
+        Url url = service.getUrl();
+
+        ServiceGroup serviceGroup = url.getServiceGroup();
+
+        ImmutableList<ObjectBooleanPair<Parameter>> pathParameters = url.getPathParameters()
+                .collectWith(PrimitiveTuples::pair, true);
+        ImmutableList<ObjectBooleanPair<Parameter>> queryParameters = url.getQueryParameters()
+                .collectWith(PrimitiveTuples::pair, false);
+
+        String queryParametersString = queryParameters.isEmpty()
+                ? ""
+                : queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
+
+        boolean hasAuthorizeCriteria = service.isAuthorizeClauseRequired();
+
+        int     numParameters      = service.getNumParameters();
+        boolean lineWrapParameters = numParameters > 1;
+
+        String parameterPrefix = lineWrapParameters ? "\n" : "";
+        String parameterIndent = lineWrapParameters ? "            " : "";
+
+        ImmutableList<String> urlParameterStrings = pathParameters.newWithAll(queryParameters)
+                .collectWith(this::getParameterSourceCode, parameterIndent);
+
+        MutableList<String> parameterStrings = urlParameterStrings.toList();
+
+        if (hasAuthorizeCriteria)
+        {
+            parameterStrings.add(parameterIndent + "@Context SecurityContext securityContext");
+        }
+        parameterStrings.add(parameterIndent + "@Nonnull @NotNull ObjectNode incomingInstance");
+
+        String userPrincipalNameLocalVariable = hasAuthorizeCriteria
+                ? "        String    userPrincipalName  = securityContext.getUserPrincipal().getName();\n"
+                : "";
+
+        String parametersSourceCode = parameterStrings.makeString(",\n");
+
+        String klassName                = serviceGroup.getKlass().getName();
+        String finderName               = klassName + "Finder";
+        String queryOperationSourceCode = this.getOperation(finderName, service.getQueryCriteria(), "query");
+        String authorizeOperationSourceCode = this.getOperation(
+                finderName,
+                service.getAuthorizeCriteria(),
+                "authorize");
+        String validateOperationSourceCode = this.getOperation(
+                finderName,
+                service.getValidateCriteria(),
+                "validate");
+        String conflictOperationSourceCode = this.getOperation(
+                finderName,
+                service.getConflictCriteria(),
+                "conflict");
+
+        String authorizePredicateSourceCode = this.checkPredicate(
+                service.getAuthorizeCriteria(),
+                "authorize",
+                "isAuthorized",
+                "ForbiddenException()");
+        String validatePredicateSourceCode = this.checkPredicate(
+                service.getValidateCriteria(),
+                "validate",
+                "isValidated",
+                "BadRequestException()");
+        String conflictPredicateSourceCode = this.checkPredicate(
+                service.getConflictCriteria(),
+                "conflict",
+                "hasConflict",
+                "ClientErrorException(Status.CONFLICT)");
+
+        String executeOperationSourceCode = this.getExecuteOperationSourceCode(
+                service.getQueryCriteria(),
+                klassName);
+
+        ImmutableList<String> deepFetchStrings = DeepFetchWalker.walk(serviceGroup.getKlass());
+        String deepFetchSourceCode = deepFetchStrings
+                .collect(each -> "        result.deepFetch(" + each + ");\n")
+                .makeString("");
+
+        String orderBySourceCode = service.getOrderBy().map(this::getOrderBysSourceCode).orElse("");
+
+        // @formatter:off
+        // language=JAVA
+        return ""
+                + "    @Timed\n"
+                + "    @ExceptionMetered\n"
+                + "    @" + service.getVerb().name() + "\n"
+                + "    @Path(\"" + url.getUrlString() + "\")" + queryParametersString + "\n"
+                + "    @Produces(MediaType.APPLICATION_JSON)\n"
+                + "    public void method" + index + "(" + parameterPrefix + parametersSourceCode + ")\n"
+                + "    {\n"
+                + "        Klass klass = this.domainModel.getClassByName(\"" + klassName + "\");\n"
+                + "\n"
+                + "        MutableList<String> errors = Lists.mutable.empty();\n"
+                + "        MutableList<String> warnings = Lists.mutable.empty();\n"
+                + "        JsonTypeCheckingValidator.validate(incomingInstance, klass, errors);\n"
+                + "        RequiredPropertiesValidator.validate(\n"
+                + "                klass,\n"
+                + "                incomingInstance,\n"
+                + "                OperationMode.PATCH,\n"
+                + "                errors,\n"
+                + "                warnings);\n"
+                + "\n"
+                + "        if (errors.notEmpty())\n"
+                + "        {\n"
+                + "            Response response = Response\n"
+                + "                    .status(Status.BAD_REQUEST)\n"
+                + "                    .entity(errors)\n"
+                + "                    .build();\n"
+                + "            throw new BadRequestException(\"Incoming data failed validation.\", response);\n"
+                + "        }\n"
+                + "\n"
+                + "        if (warnings.notEmpty())\n"
+                + "        {\n"
+                + "            Response response = Response\n"
+                + "                    .status(Status.BAD_REQUEST)\n"
+                + "                    .entity(warnings)\n"
+                + "                    .build();\n"
+                + "            throw new BadRequestException(\"Incoming data failed validation.\", response);\n"
+                + "        }\n"
+                + "\n"
+                + userPrincipalNameLocalVariable
+                + queryOperationSourceCode
+                + authorizeOperationSourceCode
+                + validateOperationSourceCode
+                + conflictOperationSourceCode
+                + "\n"
+                + executeOperationSourceCode
+                + deepFetchSourceCode
+                + orderBySourceCode
+                + "\n"
+                + "        if (result.isEmpty())\n"
+                + "        {\n"
+                + "            throw new ClientErrorException(\"Url valid, data not found.\", Status.GONE);\n"
+                + "        }\n"
+                + "\n"
+                + authorizePredicateSourceCode
+                + validatePredicateSourceCode
+                + conflictPredicateSourceCode
+                + "\n"
+                + "        if (result.size() > 1)\n"
+                + "        {\n"
+                + "            throw new InternalServerErrorException(\"TODO\");\n"
+                + "        }\n"
+                + "        Object persistentInstance = result.get(0);\n"
+                + "\n"
+                + "        Instant            transactionInstant = Instant.now(this.clock);\n"
+                + "        MutationContext    mutationContext    = new MutationContext(Optional.empty(), transactionInstant, Maps.immutable.empty());\n"
+                + "        Klass              userKlass          = this.domainModel.getUserClass().get();\n"
+                + "        IncomingUpdateDataModelValidator.validate(\n"
+                + "                this.dataStore,\n"
+                + "                userKlass,\n"
+                + "                klass,\n"
+                + "                mutationContext,\n"
+                + "                persistentInstance,\n"
+                + "                incomingInstance,\n"
+                + "                errors,\n"
+                + "                warnings);\n"
+                + "        if (errors.notEmpty())\n"
+                + "        {\n"
+                + "            Response response = Response\n"
+                + "                    .status(Status.BAD_REQUEST)\n"
+                + "                    .entity(errors)\n"
+                + "                    .build();\n"
+                + "            throw new BadRequestException(\"Incoming data failed validation.\", response);\n"
+                + "        }\n"
+                + "        if (warnings.notEmpty())\n"
+                + "        {\n"
+                + "            Response response = Response\n"
+                + "                    .status(Status.BAD_REQUEST)\n"
+                + "                    .entity(warnings)\n"
+                + "                    .build();\n"
+                + "            throw new BadRequestException(\"Incoming data failed validation.\", response);\n"
+                + "        }\n"
+                + "\n"
+                + "        PersistentReplacer replacer           = new PersistentReplacer(mutationContext, this.dataStore);\n"
+                + "        replacer.synchronize(klass, persistentInstance, incomingInstance);\n"
                 + "    }\n";
         // @formatter:on
     }
