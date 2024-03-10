@@ -43,6 +43,36 @@
             </dependency>
 
             <dependency>
+                <groupId>com.goldmansachs.reladomo</groupId>
+                <artifactId>reladomo</artifactId>
+                <version>18.1.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.goldmansachs.reladomo</groupId>
+                <artifactId>reladomogen</artifactId>
+                <version>18.1.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.goldmansachs.reladomo</groupId>
+                <artifactId>reladomo-serial</artifactId>
+                <version>18.1.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.goldmansachs.reladomo</groupId>
+                <artifactId>reladomo-gen-util</artifactId>
+                <version>18.1.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.goldmansachs.reladomo</groupId>
+                <artifactId>reladomo-test-util</artifactId>
+                <version>18.1.0</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4-runtime</artifactId>
                 <version>4.9.3</version>
