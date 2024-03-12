@@ -301,22 +301,13 @@ public class IncomingUpdateDataModelValidator
             return;
         }
 
-        Multiplicity multiplicity = associationEnd.getMultiplicity();
-
-        JsonNode jsonNode = this.objectNode.path(associationEnd.getName());
-
-        if (jsonNode.isMissingNode() || jsonNode.isNull())
+        if (associationEnd.isOwned())
         {
-            return;
-        }
-
-        if (multiplicity.isToOne())
-        {
-            this.handleToOne(associationEnd, jsonNode);
+            this.handleOwnedAssociationEnd(associationEnd);
         }
         else
         {
-            this.handleToMany(associationEnd, jsonNode);
+            this.handleOutsideProjectionReferenceProperty(associationEnd);
         }
     }
 
@@ -394,6 +385,40 @@ public class IncomingUpdateDataModelValidator
         finally
         {
             this.contextStack.pop();
+        }
+    }
+
+    private void handleOwnedAssociationEnd(@Nonnull AssociationEnd associationEnd)
+    {
+        Multiplicity multiplicity = associationEnd.getMultiplicity();
+
+        if (multiplicity.isToOne())
+        {
+            this.handleOwnedToOne(associationEnd);
+        }
+        else
+        {
+            this.handleOwnedToMany(associationEnd);
+        }
+    }
+
+    private void handleOutsideProjectionReferenceProperty(@Nonnull AssociationEnd associationEnd)
+    {
+        Multiplicity multiplicity  = associationEnd.getMultiplicity();
+        JsonNode     childJsonNode = this.objectNode.path(associationEnd.getName());
+
+        if (childJsonNode.isMissingNode() || childJsonNode.isNull())
+        {
+            return;
+        }
+
+        if (multiplicity.isToOne())
+        {
+            this.handleToOneOutsideProjection(associationEnd, childJsonNode);
+        }
+        else
+        {
+            this.handleToManyOutsideProjection(associationEnd, childJsonNode);
         }
     }
 
@@ -482,7 +507,106 @@ public class IncomingUpdateDataModelValidator
         return this.pathHere.equals(Optional.of(associationEnd.getOpposite()));
     }
 
-    public void handleToOne(
+    public void handleOwnedToOne(@Nonnull AssociationEnd associationEnd)
+    {
+        JsonNode childJsonNode = this.objectNode.path(associationEnd.getName());
+
+        String associationEndName = associationEnd.getName();
+        this.contextStack.push(associationEndName);
+
+        try
+        {
+            if (childJsonNode instanceof ObjectNode)
+            {
+                Object childPersistentInstance = this.dataStore.getToOne(
+                        this.persistentInstance,
+                        associationEnd);
+                if (childPersistentInstance == null)
+                {
+                    // TODO: This is a workaround for a bug and should be revisited to see if it still applies in the happy path. The bug started with an association between Owner[1..1] and Details[1..1] owned. The database wound up corrupted with no row or Details. Here we're trying to validate the incoming Details json against the childPersistentInstance which is null. It's possible that this situation comes up with a nullable Details object as well.
+                    return;
+                }
+                this.handleAssociationEnd(associationEnd, (ObjectNode) childJsonNode, childPersistentInstance);
+            }
+        }
+        finally
+        {
+            this.contextStack.pop();
+        }
+    }
+
+    public void handleOwnedToMany(@Nonnull AssociationEnd associationEnd)
+    {
+        JsonNode incomingChildInstances = this.objectNode.path(associationEnd.getName());
+
+        // TODO: Figure out how to recurse without checking key
+        /*
+        ImmutableList<JsonNode> incomingInstancesForInsert = this.filterIncomingInstancesForInsert(
+                incomingChildInstances,
+                associationEnd);
+        */
+
+        ImmutableList<JsonNode> incomingInstancesForUpdate = this.filterIncomingInstancesForUpdate(
+                incomingChildInstances,
+                associationEnd);
+
+        MapIterable<ImmutableList<Object>, JsonNode> incomingChildInstancesByKey = this.indexIncomingJsonInstances(
+                incomingInstancesForUpdate,
+                associationEnd);
+
+        MapIterable<ImmutableList<Object>, Object> persistentChildInstancesByKey =
+                this.getPersistentChildInstancesByKey(
+                        incomingChildInstancesByKey,
+                        associationEnd);
+
+        for (int index = 0; index < incomingChildInstances.size(); index++)
+        {
+            String contextString = String.format(
+                    "%s[%d]",
+                    associationEnd.getName(),
+                    index);
+
+            this.contextStack.push(contextString);
+
+            try
+            {
+                JsonNode childJsonNode = incomingChildInstances.path(index);
+                if (this.jsonNodeNeedsIdInferredOnInsert(childJsonNode, associationEnd))
+                {
+                    continue;
+                }
+
+                ImmutableList<Object> keysFromJsonNode        = this.getKeysFromJsonNode(childJsonNode, associationEnd, this.objectNode);
+                Object                childPersistentInstance = persistentChildInstancesByKey.get(keysFromJsonNode);
+                if (childPersistentInstance == null)
+                {
+                    // recurse in create mode
+                    IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+                            this.dataStore,
+                            this.userKlass,
+                            associationEnd.getType(),
+                            this.mutationContext,
+                            (ObjectNode) childJsonNode,
+                            this.errors,
+                            this.warnings,
+                            this.contextStack,
+                            Optional.of(associationEnd),
+                            false);
+                    validator.validate();
+                }
+                else
+                {
+                    this.handleAssociationEnd(associationEnd, (ObjectNode) childJsonNode, childPersistentInstance);
+                }
+            }
+            finally
+            {
+                this.contextStack.pop();
+            }
+        }
+    }
+
+    public void handleToOneOutsideProjection(
             @Nonnull AssociationEnd associationEnd,
             JsonNode jsonNode)
     {
@@ -508,7 +632,7 @@ public class IncomingUpdateDataModelValidator
         }
     }
 
-    public void handleToMany(
+    public void handleToManyOutsideProjection(
             @Nonnull AssociationEnd associationEnd,
             JsonNode incomingChildInstances)
     {
