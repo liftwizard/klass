@@ -648,7 +648,7 @@ public class RequiredPropertiesValidator
             }
             OperationMode nextMode = this.getNextMode(this.operationMode, associationEnd);
 
-            RequiredPropertiesValidator validator = new OutsideProjectionRequiredPropertiesValidator(
+            RequiredPropertiesValidator validator = new RequiredPropertiesValidator(
                     associationEnd.getType(),
                     (ObjectNode) jsonNode,
                     nextMode,
@@ -656,6 +656,7 @@ public class RequiredPropertiesValidator
                     this.warnings,
                     this.contextStack,
                     Optional.of(associationEnd),
+                    false,
                     false);
             validator.validate();
         }
@@ -726,7 +727,7 @@ public class RequiredPropertiesValidator
 
                 OperationMode nextMode = this.getNextMode(this.operationMode, associationEnd);
 
-                RequiredPropertiesValidator validator = new OutsideProjectionRequiredPropertiesValidator(
+                RequiredPropertiesValidator validator = new RequiredPropertiesValidator(
                         associationEnd.getType(),
                         (ObjectNode) childJsonNode,
                         nextMode,
@@ -734,6 +735,7 @@ public class RequiredPropertiesValidator
                         this.warnings,
                         this.contextStack,
                         Optional.of(associationEnd),
+                        false,
                         false);
                 validator.validate();
             }
