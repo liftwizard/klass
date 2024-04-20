@@ -27,62 +27,63 @@ git -C ~/projects/klass-fresh fetch --all --prune
 git -C ~/projects/klass-fresh optimize
 
 # klass
-rm -rf ~/projects/klass-rewrite
-git clone ~/projects/klass-fresh ~/projects/klass-rewrite
-cd ~/projects/klass-rewrite
+# rm -rf ~/projects/klass-rewrite
+# git clone ~/projects/klass-fresh ~/projects/klass-rewrite
+# cd ~/projects/klass-rewrite
 
 # klass.com ==> klass.cool
-git -C ~/projects/klass-rewrite filter-repo \
-    --paths-from-file ~/projects/klass/rewrite/rewrite-1-paths.txt
+# git -C ~/projects/klass-rewrite filter-repo \
+    # --paths-from-file ~/projects/klass/rewrite/rewrite-1-paths.txt
 
 # klass.com ==> klass.cool
-git -C ~/projects/klass-rewrite filter-repo \
-    --replace-text ~/projects/klass/rewrite/rewrite-1-text.txt \
-    --replace-message ~/projects/klass/rewrite/rewrite-1-message.txt
+# git -C ~/projects/klass-rewrite filter-repo \
+    # --replace-text ~/projects/klass/rewrite/rewrite-1-text.txt \
+    # --replace-message ~/projects/klass/rewrite/rewrite-1-message.txt
 
-# remove ***REMOVED*** directories and strings
-git -C ~/projects/klass-rewrite filter-repo \
-    --invert-paths \
-    --paths-from-file ~/projects/klass/rewrite/rewrite-2-paths.txt \
-    --replace-text ~/projects/klass/rewrite/rewrite-2-text.txt \
-    --replace-message ~/projects/klass/rewrite/rewrite-2-message.txt
+# remove factorio directories and strings
+# git -C ~/projects/klass-rewrite filter-repo \
+    # --invert-paths \
+    # --paths-from-file ~/projects/klass/rewrite/rewrite-2-paths.txt \
+    # --replace-text ~/projects/klass/rewrite/rewrite-2-text.txt \
+    # --replace-message ~/projects/klass/rewrite/rewrite-2-message.txt
 
 # Change dates earlier than 2024-03-06 to 2024-03-06
-git -C ~/projects/klass-rewrite filter-repo \
-    --commit-callback '
-        if commit.committer_date < b"1709683200 -0000" or commit.author_date < b"1709683200 -0000":
-            commit.committer_date = b"1709683200 -0000"
-            commit.author_date    = b"1709683200 -0000"
-    ' --force
+# git -C ~/projects/klass-rewrite filter-repo \
+    # --commit-callback '
+        # if commit.committer_date < b"1709683200 -0000" or commit.author_date < b"1709683200 -0000":
+            # commit.committer_date = b"1709683200 -0000"
+            # commit.author_date    = b"1709683200 -0000"
+    # ' --force
 
-git -C ~/projects/klass-rewrite test add --test default 'bash build.sh --pushover --record'
+# git -C ~/projects/klass-rewrite test add --test default 'bash build.sh --pushover --record'
 
-# ***REMOVED***.school
-rm -rf ~/projects/***REMOVED***-rewrite
-git clone ~/projects/klass-fresh ~/projects/***REMOVED***-rewrite
-cd ~/projects/***REMOVED***-rewrite
+# factorio.school
+rm -rf ~/projects/factorio-rewrite
+git clone ~/projects/klass-fresh ~/projects/factorio-rewrite
+cd ~/projects/factorio-rewrite
 
 # klass.com ==> klass.cool
-git -C ~/projects/***REMOVED***-rewrite filter-repo \
+git -C ~/projects/factorio-rewrite filter-repo \
     --paths-from-file ~/projects/klass/rewrite/rewrite-1-paths.txt
 
 # klass.com ==> klass.cool
-git -C ~/projects/***REMOVED***-rewrite filter-repo \
+git -C ~/projects/factorio-rewrite filter-repo \
     --replace-text ~/projects/klass/rewrite/rewrite-1-text.txt \
     --replace-message ~/projects/klass/rewrite/rewrite-1-message.txt
 
 # remove klass
-git -C ~/projects/***REMOVED***-rewrite filter-repo \
+git -C ~/projects/factorio-rewrite filter-repo \
     --invert-paths \
     --paths-from-file ~/projects/klass/rewrite/rewrite-3-paths-remove.txt
 
-git -C ~/projects/***REMOVED***-rewrite filter-repo \
-    --path-rename xample-projects/***REMOVED***/:
+# git -C ~/projects/factorio-rewrite filter-repo \
+    # --replace-text ~/projects/klass/rewrite/rewrite-3-text.txt \
+    # --replace-message ~/projects/klass/rewrite/rewrite-3-message.txt
 
-git -C ~/projects/***REMOVED***-rewrite filter-repo \
-    --replace-text ~/projects/klass/rewrite/rewrite-3-text.txt \
-    --replace-message ~/projects/klass/rewrite/rewrite-3-message.txt
+# move directories
+git -C ~/projects/factorio-rewrite filter-repo \
+    --path-rename xample-projects/factorio-prints/:
 
-git -C ~/projects/***REMOVED***-rewrite test add --test default 'bash build.sh --pushover --record'
+git -C ~/projects/factorio-rewrite test add --test default 'bash build.sh --pushover --record'
 
 bash build.sh
