@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Craig Motlin
+ * Copyright 2025 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,6 +36,8 @@ import cool.klass.xample.coverage.PropertiesRequiredFinder;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.model.reladomo.operation.compiler.ReladomoOperationCompiler;
 import io.liftwizard.reladomo.test.extension.ReladomoInitializeExtension;
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.factory.primitive.BooleanSets;
 import org.eclipse.collections.impl.factory.primitive.DoubleSets;
 import org.eclipse.collections.impl.factory.primitive.FloatSets;
@@ -43,6 +45,9 @@ import org.eclipse.collections.impl.factory.primitive.IntSets;
 import org.eclipse.collections.impl.factory.primitive.LongSets;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -160,6 +165,57 @@ public class ReladomoOperationCompilerTest {
                 "this.optionalString in [\"example\", null]",
                 FINDER.optionalString().in(new LinkedHashSet<>(Arrays.asList("example", null)))
             );
+    }
+
+    private static ImmutableList<Arguments> nullityTestCases()
+    {
+        return Lists.immutable.with(
+                Arguments.of("this.optionalBoolean is null",       FINDER.optionalBoolean()  .isNull()),
+                Arguments.of("this.optionalInteger is null",       FINDER.optionalInteger()  .isNull()),
+                Arguments.of("this.optionalLong is null",          FINDER.optionalLong()     .isNull()),
+                Arguments.of("this.optionalFloat is null",         FINDER.optionalFloat()    .isNull()),
+                Arguments.of("this.optionalDouble is null",        FINDER.optionalDouble()   .isNull()),
+                Arguments.of("this.optionalLocalDate is null",     FINDER.optionalLocalDate().isNull()),
+                Arguments.of("this.optionalInstant is null",       FINDER.optionalInstant()  .isNull()),
+                Arguments.of("this.optionalString is null",        FINDER.optionalString()   .isNull()),
+                Arguments.of("this.system is null",                FINDER.system()           .isNull()),
+
+                Arguments.of("this.optionalBoolean == null",       FINDER.optionalBoolean()  .isNull()),
+                Arguments.of("this.optionalInteger == null",       FINDER.optionalInteger()  .isNull()),
+                Arguments.of("this.optionalLong == null",          FINDER.optionalLong()     .isNull()),
+                Arguments.of("this.optionalFloat == null",         FINDER.optionalFloat()    .isNull()),
+                Arguments.of("this.optionalDouble == null",        FINDER.optionalDouble()   .isNull()),
+                Arguments.of("this.optionalLocalDate == null",     FINDER.optionalLocalDate().isNull()),
+                Arguments.of("this.optionalInstant == null",       FINDER.optionalInstant()  .isNull()),
+                Arguments.of("this.optionalString == null",        FINDER.optionalString()   .isNull()),
+                Arguments.of("this.system == null",                FINDER.system()           .isNull()),
+
+                Arguments.of("this.optionalBoolean is not null",   FINDER.optionalBoolean()  .isNotNull()),
+                Arguments.of("this.optionalInteger is not null",   FINDER.optionalInteger()  .isNotNull()),
+                Arguments.of("this.optionalLong is not null",      FINDER.optionalLong()     .isNotNull()),
+                Arguments.of("this.optionalFloat is not null",     FINDER.optionalFloat()    .isNotNull()),
+                Arguments.of("this.optionalDouble is not null",    FINDER.optionalDouble()   .isNotNull()),
+                Arguments.of("this.optionalLocalDate is not null", FINDER.optionalLocalDate().isNotNull()),
+                Arguments.of("this.optionalInstant is not null",   FINDER.optionalInstant()  .isNotNull()),
+                Arguments.of("this.optionalString is not null",    FINDER.optionalString()   .isNotNull()),
+                Arguments.of("this.system is not null",            FINDER.system()           .isNotNull()),
+
+                Arguments.of("this.optionalBoolean != null",       FINDER.optionalBoolean()  .isNotNull()),
+                Arguments.of("this.optionalInteger != null",       FINDER.optionalInteger()  .isNotNull()),
+                Arguments.of("this.optionalLong != null",          FINDER.optionalLong()     .isNotNull()),
+                Arguments.of("this.optionalFloat != null",         FINDER.optionalFloat()    .isNotNull()),
+                Arguments.of("this.optionalDouble != null",        FINDER.optionalDouble()   .isNotNull()),
+                Arguments.of("this.optionalLocalDate != null",     FINDER.optionalLocalDate().isNotNull()),
+                Arguments.of("this.optionalInstant != null",       FINDER.optionalInstant()  .isNotNull()),
+                Arguments.of("this.optionalString != null",        FINDER.optionalString()   .isNotNull()),
+                Arguments.of("this.system != null",                FINDER.system()           .isNotNull()));
+    }
+
+    @ParameterizedTest(name = "[{index}] {0}")
+    @MethodSource("nullityTestCases")
+    void nullityOperation(String sourceCodeText, Operation operation)
+    {
+        this.assertCompiles(sourceCodeText, operation);
     }
 
     @Test
