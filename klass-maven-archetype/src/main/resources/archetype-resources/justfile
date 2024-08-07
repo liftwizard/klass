@@ -1,3 +1,8 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+#set( $symbol_at = '@' )
+
 set shell := ["bash", "-O", "globstar", "-c"]
 set dotenv-filename := ".envrc"
 
@@ -50,13 +55,21 @@ javadoc MVN=default_mvn:
     {{MVN}} verify -DskipTests --activate-profiles maven-javadoc-plugin
 
 # mvn checkstyle
-checkstyle MVN=default_mvn:
-    {{MVN}} verify -DskipTests --activate-profiles checkstyle-semantics,checkstyle-formatting,checkstyle-semantics-strict
+checkstyle MVN="mvn":
+    {{MVN}} checkstyle:check --activate-profiles checkstyle-semantics
+    {{MVN}} checkstyle:check --activate-profiles checkstyle-formatting
+    {{MVN}} checkstyle:check --activate-profiles checkstyle-semantics-strict
+    # {{MVN}} checkstyle:check --activate-profiles checkstyle-formatting-strict
 
 # spotless
 spotless NAME MVN=default_mvn:
     {{MVN}} spotless:apply \
-      --activate-profiles 'spotless-check,spotless-{{NAME}}'
+      --activate-profiles 'spotless-apply,spotless-{{NAME}}'
+
+# spotless-all
+spotless-all MVN=default_mvn:
+    {{MVN}} spotless:apply \
+      --activate-profiles 'spotless-apply,spotless-formats,spotless-java-sort-imports,spotless-java-unused-imports,spotless-java-cleanthat,spotless-pom,spotless-markdown,spotless-json,spotless-yaml'
 
 # mvn reproducible
 reproducible MVN=default_mvn:
@@ -90,8 +103,12 @@ buildplan-list-phase:
 wrapper VERSION:
     mvn --threads 1 wrapper:wrapper -Dmaven=VERSION
 
+upstream_remote := env('UPSTREAM_REMOTE', "upstream")
+upstream_branch := env('UPSTREAM_BRANCH', "main")
+
 # mvn release:prepare
 release NEXT_VERSION: && _git-clean
+    git checkout {{upstream_remote}}/{{upstream_branch}}
     mvn --batch-mode clean release:clean release:prepare -DdevelopmentVersion={{NEXT_VERSION}}
 
 # Count lines of code
@@ -110,19 +127,19 @@ _check-local-modifications:
     git diff --quiet
     EXIT_CODE=$?
     if [ $EXIT_CODE -ne 0 ]; then
-        {{echo_command}} "Locally modified files" &
+        {{echo_command}} "Locally modified files"
         exit $EXIT_CODE
     fi
 
     git status --porcelain | (! grep -q '^??')
     EXIT_CODE=$?
     if [ $EXIT_CODE -ne 0 ]; then
-        {{echo_command}} "Untracked files" &
+        {{echo_command}} "Untracked files"
         exit $EXIT_CODE
     fi
 
 default_target   := env('MVN_TARGET',   "verify")
-default_profiles := env('MVN_PROFILES', "--activate-profiles maven-enforcer-plugin,maven-dependency-plugin,checkstyle-semantics,checkstyle-formatting,checkstyle-semantics-strict,checkstyle-formatting-strict,spotless-write,spotless-formats,spotless-java-sort-imports,spotless-java-unused-imports,spotless-java-cleanthat,spotless-pom,spotless-markdown,spotless-json,spotless-yaml")
+default_profiles := env('MVN_PROFILES', "--activate-profiles maven-enforcer-plugin,maven-dependency-plugin,checkstyle-semantics,checkstyle-formatting,checkstyle-semantics-strict,checkstyle-formatting-strict,spotless-apply,spotless-formats,spotless-java-sort-imports,spotless-java-unused-imports,spotless-java-cleanthat,spotless-pom,spotless-markdown,spotless-json,spotless-yaml")
 default_flags    := env('MVN_FLAGS',    "--threads 2C")
 
 # mvn
@@ -133,7 +150,7 @@ mvn MVN=default_mvn TARGET=default_target PROFILES=default_profiles *FLAGS=defau
     COMMIT_MESSAGE=$(git log --format=%B -n 1 HEAD)
     SKIPPABLE_WORDS=("skip" "pass" "stop" "fail")
 
-    for word in "${SKIPPABLE_WORDS[@]}"; do
+    for word in "${SKIPPABLE_WORDS[${symbol_at}]}"; do
         if [[ $COMMIT_MESSAGE == *\[${word}\]* ]]; then
             echo "Skipping due to [${word}] in commit: '$COMMIT_MESSAGE'"
             exit 0
@@ -150,14 +167,12 @@ mvn MVN=default_mvn TARGET=default_target PROFILES=default_profiles *FLAGS=defau
     DIRECTORY=$(basename $(pwd))
 
     MESSAGE="Failed in directory ${DIRECTORY} on commit: '${COMMIT_MESSAGE}' with exit code ${EXIT_CODE}"
-    {{echo_command}} "$MESSAGE" &
+    {{echo_command}} "$MESSAGE"
     exit $EXIT_CODE
 
 # end-to-end test for git-test
 test: _check-local-modifications clean mvn && _check-local-modifications
 
-upstream_remote := env('UPSTREAM_REMOTE', "upstream")
-upstream_branch := env('UPSTREAM_BRANCH', "main")
 fail_fast := env('FAIL_FAST', "false")
 
 # `just test` all commits with configurable upstream/main as ancestor
@@ -171,11 +186,13 @@ test-all *FLAGS="--retest":
 
     branches=($(git for-each-ref --format='%(refname:short)' refs/heads/ --sort -committerdate --contains {{upstream_remote}}/{{upstream_branch}}))
 
-    for branch in "${branches[@]}"
+    for branch in "${branches[${symbol_at}]}"
     do
         echo "Testing branch: $branch"
         git test run {{FLAGS}} {{upstream_remote}}/{{upstream_branch}}..${branch}
     done
+
+alias ta := test-all
 
 # `just test results` all branches with configurable upstream/main as ancestor
 test-results:
@@ -184,24 +201,29 @@ test-results:
 
     branches=($(git for-each-ref --format='%(refname:short)' refs/heads/ --sort -committerdate --contains {{upstream_remote}}/{{upstream_branch}}))
 
-    for branch in "${branches[@]}"
+    for branch in "${branches[${symbol_at}]}"
     do
         echo "Branch: $branch"
         git test results {{upstream_remote}}/{{upstream_branch}}..${branch}
     done
 
 offline := env_var_or_default('OFFLINE', 'false')
+
+# git fetch configurable upstream
+fetch:
+    #!/usr/bin/env bash
+    set -Eeuo pipefail
+    if [ "{{offline}}" != "true" ]; then
+        git fetch --all --prune --jobs=16
+    fi
+
 # Rebase all branches onto configurable upstream/main
-rebase-all:
+rebase-all: fetch
     #!/usr/bin/env bash
     set -Eeuo pipefail
 
-    if [ "{{offline}}" != "true" ]; then
-        git fetch {{upstream_remote}}
-    fi
-
     branches=($(git for-each-ref --format='%(refname:short)' refs/heads/ --sort -committerdate --no-contains {{upstream_remote}}/{{upstream_branch}}))
-    for branch in "${branches[@]}"
+    for branch in "${branches[${symbol_at}]}"
     do
         included_count=$(git branch --contains "$branch" | wc -l)
         if [ "$included_count" -gt 1 ]; then
@@ -214,6 +236,8 @@ rebase-all:
         git rebase {{upstream_remote}}/{{upstream_branch}}
     done
 
+alias ra := rebase-all
+
 # git absorb into configurable upstream/main
 absorb:
     git absorb \
@@ -221,22 +245,17 @@ absorb:
         --force
 
 # git rebase onto configurable upstream/main
-rebase:
-    #!/usr/bin/env bash
-    set -Eeuo pipefail
-    if [ "{{offline}}" != "true" ]; then
-        git fetch {{upstream_remote}} {{upstream_branch}}
-    fi
+rebase: fetch
     git rebase --interactive --autosquash {{upstream_remote}}/{{upstream_branch}}
 
 # Delete local branches merged into configurable upstream/main
-delete-local-merged:
+delete-local-merged: fetch
     git branch --merged remotes/{{upstream_remote}}/{{upstream_branch}} \
-        | grep -v "^\*\\|main" \
+        | grep -v "^\*" \
         | xargs git branch -D
 
 # Delete branches from origin merged into configurable upstream/main
-delete-remote-merged:
+delete-remote-merged: fetch
     #!/usr/bin/env bash
     set -Eeu
     if [ "{{offline}}" != "true" ]; then
@@ -254,24 +273,34 @@ delete-remote-merged:
 # Delete local and remote branches that are merged into configurable upstream/main
 delete-merged: delete-local-merged delete-remote-merged
 
+git: rebase-all delete-merged
+
 qodana:
     op run -- qodana scan \
         --apply-fixes \
         --linter jetbrains/qodana-jvm:2024.1
 
-first-build:
+build-first:
     git init
     git add -A
     git commit -m "Initial import."
 
+    git mv gitignore .gitignore
+    git mv .idea/gitignore .idea/.gitignore
+    git commit -m "Move .gitignore in place."
+
+    chmod +x ./mvnw
     ./mvnw wrapper:wrapper -Dmaven=4.0.0-alpha-7
     git add -A
     git commit -m "Add maven wrapper."
 
-    git rm -f *-reladomo-pojos/src/main/java/com/${rootArtifactId}/DeleteMe*
+build-second:
+    git rm *-reladomo-pojos/src/main/java/{{group_id_with_slashes}}/DeleteMe*.java
     git commit -m "Remove DeleteMe*."
 
-    just
+    git add -A
+    git commit -m "Initial domain model."
 
+    just install
     git add -A
     git commit -m "Initial code generation."
