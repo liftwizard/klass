@@ -106,6 +106,10 @@ release NEXT_VERSION: && _git-clean
     git checkout {{upstream_remote}}/{{upstream_branch}}
     mvn --batch-mode clean release:clean release:prepare -DdevelopmentVersion={{NEXT_VERSION}}
 
+# mvn archetype
+archetype MVN=default_mvn:
+    {{MVN}} install --also-make --projects klass-maven-archetype
+
 # Count lines of code
 scc:
     scc **/src/{main,test}
