@@ -31,6 +31,13 @@ scc:
 @archetype MVN=default_mvn:
     just _run "{{MVN}} {{ANSI_GREEN}}install{{ANSI_DEFAULT}} --also-make --projects klass-maven-archetype"
 
+mod-setup:
+    mod config build maven arguments edit install --local=.
+    mod build .
+
+moderne RECIPE:
+    mod run . --recipe={{RECIPE}}
+
 # Override this with a command called `woof` which notifies you in whatever ways you prefer.
 # My `woof` command uses `echo`, `say`, and sends a Pushover notification.
 echo_command := env('ECHO_COMMAND', "echo")
