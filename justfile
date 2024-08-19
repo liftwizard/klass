@@ -274,7 +274,3 @@ delete-merged: delete-local-merged delete-remote-merged
 
 git: rebase-all delete-merged
 
-qodana:
-    op run -- qodana scan \
-        --apply-fixes \
-        --linter jetbrains/qodana-jvm:2024.1
