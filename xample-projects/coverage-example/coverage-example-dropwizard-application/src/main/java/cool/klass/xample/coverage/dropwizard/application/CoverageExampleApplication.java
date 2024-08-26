@@ -27,8 +27,8 @@ import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.liftwizard.dropwizard.bundle.httplogging.JerseyHttpLoggingBundle;
-import io.liftwizard.servlet.bundle.spa.SPARedirectFilterBundle;
-import io.liftwizard.servlet.config.spa.SPARedirectFilterFactory;
+import io.liftwizard.servlet.bundle.singlepage.SinglePageRedirectFilterBundle;
+import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactory;
 import io.liftwizard.servlet.logging.logstash.encoder.StructuredArgumentsLogstashEncoderLogger;
 import io.liftwizard.servlet.logging.mdc.StructuredArgumentsMDCLogger;
 import io.liftwizard.servlet.logging.typesafe.StructuredArguments;
@@ -81,12 +81,12 @@ public class CoverageExampleApplication
             }
         });
 
-        bootstrap.addBundle(new SPARedirectFilterBundle<>()
+        bootstrap.addBundle(new SinglePageRedirectFilterBundle<CoverageExampleConfiguration>()
         {
             @Override
-            public SPARedirectFilterFactory getSPARedirectFilterFactory(CoverageExampleConfiguration configuration)
+            public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory(CoverageExampleConfiguration configuration)
             {
-                return configuration.getSPARedirectFilterFactory();
+                return configuration.getSinglePageRedirectFilterFactory();
             }
         });
     }
