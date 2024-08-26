@@ -150,7 +150,7 @@
       "klass/model/meta/domain/graphql/schema/GraphQLSchema.graphqls",
     ],
   },
-  spaRedirectFilter: {
+  singlePageRedirectFilter: {
     enabled: true,
     redirectSPAPage: "/index.html",
     cacheControlHeader: "public, max-age=86400",

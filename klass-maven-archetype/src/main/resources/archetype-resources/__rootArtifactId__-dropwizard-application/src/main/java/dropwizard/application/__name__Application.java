@@ -11,8 +11,8 @@ import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.liftwizard.dropwizard.bundle.httplogging.JerseyHttpLoggingBundle;
-import io.liftwizard.servlet.bundle.spa.SPARedirectFilterBundle;
-import io.liftwizard.servlet.config.spa.SPARedirectFilterFactory;
+import io.liftwizard.servlet.bundle.spa.SinglePageRedirectFilterBundle;
+import io.liftwizard.servlet.config.spa.SinglePageRedirectFilterFactory;
 import io.liftwizard.servlet.logging.logstash.encoder.StructuredArgumentsLogstashEncoderLogger;
 import io.liftwizard.servlet.logging.mdc.StructuredArgumentsMDCLogger;
 import io.liftwizard.servlet.logging.typesafe.StructuredArguments;
@@ -65,12 +65,12 @@ public class ${name}Application
             }
         });
 
-        bootstrap.addBundle(new SPARedirectFilterBundle<>()
+        bootstrap.addBundle(new SinglePageRedirectFilterBundle<>()
         {
             @Override
-            public SPARedirectFilterFactory getSPARedirectFilterFactory(${name}Configuration configuration)
+            public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory(${name}Configuration configuration)
             {
-                return configuration.getSPARedirectFilterFactory();
+                return configuration.getSinglePageRedirectFilterFactory();
             }
         });
     }

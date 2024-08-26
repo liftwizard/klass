@@ -23,31 +23,31 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.smoketurner.dropwizard.graphql.GraphQLFactory;
 import cool.klass.dropwizard.configuration.AbstractKlassConfiguration;
 import io.liftwizard.dropwizard.configuration.graphql.GraphQLFactoryProvider;
-import io.liftwizard.servlet.config.spa.SPARedirectFilterFactory;
-import io.liftwizard.servlet.config.spa.SPARedirectFilterFactoryProvider;
+import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactory;
+import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactoryProvider;
 
 public class KlassBootstrappedMetaModelConfiguration
         extends AbstractKlassConfiguration
-        implements SPARedirectFilterFactoryProvider,
+        implements SinglePageRedirectFilterFactoryProvider,
         GraphQLFactoryProvider
 {
     @Nonnull
-    private @Valid SPARedirectFilterFactory spaRedirectFilterFactory = new SPARedirectFilterFactory();
+    private @Valid SinglePageRedirectFilterFactory singlePageRedirectFilterFactory = new SinglePageRedirectFilterFactory();
 
     @Nonnull
     private @Valid GraphQLFactory graphQLFactory = new GraphQLFactory();
 
     @Override
-    @JsonProperty("spaRedirectFilter")
-    public SPARedirectFilterFactory getSPARedirectFilterFactory()
+    @JsonProperty("singlePageRedirectFilter")
+    public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory()
     {
-        return this.spaRedirectFilterFactory;
+        return this.singlePageRedirectFilterFactory;
     }
 
-    @JsonProperty("spaRedirectFilter")
-    public void setSPARedirectFilterFactory(SPARedirectFilterFactory spaRedirectFilterFactory)
+    @JsonProperty("singlePageRedirectFilter")
+    public void setSinglePageRedirectFilterFactory(SinglePageRedirectFilterFactory singlePageRedirectFilterFactory)
     {
-        this.spaRedirectFilterFactory = spaRedirectFilterFactory;
+        this.singlePageRedirectFilterFactory = singlePageRedirectFilterFactory;
     }
 
     @Override
