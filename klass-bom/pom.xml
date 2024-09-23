@@ -31,6 +31,18 @@
         <dependencies>
 
             <dependency>
+                <groupId>com.graphql-java-kickstart</groupId>
+                <artifactId>graphql-java-kickstart-javax</artifactId>
+                <version>16.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.graphql-java-kickstart</groupId>
+                <artifactId>graphql-java-servlet-javax</artifactId>
+                <version>16.0.0</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4-runtime</artifactId>
                 <version>4.9.3</version>
