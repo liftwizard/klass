@@ -97,4 +97,34 @@
         </dependencies>
     </dependencyManagement>
 
+    <profiles>
+
+        <!--region Phase 21: verify-->
+        <profile>
+            <id>maven-dependency-plugin</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <configuration>
+                            <ignoredUnusedDeclaredDependencies combine.children="append">
+                                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-domain-model</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-dtos</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-graphql-reladomo-finder</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-graphql-schema-query</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-graphql-schema</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-liquibase-schema</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-reladomo-runtime-configuration</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-relational-schema</ignoredUnusedDeclaredDependency>
+                            </ignoredUnusedDeclaredDependencies>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!--endregion-->
+
+    </profiles>
+
 </project>

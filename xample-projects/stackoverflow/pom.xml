@@ -94,4 +94,34 @@
         </dependencies>
     </dependencyManagement>
 
+    <profiles>
+
+        <!--region Phase 21: verify-->
+        <profile>
+            <id>maven-dependency-plugin</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <configuration>
+                            <ignoredUnusedDeclaredDependencies combine.children="append">
+                                <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-domain-model</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-dtos</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-graphql-reladomo-finder</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-graphql-schema-query</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-graphql-schema</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-liquibase-schema</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-reladomo-runtime-configuration</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-relational-schema</ignoredUnusedDeclaredDependency>
+                            </ignoredUnusedDeclaredDependencies>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!--endregion-->
+
+    </profiles>
+
 </project>
