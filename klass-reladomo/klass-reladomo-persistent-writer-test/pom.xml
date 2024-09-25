@@ -245,6 +245,7 @@
     </build>
 
     <profiles>
+
         <!--region Phase 21: verify-->
         <profile>
             <id>maven-dependency-plugin</id>
@@ -254,13 +255,16 @@
                     <plugin>
                         <artifactId>maven-dependency-plugin</artifactId>
                         <configuration>
-                            <ignoreNonCompile>true</ignoreNonCompile>
+                            <ignoredUnusedDeclaredDependencies combine.children="append">
+                                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-reladomo-pojos</ignoredUnusedDeclaredDependency>
+                            </ignoredUnusedDeclaredDependencies>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
         <!--endregion-->
+
     </profiles>
 
 </project>

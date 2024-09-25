@@ -120,12 +120,6 @@
 
         <dependency>
             <groupId>io.liftwizard</groupId>
-            <artifactId>liftwizard-servlet-logging-logstash-encoder</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>io.liftwizard</groupId>
             <artifactId>liftwizard-named-data-source-factory</artifactId>
         </dependency>
         <!--endregion-->
@@ -466,12 +460,6 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <scope>runtime</scope>
-        </dependency>
         <!--endregion-->
 
         <!--region Test dependencies -->
@@ -663,23 +651,6 @@
                                     <version>${klass.version}</version>
                                 </additionalDependency>
                             </additionalDependencies>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <!--endregion-->
-
-        <!--region Phase 21: verify-->
-        <profile>
-            <id>maven-dependency-plugin</id>
-
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <configuration>
-                            <ignoreNonCompile>true</ignoreNonCompile>
                         </configuration>
                     </plugin>
                 </plugins>

@@ -84,24 +84,4 @@
         </dependency>
 
     </dependencies>
-
-    <profiles>
-        <!--region Phase 21: verify-->
-        <profile>
-            <id>maven-dependency-plugin</id>
-
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <configuration>
-                            <ignoreNonCompile>true</ignoreNonCompile>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <!--endregion-->
-    </profiles>
-
 </project>
