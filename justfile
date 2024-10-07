@@ -6,6 +6,41 @@ group_id_with_slashes := "cool/klass"
 # Setup the project (mise) and run the default build (mvn)
 default: mise mvn
 
+# set up git-test
+setup-git-test:
+    git test add --forget --test default        'just default'
+    git test add --forget --test enforcer       'just enforcer'
+    git test add --forget --test dependency     'just dependency'
+    git test add --forget --test checkstyle     'just checkstyle'
+    git test add --forget --test javadoc        'just javadoc'
+    git test add --forget --test formats        'just spotless formats'
+    git test add --forget --test prettier       'just spotless prettier-java'
+    git test add --forget --test gjf            'just spotless google-java-format'
+    git test add --forget --test sort-imports   'just spotless java-sort-imports'
+    git test add --forget --test unused-imports 'just spotless java-unused-imports'
+    git test add --forget --test cleanthat      'just spotless java-cleanthat'
+    git test add --forget --test pom            'just spotless pom'
+    git test add --forget --test markdown       'just spotless markdown'
+    git test add --forget --test json           'just spotless json'
+    git test add --forget --test yaml           'just spotless yaml'
+    git test add --forget --test sql            'just spotless sql'
+
+# Add git refspec to fetch GitHub PR refs from REMOTE
+setup-github-refspec REMOTE:
+    #!/usr/bin/env bash
+    set -Eeuo pipefail
+
+    if git remote get-url {{REMOTE}} &> /dev/null && git remote get-url {{REMOTE}} | grep -q 'github\.'; then
+        git config --add remote.{{REMOTE}}.fetch '+refs/pull/*/head:refs/remotes/{{REMOTE}}/pr/*'
+        git config --add remote.{{REMOTE}}.fetch '+refs/pull/*/merge:refs/remotes/{{REMOTE}}/pr/merge/*'
+        echo "Added refspec to fetch GitHub PR refs for {{REMOTE}}"
+    else
+        echo "Remote {{REMOTE}} is not a GitHub remote"
+    fi
+
+# Add git refspec to fetch GitHub PR refs from origin and upstream
+setup-github-refspecs: (setup-github-refspec "origin") (setup-github-refspec "upstream")
+
 # mise install
 mise:
     mise plugin install maven
@@ -14,7 +49,7 @@ mise:
     mise current
 
 # git clean
-_git-clean:
+_clean-git:
     git clean -fdx release.properties **/pom.xml.releaseBackup **/target
 
 # rm -rf ~/.m2/repository/...
@@ -26,7 +61,7 @@ _clean-m2:
 
 default_mvn      := env('MVN_BINARY',   "mvnd")
 # clean (maven and git)
-clean MVN=default_mvn: && _git-clean _clean-m2
+clean MVN=default_mvn: && _clean-git _clean-m2
     {{MVN}} clean
 
 # mvn verify
@@ -37,32 +72,33 @@ verify MVN=default_mvn:
 install MVN=default_mvn:
     {{MVN}} install
 
+default_target   := env('MVN_TARGET',   "verify")
+default_flags    := env('MVN_FLAGS',    "--threads 2C")
+
+skip_tests_flags := default_flags + " -DskipTests"
+
 # mvn enforcer
-enforcer MVN=default_mvn:
-    {{MVN}} verify -DskipTests --activate-profiles maven-enforcer-plugin
+enforcer MVN=default_mvn: _check-local-modifications clean (mvn MVN default_target "--activate-profiles maven-enforcer-plugin" skip_tests_flags) && _check-local-modifications
 
 # mvn dependency
-analyze MVN=default_mvn:
-    {{MVN}} verify -DskipTests --activate-profiles maven-dependency-plugin
+dependency MVN=default_mvn: _check-local-modifications clean (mvn MVN default_target "--activate-profiles maven-dependency-plugin" skip_tests_flags) && _check-local-modifications
 
 # mvn javadoc
-javadoc MVN=default_mvn:
-    {{MVN}} verify -DskipTests --activate-profiles maven-javadoc-plugin
+javadoc MVN=default_mvn: _check-local-modifications clean (mvn MVN default_target "--activate-profiles maven-dependency-plugin" skip_tests_flags) && _check-local-modifications
 
-# mvn checkstyle
-checkstyle MVN="mvn":
-    {{MVN}} checkstyle:check --activate-profiles checkstyle-semantics
-    {{MVN}} checkstyle:check --activate-profiles checkstyle-formatting
-    {{MVN}} checkstyle:check --activate-profiles checkstyle-semantics-strict
-    {{MVN}} checkstyle:check --activate-profiles checkstyle-formatting-strict
+checkstyle-semantics MVN="mvn": _check-local-modifications clean (mvn MVN "checkstyle:check" "--activate-profiles checkstyle-semantics" default_flags) && _check-local-modifications
+checkstyle-formatting MVN="mvn": _check-local-modifications clean (mvn MVN "checkstyle:check" "--activate-profiles checkstyle-formatting" default_flags) && _check-local-modifications
+checkstyle-semantics-strict MVN="mvn": _check-local-modifications clean (mvn MVN "checkstyle:check" "--activate-profiles checkstyle-semantics-strict" default_flags) && _check-local-modifications
+checkstyle-formatting-strict MVN="mvn": _check-local-modifications clean (mvn MVN "checkstyle:check" "--activate-profiles checkstyle-formatting-strict" default_flags) && _check-local-modifications
+checkstyle: checkstyle-semantics checkstyle-formatting checkstyle-semantics-strict checkstyle-formatting-strict
 
 # spotless
-spotless NAME MVN=default_mvn:
+spotless NAME MVN=default_mvn: _check-local-modifications clean && _check-local-modifications
     {{MVN}} spotless:apply \
       --activate-profiles 'spotless-apply,spotless-{{NAME}}'
 
 # spotless-all
-spotless-all MVN=default_mvn:
+spotless-all MVN=default_mvn: _check-local-modifications clean && _check-local-modifications
     {{MVN}} spotless:apply \
       --activate-profiles 'spotless-apply,spotless-formats,spotless-java-sort-imports,spotless-java-unused-imports,spotless-java-cleanthat,spotless-pom,spotless-markdown,spotless-json,spotless-yaml'
 
@@ -102,7 +138,7 @@ upstream_remote := env('UPSTREAM_REMOTE', "upstream")
 upstream_branch := env('UPSTREAM_BRANCH', "main")
 
 # mvn release:prepare
-release NEXT_VERSION: && _git-clean
+release NEXT_VERSION: && _clean-git
     git checkout {{upstream_remote}}/{{upstream_branch}}
     mvn --batch-mode clean release:clean release:prepare -DdevelopmentVersion={{NEXT_VERSION}}
 
@@ -137,9 +173,7 @@ _check-local-modifications:
         exit $EXIT_CODE
     fi
 
-default_target   := env('MVN_TARGET',   "verify")
-default_profiles := env('MVN_PROFILES', "--activate-profiles maven-enforcer-plugin,maven-dependency-plugin,checkstyle-semantics,checkstyle-formatting,checkstyle-semantics-strict,checkstyle-formatting-strict,spotless-apply,spotless-formats,spotless-java-sort-imports,spotless-java-unused-imports,spotless-java-cleanthat,spotless-pom,spotless-markdown,spotless-json,spotless-yaml")
-default_flags    := env('MVN_FLAGS',    "--threads 2C")
+default_profiles := env('MVN_PROFILES', "--activate-profiles maven-enforcer-plugin,maven-dependency-plugin,checkstyle-semantics,checkstyle-formatting,checkstyle-semantics-strict,spotless-apply,spotless-formats,spotless-java-sort-imports,spotless-java-unused-imports,spotless-java-cleanthat,spotless-pom,spotless-markdown,spotless-json,spotless-yaml")
 
 # mvn
 mvn MVN=default_mvn TARGET=default_target PROFILES=default_profiles *FLAGS=default_flags:
@@ -175,12 +209,12 @@ test: _check-local-modifications clean mvn && _check-local-modifications
 fail_fast := env('FAIL_FAST', "false")
 
 # git-test on the range of commits between a configurable upstream/main and {{BRANCH}}
-test-branch BRANCH="HEAD" *FLAGS="--retest":
+test-branch BRANCH="HEAD" TEST="default" *FLAGS="--retest":
     echo "Testing branch: {{BRANCH}}"
-    git test run {{FLAGS}} {{upstream_remote}}/{{upstream_branch}}..{{BRANCH}}
+    git test run --test {{TEST}} {{FLAGS}} {{upstream_remote}}/{{upstream_branch}}..{{BRANCH}}
 
 # `just test` all commits with configurable upstream/main as ancestor
-test-all *FLAGS="--retest":
+test-all TEST="default" *FLAGS="--retest":
     #!/usr/bin/env bash
     set -uo pipefail
 
@@ -192,7 +226,7 @@ test-all *FLAGS="--retest":
 
     for branch in "${branches[@]}"
     do
-        just test-branch "${branch}" {{FLAGS}}
+        just test-branch "${branch}" "{{TEST}}" {{FLAGS}}
     done
 
 alias ta := test-all
@@ -207,7 +241,7 @@ test-results:
     for branch in "${branches[@]}"
     do
         echo "Branch: $branch"
-        git test results {{upstream_remote}}/{{upstream_branch}}..${branch}
+        git test results --color {{upstream_remote}}/{{upstream_branch}}..${branch}
     done
 
 offline := env_var_or_default('OFFLINE', 'false')
@@ -217,11 +251,11 @@ fetch:
     #!/usr/bin/env bash
     set -Eeuo pipefail
     if [ "{{offline}}" != "true" ]; then
-        git fetch --all --prune --jobs=16
+        git fetch {{upstream_remote}} --tags --prune
     fi
 
 # Rebase all branches onto configurable upstream/main
-rebase-all: fetch
+rebase-all: _check-local-modifications fetch
     #!/usr/bin/env bash
     set -Eeuo pipefail
 
@@ -248,14 +282,14 @@ absorb:
         --force
 
 # git rebase onto configurable upstream/main
-rebase: fetch
-    git rebase --interactive --autosquash {{upstream_remote}}/{{upstream_branch}}
+rebase: _check-local-modifications fetch
+    git rebase --interactive --autosquash --rebase-merges --update-refs {{upstream_remote}}/{{upstream_branch}}
 
 # Delete local branches merged into configurable upstream/main
 delete-local-merged: fetch
     git branch --merged remotes/{{upstream_remote}}/{{upstream_branch}} \
         | grep -v "^\*" \
-        | xargs git branch -D
+        | xargs --no-run-if-empty git branch -D
 
 # Delete branches from origin merged into configurable upstream/main
 delete-remote-merged: fetch
@@ -268,7 +302,7 @@ delete-remote-merged: fetch
             | grep "origin/" \
             | grep --invert-match "origin/pr/" \
             | cut -d "/" -f 2- \
-            | xargs git push --delete origin
+            | xargs --no-run-if-empty git push --delete origin
     else
         echo "Skipping delete-remote-merged in offline mode"
     fi
@@ -278,3 +312,21 @@ delete-merged: delete-local-merged delete-remote-merged
 
 git: rebase-all delete-merged
 
+# Generate a markdown list of commit messages
+pull-request-description:
+    git log {{upstream_remote}}/{{upstream_branch}}..HEAD --reverse --format='- %s'
+
+# Create a branch if HEAD is detached
+recover-detached-head:
+    #!/usr/bin/env bash
+    set -Eeuo pipefail
+
+    if git symbolic-ref -q HEAD >/dev/null; then
+        current_branch=$(git symbolic-ref --short HEAD)
+        echo "Not in detached HEAD state. Current branch: $current_branch"
+    else
+        current_date=$(date +%Y-%m-%d)
+        branch_name="branch-${current_date}"
+        git checkout -b "$branch_name"
+        echo "Created and checked out new branch: $branch_name"
+    fi
