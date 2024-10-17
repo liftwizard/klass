@@ -21,6 +21,7 @@ import com.gs.fw.common.mithra.finder.*;
 import cool.klass.data.store.*;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
+import cool.klass.model.meta.domain.api.Multiplicity;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import cool.klass.deserializer.json.*;
@@ -97,7 +98,7 @@ public class QuestionResource
 
         MutableList<String> errors = Lists.mutable.empty();
         MutableList<String> warnings = Lists.mutable.empty();
-        JsonTypeCheckingValidator.validate(incomingInstance, klass, errors);
+        JsonTypeCheckingValidator.validate(incomingInstance, klass, Multiplicity.ONE_TO_ONE, errors);
         RequiredPropertiesValidator.validate(
                 klass,
                 incomingInstance,

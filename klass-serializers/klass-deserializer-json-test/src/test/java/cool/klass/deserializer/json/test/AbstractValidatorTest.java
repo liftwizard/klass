@@ -30,6 +30,7 @@ import cool.klass.deserializer.json.RequiredPropertiesValidator;
 import cool.klass.dropwizard.configuration.domain.model.loader.compiler.DomainModelCompilerFactory;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
+import cool.klass.model.meta.domain.api.Multiplicity;
 import io.dropwizard.jackson.Jackson;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.junit.extension.match.FileSlurper;
@@ -101,6 +102,7 @@ public abstract class AbstractValidatorTest
         JsonTypeCheckingValidator.validate(
                 incomingInstance,
                 this.getKlass(),
+                Multiplicity.ONE_TO_ONE,
                 this.actualErrors);
 
         RequiredPropertiesValidator.validate(

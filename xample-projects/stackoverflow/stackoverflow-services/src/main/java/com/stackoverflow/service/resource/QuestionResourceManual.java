@@ -167,7 +167,7 @@ public class QuestionResourceManual
 
         MutableList<String> errors   = Lists.mutable.empty();
         MutableList<String> warnings = Lists.mutable.empty();
-        JsonTypeCheckingValidator.validate(incomingInstance, klass, errors);
+        JsonTypeCheckingValidator.validate(incomingInstance, klass, Multiplicity.ONE_TO_ONE, errors);
         RequiredPropertiesValidator.validate(
                 klass,
                 incomingInstance,
@@ -483,7 +483,7 @@ public class QuestionResourceManual
 
         MutableList<String> errors   = Lists.mutable.empty();
         MutableList<String> warnings = Lists.mutable.empty();
-        JsonTypeCheckingValidator.validate(incomingInstance, klass, errors);
+        JsonTypeCheckingValidator.validate(incomingInstance, klass, Multiplicity.ONE_TO_ONE, errors);
         RequiredPropertiesValidator.validate(
                 klass,
                 incomingInstance,

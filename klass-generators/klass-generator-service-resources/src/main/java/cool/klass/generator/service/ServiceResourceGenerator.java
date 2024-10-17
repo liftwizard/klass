@@ -171,6 +171,7 @@ public class ServiceResourceGenerator
                 + "import cool.klass.data.store.*;\n"
                 + "import cool.klass.model.meta.domain.api.DomainModel;\n"
                 + "import cool.klass.model.meta.domain.api.Klass;\n"
+                + "import cool.klass.model.meta.domain.api.Multiplicity;\n"
                 + jsr310Import
                 + writeImports
                 + "\n"
@@ -587,6 +588,8 @@ public class ServiceResourceGenerator
 
         String orderBySourceCode = service.getOrderBy().map(this::getOrderBysSourceCode).orElse("");
 
+        String multiplicity = service.getServiceMultiplicity() == ServiceMultiplicity.ONE ? "Multiplicity.ONE_TO_ONE" : "Multiplicity.ZERO_TO_MANY";
+
         // @formatter:off
         // language=JAVA
         return ""
@@ -601,7 +604,7 @@ public class ServiceResourceGenerator
                 + "\n"
                 + "        MutableList<String> errors = Lists.mutable.empty();\n"
                 + "        MutableList<String> warnings = Lists.mutable.empty();\n"
-                + "        JsonTypeCheckingValidator.validate(incomingInstance, klass, errors);\n"
+                + "        JsonTypeCheckingValidator.validate(incomingInstance, klass, " + multiplicity + ", errors);\n"
                 + "        RequiredPropertiesValidator.validate(\n"
                 + "                klass,\n"
                 + "                incomingInstance,\n"

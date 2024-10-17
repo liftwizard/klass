@@ -22,6 +22,7 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import cool.klass.model.meta.domain.api.Enumeration;
 import cool.klass.model.meta.domain.api.EnumerationLiteral;
@@ -45,82 +46,171 @@ import org.eclipse.collections.impl.factory.Stacks;
 public final class JsonTypeCheckingValidator
 {
     @Nonnull
-    private final ObjectNode objectNode;
+    private final JsonNode jsonNode;
     @Nonnull
-    private final Klass      klass;
+    private final Klass klass;
+    @Nonnull
+    private final Multiplicity expectedMultiplicity;
+    @Nonnull
+    private final Optional<NamedElement> context;
 
     @Nonnull
-    private final MutableStack<String> contextStack = Stacks.mutable.empty();
+    private final MutableStack<String> contextStack;
     @Nonnull
-    private final MutableList<String>  errors;
+    private final MutableList<String> errors;
 
-    public JsonTypeCheckingValidator(ObjectNode objectNode, Klass klass, MutableList<String> errors)
+    public JsonTypeCheckingValidator(
+            @Nonnull JsonNode jsonNode,
+            @Nonnull Optional<NamedElement> context,
+            @Nonnull Klass klass,
+            @Nonnull Multiplicity expectedMultiplicity,
+            @Nonnull MutableStack<String> contextStack,
+            @Nonnull MutableList<String> errors)
     {
-        this.objectNode = Objects.requireNonNull(objectNode);
+        this.jsonNode = Objects.requireNonNull(jsonNode);
+        this.context = Objects.requireNonNull(context);
         this.klass = Objects.requireNonNull(klass);
+        this.expectedMultiplicity = Objects.requireNonNull(expectedMultiplicity);
+        this.contextStack = Objects.requireNonNull(contextStack);
         this.errors = Objects.requireNonNull(errors);
     }
 
-    public static void validate(ObjectNode objectNode, Klass klass, MutableList<String> errors)
+    public static void validate(
+            @Nonnull JsonNode jsonNode,
+            @Nonnull Klass klass,
+            @Nonnull Multiplicity expectedMultiplicity,
+            @Nonnull MutableList<String> errors)
     {
         JsonTypeCheckingValidator incomingDataValidator = new JsonTypeCheckingValidator(
-                objectNode,
+                jsonNode,
+                Optional.of(klass),
                 klass,
+                expectedMultiplicity,
+                Stacks.mutable.empty(),
                 errors);
         incomingDataValidator.validateIncomingData();
     }
 
     public void validateIncomingData()
     {
-        this.contextStack.push(this.klass.toString());
-        this.validateIncomingData(this.objectNode, this.klass);
+        if (this.expectedMultiplicity.isToOne())
+        {
+            this.context.ifPresent(presentContext -> this.contextStack.push(presentContext.getName()));
+
+            try
+            {
+                if (this.jsonNode instanceof ObjectNode objectNode)
+                {
+                    this.validateObjectNode(objectNode);
+                }
+                else
+                {
+                    String error = String.format(
+                            "Error at %s. Expected json object but value was %s: %s.",
+                            this.getContextString(),
+                            this.jsonNode.getNodeType().toString().toLowerCase(),
+                            this.jsonNode);
+                    this.errors.add(error);
+                }
+            }
+            finally
+            {
+                this.context.ifPresent(presentContext -> this.contextStack.pop());
+            }
+        }
+        else if (this.expectedMultiplicity.isToMany())
+        {
+            if (this.jsonNode instanceof ArrayNode arrayNode)
+            {
+                this.validateArrayNode(arrayNode);
+            }
+            else
+            {
+                String error = String.format(
+                        "Error at %s. Expected json array but value was %s: %s.",
+                        this.getContextString(),
+                        this.jsonNode.getNodeType().toString().toLowerCase(),
+                        this.jsonNode);
+                this.errors.add(error);
+            }
+        }
+        else
+        {
+            throw new AssertionError(this.expectedMultiplicity);
+        }
     }
 
-    private void validateIncomingData(@Nonnull ObjectNode objectNode, @Nonnull Klass klass)
+    private void validateObjectNode(@Nonnull ObjectNode objectNode)
     {
         objectNode.fields().forEachRemaining(entry ->
         {
-            String             fieldName        = entry.getKey();
-            JsonNode           jsonNode         = entry.getValue();
-            Optional<Property> optionalProperty = klass.getPropertyByName(fieldName);
+            String childFieldName = entry.getKey();
+            JsonNode childJsonNode = entry.getValue();
+            Optional<Property> optionalProperty = this.klass.getPropertyByName(childFieldName);
 
             if (optionalProperty.isEmpty())
             {
-                this.handleMissingProperty(klass, fieldName, jsonNode);
+                this.handleMissingProperty(childFieldName, childJsonNode);
                 return;
             }
 
-            if (jsonNode.isNull())
+            if (childJsonNode.isNull())
             {
                 return;
             }
 
             Property property = optionalProperty.get();
             PropertyVisitor visitor = new JsonTypeCheckingPropertyVisitor(
-                    fieldName,
-                    jsonNode);
+                    childFieldName,
+                    childJsonNode);
             property.visit(visitor);
         });
     }
 
-    public void handleMissingProperty(@Nonnull Klass klass, String fieldName, JsonNode jsonNode)
+    private void handleMissingProperty(String childFieldName, JsonNode childJsonNode)
     {
-        this.contextStack.push(fieldName);
+        this.contextStack.push(childFieldName);
 
         try
         {
             String error = String.format(
                     "Error at %s. No such property '%s.%s' but got %s. Expected properties: %s.",
                     this.getContextString(),
-                    klass,
-                    fieldName,
-                    jsonNode,
-                    klass.getProperties().collect(NamedElement::getName).makeString());
+                    this.klass,
+                    childFieldName,
+                    childJsonNode,
+                    this.klass.getProperties().collect(NamedElement::getName).makeString());
             this.errors.add(error);
         }
         finally
         {
             this.contextStack.pop();
+        }
+    }
+
+    private void validateArrayNode(@Nonnull ArrayNode arrayNode)
+    {
+        for (int index = 0; index < arrayNode.size(); index++)
+        {
+            String contextString = String.format("%s[%d]", this.context.get().getName(), index);
+            this.contextStack.push(contextString);
+
+            try
+            {
+                JsonNode childJsonNode = arrayNode.path(index);
+                var jsonTypeCheckingValidator = new JsonTypeCheckingValidator(
+                        childJsonNode,
+                        Optional.empty(),
+                        this.klass,
+                        Multiplicity.ONE_TO_ONE,
+                        this.contextStack,
+                        this.errors);
+                jsonTypeCheckingValidator.validateIncomingData();
+            }
+            finally
+            {
+                this.contextStack.pop();
+            }
         }
     }
 
@@ -132,22 +222,23 @@ public final class JsonTypeCheckingValidator
                 .makeString(".");
     }
 
-    private final class JsonTypeCheckingPropertyVisitor implements PropertyVisitor
+    private final class JsonTypeCheckingPropertyVisitor
+            implements PropertyVisitor
     {
-        private final String   fieldName;
-        private final JsonNode jsonNode;
+        private final String childFieldName;
+        private final JsonNode childJsonNode;
 
         private JsonTypeCheckingPropertyVisitor(
-                String fieldName,
-                JsonNode jsonNode)
+                @Nonnull String childFieldName,
+                @Nonnull JsonNode childJsonNode)
         {
-            this.fieldName = fieldName;
-            this.jsonNode = jsonNode;
+            this.childFieldName = Objects.requireNonNull(childFieldName);
+            this.childJsonNode = Objects.requireNonNull(childJsonNode);
         }
 
         private void visitPropertyWithContext(@Nonnull Runnable runnable)
         {
-            JsonTypeCheckingValidator.this.contextStack.push(this.fieldName);
+            JsonTypeCheckingValidator.this.contextStack.push(this.childFieldName);
 
             try
             {
@@ -170,7 +261,7 @@ public final class JsonTypeCheckingValidator
             PrimitiveType primitiveType = primitiveProperty.getType();
             PrimitiveTypeVisitor visitor = new JsonTypeCheckingPrimitiveTypeVisitor(
                     primitiveProperty,
-                    this.jsonNode,
+                    this.childJsonNode,
                     JsonTypeCheckingValidator.this.contextStack,
                     JsonTypeCheckingValidator.this.errors);
             primitiveType.visit(visitor);
@@ -184,7 +275,7 @@ public final class JsonTypeCheckingValidator
 
         public void handleEnumerationProperty(@Nonnull EnumerationProperty enumerationProperty)
         {
-            if (!this.jsonNode.isTextual())
+            if (!this.childJsonNode.isTextual())
             {
                 String error = String.format(
                         "Error at %s. Expected enumerated property with type '%s.%s: %s%s' but got %s with type '%s'.",
@@ -193,14 +284,14 @@ public final class JsonTypeCheckingValidator
                         enumerationProperty.getName(),
                         enumerationProperty.getType().getName(),
                         enumerationProperty.isOptional() ? "?" : "",
-                        this.jsonNode,
-                        this.jsonNode.getNodeType().toString().toLowerCase());
+                        this.childJsonNode,
+                        this.childJsonNode.getNodeType().toString().toLowerCase());
                 JsonTypeCheckingValidator.this.errors.add(error);
             }
 
-            String textValue = this.jsonNode.textValue();
+            String textValue = this.childJsonNode.textValue();
 
-            Enumeration                       enumeration         = enumerationProperty.getType();
+            Enumeration enumeration = enumerationProperty.getType();
             ImmutableList<EnumerationLiteral> enumerationLiterals = enumeration.getEnumerationLiterals();
             if (!enumerationLiterals.asLazy()
                     .collect(EnumerationLiteral::getPrettyName)
@@ -217,8 +308,8 @@ public final class JsonTypeCheckingValidator
                         enumerationProperty.getName(),
                         enumerationProperty.getType().getName(),
                         enumerationProperty.isOptional() ? "?" : "",
-                        this.jsonNode,
-                        this.jsonNode.getNodeType().toString().toLowerCase(),
+                        this.childJsonNode,
+                        this.childJsonNode.getNodeType().toString().toLowerCase(),
                         quotedPrettyNames.makeString());
                 JsonTypeCheckingValidator.this.errors.add(error);
             }
@@ -235,80 +326,14 @@ public final class JsonTypeCheckingValidator
         public void visitAssociationEnd(@Nonnull AssociationEnd associationEnd)
         {
             Multiplicity multiplicity = associationEnd.getMultiplicity();
-            if (multiplicity.isToOne())
-            {
-                this.visitPropertyWithContext(() -> this.handleToOneAssociationEnd(associationEnd));
-                return;
-            }
-
-            if (!this.jsonNode.isArray())
-            {
-                JsonTypeCheckingValidator.this.contextStack.push(this.fieldName);
-
-                try
-                {
-                    String error = String.format(
-                            "Error at %s. Expected json array but value was %s: %s.",
-                            JsonTypeCheckingValidator.this.getContextString(),
-                            this.jsonNode.getNodeType().toString().toLowerCase(),
-                            this.jsonNode);
-                    JsonTypeCheckingValidator.this.errors.add(error);
-                }
-                finally
-                {
-                    JsonTypeCheckingValidator.this.contextStack.pop();
-                }
-                return;
-            }
-
-            for (int index = 0; index < this.jsonNode.size(); index++)
-            {
-                String contextString = String.format("%s[%d]", this.fieldName, index);
-                JsonTypeCheckingValidator.this.contextStack.push(contextString);
-
-                try
-                {
-                    JsonNode jsonNode = this.jsonNode.path(index);
-                    if (jsonNode instanceof ObjectNode objectNode)
-                    {
-                        JsonTypeCheckingValidator.this.validateIncomingData(
-                                objectNode,
-                                associationEnd.getType());
-                    }
-                    else
-                    {
-                        String error = String.format(
-                                "Error at %s. Expected json object but value was %s: %s.",
-                                JsonTypeCheckingValidator.this.getContextString(),
-                                jsonNode.getNodeType().toString().toLowerCase(),
-                                jsonNode);
-                        JsonTypeCheckingValidator.this.errors.add(error);
-                    }
-                }
-                finally
-                {
-                    JsonTypeCheckingValidator.this.contextStack.pop();
-                }
-            }
-        }
-
-        public void handleToOneAssociationEnd(@Nonnull AssociationEnd associationEnd)
-        {
-            if (this.jsonNode.isObject())
-            {
-                JsonTypeCheckingValidator.this.validateIncomingData(
-                        (ObjectNode) this.jsonNode,
-                        associationEnd.getType());
-            }
-            else
-            {
-                String error = String.format(
-                        "Error at %s. Expected json object but value was %s: %s.",
-                        JsonTypeCheckingValidator.this.getContextString(),
-                        this.jsonNode.getNodeType().toString().toLowerCase(),
-                        this.jsonNode);
-                JsonTypeCheckingValidator.this.errors.add(error);
-            }
+            var jsonTypeCheckingValidator = new JsonTypeCheckingValidator(
+                    this.childJsonNode,
+                    Optional.of(associationEnd),
+                    associationEnd.getType(),
+                    multiplicity,
+                    JsonTypeCheckingValidator.this.contextStack,
+                    JsonTypeCheckingValidator.this.errors);
+            jsonTypeCheckingValidator.validateIncomingData();
         }
 
         @Override

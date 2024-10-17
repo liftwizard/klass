@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import cool.klass.deserializer.json.JsonTypeCheckingValidator;
 import cool.klass.deserializer.json.RequiredPropertiesValidator;
+import cool.klass.model.meta.domain.api.Multiplicity;
 import cool.klass.reladomo.persistent.writer.IncomingUpdateDataModelValidator;
 import cool.klass.reladomo.persistent.writer.MutationContext;
 import cool.klass.reladomo.persistent.writer.test.AbstractValidatorTest;
@@ -37,6 +38,7 @@ public abstract class AbstractUpdateValidatorTest
         JsonTypeCheckingValidator.validate(
                 incomingInstance,
                 this.getKlass(),
+                Multiplicity.ONE_TO_ONE,
                 this.actualErrors);
 
         RequiredPropertiesValidator.validate(
