@@ -32,5 +32,6 @@ class ClassResourceManualTest
         String resourceClassPathLocation = klass.getSimpleName() + '.' + "getAllMeta" + ".json";
 
         this.assertUrlReturns(client, "/meta/class", resourceClassPathLocation);
+        this.assertUrlWrites(client, "/meta/class", resourceClassPathLocation);
     }
 }

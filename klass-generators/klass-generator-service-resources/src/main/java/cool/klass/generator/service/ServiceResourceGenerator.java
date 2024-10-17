@@ -145,6 +145,7 @@ public class ServiceResourceGenerator
                 import cool.klass.deserializer.json.*;
                 import cool.klass.deserializer.json.type.*;
                 import cool.klass.reladomo.persistent.writer.*;
+                import cool.klass.deserializer.json.type.ObjectNodeTypeCheckingValidator;
                 """
                 : "";
 
@@ -636,7 +637,7 @@ public class ServiceResourceGenerator
                 + "        MutableList<String> errors = Lists.mutable.empty();\n"
                 + "        MutableList<String> warnings = Lists.mutable.empty();\n"
                 + "        " + incomingInstanceParameterType + "TypeCheckingValidator.validate(errors, " + incomingInstanceParameterName + ", klass);\n"
-                + "        RequiredPropertiesValidator.validate(\n"
+                + "        ObjectNodeRequiredPropertiesValidator.validate(\n"
                 + "                errors,\n"
                 + "                warnings,\n"
                 + "                klass,\n"

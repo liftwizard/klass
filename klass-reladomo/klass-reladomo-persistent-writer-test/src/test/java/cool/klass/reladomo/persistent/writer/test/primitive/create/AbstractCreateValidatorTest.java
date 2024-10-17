@@ -22,7 +22,7 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import cool.klass.deserializer.json.RequiredPropertiesValidator;
+import cool.klass.deserializer.json.ObjectNodeRequiredPropertiesValidator;
 import cool.klass.deserializer.json.type.ObjectNodeTypeCheckingValidator;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
@@ -52,7 +52,7 @@ public abstract class AbstractCreateValidatorTest
 
         ObjectNodeTypeCheckingValidator.validate(this.actualErrors, incomingInstance, klass);
 
-        RequiredPropertiesValidator.validate(
+        ObjectNodeRequiredPropertiesValidator.validate(
                 this.actualErrors,
                 this.actualWarnings,
                 klass,

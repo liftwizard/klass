@@ -38,7 +38,7 @@ import org.eclipse.collections.api.tuple.Pair;
 
 // TODO 2024-10-20: Rename "*OutsideProjection()" methods to "*OutsideComposite"
 // TODO 2024-10-20: Rename isInProjection to isInComposite
-public class RequiredPropertiesValidator
+public class ObjectNodeRequiredPropertiesValidator
 {
     @Nonnull
     protected final ContextStack contextStack;
@@ -54,7 +54,7 @@ public class RequiredPropertiesValidator
     protected final boolean                  isRoot;
     protected final boolean                  isInProjection;
 
-    public RequiredPropertiesValidator(
+    public ObjectNodeRequiredPropertiesValidator(
             @Nonnull ContextStack contextStack,
             @Nonnull Klass klass,
             @Nonnull ObjectNode objectNode,
@@ -79,7 +79,7 @@ public class RequiredPropertiesValidator
             @Nonnull ObjectNode objectNode,
             @Nonnull OperationMode operationMode)
     {
-        var validator = new RequiredPropertiesValidator(
+        var validator = new ObjectNodeRequiredPropertiesValidator(
                 new ContextStack(errors, warnings),
                 klass,
                 objectNode,
@@ -596,7 +596,7 @@ public class RequiredPropertiesValidator
             }
             OperationMode nextMode = this.getNextMode(this.operationMode, associationEnd);
 
-            var validator = new RequiredPropertiesValidator(
+            var validator = new ObjectNodeRequiredPropertiesValidator(
                     this.contextStack,
                     associationEnd.getType(),
                     objectNode,
@@ -663,7 +663,7 @@ public class RequiredPropertiesValidator
 
                 OperationMode nextMode = this.getNextMode(this.operationMode, associationEnd);
 
-                var validator = new RequiredPropertiesValidator(
+                var validator = new ObjectNodeRequiredPropertiesValidator(
                         this.contextStack,
                         associationEnd.getType(),
                         (ObjectNode) childJsonNode,
@@ -790,7 +790,7 @@ public class RequiredPropertiesValidator
                 if (jsonNode instanceof ObjectNode objectNode)
                 {
                     OperationMode nextMode = this.getNextMode(this.operationMode, associationEnd);
-                    var validator = new RequiredPropertiesValidator(
+                    var validator = new ObjectNodeRequiredPropertiesValidator(
                             this.contextStack,
                             associationEnd.getType(),
                             objectNode,
@@ -840,7 +840,7 @@ public class RequiredPropertiesValidator
             @Nonnull ObjectNode objectNode,
             @Nonnull OperationMode nextMode)
     {
-        var validator = new RequiredPropertiesValidator(
+        var validator = new ObjectNodeRequiredPropertiesValidator(
                 this.contextStack,
                 associationEnd.getType(),
                 objectNode,
