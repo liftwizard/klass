@@ -24,8 +24,8 @@ import javax.annotation.Nonnull;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import cool.klass.deserializer.json.ObjectNodeRequiredPropertiesValidator;
 import cool.klass.deserializer.json.OperationMode;
-import cool.klass.deserializer.json.RequiredPropertiesValidator;
 import cool.klass.deserializer.json.type.ObjectNodeTypeCheckingValidator;
 import cool.klass.dropwizard.configuration.domain.model.loader.compiler.DomainModelCompilerFactory;
 import cool.klass.model.meta.domain.api.DomainModel;
@@ -95,7 +95,7 @@ public abstract class AbstractValidatorTest {
     protected final void performValidation(@Nonnull ObjectNode incomingInstance) {
         ObjectNodeTypeCheckingValidator.validate(this.actualErrors, incomingInstance, this.getKlass());
 
-        RequiredPropertiesValidator.validate(
+        ObjectNodeRequiredPropertiesValidator.validate(
             this.actualErrors,
             this.actualWarnings,
             this.getKlass(),

@@ -351,7 +351,16 @@ service QuestionVoteResource on QuestionVote
 </span><span class='klass-whitespace'>    </span><span class='klass-association-end-reference'><a href="/api/meta/code/element/Question/lastUpdatedBy#Question.lastUpdatedBy">lastUpdatedBy</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span><span class='klass-newline'>
 </span><span class='klass-curly-right'>}</span><span class='klass-newline'>
 </span><span class='klass-newline'>
-</span><span class='klass-line-comment'>// TODO: Type inference on projection paramters</span><span class='klass-newline'>
+</span><span class='klass-keyword-projection'>projection</span> <span class='klass-projection-name'><a id="QuestionProjection" href="/api/meta/code/element/QuestionProjection#QuestionProjection">QuestionProjection</a></span> <span class='klass-keyword-on'>on</span> <span class='klass-classifier-reference'><a href="/api/meta/code/element/Question#Question">Question</a></span>
+<span class='klass-curly-left'>{</span>
+    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/title#Question.title">title</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Question title&quot;</span><span class='klass-comma'>,</span>
+    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Document/body#Document.body">body</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Question body&quot;</span><span class='klass-comma'>,</span>
+    <span class='klass-association-end-reference'><a href="/api/meta/code/element/Question/answers#Question.answers">answers</a></span><span class='klass-colon'>:</span> <span class='klass-curly-left'>{</span>
+        <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Document/body#Document.body">body</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Answer body&quot;</span><span class='klass-comma'>,</span>
+    <span class='klass-curly-right'>}</span><span class='klass-comma'>,</span>
+<span class='klass-curly-right'>}</span>
+
+<span class='klass-line-comment'>// TODO: Type inference on projection paramters</span><span class='klass-newline'>
 </span><span class='klass-block-comment'>/*
 projection FilteredAnswersProjection(substring: String[1..1]) on Question
 {

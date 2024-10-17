@@ -58,8 +58,8 @@ import com.stackoverflow.Question;
 import com.stackoverflow.QuestionFinder;
 import com.stackoverflow.QuestionList;
 import cool.klass.data.store.DataStore;
+import cool.klass.deserializer.json.ObjectNodeRequiredPropertiesValidator;
 import cool.klass.deserializer.json.OperationMode;
-import cool.klass.deserializer.json.RequiredPropertiesValidator;
 import cool.klass.deserializer.json.type.ObjectNodeTypeCheckingValidator;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
@@ -166,7 +166,7 @@ public class QuestionResourceManual {
         MutableList<String> errors = Lists.mutable.empty();
         MutableList<String> warnings = Lists.mutable.empty();
         ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, klass);
-        RequiredPropertiesValidator.validate(errors, warnings, klass, incomingInstance, OperationMode.REPLACE);
+        ObjectNodeRequiredPropertiesValidator.validate(errors, warnings, klass, incomingInstance, OperationMode.REPLACE);
 
         if (errors.notEmpty()) {
             Response response = Response.status(Status.BAD_REQUEST).entity(errors).build();
@@ -457,7 +457,7 @@ public class QuestionResourceManual {
         MutableList<String> errors = Lists.mutable.empty();
         MutableList<String> warnings = Lists.mutable.empty();
         ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, klass);
-        RequiredPropertiesValidator.validate(errors, warnings, klass, incomingInstance, OperationMode.CREATE);
+        ObjectNodeRequiredPropertiesValidator.validate(errors, warnings, klass, incomingInstance, OperationMode.CREATE);
         if (errors.notEmpty()) {
             Response response = Response.status(Status.BAD_REQUEST).entity(errors).build();
             throw new BadRequestException("Incoming data failed validation.", response);

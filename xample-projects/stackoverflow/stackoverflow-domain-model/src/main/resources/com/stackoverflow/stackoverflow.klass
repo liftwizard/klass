@@ -332,6 +332,15 @@ projection QuestionReadProjection on Question
     lastUpdatedBy: UserProjection,
 }
 
+projection QuestionProjection on Question
+{
+    title: "Question title",
+    body: "Question body",
+    answers: {
+        body: "Answer body",
+    },
+}
+
 // TODO: Type inference on projection paramters
 /*
 projection FilteredAnswersProjection(substring: String[1..1]) on Question

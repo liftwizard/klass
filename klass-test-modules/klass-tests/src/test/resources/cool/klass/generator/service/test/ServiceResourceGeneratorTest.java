@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import cool.klass.deserializer.json.*;
 import cool.klass.deserializer.json.type.*;
 import cool.klass.reladomo.persistent.writer.*;
+import cool.klass.deserializer.json.type.ObjectNodeTypeCheckingValidator;
 
 import org.eclipse.collections.api.factory.Maps;
 import org.eclipse.collections.api.list.MutableList;
@@ -100,7 +101,7 @@ public class QuestionResource
         MutableList<String> errors = Lists.mutable.empty();
         MutableList<String> warnings = Lists.mutable.empty();
         ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, klass);
-        RequiredPropertiesValidator.validate(
+        ObjectNodeRequiredPropertiesValidator.validate(
                 errors,
                 warnings,
                 klass,
