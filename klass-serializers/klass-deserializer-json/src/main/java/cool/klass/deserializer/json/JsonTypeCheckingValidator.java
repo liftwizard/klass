@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import cool.klass.deserializer.json.context.ErrorContext;
 import cool.klass.model.meta.domain.api.Enumeration;
 import cool.klass.model.meta.domain.api.EnumerationLiteral;
 import cool.klass.model.meta.domain.api.Klass;
@@ -40,8 +41,6 @@ import cool.klass.model.meta.domain.api.property.PropertyVisitor;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.api.stack.MutableStack;
-import org.eclipse.collections.impl.factory.Stacks;
 
 public final class JsonTypeCheckingValidator
 {
@@ -55,7 +54,7 @@ public final class JsonTypeCheckingValidator
     private final Optional<NamedElement> context;
 
     @Nonnull
-    private final MutableStack<String> contextStack;
+    private final ErrorContext errorContext;
     @Nonnull
     private final MutableList<String> errors;
 
@@ -64,14 +63,14 @@ public final class JsonTypeCheckingValidator
             @Nonnull Optional<NamedElement> context,
             @Nonnull Klass klass,
             @Nonnull Multiplicity expectedMultiplicity,
-            @Nonnull MutableStack<String> contextStack,
+            @Nonnull ErrorContext errorContext,
             @Nonnull MutableList<String> errors)
     {
         this.jsonNode = Objects.requireNonNull(jsonNode);
         this.context = Objects.requireNonNull(context);
         this.klass = Objects.requireNonNull(klass);
         this.expectedMultiplicity = Objects.requireNonNull(expectedMultiplicity);
-        this.contextStack = Objects.requireNonNull(contextStack);
+        this.errorContext = Objects.requireNonNull(errorContext);
         this.errors = Objects.requireNonNull(errors);
     }
 
@@ -86,7 +85,7 @@ public final class JsonTypeCheckingValidator
                 Optional.of(klass),
                 klass,
                 expectedMultiplicity,
-                Stacks.mutable.empty(),
+                new ErrorContext(),
                 errors);
         incomingDataValidator.validateIncomingData();
     }
@@ -95,7 +94,7 @@ public final class JsonTypeCheckingValidator
     {
         if (this.expectedMultiplicity.isToOne())
         {
-            this.context.ifPresent(presentContext -> this.contextStack.push(presentContext.getName()));
+            this.context.ifPresent(presentContext -> this.errorContext.push(presentContext.getName()));
 
             try
             {
@@ -107,7 +106,7 @@ public final class JsonTypeCheckingValidator
                 {
                     String error = String.format(
                             "Error at %s. Expected json object but value was %s: %s.",
-                            this.getContextString(),
+                            this.errorContext,
                             this.jsonNode.getNodeType().toString().toLowerCase(),
                             this.jsonNode);
                     this.errors.add(error);
@@ -115,7 +114,7 @@ public final class JsonTypeCheckingValidator
             }
             finally
             {
-                this.context.ifPresent(presentContext -> this.contextStack.pop());
+                this.context.ifPresent(presentContext -> this.errorContext.pop());
             }
         }
         else if (this.expectedMultiplicity.isToMany())
@@ -128,7 +127,7 @@ public final class JsonTypeCheckingValidator
             {
                 String error = String.format(
                         "Error at %s. Expected json array but value was %s: %s.",
-                        this.getContextString(),
+                        this.errorContext,
                         this.jsonNode.getNodeType().toString().toLowerCase(),
                         this.jsonNode);
                 this.errors.add(error);
@@ -169,13 +168,13 @@ public final class JsonTypeCheckingValidator
 
     private void handleMissingProperty(String childFieldName, JsonNode childJsonNode)
     {
-        this.contextStack.push(childFieldName);
+        this.errorContext.push(childFieldName);
 
         try
         {
             String error = String.format(
                     "Error at %s. No such property '%s.%s' but got %s. Expected properties: %s.",
-                    this.getContextString(),
+                    this.errorContext,
                     this.klass,
                     childFieldName,
                     childJsonNode,
@@ -184,7 +183,7 @@ public final class JsonTypeCheckingValidator
         }
         finally
         {
-            this.contextStack.pop();
+            this.errorContext.pop();
         }
     }
 
@@ -193,7 +192,7 @@ public final class JsonTypeCheckingValidator
         for (int index = 0; index < arrayNode.size(); index++)
         {
             String contextString = String.format("%s[%d]", this.context.get().getName(), index);
-            this.contextStack.push(contextString);
+            this.errorContext.push(contextString);
 
             try
             {
@@ -203,23 +202,15 @@ public final class JsonTypeCheckingValidator
                         Optional.empty(),
                         this.klass,
                         Multiplicity.ONE_TO_ONE,
-                        this.contextStack,
+                        this.errorContext,
                         this.errors);
                 jsonTypeCheckingValidator.validateIncomingData();
             }
             finally
             {
-                this.contextStack.pop();
+                this.errorContext.pop();
             }
         }
-    }
-
-    private String getContextString()
-    {
-        return this.contextStack
-                .toList()
-                .asReversed()
-                .makeString(".");
     }
 
     private final class JsonTypeCheckingPropertyVisitor
@@ -238,7 +229,7 @@ public final class JsonTypeCheckingValidator
 
         private void visitPropertyWithContext(@Nonnull Runnable runnable)
         {
-            JsonTypeCheckingValidator.this.contextStack.push(this.childFieldName);
+            JsonTypeCheckingValidator.this.errorContext.push(this.childFieldName);
 
             try
             {
@@ -246,7 +237,7 @@ public final class JsonTypeCheckingValidator
             }
             finally
             {
-                JsonTypeCheckingValidator.this.contextStack.pop();
+                JsonTypeCheckingValidator.this.errorContext.pop();
             }
         }
 
@@ -262,7 +253,7 @@ public final class JsonTypeCheckingValidator
             PrimitiveTypeVisitor visitor = new JsonTypeCheckingPrimitiveTypeVisitor(
                     primitiveProperty,
                     this.childJsonNode,
-                    JsonTypeCheckingValidator.this.contextStack,
+                    JsonTypeCheckingValidator.this.errorContext,
                     JsonTypeCheckingValidator.this.errors);
             primitiveType.visit(visitor);
         }
@@ -279,7 +270,7 @@ public final class JsonTypeCheckingValidator
             {
                 String error = String.format(
                         "Error at %s. Expected enumerated property with type '%s.%s: %s%s' but got %s with type '%s'.",
-                        JsonTypeCheckingValidator.this.getContextString(),
+                        JsonTypeCheckingValidator.this.errorContext,
                         enumerationProperty.getOwningClassifier().getName(),
                         enumerationProperty.getName(),
                         enumerationProperty.getType().getName(),
@@ -303,7 +294,7 @@ public final class JsonTypeCheckingValidator
 
                 String error = String.format(
                         "Error at %s. Expected enumerated property with type '%s.%s: %s%s' but got %s with type '%s'. Expected one of %s.",
-                        JsonTypeCheckingValidator.this.getContextString(),
+                        JsonTypeCheckingValidator.this.errorContext,
                         enumerationProperty.getOwningClassifier().getName(),
                         enumerationProperty.getName(),
                         enumerationProperty.getType().getName(),
@@ -331,7 +322,7 @@ public final class JsonTypeCheckingValidator
                     Optional.of(associationEnd),
                     associationEnd.getType(),
                     multiplicity,
-                    JsonTypeCheckingValidator.this.contextStack,
+                    JsonTypeCheckingValidator.this.errorContext,
                     JsonTypeCheckingValidator.this.errors);
             jsonTypeCheckingValidator.validateIncomingData();
         }

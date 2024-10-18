@@ -24,11 +24,11 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import cool.klass.deserializer.json.context.ErrorContext;
 import cool.klass.model.meta.domain.api.modifier.Modifier;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
 import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.api.stack.MutableStack;
 
 public class JsonTypeCheckingPrimitiveTypeVisitor implements PrimitiveTypeVisitor
 {
@@ -37,28 +37,27 @@ public class JsonTypeCheckingPrimitiveTypeVisitor implements PrimitiveTypeVisito
     @Nonnull
     private final JsonNode             jsonDataTypeValue;
     @Nonnull
-    private final MutableStack<String> contextStack;
+    private final ErrorContext errorContext;
     @Nonnull
     private final MutableList<String>  errors;
 
     public JsonTypeCheckingPrimitiveTypeVisitor(
             PrimitiveProperty primitiveProperty,
             JsonNode jsonDataTypeValue,
-            MutableStack<String> contextStack,
+            ErrorContext errorContext,
             MutableList<String> errors)
     {
         this.primitiveProperty = Objects.requireNonNull(primitiveProperty);
         this.jsonDataTypeValue = Objects.requireNonNull(jsonDataTypeValue);
-        this.contextStack      = Objects.requireNonNull(contextStack);
+        this.errorContext      = Objects.requireNonNull(errorContext);
         this.errors            = Objects.requireNonNull(errors);
     }
 
     private void emitTypeError()
     {
-        String contextString = this.contextStack.toList().asReversed().makeString(".");
         String error = String.format(
                 "Error at %s. Expected property with type '%s.%s: %s%s' but got '%s' with type '%s'.",
-                contextString,
+                this.errorContext,
                 this.primitiveProperty.getOwningClassifier().getName(),
                 this.primitiveProperty.getName(),
                 this.primitiveProperty.getType().getPrettyName(),
@@ -169,7 +168,7 @@ public class JsonTypeCheckingPrimitiveTypeVisitor implements PrimitiveTypeVisito
         {
             String error = String.format(
                     "Error at %s. Expected property with type '%s' but got '%s' which could not be parsed by LocalDate.parse() which expects a String like '1999-12-31.",
-                    this.getContextString(),
+                    this.errorContext,
                     this.primitiveProperty,
                     this.jsonDataTypeValue);
             this.errors.add(error);
@@ -218,18 +217,10 @@ public class JsonTypeCheckingPrimitiveTypeVisitor implements PrimitiveTypeVisito
         {
             String error = String.format(
                     "Error at %s. Expected property with type '%s' but got '%s' which could not be parsed by java.time.format.DateTimeFormatter.ISO_INSTANT which expects a String like '1999-12-31T23:59:59Z'",
-                    this.getContextString(),
+                    this.errorContext,
                     this.primitiveProperty,
                     this.jsonDataTypeValue);
             this.errors.add(error);
         }
-    }
-
-    protected String getContextString()
-    {
-        return this.contextStack
-                .toList()
-                .asReversed()
-                .makeString(".");
     }
 }
