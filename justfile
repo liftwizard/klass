@@ -9,6 +9,7 @@ default: mise mvn
 # set up git-test
 setup-git-test:
     git test add --forget --test default        'just default'
+    git test add --forget --test verify         'just verify'
     git test add --forget --test enforcer       'just enforcer'
     git test add --forget --test dependency     'just dependency'
     git test add --forget --test checkstyle     'just checkstyle'
@@ -64,18 +65,16 @@ default_mvn      := env('MVN_BINARY',   "mvnd")
 clean MVN=default_mvn: && _clean-git _clean-m2
     {{MVN}} clean
 
-# mvn verify
-verify MVN=default_mvn:
-    {{MVN}} verify
-
-# mvn install
-install MVN=default_mvn:
-    {{MVN}} install
-
 default_target   := env('MVN_TARGET',   "verify")
 default_flags    := env('MVN_FLAGS',    "--threads 2C")
 
 skip_tests_flags := default_flags + " -DskipTests"
+
+# mvn verify
+verify MVN=default_mvn: _check-local-modifications clean (mvn MVN "verify" "" default_flags) && _check-local-modifications
+
+# mvn install
+install MVN=default_mvn: _check-local-modifications clean (mvn MVN "install" "" default_flags) && _check-local-modifications
 
 # mvn enforcer
 enforcer MVN=default_mvn: _check-local-modifications clean (mvn MVN default_target "--activate-profiles maven-enforcer-plugin" skip_tests_flags) && _check-local-modifications
