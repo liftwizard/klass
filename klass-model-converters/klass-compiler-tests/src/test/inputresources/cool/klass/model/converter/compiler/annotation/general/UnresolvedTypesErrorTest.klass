@@ -18,7 +18,8 @@ class ClassWithUnresolved extends UnresolvedClass implements UnresolvedInterface
 association AssociationWithUnresolved1
 {
     parent: UnresolvedClass[0..1];
-    children: UnresolvedClass[0..*];
+    children: UnresolvedClass[0..*]
+        orderBy: this.irrelevantProperty ascending;
 
     relationship this.unresolvedEnumerationProperty == UnresolvedClass.unresolvedEnumerationProperty
 }
@@ -78,7 +79,8 @@ class Child
 association ParentHasChild
 {
     parent: Parent[0..1];
-    children: Child[0..*];
+    children: Child[0..*]
+        orderBy: this.unresolvedMember ascending;
 }
 
 association BadRelationship2
@@ -148,6 +150,7 @@ service ClassWithUnresolvedResource on ClassWithUnresolved
             multiplicity: one;
             criteria    : this.unresolvedEnumerationProperty == unresolvedParameter;
             projection  : UnresolvedProjection;
+            orderBy     : this.unresolvedEnumerationProperty;
         }
     /fake1
         GET
@@ -155,6 +158,7 @@ service ClassWithUnresolvedResource on ClassWithUnresolved
             multiplicity: one;
             criteria    : all;
             projection  : ProjectionWithUnresolvedClass;
+            orderBy     : this.unresolvedMember;
         }
 }
 
@@ -166,5 +170,6 @@ service UnresolvedClassResource on UnresolvedClass
             multiplicity: one;
             criteria    : this.irrelevantProperty == irrelevantParameter;
             projection  : IrrelevantProjection;
+            orderBy     : this.irrelevantProperty;
         }
 }

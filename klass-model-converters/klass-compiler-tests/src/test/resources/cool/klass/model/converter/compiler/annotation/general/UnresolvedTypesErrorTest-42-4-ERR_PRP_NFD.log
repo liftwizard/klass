@@ -1,18 +1,18 @@
 ════════════════════════════════════════ [35mERR_PRP_NFD[m ════════════════════════════════════════
-[31mError: Cannot find member 'ClassWithUnresolved.unresolvedParameterizedProperty'.[m
+[31mError: Cannot find member 'ClassWithUnresolved.unresolvedReferenceProperty'.[m
 
-At (UnresolvedTypesErrorTest.klass:38)
+At (UnresolvedTypesErrorTest.klass:42)
 
 [39m 1║ [35mpackage [39mdummy
-[39m34║ [35mprojection [39mProjectionWithUnresolved [35mon [39mClassWithUnresolved
-[39m35║ [36m{
-[39m38║     [39munresolvedParameterizedProperty[36m: [36m{
-[39m  ║ [31m    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[39m40║     [36m}[36m,
-[39m46║ [36m}
+[39m35║ [35mprojection [39mProjectionWithUnresolved [35mon [39mClassWithUnresolved
+[39m36║ [36m{
+[39m42║     [39munresolvedReferenceProperty[36m:[36m{
+[39m  ║ [31m    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[39m44║     [36m}[36m,
+[39m47║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:38[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:42[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
-[36mLine:      [m38[m
+[36mLine:      [m42[m
 [36mCharacter: [m5
 ═════════════════════════════════════════════════════════════════════════════════════════════

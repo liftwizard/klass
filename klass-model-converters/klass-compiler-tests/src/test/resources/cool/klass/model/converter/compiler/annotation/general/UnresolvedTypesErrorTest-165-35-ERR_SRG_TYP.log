@@ -1,16 +1,16 @@
 ════════════════════════════════════════ [35mERR_SRG_TYP[m ════════════════════════════════════════
 [31mError: Cannot find class 'UnresolvedClass'[m
 
-At (UnresolvedTypesErrorTest.klass:161)
+At (UnresolvedTypesErrorTest.klass:165)
 
 [39m  1║ [35mpackage [39mdummy
-[39m161║ [35mservice [39mUnresolvedClassResource [35mon [39mUnresolvedClass
+[39m165║ [35mservice [39mUnresolvedClassResource [35mon [39mUnresolvedClass
 [39m   ║ [31m                                   ^^^^^^^^^^^^^^^
-[39m162║ [36m{
-[39m170║ [36m}
+[39m166║ [36m{
+[39m175║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:161[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:165[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
-[36mLine:      [m161[m
+[36mLine:      [m165[m
 [36mCharacter: [m36
 ═════════════════════════════════════════════════════════════════════════════════════════════

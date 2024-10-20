@@ -1,21 +1,21 @@
 ════════════════════════════════════════ [35mERR_THS_MEM[m ════════════════════════════════════════
 [31mError: Cannot find member '.irrelevantProperty'.[m
 
-At (UnresolvedTypesErrorTest.klass:167)
+At (UnresolvedTypesErrorTest.klass:173)
 
 [39m  1║ [35mpackage [39mdummy
-[39m161║ [35mservice [39mUnresolvedClassResource [35mon [39mUnresolvedClass
-[39m162║ [36m{
-[39m163║     [36m/[39mfake
-[39m164║         [32mGET
-[39m165║         [36m{
-[39m167║             [35mcriteria    [36m: [32mthis[36m.[39mirrelevantProperty [35m== [39mirrelevantParameter[36m;
+[39m165║ [35mservice [39mUnresolvedClassResource [35mon [39mUnresolvedClass
+[39m166║ [36m{
+[39m167║     [36m/[39mfake
+[39m168║         [32mGET
+[39m169║         [36m{
+[39m173║             [35morderBy     [36m: [32mthis[36m.[39mirrelevantProperty[36m;
 [39m   ║ [31m                               ^^^^^^^^^^^^^^^^^^
-[39m169║         [36m}
-[39m170║ [36m}
+[39m174║         [36m}
+[39m175║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:167[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:173[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
-[36mLine:      [m167[m
+[36mLine:      [m173[m
 [36mCharacter: [m32
 ═════════════════════════════════════════════════════════════════════════════════════════════

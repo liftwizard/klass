@@ -1,21 +1,21 @@
 ════════════════════════════════════════ [35mERR_VAR_REF[m ════════════════════════════════════════
 [31mError: Cannot find parameter 'unresolvedParameter'.[m
 
-At (UnresolvedTypesErrorTest.klass:149)
+At (UnresolvedTypesErrorTest.klass:151)
 
 [39m  1║ [35mpackage [39mdummy
-[39m143║ [35mservice [39mClassWithUnresolvedResource [35mon [39mClassWithUnresolved
-[39m144║ [36m{
-[39m145║     [36m/[39munresolved[36m/[36m{[39munresolvedParameterDeclaration[36m: [39mUnresolvedEnumeration[36m[[34m1[36m..[34m1[36m][36m}
-[39m146║         [32mGET
-[39m147║         [36m{
-[39m149║             [35mcriteria    [36m: [32mthis[36m.[39munresolvedEnumerationProperty [35m== [39munresolvedParameter[36m;
+[39m145║ [35mservice [39mClassWithUnresolvedResource [35mon [39mClassWithUnresolved
+[39m146║ [36m{
+[39m147║     [36m/[39munresolved[36m/[36m{[39munresolvedParameterDeclaration[36m: [39mUnresolvedEnumeration[36m[[34m1[36m..[34m1[36m][36m}
+[39m148║         [32mGET
+[39m149║         [36m{
+[39m151║             [35mcriteria    [36m: [32mthis[36m.[39munresolvedEnumerationProperty [35m== [39munresolvedParameter[36m;
 [39m   ║ [31m                                                                ^^^^^^^^^^^^^^^^^^^
-[39m151║         [36m}
-[39m159║ [36m}
+[39m154║         [36m}
+[39m163║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:149[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:151[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
-[36mLine:      [m149[m
+[36mLine:      [m151[m
 [36mCharacter: [m65
 ═════════════════════════════════════════════════════════════════════════════════════════════

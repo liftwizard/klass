@@ -1,17 +1,20 @@
 ════════════════════════════════════════ [35mERR_PRJ_DTP[m ════════════════════════════════════════
-[31mError: Cannot find member 'ClassWithUnresolved.unresolvedDataProperty'.[m
+[31mError: Cannot find member 'Child.unresolvedProjectionMember'.[m
 
-At (UnresolvedTypesErrorTest.klass:36)
+At (UnresolvedTypesErrorTest.klass:121)
 
-[39m 1║ [35mpackage [39mdummy
-[39m34║ [35mprojection [39mProjectionWithUnresolved [35mon [39mClassWithUnresolved
-[39m35║ [36m{
-[39m36║     [39munresolvedDataProperty[36m: [34m"Header"[36m,
-[39m  ║ [31m    ^^^^^^^^^^^^^^^^^^^^^^
-[39m46║ [36m}
+[39m  1║ [35mpackage [39mdummy
+[39m110║ [35mprojection [39mParentProjection [35mon [39mParent
+[39m111║ [36m{
+[39m119║     [39mchildren[36m:
+[39m120║     [36m{
+[39m121║         [39munresolvedProjectionMember[36m: [34m"Header"[36m,
+[39m   ║ [31m        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[39m127║     [36m}[36m,
+[39m138║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:36[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:121[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
-[36mLine:      [m36[m
-[36mCharacter: [m5
+[36mLine:      [m121[m
+[36mCharacter: [m9
 ═════════════════════════════════════════════════════════════════════════════════════════════

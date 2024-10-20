@@ -8,7 +8,7 @@ At (UnresolvedTypesErrorTest.klass:20)
 [39m19║ [36m{
 [39m20║     [39mparent[36m: [39mUnresolvedClass[36m[[34m0[36m..[34m1[36m][36m;
 [39m  ║ [31m            ^^^^^^^^^^^^^^^
-[39m24║ [36m}
+[39m25║ [36m}
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:20[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m

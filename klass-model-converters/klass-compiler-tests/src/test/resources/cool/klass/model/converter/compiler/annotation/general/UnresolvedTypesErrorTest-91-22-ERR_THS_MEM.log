@@ -1,17 +1,17 @@
 ════════════════════════════════════════ [35mERR_THS_MEM[m ════════════════════════════════════════
 [31mError: Cannot find member 'Parent.unresolvedMember'.[m
 
-At (UnresolvedTypesErrorTest.klass:89)
+At (UnresolvedTypesErrorTest.klass:91)
 
 [39m 1║ [35mpackage [39mdummy
-[39m84║ [35massociation [39mBadRelationship2
-[39m85║ [36m{
-[39m89║     [35mrelationship [32mthis[36m.[39munresolvedMember [35m== [39mChild[36m.[39munresolvedMember
+[39m86║ [35massociation [39mBadRelationship2
+[39m87║ [36m{
+[39m91║     [35mrelationship [32mthis[36m.[39munresolvedMember [35m== [39mChild[36m.[39munresolvedMember
 [39m  ║ [31m                      ^^^^^^^^^^^^^^^^
-[39m90║ [36m}
+[39m92║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:89[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:91[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
-[36mLine:      [m89[m
+[36mLine:      [m91[m
 [36mCharacter: [m23
 ═════════════════════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,18 @@
+════════════════════════════════════════ [35mERR_THS_MEM[m ════════════════════════════════════════
+[31mError: Cannot find member 'Child.unresolvedMember'.[m
+
+At (UnresolvedTypesErrorTest.klass:83)
+
+[39m 1║ [35mpackage [39mdummy
+[39m79║ [35massociation [39mParentHasChild
+[39m80║ [36m{
+[39m82║     [39mchildren[36m: [39mChild[36m[[34m0[36m..[34m*[36m]
+[39m83║         [35morderBy[36m: [32mthis[36m.[39munresolvedMember [35mascending[36m;
+[39m  ║ [31m                      ^^^^^^^^^^^^^^^^
+[39m84║ [36m}
+[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:83[m
+[36mFile:      [mUnresolvedTypesErrorTest.klass[m
+[36mLine:      [m83[m
+[36mCharacter: [m23
+═════════════════════════════════════════════════════════════════════════════════════════════
