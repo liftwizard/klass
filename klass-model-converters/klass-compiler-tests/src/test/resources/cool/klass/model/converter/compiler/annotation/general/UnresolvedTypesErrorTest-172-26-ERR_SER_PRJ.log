@@ -1,21 +1,21 @@
 ════════════════════════════════════════ [35mERR_SER_PRJ[m ════════════════════════════════════════
-[31mError: Cannot find projection 'UnresolvedProjection'[m
+[31mError: Cannot find projection 'IrrelevantProjection'[m
 
-At (UnresolvedTypesErrorTest.klass:150)
+At (UnresolvedTypesErrorTest.klass:172)
 
 [39m  1║ [35mpackage [39mdummy
-[39m143║ [35mservice [39mClassWithUnresolvedResource [35mon [39mClassWithUnresolved
-[39m144║ [36m{
-[39m145║     [36m/[39munresolved[36m/[36m{[39munresolvedParameterDeclaration[36m: [39mUnresolvedEnumeration[36m[[34m1[36m..[34m1[36m][36m}
-[39m146║         [32mGET
-[39m147║         [36m{
-[39m150║             [35mprojection  [36m: [39mUnresolvedProjection[36m;
+[39m165║ [35mservice [39mUnresolvedClassResource [35mon [39mUnresolvedClass
+[39m166║ [36m{
+[39m167║     [36m/[39mfake
+[39m168║         [32mGET
+[39m169║         [36m{
+[39m172║             [35mprojection  [36m: [39mIrrelevantProjection[36m;
 [39m   ║ [31m                          ^^^^^^^^^^^^^^^^^^^^
-[39m151║         [36m}
-[39m159║ [36m}
+[39m174║         [36m}
+[39m175║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:150[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:172[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
-[36mLine:      [m150[m
+[36mLine:      [m172[m
 [36mCharacter: [m27
 ═════════════════════════════════════════════════════════════════════════════════════════════

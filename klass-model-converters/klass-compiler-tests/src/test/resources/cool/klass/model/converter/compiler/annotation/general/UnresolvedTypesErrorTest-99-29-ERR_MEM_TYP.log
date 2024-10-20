@@ -1,17 +1,17 @@
 ════════════════════════════════════════ [35mERR_MEM_TYP[m ════════════════════════════════════════
 [31mError: Cannot find class 'UnresolvedClass'.[m
 
-At (UnresolvedTypesErrorTest.klass:97)
+At (UnresolvedTypesErrorTest.klass:99)
 
-[39m 1║ [35mpackage [39mdummy
-[39m92║ [35massociation [39mBadRelationship3
-[39m93║ [36m{
-[39m97║     [35mrelationship [32mthis[36m.[39mkey [35m== [39mUnresolvedClass[36m.[39munresolvedMember
-[39m  ║ [31m                             ^^^^^^^^^^^^^^^
-[39m98║ [36m}
+[39m  1║ [35mpackage [39mdummy
+[39m 94║ [35massociation [39mBadRelationship3
+[39m 95║ [36m{
+[39m 99║     [35mrelationship [32mthis[36m.[39mkey [35m== [39mUnresolvedClass[36m.[39munresolvedMember
+[39m   ║ [31m                             ^^^^^^^^^^^^^^^
+[39m100║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:97[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:99[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
-[36mLine:      [m97[m
+[36mLine:      [m99[m
 [36mCharacter: [m30
 ═════════════════════════════════════════════════════════════════════════════════════════════
