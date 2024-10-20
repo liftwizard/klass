@@ -105,23 +105,14 @@ public final class JsonTypeCheckingValidator
 
     public void handleMissingProperty(@Nonnull Klass klass, String fieldName, JsonNode jsonNode)
     {
-        this.contextStack.push(fieldName);
-
-        try
-        {
-            String error = String.format(
-                    "Error at %s. No such property '%s.%s' but got %s. Expected properties: %s.",
-                    this.getContextString(),
-                    klass,
-                    fieldName,
-                    jsonNode,
-                    klass.getProperties().collect(NamedElement::getName).makeString());
-            this.errors.add(error);
-        }
-        finally
-        {
-            this.contextStack.pop();
-        }
+        String error = String.format(
+                "Error at %s. No such property '%s.%s' but got %s. Expected properties: %s.",
+                this.getContextString(),
+                klass,
+                fieldName,
+                jsonNode,
+                klass.getProperties().collect(NamedElement::getName).makeString());
+        this.errors.add(error);
     }
 
     private String getContextString()
