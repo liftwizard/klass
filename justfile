@@ -8,7 +8,8 @@ default: mise mvn
 
 # set up git-test
 setup-git-test:
-    git test add --forget --test default        'just default'
+    git test add --forget --test default        'just test'
+    git test add --forget --test verify         'just verify'
     git test add --forget --test enforcer       'just enforcer'
     git test add --forget --test dependency     'just dependency'
     git test add --forget --test checkstyle     'just checkstyle'
@@ -60,22 +61,20 @@ _clean-m2:
     exit 0
 
 default_mvn      := env('MVN_BINARY',   "mvnd")
-# clean (maven and git)
-clean MVN=default_mvn: && _clean-git _clean-m2
-    {{MVN}} clean
-
-# mvn verify
-verify MVN=default_mvn:
-    {{MVN}} verify
-
-# mvn install
-install MVN=default_mvn:
-    {{MVN}} install
-
 default_target   := env('MVN_TARGET',   "verify")
 default_flags    := env('MVN_FLAGS',    "--threads 2C")
 
+# clean (maven and git)
+clean MVN=default_mvn *FLAGS=default_flags: && _clean-git _clean-m2
+    {{MVN}} clean {{FLAGS}}
+
 skip_tests_flags := default_flags + " -DskipTests"
+
+# end-to-end test for git-test
+test: _check-local-modifications clean mvn && _check-local-modifications
+
+# mvn verify
+verify MVN=default_mvn: _check-local-modifications clean (mvn MVN default_target "" skip_tests_flags) && _check-local-modifications
 
 # mvn enforcer
 enforcer MVN=default_mvn: _check-local-modifications clean (mvn MVN default_target "--activate-profiles maven-enforcer-plugin" skip_tests_flags) && _check-local-modifications
@@ -203,14 +202,12 @@ mvn MVN=default_mvn TARGET=default_target PROFILES=default_profiles *FLAGS=defau
     {{echo_command}} "$MESSAGE"
     exit $EXIT_CODE
 
-# end-to-end test for git-test
-test: _check-local-modifications clean mvn && _check-local-modifications
-
 fail_fast := env('FAIL_FAST', "false")
 
 # git-test on the range of commits between a configurable upstream/main and {{BRANCH}}
 test-branch BRANCH="HEAD" TEST="default" *FLAGS="--retest":
     echo "Testing branch: {{BRANCH}}"
+    echo "{{BRANCH}}" > JUSTFILE_BRANCH
     git test run --test {{TEST}} {{FLAGS}} {{upstream_remote}}/{{upstream_branch}}..{{BRANCH}}
 
 # `just test` all commits with configurable upstream/main as ancestor
@@ -254,7 +251,7 @@ fetch:
         git fetch {{upstream_remote}} --tags --prune
     fi
 
-# Rebase all branches onto configurable upstream/main
+# Rebase all branches onto configurable upstream/main or matching up-to-date origin branch
 rebase-all: _check-local-modifications fetch
     #!/usr/bin/env bash
     set -Eeuo pipefail
@@ -268,9 +265,23 @@ rebase-all: _check-local-modifications fetch
             continue
         fi
 
-        echo "Rebasing branch: $branch"
+        echo "Processing branch: $branch"
         git checkout "$branch"
-        git rebase {{upstream_remote}}/{{upstream_branch}}
+
+        # Check if origin/$branch exists
+        if git rev-parse --verify origin/$branch &>/dev/null; then
+            # Check if upstream/master is an ancestor of origin/$branch
+            if git merge-base --is-ancestor {{upstream_remote}}/{{upstream_branch}} origin/$branch; then
+                echo "Rebasing onto origin/$branch (up-to-date with or ahead of {{upstream_remote}}/{{upstream_branch}})"
+                git rebase --rebase-merges --update-refs origin/$branch
+            else
+                echo "Rebasing onto {{upstream_remote}}/{{upstream_branch}} (origin/$branch is behind)"
+                git rebase --rebase-merges --update-refs {{upstream_remote}}/{{upstream_branch}}
+            fi
+        else
+            echo "Rebasing onto {{upstream_remote}}/{{upstream_branch}} (no matching origin branch)"
+            git rebase --rebase-merges --update-refs {{upstream_remote}}/{{upstream_branch}}
+        fi
     done
 
 alias ra := rebase-all
@@ -311,6 +322,15 @@ delete-remote-merged: fetch
 delete-merged: delete-local-merged delete-remote-merged
 
 git: rebase-all delete-merged
+
+fix:
+    just absorb
+    just _check-local-modifications
+    cat JUSTFILE_BRANCH
+    git rebase --onto HEAD HEAD^ $(cat JUSTFILE_BRANCH)
+    just rebase
+    cat JUSTFILE_BRANCH
+    rm JUSTFILE_BRANCH
 
 # Generate a markdown list of commit messages
 pull-request-description:
