@@ -111,7 +111,7 @@ public final class JsonTypeCheckingValidator
                 klass,
                 fieldName,
                 jsonNode,
-                klass.getProperties().collect(NamedElement::getName).makeString());
+                klass.getProperties().reject(Property::isPrivate).collect(NamedElement::getName).makeString());
         this.errors.add(error);
     }
 
