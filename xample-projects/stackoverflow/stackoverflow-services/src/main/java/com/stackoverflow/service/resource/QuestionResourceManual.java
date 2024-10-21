@@ -167,13 +167,8 @@ public class QuestionResourceManual
 
         MutableList<String> errors   = Lists.mutable.empty();
         MutableList<String> warnings = Lists.mutable.empty();
-        JsonTypeCheckingValidator.validate(incomingInstance, klass, errors);
-        RequiredPropertiesValidator.validate(
-                klass,
-                incomingInstance,
-                OperationMode.REPLACE,
-                errors,
-                warnings);
+        JsonTypeCheckingValidator.validate(errors, incomingInstance, klass);
+        RequiredPropertiesValidator.validate(errors, warnings, klass, incomingInstance, OperationMode.REPLACE);
 
         if (errors.notEmpty())
         {
@@ -483,13 +478,8 @@ public class QuestionResourceManual
 
         MutableList<String> errors   = Lists.mutable.empty();
         MutableList<String> warnings = Lists.mutable.empty();
-        JsonTypeCheckingValidator.validate(incomingInstance, klass, errors);
-        RequiredPropertiesValidator.validate(
-                klass,
-                incomingInstance,
-                OperationMode.CREATE,
-                errors,
-                warnings);
+        JsonTypeCheckingValidator.validate(errors, incomingInstance, klass);
+        RequiredPropertiesValidator.validate(errors, warnings, klass, incomingInstance, OperationMode.CREATE);
         if (errors.notEmpty())
         {
             Response response = Response

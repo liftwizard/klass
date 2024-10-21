@@ -97,13 +97,13 @@ public class QuestionResource
 
         MutableList<String> errors = Lists.mutable.empty();
         MutableList<String> warnings = Lists.mutable.empty();
-        JsonTypeCheckingValidator.validate(incomingInstance, klass, errors);
+        JsonTypeCheckingValidator.validate(errors, incomingInstance, klass);
         RequiredPropertiesValidator.validate(
+                errors,
+                warnings,
                 klass,
                 incomingInstance,
-                OperationMode.REPLACE,
-                errors,
-                warnings);
+                OperationMode.REPLACE);
 
         if (errors.notEmpty())
         {

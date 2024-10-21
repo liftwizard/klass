@@ -34,17 +34,14 @@ public abstract class AbstractUpdateValidatorTest
     @Override
     protected final void validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance)
     {
-        JsonTypeCheckingValidator.validate(
-                incomingInstance,
-                this.getKlass(),
-                this.actualErrors);
+        JsonTypeCheckingValidator.validate(this.actualErrors, incomingInstance, this.getKlass());
 
         RequiredPropertiesValidator.validate(
+                this.actualErrors,
+                this.actualWarnings,
                 this.getKlass(),
                 incomingInstance,
-                this.getMode(),
-                this.actualErrors,
-                this.actualWarnings);
+                this.getMode());
 
         MutationContext mutationContext = new MutationContext(
                 Optional.of("test user 1"),

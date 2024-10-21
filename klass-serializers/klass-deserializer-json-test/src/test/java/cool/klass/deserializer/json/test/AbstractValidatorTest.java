@@ -99,16 +99,15 @@ public abstract class AbstractValidatorTest
     protected final void performValidation(@Nonnull ObjectNode incomingInstance)
     {
         JsonTypeCheckingValidator.validate(
-                incomingInstance,
-                this.getKlass(),
-                this.actualErrors);
+                this.actualErrors, incomingInstance,
+                this.getKlass());
 
         RequiredPropertiesValidator.validate(
+                this.actualErrors,
+                this.actualWarnings,
                 this.getKlass(),
                 incomingInstance,
-                this.getMode(),
-                this.actualErrors,
-                this.actualWarnings);
+                this.getMode());
     }
 
     @Nonnull
