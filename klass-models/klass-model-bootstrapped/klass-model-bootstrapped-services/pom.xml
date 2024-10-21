@@ -45,13 +45,13 @@
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-data-store</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-model-meta-interface</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
