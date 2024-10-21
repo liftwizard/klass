@@ -527,7 +527,12 @@ public class ServiceResourceGenerator
 
         boolean hasAuthorizeCriteria = service.isAuthorizeClauseRequired();
 
-        int     numParameters      = service.getNumParameters();
+        int numParameters = service.getNumParameters() + 1;
+        if (hasAuthorizeCriteria)
+        {
+            numParameters++;
+        }
+
         boolean lineWrapParameters = numParameters > 1;
         String parameterPrefix = lineWrapParameters ? "\n" : "";
         String parameterIndent = lineWrapParameters ? "            " : "";
