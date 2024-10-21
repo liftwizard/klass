@@ -51,6 +51,7 @@ import cool.klass.model.meta.domain.api.service.ServiceProjectionDispatch;
 import cool.klass.model.meta.domain.api.service.Verb;
 import cool.klass.model.meta.domain.api.service.url.Url;
 import cool.klass.model.meta.domain.api.value.ThisMemberReferencePath;
+import cool.klass.model.meta.domain.projection.write.WriteProjectionKlassAdapter;
 import cool.klass.model.reladomo.projection.ReladomoProjectionConverter;
 import cool.klass.model.reladomo.projection.RootReladomoNode;
 import org.eclipse.collections.api.factory.Lists;
@@ -450,7 +451,12 @@ public class ServiceResourceGenerator
                 service.getQueryCriteria(),
                 klassName);
 
-        ImmutableList<String> deepFetchStrings = DeepFetchWalker.walk(serviceGroup.getKlass());
+        Projection writeProjectionKlassAdapter = new WriteProjectionKlassAdapter(serviceGroup.getKlass());
+        var reladomoProjectionConverter = new ReladomoProjectionConverter();
+        RootReladomoNode rootReladomoNode = reladomoProjectionConverter.getRootReladomoNode(
+                serviceGroup.getKlass(),
+                writeProjectionKlassAdapter);
+        ImmutableList<String> deepFetchStrings = rootReladomoNode.getDeepFetchStrings();
         String deepFetchSourceCode = deepFetchStrings
                 .collect(each -> "        result.deepFetch(" + each + ");\n")
                 .makeString("");
@@ -523,10 +529,8 @@ public class ServiceResourceGenerator
 
         int     numParameters      = service.getNumParameters();
         boolean lineWrapParameters = numParameters > 1;
-
         String parameterPrefix = lineWrapParameters ? "\n" : "";
         String parameterIndent = lineWrapParameters ? "            " : "";
-
         ImmutableList<String> urlParameterStrings = pathParameters.newWithAll(queryParameters)
                 .collectWith(this::getParameterSourceCode, parameterIndent);
 
@@ -580,7 +584,12 @@ public class ServiceResourceGenerator
                 service.getQueryCriteria(),
                 klassName);
 
-        ImmutableList<String> deepFetchStrings = DeepFetchWalker.walk(serviceGroup.getKlass());
+        Projection writeProjectionKlassAdapter = new WriteProjectionKlassAdapter(serviceGroup.getKlass());
+        var reladomoProjectionConverter = new ReladomoProjectionConverter();
+        RootReladomoNode rootReladomoNode = reladomoProjectionConverter.getRootReladomoNode(
+                serviceGroup.getKlass(),
+                writeProjectionKlassAdapter);
+        ImmutableList<String> deepFetchStrings = rootReladomoNode.getDeepFetchStrings();
         String deepFetchSourceCode = deepFetchStrings
                 .collect(each -> "        result.deepFetch(" + each + ");\n")
                 .makeString("");
