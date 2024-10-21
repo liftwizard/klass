@@ -24,6 +24,8 @@ import javax.annotation.Nonnull;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import cool.klass.deserializer.json.context.ContextNode;
+import cool.klass.deserializer.json.context.ContextStack;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.Multiplicity;
 import cool.klass.model.meta.domain.api.PrimitiveType;
@@ -32,12 +34,15 @@ import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.OrderedMap;
-import org.eclipse.collections.api.stack.MutableStack;
 import org.eclipse.collections.api.tuple.Pair;
-import org.eclipse.collections.impl.factory.Stacks;
 
+// TODO 2024-10-20: Rename "*OutsideProjection()" methods to "*OutsideComposite"
+// TODO 2024-10-20: Rename isInProjection to isInComposite
 public class RequiredPropertiesValidator
 {
+    @Nonnull
+    protected final ContextStack contextStack;
+
     @Nonnull
     protected final Klass                    klass;
     @Nonnull
@@ -45,52 +50,40 @@ public class RequiredPropertiesValidator
     @Nonnull
     protected final OperationMode            operationMode;
     @Nonnull
-    protected final MutableList<String>      errors;
-    @Nonnull
-    protected final MutableList<String>      warnings;
-    @Nonnull
-    protected final MutableStack<String>     contextStack;
-    @Nonnull
     protected final Optional<AssociationEnd> pathHere;
     protected final boolean                  isRoot;
     protected final boolean                  isInProjection;
 
     public RequiredPropertiesValidator(
+            @Nonnull ContextStack contextStack,
             @Nonnull Klass klass,
             @Nonnull ObjectNode objectNode,
             @Nonnull OperationMode operationMode,
-            @Nonnull MutableList<String> errors,
-            @Nonnull MutableList<String> warnings,
-            @Nonnull MutableStack<String> contextStack,
             @Nonnull Optional<AssociationEnd> pathHere,
             boolean isRoot,
             boolean isInProjection)
     {
+        this.contextStack  = Objects.requireNonNull(contextStack);
         this.klass         = Objects.requireNonNull(klass);
         this.objectNode    = Objects.requireNonNull(objectNode);
         this.operationMode = Objects.requireNonNull(operationMode);
-        this.errors        = Objects.requireNonNull(errors);
-        this.warnings      = Objects.requireNonNull(warnings);
-        this.contextStack  = Objects.requireNonNull(contextStack);
         this.pathHere      = Objects.requireNonNull(pathHere);
         this.isRoot        = isRoot;
         this.isInProjection = isInProjection;
     }
 
     public static void validate(
+            @Nonnull MutableList<String> errors,
+            @Nonnull MutableList<String> warnings,
             @Nonnull Klass klass,
             @Nonnull ObjectNode objectNode,
-            @Nonnull OperationMode operationMode,
-            @Nonnull MutableList<String> errors,
-            @Nonnull MutableList<String> warnings)
+            @Nonnull OperationMode operationMode)
     {
-        RequiredPropertiesValidator validator = new RequiredPropertiesValidator(
+        var validator = new RequiredPropertiesValidator(
+                new ContextStack(errors, warnings),
                 klass,
                 objectNode,
                 operationMode,
-                errors,
-                warnings,
-                Stacks.mutable.empty(),
                 Optional.empty(),
                 true,
                 true);
@@ -101,19 +94,17 @@ public class RequiredPropertiesValidator
     {
         if (this.isRoot)
         {
-            this.contextStack.push(this.klass.getName());
+            var contextNode = new ContextNode(this.klass);
+            this.contextStack.runWithContext(contextNode, () ->
+            {
+                this.handleDataTypeProperties();
+                this.handleAssociationEnds();
+            });
         }
-        try
+        else
         {
             this.handleDataTypeProperties();
             this.handleAssociationEnds();
-        }
-        finally
-        {
-            if (this.isRoot)
-            {
-                this.contextStack.pop();
-            }
         }
     }
 
@@ -123,15 +114,8 @@ public class RequiredPropertiesValidator
         ImmutableList<DataTypeProperty> dataTypeProperties = this.klass.getDataTypeProperties();
         for (DataTypeProperty dataTypeProperty : dataTypeProperties)
         {
-            this.contextStack.push(dataTypeProperty.getName());
-            try
-            {
-                this.handleDataTypeProperty(dataTypeProperty);
-            }
-            finally
-            {
-                this.contextStack.pop();
-            }
+            var contextNode = new ContextNode(dataTypeProperty);
+            this.contextStack.runWithContext(contextNode, () -> this.handleDataTypeProperty(dataTypeProperty));
         }
     }
 
@@ -147,14 +131,8 @@ public class RequiredPropertiesValidator
         }
         else if (dataTypeProperty.isCreatedBy() || dataTypeProperty.isLastUpdatedBy())
         {
-            if (dataTypeProperty.isPrivate())
-            {
-                this.handleErrorIfPresent(dataTypeProperty, "audit");
-            }
-            else
-            {
-                this.handleWarnIfPresent(dataTypeProperty, "audit");
-            }
+            Severity severity = dataTypeProperty.isPrivate() ? Severity.ERROR : Severity.WARNING;
+            this.handleIfPresent(dataTypeProperty, "audit", severity);
         }
         else if (dataTypeProperty.isCreatedOn())
         {
@@ -162,37 +140,31 @@ public class RequiredPropertiesValidator
         }
         else if (dataTypeProperty.isForeignKey())
         {
-            if (dataTypeProperty.isPrivate())
-            {
-                this.handleErrorIfPresent(dataTypeProperty, "foreign key");
-            }
-            else
-            {
-                this.handleWarnIfPresent(dataTypeProperty, "foreign key");
-            }
+            Severity severity = dataTypeProperty.isPrivate() ? Severity.ERROR : Severity.WARNING;
+            this.handleIfPresent(dataTypeProperty, "foreign key", severity);
         }
         else if (dataTypeProperty.isDerived())
         {
-            this.handleWarnIfPresent(dataTypeProperty, "derived");
+            this.handleIfPresent(dataTypeProperty, "derived", Severity.WARNING);
         }
         else if (dataTypeProperty.getType() == PrimitiveType.TEMPORAL_RANGE)
         {
-            this.handleErrorIfPresent(dataTypeProperty, "temporal range");
+            this.handleIfPresent(dataTypeProperty, "temporal range", Severity.ERROR);
         }
         else if (dataTypeProperty.getType() == PrimitiveType.TEMPORAL_INSTANT && this.isInProjection)
         {
             if (this.operationMode == OperationMode.CREATE && this.isInProjection)
             {
-                this.handleWarnIfPresent(dataTypeProperty, "temporal");
+                this.handleIfPresent(dataTypeProperty, "temporal", Severity.WARNING);
             }
         }
         else if (dataTypeProperty.isPrivate())
         {
-            this.handleErrorIfPresent(dataTypeProperty, "private");
+            this.handleIfPresent(dataTypeProperty, "private", Severity.ERROR);
         }
         else if (dataTypeProperty.isDerived())
         {
-            this.handleWarnIfPresent(dataTypeProperty, "derived");
+            this.handleIfPresent(dataTypeProperty, "derived", Severity.WARNING);
         }
         else if (dataTypeProperty.isVersion())
         {
@@ -200,7 +172,7 @@ public class RequiredPropertiesValidator
         }
         else if (dataTypeProperty.isPrivate())
         {
-            this.handleErrorIfPresent(dataTypeProperty, "private");
+            this.handleIfPresent(dataTypeProperty, "private", Severity.ERROR);
         }
         else
         {
@@ -226,14 +198,13 @@ public class RequiredPropertiesValidator
             if (jsonNode.isMissingNode() || jsonNode.isNull())
             {
                 String error = String.format(
-                        "Error at %s. Expected value for required id property '%s.%s: %s%s' but value was %s.",
-                        this.getContextString(),
+                        "Expected value for required id property '%s.%s: %s%s' but value was %s.",
                         dataTypeProperty.getOwningClassifier().getName(),
                         dataTypeProperty.getName(),
                         dataTypeProperty.getType(),
                         dataTypeProperty.isOptional() ? "?" : "",
                         jsonNode.getNodeType().toString().toLowerCase());
-                this.errors.add(error);
+                this.contextStack.addError(error);
             }
         }
     }
@@ -243,32 +214,32 @@ public class RequiredPropertiesValidator
         // TODO: Handle foreign key properties that are also key properties at the root
         if (this.isForeignKeyMatchingKeyOnPath(dataTypeProperty))
         {
-            this.handleWarnIfPresent(dataTypeProperty, "foreign key matching key on path");
+            this.handleIfPresent(dataTypeProperty, "foreign key matching key on path", Severity.WARNING);
             return;
         }
 
         // TODO: Exclude path here
         if (this.isForeignKeyMatchingRequiredNested(dataTypeProperty))
         {
-            this.handleWarnIfPresent(dataTypeProperty, "foreign key matching key of required nested object");
+            this.handleIfPresent(dataTypeProperty, "foreign key matching key of required nested object", Severity.WARNING);
             return;
         }
 
         if (this.isRoot)
         {
-            this.handleWarnIfPresent(dataTypeProperty, "root key");
+            this.handleIfPresent(dataTypeProperty, "root key", Severity.WARNING);
             return;
         }
 
         if (dataTypeProperty.isForeignKeyWithOpposite())
         {
-            this.handleWarnIfPresent(dataTypeProperty, "foreign key");
+            this.handleIfPresent(dataTypeProperty, "foreign key", Severity.WARNING);
             return;
         }
 
         if (this.pathHere.isPresent() && dataTypeProperty.isForeignKeyMatchingKeyOnPath(this.pathHere.get()))
         {
-            this.handleAnnotationIfPresent(this.pathHere.get(), dataTypeProperty.getName());
+            this.handleIfPresent(this.pathHere.get(), dataTypeProperty.getName());
             return;
         }
 
@@ -281,14 +252,13 @@ public class RequiredPropertiesValidator
         if (jsonNode.isMissingNode() || jsonNode.isNull())
         {
             String error = String.format(
-                    "Error at %s. Expected value for key property '%s.%s: %s%s' but value was %s.",
-                    this.getContextString(),
+                    "Expected value for key property '%s.%s: %s%s' but value was %s.",
                     dataTypeProperty.getOwningClassifier().getName(),
                     dataTypeProperty.getName(),
                     dataTypeProperty.getType(),
                     dataTypeProperty.isOptional() ? "?" : "",
                     jsonNode.getNodeType().toString().toLowerCase());
-            this.errors.add(error);
+            this.contextStack.addError(error);
         }
     }
 
@@ -302,7 +272,7 @@ public class RequiredPropertiesValidator
     {
         if (this.isInProjection && this.operationMode == OperationMode.CREATE)
         {
-            this.handleWarnIfPresent(dataTypeProperty, "audit");
+            this.handleIfPresent(dataTypeProperty, "audit", Severity.WARNING);
         }
         else if (this.isInProjection && (this.operationMode == OperationMode.REPLACE || this.operationMode == OperationMode.PATCH))
         {
@@ -329,21 +299,16 @@ public class RequiredPropertiesValidator
         return this.pathHere.map(dataTypeProperty::isForeignKeyMatchingKeyOnPath).orElse(false);
     }
 
-    protected void handleErrorIfPresent(@Nonnull DataTypeProperty dataTypeProperty, String propertyKind)
+    private enum Severity
     {
-        this.handleAnnotationIfPresent(dataTypeProperty, propertyKind, this.errors, "Error");
+        ERROR,
+        WARNING,
     }
 
-    protected void handleWarnIfPresent(@Nonnull DataTypeProperty dataTypeProperty, String propertyKind)
-    {
-        this.handleAnnotationIfPresent(dataTypeProperty, propertyKind, this.warnings, "Warning");
-    }
-
-    protected void handleAnnotationIfPresent(
+    protected void handleIfPresent(
             @Nonnull DataTypeProperty property,
             String propertyKind,
-            MutableList<String> annotations,
-            String severityString)
+            Severity severity)
     {
         JsonNode jsonNode = this.objectNode.path(property.getName());
         if (jsonNode.isMissingNode())
@@ -353,9 +318,7 @@ public class RequiredPropertiesValidator
 
         String jsonNodeString = jsonNode.isNull() ? "" : ": " + jsonNode;
         String annotation = String.format(
-                "%s at %s. Didn't expect to receive value for %s property '%s.%s: %s%s' but value was %s%s.",
-                severityString,
-                this.getContextString(),
+                "Didn't expect to receive value for %s property '%s.%s: %s%s' but value was %s%s.",
                 propertyKind,
                 property.getOwningClassifier().getName(),
                 property.getName(),
@@ -363,10 +326,15 @@ public class RequiredPropertiesValidator
                 property.isOptional() ? "?" : "",
                 jsonNode.getNodeType().toString().toLowerCase(),
                 jsonNodeString);
-        annotations.add(annotation);
+        switch (severity)
+        {
+            case ERROR -> this.contextStack.addError(annotation);
+            case WARNING -> this.contextStack.addWarning(annotation);
+            default -> throw new AssertionError("Unexpected value: " + severity);
+        }
     }
 
-    protected void handleAnnotationIfPresent(@Nonnull AssociationEnd property, String propertyKind)
+    protected void handleIfPresent(@Nonnull AssociationEnd property, String propertyKind)
     {
         JsonNode jsonNode = this.objectNode.path(property.getName());
         if (jsonNode.isMissingNode())
@@ -376,8 +344,7 @@ public class RequiredPropertiesValidator
 
         String jsonNodeString = jsonNode.isNull() ? "" : ": " + jsonNode;
         String warning = String.format(
-                "Warning at %s. Didn't expect to receive value for %s association end '%s.%s: %s[%s]' but value was %s%s.",
-                this.getContextString(),
+                "Didn't expect to receive value for %s association end '%s.%s: %s[%s]' but value was %s%s.",
                 propertyKind,
                 property.getOwningClassifier().getName(),
                 property.getName(),
@@ -385,7 +352,7 @@ public class RequiredPropertiesValidator
                 property.getMultiplicity().getPrettyName(),
                 jsonNode.getNodeType().toString().toLowerCase(),
                 jsonNodeString);
-        this.warnings.add(warning);
+        this.contextStack.addWarning(warning);
     }
 
     protected void handlePlainProperty(@Nonnull DataTypeProperty property)
@@ -397,7 +364,7 @@ public class RequiredPropertiesValidator
 
         if (!this.isInProjection)
         {
-            this.handleWarnIfPresent(property, "outside projection");
+            this.handleIfPresent(property, "outside projection", Severity.WARNING);
             return;
         }
 
@@ -410,14 +377,13 @@ public class RequiredPropertiesValidator
         if (jsonNode.isMissingNode() || jsonNode.isNull())
         {
             String error = String.format(
-                    "Error at %s. Expected value for required property '%s.%s: %s%s' but value was %s.",
-                    this.getContextString(),
+                    "Expected value for required property '%s.%s: %s%s' but value was %s.",
                     property.getOwningClassifier().getName(),
                     property.getName(),
                     property.getType(),
                     property.isOptional() ? "?" : "",
                     jsonNode.getNodeType().toString().toLowerCase());
-            this.errors.add(error);
+            this.contextStack.addError(error);
         }
     }
 
@@ -437,14 +403,13 @@ public class RequiredPropertiesValidator
         if (jsonNode.asInt() != 1)
         {
             String error = String.format(
-                    "Error at %s. Expected value for version property '%s.%s: %s%s' to be 1 during initial creation but value was %s.",
-                    this.getContextString(),
+                    "Expected value for version property '%s.%s: %s%s' to be 1 during initial creation but value was %s.",
                     property.getOwningClassifier().getName(),
                     property.getName(),
                     property.getType(),
                     property.isOptional() ? "?" : "",
                     jsonNode.getNodeType().toString().toLowerCase());
-            this.errors.add(error);
+            this.contextStack.addError(error);
         }
     }
     // endregion
@@ -462,7 +427,7 @@ public class RequiredPropertiesValidator
     {
         if (this.isBackward(associationEnd))
         {
-            this.handleAnnotationIfPresent(associationEnd, "opposite");
+            this.handleIfPresent(associationEnd, "opposite");
         }
         else if (associationEnd.isVersion())
         {
@@ -486,49 +451,37 @@ public class RequiredPropertiesValidator
             @Nonnull AssociationEnd associationEnd,
             JsonNode jsonNode)
     {
-        this.contextStack.push(associationEnd.getName());
-        try
+        var contextNode = new ContextNode(associationEnd);
+        this.contextStack.runWithContext(contextNode, () ->
         {
             if (jsonNode instanceof ObjectNode objectNode)
             {
                 this.handleOwnedAssociationEnd(associationEnd, objectNode);
             }
-        }
-        finally
-        {
-            this.contextStack.pop();
-        }
+        });
     }
 
     public void handleToMany(
             @Nonnull AssociationEnd associationEnd,
             JsonNode jsonNode)
     {
-        if (!(jsonNode instanceof ArrayNode))
+        if (!(jsonNode instanceof ArrayNode arrayNode))
         {
             return;
         }
 
         for (int index = 0; index < jsonNode.size(); index++)
         {
-            String contextString = String.format(
-                    "%s[%d]",
-                    associationEnd.getName(),
-                    index);
-            this.contextStack.push(contextString);
-
-            try
+            var contextNode = new ContextNode(associationEnd, index);
+            int finalIndex = index;
+            this.contextStack.runWithContext(contextNode, () ->
             {
-                JsonNode childJsonNode = jsonNode.path(index);
+                JsonNode childJsonNode = jsonNode.path(finalIndex);
                 if (childJsonNode instanceof ObjectNode objectNode)
                 {
                     this.handleOwnedAssociationEnd(associationEnd, objectNode);
                 }
-            }
-            finally
-            {
-                this.contextStack.pop();
-            }
+            });
         }
     }
 
@@ -548,28 +501,26 @@ public class RequiredPropertiesValidator
             if (this.operationMode == OperationMode.REPLACE && associationEnd.isFinal())
             {
                 String warning = String.format(
-                        "Warning at %s. Expected value for required final property '%s.%s: %s[%s]' but value was %s.",
-                        this.getContextString(),
+                        "Expected value for required final property '%s.%s: %s[%s]' but value was %s.",
                         associationEnd.getOwningClassifier().getName(),
                         associationEnd.getName(),
                         associationEnd.getType(),
                         associationEnd.getMultiplicity().getPrettyName(),
                         jsonNode.getNodeType().toString().toLowerCase());
-                this.warnings.add(warning);
+                this.contextStack.addWarning(warning);
                 return;
             }
 
             if (this.operationMode == OperationMode.REPLACE && associationEnd.isPrivate())
             {
                 String warning = String.format(
-                        "Warning at %s. Expected value for required private property '%s.%s: %s[%s]' but value was %s.",
-                        this.getContextString(),
+                        "Expected value for required private property '%s.%s: %s[%s]' but value was %s.",
                         associationEnd.getOwningClassifier().getName(),
                         associationEnd.getName(),
                         associationEnd.getType(),
                         associationEnd.getMultiplicity().getPrettyName(),
                         jsonNode.getNodeType().toString().toLowerCase());
-                this.warnings.add(warning);
+                this.contextStack.addWarning(warning);
                 return;
             }
 
@@ -578,14 +529,13 @@ public class RequiredPropertiesValidator
                     || this.operationMode == OperationMode.PATCH && jsonNode.isNull())
             {
                 String error = String.format(
-                        "Error at %s. Expected value for required property '%s.%s: %s[%s]' but value was %s.",
-                        this.getContextString(),
+                        "Expected value for required property '%s.%s: %s[%s]' but value was %s.",
                         associationEnd.getOwningClassifier().getName(),
                         associationEnd.getName(),
                         associationEnd.getType(),
                         associationEnd.getMultiplicity().getPrettyName(),
                         jsonNode.getNodeType().toString().toLowerCase());
-                this.errors.add(error);
+                this.contextStack.addError(error);
                 return;
             }
         }
@@ -615,14 +565,13 @@ public class RequiredPropertiesValidator
             if (associationEnd.isRequired() && this.operationMode != OperationMode.PATCH)
             {
                 String error = String.format(
-                        "Error at %s. Expected value for required property '%s.%s: %s[%s]' but value was %s.",
-                        this.getContextString(),
+                        "Expected value for required property '%s.%s: %s[%s]' but value was %s.",
                         associationEnd.getOwningClassifier().getName(),
                         associationEnd.getName(),
                         associationEnd.getType(),
                         associationEnd.getMultiplicity().getPrettyName(),
                         jsonNode.getNodeType().toString().toLowerCase());
-                this.errors.add(error);
+                this.contextStack.addError(error);
             }
             return;
         }
@@ -630,40 +579,33 @@ public class RequiredPropertiesValidator
         if (!associationEnd.hasRealKeys())
         {
             String warning = String.format(
-                    "Warning at %s. Did not expect value for property '%s.%s: %s[%s]' because it's outside the owned projection and it has no keys other than foreign keys.",
-                    this.getContextString(),
+                    "Did not expect value for property '%s.%s: %s[%s]' because it's outside the owned projection and it has no keys other than foreign keys.",
                     associationEnd.getOwningClassifier().getName(),
                     associationEnd.getName(),
                     associationEnd.getType(),
                     associationEnd.getMultiplicity().getPrettyName());
-            this.warnings.add(warning);
+            this.contextStack.addWarning(warning);
         }
 
-        this.contextStack.push(associationEnd.getName());
-        try
+        var contextNode = new ContextNode(associationEnd);
+        this.contextStack.runWithContext(contextNode, () ->
         {
-            if (!(jsonNode instanceof ObjectNode))
+            if (!(jsonNode instanceof ObjectNode objectNode))
             {
                 return;
             }
             OperationMode nextMode = this.getNextMode(this.operationMode, associationEnd);
 
-            RequiredPropertiesValidator validator = new RequiredPropertiesValidator(
-                    associationEnd.getType(),
-                    (ObjectNode) jsonNode,
-                    nextMode,
-                    this.errors,
-                    this.warnings,
+            var validator = new RequiredPropertiesValidator(
                     this.contextStack,
+                    associationEnd.getType(),
+                    objectNode,
+                    nextMode,
                     Optional.of(associationEnd),
                     false,
                     false);
             validator.validate();
-        }
-        finally
-        {
-            this.contextStack.pop();
-        }
+        });
     }
 
     protected void handleToManyOutsideProjection(
@@ -680,14 +622,13 @@ public class RequiredPropertiesValidator
             if (associationEnd.isRequired())
             {
                 String error = String.format(
-                        "Error at %s. Expected value for required property '%s.%s: %s[%s]' but value was %s.",
-                        this.getContextString(),
+                        "Expected value for required property '%s.%s: %s[%s]' but value was %s.",
                         associationEnd.getOwningClassifier().getName(),
                         associationEnd.getName(),
                         associationEnd.getType(),
                         associationEnd.getMultiplicity().getPrettyName(),
                         jsonNode.getNodeType().toString().toLowerCase());
-                this.errors.add(error);
+                this.contextStack.addError(error);
             }
             return;
         }
@@ -695,13 +636,12 @@ public class RequiredPropertiesValidator
         if (!associationEnd.hasRealKeys())
         {
             String warning = String.format(
-                    "Warning at %s. Did not expect value for property '%s.%s: %s[%s]' because it's outside the owned projection and it has no keys other than foreign keys.",
-                    this.getContextString(),
+                    "Did not expect value for property '%s.%s: %s[%s]' because it's outside the owned projection and it has no keys other than foreign keys.",
                     associationEnd.getOwningClassifier().getName(),
                     associationEnd.getName(),
                     associationEnd.getType(),
                     associationEnd.getMultiplicity().getPrettyName());
-            this.warnings.add(warning);
+            this.contextStack.addWarning(warning);
         }
 
         if (!(jsonNode instanceof ArrayNode))
@@ -711,15 +651,11 @@ public class RequiredPropertiesValidator
 
         for (int index = 0; index < jsonNode.size(); index++)
         {
-            String contextString = String.format(
-                    "%s[%d]",
-                    associationEnd.getName(),
-                    index);
-            this.contextStack.push(contextString);
-
-            try
+            int finalIndex = index;
+            var contextNode = new ContextNode(associationEnd, finalIndex);
+            this.contextStack.runWithContext(contextNode, () ->
             {
-                JsonNode childJsonNode = jsonNode.path(index);
+                JsonNode childJsonNode = jsonNode.path(finalIndex);
                 if (!(childJsonNode instanceof ObjectNode))
                 {
                     return;
@@ -727,22 +663,16 @@ public class RequiredPropertiesValidator
 
                 OperationMode nextMode = this.getNextMode(this.operationMode, associationEnd);
 
-                RequiredPropertiesValidator validator = new RequiredPropertiesValidator(
+                var validator = new RequiredPropertiesValidator(
+                        this.contextStack,
                         associationEnd.getType(),
                         (ObjectNode) childJsonNode,
                         nextMode,
-                        this.errors,
-                        this.warnings,
-                        this.contextStack,
                         Optional.of(associationEnd),
                         false,
                         false);
                 validator.validate();
-            }
-            finally
-            {
-                this.contextStack.pop();
-            }
+            });
         }
     }
 
@@ -755,15 +685,14 @@ public class RequiredPropertiesValidator
         }
 
         String error = String.format(
-                "Error at %s. Expected value for %s property '%s.%s: %s[%s]' but value was %s.",
-                this.getContextString(),
+                "Expected value for %s property '%s.%s: %s[%s]' but value was %s.",
                 propertyKind,
                 associationEnd.getOwningClassifier().getName(),
                 associationEnd.getName(),
                 associationEnd.getType(),
                 associationEnd.getMultiplicity().getPrettyName(),
                 jsonNode.getNodeType().toString().toLowerCase());
-        this.errors.add(error);
+        this.contextStack.addError(error);
     }
 
     protected void handleOwnedAssociationEnd(@Nonnull AssociationEnd associationEnd, @Nonnull ObjectNode objectNode)
@@ -796,28 +725,26 @@ public class RequiredPropertiesValidator
             if (this.operationMode == OperationMode.REPLACE && associationEnd.isFinal())
             {
                 String warning = String.format(
-                        "Warning at %s. Expected value for required final property '%s.%s: %s[%s]' but value was %s.",
-                        this.getContextString(),
+                        "Expected value for required final property '%s.%s: %s[%s]' but value was %s.",
                         associationEnd.getOwningClassifier().getName(),
                         associationEnd.getName(),
                         associationEnd.getType(),
                         associationEnd.getMultiplicity().getPrettyName(),
                         jsonNode.getNodeType().toString().toLowerCase());
-                this.warnings.add(warning);
+                this.contextStack.addWarning(warning);
                 return;
             }
 
             if (this.operationMode == OperationMode.REPLACE && associationEnd.isPrivate())
             {
                 String warning = String.format(
-                        "Warning at %s. Expected value for required private property '%s.%s: %s[%s]' but value was %s.",
-                        this.getContextString(),
+                        "Expected value for required private property '%s.%s: %s[%s]' but value was %s.",
                         associationEnd.getOwningClassifier().getName(),
                         associationEnd.getName(),
                         associationEnd.getType(),
                         associationEnd.getMultiplicity().getPrettyName(),
                         jsonNode.getNodeType().toString().toLowerCase());
-                this.warnings.add(warning);
+                this.contextStack.addWarning(warning);
                 return;
             }
 
@@ -826,14 +753,13 @@ public class RequiredPropertiesValidator
                     || this.operationMode == OperationMode.PATCH && jsonNode.isNull())
             {
                 String error = String.format(
-                        "Error at %s. Expected value for required property '%s.%s: %s[%s]' but value was %s.",
-                        this.getContextString(),
+                        "Expected value for required property '%s.%s: %s[%s]' but value was %s.",
                         associationEnd.getOwningClassifier().getName(),
                         associationEnd.getName(),
                         associationEnd.getType(),
                         associationEnd.getMultiplicity().getPrettyName(),
                         jsonNode.getNodeType().toString().toLowerCase());
-                this.errors.add(error);
+                this.contextStack.addError(error);
                 return;
             }
         }
@@ -858,29 +784,23 @@ public class RequiredPropertiesValidator
                 return;
             }
 
-            this.contextStack.push(associationEnd.getName());
-            try
+            var contextNode = new ContextNode(associationEnd);
+            this.contextStack.runWithContext(contextNode, () ->
             {
                 if (jsonNode instanceof ObjectNode objectNode)
                 {
                     OperationMode nextMode = this.getNextMode(this.operationMode, associationEnd);
-                    RequiredPropertiesValidator validator = new RequiredPropertiesValidator(
+                    var validator = new RequiredPropertiesValidator(
+                            this.contextStack,
                             associationEnd.getType(),
                             objectNode,
                             nextMode,
-                            this.errors,
-                            this.warnings,
-                            this.contextStack,
                             Optional.of(associationEnd),
                             false,
                             this.isInProjection && associationEnd.isOwned());
                     validator.validate();
                 }
-            }
-            finally
-            {
-                this.contextStack.pop();
-            }
+            });
         }
         else if (this.operationMode == OperationMode.REPLACE || this.operationMode == OperationMode.PATCH)
         {
@@ -895,7 +815,7 @@ public class RequiredPropertiesValidator
         else if (this.operationMode == OperationMode.REFERENCE_OUTSIDE_PROJECTION)
         {
             // TODO: Recurse and check that it matches if present
-            this.handleAnnotationIfPresent(associationEnd, "version");
+            this.handleIfPresent(associationEnd, "version");
         }
         else
         {
@@ -920,13 +840,11 @@ public class RequiredPropertiesValidator
             @Nonnull ObjectNode objectNode,
             @Nonnull OperationMode nextMode)
     {
-        RequiredPropertiesValidator validator = new RequiredPropertiesValidator(
+        var validator = new RequiredPropertiesValidator(
+                this.contextStack,
                 associationEnd.getType(),
                 objectNode,
                 nextMode,
-                this.errors,
-                this.warnings,
-                this.contextStack,
                 Optional.of(associationEnd),
                 false,
                 this.isInProjection && associationEnd.isOwned());
@@ -959,14 +877,6 @@ public class RequiredPropertiesValidator
         }
 
         throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".getNextMode() not implemented yet: " + operationMode);
-    }
-
-    protected String getContextString()
-    {
-        return this.contextStack
-                .toList()
-                .asReversed()
-                .makeString(".");
     }
 
     protected ImmutableList<Object> getKeysFromJsonNode(
@@ -1030,4 +940,5 @@ public class RequiredPropertiesValidator
     {
         return this.pathHere.equals(Optional.of(associationEnd.getOpposite()));
     }
+    // endregion AssociationEnds
 }

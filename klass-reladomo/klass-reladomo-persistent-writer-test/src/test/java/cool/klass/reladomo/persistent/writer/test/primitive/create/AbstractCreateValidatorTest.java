@@ -50,17 +50,14 @@ public abstract class AbstractCreateValidatorTest
         ImmutableMap<DataTypeProperty, Object> propertyDataFromUrl = this.getPropertyDataFromUrl();
         propertyDataFromUrl.forEachKey(property -> assertThat(property.getOwningClassifier()).isSameAs(klass));
 
-        JsonTypeCheckingValidator.validate(
-                incomingInstance,
-                klass,
-                this.actualErrors);
+        JsonTypeCheckingValidator.validate(this.actualErrors, incomingInstance, klass);
 
         RequiredPropertiesValidator.validate(
+                this.actualErrors,
+                this.actualWarnings,
                 klass,
                 incomingInstance,
-                this.getMode(),
-                this.actualErrors,
-                this.actualWarnings);
+                this.getMode());
 
         MutationContext mutationContext = new MutationContext(
                 Optional.of("test user 1"),
