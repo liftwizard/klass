@@ -33,6 +33,7 @@
         <module>klass-model-loader-compiler</module>
         <module>klass-model-loader</module>
         <module>klass-model-meta-interface</module>
+        <module>klass-model-meta-project-write</module>
         <module>klass-model-meta</module>
         <module>klass-model-reladomo-graphql</module>
         <module>klass-model-reladomo-projection</module>

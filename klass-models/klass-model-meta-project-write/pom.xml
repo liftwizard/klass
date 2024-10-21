@@ -18,13 +18,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cool.klass</groupId>
-        <artifactId>klass-generators</artifactId>
+        <artifactId>klass-models</artifactId>
         <version>0.4.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>klass-generator-service-resources</artifactId>
-
-    <name>Klass Generator: Service Resource</name>
+    <artifactId>klass-model-meta-project-write</artifactId>
 
     <dependencies>
 
@@ -35,35 +33,15 @@
         </dependency>
 
         <dependency>
-            <groupId>cool.klass</groupId>
-            <artifactId>klass-model-reladomo-projection</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cool.klass</groupId>
-            <artifactId>klass-model-meta-project-write</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.eclipse.collections</groupId>
             <artifactId>eclipse-collections-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.collections</groupId>
-            <artifactId>eclipse-collections</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
+            <version>11.1.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
+            <version>3.0.2</version>
         </dependency>
 
     </dependencies>
