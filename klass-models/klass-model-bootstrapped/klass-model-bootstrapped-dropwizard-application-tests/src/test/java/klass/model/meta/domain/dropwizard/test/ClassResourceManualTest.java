@@ -16,6 +16,8 @@
 
 package klass.model.meta.domain.dropwizard.test;
 
+import javax.ws.rs.client.Client;
+
 import org.junit.jupiter.api.Test;
 
 class ClassResourceManualTest
@@ -24,6 +26,11 @@ class ClassResourceManualTest
     @Test
     void getAllMeta()
     {
-        this.assertUrlReturns("getAllMeta", "/meta/class");
+        Class<?> klass = this.getClass();
+        String clientName = klass.getPackage().getName() + '.' + klass.getSimpleName() + '.' + "getAllMeta";
+        Client client = this.getClient(clientName);
+        String resourceClassPathLocation = klass.getSimpleName() + '.' + "getAllMeta" + ".json";
+
+        this.assertUrlReturns(client, "/meta/class", resourceClassPathLocation);
     }
 }
