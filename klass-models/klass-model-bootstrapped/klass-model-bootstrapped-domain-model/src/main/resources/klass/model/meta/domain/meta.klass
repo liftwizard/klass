@@ -1184,6 +1184,14 @@ service KlassResource on Klass
             criteria    : this.name == name;
             projection  : KlassProjection;
         }
+        PUT
+        {
+            criteria    : this.name == name;
+        }
+        DELETE
+        {
+            criteria    : this.name == name;
+        }
     /meta/class
         GET
         {
@@ -1191,6 +1199,14 @@ service KlassResource on Klass
             criteria    : all;
             projection  : KlassProjection;
             orderBy     : this.ordinal ascending;
+        }
+        PUT
+        {
+            criteria    : all;
+        }
+        DELETE
+        {
+            criteria    : all;
         }
 }
 

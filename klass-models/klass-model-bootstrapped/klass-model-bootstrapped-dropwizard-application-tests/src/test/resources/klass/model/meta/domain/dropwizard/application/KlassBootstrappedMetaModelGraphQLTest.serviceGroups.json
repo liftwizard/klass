@@ -216,6 +216,30 @@
                 "validateCriteria": null,
                 "conflictCriteria": null,
                 "orderBys": []
+              },
+              {
+                "verb": "PUT",
+                "serviceMultiplicity": "ONE",
+                "projection": null,
+                "queryCriteria": {
+                  "id": 94
+                },
+                "authorizeCriteria": null,
+                "validateCriteria": null,
+                "conflictCriteria": null,
+                "orderBys": []
+              },
+              {
+                "verb": "DELETE",
+                "serviceMultiplicity": "ONE",
+                "projection": null,
+                "queryCriteria": {
+                  "id": 95
+                },
+                "authorizeCriteria": null,
+                "validateCriteria": null,
+                "conflictCriteria": null,
+                "orderBys": []
               }
             ]
           },
@@ -230,7 +254,31 @@
                   "name": "KlassProjection"
                 },
                 "queryCriteria": {
-                  "id": 94
+                  "id": 96
+                },
+                "authorizeCriteria": null,
+                "validateCriteria": null,
+                "conflictCriteria": null,
+                "orderBys": []
+              },
+              {
+                "verb": "PUT",
+                "serviceMultiplicity": "ONE",
+                "projection": null,
+                "queryCriteria": {
+                  "id": 97
+                },
+                "authorizeCriteria": null,
+                "validateCriteria": null,
+                "conflictCriteria": null,
+                "orderBys": []
+              },
+              {
+                "verb": "DELETE",
+                "serviceMultiplicity": "ONE",
+                "projection": null,
+                "queryCriteria": {
+                  "id": 98
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
@@ -270,7 +318,7 @@
                   "name": "ClassifierProjection"
                 },
                 "queryCriteria": {
-                  "id": 95
+                  "id": 99
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
@@ -290,7 +338,7 @@
                   "name": "ClassifierProjection"
                 },
                 "queryCriteria": {
-                  "id": 96
+                  "id": 100
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
@@ -330,7 +378,7 @@
                   "name": "AssociationProjection"
                 },
                 "queryCriteria": {
-                  "id": 97
+                  "id": 101
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
@@ -350,7 +398,7 @@
                   "name": "AssociationProjection"
                 },
                 "queryCriteria": {
-                  "id": 98
+                  "id": 102
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
@@ -390,7 +438,7 @@
                   "name": "NamedProjectionProjection"
                 },
                 "queryCriteria": {
-                  "id": 99
+                  "id": 103
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
@@ -410,7 +458,7 @@
                   "name": "NamedProjectionProjection"
                 },
                 "queryCriteria": {
-                  "id": 100
+                  "id": 104
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
@@ -450,7 +498,7 @@
                   "name": "ServiceGroupProjection"
                 },
                 "queryCriteria": {
-                  "id": 101
+                  "id": 105
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
@@ -470,7 +518,7 @@
                   "name": "ServiceGroupProjection"
                 },
                 "queryCriteria": {
-                  "id": 102
+                  "id": 106
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,

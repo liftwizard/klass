@@ -145,7 +145,6 @@ public class ServiceResourceGenerator
                 import cool.klass.deserializer.json.*;
                 import cool.klass.deserializer.json.type.*;
                 import cool.klass.reladomo.persistent.writer.*;
-                import cool.klass.deserializer.json.type.ObjectNodeTypeCheckingValidator;
                 """
                 : "";
 
