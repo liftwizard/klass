@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cool.klass.deserializer.json;
+package cool.klass.deserializer.json.type;
 
 import java.util.Objects;
 
