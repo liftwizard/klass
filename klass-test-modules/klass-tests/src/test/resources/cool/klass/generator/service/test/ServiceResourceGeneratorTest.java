@@ -98,7 +98,7 @@ public class QuestionResource
 
         MutableList<String> errors = Lists.mutable.empty();
         MutableList<String> warnings = Lists.mutable.empty();
-        JsonTypeCheckingValidator.validate(errors, incomingInstance, klass);
+        ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, klass);
         RequiredPropertiesValidator.validate(
                 errors,
                 warnings,

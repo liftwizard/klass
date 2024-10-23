@@ -85,11 +85,11 @@ public final class ArrayNodeTypeCheckingValidator
             var contextNode = new ContextNode(this.context, index);
             this.contextStack.runWithContext(contextNode, () ->
             {
-                var jsonTypeCheckingValidator = new JsonTypeCheckingValidator(
+                var validator = new ObjectNodeTypeCheckingValidator(
                         this.contextStack,
                         this.klass,
                         childJsonNode);
-                jsonTypeCheckingValidator.validateIncomingData();
+                validator.validateIncomingData();
             });
         }
     }

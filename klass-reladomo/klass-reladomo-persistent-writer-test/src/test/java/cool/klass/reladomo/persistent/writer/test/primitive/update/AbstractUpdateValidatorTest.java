@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import cool.klass.deserializer.json.RequiredPropertiesValidator;
-import cool.klass.deserializer.json.type.JsonTypeCheckingValidator;
+import cool.klass.deserializer.json.type.ObjectNodeTypeCheckingValidator;
 import cool.klass.reladomo.persistent.writer.IncomingUpdateDataModelValidator;
 import cool.klass.reladomo.persistent.writer.MutationContext;
 import cool.klass.reladomo.persistent.writer.test.AbstractValidatorTest;
@@ -34,7 +34,7 @@ public abstract class AbstractUpdateValidatorTest
     @Override
     protected final void validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance)
     {
-        JsonTypeCheckingValidator.validate(this.actualErrors, incomingInstance, this.getKlass());
+        ObjectNodeTypeCheckingValidator.validate(this.actualErrors, incomingInstance, this.getKlass());
 
         RequiredPropertiesValidator.validate(
                 this.actualErrors,
