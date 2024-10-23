@@ -24,6 +24,7 @@ import cool.klass.model.meta.domain.api.Klass;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import cool.klass.deserializer.json.*;
+import cool.klass.deserializer.json.type.*;
 import cool.klass.reladomo.persistent.writer.*;
 
 import org.eclipse.collections.api.factory.Maps;

@@ -22,8 +22,8 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import cool.klass.deserializer.json.JsonTypeCheckingValidator;
 import cool.klass.deserializer.json.RequiredPropertiesValidator;
+import cool.klass.deserializer.json.type.JsonTypeCheckingValidator;
 import cool.klass.reladomo.persistent.writer.IncomingUpdateDataModelValidator;
 import cool.klass.reladomo.persistent.writer.MutationContext;
 import cool.klass.reladomo.persistent.writer.test.AbstractValidatorTest;
