@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import cool.klass.deserializer.json.OperationMode;
 import cool.klass.deserializer.json.RequiredPropertiesValidator;
-import cool.klass.deserializer.json.type.JsonTypeCheckingValidator;
+import cool.klass.deserializer.json.type.ObjectNodeTypeCheckingValidator;
 import cool.klass.dropwizard.configuration.domain.model.loader.compiler.DomainModelCompilerFactory;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
@@ -98,7 +98,7 @@ public abstract class AbstractValidatorTest
 
     protected final void performValidation(@Nonnull ObjectNode incomingInstance)
     {
-        JsonTypeCheckingValidator.validate(
+        ObjectNodeTypeCheckingValidator.validate(
                 this.actualErrors, incomingInstance,
                 this.getKlass());
 

@@ -60,7 +60,7 @@ import com.stackoverflow.QuestionList;
 import cool.klass.data.store.DataStore;
 import cool.klass.deserializer.json.OperationMode;
 import cool.klass.deserializer.json.RequiredPropertiesValidator;
-import cool.klass.deserializer.json.type.JsonTypeCheckingValidator;
+import cool.klass.deserializer.json.type.ObjectNodeTypeCheckingValidator;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.Multiplicity;
@@ -167,7 +167,7 @@ public class QuestionResourceManual
 
         MutableList<String> errors   = Lists.mutable.empty();
         MutableList<String> warnings = Lists.mutable.empty();
-        JsonTypeCheckingValidator.validate(errors, incomingInstance, klass);
+        ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, klass);
         RequiredPropertiesValidator.validate(errors, warnings, klass, incomingInstance, OperationMode.REPLACE);
 
         if (errors.notEmpty())
@@ -478,7 +478,7 @@ public class QuestionResourceManual
 
         MutableList<String> errors   = Lists.mutable.empty();
         MutableList<String> warnings = Lists.mutable.empty();
-        JsonTypeCheckingValidator.validate(errors, incomingInstance, klass);
+        ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, klass);
         RequiredPropertiesValidator.validate(errors, warnings, klass, incomingInstance, OperationMode.CREATE);
         if (errors.notEmpty())
         {

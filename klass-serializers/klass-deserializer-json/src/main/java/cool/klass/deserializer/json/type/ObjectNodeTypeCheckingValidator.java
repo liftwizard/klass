@@ -31,7 +31,7 @@ import cool.klass.model.meta.domain.api.property.Property;
 import cool.klass.model.meta.domain.api.property.PropertyVisitor;
 import org.eclipse.collections.api.list.MutableList;
 
-public final class JsonTypeCheckingValidator
+public final class ObjectNodeTypeCheckingValidator
 {
     @Nonnull
     private final ContextStack contextStack;
@@ -41,7 +41,7 @@ public final class JsonTypeCheckingValidator
     @Nonnull
     private final JsonNode jsonNode;
 
-    public JsonTypeCheckingValidator(
+    public ObjectNodeTypeCheckingValidator(
             @Nonnull ContextStack contextStack,
             @Nonnull Klass klass,
             @Nonnull JsonNode jsonNode)
@@ -57,7 +57,7 @@ public final class JsonTypeCheckingValidator
         var contextNode = new ContextNode(klass);
         contextStack.runWithContext(contextNode, () ->
         {
-            var validator = new JsonTypeCheckingValidator(contextStack, klass, jsonNode);
+            var validator = new ObjectNodeTypeCheckingValidator(contextStack, klass, jsonNode);
             validator.validateIncomingData();
         });
     }

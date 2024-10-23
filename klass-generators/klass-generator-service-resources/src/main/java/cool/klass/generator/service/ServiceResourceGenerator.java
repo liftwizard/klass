@@ -616,7 +616,7 @@ public class ServiceResourceGenerator
                 + "\n"
                 + "        MutableList<String> errors = Lists.mutable.empty();\n"
                 + "        MutableList<String> warnings = Lists.mutable.empty();\n"
-                + "        JsonTypeCheckingValidator.validate(errors, incomingInstance, klass);\n"
+                + "        ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, klass);\n"
                 + "        RequiredPropertiesValidator.validate(\n"
                 + "                errors,\n"
                 + "                warnings,\n"

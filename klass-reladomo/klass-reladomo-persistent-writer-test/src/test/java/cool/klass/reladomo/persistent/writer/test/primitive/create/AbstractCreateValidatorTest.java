@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import cool.klass.deserializer.json.RequiredPropertiesValidator;
-import cool.klass.deserializer.json.type.JsonTypeCheckingValidator;
+import cool.klass.deserializer.json.type.ObjectNodeTypeCheckingValidator;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.reladomo.persistent.writer.IncomingCreateDataModelValidator;
@@ -50,7 +50,7 @@ public abstract class AbstractCreateValidatorTest
         ImmutableMap<DataTypeProperty, Object> propertyDataFromUrl = this.getPropertyDataFromUrl();
         propertyDataFromUrl.forEachKey(property -> assertThat(property.getOwningClassifier()).isSameAs(klass));
 
-        JsonTypeCheckingValidator.validate(this.actualErrors, incomingInstance, klass);
+        ObjectNodeTypeCheckingValidator.validate(this.actualErrors, incomingInstance, klass);
 
         RequiredPropertiesValidator.validate(
                 this.actualErrors,
