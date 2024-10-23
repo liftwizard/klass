@@ -132,11 +132,12 @@ public class ServiceResourceGenerator
                 ? "import io.dropwizard.jersey.jsr310.*;\n"
                 : "";
 
-        boolean hasWriteServices = serviceGroup.getUrls()
+        ImmutableList<Verb> verbs = serviceGroup.getUrls()
                 .asLazy()
                 .flatCollect(Url::getServices)
                 .collect(Service::getVerb)
-                .contains(Verb.PUT);
+                .toImmutableList();
+        boolean hasWriteServices = verbs.contains(Verb.PUT) || verbs.contains(Verb.PATCH) || verbs.contains(Verb.DELETE);
         String writeImports = hasWriteServices
                 ? """
                 import javax.validation.constraints.NotNull;
@@ -144,6 +145,7 @@ public class ServiceResourceGenerator
                 import cool.klass.deserializer.json.*;
                 import cool.klass.deserializer.json.type.*;
                 import cool.klass.reladomo.persistent.writer.*;
+                import cool.klass.deserializer.json.type.ObjectNodeTypeCheckingValidator;
                 """
                 : "";
 
@@ -173,6 +175,7 @@ public class ServiceResourceGenerator
                 + "import cool.klass.data.store.*;\n"
                 + "import cool.klass.model.meta.domain.api.DomainModel;\n"
                 + "import cool.klass.model.meta.domain.api.Klass;\n"
+                + "import cool.klass.model.meta.domain.api.Multiplicity;\n"
                 + jsr310Import
                 + writeImports
                 + "\n"
@@ -240,12 +243,17 @@ public class ServiceResourceGenerator
 
         if (service.getVerb() == Verb.POST)
         {
-            return this.getPostSourceCode();
+            return this.getPostSourceCode(service, index);
         }
 
         if (service.getVerb() == Verb.PUT)
         {
-            return this.getPutSourceCode(service, index);
+            return this.getWriteSourceCode(service, index, "OperationMode.REPLACE");
+        }
+
+        if (service.getVerb() == Verb.PATCH)
+        {
+            return this.getWriteSourceCode(service, index, "OperationMode.PATCH");
         }
 
         if (service.getVerb() == Verb.DELETE)
@@ -371,7 +379,7 @@ public class ServiceResourceGenerator
     }
 
     @Nonnull
-    private String getPostSourceCode()
+    private String getPostSourceCode(Service service, int index)
     {
         return "    // TODO: POST\n";
     }
@@ -511,7 +519,7 @@ public class ServiceResourceGenerator
     }
 
     @Nonnull
-    private String getPutSourceCode(@Nonnull Service service, int index)
+    private String getWriteSourceCode(@Nonnull Service service, int index, String operationMode)
     {
         Url url = service.getUrl();
 
@@ -546,7 +554,19 @@ public class ServiceResourceGenerator
         {
             parameterStrings.add(parameterIndent + "@Context SecurityContext securityContext");
         }
-        parameterStrings.add(parameterIndent + "@Nonnull @NotNull ObjectNode incomingInstance");
+
+        ServiceMultiplicity serviceMultiplicity = service.getServiceMultiplicity();
+        String incomingInstanceParameterType = serviceMultiplicity == ServiceMultiplicity.ONE
+                ? "ObjectNode"
+                : "ArrayNode";
+        String incomingInstanceParameterName = serviceMultiplicity == ServiceMultiplicity.ONE
+                ? "incomingInstance"
+                : "incomingInstances";
+        String incomingInstanceSourceCode = "%s@Nonnull @NotNull %s %s".formatted(
+                parameterIndent,
+                incomingInstanceParameterType,
+                incomingInstanceParameterName);
+        parameterStrings.add(incomingInstanceSourceCode);
 
         String userPrincipalNameLocalVariable = hasAuthorizeCriteria
                 ? "        String    userPrincipalName  = securityContext.getUserPrincipal().getName();\n"
@@ -616,13 +636,13 @@ public class ServiceResourceGenerator
                 + "\n"
                 + "        MutableList<String> errors = Lists.mutable.empty();\n"
                 + "        MutableList<String> warnings = Lists.mutable.empty();\n"
-                + "        ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, klass);\n"
+                + "        " + incomingInstanceParameterType + "TypeCheckingValidator.validate(errors, " + incomingInstanceParameterName + ", klass);\n"
                 + "        RequiredPropertiesValidator.validate(\n"
                 + "                errors,\n"
                 + "                warnings,\n"
                 + "                klass,\n"
-                + "                incomingInstance,\n"
-                + "                OperationMode.REPLACE);\n"
+                + "                " + incomingInstanceParameterName + ",\n"
+                + "                " + operationMode + ");\n"
                 + "\n"
                 + "        if (errors.notEmpty())\n"
                 + "        {\n"
@@ -676,7 +696,7 @@ public class ServiceResourceGenerator
                 + "                klass,\n"
                 + "                mutationContext,\n"
                 + "                persistentInstance,\n"
-                + "                incomingInstance,\n"
+                + "                " + incomingInstanceParameterName + ",\n"
                 + "                errors,\n"
                 + "                warnings);\n"
                 + "        if (errors.notEmpty())\n"
@@ -697,7 +717,7 @@ public class ServiceResourceGenerator
                 + "        }\n"
                 + "\n"
                 + "        PersistentReplacer replacer           = new PersistentReplacer(mutationContext, this.dataStore);\n"
-                + "        replacer.synchronize(klass, persistentInstance, incomingInstance);\n"
+                + "        replacer.synchronize(klass, persistentInstance, " + incomingInstanceParameterName + ");\n"
                 + "    }\n";
         // @formatter:on
     }
