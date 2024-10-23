@@ -113,6 +113,16 @@ service PropertiesRequiredResource on PropertiesRequired
             multiplicity: one;
             criteria    : this.propertiesRequiredId == propertiesRequiredId;
         }
+        PATCH
+        {
+            multiplicity: one;
+            criteria    : this.propertiesRequiredId == propertiesRequiredId;
+        }
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.propertiesRequiredId == propertiesRequiredId;
+        }
 }
 
 class PropertiesOptional
@@ -176,6 +186,16 @@ service PropertiesOptionalResource on PropertiesOptional
             multiplicity: one;
         }
         PUT
+        {
+            multiplicity: one;
+            criteria    : this.propertiesOptionalId == propertiesOptionalId;
+        }
+        PATCH
+        {
+            multiplicity: one;
+            criteria    : this.propertiesOptionalId == propertiesOptionalId;
+        }
+        DELETE
         {
             multiplicity: one;
             criteria    : this.propertiesOptionalId == propertiesOptionalId;
@@ -297,6 +317,32 @@ service EveryTypeKeyPropertyResource on EveryTypeKeyProperty
                     && this.keyInstant == keyInstant
                     && this.keyLocalDate == keyLocalDate;
         }
+        PATCH
+        {
+            multiplicity: one;
+            criteria    :
+                this.keyString == keyString
+                    && this.keyInteger == keyInteger
+                    && this.keyLong == keyLong
+                    && this.keyDouble == keyDouble
+                    && this.keyFloat == keyFloat
+                    && this.keyBoolean == keyBoolean
+                    && this.keyInstant == keyInstant
+                    && this.keyLocalDate == keyLocalDate;
+        }
+        DELETE
+        {
+            multiplicity: one;
+            criteria    :
+                this.keyString == keyString
+                    && this.keyInteger == keyInteger
+                    && this.keyLong == keyLong
+                    && this.keyDouble == keyDouble
+                    && this.keyFloat == keyFloat
+                    && this.keyBoolean == keyBoolean
+                    && this.keyInstant == keyInstant
+                    && this.keyLocalDate == keyLocalDate;
+        }
 }
 
 class FinalProperties
@@ -321,6 +367,14 @@ service FinalPropertiesResource on FinalProperties
             projection  : FinalPropertiesProjection;
         }
         PUT
+        {
+            criteria    : this.id == id;
+        }
+        PATCH
+        {
+            criteria    : this.id == id;
+        }
+        DELETE
         {
             criteria    : this.id == id;
         }

@@ -2319,18 +2319,14 @@
         }
       },
       {
-        "__typename": "AllCriteria",
-        "id": 94
-      },
-      {
         "__typename": "OperatorCriteria",
-        "id": 95,
+        "id": 94,
         "operator": "EQUALS",
         "sourceExpressionValue": {
           "__typename": "ThisMemberReferencePath",
           "id": 147,
           "klass": {
-            "name": "Classifier"
+            "name": "Klass"
           },
           "associationEnds": [],
           "dataTypeProperty": {
@@ -2343,23 +2339,19 @@
           "id": 148,
           "parameter": {
             "__typename": "PrimitiveParameter",
-            "id": 5
+            "id": 4
           }
         }
       },
       {
-        "__typename": "AllCriteria",
-        "id": 96
-      },
-      {
         "__typename": "OperatorCriteria",
-        "id": 97,
+        "id": 95,
         "operator": "EQUALS",
         "sourceExpressionValue": {
           "__typename": "ThisMemberReferencePath",
           "id": 149,
           "klass": {
-            "name": "Association"
+            "name": "Klass"
           },
           "associationEnds": [],
           "dataTypeProperty": {
@@ -2372,9 +2364,17 @@
           "id": 150,
           "parameter": {
             "__typename": "PrimitiveParameter",
-            "id": 6
+            "id": 4
           }
         }
+      },
+      {
+        "__typename": "AllCriteria",
+        "id": 96
+      },
+      {
+        "__typename": "AllCriteria",
+        "id": 97
       },
       {
         "__typename": "AllCriteria",
@@ -2388,7 +2388,7 @@
           "__typename": "ThisMemberReferencePath",
           "id": 151,
           "klass": {
-            "name": "NamedProjection"
+            "name": "Classifier"
           },
           "associationEnds": [],
           "dataTypeProperty": {
@@ -2401,7 +2401,7 @@
           "id": 152,
           "parameter": {
             "__typename": "PrimitiveParameter",
-            "id": 7
+            "id": 5
           }
         }
       },
@@ -2417,7 +2417,7 @@
           "__typename": "ThisMemberReferencePath",
           "id": 153,
           "klass": {
-            "name": "ServiceGroup"
+            "name": "Association"
           },
           "associationEnds": [],
           "dataTypeProperty": {
@@ -2430,13 +2430,71 @@
           "id": 154,
           "parameter": {
             "__typename": "PrimitiveParameter",
-            "id": 8
+            "id": 6
           }
         }
       },
       {
         "__typename": "AllCriteria",
         "id": 102
+      },
+      {
+        "__typename": "OperatorCriteria",
+        "id": 103,
+        "operator": "EQUALS",
+        "sourceExpressionValue": {
+          "__typename": "ThisMemberReferencePath",
+          "id": 155,
+          "klass": {
+            "name": "NamedProjection"
+          },
+          "associationEnds": [],
+          "dataTypeProperty": {
+            "__typename": "PrimitiveProperty",
+            "name": "name"
+          }
+        },
+        "targetExpressionValue": {
+          "__typename": "VariableReference",
+          "id": 156,
+          "parameter": {
+            "__typename": "PrimitiveParameter",
+            "id": 7
+          }
+        }
+      },
+      {
+        "__typename": "AllCriteria",
+        "id": 104
+      },
+      {
+        "__typename": "OperatorCriteria",
+        "id": 105,
+        "operator": "EQUALS",
+        "sourceExpressionValue": {
+          "__typename": "ThisMemberReferencePath",
+          "id": 157,
+          "klass": {
+            "name": "ServiceGroup"
+          },
+          "associationEnds": [],
+          "dataTypeProperty": {
+            "__typename": "PrimitiveProperty",
+            "name": "name"
+          }
+        },
+        "targetExpressionValue": {
+          "__typename": "VariableReference",
+          "id": 158,
+          "parameter": {
+            "__typename": "PrimitiveParameter",
+            "id": 8
+          }
+        }
+      },
+      {
+        "__typename": "AllCriteria",
+        "id": 106
       }
     ]
   }

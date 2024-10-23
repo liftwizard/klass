@@ -855,12 +855,41 @@ projection CommentVersionProjection on CommentVersion
 
 service BlueprintResource on Blueprint
 {
+    /generated/blueprint
+        POST
+        {
+            multiplicity: one;
+        }
     /generated/blueprint/{key: String[1..1]}
         GET
         {
             multiplicity: one;
             criteria    : this.key == key;
             projection  : BlueprintProjection;
+        }
+        PUT
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            authorize   : this.createdById == user;
+            // TODO: entitlements on user
+            // || user == UserEntitlement.userId && UserEntitlement.userRole == UserRole.ADMIN;
+        }
+        PATCH
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            authorize   : this.createdById == user;
+            // TODO: entitlements on user
+            // || user == UserEntitlement.userId && UserEntitlement.userRole == UserRole.ADMIN;
+        }
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            authorize   : this.createdById == user;
+            // TODO: entitlements on user
+            // || user == UserEntitlement.userId && UserEntitlement.userRole == UserRole.ADMIN;
         }
     /generated/blueprint/{key: String[1..1]}/history
         GET

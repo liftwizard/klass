@@ -2742,7 +2742,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 155
+                  "id": 159
                 }
               }
             ]
@@ -2784,7 +2784,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 156
+                  "id": 160
                 }
               }
             ]
@@ -2857,7 +2857,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 157
+                  "id": 161
                 }
               }
             ]
@@ -2961,7 +2961,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 158
+                  "id": 162
                 }
               }
             ]
@@ -3139,7 +3139,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 159
+                  "id": 163
                 }
               }
             ]
@@ -3212,7 +3212,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 160
+                  "id": 164
                 }
               }
             ]
@@ -3316,7 +3316,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 161
+                  "id": 165
                 }
               }
             ]
@@ -3556,7 +3556,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 162
+                  "id": 166
                 }
               }
             ]
@@ -3722,7 +3722,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 163
+                  "id": 167
                 }
               }
             ]
@@ -3764,7 +3764,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 164
+                  "id": 168
                 }
               }
             ]
@@ -3868,7 +3868,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 165
+                  "id": 169
                 }
               }
             ]
@@ -3906,7 +3906,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 166
+                  "id": 170
                 }
               }
             ]
@@ -3975,7 +3975,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 167
+                  "id": 171
                 }
               }
             ]
@@ -4172,7 +4172,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 168
+                  "id": 172
                 }
               }
             ]
@@ -4245,7 +4245,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 169
+                  "id": 173
                 }
               }
             ]
@@ -4287,7 +4287,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 170
+                  "id": 174
                 }
               }
             ]
@@ -4500,7 +4500,7 @@
               {
                 "orderByDirection": "ASCENDING",
                 "thisMemberReferencePath": {
-                  "id": 171
+                  "id": 175
                 }
               }
             ]
@@ -4993,6 +4993,30 @@
                 "validateCriteria": null,
                 "conflictCriteria": null,
                 "orderBys": []
+              },
+              {
+                "verb": "PUT",
+                "serviceMultiplicity": "ONE",
+                "projection": null,
+                "queryCriteria": {
+                  "id": 94
+                },
+                "authorizeCriteria": null,
+                "validateCriteria": null,
+                "conflictCriteria": null,
+                "orderBys": []
+              },
+              {
+                "verb": "DELETE",
+                "serviceMultiplicity": "ONE",
+                "projection": null,
+                "queryCriteria": {
+                  "id": 95
+                },
+                "authorizeCriteria": null,
+                "validateCriteria": null,
+                "conflictCriteria": null,
+                "orderBys": []
               }
             ]
           },
@@ -5007,7 +5031,31 @@
                   "name": "KlassProjection"
                 },
                 "queryCriteria": {
-                  "id": 94
+                  "id": 96
+                },
+                "authorizeCriteria": null,
+                "validateCriteria": null,
+                "conflictCriteria": null,
+                "orderBys": []
+              },
+              {
+                "verb": "PUT",
+                "serviceMultiplicity": "ONE",
+                "projection": null,
+                "queryCriteria": {
+                  "id": 97
+                },
+                "authorizeCriteria": null,
+                "validateCriteria": null,
+                "conflictCriteria": null,
+                "orderBys": []
+              },
+              {
+                "verb": "DELETE",
+                "serviceMultiplicity": "ONE",
+                "projection": null,
+                "queryCriteria": {
+                  "id": 98
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
@@ -5048,7 +5096,7 @@
                   "name": "ClassifierProjection"
                 },
                 "queryCriteria": {
-                  "id": 95
+                  "id": 99
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
@@ -5068,7 +5116,7 @@
                   "name": "ClassifierProjection"
                 },
                 "queryCriteria": {
-                  "id": 96
+                  "id": 100
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
@@ -5109,7 +5157,7 @@
                   "name": "AssociationProjection"
                 },
                 "queryCriteria": {
-                  "id": 97
+                  "id": 101
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
@@ -5129,7 +5177,7 @@
                   "name": "AssociationProjection"
                 },
                 "queryCriteria": {
-                  "id": 98
+                  "id": 102
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
@@ -5170,7 +5218,7 @@
                   "name": "NamedProjectionProjection"
                 },
                 "queryCriteria": {
-                  "id": 99
+                  "id": 103
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
@@ -5190,7 +5238,7 @@
                   "name": "NamedProjectionProjection"
                 },
                 "queryCriteria": {
-                  "id": 100
+                  "id": 104
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
@@ -5231,7 +5279,7 @@
                   "name": "ServiceGroupProjection"
                 },
                 "queryCriteria": {
-                  "id": 101
+                  "id": 105
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
@@ -5251,7 +5299,7 @@
                   "name": "ServiceGroupProjection"
                 },
                 "queryCriteria": {
-                  "id": 102
+                  "id": 106
                 },
                 "authorizeCriteria": null,
                 "validateCriteria": null,
