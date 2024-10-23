@@ -324,7 +324,8 @@ delete-merged: delete-local-merged delete-remote-merged
 git: rebase-all delete-merged
 
 fix:
-    just absorb
+    git add --update
+    git commit --fixup HEAD
     just _check-local-modifications
     cat JUSTFILE_BRANCH
     git rebase --onto HEAD HEAD^ $(cat JUSTFILE_BRANCH)
