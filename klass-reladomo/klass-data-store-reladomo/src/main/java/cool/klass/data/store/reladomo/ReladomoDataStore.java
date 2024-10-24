@@ -459,7 +459,7 @@ public class ReladomoDataStore
             Optional<EnumerationLiteral> enumerationLiteral = enumeration.getEnumerationLiterals()
                     .detectOptional(each -> each.getPrettyName().equals(prettyName));
 
-            return enumerationLiteral.orElseThrow(() -> new AssertionError(prettyName));
+            return enumerationLiteral.orElseThrow(() -> new AssertionError("No enumeration literal found for " + prettyName + " in " + enumeration.getName()));
         }
 
         return result;
