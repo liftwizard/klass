@@ -224,8 +224,9 @@ jobs:
           --activate-profiles 'checkstyle-formatting'
           -Dcheckstyle.failOnViolation=false
           -Dcheckstyle.failsOnError=false
-          -Dcheckstyle.output.format=sarif
-          -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
+        run: >
+          shopt -s globstar
+          jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > results/merged.sarif
 
       - name: "Merge SARIF files"
         run: |
@@ -267,8 +268,9 @@ jobs:
       - name: "Produce Checkstyle XML: Strict Formatting"
         run: >
           ./mvnw checkstyle:check
-          -Dcheckstyle.failOnViolation=false
-          -Dcheckstyle.failsOnError=false
+        run: >
+          shopt -s globstar
+          jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > results/merged.sarif
           -Dcheckstyle.output.format=sarif
           -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
 
