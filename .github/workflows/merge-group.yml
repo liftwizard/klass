@@ -141,7 +141,7 @@ jobs:
           jq -s '{ "$schema": "https://json.schemastore.org/sarif-2.1.0", "version": "2.1.0", "runs": map(.runs) | add }' ./**/target/checkstyle-result.sarif > target/merged.sarif
 
       - uses: github/codeql-action/upload-sarif@v3
-        with:
+          sarif_file: target/merged.sarif
           sarif_file: .
           # Optional category for the results
           # Used to differentiate multiple results for one commit
@@ -185,7 +185,7 @@ jobs:
         run: |
           jq -s '{ "$schema": "https://json.schemastore.org/sarif-2.1.0", "version": "2.1.0", "runs": map(.runs) | add }' ./**/target/checkstyle-result.sarif > target/merged.sarif
 
-      - uses: github/codeql-action/upload-sarif@v3
+          sarif_file: target/merged.sarif
         with:
           sarif_file: .
           # Optional category for the results
@@ -229,7 +229,7 @@ jobs:
       - name: "Merge SARIF files"
         run: |
           jq -s '{ "$schema": "https://json.schemastore.org/sarif-2.1.0", "version": "2.1.0", "runs": map(.runs) | add }' ./**/target/checkstyle-result.sarif > target/merged.sarif
-
+          sarif_file: target/merged.sarif
       - uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: .
@@ -274,7 +274,7 @@ jobs:
       - name: "Merge SARIF files"
         run: |
           jq -s '{ "$schema": "https://json.schemastore.org/sarif-2.1.0", "version": "2.1.0", "runs": map(.runs) | add }' ./**/target/checkstyle-result.sarif > target/merged.sarif
-
+          sarif_file: target/merged.sarif
       - uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: .
