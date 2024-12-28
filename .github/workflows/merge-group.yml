@@ -108,6 +108,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       security-events: write
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
 
@@ -124,11 +125,28 @@ jobs:
       - uses: jdx/mise-action@v2
 
       - name: "Produce Checkstyle XML: Semantics"
-        run: mvn checkstyle:check --activate-profiles 'checkstyle-semantics' -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcheckstyle.output.format=sarif
+        run: |
+          mvn checkstyle:check \
+          --activate-profiles 'checkstyle-semantics' \
+          -Dcheckstyle.failOnViolation=true \
+          -Dcheckstyle.failsOnError=true \
+          -Dcheckstyle.output.format=sarif \
+          -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
+
+      - name: "Merge SARIF files"
+        if: failure()
+        run: |
+          shopt -s globstar
+          mkdir results
+          jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' ./**/target/*.sarif > results/merged.sarif
+
+      - if: failure()
+        run: cat results/merged.sarif
 
       - uses: github/codeql-action/upload-sarif@v3
+        if: failure()
         with:
-          sarif_file: target/checkstyle-result.xml
+          sarif_file: results/merged.sarif
           # Optional category for the results
           # Used to differentiate multiple results for one commit
           category: Checkstyle Semantics
@@ -142,6 +160,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       security-events: write
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
 
@@ -158,14 +177,31 @@ jobs:
       - uses: jdx/mise-action@v2
 
       - name: "Produce Checkstyle XML: Strict Semantics"
-        run: mvn checkstyle:check --activate-profiles 'checkstyle-semantics-strict' -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcheckstyle.output.format=sarif
+        run: |
+          mvn checkstyle:check \
+          --activate-profiles 'checkstyle-semantics-strict' \
+          -Dcheckstyle.failOnViolation=true \
+          -Dcheckstyle.failsOnError=true \
+          -Dcheckstyle.output.format=sarif \
+          -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
+
+      - name: "Merge SARIF files"
+        if: failure()
+        run: |
+          shopt -s globstar
+          mkdir results
+          jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' ./**/target/*.sarif > results/merged.sarif
+
+      - if: failure()
+        run: cat results/merged.sarif
 
       - uses: github/codeql-action/upload-sarif@v3
+        if: failure()
         with:
-          sarif_file: target/checkstyle-result.xml
+          sarif_file: results/merged.sarif
           # Optional category for the results
           # Used to differentiate multiple results for one commit
-          category: Checkstyle Semantics
+          category: Checkstyle Strict Semantics
 
       # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
@@ -176,6 +212,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       security-events: write
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
 
@@ -192,11 +229,28 @@ jobs:
       - uses: jdx/mise-action@v2
 
       - name: "Produce Checkstyle XML: Formatting"
-        run: mvn checkstyle:check --activate-profiles 'checkstyle-formatting' -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcheckstyle.output.format=sarif
+        run: |
+          mvn checkstyle:check \
+          --activate-profiles 'checkstyle-formatting' \
+          -Dcheckstyle.failOnViolation=true \
+          -Dcheckstyle.failsOnError=true \
+          -Dcheckstyle.output.format=sarif \
+          -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
+
+      - name: "Merge SARIF files"
+        if: failure()
+        run: |
+          shopt -s globstar
+          mkdir results
+          jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' ./**/target/*.sarif > results/merged.sarif
+
+      - if: failure()
+        run: cat results/merged.sarif
 
       - uses: github/codeql-action/upload-sarif@v3
+        if: failure()
         with:
-          sarif_file: target/checkstyle-result.xml
+          sarif_file: results/merged.sarif
           # Optional category for the results
           # Used to differentiate multiple results for one commit
           category: Checkstyle Formatting
@@ -210,6 +264,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       security-events: write
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
 
@@ -226,14 +281,31 @@ jobs:
       - uses: jdx/mise-action@v2
 
       - name: "Produce Checkstyle XML: Strict Formatting"
-        run: mvn checkstyle:check --activate-profiles 'checkstyle-formatting-strict' -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcheckstyle.output.format=sarif
+        run: |
+          mvn checkstyle:check \
+          --activate-profiles 'checkstyle-formatting-strict' \
+          -Dcheckstyle.failOnViolation=true \
+          -Dcheckstyle.failsOnError=true \
+          -Dcheckstyle.output.format=sarif \
+          -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
+
+      - name: "Merge SARIF files"
+        if: failure()
+        run: |
+          shopt -s globstar
+          mkdir results
+          jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' ./**/target/*.sarif > results/merged.sarif
+
+      - if: failure()
+        run: cat results/merged.sarif
 
       - uses: github/codeql-action/upload-sarif@v3
+        if: failure()
         with:
-          sarif_file: target/checkstyle-result.xml
+          sarif_file: results/merged.sarif
           # Optional category for the results
           # Used to differentiate multiple results for one commit
-          category: Checkstyle Formatting
+          category: Checkstyle Strict Formatting
 
       # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
