@@ -61,8 +61,7 @@ public abstract class PersistentSynchronizer
     protected PersistentSynchronizer(
             @Nonnull MutationContext mutationContext,
             @Nonnull DataStore dataStore,
-            boolean inTransaction)
-    {
+            boolean inTransaction) {
         this.mutationContext = Objects.requireNonNull(mutationContext);
         this.dataStore       = Objects.requireNonNull(dataStore);
         this.inTransaction   = inTransaction;
