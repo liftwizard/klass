@@ -142,7 +142,7 @@ jobs:
 
       - uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: target/merged.sarif
+          sarif_file: target
           # Optional category for the results
           # Used to differentiate multiple results for one commit
           category: Checkstyle Semantics
@@ -187,7 +187,7 @@ jobs:
 
       - uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: target/merged.sarif
+          sarif_file: target
           # Optional category for the results
           # Used to differentiate multiple results for one commit
           category: Checkstyle Semantics
@@ -232,7 +232,7 @@ jobs:
 
       - uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: target/merged.sarif
+          sarif_file: target
           # Optional category for the results
           # Used to differentiate multiple results for one commit
           category: Checkstyle Formatting
@@ -277,7 +277,7 @@ jobs:
 
       - uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: target/merged.sarif
+          sarif_file: target
           # Optional category for the results
           # Used to differentiate multiple results for one commit
           category: Checkstyle Formatting
