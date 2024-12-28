@@ -229,7 +229,7 @@ jobs:
 
       - name: "Merge SARIF files"
         run: |
-          jq -s ' { "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata01/os/schemas/sarif-schema-2.1.0.json", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > target/merged.sarif
+          jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > target/merged.sarif
 
       - run: cat target/merged.sarif
 
@@ -276,7 +276,7 @@ jobs:
       # https://medium.com/snapp-mobile/uploading-sarif-reports-to-github-91a8001e6794
       - name: "Merge SARIF files"
         run: |
-          jq -s ' { "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/errata01/os/schemas/sarif-schema-2.1.0.json", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > target/merged.sarif
+          jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > target/merged.sarif
 
       - run: cat target/merged.sarif
 
