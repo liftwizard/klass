@@ -5,6 +5,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+env:
+  GROUP_ID: "cool/klass"
+
 jobs:
   maven-coverage:
     runs-on: ubuntu-latest
@@ -37,7 +40,7 @@ jobs:
           min-coverage-changed-files: 0
 
       - name: "Clean Maven cache"
-        run: rm -rf ~/.m2/repository/cool/klass
+        run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
   # Check if the new commits in a Pull Request contain a merge commit. If so, fail and print them out.
   forbid-merge-commits:
