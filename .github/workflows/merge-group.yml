@@ -267,7 +267,6 @@ jobs:
       - name: "Produce Checkstyle XML: Strict Formatting"
         run: >
           ./mvnw checkstyle:check
-          --activate-profiles 'checkstyle-formatting-strict'
           -Dcheckstyle.failOnViolation=false
           -Dcheckstyle.failsOnError=false
           -Dcheckstyle.output.format=sarif
