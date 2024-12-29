@@ -110,6 +110,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       security-events: write
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
 
@@ -127,12 +128,13 @@ jobs:
           distribution: oracle
 
       - name: "Produce Checkstyle XML: Semantics"
-        run: >
-          ./mvnw checkstyle:check
-          --activate-profiles 'checkstyle-semantics'
-          -Dcheckstyle.output.format=sarif
+        run: |
+          ./mvnw checkstyle:check \
+          --activate-profiles 'checkstyle-semantics' \
+          -Dcheckstyle.failOnViolation=true \
+          -Dcheckstyle.failsOnError=true \
+          -Dcheckstyle.output.format=sarif \
           -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
-        continue-on-error: true
 
       - name: "Merge SARIF files"
         if: failure()
@@ -159,6 +161,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       security-events: write
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
 
@@ -176,12 +179,13 @@ jobs:
           distribution: oracle
 
       - name: "Produce Checkstyle XML: Strict Semantics"
-        run: >
-          ./mvnw checkstyle:check
-          --activate-profiles 'checkstyle-semantics-strict'
-          -Dcheckstyle.output.format=sarif
+        run: |
+          ./mvnw checkstyle:check \
+          --activate-profiles 'checkstyle-semantics-strict' \
+          -Dcheckstyle.failOnViolation=true \
+          -Dcheckstyle.failsOnError=true \
+          -Dcheckstyle.output.format=sarif \
           -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
-        continue-on-error: true
 
       - name: "Merge SARIF files"
         if: failure()
@@ -208,6 +212,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       security-events: write
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
 
@@ -225,12 +230,13 @@ jobs:
           distribution: oracle
 
       - name: "Produce Checkstyle XML: Formatting"
-        run: >
-          ./mvnw checkstyle:check
-          --activate-profiles 'checkstyle-formatting'
-          -Dcheckstyle.output.format=sarif
+        run: |
+          ./mvnw checkstyle:check \
+          --activate-profiles 'checkstyle-formatting' \
+          -Dcheckstyle.failOnViolation=true \
+          -Dcheckstyle.failsOnError=true \
+          -Dcheckstyle.output.format=sarif \
           -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
-        continue-on-error: true
 
       - name: "Merge SARIF files"
         if: failure()
@@ -257,6 +263,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       security-events: write
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
 
@@ -274,12 +281,13 @@ jobs:
           distribution: oracle
 
       - name: "Produce Checkstyle XML: Strict Formatting"
-        run: >
-          ./mvnw checkstyle:check
-          --activate-profiles 'checkstyle-formatting-strict'
-          -Dcheckstyle.output.format=sarif
+        run: |
+          ./mvnw checkstyle:check \
+          --activate-profiles 'checkstyle-formatting-strict' \
+          -Dcheckstyle.failOnViolation=true \
+          -Dcheckstyle.failsOnError=true \
+          -Dcheckstyle.output.format=sarif \
           -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
-        continue-on-error: true
 
       - name: "Merge SARIF files"
         if: failure()
