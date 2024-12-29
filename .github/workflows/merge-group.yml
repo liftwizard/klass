@@ -141,9 +141,9 @@ jobs:
           shopt -s globstar
           jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > results/merged.sarif
 
-      - run: cat target/merged.sarif
-      - uses: github/codeql-action/upload-sarif@v3
+      - run: cat results/merged.sarif
 
+      - uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: results/merged.sarif
           # Optional category for the results
@@ -184,19 +184,22 @@ jobs:
           -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
 
       - name: "Merge SARIF files"
+        shell: bash -O globstar -c
         run: >
           shopt -s globstar
           jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > results/merged.sarif
-        shell: bash -O globstar -c
-
-      - run: cat target/merged.sarif
 
       - run: cat results/merged.sarif
-        with:
-          sarif_file: target/merged.sarif
-        run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
+      - uses: github/codeql-action/upload-sarif@v3
+        with:
           sarif_file: results/merged.sarif
+          # Optional category for the results
+          # Used to differentiate multiple results for one commit
+          category: Checkstyle Strict Semantics
+
+      - name: "Clean Maven cache"
+        run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
   checkstyle-formatting:
     name: checkstyle xml (formatting)
@@ -225,28 +228,31 @@ jobs:
           --activate-profiles 'checkstyle-formatting'
           -Dcheckstyle.failOnViolation=false
           -Dcheckstyle.failsOnError=false
-        run: >
-          shopt -s globstar
-          jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > results/merged.sarif
           -Dcheckstyle.output.format=sarif
           -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
 
       - name: "Merge SARIF files"
         shell: bash -O globstar -c
-
-      - name: "Merge SARIF files"
-        run: |
-          jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > target/merged.sarif
-
-      - run: cat target/merged.sarif
+        run: >
+          shopt -s globstar
+          jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > results/merged.sarif
 
       - run: cat results/merged.sarif
-          sarif_file: results/merged.sarif
-          sarif_file: target/merged.sarif
-          # Optional category for the results
-    permissions:
 
       - uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results/merged.sarif
+          # Optional category for the results
+          # Used to differentiate multiple results for one commit
+          category: Checkstyle Formatting
+
+      - name: "Clean Maven cache"
+        run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
+
+  checkstyle-formatting-strict:
+    name: checkstyle xml (formatting strict)
+    runs-on: ubuntu-latest
+    permissions:
       security-events: write
     steps:
       - uses: actions/checkout@v4
@@ -267,31 +273,34 @@ jobs:
       - name: "Produce Checkstyle XML: Strict Formatting"
         run: >
           ./mvnw checkstyle:check
-        run: >
-          shopt -s globstar
-          jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > results/merged.sarif
           --activate-profiles 'checkstyle-formatting-strict'
           -Dcheckstyle.failOnViolation=false
           -Dcheckstyle.failsOnError=false
-      # https://medium.com/snapp-mobile/uploading-sarif-reports-to-github-91a8001e6794
+          -Dcheckstyle.output.format=sarif
+          -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
+
       - name: "Merge SARIF files"
-        run: |
-          jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > target/merged.sarif
         shell: bash -O globstar -c
         run: >
           shopt -s globstar
           jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > results/merged.sarif
-          sarif_file: target/merged.sarif
+
+      - run: cat results/merged.sarif
+
+      - uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results/merged.sarif
           # Optional category for the results
+          # Used to differentiate multiple results for one commit
+          category: Checkstyle Strict Formatting
+
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
-          sarif_file: results/merged.sarif
+  maven-rewrite:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: github/codeql-action/upload-sarif@v3
 
       - uses: actions/cache@v4
         with:
