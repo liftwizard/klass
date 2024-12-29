@@ -130,12 +130,12 @@ jobs:
         run: >
           ./mvnw checkstyle:check
           --activate-profiles 'checkstyle-semantics'
-          -Dcheckstyle.failOnViolation=false
-          -Dcheckstyle.failsOnError=false
           -Dcheckstyle.output.format=sarif
           -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
+        continue-on-error: true
 
       - name: "Merge SARIF files"
+        if: failure()
         run: |
           shopt -s globstar
           mkdir results
@@ -144,6 +144,7 @@ jobs:
       - run: cat results/merged.sarif
 
       - uses: github/codeql-action/upload-sarif@v3
+        if: failure()
         with:
           sarif_file: results/merged.sarif
           # Optional category for the results
@@ -178,12 +179,12 @@ jobs:
         run: >
           ./mvnw checkstyle:check
           --activate-profiles 'checkstyle-semantics-strict'
-          -Dcheckstyle.failOnViolation=false
-          -Dcheckstyle.failsOnError=false
           -Dcheckstyle.output.format=sarif
           -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
+        continue-on-error: true
 
       - name: "Merge SARIF files"
+        if: failure()
         run: |
           shopt -s globstar
           mkdir results
@@ -192,6 +193,7 @@ jobs:
       - run: cat results/merged.sarif
 
       - uses: github/codeql-action/upload-sarif@v3
+        if: failure()
         with:
           sarif_file: results/merged.sarif
           # Optional category for the results
@@ -226,12 +228,12 @@ jobs:
         run: >
           ./mvnw checkstyle:check
           --activate-profiles 'checkstyle-formatting'
-          -Dcheckstyle.failOnViolation=false
-          -Dcheckstyle.failsOnError=false
           -Dcheckstyle.output.format=sarif
           -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
+        continue-on-error: true
 
       - name: "Merge SARIF files"
+        if: failure()
         run: |
           shopt -s globstar
           mkdir results
@@ -240,6 +242,7 @@ jobs:
       - run: cat results/merged.sarif
 
       - uses: github/codeql-action/upload-sarif@v3
+        if: failure()
         with:
           sarif_file: results/merged.sarif
           # Optional category for the results
@@ -274,12 +277,12 @@ jobs:
         run: >
           ./mvnw checkstyle:check
           --activate-profiles 'checkstyle-formatting-strict'
-          -Dcheckstyle.failOnViolation=false
-          -Dcheckstyle.failsOnError=false
           -Dcheckstyle.output.format=sarif
           -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
+        continue-on-error: true
 
       - name: "Merge SARIF files"
+        if: failure()
         run: |
           shopt -s globstar
           mkdir results
@@ -288,6 +291,7 @@ jobs:
       - run: cat results/merged.sarif
 
       - uses: github/codeql-action/upload-sarif@v3
+        if: failure()
         with:
           sarif_file: results/merged.sarif
           # Optional category for the results
