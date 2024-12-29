@@ -189,9 +189,9 @@ jobs:
       - run: cat results/merged.sarif
         with:
           sarif_file: target/merged.sarif
-          # Optional category for the results
-      - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
+
+      - uses: github/codeql-action/upload-sarif@v3
 
   checkstyle-formatting:
     name: checkstyle xml (formatting)
@@ -234,13 +234,9 @@ jobs:
         with:
           sarif_file: target/merged.sarif
           # Optional category for the results
-      - name: "Clean Maven cache"
-        run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
-
-  checkstyle-formatting-strict:
-    name: checkstyle xml (formatting strict)
-    runs-on: ubuntu-latest
     permissions:
+
+      - uses: github/codeql-action/upload-sarif@v3
       security-events: write
     steps:
       - uses: actions/checkout@v4
@@ -284,6 +280,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - uses: github/codeql-action/upload-sarif@v3
 
       - uses: actions/cache@v4
         with:
