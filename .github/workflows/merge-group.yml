@@ -195,7 +195,8 @@ jobs:
           jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > results/merged.sarif
           jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' ./**/target/*.sarif > results/merged.sarif
       - run: cat results/merged.sarif
-
+      - if: failure()
+        run: cat results/merged.sarif
       - uses: github/codeql-action/upload-sarif@v3
         if: failure()
         with:
