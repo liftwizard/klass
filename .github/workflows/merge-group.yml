@@ -225,6 +225,11 @@ jobs:
         run: >
           shopt -s globstar
           jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > results/merged.sarif
+          -Dcheckstyle.output.format=sarif
+          -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
+
+      - name: "Merge SARIF files"
+        shell: bash -O globstar -c
 
       - name: "Merge SARIF files"
         run: |
@@ -262,9 +267,9 @@ jobs:
         run: >
           shopt -s globstar
           jq -s ' { "$schema": .[0]."$schema", "version": .[0].version, "runs": [ { "tool": .[0].runs[0].tool, "results": [ .[].runs[].results[] ] | select(length > 0) } ] }' **/target/*.sarif > results/merged.sarif
-          -Dcheckstyle.output.format=sarif
-          -Dcheckstyle.output.file='${project.build.directory}/checkstyle-result.sarif'
-
+          --activate-profiles 'checkstyle-formatting-strict'
+          -Dcheckstyle.failOnViolation=false
+          -Dcheckstyle.failsOnError=false
       # https://medium.com/snapp-mobile/uploading-sarif-reports-to-github-91a8001e6794
       - name: "Merge SARIF files"
         run: |
