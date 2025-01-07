@@ -227,7 +227,7 @@ rebase-all: fetch
     do
         included_count=$(git branch --contains "$branch" | wc -l)
         if [ "$included_count" -gt 1 ]; then
-            echo "Skipping branch $branch as it is included in other branches"
+            echo "{{ANSI_BOLD}}Skipping branch {{ANSI_GREEN}}$branch as it is included in other branches{{ANSI_NORMAL}}"
             continue
         fi
 

@@ -2,7 +2,7 @@ default_mvn      := env('MVN_BINARY',   "mvnd")
 default_target   := env('MVN_TARGET',   "verify")
 default_flags    := env('MVN_FLAGS',    "--threads 2C")
 skip_tests_flags := default_flags + " -DskipTests"
-default_profiles := env('MVN_PROFILES', "--activate-profiles maven-enforcer-plugin,maven-dependency-plugin,maven-javadoc-plugin,checkstyle-semantics,checkstyle-formatting,checkstyle-semantics-strict,spotless-apply,spotless-formats,spotless-java-sort-imports,spotless-java-unused-imports,spotless-java-cleanthat,spotless-pom,spotless-markdown,spotless-json,spotless-yaml")
+default_profiles := env('MVN_PROFILES', "--activate-profiles maven-enforcer-plugin,maven-dependency-plugin,maven-javadoc-plugin,checkstyle-semantics,checkstyle-formatting,checkstyle-semantics-strict,checkstyle-formatting-strict,spotless-apply,spotless-formats,spotless-java-sort-imports,spotless-java-unused-imports,spotless-java-cleanthat,spotless-pom,spotless-markdown,spotless-json,spotless-yaml")
 
 # mvn
 mvn MVN=default_mvn TARGET=default_target PROFILES=default_profiles *FLAGS=default_flags:
@@ -19,10 +19,7 @@ mvn MVN=default_mvn TARGET=default_target PROFILES=default_profiles *FLAGS=defau
         fi
     done
 
-    bold=$(tput bold)
-    normal=$(tput sgr0)
-
-    echo "Running: ${bold}{{MVN}} {{FLAGS}} {{TARGET}} {{PROFILES}}${normal}"
+    echo "Running: {{ANSI_BOLD}}{{MVN}} {{FLAGS}} {{TARGET}} {{PROFILES}}{{ANSI_NORMAL}}"
     {{MVN}} {{FLAGS}} {{TARGET}} {{PROFILES}}
 
     EXIT_CODE=$?
@@ -47,21 +44,27 @@ _clean-m2:
 _clean-maven MVN=default_mvn *FLAGS=default_flags: (mvn MVN "clean" "" FLAGS)
 
 # mvn verify
-verify MVN=default_mvn: _check-local-modifications clean (mvn MVN default_target "" skip_tests_flags) && _check-local-modifications
+compile MVN=default_mvn: (mvn MVN "verify" "" skip_tests_flags) && _check-local-modifications
+
+# mvn verify
+test MVN=default_mvn: (mvn MVN "verify" "" default_flags) && _check-local-modifications
+
+# mvn install
+install MVN=default_mvn: (mvn MVN "install" "" skip_tests_flags) && _check-local-modifications
 
 # mvn enforcer
-enforcer MVN=default_mvn: _check-local-modifications clean (mvn MVN default_target "--activate-profiles maven-enforcer-plugin" skip_tests_flags) && _check-local-modifications
+enforcer MVN=default_mvn: (mvn MVN "verify" "--activate-profiles maven-enforcer-plugin" skip_tests_flags) && _check-local-modifications
 
 # mvn dependency
-dependency MVN=default_mvn: _check-local-modifications clean (mvn MVN default_target "--activate-profiles maven-dependency-plugin" skip_tests_flags) && _check-local-modifications
+dependency MVN=default_mvn: (mvn MVN "verify" "--activate-profiles maven-dependency-plugin" skip_tests_flags) && _check-local-modifications
 
 # mvn javadoc
-javadoc MVN=default_mvn: _check-local-modifications clean (mvn MVN default_target "--activate-profiles maven-javadoc-plugin" skip_tests_flags) && _check-local-modifications
+javadoc MVN=default_mvn: (mvn MVN "verify" "--activate-profiles maven-javadoc-plugin" skip_tests_flags) && _check-local-modifications
 
-checkstyle-semantics MVN="mvn": _check-local-modifications clean (mvn MVN "checkstyle:check" "--activate-profiles checkstyle-semantics" default_flags) && _check-local-modifications
-checkstyle-formatting MVN="mvn": _check-local-modifications clean (mvn MVN "checkstyle:check" "--activate-profiles checkstyle-formatting" default_flags) && _check-local-modifications
-checkstyle-semantics-strict MVN="mvn": _check-local-modifications clean (mvn MVN "checkstyle:check" "--activate-profiles checkstyle-semantics-strict" default_flags) && _check-local-modifications
-checkstyle-formatting-strict MVN="mvn": _check-local-modifications clean (mvn MVN "checkstyle:check" "--activate-profiles checkstyle-formatting-strict" default_flags) && _check-local-modifications
+checkstyle-semantics MVN="mvn": (mvn MVN "checkstyle:check" "--activate-profiles checkstyle-semantics" default_flags) && _check-local-modifications
+checkstyle-formatting MVN="mvn": (mvn MVN "checkstyle:check" "--activate-profiles checkstyle-formatting" default_flags) && _check-local-modifications
+checkstyle-semantics-strict MVN="mvn": (mvn MVN "checkstyle:check" "--activate-profiles checkstyle-semantics-strict" default_flags) && _check-local-modifications
+checkstyle-formatting-strict MVN="mvn": (mvn MVN "checkstyle:check" "--activate-profiles checkstyle-formatting-strict" default_flags) && _check-local-modifications
 checkstyle: checkstyle-semantics checkstyle-formatting checkstyle-semantics-strict checkstyle-formatting-strict
 
 # spotless
@@ -78,7 +81,7 @@ rewrite-dry-run MVN=default_mvn:
     {{MVN}} install -DskipTests org.openrewrite.maven:rewrite-maven-plugin:dryRun --activate-profiles rewrite-maven-plugin,rewrite-maven-plugin-dryRun
 
 # mvn rewrite
-rewrite RECIPE:
+rewrite RECIPE: && _check-local-modifications
     mvn --threads 1 -U -DskipTests org.openrewrite.maven:rewrite-maven-plugin:run -Drewrite.activeRecipes={{RECIPE}}
 
 # mvn display updates (dependencies, plugins, properties)
@@ -102,7 +105,7 @@ wrapper VERSION:
     mvn --threads 1 wrapper:wrapper -Dmaven=VERSION
 
 # mvn release:prepare
-release NEXT_VERSION: && _clean-git
+release NEXT_VERSION: clean _check-local-modifications && _clean-git _check-local-modifications
     git checkout {{upstream_remote}}/{{upstream_branch}}
     mvn --batch-mode clean release:clean release:prepare -DdevelopmentVersion={{NEXT_VERSION}}
 
