@@ -19,6 +19,10 @@ mvn MVN=default_mvn TARGET=default_target PROFILES=default_profiles *FLAGS=defau
         fi
     done
 
+    bold=$(tput bold)
+    normal=$(tput sgr0)
+
+    echo "Running: ${bold}{{MVN}} {{FLAGS}} {{TARGET}} {{PROFILES}}${normal}"
     {{MVN}} {{FLAGS}} {{TARGET}} {{PROFILES}}
 
     EXIT_CODE=$?
@@ -40,8 +44,7 @@ _clean-m2:
     exit 0
 
 # mvn clean
-_clean-maven MVN=default_mvn *FLAGS=default_flags:
-    {{MVN}} clean {{FLAGS}}
+_clean-maven MVN=default_mvn *FLAGS=default_flags: (mvn MVN "clean" "" FLAGS)
 
 # mvn verify
 verify MVN=default_mvn: _check-local-modifications clean (mvn MVN default_target "" skip_tests_flags) && _check-local-modifications
@@ -62,18 +65,13 @@ checkstyle-formatting-strict MVN="mvn": _check-local-modifications clean (mvn MV
 checkstyle: checkstyle-semantics checkstyle-formatting checkstyle-semantics-strict checkstyle-formatting-strict
 
 # spotless
-spotless NAME MVN=default_mvn: _check-local-modifications clean && _check-local-modifications
-    {{MVN}} spotless:apply \
-      --activate-profiles 'spotless-apply,spotless-{{NAME}}'
+spotless NAME MVN=default_mvn: _check-local-modifications clean (mvn MVN "spotless:apply" ("--activate-profiles spotless-apply,spotless-" + NAME) default_flags) && _check-local-modifications
 
 # spotless-all
-spotless-all MVN=default_mvn: _check-local-modifications clean && _check-local-modifications
-    {{MVN}} spotless:apply \
-      --activate-profiles 'spotless-apply,spotless-formats,spotless-java-sort-imports,spotless-java-unused-imports,spotless-java-cleanthat,spotless-pom,spotless-markdown,spotless-json,spotless-yaml'
+spotless-all MVN=default_mvn: _check-local-modifications clean (mvn MVN "spotless:apply" "--activate-profiles spotless-apply,spotless-formats,spotless-java-sort-imports,spotless-java-unused-imports,spotless-java-cleanthat,spotless-pom,spotless-markdown,spotless-json,spotless-yaml" default_flags) && _check-local-modifications
 
 # mvn reproducible
-reproducible MVN=default_mvn:
-    {{MVN}} verify -DskipTests artifact:check-buildplan
+reproducible MVN=default_mvn: (mvn MVN "verify artifact:check-buildplan" "" skip_tests_flags) && _check-local-modifications
 
 # mvn rewrite
 rewrite-dry-run MVN=default_mvn:
