@@ -3,6 +3,7 @@ set dotenv-filename := ".envrc"
 
 group_id_with_slashes := "cool/klass"
 
+import ".just/console.just"
 import ".just/maven.just"
 import ".just/git.just"
 import ".just/git-rebase.just"
@@ -20,9 +21,6 @@ mise:
 
 # clean (maven and git)
 clean: _clean-git _clean-maven _clean-m2
-
-# end-to-end test for git-test
-test: _check-local-modifications clean mvn && _check-local-modifications
 
 # Count lines of code
 scc:
