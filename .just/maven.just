@@ -14,13 +14,18 @@ mvn MVN=default_mvn TARGET=default_target PROFILES=default_profiles *FLAGS=defau
 
     for word in "${SKIPPABLE_WORDS[@]}"; do
         if [[ $COMMIT_MESSAGE == *\[${word}\]* ]]; then
-            echo "Skipping due to [${word}] in commit: '$COMMIT_MESSAGE'"
+            echo "Skipping due to [{{ANSI_YELLOW}}${word}{{ANSI_DEFAULT}}] in commit: '${COMMIT_MESSAGE}'"
             exit 0
         fi
     done
 
-    echo "Running: {{ANSI_BOLD}}{{MVN}} {{FLAGS}} {{TARGET}} {{PROFILES}}{{ANSI_NORMAL}}"
-    {{MVN}} {{FLAGS}} {{TARGET}} {{PROFILES}}
+    # Set colors based on whether values match defaults
+    if [ "{{MVN}}" = "{{default_mvn}}" ]; then MVN_COLOR="{{ANSI_GRAY}}"; else MVN_COLOR="{{ANSI_MAGENTA}}"; fi
+    if [ "{{TARGET}}" = "{{default_target}}" ]; then TARGET_COLOR="{{ANSI_GRAY}}"; else TARGET_COLOR="{{ANSI_GREEN}}"; fi
+    if [ "{{PROFILES}}" = "{{default_profiles}}" ]; then PROFILES_COLOR="{{ANSI_GRAY}}"; else PROFILES_COLOR="{{ANSI_BLUE}}"; fi
+    if [ "{{FLAGS}}" = "{{default_flags}}" ]; then FLAGS_COLOR="{{ANSI_GRAY}}"; else FLAGS_COLOR="{{ANSI_MAGENTA}}"; fi
+
+    just _run "${MVN_COLOR}{{MVN}}{{ANSI_DEFAULT}} ${TARGET_COLOR}{{TARGET}}{{ANSI_DEFAULT}} ${FLAGS_COLOR}{{FLAGS}}{{ANSI_DEFAULT}} ${PROFILES_COLOR}{{PROFILES}}{{ANSI_DEFAULT}}"
 
     EXIT_CODE=$?
     if [ $EXIT_CODE -eq 0 ]; then
@@ -37,11 +42,12 @@ mvn MVN=default_mvn TARGET=default_target PROFILES=default_profiles *FLAGS=defau
 _clean-m2:
     #!/usr/bin/env bash
     set -uo pipefail
-    rm -rf ~/.m2/repository/{{group_id_with_slashes}}/**/*-SNAPSHOT
+    just _run "rm -rf ~/.m2/repository/{{ANSI_YELLOW}}{{group_id_with_slashes}}{{ANSI_DEFAULT}}/**/*-SNAPSHOT"
     exit 0
 
 # mvn clean
-_clean-maven MVN=default_mvn *FLAGS=default_flags: (mvn MVN "clean" "" FLAGS)
+@_clean-maven MVN=default_mvn *FLAGS=default_flags: && (mvn MVN "clean" "" FLAGS)
+    just _run "git clean --quiet --force -dx release.properties **/pom.xml.releaseBackup **/target"
 
 # mvn verify
 compile MVN=default_mvn: (mvn MVN "verify" "" skip_tests_flags) && _check-local-modifications
@@ -77,38 +83,34 @@ spotless-all MVN=default_mvn: _check-local-modifications clean (mvn MVN "spotles
 reproducible MVN=default_mvn: (mvn MVN "verify artifact:check-buildplan" "" skip_tests_flags) && _check-local-modifications
 
 # mvn rewrite
-rewrite-dry-run MVN=default_mvn:
-    {{MVN}} install -DskipTests org.openrewrite.maven:rewrite-maven-plugin:dryRun --activate-profiles rewrite-maven-plugin,rewrite-maven-plugin-dryRun
+@rewrite-dry-run MVN=default_mvn:
+    just _run "{{MVN}} {{ANSI_GREEN}}install{{ANSI_DEFAULT}} -DskipTests org.openrewrite.maven:rewrite-maven-plugin:dryRun {{ANSI_BLUE}}--activate-profiles rewrite-maven-plugin,rewrite-maven-plugin-dryRun"
 
 # mvn rewrite
-rewrite RECIPE: && _check-local-modifications
-    mvn --threads 1 -U -DskipTests org.openrewrite.maven:rewrite-maven-plugin:run -Drewrite.activeRecipes={{RECIPE}}
+@rewrite RECIPE: && _check-local-modifications
+    just _run "mvn {{ANSI_MAGENTA}}--threads 1 -U -DskipTests{{ANSI_DEFAULT}} org.openrewrite.maven:rewrite-maven-plugin:run -Drewrite.activeRecipes={{ANSI_YELLOW}}{{RECIPE}}{{ANSI_DEFAULT}}"
 
 # mvn display updates (dependencies, plugins, properties)
-display-updates:
-    mvn --threads 1 versions:display-dependency-updates versions:display-plugin-updates versions:display-property-updates
+@display-updates:
+    just _run "mvn {{ANSI_MAGENTA}}--threads 1{{ANSI_DEFAULT}} versions:display-dependency-updates versions:display-plugin-updates versions:display-property-updates"
 
 # mvn dependency:tree
-dependency-tree:
-    mvn --threads 1 dependency:tree
+@dependency-tree:
+    just _run "mvn {{ANSI_MAGENTA}}--threads 1{{ANSI_DEFAULT}} dependency:tree"
 
 # mvn buildplan-list
-buildplan-list:
-    mvn --threads 1 buildplan:list
+@buildplan-list:
+    just _run "mvn {{ANSI_MAGENTA}}--threads 1{{ANSI_DEFAULT}} buildplan:list"
 
 # mvn buildplan-list-phase
-buildplan-list-phase:
-    mvn --threads 1 buildplan:list-phase
+@buildplan-list-phase:
+    just _run "mvn {{ANSI_MAGENTA}}--threads 1{{ANSI_DEFAULT}} buildplan:list-phase"
 
 # mvn wrapper:wrapper
-wrapper VERSION:
-    mvn --threads 1 wrapper:wrapper -Dmaven=VERSION
+@wrapper VERSION:
+    just _run "mvn {{ANSI_MAGENTA}}--threads 1{{ANSI_DEFAULT}} wrapper:wrapper -Dmaven={{ANSI_YELLOW}}{{VERSION}}{{ANSI_DEFAULT}}"
 
 # mvn release:prepare
-release NEXT_VERSION: clean _check-local-modifications && _clean-git _check-local-modifications
-    git checkout {{upstream_remote}}/{{upstream_branch}}
-    mvn --batch-mode clean release:clean release:prepare -DdevelopmentVersion={{NEXT_VERSION}}
-
-# mvn archetype
-archetype MVN=default_mvn:
-    {{MVN}} install --also-make --projects klass-maven-archetype
+@release NEXT_VERSION: clean _check-local-modifications && _clean-git _check-local-modifications
+    just _run "git checkout {{ANSI_BRIGHT_RED}}{{ANSI_BOLD}}{{upstream_remote}}/{{upstream_branch}}{{ANSI_NORMAL}}"
+    just _run "mvn {{ANSI_MAGENTA}}--batch-mode{{ANSI_DEFAULT}} clean release:clean release:prepare -DdevelopmentVersion={{ANSI_YELLOW}}{{NEXT_VERSION}}{{ANSI_DEFAULT}}"
