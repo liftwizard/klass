@@ -33,9 +33,16 @@ git_tests := env('GIT_TESTS', "--tests compile,test,enforcer,dependency,checksty
 
 # git-test on the range of commits between a configurable upstream/main and {{BRANCH}}
 test-branch BRANCH="HEAD" TESTS=git_tests *FLAGS="--retest --verbose --verbose":
-    @branch=$(git branch --show-current); [ -n "$branch" ] && echo "$branch" > JUSTFILE_BRANCH || git rev-parse HEAD > JUSTFILE_BRANCH
-    @echo "{{ANSI_BOLD}}Testing branch: {{ANSI_GREEN}}$(cat JUSTFILE_BRANCH){{ANSI_NORMAL}}"
-    git test run --test {{TESTS}} {{FLAGS}} {{upstream_remote}}/{{upstream_branch}}..$(cat JUSTFILE_BRANCH)
+    #!/usr/bin/env bash
+    branch="{{BRANCH}}"
+    if [ "$branch" = "HEAD" ]; then
+        branch=$(git branch --show-current)
+        if [ -z "$branch" ]; then
+            branch=$(git rev-parse HEAD)
+        fi
+    fi
+    echo "$branch" > JUSTFILE_BRANCH
+    just _run "git test run {{ANSI_GRAY}}{{TESTS}}{{ANSI_DEFAULT}} {{FLAGS}} {{ANSI_BRIGHT_RED}}{{ANSI_BOLD}}{{upstream_remote}}/{{upstream_branch}}{{ANSI_NORMAL}}..{{ANSI_BRIGHT_GREEN}}{{ANSI_BOLD}}${branch}{{ANSI_NORMAL}}"
 
 # `just test` all commits with configurable upstream/main as ancestor
 test-all TESTS=git_tests *FLAGS="--retest --verbose --verbose":
@@ -48,9 +55,15 @@ test-all TESTS=git_tests *FLAGS="--retest --verbose --verbose":
 
     branches=($(git for-each-ref --format='%(refname:short)' refs/heads/ --sort -committerdate --contains {{upstream_remote}}/{{upstream_branch}}))
 
+    total_branches=${#branches[@]}
+    echo "Found {{ANSI_YELLOW}}${total_branches}{{ANSI_DEFAULT}} branches containing remote ref {{ANSI_BRIGHT_RED}}{{ANSI_BOLD}}{{upstream_remote}}/{{upstream_branch}}{{ANSI_NORMAL}} as ancestor: {{ANSI_GREEN}}${branches[@]}{{ANSI_NORMAL}}"
+
+    current=1
     for branch in "${branches[@]}"
     do
-        just test-branch "${branch}" "{{TESTS}}" {{FLAGS}}
+        echo -n "[{{ANSI_YELLOW}}${current}{{ANSI_DEFAULT}}/${total_branches}] "
+        just _run "{{ANSI_BRIGHT_RED}}just{{ANSI_DEFAULT}} test-branch {{ANSI_BRIGHT_GREEN}}{{ANSI_BOLD}}\"${branch}\"{{ANSI_NORMAL}} {{ANSI_GRAY}}'{{TESTS}}'{{ANSI_DEFAULT}} {{FLAGS}}"
+        ((current++))
     done
 
 alias ta := test-all
@@ -62,10 +75,15 @@ test-results:
 
     branches=($(git for-each-ref --format='%(refname:short)' refs/heads/ --sort -committerdate --contains {{upstream_remote}}/{{upstream_branch}}))
 
+    total_branches=${#branches[@]}
+    echo "Found {{ANSI_YELLOW}}${total_branches}{{ANSI_DEFAULT}} branches containing remote ref {{ANSI_BRIGHT_RED}}{{ANSI_BOLD}}{{upstream_remote}}/{{upstream_branch}}{{ANSI_NORMAL}}{{ANSI_DEFAULT}} as ancestor: {{ANSI_BRIGHT_GREEN}}${branches[@]}{{ANSI_NORMAL}}"
+
+    current=1
     for branch in "${branches[@]}"
     do
-        echo "Branch: $branch"
-        git test results --color {{upstream_remote}}/{{upstream_branch}}..${branch}
+        echo -n "[{{ANSI_YELLOW}}${current}{{ANSI_DEFAULT}}/${total_branches}] "
+        just _run "git test results --color {{ANSI_BRIGHT_RED}}{{ANSI_BOLD}}{{upstream_remote}}/{{upstream_branch}}{{ANSI_NORMAL}}..{{ANSI_BRIGHT_GREEN}}{{ANSI_BOLD}}${branch}{{ANSI_NORMAL}}"
+        ((current++))
     done
 
 # Fix the current commit and rebase

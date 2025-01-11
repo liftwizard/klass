@@ -8,11 +8,10 @@ setup-github-refspec REMOTE:
     set -Eeuo pipefail
 
     if git remote get-url {{REMOTE}} &> /dev/null && git remote get-url {{REMOTE}} | grep -q 'github\.'; then
-        git config --add remote.{{REMOTE}}.fetch '+refs/pull/*/head:refs/remotes/{{REMOTE}}/pr/*'
-        git config --add remote.{{REMOTE}}.fetch '+refs/pull/*/merge:refs/remotes/{{REMOTE}}/pr/merge/*'
-        echo "Added refspec to fetch GitHub PR refs for {{REMOTE}}"
+        just _run "git config --add remote.{{ANSI_BRIGHT_RED}}{{ANSI_BOLD}}{{REMOTE}}{{ANSI_NORMAL}}.fetch '+refs/pull/*/head:refs/remotes/{{ANSI_BRIGHT_RED}}{{ANSI_BOLD}}{{REMOTE}}{{ANSI_NORMAL}}/pr/*'"
+        just _run "git config --add remote.{{ANSI_BRIGHT_RED}}{{ANSI_BOLD}}{{REMOTE}}{{ANSI_NORMAL}}.fetch '+refs/pull/*/merge:refs/remotes/{{ANSI_BRIGHT_RED}}{{ANSI_BOLD}}{{REMOTE}}{{ANSI_NORMAL}}/pr/merge/*'"
     else
-        echo "Remote {{REMOTE}} is not a GitHub remote"
+        echo "Remote {{ANSI_BRIGHT_RED}}{{ANSI_BOLD}}{{REMOTE}}{{ANSI_NORMAL}} is not a GitHub remote"
     fi
 
 # Add git refspec to fetch GitHub PR refs from origin and upstream
@@ -20,7 +19,6 @@ setup-github-refspecs: (setup-github-refspec "origin") (setup-github-refspec "up
 
 # git clean helper
 _clean-git:
-    git clean --quiet --force -dx release.properties **/pom.xml.releaseBackup **/target
 
 # Fail if there are local modifications or untracked files
 _check-local-modifications:
@@ -36,8 +34,7 @@ _check-local-modifications:
     if [ -n "$ERRORS" ]; then
         {{echo_command}} "Local modifications"
         echo -e "$ERRORS"
-        echo -e "Running: git status\n"
-        git status
+        just _run "git status"
         exit 1
     fi
 
@@ -46,7 +43,7 @@ fetch:
     #!/usr/bin/env bash
     set -Eeuo pipefail
     if [ "{{offline}}" != "true" ]; then
-        git fetch {{upstream_remote}} --tags --prune
+        just _run "git fetch {{ANSI_BRIGHT_RED}}{{ANSI_BOLD}}{{upstream_remote}}{{ANSI_NORMAL}} --tags --prune"
     fi
 
 # Create a branch if HEAD is detached
@@ -56,14 +53,16 @@ recover-detached-head:
 
     if git symbolic-ref -q HEAD >/dev/null; then
         current_branch=$(git symbolic-ref --short HEAD)
-        echo "Not in detached HEAD state. Current branch: $current_branch"
+        echo "Not in detached HEAD state. Current branch: {{ANSI_BRIGHT_GREEN}}{{ANSI_BOLD}}$current_branch{{ANSI_NORMAL}}"
     else
         current_date=$(date +%Y-%m-%d)
         branch_name="branch-${current_date}"
         git checkout -b "$branch_name"
-        echo "Created and checked out new branch: $branch_name"
+        echo "Created and checked out new branch: {{ANSI_BRIGHT_GREEN}}{{ANSI_BOLD}}$branch_name{{ANSI_NORMAL}}"
     fi
 
 # Generate a markdown list of commit messages
 pull-request-description:
-    git log {{upstream_remote}}/{{upstream_branch}}..HEAD --reverse --format='- %s'
+    #!/usr/bin/env bash
+    set -Eeuo pipefail
+    just _run "git log {{ANSI_BRIGHT_RED}}{{ANSI_BOLD}}{{upstream_remote}}/{{upstream_branch}}{{ANSI_NORMAL}}..{{ANSI_BRIGHT_CYAN}}{{ANSI_BOLD}}HEAD{{ANSI_NORMAL}} --reverse --format='- %s'"
