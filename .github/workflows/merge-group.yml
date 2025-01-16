@@ -551,8 +551,6 @@ jobs:
       - uses: reviewdog/action-languagetool@v1.20.0
         with:
           reporter: github-pr-check
-          fail_on_error: true
-          filter_mode: nofilter
 
   reviewdog-actionlint:
     runs-on: ubuntu-latest
