@@ -29,6 +29,7 @@ jobs:
 
       - run: mvn verify
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -52,6 +53,7 @@ jobs:
       - name: Run maven-enforcer-plugin
         run: mvn verify --activate-profiles maven-enforcer-plugin -DskipTests
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -75,6 +77,7 @@ jobs:
       - name: Run maven-dependency-plugin
         run: mvn verify --activate-profiles maven-dependency-plugin -DskipTests
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -98,6 +101,7 @@ jobs:
       - name: Run maven-javadoc-plugin
         run: mvn verify --activate-profiles maven-javadoc-plugin -DskipTests
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -131,6 +135,7 @@ jobs:
           # Used to differentiate multiple results for one commit
           category: Checkstyle Semantics
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -164,6 +169,7 @@ jobs:
           # Used to differentiate multiple results for one commit
           category: Checkstyle Semantics
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -197,6 +203,7 @@ jobs:
           # Used to differentiate multiple results for one commit
           category: Checkstyle Formatting
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -230,6 +237,7 @@ jobs:
           # Used to differentiate multiple results for one commit
           category: Checkstyle Formatting
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -253,6 +261,7 @@ jobs:
       - name: Run rewrite-maven-plugin
         run: mvn install org.openrewrite.maven:rewrite-maven-plugin:dryRun --activate-profiles rewrite-maven-plugin,rewrite-maven-plugin-dryRun -DskipTests
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -277,6 +286,7 @@ jobs:
       - name: Run artifact:check-buildplan
         run: mvn verify artifact:check-buildplan -DskipTests
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -302,6 +312,7 @@ jobs:
       - name: "Spotless Check: Formats"
         run: mvn spotless:check --activate-profiles 'spotless-check,spotless-formats'
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -327,6 +338,7 @@ jobs:
       - name: "Spotless Check: Java Import Order"
         run: mvn spotless:check --activate-profiles 'spotless-check,spotless-java-sort-imports'
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -352,6 +364,7 @@ jobs:
       - name: "Spotless Check: Java Unused Imports"
         run: mvn spotless:check --activate-profiles 'spotless-check,spotless-java-unused-imports'
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -377,6 +390,7 @@ jobs:
       - name: "Spotless Check: Java cleanthat"
         run: mvn spotless:check --activate-profiles 'spotless-check,spotless-java-cleanthat'
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -402,6 +416,7 @@ jobs:
       - name: "Spotless Check: Sql"
         run: mvn spotless:check --activate-profiles 'spotless-check,spotless-sql'
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -427,6 +442,7 @@ jobs:
       - name: "Spotless Check: Pom"
         run: mvn spotless:check --activate-profiles 'spotless-check,spotless-pom'
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -452,6 +468,7 @@ jobs:
       - name: "Spotless Check: Markdown"
         run: mvn spotless:check --activate-profiles 'spotless-check,spotless-markdown'
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -477,6 +494,7 @@ jobs:
       - name: "Spotless Check: Json"
         run: mvn spotless:check --activate-profiles 'spotless-check,spotless-json'
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
@@ -502,6 +520,7 @@ jobs:
       - name: "Spotless Check: Yaml"
         run: mvn spotless:check --activate-profiles 'spotless-check,spotless-yaml'
 
+      # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
