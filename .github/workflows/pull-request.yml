@@ -22,6 +22,8 @@ jobs:
             maven-coverage-
             maven-
 
+      - uses: twosigma/maven-cache-cleaner@v1
+
       - uses: jdx/mise-action@v2
 
       - run: mvn verify --activate-profiles jacoco-maven-plugin
