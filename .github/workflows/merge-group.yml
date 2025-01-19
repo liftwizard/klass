@@ -23,6 +23,8 @@ jobs:
             maven-test-
             maven-
 
+      - uses: twosigma/maven-cache-cleaner@v1
+
       - uses: jdx/mise-action@v2
 
       - run: mvn verify
@@ -42,6 +44,8 @@ jobs:
           restore-keys: |
             maven-enforcer-
             maven-
+
+      - uses: twosigma/maven-cache-cleaner@v1
 
       - uses: jdx/mise-action@v2
 
@@ -64,6 +68,8 @@ jobs:
             maven-dependency-
             maven-
 
+      - uses: twosigma/maven-cache-cleaner@v1
+
       - uses: jdx/mise-action@v2
 
       - name: Run maven-dependency-plugin
@@ -84,6 +90,8 @@ jobs:
           restore-keys: |
             maven-javadoc-
             maven-
+
+      - uses: twosigma/maven-cache-cleaner@v1
 
       - uses: jdx/mise-action@v2
 
@@ -108,6 +116,8 @@ jobs:
           restore-keys: |
             maven-checkstyle-
             maven-
+
+      - uses: twosigma/maven-cache-cleaner@v1
 
       - uses: jdx/mise-action@v2
 
@@ -140,6 +150,8 @@ jobs:
             maven-checkstyle-
             maven-
 
+      - uses: twosigma/maven-cache-cleaner@v1
+
       - uses: jdx/mise-action@v2
 
       - name: "Produce Checkstyle XML: Strict Semantics"
@@ -170,6 +182,8 @@ jobs:
           restore-keys: |
             maven-checkstyle-
             maven-
+
+      - uses: twosigma/maven-cache-cleaner@v1
 
       - uses: jdx/mise-action@v2
 
@@ -202,6 +216,8 @@ jobs:
             maven-checkstyle-
             maven-
 
+      - uses: twosigma/maven-cache-cleaner@v1
+
       - uses: jdx/mise-action@v2
 
       - name: "Produce Checkstyle XML: Strict Formatting"
@@ -230,6 +246,8 @@ jobs:
             maven-rewrite-
             maven-
 
+      - uses: twosigma/maven-cache-cleaner@v1
+
       - uses: jdx/mise-action@v2
 
       - name: Run rewrite-maven-plugin
@@ -251,6 +269,8 @@ jobs:
           restore-keys: |
             maven-reproducible-
             maven-
+
+      - uses: twosigma/maven-cache-cleaner@v1
 
       - uses: jdx/mise-action@v2
 
@@ -275,6 +295,8 @@ jobs:
             maven-spotless-
             maven-
 
+      - uses: twosigma/maven-cache-cleaner@v1
+
       - uses: jdx/mise-action@v2
 
       - name: "Spotless Check: Formats"
@@ -297,6 +319,8 @@ jobs:
           restore-keys: |
             maven-spotless-
             maven-
+
+      - uses: twosigma/maven-cache-cleaner@v1
 
       - uses: jdx/mise-action@v2
 
@@ -321,6 +345,8 @@ jobs:
             maven-spotless-
             maven-
 
+      - uses: twosigma/maven-cache-cleaner@v1
+
       - uses: jdx/mise-action@v2
 
       - name: "Spotless Check: Java Unused Imports"
@@ -343,6 +369,8 @@ jobs:
           restore-keys: |
             maven-spotless-
             maven-
+
+      - uses: twosigma/maven-cache-cleaner@v1
 
       - uses: jdx/mise-action@v2
 
@@ -367,6 +395,8 @@ jobs:
             maven-spotless-
             maven-
 
+      - uses: twosigma/maven-cache-cleaner@v1
+
       - uses: jdx/mise-action@v2
 
       - name: "Spotless Check: Sql"
@@ -389,6 +419,8 @@ jobs:
           restore-keys: |
             maven-spotless-
             maven-
+
+      - uses: twosigma/maven-cache-cleaner@v1
 
       - uses: jdx/mise-action@v2
 
@@ -413,6 +445,8 @@ jobs:
             maven-spotless-
             maven-
 
+      - uses: twosigma/maven-cache-cleaner@v1
+
       - uses: jdx/mise-action@v2
 
       - name: "Spotless Check: Markdown"
@@ -436,6 +470,8 @@ jobs:
             maven-spotless-
             maven-
 
+      - uses: twosigma/maven-cache-cleaner@v1
+
       - uses: jdx/mise-action@v2
 
       - name: "Spotless Check: Json"
@@ -458,6 +494,8 @@ jobs:
           restore-keys: |
             maven-spotless-
             maven-
+
+      - uses: twosigma/maven-cache-cleaner@v1
 
       - uses: jdx/mise-action@v2
 
