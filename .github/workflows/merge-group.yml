@@ -23,12 +23,9 @@ jobs:
             maven-test-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
-      - run: ./mvnw verify
+      - run: mvn verify
 
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
@@ -46,13 +43,10 @@ jobs:
             maven-enforcer-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: Run maven-enforcer-plugin
-        run: ./mvnw verify --activate-profiles maven-enforcer-plugin -DskipTests
+        run: mvn verify --activate-profiles maven-enforcer-plugin -DskipTests
 
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
@@ -70,13 +64,10 @@ jobs:
             maven-dependency-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: Run maven-dependency-plugin
-        run: ./mvnw verify --activate-profiles maven-dependency-plugin -DskipTests
+        run: mvn verify --activate-profiles maven-dependency-plugin -DskipTests
 
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
@@ -94,13 +85,10 @@ jobs:
             maven-javadoc-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: Run maven-javadoc-plugin
-        run: ./mvnw verify --activate-profiles maven-javadoc-plugin -DskipTests
+        run: mvn verify --activate-profiles maven-javadoc-plugin -DskipTests
 
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
@@ -121,13 +109,10 @@ jobs:
             maven-checkstyle-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: "Produce Checkstyle XML: Semantics"
-        run: ./mvnw checkstyle:check --activate-profiles 'checkstyle-semantics' -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcheckstyle.output.format=sarif
+        run: mvn checkstyle:check --activate-profiles 'checkstyle-semantics' -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcheckstyle.output.format=sarif
 
       - uses: github/codeql-action/upload-sarif@v3
         with:
@@ -155,13 +140,10 @@ jobs:
             maven-checkstyle-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: "Produce Checkstyle XML: Strict Semantics"
-        run: ./mvnw checkstyle:check --activate-profiles 'checkstyle-semantics-strict' -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcheckstyle.output.format=sarif
+        run: mvn checkstyle:check --activate-profiles 'checkstyle-semantics-strict' -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcheckstyle.output.format=sarif
 
       - uses: github/codeql-action/upload-sarif@v3
         with:
@@ -189,13 +171,10 @@ jobs:
             maven-checkstyle-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: "Produce Checkstyle XML: Formatting"
-        run: ./mvnw checkstyle:check --activate-profiles 'checkstyle-formatting' -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcheckstyle.output.format=sarif
+        run: mvn checkstyle:check --activate-profiles 'checkstyle-formatting' -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcheckstyle.output.format=sarif
 
       - uses: github/codeql-action/upload-sarif@v3
         with:
@@ -223,13 +202,10 @@ jobs:
             maven-checkstyle-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: "Produce Checkstyle XML: Strict Formatting"
-        run: ./mvnw checkstyle:check --activate-profiles 'checkstyle-formatting-strict' -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcheckstyle.output.format=sarif
+        run: mvn checkstyle:check --activate-profiles 'checkstyle-formatting-strict' -Dcheckstyle.failOnViolation=false -Dcheckstyle.failsOnError=false -Dcheckstyle.output.format=sarif
 
       - uses: github/codeql-action/upload-sarif@v3
         with:
@@ -254,13 +230,10 @@ jobs:
             maven-rewrite-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: Run rewrite-maven-plugin
-        run: ./mvnw install org.openrewrite.maven:rewrite-maven-plugin:dryRun --activate-profiles rewrite-maven-plugin,rewrite-maven-plugin-dryRun -DskipTests
+        run: mvn install org.openrewrite.maven:rewrite-maven-plugin:dryRun --activate-profiles rewrite-maven-plugin,rewrite-maven-plugin-dryRun -DskipTests
 
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
@@ -279,13 +252,10 @@ jobs:
             maven-reproducible-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: Run artifact:check-buildplan
-        run: ./mvnw verify artifact:check-buildplan -DskipTests
+        run: mvn verify artifact:check-buildplan -DskipTests
 
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
@@ -305,13 +275,10 @@ jobs:
             maven-spotless-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: "Spotless Check: Formats"
-        run: ./mvnw spotless:check --activate-profiles 'spotless-check,spotless-formats'
+        run: mvn spotless:check --activate-profiles 'spotless-check,spotless-formats'
 
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
@@ -331,13 +298,10 @@ jobs:
             maven-spotless-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: "Spotless Check: Java Import Order"
-        run: ./mvnw spotless:check --activate-profiles 'spotless-check,spotless-java-sort-imports'
+        run: mvn spotless:check --activate-profiles 'spotless-check,spotless-java-sort-imports'
 
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
@@ -357,13 +321,10 @@ jobs:
             maven-spotless-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: "Spotless Check: Java Unused Imports"
-        run: ./mvnw spotless:check --activate-profiles 'spotless-check,spotless-java-unused-imports'
+        run: mvn spotless:check --activate-profiles 'spotless-check,spotless-java-unused-imports'
 
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
@@ -383,13 +344,10 @@ jobs:
             maven-spotless-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: "Spotless Check: Java cleanthat"
-        run: ./mvnw spotless:check --activate-profiles 'spotless-check,spotless-java-cleanthat'
+        run: mvn spotless:check --activate-profiles 'spotless-check,spotless-java-cleanthat'
 
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
@@ -409,13 +367,10 @@ jobs:
             maven-spotless-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: "Spotless Check: Sql"
-        run: ./mvnw spotless:check --activate-profiles 'spotless-check,spotless-sql'
+        run: mvn spotless:check --activate-profiles 'spotless-check,spotless-sql'
 
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
@@ -435,13 +390,10 @@ jobs:
             maven-spotless-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: "Spotless Check: Pom"
-        run: ./mvnw spotless:check --activate-profiles 'spotless-check,spotless-pom'
+        run: mvn spotless:check --activate-profiles 'spotless-check,spotless-pom'
 
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
@@ -461,13 +413,10 @@ jobs:
             maven-spotless-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: "Spotless Check: Markdown"
-        run: ./mvnw spotless:check --activate-profiles 'spotless-check,spotless-markdown'
+        run: mvn spotless:check --activate-profiles 'spotless-check,spotless-markdown'
 
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
@@ -487,13 +436,10 @@ jobs:
             maven-spotless-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: "Spotless Check: Json"
-        run: ./mvnw spotless:check --activate-profiles 'spotless-check,spotless-json'
+        run: mvn spotless:check --activate-profiles 'spotless-check,spotless-json'
 
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
@@ -513,13 +459,10 @@ jobs:
             maven-spotless-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
       - name: "Spotless Check: Yaml"
-        run: ./mvnw spotless:check --activate-profiles 'spotless-check,spotless-yaml'
+        run: mvn spotless:check --activate-profiles 'spotless-check,spotless-yaml'
 
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
