@@ -22,12 +22,9 @@ jobs:
             maven-coverage-
             maven-
 
-      - uses: actions/setup-java@v4
-        with:
-          java-version-file: .tool-versions
-          distribution: oracle
+      - uses: jdx/mise-action@v2
 
-      - run: ./mvnw verify --activate-profiles jacoco-maven-plugin
+      - run: mvn verify --activate-profiles jacoco-maven-plugin
 
       - uses: madrapps/jacoco-report@v1.7.1
         with:
