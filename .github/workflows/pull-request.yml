@@ -18,10 +18,9 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          key: maven-coverage-${{ hashFiles('**/pom.xml') }}
+          key: maven-${{ hashFiles('**/pom.xml') }}
           path: ~/.m2/repository
           restore-keys: |
-            maven-coverage-
             maven-
 
       - uses: twosigma/maven-cache-cleaner@v1

@@ -19,10 +19,9 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          key: maven-test-${{ hashFiles('**/pom.xml') }}
+          key: maven-${{ hashFiles('**/pom.xml') }}
           path: ~/.m2/repository
           restore-keys: |
-            maven-test-
             maven-
 
       - uses: twosigma/maven-cache-cleaner@v1
@@ -42,10 +41,9 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          key: maven-enforcer-${{ hashFiles('**/pom.xml') }}
+          key: maven-${{ hashFiles('**/pom.xml') }}
           path: ~/.m2/repository
           restore-keys: |
-            maven-enforcer-
             maven-
 
       - uses: twosigma/maven-cache-cleaner@v1
@@ -66,10 +64,9 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          key: maven-dependency-${{ hashFiles('**/pom.xml') }}
+          key: maven-${{ hashFiles('**/pom.xml') }}
           path: ~/.m2/repository
           restore-keys: |
-            maven-dependency-
             maven-
 
       - uses: twosigma/maven-cache-cleaner@v1
@@ -90,10 +87,9 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          key: maven-javadoc-${{ hashFiles('**/pom.xml') }}
+          key: maven-${{ hashFiles('**/pom.xml') }}
           path: ~/.m2/repository
           restore-keys: |
-            maven-javadoc-
             maven-
 
       - uses: twosigma/maven-cache-cleaner@v1
@@ -275,10 +271,9 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          key: maven-reproducible-${{ hashFiles('**/pom.xml') }}
+          key: maven-${{ hashFiles('**/pom.xml') }}
           path: ~/.m2/repository
           restore-keys: |
-            maven-reproducible-
             maven-
 
       - uses: twosigma/maven-cache-cleaner@v1
@@ -301,7 +296,7 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          key: maven-spotless-formats-${{ hashFiles('**/pom.xml') }}
+          key: maven-spotless-${{ hashFiles('**/pom.xml') }}
           path: ~/.m2/repository
           restore-keys: |
             maven-spotless-
@@ -327,7 +322,7 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          key: maven-spotless-java-sort-imports-${{ hashFiles('**/pom.xml') }}
+          key: maven-spotless-${{ hashFiles('**/pom.xml') }}
           path: ~/.m2/repository
           restore-keys: |
             maven-spotless-
@@ -353,7 +348,7 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          key: maven-spotless-java-unused-imports-${{ hashFiles('**/pom.xml') }}
+          key: maven-spotless-${{ hashFiles('**/pom.xml') }}
           path: ~/.m2/repository
           restore-keys: |
             maven-spotless-
@@ -379,7 +374,7 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          key: maven-spotless-java-cleanthat-${{ hashFiles('**/pom.xml') }}
+          key: maven-spotless-${{ hashFiles('**/pom.xml') }}
           path: ~/.m2/repository
           restore-keys: |
             maven-spotless-
@@ -405,7 +400,7 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          key: maven-spotless-sql-${{ hashFiles('**/pom.xml') }}
+          key: maven-spotless-${{ hashFiles('**/pom.xml') }}
           path: ~/.m2/repository
           restore-keys: |
             maven-spotless-
@@ -431,7 +426,7 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          key: maven-spotless-pom-${{ hashFiles('**/pom.xml') }}
+          key: maven-spotless-${{ hashFiles('**/pom.xml') }}
           path: ~/.m2/repository
           restore-keys: |
             maven-spotless-
@@ -457,7 +452,7 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          key: maven-spotless-markdown-${{ hashFiles('**/pom.xml') }}
+          key: maven-spotless-${{ hashFiles('**/pom.xml') }}
           path: ~/.m2/repository
           restore-keys: |
             maven-spotless-
@@ -483,7 +478,7 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          key: maven-spotless-json-${{ hashFiles('**/pom.xml') }}
+          key: maven-spotless-${{ hashFiles('**/pom.xml') }}
           path: ~/.m2/repository
           restore-keys: |
             maven-spotless-
@@ -509,7 +504,7 @@ jobs:
 
       - uses: actions/cache@v4
         with:
-          key: maven-spotless-yaml-${{ hashFiles('**/pom.xml') }}
+          key: maven-spotless-${{ hashFiles('**/pom.xml') }}
           path: ~/.m2/repository
           restore-keys: |
             maven-spotless-
