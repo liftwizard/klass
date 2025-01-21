@@ -1,3 +1,5 @@
+# Jobs that run on pull_request, but not on merge_group. This is useful for jobs that post comments on Pull Requests, like a code coverage report or a preview of rendered docs.
+
 on:
   pull_request:
 
