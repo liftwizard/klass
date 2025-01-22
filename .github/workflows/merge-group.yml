@@ -545,7 +545,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: reviewdog/action-languagetool@v1.20.0
+      - uses: reviewdog/action-languagetool@v1.20.2
         with:
           reporter: github-pr-check
 
@@ -553,7 +553,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: reviewdog/action-actionlint@v1.60.0
+      - uses: reviewdog/action-actionlint@v1.64.1
         with:
           reporter: github-pr-check
           fail_on_error: true
@@ -563,7 +563,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: reviewdog/action-shellcheck@v1.28.0
+      - uses: reviewdog/action-shellcheck@v1.29.0
         with:
           reporter: github-pr-check
           fail_on_error: true
