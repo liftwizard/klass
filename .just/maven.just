@@ -83,12 +83,10 @@ spotless-all MVN=default_mvn: _check-local-modifications clean (mvn MVN "spotles
 reproducible MVN=default_mvn: (mvn MVN "verify artifact:check-buildplan" "" skip_tests_flags) && _check-local-modifications
 
 # mvn rewrite
-@rewrite-dry-run MVN=default_mvn:
-    just _run "{{MVN}} {{ANSI_GREEN}}install{{ANSI_DEFAULT}} -DskipTests org.openrewrite.maven:rewrite-maven-plugin:dryRun {{ANSI_BLUE}}--activate-profiles rewrite-maven-plugin,rewrite-maven-plugin-dryRun"
+rewrite-dry-run MVN=default_mvn: _check-local-modifications clean (mvn MVN "install org.openrewrite.maven:rewrite-maven-plugin:dryRun" "--activate-profiles rewrite-maven-plugin,rewrite-maven-plugin-dryRun" skip_tests_flags) && _check-local-modifications
 
 # mvn rewrite
-@rewrite RECIPE: && _check-local-modifications
-    just _run "mvn {{ANSI_MAGENTA}}--threads 1 -U -DskipTests{{ANSI_DEFAULT}} org.openrewrite.maven:rewrite-maven-plugin:run -Drewrite.activeRecipes={{ANSI_YELLOW}}{{RECIPE}}{{ANSI_DEFAULT}}"
+rewrite RECIPE MVN=default_mvn: _check-local-modifications clean (mvn MVN "install org.openrewrite.maven:rewrite-maven-plugin:run" ("--activate-profiles rewrite-maven-plugin -Drewrite.activeRecipes=" + RECIPE) skip_tests_flags) && _check-local-modifications
 
 # mvn display updates (dependencies, plugins, properties)
 @display-updates:
