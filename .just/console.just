@@ -63,7 +63,7 @@ ANSI_BG_BRIGHT_WHITE := `tput setab 15`
 
 @_run cmd:
     echo "{{ANSI_BOLD}}Running command: {{ANSI_NORMAL}}{{ cmd }}{{ANSI_NORMAL}}"
-    eval "$(echo "{{ cmd }}" | npx --yes strip-ansi-cli)"
+    eval "$(echo "{{ cmd }}" | strip-ansi)"
 
 @demo-console-colors:
     #!/usr/bin/env bash
