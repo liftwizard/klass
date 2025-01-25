@@ -22,6 +22,9 @@ mise:
 # clean (maven and git)
 @clean: _clean-git _clean-maven _clean-m2
 
+markdownlint:
+    markdownlint --config .markdownlint.jsonc  --fix .
+
 # Count lines of code
 scc:
     scc **/src/{main,test}
