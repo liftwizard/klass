@@ -19,12 +19,14 @@ jobs:
 
       - uses: actions/setup-java@v4
         with:
-          java-version-file: .tool-versions
+          java-version: 17.0.10
           distribution: oracle
           server-id: ossrh
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+
+      - uses: jdx/mise-action@v2
 
       - name: Publish package
         # For some reason this has to be `mvn`
