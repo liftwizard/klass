@@ -109,7 +109,7 @@ rewrite RECIPE MVN=default_mvn: _check-local-modifications clean (mvn MVN "insta
     just _run "mvn {{ANSI_MAGENTA}}--threads 1{{ANSI_DEFAULT}} wrapper:wrapper -Dmaven={{ANSI_YELLOW}}{{VERSION}}{{ANSI_DEFAULT}}"
 
 # mvn release:prepare
-release: clean _check-local-modifications && _clean-git _check-local-modifications
+release: clean _check-local-modifications && _clean-git (spotless "json") _check-local-modifications
     #!/usr/bin/env bash
     set -Eeuo pipefail
 
