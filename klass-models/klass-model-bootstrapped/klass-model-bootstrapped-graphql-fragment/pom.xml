@@ -19,7 +19,7 @@
     <parent>
         <groupId>cool.klass</groupId>
         <artifactId>klass-model-bootstrapped</artifactId>
-        <version>0.4.0-SNAPSHOT</version>
+        <version>0.4.0</version>
     </parent>
 
     <artifactId>klass-model-bootstrapped-graphql-fragment</artifactId>
@@ -33,7 +33,7 @@
             <plugin>
                 <groupId>cool.klass</groupId>
                 <artifactId>klass-generator-graphql-fragment-plugin</artifactId>
-                <version>0.4.0-SNAPSHOT</version>
+                <version>0.4.0</version>
 
                 <configuration>
                     <klassSourcePackages>
