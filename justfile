@@ -12,7 +12,7 @@ import ".just/git-test.just"
 # Setup the project (mise) and run the default build (mvn)
 default: mise mvn
 
-# mise install
+# `mise install`
 mise:
     mise install --quiet
     mise current
