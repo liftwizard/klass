@@ -1,4 +1,4 @@
-# set up git-test
+# set up `git-test`
 setup-git-test:
     # Combined
     git test add --forget --test default                      'just clean _check-local-modifications mvn'
@@ -86,13 +86,14 @@ test-results:
         ((current++))
     done
 
-# Fix the current commit and rebase
+# Fix the current commit and `git rebase`
 test-fix:
     git add --update
     git commit --fixup HEAD
     just _check-local-modifications
     cat JUSTFILE_BRANCH
     git rebase --onto HEAD HEAD^ $(cat JUSTFILE_BRANCH)
+    git checkout $(cat JUSTFILE_BRANCH)
     just rebase
     cat JUSTFILE_BRANCH
     rm JUSTFILE_BRANCH

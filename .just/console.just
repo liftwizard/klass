@@ -61,10 +61,12 @@ ANSI_BG_BRIGHT_MAGENTA := `tput setab 13`
 ANSI_BG_BRIGHT_CYAN := `tput setab 14`
 ANSI_BG_BRIGHT_WHITE := `tput setab 15`
 
-@_run cmd:
-    echo "{{ANSI_BOLD}}Running command: {{ANSI_NORMAL}}{{ cmd }}{{ANSI_NORMAL}}"
-    eval "$(echo "{{ cmd }}" | strip-ansi)"
+# Run command, stripping ansi color codes
+@_run command:
+    echo "{{ANSI_BOLD}}Running command: {{ANSI_NORMAL}}{{command}}{{ANSI_NORMAL}}"
+    eval "$(echo "{{command}}" | strip-ansi)"
 
+# `echo` text in each color
 @demo-console-colors:
     #!/usr/bin/env bash
     set -uo pipefail
