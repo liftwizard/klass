@@ -31,7 +31,7 @@ fail_fast := env('FAIL_FAST', "false")
 
 git_tests := env('GIT_TESTS', "--tests default,checkstyle,spotless-all")
 
-# git-test on the range of commits between a configurable upstream/main and {{BRANCH}}
+# `git-test` on the range of commits between a configurable upstream/main and {{BRANCH}}
 test-branch BRANCH="HEAD" TESTS=git_tests *FLAGS="--retest --verbose --verbose":
     #!/usr/bin/env bash
     branch="{{BRANCH}}"
