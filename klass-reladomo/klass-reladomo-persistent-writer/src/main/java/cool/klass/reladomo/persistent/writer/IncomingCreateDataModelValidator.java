@@ -178,6 +178,7 @@ public class IncomingCreateDataModelValidator
         }
         else if (dataTypeProperty.isCreatedOn())
         {
+            // Ignored
         }
         else if (dataTypeProperty.isVersion())
         {
