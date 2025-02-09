@@ -88,12 +88,25 @@ test-results:
 
 # Fix the current commit and `git rebase`
 test-fix:
-    git add --update
-    git commit --fixup HEAD
+    #!/usr/bin/env bash
+    set -Eeuo pipefail
+
+    echo "{{ANSI_BOLD}}Staging changes.{{ANSI_NORMAL}}"
+    just _run "git add --update"
+
+    echo "{{ANSI_BOLD}}Committing fixup.{{ANSI_NORMAL}}"
+    just _run "git commit --fixup {{ANSI_BOLD}}{{ANSI_CYAN}}HEAD{{ANSI_NORMAL}}"
+
+    echo "{{ANSI_BOLD}}Checking for unstaged files.{{ANSI_NORMAL}}"
     just _check-local-modifications
-    cat JUSTFILE_BRANCH
-    git rebase --onto HEAD HEAD^ $(cat JUSTFILE_BRANCH)
-    git checkout $(cat JUSTFILE_BRANCH)
-    just rebase
-    cat JUSTFILE_BRANCH
-    rm JUSTFILE_BRANCH
+
+    BRANCH=$(cat JUSTFILE_BRANCH)
+    echo "Rebasing the last branch used with just test-fix: {{ANSI_BRIGHT_GREEN}}{{ANSI_BOLD}}$BRANCH{{ANSI_NORMAL}}"
+    just _run "git rebase --onto HEAD HEAD^ {{ANSI_BRIGHT_GREEN}}{{ANSI_BOLD}}$BRANCH{{ANSI_NORMAL}}"
+    just _run "git checkout $BRANCH"
+
+    echo "{{ANSI_BOLD}}Squashing changes.{{ANSI_NORMAL}}"
+    just _run "just rebase"
+
+    echo "{{ANSI_BOLD}}Cleaning up.{{ANSI_NORMAL}}"
+    just _run "rm {{ANSI_YELLOW}}JUSTFILE_BRANCH{{ANSI_NORMAL}}"
