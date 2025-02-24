@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#MISE description="Build the Maven archetype"
+
+#USAGE flag "--mvn <mvn>"              help="The Maven command to use" default=""
+
+set -Eeuo pipefail
+
+source .mise/tasks/console/ansi-colors
+
+mvn_cmd="${usage_mvn}"
+if [ -z "$mvn_cmd" ]; then
+    mvn_cmd="mise run maven"
+fi
+
+mise run console:run "${mvn_cmd} ${ANSI_GREEN}install${ANSI_DEFAULT} --also-make --projects klass-maven-archetype"
