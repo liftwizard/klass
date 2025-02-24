@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#MISE description="Generate a repomix file for the mise tasks migration work"
+#MISE sources=[".mise/**", ".just/*.just", "justfile", ".envrc"]
+#MISE outputs=["repomix-output-mise-tasks.txt"]
+
+set -Eeuo pipefail
+
+repomix --include ".mise/,.just/*.just,justfile,.envrc" --output-show-line-numbers --output repomix-output-mise-tasks.txt

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#MISE description="Generate a repomix file"
+#MISE outputs=["repomix-output.txt"]
+
+set -Eeuo pipefail
+
+repomix --output-show-line-numbers

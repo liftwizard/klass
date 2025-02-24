@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+#MISE description="Run Maven with configurable target, profiles, and flags"
+#USAGE flag "--mvn <mvn_binary>"         help="Maven binary to use"
+#USAGE flag "--target <target>"          help="Maven phase to execute"
+#USAGE flag "--profiles <profiles>"      help="Maven profiles to activate"
+#USAGE flag "--flags <flags>"            help="Additional Maven flags"
+#USAGE flag "--echo-cmd <echo_command>"  help="Command to echo error messages"
+
+set -Eeuo pipefail
+
+# TODO Change --target to a positional argument
+
+
+# Fallback to environment variables if flags aren't provided
+mvn_binary="${usage_mvn:-${MVN_BINARY}}"
+target="${usage_target:-${MVN_TARGET}}"
+profiles="${usage_profiles:-${MVN_PROFILES}}"
+flags="${usage_flags:-${MVN_FLAGS}}"
+echo_cmd="${usage_echo_cmd:-${ECHO_COMMAND}}"
+
+source .mise/tasks/console/ansi-colors
+
+# Determine if we should skip Maven execution based on the commit message.
+COMMIT_MESSAGE=$(git log --format=%B -n 1 HEAD)
+SKIPPABLE_WORDS=("skip" "pass" "stop" "fail")
+
+for word in "${SKIPPABLE_WORDS[@]}"; do
+  if [[ "$COMMIT_MESSAGE" == *"[$word]"* ]]; then
+    echo "Skipping Maven execution due to [$word] in commit: '$COMMIT_MESSAGE'"
+        exit 0
+    fi
+done
+
+# Use colors to highlight non-default values.
+if [ "$mvn_binary" = "mvn" ]; then MVN_COLOR="${ANSI_GRAY}"; else MVN_COLOR="${ANSI_MAGENTA}"; fi
+if [ "$target" = "verify" ]; then TARGET_COLOR="${ANSI_GRAY}"; else TARGET_COLOR="${ANSI_GREEN}"; fi
+if [ "$profiles" = "--activate-profiles maven-enforcer-plugin,maven-dependency-plugin,maven-javadoc-plugin,checkstyle-semantics,checkstyle-formatting,spotless-apply,spotless-formats,spotless-java-sort-imports,spotless-java-unused-imports,spotless-java-cleanthat,spotless-sql,spotless-pom,spotless-markdown,spotless-json,spotless-yaml" ]; then
+  PROFILES_COLOR="${ANSI_GRAY}"
+else
+  PROFILES_COLOR="${ANSI_BLUE}"
+fi
+if [ "$flags" = "--threads 2C" ]; then FLAGS_COLOR="${ANSI_GRAY}"; else FLAGS_COLOR="${ANSI_MAGENTA}"; fi
+
+CMD="${MVN_COLOR}${mvn_binary}${ANSI_DEFAULT} ${TARGET_COLOR}${target}${ANSI_DEFAULT} ${FLAGS_COLOR}${flags}${ANSI_DEFAULT} ${PROFILES_COLOR}${profiles}${ANSI_DEFAULT}"
+
+mise run console:run "$CMD"
+
+EXIT_CODE=$?
+
+if [ $EXIT_CODE -eq 0 ]; then
+    exit 0
+fi
+
+DIRECTORY=$(basename "$(pwd)")
+MESSAGE="Failed in directory ${DIRECTORY} on commit: '${COMMIT_MESSAGE}' with exit code ${EXIT_CODE}"
+$echo_cmd "$MESSAGE"
+exit $EXIT_CODE
+

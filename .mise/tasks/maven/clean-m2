@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#MISE description="Clean Maven local repository snapshots for the project group"
+#MISE hide=true
+
+set -Eeuo pipefail
+
+# Remove snapshot artifacts under the given group path.
+rm -rf ~/.m2/repository/${GROUP_ID}/**/*-SNAPSHOT
+exit 0

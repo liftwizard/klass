@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+#MISE description="`mvn verify` without tests"
+#MISE depends=["git:check-local-modifications"]
+
+#USAGE flag "--mvn <mvn_binary>"  help="Maven binary to use" default="mvnd"
+#USAGE flag "--flags <flags>"      help="Flags to pass to Maven (including test-skipping)" default="--threads 2C -DskipTests"
+
+set -Eeuo pipefail
+
+mise run maven --mvn "$usage_mvn" --target verify --flags "$usage_flags"
+
+mise run git:check-local-modifications

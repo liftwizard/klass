@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#MISE description="Prompt llm with repomix output attachment"
+#MISE depends=["llm:repomix:mise-tasks"]
+#USAGE flag "-m --model <model>" help="LLM model to use" default="claude-3.7-sonnet"
+#USAGE complete "model" run="llm models | cut -d':' -f2 | cut -d' ' -f2"
+#USAGE flag "-s --prompt <prompt>" help="Prompt to pass along to llm"
+
+set -Eeuo pipefail
+
+if [ -z "${usage_prompt}" ]; then
+  echo "Error: --prompt flag is required"
+  exit 1
+fi
+
+cat repomix-output-mise-tasks.txt | llm prompt \
+  --model "${usage_model}" \
+  --option max_tokens 128000 \
+  --option thinking_budget 4000 \
+  '${usage_prompt}'
+

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+#MISE description="`mvn clean`"
+#MISE hide=true
+#USAGE flag "--mvn <mvn_binary>"   help="Maven binary to use" default="mvnd"
+#USAGE flag "--flags <flags>"      help="Additional Maven flags" default="--threads 2C"
+
+set -Eeuo pipefail
+
+mise run maven --mvn "$usage_mvn" --target clean --flags "$usage_flags"
+
+mise run console:run 'git clean --quiet --force -dx release.properties **/pom.xml.releaseBackup **/target'
