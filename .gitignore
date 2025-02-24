@@ -4,6 +4,7 @@ JUSTFILE_BRANCH
 # Project-specific
 _book
 spy.log
+.worktrees/
 
 # Java
 hs_err_pid*
