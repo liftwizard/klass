@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#MISE description="Git rebase onto configurable upstream/main"
+#MISE depends=["git:check-local-modifications", "git:fetch"]
+#MISE raw=true
+
+set -Eeuo pipefail
+
+source .mise/tasks/console/ansi-colors
+
+upstream_remote="${UPSTREAM_REMOTE:-upstream}"
+upstream_branch="${UPSTREAM_BRANCH:-main}"
+
+mise run console:run "git rebase --interactive --autosquash --rebase-merges --update-refs ${ANSI_BRIGHT_RED}${ANSI_BOLD}${upstream_remote}/${upstream_branch}${ANSI_NORMAL}"
