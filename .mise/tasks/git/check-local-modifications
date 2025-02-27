@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-
 #MISE description="Fail if there are local modifications or untracked files"
-
 #USAGE flag "--echo-cmd <echo_command>"  help="Command to echo error messages"
 
 set -uo pipefail
