@@ -4,16 +4,23 @@ maven = "3.9.9"
 mvnd = "1.0.2"
 node = "22.13.1"
 "npm:markdownlint-cli" = "0.44.0"
-"npm:repomix" = "0.2.29"
+"npm:repomix" = "latest"
 "npm:strip-ansi-cli" = "4.0.0"
 
 [alias]
 mvnd = "asdf:https://github.com/joschi/asdf-mvnd"
 
 [env]
+ECHO_COMMAND = "echo"
+OFFLINE = "false"
+
+# Maven-related environment variables
 GROUP_ID = "cool/klass"
 MVN_BINARY   = "mvn"
 MVN_TARGET   = "verify"
 MVN_PROFILES = "--activate-profiles maven-enforcer-plugin,maven-dependency-plugin,maven-javadoc-plugin,checkstyle-semantics,checkstyle-formatting,spotless-apply,spotless-formats,spotless-java-sort-imports,spotless-java-unused-imports,spotless-java-cleanthat,spotless-sql,spotless-pom,spotless-markdown,spotless-json,spotless-yaml"
 MVN_FLAGS    = "--threads 2C"
-ECHO_COMMAND = "echo"
+
+# Git-related environment variables
+UPSTREAM_REMOTE = "upstream"
+UPSTREAM_BRANCH = "main"
