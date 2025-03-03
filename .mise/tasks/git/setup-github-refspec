@@ -15,8 +15,28 @@ if [ -z "$remote_url" ]; then
     exit 0
 fi
 
-# Check if the remote URL indicates a GitHub remote.
-if ! echo "$remote_url" | grep -qi 'github\.'; then
+# Check if the remote URL directly indicates a GitHub remote
+is_github=false
+if echo "$remote_url" | grep -qi 'github\.'; then
+    is_github=true
+else
+    # Extract the host part from SSH URLs like "Host:path" or "git@Host:path"
+    if [[ "$remote_url" =~ ^([^@]+@)?([^:]+): ]]; then
+        host_alias="${BASH_REMATCH[2]}"
+
+        # Use ssh -G to get the resolved hostname for the alias
+        if command -v ssh >/dev/null 2>&1; then
+            resolved_hostname=$(ssh -G "$host_alias" 2>/dev/null | grep "^hostname " | awk '{print $2}')
+
+            # Check if the resolved hostname is github.com
+            if [[ -n "$resolved_hostname" ]] && [[ "$resolved_hostname" == *"github.com"* ]]; then
+                is_github=true
+            fi
+        fi
+    fi
+fi
+
+if [ "$is_github" = false ]; then
     echo "${ANSI_BRIGHT_YELLOW}${ANSI_BOLD}Warning:${ANSI_NORMAL} Remote ${ANSI_BRIGHT_RED}${ANSI_BOLD}${REMOTE}${ANSI_NORMAL} exists, but is not a GitHub URL (found: ${remote_url})."
     exit 0
 fi
