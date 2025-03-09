@@ -369,6 +369,7 @@ public abstract class AntlrClassifier
         this.reportCircularInheritance(compilerAnnotationHolder);
         this.reportPropertyDeclarationOrder(compilerAnnotationHolder);
         this.reportDuplicateAssociationEndSignatureNames(compilerAnnotationHolder);
+        this.reportRedundantTemporalModifiers(compilerAnnotationHolder);
     }
 
     private void reportDuplicatePropertyNames(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
@@ -494,6 +495,31 @@ public abstract class AntlrClassifier
             }
             associationEndSignature.reportErrors(compilerAnnotationHolder);
         }
+    }
+
+    private void reportRedundantTemporalModifiers(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+    {
+        boolean hasSystemTemporal = this.declaredModifiers.anySatisfy(AntlrModifier::isSystemTemporal);
+        boolean hasValidTemporal = this.declaredModifiers.anySatisfy(AntlrModifier::isValidTemporal);
+        boolean hasBitemporal = this.declaredModifiers.anySatisfy(AntlrModifier::isBitemporal);
+
+        if (!hasBitemporal || !hasSystemTemporal && !hasValidTemporal)
+        {
+            return;
+        }
+
+        MutableList<AntlrModifier> temporalModifiers = this.declaredModifiers
+                .select(AntlrModifier::isTemporal);
+
+        String message = String.format(
+                "Class '%s' has redundant temporal modifiers. The 'bitemporal' modifier is redundant with 'systemTemporal' and 'validTemporal'.",
+                this.getName());
+
+        compilerAnnotationHolder.add(
+                "ERR_RED_TMP",
+                message,
+                this,
+                temporalModifiers.collect(AntlrModifier::getElementContext).toImmutable());
     }
 
     protected void reportCircularInheritance(CompilerAnnotationHolder compilerAnnotationHolder)

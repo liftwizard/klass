@@ -1,0 +1,9 @@
+package cool.klass.model.converter.compiler.annotation.temporal
+
+class ClassWithRedundantTemporalModifiers
+    systemTemporal
+    validTemporal
+    bitemporal
+{
+    key: String key;
+}
