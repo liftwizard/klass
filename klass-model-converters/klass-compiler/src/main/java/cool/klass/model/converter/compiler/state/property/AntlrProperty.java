@@ -107,6 +107,11 @@ public abstract class AntlrProperty
         return this.getModifiers().anySatisfy(AntlrModifier::isLastUpdatedBy);
     }
 
+    public boolean isDerived()
+    {
+        return this.getModifiers().anySatisfy(AntlrModifier::isDerived);
+    }
+
     public int getNumModifiers()
     {
         return this.modifiers.size();
@@ -146,6 +151,7 @@ public abstract class AntlrProperty
         this.reportDuplicateModifiers(compilerAnnotationHolder);
         this.reportDuplicateAuditModifiers(compilerAnnotationHolder);
         this.reportInvalidAuditProperties(compilerAnnotationHolder);
+        this.reportDerivedPrivateProperty(compilerAnnotationHolder);
     }
 
     private void reportDuplicateModifiers(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
@@ -281,6 +287,24 @@ public abstract class AntlrProperty
                 this.getOwningClassifier().getName(),
                 this.getName());
         compilerAnnotationHolder.add("ERR_PRP_REF", message, this, severity);
+    }
+
+    public void reportDerivedPrivateProperty(CompilerAnnotationHolder compilerAnnotationHolder)
+    {
+        if (this.isDerived() && this.isPrivate())
+        {
+            AntlrModifier derivedModifier = this.getModifiers().detect(AntlrModifier::isDerived);
+            AntlrModifier privateModifier = this.getModifiers().detect(AntlrModifier::isPrivate);
+
+            String message = String.format(
+                    "Derived property '%s' may not be private. Remove the 'private' modifier.",
+                    this);
+            compilerAnnotationHolder.add(
+                    "ERR_DRV_PRI",
+                    message,
+                    this,
+                    Lists.immutable.with(derivedModifier.getElementContext(), privateModifier.getElementContext()));
+        }
     }
     // </editor-fold>
 

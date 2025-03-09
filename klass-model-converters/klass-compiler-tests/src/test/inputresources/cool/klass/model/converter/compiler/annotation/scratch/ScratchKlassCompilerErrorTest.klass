@@ -1,15 +1,6 @@
 package scratch
 
-// #1: Derived properties should not be private
-class ClassWithPrivateDerived
-{
-    key: String key;
-
-    // TODO: Derived properties should not be private
-    value: String derived private;
-}
-
-// #2: Macros on the parents and children should not result in duplicate fields
+// TODO #2: Macros on the parents and children should not result in duplicate fields
 class SuperClassWithSameMacro
     abstract
     systemTemporal

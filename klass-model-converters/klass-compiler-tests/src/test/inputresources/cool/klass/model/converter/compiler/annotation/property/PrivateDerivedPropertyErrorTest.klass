@@ -1,0 +1,7 @@
+package cool.klass.model.converter.compiler.annotation.property
+
+class ClassWithPrivateDerived
+{
+    key: String key;
+    value: String derived private;
+}
