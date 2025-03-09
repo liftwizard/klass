@@ -185,6 +185,26 @@ public class AntlrModifier
         return this.is("transient");
     }
 
+    public boolean isSystemTemporal()
+    {
+        return this.is("systemTemporal");
+    }
+
+    public boolean isValidTemporal()
+    {
+        return this.is("validTemporal");
+    }
+
+    public boolean isBitemporal()
+    {
+        return this.is("bitemporal");
+    }
+
+    public boolean isTemporal()
+    {
+        return this.isSystemTemporal() || this.isValidTemporal() || this.isBitemporal();
+    }
+
     @Nonnull
     public ModifierBuilder build()
     {

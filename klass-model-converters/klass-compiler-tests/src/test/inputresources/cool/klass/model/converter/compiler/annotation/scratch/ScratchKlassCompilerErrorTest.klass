@@ -27,15 +27,6 @@ class SubClassWithSameMacro
     childData: String;
 }
 
-// #3: We should not allow redudant temporal modifiers
-class ClassWithRedunantTemporalModifiers
-    systemTemporal
-    validTemporal
-    bitemporal
-{
-    key: String key;
-}
-
 // #4: Temporal interface
 interface TemporalInterface
     systemTemporal
