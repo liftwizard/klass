@@ -68,7 +68,6 @@ import cool.klass.model.meta.grammar.KlassParser.ServiceGroupDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.TopLevelDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlDeclarationContext;
 
-// TODO: Null checks could be replaced by flags indicating whether certain data is populated yet based on the current phase.
 public class CompilerWalkState
 {
     private final AntlrDomainModel domainModel;
