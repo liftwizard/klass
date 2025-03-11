@@ -36,7 +36,6 @@ import cool.klass.model.meta.grammar.KlassLexer;
 import cool.klass.model.meta.grammar.KlassParser;
 import org.antlr.v4.runtime.ANTLRErrorListener;
 import org.antlr.v4.runtime.BufferedTokenStream;
-import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -60,8 +59,6 @@ public final class CompilationUnit
     @Nonnull
     private final String                            sourceCodeText;
     @Nonnull
-    private final CharStream                        charStream;
-    @Nonnull
     private final BufferedTokenStream               tokenStream;
     @Nonnull
     private final ParserRuleContext                 parserContext;
@@ -73,7 +70,6 @@ public final class CompilationUnit
             @Nonnull Optional<AntlrElement> macroElement,
             @Nonnull String sourceName,
             @Nonnull String sourceCodeText,
-            @Nonnull CharStream charStream,
             @Nonnull BufferedTokenStream tokenStream,
             @Nonnull ParserRuleContext parserRuleContext)
     {
@@ -81,7 +77,6 @@ public final class CompilationUnit
         this.macroElement   = Objects.requireNonNull(macroElement);
         this.sourceName     = Objects.requireNonNull(sourceName);
         this.sourceCodeText = Objects.requireNonNull(sourceCodeText);
-        this.charStream     = Objects.requireNonNull(charStream);
         this.tokenStream    = Objects.requireNonNull(tokenStream);
         this.parserContext  = Objects.requireNonNull(parserRuleContext);
 
@@ -247,7 +242,6 @@ public final class CompilationUnit
                 macroElement,
                 sourceName,
                 sourceCodeText,
-                charStream,
                 tokenStream,
                 parserRuleContext);
     }
@@ -291,12 +285,7 @@ public final class CompilationUnit
     @Override
     public String toString()
     {
-        // TODO: Remove charStream field if this assertion never fails
-        if (!this.sourceName.equals(this.charStream.getSourceName()))
-        {
-            throw new AssertionError(this.sourceName + ", " + this.charStream.getSourceName());
-        }
-        return this.charStream.getSourceName();
+        return this.sourceName;
     }
 
     public SourceCodeBuilderImpl build()
