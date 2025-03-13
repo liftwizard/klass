@@ -16,8 +16,16 @@
 
 package cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public record ColorSchemeRule(
+        @NotBlank(message = "Rule name is required")
         String name,
+
+        @NotNull(message = "Style settings are required")
+        @Valid
         StyleSettings style)
 {
 }
