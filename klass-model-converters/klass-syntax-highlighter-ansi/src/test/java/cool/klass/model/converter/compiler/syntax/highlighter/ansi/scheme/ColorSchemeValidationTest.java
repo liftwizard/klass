@@ -30,9 +30,8 @@ import io.dropwizard.jersey.validation.Validators;
 import io.liftwizard.serialization.jackson.config.ObjectMapperConfig;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ColorSchemeValidationTest
 {
@@ -70,7 +69,9 @@ class ColorSchemeValidationTest
                 .sorted()
                 .toList();
 
-        assertTrue(actualViolationMessages.isEmpty(), "Should have no violations for valid scheme");
+        assertThat(actualViolationMessages)
+                .as("There should be no validation violations for a valid scheme")
+                .isEmpty();
     }
 
     @Test
@@ -99,12 +100,9 @@ class ColorSchemeValidationTest
                 .sorted()
                 .toList();
 
-        List<String> expectedViolationMessages = List.of("Color scheme name is required");
-
-        assertEquals(
-                expectedViolationMessages,
-                actualViolationMessages,
-                "Should have correct violation message for missing name");
+        assertThat(actualViolationMessages)
+                .as("Should have correct violation message for missing name")
+                .containsExactly("Color scheme name is required");
     }
 
     @Test
@@ -133,12 +131,9 @@ class ColorSchemeValidationTest
                 .sorted()
                 .toList();
 
-        List<String> expectedViolationMessages = List.of("Color scheme description is required");
-
-        assertEquals(
-                expectedViolationMessages,
-                actualViolationMessages,
-                "Should have correct violation message for null description");
+        assertThat(actualViolationMessages)
+                .as("Should have correct violation message for null description")
+                .containsExactly("Color scheme description is required");
     }
 
     @Test
@@ -160,14 +155,11 @@ class ColorSchemeValidationTest
                 .sorted()
                 .toList();
 
-        List<String> expectedViolationMessages = List.of(
-                "Color scheme must define a 'background' rule",
-                "Color scheme must define at least one rule");
-
-        assertEquals(
-                expectedViolationMessages,
-                actualViolationMessages,
-                "Should have correct violation message for empty rules");
+        assertThat(actualViolationMessages)
+                .as("Should have correct violation messages for empty rules")
+                .containsExactlyInAnyOrder(
+                        "Color scheme must define a 'background' rule",
+                        "Color scheme must define at least one rule");
     }
 
     @Test
@@ -196,13 +188,9 @@ class ColorSchemeValidationTest
                 .sorted()
                 .toList();
 
-        List<String> expectedViolationMessages = List.of(
-                "Color scheme must define a 'background' rule");
-
-        assertEquals(
-                expectedViolationMessages,
-                actualViolationMessages,
-                "Should have correct violation message for missing background rule");
+        assertThat(actualViolationMessages)
+                .as("Should have correct violation message for missing background rule")
+                .containsExactly("Color scheme must define a 'background' rule");
     }
 
     @Test
@@ -237,17 +225,16 @@ class ColorSchemeValidationTest
                 .sorted()
                 .toList();
 
-        List<String> expectedViolationMessages = List.of("Invalid foreground color value");
-
-        assertEquals(
-                expectedViolationMessages,
-                actualViolationMessages,
-                "Should have correct violation message for invalid color name");
+        assertThat(actualViolationMessages)
+                .as("Should have correct violation message for invalid color name")
+                .containsExactly("Invalid foreground color value");
 
         // Also check the detailed error in the logs
         Set<ConstraintViolation<ColorSchemeRule>> ruleViolations = this.validator.validate(definition.rules().getFirst());
 
-        assertTrue(ruleViolations.isEmpty(), "Rule itself should be valid since name is present");
+        assertThat(ruleViolations)
+                .as("Rule itself should be valid since name is present")
+                .isEmpty();
 
         // Style settings should have the validation error
         List<String> actualStyleViolationMessages = this.validator.validate(definition.rules().get(1).style())
@@ -256,12 +243,9 @@ class ColorSchemeValidationTest
                 .sorted()
                 .toList();
 
-        List<String> expectedStyleViolationMessages = List.of("Invalid foreground color value");
-
-        assertEquals(
-                expectedStyleViolationMessages,
-                actualStyleViolationMessages,
-                "Should have correct style validation messages");
+        assertThat(actualStyleViolationMessages)
+                .as("Should have correct style validation messages")
+                .containsExactly("Invalid foreground color value");
     }
 
     @Test
@@ -296,12 +280,9 @@ class ColorSchemeValidationTest
                 .sorted()
                 .toList();
 
-        List<String> expectedViolationMessages = List.of("Invalid foreground color value");
-
-        assertEquals(
-                expectedViolationMessages,
-                actualViolationMessages,
-                "Should have correct violation message for invalid hex color");
+        assertThat(actualViolationMessages)
+                .as("Should have correct violation message for invalid hex color")
+                .containsExactly("Invalid foreground color value");
     }
 
     @Test
@@ -336,12 +317,9 @@ class ColorSchemeValidationTest
                 .sorted()
                 .toList();
 
-        List<String> expectedViolationMessages = List.of("Invalid foreground color value");
-
-        assertEquals(
-                expectedViolationMessages,
-                actualViolationMessages,
-                "Should have correct violation message for out-of-range numeric color");
+        assertThat(actualViolationMessages)
+                .as("Should have correct violation message for out-of-range numeric color")
+                .containsExactly("Invalid foreground color value");
     }
 
     @Test
@@ -376,13 +354,9 @@ class ColorSchemeValidationTest
                 .sorted()
                 .toList();
 
-        List<String> expectedViolationMessages = List.of(
-                "Unknown rule name in color scheme");
-
-        assertEquals(
-                expectedViolationMessages,
-                actualViolationMessages,
-                "Should report unknown rule names");
+        assertThat(actualViolationMessages)
+                .as("Should report unknown rule names")
+                .containsExactly("Unknown rule name in color scheme");
     }
 
     @Test
@@ -423,13 +397,9 @@ class ColorSchemeValidationTest
                 .sorted()
                 .toList();
 
-        List<String> expectedViolationMessages = List.of(
-                "Unknown rule name in color scheme");
-
-        assertEquals(
-                expectedViolationMessages,
-                actualViolationMessages,
-                "Should report unknown rule name");
+        assertThat(actualViolationMessages)
+                .as("Should report unknown rule name")
+                .containsExactly("Unknown rule name in color scheme");
     }
 
     @Test
@@ -450,16 +420,13 @@ class ColorSchemeValidationTest
                 }
                 """;
 
-        RuntimeException exception = assertThrows(
-                RuntimeException.class,
-                () -> this.parseAndValidate(json),
-                "Should throw RuntimeException for invalid JSON");
-
-        assertEquals("Failed to parse JSON", exception.getMessage());
-
-        Throwable cause = exception.getCause();
-        assertTrue(cause instanceof UnrecognizedPropertyException);
-        assertTrue(cause.getMessage().contains("Unrecognized field \"t\""));
+        assertThatThrownBy(() -> this.parseAndValidate(json))
+                .as("Should throw RuntimeException for invalid JSON")
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Failed to parse JSON")
+                .hasCauseInstanceOf(UnrecognizedPropertyException.class)
+                .getCause()
+                .hasMessageContaining("Unrecognized field \"t\"");
     }
 
     private ColorSchemeDefinition parseAndValidate(String json)
