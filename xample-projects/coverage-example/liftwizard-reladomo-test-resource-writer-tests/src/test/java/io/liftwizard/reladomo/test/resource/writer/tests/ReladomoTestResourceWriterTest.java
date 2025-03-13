@@ -18,9 +18,6 @@ package io.liftwizard.reladomo.test.resource.writer.tests;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
-import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cool.klass.dropwizard.configuration.domain.model.loader.compiler.DomainModelCompilerFactory;
 import cool.klass.model.meta.domain.api.DomainModel;
@@ -32,6 +29,7 @@ import io.liftwizard.reladomo.test.extension.ReladomoInitializeExtension;
 import io.liftwizard.reladomo.test.extension.ReladomoLoadDataExtension;
 import io.liftwizard.reladomo.test.extension.ReladomoTestFile;
 import io.liftwizard.reladomo.test.resource.writer.ReladomoTestResourceWriter;
+import io.liftwizard.serialization.jackson.config.ObjectMapperConfig;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -59,7 +57,7 @@ public class ReladomoTestResourceWriterTest
     @RegisterExtension
     private final ReladomoLoadDataExtension loadDataTestExtension = new ReladomoLoadDataExtension();
 
-    private final ObjectMapper objectMapper = getObjectMapper();
+    private final ObjectMapper objectMapper = ObjectMapperConfig.configure(new ObjectMapper());
     private final DomainModel  domainModel  = getDomainModel(this.objectMapper);
 
     @Test
@@ -73,21 +71,11 @@ public class ReladomoTestResourceWriterTest
         this.fileMatchExtension.assertFileContents(resourceClassPathLocation, actual);
     }
 
-    @Nonnull
-    private static ObjectMapper getObjectMapper()
-    {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(Feature.ALLOW_COMMENTS, true);
-        objectMapper.configure(Feature.ALLOW_YAML_COMMENTS, true);
-        objectMapper.configure(Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
-        objectMapper.configure(Feature.ALLOW_TRAILING_COMMA, true);
-        return objectMapper;
-    }
-
     private static DomainModel getDomainModel(ObjectMapper objectMapper)
     {
         DomainModelCompilerFactory domainModelCompilerFactory = new DomainModelCompilerFactory();
         domainModelCompilerFactory.setSourcePackages(List.of("cool.klass.xample.coverage"));
+        domainModelCompilerFactory.setColorScheme("dark");
         return domainModelCompilerFactory.createDomainModel(objectMapper);
     }
 }

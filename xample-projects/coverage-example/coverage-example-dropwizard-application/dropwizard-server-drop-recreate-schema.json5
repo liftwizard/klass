@@ -43,6 +43,7 @@
     domainModel: {
       type: "compiler",
       sourcePackages: ["cool.klass.xample.coverage"],
+      colorScheme: "dark",
     },
     dataStore: {
       type: "reladomo",

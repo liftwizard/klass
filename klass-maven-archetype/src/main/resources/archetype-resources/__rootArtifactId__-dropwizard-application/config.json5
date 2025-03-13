@@ -103,6 +103,7 @@
     domainModel: {
       type: "compiler",
       sourcePackages: ["klass.model.meta.domain", "${package}"],
+      colorScheme: "dark",
     },
     dataStore: {
       type: "reladomo",

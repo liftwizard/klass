@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Craig Motlin
+ * Copyright 2025 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,8 +21,7 @@ import java.time.Duration;
 import com.google.common.base.Stopwatch;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.DarkAnsiColorScheme;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.LightAnsiColorScheme;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import cool.klass.model.converter.compiler.token.categorizing.lexer.LexerBasedTokenCategorizer;
 import cool.klass.model.converter.compiler.token.categorizing.parser.ParserBasedTokenCategorizer;
@@ -50,13 +49,29 @@ class SyntaxHighlighterListenerTest
     @Test
     void lightColorScheme()
     {
-        this.testColorScheme(LightAnsiColorScheme.INSTANCE);
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("light");
+        this.testColorScheme(colorScheme);
     }
 
     @Test
     void darkColorScheme()
     {
-        this.testColorScheme(DarkAnsiColorScheme.INSTANCE);
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
+        this.testColorScheme(colorScheme);
+    }
+
+    @Test
+    void darkCubeColorScheme()
+    {
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
+        this.testColorScheme(colorScheme);
+    }
+
+    @Test
+    void rgbColorScheme()
+    {
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
+        this.testColorScheme(colorScheme);
     }
 
     private void testColorScheme(AnsiColorScheme colorScheme)

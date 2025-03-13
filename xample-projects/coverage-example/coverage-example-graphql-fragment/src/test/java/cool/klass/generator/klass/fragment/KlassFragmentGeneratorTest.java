@@ -17,6 +17,7 @@
 package cool.klass.generator.klass.fragment;
 
 import cool.klass.generator.grahql.fragment.GraphQLFragmentSourceCodeGenerator;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.meta.domain.api.PackageableElement;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import cool.klass.model.meta.loader.compiler.DomainModelCompilerLoader;
@@ -44,7 +45,8 @@ public class KlassFragmentGeneratorTest
         var domainModelCompilerLoader = new DomainModelCompilerLoader(
                 klassSourcePackages,
                 Thread.currentThread().getContextClassLoader(),
-                DomainModelCompilerLoader::logCompilerError);
+                DomainModelCompilerLoader::logCompilerError,
+                ColorSchemeProvider.getByName("dark"));
 
         DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
         ImmutableList<String> packageNames = domainModel

@@ -17,6 +17,7 @@
 package cool.klass.model.converter.compiler;
 
 import java.util.LinkedHashMap;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -53,7 +54,7 @@ import cool.klass.model.converter.compiler.phase.VariableResolutionPhase;
 import cool.klass.model.converter.compiler.phase.VersionAssociationInferencePhase;
 import cool.klass.model.converter.compiler.phase.VersionClassInferencePhase;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.DarkAnsiColorScheme;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import cool.klass.model.converter.compiler.token.categorizing.lexer.LexerBasedTokenCategorizer;
 import cool.klass.model.converter.compiler.token.categorizing.parser.ParserBasedTokenCategorizer;
@@ -103,15 +104,17 @@ public class KlassCompiler
     private static final Logger LOGGER = LoggerFactory.getLogger(KlassCompiler.class);
 
     private final CompilerState compilerState;
+    private final AnsiColorScheme colorScheme;
 
-    public KlassCompiler(CompilationUnit compilationUnit)
+    public KlassCompiler(CompilationUnit compilationUnit, AnsiColorScheme colorScheme)
     {
-        this(Lists.immutable.with(compilationUnit));
+        this(Lists.immutable.with(compilationUnit), colorScheme);
     }
 
-    public KlassCompiler(ImmutableList<CompilationUnit> compilationUnits)
+    public KlassCompiler(ImmutableList<CompilationUnit> compilationUnits, AnsiColorScheme colorScheme)
     {
         this.compilerState = new CompilerState(compilationUnits);
+        this.colorScheme = Objects.requireNonNull(colorScheme);
     }
 
     private void executeCompilerPhase(KlassListener compilerPhase)
@@ -164,9 +167,8 @@ public class KlassCompiler
 
         CompilerAnnotationHolder compilerAnnotationHolder = this.compilerState.getCompilerAnnotationHolder();
 
-        // TODO: Make the ColorScheme configurable
         var ansiTokenColorizer = new AnsiTokenColorizer(
-                DarkAnsiColorScheme.INSTANCE,
+                this.colorScheme,
                 tokenCategoriesFromParser,
                 tokenCategoriesFromLexer);
         compilerAnnotationHolder.setAnsiTokenColorizer(ansiTokenColorizer);
