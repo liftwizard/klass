@@ -17,6 +17,7 @@
 package cool.klass.xample.coverage.html;
 
 import cool.klass.generator.klass.html.KlassSourceCodeHtmlGenerator;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.loader.compiler.DomainModelCompilerLoader;
@@ -47,7 +48,8 @@ public class KlassSourceCodeHtmlGeneratorTest
         var domainModelCompilerLoader = new DomainModelCompilerLoader(
                 klassSourcePackages,
                 Thread.currentThread().getContextClassLoader(),
-                DomainModelCompilerLoader::logCompilerError);
+                DomainModelCompilerLoader::logCompilerError,
+                ColorSchemeProvider.getByName("dark"));
 
         DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
         ImmutableList<SourceCode> sourceCodesFromMacros = domainModel

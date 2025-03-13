@@ -37,6 +37,7 @@
                     <klassSourcePackages>
                         <klassSourcePackage>klass.model.meta.domain</klassSourcePackage>
                     </klassSourcePackages>
+                    <colorScheme>dark</colorScheme>
                 </configuration>
                 <dependencies>
                     <dependency>

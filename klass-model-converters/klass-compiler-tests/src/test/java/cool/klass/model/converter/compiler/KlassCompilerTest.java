@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Craig Motlin
+ * Copyright 2025 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.annotation.AbstractCompilerAnnotation;
 import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.junit.extension.match.FileSlurper;
 import org.eclipse.collections.api.list.ImmutableList;
@@ -66,7 +68,8 @@ class KlassCompilerTest
                 Optional.empty(),
                 sourceCodeName,
                 sourceCodeText);
-        KlassCompiler compiler = new KlassCompiler(compilationUnit);
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
+        KlassCompiler compiler = new KlassCompiler(compilationUnit, colorScheme);
         CompilationResult compilationResult = compiler.compile();
         ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult
                 .compilerAnnotations()

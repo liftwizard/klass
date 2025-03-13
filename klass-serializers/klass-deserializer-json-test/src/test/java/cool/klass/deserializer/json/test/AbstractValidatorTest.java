@@ -93,6 +93,7 @@ public abstract class AbstractValidatorTest
     {
         DomainModelCompilerFactory domainModelCompilerFactory = new DomainModelCompilerFactory();
         domainModelCompilerFactory.setSourcePackages(List.of("cool.klass.xample.coverage"));
+        domainModelCompilerFactory.setColorScheme("dark");
         return domainModelCompilerFactory.createDomainModel(objectMapper);
     }
 

@@ -22,6 +22,7 @@ import cool.klass.model.converter.compiler.CompilationResult;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.KlassCompiler;
 import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
@@ -53,7 +54,7 @@ public class ReladomoConcreteClassGeneratorTest
                 Optional.empty(),
                 "example.klass",
                 klassSourceCode);
-        KlassCompiler     compiler          = new KlassCompiler(compilationUnit);
+        KlassCompiler     compiler          = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("dark"));
         CompilationResult compilationResult = compiler.compile();
 
         if (compilationResult.domainModelWithSourceCode().isEmpty())

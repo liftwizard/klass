@@ -47,6 +47,7 @@
                     <klassSourcePackages>
                         <klassSourcePackage>${app.rootPackageName}</klassSourcePackage>
                     </klassSourcePackages>
+                    <colorScheme>dark</colorScheme>
                 </configuration>
                 <dependencies>
                     <dependency>

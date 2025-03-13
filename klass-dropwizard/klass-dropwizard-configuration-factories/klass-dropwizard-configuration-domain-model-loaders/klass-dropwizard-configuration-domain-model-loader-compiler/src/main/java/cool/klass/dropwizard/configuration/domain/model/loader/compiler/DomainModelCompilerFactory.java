@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Craig Motlin
+ * Copyright 2025 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,24 +23,35 @@ import javax.annotation.Nonnull;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auto.service.AutoService;
 import cool.klass.dropwizard.configuration.domain.model.loader.DomainModelFactory;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import cool.klass.model.meta.loader.compiler.DomainModelCompilerLoader;
+import io.dropwizard.validation.ValidationMethod;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.impl.factory.Lists;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @JsonTypeName("compiler")
 @AutoService(DomainModelFactory.class)
 public class DomainModelCompilerFactory
         implements DomainModelFactory
 {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DomainModelCompilerFactory.class);
+
     @NotEmpty
     private @Valid @NotNull List<String> sourcePackages = Arrays.asList("klass.model.meta.domain");
+
+    @NotEmpty
+    private @NotNull String colorScheme;
 
     private DomainModelWithSourceCode domainModel;
 
@@ -53,9 +64,15 @@ public class DomainModelCompilerFactory
             return this.domainModel;
         }
         ImmutableList<String> klassSourcePackagesImmutable = Lists.immutable.withAll(this.sourcePackages);
-        DomainModelCompilerLoader domainModelLoader = new DomainModelCompilerLoader(
+
+        AnsiColorScheme ansiColorScheme = ColorSchemeProvider.getByName(this.colorScheme);
+
+        // TODO: We should use an abstract DomainModelFactory here, not necessarily the compiler.
+        var domainModelLoader = new DomainModelCompilerLoader(
                 klassSourcePackagesImmutable,
-                Thread.currentThread().getContextClassLoader());
+                Thread.currentThread().getContextClassLoader(),
+                DomainModelCompilerLoader::logCompilerAnnotation,
+                ansiColorScheme);
         this.domainModel = domainModelLoader.load();
         return this.domainModel;
     }
@@ -70,5 +87,34 @@ public class DomainModelCompilerFactory
     public void setSourcePackages(List<String> sourcePackages)
     {
         this.sourcePackages = sourcePackages;
+    }
+
+    @JsonProperty
+    public String getColorScheme()
+    {
+        return this.colorScheme;
+    }
+
+    @JsonProperty
+    public void setColorScheme(String colorScheme)
+    {
+        this.colorScheme = colorScheme;
+    }
+
+    @ValidationMethod(message = "Invalid color scheme. Valid options include 'dark', 'light', 'dark-cube', 'dark-rgb'.")
+    @JsonIgnore
+    public boolean isColorSchemeValid()
+    {
+        if (this.colorScheme == null)
+        {
+            return false;
+        }
+
+        boolean exists = ColorSchemeProvider.existsByName(this.colorScheme);
+        if (!exists)
+        {
+            LOGGER.warn("Invalid color scheme '{}': color scheme not found", this.colorScheme);
+        }
+        return exists;
     }
 }

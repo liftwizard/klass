@@ -39,6 +39,7 @@
                         <klassSourcePackage>klass.model.meta.domain</klassSourcePackage>
                     </klassSourcePackages>
                     <logCompilerAnnotations>true</logCompilerAnnotations>
+                    <colorScheme>dark</colorScheme>
                 </configuration>
                 <executions>
                     <execution>

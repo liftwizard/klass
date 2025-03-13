@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Craig Motlin
+ * Copyright 2025 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,8 @@ import cool.klass.model.converter.compiler.CompilationResult;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.KlassCompiler;
 import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import cool.klass.model.meta.loader.compiler.DomainModelCompilerLoader;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
@@ -56,6 +58,9 @@ public abstract class AbstractGenerateMojo
 
     @Parameter(property = "logCompilerAnnotations")
     protected boolean logCompilerAnnotations;
+
+    @Parameter(property = "colorScheme")
+    protected String colorScheme;
 
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     protected MavenProject mavenProject;
@@ -87,8 +92,17 @@ public abstract class AbstractGenerateMojo
 
         ImmutableList<CompilationUnit> compilationUnits = this.getCompilationUnits(klassLocations.toImmutable());
 
+        AnsiColorScheme ansiColorScheme = ColorSchemeProvider.getByName(this.colorScheme);
+        if (this.colorScheme != null)
+        {
+            this.getLog().info("Using configured color scheme: " + this.colorScheme);
+        }
+        else
+        {
+            this.getLog().info("No color scheme configured, using default");
+        }
         // TODO: We should use an abstract DomainModelFactory here, not necessarily the compiler.
-        KlassCompiler klassCompiler = new KlassCompiler(compilationUnits);
+        KlassCompiler klassCompiler = new KlassCompiler(compilationUnits, ansiColorScheme);
         return klassCompiler.compile();
     }
 
@@ -107,11 +121,13 @@ public abstract class AbstractGenerateMojo
             throw new MojoExecutionException(message);
         }
 
+        AnsiColorScheme ansiColorScheme = ColorSchemeProvider.getByName(this.colorScheme);
         // TODO: We should use an abstract DomainModelFactory here, not necessarily the compiler.
         var loader = new DomainModelCompilerLoader(
                 Lists.immutable.withAll(this.klassSourcePackages),
                 this.getClassLoader(),
-                this::logCompilerAnnotation);
+                this::logCompilerAnnotation,
+                ansiColorScheme);
         return loader.load();
     }
 

@@ -18,6 +18,7 @@ package cool.klass.dropwizard.configuration;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -239,5 +240,12 @@ public abstract class AbstractKlassConfiguration
     public UUIDSupplierFactory getUuidSupplierFactory()
     {
         return this.getDataStoreFactory().getUuidFactory();
+    }
+
+    @JsonIgnore
+    @Nullable
+    public String getColorScheme()
+    {
+        return this.klassFactory == null ? null : this.klassFactory.getColorScheme();
     }
 }

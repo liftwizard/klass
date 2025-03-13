@@ -40,6 +40,7 @@
                         <klassSourcePackage>klass.model.meta.domain</klassSourcePackage>
                         <klassSourcePackage>${app.rootPackageName}</klassSourcePackage>
                     </klassSourcePackages>
+                    <colorScheme>dark</colorScheme>
                 </configuration>
 
                 <dependencies>
