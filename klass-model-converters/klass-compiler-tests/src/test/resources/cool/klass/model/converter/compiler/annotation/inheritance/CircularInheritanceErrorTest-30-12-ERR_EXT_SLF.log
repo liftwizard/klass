@@ -3,13 +3,13 @@
 
 At (CircularInheritanceErrorTest.klass:30)
 
-[39m 1║ [35mpackage [39mexample
-[39m28║ [35mclass [39mAbstractClass1
-[39m29║     [35mabstract
-[39m30║     [35mextends [39mAbstractClass2
+[39m 1║ [38;2;187;136;255mpackage [38;2;169;183;198mexample
+[39m28║ [38;2;187;136;255mclass [38;2;221;68;136mAbstractClass1
+[39m29║     [38;2;187;136;255mabstract
+[39m30║     [38;2;187;136;255mextends [38;2;221;68;136mAbstractClass2
 [39m  ║ [31m            ^^^^^^^^^^^^^^
-[39m31║ [36m{
-[39m33║ [36m}
+[39m31║ [38;2;169;183;198m{
+[39m33║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mCircularInheritanceErrorTest.klass:30[m
 [36mFile:      [mCircularInheritanceErrorTest.klass[m

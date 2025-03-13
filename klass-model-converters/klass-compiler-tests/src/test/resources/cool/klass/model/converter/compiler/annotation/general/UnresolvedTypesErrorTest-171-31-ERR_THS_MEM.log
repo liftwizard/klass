@@ -3,16 +3,16 @@
 
 At (UnresolvedTypesErrorTest.klass:171)
 
-[39m  1║ [35mpackage [39mdummy
-[39m165║ [35mservice [39mUnresolvedClassResource [35mon [39mUnresolvedClass
-[39m166║ [36m{
-[39m167║     [36m/[39mfake
-[39m168║         [32mGET
-[39m169║         [36m{
-[39m171║             [35mcriteria    [36m: [32mthis[36m.[39mirrelevantProperty [35m== [39mirrelevantParameter[36m;
+[39m  1║ [38;2;187;136;255mpackage [38;2;169;183;198mdummy
+[39m165║ [38;2;187;136;255mservice [38;2;169;183;198mUnresolvedClassResource [38;2;187;136;255mon [38;2;221;68;136mUnresolvedClass
+[39m166║ [38;2;169;183;198m{
+[39m167║     [38;2;169;183;198m/[38;2;169;183;198mfake
+[39m168║         [38;2;169;183;198mGET
+[39m169║         [38;2;169;183;198m{
+[39m171║             [38;2;187;136;255mcriteria    [38;2;169;183;198m: [38;2;204;120;50mthis[38;2;169;183;198m.[38;2;152;118;170mirrelevantProperty [38;2;169;183;198m== [38;2;187;136;255mirrelevantParameter[38;2;169;183;198m;
 [39m   ║ [31m                               ^^^^^^^^^^^^^^^^^^
-[39m174║         [36m}
-[39m175║ [36m}
+[39m174║         [38;2;169;183;198m}
+[39m175║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:171[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m

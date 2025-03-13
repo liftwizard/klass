@@ -3,8 +3,8 @@
 
 At (AmbiguousTypesErrorTest.klass:9)
 
-[39m1║ [35mpackage [39mdummy
-[39m9║ [35menumeration [39mAmbiguousEnumeration [36m{[36m}
+[39m1║ [38;2;187;136;255mpackage [38;2;169;183;198mdummy
+[39m9║ [38;2;187;136;255menumeration [38;2;152;118;170mAmbiguousEnumeration [38;2;169;183;198m{[38;2;169;183;198m}
 [39m ║ [31m            ^^^^^^^^^^^^^^^^^^^^
 [m
 [36mLocation:  [mAmbiguousTypesErrorTest.klass:9[m

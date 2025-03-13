@@ -3,12 +3,12 @@
 
 At (ToOneAssociationEndOrderByErrorTest.klass:16)
 
-[39m 1║ [35mpackage [39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mtest
-[39m14║ [35massociation [39mParentHasChildren
-[39m15║ [36m{
-[39m16║     [39mparent[36m: [39mParent[36m[[34m1[36m..[34m1[36m] [35morderBy[36m: [32mthis[36m.[39mkey [35mascending[36m;
+[39m 1║ [38;2;187;136;255mpackage [38;2;169;183;198mcool[38;2;169;183;198m.[38;2;169;183;198mklass[38;2;169;183;198m.[38;2;169;183;198mmodel[38;2;169;183;198m.[38;2;169;183;198mconverter[38;2;169;183;198m.[38;2;169;183;198mcompiler[38;2;169;183;198m.[38;2;169;183;198mannotation[38;2;169;183;198m.[38;2;169;183;198mtest
+[39m14║ [38;2;187;136;255massociation [38;2;169;183;198mParentHasChildren
+[39m15║ [38;2;169;183;198m{
+[39m16║     [38;2;152;118;170mparent[38;2;169;183;198m: [38;2;221;68;136mParent[38;2;169;183;198m[[38;2;104;151;187m1[38;2;169;183;198m..[38;2;104;151;187m1[38;2;169;183;198m] [38;2;187;136;255morderBy[38;2;169;183;198m: [38;2;204;120;50mthis[38;2;169;183;198m.[38;2;152;118;170mkey [38;2;187;136;255mascending[38;2;169;183;198m;
 [39m  ║ [31m                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[39m18║ [36m}
+[39m18║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mToOneAssociationEndOrderByErrorTest.klass:16[m
 [36mFile:      [mToOneAssociationEndOrderByErrorTest.klass[m

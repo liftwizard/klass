@@ -28,6 +28,7 @@ public class KlassFactory
 {
     private @NotNull @Valid DomainModelFactory domainModelFactory;
     private @NotNull @Valid DataStoreFactory   dataStoreFactory   = new ReladomoDataStoreFactory();
+    private String colorScheme;
 
     @JsonProperty("domainModel")
     public DomainModelFactory getDomainModelFactory()
@@ -51,5 +52,17 @@ public class KlassFactory
     public void setDataStoreFactory(DataStoreFactory dataStoreFactory)
     {
         this.dataStoreFactory = dataStoreFactory;
+    }
+
+    @JsonProperty("colorScheme")
+    public String getColorScheme()
+    {
+        return this.colorScheme;
+    }
+
+    @JsonProperty("colorScheme")
+    public void setColorScheme(String colorScheme)
+    {
+        this.colorScheme = colorScheme;
     }
 }

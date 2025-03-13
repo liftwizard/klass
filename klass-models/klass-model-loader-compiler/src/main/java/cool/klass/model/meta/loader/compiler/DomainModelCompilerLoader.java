@@ -29,6 +29,7 @@ import cool.klass.model.converter.compiler.CompilationResult;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.KlassCompiler;
 import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import cool.klass.model.meta.loader.DomainModelLoader;
 import org.eclipse.collections.api.list.ImmutableList;
@@ -54,30 +55,19 @@ public class DomainModelCompilerLoader
     private final ClassLoader                      classLoader;
     @Nonnull
     private final Consumer<RootCompilerAnnotation> compilerAnnotationHandler;
-
-    public DomainModelCompilerLoader(@Nonnull ImmutableList<String> klassSourcePackages)
-    {
-        this(
-                klassSourcePackages,
-                Thread.currentThread().getContextClassLoader(),
-                DomainModelCompilerLoader::logCompilerAnnotation);
-    }
-
-    public DomainModelCompilerLoader(
-            @Nonnull ImmutableList<String> klassSourcePackages,
-            @Nonnull ClassLoader classLoader)
-    {
-        this(klassSourcePackages, classLoader, DomainModelCompilerLoader::logCompilerAnnotation);
-    }
+    @Nonnull
+    private final AnsiColorScheme                  colorScheme;
 
     public DomainModelCompilerLoader(
             @Nonnull ImmutableList<String> klassSourcePackages,
             @Nonnull ClassLoader classLoader,
-            @Nonnull Consumer<RootCompilerAnnotation> compilerAnnotationHandler)
+            @Nonnull Consumer<RootCompilerAnnotation> compilerAnnotationHandler,
+            AnsiColorScheme colorScheme)
     {
         this.klassSourcePackages       = Objects.requireNonNull(klassSourcePackages);
         this.classLoader               = Objects.requireNonNull(classLoader);
         this.compilerAnnotationHandler = Objects.requireNonNull(compilerAnnotationHandler);
+        this.colorScheme               = Objects.requireNonNull(colorScheme);
     }
 
     public static void logCompilerError(RootCompilerAnnotation compilerAnnotation)
@@ -109,7 +99,7 @@ public class DomainModelCompilerLoader
 
         ImmutableList<CompilationUnit> compilationUnits = this.getCompilationUnits();
 
-        KlassCompiler             klassCompiler     = new KlassCompiler(compilationUnits);
+        KlassCompiler             klassCompiler     = new KlassCompiler(compilationUnits, this.colorScheme);
         CompilationResult         compilationResult = klassCompiler.compile();
         DomainModelWithSourceCode domainModel       = this.handleResult(compilationResult);
 

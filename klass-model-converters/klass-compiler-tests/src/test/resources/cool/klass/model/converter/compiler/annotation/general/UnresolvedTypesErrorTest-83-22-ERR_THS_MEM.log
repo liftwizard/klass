@@ -3,13 +3,13 @@
 
 At (UnresolvedTypesErrorTest.klass:83)
 
-[39m 1║ [35mpackage [39mdummy
-[39m79║ [35massociation [39mParentHasChild
-[39m80║ [36m{
-[39m82║     [39mchildren[36m: [39mChild[36m[[34m0[36m..[34m*[36m]
-[39m83║         [35morderBy[36m: [32mthis[36m.[39munresolvedMember [35mascending[36m;
+[39m 1║ [38;2;187;136;255mpackage [38;2;169;183;198mdummy
+[39m79║ [38;2;187;136;255massociation [38;2;169;183;198mParentHasChild
+[39m80║ [38;2;169;183;198m{
+[39m82║     [38;2;152;118;170mchildren[38;2;169;183;198m: [38;2;221;68;136mChild[38;2;169;183;198m[[38;2;104;151;187m0[38;2;169;183;198m..[38;2;104;151;187m*[38;2;169;183;198m]
+[39m83║         [38;2;187;136;255morderBy[38;2;169;183;198m: [38;2;204;120;50mthis[38;2;169;183;198m.[38;2;152;118;170munresolvedMember [38;2;187;136;255mascending[38;2;169;183;198m;
 [39m  ║ [31m                      ^^^^^^^^^^^^^^^^
-[39m84║ [36m}
+[39m84║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:83[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m

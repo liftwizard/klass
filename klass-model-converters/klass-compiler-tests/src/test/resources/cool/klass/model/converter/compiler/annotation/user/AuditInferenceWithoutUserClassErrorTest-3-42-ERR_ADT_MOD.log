@@ -3,11 +3,11 @@
 
 At (AuditInferenceWithoutUserClassErrorTest.klass:3)
 
-[39m1║ [35mpackage [39mcom[36m.[39merrors
-[39m3║ [35mclass [39mDummyClass [32msystemTemporal [32mversioned [32maudited
+[39m1║ [38;2;187;136;255mpackage [38;2;169;183;198mcom[38;2;169;183;198m.[38;2;169;183;198merrors
+[39m3║ [38;2;187;136;255mclass [38;2;221;68;136mDummyClass [38;2;187;136;255msystemTemporal [38;2;187;136;255mversioned [38;2;187;136;255maudited
 [39m ║ [31m                                          ^^^^^^^
-[39m4║ [36m{
-[39m6║ [36m}
+[39m4║ [38;2;169;183;198m{
+[39m6║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mAuditInferenceWithoutUserClassErrorTest.klass:3[m
 [36mFile:      [mAuditInferenceWithoutUserClassErrorTest.klass[m

@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 import org.fusesource.jansi.Ansi;
+import org.fusesource.jansi.Ansi.Color;
 
 public abstract class AbstractContextString
 {
@@ -58,7 +59,7 @@ public abstract class AbstractContextString
     {
         String lineNumberString       = this.getLineNumberString(this.line + offset);
         String paddedLineNumberString = AbstractContextString.padLeft(lineNumberString, lineNumberWidth);
-        return Ansi.ansi().fgDefault().a(paddedLineNumberString).a(" ").a(string).toString();
+        return Ansi.ansi().fg(Color.DEFAULT).a(paddedLineNumberString).a(" ").a(string).toString();
     }
 
     @Override

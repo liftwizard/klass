@@ -3,12 +3,12 @@
 
 At (AuditPropertyWithoutUserClassErrorTest.klass:11)
 
-[39m 1║ [35mpackage [39mcom[36m.[39merrors
-[39m 3║ [35mclass [39mDummyClass [32msystemTemporal [32mversioned [32maudited
-[39m 4║ [36m{
-[39m11║     [39mlastUpdatedById[36m: [35mString [32mlastUpdatedBy [32muserId [32mprivate [32mmaximumLength[36m([34m256[36m)[36m;
+[39m 1║ [38;2;187;136;255mpackage [38;2;169;183;198mcom[38;2;169;183;198m.[38;2;169;183;198merrors
+[39m 3║ [38;2;187;136;255mclass [38;2;221;68;136mDummyClass [38;2;187;136;255msystemTemporal [38;2;187;136;255mversioned [38;2;187;136;255maudited
+[39m 4║ [38;2;169;183;198m{
+[39m11║     [38;2;152;118;170mlastUpdatedById[38;2;169;183;198m: [38;2;68;221;221mString [38;2;187;136;255mlastUpdatedBy [38;2;187;136;255muserId [38;2;187;136;255mprivate [38;2;187;136;255mmaximumLength[38;2;169;183;198m([38;2;104;151;187m256[38;2;169;183;198m)[38;2;169;183;198m;
 [39m  ║ [31m    ^^^^^^^^^^^^^^^
-[39m12║ [36m}
+[39m12║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mAuditPropertyWithoutUserClassErrorTest.klass:11[m
 [36mFile:      [mAuditPropertyWithoutUserClassErrorTest.klass[m

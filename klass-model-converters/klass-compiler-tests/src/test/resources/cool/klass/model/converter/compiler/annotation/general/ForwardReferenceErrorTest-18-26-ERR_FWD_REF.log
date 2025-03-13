@@ -3,16 +3,16 @@
 
 At (ForwardReferenceErrorTest.klass:18)
 
-[39m 1║ [35mpackage [39mdummy
-[39m11║ [35mservice [39mClassWithEnumerationPropertyResource [35mon [39mClassWithEnumerationProperty
-[39m12║ [36m{
-[39m13║     [36m/[39murl1[36m/[36m{[39menumerationProperty[36m: [39mExampleEnumeration[36m[[34m1[36m..[34m1[36m][36m}
-[39m14║         [32mGET
-[39m15║         [36m{
-[39m18║             [35mprojection  [36m: [39mProjectionWithForwardReferences[36m;
+[39m 1║ [38;2;187;136;255mpackage [38;2;169;183;198mdummy
+[39m11║ [38;2;187;136;255mservice [38;2;169;183;198mClassWithEnumerationPropertyResource [38;2;187;136;255mon [38;2;221;68;136mClassWithEnumerationProperty
+[39m12║ [38;2;169;183;198m{
+[39m13║     [38;2;169;183;198m/[38;2;169;183;198murl1[38;2;169;183;198m/[38;2;169;183;198m{[38;2;187;136;255menumerationProperty[38;2;169;183;198m: [38;2;152;118;170mExampleEnumeration[38;2;169;183;198m[[38;2;104;151;187m1[38;2;169;183;198m..[38;2;104;151;187m1[38;2;169;183;198m][38;2;169;183;198m}
+[39m14║         [38;2;169;183;198mGET
+[39m15║         [38;2;169;183;198m{
+[39m18║             [38;2;187;136;255mprojection  [38;2;169;183;198m: [38;2;169;183;198mProjectionWithForwardReferences[38;2;169;183;198m;
 [39m  ║ [31m                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[39m19║         [36m}
-[39m20║ [36m}
+[39m19║         [38;2;169;183;198m}
+[39m20║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mForwardReferenceErrorTest.klass:18[m
 [36mFile:      [mForwardReferenceErrorTest.klass[m

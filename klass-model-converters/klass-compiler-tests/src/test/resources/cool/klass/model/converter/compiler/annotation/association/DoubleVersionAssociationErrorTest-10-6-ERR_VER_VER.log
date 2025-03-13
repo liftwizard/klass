@@ -3,12 +3,12 @@
 
 At (DoubleVersionAssociationErrorTest.klass:10)
 
-[39m 1║ [35mpackage [39mdummy
-[39m10║ [35mclass [39mExampleTarget
+[39m 1║ [38;2;187;136;255mpackage [38;2;169;183;198mdummy
+[39m10║ [38;2;187;136;255mclass [38;2;221;68;136mExampleTarget
 [39m  ║ [31m      ^^^^^^^^^^^^^
-[39m11║     [32msystemTemporal
-[39m12║ [36m{
-[39m15║ [36m}
+[39m11║     [38;2;187;136;255msystemTemporal
+[39m12║ [38;2;169;183;198m{
+[39m15║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mDoubleVersionAssociationErrorTest.klass:10[m
 [36mFile:      [mDoubleVersionAssociationErrorTest.klass[m

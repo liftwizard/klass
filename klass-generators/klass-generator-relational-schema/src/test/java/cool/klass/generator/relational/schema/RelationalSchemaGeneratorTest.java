@@ -20,6 +20,7 @@ import java.util.Optional;
 
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Converter;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import cool.klass.model.meta.loader.compiler.DomainModelCompilerLoader;
@@ -50,7 +51,8 @@ public class RelationalSchemaGeneratorTest
         var domainModelCompilerLoader = new DomainModelCompilerLoader(
                 klassSourcePackages,
                 Thread.currentThread().getContextClassLoader(),
-                DomainModelCompilerLoader::logCompilerError);
+                DomainModelCompilerLoader::logCompilerError,
+                ColorSchemeProvider.getByName("dark"));
 
         DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
 

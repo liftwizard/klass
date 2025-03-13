@@ -3,12 +3,12 @@
 
 At (UnresolvedTypesErrorTest.klass:99)
 
-[39m  1║ [35mpackage [39mdummy
-[39m 94║ [35massociation [39mBadRelationship3
-[39m 95║ [36m{
-[39m 99║     [35mrelationship [32mthis[36m.[39mkey [35m== [39mUnresolvedClass[36m.[39munresolvedMember
+[39m  1║ [38;2;187;136;255mpackage [38;2;169;183;198mdummy
+[39m 94║ [38;2;187;136;255massociation [38;2;169;183;198mBadRelationship3
+[39m 95║ [38;2;169;183;198m{
+[39m 99║     [38;2;187;136;255mrelationship [38;2;204;120;50mthis[38;2;169;183;198m.[38;2;152;118;170mkey [38;2;169;183;198m== [38;2;221;68;136mUnresolvedClass[38;2;169;183;198m.[38;2;152;118;170munresolvedMember
 [39m   ║ [31m                             ^^^^^^^^^^^^^^^
-[39m100║ [36m}
+[39m100║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:99[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m

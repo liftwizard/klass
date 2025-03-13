@@ -3,12 +3,12 @@
 
 At (ManyOwnsOneAssociationErrorTest.klass:17)
 
-[39m 1║ [35mpackage [39mdummy
-[39m15║ [35massociation [39mAssociation1
-[39m16║ [36m{
-[39m17║     [39mparent[36m: [39mExampleType1[36m[[34m0[36m..[34m1[36m] [32mowned[36m;
+[39m 1║ [38;2;187;136;255mpackage [38;2;169;183;198mdummy
+[39m15║ [38;2;187;136;255massociation [38;2;169;183;198mAssociation1
+[39m16║ [38;2;169;183;198m{
+[39m17║     [38;2;152;118;170mparent[38;2;169;183;198m: [38;2;221;68;136mExampleType1[38;2;169;183;198m[[38;2;104;151;187m0[38;2;169;183;198m..[38;2;104;151;187m1[38;2;169;183;198m] [38;2;187;136;255mowned[38;2;169;183;198m;
 [39m  ║ [31m                        ^^^^^^ ^^^^^
-[39m21║ [36m}
+[39m21║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mManyOwnsOneAssociationErrorTest.klass:17[m
 [36mFile:      [mManyOwnsOneAssociationErrorTest.klass[m

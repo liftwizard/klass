@@ -3,12 +3,12 @@
 
 At (AmbiguousTypesErrorTest.klass:25)
 
-[39m 1║ [35mpackage [39mdummy
-[39m19║ [35mclass [39mGoodClass
-[39m20║ [36m{
-[39m25║     [39mambiguousDataProperty[36m: [39mGoodEnum[36m;
+[39m 1║ [38;2;187;136;255mpackage [38;2;169;183;198mdummy
+[39m19║ [38;2;187;136;255mclass [38;2;221;68;136mGoodClass
+[39m20║ [38;2;169;183;198m{
+[39m25║     [38;2;152;118;170mambiguousDataProperty[38;2;169;183;198m: [38;2;152;118;170mGoodEnum[38;2;169;183;198m;
 [39m  ║ [31m    ^^^^^^^^^^^^^^^^^^^^^
-[39m39║ [36m}
+[39m39║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mAmbiguousTypesErrorTest.klass:25[m
 [36mFile:      [mAmbiguousTypesErrorTest.klass[m

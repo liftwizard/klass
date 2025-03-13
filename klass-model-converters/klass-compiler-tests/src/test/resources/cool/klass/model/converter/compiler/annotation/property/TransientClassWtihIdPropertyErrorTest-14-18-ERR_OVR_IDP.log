@@ -3,14 +3,14 @@
 
 At (TransientClassWtihIdPropertyErrorTest.klass:14)
 
-[39m 1║ [35mpackage [39mexample
-[39m10║ [35mclass [39mConcreteSubClass
-[39m11║     [35mextends [39mAbstractSuperClass
-[39m12║     [32mtransient
-[39m13║ [36m{
-[39m14║     [39mkey[36m: [35mLong [32mkey [32mid[36m;
+[39m 1║ [38;2;187;136;255mpackage [38;2;169;183;198mexample
+[39m10║ [38;2;187;136;255mclass [38;2;221;68;136mConcreteSubClass
+[39m11║     [38;2;187;136;255mextends [38;2;221;68;136mAbstractSuperClass
+[39m12║     [38;2;187;136;255mtransient
+[39m13║ [38;2;169;183;198m{
+[39m14║     [38;2;152;118;170mkey[38;2;169;183;198m: [38;2;68;221;221mLong [38;2;187;136;255mkey [38;2;187;136;255mid[38;2;169;183;198m;
 [39m  ║ [31m                  ^^
-[39m15║ [36m}
+[39m15║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mTransientClassWtihIdPropertyErrorTest.klass:14[m
 [36mFile:      [mTransientClassWtihIdPropertyErrorTest.klass[m

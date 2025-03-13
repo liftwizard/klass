@@ -3,12 +3,12 @@
 
 At (InvalidMultiplicityErrorTest.klass:10)
 
-[39m 1║ [35mpackage [39mdummy
-[39m 8║ [35massociation [39mDummyAssociation
-[39m 9║ [36m{
-[39m10║     [39msource[36m: [39mDummyClass[36m[[34m2[36m..[34m3[36m][36m;
+[39m 1║ [38;2;187;136;255mpackage [38;2;169;183;198mdummy
+[39m 8║ [38;2;187;136;255massociation [38;2;169;183;198mDummyAssociation
+[39m 9║ [38;2;169;183;198m{
+[39m10║     [38;2;152;118;170msource[38;2;169;183;198m: [38;2;221;68;136mDummyClass[38;2;169;183;198m[[38;2;104;151;187m2[38;2;169;183;198m..[38;2;104;151;187m3[38;2;169;183;198m][38;2;169;183;198m;
 [39m  ║ [31m                      ^^^^^^
-[39m14║ [36m}
+[39m14║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mInvalidMultiplicityErrorTest.klass:10[m
 [36mFile:      [mInvalidMultiplicityErrorTest.klass[m

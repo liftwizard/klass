@@ -3,12 +3,12 @@
 
 At (ForwardReferenceErrorTest.klass:29)
 
-[39m 1║ [35mpackage [39mdummy
-[39m27║ [35mclass [39mClassWithEnumerationProperty
-[39m28║ [36m{
-[39m29║     [39menumerationProperty[36m: [39mExampleEnumeration [32mkey[36m;
+[39m 1║ [38;2;187;136;255mpackage [38;2;169;183;198mdummy
+[39m27║ [38;2;187;136;255mclass [38;2;221;68;136mClassWithEnumerationProperty
+[39m28║ [38;2;169;183;198m{
+[39m29║     [38;2;152;118;170menumerationProperty[38;2;169;183;198m: [38;2;152;118;170mExampleEnumeration [38;2;187;136;255mkey[38;2;169;183;198m;
 [39m  ║ [31m                         ^^^^^^^^^^^^^^^^^^
-[39m31║ [36m}
+[39m31║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mForwardReferenceErrorTest.klass:29[m
 [36mFile:      [mForwardReferenceErrorTest.klass[m

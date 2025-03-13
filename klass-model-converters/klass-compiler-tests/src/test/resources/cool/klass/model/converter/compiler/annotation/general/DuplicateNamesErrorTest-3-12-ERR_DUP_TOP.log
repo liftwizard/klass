@@ -3,11 +3,11 @@
 
 At (DuplicateNamesErrorTest.klass:3)
 
-[39m1║ [35mpackage [39mdummy
-[39m3║ [35menumeration [39mDuplicateTopLevelElement
+[39m1║ [38;2;187;136;255mpackage [38;2;169;183;198mdummy
+[39m3║ [38;2;187;136;255menumeration [38;2;152;118;170mDuplicateTopLevelElement
 [39m ║ [31m            ^^^^^^^^^^^^^^^^^^^^^^^^
-[39m4║ [36m{
-[39m7║ [36m}
+[39m4║ [38;2;169;183;198m{
+[39m7║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mDuplicateNamesErrorTest.klass:3[m
 [36mFile:      [mDuplicateNamesErrorTest.klass[m

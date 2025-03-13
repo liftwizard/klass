@@ -3,12 +3,12 @@
 
 At (DuplicateAuditAssociationEndErrorTest.klass:42)
 
-[39m 1║ [35mpackage [39mcom[36m.[39merrors
-[39m39║ [35massociation [39mLastUpdatedByDuplicate
-[39m40║ [36m{
-[39m42║     [39mlastUpdatedByDuplicate[36m: [39mUser[36m[[34m1[36m..[34m1[36m] [32mlastUpdatedBy[36m;
+[39m 1║ [38;2;187;136;255mpackage [38;2;169;183;198mcom[38;2;169;183;198m.[38;2;169;183;198merrors
+[39m39║ [38;2;187;136;255massociation [38;2;169;183;198mLastUpdatedByDuplicate
+[39m40║ [38;2;169;183;198m{
+[39m42║     [38;2;152;118;170mlastUpdatedByDuplicate[38;2;169;183;198m: [38;2;221;68;136mUser[38;2;169;183;198m[[38;2;104;151;187m1[38;2;169;183;198m..[38;2;104;151;187m1[38;2;169;183;198m] [38;2;187;136;255mlastUpdatedBy[38;2;169;183;198m;
 [39m  ║ [31m                                       ^^^^^^^^^^^^^
-[39m45║ [36m}
+[39m45║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mDuplicateAuditAssociationEndErrorTest.klass:42[m
 [36mFile:      [mDuplicateAuditAssociationEndErrorTest.klass[m

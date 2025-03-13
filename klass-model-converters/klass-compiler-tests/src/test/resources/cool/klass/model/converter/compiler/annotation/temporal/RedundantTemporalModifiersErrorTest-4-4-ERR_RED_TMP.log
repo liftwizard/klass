@@ -3,16 +3,16 @@
 
 At (RedundantTemporalModifiersErrorTest.klass:4)
 
-[39m1║ [35mpackage [39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mtemporal
-[39m3║ [35mclass [39mClassWithRedundantTemporalModifiers
-[39m4║     [32msystemTemporal
+[39m1║ [38;2;187;136;255mpackage [38;2;169;183;198mcool[38;2;169;183;198m.[38;2;169;183;198mklass[38;2;169;183;198m.[38;2;169;183;198mmodel[38;2;169;183;198m.[38;2;169;183;198mconverter[38;2;169;183;198m.[38;2;169;183;198mcompiler[38;2;169;183;198m.[38;2;169;183;198mannotation[38;2;169;183;198m.[38;2;169;183;198mtemporal
+[39m3║ [38;2;187;136;255mclass [38;2;221;68;136mClassWithRedundantTemporalModifiers
+[39m4║     [38;2;187;136;255msystemTemporal
 [39m ║ [31m    ^^^^^^^^^^^^^^
-[39m5║     [32mvalidTemporal
+[39m5║     [38;2;187;136;255mvalidTemporal
 [39m ║ [31m    ^^^^^^^^^^^^^
-[39m6║     [32mbitemporal
+[39m6║     [38;2;187;136;255mbitemporal
 [39m ║ [31m    ^^^^^^^^^^
-[39m7║ [36m{
-[39m9║ [36m}
+[39m7║ [38;2;169;183;198m{
+[39m9║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mRedundantTemporalModifiersErrorTest.klass:4[m
 [36mFile:      [mRedundantTemporalModifiersErrorTest.klass[m

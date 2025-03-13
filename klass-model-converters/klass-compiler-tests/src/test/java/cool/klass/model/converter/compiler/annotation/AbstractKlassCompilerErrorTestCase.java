@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Craig Motlin
+ * Copyright 2025 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@ import javax.annotation.Nonnull;
 import cool.klass.model.converter.compiler.CompilationResult;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.KlassCompiler;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.junit.extension.match.FileSlurper;
@@ -98,7 +100,8 @@ public abstract class AbstractKlassCompilerErrorTestCase
                 Optional.empty(),
                 sourceName,
                 sourceCodeText);
-        var compiler = new KlassCompiler(compilationUnit);
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-rgb");
+        var compiler = new KlassCompiler(compilationUnit, colorScheme);
         return compiler.compile();
     }
 

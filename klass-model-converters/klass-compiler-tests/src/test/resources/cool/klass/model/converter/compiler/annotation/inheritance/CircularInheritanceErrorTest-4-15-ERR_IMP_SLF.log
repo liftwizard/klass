@@ -3,12 +3,12 @@
 
 At (CircularInheritanceErrorTest.klass:4)
 
-[39m1║ [35mpackage [39mexample
-[39m3║ [35minterface [39mInterfaceImplementsSelf
-[39m4║     [35mimplements [39mInterfaceImplementsSelf
+[39m1║ [38;2;187;136;255mpackage [38;2;169;183;198mexample
+[39m3║ [38;2;187;136;255minterface [38;2;68;221;221mInterfaceImplementsSelf
+[39m4║     [38;2;187;136;255mimplements [38;2;68;221;221mInterfaceImplementsSelf
 [39m ║ [31m               ^^^^^^^^^^^^^^^^^^^^^^^
-[39m5║ [36m{
-[39m7║ [36m}
+[39m5║ [38;2;169;183;198m{
+[39m7║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mCircularInheritanceErrorTest.klass:4[m
 [36mFile:      [mCircularInheritanceErrorTest.klass[m

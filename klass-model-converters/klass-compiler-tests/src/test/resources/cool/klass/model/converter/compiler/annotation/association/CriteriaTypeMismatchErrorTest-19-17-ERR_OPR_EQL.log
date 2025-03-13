@@ -3,12 +3,12 @@
 
 At (CriteriaTypeMismatchErrorTest.klass:19)
 
-[39m 1║ [35mpackage [39mdummy
-[39m14║ [35massociation [39mDoubleOwnedAssociation
-[39m15║ [36m{
-[39m19║     [35mrelationship [32mthis[36m.[39mlongKey [35m== [39mExampleClass2[36m.[39mstringForeignKey
+[39m 1║ [38;2;187;136;255mpackage [38;2;169;183;198mdummy
+[39m14║ [38;2;187;136;255massociation [38;2;169;183;198mDoubleOwnedAssociation
+[39m15║ [38;2;169;183;198m{
+[39m19║     [38;2;187;136;255mrelationship [38;2;204;120;50mthis[38;2;169;183;198m.[38;2;152;118;170mlongKey [38;2;169;183;198m== [38;2;221;68;136mExampleClass2[38;2;169;183;198m.[38;2;152;118;170mstringForeignKey
 [39m  ║ [31m                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[39m20║ [36m}
+[39m20║ [38;2;169;183;198m}
 [m
 [36mLocation:  [mCriteriaTypeMismatchErrorTest.klass:19[m
 [36mFile:      [mCriteriaTypeMismatchErrorTest.klass[m

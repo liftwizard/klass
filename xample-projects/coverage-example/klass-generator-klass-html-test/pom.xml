@@ -105,6 +105,13 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-syntax-highlighter-ansi</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 </project>
