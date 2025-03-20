@@ -1,4 +1,3 @@
-set shell := ["bash", "-O", "globstar", "-c"]
 set dotenv-filename := ".envrc"
 
 group_id_with_slashes := "cool/klass"
@@ -25,6 +24,7 @@ markdownlint:
 
 # Count lines of code
 scc:
+    shopt -s globstar
     scc **/src/{main,test}
 
 # mvn archetype
