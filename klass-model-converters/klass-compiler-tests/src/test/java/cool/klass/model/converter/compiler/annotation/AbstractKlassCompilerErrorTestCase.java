@@ -16,6 +16,8 @@
 
 package cool.klass.model.converter.compiler.annotation;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
@@ -85,6 +87,20 @@ public abstract class AbstractKlassCompilerErrorTestCase
                 sourceCodeText);
 
         this.handleCompilerAnnotations(compilationResult, testName);
+
+        String packagePath = callingClass.getPackage().getName().replace('.', '/');
+        var resourcesDir = new File("src/test/resources/" + packagePath);
+
+        if (resourcesDir.exists() && resourcesDir.isDirectory())
+        {
+            String errorPattern = "-\\d+(_\\d+)*-\\d+-ERR_.*\\.log";
+            FilenameFilter errorFileFilter = (dir, name) -> name.matches(testName + errorPattern);
+            File[] errorFiles = resourcesDir.listFiles(errorFileFilter);
+
+            assertThat(errorFiles)
+                    .as("No error files should exist for %s in %s", testName, "src/test/resources/" + packagePath)
+                    .isEmpty();
+        }
 
         Optional<DomainModelWithSourceCode> domainModelWithSourceCode = compilationResult.domainModelWithSourceCode();
         assertThat(domainModelWithSourceCode).isPresent();
