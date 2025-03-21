@@ -90,6 +90,26 @@ public abstract class AbstractKlassCompilerErrorTestCase
         assertThat(domainModelWithSourceCode).isPresent();
     }
 
+    protected void assertOnlyCompilerWarnings()
+    {
+        Class<?> callingClass = this.getClass();
+        String   testName     = callingClass.getSimpleName();
+        String   sourceName   = testName + ".klass";
+
+        String sourceCodeText = FileSlurper.slurp(sourceName, callingClass);
+
+        CompilationResult compilationResult = AbstractKlassCompilerErrorTestCase.getCompilationResult(
+                sourceName,
+                sourceCodeText);
+
+        this.handleCompilerAnnotations(compilationResult, testName);
+
+        Optional<DomainModelWithSourceCode> domainModelWithSourceCode = compilationResult.domainModelWithSourceCode();
+        assertThat(domainModelWithSourceCode)
+                .as("Expected compilation to succeed with warnings")
+                .isPresent();
+    }
+
     @Nonnull
     private static CompilationResult getCompilationResult(String sourceName, String sourceCodeText)
     {
