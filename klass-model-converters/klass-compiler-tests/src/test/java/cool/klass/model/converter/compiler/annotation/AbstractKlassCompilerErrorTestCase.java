@@ -55,80 +55,27 @@ public abstract class AbstractKlassCompilerErrorTestCase
         this.assertCompilerErrors();
     }
 
-    protected void assertCompilerErrors()
+    @Nonnull
+    private String getTestName()
     {
-        Class<?> callingClass   = this.getClass();
-        String   testName       = callingClass.getSimpleName();
-        String   sourceName     = testName + ".klass";
-        String   sourceCodeText = FileSlurper.slurp(sourceName, callingClass);
-
-        CompilationResult compilationResult = AbstractKlassCompilerErrorTestCase.getCompilationResult(
-                sourceName,
-                sourceCodeText);
-
-        this.handleCompilerAnnotations(compilationResult, testName);
-
-        if (compilationResult.domainModelWithSourceCode().isPresent())
-        {
-            fail("Expected a compile error but found:\n" + sourceCodeText);
-        }
-    }
-
-    protected void assertNoCompilerErrors()
-    {
-        Class<?> callingClass = this.getClass();
-        String   testName     = callingClass.getSimpleName();
-        String   sourceName   = testName + ".klass";
-
-        String sourceCodeText = FileSlurper.slurp(sourceName, callingClass);
-
-        CompilationResult compilationResult = AbstractKlassCompilerErrorTestCase.getCompilationResult(
-                sourceName,
-                sourceCodeText);
-
-        this.handleCompilerAnnotations(compilationResult, testName);
-
-        String packagePath = callingClass.getPackage().getName().replace('.', '/');
-        var resourcesDir = new File("src/test/resources/" + packagePath);
-
-        if (resourcesDir.exists() && resourcesDir.isDirectory())
-        {
-            String errorPattern = "-\\d+(_\\d+)*-\\d+-ERR_.*\\.log";
-            FilenameFilter errorFileFilter = (dir, name) -> name.matches(testName + errorPattern);
-            File[] errorFiles = resourcesDir.listFiles(errorFileFilter);
-
-            assertThat(errorFiles)
-                    .as("No error files should exist for %s in %s", testName, "src/test/resources/" + packagePath)
-                    .isEmpty();
-        }
-
-        Optional<DomainModelWithSourceCode> domainModelWithSourceCode = compilationResult.domainModelWithSourceCode();
-        assertThat(domainModelWithSourceCode).isPresent();
-    }
-
-    protected void assertOnlyCompilerWarnings()
-    {
-        Class<?> callingClass = this.getClass();
-        String   testName     = callingClass.getSimpleName();
-        String   sourceName   = testName + ".klass";
-
-        String sourceCodeText = FileSlurper.slurp(sourceName, callingClass);
-
-        CompilationResult compilationResult = AbstractKlassCompilerErrorTestCase.getCompilationResult(
-                sourceName,
-                sourceCodeText);
-
-        this.handleCompilerAnnotations(compilationResult, testName);
-
-        Optional<DomainModelWithSourceCode> domainModelWithSourceCode = compilationResult.domainModelWithSourceCode();
-        assertThat(domainModelWithSourceCode)
-                .as("Expected compilation to succeed with warnings")
-                .isPresent();
+        return this.getClass().getSimpleName();
     }
 
     @Nonnull
-    private static CompilationResult getCompilationResult(String sourceName, String sourceCodeText)
+    private String getSourceName()
     {
+        return this.getTestName() + ".klass";
+    }
+
+    private String getSourceCodeText()
+    {
+        return FileSlurper.slurp(this.getSourceName(), this.getClass());
+    }
+
+    @Nonnull
+    private CompilationResult compile(String sourceCodeText)
+    {
+        String sourceName = this.getSourceName();
         CompilationUnit compilationUnit = CompilationUnit.createFromText(
                 0,
                 Optional.empty(),
@@ -138,11 +85,16 @@ public abstract class AbstractKlassCompilerErrorTestCase
         return compiler.compile();
     }
 
-    private void handleCompilerAnnotations(
+    private void assertCompilerAnnotationsExist(
             CompilationResult compilationResult,
-            String testName)
+            String testName,
+            String sourceCodeText)
     {
         ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
+        assertThat(compilerAnnotations)
+                .as("Expected a compile error but found:\n" + sourceCodeText)
+                .isNotEmpty();
+
         for (RootCompilerAnnotation compilerAnnotation : compilerAnnotations)
         {
             String annotationSourceName = "%s-%s-%d-%s.log".formatted(
@@ -174,14 +126,84 @@ public abstract class AbstractKlassCompilerErrorTestCase
     private ImmutableList<Object> getAnnotationKey(RootCompilerAnnotation rootCompilerAnnotation)
     {
         String filenameWithoutDirectory = rootCompilerAnnotation.getFilenameWithoutDirectory();
-        int    line                     = rootCompilerAnnotation.getLine();
-        int    charPositionInLine       = rootCompilerAnnotation.getCharPositionInLine();
-        String annotationCode           = rootCompilerAnnotation.getAnnotationCode();
+        int line = rootCompilerAnnotation.getLine();
+        int charPositionInLine = rootCompilerAnnotation.getCharPositionInLine();
+        String annotationCode = rootCompilerAnnotation.getAnnotationCode();
         ImmutableList<Object> result = Lists.immutable.with(
                 filenameWithoutDirectory,
                 line,
                 charPositionInLine,
                 annotationCode);
         return result;
+    }
+
+    private void assertCompilerAnnotationsDoNotExist(CompilationResult compilationResult, String sourceCodeText)
+    {
+        ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
+        assertThat(compilerAnnotations)
+                .as("Expected no compiler errors but found:\n" + sourceCodeText)
+                .isEmpty();
+    }
+
+    private void assertCompilerAnnotationFilesDoNotExist()
+    {
+        String packagePath = this.getClass().getPackage().getName().replace('.', '/');
+        File resourcesDir = new File("src/test/resources/" + packagePath);
+
+        if (resourcesDir.exists() && resourcesDir.isDirectory())
+        {
+            String errorPattern = "-\\d+(_\\d+)*-\\d+-ERR_.*\\.log";
+            FilenameFilter errorFileFilter = (dir, name) -> name.matches(this.getTestName() + errorPattern);
+            File[] errorFiles = resourcesDir.listFiles(errorFileFilter);
+
+            assertThat(errorFiles)
+                    .as(
+                            "No error files should exist for %s in %s",
+                            this.getTestName(),
+                            "src/test/resources/" + packagePath)
+                    .isEmpty();
+        }
+    }
+
+    private void assertDomainModelDoesNotExist(CompilationResult compilationResult, String sourceCodeText)
+    {
+        if (compilationResult.domainModelWithSourceCode().isPresent())
+        {
+            fail("Expected a compile error but found:\n" + sourceCodeText);
+        }
+    }
+
+    private void assertDomainModelExists(CompilationResult compilationResult)
+    {
+        Optional<DomainModelWithSourceCode> domainModelWithSourceCode = compilationResult.domainModelWithSourceCode();
+        assertThat(domainModelWithSourceCode).isPresent();
+    }
+
+    protected void assertCompilerErrors()
+    {
+        String sourceCodeText = this.getSourceCodeText();
+        CompilationResult compilationResult = this.compile(sourceCodeText);
+
+        this.assertCompilerAnnotationsExist(compilationResult, this.getTestName(), sourceCodeText);
+        this.assertDomainModelDoesNotExist(compilationResult, sourceCodeText);
+    }
+
+    protected void assertNoCompilerErrors()
+    {
+        String sourceCodeText = this.getSourceCodeText();
+        CompilationResult compilationResult = this.compile(sourceCodeText);
+
+        this.assertCompilerAnnotationsDoNotExist(compilationResult, sourceCodeText);
+        this.assertCompilerAnnotationFilesDoNotExist();
+        this.assertDomainModelExists(compilationResult);
+    }
+
+    protected void assertOnlyCompilerWarnings()
+    {
+        String sourceCodeText = this.getSourceCodeText();
+        CompilationResult compilationResult = this.compile(sourceCodeText);
+
+        this.assertCompilerAnnotationsExist(compilationResult, this.getTestName(), sourceCodeText);
+        this.assertDomainModelExists(compilationResult);
     }
 }
