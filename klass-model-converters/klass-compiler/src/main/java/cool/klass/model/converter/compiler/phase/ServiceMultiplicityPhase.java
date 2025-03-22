@@ -37,6 +37,7 @@ public class ServiceMultiplicityPhase extends AbstractCompilerPhase
     @Override
     public void enterServiceMultiplicityDeclaration(ServiceMultiplicityDeclarationContext ctx)
     {
+        super.enterServiceMultiplicityDeclaration(ctx);
         ServiceMultiplicityContext multiplicityContext = ctx.serviceMultiplicity();
 
         AntlrServiceMultiplicity serviceMultiplicity = new AntlrServiceMultiplicity(

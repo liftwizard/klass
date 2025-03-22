@@ -48,6 +48,7 @@ public class OrderByPhase extends AbstractCompilerPhase
     @Override
     public void enterServiceOrderByDeclaration(@Nonnull ServiceOrderByDeclarationContext ctx)
     {
+        super.enterServiceOrderByDeclaration(ctx);
         this.serviceOrderByDeclarationContext = ctx;
     }
 
@@ -55,6 +56,7 @@ public class OrderByPhase extends AbstractCompilerPhase
     public void exitServiceOrderByDeclaration(@Nonnull ServiceOrderByDeclarationContext ctx)
     {
         this.serviceOrderByDeclarationContext = null;
+        super.exitServiceOrderByDeclaration(ctx);
     }
 
     @Override
