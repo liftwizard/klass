@@ -17,9 +17,11 @@
 package cool.klass.model.converter.compiler;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
@@ -27,6 +29,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.base.Splitter;
 import cool.klass.model.converter.compiler.parser.ThrowingErrorListener;
 import cool.klass.model.converter.compiler.phase.AbstractCompilerPhase;
 import cool.klass.model.converter.compiler.state.AntlrElement;
@@ -114,8 +117,8 @@ public final class CompilationUnit
     {
         if (this.macroElement.isEmpty())
         {
-            String[] split = this.sourceName.split("/");
-            return split[split.length - 1];
+            List<String> split = Splitter.on('/').splitToList(this.sourceName);
+            return split.get(split.size() - 1);
         }
 
         String fullPathSourceName = this.macroElement
@@ -180,11 +183,11 @@ public final class CompilationUnit
     @Nonnull
     private static String slurp(File file)
     {
-        try (Scanner scanner = new Scanner(file).useDelimiter("\\A"))
+        try (Scanner scanner = new Scanner(file, StandardCharsets.UTF_8).useDelimiter("\\A"))
         {
             return scanner.hasNext() ? scanner.next() : "";
         }
-        catch (FileNotFoundException e)
+        catch (IOException e)
         {
             throw new RuntimeException(e);
         }
@@ -201,7 +204,7 @@ public final class CompilationUnit
     @Nonnull
     private static String slurp(@Nonnull InputStream inputStream)
     {
-        try (Scanner scanner = new Scanner(inputStream).useDelimiter("\\A"))
+        try (Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8).useDelimiter("\\A"))
         {
             return scanner.hasNext() ? scanner.next() : "";
         }

@@ -29,7 +29,6 @@ import cool.klass.model.converter.compiler.state.AntlrDomainModel;
 import cool.klass.model.converter.compiler.state.AntlrEnumeration;
 import cool.klass.model.converter.compiler.state.AntlrInterface;
 import cool.klass.model.converter.compiler.state.AntlrTopLevelElement;
-import cool.klass.model.converter.compiler.state.modifier.AntlrModifierOwner;
 import cool.klass.model.converter.compiler.state.order.AntlrOrderBy;
 import cool.klass.model.converter.compiler.state.order.AntlrOrderByMemberReferencePath;
 import cool.klass.model.converter.compiler.state.order.AntlrOrderByOwner;
@@ -124,8 +123,6 @@ public class CompilerWalkState
 
     @Nullable
     private AntlrParameterOwner parameterOwner;
-    @Nullable
-    private AntlrModifierOwner  modifierOwner;
 
     private int numClassifierMembers;
 
