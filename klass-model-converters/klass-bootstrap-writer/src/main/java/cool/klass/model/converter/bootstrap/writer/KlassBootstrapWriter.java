@@ -21,7 +21,6 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import com.gs.fw.common.mithra.finder.RelatedFinder;
 import cool.klass.data.store.DataStore;
 import cool.klass.model.meta.domain.api.Association;
 import cool.klass.model.meta.domain.api.Classifier;
@@ -56,77 +55,52 @@ import cool.klass.model.meta.domain.api.service.ServiceProjectionDispatch;
 import cool.klass.model.meta.domain.api.service.url.Url;
 import cool.klass.model.meta.domain.api.value.ExpressionValue;
 import cool.klass.model.meta.domain.api.value.ThisMemberReferencePath;
-import klass.model.meta.domain.AssociationEndFinder;
 import klass.model.meta.domain.AssociationEndList;
 import klass.model.meta.domain.AssociationEndModifier;
-import klass.model.meta.domain.AssociationEndModifierFinder;
 import klass.model.meta.domain.AssociationEndModifierList;
 import klass.model.meta.domain.AssociationEndOrderBy;
 import klass.model.meta.domain.AssociationEndOrderByList;
-import klass.model.meta.domain.AssociationFinder;
 import klass.model.meta.domain.AssociationList;
 import klass.model.meta.domain.ClassifierInterfaceMapping;
-import klass.model.meta.domain.ClassifierInterfaceMappingFinder;
 import klass.model.meta.domain.ClassifierInterfaceMappingList;
 import klass.model.meta.domain.ClassifierList;
 import klass.model.meta.domain.ClassifierModifier;
-import klass.model.meta.domain.ClassifierModifierFinder;
 import klass.model.meta.domain.ClassifierModifierList;
 import klass.model.meta.domain.DataTypePropertyList;
-import klass.model.meta.domain.EnumerationFinder;
 import klass.model.meta.domain.EnumerationList;
-import klass.model.meta.domain.EnumerationLiteralFinder;
 import klass.model.meta.domain.EnumerationLiteralList;
 import klass.model.meta.domain.EnumerationParameter;
 import klass.model.meta.domain.EnumerationParameterList;
-import klass.model.meta.domain.EnumerationPropertyFinder;
 import klass.model.meta.domain.EnumerationPropertyList;
-import klass.model.meta.domain.InterfaceFinder;
 import klass.model.meta.domain.InterfaceList;
-import klass.model.meta.domain.KlassFinder;
 import klass.model.meta.domain.KlassList;
 import klass.model.meta.domain.MaxLengthPropertyValidation;
-import klass.model.meta.domain.MaxLengthPropertyValidationFinder;
 import klass.model.meta.domain.MaxLengthPropertyValidationList;
 import klass.model.meta.domain.MaxPropertyValidation;
-import klass.model.meta.domain.MaxPropertyValidationFinder;
 import klass.model.meta.domain.MaxPropertyValidationList;
 import klass.model.meta.domain.MemberReferencePath;
 import klass.model.meta.domain.MemberReferencePathList;
 import klass.model.meta.domain.MinLengthPropertyValidation;
-import klass.model.meta.domain.MinLengthPropertyValidationFinder;
 import klass.model.meta.domain.MinLengthPropertyValidationList;
 import klass.model.meta.domain.MinPropertyValidation;
-import klass.model.meta.domain.MinPropertyValidationFinder;
 import klass.model.meta.domain.MinPropertyValidationList;
 import klass.model.meta.domain.NamedElementAbstract;
 import klass.model.meta.domain.NamedProjection;
-import klass.model.meta.domain.NamedProjectionFinder;
 import klass.model.meta.domain.NamedProjectionList;
 import klass.model.meta.domain.PackageableElementList;
 import klass.model.meta.domain.PrimitiveParameter;
 import klass.model.meta.domain.PrimitiveParameterList;
-import klass.model.meta.domain.PrimitivePropertyFinder;
 import klass.model.meta.domain.PrimitivePropertyList;
-import klass.model.meta.domain.ProjectionDataTypePropertyFinder;
 import klass.model.meta.domain.ProjectionElementList;
-import klass.model.meta.domain.ProjectionProjectionReferenceFinder;
-import klass.model.meta.domain.ProjectionReferencePropertyFinder;
 import klass.model.meta.domain.ProjectionWithAssociationEnd;
 import klass.model.meta.domain.PropertyModifier;
-import klass.model.meta.domain.PropertyModifierFinder;
 import klass.model.meta.domain.PropertyModifierList;
 import klass.model.meta.domain.RootProjection;
-import klass.model.meta.domain.RootProjectionFinder;
 import klass.model.meta.domain.RootProjectionList;
-import klass.model.meta.domain.ServiceFinder;
-import klass.model.meta.domain.ServiceGroupFinder;
 import klass.model.meta.domain.ServiceGroupList;
 import klass.model.meta.domain.ServiceList;
-import klass.model.meta.domain.ThisMemberReferencePathFinder;
 import klass.model.meta.domain.ThisMemberReferencePathList;
 import klass.model.meta.domain.TypeMemberReferencePathList;
-import klass.model.meta.domain.UrlFinder;
 import klass.model.meta.domain.UrlList;
 import klass.model.meta.domain.UrlParameter;
 import klass.model.meta.domain.UrlParameterList;
@@ -139,32 +113,6 @@ import org.eclipse.collections.impl.factory.Maps;
 public class KlassBootstrapWriter
 {
     // TODO: Implement Purge on DataStore and break the dependency on Reladomo
-    private static final ImmutableList<RelatedFinder<?>> BOOTSTRAP_FINDERS = Lists.immutable.with(
-            EnumerationFinder.getFinderInstance(),
-            EnumerationLiteralFinder.getFinderInstance(),
-            InterfaceFinder.getFinderInstance(),
-            KlassFinder.getFinderInstance(),
-            AssociationFinder.getFinderInstance(),
-            NamedProjectionFinder.getFinderInstance(),
-            RootProjectionFinder.getFinderInstance(),
-            ProjectionReferencePropertyFinder.getFinderInstance(),
-            ProjectionProjectionReferenceFinder.getFinderInstance(),
-            ProjectionDataTypePropertyFinder.getFinderInstance(),
-            ServiceGroupFinder.getFinderInstance(),
-            UrlFinder.getFinderInstance(),
-            ServiceFinder.getFinderInstance(),
-            PrimitivePropertyFinder.getFinderInstance(),
-            EnumerationPropertyFinder.getFinderInstance(),
-            PropertyModifierFinder.getFinderInstance(),
-            ClassifierModifierFinder.getFinderInstance(),
-            AssociationEndFinder.getFinderInstance(),
-            AssociationEndModifierFinder.getFinderInstance(),
-            ThisMemberReferencePathFinder.getFinderInstance(),
-            MinLengthPropertyValidationFinder.getFinderInstance(),
-            MaxLengthPropertyValidationFinder.getFinderInstance(),
-            MinPropertyValidationFinder.getFinderInstance(),
-            MaxPropertyValidationFinder.getFinderInstance(),
-            ClassifierInterfaceMappingFinder.getFinderInstance());
 
     private final DomainModel domainModel;
     private final DataStore   dataStore;

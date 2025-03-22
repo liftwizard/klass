@@ -36,7 +36,7 @@ public class KlassTypeResolver
     @Override
     public GraphQLObjectType getType(TypeResolutionEnvironment env)
     {
-        // TODO: Assert that the resolved type is a subclass of this.klass
+        // TODO 2025-03-23: Assert that the resolved type is a subclass of this.klass
         String simpleName = env.getObject().getClass().getSimpleName();
         if (simpleName.endsWith("DTO"))
         {

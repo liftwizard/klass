@@ -30,7 +30,7 @@ public class AssociationEnd extends AssociationEndAbstract
         AssociationEndOrderByList orderBys = super.getOrderBys();
         if (orderBys.size() > 1)
         {
-            orderBys.size();
+            int unused = orderBys.size();
         }
         return orderBys;
     }

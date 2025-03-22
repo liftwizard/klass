@@ -105,7 +105,7 @@ public class OperatorAntlrCriteria
     {
         if (this.elementBuilder != null)
         {
-            throw new IllegalStateException(this.elementBuilder.toString());
+            throw new IllegalStateException(String.valueOf(this.elementBuilder));
         }
         // TODO: Refactor to build the parent before the children
         this.elementBuilder = new OperatorCriteriaBuilder(
