@@ -206,6 +206,7 @@ public class ParameterizedPropertyPhase
     @Override
     public void enterParameterDeclarationList(@Nonnull ParameterDeclarationListContext ctx)
     {
+        super.enterParameterDeclarationList(ctx);
         throw new UnsupportedOperationException(this.getClass().getSimpleName()
                 + ".enterParameterDeclarationList() not implemented yet");
     }
@@ -213,6 +214,7 @@ public class ParameterizedPropertyPhase
     @Override
     public void exitParameterDeclarationList(@Nonnull ParameterDeclarationListContext ctx)
     {
+        super.exitParameterDeclarationList(ctx);
         throw new UnsupportedOperationException(this.getClass().getSimpleName()
                 + ".exitParameterDeclarationList() not implemented yet");
     }

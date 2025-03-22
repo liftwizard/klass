@@ -265,6 +265,7 @@ public class PropertyPhase
     @Override
     public void enterDataTypePropertyModifier(DataTypePropertyModifierContext ctx)
     {
+        super.enterDataTypePropertyModifier(ctx);
         AntlrModifier modifier = new AntlrModifier(
                 ctx,
                 Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),

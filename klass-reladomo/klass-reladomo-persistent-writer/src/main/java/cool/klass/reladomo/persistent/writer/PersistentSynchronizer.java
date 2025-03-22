@@ -581,7 +581,7 @@ public abstract class PersistentSynchronizer
 
                 if (associationEnd.isOwned())
                 {
-                    throw new AssertionError();
+                    throw new AssertionError("TODO: handle owned");
                     // this.dataStore.generateAndSetId(newInstance, resultType);
                     // // TODO: This is the backwards order from how I used to do it
                     // this.dataStore.setToOne(newInstance, associationEnd.getOpposite(), persistentParentInstance);
@@ -592,7 +592,7 @@ public abstract class PersistentSynchronizer
                 }
                 else
                 {
-                    throw new AssertionError();
+                    throw new AssertionError("TODO: handle not owned");
                 }
             }
             else

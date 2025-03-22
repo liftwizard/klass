@@ -186,6 +186,7 @@ public class ProjectionPhase
     @Override
     public void enterProjectionParameterizedProperty(@Nonnull ProjectionParameterizedPropertyContext ctx)
     {
+        super.enterProjectionParameterizedProperty(ctx);
         throw new UnsupportedOperationException(this.getClass().getSimpleName()
                 + ".enterProjectionParameterizedProperty() not implemented yet");
     }
@@ -193,7 +194,7 @@ public class ProjectionPhase
     @Override
     public void exitProjectionParameterizedProperty(@Nonnull ProjectionParameterizedPropertyContext ctx)
     {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".exitProjectionParameterizedProperty() not implemented yet");
+        super.exitProjectionParameterizedProperty(ctx);
+        throw new UnsupportedOperationException(this.getClass().getSimpleName());
     }
 }

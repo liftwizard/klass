@@ -17,6 +17,7 @@
 package cool.klass.model.converter.compiler.state.property;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -268,7 +269,7 @@ public class AntlrAssociationEnd
     {
         if (this.multiplicity.isToMany())
         {
-            if (this.classReference.getElementContext().identifier().getText().toLowerCase().endsWith(this.getName().toLowerCase()))
+            if (this.classReference.getElementContext().identifier().getText().toLowerCase(Locale.ROOT).endsWith(this.getName().toLowerCase(Locale.ROOT)))
             {
                 String message = "Expected to-many association end '%s.%s' to have a plural name, but name exactly matched type association end type '%s'.".formatted(
                         this.getOwningClassifier().getName(),

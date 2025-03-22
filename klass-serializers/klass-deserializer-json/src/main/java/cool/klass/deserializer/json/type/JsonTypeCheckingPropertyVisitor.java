@@ -96,7 +96,6 @@ public record JsonTypeCheckingPropertyVisitor(
         {
             String error = String.format(
                     "Expected enumerated property with type '%s.%s: %s%s' but got %s with type '%s'.",
-                    this.contextStack,
                     enumerationProperty.getOwningClassifier().getName(),
                     enumerationProperty.getName(),
                     enumerationProperty.getType().getName(),
