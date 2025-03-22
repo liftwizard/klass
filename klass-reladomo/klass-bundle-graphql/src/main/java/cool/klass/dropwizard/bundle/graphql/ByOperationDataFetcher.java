@@ -24,7 +24,6 @@ import com.gs.fw.common.mithra.finder.Operation;
 import com.gs.fw.common.mithra.finder.RelatedFinder;
 import cool.klass.data.store.reladomo.ReladomoDataStore;
 import cool.klass.model.meta.domain.api.Klass;
-import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.reladomo.tree.RootReladomoTreeNode;
 import cool.klass.model.reladomo.tree.converter.graphql.ReladomoTreeGraphqlConverter;
 import cool.klass.reladomo.tree.deep.fetcher.ReladomoTreeNodeDeepFetcherListener;
@@ -84,17 +83,6 @@ public class ByOperationDataFetcher
         rootReladomoTreeNode.toManyAwareWalk(serializerVisitor);
 
         return serializerVisitor.getResult();
-    }
-
-    private void assertEnvironmentContains(DataFetchingEnvironment environment, DataTypeProperty keyProperty)
-    {
-        if (environment.containsArgument(keyProperty.getName()))
-        {
-            return;
-        }
-
-        String detailMessage = "Argument " + keyProperty.getName() + " is required for " + this.klass.getName();
-        throw new IllegalArgumentException(detailMessage);
     }
 
     private Operation compileOperation(RelatedFinder<?> relatedFinder, String inputOperation)

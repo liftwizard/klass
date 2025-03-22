@@ -44,7 +44,6 @@ import graphql.kickstart.servlet.GraphQLHttpServlet;
 import graphql.scalars.java.JavaPrimitives;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.RuntimeWiring;
-import graphql.schema.idl.RuntimeWiring.Builder;
 import graphql.schema.idl.TypeRuntimeWiring;
 import io.dropwizard.Configuration;
 import io.dropwizard.assets.AssetsBundle;
@@ -162,7 +161,7 @@ public class KlassGraphQLBundle<T extends Configuration & GraphQLFactoryProvider
         DomainModel       domainModel  = configuration.getDomainModelFactory().createDomainModel(objectMapper);
         ReladomoDataStore dataStore    = (ReladomoDataStore) configuration.getDataStoreFactory().createDataStore();
 
-        Builder builder = RuntimeWiring.newRuntimeWiring();
+        RuntimeWiring.Builder builder = RuntimeWiring.newRuntimeWiring();
         builder
                 .scalar(GraphQLTemporalScalar.INSTANT_INSTANCE)
                 .scalar(GraphQLTemporalScalar.TEMPORAL_INSTANT_INSTANCE)
