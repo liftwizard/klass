@@ -34,5 +34,6 @@
     <suppress files=".*" checks="VariableDeclarationUsageDistance" />
     <suppress files=".*" checks="VisibilityModifier" />
     <suppress files=".*" id="checkASCII" />
+    <suppress files="[\\/]AssociationEnd.java" checks="UnusedLocalVariable" />
 
 </suppressions>
