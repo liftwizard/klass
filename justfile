@@ -5,7 +5,6 @@ group_id_with_slashes := "cool/klass"
 import ".just/console.just"
 import ".just/maven.just"
 import ".just/git.just"
-import ".just/git-rebase.just"
 import ".just/git-test.just"
 
 # Setup the project (mise) and run the default build (mvn)
@@ -21,11 +20,6 @@ mise:
 
 markdownlint:
     markdownlint --config .markdownlint.jsonc  --fix .
-
-# Count lines of code
-scc:
-    shopt -s globstar
-    scc **/src/{main,test}
 
 # mvn archetype
 @archetype MVN=default_mvn:
