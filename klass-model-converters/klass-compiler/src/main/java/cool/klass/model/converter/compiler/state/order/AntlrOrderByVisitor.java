@@ -16,27 +16,9 @@
 
 package cool.klass.model.converter.compiler.state.order;
 
-import java.util.Optional;
-
 import javax.annotation.Nonnull;
 
-import cool.klass.model.converter.compiler.state.IAntlrElement;
-import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.impl.factory.Lists;
-
-public interface AntlrOrderByOwner
-        extends IAntlrElement
+public interface AntlrOrderByVisitor
 {
-    void enterOrderByDeclaration(@Nonnull AntlrOrderBy orderBy);
-
-    @Nonnull
-    Optional<AntlrOrderBy> getOrderBy();
-
-    @Nonnull
-    default ImmutableList<AntlrOrderBy> getOrderBys()
-    {
-        return this.getOrderBy()
-                .map(Lists.immutable::with)
-                .orElseGet(Lists.immutable::empty);
-    }
+    void visit(@Nonnull AntlrOrderBy orderBy);
 }

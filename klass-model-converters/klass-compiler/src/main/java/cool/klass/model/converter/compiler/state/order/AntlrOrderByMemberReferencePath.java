@@ -81,6 +81,12 @@ public class AntlrOrderByMemberReferencePath
         return this.orderByDirection;
     }
 
+    @Nonnull
+    public AntlrThisMemberReferencePath getThisMemberReferencePath()
+    {
+        return this.thisMemberReferencePath;
+    }
+
     public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
     {
         // TODO: ❗️ Redo context stack for error reporting
