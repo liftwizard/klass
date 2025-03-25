@@ -55,4 +55,12 @@ public class PrimitiveTypeBuilder
     {
         return this.primitiveType;
     }
+
+    @Override
+    public String toString()
+    {
+        return "PrimitiveTypeBuilder{"
+                + "primitiveType=" + this.primitiveType
+                + "}";
+    }
 }
