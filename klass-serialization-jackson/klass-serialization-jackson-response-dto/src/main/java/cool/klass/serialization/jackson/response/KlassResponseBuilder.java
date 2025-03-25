@@ -115,4 +115,18 @@ public class KlassResponseBuilder
                 this.principal);
         return new KlassResponse(metadata, this.data);
     }
+
+    @Override
+    public String toString()
+    {
+        return "KlassResponseBuilder{"
+                + "projection=" + this.projection
+                + ", multiplicity=" + this.multiplicity
+                + ", transactionTimestamp=" + this.transactionTimestamp
+                + ", pagination=" + this.pagination
+                + ", principal=" + this.principal
+                + ", criteria=" + this.criteria
+                + ", orderBy=" + this.orderBy
+                + "}";
+    }
 }

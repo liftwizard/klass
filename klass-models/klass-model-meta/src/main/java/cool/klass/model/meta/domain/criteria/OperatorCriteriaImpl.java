@@ -121,5 +121,15 @@ public final class OperatorCriteriaImpl
                     this.sourceValue.build(),
                     this.targetValue.build());
         }
+
+        @Override
+        public String toString()
+        {
+            return "OperatorCriteriaBuilder{"
+                    + "operator=" + this.operator
+                    + ", sourceValue=" + this.sourceValue
+                    + ", targetValue=" + this.targetValue
+                    + '}';
+        }
     }
 }
