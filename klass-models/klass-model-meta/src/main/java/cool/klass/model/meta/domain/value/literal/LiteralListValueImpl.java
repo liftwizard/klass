@@ -69,7 +69,7 @@ public final class LiteralListValueImpl
     {
         if (this.literalValues != null)
         {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Literal values already set");
         }
         this.literalValues = Objects.requireNonNull(literalValues);
     }

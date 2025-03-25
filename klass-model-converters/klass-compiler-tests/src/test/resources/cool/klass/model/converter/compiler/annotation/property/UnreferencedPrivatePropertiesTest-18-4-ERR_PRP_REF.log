@@ -1,0 +1,17 @@
+════════════════════════════════════════ [35mERR_PRP_REF[m ════════════════════════════════════════
+[33mWarning: Private property 'ExampleClass.privateUnreferenced' is not referenced in any criteria.[m
+
+At (UnreferencedPrivatePropertiesTest.klass:18)
+
+[39m 1║ [35mpackage [39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mproperty
+[39m 9║ [35mclass [39mExampleClass
+[39m10║ [36m{
+[39m18║     [39mprivateUnreferenced[36m: [35mInteger [32mprivate[36m;
+[39m  ║ [33m    ^^^^^^^^^^^^^^^^^^^
+[39m19║ [36m}
+[m
+[36mLocation:  [mUnreferencedPrivatePropertiesTest.klass:18[m
+[36mFile:      [mUnreferencedPrivatePropertiesTest.klass[m
+[36mLine:      [m18[m
+[36mCharacter: [m5
+═════════════════════════════════════════════════════════════════════════════════════════════

@@ -81,6 +81,12 @@ public class AntlrOrderBy
         return this.orderByOwner instanceof AntlrService;
     }
 
+    @Nonnull
+    public ImmutableList<AntlrOrderByMemberReferencePath> getOrderByMemberReferencePaths()
+    {
+        return this.orderByMemberReferencePaths.toImmutable();
+    }
+
     @Override
     public Pair<Token, Token> getContextBefore()
     {
@@ -142,5 +148,10 @@ public class AntlrOrderBy
     public OrderByBuilder getElementBuilder()
     {
         return Objects.requireNonNull(this.elementBuilder);
+    }
+
+    public void visit(@Nonnull AntlrOrderByVisitor visitor)
+    {
+        visitor.visit(this);
     }
 }

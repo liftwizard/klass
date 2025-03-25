@@ -1,0 +1,45 @@
+package cool.klass.model.converter.compiler.annotation.property
+
+class RelatedClass
+{
+    id: String key;
+    normalProperty: String;
+}
+
+class ExampleClass
+{
+    id: String key;
+    relatedClassId: String private;
+    name: String;
+    privateUsedInAssociationCriteria: String private;
+    privateUsedInServiceCriteria: String private;
+    privateUsedInAssociationOrderBy: Integer private;
+    privateUsedInServiceOrderBy: Integer private;
+    privateUnreferenced: Integer private;
+}
+
+association ExampleToRelated
+{
+    example: ExampleClass[0..*] orderBy: this.privateUsedInAssociationOrderBy ascending;
+    related: RelatedClass[1..1];
+
+    relationship this.relatedClassId == RelatedClass.id && this.privateUsedInAssociationCriteria == "test"
+}
+
+projection ExampleProjection on ExampleClass
+{
+    id: "ID",
+    name: "Name",
+}
+
+service ExampleClassResource on ExampleClass
+{
+    /examples
+        GET
+        {
+            multiplicity: many;
+            criteria: this.privateUsedInServiceCriteria == "test";
+            projection: ExampleProjection;
+            orderBy: this.privateUsedInServiceOrderBy ascending;
+        }
+}
