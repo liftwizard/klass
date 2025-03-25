@@ -151,6 +151,10 @@ jobs:
       - name: "Produce Checkstyle XML: Semantics"
         run: mvn checkstyle:check --activate-profiles 'checkstyle-semantics'
 
+      - uses: motlin/checkstyle-results@v1.0.0
+        with:
+          checkstyle_files: "**/checkstyle-result.xml"
+
       # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
@@ -177,6 +181,10 @@ jobs:
 
       - name: "Produce Checkstyle XML: Strict Semantics"
         run: mvn checkstyle:check --activate-profiles 'checkstyle-semantics-strict'
+
+      - uses: motlin/checkstyle-results@v1.0.0
+        with:
+          checkstyle_files: "**/checkstyle-result.xml"
 
       # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
@@ -205,6 +213,10 @@ jobs:
       - name: "Produce Checkstyle XML: Formatting"
         run: mvn checkstyle:check --activate-profiles 'checkstyle-formatting'
 
+      - uses: motlin/checkstyle-results@v1.0.0
+        with:
+          checkstyle_files: "**/checkstyle-result.xml"
+
       # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
@@ -231,6 +243,10 @@ jobs:
 
       - name: "Produce Checkstyle XML: Strict Formatting"
         run: mvn checkstyle:check --activate-profiles 'checkstyle-formatting-strict'
+
+      - uses: motlin/checkstyle-results@v1.0.0
+        with:
+          checkstyle_files: "**/checkstyle-result.xml"
 
       # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
