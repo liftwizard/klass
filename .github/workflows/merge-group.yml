@@ -581,6 +581,24 @@ jobs:
           reporter: github-pr-check
           filter_mode: nofilter
 
+  super-linter:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: super-linter/super-linter@v7.3.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   all-checks:
     name: All checks
     needs:
@@ -610,6 +628,7 @@ jobs:
         reviewdog-languagetool,
         reviewdog-actionlint,
         reviewdog-shellcheck,
+        super-linter,
       ]
     runs-on: ubuntu-latest
     steps:
