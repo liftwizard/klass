@@ -26,6 +26,6 @@ class AuditWithoutTemporalErrorTest
     @Override
     public void smokeTest()
     {
-        this.assertNoCompilerErrors();
+        this.assertCompilationSucceeds(true);
     }
 }

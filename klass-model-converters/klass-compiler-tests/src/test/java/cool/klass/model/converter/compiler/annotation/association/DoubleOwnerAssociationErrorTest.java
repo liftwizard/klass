@@ -26,6 +26,6 @@ class DoubleOwnerAssociationErrorTest
     @Override
     public void smokeTest()
     {
-        this.assertOnlyCompilerWarnings();
+        this.assertCompilationSucceeds(true);
     }
 }

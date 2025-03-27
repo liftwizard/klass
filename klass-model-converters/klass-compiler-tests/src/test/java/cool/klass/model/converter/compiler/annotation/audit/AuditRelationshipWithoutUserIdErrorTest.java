@@ -26,6 +26,6 @@ class AuditRelationshipWithoutUserIdErrorTest
     @Override
     public void smokeTest()
     {
-        this.assertNoCompilerErrors();
+        this.assertCompilationSucceeds(true);
     }
 }
