@@ -26,7 +26,7 @@ class ScratchKlassCompilerErrorTest
     @Override
     public void smokeTest()
     {
-        // TODO:
-        this.assertNoCompilerErrors();
+        // TODO 2025-03-27:
+        this.assertCompilationSucceeds(true);
     }
 }

@@ -22,12 +22,11 @@ import org.junit.jupiter.api.Test;
 class InvalidOverridesErrorTest
         extends AbstractKlassCompilerErrorTestCase
 {
-    // TODO: Reject bad overrides with a compiler error
-
     @Test
     @Override
     public void smokeTest()
     {
-        this.assertNoCompilerErrors();
+        // TODO 2025-03-27: Reject bad overrides with a compiler error
+        this.assertCompilationSucceeds(true);
     }
 }
