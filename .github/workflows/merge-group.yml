@@ -149,7 +149,7 @@ jobs:
       - uses: jdx/mise-action@v2
 
       - name: "Produce Checkstyle XML: Semantics"
-        run: mvn checkstyle:check --activate-profiles 'checkstyle-semantics'
+        run: mvn checkstyle:check --activate-profiles 'checkstyle-semantics' -Dcheckstyle.failOnViolation=false
 
       - uses: motlin/checkstyle-results@v1.0.0
         with:
@@ -180,7 +180,7 @@ jobs:
       - uses: jdx/mise-action@v2
 
       - name: "Produce Checkstyle XML: Strict Semantics"
-        run: mvn checkstyle:check --activate-profiles 'checkstyle-semantics-strict'
+        run: mvn checkstyle:check --activate-profiles 'checkstyle-semantics-strict' -Dcheckstyle.failOnViolation=false
 
       - uses: motlin/checkstyle-results@v1.0.0
         with:
@@ -211,7 +211,7 @@ jobs:
       - uses: jdx/mise-action@v2
 
       - name: "Produce Checkstyle XML: Formatting"
-        run: mvn checkstyle:check --activate-profiles 'checkstyle-formatting'
+        run: mvn checkstyle:check --activate-profiles 'checkstyle-formatting' -Dcheckstyle.failOnViolation=false
 
       - uses: motlin/checkstyle-results@v1.0.0
         with:
@@ -242,7 +242,7 @@ jobs:
       - uses: jdx/mise-action@v2
 
       - name: "Produce Checkstyle XML: Strict Formatting"
-        run: mvn checkstyle:check --activate-profiles 'checkstyle-formatting-strict'
+        run: mvn checkstyle:check --activate-profiles 'checkstyle-formatting-strict' -Dcheckstyle.failOnViolation=false
 
       - uses: motlin/checkstyle-results@v1.0.0
         with:
