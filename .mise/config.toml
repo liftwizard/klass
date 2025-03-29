@@ -1,0 +1,32 @@
+[tools]
+java = "oracle-17.0.10"
+maven = "3.9.9"
+mvnd = "1.0.2"
+node = "22.13.1"
+"npm:markdownlint-cli" = "0.44.0"
+"npm:repomix" = "latest"
+"npm:strip-ansi-cli" = "4.0.0"
+
+[alias]
+mvnd = "asdf:https://github.com/joschi/asdf-mvnd"
+
+[env]
+ECHO_COMMAND = "echo"
+OFFLINE = "false"
+
+# Maven-related environment variables
+GROUP_ID = "cool/klass"
+MVN_BINARY   = "mvn"
+MVN_TARGET   = "verify"
+MVN_VERIFY_PROFILES = "maven-enforcer-plugin,maven-dependency-plugin,maven-javadoc-plugin"
+MVN_CHECKSTYLE_PROFILES = "checkstyle-semantics,checkstyle-formatting,checkstyle-semantics-strict,checkstyle-formatting-strict"
+MVN_SPOTLESS_PROFILES = "spotless-apply,spotless-formats,spotless-java-sort-imports,spotless-java-unused-imports,spotless-java-cleanthat,spotless-sql,spotless-pom,spotless-markdown,spotless-json,spotless-yaml"
+MVN_PROFILES = "--activate-profiles {{env.MVN_VERIFY_PROFILES}},{{env.MVN_CHECKSTYLE_PROFILES}},{{env.MVN_SPOTLESS_PROFILES}}"
+MVN_FLAGS    = "--threads 2C"
+
+# Git-related environment variables
+UPSTREAM_REMOTE = "upstream"
+UPSTREAM_BRANCH = "main"
+
+# Git-test related environment variables
+GIT_TESTS = "default,checkstyle,spotless-all"
