@@ -27,7 +27,7 @@ jobs:
 
       - uses: jdx/mise-action@v2
 
-      - run: mvn verify --activate-profiles jacoco-maven-plugin
+      - run: just coverage
 
       - uses: madrapps/jacoco-report@v1.7.1
         with:
