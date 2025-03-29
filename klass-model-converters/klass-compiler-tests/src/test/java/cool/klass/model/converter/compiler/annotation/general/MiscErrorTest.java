@@ -30,7 +30,8 @@ class MiscErrorTest
     @Test
     public void smokeTest()
     {
-        RuntimeException runtimeException = assertThrows(RuntimeException.class, this::assertCompilerErrors);
+        RuntimeException runtimeException = assertThrows(RuntimeException.class,
+                () -> this.assertCompilationSucceeds( false));
         assertThat(runtimeException.getMessage()).isEqualTo("Exception in compiler during phase: ParameterizedPropertyPhase for compilation unit: MiscErrorTest.klass");
     }
 }
