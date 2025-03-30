@@ -31,26 +31,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @AutoService(PrioritizedBundle.class)
-public class BootstrapWriterBundle
-        implements PrioritizedBundle
-{
+public class BootstrapWriterBundle implements PrioritizedBundle {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(BootstrapWriterBundle.class);
 
     @Override
-    public int getPriority()
-    {
+    public int getPriority() {
         return -2;
     }
 
     @Override
-    public void runWithMdc(@Nonnull Object configuration, @Nonnull Environment environment)
-    {
-        AbstractKlassConfiguration klassConfiguration = this.safeCastConfiguration(
-                AbstractKlassConfiguration.class,
-                configuration);
+    public void runWithMdc(@Nonnull Object configuration, @Nonnull Environment environment) {
+        AbstractKlassConfiguration klassConfiguration =
+            this.safeCastConfiguration(AbstractKlassConfiguration.class, configuration);
         boolean enabled = klassConfiguration.getBootstrapFactory().isEnabled();
-        if (!enabled)
-        {
+        if (!enabled) {
             LOGGER.info("{} disabled.", this.getClass().getSimpleName());
             return;
         }
@@ -59,8 +54,8 @@ public class BootstrapWriterBundle
 
         ObjectMapper objectMapper = environment.getObjectMapper();
         KlassFactory klassFactory = klassConfiguration.getKlassFactory();
-        DataStore    dataStore    = klassFactory.getDataStoreFactory().createDataStore();
-        DomainModel  domainModel  = klassFactory.getDomainModelFactory().createDomainModel(objectMapper);
+        DataStore dataStore = klassFactory.getDataStoreFactory().createDataStore();
+        DomainModel domainModel = klassFactory.getDomainModelFactory().createDomainModel(objectMapper);
 
         KlassBootstrapWriter klassBootstrapWriter = new KlassBootstrapWriter(domainModel, dataStore);
         klassBootstrapWriter.bootstrapMetaModel();

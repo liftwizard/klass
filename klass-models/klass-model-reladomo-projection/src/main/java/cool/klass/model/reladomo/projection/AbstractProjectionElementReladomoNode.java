@@ -25,43 +25,38 @@ import cool.klass.model.meta.domain.api.Interface;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.impl.map.mutable.MapAdapter;
 
-public abstract class AbstractProjectionElementReladomoNode
-        implements ProjectionElementReladomoNode
-{
-    protected final MutableMap<String, ProjectionElementReladomoNode> children = MapAdapter.adapt(new LinkedHashMap<>());
+public abstract class AbstractProjectionElementReladomoNode implements ProjectionElementReladomoNode {
+
+    protected final MutableMap<String, ProjectionElementReladomoNode> children = MapAdapter.adapt(
+        new LinkedHashMap<>()
+    );
 
     protected RootReladomoNode rootReladomoNode;
 
     private final String name;
 
-    protected AbstractProjectionElementReladomoNode(@Nonnull String name)
-    {
+    protected AbstractProjectionElementReladomoNode(@Nonnull String name) {
         this.name = Objects.requireNonNull(name);
     }
 
     @Nonnull
     @Override
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
 
     @Override
-    public RootReladomoNode getRootReladomoNode()
-    {
+    public RootReladomoNode getRootReladomoNode() {
         return this.rootReladomoNode;
     }
 
     @Override
-    public MutableMap<String, ProjectionElementReladomoNode> getChildren()
-    {
-        if (this.rootReladomoNode == null)
-        {
+    public MutableMap<String, ProjectionElementReladomoNode> getChildren() {
+        if (this.rootReladomoNode == null) {
             return this.children;
         }
 
-        if (this.children.notEmpty())
-        {
+        if (this.children.notEmpty()) {
             throw new AssertionError(this.children);
         }
 
@@ -69,23 +64,18 @@ public abstract class AbstractProjectionElementReladomoNode
     }
 
     @Override
-    public ProjectionElementReladomoNode computeChild(String name, ProjectionElementReladomoNode child)
-    {
-        if (this.rootReladomoNode != null)
-        {
+    public ProjectionElementReladomoNode computeChild(String name, ProjectionElementReladomoNode child) {
+        if (this.rootReladomoNode != null) {
             throw new AssertionError(this.rootReladomoNode);
         }
 
-        if (this.getType() != child.getOwningClassifier() && !(child.getOwningClassifier() instanceof Interface))
-        {
+        if (this.getType() != child.getOwningClassifier() && !(child.getOwningClassifier() instanceof Interface)) {
             String detailMessage = this.getType() + " != " + child.getOwningClassifier();
             throw new AssertionError(detailMessage);
         }
         ProjectionElementReladomoNode result = this.children.getIfAbsentPut(name, child);
-        if (result != child)
-        {
-            if (!result.equals(child))
-            {
+        if (result != child) {
+            if (!result.equals(child)) {
                 throw new AssertionError(result + " != " + child);
             }
         }
@@ -93,11 +83,8 @@ public abstract class AbstractProjectionElementReladomoNode
     }
 
     @Override
-    public void setProjection(
-            RootReladomoNode rootReladomoNode)
-    {
-        if (this.children.notEmpty())
-        {
+    public void setProjection(RootReladomoNode rootReladomoNode) {
+        if (this.children.notEmpty()) {
             throw new AssertionError(this.children);
         }
 
@@ -105,8 +92,7 @@ public abstract class AbstractProjectionElementReladomoNode
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getNodeString();
     }
 }

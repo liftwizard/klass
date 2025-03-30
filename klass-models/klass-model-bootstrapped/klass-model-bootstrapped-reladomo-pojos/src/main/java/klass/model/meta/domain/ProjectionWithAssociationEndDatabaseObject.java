@@ -16,6 +16,4 @@
 
 package klass.model.meta.domain;
 
-public class ProjectionWithAssociationEndDatabaseObject extends ProjectionWithAssociationEndDatabaseObjectAbstract
-{
-}
+public class ProjectionWithAssociationEndDatabaseObject extends ProjectionWithAssociationEndDatabaseObjectAbstract {}

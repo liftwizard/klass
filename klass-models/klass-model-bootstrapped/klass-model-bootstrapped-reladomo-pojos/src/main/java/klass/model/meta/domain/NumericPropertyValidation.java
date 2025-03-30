@@ -16,7 +16,4 @@
 
 package klass.model.meta.domain;
 
-public interface NumericPropertyValidation
-        extends NumericPropertyValidationAbstract
-{
-}
+public interface NumericPropertyValidation extends NumericPropertyValidationAbstract {}

@@ -16,6 +16,4 @@
 
 package com.stackoverflow;
 
-public class QuestionVersionDatabaseObject extends QuestionVersionDatabaseObjectAbstract
-{
-}
+public class QuestionVersionDatabaseObject extends QuestionVersionDatabaseObjectAbstract {}

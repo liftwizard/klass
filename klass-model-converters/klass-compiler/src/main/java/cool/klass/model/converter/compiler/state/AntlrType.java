@@ -23,9 +23,7 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.impl.factory.Lists;
 
 // All AntlrTypes are named elements, but the interface doesn't exist yet
-public interface AntlrType
-        extends IAntlrElement
-{
+public interface AntlrType extends IAntlrElement {
     String getName();
 
     TypeGetter getTypeGetter();
@@ -33,8 +31,7 @@ public interface AntlrType
     @Nonnull
     TypeGetter getElementBuilder();
 
-    default ImmutableList<AntlrType> getPotentialWiderTypes()
-    {
+    default ImmutableList<AntlrType> getPotentialWiderTypes() {
         return Lists.immutable.with(this);
     }
 }

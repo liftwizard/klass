@@ -41,66 +41,53 @@ import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveToJavaTypeVisitor;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class DataTransferObjectsGenerator
-{
+public class DataTransferObjectsGenerator {
+
     @Nonnull
     private final DomainModel domainModel;
 
-    public DataTransferObjectsGenerator(@Nonnull DomainModel domainModel)
-    {
+    public DataTransferObjectsGenerator(@Nonnull DomainModel domainModel) {
         this.domainModel = Objects.requireNonNull(domainModel);
     }
 
-    public void writeDataTransferObjectFiles(@Nonnull Path outputPath) throws IOException
-    {
-        for (Enumeration enumeration : this.domainModel.getEnumerations())
-        {
+    public void writeDataTransferObjectFiles(@Nonnull Path outputPath) throws IOException {
+        for (Enumeration enumeration : this.domainModel.getEnumerations()) {
             Path dtoOutputPath = this.getDtoOutputPath(outputPath, enumeration);
             this.printStringToFile(dtoOutputPath, this.getEnumerationSourceCode(enumeration));
         }
 
-        for (Klass klass : this.domainModel.getClasses())
-        {
+        for (Klass klass : this.domainModel.getClasses()) {
             Path dtoOutputPath = this.getDtoOutputPath(outputPath, klass);
             this.printStringToFile(dtoOutputPath, this.getClassSourceCode(klass));
         }
     }
 
     @Nonnull
-    public Path getDtoOutputPath(
-            @Nonnull Path outputPath,
-            @Nonnull PackageableElement packageableElement)
-    {
-        String packageRelativePath = packageableElement.getPackageName()
-                .replaceAll("\\.", "/");
-        Path dtoDirectory = outputPath
-                .resolve(packageRelativePath)
-                .resolve("dto");
+    public Path getDtoOutputPath(@Nonnull Path outputPath, @Nonnull PackageableElement packageableElement) {
+        String packageRelativePath = packageableElement.getPackageName().replaceAll("\\.", "/");
+        Path dtoDirectory = outputPath.resolve(packageRelativePath).resolve("dto");
         dtoDirectory.toFile().mkdirs();
         String fileName = packageableElement.getName() + "DTO.java";
         return dtoDirectory.resolve(fileName);
     }
 
-    private void printStringToFile(@Nonnull Path path, String contents) throws FileNotFoundException
-    {
-        try (PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8))
-        {
+    private void printStringToFile(@Nonnull Path path, String contents) throws FileNotFoundException {
+        try (
+            PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
+        ) {
             printStream.print(contents);
         }
     }
 
     @Nonnull
-    private String getEnumerationSourceCode(@Nonnull Enumeration enumeration)
-    {
-        String packageName        = enumeration.getPackageName() + ".dto";
+    private String getEnumerationSourceCode(@Nonnull Enumeration enumeration) {
+        String packageName = enumeration.getPackageName() + ".dto";
         String literalsSourceCode = enumeration.getEnumerationLiterals().collect(this::getLiteral).makeString("");
 
         boolean hasPrettyName = enumeration
-                .getEnumerationLiterals()
-                .anySatisfy(each -> each.getDeclaredPrettyName().isPresent());
-        String prettyNameImport = hasPrettyName
-                ? "import com.fasterxml.jackson.annotation.JsonProperty;\n"
-                : "";
+            .getEnumerationLiterals()
+            .anySatisfy(each -> each.getDeclaredPrettyName().isPresent());
+        String prettyNameImport = hasPrettyName ? "import com.fasterxml.jackson.annotation.JsonProperty;\n" : "";
 
         // @formatter:off
         // language=JAVA
@@ -119,39 +106,37 @@ public class DataTransferObjectsGenerator
     }
 
     @Nonnull
-    public String getClassSourceCode(@Nonnull Klass klass)
-    {
+    public String getClassSourceCode(@Nonnull Klass klass) {
         String packageName = klass.getPackageName() + ".dto";
 
-        ImmutableList<DataTypeProperty> dataTypeProperties = klass.getDataTypeProperties()
-                .select(each -> each.getOwningClassifier() == klass || each.getOwningClassifier() instanceof Interface)
-                .reject(DataTypeProperty::isPrivate);
-        String dataFieldsSourceCode = dataTypeProperties.collect(this::getDataField).makeString("")
-                + (dataTypeProperties.isEmpty() ? "" : "\n");
+        ImmutableList<DataTypeProperty> dataTypeProperties = klass
+            .getDataTypeProperties()
+            .select(each -> each.getOwningClassifier() == klass || each.getOwningClassifier() instanceof Interface)
+            .reject(DataTypeProperty::isPrivate);
+        String dataFieldsSourceCode =
+            dataTypeProperties.collect(this::getDataField).makeString("") + (dataTypeProperties.isEmpty() ? "" : "\n");
 
         String dataGettersSettersSourceCode = dataTypeProperties.collect(this::getDataGetterSetter).makeString("");
 
         ImmutableList<AssociationEnd> associationEnds = klass.getDeclaredAssociationEnds();
 
-        String referenceFieldsSourceCode =
-                associationEnds.collect(this::getReferenceField).makeString("");
+        String referenceFieldsSourceCode = associationEnds.collect(this::getReferenceField).makeString("");
 
-        String referenceGettersSettersSourceCode =
-                associationEnds.collect(this::getReferenceGetterSetter).makeString("");
+        String referenceGettersSettersSourceCode = associationEnds
+            .collect(this::getReferenceGetterSetter)
+            .makeString("");
 
         boolean hasConstraints = dataTypeProperties
-                .asLazy()
-                .reject(DataTypeProperty::isKey)
-                .reject(DataTypeProperty::isTemporal)
-                .select(DataTypeProperty::isRequired)
-                .notEmpty();
-        String constraintImports = hasConstraints
-                ? "import javax.validation.constraints.*;\n"
-                : "";
+            .asLazy()
+            .reject(DataTypeProperty::isKey)
+            .reject(DataTypeProperty::isTemporal)
+            .select(DataTypeProperty::isRequired)
+            .notEmpty();
+        String constraintImports = hasConstraints ? "import javax.validation.constraints.*;\n" : "";
 
         String superClassDeclaration = klass.getSuperClass().isPresent()
-                ? "        extends " + klass.getSuperClass().get().getName() + "DTO\n"
-                : "";
+            ? "        extends " + klass.getSuperClass().get().getName() + "DTO\n"
+            : "";
 
         String abstractKeyword = klass.isAbstract() ? "abstract " : "";
 
@@ -182,11 +167,11 @@ public class DataTransferObjectsGenerator
     }
 
     @Nonnull
-    private String getLiteral(@Nonnull EnumerationLiteral enumerationLiteral)
-    {
-        String line1 = enumerationLiteral.getDeclaredPrettyName()
-                .map(prettyName -> "    @JsonProperty(\"" + prettyName + "\")\n")
-                .orElse("");
+    private String getLiteral(@Nonnull EnumerationLiteral enumerationLiteral) {
+        String line1 = enumerationLiteral
+            .getDeclaredPrettyName()
+            .map(prettyName -> "    @JsonProperty(\"" + prettyName + "\")\n")
+            .orElse("");
 
         String line2 = "    " + enumerationLiteral.getName() + ",\n";
 
@@ -194,86 +179,92 @@ public class DataTransferObjectsGenerator
     }
 
     @Nonnull
-    private String getDataGetterSetter(@Nonnull DataTypeProperty dataTypeProperty)
-    {
-        String type          = this.getType(dataTypeProperty.getType());
-        String name          = dataTypeProperty.getName();
+    private String getDataGetterSetter(@Nonnull DataTypeProperty dataTypeProperty) {
+        String type = this.getType(dataTypeProperty.getType());
+        String name = dataTypeProperty.getName();
         String uppercaseName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, name);
         return this.getGetterSetter(type, name, uppercaseName);
     }
 
     @Nonnull
-    private String getReferenceGetterSetter(@Nonnull AssociationEnd associationEnd)
-    {
-        String type          = this.getType(associationEnd.getType(), associationEnd.getMultiplicity());
-        String name          = associationEnd.getName();
+    private String getReferenceGetterSetter(@Nonnull AssociationEnd associationEnd) {
+        String type = this.getType(associationEnd.getType(), associationEnd.getMultiplicity());
+        String name = associationEnd.getName();
         String uppercaseName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, name);
         return this.getGetterSetter(type, name, uppercaseName);
     }
 
     @Nonnull
-    private String getGetterSetter(String type, String name, String uppercaseName)
-    {
+    private String getGetterSetter(String type, String name, String uppercaseName) {
         // language=JAVA
-        return ""
-                + "\n"
-                + "    public " + type + " get" + uppercaseName + "()\n"
-                + "    {\n"
-                + "        return this." + name + ";\n"
-                + "    }\n"
-                + "\n"
-                + "    public void set" + uppercaseName + "(" + type + " " + name + ")\n"
-                + "    {\n"
-                + "        this." + name + " = " + name + ";\n"
-                + "    }\n";
+        return (
+            "" +
+            "\n" +
+            "    public " +
+            type +
+            " get" +
+            uppercaseName +
+            "()\n" +
+            "    {\n" +
+            "        return this." +
+            name +
+            ";\n" +
+            "    }\n" +
+            "\n" +
+            "    public void set" +
+            uppercaseName +
+            "(" +
+            type +
+            " " +
+            name +
+            ")\n" +
+            "    {\n" +
+            "        this." +
+            name +
+            " = " +
+            name +
+            ";\n" +
+            "    }\n"
+        );
     }
 
     @Nonnull
-    private String getType(DataType dataType)
-    {
-        if (dataType instanceof Enumeration enumeration)
-        {
+    private String getType(DataType dataType) {
+        if (dataType instanceof Enumeration enumeration) {
             return enumeration.getName() + "DTO";
         }
-        if (dataType instanceof PrimitiveType primitiveType)
-        {
+        if (dataType instanceof PrimitiveType primitiveType) {
             return PrimitiveToJavaTypeVisitor.getJavaType(primitiveType);
         }
         throw new AssertionError();
     }
 
     @Nonnull
-    private String getType(@Nonnull Klass klass, @Nonnull Multiplicity multiplicity)
-    {
+    private String getType(@Nonnull Klass klass, @Nonnull Multiplicity multiplicity) {
         String toOneType = klass.getName() + "DTO";
-        if (multiplicity.isToOne())
-        {
+        if (multiplicity.isToOne()) {
             return toOneType;
         }
 
         return "List<" + toOneType + ">";
     }
 
-    private String getDataField(@Nonnull DataTypeProperty dataTypeProperty)
-    {
+    private String getDataField(@Nonnull DataTypeProperty dataTypeProperty) {
         String annotation = this.getAnnotation(dataTypeProperty);
-        String type       = this.getType(dataTypeProperty.getType());
+        String type = this.getType(dataTypeProperty.getType());
         return String.format("%s    private %s %s;\n", annotation, type, dataTypeProperty.getName());
     }
 
     @Nonnull
-    private String getAnnotation(@Nonnull DataTypeProperty dataTypeProperty)
-    {
+    private String getAnnotation(@Nonnull DataTypeProperty dataTypeProperty) {
         return this.isNullable(dataTypeProperty) ? "" : "    @NotNull\n";
     }
 
-    private boolean isNullable(@Nonnull DataTypeProperty dataTypeProperty)
-    {
+    private boolean isNullable(@Nonnull DataTypeProperty dataTypeProperty) {
         return dataTypeProperty.isTemporal() || dataTypeProperty.isOptional() || dataTypeProperty.isKey();
     }
 
-    private String getReferenceField(@Nonnull AssociationEnd associationEnd)
-    {
+    private String getReferenceField(@Nonnull AssociationEnd associationEnd) {
         Multiplicity multiplicity = associationEnd.getMultiplicity();
 
         // TODO: NotNull shouldn't apply if the ONE_TO_ONE is a version association end.

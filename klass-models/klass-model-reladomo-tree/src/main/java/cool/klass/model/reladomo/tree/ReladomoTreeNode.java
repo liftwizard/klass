@@ -25,17 +25,14 @@ import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MapIterable;
 import org.eclipse.collections.api.stack.MutableStack;
 
-public interface ReladomoTreeNode
-{
+public interface ReladomoTreeNode {
     void visit(ReladomoTreeNodeVisitor visitor);
 
-    default void walk(ReladomoTreeNodeListener listener)
-    {
+    default void walk(ReladomoTreeNodeListener listener) {
         this.visit(new ReladomoTreeNodeWalkerVisitor(listener));
     }
 
-    default void toManyAwareWalk(ReladomoTreeNodeToManyAwareListener listener)
-    {
+    default void toManyAwareWalk(ReladomoTreeNodeToManyAwareListener listener) {
         this.visit(new ReladomoTreeNodeToManyAwareWalkerVisitor(listener));
     }
 
@@ -49,52 +46,42 @@ public interface ReladomoTreeNode
 
     ReladomoTreeNode computeChild(String childName, ReladomoTreeNode childNode);
 
-    default String getShortString()
-    {
+    default String getShortString() {
         return '.' + this.getName();
     }
 
-    default String getNodeString(String indent)
-    {
-        return indent
-                + this.getOwningClassifier().getName()
-                + this.getShortString()
-                + ": "
-                + this.getType().getName()
-                + "\n";
+    default String getNodeString(String indent) {
+        return (
+            indent +
+            this.getOwningClassifier().getName() +
+            this.getShortString() +
+            ": " +
+            this.getType().getName() +
+            "\n"
+        );
     }
 
-    default boolean isLeaf()
-    {
+    default boolean isLeaf() {
         return this.getChildren().isEmpty();
     }
 
-    default ImmutableList<String> getDeepFetchStrings()
-    {
-        if (this.isLeaf())
-        {
+    default ImmutableList<String> getDeepFetchStrings() {
+        if (this.isLeaf()) {
             return Lists.immutable.empty();
         }
-        MutableList<String>  result = Lists.mutable.empty();
-        MutableStack<String> stack  = Stacks.mutable.empty();
+        MutableList<String> result = Lists.mutable.empty();
+        MutableStack<String> stack = Stacks.mutable.empty();
         this.getDeepFetchStrings(result, stack);
         return result.toImmutable();
     }
 
-    private void getDeepFetchStrings(
-            MutableList<String> result,
-            MutableStack<String> stack)
-    {
+    private void getDeepFetchStrings(MutableList<String> result, MutableStack<String> stack) {
         stack.push(this.getShortString());
-        if (this.isLeaf())
-        {
+        if (this.isLeaf()) {
             String string = stack.toList().asReversed().makeString("");
             result.add(string);
-        }
-        else
-        {
-            for (ReladomoTreeNode child : this.getChildren())
-            {
+        } else {
+            for (ReladomoTreeNode child : this.getChildren()) {
                 child.getDeepFetchStrings(result, stack);
             }
         }

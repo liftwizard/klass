@@ -24,8 +24,7 @@ import cool.klass.model.meta.domain.api.source.property.DataTypePropertyWithSour
 import cool.klass.model.meta.grammar.KlassParser.ProjectionPrimitiveMemberContext;
 
 public interface ProjectionDataTypePropertyWithSourceCode
-        extends ProjectionDataTypeProperty, NamedElementWithSourceCode
-{
+    extends ProjectionDataTypeProperty, NamedElementWithSourceCode {
     @Override
     ProjectionPrimitiveMemberContext getElementContext();
 

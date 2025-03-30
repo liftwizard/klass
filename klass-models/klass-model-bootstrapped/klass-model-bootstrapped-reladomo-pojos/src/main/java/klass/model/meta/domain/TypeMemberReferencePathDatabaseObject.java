@@ -16,6 +16,4 @@
 
 package klass.model.meta.domain;
 
-public class TypeMemberReferencePathDatabaseObject extends TypeMemberReferencePathDatabaseObjectAbstract
-{
-}
+public class TypeMemberReferencePathDatabaseObject extends TypeMemberReferencePathDatabaseObjectAbstract {}

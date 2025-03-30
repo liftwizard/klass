@@ -58,302 +58,272 @@ import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 import org.eclipse.collections.impl.tuple.Tuples;
 
-public abstract class AntlrDataTypeProperty<T extends DataType>
-        extends AntlrProperty
-{
+public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrProperty {
+
     // <editor-fold desc="AMBIGUOUS">
     public static final AntlrDataTypeProperty AMBIGUOUS = new AntlrDataTypeProperty(
-            new ClassDeclarationContext(AMBIGUOUS_PARENT, -1),
-            Optional.empty(),
-            -1,
-            AMBIGUOUS_IDENTIFIER_CONTEXT,
-            AntlrClassifier.AMBIGUOUS,
-            false)
-    {
+        new ClassDeclarationContext(AMBIGUOUS_PARENT, -1),
+        Optional.empty(),
+        -1,
+        AMBIGUOUS_IDENTIFIER_CONTEXT,
+        AntlrClassifier.AMBIGUOUS,
+        false
+    ) {
         @Override
-        protected ParserRuleContext getTypeParserRuleContext()
-        {
-            throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                    + ".getTypeParserRuleContext() not implemented yet");
+        protected ParserRuleContext getTypeParserRuleContext() {
+            throw new UnsupportedOperationException(
+                this.getClass().getSimpleName() + ".getTypeParserRuleContext() not implemented yet"
+            );
         }
 
         @Nonnull
         @Override
-        public AntlrType getType()
-        {
+        public AntlrType getType() {
             return AntlrEnumeration.AMBIGUOUS;
         }
 
         @Nonnull
         @Override
-        public DataTypePropertyBuilder build()
-        {
+        public DataTypePropertyBuilder build() {
             throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".build() not implemented yet");
         }
 
         @Nonnull
         @Override
-        public DataTypePropertyBuilder getElementBuilder()
-        {
-            throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                    + ".getElementBuilder() not implemented yet");
+        public DataTypePropertyBuilder getElementBuilder() {
+            throw new UnsupportedOperationException(
+                this.getClass().getSimpleName() + ".getElementBuilder() not implemented yet"
+            );
         }
 
         @Override
-        public String getTypeName()
-        {
-            throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                    + ".getTypeName() not implemented yet");
+        public String getTypeName() {
+            throw new UnsupportedOperationException(
+                this.getClass().getSimpleName() + ".getTypeName() not implemented yet"
+            );
         }
 
         @Override
-        protected void reportInvalidIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
-        {
-            throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                    + ".reportInvalidIdProperties() not implemented yet");
+        protected void reportInvalidIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+            throw new UnsupportedOperationException(
+                this.getClass().getSimpleName() + ".reportInvalidIdProperties() not implemented yet"
+            );
         }
     };
     // </editor-fold>
 
     // <editor-fold desc="NOT_FOUND">
     public static final AntlrDataTypeProperty NOT_FOUND = new AntlrDataTypeProperty(
-            new ClassDeclarationContext(NOT_FOUND_PARENT, -1),
-            Optional.empty(),
-            -1,
-            NOT_FOUND_IDENTIFIER_CONTEXT,
-            AntlrClassifier.NOT_FOUND,
-            false)
-    {
+        new ClassDeclarationContext(NOT_FOUND_PARENT, -1),
+        Optional.empty(),
+        -1,
+        NOT_FOUND_IDENTIFIER_CONTEXT,
+        AntlrClassifier.NOT_FOUND,
+        false
+    ) {
         @Override
-        protected ParserRuleContext getTypeParserRuleContext()
-        {
-            throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                    + ".getTypeParserRuleContext() not implemented yet");
+        protected ParserRuleContext getTypeParserRuleContext() {
+            throw new UnsupportedOperationException(
+                this.getClass().getSimpleName() + ".getTypeParserRuleContext() not implemented yet"
+            );
         }
 
         @Nonnull
         @Override
-        public AntlrType getType()
-        {
+        public AntlrType getType() {
             return AntlrEnumeration.NOT_FOUND;
         }
 
         @Nonnull
         @Override
-        public DataTypePropertyBuilder build()
-        {
+        public DataTypePropertyBuilder build() {
             throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".build() not implemented yet");
         }
 
         @Nonnull
         @Override
-        public DataTypePropertyBuilder getElementBuilder()
-        {
-            throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                    + ".getElementBuilder() not implemented yet");
+        public DataTypePropertyBuilder getElementBuilder() {
+            throw new UnsupportedOperationException(
+                this.getClass().getSimpleName() + ".getElementBuilder() not implemented yet"
+            );
         }
 
         @Override
-        public String getTypeName()
-        {
-            throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                    + ".getTypeName() not implemented yet");
+        public String getTypeName() {
+            throw new UnsupportedOperationException(
+                this.getClass().getSimpleName() + ".getTypeName() not implemented yet"
+            );
         }
 
         @Override
-        protected void reportInvalidIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
-        {
-            throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                    + ".reportInvalidIdProperties() not implemented yet");
+        protected void reportInvalidIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+            throw new UnsupportedOperationException(
+                this.getClass().getSimpleName() + ".reportInvalidIdProperties() not implemented yet"
+            );
         }
     };
     // </editor-fold>
 
-    private static final ImmutableList<PrimitiveType> ALLOWED_VERSION_TYPES =
-            Lists.immutable.with(
-                    PrimitiveType.INTEGER,
-                    PrimitiveType.LONG);
+    private static final ImmutableList<PrimitiveType> ALLOWED_VERSION_TYPES = Lists.immutable.with(
+        PrimitiveType.INTEGER,
+        PrimitiveType.LONG
+    );
 
     protected final boolean isOptional;
 
     @Nonnull
     protected final AntlrClassifier owningClassifier;
 
-    protected final MutableList<AbstractAntlrPropertyValidation>  validations          = Lists.mutable.empty();
+    protected final MutableList<AbstractAntlrPropertyValidation> validations = Lists.mutable.empty();
     protected final MutableList<AntlrMinLengthPropertyValidation> minLengthValidations = Lists.mutable.empty();
     protected final MutableList<AntlrMaxLengthPropertyValidation> maxLengthValidations = Lists.mutable.empty();
-    protected final MutableList<AntlrMinPropertyValidation>       minValidations       = Lists.mutable.empty();
-    protected final MutableList<AntlrMaxPropertyValidation>       maxValidations       = Lists.mutable.empty();
+    protected final MutableList<AntlrMinPropertyValidation> minValidations = Lists.mutable.empty();
+    protected final MutableList<AntlrMaxPropertyValidation> maxValidations = Lists.mutable.empty();
 
-    private final MutableOrderedMap<AntlrAssociationEnd, MutableList<AntlrDataTypeProperty<?>>> keysMatchingThisForeignKey = OrderedMapAdapter.adapt(new LinkedHashMap<>());
-    private final MutableOrderedMap<AntlrAssociationEnd, MutableList<AntlrDataTypeProperty<?>>> foreignKeysMatchingThisKey = OrderedMapAdapter.adapt(new LinkedHashMap<>());
+    private final MutableOrderedMap<
+        AntlrAssociationEnd,
+        MutableList<AntlrDataTypeProperty<?>>
+    > keysMatchingThisForeignKey = OrderedMapAdapter.adapt(new LinkedHashMap<>());
+    private final MutableOrderedMap<
+        AntlrAssociationEnd,
+        MutableList<AntlrDataTypeProperty<?>>
+    > foreignKeysMatchingThisKey = OrderedMapAdapter.adapt(new LinkedHashMap<>());
 
     protected AntlrDataTypeProperty(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext,
-            @Nonnull AntlrClassifier owningClassifier,
-            boolean isOptional)
-    {
+        @Nonnull ParserRuleContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext,
+        @Nonnull AntlrClassifier owningClassifier,
+        boolean isOptional
+    ) {
         super(elementContext, compilationUnit, ordinal, nameContext);
-        this.isOptional       = isOptional;
+        this.isOptional = isOptional;
         this.owningClassifier = Objects.requireNonNull(owningClassifier);
     }
 
     @Nonnull
     @Override
-    public Optional<IAntlrElement> getSurroundingElement()
-    {
+    public Optional<IAntlrElement> getSurroundingElement() {
         return Optional.of(this.owningClassifier);
     }
 
     protected abstract ParserRuleContext getTypeParserRuleContext();
 
-    public boolean isKey()
-    {
+    public boolean isKey() {
         return this.getModifiers().anySatisfy(AntlrModifier::isKey);
     }
 
-    public boolean isId()
-    {
+    public boolean isId() {
         return this.getModifiers().anySatisfy(AntlrModifier::isId);
     }
 
-    public boolean isUserId()
-    {
+    public boolean isUserId() {
         return this.getModifiers().anySatisfy(AntlrModifier::isUserId);
     }
 
-    public boolean isAudit()
-    {
+    public boolean isAudit() {
         return this.getModifiers().anySatisfy(AntlrModifier::isAudit);
     }
 
-    public boolean isCreatedOn()
-    {
+    public boolean isCreatedOn() {
         return this.getModifiers().anySatisfy(AntlrModifier::isCreatedOn);
     }
 
-    public boolean isOptional()
-    {
+    public boolean isOptional() {
         return this.isOptional;
     }
 
-    public boolean isSystem()
-    {
+    public boolean isSystem() {
         return this.getModifiers().anySatisfy(AntlrModifier::isSystem);
     }
 
-    public boolean isValid()
-    {
+    public boolean isValid() {
         return this.getModifiers().anySatisfy(AntlrModifier::isValid);
     }
 
-    public boolean isValidRange()
-    {
+    public boolean isValidRange() {
         return this.isValid() && !this.isFrom() && !this.isTo();
     }
 
-    public boolean isValidFrom()
-    {
+    public boolean isValidFrom() {
         return this.isValid() && this.isFrom();
     }
 
-    public boolean isValidTo()
-    {
+    public boolean isValidTo() {
         return this.isValid() && this.isTo();
     }
 
-    public boolean isSystemRange()
-    {
+    public boolean isSystemRange() {
         return this.isSystem() && !this.isFrom() && !this.isTo();
     }
 
-    public boolean isSystemFrom()
-    {
+    public boolean isSystemFrom() {
         return this.isSystem() && this.isFrom();
     }
 
-    public boolean isSystemTo()
-    {
+    public boolean isSystemTo() {
         return this.isSystem() && this.isTo();
     }
 
-    public boolean isFrom()
-    {
+    public boolean isFrom() {
         return this.getModifiers().anySatisfy(AntlrModifier::isFrom);
     }
 
-    public boolean isTo()
-    {
+    public boolean isTo() {
         return this.getModifiers().anySatisfy(AntlrModifier::isTo);
     }
 
-    public void setKeyMatchingThisForeignKey(
-            AntlrAssociationEnd associationEnd,
-            AntlrDataTypeProperty<?> keyProperty)
-    {
-        this.keysMatchingThisForeignKey
-                .computeIfAbsent(associationEnd, k -> Lists.mutable.empty())
-                .add(keyProperty);
+    public void setKeyMatchingThisForeignKey(AntlrAssociationEnd associationEnd, AntlrDataTypeProperty<?> keyProperty) {
+        this.keysMatchingThisForeignKey.computeIfAbsent(associationEnd, k -> Lists.mutable.empty()).add(keyProperty);
     }
 
     public void setForeignKeyMatchingThisKey(
-            AntlrAssociationEnd associationEnd,
-            AntlrDataTypeProperty<?> foreignKeyProperty)
-    {
-        this.foreignKeysMatchingThisKey
-                .computeIfAbsent(associationEnd, k -> Lists.mutable.empty())
-                .add(foreignKeyProperty);
+        AntlrAssociationEnd associationEnd,
+        AntlrDataTypeProperty<?> foreignKeyProperty
+    ) {
+        this.foreignKeysMatchingThisKey.computeIfAbsent(associationEnd, k -> Lists.mutable.empty()).add(
+                foreignKeyProperty
+            );
     }
 
-    public void addMinLengthValidation(AntlrMinLengthPropertyValidation minLengthValidation)
-    {
+    public void addMinLengthValidation(AntlrMinLengthPropertyValidation minLengthValidation) {
         this.validations.add(minLengthValidation);
         this.minLengthValidations.add(minLengthValidation);
     }
 
-    public void addMaxLengthValidation(AntlrMaxLengthPropertyValidation maxLengthValidation)
-    {
+    public void addMaxLengthValidation(AntlrMaxLengthPropertyValidation maxLengthValidation) {
         this.validations.add(maxLengthValidation);
         this.maxLengthValidations.add(maxLengthValidation);
     }
 
-    public void addMinValidation(AntlrMinPropertyValidation minValidation)
-    {
+    public void addMinValidation(AntlrMinPropertyValidation minValidation) {
         this.validations.add(minValidation);
         this.minValidations.add(minValidation);
     }
 
-    public void addMaxValidation(AntlrMaxPropertyValidation maxValidation)
-    {
+    public void addMaxValidation(AntlrMaxPropertyValidation maxValidation) {
         this.validations.add(maxValidation);
         this.maxValidations.add(maxValidation);
     }
 
-    public ListIterable<AbstractAntlrPropertyValidation> getValidations()
-    {
+    public ListIterable<AbstractAntlrPropertyValidation> getValidations() {
         return this.validations;
     }
 
-    public ListIterable<AntlrMinLengthPropertyValidation> getMinLengthValidations()
-    {
+    public ListIterable<AntlrMinLengthPropertyValidation> getMinLengthValidations() {
         return this.minLengthValidations;
     }
 
-    public ListIterable<AntlrMaxLengthPropertyValidation> getMaxLengthValidations()
-    {
+    public ListIterable<AntlrMaxLengthPropertyValidation> getMaxLengthValidations() {
         return this.maxLengthValidations;
     }
 
-    public ListIterable<AntlrMinPropertyValidation> getMinValidations()
-    {
+    public ListIterable<AntlrMinPropertyValidation> getMinValidations() {
         return this.minValidations;
     }
 
-    public ListIterable<AntlrMaxPropertyValidation> getMaxValidations()
-    {
+    public ListIterable<AntlrMaxPropertyValidation> getMaxValidations() {
         return this.maxValidations;
     }
 
@@ -363,13 +333,11 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 
     @Nonnull
     @Override
-    public AntlrClassifier getOwningClassifier()
-    {
+    public AntlrClassifier getOwningClassifier() {
         return this.owningClassifier;
     }
 
-    public ImmutableList<AntlrDataTypeProperty<?>> getOverriddenProperties()
-    {
+    public ImmutableList<AntlrDataTypeProperty<?>> getOverriddenProperties() {
         return this.owningClassifier.getOverriddenDataTypeProperties(this.getName());
     }
 
@@ -378,23 +346,18 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
     @Override
     public abstract DataTypePropertyBuilder<T, ?, ?> build();
 
-    protected void buildValidations()
-    {
-        Optional<MinLengthPropertyValidationBuilder> minLengthPropertyValidationBuilders = this.minLengthValidations
-                .collect(AntlrMinLengthPropertyValidation::build)
-                .detectOptional(x -> true);
-        Optional<MaxLengthPropertyValidationBuilder> maxLengthPropertyValidationBuilders = this.maxLengthValidations
-                .collect(AntlrMaxLengthPropertyValidation::build)
-                .detectOptional(x -> true);
-        Optional<MinPropertyValidationBuilder> minPropertyValidationBuilders = this.minValidations
-                .collect(AntlrMinPropertyValidation::build)
-                .detectOptional(x -> true);
-        Optional<MaxPropertyValidationBuilder> maxPropertyValidationBuilders = this.maxValidations
-                .collect(AntlrMaxPropertyValidation::build)
-                .detectOptional(x -> true);
+    protected void buildValidations() {
+        Optional<MinLengthPropertyValidationBuilder> minLengthPropertyValidationBuilders =
+            this.minLengthValidations.collect(AntlrMinLengthPropertyValidation::build).detectOptional(x -> true);
+        Optional<MaxLengthPropertyValidationBuilder> maxLengthPropertyValidationBuilders =
+            this.maxLengthValidations.collect(AntlrMaxLengthPropertyValidation::build).detectOptional(x -> true);
+        Optional<MinPropertyValidationBuilder> minPropertyValidationBuilders =
+            this.minValidations.collect(AntlrMinPropertyValidation::build).detectOptional(x -> true);
+        Optional<MaxPropertyValidationBuilder> maxPropertyValidationBuilders =
+            this.maxValidations.collect(AntlrMaxPropertyValidation::build).detectOptional(x -> true);
 
-        MutableList<PropertyValidationBuilder<?>> propertyValidationBuilders = this.validations.collect(
-                AbstractAntlrPropertyValidation::getElementBuilder);
+        MutableList<PropertyValidationBuilder<?>> propertyValidationBuilders =
+            this.validations.collect(AbstractAntlrPropertyValidation::getElementBuilder);
 
         this.getElementBuilder().setMinLengthPropertyValidationBuilder(minLengthPropertyValidationBuilders);
         this.getElementBuilder().setMaxLengthPropertyValidationBuilder(maxLengthPropertyValidationBuilders);
@@ -403,31 +366,36 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
         this.getElementBuilder().setPropertyValidationBuilders(propertyValidationBuilders.toImmutable());
     }
 
-    public void build2()
-    {
+    public void build2() {
         MutableOrderedMap<AssociationEndBuilder, DataTypePropertyBuilder<?, ?, ?>> keysMatchingThisForeignKey =
-                this.keysMatchingThisForeignKey.collect((associationEnd, dataTypeProperties) -> Tuples.pair(
-                        associationEnd.getElementBuilder(),
-                        dataTypeProperties
-                                .getOnly().getElementBuilder()));
+            this.keysMatchingThisForeignKey.collect(
+                    (associationEnd, dataTypeProperties) ->
+                        Tuples.pair(
+                            associationEnd.getElementBuilder(),
+                            dataTypeProperties.getOnly().getElementBuilder()
+                        )
+                );
 
         this.getElementBuilder().setKeyBuildersMatchingThisForeignKey(keysMatchingThisForeignKey.asUnmodifiable());
 
         MutableOrderedMap<AssociationEndBuilder, DataTypePropertyBuilder<?, ?, ?>> foreignKeysMatchingThisKey =
-                this.foreignKeysMatchingThisKey.collect((associationEnd, dataTypeProperties) -> Tuples.pair(
-                        associationEnd.getElementBuilder(),
-                        dataTypeProperties
-                                .getOnly().getElementBuilder()));
+            this.foreignKeysMatchingThisKey.collect(
+                    (associationEnd, dataTypeProperties) ->
+                        Tuples.pair(
+                            associationEnd.getElementBuilder(),
+                            dataTypeProperties.getOnly().getElementBuilder()
+                        )
+                );
 
         this.getElementBuilder().setForeignKeyBuildersMatchingThisKey(foreignKeysMatchingThisKey.asUnmodifiable());
     }
+
     // </editor-fold>
 
     // <editor-fold desc="Report Compiler Errors">
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
-    {
+    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         super.reportErrors(compilerAnnotationHolder);
 
         this.reportDuplicateValidations(compilerAnnotationHolder);
@@ -436,12 +404,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
         this.reportInvalidUserIdProperties(compilerAnnotationHolder);
         this.reportInvalidVersionProperties(compilerAnnotationHolder);
         this.reportInvalidTemporalProperties(compilerAnnotationHolder);
-
         // TODO: ☑ Check for nullable key properties
     }
 
-    private void reportDuplicateValidations(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
-    {
+    private void reportDuplicateValidations(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         this.reportDuplicateValidations(compilerAnnotationHolder, this.minLengthValidations);
         this.reportDuplicateValidations(compilerAnnotationHolder, this.maxLengthValidations);
         this.reportDuplicateValidations(compilerAnnotationHolder, this.minValidations);
@@ -449,500 +415,446 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
     }
 
     private void reportDuplicateValidations(
-            @Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
-            @Nonnull ListIterable<? extends AbstractAntlrPropertyValidation> validations)
-    {
-        if (validations.size() <= 1)
-        {
+        @Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
+        @Nonnull ListIterable<? extends AbstractAntlrPropertyValidation> validations
+    ) {
+        if (validations.size() <= 1) {
             return;
         }
 
-        for (AbstractAntlrPropertyValidation minLengthValidation : validations)
-        {
+        for (AbstractAntlrPropertyValidation minLengthValidation : validations) {
             ParserRuleContext offendingToken = minLengthValidation.getElementContext();
-            String message = String.format(
-                    "Duplicate validation '%s'.",
-                    offendingToken.getText());
+            String message = String.format("Duplicate validation '%s'.", offendingToken.getText());
             compilerAnnotationHolder.add(
-                    "ERR_DUP_VAL",
-                    message,
-                    minLengthValidation,
-                    minLengthValidation.getKeywordToken());
+                "ERR_DUP_VAL",
+                message,
+                minLengthValidation,
+                minLengthValidation.getKeywordToken()
+            );
         }
     }
 
     protected abstract void reportInvalidIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder);
 
-    private void reportInvalidForeignKeyProperties(CompilerAnnotationHolder compilerAnnotationHolder)
-    {
-        this.keysMatchingThisForeignKey.forEach((associationEnd, keyBuilders) -> this.reportInvalidForeignKeyProperties(
-                compilerAnnotationHolder,
-                associationEnd,
-                keyBuilders));
+    private void reportInvalidForeignKeyProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
+        this.keysMatchingThisForeignKey.forEach(
+                (associationEnd, keyBuilders) ->
+                    this.reportInvalidForeignKeyProperties(compilerAnnotationHolder, associationEnd, keyBuilders)
+            );
     }
 
     private void reportInvalidForeignKeyProperties(
-            @Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
-            @Nonnull AntlrAssociationEnd associationEnd,
-            @Nonnull ListIterable<AntlrDataTypeProperty<?>> keyBuilders)
-    {
-        if (keyBuilders.size() > 1)
-        {
+        @Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
+        @Nonnull AntlrAssociationEnd associationEnd,
+        @Nonnull ListIterable<AntlrDataTypeProperty<?>> keyBuilders
+    ) {
+        if (keyBuilders.size() > 1) {
             throw new AssertionError(
-                    "TODO: Is it sometimes valid to have a single foreign key relate to many different primary keys on different types?");
+                "TODO: Is it sometimes valid to have a single foreign key relate to many different primary keys on different types?"
+            );
         }
 
-        if (!associationEnd.isToOne())
-        {
+        if (!associationEnd.isToOne()) {
             throw new AssertionError(associationEnd);
         }
 
-        if (this.isOptional && associationEnd.isToOneRequired())
-        {
+        if (this.isOptional && associationEnd.isToOneRequired()) {
             String message = String.format(
-                    "Association end '%s.%s' has multiplicity [%s] so foreign key '%s.%s' ought to be required.",
-                    associationEnd.getOwningClassifier().getName(),
-                    associationEnd.getName(),
-                    associationEnd.getMultiplicity().getMultiplicity().getPrettyName(),
-                    this.owningClassifier.getName(),
-                    this.getName());
+                "Association end '%s.%s' has multiplicity [%s] so foreign key '%s.%s' ought to be required.",
+                associationEnd.getOwningClassifier().getName(),
+                associationEnd.getName(),
+                associationEnd.getMultiplicity().getMultiplicity().getPrettyName(),
+                this.owningClassifier.getName(),
+                this.getName()
+            );
             compilerAnnotationHolder.add("ERR_FOR_MUL", message, this, this.getTypeParserRuleContext());
             compilerAnnotationHolder.add("ERR_FOR_MUL", message, associationEnd.getMultiplicity());
         }
 
-        if (!this.isOptional && associationEnd.isToOneOptional())
-        {
+        if (!this.isOptional && associationEnd.isToOneOptional()) {
             String message = String.format(
-                    "Association end '%s.%s' has multiplicity [%s] so foreign key '%s.%s' ought to be optional.",
-                    associationEnd.getOwningClassifier().getName(),
-                    associationEnd.getName(),
-                    associationEnd.getMultiplicity().getMultiplicity().getPrettyName(),
-                    this.owningClassifier.getName(),
-                    this.getName());
+                "Association end '%s.%s' has multiplicity [%s] so foreign key '%s.%s' ought to be optional.",
+                associationEnd.getOwningClassifier().getName(),
+                associationEnd.getName(),
+                associationEnd.getMultiplicity().getMultiplicity().getPrettyName(),
+                this.owningClassifier.getName(),
+                this.getName()
+            );
             compilerAnnotationHolder.add(
-                    "ERR_FOR_MUL",
-                    message,
-                    this,
-                    this.getTypeParserRuleContext(),
-                    AnnotationSeverity.WARNING);
+                "ERR_FOR_MUL",
+                message,
+                this,
+                this.getTypeParserRuleContext(),
+                AnnotationSeverity.WARNING
+            );
         }
 
-        if (this.isCreatedBy() || this.isLastUpdatedBy())
-        {
+        if (this.isCreatedBy() || this.isLastUpdatedBy()) {
             return;
         }
 
-        if (!this.isFinal() && associationEnd.isFinal())
-        {
+        if (!this.isFinal() && associationEnd.isFinal()) {
             String message = String.format(
-                    "Association end '%s.%s' is final [%s] so foreign key '%s.%s' ought to be final.",
-                    associationEnd.getOwningClassifier().getName(),
-                    associationEnd.getName(),
-                    associationEnd.getMultiplicity().getMultiplicity().getPrettyName(),
-                    this.owningClassifier.getName(),
-                    this.getName());
+                "Association end '%s.%s' is final [%s] so foreign key '%s.%s' ought to be final.",
+                associationEnd.getOwningClassifier().getName(),
+                associationEnd.getName(),
+                associationEnd.getMultiplicity().getMultiplicity().getPrettyName(),
+                this.owningClassifier.getName(),
+                this.getName()
+            );
             compilerAnnotationHolder.add("ERR_FOR_FIN", message, this);
-            for (AntlrModifier modifier : associationEnd.getModifiersByName("final"))
-            {
+            for (AntlrModifier modifier : associationEnd.getModifiersByName("final")) {
                 compilerAnnotationHolder.add("ERR_FOR_FIN", message, modifier);
             }
         }
 
-        if (this.isFinal() && !associationEnd.isFinal())
-        {
+        if (this.isFinal() && !associationEnd.isFinal()) {
             String message = String.format(
-                    "Association end '%s.%s' is not final [%s] but foreign key '%s.%s' is final. The two properties must match.",
-                    associationEnd.getOwningClassifier().getName(),
-                    associationEnd.getName(),
-                    associationEnd.getMultiplicity().getMultiplicity().getPrettyName(),
-                    this.owningClassifier.getName(),
-                    this.getName());
+                "Association end '%s.%s' is not final [%s] but foreign key '%s.%s' is final. The two properties must match.",
+                associationEnd.getOwningClassifier().getName(),
+                associationEnd.getName(),
+                associationEnd.getMultiplicity().getMultiplicity().getPrettyName(),
+                this.owningClassifier.getName(),
+                this.getName()
+            );
             ImmutableList<AntlrModifier> modifiers = this.getModifiersByName("final");
-            for (AntlrModifier modifier : modifiers)
-            {
+            for (AntlrModifier modifier : modifiers) {
                 compilerAnnotationHolder.add("ERR_FOR_FIN", message, modifier);
             }
             compilerAnnotationHolder.add("ERR_FOR_FIN", message, associationEnd);
         }
     }
 
-    private void reportInvalidUserIdProperties(CompilerAnnotationHolder compilerAnnotationHolder)
-    {
-        if (!this.isUserId() || this.isCreatedBy() || this.isLastUpdatedBy())
-        {
+    private void reportInvalidUserIdProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
+        if (!this.isUserId() || this.isCreatedBy() || this.isLastUpdatedBy()) {
             return;
         }
 
         AntlrType antlrType = this.getType();
-        if (antlrType instanceof AntlrPrimitiveType primitiveType
-                && primitiveType.getPrimitiveType() == PrimitiveType.STRING)
-        {
+        if (
+            antlrType instanceof AntlrPrimitiveType primitiveType &&
+            primitiveType.getPrimitiveType() == PrimitiveType.STRING
+        ) {
             return;
         }
 
         AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isUserId);
         String message = String.format(
-                "Expected type '%s' but was '%s' for '%s' property '%s'.",
-                PrimitiveType.STRING,
-                antlrType.getName(),
-                modifier.getKeyword(),
-                this);
+            "Expected type '%s' but was '%s' for '%s' property '%s'.",
+            PrimitiveType.STRING,
+            antlrType.getName(),
+            modifier.getKeyword(),
+            this
+        );
         compilerAnnotationHolder.add(
-                "ERR_USR_DTP",
-                message,
-                this,
-                Lists.immutable.with(modifier.getElementContext(), this.getTypeParserRuleContext()));
+            "ERR_USR_DTP",
+            message,
+            this,
+            Lists.immutable.with(modifier.getElementContext(), this.getTypeParserRuleContext())
+        );
     }
 
-    private void reportInvalidVersionProperties(CompilerAnnotationHolder compilerAnnotationHolder)
-    {
-        if (this.getModifiers().noneSatisfy(AntlrModifier::isVersion))
-        {
+    private void reportInvalidVersionProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
+        if (this.getModifiers().noneSatisfy(AntlrModifier::isVersion)) {
             return;
         }
 
         AntlrType antlrType = this.getType();
-        if (antlrType instanceof AntlrPrimitiveType primitiveType
-                && ALLOWED_VERSION_TYPES.contains(primitiveType.getPrimitiveType()))
-        {
+        if (
+            antlrType instanceof AntlrPrimitiveType primitiveType &&
+            ALLOWED_VERSION_TYPES.contains(primitiveType.getPrimitiveType())
+        ) {
             return;
         }
 
         ParserRuleContext offendingToken = this.getTypeParserRuleContext();
-        AntlrModifier     modifier       = this.getModifiers().detect(AntlrModifier::isVersion);
+        AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isVersion);
         String message = String.format(
-                "Expected types %s but was '%s' for '%s' property '%s'.",
-                ALLOWED_VERSION_TYPES,
-                antlrType.getName(),
-                modifier.getKeyword(),
-                this);
+            "Expected types %s but was '%s' for '%s' property '%s'.",
+            ALLOWED_VERSION_TYPES,
+            antlrType.getName(),
+            modifier.getKeyword(),
+            this
+        );
         compilerAnnotationHolder.add(
-                "ERR_VER_DTP",
-                message,
-                modifier,
-                Lists.immutable.with(offendingToken, modifier.getElementContext()));
+            "ERR_VER_DTP",
+            message,
+            modifier,
+            Lists.immutable.with(offendingToken, modifier.getElementContext())
+        );
     }
 
-    private void reportInvalidTemporalProperties(CompilerAnnotationHolder compilerAnnotationHolder)
-    {
-        if (this.isValidRange() || this.isSystemRange())
-        {
-            if (this.getType() != AntlrPrimitiveType.TEMPORAL_RANGE)
-            {
+    private void reportInvalidTemporalProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
+        if (this.isValidRange() || this.isSystemRange()) {
+            if (this.getType() != AntlrPrimitiveType.TEMPORAL_RANGE) {
                 ParserRuleContext offendingToken = this.getTypeParserRuleContext();
                 String message = String.format(
-                        "Expected type '%s' for temporal property but found '%s'.",
-                        AntlrPrimitiveType.TEMPORAL_RANGE,
-                        offendingToken.getText());
-                ListIterable<AntlrModifier> modifiers = this
-                        .getModifiers()
-                        .select(antlrModifier -> antlrModifier.isSystem() || antlrModifier.isVersion());
-                ListIterable<ParserRuleContext> modifierContexts = modifiers
-                        .collect(AntlrElement::getElementContext);
+                    "Expected type '%s' for temporal property but found '%s'.",
+                    AntlrPrimitiveType.TEMPORAL_RANGE,
+                    offendingToken.getText()
+                );
+                ListIterable<AntlrModifier> modifiers =
+                    this.getModifiers().select(antlrModifier -> antlrModifier.isSystem() || antlrModifier.isVersion());
+                ListIterable<ParserRuleContext> modifierContexts = modifiers.collect(AntlrElement::getElementContext);
                 compilerAnnotationHolder.add(
-                        "ERR_TMP_RNG",
-                        message,
-                        this,
-                        Lists.immutable
-                                .with(offendingToken)
-                                .newWithAll(modifierContexts));
+                    "ERR_TMP_RNG",
+                    message,
+                    this,
+                    Lists.immutable.with(offendingToken).newWithAll(modifierContexts)
+                );
             }
-        }
-        else if (this.isFrom() || this.isTo())
-        {
-            if (!this.isValid() && !this.isSystem())
-            {
-                ImmutableList<AntlrModifier> modifiers = this
-                        .getModifiers()
-                        .select(modifier -> modifier.isFrom() || modifier.isTo())
-                        .toImmutable();
+        } else if (this.isFrom() || this.isTo()) {
+            if (!this.isValid() && !this.isSystem()) {
+                ImmutableList<AntlrModifier> modifiers =
+                    this.getModifiers().select(modifier -> modifier.isFrom() || modifier.isTo()).toImmutable();
                 String message = String.format(
-                        "Property '%s' with temporal modifier(s) %s must be marked as 'system' or 'valid'.",
-                        this,
-                        modifiers);
+                    "Property '%s' with temporal modifier(s) %s must be marked as 'system' or 'valid'.",
+                    this,
+                    modifiers
+                );
                 compilerAnnotationHolder.add(
-                        "ERR_TMP_SYS",
-                        message,
-                        this,
-                        modifiers.collect(AntlrElement::getElementContext));
-            }
-            else if (this.getType() != AntlrPrimitiveType.TEMPORAL_INSTANT)
-            {
+                    "ERR_TMP_SYS",
+                    message,
+                    this,
+                    modifiers.collect(AntlrElement::getElementContext)
+                );
+            } else if (this.getType() != AntlrPrimitiveType.TEMPORAL_INSTANT) {
                 ParserRuleContext offendingToken = this.getTypeParserRuleContext();
                 String message = String.format(
-                        "Expected type '%s' for temporal property but found '%s'.",
-                        AntlrPrimitiveType.TEMPORAL_INSTANT,
-                        offendingToken.getText());
-                ListIterable<AntlrModifier> modifiers = this
-                        .getModifiers()
-                        .select(modifier -> modifier.isSystem()
-                                || modifier.isVersion()
-                                || modifier.isFrom()
-                                || modifier.isTo());
-                ListIterable<ParserRuleContext> modifierContexts = modifiers
-                        .collect(AntlrElement::getElementContext);
+                    "Expected type '%s' for temporal property but found '%s'.",
+                    AntlrPrimitiveType.TEMPORAL_INSTANT,
+                    offendingToken.getText()
+                );
+                ListIterable<AntlrModifier> modifiers =
+                    this.getModifiers()
+                        .select(
+                            modifier ->
+                                modifier.isSystem() || modifier.isVersion() || modifier.isFrom() || modifier.isTo()
+                        );
+                ListIterable<ParserRuleContext> modifierContexts = modifiers.collect(AntlrElement::getElementContext);
                 compilerAnnotationHolder.add(
-                        "ERR_TMP_INS",
-                        message,
-                        this,
-                        Lists.immutable
-                                .with(offendingToken)
-                                .newWithAll(modifierContexts));
-            }
-            else if (this.isFrom() && this.isTo())
-            {
-                ImmutableList<AntlrModifier> modifiers = this
-                        .getModifiers()
-                        .select(modifier -> modifier.isFrom() || modifier.isTo())
-                        .toImmutable();
-                ImmutableList<ParserRuleContext> modifierContexts = modifiers
-                        .collect(AntlrElement::getElementContext);
+                    "ERR_TMP_INS",
+                    message,
+                    this,
+                    Lists.immutable.with(offendingToken).newWithAll(modifierContexts)
+                );
+            } else if (this.isFrom() && this.isTo()) {
+                ImmutableList<AntlrModifier> modifiers =
+                    this.getModifiers().select(modifier -> modifier.isFrom() || modifier.isTo()).toImmutable();
+                ImmutableList<ParserRuleContext> modifierContexts = modifiers.collect(AntlrElement::getElementContext);
                 String message = "Property may not have both 'from' and to' modifiers.";
-                compilerAnnotationHolder.add(
-                        "ERR_TMP_FTO",
-                        message,
-                        this,
-                        modifierContexts);
+                compilerAnnotationHolder.add("ERR_TMP_FTO", message, this, modifierContexts);
             }
         }
     }
 
     @Override
-    protected void reportInvalidAuditProperties(CompilerAnnotationHolder compilerAnnotationHolder)
-    {
+    protected void reportInvalidAuditProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
         super.reportInvalidAuditProperties(compilerAnnotationHolder);
 
-        if (this.isUserId())
-        {
-            if (!this.isKey() && !this.isCreatedBy() && !this.isLastUpdatedBy())
-            {
+        if (this.isUserId()) {
+            if (!this.isKey() && !this.isCreatedBy() && !this.isLastUpdatedBy()) {
                 AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isUserId);
                 String message = String.format(
-                        "Expected property '%s' with modifier '%s' to be a key, createdBy, or lastUpdatedBy.",
-                        this,
-                        modifier.getKeyword());
+                    "Expected property '%s' with modifier '%s' to be a key, createdBy, or lastUpdatedBy.",
+                    this,
+                    modifier.getKeyword()
+                );
                 compilerAnnotationHolder.add(
-                        "ERR_AUD_KEY",
-                        message,
-                        this,
-                        Lists.immutable.with(modifier.getElementContext()));
+                    "ERR_AUD_KEY",
+                    message,
+                    this,
+                    Lists.immutable.with(modifier.getElementContext())
+                );
             }
         }
 
-        if (this.isCreatedBy() || this.isLastUpdatedBy())
-        {
+        if (this.isCreatedBy() || this.isLastUpdatedBy()) {
             AntlrType antlrType = this.getType();
-            if (!(antlrType instanceof AntlrPrimitiveType)
-                    || ((AntlrPrimitiveType) antlrType).getPrimitiveType() != PrimitiveType.STRING)
-            {
-                AntlrModifier modifier = this
-                        .getModifiers()
+            if (
+                !(antlrType instanceof AntlrPrimitiveType) ||
+                ((AntlrPrimitiveType) antlrType).getPrimitiveType() != PrimitiveType.STRING
+            ) {
+                AntlrModifier modifier =
+                    this.getModifiers()
                         .detect(antlrModifier -> antlrModifier.isCreatedBy() || antlrModifier.isLastUpdatedBy());
                 String message = String.format(
-                        "Expected type '%s' but was '%s' for '%s' property '%s'.",
-                        PrimitiveType.STRING,
-                        antlrType.getName(),
-                        modifier.getKeyword(),
-                        this);
+                    "Expected type '%s' but was '%s' for '%s' property '%s'.",
+                    PrimitiveType.STRING,
+                    antlrType.getName(),
+                    modifier.getKeyword(),
+                    this
+                );
                 compilerAnnotationHolder.add(
-                        "ERR_AUD_DTP",
-                        message,
-                        this,
-                        Lists.immutable.with(modifier.getElementContext(), this.getTypeParserRuleContext()));
-            }
-            else if (!this.isUserId())
-            {
-                AntlrModifier modifier = this
-                        .getModifiers()
+                    "ERR_AUD_DTP",
+                    message,
+                    this,
+                    Lists.immutable.with(modifier.getElementContext(), this.getTypeParserRuleContext())
+                );
+            } else if (!this.isUserId()) {
+                AntlrModifier modifier =
+                    this.getModifiers()
                         .detect(antlrModifier -> antlrModifier.isCreatedBy() || antlrModifier.isLastUpdatedBy());
                 String message = String.format(
-                        "Expected property '%s' with modifier '%s' to also have the userId modifier.",
-                        this,
-                        modifier.getKeyword());
+                    "Expected property '%s' with modifier '%s' to also have the userId modifier.",
+                    this,
+                    modifier.getKeyword()
+                );
                 compilerAnnotationHolder.add(
-                        "ERR_AUD_UID",
-                        message,
-                        this,
-                        Lists.immutable.with(modifier.getElementContext()));
-            }
-            else if (!this.isPrivate())
-            {
-                AntlrModifier modifier = this
-                        .getModifiers()
+                    "ERR_AUD_UID",
+                    message,
+                    this,
+                    Lists.immutable.with(modifier.getElementContext())
+                );
+            } else if (!this.isPrivate()) {
+                AntlrModifier modifier =
+                    this.getModifiers()
                         .detect(antlrModifier -> antlrModifier.isCreatedBy() || antlrModifier.isLastUpdatedBy());
                 String message = String.format(
-                        "Expected property '%s' with modifier '%s' to also have the private modifier.",
-                        this,
-                        modifier.getKeyword());
+                    "Expected property '%s' with modifier '%s' to also have the private modifier.",
+                    this,
+                    modifier.getKeyword()
+                );
                 compilerAnnotationHolder.add(
-                        "ERR_AUD_PRI",
-                        message,
-                        this,
-                        Lists.immutable.with(modifier.getElementContext()));
+                    "ERR_AUD_PRI",
+                    message,
+                    this,
+                    Lists.immutable.with(modifier.getElementContext())
+                );
             }
         }
 
-        if (this.isCreatedOn())
-        {
+        if (this.isCreatedOn()) {
             AntlrType antlrType = this.getType();
-            if (!(antlrType instanceof AntlrPrimitiveType)
-                    || ((AntlrPrimitiveType) antlrType).getPrimitiveType() != PrimitiveType.INSTANT)
-            {
-                AntlrModifier modifier = this
-                        .getModifiers()
-                        .detect(AntlrModifier::isCreatedOn);
+            if (
+                !(antlrType instanceof AntlrPrimitiveType) ||
+                ((AntlrPrimitiveType) antlrType).getPrimitiveType() != PrimitiveType.INSTANT
+            ) {
+                AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isCreatedOn);
                 String message = String.format(
-                        "Expected type '%s' but was '%s' for '%s' property '%s'.",
-                        PrimitiveType.INSTANT,
-                        antlrType.getName(),
-                        modifier.getKeyword(),
-                        this);
+                    "Expected type '%s' but was '%s' for '%s' property '%s'.",
+                    PrimitiveType.INSTANT,
+                    antlrType.getName(),
+                    modifier.getKeyword(),
+                    this
+                );
                 compilerAnnotationHolder.add(
-                        "ERR_AUD_DTP",
-                        message,
-                        this,
-                        Lists.immutable.with(modifier.getElementContext(), this.getTypeParserRuleContext()));
-            }
-            else if (!this.isFinal())
-            {
-                AntlrModifier modifier = this
-                        .getModifiers()
-                        .detect(AntlrModifier::isCreatedOn);
+                    "ERR_AUD_DTP",
+                    message,
+                    this,
+                    Lists.immutable.with(modifier.getElementContext(), this.getTypeParserRuleContext())
+                );
+            } else if (!this.isFinal()) {
+                AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isCreatedOn);
 
-                String message = String.format(
-                        "Expected createdOn property '%s' to be final.",
-                        this);
+                String message = String.format("Expected createdOn property '%s' to be final.", this);
                 compilerAnnotationHolder.add(
-                        "ERR_CON_FIN",
-                        message,
-                        this,
-                        Lists.immutable.with(modifier.getElementContext()));
+                    "ERR_CON_FIN",
+                    message,
+                    this,
+                    Lists.immutable.with(modifier.getElementContext())
+                );
             }
         }
 
-        if (this.isCreatedBy() && this.isLastUpdatedBy())
-        {
+        if (this.isCreatedBy() && this.isLastUpdatedBy()) {
             return;
         }
 
-        if (this.isCreatedBy())
-        {
-            AntlrModifier modifier = this
-                    .getModifiers()
-                    .detect(AntlrModifier::isCreatedBy);
-            if (!this.getName().equals("createdById"))
-            {
-                String message = String.format(
-                        "Expected createdBy property '%s' to be named 'createdById'.",
-                        this);
+        if (this.isCreatedBy()) {
+            AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isCreatedBy);
+            if (!this.getName().equals("createdById")) {
+                String message = String.format("Expected createdBy property '%s' to be named 'createdById'.", this);
                 compilerAnnotationHolder.add(
-                        "WRN_CRT_NAM",
-                        message,
-                        this,
-                        Lists.immutable.with(this.getNameContext(), modifier.getElementContext()),
-                        AnnotationSeverity.WARNING);
+                    "WRN_CRT_NAM",
+                    message,
+                    this,
+                    Lists.immutable.with(this.getNameContext(), modifier.getElementContext()),
+                    AnnotationSeverity.WARNING
+                );
             }
         }
 
-        if (this.isLastUpdatedBy())
-        {
-            AntlrModifier modifier = this
-                    .getModifiers()
-                    .detect(AntlrModifier::isLastUpdatedBy);
-            if (!this.getName().equals("lastUpdatedById"))
-            {
+        if (this.isLastUpdatedBy()) {
+            AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isLastUpdatedBy);
+            if (!this.getName().equals("lastUpdatedById")) {
                 String message = String.format(
-                        "Expected lastUpdatedBy property '%s' to be named 'lastUpdatedById'.",
-                        this);
+                    "Expected lastUpdatedBy property '%s' to be named 'lastUpdatedById'.",
+                    this
+                );
                 compilerAnnotationHolder.add(
-                        "WRN_LUB_NAM",
-                        message,
-                        this,
-                        Lists.immutable.with(this.getNameContext(), modifier.getElementContext()),
-                        AnnotationSeverity.WARNING);
+                    "WRN_LUB_NAM",
+                    message,
+                    this,
+                    Lists.immutable.with(this.getNameContext(), modifier.getElementContext()),
+                    AnnotationSeverity.WARNING
+                );
             }
         }
     }
 
-    public void reportIdPropertyWithKeyProperties(CompilerAnnotationHolder compilerAnnotationHolder)
-    {
+    public void reportIdPropertyWithKeyProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
         String message = String.format(
-                "Class '%s' may have id properties or non-id key properties, but not both. Found id property: %s.",
-                this.owningClassifier.getName(),
-                this);
+            "Class '%s' may have id properties or non-id key properties, but not both. Found id property: %s.",
+            this.owningClassifier.getName(),
+            this
+        );
         compilerAnnotationHolder.add("ERR_KEY_IDS", message, this);
     }
 
-    public void reportKeyPropertyWithIdProperties(CompilerAnnotationHolder compilerAnnotationHolder)
-    {
+    public void reportKeyPropertyWithIdProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
         String message = String.format(
-                "Class '%s' may have id properties or non-id key properties, but not both. Found non-id key property: %s.",
-                this.owningClassifier.getName(),
-                this);
+            "Class '%s' may have id properties or non-id key properties, but not both. Found non-id key property: %s.",
+            this.owningClassifier.getName(),
+            this
+        );
         compilerAnnotationHolder.add("ERR_KEY_IDS", message, this);
     }
 
-    public void reportTransientIdProperties(CompilerAnnotationHolder compilerAnnotationHolder)
-    {
+    public void reportTransientIdProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
         ImmutableList<AntlrModifier> idModifiers = this.getModifiersByName("id");
-        if (idModifiers.isEmpty())
-        {
+        if (idModifiers.isEmpty()) {
             return;
         }
 
         String message = String.format(
-                "Transient class '%s' may not have id properties.",
-                this.owningClassifier.getName());
+            "Transient class '%s' may not have id properties.",
+            this.owningClassifier.getName()
+        );
         compilerAnnotationHolder.add(
-                "ERR_TNS_IDP",
-                message,
-                this,
-                idModifiers.collect(AntlrElement::getElementContext));
+            "ERR_TNS_IDP",
+            message,
+            this,
+            idModifiers.collect(AntlrElement::getElementContext)
+        );
     }
+
     // </editor-fold>
 
     @Override
-    public String toString()
-    {
-        return String.format(
-                "%s.%s",
-                this.owningClassifier.getName(),
-                this.getShortString());
+    public String toString() {
+        return String.format("%s.%s", this.owningClassifier.getName(), this.getShortString());
     }
 
     @Override
-    public String getShortString()
-    {
+    public String getShortString() {
         MutableList<String> sourceCodeStrings = org.eclipse.collections.api.factory.Lists.mutable.empty();
 
         String typeSourceCode = this.getType().getName();
         sourceCodeStrings.add(typeSourceCode);
 
-        this
-                .getModifiers()
-                .asLazy()
-                .collect(AntlrElement::toString)
-                .into(sourceCodeStrings);
+        this.getModifiers().asLazy().collect(AntlrElement::toString).into(sourceCodeStrings);
 
-        this
-                .getValidations()
-                .asLazy()
-                .collect(AntlrElement::toString)
-                .into(sourceCodeStrings);
+        this.getValidations().asLazy().collect(AntlrElement::toString).into(sourceCodeStrings);
 
-        return String.format(
-                "%s: %s",
-                this.getName(),
-                sourceCodeStrings.makeString(" "));
+        return String.format("%s: %s", this.getName(), sourceCodeStrings.makeString(" "));
     }
 
-    public OrderedMap<AntlrAssociationEnd, MutableList<AntlrDataTypeProperty<?>>> getKeysMatchingThisForeignKey()
-    {
+    public OrderedMap<AntlrAssociationEnd, MutableList<AntlrDataTypeProperty<?>>> getKeysMatchingThisForeignKey() {
         return Objects.requireNonNull(this.keysMatchingThisForeignKey);
     }
 
-    public boolean isForeignKey()
-    {
+    public boolean isForeignKey() {
         return this.keysMatchingThisForeignKey.notEmpty();
     }
 }

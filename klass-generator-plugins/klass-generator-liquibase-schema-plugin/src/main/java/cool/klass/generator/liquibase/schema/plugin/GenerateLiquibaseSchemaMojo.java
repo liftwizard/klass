@@ -30,27 +30,25 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-        name = "generate-liquibase-schema",
-        defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
-        threadSafe = true,
-        requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class GenerateLiquibaseSchemaMojo
-        extends AbstractGenerateMojo
-{
+    name = "generate-liquibase-schema",
+    defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
+    threadSafe = true,
+    requiresDependencyResolution = ResolutionScope.RUNTIME
+)
+public class GenerateLiquibaseSchemaMojo extends AbstractGenerateMojo {
+
     @Parameter(
-            property = "outputDirectory",
-            defaultValue = "${project.build.directory}/generated-resources/liquibase-schema")
+        property = "outputDirectory",
+        defaultValue = "${project.build.directory}/generated-resources/liquibase-schema"
+    )
     private File outputDirectory;
 
     @Parameter(property = "fileName")
     private final String fileName = "migrations-initial-schema.xml";
 
     @Override
-    public void execute()
-            throws MojoExecutionException
-    {
-        if (!this.outputDirectory.exists())
-        {
+    public void execute() throws MojoExecutionException {
+        if (!this.outputDirectory.exists()) {
             this.outputDirectory.mkdirs();
         }
 
@@ -59,12 +57,9 @@ public class GenerateLiquibaseSchemaMojo
         Path outputPath = this.outputDirectory.toPath();
 
         LiquibaseSchemaGenerator generator = new LiquibaseSchemaGenerator(domainModel, this.fileName);
-        try
-        {
+        try {
             generator.writeFiles(outputPath);
-        }
-        catch (RuntimeException e)
-        {
+        } catch (RuntimeException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
 

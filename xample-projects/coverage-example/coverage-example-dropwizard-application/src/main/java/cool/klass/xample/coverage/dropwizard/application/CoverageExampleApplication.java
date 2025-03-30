@@ -33,37 +33,30 @@ import io.liftwizard.servlet.logging.logstash.encoder.StructuredArgumentsLogstas
 import io.liftwizard.servlet.logging.mdc.StructuredArgumentsMDCLogger;
 import io.liftwizard.servlet.logging.typesafe.StructuredArguments;
 
-public class CoverageExampleApplication
-        extends AbstractCoverageExampleApplication
-{
-    public static void main(String[] args)
-            throws Exception
-    {
+public class CoverageExampleApplication extends AbstractCoverageExampleApplication {
+
+    public static void main(String[] args) throws Exception {
         new CoverageExampleApplication().run(args);
     }
 
     @Override
-    public void initialize(@Nonnull Bootstrap<CoverageExampleConfiguration> bootstrap)
-    {
+    public void initialize(@Nonnull Bootstrap<CoverageExampleConfiguration> bootstrap) {
         super.initialize(bootstrap);
     }
 
     @Override
-    protected void initializeCommands(@Nonnull Bootstrap<CoverageExampleConfiguration> bootstrap)
-    {
+    protected void initializeCommands(@Nonnull Bootstrap<CoverageExampleConfiguration> bootstrap) {
         super.initializeCommands(bootstrap);
     }
 
     @Override
-    protected void initializeBundles(@Nonnull Bootstrap<CoverageExampleConfiguration> bootstrap)
-    {
+    protected void initializeBundles(@Nonnull Bootstrap<CoverageExampleConfiguration> bootstrap) {
         super.initializeBundles(bootstrap);
 
         var mdcLogger = new StructuredArgumentsMDCLogger(bootstrap.getObjectMapper());
         var logstashLogger = new StructuredArgumentsLogstashEncoderLogger();
 
-        Consumer<StructuredArguments> structuredLogger = structuredArguments ->
-        {
+        Consumer<StructuredArguments> structuredLogger = structuredArguments -> {
             mdcLogger.accept(structuredArguments);
             logstashLogger.accept(structuredArguments);
         };
@@ -72,28 +65,29 @@ public class CoverageExampleApplication
 
         bootstrap.addBundle(new KlassGraphQLBundle<>());
 
-        bootstrap.addBundle(new MigrationsBundle<>()
-        {
-            @Override
-            public DataSourceFactory getDataSourceFactory(CoverageExampleConfiguration configuration)
-            {
-                return configuration.getNamedDataSourcesFactory().getNamedDataSourceFactoryByName("h2-tcp");
+        bootstrap.addBundle(
+            new MigrationsBundle<>() {
+                @Override
+                public DataSourceFactory getDataSourceFactory(CoverageExampleConfiguration configuration) {
+                    return configuration.getNamedDataSourcesFactory().getNamedDataSourceFactoryByName("h2-tcp");
+                }
             }
-        });
+        );
 
-        bootstrap.addBundle(new SinglePageRedirectFilterBundle<CoverageExampleConfiguration>()
-        {
-            @Override
-            public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory(CoverageExampleConfiguration configuration)
-            {
-                return configuration.getSinglePageRedirectFilterFactory();
+        bootstrap.addBundle(
+            new SinglePageRedirectFilterBundle<CoverageExampleConfiguration>() {
+                @Override
+                public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory(
+                    CoverageExampleConfiguration configuration
+                ) {
+                    return configuration.getSinglePageRedirectFilterFactory();
+                }
             }
-        });
+        );
     }
 
     @Override
-    protected void registerJacksonModules(@Nonnull Environment environment)
-    {
+    protected void registerJacksonModules(@Nonnull Environment environment) {
         super.registerJacksonModules(environment);
 
         environment.getObjectMapper().registerModule(new KlassMetaModelJacksonModule());

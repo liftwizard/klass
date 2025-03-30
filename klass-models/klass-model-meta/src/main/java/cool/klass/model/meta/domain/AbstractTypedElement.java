@@ -31,46 +31,45 @@ import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public abstract class AbstractTypedElement<T extends Type>
-        extends AbstractIdentifierElement
-        implements TypedElement
-{
+public abstract class AbstractTypedElement<T extends Type> extends AbstractIdentifierElement implements TypedElement {
+
     @Nonnull
     protected final T type;
 
     protected AbstractTypedElement(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext,
-            @Nonnull T type)
-    {
+        @Nonnull ParserRuleContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext,
+        @Nonnull T type
+    ) {
         super(elementContext, macroElement, sourceCode, ordinal, nameContext);
         this.type = Objects.requireNonNull(type);
     }
 
     @Override
     @Nonnull
-    public final T getType()
-    {
+    public final T getType() {
         return this.type;
     }
 
-    public abstract static class TypedElementBuilder<T extends Type, TG extends TypeGetter, BuiltElement extends AbstractTypedElement<T>>
-            extends IdentifierElementBuilder<BuiltElement>
-    {
+    public abstract static class TypedElementBuilder<
+        T extends Type, TG extends TypeGetter, BuiltElement extends AbstractTypedElement<T>
+    >
+        extends IdentifierElementBuilder<BuiltElement> {
+
         @Nonnull
         protected final TG typeBuilder;
 
         protected TypedElementBuilder(
-                @Nonnull ParserRuleContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode,
-                int ordinal,
-                @Nonnull IdentifierContext nameContext,
-                @Nonnull TG typeBuilder)
-        {
+            @Nonnull ParserRuleContext elementContext,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode,
+            int ordinal,
+            @Nonnull IdentifierContext nameContext,
+            @Nonnull TG typeBuilder
+        ) {
             super(elementContext, macroElement, sourceCode, ordinal, nameContext);
             this.typeBuilder = Objects.requireNonNull(typeBuilder);
         }

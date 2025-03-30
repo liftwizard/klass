@@ -22,30 +22,24 @@ import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.impl.factory.Lists;
 
-public interface ProjectionDataTypeProperty
-        extends ProjectionChild
-{
+public interface ProjectionDataTypeProperty extends ProjectionChild {
     @Override
-    default ImmutableList<? extends ProjectionChild> getChildren()
-    {
+    default ImmutableList<? extends ProjectionChild> getChildren() {
         return Lists.immutable.empty();
     }
 
     @Override
-    default void visit(@Nonnull ProjectionVisitor visitor)
-    {
+    default void visit(@Nonnull ProjectionVisitor visitor) {
         visitor.visitProjectionDataTypeProperty(this);
     }
 
     @Override
-    default void enter(@Nonnull ProjectionListener listener)
-    {
+    default void enter(@Nonnull ProjectionListener listener) {
         listener.enterProjectionDataTypeProperty(this);
     }
 
     @Override
-    default void exit(@Nonnull ProjectionListener listener)
-    {
+    default void exit(@Nonnull ProjectionListener listener) {
         listener.exitProjectionDataTypeProperty(this);
     }
 

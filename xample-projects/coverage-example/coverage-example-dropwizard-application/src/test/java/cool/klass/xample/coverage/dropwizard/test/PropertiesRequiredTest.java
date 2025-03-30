@@ -24,61 +24,57 @@ import javax.ws.rs.core.Response.Status;
 import io.liftwizard.junit.extension.match.FileSlurper;
 import org.junit.jupiter.api.Test;
 
-class PropertiesRequiredTest
-        extends AbstractCoverageTest
-{
+class PropertiesRequiredTest extends AbstractCoverageTest {
+
     @Test
-    void getFirst()
-    {
+    void getFirst() {
         Client client = this.getClient("getFirst");
 
         Response response = client
-                .target("http://localhost:{port}/api/propertiesRequired/{id}")
-                .resolveTemplate("port", this.appExtension.getLocalPort())
-                .resolveTemplate("id", 1)
-                .request()
-                .get();
+            .target("http://localhost:{port}/api/propertiesRequired/{id}")
+            .resolveTemplate("port", this.appExtension.getLocalPort())
+            .resolveTemplate("id", 1)
+            .request()
+            .get();
 
         this.assertResponse("getFirst", Status.OK, response);
     }
 
     @Test
-    void getSecond()
-    {
+    void getSecond() {
         Client client = this.getClient("getSecond");
 
         Response response = client
-                .target("http://localhost:{port}/api/propertiesRequired/{id}")
-                .resolveTemplate("port", this.appExtension.getLocalPort())
-                .resolveTemplate("id", 2)
-                .request()
-                .get();
+            .target("http://localhost:{port}/api/propertiesRequired/{id}")
+            .resolveTemplate("port", this.appExtension.getLocalPort())
+            .resolveTemplate("id", 2)
+            .request()
+            .get();
 
         this.assertResponse("getSecond", Status.OK, response);
     }
 
     @Test
-    void putFirst()
-    {
-        Client client   = this.getClient("putFirst");
+    void putFirst() {
+        Client client = this.getClient("putFirst");
         String jsonName = this.getClass().getSimpleName() + ".putFirst.json5";
-        String json     = FileSlurper.slurp(jsonName, this.getClass());
+        String json = FileSlurper.slurp(jsonName, this.getClass());
 
         Response putResponse = client
-                .target("http://localhost:{port}/api/propertiesRequired/{id}")
-                .resolveTemplate("port", this.appExtension.getLocalPort())
-                .resolveTemplate("id", 1)
-                .request()
-                .put(Entity.json(json));
+            .target("http://localhost:{port}/api/propertiesRequired/{id}")
+            .resolveTemplate("port", this.appExtension.getLocalPort())
+            .resolveTemplate("id", 1)
+            .request()
+            .put(Entity.json(json));
 
         this.assertEmptyResponse(Status.NO_CONTENT, putResponse);
 
         Response getResponse = client
-                .target("http://localhost:{port}/api/propertiesRequired/{id}")
-                .resolveTemplate("port", this.appExtension.getLocalPort())
-                .resolveTemplate("id", 1)
-                .request()
-                .get();
+            .target("http://localhost:{port}/api/propertiesRequired/{id}")
+            .resolveTemplate("port", this.appExtension.getLocalPort())
+            .resolveTemplate("id", 1)
+            .request()
+            .get();
 
         this.assertResponse("putFirst2", Status.OK, getResponse);
     }

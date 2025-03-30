@@ -16,8 +16,7 @@
 
 package cool.klass.model.meta.domain.api.projection;
 
-public interface ProjectionListener
-{
+public interface ProjectionListener {
     void enterProjection(Projection projection);
 
     void exitProjection(Projection projection);

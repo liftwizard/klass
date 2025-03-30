@@ -19,13 +19,11 @@ package cool.klass.model.converter.compiler.annotation.association;
 import cool.klass.model.converter.compiler.annotation.AbstractKlassCompilerErrorTestCase;
 import org.junit.jupiter.api.Test;
 
-class DoubleOwnerAssociationErrorTest
-        extends AbstractKlassCompilerErrorTestCase
-{
+class DoubleOwnerAssociationErrorTest extends AbstractKlassCompilerErrorTestCase {
+
     @Test
     @Override
-    public void smokeTest()
-    {
+    public void smokeTest() {
         this.assertCompilationSucceeds(true);
     }
 }

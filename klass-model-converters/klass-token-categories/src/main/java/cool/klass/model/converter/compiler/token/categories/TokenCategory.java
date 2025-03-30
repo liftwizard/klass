@@ -16,8 +16,7 @@
 
 package cool.klass.model.converter.compiler.token.categories;
 
-public enum TokenCategory
-{
+public enum TokenCategory {
     // Comments
     COMMENT(null),
     BLOCK_COMMENT(COMMENT),
@@ -148,13 +147,11 @@ public enum TokenCategory
 
     private final TokenCategory parentCategory;
 
-    TokenCategory(TokenCategory parentCategory)
-    {
+    TokenCategory(TokenCategory parentCategory) {
         this.parentCategory = parentCategory;
     }
 
-    public TokenCategory getParentCategory()
-    {
+    public TokenCategory getParentCategory() {
         return this.parentCategory;
     }
 }

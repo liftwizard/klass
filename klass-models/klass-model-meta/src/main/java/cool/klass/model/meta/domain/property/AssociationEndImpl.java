@@ -36,111 +36,99 @@ import cool.klass.model.meta.grammar.KlassParser.AssociationEndContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 
 // TODO: Super class for reference-type-property?
-public final class AssociationEndImpl
-        extends ReferencePropertyImpl<KlassImpl>
-        implements AssociationEndWithSourceCode
-{
+public final class AssociationEndImpl extends ReferencePropertyImpl<KlassImpl> implements AssociationEndWithSourceCode {
+
     @Nonnull
     private final AssociationImpl owningAssociation;
 
     private AssociationEndImpl(
+        @Nonnull AssociationEndContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext,
+        @Nonnull KlassImpl type,
+        @Nonnull KlassImpl owningClass,
+        @Nonnull AssociationImpl owningAssociation,
+        @Nonnull Multiplicity multiplicity
+    ) {
+        super(elementContext, macroElement, sourceCode, ordinal, nameContext, type, owningClass, multiplicity);
+        this.owningAssociation = Objects.requireNonNull(owningAssociation);
+    }
+
+    @Nonnull
+    @Override
+    public AssociationEndContext getElementContext() {
+        return (AssociationEndContext) super.getElementContext();
+    }
+
+    @Nonnull
+    @Override
+    public Klass getOwningClassifier() {
+        return (Klass) super.getOwningClassifier();
+    }
+
+    @Override
+    @Nonnull
+    public AssociationImpl getOwningAssociation() {
+        return this.owningAssociation;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+            "%s.%s: %s[%s]",
+            this.getOwningClassifier().getName(),
+            this.getName(),
+            this.getType().getName(),
+            this.multiplicity.getPrettyName()
+        );
+    }
+
+    public static final class AssociationEndBuilder
+        extends ReferencePropertyBuilder<KlassImpl, KlassBuilder, AssociationEndImpl> {
+
+        @Nonnull
+        private final AssociationBuilder owningAssociation;
+
+        public AssociationEndBuilder(
             @Nonnull AssociationEndContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode,
             int ordinal,
             @Nonnull IdentifierContext nameContext,
-            @Nonnull KlassImpl type,
-            @Nonnull KlassImpl owningClass,
-            @Nonnull AssociationImpl owningAssociation,
-            @Nonnull Multiplicity multiplicity)
-    {
-        super(
+            @Nonnull KlassBuilder type,
+            @Nonnull KlassBuilder owningClassBuilder,
+            @Nonnull AssociationBuilder owningAssociation,
+            @Nonnull Multiplicity multiplicity
+        ) {
+            super(
                 elementContext,
                 macroElement,
                 sourceCode,
                 ordinal,
                 nameContext,
                 type,
-                owningClass,
-                multiplicity);
-        this.owningAssociation = Objects.requireNonNull(owningAssociation);
-    }
-
-    @Nonnull
-    @Override
-    public AssociationEndContext getElementContext()
-    {
-        return (AssociationEndContext) super.getElementContext();
-    }
-
-    @Nonnull
-    @Override
-    public Klass getOwningClassifier()
-    {
-        return (Klass) super.getOwningClassifier();
-    }
-
-    @Override
-    @Nonnull
-    public AssociationImpl getOwningAssociation()
-    {
-        return this.owningAssociation;
-    }
-
-    @Override
-    public String toString()
-    {
-        return String.format(
-                "%s.%s: %s[%s]",
-                this.getOwningClassifier().getName(),
-                this.getName(),
-                this.getType().getName(),
-                this.multiplicity.getPrettyName());
-    }
-
-    public static final class AssociationEndBuilder
-            extends ReferencePropertyBuilder<KlassImpl, KlassBuilder, AssociationEndImpl>
-    {
-        @Nonnull
-        private final AssociationBuilder owningAssociation;
-
-        public AssociationEndBuilder(
-                @Nonnull AssociationEndContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode,
-                int ordinal,
-                @Nonnull IdentifierContext nameContext,
-                @Nonnull KlassBuilder type,
-                @Nonnull KlassBuilder owningClassBuilder,
-                @Nonnull AssociationBuilder owningAssociation,
-                @Nonnull Multiplicity multiplicity)
-        {
-            super(
-                    elementContext,
-                    macroElement,
-                    sourceCode,
-                    ordinal,
-                    nameContext,
-                    type,
-                    owningClassBuilder,
-                    multiplicity);
+                owningClassBuilder,
+                multiplicity
+            );
             this.owningAssociation = Objects.requireNonNull(owningAssociation);
         }
 
         @Override
         @Nonnull
-        protected AssociationEndImpl buildUnsafe()
-        {
+        protected AssociationEndImpl buildUnsafe() {
             return new AssociationEndImpl(
-                    (AssociationEndContext) this.elementContext,
-                    this.macroElement.map(ElementBuilder::getElement),
-                    this.sourceCode.build(),
-                    this.ordinal,
-                    this.getNameContext(),
-                    this.typeBuilder.getElement(),
-                    (KlassImpl) this.owningClassifierBuilder.getElement(),
-                    this.owningAssociation.getElement(),
-                    this.multiplicity);
+                (AssociationEndContext) this.elementContext,
+                this.macroElement.map(ElementBuilder::getElement),
+                this.sourceCode.build(),
+                this.ordinal,
+                this.getNameContext(),
+                this.typeBuilder.getElement(),
+                (KlassImpl) this.owningClassifierBuilder.getElement(),
+                this.owningAssociation.getElement(),
+                this.multiplicity
+            );
         }
     }
 }

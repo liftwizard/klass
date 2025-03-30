@@ -32,60 +32,53 @@ import cool.klass.model.meta.grammar.KlassParser.BooleanLiteralContext;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.impl.factory.Lists;
 
-public final class AntlrBooleanLiteralValue
-        extends AbstractAntlrLiteralValue
-{
-    private final boolean                    value;
-    private       BooleanLiteralValueBuilder elementBuilder;
+public final class AntlrBooleanLiteralValue extends AbstractAntlrLiteralValue {
+
+    private final boolean value;
+    private BooleanLiteralValueBuilder elementBuilder;
 
     public AntlrBooleanLiteralValue(
-            @Nonnull BooleanLiteralContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            boolean value,
-            @Nonnull IAntlrElement expressionValueOwner)
-    {
+        @Nonnull BooleanLiteralContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        boolean value,
+        @Nonnull IAntlrElement expressionValueOwner
+    ) {
         super(elementContext, compilationUnit, expressionValueOwner);
         this.value = value;
     }
 
     @Override
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
-    {
-    }
+    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {}
 
     @Nonnull
     @Override
-    public BooleanLiteralValueBuilder build()
-    {
-        if (this.elementBuilder != null)
-        {
+    public BooleanLiteralValueBuilder build() {
+        if (this.elementBuilder != null) {
             throw new IllegalStateException();
         }
         this.elementBuilder = new BooleanLiteralValueBuilder(
-                (BooleanLiteralContext) this.elementContext,
-                this.getMacroElementBuilder(),
-                this.getSourceCodeBuilder(),
-                this.value);
+            (BooleanLiteralContext) this.elementContext,
+            this.getMacroElementBuilder(),
+            this.getSourceCodeBuilder(),
+            this.value
+        );
         return this.elementBuilder;
     }
 
     @Nonnull
     @Override
-    public BooleanLiteralValueBuilder getElementBuilder()
-    {
+    public BooleanLiteralValueBuilder getElementBuilder() {
         return Objects.requireNonNull(this.elementBuilder);
     }
 
     @Nonnull
     @Override
-    public ImmutableList<AntlrType> getPossibleTypes()
-    {
+    public ImmutableList<AntlrType> getPossibleTypes() {
         return Lists.immutable.with(AntlrPrimitiveType.BOOLEAN);
     }
 
     @Override
-    public void visit(AntlrExpressionValueVisitor visitor)
-    {
+    public void visit(AntlrExpressionValueVisitor visitor) {
         visitor.visitBooleanLiteral(this);
     }
 }

@@ -31,66 +31,59 @@ import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class WriteProjectionAssociationEndAdapter
-        implements ProjectionReferenceProperty
-{
+public class WriteProjectionAssociationEndAdapter implements ProjectionReferenceProperty {
+
     private final ProjectionParent parent;
     private final AssociationEnd associationEnd;
 
-    public WriteProjectionAssociationEndAdapter(ProjectionParent projectionParent, AssociationEnd associationEnd)
-    {
+    public WriteProjectionAssociationEndAdapter(ProjectionParent projectionParent, AssociationEnd associationEnd) {
         this.parent = Objects.requireNonNull(projectionParent);
         this.associationEnd = Objects.requireNonNull(associationEnd);
     }
 
     @Nonnull
     @Override
-    public ReferenceProperty getProperty()
-    {
+    public ReferenceProperty getProperty() {
         return this.associationEnd;
     }
 
     @Nonnull
     @Override
-    public Classifier getDeclaredClassifier()
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".getDeclaredClassifier() not implemented yet");
+    public Classifier getDeclaredClassifier() {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".getDeclaredClassifier() not implemented yet"
+        );
     }
 
     @Override
-    public Optional<ProjectionParent> getParent()
-    {
+    public Optional<ProjectionParent> getParent() {
         throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".getParent() not implemented yet");
     }
 
     @Override
-    public ImmutableList<? extends ProjectionChild> getChildren()
-    {
+    public ImmutableList<? extends ProjectionChild> getChildren() {
         Klass klass = this.associationEnd.getType();
         return klass
-                .getAssociationEnds()
-                .select(ReferenceProperty::isOwned)
-                .collect(associationEnd -> new WriteProjectionAssociationEndAdapter(this, associationEnd));
+            .getAssociationEnds()
+            .select(ReferenceProperty::isOwned)
+            .collect(associationEnd -> new WriteProjectionAssociationEndAdapter(this, associationEnd));
     }
 
     @Nonnull
     @Override
-    public String getName()
-    {
+    public String getName() {
         throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".getName() not implemented yet");
     }
 
     @Override
-    public int getOrdinal()
-    {
+    public int getOrdinal() {
         throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".getOrdinal() not implemented yet");
     }
 
     @Override
-    public Optional<Element> getMacroElement()
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".getMacroElement() not implemented yet");
+    public Optional<Element> getMacroElement() {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".getMacroElement() not implemented yet"
+        );
     }
 }

@@ -32,60 +32,53 @@ import cool.klass.model.meta.grammar.KlassParser.StringLiteralContext;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.impl.factory.Lists;
 
-public final class AntlrStringLiteralValue
-        extends AbstractAntlrLiteralValue
-{
-    private final String                    value;
-    private       StringLiteralValueBuilder elementBuilder;
+public final class AntlrStringLiteralValue extends AbstractAntlrLiteralValue {
+
+    private final String value;
+    private StringLiteralValueBuilder elementBuilder;
 
     public AntlrStringLiteralValue(
-            @Nonnull StringLiteralContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            @Nonnull String value,
-            @Nonnull IAntlrElement expressionValueOwner)
-    {
+        @Nonnull StringLiteralContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        @Nonnull String value,
+        @Nonnull IAntlrElement expressionValueOwner
+    ) {
         super(elementContext, compilationUnit, expressionValueOwner);
         this.value = Objects.requireNonNull(value);
     }
 
     @Override
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
-    {
-    }
+    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {}
 
     @Nonnull
     @Override
-    public StringLiteralValueBuilder build()
-    {
-        if (this.elementBuilder != null)
-        {
+    public StringLiteralValueBuilder build() {
+        if (this.elementBuilder != null) {
             throw new IllegalStateException();
         }
         this.elementBuilder = new StringLiteralValueBuilder(
-                (StringLiteralContext) this.elementContext,
-                this.getMacroElementBuilder(),
-                this.getSourceCodeBuilder(),
-                this.value);
+            (StringLiteralContext) this.elementContext,
+            this.getMacroElementBuilder(),
+            this.getSourceCodeBuilder(),
+            this.value
+        );
         return this.elementBuilder;
     }
 
     @Nonnull
     @Override
-    public StringLiteralValueBuilder getElementBuilder()
-    {
+    public StringLiteralValueBuilder getElementBuilder() {
         return Objects.requireNonNull(this.elementBuilder);
     }
 
     @Nonnull
     @Override
-    public ImmutableList<AntlrType> getPossibleTypes()
-    {
+    public ImmutableList<AntlrType> getPossibleTypes() {
         return Lists.immutable.with(AntlrPrimitiveType.STRING);
     }
 
     @Override
-    public void visit(AntlrExpressionValueVisitor visitor)
-    {
+    public void visit(AntlrExpressionValueVisitor visitor) {
         visitor.visitStringLiteral(this);
     }
 }

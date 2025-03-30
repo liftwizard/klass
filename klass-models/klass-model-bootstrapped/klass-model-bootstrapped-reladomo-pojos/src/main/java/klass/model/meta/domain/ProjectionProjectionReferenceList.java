@@ -20,24 +20,19 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class ProjectionProjectionReferenceList extends ProjectionProjectionReferenceListAbstract
-{
-    public ProjectionProjectionReferenceList()
-    {
-    }
+public class ProjectionProjectionReferenceList extends ProjectionProjectionReferenceListAbstract {
 
-    public ProjectionProjectionReferenceList(int initialSize)
-    {
+    public ProjectionProjectionReferenceList() {}
+
+    public ProjectionProjectionReferenceList(int initialSize) {
         super(initialSize);
     }
 
-    public ProjectionProjectionReferenceList(Collection c)
-    {
+    public ProjectionProjectionReferenceList(Collection c) {
         super(c);
     }
 
-    public ProjectionProjectionReferenceList(Operation operation)
-    {
+    public ProjectionProjectionReferenceList(Operation operation) {
         super(operation);
     }
 }

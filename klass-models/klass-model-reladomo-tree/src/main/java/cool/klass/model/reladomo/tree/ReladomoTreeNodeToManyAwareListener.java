@@ -18,8 +18,7 @@ package cool.klass.model.reladomo.tree;
 
 import java.util.Optional;
 
-public interface ReladomoTreeNodeToManyAwareListener
-{
+public interface ReladomoTreeNodeToManyAwareListener {
     Object getStateToAssertInvariants();
 
     void enterListIndex(int index);

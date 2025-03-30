@@ -37,25 +37,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public class KlassSourceCodeHtmlGeneratorTest
-{
+public class KlassSourceCodeHtmlGeneratorTest {
+
     @RegisterExtension
     final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
     @Test
-    void smokeTest()
-    {
-        String              sourceCodeText = FileSlurper.slurp("/com/stackoverflow/stackoverflow.klass", this.getClass());
+    void smokeTest() {
+        String sourceCodeText = FileSlurper.slurp("/com/stackoverflow/stackoverflow.klass", this.getClass());
         CompilationUnit compilationUnit = CompilationUnit.createFromText(
-                0,
-                Optional.empty(),
-                "example.klass",
-                sourceCodeText);
+            0,
+            Optional.empty(),
+            "example.klass",
+            sourceCodeText
+        );
         AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
-        KlassCompiler     compiler          = new KlassCompiler(compilationUnit, colorScheme);
+        KlassCompiler compiler = new KlassCompiler(compilationUnit, colorScheme);
         CompilationResult compilationResult = compiler.compile();
-        if (compilationResult.domainModelWithSourceCode().isEmpty())
-        {
+        if (compilationResult.domainModelWithSourceCode().isEmpty()) {
             String message = compilationResult.compilerAnnotations().makeString("\n");
             fail(message);
         }
@@ -63,16 +62,13 @@ public class KlassSourceCodeHtmlGeneratorTest
         DomainModelWithSourceCode domainModel = compilationResult.domainModelWithSourceCode().get();
         assertThat(domainModel).isNotNull();
 
-        for (SourceCode sourceCode : domainModel.getSourceCodes())
-        {
+        for (SourceCode sourceCode : domainModel.getSourceCodes()) {
             String fullPathSourceName = sourceCode.getFullPathSourceName();
 
             String html = KlassSourceCodeHtmlGenerator.getSourceCode(domainModel, sourceCode);
 
             String resourceClassPathLocation = fullPathSourceName + ".html";
-            this.fileMatchExtension.assertFileContents(
-                    resourceClassPathLocation,
-                    html);
+            this.fileMatchExtension.assertFileContents(resourceClassPathLocation, html);
         }
     }
 }

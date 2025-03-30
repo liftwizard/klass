@@ -34,59 +34,54 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.OrderedMap;
 import org.eclipse.collections.impl.factory.Lists;
 
-public class AntlrVariableReference
-        extends AntlrExpressionValue
-{
+public class AntlrVariableReference extends AntlrExpressionValue {
+
     @Nonnull
     private final String variableName;
 
     @Nullable
-    private AntlrParameter           antlrParameter;
+    private AntlrParameter antlrParameter;
+
     private VariableReferenceBuilder elementBuilder;
 
     public AntlrVariableReference(
-            @Nonnull VariableReferenceContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            @Nonnull String variableName,
-            @Nonnull IAntlrElement expressionValueOwner)
-    {
+        @Nonnull VariableReferenceContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        @Nonnull String variableName,
+        @Nonnull IAntlrElement expressionValueOwner
+    ) {
         super(elementContext, compilationUnit, expressionValueOwner);
         this.variableName = Objects.requireNonNull(variableName);
     }
 
     @Nonnull
     @Override
-    public VariableReferenceBuilder build()
-    {
-        if (this.elementBuilder != null)
-        {
+    public VariableReferenceBuilder build() {
+        if (this.elementBuilder != null) {
             throw new IllegalStateException();
         }
         this.elementBuilder = new VariableReferenceBuilder(
-                (VariableReferenceContext) this.elementContext,
-                this.getMacroElementBuilder(),
-                this.getSourceCodeBuilder(),
-                this.antlrParameter.getElementBuilder());
+            (VariableReferenceContext) this.elementContext,
+            this.getMacroElementBuilder(),
+            this.getSourceCodeBuilder(),
+            this.antlrParameter.getElementBuilder()
+        );
         return this.elementBuilder;
     }
 
     @Nonnull
     @Override
-    public VariableReferenceBuilder getElementBuilder()
-    {
+    public VariableReferenceBuilder getElementBuilder() {
         return Objects.requireNonNull(this.elementBuilder);
     }
 
     @Override
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
-    {
-        if (this.antlrParameter == AntlrParameter.AMBIGUOUS)
-        {
+    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+        if (this.antlrParameter == AntlrParameter.AMBIGUOUS) {
             return;
         }
 
-        if (this.antlrParameter == AntlrParameter.NOT_FOUND)
-        {
+        if (this.antlrParameter == AntlrParameter.NOT_FOUND) {
             String message = String.format("Cannot find parameter '%s'.", this.elementContext.getText());
             compilerAnnotationHolder.add("ERR_VAR_REF", message, this);
         }
@@ -94,26 +89,21 @@ public class AntlrVariableReference
 
     @Nonnull
     @Override
-    public ImmutableList<AntlrType> getPossibleTypes()
-    {
+    public ImmutableList<AntlrType> getPossibleTypes() {
         Objects.requireNonNull(this.antlrParameter);
         AntlrType type = this.antlrParameter.getType();
         return type == AntlrEnumeration.NOT_FOUND || type == AntlrEnumeration.AMBIGUOUS
-                ? Lists.immutable.empty()
-                : type.getPotentialWiderTypes();
+            ? Lists.immutable.empty()
+            : type.getPotentialWiderTypes();
     }
 
     @Override
-    public void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName)
-    {
-        this.antlrParameter = formalParametersByName.getIfAbsentValue(
-                this.variableName,
-                AntlrParameter.NOT_FOUND);
+    public void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName) {
+        this.antlrParameter = formalParametersByName.getIfAbsentValue(this.variableName, AntlrParameter.NOT_FOUND);
     }
 
     @Override
-    public void visit(AntlrExpressionValueVisitor visitor)
-    {
+    public void visit(AntlrExpressionValueVisitor visitor) {
         visitor.visitVariableReference(this);
     }
 }

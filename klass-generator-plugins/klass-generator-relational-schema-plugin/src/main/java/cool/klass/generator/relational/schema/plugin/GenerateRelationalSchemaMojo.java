@@ -30,23 +30,22 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-        name = "generate-relational-schema",
-        defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
-        threadSafe = true,
-        requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class GenerateRelationalSchemaMojo
-        extends AbstractGenerateMojo
-{
+    name = "generate-relational-schema",
+    defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
+    threadSafe = true,
+    requiresDependencyResolution = ResolutionScope.RUNTIME
+)
+public class GenerateRelationalSchemaMojo extends AbstractGenerateMojo {
+
     @Parameter(
-            property = "outputDirectory",
-            defaultValue = "${project.build.directory}/generated-resources/relational-schema")
+        property = "outputDirectory",
+        defaultValue = "${project.build.directory}/generated-resources/relational-schema"
+    )
     private File outputDirectory;
 
     @Override
-    public void execute() throws MojoExecutionException
-    {
-        if (!this.outputDirectory.exists())
-        {
+    public void execute() throws MojoExecutionException {
+        if (!this.outputDirectory.exists()) {
             this.outputDirectory.mkdirs();
         }
 
@@ -55,12 +54,9 @@ public class GenerateRelationalSchemaMojo
         Path outputPath = this.outputDirectory.toPath();
 
         RelationalSchemaGenerator generator = new RelationalSchemaGenerator(domainModel);
-        try
-        {
+        try {
             generator.writeRelationalSchema(outputPath);
-        }
-        catch (RuntimeException e)
-        {
+        } catch (RuntimeException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
 

@@ -35,20 +35,17 @@ import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
-public class AntlrEnumeration
-        extends AntlrPackageableElement
-        implements AntlrType, AntlrTopLevelElement
-{
+public class AntlrEnumeration extends AntlrPackageableElement implements AntlrType, AntlrTopLevelElement {
+
     // <editor-fold desc="AMBIGUOUS">
     public static final AntlrEnumeration AMBIGUOUS = new AntlrEnumeration(
-            new EnumerationDeclarationContext(AMBIGUOUS_PARENT, -1),
-            AntlrCompilationUnit.AMBIGUOUS,
-            -1,
-            new IdentifierContext(AMBIGUOUS_PARENT, -1))
-    {
+        new EnumerationDeclarationContext(AMBIGUOUS_PARENT, -1),
+        AntlrCompilationUnit.AMBIGUOUS,
+        -1,
+        new IdentifierContext(AMBIGUOUS_PARENT, -1)
+    ) {
         @Override
-        public String toString()
-        {
+        public String toString() {
             return AntlrEnumeration.class.getSimpleName() + ".AMBIGUOUS";
         }
     };
@@ -56,68 +53,61 @@ public class AntlrEnumeration
 
     // <editor-fold desc="NOT_FOUND">
     public static final AntlrEnumeration NOT_FOUND = new AntlrEnumeration(
-            new EnumerationDeclarationContext(NOT_FOUND_PARENT, -1),
-            AntlrCompilationUnit.NOT_FOUND,
-            -1,
-            NOT_FOUND_IDENTIFIER_CONTEXT)
-    {
+        new EnumerationDeclarationContext(NOT_FOUND_PARENT, -1),
+        AntlrCompilationUnit.NOT_FOUND,
+        -1,
+        NOT_FOUND_IDENTIFIER_CONTEXT
+    ) {
         @Override
-        public String toString()
-        {
+        public String toString() {
             return AntlrEnumeration.class.getSimpleName() + ".NOT_FOUND";
         }
     };
     // </editor-fold>
 
-    private final MutableList<AntlrEnumerationLiteral>               enumerationLiteral        = Lists.mutable.empty();
+    private final MutableList<AntlrEnumerationLiteral> enumerationLiteral = Lists.mutable.empty();
     private final MutableOrderedMap<String, AntlrEnumerationLiteral> enumerationLiteralsByName =
-            OrderedMapAdapter.adapt(
-                    new LinkedHashMap<>());
+        OrderedMapAdapter.adapt(new LinkedHashMap<>());
 
     private EnumerationBuilder enumerationBuilder;
 
     public AntlrEnumeration(
-            @Nonnull EnumerationDeclarationContext elementContext,
-            @Nonnull AntlrCompilationUnit compilationUnitState,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext)
-    {
+        @Nonnull EnumerationDeclarationContext elementContext,
+        @Nonnull AntlrCompilationUnit compilationUnitState,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext
+    ) {
         super(elementContext, compilationUnitState, ordinal, nameContext);
     }
 
-    public int getNumLiterals()
-    {
+    public int getNumLiterals() {
         return this.enumerationLiteral.size();
     }
 
-    public void enterEnumerationLiteral(@Nonnull AntlrEnumerationLiteral enumerationLiteral)
-    {
+    public void enterEnumerationLiteral(@Nonnull AntlrEnumerationLiteral enumerationLiteral) {
         this.enumerationLiteral.add(enumerationLiteral);
         this.enumerationLiteralsByName.compute(
                 enumerationLiteral.getName(),
-                (name, builder) -> builder == null
-                        ? enumerationLiteral
-                        : AntlrEnumerationLiteral.AMBIGUOUS);
+                (name, builder) -> builder == null ? enumerationLiteral : AntlrEnumerationLiteral.AMBIGUOUS
+            );
     }
 
-    public EnumerationBuilder build()
-    {
-        if (this.enumerationBuilder != null)
-        {
+    public EnumerationBuilder build() {
+        if (this.enumerationBuilder != null) {
             throw new IllegalStateException();
         }
 
         this.enumerationBuilder = new EnumerationBuilder(
-                this.getElementContext(),
-                this.getMacroElementBuilder(),
-                this.getSourceCodeBuilder(),
-                this.ordinal,
-                this.getElementContext().identifier(),
-                this.getPackageName());
+            this.getElementContext(),
+            this.getMacroElementBuilder(),
+            this.getSourceCodeBuilder(),
+            this.ordinal,
+            this.getElementContext().identifier(),
+            this.getPackageName()
+        );
 
-        ImmutableList<EnumerationLiteralBuilder> enumerationLiteralBuilders = this.enumerationLiteral
-                .collect(AntlrEnumerationLiteral::build)
-                .toImmutable();
+        ImmutableList<EnumerationLiteralBuilder> enumerationLiteralBuilders =
+            this.enumerationLiteral.collect(AntlrEnumerationLiteral::build).toImmutable();
 
         this.enumerationBuilder.setEnumerationLiteralBuilders(enumerationLiteralBuilders);
         return this.enumerationBuilder;
@@ -125,78 +115,68 @@ public class AntlrEnumeration
 
     @Nonnull
     @Override
-    public EnumerationDeclarationContext getElementContext()
-    {
+    public EnumerationDeclarationContext getElementContext() {
         return (EnumerationDeclarationContext) super.getElementContext();
     }
 
     @Override
-    public EnumerationBlockContext getBlockContext()
-    {
+    public EnumerationBlockContext getBlockContext() {
         return this.getElementContext().enumerationBlock();
     }
 
     @Nonnull
     @Override
-    public EnumerationBuilder getElementBuilder()
-    {
+    public EnumerationBuilder getElementBuilder() {
         return Objects.requireNonNull(this.enumerationBuilder);
     }
 
     // <editor-fold desc="Report Compiler Errors">
     @Override
-    public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
-    {
+    public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         super.reportNameErrors(compilerAnnotationHolder);
         this.enumerationLiteral.forEachWith(AntlrEnumerationLiteral::reportNameErrors, compilerAnnotationHolder);
     }
 
     @Override
-    public void reportErrors(CompilerAnnotationHolder compilerAnnotationHolder)
-    {
+    public void reportErrors(CompilerAnnotationHolder compilerAnnotationHolder) {
         this.logDuplicateLiteralNames(compilerAnnotationHolder);
         this.logDuplicatePrettyNames(compilerAnnotationHolder);
     }
+
     // </editor-fold>
 
-    public void logDuplicateLiteralNames(CompilerAnnotationHolder compilerAnnotationHolder)
-    {
-        MutableBag<String> duplicateNames = this.enumerationLiteral
-                .collect(AntlrNamedElement::getName)
+    public void logDuplicateLiteralNames(CompilerAnnotationHolder compilerAnnotationHolder) {
+        MutableBag<String> duplicateNames =
+            this.enumerationLiteral.collect(AntlrNamedElement::getName)
                 .toBag()
                 .selectByOccurrences(occurrences -> occurrences > 1);
 
-        this.enumerationLiteral
-                .asLazy()
-                .select(enumerationLiteral -> duplicateNames.contains(enumerationLiteral.getName()))
-                .forEachWith(AntlrEnumerationLiteral::reportDuplicateName, compilerAnnotationHolder);
+        this.enumerationLiteral.asLazy()
+            .select(enumerationLiteral -> duplicateNames.contains(enumerationLiteral.getName()))
+            .forEachWith(AntlrEnumerationLiteral::reportDuplicateName, compilerAnnotationHolder);
     }
 
-    public void logDuplicatePrettyNames(CompilerAnnotationHolder compilerAnnotationHolder)
-    {
-        MutableBag<String> duplicatePrettyNames = this.enumerationLiteral
-                .collect(AntlrEnumerationLiteral::getPrettyName)
+    public void logDuplicatePrettyNames(CompilerAnnotationHolder compilerAnnotationHolder) {
+        MutableBag<String> duplicatePrettyNames =
+            this.enumerationLiteral.collect(AntlrEnumerationLiteral::getPrettyName)
                 .select(Optional::isPresent)
                 .collect(Optional::get)
                 .toBag()
                 .selectByOccurrences(occurrences -> occurrences > 1);
 
-        this.enumerationLiteral
-                .asLazy()
-                .select(each -> each.getPrettyName().isPresent())
-                .select(each -> duplicatePrettyNames.contains(each.getPrettyName().get()))
-                .forEachWith(AntlrEnumerationLiteral::reportDuplicatePrettyName, compilerAnnotationHolder);
+        this.enumerationLiteral.asLazy()
+            .select(each -> each.getPrettyName().isPresent())
+            .select(each -> duplicatePrettyNames.contains(each.getPrettyName().get()))
+            .forEachWith(AntlrEnumerationLiteral::reportDuplicatePrettyName, compilerAnnotationHolder);
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return String.format("%s.%s", this.getPackageName(), this.getName());
     }
 
     @Override
-    public EnumerationBuilder getTypeGetter()
-    {
+    public EnumerationBuilder getTypeGetter() {
         return Objects.requireNonNull(this.enumerationBuilder);
     }
 }

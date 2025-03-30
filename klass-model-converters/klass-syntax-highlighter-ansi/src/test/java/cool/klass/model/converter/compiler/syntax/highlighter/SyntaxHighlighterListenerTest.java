@@ -42,78 +42,72 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @ExtendWith(LogMarkerTestExtension.class)
-class SyntaxHighlighterListenerTest
-{
+class SyntaxHighlighterListenerTest {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(SyntaxHighlighterListenerTest.class);
 
     @Test
-    void lightColorScheme()
-    {
+    void lightColorScheme() {
         AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("light");
         this.testColorScheme(colorScheme);
     }
 
     @Test
-    void darkColorScheme()
-    {
+    void darkColorScheme() {
         AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
         this.testColorScheme(colorScheme);
     }
 
     @Test
-    void darkCubeColorScheme()
-    {
+    void darkCubeColorScheme() {
         AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
         this.testColorScheme(colorScheme);
     }
 
     @Test
-    void rgbColorScheme()
-    {
+    void rgbColorScheme() {
         AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
         this.testColorScheme(colorScheme);
     }
 
-    private void testColorScheme(AnsiColorScheme colorScheme)
-    {
-        Stopwatch           lexerStopwatch = Stopwatch.createStarted();
-        String              sourceCodeText = FileSlurper.slurp("/com/stackoverflow/stackoverflow.klass", this.getClass());
-        String              sourceName     = "example.klass";
-        CodePointCharStream charStream     = CharStreams.fromString(sourceCodeText, sourceName);
-        KlassLexer          lexer          = new KlassLexer(charStream);
-        CommonTokenStream   tokenStream    = new CommonTokenStream(lexer);
+    private void testColorScheme(AnsiColorScheme colorScheme) {
+        Stopwatch lexerStopwatch = Stopwatch.createStarted();
+        String sourceCodeText = FileSlurper.slurp("/com/stackoverflow/stackoverflow.klass", this.getClass());
+        String sourceName = "example.klass";
+        CodePointCharStream charStream = CharStreams.fromString(sourceCodeText, sourceName);
+        KlassLexer lexer = new KlassLexer(charStream);
+        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
         lexerStopwatch.stop();
         Duration elapsedLexer = lexerStopwatch.elapsed();
         LOGGER.info("elapsedLexer = {}", elapsedLexer);
 
-        Stopwatch   parserStopwatch = Stopwatch.createStarted();
-        KlassParser parser          = new KlassParser(tokenStream);
-        ParseTree   parseTree       = parser.compilationUnit();
+        Stopwatch parserStopwatch = Stopwatch.createStarted();
+        KlassParser parser = new KlassParser(tokenStream);
+        ParseTree parseTree = parser.compilationUnit();
         parserStopwatch.stop();
         Duration elapsedParser = parserStopwatch.elapsed();
         LOGGER.info("elapsedParser = {}", elapsedParser);
 
         Stopwatch tokenCategorizerStopwatch = Stopwatch.createStarted();
         MapIterable<Token, TokenCategory> tokenCategoriesFromLexer =
-                LexerBasedTokenCategorizer.findTokenCategoriesFromLexer(tokenStream);
+            LexerBasedTokenCategorizer.findTokenCategoriesFromLexer(tokenStream);
         MapIterable<Token, TokenCategory> tokenCategoriesFromParser =
-                ParserBasedTokenCategorizer.findTokenCategoriesFromParser(parseTree);
+            ParserBasedTokenCategorizer.findTokenCategoriesFromParser(parseTree);
         tokenCategorizerStopwatch.stop();
         Duration elapsedTokenCategorizer = tokenCategorizerStopwatch.elapsed();
         LOGGER.info("elapsedTokenCategorizer = {}", elapsedTokenCategorizer);
 
         Stopwatch rewriteStopwatch = Stopwatch.createStarted();
         AnsiTokenColorizer ansiTokenColorizer = new AnsiTokenColorizer(
-                colorScheme,
-                tokenCategoriesFromLexer,
-                tokenCategoriesFromParser);
+            colorScheme,
+            tokenCategoriesFromLexer,
+            tokenCategoriesFromParser
+        );
 
         Ansi ansi = Ansi.ansi();
         colorScheme.background(ansi);
 
-        tokenStream
-                .getTokens()
-                .forEach(token -> ansiTokenColorizer.colorizeText(ansi, token));
+        tokenStream.getTokens().forEach(token -> ansiTokenColorizer.colorizeText(ansi, token));
         ansi.reset();
 
         rewriteStopwatch.stop();

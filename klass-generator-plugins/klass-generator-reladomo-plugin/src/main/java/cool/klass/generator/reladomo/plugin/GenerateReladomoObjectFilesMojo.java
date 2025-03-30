@@ -33,35 +33,31 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 
 // TODO: GENERATE_RESOURCES default phase?
 @Mojo(
-        name = "generate-reladomo-object-files",
-        defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-        threadSafe = true,
-        requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class GenerateReladomoObjectFilesMojo extends AbstractGenerateMojo
-{
+    name = "generate-reladomo-object-files",
+    defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+    threadSafe = true,
+    requiresDependencyResolution = ResolutionScope.RUNTIME
+)
+public class GenerateReladomoObjectFilesMojo extends AbstractGenerateMojo {
+
     @Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}/generated-resources/reladomo")
     private File outputDirectory;
 
     @Override
-    public void execute() throws MojoExecutionException
-    {
-        if (!this.outputDirectory.exists())
-        {
+    public void execute() throws MojoExecutionException {
+        if (!this.outputDirectory.exists()) {
             this.outputDirectory.mkdirs();
         }
 
-        Path        outputPath  = this.outputDirectory.toPath();
+        Path outputPath = this.outputDirectory.toPath();
         DomainModel domainModel = this.getDomainModel();
 
-        ReladomoObjectFileGenerator    reladomoObjectFileGenerator    = new ReladomoObjectFileGenerator(domainModel);
+        ReladomoObjectFileGenerator reladomoObjectFileGenerator = new ReladomoObjectFileGenerator(domainModel);
         ReladomoInterfaceFileGenerator reladomoInterfaceFileGenerator = new ReladomoInterfaceFileGenerator(domainModel);
-        try
-        {
+        try {
             reladomoObjectFileGenerator.writeObjectFiles(outputPath);
             reladomoInterfaceFileGenerator.writeObjectFiles(outputPath);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
 

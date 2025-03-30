@@ -25,21 +25,19 @@ import io.liftwizard.junit.extension.match.FileSlurper;
 import org.eclipse.collections.impl.factory.Maps;
 import org.junit.jupiter.api.Test;
 
-class CoverageExampleGraphQLTest
-        extends AbstractCoverageTest
-{
+class CoverageExampleGraphQLTest extends AbstractCoverageTest {
+
     @Test
-    void graphqlSmokeTest()
-    {
-        Client client           = this.getClient("graphqlSmokeTest");
+    void graphqlSmokeTest() {
+        Client client = this.getClient("graphqlSmokeTest");
         String graphqlQueryName = this.getClass().getSimpleName() + ".graphqlSmokeTest.graphql";
-        String graphqlQuery     = FileSlurper.slurp(graphqlQueryName, this.getClass());
+        String graphqlQuery = FileSlurper.slurp(graphqlQueryName, this.getClass());
 
         Response response = client
-                .target("http://localhost:{port}/graphql")
-                .resolveTemplate("port", this.appExtension.getLocalPort())
-                .request()
-                .post(Entity.json(Maps.mutable.with("query", graphqlQuery)));
+            .target("http://localhost:{port}/graphql")
+            .resolveTemplate("port", this.appExtension.getLocalPort())
+            .request()
+            .post(Entity.json(Maps.mutable.with("query", graphqlQuery)));
 
         this.assertResponse("graphqlSmokeTest", Status.OK, response);
     }

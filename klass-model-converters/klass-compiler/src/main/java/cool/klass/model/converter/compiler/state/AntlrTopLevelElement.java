@@ -27,19 +27,15 @@ import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.tuple.Tuples;
 
-public interface AntlrTopLevelElement
-        extends IAntlrElement
-{
+public interface AntlrTopLevelElement extends IAntlrElement {
     @Override
-    default Pair<Token, Token> getContextBefore()
-    {
+    default Pair<Token, Token> getContextBefore() {
         return Tuples.pair(this.getElementContext().getStart(), this.getBlockContext().getStart());
     }
 
     @Nonnull
     @Override
-    default Pair<Token, Token> getContextAfter()
-    {
+    default Pair<Token, Token> getContextAfter() {
         Token token = this.getElementContext().getStop();
         return Tuples.pair(token, token);
     }
@@ -48,10 +44,10 @@ public interface AntlrTopLevelElement
      * @return a context representing a block, where '{' and '}' are the start and stop tokens.
      * @throws UnsupportedOperationException unless overridden
      */
-    default ParserRuleContext getBlockContext()
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".getBodyContext() not implemented yet");
+    default ParserRuleContext getBlockContext() {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".getBodyContext() not implemented yet"
+        );
     }
 
     @Nonnull
@@ -59,14 +55,12 @@ public interface AntlrTopLevelElement
 
     @Override
     @Nonnull
-    default Optional<IAntlrElement> getSurroundingElement()
-    {
+    default Optional<IAntlrElement> getSurroundingElement() {
         return Optional.empty();
     }
 
     @Override
-    default boolean isContext()
-    {
+    default boolean isContext() {
         return true;
     }
 
@@ -74,8 +68,7 @@ public interface AntlrTopLevelElement
 
     void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder);
 
-    default void reportDuplicateTopLevelName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
-    {
+    default void reportDuplicateTopLevelName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         String message = String.format("Duplicate top level item name: '%s'.", this.getName());
         compilerAnnotationHolder.add("ERR_DUP_TOP", message, this);
     }

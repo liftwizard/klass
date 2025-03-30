@@ -110,129 +110,108 @@ import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.factory.Maps;
 
-public class KlassBootstrapWriter
-{
+public class KlassBootstrapWriter {
+
     // TODO: Implement Purge on DataStore and break the dependency on Reladomo
 
     private final DomainModel domainModel;
-    private final DataStore   dataStore;
+    private final DataStore dataStore;
 
-    public KlassBootstrapWriter(DomainModel domainModel, DataStore dataStore)
-    {
+    public KlassBootstrapWriter(DomainModel domainModel, DataStore dataStore) {
         this.domainModel = Objects.requireNonNull(domainModel);
-        this.dataStore   = Objects.requireNonNull(dataStore);
+        this.dataStore = Objects.requireNonNull(dataStore);
     }
 
-    public void bootstrapMetaModel()
-    {
+    public void bootstrapMetaModel() {
         this.dataStore.runInTransaction(this::bootstrapMetaModelInTransaction);
     }
 
-    private void bootstrapMetaModelInTransaction()
-    {
+    private void bootstrapMetaModelInTransaction() {
         // BOOTSTRAP_FINDERS.each(this::deleteAll);
 
-        this.domainModel
-        .getTopLevelElements()
-                .collect(this::handlePackageableElement, new PackageableElementList())
-                .insertAll();
+        this.domainModel.getTopLevelElements()
+            .collect(this::handlePackageableElement, new PackageableElementList())
+            .insertAll();
 
-        this.domainModel
-                .getEnumerations()
-                .collect(this::handleEnumeration, new EnumerationList())
-                .insertAll();
-        this.domainModel
-                .getEnumerations()
-                .flatCollect(Enumeration::getEnumerationLiterals)
-                .collect(this::handleEnumerationLiteral, new EnumerationLiteralList())
-                .insertAll();
-        this.domainModel
-                .getClassifiers()
-                .collect(this::handleClassifier, new ClassifierList())
-                .insertAll();
-        this.domainModel
-                .getInterfaces()
-                .collect(this::handleInterface, new InterfaceList())
-                .insertAll();
-        this.domainModel
-                .getClasses()
-                .collect(this::handleClass, new KlassList())
-                .insertAll();
-        this.domainModel
-                .getClassifiers()
-                .flatCollect(this::handleSuperInterface, new ClassifierInterfaceMappingList())
-                .insertAll();
-        this.domainModel
-                .getClassifiers()
-                .flatCollect(this::handleClassifierModifier, new ClassifierModifierList())
-                .insertAll();
-        this.domainModel
-                .getClassifiers()
-                .flatCollect(this::handleDataTypeProperty, new DataTypePropertyList())
-                .insertAll();
+        this.domainModel.getEnumerations().collect(this::handleEnumeration, new EnumerationList()).insertAll();
+        this.domainModel.getEnumerations()
+            .flatCollect(Enumeration::getEnumerationLiterals)
+            .collect(this::handleEnumerationLiteral, new EnumerationLiteralList())
+            .insertAll();
+        this.domainModel.getClassifiers().collect(this::handleClassifier, new ClassifierList()).insertAll();
+        this.domainModel.getInterfaces().collect(this::handleInterface, new InterfaceList()).insertAll();
+        this.domainModel.getClasses().collect(this::handleClass, new KlassList()).insertAll();
+        this.domainModel.getClassifiers()
+            .flatCollect(this::handleSuperInterface, new ClassifierInterfaceMappingList())
+            .insertAll();
+        this.domainModel.getClassifiers()
+            .flatCollect(this::handleClassifierModifier, new ClassifierModifierList())
+            .insertAll();
+        this.domainModel.getClassifiers()
+            .flatCollect(this::handleDataTypeProperty, new DataTypePropertyList())
+            .insertAll();
 
-        ImmutableList<DataTypeProperty> allDataTypeProperties = this.domainModel
-                .getClassifiers()
-                .flatCollect(Classifier::getDeclaredDataTypeProperties);
+        ImmutableList<DataTypeProperty> allDataTypeProperties =
+            this.domainModel.getClassifiers().flatCollect(Classifier::getDeclaredDataTypeProperties);
+        allDataTypeProperties.flatCollect(this::handlePropertyModifier, new PropertyModifierList()).insertAll();
         allDataTypeProperties
-                .flatCollect(this::handlePropertyModifier, new PropertyModifierList())
-                .insertAll();
+            .collect(this::handleMinLengthPropertyValidation)
+            .reject(Optional::isEmpty)
+            .collect(Optional::get, new MinLengthPropertyValidationList())
+            .insertAll();
         allDataTypeProperties
-                .collect(this::handleMinLengthPropertyValidation)
-                .reject(Optional::isEmpty)
-                .collect(Optional::get, new MinLengthPropertyValidationList())
-                .insertAll();
+            .collect(this::handleMaxLengthPropertyValidation)
+            .reject(Optional::isEmpty)
+            .collect(Optional::get, new MaxLengthPropertyValidationList())
+            .insertAll();
         allDataTypeProperties
-                .collect(this::handleMaxLengthPropertyValidation)
-                .reject(Optional::isEmpty)
-                .collect(Optional::get, new MaxLengthPropertyValidationList())
-                .insertAll();
+            .collect(this::handleMinPropertyValidation)
+            .reject(Optional::isEmpty)
+            .collect(Optional::get, new MinPropertyValidationList())
+            .insertAll();
         allDataTypeProperties
-                .collect(this::handleMinPropertyValidation)
-                .reject(Optional::isEmpty)
-                .collect(Optional::get, new MinPropertyValidationList())
-                .insertAll();
+            .collect(this::handleMaxPropertyValidation)
+            .reject(Optional::isEmpty)
+            .collect(Optional::get, new MaxPropertyValidationList())
+            .insertAll();
         allDataTypeProperties
-                .collect(this::handleMaxPropertyValidation)
-                .reject(Optional::isEmpty)
-                .collect(Optional::get, new MaxPropertyValidationList())
-                .insertAll();
+            .select(PrimitiveProperty.class::isInstance)
+            .collect(PrimitiveProperty.class::cast)
+            .collect(this::handlePrimitiveProperty, new PrimitivePropertyList())
+            .insertAll();
         allDataTypeProperties
-                .select(PrimitiveProperty.class::isInstance)
-                .collect(PrimitiveProperty.class::cast)
-                .collect(this::handlePrimitiveProperty, new PrimitivePropertyList())
-                .insertAll();
-        allDataTypeProperties
-                .select(EnumerationProperty.class::isInstance)
-                .collect(EnumerationProperty.class::cast)
-                .collect(this::handleEnumerationProperty, new EnumerationPropertyList())
-                .insertAll();
+            .select(EnumerationProperty.class::isInstance)
+            .collect(EnumerationProperty.class::cast)
+            .collect(this::handleEnumerationProperty, new EnumerationPropertyList())
+            .insertAll();
 
         ImmutableList<Url> urls = this.domainModel.getServiceGroups().flatCollect(ServiceGroup::getUrls);
         ImmutableList<Service> services = urls.flatCollect(Url::getServices);
         ImmutableList<Criteria> serviceCriteria = services
-                .flatCollect(each -> Lists.immutable.with(
+            .flatCollect(
+                each ->
+                    Lists.immutable.with(
                         each.getQueryCriteria(),
                         each.getAuthorizeCriteria(),
                         each.getValidateCriteria(),
-                        each.getConflictCriteria()))
-                .reject(Optional::isEmpty)
-                .collect(Optional::get);
+                        each.getConflictCriteria()
+                    )
+            )
+            .reject(Optional::isEmpty)
+            .collect(Optional::get);
 
-        ImmutableList<Criteria> associationCriteria = this.domainModel
-                .getAssociations()
-                .collect(Association::getCriteria);
+        ImmutableList<Criteria> associationCriteria =
+            this.domainModel.getAssociations().collect(Association::getCriteria);
         ImmutableList<Criteria> allCriteria = associationCriteria.newWithAll(serviceCriteria);
 
-        ImmutableList<AssociationEnd> associationEnds = this.domainModel
-                .getAssociations()
-                .flatCollect(Association::getAssociationEnds);
+        ImmutableList<AssociationEnd> associationEnds =
+            this.domainModel.getAssociations().flatCollect(Association::getAssociationEnds);
         ImmutableList<ThisMemberReferencePath> orderByReferencePaths = associationEnds
-                .collect(AssociationEnd::getOrderBy)
-                .reject(Optional::isEmpty)
-                .collect(Optional::get)
-                .flatCollect(OrderBy::getOrderByMemberReferencePaths)
-                .collect(OrderByMemberReferencePath::getThisMemberReferencePath);
+            .collect(AssociationEnd::getOrderBy)
+            .reject(Optional::isEmpty)
+            .collect(Optional::get)
+            .flatCollect(OrderBy::getOrderByMemberReferencePaths)
+            .collect(OrderByMemberReferencePath::getThisMemberReferencePath);
 
         BootstrapExpressionValueVisitor1 expressionValueVisitor1 = new BootstrapExpressionValueVisitor1();
         var criteriaVisitor1 = new BootstrapExpressionValueCriteriaVisitor(expressionValueVisitor1);
@@ -242,9 +221,11 @@ public class KlassBootstrapWriter
 
         expressionValueVisitor1.getBootstrappedExpressionValues().insertAll();
 
-        var expressionValuesByExpressionValue = expressionValueVisitor1.getExpressionValuesByExpressionValue().toImmutable();
-        var expressionValueVisitor2           = new BootstrapExpressionValueVisitor2(expressionValuesByExpressionValue);
-        var criteriaVisitor2                  = new BootstrapExpressionValueCriteriaVisitor(expressionValueVisitor2);
+        var expressionValuesByExpressionValue = expressionValueVisitor1
+            .getExpressionValuesByExpressionValue()
+            .toImmutable();
+        var expressionValueVisitor2 = new BootstrapExpressionValueVisitor2(expressionValuesByExpressionValue);
+        var criteriaVisitor2 = new BootstrapExpressionValueCriteriaVisitor(expressionValueVisitor2);
 
         allCriteria.each(criteria -> criteria.visit(criteriaVisitor2));
         orderByReferencePaths.each(expressionValueVisitor2::visitThisMember);
@@ -257,7 +238,8 @@ public class KlassBootstrapWriter
         allCriteria.each(criteria -> criteria.visit(criteriaVisitor3));
         criteriaVisitor3.getBootstrappedCriteria().insertAll();
 
-        ImmutableMap<Criteria, klass.model.meta.domain.Criteria> criteriaByCriteria = criteriaVisitor3.getCriteriaByCriteria();
+        ImmutableMap<Criteria, klass.model.meta.domain.Criteria> criteriaByCriteria =
+            criteriaVisitor3.getCriteriaByCriteria();
         var criteriaVisitor4 = new BootstrapCriteriaVisitor2(criteriaByCriteria, expressionValuesByExpressionValue);
         allCriteria.each(criteria -> criteria.visit(criteriaVisitor4));
         criteriaVisitor4.getAllCriteria().insertAll();
@@ -267,122 +249,135 @@ public class KlassBootstrapWriter
         criteriaVisitor4.getAndCriteria().insertAll();
         criteriaVisitor4.getOrCriteria().insertAll();
 
-        this.domainModel
-                .getAssociations()
-                .collectWith(this::handleAssociation, criteriaByCriteria, new AssociationList())
-                .insertAll();
+        this.domainModel.getAssociations()
+            .collectWith(this::handleAssociation, criteriaByCriteria, new AssociationList())
+            .insertAll();
+        associationEnds.collect(this::handleAssociationEnd, new AssociationEndList()).insertAll();
         associationEnds
-                .collect(this::handleAssociationEnd, new AssociationEndList())
-                .insertAll();
-        associationEnds
-                .flatCollect(
-                        associationEnd -> associationEnd
-                                .getModifiers()
-                                .collectWith(this::handleAssociationEndModifier, associationEnd),
-                        new AssociationEndModifierList())
-                .insertAll();
+            .flatCollect(
+                associationEnd ->
+                    associationEnd.getModifiers().collectWith(this::handleAssociationEndModifier, associationEnd),
+                new AssociationEndModifierList()
+            )
+            .insertAll();
 
         associationEnds
-                .flatCollect(
-                        associationEnd -> associationEnd
-                                .getOrderBy()
-                                .map(OrderBy::getOrderByMemberReferencePaths).orElseGet(Lists.immutable::empty)
-                                .collect(memberReferencePath -> this.handleOrderByMemberReferencePath(memberReferencePath, associationEnd, expressionValuesByExpressionValue)),
-                        new AssociationEndOrderByList())
-                .insertAll();
+            .flatCollect(
+                associationEnd ->
+                    associationEnd
+                        .getOrderBy()
+                        .map(OrderBy::getOrderByMemberReferencePaths)
+                        .orElseGet(Lists.immutable::empty)
+                        .collect(
+                            memberReferencePath ->
+                                this.handleOrderByMemberReferencePath(
+                                        memberReferencePath,
+                                        associationEnd,
+                                        expressionValuesByExpressionValue
+                                    )
+                        ),
+                new AssociationEndOrderByList()
+            )
+            .insertAll();
 
-        MutableMap<Projection, klass.model.meta.domain.ProjectionElement> rootProjectionByProjection = Maps.mutable.empty();
+        MutableMap<Projection, klass.model.meta.domain.ProjectionElement> rootProjectionByProjection =
+            Maps.mutable.empty();
 
         ProjectionElementList projectionElementList = new ProjectionElementList();
-        for (Projection projection : this.domainModel.getProjections())
-        {
+        for (Projection projection : this.domainModel.getProjections()) {
             klass.model.meta.domain.ProjectionElement projectionElement = this.handleRootProjectionElement(projection);
             rootProjectionByProjection.put(projection, projectionElement);
             projectionElementList.add(projectionElement);
         }
         projectionElementList.insertAll();
 
-        this.domainModel
-                .getProjections()
-                .collect(each -> this.handleRootProjection(
-                        each,
-                        rootProjectionByProjection.get(each)), new RootProjectionList())
-                .insertAll();
+        this.domainModel.getProjections()
+            .collect(
+                each -> this.handleRootProjection(each, rootProjectionByProjection.get(each)),
+                new RootProjectionList()
+            )
+            .insertAll();
 
-        this.domainModel
-                .getProjections()
-                .collect(projection -> this.handleNamedProjection(projection, rootProjectionByProjection), new NamedProjectionList())
-                .insertAll();
+        this.domainModel.getProjections()
+            .collect(
+                projection -> this.handleNamedProjection(projection, rootProjectionByProjection),
+                new NamedProjectionList()
+            )
+            .insertAll();
 
-        this.domainModel
-                .getProjections()
-                .each(projection -> this.handleProjectionChildren(
-                        projection,
-                        rootProjectionByProjection.get(projection)));
+        this.domainModel.getProjections()
+            .each(projection -> this.handleProjectionChildren(projection, rootProjectionByProjection.get(projection)));
 
-        this.domainModel
-                .getServiceGroups()
-                .collect(this::handleServiceGroup, new ServiceGroupList())
-                .insertAll();
+        this.domainModel.getServiceGroups().collect(this::handleServiceGroup, new ServiceGroupList()).insertAll();
 
-        urls
-                .collect(this::handleUrl, new UrlList())
-                .insertAll();
+        urls.collect(this::handleUrl, new UrlList()).insertAll();
 
-        MutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter = Maps.mutable.empty();
+        MutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter =
+            Maps.mutable.empty();
 
         urls
-                .flatCollect(
-                        url -> url
-                                .getPathParameters()
-                                .collect(
-                                        eachPathParameter ->
-                                                this.handleUrlParameter(
-                                                        url,
-                                                        eachPathParameter,
-                                                        "path",
-                                                        bootstrappedParametersByParameter)),
-                        new UrlParameterList())
-                .insertAll();
+            .flatCollect(
+                url ->
+                    url
+                        .getPathParameters()
+                        .collect(
+                            eachPathParameter ->
+                                this.handleUrlParameter(
+                                        url,
+                                        eachPathParameter,
+                                        "path",
+                                        bootstrappedParametersByParameter
+                                    )
+                        ),
+                new UrlParameterList()
+            )
+            .insertAll();
 
         urls
-                .flatCollect(
-                        url -> url
-                                .getQueryParameters()
-                                .collect(
-                                        eachPathParameter ->
-                                                this.handleUrlParameter(
-                                                        url,
-                                                        eachPathParameter,
-                                                        "query",
-                                                        bootstrappedParametersByParameter)),
-                        new UrlParameterList())
-                .insertAll();
+            .flatCollect(
+                url ->
+                    url
+                        .getQueryParameters()
+                        .collect(
+                            eachPathParameter ->
+                                this.handleUrlParameter(
+                                        url,
+                                        eachPathParameter,
+                                        "query",
+                                        bootstrappedParametersByParameter
+                                    )
+                        ),
+                new UrlParameterList()
+            )
+            .insertAll();
 
         ImmutableList<Parameter> parameters = urls.flatCollect(Url::getParameters);
 
         parameters
-                .select(each -> each.getType() instanceof PrimitiveType)
-                .collect(
-                        each -> this.handleUrlPrimitiveParameter(each, bootstrappedParametersByParameter),
-                        new PrimitiveParameterList())
-                .insertAll();
+            .select(each -> each.getType() instanceof PrimitiveType)
+            .collect(
+                each -> this.handleUrlPrimitiveParameter(each, bootstrappedParametersByParameter),
+                new PrimitiveParameterList()
+            )
+            .insertAll();
 
         parameters
-                .select(each -> each.getType() instanceof Enumeration)
-                .collect(
-                        each -> this.handleUrlEnumerationParameter(each, bootstrappedParametersByParameter),
-                        new EnumerationParameterList())
-                .insertAll();
+            .select(each -> each.getType() instanceof Enumeration)
+            .collect(
+                each -> this.handleUrlEnumerationParameter(each, bootstrappedParametersByParameter),
+                new EnumerationParameterList()
+            )
+            .insertAll();
 
-        var expressionValueVisitor3 = new BootstrapExpressionValueVisitor3(expressionValuesByExpressionValue, bootstrappedParametersByParameter.toImmutable());
-        var criteriaVisitor5        = new BootstrapExpressionValueCriteriaVisitor(expressionValueVisitor3);
+        var expressionValueVisitor3 = new BootstrapExpressionValueVisitor3(
+            expressionValuesByExpressionValue,
+            bootstrappedParametersByParameter.toImmutable()
+        );
+        var criteriaVisitor5 = new BootstrapExpressionValueCriteriaVisitor(expressionValueVisitor3);
 
         serviceCriteria.each(criteria -> criteria.visit(criteriaVisitor5));
 
-        services
-                .collectWith(this::handleService, criteriaByCriteria, new ServiceList())
-                .insertAll();
+        services.collectWith(this::handleService, criteriaByCriteria, new ServiceList()).insertAll();
     }
 
     /*
@@ -395,23 +390,24 @@ public class KlassBootstrapWriter
     }
     */
 
-    private klass.model.meta.domain.PackageableElement handlePackageableElement(@Nonnull PackageableElement packageableElement)
-    {
+    private klass.model.meta.domain.PackageableElement handlePackageableElement(
+        @Nonnull PackageableElement packageableElement
+    ) {
         var bootstrappedPackageableElement = new klass.model.meta.domain.PackageableElement();
         KlassBootstrapWriter.handleNamedElement(bootstrappedPackageableElement, packageableElement);
         bootstrappedPackageableElement.setPackageName(packageableElement.getPackageName());
         return bootstrappedPackageableElement;
     }
 
-    private klass.model.meta.domain.Enumeration handleEnumeration(@Nonnull Enumeration enumeration)
-    {
+    private klass.model.meta.domain.Enumeration handleEnumeration(@Nonnull Enumeration enumeration) {
         var bootstrappedEnumeration = new klass.model.meta.domain.Enumeration();
         bootstrappedEnumeration.setName(enumeration.getName());
         return bootstrappedEnumeration;
     }
 
-    private klass.model.meta.domain.EnumerationLiteral handleEnumerationLiteral(@Nonnull EnumerationLiteral enumerationLiteral)
-    {
+    private klass.model.meta.domain.EnumerationLiteral handleEnumerationLiteral(
+        @Nonnull EnumerationLiteral enumerationLiteral
+    ) {
         var bootstrappedEnumerationLiteral = new klass.model.meta.domain.EnumerationLiteral();
         KlassBootstrapWriter.handleNamedElement(bootstrappedEnumerationLiteral, enumerationLiteral);
         enumerationLiteral.getDeclaredPrettyName().ifPresent(bootstrappedEnumerationLiteral::setPrettyName);
@@ -419,40 +415,34 @@ public class KlassBootstrapWriter
         return bootstrappedEnumerationLiteral;
     }
 
-    private klass.model.meta.domain.Classifier handleClassifier(@Nonnull Classifier classifier)
-    {
+    private klass.model.meta.domain.Classifier handleClassifier(@Nonnull Classifier classifier) {
         var bootstrappedClassifier = new klass.model.meta.domain.Classifier();
         bootstrappedClassifier.setName(classifier.getName());
         return bootstrappedClassifier;
     }
 
-    private ImmutableList<ClassifierInterfaceMapping> handleSuperInterface(@Nonnull Classifier classifier)
-    {
+    private ImmutableList<ClassifierInterfaceMapping> handleSuperInterface(@Nonnull Classifier classifier) {
         return classifier
-                .getInterfaces()
-                .collect(superInterface -> getClassifierInterfaceMapping(classifier, superInterface));
+            .getInterfaces()
+            .collect(superInterface -> getClassifierInterfaceMapping(classifier, superInterface));
     }
 
     @Nonnull
     private static ClassifierInterfaceMapping getClassifierInterfaceMapping(
-            @Nonnull Classifier classifier,
-            Interface superInterface)
-    {
+        @Nonnull Classifier classifier,
+        Interface superInterface
+    ) {
         ClassifierInterfaceMapping classifierInterfaceMapping = new ClassifierInterfaceMapping();
         classifierInterfaceMapping.setClassifierName(classifier.getName());
         classifierInterfaceMapping.setInterfaceName(superInterface.getName());
         return classifierInterfaceMapping;
     }
 
-    private ImmutableList<ClassifierModifier> handleClassifierModifier(@Nonnull Classifier classifier)
-    {
-        return classifier
-                .getModifiers()
-                .collect(modifier -> this.getClassifierModifier(classifier, modifier));
+    private ImmutableList<ClassifierModifier> handleClassifierModifier(@Nonnull Classifier classifier) {
+        return classifier.getModifiers().collect(modifier -> this.getClassifierModifier(classifier, modifier));
     }
 
-    private ClassifierModifier getClassifierModifier(Classifier classifier, Modifier modifier)
-    {
+    private ClassifierModifier getClassifierModifier(Classifier classifier, Modifier modifier) {
         var bootstrappedClassifierModifier = new ClassifierModifier();
         bootstrappedClassifierModifier.setKeyword(modifier.getKeyword());
         bootstrappedClassifierModifier.setOrdinal(modifier.getOrdinal());
@@ -460,16 +450,13 @@ public class KlassBootstrapWriter
         return bootstrappedClassifierModifier;
     }
 
-    private ImmutableList<klass.model.meta.domain.DataTypeProperty> handleDataTypeProperty(@Nonnull Classifier classifier)
-    {
-        return classifier
-                .getDeclaredDataTypeProperties()
-                .collect(this::getDataTypeProperty);
+    private ImmutableList<klass.model.meta.domain.DataTypeProperty> handleDataTypeProperty(
+        @Nonnull Classifier classifier
+    ) {
+        return classifier.getDeclaredDataTypeProperties().collect(this::getDataTypeProperty);
     }
 
-    private klass.model.meta.domain.DataTypeProperty getDataTypeProperty(
-            DataTypeProperty dataTypeProperty)
-    {
+    private klass.model.meta.domain.DataTypeProperty getDataTypeProperty(DataTypeProperty dataTypeProperty) {
         Classifier classifier = dataTypeProperty.getOwningClassifier();
 
         var bootstrappedDataTypeProperty = new klass.model.meta.domain.DataTypeProperty();
@@ -480,15 +467,13 @@ public class KlassBootstrapWriter
         return bootstrappedDataTypeProperty;
     }
 
-    private ImmutableList<PropertyModifier> handlePropertyModifier(@Nonnull DataTypeProperty dataTypeProperty)
-    {
+    private ImmutableList<PropertyModifier> handlePropertyModifier(@Nonnull DataTypeProperty dataTypeProperty) {
         return dataTypeProperty
-                .getModifiers()
-                .collect(modifier -> this.getPropertyModifier(dataTypeProperty, modifier));
+            .getModifiers()
+            .collect(modifier -> this.getPropertyModifier(dataTypeProperty, modifier));
     }
 
-    private PropertyModifier getPropertyModifier(DataTypeProperty dataTypeProperty, Modifier modifier)
-    {
+    private PropertyModifier getPropertyModifier(DataTypeProperty dataTypeProperty, Modifier modifier) {
         var bootstrappedPropertyModifier = new PropertyModifier();
         bootstrappedPropertyModifier.setKeyword(modifier.getKeyword());
         bootstrappedPropertyModifier.setOrdinal(modifier.getOrdinal());
@@ -497,68 +482,67 @@ public class KlassBootstrapWriter
         return bootstrappedPropertyModifier;
     }
 
-    private Optional<MinLengthPropertyValidation> handleMinLengthPropertyValidation(DataTypeProperty dataTypeProperty)
-    {
-        return dataTypeProperty.getMinLengthPropertyValidation().map(validation ->
-        {
-            Classifier classifier = dataTypeProperty.getOwningClassifier();
+    private Optional<MinLengthPropertyValidation> handleMinLengthPropertyValidation(DataTypeProperty dataTypeProperty) {
+        return dataTypeProperty
+            .getMinLengthPropertyValidation()
+            .map(validation -> {
+                Classifier classifier = dataTypeProperty.getOwningClassifier();
 
-            var bootstrappedMinLengthPropertyValidation = new MinLengthPropertyValidation();
-            bootstrappedMinLengthPropertyValidation.setClassifierName(classifier.getName());
-            bootstrappedMinLengthPropertyValidation.setPropertyName(dataTypeProperty.getName());
-            bootstrappedMinLengthPropertyValidation.setNumber(validation.getNumber());
+                var bootstrappedMinLengthPropertyValidation = new MinLengthPropertyValidation();
+                bootstrappedMinLengthPropertyValidation.setClassifierName(classifier.getName());
+                bootstrappedMinLengthPropertyValidation.setPropertyName(dataTypeProperty.getName());
+                bootstrappedMinLengthPropertyValidation.setNumber(validation.getNumber());
 
-            return bootstrappedMinLengthPropertyValidation;
-        });
+                return bootstrappedMinLengthPropertyValidation;
+            });
     }
 
-    private Optional<MaxLengthPropertyValidation> handleMaxLengthPropertyValidation(DataTypeProperty dataTypeProperty)
-    {
-        return dataTypeProperty.getMaxLengthPropertyValidation().map(validation ->
-        {
-            Classifier classifier = dataTypeProperty.getOwningClassifier();
+    private Optional<MaxLengthPropertyValidation> handleMaxLengthPropertyValidation(DataTypeProperty dataTypeProperty) {
+        return dataTypeProperty
+            .getMaxLengthPropertyValidation()
+            .map(validation -> {
+                Classifier classifier = dataTypeProperty.getOwningClassifier();
 
-            var bootstrappedMaxLengthPropertyValidation = new MaxLengthPropertyValidation();
-            bootstrappedMaxLengthPropertyValidation.setClassifierName(classifier.getName());
-            bootstrappedMaxLengthPropertyValidation.setPropertyName(dataTypeProperty.getName());
-            bootstrappedMaxLengthPropertyValidation.setNumber(validation.getNumber());
+                var bootstrappedMaxLengthPropertyValidation = new MaxLengthPropertyValidation();
+                bootstrappedMaxLengthPropertyValidation.setClassifierName(classifier.getName());
+                bootstrappedMaxLengthPropertyValidation.setPropertyName(dataTypeProperty.getName());
+                bootstrappedMaxLengthPropertyValidation.setNumber(validation.getNumber());
 
-            return bootstrappedMaxLengthPropertyValidation;
-        });
+                return bootstrappedMaxLengthPropertyValidation;
+            });
     }
 
-    private Optional<MinPropertyValidation> handleMinPropertyValidation(DataTypeProperty dataTypeProperty)
-    {
-        return dataTypeProperty.getMinPropertyValidation().map(validation ->
-        {
-            Classifier classifier = dataTypeProperty.getOwningClassifier();
+    private Optional<MinPropertyValidation> handleMinPropertyValidation(DataTypeProperty dataTypeProperty) {
+        return dataTypeProperty
+            .getMinPropertyValidation()
+            .map(validation -> {
+                Classifier classifier = dataTypeProperty.getOwningClassifier();
 
-            var bootstrappedMinPropertyValidation = new MinPropertyValidation();
-            bootstrappedMinPropertyValidation.setClassifierName(classifier.getName());
-            bootstrappedMinPropertyValidation.setPropertyName(dataTypeProperty.getName());
-            bootstrappedMinPropertyValidation.setNumber(validation.getNumber());
+                var bootstrappedMinPropertyValidation = new MinPropertyValidation();
+                bootstrappedMinPropertyValidation.setClassifierName(classifier.getName());
+                bootstrappedMinPropertyValidation.setPropertyName(dataTypeProperty.getName());
+                bootstrappedMinPropertyValidation.setNumber(validation.getNumber());
 
-            return bootstrappedMinPropertyValidation;
-        });
+                return bootstrappedMinPropertyValidation;
+            });
     }
 
-    private Optional<MaxPropertyValidation> handleMaxPropertyValidation(DataTypeProperty dataTypeProperty)
-    {
-        return dataTypeProperty.getMaxPropertyValidation().map(validation ->
-        {
-            Classifier classifier = dataTypeProperty.getOwningClassifier();
+    private Optional<MaxPropertyValidation> handleMaxPropertyValidation(DataTypeProperty dataTypeProperty) {
+        return dataTypeProperty
+            .getMaxPropertyValidation()
+            .map(validation -> {
+                Classifier classifier = dataTypeProperty.getOwningClassifier();
 
-            var bootstrappedMaxPropertyValidation = new MaxPropertyValidation();
-            bootstrappedMaxPropertyValidation.setClassifierName(classifier.getName());
-            bootstrappedMaxPropertyValidation.setPropertyName(dataTypeProperty.getName());
-            bootstrappedMaxPropertyValidation.setNumber(validation.getNumber());
+                var bootstrappedMaxPropertyValidation = new MaxPropertyValidation();
+                bootstrappedMaxPropertyValidation.setClassifierName(classifier.getName());
+                bootstrappedMaxPropertyValidation.setPropertyName(dataTypeProperty.getName());
+                bootstrappedMaxPropertyValidation.setNumber(validation.getNumber());
 
-            return bootstrappedMaxPropertyValidation;
-        });
+                return bootstrappedMaxPropertyValidation;
+            });
     }
 
-    private klass.model.meta.domain.PrimitiveProperty handlePrimitiveProperty(PrimitiveProperty primitiveProperty)
-    {
+    private klass.model.meta.domain.PrimitiveProperty handlePrimitiveProperty(PrimitiveProperty primitiveProperty) {
         Classifier classifier = primitiveProperty.getOwningClassifier();
 
         var bootstrappedPrimitiveProperty = new klass.model.meta.domain.PrimitiveProperty();
@@ -569,8 +553,9 @@ public class KlassBootstrapWriter
         return bootstrappedPrimitiveProperty;
     }
 
-    private klass.model.meta.domain.EnumerationProperty handleEnumerationProperty(EnumerationProperty enumerationProperty)
-    {
+    private klass.model.meta.domain.EnumerationProperty handleEnumerationProperty(
+        EnumerationProperty enumerationProperty
+    ) {
         Classifier classifier = enumerationProperty.getOwningClassifier();
 
         var bootstrappedEnumerationProperty = new klass.model.meta.domain.EnumerationProperty();
@@ -581,39 +566,34 @@ public class KlassBootstrapWriter
         return bootstrappedEnumerationProperty;
     }
 
-    private klass.model.meta.domain.Interface handleInterface(@Nonnull Interface anInterface)
-    {
+    private klass.model.meta.domain.Interface handleInterface(@Nonnull Interface anInterface) {
         var bootstrappedInterface = new klass.model.meta.domain.Interface();
         bootstrappedInterface.setName(anInterface.getName());
         return bootstrappedInterface;
     }
 
-    private klass.model.meta.domain.Klass handleClass(@Nonnull Klass klass)
-    {
+    private klass.model.meta.domain.Klass handleClass(@Nonnull Klass klass) {
         var bootstrappedClass = new klass.model.meta.domain.Klass();
         bootstrappedClass.setName(klass.getName());
         // TODO: Report Reladomo bug. If any non-nullable properties are not set on a transient object, insert() ought to throw but doesn't
         bootstrappedClass.setAbstractClass(klass.isAbstract());
 
-        klass.getSuperClass()
-                .map(NamedElement::getName)
-                .ifPresent(bootstrappedClass::setSuperClassName);
+        klass.getSuperClass().map(NamedElement::getName).ifPresent(bootstrappedClass::setSuperClassName);
         return bootstrappedClass;
     }
 
     private klass.model.meta.domain.Association handleAssociation(
-            @Nonnull Association association,
-            @Nonnull ImmutableMap<Criteria, klass.model.meta.domain.Criteria> criteriaByCriteria)
-    {
-        var bootstrappedCriteria    = criteriaByCriteria.get(association.getCriteria());
+        @Nonnull Association association,
+        @Nonnull ImmutableMap<Criteria, klass.model.meta.domain.Criteria> criteriaByCriteria
+    ) {
+        var bootstrappedCriteria = criteriaByCriteria.get(association.getCriteria());
         var bootstrappedAssociation = new klass.model.meta.domain.Association();
         bootstrappedAssociation.setName(association.getName());
         bootstrappedAssociation.setCriteria(bootstrappedCriteria);
         return bootstrappedAssociation;
     }
 
-    private klass.model.meta.domain.AssociationEnd handleAssociationEnd(@Nonnull AssociationEnd associationEnd)
-    {
+    private klass.model.meta.domain.AssociationEnd handleAssociationEnd(@Nonnull AssociationEnd associationEnd) {
         String direction = getDirection(associationEnd);
         var bootstrappedAssociationEnd = new klass.model.meta.domain.AssociationEnd();
         KlassBootstrapWriter.handleNamedElement(bootstrappedAssociationEnd, associationEnd);
@@ -626,8 +606,9 @@ public class KlassBootstrapWriter
     }
 
     private AssociationEndModifier handleAssociationEndModifier(
-            @Nonnull Modifier modifier, @Nonnull AssociationEnd associationEnd)
-    {
+        @Nonnull Modifier modifier,
+        @Nonnull AssociationEnd associationEnd
+    ) {
         var bootstrappedAssociationEndModifier = new AssociationEndModifier();
         bootstrappedAssociationEndModifier.setOwningClassName(associationEnd.getOwningClassifier().getName());
         bootstrappedAssociationEndModifier.setAssociationEndName(associationEnd.getName());
@@ -638,66 +619,57 @@ public class KlassBootstrapWriter
 
     @Nonnull
     private AssociationEndOrderBy handleOrderByMemberReferencePath(
-            @Nonnull OrderByMemberReferencePath orderByMemberReferencePath,
-            @Nonnull AssociationEnd associationEnd,
-            @Nonnull ImmutableMap<ExpressionValue, klass.model.meta.domain.ExpressionValue> expressionValuesByExpressionValue)
-    {
+        @Nonnull OrderByMemberReferencePath orderByMemberReferencePath,
+        @Nonnull AssociationEnd associationEnd,
+        @Nonnull ImmutableMap<
+            ExpressionValue,
+            klass.model.meta.domain.ExpressionValue
+        > expressionValuesByExpressionValue
+    ) {
         ThisMemberReferencePath thisMemberReferencePath = orderByMemberReferencePath.getThisMemberReferencePath();
 
         var expressionValue = expressionValuesByExpressionValue.get(thisMemberReferencePath);
 
         var associationEndOrderBy = new AssociationEndOrderBy();
-        associationEndOrderBy.setAssociationEndClassName(associationEnd
-                .getOwningClassifier()
-                .getName());
+        associationEndOrderBy.setAssociationEndClassName(associationEnd.getOwningClassifier().getName());
         associationEndOrderBy.setAssociationEndName(associationEnd.getName());
         associationEndOrderBy.setThisMemberReferencePathId(expressionValue.getId());
-        associationEndOrderBy.setOrderByDirection(orderByMemberReferencePath
-                .getOrderByDirectionDeclaration()
-                .getOrderByDirection()
-                .getPrettyName());
+        associationEndOrderBy.setOrderByDirection(
+            orderByMemberReferencePath.getOrderByDirectionDeclaration().getOrderByDirection().getPrettyName()
+        );
         return associationEndOrderBy;
     }
 
-    private void bootstrapAssociationEndOrderBy(
-            @Nonnull AssociationEnd associationEnd,
-            @Nonnull OrderBy orderBy)
-    {
-        for (OrderByMemberReferencePath orderByMemberReferencePath : orderBy.getOrderByMemberReferencePaths())
-        {
+    private void bootstrapAssociationEndOrderBy(@Nonnull AssociationEnd associationEnd, @Nonnull OrderBy orderBy) {
+        for (OrderByMemberReferencePath orderByMemberReferencePath : orderBy.getOrderByMemberReferencePaths()) {
             ThisMemberReferencePath thisMemberReferencePath = orderByMemberReferencePath.getThisMemberReferencePath();
 
             klass.model.meta.domain.ThisMemberReferencePath bootstrappedThisMemberReferencePath =
-                    this.bootstrapThisMemberReferencePath(thisMemberReferencePath);
+                this.bootstrapThisMemberReferencePath(thisMemberReferencePath);
 
             var associationEndOrderBy = new AssociationEndOrderBy();
             associationEndOrderBy.setAssociationEndClassName(associationEnd.getOwningClassifier().getName());
             associationEndOrderBy.setAssociationEndName(associationEnd.getName());
             associationEndOrderBy.setThisMemberReferencePathId(bootstrappedThisMemberReferencePath.getId());
-            associationEndOrderBy.setOrderByDirection(orderByMemberReferencePath
-                    .getOrderByDirectionDeclaration()
-                    .getOrderByDirection()
-                    .getPrettyName());
+            associationEndOrderBy.setOrderByDirection(
+                orderByMemberReferencePath.getOrderByDirectionDeclaration().getOrderByDirection().getPrettyName()
+            );
             associationEndOrderBy.insert();
         }
     }
 
     @Nonnull
-    private static String getDirection(@Nonnull AssociationEnd associationEnd)
-    {
-        if (associationEnd == associationEnd.getOwningAssociation().getSourceAssociationEnd())
-        {
+    private static String getDirection(@Nonnull AssociationEnd associationEnd) {
+        if (associationEnd == associationEnd.getOwningAssociation().getSourceAssociationEnd()) {
             return "source";
         }
-        if (associationEnd == associationEnd.getOwningAssociation().getTargetAssociationEnd())
-        {
+        if (associationEnd == associationEnd.getOwningAssociation().getTargetAssociationEnd()) {
             return "target";
         }
         throw new AssertionError();
     }
 
-    private klass.model.meta.domain.ProjectionElement handleRootProjectionElement(@Nonnull Projection projection)
-    {
+    private klass.model.meta.domain.ProjectionElement handleRootProjectionElement(@Nonnull Projection projection) {
         var bootstrappedProjectionElement = new klass.model.meta.domain.ProjectionElement();
         bootstrappedProjectionElement.setName(projection.getName());
         bootstrappedProjectionElement.setOrdinal(projection.getOrdinal());
@@ -705,9 +677,9 @@ public class KlassBootstrapWriter
     }
 
     private RootProjection handleRootProjection(
-            @Nonnull Projection projection,
-            @Nonnull    klass.model.meta.domain.ProjectionElement projectionElement)
-    {
+        @Nonnull Projection projection,
+        @Nonnull klass.model.meta.domain.ProjectionElement projectionElement
+    ) {
         var bootstrappedRootProjection = new RootProjection();
         bootstrappedRootProjection.setId(projectionElement.getId());
         bootstrappedRootProjection.setClassifierName(projection.getClassifier().getName());
@@ -715,114 +687,116 @@ public class KlassBootstrapWriter
     }
 
     private void handleProjectionChildren(
-            @Nonnull Projection projection,
-            @Nonnull klass.model.meta.domain.ProjectionElement bootstrappedProjectionElement)
-    {
-        for (ProjectionChild projectionChild : projection.getChildren())
-        {
-            this.handleElementProjection(
-                    projectionChild,
-                    bootstrappedProjectionElement);
+        @Nonnull Projection projection,
+        @Nonnull klass.model.meta.domain.ProjectionElement bootstrappedProjectionElement
+    ) {
+        for (ProjectionChild projectionChild : projection.getChildren()) {
+            this.handleElementProjection(projectionChild, bootstrappedProjectionElement);
         }
     }
 
     private void handleElementProjection(
-            @Nonnull ProjectionElement projectionElement,
-            @Nonnull klass.model.meta.domain.ProjectionElement bootstrappedProjectionParent)
-    {
-        projectionElement.visit(new ProjectionVisitor()
-        {
-            @Override
-            public void visitProjection(@Nonnull Projection projection)
-            {
-                throw new AssertionError();
-            }
+        @Nonnull ProjectionElement projectionElement,
+        @Nonnull klass.model.meta.domain.ProjectionElement bootstrappedProjectionParent
+    ) {
+        projectionElement.visit(
+            new ProjectionVisitor() {
+                @Override
+                public void visitProjection(@Nonnull Projection projection) {
+                    throw new AssertionError();
+                }
 
-            @Override
-            public void visitProjectionReferenceProperty(@Nonnull ProjectionReferenceProperty projectionReferenceProperty)
-            {
-                var bootstrappedProjectionElement = new klass.model.meta.domain.ProjectionElement();
-                bootstrappedProjectionElement.setName(projectionReferenceProperty.getName());
-                bootstrappedProjectionElement.setOrdinal(projectionReferenceProperty.getOrdinal());
-                bootstrappedProjectionElement.setParentId(bootstrappedProjectionParent.getId());
-                bootstrappedProjectionElement.insert();
+                @Override
+                public void visitProjectionReferenceProperty(
+                    @Nonnull ProjectionReferenceProperty projectionReferenceProperty
+                ) {
+                    var bootstrappedProjectionElement = new klass.model.meta.domain.ProjectionElement();
+                    bootstrappedProjectionElement.setName(projectionReferenceProperty.getName());
+                    bootstrappedProjectionElement.setOrdinal(projectionReferenceProperty.getOrdinal());
+                    bootstrappedProjectionElement.setParentId(bootstrappedProjectionParent.getId());
+                    bootstrappedProjectionElement.insert();
 
-                var bootstrappedProjectionWithAssociationEnd = new ProjectionWithAssociationEnd();
-                bootstrappedProjectionWithAssociationEnd.setId(bootstrappedProjectionElement.getId());
-                bootstrappedProjectionWithAssociationEnd.setAssociationEndClass(projectionReferenceProperty
-                        .getProperty()
-                        .getOwningClassifier()
-                        .getName());
-                bootstrappedProjectionWithAssociationEnd.setAssociationEndName(projectionReferenceProperty
-                        .getProperty()
-                        .getName());
-                bootstrappedProjectionWithAssociationEnd.insert();
+                    var bootstrappedProjectionWithAssociationEnd = new ProjectionWithAssociationEnd();
+                    bootstrappedProjectionWithAssociationEnd.setId(bootstrappedProjectionElement.getId());
+                    bootstrappedProjectionWithAssociationEnd.setAssociationEndClass(
+                        projectionReferenceProperty.getProperty().getOwningClassifier().getName()
+                    );
+                    bootstrappedProjectionWithAssociationEnd.setAssociationEndName(
+                        projectionReferenceProperty.getProperty().getName()
+                    );
+                    bootstrappedProjectionWithAssociationEnd.insert();
 
-                var bootstrappedProjectionReferenceProperty = new klass.model.meta.domain.ProjectionReferenceProperty();
-                bootstrappedProjectionReferenceProperty.setId(bootstrappedProjectionElement.getId());
-                bootstrappedProjectionReferenceProperty.insert();
+                    var bootstrappedProjectionReferenceProperty =
+                        new klass.model.meta.domain.ProjectionReferenceProperty();
+                    bootstrappedProjectionReferenceProperty.setId(bootstrappedProjectionElement.getId());
+                    bootstrappedProjectionReferenceProperty.insert();
 
-                for (ProjectionChild projectionChild : projectionReferenceProperty.getChildren())
-                {
-                    KlassBootstrapWriter.this.handleElementProjection(projectionChild, bootstrappedProjectionElement);
+                    for (ProjectionChild projectionChild : projectionReferenceProperty.getChildren()) {
+                        KlassBootstrapWriter.this.handleElementProjection(
+                                projectionChild,
+                                bootstrappedProjectionElement
+                            );
+                    }
+                }
+
+                @Override
+                public void visitProjectionProjectionReference(
+                    @Nonnull ProjectionProjectionReference projectionProjectionReference
+                ) {
+                    var bootstrappedProjectionElement = new klass.model.meta.domain.ProjectionElement();
+                    bootstrappedProjectionElement.setName(projectionProjectionReference.getName());
+                    bootstrappedProjectionElement.setOrdinal(projectionProjectionReference.getOrdinal());
+                    bootstrappedProjectionElement.setParentId(bootstrappedProjectionParent.getId());
+                    bootstrappedProjectionElement.insert();
+
+                    var bootstrappedProjectionWithAssociationEnd = new ProjectionWithAssociationEnd();
+                    bootstrappedProjectionWithAssociationEnd.setId(bootstrappedProjectionElement.getId());
+                    bootstrappedProjectionWithAssociationEnd.setAssociationEndClass(
+                        projectionProjectionReference.getProperty().getOwningClassifier().getName()
+                    );
+                    bootstrappedProjectionWithAssociationEnd.setAssociationEndName(
+                        projectionProjectionReference.getProperty().getName()
+                    );
+                    bootstrappedProjectionWithAssociationEnd.insert();
+
+                    var bootstrappedProjectionProjectionReference =
+                        new klass.model.meta.domain.ProjectionProjectionReference();
+                    bootstrappedProjectionProjectionReference.setId(bootstrappedProjectionElement.getId());
+                    bootstrappedProjectionProjectionReference.setProjectionName(
+                        projectionProjectionReference.getProjection().getName()
+                    );
+                    bootstrappedProjectionProjectionReference.insert();
+                }
+
+                @Override
+                public void visitProjectionDataTypeProperty(
+                    @Nonnull ProjectionDataTypeProperty projectionDataTypeProperty
+                ) {
+                    var bootstrappedProjectionElement = new klass.model.meta.domain.ProjectionElement();
+                    bootstrappedProjectionElement.setName(projectionDataTypeProperty.getName());
+                    bootstrappedProjectionElement.setOrdinal(projectionDataTypeProperty.getOrdinal());
+                    bootstrappedProjectionElement.setParentId(bootstrappedProjectionParent.getId());
+                    bootstrappedProjectionElement.insert();
+
+                    var bootstrappedProjectionDataTypeProperty =
+                        new klass.model.meta.domain.ProjectionDataTypeProperty();
+                    bootstrappedProjectionDataTypeProperty.setId(bootstrappedProjectionElement.getId());
+                    bootstrappedProjectionDataTypeProperty.setPropertyClassifierName(
+                        projectionDataTypeProperty.getProperty().getOwningClassifier().getName()
+                    );
+                    bootstrappedProjectionDataTypeProperty.setPropertyName(
+                        projectionDataTypeProperty.getProperty().getName()
+                    );
+                    bootstrappedProjectionDataTypeProperty.insert();
                 }
             }
-
-            @Override
-            public void visitProjectionProjectionReference(@Nonnull ProjectionProjectionReference projectionProjectionReference)
-            {
-                var bootstrappedProjectionElement = new klass.model.meta.domain.ProjectionElement();
-                bootstrappedProjectionElement.setName(projectionProjectionReference.getName());
-                bootstrappedProjectionElement.setOrdinal(projectionProjectionReference.getOrdinal());
-                bootstrappedProjectionElement.setParentId(bootstrappedProjectionParent.getId());
-                bootstrappedProjectionElement.insert();
-
-                var bootstrappedProjectionWithAssociationEnd = new ProjectionWithAssociationEnd();
-                bootstrappedProjectionWithAssociationEnd.setId(bootstrappedProjectionElement.getId());
-                bootstrappedProjectionWithAssociationEnd.setAssociationEndClass(projectionProjectionReference
-                        .getProperty()
-                        .getOwningClassifier()
-                        .getName());
-                bootstrappedProjectionWithAssociationEnd.setAssociationEndName(projectionProjectionReference
-                        .getProperty()
-                        .getName());
-                bootstrappedProjectionWithAssociationEnd.insert();
-
-                var bootstrappedProjectionProjectionReference = new klass.model.meta.domain.ProjectionProjectionReference();
-                bootstrappedProjectionProjectionReference.setId(bootstrappedProjectionElement.getId());
-                bootstrappedProjectionProjectionReference.setProjectionName(projectionProjectionReference
-                        .getProjection()
-                        .getName());
-                bootstrappedProjectionProjectionReference.insert();
-            }
-
-            @Override
-            public void visitProjectionDataTypeProperty(@Nonnull ProjectionDataTypeProperty projectionDataTypeProperty)
-            {
-                var bootstrappedProjectionElement = new klass.model.meta.domain.ProjectionElement();
-                bootstrappedProjectionElement.setName(projectionDataTypeProperty.getName());
-                bootstrappedProjectionElement.setOrdinal(projectionDataTypeProperty.getOrdinal());
-                bootstrappedProjectionElement.setParentId(bootstrappedProjectionParent.getId());
-                bootstrappedProjectionElement.insert();
-
-                var bootstrappedProjectionDataTypeProperty = new klass.model.meta.domain.ProjectionDataTypeProperty();
-                bootstrappedProjectionDataTypeProperty.setId(bootstrappedProjectionElement.getId());
-                bootstrappedProjectionDataTypeProperty.setPropertyClassifierName(projectionDataTypeProperty
-                        .getProperty()
-                        .getOwningClassifier()
-                        .getName());
-                bootstrappedProjectionDataTypeProperty.setPropertyName(projectionDataTypeProperty
-                        .getProperty()
-                        .getName());
-                bootstrappedProjectionDataTypeProperty.insert();
-            }
-        });
+        );
     }
 
     private NamedProjection handleNamedProjection(
-            @Nonnull Projection projection,
-            @Nonnull MutableMap<Projection, klass.model.meta.domain.ProjectionElement> rootProjectionByProjection)
-    {
+        @Nonnull Projection projection,
+        @Nonnull MutableMap<Projection, klass.model.meta.domain.ProjectionElement> rootProjectionByProjection
+    ) {
         var bootstrappedRootProjection = rootProjectionByProjection.get(projection);
         var bootstrappedProjection = new NamedProjection();
         bootstrappedProjection.setName(projection.getName());
@@ -830,16 +804,14 @@ public class KlassBootstrapWriter
         return bootstrappedProjection;
     }
 
-    private klass.model.meta.domain.ServiceGroup handleServiceGroup(@Nonnull ServiceGroup serviceGroup)
-    {
+    private klass.model.meta.domain.ServiceGroup handleServiceGroup(@Nonnull ServiceGroup serviceGroup) {
         klass.model.meta.domain.ServiceGroup bootstrappedServiceGroup = new klass.model.meta.domain.ServiceGroup();
         bootstrappedServiceGroup.setName(serviceGroup.getName());
         bootstrappedServiceGroup.setClassName(serviceGroup.getKlass().getName());
         return bootstrappedServiceGroup;
     }
 
-    private klass.model.meta.domain.Url handleUrl(@Nonnull Url url)
-    {
+    private klass.model.meta.domain.Url handleUrl(@Nonnull Url url) {
         ServiceGroup serviceGroup = url.getServiceGroup();
 
         var bootstrappedUrl = new klass.model.meta.domain.Url();
@@ -849,31 +821,26 @@ public class KlassBootstrapWriter
     }
 
     private UrlParameter handleUrlParameter(
-            Url url,
-            @Nonnull Parameter parameter,
-            String urlParameterType,
-            @Nonnull MutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter)
-    {
+        Url url,
+        @Nonnull Parameter parameter,
+        String urlParameterType,
+        @Nonnull MutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter
+    ) {
         var bootstrappedParameter = new klass.model.meta.domain.Parameter();
         handleNamedElement(bootstrappedParameter, parameter);
         bootstrappedParameter.setMultiplicity(parameter.getMultiplicity().getPrettyName());
         bootstrappedParameter.insert();
 
         DataType dataType = parameter.getType();
-        if (dataType instanceof PrimitiveType primitiveType)
-        {
+        if (dataType instanceof PrimitiveType primitiveType) {
             PrimitiveParameter bootstrappedPrimitiveParameter = new PrimitiveParameter();
             bootstrappedPrimitiveParameter.setPrimitiveType(primitiveType.getPrettyName());
             bootstrappedPrimitiveParameter.setId(bootstrappedParameter.getId());
-        }
-        else if (dataType instanceof Enumeration enumeration)
-        {
+        } else if (dataType instanceof Enumeration enumeration) {
             EnumerationParameter bootstrappedEnumerationParameter = new EnumerationParameter();
             bootstrappedEnumerationParameter.setEnumerationName(enumeration.getName());
             bootstrappedEnumerationParameter.setId(bootstrappedParameter.getId());
-        }
-        else
-        {
+        } else {
             throw new AssertionError();
         }
 
@@ -889,12 +856,12 @@ public class KlassBootstrapWriter
     }
 
     private PrimitiveParameter handleUrlPrimitiveParameter(
-            @Nonnull Parameter parameter,
-            @Nonnull MutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter)
-    {
+        @Nonnull Parameter parameter,
+        @Nonnull MutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter
+    ) {
         var bootstrappedParameter = bootstrappedParametersByParameter.get(parameter);
 
-        PrimitiveType      primitiveType                  = (PrimitiveType) parameter.getType();
+        PrimitiveType primitiveType = (PrimitiveType) parameter.getType();
         PrimitiveParameter bootstrappedPrimitiveParameter = new PrimitiveParameter();
         bootstrappedPrimitiveParameter.setPrimitiveType(primitiveType.getPrettyName());
         bootstrappedPrimitiveParameter.setId(bootstrappedParameter.getId());
@@ -903,12 +870,12 @@ public class KlassBootstrapWriter
     }
 
     private EnumerationParameter handleUrlEnumerationParameter(
-            @Nonnull Parameter parameter,
-            @Nonnull MutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter)
-    {
+        @Nonnull Parameter parameter,
+        @Nonnull MutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter
+    ) {
         var bootstrappedParameter = bootstrappedParametersByParameter.get(parameter);
 
-        Enumeration          enumeration                      = (Enumeration) parameter.getType();
+        Enumeration enumeration = (Enumeration) parameter.getType();
         EnumerationParameter bootstrappedEnumerationParameter = new EnumerationParameter();
         bootstrappedEnumerationParameter.setEnumerationName(enumeration.getName());
         bootstrappedEnumerationParameter.setId(bootstrappedParameter.getId());
@@ -917,9 +884,9 @@ public class KlassBootstrapWriter
     }
 
     private klass.model.meta.domain.Service handleService(
-            @Nonnull Service service,
-            @Nonnull ImmutableMap<Criteria, klass.model.meta.domain.Criteria> criteriaByCriteria)
-    {
+        @Nonnull Service service,
+        @Nonnull ImmutableMap<Criteria, klass.model.meta.domain.Criteria> criteriaByCriteria
+    ) {
         Url url = service.getUrl();
         ServiceGroup serviceGroup = url.getServiceGroup();
 
@@ -929,17 +896,18 @@ public class KlassBootstrapWriter
         bootstrappedService.setVerb(service.getVerb().name());
         bootstrappedService.setServiceMultiplicity(service.getServiceMultiplicity().getPrettyName());
         service
-                .getProjectionDispatch()
-                .map(ServiceProjectionDispatch::getProjection)
-                .map(NamedElement::getName)
-                .ifPresent(bootstrappedService::setProjectionName);
+            .getProjectionDispatch()
+            .map(ServiceProjectionDispatch::getProjection)
+            .map(NamedElement::getName)
+            .ifPresent(bootstrappedService::setProjectionName);
 
-        service.getQueryCriteria().ifPresent(criteria ->
-        {
-            klass.model.meta.domain.Criteria queryCriteria = criteriaByCriteria.get(criteria);
-            Objects.requireNonNull(queryCriteria, "queryCriteria");
-            bootstrappedService.setQueryCriteriaId(queryCriteria.getId());
-        });
+        service
+            .getQueryCriteria()
+            .ifPresent(criteria -> {
+                klass.model.meta.domain.Criteria queryCriteria = criteriaByCriteria.get(criteria);
+                Objects.requireNonNull(queryCriteria, "queryCriteria");
+                bootstrappedService.setQueryCriteriaId(queryCriteria.getId());
+            });
 
         // TODO: Bootstrap service orderBy
         // Optional<OrderBy> orderBy = service.getOrderBy();
@@ -949,12 +917,13 @@ public class KlassBootstrapWriter
     }
 
     @Nonnull
-    private klass.model.meta.domain.ThisMemberReferencePath bootstrapThisMemberReferencePath(@Nonnull ThisMemberReferencePath thisMemberReferencePath)
-    {
+    private klass.model.meta.domain.ThisMemberReferencePath bootstrapThisMemberReferencePath(
+        @Nonnull ThisMemberReferencePath thisMemberReferencePath
+    ) {
         var bootstrappedExpressionValue = new klass.model.meta.domain.ExpressionValue();
         bootstrappedExpressionValue.insert();
 
-        Klass            klass    = thisMemberReferencePath.getKlass();
+        Klass klass = thisMemberReferencePath.getKlass();
         DataTypeProperty property = thisMemberReferencePath.getProperty();
 
         var bootstrappedMemberReferencePath = new MemberReferencePath();
@@ -966,17 +935,16 @@ public class KlassBootstrapWriter
         var bootstrappedThisMemberReferencePath = new klass.model.meta.domain.ThisMemberReferencePath();
         bootstrappedThisMemberReferencePath.setId(bootstrappedExpressionValue.getId());
 
-        if (thisMemberReferencePath.getAssociationEnds().notEmpty())
-        {
+        if (thisMemberReferencePath.getAssociationEnds().notEmpty()) {
             throw new AssertionError("TODO");
         }
         return bootstrappedThisMemberReferencePath;
     }
 
     public static void handleNamedElement(
-            @Nonnull NamedElementAbstract bootstrappedNamedElement,
-            @Nonnull NamedElement namedElement)
-    {
+        @Nonnull NamedElementAbstract bootstrappedNamedElement,
+        @Nonnull NamedElement namedElement
+    ) {
         bootstrappedNamedElement.setName(namedElement.getName());
         bootstrappedNamedElement.setOrdinal(namedElement.getOrdinal());
     }

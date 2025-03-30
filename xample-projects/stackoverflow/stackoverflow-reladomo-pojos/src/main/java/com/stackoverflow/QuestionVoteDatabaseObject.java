@@ -16,6 +16,4 @@
 
 package com.stackoverflow;
 
-public class QuestionVoteDatabaseObject extends QuestionVoteDatabaseObjectAbstract
-{
-}
+public class QuestionVoteDatabaseObject extends QuestionVoteDatabaseObjectAbstract {}

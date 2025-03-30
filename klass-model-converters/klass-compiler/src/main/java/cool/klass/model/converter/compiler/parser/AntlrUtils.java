@@ -21,24 +21,20 @@ import javax.annotation.Nullable;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public final class AntlrUtils
-{
-    private AntlrUtils()
-    {
+public final class AntlrUtils {
+
+    private AntlrUtils() {
         throw new AssertionError("Suppress default constructor for noninstantiability");
     }
 
     @Nullable
-    public static <T> T getParentOfType(@Nonnull ParserRuleContext ctx, @Nonnull Class<T> aClass /* klass? */)
-    {
-        if (aClass.isInstance(ctx))
-        {
+    public static <T> T getParentOfType(@Nonnull ParserRuleContext ctx, @Nonnull Class<T> aClass/* klass? */) {
+        if (aClass.isInstance(ctx)) {
             return aClass.cast(ctx);
         }
 
         ParserRuleContext parent = ctx.getParent();
-        if (parent == null)
-        {
+        if (parent == null) {
             return null;
         }
 

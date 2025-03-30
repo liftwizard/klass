@@ -21,79 +21,67 @@ import javax.annotation.Nonnull;
 import cool.klass.model.meta.domain.api.PrimitiveType;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
 
-public class PrimitiveToJavaParameterTypeVisitor implements PrimitiveTypeVisitor
-{
+public class PrimitiveToJavaParameterTypeVisitor implements PrimitiveTypeVisitor {
+
     private String result;
 
-    public static String getJavaType(@Nonnull PrimitiveType primitiveType)
-    {
+    public static String getJavaType(@Nonnull PrimitiveType primitiveType) {
         PrimitiveToJavaParameterTypeVisitor primitiveToJavaTypeVisitor = new PrimitiveToJavaParameterTypeVisitor();
         primitiveType.visit(primitiveToJavaTypeVisitor);
         return primitiveToJavaTypeVisitor.getResult();
     }
 
-    public String getResult()
-    {
+    public String getResult() {
         return this.result;
     }
 
     @Override
-    public void visitString()
-    {
+    public void visitString() {
         this.result = "String";
     }
 
     @Override
-    public void visitInteger()
-    {
+    public void visitInteger() {
         this.result = "Integer";
     }
 
     @Override
-    public void visitLong()
-    {
+    public void visitLong() {
         this.result = "Long";
     }
 
     @Override
-    public void visitDouble()
-    {
+    public void visitDouble() {
         this.result = "Double";
     }
 
     @Override
-    public void visitFloat()
-    {
+    public void visitFloat() {
         this.result = "Float";
     }
 
     @Override
-    public void visitBoolean()
-    {
+    public void visitBoolean() {
         this.result = "Boolean";
     }
 
     @Override
-    public void visitInstant()
-    {
+    public void visitInstant() {
         this.result = "OffsetDateTimeParam";
     }
 
     @Override
-    public void visitLocalDate()
-    {
+    public void visitLocalDate() {
         this.result = "LocalDateParam";
     }
 
     @Override
-    public void visitTemporalInstant()
-    {
+    public void visitTemporalInstant() {
         this.result = "InstantParam";
     }
 
     @Override
-    public void visitTemporalRange()
-    {
+    public void visitTemporalRange() {
         this.result = "InstantParam";
     }
 }

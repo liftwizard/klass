@@ -20,8 +20,7 @@ import cool.klass.model.meta.domain.api.property.AssociationEndSignature;
 import cool.klass.model.meta.grammar.KlassParser.AssociationEndSignatureContext;
 
 public interface AssociationEndSignatureWithSourceCode
-        extends AssociationEndSignature, ReferencePropertyWithSourceCode
-{
+    extends AssociationEndSignature, ReferencePropertyWithSourceCode {
     @Override
     AssociationEndSignatureContext getElementContext();
 }

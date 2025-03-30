@@ -27,37 +27,36 @@ import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.meta.domain.api.service.Verb;
 import cool.klass.model.meta.grammar.KlassParser.VerbContext;
 
-public class AntlrVerb
-        extends AntlrElement
-{
+public class AntlrVerb extends AntlrElement {
+
     public static final AntlrVerb AMBIGUOUS = new AntlrVerb(
-            new VerbContext(AMBIGUOUS_PARENT, -1),
-            Optional.empty(),
-            Verb.GET);
+        new VerbContext(AMBIGUOUS_PARENT, -1),
+        Optional.empty(),
+        Verb.GET
+    );
 
     @Nonnull
     private final Verb verb;
 
     public AntlrVerb(
-            @Nonnull VerbContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            @Nonnull Verb verb)
-    {
+        @Nonnull VerbContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        @Nonnull Verb verb
+    ) {
         super(elementContext, compilationUnit);
         this.verb = Objects.requireNonNull(verb);
     }
 
     @Nonnull
     @Override
-    public Optional<IAntlrElement> getSurroundingElement()
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".getSurroundingContext() not implemented yet");
+    public Optional<IAntlrElement> getSurroundingElement() {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".getSurroundingContext() not implemented yet"
+        );
     }
 
     @Nonnull
-    public Verb getVerb()
-    {
+    public Verb getVerb() {
         return this.verb;
     }
 }

@@ -21,26 +21,23 @@ import java.util.Optional;
 
 import cool.klass.model.meta.domain.api.NamedElement;
 
-public class ContextNode
-{
+public class ContextNode {
+
     private final NamedElement namedElement;
     private final Optional<Integer> index;
 
-    public ContextNode(NamedElement namedElement)
-    {
+    public ContextNode(NamedElement namedElement) {
         this.namedElement = Objects.requireNonNull(namedElement);
         this.index = Optional.empty();
     }
 
-    public ContextNode(NamedElement namedElement, int index)
-    {
+    public ContextNode(NamedElement namedElement, int index) {
         this.namedElement = namedElement;
         this.index = Optional.of(index);
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         String name = this.namedElement.getName();
         String indexString = this.index.map(present -> String.format("[%d]", present)).orElse("");
         return name + indexString;

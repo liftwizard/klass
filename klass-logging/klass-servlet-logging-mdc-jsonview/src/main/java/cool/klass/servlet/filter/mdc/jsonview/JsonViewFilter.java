@@ -29,19 +29,16 @@ import io.liftwizard.logging.slf4j.mdc.MultiMDCCloseable;
 
 @Provider
 @Priority(Priorities.USER - 10)
-public class JsonViewFilter
-        implements ContainerRequestFilter
-{
+public class JsonViewFilter implements ContainerRequestFilter {
+
     private final Projection projection;
 
-    public JsonViewFilter(Projection projection)
-    {
+    public JsonViewFilter(Projection projection) {
         this.projection = Objects.requireNonNull(projection);
     }
 
     @Override
-    public void filter(ContainerRequestContext requestContext)
-    {
+    public void filter(ContainerRequestContext requestContext) {
         MultiMDCCloseable mdc = (MultiMDCCloseable) requestContext.getProperty("mdc");
 
         mdc.put("klass.jsonView.projectionName", String.valueOf(this.projection));

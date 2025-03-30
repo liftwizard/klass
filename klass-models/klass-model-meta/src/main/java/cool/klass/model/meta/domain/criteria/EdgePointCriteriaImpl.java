@@ -30,62 +30,57 @@ import cool.klass.model.meta.domain.value.AbstractMemberReferencePath;
 import cool.klass.model.meta.domain.value.AbstractMemberReferencePath.AbstractMemberReferencePathBuilder;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaEdgePointContext;
 
-public final class EdgePointCriteriaImpl
-        extends AbstractCriteria
-        implements EdgePointCriteria
-{
+public final class EdgePointCriteriaImpl extends AbstractCriteria implements EdgePointCriteria {
+
     @Nonnull
     private final AbstractMemberReferencePath memberExpressionValue;
 
     private EdgePointCriteriaImpl(
-            @Nonnull CriteriaEdgePointContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode,
-            @Nonnull AbstractMemberReferencePath memberExpressionValue)
-    {
+        @Nonnull CriteriaEdgePointContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode,
+        @Nonnull AbstractMemberReferencePath memberExpressionValue
+    ) {
         super(elementContext, macroElement, sourceCode);
         this.memberExpressionValue = Objects.requireNonNull(memberExpressionValue);
     }
 
     @Nonnull
     @Override
-    public CriteriaEdgePointContext getElementContext()
-    {
+    public CriteriaEdgePointContext getElementContext() {
         return (CriteriaEdgePointContext) super.getElementContext();
     }
 
     @Override
     @Nonnull
-    public AbstractMemberReferencePath getMemberExpressionValue()
-    {
+    public AbstractMemberReferencePath getMemberExpressionValue() {
         return this.memberExpressionValue;
     }
 
-    public static final class EdgePointCriteriaBuilder
-            extends AbstractCriteriaBuilder<EdgePointCriteriaImpl>
-    {
+    public static final class EdgePointCriteriaBuilder extends AbstractCriteriaBuilder<EdgePointCriteriaImpl> {
+
         @Nonnull
         private final AbstractMemberReferencePathBuilder<?> memberExpressionValue;
 
         public EdgePointCriteriaBuilder(
-                @Nonnull CriteriaEdgePointContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode,
-                @Nonnull AbstractMemberReferencePathBuilder<?> memberExpressionValue)
-        {
+            @Nonnull CriteriaEdgePointContext elementContext,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode,
+            @Nonnull AbstractMemberReferencePathBuilder<?> memberExpressionValue
+        ) {
             super(elementContext, macroElement, sourceCode);
             this.memberExpressionValue = Objects.requireNonNull(memberExpressionValue);
         }
 
         @Override
         @Nonnull
-        protected EdgePointCriteriaImpl buildUnsafe()
-        {
+        protected EdgePointCriteriaImpl buildUnsafe() {
             return new EdgePointCriteriaImpl(
-                    (CriteriaEdgePointContext) this.elementContext,
-                    this.macroElement.map(ElementBuilder::getElement),
-                    this.sourceCode.build(),
-                    this.memberExpressionValue.build());
+                (CriteriaEdgePointContext) this.elementContext,
+                this.macroElement.map(ElementBuilder::getElement),
+                this.sourceCode.build(),
+                this.memberExpressionValue.build()
+            );
         }
     }
 }

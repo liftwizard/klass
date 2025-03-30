@@ -35,132 +35,115 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.factory.SortedBags;
 
-public abstract class AbstractDataTypePropertyVisitor implements DataTypePropertyVisitor
-{
-    private final MutableSortedBag<DataTypeProperty> propertyCounts =
-            SortedBags.mutable.empty(AbstractDataTypePropertyVisitor.getDataTypePropertyComparator());
+public abstract class AbstractDataTypePropertyVisitor implements DataTypePropertyVisitor {
+
+    private final MutableSortedBag<DataTypeProperty> propertyCounts = SortedBags.mutable.empty(
+        AbstractDataTypePropertyVisitor.getDataTypePropertyComparator()
+    );
 
     private Object result;
 
-    private static Comparator<DataTypeProperty> getDataTypePropertyComparator()
-    {
-        Comparator<DataTypeProperty> byClassifierName = Comparator.comparing(dtp -> dtp
-                .getOwningClassifier()
-                .getName());
+    private static Comparator<DataTypeProperty> getDataTypePropertyComparator() {
+        Comparator<DataTypeProperty> byClassifierName = Comparator.comparing(
+            dtp -> dtp.getOwningClassifier().getName()
+        );
         return byClassifierName.thenComparing(NamedElement::getName);
     }
 
-    public Object getResult()
-    {
+    public Object getResult() {
         return this.result;
     }
 
     @Override
-    public void visitEnumerationProperty(@Nonnull EnumerationProperty enumerationProperty)
-    {
+    public void visitEnumerationProperty(@Nonnull EnumerationProperty enumerationProperty) {
         ImmutableList<EnumerationLiteral> enumerationLiterals = enumerationProperty.getType().getEnumerationLiterals();
         // TODO: Compiler error for enumeration with <2 literals
         this.result = enumerationLiterals.get(this.getIndex() - 1);
     }
 
     @Override
-    public void visitString(@Nonnull PrimitiveProperty primitiveProperty)
-    {
+    public void visitString(@Nonnull PrimitiveProperty primitiveProperty) {
         // TODO: Something more reliable, or ban shared foreign keys
-        if (primitiveProperty.getKeysMatchingThisForeignKey().size() > 1)
-        {
+        if (primitiveProperty.getKeysMatchingThisForeignKey().size() > 1) {
             throw new AssertionError(primitiveProperty);
         }
-        if (primitiveProperty.getKeysMatchingThisForeignKey().size() == 1)
-        {
-            Pair<AssociationEnd, DataTypeProperty> pair =
-                    primitiveProperty.getKeysMatchingThisForeignKey().keyValuesView().getOnly();
+        if (primitiveProperty.getKeysMatchingThisForeignKey().size() == 1) {
+            Pair<AssociationEnd, DataTypeProperty> pair = primitiveProperty
+                .getKeysMatchingThisForeignKey()
+                .keyValuesView()
+                .getOnly();
 
-            AssociationEnd   associationEnd = pair.getOne();
-            DataTypeProperty keyProperty    = pair.getTwo();
+            AssociationEnd associationEnd = pair.getOne();
+            DataTypeProperty keyProperty = pair.getTwo();
             this.result = String.format(
-                    "%s %s %d %s",
-                    associationEnd.getType().getName(),
-                    keyProperty.getName(),
-                    this.getIndex(),
-                    this.getEmoji());
-        }
-        else
-        {
+                "%s %s %d %s",
+                associationEnd.getType().getName(),
+                keyProperty.getName(),
+                this.getIndex(),
+                this.getEmoji()
+            );
+        } else {
             this.result = String.format(
-                    "%s %s %d %s",
-                    primitiveProperty.getOwningClassifier().getName(),
-                    primitiveProperty.getName(),
-                    this.getNumber(primitiveProperty),
-                    this.getEmoji());
+                "%s %s %d %s",
+                primitiveProperty.getOwningClassifier().getName(),
+                primitiveProperty.getName(),
+                this.getNumber(primitiveProperty),
+                this.getEmoji()
+            );
         }
     }
 
     @Override
-    public void visitInteger(@Nonnull PrimitiveProperty primitiveProperty)
-    {
+    public void visitInteger(@Nonnull PrimitiveProperty primitiveProperty) {
         this.result = this.getAdjustment(primitiveProperty);
     }
 
     @Override
-    public void visitLong(@Nonnull PrimitiveProperty primitiveProperty)
-    {
-        if (primitiveProperty.isForeignKey())
-        {
+    public void visitLong(@Nonnull PrimitiveProperty primitiveProperty) {
+        if (primitiveProperty.isForeignKey()) {
             this.result = (long) this.getIndex();
-        }
-        else if (primitiveProperty.isKey())
-        {
+        } else if (primitiveProperty.isKey()) {
             this.result = (long) this.getNumber(primitiveProperty);
-        }
-        else
-        {
+        } else {
             this.result = 100_000_000_000L * this.getNumber(primitiveProperty);
         }
     }
 
     @Override
-    public void visitDouble(@Nonnull PrimitiveProperty primitiveProperty)
-    {
+    public void visitDouble(@Nonnull PrimitiveProperty primitiveProperty) {
         this.result = this.getAdjustment(primitiveProperty) + 0.0123456789;
     }
 
     @Override
-    public void visitFloat(@Nonnull PrimitiveProperty primitiveProperty)
-    {
+    public void visitFloat(@Nonnull PrimitiveProperty primitiveProperty) {
         this.result = this.getAdjustment(primitiveProperty) + 0.01234567f;
     }
 
     @Override
-    public void visitBoolean(PrimitiveProperty primitiveProperty)
-    {
+    public void visitBoolean(PrimitiveProperty primitiveProperty) {
         this.result = this.getBoolean();
     }
 
     @Override
-    public void visitInstant(@Nonnull PrimitiveProperty primitiveProperty)
-    {
+    public void visitInstant(@Nonnull PrimitiveProperty primitiveProperty) {
         this.result = this.getUniqueLocalDateTime(primitiveProperty).toInstant(ZoneOffset.UTC);
     }
 
     @Override
-    public void visitLocalDate(@Nonnull PrimitiveProperty primitiveProperty)
-    {
+    public void visitLocalDate(@Nonnull PrimitiveProperty primitiveProperty) {
         this.result = this.getUniqueLocalDateTime(primitiveProperty).toLocalDate();
     }
 
     @Override
-    public void visitTemporalInstant(PrimitiveProperty primitiveProperty)
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".visitTemporalInstant() not implemented yet");
+    public void visitTemporalInstant(PrimitiveProperty primitiveProperty) {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".visitTemporalInstant() not implemented yet"
+        );
     }
 
     @Override
-    public void visitTemporalRange(@Nonnull PrimitiveProperty primitiveProperty)
-    {
-        if (!primitiveProperty.isSystem())
-        {
+    public void visitTemporalRange(@Nonnull PrimitiveProperty primitiveProperty) {
+        if (!primitiveProperty.isSystem()) {
             throw new AssertionError();
         }
     }
@@ -175,15 +158,12 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
     @Nonnull
     protected abstract LocalDateTime getLocalDateTime();
 
-    private int getAdjustment(@Nonnull PrimitiveProperty primitiveProperty)
-    {
+    private int getAdjustment(@Nonnull PrimitiveProperty primitiveProperty) {
         return primitiveProperty.isForeignKey() ? this.getIndex() : this.getNumber(primitiveProperty);
     }
 
-    private LocalDateTime getUniqueLocalDateTime(@Nonnull PrimitiveProperty primitiveProperty)
-    {
-        if (primitiveProperty.isForeignKey())
-        {
+    private LocalDateTime getUniqueLocalDateTime(@Nonnull PrimitiveProperty primitiveProperty) {
+        if (primitiveProperty.isForeignKey()) {
             return this.getLocalDateTime();
         }
 
@@ -191,9 +171,8 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
         return this.getLocalDateTime().plus(occurrences, ChronoUnit.YEARS);
     }
 
-    private int getNumber(DataTypeProperty dataTypeProperty)
-    {
-        int occurrences    = this.propertyCounts.addOccurrences(dataTypeProperty, 1);
+    private int getNumber(DataTypeProperty dataTypeProperty) {
+        int occurrences = this.propertyCounts.addOccurrences(dataTypeProperty, 1);
         int oldOccurrences = occurrences - 1;
         return oldOccurrences * 2 + this.getIndex();
     }

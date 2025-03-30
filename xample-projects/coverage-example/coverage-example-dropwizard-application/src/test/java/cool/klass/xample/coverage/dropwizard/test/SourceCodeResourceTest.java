@@ -25,24 +25,22 @@ import io.liftwizard.junit.extension.match.file.FileMatchExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class SourceCodeResourceTest
-        extends AbstractCoverageTest
-{
+public class SourceCodeResourceTest extends AbstractCoverageTest {
+
     @RegisterExtension
     final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
     @Test
-    void smoke_test()
-    {
+    void smoke_test() {
         Client client = this.getClient("smoke_test");
 
         Response response = client
-                .target("http://localhost:{port}/api/meta/code/element/{topLevelElementName}")
-                .resolveTemplate("port", this.appExtension.getLocalPort())
-                .resolveTemplate("topLevelElementName", "User")
-                .request(MediaType.TEXT_HTML_TYPE)
-                .header("Authorization", "Impersonation User ID")
-                .get();
+            .target("http://localhost:{port}/api/meta/code/element/{topLevelElementName}")
+            .resolveTemplate("port", this.appExtension.getLocalPort())
+            .resolveTemplate("topLevelElementName", "User")
+            .request(MediaType.TEXT_HTML_TYPE)
+            .header("Authorization", "Impersonation User ID")
+            .get();
 
         this.assertResponseStatus(response, Status.OK);
         String responseHtml = response.readEntity(String.class);

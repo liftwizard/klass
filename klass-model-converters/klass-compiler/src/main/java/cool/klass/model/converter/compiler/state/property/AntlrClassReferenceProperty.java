@@ -29,25 +29,23 @@ import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public abstract class AntlrClassReferenceProperty
-        extends AntlrReferenceProperty<AntlrClass>
-        implements AntlrClassReferenceOwner
-{
+    extends AntlrReferenceProperty<AntlrClass>
+    implements AntlrClassReferenceOwner {
+
     protected AntlrClassReference classReference;
 
     protected AntlrClassReferenceProperty(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext)
-    {
+        @Nonnull ParserRuleContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext
+    ) {
         super(elementContext, compilationUnit, ordinal, nameContext);
     }
 
     @Override
-    public void enterClassReference(@Nonnull AntlrClassReference classReference)
-    {
-        if (this.classReference != null)
-        {
+    public void enterClassReference(@Nonnull AntlrClassReference classReference) {
+        if (this.classReference != null) {
             throw new AssertionError();
         }
 
@@ -56,8 +54,7 @@ public abstract class AntlrClassReferenceProperty
 
     @Nonnull
     @Override
-    public AntlrClass getType()
-    {
+    public AntlrClass getType() {
         return this.classReference.getKlass();
     }
 }

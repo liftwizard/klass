@@ -33,67 +33,60 @@ import graphql.schema.DataFetchingFieldSelectionSet;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableMap;
 
-public class ByKeyDataFetcher
-        implements DataFetcher<Object>
-{
-    private final Klass                        klass;
-    private final ReladomoDataStore            dataStore;
+public class ByKeyDataFetcher implements DataFetcher<Object> {
+
+    private final Klass klass;
+    private final ReladomoDataStore dataStore;
     private final ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter;
 
     public ByKeyDataFetcher(
-            Klass klass,
-            ReladomoDataStore dataStore,
-            ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter)
-    {
-        this.klass                        = Objects.requireNonNull(klass);
-        this.dataStore                    = Objects.requireNonNull(dataStore);
+        Klass klass,
+        ReladomoDataStore dataStore,
+        ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
+    ) {
+        this.klass = Objects.requireNonNull(klass);
+        this.dataStore = Objects.requireNonNull(dataStore);
         this.reladomoTreeGraphqlConverter = Objects.requireNonNull(reladomoTreeGraphqlConverter);
     }
 
     @Override
-    public Object get(DataFetchingEnvironment environment)
-            throws Exception
-    {
-        MutableMap<DataTypeProperty, Object> keys = this.klass
-                .getKeyProperties()
+    public Object get(DataFetchingEnvironment environment) throws Exception {
+        MutableMap<DataTypeProperty, Object> keys =
+            this.klass.getKeyProperties()
                 .tap(keyProperty -> this.assertEnvironmentContains(environment, keyProperty))
                 .toMap(each -> each, keyProperty -> environment.getArgument(keyProperty.getName()));
 
         List<Object> result = this.dataStore.findByKeyReturningList(this.klass, keys);
 
         DataFetchingFieldSelectionSet selectionSet = environment.getSelectionSet();
-        RootReladomoTreeNode rootReladomoTreeNode = this.reladomoTreeGraphqlConverter.convert(
-                this.klass,
-                selectionSet);
+        RootReladomoTreeNode rootReladomoTreeNode = this.reladomoTreeGraphqlConverter.convert(this.klass, selectionSet);
 
         var deepFetcherListener = new ReladomoTreeNodeDeepFetcherListener(
-                this.dataStore,
-                (DomainList) result,
-                this.klass);
+            this.dataStore,
+            (DomainList) result,
+            this.klass
+        );
         rootReladomoTreeNode.walk(deepFetcherListener);
 
         var serializerVisitor = new ReladomoTreeObjectToDTOSerializerListener(
-                this.dataStore,
-                (DomainList) result,
-                this.klass);
+            this.dataStore,
+            (DomainList) result,
+            this.klass
+        );
         rootReladomoTreeNode.toManyAwareWalk(serializerVisitor);
 
         MutableList<Object> resultList = serializerVisitor.getResult();
-        if (resultList.isEmpty())
-        {
+        if (resultList.isEmpty()) {
             return null;
         }
-        if (resultList.size() > 1)
-        {
+        if (resultList.size() > 1) {
             throw new IllegalStateException("Expected 1 result, but got " + resultList.size());
         }
         return resultList.getOnly();
     }
 
-    private void assertEnvironmentContains(DataFetchingEnvironment environment, DataTypeProperty keyProperty)
-    {
-        if (environment.containsArgument(keyProperty.getName()))
-        {
+    private void assertEnvironmentContains(DataFetchingEnvironment environment, DataTypeProperty keyProperty) {
+        if (environment.containsArgument(keyProperty.getName())) {
             return;
         }
 

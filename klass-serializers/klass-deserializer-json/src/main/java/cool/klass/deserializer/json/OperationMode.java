@@ -16,8 +16,7 @@
 
 package cool.klass.deserializer.json;
 
-public enum OperationMode
-{
+public enum OperationMode {
     CREATE,
     REPLACE,
     PATCH,

@@ -16,6 +16,4 @@
 
 package klass.model.meta.domain;
 
-public class ClassifierInterfaceMappingDatabaseObject extends ClassifierInterfaceMappingDatabaseObjectAbstract
-{
-}
+public class ClassifierInterfaceMappingDatabaseObject extends ClassifierInterfaceMappingDatabaseObjectAbstract {}

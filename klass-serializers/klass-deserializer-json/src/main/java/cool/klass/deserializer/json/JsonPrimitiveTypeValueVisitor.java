@@ -24,27 +24,23 @@ import java.util.Objects;
 import com.fasterxml.jackson.databind.JsonNode;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
 
-public class JsonPrimitiveTypeValueVisitor implements PrimitiveTypeVisitor
-{
+public class JsonPrimitiveTypeValueVisitor implements PrimitiveTypeVisitor {
+
     private final JsonNode jsonDataTypeValue;
 
     private Object result;
 
-    public JsonPrimitiveTypeValueVisitor(JsonNode jsonDataTypeValue)
-    {
+    public JsonPrimitiveTypeValueVisitor(JsonNode jsonDataTypeValue) {
         this.jsonDataTypeValue = Objects.requireNonNull(jsonDataTypeValue);
     }
 
-    public Object getResult()
-    {
+    public Object getResult() {
         return this.result;
     }
 
     @Override
-    public void visitString()
-    {
-        if (!this.jsonDataTypeValue.isTextual())
-        {
+    public void visitString() {
+        if (!this.jsonDataTypeValue.isTextual()) {
             throw new AssertionError();
         }
 
@@ -52,10 +48,8 @@ public class JsonPrimitiveTypeValueVisitor implements PrimitiveTypeVisitor
     }
 
     @Override
-    public void visitInteger()
-    {
-        if (!this.jsonDataTypeValue.isIntegralNumber() || !this.jsonDataTypeValue.canConvertToInt())
-        {
+    public void visitInteger() {
+        if (!this.jsonDataTypeValue.isIntegralNumber() || !this.jsonDataTypeValue.canConvertToInt()) {
             throw new AssertionError();
         }
 
@@ -63,10 +57,8 @@ public class JsonPrimitiveTypeValueVisitor implements PrimitiveTypeVisitor
     }
 
     @Override
-    public void visitLong()
-    {
-        if (!this.jsonDataTypeValue.isIntegralNumber() || !this.jsonDataTypeValue.canConvertToLong())
-        {
+    public void visitLong() {
+        if (!this.jsonDataTypeValue.isIntegralNumber() || !this.jsonDataTypeValue.canConvertToLong()) {
             throw new AssertionError();
         }
 
@@ -74,13 +66,13 @@ public class JsonPrimitiveTypeValueVisitor implements PrimitiveTypeVisitor
     }
 
     @Override
-    public void visitDouble()
-    {
-        if (!this.jsonDataTypeValue.isDouble()
-                && !this.jsonDataTypeValue.isFloat()
-                && !this.jsonDataTypeValue.isInt()
-                && !this.jsonDataTypeValue.isLong())
-        {
+    public void visitDouble() {
+        if (
+            !this.jsonDataTypeValue.isDouble() &&
+            !this.jsonDataTypeValue.isFloat() &&
+            !this.jsonDataTypeValue.isInt() &&
+            !this.jsonDataTypeValue.isLong()
+        ) {
             throw new AssertionError();
         }
 
@@ -88,34 +80,31 @@ public class JsonPrimitiveTypeValueVisitor implements PrimitiveTypeVisitor
     }
 
     @Override
-    public void visitFloat()
-    {
-        if (!this.jsonDataTypeValue.isDouble()
-                && !this.jsonDataTypeValue.isFloat()
-                && !this.jsonDataTypeValue.isInt()
-                && !this.jsonDataTypeValue.isLong()
-                || !this.hasValidFloatString())
-        {
+    public void visitFloat() {
+        if (
+            (!this.jsonDataTypeValue.isDouble() &&
+                !this.jsonDataTypeValue.isFloat() &&
+                !this.jsonDataTypeValue.isInt() &&
+                !this.jsonDataTypeValue.isLong()) ||
+            !this.hasValidFloatString()
+        ) {
             throw new AssertionError();
         }
 
         this.result = this.jsonDataTypeValue.floatValue();
     }
 
-    private boolean hasValidFloatString()
-    {
-        double doubleValue  = this.jsonDataTypeValue.doubleValue();
-        float  floatValue   = this.jsonDataTypeValue.floatValue();
+    private boolean hasValidFloatString() {
+        double doubleValue = this.jsonDataTypeValue.doubleValue();
+        float floatValue = this.jsonDataTypeValue.floatValue();
         String doubleString = Double.toString(doubleValue);
-        String floatString  = Float.toString(floatValue);
+        String floatString = Float.toString(floatValue);
         return doubleString.equals(floatString);
     }
 
     @Override
-    public void visitBoolean()
-    {
-        if (!this.jsonDataTypeValue.isBoolean())
-        {
+    public void visitBoolean() {
+        if (!this.jsonDataTypeValue.isBoolean()) {
             throw new AssertionError();
         }
 
@@ -123,26 +112,21 @@ public class JsonPrimitiveTypeValueVisitor implements PrimitiveTypeVisitor
     }
 
     @Override
-    public void visitInstant()
-    {
+    public void visitInstant() {
         this.visitTemporal();
     }
 
     @Override
-    public void visitLocalDate()
-    {
-        if (!this.jsonDataTypeValue.isTextual())
-        {
+    public void visitLocalDate() {
+        if (!this.jsonDataTypeValue.isTextual()) {
             throw new AssertionError();
         }
 
         String text = this.jsonDataTypeValue.textValue();
-        if (text.equals("now"))
-        {
+        if (text.equals("now")) {
             throw new RuntimeException("TODO: Support 'now' as a value for dates.");
         }
-        if (text.equals("infinity"))
-        {
+        if (text.equals("infinity")) {
             throw new RuntimeException("TODO: Support 'infinity' as a value for dates.");
         }
 
@@ -150,40 +134,31 @@ public class JsonPrimitiveTypeValueVisitor implements PrimitiveTypeVisitor
     }
 
     @Override
-    public void visitTemporalInstant()
-    {
+    public void visitTemporalInstant() {
         this.visitTemporal();
     }
 
     @Override
-    public void visitTemporalRange()
-    {
+    public void visitTemporalRange() {
         this.visitTemporal();
     }
 
-    private void visitTemporal()
-    {
-        if (!this.jsonDataTypeValue.isTextual())
-        {
+    private void visitTemporal() {
+        if (!this.jsonDataTypeValue.isTextual()) {
             throw new AssertionError();
         }
 
         String text = this.jsonDataTypeValue.textValue();
-        if (text.equals("now"))
-        {
+        if (text.equals("now")) {
             throw new RuntimeException("TODO: Support 'now' as a value for dates.");
         }
-        if (text.equals("infinity"))
-        {
+        if (text.equals("infinity")) {
             throw new RuntimeException("TODO: Support 'infinity' as a value for dates.");
         }
 
-        try
-        {
+        try {
             this.result = Instant.parse(text);
-        }
-        catch (DateTimeParseException e)
-        {
+        } catch (DateTimeParseException e) {
             throw new AssertionError(e);
         }
     }

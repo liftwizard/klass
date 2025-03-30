@@ -19,8 +19,7 @@ package cool.klass.model.meta.domain.api.visitor;
 import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 
-public interface DataTypePropertyVisitor
-{
+public interface DataTypePropertyVisitor {
     void visitEnumerationProperty(EnumerationProperty enumerationProperty);
 
     void visitString(PrimitiveProperty primitiveProperty);

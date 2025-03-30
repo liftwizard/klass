@@ -27,53 +27,48 @@ import cool.klass.model.meta.domain.property.validation.MinPropertyValidationImp
 import cool.klass.model.meta.grammar.KlassParser.MinValidationContext;
 import cool.klass.model.meta.grammar.KlassParser.MinValidationKeywordContext;
 
-public class AntlrMinPropertyValidation
-        extends AbstractAntlrNumericPropertyValidation
-{
+public class AntlrMinPropertyValidation extends AbstractAntlrNumericPropertyValidation {
+
     private MinPropertyValidationBuilder elementBuilder;
 
     public AntlrMinPropertyValidation(
-            @Nonnull MinValidationContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            @Nonnull AntlrDataTypeProperty<?> owningProperty,
-            int number)
-    {
+        @Nonnull MinValidationContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        @Nonnull AntlrDataTypeProperty<?> owningProperty,
+        int number
+    ) {
         super(elementContext, compilationUnit, owningProperty, number);
     }
 
     @Override
-    public MinPropertyValidationBuilder build()
-    {
-        if (this.elementBuilder != null)
-        {
+    public MinPropertyValidationBuilder build() {
+        if (this.elementBuilder != null) {
             throw new IllegalStateException();
         }
         this.elementBuilder = new MinPropertyValidationBuilder(
-                (MinValidationContext) this.elementContext,
-                this.getMacroElementBuilder(),
-                this.getSourceCodeBuilder(),
-                this.owningProperty.getElementBuilder(),
-                this.number);
+            (MinValidationContext) this.elementContext,
+            this.getMacroElementBuilder(),
+            this.getSourceCodeBuilder(),
+            this.owningProperty.getElementBuilder(),
+            this.number
+        );
         return this.elementBuilder;
     }
 
     @Nonnull
     @Override
-    public MinPropertyValidationBuilder getElementBuilder()
-    {
+    public MinPropertyValidationBuilder getElementBuilder() {
         return Objects.requireNonNull(this.elementBuilder);
     }
 
     @Nonnull
     @Override
-    public MinValidationContext getElementContext()
-    {
+    public MinValidationContext getElementContext() {
         return (MinValidationContext) super.getElementContext();
     }
 
     @Override
-    public MinValidationKeywordContext getKeywordToken()
-    {
+    public MinValidationKeywordContext getKeywordToken() {
         return this.getElementContext().minValidationKeyword();
     }
 }

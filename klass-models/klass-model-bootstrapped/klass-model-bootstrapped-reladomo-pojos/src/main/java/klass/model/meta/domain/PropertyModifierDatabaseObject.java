@@ -16,6 +16,4 @@
 
 package klass.model.meta.domain;
 
-public class PropertyModifierDatabaseObject extends PropertyModifierDatabaseObjectAbstract
-{
-}
+public class PropertyModifierDatabaseObject extends PropertyModifierDatabaseObjectAbstract {}

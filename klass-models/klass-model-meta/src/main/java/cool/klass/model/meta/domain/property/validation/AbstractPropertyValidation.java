@@ -31,33 +31,31 @@ import cool.klass.model.meta.domain.property.AbstractDataTypeProperty;
 import cool.klass.model.meta.domain.property.AbstractDataTypeProperty.DataTypePropertyBuilder;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public abstract class AbstractPropertyValidation
-        extends AbstractElement
-        implements PropertyValidation
-{
+public abstract class AbstractPropertyValidation extends AbstractElement implements PropertyValidation {
+
     private final AbstractDataTypeProperty<?> owningProperty;
 
     protected AbstractPropertyValidation(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode,
-            @Nonnull AbstractDataTypeProperty<?> owningProperty)
-    {
+        @Nonnull ParserRuleContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode,
+        @Nonnull AbstractDataTypeProperty<?> owningProperty
+    ) {
         super(elementContext, macroElement, sourceCode);
         this.owningProperty = Objects.requireNonNull(owningProperty);
     }
 
     public abstract static class PropertyValidationBuilder<BuiltElement extends AbstractPropertyValidation>
-            extends ElementBuilder<BuiltElement>
-    {
+        extends ElementBuilder<BuiltElement> {
+
         protected final DataTypePropertyBuilder<?, ?, ?> owningPropertyBuilder;
 
         protected PropertyValidationBuilder(
-                @Nonnull ParserRuleContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode,
-                @Nonnull DataTypePropertyBuilder<?, ?, ?> owningPropertyBuilder)
-        {
+            @Nonnull ParserRuleContext elementContext,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode,
+            @Nonnull DataTypePropertyBuilder<?, ?, ?> owningPropertyBuilder
+        ) {
             super(elementContext, macroElement, sourceCode);
             this.owningPropertyBuilder = Objects.requireNonNull(owningPropertyBuilder);
         }

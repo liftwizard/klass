@@ -32,74 +32,75 @@ import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.PrimitivePropertyContext;
 
 public final class PrimitivePropertyImpl
-        extends AbstractDataTypeProperty<PrimitiveType>
-        implements PrimitivePropertyWithSourceCode
-{
+    extends AbstractDataTypeProperty<PrimitiveType>
+    implements PrimitivePropertyWithSourceCode {
+
     private PrimitivePropertyImpl(
+        @Nonnull PrimitivePropertyContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext,
+        @Nonnull PrimitiveType primitiveType,
+        @Nonnull AbstractClassifier owningClassifier,
+        boolean isOptional
+    ) {
+        super(
+            elementContext,
+            macroElement,
+            sourceCode,
+            ordinal,
+            nameContext,
+            primitiveType,
+            owningClassifier,
+            isOptional
+        );
+    }
+
+    @Nonnull
+    @Override
+    public PrimitivePropertyContext getElementContext() {
+        return (PrimitivePropertyContext) super.getElementContext();
+    }
+
+    public static final class PrimitivePropertyBuilder
+        extends DataTypePropertyBuilder<PrimitiveType, PrimitiveType, PrimitivePropertyImpl> {
+
+        public PrimitivePropertyBuilder(
             @Nonnull PrimitivePropertyContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode,
             int ordinal,
             @Nonnull IdentifierContext nameContext,
             @Nonnull PrimitiveType primitiveType,
-            @Nonnull AbstractClassifier owningClassifier,
-            boolean isOptional)
-    {
-        super(
+            @Nonnull ClassifierBuilder<?> owningClassifierBuilder,
+            boolean isOptional
+        ) {
+            super(
                 elementContext,
                 macroElement,
                 sourceCode,
                 ordinal,
                 nameContext,
                 primitiveType,
-                owningClassifier,
-                isOptional);
-    }
-
-    @Nonnull
-    @Override
-    public PrimitivePropertyContext getElementContext()
-    {
-        return (PrimitivePropertyContext) super.getElementContext();
-    }
-
-    public static final class PrimitivePropertyBuilder
-            extends DataTypePropertyBuilder<PrimitiveType, PrimitiveType, PrimitivePropertyImpl>
-    {
-        public PrimitivePropertyBuilder(
-                @Nonnull PrimitivePropertyContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode,
-                int ordinal,
-                @Nonnull IdentifierContext nameContext,
-                @Nonnull PrimitiveType primitiveType,
-                @Nonnull ClassifierBuilder<?> owningClassifierBuilder,
-                boolean isOptional)
-        {
-            super(
-                    elementContext,
-                    macroElement,
-                    sourceCode,
-                    ordinal,
-                    nameContext,
-                    primitiveType,
-                    owningClassifierBuilder,
-                    isOptional);
+                owningClassifierBuilder,
+                isOptional
+            );
         }
 
         @Override
         @Nonnull
-        protected PrimitivePropertyImpl buildUnsafe()
-        {
+        protected PrimitivePropertyImpl buildUnsafe() {
             return new PrimitivePropertyImpl(
-                    (PrimitivePropertyContext) this.elementContext,
-                    this.macroElement.map(ElementBuilder::getElement),
-                    this.sourceCode.build(),
-                    this.ordinal,
-                    this.getNameContext(),
-                    this.typeBuilder,
-                    this.owningClassifierBuilder.getElement(),
-                    this.isOptional);
+                (PrimitivePropertyContext) this.elementContext,
+                this.macroElement.map(ElementBuilder::getElement),
+                this.sourceCode.build(),
+                this.ordinal,
+                this.getNameContext(),
+                this.typeBuilder,
+                this.owningClassifierBuilder.getElement(),
+                this.isOptional
+            );
         }
     }
 }

@@ -20,9 +20,7 @@ import javax.annotation.Nonnull;
 
 import cool.klass.model.meta.domain.api.Klass;
 
-public interface ParameterizedProperty
-        extends ReferenceProperty
-{
+public interface ParameterizedProperty extends ReferenceProperty {
     @Nonnull
     @Override
     Klass getType();
@@ -32,8 +30,7 @@ public interface ParameterizedProperty
     Klass getOwningClassifier();
 
     @Override
-    default void visit(@Nonnull PropertyVisitor visitor)
-    {
+    default void visit(@Nonnull PropertyVisitor visitor) {
         visitor.visitParameterizedProperty(this);
     }
 }

@@ -31,30 +31,27 @@ import cool.klass.model.meta.domain.operator.AbstractOperator.AbstractOperatorBu
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.list.ListIterable;
 
-public abstract class AntlrOperator
-        extends AntlrElement
-{
-    protected final String                operatorText;
-    protected       OperatorAntlrCriteria owningOperatorAntlrCriteria;
+public abstract class AntlrOperator extends AntlrElement {
+
+    protected final String operatorText;
+    protected OperatorAntlrCriteria owningOperatorAntlrCriteria;
 
     protected AntlrOperator(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            @Nonnull String operatorText)
-    {
+        @Nonnull ParserRuleContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        @Nonnull String operatorText
+    ) {
         super(elementContext, compilationUnit);
         this.operatorText = Objects.requireNonNull(operatorText);
     }
 
-    public void setOwningOperatorAntlrCriteria(OperatorAntlrCriteria operatorAntlrCriteria)
-    {
+    public void setOwningOperatorAntlrCriteria(OperatorAntlrCriteria operatorAntlrCriteria) {
         this.owningOperatorAntlrCriteria = Objects.requireNonNull(operatorAntlrCriteria);
     }
 
     @Nonnull
     @Override
-    public Optional<IAntlrElement> getSurroundingElement()
-    {
+    public Optional<IAntlrElement> getSurroundingElement() {
         return Optional.of(this.owningOperatorAntlrCriteria);
     }
 
@@ -66,7 +63,8 @@ public abstract class AntlrOperator
     public abstract AbstractOperatorBuilder<?> getElementBuilder();
 
     public abstract void checkTypes(
-            CompilerAnnotationHolder compilerAnnotationHolder,
-            ListIterable<AntlrType> sourceTypes,
-            ListIterable<AntlrType> targetTypes);
+        CompilerAnnotationHolder compilerAnnotationHolder,
+        ListIterable<AntlrType> sourceTypes,
+        ListIterable<AntlrType> targetTypes
+    );
 }

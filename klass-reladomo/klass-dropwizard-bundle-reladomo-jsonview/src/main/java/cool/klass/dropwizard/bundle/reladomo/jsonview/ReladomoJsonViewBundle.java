@@ -34,32 +34,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @AutoService(PrioritizedBundle.class)
-public class ReladomoJsonViewBundle
-        implements PrioritizedBundle
-{
+public class ReladomoJsonViewBundle implements PrioritizedBundle {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ReladomoJsonViewBundle.class);
 
     @Override
-    public int getPriority()
-    {
+    public int getPriority() {
         return -2;
     }
 
     @Override
-    public void runWithMdc(@Nonnull Object configuration, @Nonnull Environment environment)
-    {
+    public void runWithMdc(@Nonnull Object configuration, @Nonnull Environment environment) {
         DomainModelFactoryProvider domainModelFactoryProvider =
-                this.safeCastConfiguration(DomainModelFactoryProvider.class, configuration);
+            this.safeCastConfiguration(DomainModelFactoryProvider.class, configuration);
 
-        DataStoreFactoryProvider dataStoreFactoryProvider = this.safeCastConfiguration(
-                DataStoreFactoryProvider.class,
-                configuration);
+        DataStoreFactoryProvider dataStoreFactoryProvider =
+            this.safeCastConfiguration(DataStoreFactoryProvider.class, configuration);
 
         LOGGER.info("Running {}.", this.getClass().getSimpleName());
 
         ObjectMapper objectMapper = environment.getObjectMapper();
-        DomainModel  domainModel  = domainModelFactoryProvider.getDomainModelFactory().createDomainModel(objectMapper);
-        DataStore    dataStore    = dataStoreFactoryProvider.getDataStoreFactory().createDataStore();
+        DomainModel domainModel = domainModelFactoryProvider.getDomainModelFactory().createDomainModel(objectMapper);
+        DataStore dataStore = dataStoreFactoryProvider.getDataStoreFactory().createDataStore();
 
         JsonSerializer<MithraObject> serializer = new ReladomoJsonViewSerializer(domainModel, dataStore);
 

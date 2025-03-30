@@ -24,9 +24,7 @@ import cool.klass.model.meta.domain.api.source.property.DataTypePropertyWithSour
 import cool.klass.model.meta.domain.api.value.TypeMemberReferencePath;
 import cool.klass.model.meta.grammar.KlassParser.TypeMemberReferencePathContext;
 
-public interface TypeMemberReferencePathWithSourceCode
-        extends TypeMemberReferencePath, ElementWithSourceCode
-{
+public interface TypeMemberReferencePathWithSourceCode extends TypeMemberReferencePath, ElementWithSourceCode {
     @Override
     TypeMemberReferencePathContext getElementContext();
 

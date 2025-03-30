@@ -20,15 +20,12 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-public interface EnumerationLiteral
-        extends TypedElement
-{
+public interface EnumerationLiteral extends TypedElement {
     @Nonnull
     Optional<String> getDeclaredPrettyName();
 
     @Nonnull
-    default String getPrettyName()
-    {
+    default String getPrettyName() {
         return this.getDeclaredPrettyName().orElseGet(this::getName);
     }
 

@@ -34,203 +34,175 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.impl.factory.Lists;
 
 // TODO: Specific subclasses for the specific antlr context types
-public class AntlrModifier
-        extends AntlrOrdinalElement
-{
+public class AntlrModifier extends AntlrOrdinalElement {
+
     public static final AntlrModifier AMBIGUOUS = new AntlrModifier(
-            new ClassifierModifierContext(AMBIGUOUS_PARENT, -1),
-            Optional.empty(),
-            -1,
-            AntlrClassifier.AMBIGUOUS);
+        new ClassifierModifierContext(AMBIGUOUS_PARENT, -1),
+        Optional.empty(),
+        -1,
+        AntlrClassifier.AMBIGUOUS
+    );
 
     public static final AntlrModifier NOT_FOUND = new AntlrModifier(
-            new ClassifierModifierContext(NOT_FOUND_PARENT, -1),
-            Optional.empty(),
-            -1,
-            AntlrClassifier.NOT_FOUND);
+        new ClassifierModifierContext(NOT_FOUND_PARENT, -1),
+        Optional.empty(),
+        -1,
+        AntlrClassifier.NOT_FOUND
+    );
 
     public static final ImmutableList<String> AUDIT_PROPERTY_NAMES = Lists.immutable.with(
-            "createdBy",
-            "createdOn",
-            "lastUpdatedBy");
+        "createdBy",
+        "createdOn",
+        "lastUpdatedBy"
+    );
 
     private final AntlrNamedElement surroundingElement;
-    private       ModifierBuilder   elementBuilder;
+    private ModifierBuilder elementBuilder;
 
     public AntlrModifier(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            int ordinal,
-            @Nonnull AntlrNamedElement surroundingElement)
-    {
+        @Nonnull ParserRuleContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        int ordinal,
+        @Nonnull AntlrNamedElement surroundingElement
+    ) {
         super(elementContext, compilationUnit, ordinal);
         this.surroundingElement = surroundingElement;
     }
 
     @Nonnull
     @Override
-    public Optional<IAntlrElement> getSurroundingElement()
-    {
+    public Optional<IAntlrElement> getSurroundingElement() {
         return Optional.of(this.surroundingElement);
     }
 
-    public Token getKeywordToken()
-    {
+    public Token getKeywordToken() {
         ParserRuleContext elementContext = this.getElementContext();
-        int               childCount     = elementContext.getChildCount();
-        if (childCount != 1)
-        {
+        int childCount = elementContext.getChildCount();
+        if (childCount != 1) {
             throw new AssertionError();
         }
         return elementContext.getStart();
     }
 
-    public String getKeyword()
-    {
+    public String getKeyword() {
         return this.getKeywordToken().getText();
     }
 
-    public boolean is(String name)
-    {
+    public boolean is(String name) {
         return this.getKeyword().equals(name);
     }
 
-    public boolean isAudit()
-    {
+    public boolean isAudit() {
         return this.is("audited") || AUDIT_PROPERTY_NAMES.contains(this.getKeyword());
     }
 
-    public boolean isCreatedBy()
-    {
+    public boolean isCreatedBy() {
         return this.is("createdBy");
     }
 
-    public boolean isCreatedOn()
-    {
+    public boolean isCreatedOn() {
         return this.is("createdOn");
     }
 
-    public boolean isLastUpdatedBy()
-    {
+    public boolean isLastUpdatedBy() {
         return this.is("lastUpdatedBy");
     }
 
-    public boolean isUser()
-    {
+    public boolean isUser() {
         return this.is("userId");
     }
 
-    public boolean isPrivate()
-    {
+    public boolean isPrivate() {
         return this.is("private");
     }
 
-    public boolean isFinal()
-    {
+    public boolean isFinal() {
         return this.is("final");
     }
 
-    public boolean isSystem()
-    {
+    public boolean isSystem() {
         return this.is("system");
     }
 
-    public boolean isValid()
-    {
+    public boolean isValid() {
         return this.is("valid");
     }
 
-    public boolean isFrom()
-    {
+    public boolean isFrom() {
         return this.is("from");
     }
 
-    public boolean isTo()
-    {
+    public boolean isTo() {
         return this.is("to");
     }
 
-    public boolean isVersion()
-    {
+    public boolean isVersion() {
         return this.is("version");
     }
 
-    public boolean isUserId()
-    {
+    public boolean isUserId() {
         return this.is("userId");
     }
 
-    public boolean isId()
-    {
+    public boolean isId() {
         return this.is("id");
     }
 
-    public boolean isKey()
-    {
+    public boolean isKey() {
         return this.is("key");
     }
 
-    public boolean isDerived()
-    {
+    public boolean isDerived() {
         return this.is("derived");
     }
 
-    public boolean isOwned()
-    {
+    public boolean isOwned() {
         return this.is("owned");
     }
 
-    public boolean isTransient()
-    {
+    public boolean isTransient() {
         return this.is("transient");
     }
 
-    public boolean isSystemTemporal()
-    {
+    public boolean isSystemTemporal() {
         return this.is("systemTemporal");
     }
 
-    public boolean isValidTemporal()
-    {
+    public boolean isValidTemporal() {
         return this.is("validTemporal");
     }
 
-    public boolean isBitemporal()
-    {
+    public boolean isBitemporal() {
         return this.is("bitemporal");
     }
 
-    public boolean isTemporal()
-    {
+    public boolean isTemporal() {
         return this.isSystemTemporal() || this.isValidTemporal() || this.isBitemporal();
     }
 
     @Nonnull
-    public ModifierBuilder build()
-    {
-        if (this.elementBuilder != null)
-        {
+    public ModifierBuilder build() {
+        if (this.elementBuilder != null) {
             throw new IllegalStateException();
         }
         this.elementBuilder = new ModifierBuilder(
-                this.getElementContext(),
-                this.getMacroElementBuilder(),
-                this.getSourceCodeBuilder(),
-                this.ordinal,
-                this.surroundingElement.getElementBuilder());
+            this.getElementContext(),
+            this.getMacroElementBuilder(),
+            this.getSourceCodeBuilder(),
+            this.ordinal,
+            this.surroundingElement.getElementBuilder()
+        );
         return this.elementBuilder;
     }
 
     @Override
     @Nonnull
-    public ModifierBuilder getElementBuilder()
-    {
+    public ModifierBuilder getElementBuilder() {
         return Objects.requireNonNull(this.elementBuilder);
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.getKeyword();
     }
 }

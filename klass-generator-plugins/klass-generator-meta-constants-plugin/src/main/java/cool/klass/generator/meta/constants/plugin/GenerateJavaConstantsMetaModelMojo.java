@@ -30,15 +30,17 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-        name = "generate-meta-model-constants",
-        defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-        threadSafe = true,
-        requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class GenerateJavaConstantsMetaModelMojo extends AbstractGenerateMojo
-{
+    name = "generate-meta-model-constants",
+    defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+    threadSafe = true,
+    requiresDependencyResolution = ResolutionScope.RUNTIME
+)
+public class GenerateJavaConstantsMetaModelMojo extends AbstractGenerateMojo {
+
     @Parameter(
-            property = "outputDirectory",
-            defaultValue = "${project.build.directory}/generated-sources/meta-model-constants")
+        property = "outputDirectory",
+        defaultValue = "${project.build.directory}/generated-sources/meta-model-constants"
+    )
     private File outputDirectory;
 
     @Parameter(property = "applicationName", required = true)
@@ -48,25 +50,21 @@ public class GenerateJavaConstantsMetaModelMojo extends AbstractGenerateMojo
     private String rootPackageName;
 
     @Override
-    public void execute() throws MojoExecutionException
-    {
-        if (!this.outputDirectory.exists())
-        {
+    public void execute() throws MojoExecutionException {
+        if (!this.outputDirectory.exists()) {
             this.outputDirectory.mkdirs();
         }
 
         DomainModel domainModel = this.getDomainModel();
-        Path        outputPath  = this.outputDirectory.toPath();
-        try
-        {
+        Path outputPath = this.outputDirectory.toPath();
+        try {
             JavaConstantsMetaModelGenerator javaConstantsMetaModelGenerator = new JavaConstantsMetaModelGenerator(
-                    domainModel,
-                    this.applicationName,
-                    this.rootPackageName);
+                domainModel,
+                this.applicationName,
+                this.rootPackageName
+            );
             javaConstantsMetaModelGenerator.writeJavaConstantsMetaModelFiles(outputPath);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
 

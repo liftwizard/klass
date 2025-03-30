@@ -27,40 +27,36 @@ import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactory;
 import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactoryProvider;
 
 public class KlassBootstrappedMetaModelConfiguration
-        extends AbstractKlassConfiguration
-        implements SinglePageRedirectFilterFactoryProvider,
-        GraphQLFactoryProvider
-{
+    extends AbstractKlassConfiguration
+    implements SinglePageRedirectFilterFactoryProvider, GraphQLFactoryProvider {
+
     @Nonnull
-    private @Valid SinglePageRedirectFilterFactory singlePageRedirectFilterFactory = new SinglePageRedirectFilterFactory();
+    private @Valid SinglePageRedirectFilterFactory singlePageRedirectFilterFactory =
+        new SinglePageRedirectFilterFactory();
 
     @Nonnull
     private @Valid GraphQLFactory graphQLFactory = new GraphQLFactory();
 
     @Override
     @JsonProperty("singlePageRedirectFilter")
-    public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory()
-    {
+    public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory() {
         return this.singlePageRedirectFilterFactory;
     }
 
     @JsonProperty("singlePageRedirectFilter")
-    public void setSinglePageRedirectFilterFactory(SinglePageRedirectFilterFactory singlePageRedirectFilterFactory)
-    {
+    public void setSinglePageRedirectFilterFactory(SinglePageRedirectFilterFactory singlePageRedirectFilterFactory) {
         this.singlePageRedirectFilterFactory = singlePageRedirectFilterFactory;
     }
 
     @Override
     @Nonnull
     @JsonProperty("graphQL")
-    public GraphQLFactory getGraphQLFactory()
-    {
+    public GraphQLFactory getGraphQLFactory() {
         return this.graphQLFactory;
     }
 
     @JsonProperty("graphQL")
-    public void setGraphQLFactory(@Nonnull GraphQLFactory factory)
-    {
+    public void setGraphQLFactory(@Nonnull GraphQLFactory factory) {
         this.graphQLFactory = factory;
     }
 }

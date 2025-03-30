@@ -16,8 +16,7 @@
 
 package cool.klass.model.meta.domain.api.visitor;
 
-public interface PrimitiveTypeVisitor
-{
+public interface PrimitiveTypeVisitor {
     void visitString() throws Exception;
 
     void visitInteger() throws Exception;

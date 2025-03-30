@@ -23,34 +23,27 @@ import javax.annotation.Nonnull;
 import cool.klass.generator.perpackage.AbstractPerPackageGenerator;
 import cool.klass.model.meta.domain.api.DomainModel;
 
-public class KlassServiceGenerator
-        extends AbstractPerPackageGenerator
-{
-    public KlassServiceGenerator(@Nonnull DomainModel domainModel)
-    {
+public class KlassServiceGenerator extends AbstractPerPackageGenerator {
+
+    public KlassServiceGenerator(@Nonnull DomainModel domainModel) {
         super(domainModel);
     }
 
     @Nonnull
     @Override
-    protected Path getPluginRelativePath(Path path)
-    {
-        return path
-                .resolve("klass")
-                .resolve("service");
+    protected Path getPluginRelativePath(Path path) {
+        return path.resolve("klass").resolve("service");
     }
 
     @Override
     @Nonnull
-    protected String getFileName()
-    {
+    protected String getFileName() {
         return "generated-services.klass";
     }
 
     @Override
     @Nonnull
-    protected String getPackageSourceCode(@Nonnull String fullyQualifiedPackage)
-    {
+    protected String getPackageSourceCode(@Nonnull String fullyQualifiedPackage) {
         return KlassServiceSourceCodeGenerator.getPackageSourceCode(this.domainModel, fullyQualifiedPackage);
     }
 }
