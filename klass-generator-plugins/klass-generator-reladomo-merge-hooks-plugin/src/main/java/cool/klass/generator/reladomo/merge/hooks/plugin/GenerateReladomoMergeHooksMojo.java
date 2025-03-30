@@ -28,21 +28,22 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-        name = "generate-reladomo-merge-hooks",
-        defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-        threadSafe = true,
-        requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class GenerateReladomoMergeHooksMojo extends AbstractGenerateMojo
-{
-    @Parameter(property = "outputDirectory",
-               defaultValue = "${project.build.directory}/generated-sources/reladomo-merge-hooks")
+    name = "generate-reladomo-merge-hooks",
+    defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+    threadSafe = true,
+    requiresDependencyResolution = ResolutionScope.RUNTIME
+)
+public class GenerateReladomoMergeHooksMojo extends AbstractGenerateMojo {
+
+    @Parameter(
+        property = "outputDirectory",
+        defaultValue = "${project.build.directory}/generated-sources/reladomo-merge-hooks"
+    )
     private File outputDirectory;
 
     @Override
-    public void execute() throws MojoExecutionException
-    {
-        if (!this.outputDirectory.exists())
-        {
+    public void execute() throws MojoExecutionException {
+        if (!this.outputDirectory.exists()) {
             this.outputDirectory.mkdirs();
         }
 

@@ -26,21 +26,17 @@ import cool.klass.model.meta.domain.api.modifier.Modifier;
 import cool.klass.model.meta.domain.api.order.OrderBy;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public interface ReferenceProperty
-        extends Property
-{
+public interface ReferenceProperty extends Property {
     @Nonnull
     Multiplicity getMultiplicity();
 
     @Override
-    default boolean isRequired()
-    {
+    default boolean isRequired() {
         return this.getMultiplicity().isRequired();
     }
 
     @Override
-    default boolean isDerived()
-    {
+    default boolean isDerived() {
         // TODO: derived ReferenceProperties
         return false;
     }
@@ -56,44 +52,36 @@ public interface ReferenceProperty
     ImmutableList<Modifier> getModifiers();
 
     // TODO: Delete overrides
-    default boolean isOwned()
-    {
+    default boolean isOwned() {
         return this.getModifiers().anySatisfy(modifier -> modifier.is("owned"));
     }
 
-    default boolean isVersion()
-    {
+    default boolean isVersion() {
         return this.getModifiers().anySatisfy(Modifier::isVersion);
     }
 
-    default boolean isAudit()
-    {
+    default boolean isAudit() {
         return this.isCreatedBy() || this.isLastUpdatedBy();
     }
 
-    default boolean isCreatedBy()
-    {
+    default boolean isCreatedBy() {
         return this.getModifiers().anySatisfy(Modifier::isCreatedBy);
     }
 
-    default boolean isLastUpdatedBy()
-    {
+    default boolean isLastUpdatedBy() {
         return this.getModifiers().anySatisfy(Modifier::isLastUpdatedBy);
     }
 
-    default boolean isFinal()
-    {
+    default boolean isFinal() {
         return this.getModifiers().anySatisfy(Modifier::isFinal);
     }
 
     @Override
-    default boolean isPrivate()
-    {
+    default boolean isPrivate() {
         return this.getModifiers().anySatisfy(Modifier::isPrivate);
     }
 
-    default boolean isToSelf()
-    {
+    default boolean isToSelf() {
         return this.getOwningClassifier().equals(this.getType());
     }
 }

@@ -32,144 +32,115 @@ import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import cool.klass.model.meta.domain.api.service.ServiceGroup;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class GraphQLElementToSchemaSourceVisitor
-        implements TopLevelElementVisitor
-{
+public class GraphQLElementToSchemaSourceVisitor implements TopLevelElementVisitor {
+
     private String sourceCode;
 
     @Override
-    public void visitEnumeration(Enumeration enumeration)
-    {
+    public void visitEnumeration(Enumeration enumeration) {
         this.sourceCode = this.getEnumerationSourceCode(enumeration);
     }
 
     @Override
-    public void visitInterface(Interface anInterface)
-    {
+    public void visitInterface(Interface anInterface) {
         this.sourceCode = "";
     }
 
     @Override
-    public void visitKlass(Klass klass)
-    {
+    public void visitKlass(Klass klass) {
         this.sourceCode = this.getClassSourceCode(klass);
     }
 
     @Override
-    public void visitAssociation(Association association)
-    {
+    public void visitAssociation(Association association) {
         this.sourceCode = "";
     }
 
     @Override
-    public void visitProjection(Projection projection)
-    {
+    public void visitProjection(Projection projection) {
         this.sourceCode = "";
     }
 
     @Override
-    public void visitServiceGroup(ServiceGroup serviceGroup)
-    {
+    public void visitServiceGroup(ServiceGroup serviceGroup) {
         this.sourceCode = "";
     }
 
     @Nonnull
-    private String getEnumerationSourceCode(@Nonnull Enumeration enumeration)
-    {
+    private String getEnumerationSourceCode(@Nonnull Enumeration enumeration) {
         String enumerationLiteralsSourceCode = enumeration
-                .getEnumerationLiterals()
-                .collect(NamedElement::getName)
-                .collect(name -> String.format("    %s\n", name))
-                .makeString("");
+            .getEnumerationLiterals()
+            .collect(NamedElement::getName)
+            .collect(name -> String.format("    %s\n", name))
+            .makeString("");
 
-        return ""
-                + "enum " + enumeration.getName() + " {\n"
-                + enumerationLiteralsSourceCode
-                + "}\n"
-                + '\n';
+        return "" + "enum " + enumeration.getName() + " {\n" + enumerationLiteralsSourceCode + "}\n" + '\n';
     }
 
     @Nonnull
-    private String getInterfaceSourceCode(@Nonnull Interface anInterface)
-    {
+    private String getInterfaceSourceCode(@Nonnull Interface anInterface) {
         String fieldsSourceCode = anInterface
-                .getProperties()
-                .collect(GraphQLElementToSchemaSourceVisitor::getPropertySourceCode)
-                .collect(name -> String.format("    %s\n", name))
-                .makeString("");
+            .getProperties()
+            .collect(GraphQLElementToSchemaSourceVisitor::getPropertySourceCode)
+            .collect(name -> String.format("    %s\n", name))
+            .makeString("");
 
-        return ""
-                + "interface " + anInterface.getName() + " {\n"
-                + fieldsSourceCode
-                + "}\n"
-                + '\n';
+        return "" + "interface " + anInterface.getName() + " {\n" + fieldsSourceCode + "}\n" + '\n';
     }
 
     @Nonnull
-    private String getClassSourceCode(@Nonnull Klass klass)
-    {
+    private String getClassSourceCode(@Nonnull Klass klass) {
         String keyword = klass.isAbstract() ? "interface" : "type";
 
-        ImmutableList<String> superClassNames = klass
-                .getSuperClassChain()
-                .collect(NamedElement::getName);
+        ImmutableList<String> superClassNames = klass.getSuperClassChain().collect(NamedElement::getName);
         String implementsSourceCode = superClassNames.isEmpty()
-                ? ""
-                : " implements " + superClassNames.makeString(" & ");
+            ? ""
+            : " implements " + superClassNames.makeString(" & ");
 
         String fieldsSourceCode = klass
-                .getProperties()
-                .reject(Property::isDerived)
-                .reject(Property::isPrivate)
-                .collect(GraphQLElementToSchemaSourceVisitor::getPropertySourceCode)
-                .collect(name -> String.format("    %s\n", name))
-                .makeString("");
+            .getProperties()
+            .reject(Property::isDerived)
+            .reject(Property::isPrivate)
+            .collect(GraphQLElementToSchemaSourceVisitor::getPropertySourceCode)
+            .collect(name -> String.format("    %s\n", name))
+            .makeString("");
 
-        return ""
-                + keyword + " " + klass.getName() + implementsSourceCode + " {\n"
-                + fieldsSourceCode
-                + "}\n"
-                + '\n';
+        return "" + keyword + " " + klass.getName() + implementsSourceCode + " {\n" + fieldsSourceCode + "}\n" + '\n';
     }
 
-    private static String getPropertySourceCode(@Nonnull Property property)
-    {
+    private static String getPropertySourceCode(@Nonnull Property property) {
         return String.format(
-                "%s: %s%s%s%s",
-                property.getName(),
-                GraphQLElementToSchemaSourceVisitor.isMany(property) ? "[" : "",
-                GraphQLElementToSchemaSourceVisitor.getType(property),
-                GraphQLElementToSchemaSourceVisitor.isMany(property) ? "!]" : "",
-                property.isRequired() || GraphQLElementToSchemaSourceVisitor.isMany(property) ? "!" : "");
+            "%s: %s%s%s%s",
+            property.getName(),
+            GraphQLElementToSchemaSourceVisitor.isMany(property) ? "[" : "",
+            GraphQLElementToSchemaSourceVisitor.getType(property),
+            GraphQLElementToSchemaSourceVisitor.isMany(property) ? "!]" : "",
+            property.isRequired() || GraphQLElementToSchemaSourceVisitor.isMany(property) ? "!" : ""
+        );
     }
 
     @Nonnull
-    private static String getType(@Nonnull Property property)
-    {
+    private static String getType(@Nonnull Property property) {
         Type type = property.getType();
-        if (type instanceof Enumeration)
-        {
+        if (type instanceof Enumeration) {
             return "String";
         }
-        if (type == PrimitiveType.INTEGER)
-        {
+        if (type == PrimitiveType.INTEGER) {
             return "Int";
         }
-        if (type == PrimitiveType.DOUBLE)
-        {
+        if (type == PrimitiveType.DOUBLE) {
             return "Float";
         }
         return type.toString();
     }
 
-    private static boolean isMany(@Nonnull Property property)
-    {
-        return property instanceof ReferenceProperty referenceProperty
-                && referenceProperty.getMultiplicity().isToMany();
+    private static boolean isMany(@Nonnull Property property) {
+        return (
+            property instanceof ReferenceProperty referenceProperty && referenceProperty.getMultiplicity().isToMany()
+        );
     }
 
-    public String getSourceCode()
-    {
+    public String getSourceCode() {
         return this.sourceCode;
     }
 }

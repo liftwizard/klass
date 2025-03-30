@@ -24,68 +24,59 @@ import cool.klass.deserializer.json.OperationMode;
 import cool.klass.model.meta.domain.api.Klass;
 import org.junit.jupiter.api.Test;
 
-class PropertiesRequiredTest extends AbstractPrimitiveValidatorTest
-{
+class PropertiesRequiredTest extends AbstractPrimitiveValidatorTest {
+
     @Override
     @Test
-    public void validate_good() throws IOException
-    {
+    public void validate_good() throws IOException {
         this.validate("validate_good");
     }
 
     @Test
     @Override
-    public void validate_extra_properties() throws IOException
-    {
+    public void validate_extra_properties() throws IOException {
         this.validate("validate_extra_properties");
     }
 
     @Override
     @Test
-    public void validate_expected_primitive_actual_missing() throws IOException
-    {
+    public void validate_expected_primitive_actual_missing() throws IOException {
         this.validate("validate_expected_primitive_actual_missing");
     }
 
     @Override
     @Test
-    public void validate_expected_primitive_actual_array() throws IOException
-    {
+    public void validate_expected_primitive_actual_array() throws IOException {
         this.validate("validate_expected_primitive_actual_array");
     }
 
     @Override
     @Test
-    public void validate_expected_primitive_actual_object() throws IOException
-    {
+    public void validate_expected_primitive_actual_object() throws IOException {
         this.validate("validate_expected_primitive_actual_object");
     }
 
     @Override
     @Test
-    public void validate_expected_primitive_actual_null() throws IOException
-    {
+    public void validate_expected_primitive_actual_null() throws IOException {
         this.validate("validate_expected_primitive_actual_null");
     }
 
     @Override
     @Test
-    public void validate_expected_primitive_actual_string() throws IOException
-    {
+    public void validate_expected_primitive_actual_string() throws IOException {
         this.validate("validate_expected_primitive_actual_string");
     }
 
     @Nonnull
     @Override
-    protected Klass getKlass()
-    {
+    protected Klass getKlass() {
         return this.domainModel.getClassByName("PropertiesRequired");
     }
 
     @Nonnull
     @Override
-    protected OperationMode getMode()
-    {
+    protected OperationMode getMode() {
         return OperationMode.CREATE;
     }
 }

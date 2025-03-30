@@ -35,35 +35,34 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(LogMarkerTestExtension.class)
-class DomainModelCompilerFactoryTest
-{
-    private final ObjectMapper objectMapper = newObjectMapper();
-    private final Validator    validator    = Validators.newValidator();
+class DomainModelCompilerFactoryTest {
 
-    private final JsonConfigurationFactory<DomainModelFactory> factory =
-            new JsonConfigurationFactory<>(DomainModelFactory.class, this.validator, this.objectMapper, "dw");
+    private final ObjectMapper objectMapper = newObjectMapper();
+    private final Validator validator = Validators.newValidator();
+
+    private final JsonConfigurationFactory<DomainModelFactory> factory = new JsonConfigurationFactory<>(
+        DomainModelFactory.class,
+        this.validator,
+        this.objectMapper,
+        "dw"
+    );
 
     @Test
-    void isDiscoverable()
-    {
+    void isDiscoverable() {
         // Make sure the types we specified in META-INF gets picked up
-        var            discoverableSubtypeResolver = new DiscoverableSubtypeResolver();
-        List<Class<?>> discoveredSubtypes          = discoverableSubtypeResolver.getDiscoveredSubtypes();
+        var discoverableSubtypeResolver = new DiscoverableSubtypeResolver();
+        List<Class<?>> discoveredSubtypes = discoverableSubtypeResolver.getDiscoveredSubtypes();
         assertThat(discoveredSubtypes).contains(DomainModelCompilerFactory.class);
     }
 
     @Test
-    void domainModelCompiler()
-            throws Exception
-    {
-        DomainModelFactory domainModelFactory = this.factory.build(
-                new ResourceConfigurationSourceProvider(),
-                "config-test.json5");
+    void domainModelCompiler() throws Exception {
+        DomainModelFactory domainModelFactory =
+            this.factory.build(new ResourceConfigurationSourceProvider(), "config-test.json5");
         assertThat(domainModelFactory).isInstanceOf(DomainModelCompilerFactory.class);
     }
 
-    private static ObjectMapper newObjectMapper()
-    {
+    private static ObjectMapper newObjectMapper() {
         ObjectMapper objectMapper = Jackson.newObjectMapper();
         ObjectMapperConfig.configure(objectMapper);
         return objectMapper;

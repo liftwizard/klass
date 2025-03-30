@@ -30,14 +30,14 @@ import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.Interval;
 
-public abstract class AntlrElement
-        implements IAntlrElement
-{
+public abstract class AntlrElement implements IAntlrElement {
+
     public static final ParserRuleContext AMBIGUOUS_PARENT = new ParserRuleContext();
     public static final ParserRuleContext NOT_FOUND_PARENT = new ParserRuleContext();
 
     @Nonnull
-    protected final ParserRuleContext         elementContext;
+    protected final ParserRuleContext elementContext;
+
     // TODO: Consider creating a "native" source file with native declarations of PrimitiveTypes
     /**
      * The type of compilationUnit is Optional because some Elements, specifically PrimitiveTypes are not declared in SourceCode
@@ -46,19 +46,17 @@ public abstract class AntlrElement
     protected final Optional<CompilationUnit> compilationUnit;
 
     protected AntlrElement(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit)
-    {
-        this.elementContext  = Objects.requireNonNull(elementContext);
+        @Nonnull ParserRuleContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit
+    ) {
+        this.elementContext = Objects.requireNonNull(elementContext);
         this.compilationUnit = Objects.requireNonNull(compilationUnit);
 
         compilationUnit.ifPresent(cu -> AntlrElement.assertContextContains(cu.getParserContext(), elementContext));
     }
 
-    private static void assertContextContains(ParserRuleContext parentContext, ParserRuleContext childContext)
-    {
-        if (parentContext == childContext)
-        {
+    private static void assertContextContains(ParserRuleContext parentContext, ParserRuleContext childContext) {
+        if (parentContext == childContext) {
             return;
         }
 
@@ -77,132 +75,119 @@ public abstract class AntlrElement
      * @throws AssertionError if the parserRuleContext is not a sentinel but looks too much like a sentinel
      */
     @SuppressWarnings("unused")
-    public static String getSourceTextLenient(ParserRuleContext parserRuleContext)
-    {
+    public static String getSourceTextLenient(ParserRuleContext parserRuleContext) {
         Objects.requireNonNull(parserRuleContext);
 
-        Token             start       = parserRuleContext.getStart();
-        Token             stop        = parserRuleContext.getStop();
-        ParserRuleContext parent      = parserRuleContext.getParent();
-        RuleContext       payload     = parserRuleContext.getPayload();
-        RuleContext       ruleContext = parserRuleContext.getRuleContext();
-        int               childCount  = parserRuleContext.getChildCount();
+        Token start = parserRuleContext.getStart();
+        Token stop = parserRuleContext.getStop();
+        ParserRuleContext parent = parserRuleContext.getParent();
+        RuleContext payload = parserRuleContext.getPayload();
+        RuleContext ruleContext = parserRuleContext.getRuleContext();
+        int childCount = parserRuleContext.getChildCount();
 
-        if (start == null
-                || stop == null
-                || parent == null && !(parserRuleContext instanceof CompilationUnitContext)
-                || payload != parserRuleContext
-                || ruleContext != parserRuleContext
-                || childCount == 0)
-        {
-            if (start != null)
-            {
+        if (
+            start == null ||
+            stop == null ||
+            (parent == null && !(parserRuleContext instanceof CompilationUnitContext)) ||
+            payload != parserRuleContext ||
+            ruleContext != parserRuleContext ||
+            childCount == 0
+        ) {
+            if (start != null) {
                 throw new AssertionError();
             }
-            if (stop != null)
-            {
+            if (stop != null) {
                 throw new AssertionError();
             }
-            if (payload != parserRuleContext)
-            {
+            if (payload != parserRuleContext) {
                 throw new AssertionError();
             }
-            if (ruleContext != parserRuleContext)
-            {
+            if (ruleContext != parserRuleContext) {
                 throw new AssertionError();
             }
-            if (childCount != 0)
-            {
+            if (childCount != 0) {
                 throw new AssertionError();
             }
-            if (parent == AMBIGUOUS_PARENT)
-            {
+            if (parent == AMBIGUOUS_PARENT) {
                 return "AMBIGUOUS";
             }
-            if (parent == NOT_FOUND_PARENT)
-            {
+            if (parent == NOT_FOUND_PARENT) {
                 return "NOT_FOUND";
             }
 
             throw new AssertionError();
         }
 
-        int      startIndex = start.getStartIndex();
-        int      stopIndex  = stop.getStopIndex();
-        Interval interval   = new Interval(startIndex, stopIndex);
+        int startIndex = start.getStartIndex();
+        int stopIndex = stop.getStopIndex();
+        Interval interval = new Interval(startIndex, stopIndex);
         return start.getInputStream().getText(interval);
     }
 
-    protected static String getSourceText(ParserRuleContext parserRuleContext)
-    {
+    protected static String getSourceText(ParserRuleContext parserRuleContext) {
         Objects.requireNonNull(parserRuleContext.getStart());
         Objects.requireNonNull(parserRuleContext.getStop());
-        int      startIndex = parserRuleContext.getStart().getStartIndex();
-        int      stopIndex  = parserRuleContext.getStop().getStopIndex();
-        Interval interval   = new Interval(startIndex, stopIndex);
+        int startIndex = parserRuleContext.getStart().getStartIndex();
+        int stopIndex = parserRuleContext.getStop().getStopIndex();
+        Interval interval = new Interval(startIndex, stopIndex);
         return parserRuleContext.getStart().getInputStream().getText(interval);
     }
 
     @Override
     @Nonnull
-    public ParserRuleContext getElementContext()
-    {
+    public ParserRuleContext getElementContext() {
         return this.elementContext;
     }
 
     @Nonnull
-    public ElementBuilder<?> getElementBuilder()
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".getElementBuilder() not implemented yet");
+    public ElementBuilder<?> getElementBuilder() {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".getElementBuilder() not implemented yet"
+        );
     }
 
     @Override
     @Nonnull
-    public Optional<AntlrElement> getMacroElement()
-    {
+    public Optional<AntlrElement> getMacroElement() {
         return this.compilationUnit.flatMap(CompilationUnit::getMacroElement);
     }
 
-    public boolean hasMacro()
-    {
+    public boolean hasMacro() {
         return this.getMacroElement().isPresent();
     }
 
     @Nonnull
-    protected Optional<ElementBuilder<?>> getMacroElementBuilder()
-    {
+    protected Optional<ElementBuilder<?>> getMacroElementBuilder() {
         return this.getMacroElement().map(antlrElement -> Objects.requireNonNull(antlrElement.getElementBuilder()));
     }
 
-    protected SourceCodeBuilder getSourceCodeBuilder()
-    {
+    protected SourceCodeBuilder getSourceCodeBuilder() {
         return this.compilationUnit.map(CompilationUnit::build).orElseThrow();
     }
 
     @Nonnull
     @Override
-    public Optional<CompilationUnit> getCompilationUnit()
-    {
+    public Optional<CompilationUnit> getCompilationUnit() {
         return this.compilationUnit;
     }
 
-    public boolean isInSameCompilationUnit(AntlrElement other)
-    {
-        return this.compilationUnit.isPresent()
-                && other.compilationUnit.isPresent()
-                && this.compilationUnit.equals(other.compilationUnit);
+    public boolean isInSameCompilationUnit(AntlrElement other) {
+        return (
+            this.compilationUnit.isPresent() &&
+            other.compilationUnit.isPresent() &&
+            this.compilationUnit.equals(other.compilationUnit)
+        );
     }
 
-    public boolean isForwardReference(AntlrElement other)
-    {
-        return this.isInSameCompilationUnit(other)
-                && this.getElementContext().getStart().getStartIndex() < other.getElementContext().getStart().getStartIndex();
+    public boolean isForwardReference(AntlrElement other) {
+        return (
+            this.isInSameCompilationUnit(other) &&
+            this.getElementContext().getStart().getStartIndex() < other.getElementContext().getStart().getStartIndex()
+        );
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return AntlrElement.getSourceText(this.getElementContext());
     }
 }

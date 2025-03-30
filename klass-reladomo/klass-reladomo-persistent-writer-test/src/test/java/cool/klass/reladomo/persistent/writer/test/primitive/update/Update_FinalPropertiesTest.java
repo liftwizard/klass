@@ -30,20 +30,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class Update_FinalPropertiesTest
-        extends AbstractUpdateValidatorTest
-{
+public class Update_FinalPropertiesTest extends AbstractUpdateValidatorTest {
+
     @RegisterExtension
     public final ReladomoExtensionBuilder reladomoTestExtension = new ReladomoExtensionBuilder()
-            .setRuntimeConfigurationPath("reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml")
-            .setTestDataFileNames("test-data/User.txt", "test-data/Update_FinalPropertiesTest.txt");
+        .setRuntimeConfigurationPath("reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml")
+        .setTestDataFileNames("test-data/User.txt", "test-data/Update_FinalPropertiesTest.txt");
 
     private Object persistentInstance;
 
     @BeforeEach
-    void setUp()
-    {
-        Klass            klass       = this.getKlass();
+    void setUp() {
+        Klass klass = this.getKlass();
         DataTypeProperty keyProperty = (DataTypeProperty) klass.getPropertyByName("id").get();
 
         ImmutableMap<DataTypeProperty, Object> keys = Maps.immutable.with(keyProperty, 1L);
@@ -52,29 +50,24 @@ public class Update_FinalPropertiesTest
     }
 
     @Test
-    void validate_mutate_final()
-            throws IOException
-    {
+    void validate_mutate_final() throws IOException {
         this.validate("validate_mutate_final", this.persistentInstance);
     }
 
     @Nonnull
     @Override
-    protected Klass getKlass()
-    {
+    protected Klass getKlass() {
         return this.domainModel.getClassByName("FinalProperties");
     }
 
     @Nonnull
     @Override
-    protected OperationMode getMode()
-    {
+    protected OperationMode getMode() {
         return OperationMode.REPLACE;
     }
 
     @Override
-    protected ImmutableMap<DataTypeProperty, Object> getPropertyDataFromUrl()
-    {
+    protected ImmutableMap<DataTypeProperty, Object> getPropertyDataFromUrl() {
         DataTypeProperty dataTypeProperty = this.getKlass().getDataTypePropertyByName("id");
         return Maps.immutable.with(dataTypeProperty, 1L);
     }

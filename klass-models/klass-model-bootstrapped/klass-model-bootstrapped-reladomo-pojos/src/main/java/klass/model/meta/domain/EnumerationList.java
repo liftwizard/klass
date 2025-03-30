@@ -20,24 +20,19 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class EnumerationList extends EnumerationListAbstract
-{
-    public EnumerationList()
-    {
-    }
+public class EnumerationList extends EnumerationListAbstract {
 
-    public EnumerationList(int initialSize)
-    {
+    public EnumerationList() {}
+
+    public EnumerationList(int initialSize) {
         super(initialSize);
     }
 
-    public EnumerationList(Collection<?> c)
-    {
+    public EnumerationList(Collection<?> c) {
         super(c);
     }
 
-    public EnumerationList(Operation operation)
-    {
+    public EnumerationList(Operation operation) {
         super(operation);
     }
 }

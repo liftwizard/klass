@@ -16,6 +16,5 @@
 
 package cool.klass.xample.coverage;
 
-public class SharedSyntheticOneToManyTargetDatabaseObject extends SharedSyntheticOneToManyTargetDatabaseObjectAbstract
-{
-}
+public class SharedSyntheticOneToManyTargetDatabaseObject
+    extends SharedSyntheticOneToManyTargetDatabaseObjectAbstract {}

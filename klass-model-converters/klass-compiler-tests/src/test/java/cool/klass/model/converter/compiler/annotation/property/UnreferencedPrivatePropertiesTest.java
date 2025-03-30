@@ -18,12 +18,10 @@ package cool.klass.model.converter.compiler.annotation.property;
 
 import cool.klass.model.converter.compiler.annotation.AbstractKlassCompilerErrorTestCase;
 
-public class UnreferencedPrivatePropertiesTest
-        extends AbstractKlassCompilerErrorTestCase
-{
+public class UnreferencedPrivatePropertiesTest extends AbstractKlassCompilerErrorTestCase {
+
     @Override
-    public void smokeTest()
-    {
+    public void smokeTest() {
         this.assertCompilationSucceeds(true);
     }
 }

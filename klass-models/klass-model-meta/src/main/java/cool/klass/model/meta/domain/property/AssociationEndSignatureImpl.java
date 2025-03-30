@@ -33,85 +33,77 @@ import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 
 // TODO: Super class for reference-type-property?
 public final class AssociationEndSignatureImpl
-        extends ReferencePropertyImpl<AbstractClassifier>
-        implements AssociationEndSignatureWithSourceCode
-{
+    extends ReferencePropertyImpl<AbstractClassifier>
+    implements AssociationEndSignatureWithSourceCode {
+
     private AssociationEndSignatureImpl(
+        @Nonnull AssociationEndSignatureContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext,
+        @Nonnull AbstractClassifier type,
+        @Nonnull AbstractClassifier owningClassifier,
+        @Nonnull Multiplicity multiplicity
+    ) {
+        super(elementContext, macroElement, sourceCode, ordinal, nameContext, type, owningClassifier, multiplicity);
+    }
+
+    @Nonnull
+    @Override
+    public AssociationEndSignatureContext getElementContext() {
+        return (AssociationEndSignatureContext) super.getElementContext();
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+            "%s.%s: %s[%s]",
+            this.getOwningClassifier().getName(),
+            this.getName(),
+            this.getType().getName(),
+            this.multiplicity.getPrettyName()
+        );
+    }
+
+    public static final class AssociationEndSignatureBuilder
+        extends ReferencePropertyBuilder<AbstractClassifier, ClassifierBuilder<?>, AssociationEndSignatureImpl> {
+
+        public AssociationEndSignatureBuilder(
             @Nonnull AssociationEndSignatureContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode,
             int ordinal,
             @Nonnull IdentifierContext nameContext,
-            @Nonnull AbstractClassifier type,
-            @Nonnull AbstractClassifier owningClassifier,
-            @Nonnull Multiplicity multiplicity)
-    {
-        super(
+            @Nonnull ClassifierBuilder<?> type,
+            @Nonnull ClassifierBuilder<?> owningClassifierBuilder,
+            @Nonnull Multiplicity multiplicity
+        ) {
+            super(
                 elementContext,
                 macroElement,
                 sourceCode,
                 ordinal,
                 nameContext,
                 type,
-                owningClassifier,
-                multiplicity);
-    }
-
-    @Nonnull
-    @Override
-    public AssociationEndSignatureContext getElementContext()
-    {
-        return (AssociationEndSignatureContext) super.getElementContext();
-    }
-
-    @Override
-    public String toString()
-    {
-        return String.format(
-                "%s.%s: %s[%s]",
-                this.getOwningClassifier().getName(),
-                this.getName(),
-                this.getType().getName(),
-                this.multiplicity.getPrettyName());
-    }
-
-    public static final class AssociationEndSignatureBuilder
-            extends ReferencePropertyBuilder<AbstractClassifier, ClassifierBuilder<?>, AssociationEndSignatureImpl>
-    {
-        public AssociationEndSignatureBuilder(
-                @Nonnull AssociationEndSignatureContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode,
-                int ordinal,
-                @Nonnull IdentifierContext nameContext,
-                @Nonnull ClassifierBuilder<?> type,
-                @Nonnull ClassifierBuilder<?> owningClassifierBuilder,
-                @Nonnull Multiplicity multiplicity)
-        {
-            super(
-                    elementContext,
-                    macroElement,
-                    sourceCode,
-                    ordinal,
-                    nameContext,
-                    type,
-                    owningClassifierBuilder,
-                    multiplicity);
+                owningClassifierBuilder,
+                multiplicity
+            );
         }
 
         @Override
         @Nonnull
-        protected AssociationEndSignatureImpl buildUnsafe()
-        {
+        protected AssociationEndSignatureImpl buildUnsafe() {
             return new AssociationEndSignatureImpl(
-                    (AssociationEndSignatureContext) this.elementContext,
-                    this.macroElement.map(ElementBuilder::getElement),
-                    this.sourceCode.build(),
-                    this.ordinal,
-                    this.getNameContext(),
-                    this.typeBuilder.getElement(),
-                    this.owningClassifierBuilder.getElement(),
-                    this.multiplicity);
+                (AssociationEndSignatureContext) this.elementContext,
+                this.macroElement.map(ElementBuilder::getElement),
+                this.sourceCode.build(),
+                this.ordinal,
+                this.getNameContext(),
+                this.typeBuilder.getElement(),
+                this.owningClassifierBuilder.getElement(),
+                this.multiplicity
+            );
         }
     }
 }

@@ -28,8 +28,7 @@ import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import org.eclipse.collections.api.map.MapIterable;
 
-public interface DataStore
-{
+public interface DataStore {
     <Result> Result runInTransaction(TransactionalCommand<Result> transactionalCommand);
 
     void runInTransaction(Runnable runnable);
@@ -40,14 +39,11 @@ public interface DataStore
 
     List<Object> findByKeyReturningList(Klass klass, MapIterable<DataTypeProperty, Object> keys);
 
-    default Object getReferenceProperty(Object persistentInstance, ReferenceProperty referenceProperty)
-    {
-        if (referenceProperty.getMultiplicity().isToOne())
-        {
+    default Object getReferenceProperty(Object persistentInstance, ReferenceProperty referenceProperty) {
+        if (referenceProperty.getMultiplicity().isToOne()) {
             return this.getToOne(persistentInstance, referenceProperty);
         }
-        if (referenceProperty.getMultiplicity().isToMany())
-        {
+        if (referenceProperty.getMultiplicity().isToMany()) {
             return this.getToMany(persistentInstance, referenceProperty);
         }
         throw new IllegalStateException("Unknown multiplicity: " + referenceProperty.getMultiplicity());

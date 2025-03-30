@@ -26,23 +26,21 @@ import io.liftwizard.reladomo.test.extension.ReladomoTestFile;
 import org.eclipse.collections.impl.factory.Maps;
 import org.junit.jupiter.api.Test;
 
-class StackOverflowGraphQLTest
-        extends AbstractStackOverflowApplicationTest
-{
+class StackOverflowGraphQLTest extends AbstractStackOverflowApplicationTest {
+
     @Test
     @ReladomoTestFile("test-data/existing-question.txt")
-    void smokeTest()
-    {
+    void smokeTest() {
         Client client = this.getClient("graphqlSmokeTest");
 
         String queryName = this.getClass().getSimpleName() + ".smokeTest.graphql";
-        String query     = FileSlurper.slurp(queryName, this.getClass());
+        String query = FileSlurper.slurp(queryName, this.getClass());
 
         Response response = client
-                .target("http://localhost:{port}/graphql")
-                .resolveTemplate("port", this.appExtension.getLocalPort())
-                .request()
-                .post(Entity.json(Maps.mutable.with("query", query)));
+            .target("http://localhost:{port}/graphql")
+            .resolveTemplate("port", this.appExtension.getLocalPort())
+            .request()
+            .post(Entity.json(Maps.mutable.with("query", query)));
 
         this.assertResponse("graphqlSmokeTest", Status.OK, response);
     }

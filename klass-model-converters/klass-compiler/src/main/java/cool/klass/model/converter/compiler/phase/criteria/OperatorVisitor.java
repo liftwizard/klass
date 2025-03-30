@@ -34,59 +34,57 @@ import cool.klass.model.meta.grammar.KlassParser.InequalityOperatorContext;
 import cool.klass.model.meta.grammar.KlassParser.StringOperatorContext;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-public class OperatorVisitor extends KlassBaseVisitor<AntlrOperator>
-{
+public class OperatorVisitor extends KlassBaseVisitor<AntlrOperator> {
+
     private final CompilerState compilerState;
 
-    public OperatorVisitor(CompilerState compilerState)
-    {
+    public OperatorVisitor(CompilerState compilerState) {
         this.compilerState = Objects.requireNonNull(compilerState);
     }
 
     @Nonnull
     @Override
-    public AntlrOperator visitTerminal(TerminalNode node)
-    {
+    public AntlrOperator visitTerminal(TerminalNode node) {
         throw new AssertionError();
     }
 
     @Nonnull
     @Override
-    public AntlrEqualityOperator visitEqualityOperator(@Nonnull EqualityOperatorContext ctx)
-    {
+    public AntlrEqualityOperator visitEqualityOperator(@Nonnull EqualityOperatorContext ctx) {
         return new AntlrEqualityOperator(
-                ctx,
-                Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-                ctx.getText());
+            ctx,
+            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+            ctx.getText()
+        );
     }
 
     @Nonnull
     @Override
-    public AntlrInequalityOperator visitInequalityOperator(@Nonnull InequalityOperatorContext ctx)
-    {
+    public AntlrInequalityOperator visitInequalityOperator(@Nonnull InequalityOperatorContext ctx) {
         return new AntlrInequalityOperator(
-                ctx,
-                Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-                ctx.getText());
+            ctx,
+            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+            ctx.getText()
+        );
     }
 
     @Nonnull
     @Override
-    public AntlrInOperator visitInOperator(@Nonnull InOperatorContext ctx)
-    {
+    public AntlrInOperator visitInOperator(@Nonnull InOperatorContext ctx) {
         return new AntlrInOperator(
-                ctx,
-                Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-                ctx.getText());
+            ctx,
+            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+            ctx.getText()
+        );
     }
 
     @Nonnull
     @Override
-    public AntlrStringOperator visitStringOperator(@Nonnull StringOperatorContext ctx)
-    {
+    public AntlrStringOperator visitStringOperator(@Nonnull StringOperatorContext ctx) {
         return new AntlrStringOperator(
-                ctx,
-                Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-                ctx.getText());
+            ctx,
+            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+            ctx.getText()
+        );
     }
 }

@@ -32,24 +32,22 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.OrderedMap;
 
-public abstract class AntlrExpressionValue
-        extends AntlrElement
-{
+public abstract class AntlrExpressionValue extends AntlrElement {
+
     private final IAntlrElement expressionValueOwner;
 
     protected AntlrExpressionValue(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            @Nonnull IAntlrElement expressionValueOwner)
-    {
+        @Nonnull ParserRuleContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        @Nonnull IAntlrElement expressionValueOwner
+    ) {
         super(elementContext, compilationUnit);
         this.expressionValueOwner = Objects.requireNonNull(expressionValueOwner);
     }
 
     @Nonnull
     @Override
-    public Optional<IAntlrElement> getSurroundingElement()
-    {
+    public Optional<IAntlrElement> getSurroundingElement() {
         return Optional.of(this.expressionValueOwner);
     }
 
@@ -65,8 +63,7 @@ public abstract class AntlrExpressionValue
     @Nonnull
     public abstract ImmutableList<AntlrType> getPossibleTypes();
 
-    public void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName)
-    {
+    public void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName) {
         // Intentionally blank
     }
 

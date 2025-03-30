@@ -45,30 +45,31 @@ import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.factory.Lists;
 
 // TODO: Specific subclasses for the specific antlr context types
-public final class AntlrParameter
-        extends AntlrIdentifierElement
-        implements AntlrMultiplicityOwner
-{
+public final class AntlrParameter extends AntlrIdentifierElement implements AntlrMultiplicityOwner {
+
     public static final AntlrParameter AMBIGUOUS = new AntlrParameter(
-            new ParserRuleContext(AMBIGUOUS_PARENT, -1),
-            Optional.empty(),
-            -1,
-            AMBIGUOUS_IDENTIFIER_CONTEXT,
-            AntlrEnumeration.AMBIGUOUS,
-            AntlrParameterizedProperty.AMBIGUOUS);
+        new ParserRuleContext(AMBIGUOUS_PARENT, -1),
+        Optional.empty(),
+        -1,
+        AMBIGUOUS_IDENTIFIER_CONTEXT,
+        AntlrEnumeration.AMBIGUOUS,
+        AntlrParameterizedProperty.AMBIGUOUS
+    );
 
     public static final AntlrParameter NOT_FOUND = new AntlrParameter(
-            new ParserRuleContext(NOT_FOUND_PARENT, -1),
-            Optional.empty(),
-            -1,
-            NOT_FOUND_IDENTIFIER_CONTEXT,
-            AntlrEnumeration.NOT_FOUND,
-            AntlrParameterizedProperty.AMBIGUOUS);
+        new ParserRuleContext(NOT_FOUND_PARENT, -1),
+        Optional.empty(),
+        -1,
+        NOT_FOUND_IDENTIFIER_CONTEXT,
+        AntlrEnumeration.NOT_FOUND,
+        AntlrParameterizedProperty.AMBIGUOUS
+    );
 
     @Nonnull
     private final IAntlrElement parameterOwner;
+
     @Nonnull
-    private final AntlrType     type;
+    private final AntlrType type;
 
     // TODO: Factor modifiers into type checking
     private final MutableList<AntlrModifier> modifiers = Lists.mutable.empty();
@@ -80,115 +81,100 @@ public final class AntlrParameter
     private ParameterBuilder elementBuilder;
 
     public AntlrParameter(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext,
-            @Nonnull AntlrType type,
-            @Nonnull IAntlrElement parameterOwner)
-    {
+        @Nonnull ParserRuleContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext,
+        @Nonnull AntlrType type,
+        @Nonnull IAntlrElement parameterOwner
+    ) {
         super(elementContext, compilationUnit, ordinal, nameContext);
-        this.type           = Objects.requireNonNull(type);
+        this.type = Objects.requireNonNull(type);
         this.parameterOwner = Objects.requireNonNull(parameterOwner);
     }
 
     @Nonnull
     @Override
-    public Optional<IAntlrElement> getSurroundingElement()
-    {
+    public Optional<IAntlrElement> getSurroundingElement() {
         return Optional.of(this.parameterOwner);
     }
 
     @Override
-    public Pair<Token, Token> getContextBefore()
-    {
+    public Pair<Token, Token> getContextBefore() {
         return this.getEntireContext();
     }
 
     @Override
-    protected Pattern getNamePattern()
-    {
+    protected Pattern getNamePattern() {
         return MEMBER_NAME_PATTERN;
     }
 
-    public int getNumModifiers()
-    {
+    public int getNumModifiers() {
         return this.modifiers.size();
     }
 
     @Override
-    public void enterMultiplicity(@Nonnull AntlrMultiplicity multiplicity)
-    {
-        if (this.multiplicity != null)
-        {
+    public void enterMultiplicity(@Nonnull AntlrMultiplicity multiplicity) {
+        if (this.multiplicity != null) {
             throw new IllegalStateException();
         }
         this.multiplicity = Objects.requireNonNull(multiplicity);
     }
 
-    public void enterModifier(AntlrModifier modifier)
-    {
+    public void enterModifier(AntlrModifier modifier) {
         this.modifiers.add(modifier);
     }
 
     // <editor-fold desc="Report Compiler Errors">
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
-    {
+    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         this.reportNameErrors(compilerAnnotationHolder);
         this.reportTypeErrors(compilerAnnotationHolder);
     }
 
-    private void reportTypeErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
-    {
-        if (this.type != AntlrEnumeration.NOT_FOUND)
-        {
+    private void reportTypeErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+        if (this.type != AntlrEnumeration.NOT_FOUND) {
             return;
         }
 
         EnumerationReferenceContext offendingToken =
-                ((EnumerationParameterDeclarationContext) this.getElementContext()).enumerationReference();
-        String message = String.format(
-                "Cannot find enumeration '%s'.",
-                offendingToken.getText());
+            ((EnumerationParameterDeclarationContext) this.getElementContext()).enumerationReference();
+        String message = String.format("Cannot find enumeration '%s'.", offendingToken.getText());
         compilerAnnotationHolder.add("ERR_ENM_PAR", message, this, offendingToken);
     }
 
-    public void reportDuplicateParameterName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
-    {
+    public void reportDuplicateParameterName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         String message = String.format("Duplicate parameter: '%s'.", this.getName());
         compilerAnnotationHolder.add("ERR_DUP_PAR", message, this);
     }
+
     // </editor-fold>
 
     @Nonnull
-    public AntlrType getType()
-    {
+    public AntlrType getType() {
         return this.type;
     }
 
     @Nonnull
-    public ParameterBuilder build()
-    {
-        if (this.elementBuilder != null)
-        {
+    public ParameterBuilder build() {
+        if (this.elementBuilder != null) {
             throw new IllegalStateException();
         }
         this.elementBuilder = new ParameterBuilder(
-                this.elementContext,
-                this.getMacroElementBuilder(),
-                this.getSourceCodeBuilder(),
-                this.ordinal,
-                this.getNameContext(),
-                // TODO: Fuller interface hierarchy with AntlrType, AntlrDataType, etc.
-                (DataTypeGetter) this.type.getElementBuilder(),
-                this.multiplicity.getMultiplicity());
+            this.elementContext,
+            this.getMacroElementBuilder(),
+            this.getSourceCodeBuilder(),
+            this.ordinal,
+            this.getNameContext(),
+            // TODO: Fuller interface hierarchy with AntlrType, AntlrDataType, etc.
+            (DataTypeGetter) this.type.getElementBuilder(),
+            this.multiplicity.getMultiplicity()
+        );
         return this.elementBuilder;
     }
 
     @Override
     @Nonnull
-    public ParameterBuilder getElementBuilder()
-    {
+    public ParameterBuilder getElementBuilder() {
         return Objects.requireNonNull(this.elementBuilder);
     }
 }

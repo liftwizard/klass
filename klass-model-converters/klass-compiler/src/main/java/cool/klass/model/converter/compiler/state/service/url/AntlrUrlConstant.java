@@ -30,62 +30,58 @@ import cool.klass.model.meta.domain.service.url.UrlConstantImpl.UrlConstantBuild
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlConstantContext;
 
-public class AntlrUrlConstant
-        extends AntlrIdentifierElement
-{
+public class AntlrUrlConstant extends AntlrIdentifierElement {
+
     private UrlConstantBuilder elementBuilder;
 
     public AntlrUrlConstant(
-            @Nonnull UrlConstantContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext)
-    {
+        @Nonnull UrlConstantContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext
+    ) {
         super(elementContext, compilationUnit, ordinal, nameContext);
     }
 
     @Nonnull
     @Override
-    public Optional<IAntlrElement> getSurroundingElement()
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".getSurroundingContext() not implemented yet");
+    public Optional<IAntlrElement> getSurroundingElement() {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".getSurroundingContext() not implemented yet"
+        );
     }
 
     @Nonnull
-    public UrlConstantBuilder build()
-    {
-        if (this.elementBuilder != null)
-        {
+    public UrlConstantBuilder build() {
+        if (this.elementBuilder != null) {
             throw new IllegalStateException();
         }
         this.elementBuilder = new UrlConstantBuilder(
-                (UrlConstantContext) this.elementContext,
-                this.getMacroElementBuilder(),
-                this.getSourceCodeBuilder(),
-                this.ordinal,
-                this.getNameContext());
+            (UrlConstantContext) this.elementContext,
+            this.getMacroElementBuilder(),
+            this.getSourceCodeBuilder(),
+            this.ordinal,
+            this.getNameContext()
+        );
         return this.elementBuilder;
     }
 
     @Override
     @Nonnull
-    public UrlConstantBuilder getElementBuilder()
-    {
+    public UrlConstantBuilder getElementBuilder() {
         return Objects.requireNonNull(this.elementBuilder);
     }
 
     @Nonnull
     @Override
-    protected Pattern getNamePattern()
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".getNamePattern() not implemented yet");
+    protected Pattern getNamePattern() {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".getNamePattern() not implemented yet"
+        );
     }
 
     @Override
-    public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
-    {
+    public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         // TODO: URLs can contain almost anything. The parser is probably already more strict than any error checking that needs to happen here.
         // https://stackoverflow.com/questions/7109143/what-characters-are-valid-in-a-url
     }

@@ -29,12 +29,13 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-        name = "generate-json-views",
-        defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-        threadSafe = true,
-        requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class GenerateJsonViewsMojo extends AbstractGenerateMojo
-{
+    name = "generate-json-views",
+    defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+    threadSafe = true,
+    requiresDependencyResolution = ResolutionScope.RUNTIME
+)
+public class GenerateJsonViewsMojo extends AbstractGenerateMojo {
+
     @Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}/generated-sources/json-views")
     private File outputDirectory;
 
@@ -45,19 +46,16 @@ public class GenerateJsonViewsMojo extends AbstractGenerateMojo
     private String rootPackageName;
 
     @Override
-    public void execute() throws MojoExecutionException
-    {
+    public void execute() throws MojoExecutionException {
         DomainModel domainModel = this.getDomainModel();
-        try
-        {
+        try {
             JsonViewGenerator jsonViewGenerator = new JsonViewGenerator(
-                    domainModel,
-                    this.rootPackageName,
-                    this.applicationName);
+                domainModel,
+                this.rootPackageName,
+                this.applicationName
+            );
             jsonViewGenerator.writeJsonViews(this.outputDirectory.toPath());
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
 

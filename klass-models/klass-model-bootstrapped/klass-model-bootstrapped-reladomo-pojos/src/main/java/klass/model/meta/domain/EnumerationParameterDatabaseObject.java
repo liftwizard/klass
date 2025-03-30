@@ -16,6 +16,4 @@
 
 package klass.model.meta.domain;
 
-public class EnumerationParameterDatabaseObject extends EnumerationParameterDatabaseObjectAbstract
-{
-}
+public class EnumerationParameterDatabaseObject extends EnumerationParameterDatabaseObjectAbstract {}

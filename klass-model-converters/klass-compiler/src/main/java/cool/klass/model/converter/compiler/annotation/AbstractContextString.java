@@ -24,46 +24,41 @@ import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 import org.fusesource.jansi.Ansi;
 
-public abstract class AbstractContextString
-{
-    private final int    line;
+public abstract class AbstractContextString {
+
+    private final int line;
+
     @Nonnull
     private final String string;
 
-    protected AbstractContextString(int line, @Nonnull String string)
-    {
-        this.line   = line;
+    protected AbstractContextString(int line, @Nonnull String string) {
+        this.line = line;
         this.string = Objects.requireNonNull(string);
     }
 
-    private static String padLeft(String string, int width)
-    {
+    private static String padLeft(String string, int width) {
         return String.format("%" + width + "s║", string);
     }
 
-    public int getLine()
-    {
+    public int getLine() {
         return this.line;
     }
 
-    public String toString(int lineNumberWidth)
-    {
+    public String toString(int lineNumberWidth) {
         MutableList<String> strings = ArrayAdapter.adapt(this.string.split("\n"));
         return strings
-                .collectWithIndex((string, index) -> this.toString(string, index, lineNumberWidth))
-                .makeString("\n");
+            .collectWithIndex((string, index) -> this.toString(string, index, lineNumberWidth))
+            .makeString("\n");
     }
 
-    private String toString(String string, int offset, int lineNumberWidth)
-    {
-        String lineNumberString       = this.getLineNumberString(this.line + offset);
+    private String toString(String string, int offset, int lineNumberWidth) {
+        String lineNumberString = this.getLineNumberString(this.line + offset);
         String paddedLineNumberString = AbstractContextString.padLeft(lineNumberString, lineNumberWidth);
         return Ansi.ansi().fgDefault().a(paddedLineNumberString).a(" ").a(string).toString();
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.toString(4);
     }
 

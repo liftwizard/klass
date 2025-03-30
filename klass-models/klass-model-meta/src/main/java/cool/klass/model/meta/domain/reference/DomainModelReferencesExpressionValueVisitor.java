@@ -47,114 +47,104 @@ import cool.klass.model.meta.grammar.KlassParser.TypeMemberReferencePathContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class DomainModelReferencesExpressionValueVisitor
-        implements ExpressionValueVisitor
-{
+public class DomainModelReferencesExpressionValueVisitor implements ExpressionValueVisitor {
+
     private final DomainModelReferences domainModelReferences;
 
-    public DomainModelReferencesExpressionValueVisitor(@Nonnull DomainModelReferences domainModelReferences)
-    {
+    public DomainModelReferencesExpressionValueVisitor(@Nonnull DomainModelReferences domainModelReferences) {
         this.domainModelReferences = Objects.requireNonNull(domainModelReferences);
     }
 
     @Override
-    public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue)
-    {
-        TypeMemberReferencePathWithSourceCode elementWithSourceCode = (TypeMemberReferencePathWithSourceCode) typeMemberExpressionValue;
-        TypeMemberReferencePathContext        elementContext        = elementWithSourceCode.getElementContext();
+    public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue) {
+        TypeMemberReferencePathWithSourceCode elementWithSourceCode =
+            (TypeMemberReferencePathWithSourceCode) typeMemberExpressionValue;
+        TypeMemberReferencePathContext elementContext = elementWithSourceCode.getElementContext();
 
         ClassReferenceContext classReference = elementContext.classReference();
-        KlassWithSourceCode   klass          = elementWithSourceCode.getKlass();
+        KlassWithSourceCode klass = elementWithSourceCode.getKlass();
         this.domainModelReferences.addClassReference(classReference, klass);
 
         List<AssociationEndReferenceContext> associationEndReferenceContexts = elementContext.associationEndReference();
-        ImmutableList<AssociationEnd>        associationEnds                 = typeMemberExpressionValue.getAssociationEnds();
+        ImmutableList<AssociationEnd> associationEnds = typeMemberExpressionValue.getAssociationEnds();
 
-        for (int i = 0; i < associationEndReferenceContexts.size(); i++)
-        {
+        for (int i = 0; i < associationEndReferenceContexts.size(); i++) {
             AssociationEndReferenceContext associationEndReference = associationEndReferenceContexts.get(i);
-            AssociationEnd                 associationEnd          = associationEnds.get(i);
+            AssociationEnd associationEnd = associationEnds.get(i);
             this.domainModelReferences.addAssociationEndReference(
                     associationEndReference,
-                    (AssociationEndWithSourceCode) associationEnd);
+                    (AssociationEndWithSourceCode) associationEnd
+                );
         }
 
-        IdentifierContext              propertyReference = elementContext.memberReference().identifier();
-        DataTypePropertyWithSourceCode property          = elementWithSourceCode.getProperty();
+        IdentifierContext propertyReference = elementContext.memberReference().identifier();
+        DataTypePropertyWithSourceCode property = elementWithSourceCode.getProperty();
         this.domainModelReferences.addDataTypePropertyReference(propertyReference, property);
     }
 
     @Override
-    public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue)
-    {
-        ThisMemberReferencePathWithSourceCode elementWithSourceCode = (ThisMemberReferencePathWithSourceCode) thisMemberExpressionValue;
-        ThisMemberReferencePathContext        elementContext        = elementWithSourceCode.getElementContext();
+    public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue) {
+        ThisMemberReferencePathWithSourceCode elementWithSourceCode =
+            (ThisMemberReferencePathWithSourceCode) thisMemberExpressionValue;
+        ThisMemberReferencePathContext elementContext = elementWithSourceCode.getElementContext();
 
         List<AssociationEndReferenceContext> associationEndReferenceContexts = elementContext.associationEndReference();
-        ImmutableList<AssociationEnd>        associationEnds                 = thisMemberExpressionValue.getAssociationEnds();
+        ImmutableList<AssociationEnd> associationEnds = thisMemberExpressionValue.getAssociationEnds();
 
-        for (int i = 0; i < associationEndReferenceContexts.size(); i++)
-        {
+        for (int i = 0; i < associationEndReferenceContexts.size(); i++) {
             AssociationEndReferenceContext associationEndReference = associationEndReferenceContexts.get(i);
-            AssociationEnd                 associationEnd          = associationEnds.get(i);
+            AssociationEnd associationEnd = associationEnds.get(i);
             this.domainModelReferences.addAssociationEndReference(
                     associationEndReference,
-                    (AssociationEndWithSourceCode) associationEnd);
+                    (AssociationEndWithSourceCode) associationEnd
+                );
         }
 
-        IdentifierContext              propertyReference = elementContext.memberReference().identifier();
-        DataTypePropertyWithSourceCode property          = elementWithSourceCode.getProperty();
+        IdentifierContext propertyReference = elementContext.memberReference().identifier();
+        DataTypePropertyWithSourceCode property = elementWithSourceCode.getProperty();
         this.domainModelReferences.addDataTypePropertyReference(propertyReference, property);
     }
 
     @Override
-    public void visitVariableReference(@Nonnull VariableReference variableReference)
-    {
+    public void visitVariableReference(@Nonnull VariableReference variableReference) {
         // TODO: Implement more references
     }
 
     @Override
-    public void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue)
-    {
+    public void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue) {
         // Deliberately empty
     }
 
     @Override
-    public void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue)
-    {
+    public void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue) {
         // Deliberately empty
     }
 
     @Override
-    public void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue)
-    {
+    public void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue) {
         // Deliberately empty
     }
 
     @Override
-    public void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue)
-    {
+    public void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue) {
         // Deliberately empty
     }
 
     @Override
-    public void visitLiteralList(@Nonnull LiteralListValue literalListValue)
-    {
+    public void visitLiteralList(@Nonnull LiteralListValue literalListValue) {
         // Deliberately empty
     }
 
     @Override
-    public void visitUserLiteral(@Nonnull UserLiteral userLiteral)
-    {
+    public void visitUserLiteral(@Nonnull UserLiteral userLiteral) {
         ElementWithSourceCode elementWithSourceCode = (ElementWithSourceCode) userLiteral;
-        ParserRuleContext     reference             = elementWithSourceCode.getElementContext();
-        KlassWithSourceCode   element               = (KlassWithSourceCode) userLiteral.getUserClass();
+        ParserRuleContext reference = elementWithSourceCode.getElementContext();
+        KlassWithSourceCode element = (KlassWithSourceCode) userLiteral.getUserClass();
         this.domainModelReferences.addUserReference(reference, element);
     }
 
     @Override
-    public void visitNullLiteral(@Nonnull NullLiteral nullLiteral)
-    {
+    public void visitNullLiteral(@Nonnull NullLiteral nullLiteral) {
         // Deliberately empty
     }
 }

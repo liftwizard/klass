@@ -24,19 +24,14 @@ import cool.klass.model.converter.compiler.state.IAntlrElement;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.impl.factory.Lists;
 
-public interface AntlrOrderByOwner
-        extends IAntlrElement
-{
+public interface AntlrOrderByOwner extends IAntlrElement {
     void enterOrderByDeclaration(@Nonnull AntlrOrderBy orderBy);
 
     @Nonnull
     Optional<AntlrOrderBy> getOrderBy();
 
     @Nonnull
-    default ImmutableList<AntlrOrderBy> getOrderBys()
-    {
-        return this.getOrderBy()
-                .map(Lists.immutable::with)
-                .orElseGet(Lists.immutable::empty);
+    default ImmutableList<AntlrOrderBy> getOrderBys() {
+        return this.getOrderBy().map(Lists.immutable::with).orElseGet(Lists.immutable::empty);
     }
 }

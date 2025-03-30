@@ -39,164 +39,142 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 
-public final class KlassImpl
-        extends AbstractClassifier
-        implements KlassWithSourceCode
-{
+public final class KlassImpl extends AbstractClassifier implements KlassWithSourceCode {
+
     private final boolean isAbstract;
     private final boolean isUser;
     private final boolean isTransient;
 
-    private ImmutableList<AssociationEnd>        declaredAssociationEnds;
+    private ImmutableList<AssociationEnd> declaredAssociationEnds;
     private ImmutableMap<String, AssociationEnd> declaredAssociationEndsByName;
-    private ImmutableList<AssociationEnd>        associationEnds;
+    private ImmutableList<AssociationEnd> associationEnds;
     private ImmutableMap<String, AssociationEnd> associationEndsByName;
 
     @Nonnull
-    private Optional<AssociationEnd> versionProperty   = Optional.empty();
+    private Optional<AssociationEnd> versionProperty = Optional.empty();
+
     @Nonnull
     private Optional<AssociationEnd> versionedProperty = Optional.empty();
 
-    private Optional<Klass>      superClass;
+    private Optional<Klass> superClass;
     private ImmutableList<Klass> subClasses;
 
     private KlassImpl(
-            @Nonnull ClassDeclarationContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext,
-            @Nonnull String packageName,
-            boolean isAbstract,
-            boolean isUser,
-            boolean isTransient)
-    {
+        @Nonnull ClassDeclarationContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext,
+        @Nonnull String packageName,
+        boolean isAbstract,
+        boolean isUser,
+        boolean isTransient
+    ) {
         super(elementContext, macroElement, sourceCode, ordinal, nameContext, packageName);
-        this.isAbstract  = isAbstract;
-        this.isUser      = isUser;
+        this.isAbstract = isAbstract;
+        this.isUser = isUser;
         this.isTransient = isTransient;
     }
 
     @Nonnull
     @Override
-    public ClassDeclarationContext getElementContext()
-    {
+    public ClassDeclarationContext getElementContext() {
         return (ClassDeclarationContext) super.getElementContext();
     }
 
     @Override
     @Nonnull
-    public Optional<AssociationEnd> getVersionProperty()
-    {
+    public Optional<AssociationEnd> getVersionProperty() {
         return this.versionProperty;
     }
 
     @Override
     @Nonnull
-    public Optional<AssociationEnd> getVersionedProperty()
-    {
+    public Optional<AssociationEnd> getVersionedProperty() {
         return this.versionedProperty;
     }
 
     @Override
-    public boolean isAbstract()
-    {
+    public boolean isAbstract() {
         return this.isAbstract;
     }
 
     @Override
-    public boolean isUser()
-    {
+    public boolean isUser() {
         return this.isUser;
     }
 
     @Override
-    public boolean isTransient()
-    {
+    public boolean isTransient() {
         return this.isTransient;
     }
 
-    private void setDeclaredAssociationEnds(ImmutableList<AssociationEnd> declaredAssociationEnds)
-    {
-        if (this.declaredAssociationEnds != null)
-        {
+    private void setDeclaredAssociationEnds(ImmutableList<AssociationEnd> declaredAssociationEnds) {
+        if (this.declaredAssociationEnds != null) {
             throw new IllegalStateException();
         }
-        this.declaredAssociationEnds       = Objects.requireNonNull(declaredAssociationEnds);
+        this.declaredAssociationEnds = Objects.requireNonNull(declaredAssociationEnds);
         this.declaredAssociationEndsByName = this.declaredAssociationEnds.groupByUniqueKey(AssociationEnd::getName);
     }
 
     @Override
-    public ImmutableList<AssociationEnd> getDeclaredAssociationEnds()
-    {
+    public ImmutableList<AssociationEnd> getDeclaredAssociationEnds() {
         return Objects.requireNonNull(this.declaredAssociationEnds);
     }
 
     @Override
-    public AssociationEnd getDeclaredAssociationEndByName(String name)
-    {
+    public AssociationEnd getDeclaredAssociationEndByName(String name) {
         return this.declaredAssociationEndsByName.get(name);
     }
 
-    private void setAssociationEnds(ImmutableList<AssociationEnd> associationEnds)
-    {
-        if (this.associationEnds != null)
-        {
+    private void setAssociationEnds(ImmutableList<AssociationEnd> associationEnds) {
+        if (this.associationEnds != null) {
             throw new IllegalStateException();
         }
-        this.associationEnds       = Objects.requireNonNull(associationEnds);
+        this.associationEnds = Objects.requireNonNull(associationEnds);
         this.associationEndsByName = this.associationEnds.groupByUniqueKey(AssociationEnd::getName);
 
-        this.versionProperty   = this.associationEnds.detectOptional(AssociationEnd::isVersion);
+        this.versionProperty = this.associationEnds.detectOptional(AssociationEnd::isVersion);
         this.versionedProperty = this.associationEnds.detectOptional(AssociationEnd::isVersioned);
     }
 
     @Override
-    public ImmutableList<AssociationEnd> getAssociationEnds()
-    {
+    public ImmutableList<AssociationEnd> getAssociationEnds() {
         return Objects.requireNonNull(this.associationEnds);
     }
 
     @Override
-    public AssociationEnd getAssociationEndByName(String name)
-    {
+    public AssociationEnd getAssociationEndByName(String name) {
         return this.associationEndsByName.get(name);
     }
 
     @Override
     @Nonnull
-    public Optional<Klass> getSuperClass()
-    {
+    public Optional<Klass> getSuperClass() {
         return this.superClass;
     }
 
-    private void setSuperClass(Optional<Klass> superClass)
-    {
-        if (this.superClass != null)
-        {
+    private void setSuperClass(Optional<Klass> superClass) {
+        if (this.superClass != null) {
             throw new IllegalStateException();
         }
         this.superClass = Objects.requireNonNull(superClass);
     }
 
     @Override
-    public ImmutableList<Klass> getSubClasses()
-    {
+    public ImmutableList<Klass> getSubClasses() {
         return Objects.requireNonNull(this.subClasses);
     }
 
-    public void setSubClasses(ImmutableList<Klass> subClasses)
-    {
-        if (this.subClasses != null)
-        {
+    public void setSubClasses(ImmutableList<Klass> subClasses) {
+        if (this.subClasses != null) {
             throw new IllegalStateException();
         }
         this.subClasses = Objects.requireNonNull(subClasses);
     }
 
-    public static final class KlassBuilder
-            extends ClassifierBuilder<KlassImpl>
-    {
+    public static final class KlassBuilder extends ClassifierBuilder<KlassImpl> {
+
         private final boolean isAbstract;
         private final boolean isUser;
         private final boolean isTransient;
@@ -204,30 +182,28 @@ public final class KlassImpl
         @Nullable
         private ImmutableList<AssociationEndBuilder> declaredAssociationEnds;
 
-        private Optional<KlassBuilder>      superClass;
+        private Optional<KlassBuilder> superClass;
         private ImmutableList<KlassBuilder> subClasses;
 
         public KlassBuilder(
-                @Nonnull ClassDeclarationContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode,
-                int ordinal,
-                @Nonnull IdentifierContext nameContext,
-                @Nonnull String packageName,
-                boolean isAbstract,
-                boolean isUser,
-                boolean isTransient)
-        {
+            @Nonnull ClassDeclarationContext elementContext,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode,
+            int ordinal,
+            @Nonnull IdentifierContext nameContext,
+            @Nonnull String packageName,
+            boolean isAbstract,
+            boolean isUser,
+            boolean isTransient
+        ) {
             super(elementContext, macroElement, sourceCode, ordinal, nameContext, packageName);
-            this.isAbstract  = isAbstract;
-            this.isUser      = isUser;
+            this.isAbstract = isAbstract;
+            this.isUser = isUser;
             this.isTransient = isTransient;
         }
 
-        public void setDeclaredAssociationEnds(@Nonnull ImmutableList<AssociationEndBuilder> declaredAssociationEnds)
-        {
-            if (this.declaredAssociationEnds != null)
-            {
+        public void setDeclaredAssociationEnds(@Nonnull ImmutableList<AssociationEndBuilder> declaredAssociationEnds) {
+            if (this.declaredAssociationEnds != null) {
                 throw new IllegalStateException();
             }
             this.declaredAssociationEnds = Objects.requireNonNull(declaredAssociationEnds);
@@ -235,46 +211,40 @@ public final class KlassImpl
 
         @Override
         @Nonnull
-        protected KlassImpl buildUnsafe()
-        {
+        protected KlassImpl buildUnsafe() {
             return new KlassImpl(
-                    (ClassDeclarationContext) this.elementContext,
-                    this.macroElement.map(ElementBuilder::getElement),
-                    this.sourceCode.build(),
-                    this.ordinal,
-                    this.getNameContext(),
-                    this.packageName,
-                    this.isAbstract,
-                    this.isUser,
-                    this.isTransient);
+                (ClassDeclarationContext) this.elementContext,
+                this.macroElement.map(ElementBuilder::getElement),
+                this.sourceCode.build(),
+                this.ordinal,
+                this.getNameContext(),
+                this.packageName,
+                this.isAbstract,
+                this.isUser,
+                this.isTransient
+            );
         }
 
-        public void setSuperClass(@Nonnull Optional<KlassBuilder> superClass)
-        {
-            if (this.superClass != null)
-            {
+        public void setSuperClass(@Nonnull Optional<KlassBuilder> superClass) {
+            if (this.superClass != null) {
                 throw new IllegalStateException();
             }
             this.superClass = Objects.requireNonNull(superClass);
         }
 
-        public void setSubClassBuilders(ImmutableList<KlassBuilder> subClasses)
-        {
-            if (this.subClasses != null)
-            {
+        public void setSubClassBuilders(ImmutableList<KlassBuilder> subClasses) {
+            if (this.subClasses != null) {
                 throw new IllegalStateException();
             }
             this.subClasses = Objects.requireNonNull(subClasses);
         }
 
         @Override
-        public void build2()
-        {
+        public void build2() {
             super.build2();
 
-            ImmutableList<AssociationEnd> declaredAssociationEnds = this.declaredAssociationEnds
-                    .<AssociationEnd>collect(AssociationEndBuilder::getElement)
-                    .toImmutable();
+            ImmutableList<AssociationEnd> declaredAssociationEnds =
+                this.declaredAssociationEnds.<AssociationEnd>collect(AssociationEndBuilder::getElement).toImmutable();
             this.element.setDeclaredAssociationEnds(declaredAssociationEnds);
 
             Optional<Klass> maybeSuperClass = this.superClass.map(ElementBuilder::getElement);
@@ -283,75 +253,70 @@ public final class KlassImpl
             this.element.setSubClasses(subClasses);
 
             ImmutableList<AssociationEnd> associationEnds = maybeSuperClass
-                    .map(Klass::getAssociationEnds)
-                    .orElseGet(Lists.immutable::empty)
-                    .newWithAll(declaredAssociationEnds)
-                    .toReversed()
-                    .distinctBy(NamedElement::getName)
-                    .toReversed();
+                .map(Klass::getAssociationEnds)
+                .orElseGet(Lists.immutable::empty)
+                .newWithAll(declaredAssociationEnds)
+                .toReversed()
+                .distinctBy(NamedElement::getName)
+                .toReversed();
 
             this.element.setAssociationEnds(associationEnds);
         }
 
         @Override
-        protected ImmutableList<DataTypeProperty> getDataTypeProperties()
-        {
-            ImmutableList<DataTypeProperty> declaredDataTypeProperties = this.declaredDataTypeProperties
-                    .collect(property -> property.getElement());
+        protected ImmutableList<DataTypeProperty> getDataTypeProperties() {
+            ImmutableList<DataTypeProperty> declaredDataTypeProperties =
+                this.declaredDataTypeProperties.collect(property -> property.getElement());
 
-            ImmutableList<DataTypeProperty> interfaceProperties = this.declaredInterfaces
-                    .collect(ElementBuilder::getElement)
+            ImmutableList<DataTypeProperty> interfaceProperties =
+                this.declaredInterfaces.collect(ElementBuilder::getElement)
                     .flatCollect(Classifier::getDataTypeProperties)
                     .toImmutable();
 
-            ImmutableList<DataTypeProperty> superClassProperties = this.superClass
-                    .map(ElementBuilder::getElement)
+            ImmutableList<DataTypeProperty> superClassProperties =
+                this.superClass.map(ElementBuilder::getElement)
                     .map(Classifier::getDataTypeProperties)
                     .orElseGet(Lists.immutable::empty);
 
             ImmutableList<DataTypeProperty> allDataTypeProperties = interfaceProperties
-                    .newWithAll(superClassProperties)
-                    .newWithAll(declaredDataTypeProperties);
+                .newWithAll(superClassProperties)
+                .newWithAll(declaredDataTypeProperties);
 
             ImmutableList<DataTypeProperty> result = allDataTypeProperties
-                    .toReversed()
-                    .distinctBy(NamedElement::getName)
-                    .toReversed();
+                .toReversed()
+                .distinctBy(NamedElement::getName)
+                .toReversed();
 
             return result;
         }
 
         @Override
-        protected ImmutableList<ReferenceProperty> getReferenceProperties()
-        {
-            ImmutableList<ReferenceProperty> declaredReferenceProperties = this.declaredReferenceProperties
-                    .collect(property -> property.getElement());
+        protected ImmutableList<ReferenceProperty> getReferenceProperties() {
+            ImmutableList<ReferenceProperty> declaredReferenceProperties =
+                this.declaredReferenceProperties.collect(property -> property.getElement());
 
-            ImmutableList<ReferenceProperty> superClassProperties = this.superClass
-                    .map(KlassBuilder::getReferenceProperties)
-                    .orElseGet(Lists.immutable::empty);
+            ImmutableList<ReferenceProperty> superClassProperties =
+                this.superClass.map(KlassBuilder::getReferenceProperties).orElseGet(Lists.immutable::empty);
 
-            ImmutableList<ReferenceProperty> interfaceProperties = this.declaredInterfaces
-
-                    .collect(ElementBuilder::getElement)
+            ImmutableList<ReferenceProperty> interfaceProperties =
+                this.declaredInterfaces.collect(ElementBuilder::getElement)
                     .flatCollect(Classifier::getReferenceProperties)
                     .toImmutable();
 
             ImmutableList<ReferenceProperty> allReferenceProperties = interfaceProperties
-                    .newWithAll(superClassProperties)
-                    .newWithAll(declaredReferenceProperties);
+                .newWithAll(superClassProperties)
+                .newWithAll(declaredReferenceProperties);
 
             ImmutableList<ReferenceProperty> result = allReferenceProperties
-                    .toReversed()
-                    .distinctBy(NamedElement::getName)
-                    .toReversed();
+                .toReversed()
+                .distinctBy(NamedElement::getName)
+                .toReversed();
 
             return result;
         }
 
         @Override
-        public KlassImpl getType()
-        {
+        public KlassImpl getType() {
             return Objects.requireNonNull(this.element);
         }
     }

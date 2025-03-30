@@ -33,74 +33,75 @@ import cool.klass.model.meta.grammar.KlassParser.EnumerationPropertyContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 
 public final class EnumerationPropertyImpl
-        extends AbstractDataTypeProperty<EnumerationImpl>
-        implements EnumerationPropertyWithSourceCode
-{
+    extends AbstractDataTypeProperty<EnumerationImpl>
+    implements EnumerationPropertyWithSourceCode {
+
     private EnumerationPropertyImpl(
+        @Nonnull EnumerationPropertyContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext,
+        @Nonnull EnumerationImpl enumeration,
+        @Nonnull AbstractClassifier owningClassifier,
+        boolean isOptional
+    ) {
+        super(
+            elementContext,
+            macroElement,
+            sourceCode,
+            ordinal,
+            nameContext,
+            enumeration,
+            owningClassifier,
+            isOptional
+        );
+    }
+
+    @Nonnull
+    @Override
+    public EnumerationPropertyContext getElementContext() {
+        return (EnumerationPropertyContext) super.getElementContext();
+    }
+
+    public static final class EnumerationPropertyBuilder
+        extends DataTypePropertyBuilder<EnumerationImpl, EnumerationBuilder, EnumerationPropertyImpl> {
+
+        public EnumerationPropertyBuilder(
             @Nonnull EnumerationPropertyContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode,
             int ordinal,
             @Nonnull IdentifierContext nameContext,
-            @Nonnull EnumerationImpl enumeration,
-            @Nonnull AbstractClassifier owningClassifier,
-            boolean isOptional)
-    {
-        super(
+            @Nonnull EnumerationBuilder enumerationBuilder,
+            @Nonnull ClassifierBuilder<?> owningClassifierBuilder,
+            boolean isOptional
+        ) {
+            super(
                 elementContext,
                 macroElement,
                 sourceCode,
                 ordinal,
                 nameContext,
-                enumeration,
-                owningClassifier,
-                isOptional);
-    }
-
-    @Nonnull
-    @Override
-    public EnumerationPropertyContext getElementContext()
-    {
-        return (EnumerationPropertyContext) super.getElementContext();
-    }
-
-    public static final class EnumerationPropertyBuilder
-            extends DataTypePropertyBuilder<EnumerationImpl, EnumerationBuilder, EnumerationPropertyImpl>
-    {
-        public EnumerationPropertyBuilder(
-                @Nonnull EnumerationPropertyContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode,
-                int ordinal,
-                @Nonnull IdentifierContext nameContext,
-                @Nonnull EnumerationBuilder enumerationBuilder,
-                @Nonnull ClassifierBuilder<?> owningClassifierBuilder,
-                boolean isOptional)
-        {
-            super(
-                    elementContext,
-                    macroElement,
-                    sourceCode,
-                    ordinal,
-                    nameContext,
-                    enumerationBuilder,
-                    owningClassifierBuilder,
-                    isOptional);
+                enumerationBuilder,
+                owningClassifierBuilder,
+                isOptional
+            );
         }
 
         @Override
         @Nonnull
-        protected EnumerationPropertyImpl buildUnsafe()
-        {
+        protected EnumerationPropertyImpl buildUnsafe() {
             return new EnumerationPropertyImpl(
-                    (EnumerationPropertyContext) this.elementContext,
-                    this.macroElement.map(ElementBuilder::getElement),
-                    this.sourceCode.build(),
-                    this.ordinal,
-                    this.getNameContext(),
-                    this.typeBuilder.getElement(),
-                    this.owningClassifierBuilder.getElement(),
-                    this.isOptional);
+                (EnumerationPropertyContext) this.elementContext,
+                this.macroElement.map(ElementBuilder::getElement),
+                this.sourceCode.build(),
+                this.ordinal,
+                this.getNameContext(),
+                this.typeBuilder.getElement(),
+                this.owningClassifierBuilder.getElement(),
+                this.isOptional
+            );
         }
     }
 }

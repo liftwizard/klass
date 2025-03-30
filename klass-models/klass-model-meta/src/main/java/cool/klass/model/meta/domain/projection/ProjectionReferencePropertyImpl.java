@@ -36,100 +36,100 @@ import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionReferencePropertyContext;
 
 public final class ProjectionReferencePropertyImpl
-        extends AbstractProjectionParent
-        implements ProjectionReferencePropertyWithSourceCode
-{
+    extends AbstractProjectionParent
+    implements ProjectionReferencePropertyWithSourceCode {
+
     @Nonnull
-    private final          ProjectionParent                parent;
+    private final ProjectionParent parent;
+
     @Nonnull
-    private final ClassifierWithSourceCode        classifier;
+    private final ClassifierWithSourceCode classifier;
+
     @Nonnull
-    private final          ReferencePropertyWithSourceCode referenceProperty;
+    private final ReferencePropertyWithSourceCode referenceProperty;
 
     private ProjectionReferencePropertyImpl(
-            @Nonnull ProjectionReferencePropertyContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext,
-            @Nonnull ProjectionParent parent,
-            @Nonnull ClassifierWithSourceCode classifier,
-            @Nonnull ReferencePropertyWithSourceCode referenceProperty)
-    {
+        @Nonnull ProjectionReferencePropertyContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext,
+        @Nonnull ProjectionParent parent,
+        @Nonnull ClassifierWithSourceCode classifier,
+        @Nonnull ReferencePropertyWithSourceCode referenceProperty
+    ) {
         super(elementContext, macroElement, sourceCode, ordinal, nameContext);
-        this.parent            = Objects.requireNonNull(parent);
-        this.classifier        = Objects.requireNonNull(classifier);
+        this.parent = Objects.requireNonNull(parent);
+        this.classifier = Objects.requireNonNull(classifier);
         this.referenceProperty = Objects.requireNonNull(referenceProperty);
     }
 
     @Nonnull
     @Override
-    public ProjectionReferencePropertyContext getElementContext()
-    {
+    public ProjectionReferencePropertyContext getElementContext() {
         return (ProjectionReferencePropertyContext) super.getElementContext();
     }
 
     @Override
     @Nonnull
-    public Optional<ProjectionParent> getParent()
-    {
+    public Optional<ProjectionParent> getParent() {
         return Optional.of(this.parent);
     }
 
     @Nonnull
     @Override
-    public Classifier getDeclaredClassifier()
-    {
+    public Classifier getDeclaredClassifier() {
         return this.classifier;
     }
 
     @Override
     @Nonnull
-    public ReferencePropertyWithSourceCode getProperty()
-    {
+    public ReferencePropertyWithSourceCode getProperty() {
         return this.referenceProperty;
     }
 
     public static final class ProjectionReferencePropertyBuilder
-            extends AbstractProjectionParentBuilder<ProjectionReferencePropertyImpl>
-            implements ProjectionChildBuilder
-    {
+        extends AbstractProjectionParentBuilder<ProjectionReferencePropertyImpl>
+        implements ProjectionChildBuilder {
+
         @Nonnull
         private final AbstractProjectionParentBuilder<?> parentBuilder;
+
         @Nonnull
-        private final ClassifierBuilder<?>               classifierBuilder;
+        private final ClassifierBuilder<?> classifierBuilder;
+
         @Nonnull
-        private final ReferencePropertyBuilder<?, ?, ?>  referencePropertyBuilder;
+        private final ReferencePropertyBuilder<?, ?, ?> referencePropertyBuilder;
 
         public ProjectionReferencePropertyBuilder(
-                @Nonnull ProjectionReferencePropertyContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode,
-                int ordinal,
-                @Nonnull IdentifierContext nameContext,
-                @Nonnull AbstractProjectionParentBuilder<?> parentBuilder,
-                @Nonnull ClassifierBuilder<?> classifierBuilder,
-                @Nonnull ReferencePropertyBuilder<?, ?, ?> referencePropertyBuilder)
-        {
+            @Nonnull ProjectionReferencePropertyContext elementContext,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode,
+            int ordinal,
+            @Nonnull IdentifierContext nameContext,
+            @Nonnull AbstractProjectionParentBuilder<?> parentBuilder,
+            @Nonnull ClassifierBuilder<?> classifierBuilder,
+            @Nonnull ReferencePropertyBuilder<?, ?, ?> referencePropertyBuilder
+        ) {
             super(elementContext, macroElement, sourceCode, ordinal, nameContext);
-            this.parentBuilder            = Objects.requireNonNull(parentBuilder);
-            this.classifierBuilder        = Objects.requireNonNull(classifierBuilder);
+            this.parentBuilder = Objects.requireNonNull(parentBuilder);
+            this.classifierBuilder = Objects.requireNonNull(classifierBuilder);
             this.referencePropertyBuilder = Objects.requireNonNull(referencePropertyBuilder);
         }
 
         @Override
         @Nonnull
-        protected ProjectionReferencePropertyImpl buildUnsafe()
-        {
+        protected ProjectionReferencePropertyImpl buildUnsafe() {
             return new ProjectionReferencePropertyImpl(
-                    (ProjectionReferencePropertyContext) this.elementContext,
-                    this.macroElement.map(ElementBuilder::getElement),
-                    this.sourceCode.build(),
-                    this.ordinal,
-                    this.getNameContext(),
-                    this.parentBuilder.getElement(),
-                    this.classifierBuilder.getElement(),
-                    this.referencePropertyBuilder.getElement());
+                (ProjectionReferencePropertyContext) this.elementContext,
+                this.macroElement.map(ElementBuilder::getElement),
+                this.sourceCode.build(),
+                this.ordinal,
+                this.getNameContext(),
+                this.parentBuilder.getElement(),
+                this.classifierBuilder.getElement(),
+                this.referencePropertyBuilder.getElement()
+            );
         }
     }
 }

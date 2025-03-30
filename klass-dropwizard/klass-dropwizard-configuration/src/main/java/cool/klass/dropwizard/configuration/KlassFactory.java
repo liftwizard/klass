@@ -24,45 +24,39 @@ import cool.klass.dropwizard.configuration.data.store.DataStoreFactory;
 import cool.klass.dropwizard.configuration.data.store.reladomo.ReladomoDataStoreFactory;
 import cool.klass.dropwizard.configuration.domain.model.loader.DomainModelFactory;
 
-public class KlassFactory
-{
+public class KlassFactory {
+
     private @NotNull @Valid DomainModelFactory domainModelFactory;
-    private @NotNull @Valid DataStoreFactory   dataStoreFactory   = new ReladomoDataStoreFactory();
+    private @NotNull @Valid DataStoreFactory dataStoreFactory = new ReladomoDataStoreFactory();
     private String colorScheme;
 
     @JsonProperty("domainModel")
-    public DomainModelFactory getDomainModelFactory()
-    {
+    public DomainModelFactory getDomainModelFactory() {
         return this.domainModelFactory;
     }
 
     @JsonProperty("domainModel")
-    public void setDomainModelFactory(DomainModelFactory domainModelFactory)
-    {
+    public void setDomainModelFactory(DomainModelFactory domainModelFactory) {
         this.domainModelFactory = domainModelFactory;
     }
 
     @JsonProperty("dataStore")
-    public DataStoreFactory getDataStoreFactory()
-    {
+    public DataStoreFactory getDataStoreFactory() {
         return this.dataStoreFactory;
     }
 
     @JsonProperty("dataStore")
-    public void setDataStoreFactory(DataStoreFactory dataStoreFactory)
-    {
+    public void setDataStoreFactory(DataStoreFactory dataStoreFactory) {
         this.dataStoreFactory = dataStoreFactory;
     }
 
     @JsonProperty("colorScheme")
-    public String getColorScheme()
-    {
+    public String getColorScheme() {
         return this.colorScheme;
     }
 
     @JsonProperty("colorScheme")
-    public void setColorScheme(String colorScheme)
-    {
+    public void setColorScheme(String colorScheme) {
         this.colorScheme = colorScheme;
     }
 }

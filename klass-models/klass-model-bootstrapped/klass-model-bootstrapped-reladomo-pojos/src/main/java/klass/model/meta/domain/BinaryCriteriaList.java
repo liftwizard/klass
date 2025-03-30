@@ -20,24 +20,19 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class BinaryCriteriaList extends BinaryCriteriaListAbstract
-{
-    public BinaryCriteriaList()
-    {
-    }
+public class BinaryCriteriaList extends BinaryCriteriaListAbstract {
 
-    public BinaryCriteriaList(int initialSize)
-    {
+    public BinaryCriteriaList() {}
+
+    public BinaryCriteriaList(int initialSize) {
         super(initialSize);
     }
 
-    public BinaryCriteriaList(Collection c)
-    {
+    public BinaryCriteriaList(Collection c) {
         super(c);
     }
 
-    public BinaryCriteriaList(Operation operation)
-    {
+    public BinaryCriteriaList(Operation operation) {
         super(operation);
     }
 }

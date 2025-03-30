@@ -18,7 +18,4 @@ package cool.klass.model.converter.compiler.annotation.audit;
 
 import cool.klass.model.converter.compiler.annotation.AbstractKlassCompilerErrorTestCase;
 
-public class DuplicateAuditAssociationEndErrorTest
-        extends AbstractKlassCompilerErrorTestCase
-{
-}
+public class DuplicateAuditAssociationEndErrorTest extends AbstractKlassCompilerErrorTestCase {}

@@ -28,16 +28,14 @@ import cool.klass.model.meta.grammar.KlassParser.CriteriaExpressionContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceCriteriaDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceCriteriaKeywordContext;
 
-public class ServiceCriteriaPhase extends AbstractCompilerPhase
-{
-    public ServiceCriteriaPhase(@Nonnull CompilerState compilerState)
-    {
+public class ServiceCriteriaPhase extends AbstractCompilerPhase {
+
+    public ServiceCriteriaPhase(@Nonnull CompilerState compilerState) {
         super(compilerState);
     }
 
     @Override
-    public void enterServiceCriteriaDeclaration(@Nonnull ServiceCriteriaDeclarationContext ctx)
-    {
+    public void enterServiceCriteriaDeclaration(@Nonnull ServiceCriteriaDeclarationContext ctx) {
         super.enterServiceCriteriaDeclaration(ctx);
 
         ServiceCriteriaKeywordContext serviceCriteriaKeywordContext = ctx.serviceCriteriaKeyword();
@@ -45,16 +43,15 @@ public class ServiceCriteriaPhase extends AbstractCompilerPhase
         String serviceCriteriaKeyword = serviceCriteriaKeywordContext.getText();
 
         AntlrServiceCriteria serviceCriteria = new AntlrServiceCriteria(
-                ctx,
-                Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-                serviceCriteriaKeyword,
-                this.compilerState.getCompilerWalk().getService());
+            ctx,
+            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+            serviceCriteriaKeyword,
+            this.compilerState.getCompilerWalk().getService()
+        );
 
         CriteriaExpressionContext criteriaExpressionContext = ctx.criteriaExpression();
 
-        CriteriaVisitor criteriaVisitor = new CriteriaVisitor(
-                this.compilerState,
-                serviceCriteria);
+        CriteriaVisitor criteriaVisitor = new CriteriaVisitor(this.compilerState, serviceCriteria);
 
         AntlrCriteria antlrCriteria = criteriaVisitor.visit(criteriaExpressionContext);
         serviceCriteria.setCriteria(antlrCriteria);

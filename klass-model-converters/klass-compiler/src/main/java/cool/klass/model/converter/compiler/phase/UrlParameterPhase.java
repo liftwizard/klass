@@ -42,90 +42,81 @@ import cool.klass.model.meta.grammar.KlassParser.UrlConstantContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlDeclarationContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public class UrlParameterPhase
-        extends AbstractCompilerPhase
-{
+public class UrlParameterPhase extends AbstractCompilerPhase {
+
     @Nullable
-    private Boolean        inQueryParameterList;
+    private Boolean inQueryParameterList;
+
     @Nullable
     private AntlrParameter parameter;
 
     @Nullable
     private AntlrMultiplicityOwner multiplicityOwner;
 
-    public UrlParameterPhase(@Nonnull CompilerState compilerState)
-    {
+    public UrlParameterPhase(@Nonnull CompilerState compilerState) {
         super(compilerState);
     }
 
     @Override
-    public void enterUrlDeclaration(@Nonnull UrlDeclarationContext ctx)
-    {
+    public void enterUrlDeclaration(@Nonnull UrlDeclarationContext ctx) {
         super.enterUrlDeclaration(ctx);
         this.inQueryParameterList = false;
     }
 
     @Override
-    public void exitUrlDeclaration(@Nonnull UrlDeclarationContext ctx)
-    {
+    public void exitUrlDeclaration(@Nonnull UrlDeclarationContext ctx) {
         this.inQueryParameterList = null;
         super.exitUrlDeclaration(ctx);
     }
 
     @Override
-    public void enterUrlConstant(@Nonnull UrlConstantContext ctx)
-    {
+    public void enterUrlConstant(@Nonnull UrlConstantContext ctx) {
         super.enterUrlConstant(ctx);
 
         AntlrUrl url = this.compilerState.getCompilerWalk().getUrl();
         AntlrUrlConstant antlrUrlConstant = new AntlrUrlConstant(
-                ctx,
-                Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-                url.getNumPathSegments() + 1,
-                ctx.identifier());
+            ctx,
+            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+            url.getNumPathSegments() + 1,
+            ctx.identifier()
+        );
         url.enterUrlConstant(antlrUrlConstant);
     }
 
     @Override
-    public void enterQueryParameterList(@Nonnull QueryParameterListContext ctx)
-    {
+    public void enterQueryParameterList(@Nonnull QueryParameterListContext ctx) {
         super.enterQueryParameterList(ctx);
         this.inQueryParameterList = true;
     }
 
     @Override
-    public void enterPrimitiveParameterDeclaration(@Nonnull PrimitiveParameterDeclarationContext ctx)
-    {
+    public void enterPrimitiveParameterDeclaration(@Nonnull PrimitiveParameterDeclarationContext ctx) {
         super.enterPrimitiveParameterDeclaration(ctx);
 
-        if (this.compilerState.getCompilerWalk().getUrl() == null)
-        {
+        if (this.compilerState.getCompilerWalk().getUrl() == null) {
             return;
         }
 
-        String             primitiveTypeName  = ctx.primitiveType().getText();
-        PrimitiveType      primitiveType      = PrimitiveType.byPrettyName(primitiveTypeName);
+        String primitiveTypeName = ctx.primitiveType().getText();
+        PrimitiveType primitiveType = PrimitiveType.byPrettyName(primitiveTypeName);
         AntlrPrimitiveType primitiveTypeState = AntlrPrimitiveType.valueOf(primitiveType);
 
         this.enterParameterDeclaration(ctx, primitiveTypeState, ctx.identifier());
     }
 
     @Override
-    public void exitPrimitiveParameterDeclaration(@Nonnull PrimitiveParameterDeclarationContext ctx)
-    {
-        this.parameter         = null;
+    public void exitPrimitiveParameterDeclaration(@Nonnull PrimitiveParameterDeclarationContext ctx) {
+        this.parameter = null;
         this.multiplicityOwner = null;
 
         super.exitPrimitiveParameterDeclaration(ctx);
     }
 
     @Override
-    public void enterEnumerationParameterDeclaration(@Nonnull EnumerationParameterDeclarationContext ctx)
-    {
+    public void enterEnumerationParameterDeclaration(@Nonnull EnumerationParameterDeclarationContext ctx) {
         super.enterEnumerationParameterDeclaration(ctx);
 
-        if (this.compilerState.getCompilerWalk().getUrl() == null)
-        {
+        if (this.compilerState.getCompilerWalk().getUrl() == null) {
             return;
         }
 
@@ -136,74 +127,67 @@ public class UrlParameterPhase
     }
 
     @Override
-    public void exitEnumerationParameterDeclaration(@Nonnull EnumerationParameterDeclarationContext ctx)
-    {
-        this.parameter         = null;
+    public void exitEnumerationParameterDeclaration(@Nonnull EnumerationParameterDeclarationContext ctx) {
+        this.parameter = null;
         this.multiplicityOwner = null;
 
         super.exitEnumerationParameterDeclaration(ctx);
     }
 
     @Override
-    public void enterParameterModifier(@Nonnull ParameterModifierContext ctx)
-    {
+    public void enterParameterModifier(@Nonnull ParameterModifierContext ctx) {
         super.enterParameterModifier(ctx);
 
         // TODO: Check if parameter is non null?
         int ordinal = this.parameter.getNumModifiers();
         AntlrModifier modifier = new AntlrModifier(
-                ctx,
-                Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-                ordinal,
-                this.parameter);
+            ctx,
+            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+            ordinal,
+            this.parameter
+        );
         this.parameter.enterModifier(modifier);
     }
 
     private void enterParameterDeclaration(
-            @Nonnull ParserRuleContext ctx,
-            @Nonnull AntlrType type,
-            @Nonnull IdentifierContext identifierContext)
-    {
-        if (this.parameter != null)
-        {
+        @Nonnull ParserRuleContext ctx,
+        @Nonnull AntlrType type,
+        @Nonnull IdentifierContext identifierContext
+    ) {
+        if (this.parameter != null) {
             throw new AssertionError();
         }
 
         AntlrUrl url = this.compilerState.getCompilerWalk().getUrl();
-        int ordinal = this.inQueryParameterList
-                ? url.getNumQueryParameters() + 1
-                : url.getNumPathSegments() + 1;
+        int ordinal = this.inQueryParameterList ? url.getNumQueryParameters() + 1 : url.getNumPathSegments() + 1;
 
-        this.parameter         = new AntlrParameter(
-                ctx,
-                Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-                ordinal,
-                identifierContext,
-                type,
-                url);
+        this.parameter = new AntlrParameter(
+            ctx,
+            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+            ordinal,
+            identifierContext,
+            type,
+            url
+        );
         this.multiplicityOwner = this.parameter;
 
-        if (this.inQueryParameterList)
-        {
+        if (this.inQueryParameterList) {
             url.enterQueryParameterDeclaration(this.parameter);
-        }
-        else
-        {
+        } else {
             url.enterPathParameterDeclaration(this.parameter);
         }
     }
 
     @Override
-    public void enterMultiplicity(@Nonnull MultiplicityContext ctx)
-    {
+    public void enterMultiplicity(@Nonnull MultiplicityContext ctx) {
         super.enterMultiplicity(ctx);
 
-        if (this.multiplicityOwner != null)
-        {
+        if (this.multiplicityOwner != null) {
             AntlrMultiplicity multiplicity = new AntlrMultiplicity(
-                    ctx,
-                    Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-                    this.multiplicityOwner);
+                ctx,
+                Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+                this.multiplicityOwner
+            );
 
             this.multiplicityOwner.enterMultiplicity(multiplicity);
         }

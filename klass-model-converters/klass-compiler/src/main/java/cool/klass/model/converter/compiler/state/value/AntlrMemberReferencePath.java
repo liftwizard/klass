@@ -35,45 +35,43 @@ import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public abstract class AntlrMemberReferencePath
-        extends AntlrExpressionValue
-{
+public abstract class AntlrMemberReferencePath extends AntlrExpressionValue {
+
     @Nonnull
-    protected final AntlrClass                         klass;
+    protected final AntlrClass klass;
+
     @Nonnull
     protected final ImmutableList<AntlrAssociationEnd> associationEnd;
+
     @Nonnull
-    protected final AntlrDataTypeProperty<?>           dataTypeProperty;
+    protected final AntlrDataTypeProperty<?> dataTypeProperty;
 
     protected AntlrMemberReferencePath(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            @Nonnull AntlrClass klass,
-            @Nonnull ImmutableList<AntlrAssociationEnd> associationEnd,
-            @Nonnull AntlrDataTypeProperty<?> dataTypeProperty,
-            @Nonnull IAntlrElement expressionValueOwner)
-    {
+        @Nonnull ParserRuleContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        @Nonnull AntlrClass klass,
+        @Nonnull ImmutableList<AntlrAssociationEnd> associationEnd,
+        @Nonnull AntlrDataTypeProperty<?> dataTypeProperty,
+        @Nonnull IAntlrElement expressionValueOwner
+    ) {
         super(elementContext, compilationUnit, expressionValueOwner);
-        this.klass            = Objects.requireNonNull(klass);
-        this.associationEnd   = Objects.requireNonNull(associationEnd);
+        this.klass = Objects.requireNonNull(klass);
+        this.associationEnd = Objects.requireNonNull(associationEnd);
         this.dataTypeProperty = Objects.requireNonNull(dataTypeProperty);
     }
 
     @Nonnull
-    public AntlrClass getKlass()
-    {
+    public AntlrClass getKlass() {
         return this.klass;
     }
 
     @Nonnull
-    public ImmutableList<AntlrAssociationEnd> getAssociationEnds()
-    {
+    public ImmutableList<AntlrAssociationEnd> getAssociationEnds() {
         return this.associationEnd;
     }
 
     @Nonnull
-    public AntlrDataTypeProperty<?> getDataTypeProperty()
-    {
+    public AntlrDataTypeProperty<?> getDataTypeProperty() {
         return this.dataTypeProperty;
     }
 
@@ -83,20 +81,19 @@ public abstract class AntlrMemberReferencePath
 
     @Nullable
     protected AntlrClass reportErrorsAssociationEnds(
-            @Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
-            @Nonnull List<AssociationEndReferenceContext> associationEndReferenceContexts)
-    {
+        @Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
+        @Nonnull List<AssociationEndReferenceContext> associationEndReferenceContexts
+    ) {
         AntlrClass currentClass = this.klass;
-        for (int i = 0; i < this.associationEnd.size(); i++)
-        {
+        for (int i = 0; i < this.associationEnd.size(); i++) {
             AntlrAssociationEnd associationEnd = this.associationEnd.get(i);
-            if (associationEnd == AntlrAssociationEnd.NOT_FOUND)
-            {
+            if (associationEnd == AntlrAssociationEnd.NOT_FOUND) {
                 IdentifierContext identifier = associationEndReferenceContexts.get(i).identifier();
                 String message = String.format(
-                        "Cannot find member '%s.%s'.",
-                        currentClass.getName(),
-                        identifier.getText());
+                    "Cannot find member '%s.%s'.",
+                    currentClass.getName(),
+                    identifier.getText()
+                );
                 compilerAnnotationHolder.add("ERR_MEM_EXP", message, this, identifier);
                 return null;
             }

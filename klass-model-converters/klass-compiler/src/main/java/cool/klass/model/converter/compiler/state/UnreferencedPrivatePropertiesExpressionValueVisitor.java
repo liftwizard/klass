@@ -36,25 +36,21 @@ import cool.klass.model.converter.compiler.state.value.literal.AntlrStringLitera
 import cool.klass.model.converter.compiler.state.value.literal.AntlrUserLiteral;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class UnreferencedPrivatePropertiesExpressionValueVisitor
-        implements AntlrExpressionValueVisitor
-{
-    private final Set<AntlrAssociationEnd>      associationEndsReferencedByCriteria    = new LinkedHashSet<>();
+public class UnreferencedPrivatePropertiesExpressionValueVisitor implements AntlrExpressionValueVisitor {
+
+    private final Set<AntlrAssociationEnd> associationEndsReferencedByCriteria = new LinkedHashSet<>();
     private final Set<AntlrDataTypeProperty<?>> dataTypePropertiesReferencedByCriteria = new LinkedHashSet<>();
 
-    public Set<AntlrAssociationEnd> getAssociationEndsReferencedByCriteria()
-    {
+    public Set<AntlrAssociationEnd> getAssociationEndsReferencedByCriteria() {
         return this.associationEndsReferencedByCriteria;
     }
 
-    public Set<AntlrDataTypeProperty<?>> getDataTypePropertiesReferencedByCriteria()
-    {
+    public Set<AntlrDataTypeProperty<?>> getDataTypePropertiesReferencedByCriteria() {
         return this.dataTypePropertiesReferencedByCriteria;
     }
 
     @Override
-    public void visitTypeMember(@Nonnull AntlrTypeMemberReferencePath typeMemberExpressionValue)
-    {
+    public void visitTypeMember(@Nonnull AntlrTypeMemberReferencePath typeMemberExpressionValue) {
         ImmutableList<AntlrAssociationEnd> associationEnds = typeMemberExpressionValue.getAssociationEnds();
         this.associationEndsReferencedByCriteria.addAll(associationEnds.castToList());
         AntlrDataTypeProperty<?> dataTypeProperty = typeMemberExpressionValue.getDataTypeProperty();
@@ -62,8 +58,7 @@ public class UnreferencedPrivatePropertiesExpressionValueVisitor
     }
 
     @Override
-    public void visitThisMember(@Nonnull AntlrThisMemberReferencePath thisMemberExpressionValue)
-    {
+    public void visitThisMember(@Nonnull AntlrThisMemberReferencePath thisMemberExpressionValue) {
         ImmutableList<AntlrAssociationEnd> associationEnds = thisMemberExpressionValue.getAssociationEnds();
         this.associationEndsReferencedByCriteria.addAll(associationEnds.castToList());
         AntlrDataTypeProperty<?> dataTypeProperty = thisMemberExpressionValue.getDataTypeProperty();
@@ -71,42 +66,26 @@ public class UnreferencedPrivatePropertiesExpressionValueVisitor
     }
 
     @Override
-    public void visitVariableReference(@Nonnull AntlrVariableReference variableReference)
-    {
-    }
+    public void visitVariableReference(@Nonnull AntlrVariableReference variableReference) {}
 
     @Override
-    public void visitBooleanLiteral(@Nonnull AntlrBooleanLiteralValue booleanLiteralValue)
-    {
-    }
+    public void visitBooleanLiteral(@Nonnull AntlrBooleanLiteralValue booleanLiteralValue) {}
 
     @Override
-    public void visitIntegerLiteral(@Nonnull AntlrIntegerLiteralValue integerLiteralValue)
-    {
-    }
+    public void visitIntegerLiteral(@Nonnull AntlrIntegerLiteralValue integerLiteralValue) {}
 
     @Override
-    public void visitFloatingPointLiteral(@Nonnull AntlrFloatingPointLiteralValue floatingPointLiteral)
-    {
-    }
+    public void visitFloatingPointLiteral(@Nonnull AntlrFloatingPointLiteralValue floatingPointLiteral) {}
 
     @Override
-    public void visitStringLiteral(@Nonnull AntlrStringLiteralValue stringLiteralValue)
-    {
-    }
+    public void visitStringLiteral(@Nonnull AntlrStringLiteralValue stringLiteralValue) {}
 
     @Override
-    public void visitLiteralList(@Nonnull AntlrLiteralListValue literalListValue)
-    {
-    }
+    public void visitLiteralList(@Nonnull AntlrLiteralListValue literalListValue) {}
 
     @Override
-    public void visitUserLiteral(@Nonnull AntlrUserLiteral userLiteral)
-    {
-    }
+    public void visitUserLiteral(@Nonnull AntlrUserLiteral userLiteral) {}
 
     @Override
-    public void visitNullLiteral(@Nonnull AntlrNullLiteral nullLiteral)
-    {
-    }
+    public void visitNullLiteral(@Nonnull AntlrNullLiteral nullLiteral) {}
 }

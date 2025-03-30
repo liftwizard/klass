@@ -25,81 +25,70 @@ import io.liftwizard.junit.extension.match.FileSlurper;
 import org.eclipse.collections.impl.factory.Maps;
 import org.junit.jupiter.api.Test;
 
-class KlassBootstrappedMetaModelGraphQLTest
-        extends AbstractKlassBootstrappedMetaModelApplicationTest
-{
+class KlassBootstrappedMetaModelGraphQLTest extends AbstractKlassBootstrappedMetaModelApplicationTest {
+
     @Test
-    void packageableElements()
-    {
+    void packageableElements() {
         this.assertGraphQL("packageableElements");
     }
 
     @Test
-    void enumerations()
-    {
+    void enumerations() {
         this.assertGraphQL("enumerations");
     }
 
     @Test
-    void interfaces()
-    {
+    void interfaces() {
         this.assertGraphQL("interfaces");
     }
 
     @Test
-    void classes()
-    {
+    void classes() {
         this.assertGraphQL("classes");
     }
 
     @Test
-    void associations()
-    {
+    void associations() {
         this.assertGraphQL("associations");
     }
 
     @Test
-    void projectionElements()
-    {
+    void projectionElements() {
         this.assertGraphQL("projectionElements");
     }
 
     @Test
-    void namedProjections()
-    {
+    void namedProjections() {
         this.assertGraphQL("namedProjections");
     }
 
     @Test
-    void expressionValue()
-    {
+    void expressionValue() {
         this.assertGraphQL("expressionValue");
     }
 
     @Test
-    void criteria()
-    {
+    void criteria() {
         this.assertGraphQL("criteria");
     }
 
     @Test
-    void serviceGroups()
-    {
+    void serviceGroups() {
         this.assertGraphQL("serviceGroups");
     }
 
-    private void assertGraphQL(String testName)
-    {
+    private void assertGraphQL(String testName) {
         Client client = this.getClient(testName);
 
         Class<?> callingClass = this.getClass();
-        String   sourceName   = callingClass.getSimpleName() + "." + testName + ".graphql";
-        String   query        = FileSlurper.slurp(sourceName, callingClass);
+        String sourceName = callingClass.getSimpleName() + "." + testName + ".graphql";
+        String query = FileSlurper.slurp(sourceName, callingClass);
 
-        Response response = client.target("http://localhost:{port}/graphql")
-                .resolveTemplate("port", this.appExtension.getLocalPort())
-                .request()
-                .post(Entity.json(Maps.mutable.with("query", query)));
+        Response response = client
+            .target("http://localhost:{port}/graphql")
+            .resolveTemplate("port", this.appExtension.getLocalPort())
+            .request()
+            .post(Entity.json(Maps.mutable.with("query", query)));
 
         this.assertResponse(testName, Status.OK, response);
     }

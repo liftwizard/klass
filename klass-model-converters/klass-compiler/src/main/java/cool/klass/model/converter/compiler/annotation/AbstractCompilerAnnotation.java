@@ -49,49 +49,52 @@ import org.fusesource.jansi.Ansi.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractCompilerAnnotation
-{
+public abstract class AbstractCompilerAnnotation {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractCompilerAnnotation.class);
 
-    private static final Comparator<Token> TOKEN_COMPARATOR = Comparator
-            .comparing(Token::getLine)
-            .thenComparing(Token::getCharPositionInLine);
+    private static final Comparator<Token> TOKEN_COMPARATOR = Comparator.comparing(Token::getLine).thenComparing(
+        Token::getCharPositionInLine
+    );
 
     @Nonnull
-    protected final CompilationUnit                   compilationUnit;
+    protected final CompilationUnit compilationUnit;
+
     @Nonnull
-    protected final AnnotationSeverity                severity;
+    protected final AnnotationSeverity severity;
+
     @Nonnull
-    private final   Optional<CauseCompilerAnnotation> macroCause;
+    private final Optional<CauseCompilerAnnotation> macroCause;
+
     // TODO: Change type of offendingContexts to also be SourceContexts
     @Nonnull
-    private final   ImmutableList<ParserRuleContext>  offendingContexts;
+    private final ImmutableList<ParserRuleContext> offendingContexts;
+
     @Nonnull
-    private final   ImmutableList<IAntlrElement>      sourceContexts;
+    private final ImmutableList<IAntlrElement> sourceContexts;
+
     @Nonnull
-    private final   AnsiTokenColorizer                ansiTokenColorizer;
+    private final AnsiTokenColorizer ansiTokenColorizer;
 
     protected AbstractCompilerAnnotation(
-            @Nonnull CompilationUnit compilationUnit,
-            @Nonnull Optional<CauseCompilerAnnotation> macroCause,
-            @Nonnull ImmutableList<ParserRuleContext> offendingContexts,
-            @Nonnull ImmutableList<IAntlrElement> sourceContexts,
-            @Nonnull AnsiTokenColorizer ansiTokenColorizer,
-            @Nonnull AnnotationSeverity severity)
-    {
-        this.macroCause         = Objects.requireNonNull(macroCause);
-        this.compilationUnit    = Objects.requireNonNull(compilationUnit);
-        this.offendingContexts  = Objects.requireNonNull(offendingContexts);
-        this.sourceContexts     = Objects.requireNonNull(sourceContexts).select(IAntlrElement::isContext);
+        @Nonnull CompilationUnit compilationUnit,
+        @Nonnull Optional<CauseCompilerAnnotation> macroCause,
+        @Nonnull ImmutableList<ParserRuleContext> offendingContexts,
+        @Nonnull ImmutableList<IAntlrElement> sourceContexts,
+        @Nonnull AnsiTokenColorizer ansiTokenColorizer,
+        @Nonnull AnnotationSeverity severity
+    ) {
+        this.macroCause = Objects.requireNonNull(macroCause);
+        this.compilationUnit = Objects.requireNonNull(compilationUnit);
+        this.offendingContexts = Objects.requireNonNull(offendingContexts);
+        this.sourceContexts = Objects.requireNonNull(sourceContexts).select(IAntlrElement::isContext);
         this.ansiTokenColorizer = Objects.requireNonNull(ansiTokenColorizer);
-        this.severity           = Objects.requireNonNull(severity);
+        this.severity = Objects.requireNonNull(severity);
 
-        if (offendingContexts.isEmpty())
-        {
+        if (offendingContexts.isEmpty()) {
             throw new AssertionError();
         }
-        if (!offendingContexts.noneSatisfy(offendingContext -> offendingContext.getStart() == null))
-        {
+        if (!offendingContexts.noneSatisfy(offendingContext -> offendingContext.getStart() == null)) {
             throw new AssertionError();
         }
 
@@ -99,94 +102,82 @@ public abstract class AbstractCompilerAnnotation
     }
 
     @Nonnull
-    protected CompilationUnit getCompilationUnit()
-    {
+    protected CompilationUnit getCompilationUnit() {
         return this.compilationUnit;
     }
 
-    public boolean isError()
-    {
+    public boolean isError() {
         return this.severity == AnnotationSeverity.ERROR;
     }
 
-    public boolean isWarning()
-    {
+    public boolean isWarning() {
         return this.severity == AnnotationSeverity.WARNING;
     }
 
     @Nonnull
-    public AnnotationSeverity getSeverity()
-    {
+    public AnnotationSeverity getSeverity() {
         return this.severity;
     }
 
-    protected String getContextString()
-    {
+    protected String getContextString() {
         ImmutableList<AbstractContextString> contextStrings = this.applyListenerToStack();
 
-        int    maxLine         = contextStrings.getLast().getLine();
-        String maxLineString   = String.valueOf(maxLine);
-        int    lineNumberWidth = maxLineString.length();
+        int maxLine = contextStrings.getLast().getLine();
+        String maxLineString = String.valueOf(maxLine);
+        int lineNumberWidth = maxLineString.length();
 
         String entireContext = contextStrings
-                .collect(contextString -> contextString.toString(lineNumberWidth))
-                .makeString("", "\n", "\n");
+            .collect(contextString -> contextString.toString(lineNumberWidth))
+            .makeString("", "\n", "\n");
         return Ansi.ansi().a(entireContext).reset().toString();
     }
 
     @Nonnull
-    protected String getFilenameWithoutDirectory()
-    {
+    protected String getFilenameWithoutDirectory() {
         String sourceName = this.compilationUnit.getSourceName();
-        return this.macroCause
-                .map(ignore -> sourceName)
-                .orElseGet(() -> sourceName.substring(sourceName.lastIndexOf('/') + 1));
+        return this.macroCause.map(ignore -> sourceName).orElseGet(
+                () -> sourceName.substring(sourceName.lastIndexOf('/') + 1)
+            );
     }
 
-    protected String getShortLocationString()
-    {
-        return this.macroCause
-                .map(ignore -> this.getLocationWithoutLine())
-                .orElseGet(this::getLocationWithLine);
+    protected String getShortLocationString() {
+        return this.macroCause.map(ignore -> this.getLocationWithoutLine()).orElseGet(this::getLocationWithLine);
     }
 
-    private String getLocationWithoutLine()
-    {
+    private String getLocationWithoutLine() {
         return String.format("(%s)", this.compilationUnit);
     }
 
-    private String getLocationWithLine()
-    {
+    private String getLocationWithLine() {
         return String.format(
-                "(%s:%d)",
-                // TODO: This should be part of the source information
-                this.getFilenameWithoutDirectory(),
-                this.getLine());
+            "(%s:%d)",
+            // TODO: This should be part of the source information
+            this.getFilenameWithoutDirectory(),
+            this.getLine()
+        );
     }
 
-    protected ImmutableList<AbstractContextString> applyListenerToStack()
-    {
+    protected ImmutableList<AbstractContextString> applyListenerToStack() {
         SetIterable<Token> contextTokens = this.getContextTokens();
 
-        MutableSet<Token> underlinedTokens = this.offendingContexts
-                .asLazy()
+        MutableSet<Token> underlinedTokens =
+            this.offendingContexts.asLazy()
                 .flatCollect(this::getUnderlinedTokenRange)
                 .into(SetAdapter.adapt(new LinkedHashSet<>()));
 
         MutableSet<Integer> contextLines = contextTokens
-                .asLazy()
-                .collect(Token::getLine)
-                .into(SetAdapter.adapt(new LinkedHashSet<>()));
+            .asLazy()
+            .collect(Token::getLine)
+            .into(SetAdapter.adapt(new LinkedHashSet<>()));
 
         MutableSet<Integer> underlinedLines = underlinedTokens
-                .asLazy()
-                .collect(Token::getLine)
-                .into(SetAdapter.adapt(new LinkedHashSet<>()));
+            .asLazy()
+            .collect(Token::getLine)
+            .into(SetAdapter.adapt(new LinkedHashSet<>()));
 
-        if (!contextTokens.containsAll(underlinedTokens))
-        {
-            String message = this.offendingContexts
-                    .asLazy()
+        if (!contextTokens.containsAll(underlinedTokens)) {
+            String message =
+                this.offendingContexts.asLazy()
                     .flatCollect(this::getUnderlinedTokenRange)
                     .collect(Token::getText)
                     .toList()
@@ -194,26 +185,22 @@ public abstract class AbstractCompilerAnnotation
             LOGGER.warn("Not all underlined tokens are in the context: {}", message);
         }
 
-        if (!contextLines.containsAll(underlinedLines))
-        {
+        if (!contextLines.containsAll(underlinedLines)) {
             LOGGER.warn("Not all underlined lines are in the context: {}", underlinedLines);
         }
 
-        ImmutableList<TokenLine>           tokenLines     = this.getTokenLines(contextTokens);
+        ImmutableList<TokenLine> tokenLines = this.getTokenLines(contextTokens);
         MutableList<AbstractContextString> contextStrings = Lists.mutable.empty();
 
-        for (TokenLine tokenLine : tokenLines)
-        {
+        for (TokenLine tokenLine : tokenLines) {
             Ansi ansi = Ansi.ansi();
             tokenLine.getTokens().forEach(token -> this.ansiTokenColorizer.colorizeText(ansi, token));
 
-            if (!ansi.toString().endsWith(System.getProperty("line.separator")))
-            {
+            if (!ansi.toString().endsWith(System.getProperty("line.separator"))) {
                 ansi.newline();
             }
             contextStrings.add(new ContextString(tokenLine.getLine(), ansi.toString()));
-            if (underlinedLines.contains(tokenLine.getLine()))
-            {
+            if (underlinedLines.contains(tokenLine.getLine())) {
                 String underline = this.getUnderline(tokenLine, underlinedTokens);
                 contextStrings.add(new UnderlineContextString(tokenLine.getLine(), underline));
             }
@@ -222,8 +209,7 @@ public abstract class AbstractCompilerAnnotation
         return contextStrings.toImmutable();
     }
 
-    protected Pair<Token, Token> getFirstAndLastToken()
-    {
+    protected Pair<Token, Token> getFirstAndLastToken() {
         MutableSet<Token> contextTokens = Sets.mutable.empty();
         this.offendingContexts.asLazy().collect(ParserRuleContext::getStart).into(contextTokens);
         this.offendingContexts.asLazy().collect(ParserRuleContext::getStop).into(contextTokens);
@@ -232,47 +218,39 @@ public abstract class AbstractCompilerAnnotation
     }
 
     @Nonnull
-    private SetIterable<Token> getContextTokens()
-    {
+    private SetIterable<Token> getContextTokens() {
         MutableSet<Token> contextTokens = SetAdapter.adapt(new LinkedHashSet<>());
 
-        this.sourceContexts
-                .asReversed()
-                .collect(IAntlrElement::getContextBefore)
-                .flatCollect(this::getTokenRange)
-                .into(contextTokens);
+        this.sourceContexts.asReversed()
+            .collect(IAntlrElement::getContextBefore)
+            .flatCollect(this::getTokenRange)
+            .into(contextTokens);
 
-        this.sourceContexts
-                .asLazy()
-                .collect(IAntlrElement::getContextAfter)
-                .reject(Objects::isNull)
-                .flatCollect(this::getTokenRange)
-                .into(contextTokens);
+        this.sourceContexts.asLazy()
+            .collect(IAntlrElement::getContextAfter)
+            .reject(Objects::isNull)
+            .flatCollect(this::getTokenRange)
+            .into(contextTokens);
         return contextTokens;
     }
 
-    private ImmutableList<TokenLine> getTokenLines(SetIterable<Token> contextTokens)
-    {
-        Iterator<Token>        contextTokenIterator = contextTokens.iterator();
-        Deque<Token>           currentLine          = new ArrayDeque<>();
-        Token                  currentToken         = null;
-        MutableList<TokenLine> tokenLines           = Lists.mutable.empty();
-        while (contextTokenIterator.hasNext())
-        {
+    private ImmutableList<TokenLine> getTokenLines(SetIterable<Token> contextTokens) {
+        Iterator<Token> contextTokenIterator = contextTokens.iterator();
+        Deque<Token> currentLine = new ArrayDeque<>();
+        Token currentToken = null;
+        MutableList<TokenLine> tokenLines = Lists.mutable.empty();
+        while (contextTokenIterator.hasNext()) {
             Token nextToken = contextTokenIterator.next();
-            if (currentLine.isEmpty())
-            {
+            if (currentLine.isEmpty()) {
                 this.startLine(currentLine, nextToken);
                 currentToken = nextToken;
-            }
-            else if (currentToken.getTokenSource() == nextToken.getTokenSource()
-                     && currentToken.getLine() == nextToken.getLine())
-            {
+            } else if (
+                currentToken.getTokenSource() == nextToken.getTokenSource() &&
+                currentToken.getLine() == nextToken.getLine()
+            ) {
                 this.endLine(currentLine, nextToken);
                 currentToken = nextToken;
-            }
-            else
-            {
+            } else {
                 tokenLines.add(new TokenLine(currentToken.getLine(), Lists.immutable.withAll(currentLine)));
                 currentLine.clear();
 
@@ -284,65 +262,48 @@ public abstract class AbstractCompilerAnnotation
         return tokenLines.toImmutable();
     }
 
-    private void startLine(Deque<Token> currentLine, Token nextToken)
-    {
-        int               beginTokenIndex = this.getBeginTokenIndex(nextToken.getLine(), nextToken.getTokenIndex());
-        CommonTokenStream tokenStream     = (CommonTokenStream) this.compilationUnit.getTokenStream();
-        List<Token> tokenRange = tokenStream.get(
-                beginTokenIndex,
-                nextToken.getTokenIndex() - 1);
+    private void startLine(Deque<Token> currentLine, Token nextToken) {
+        int beginTokenIndex = this.getBeginTokenIndex(nextToken.getLine(), nextToken.getTokenIndex());
+        CommonTokenStream tokenStream = (CommonTokenStream) this.compilationUnit.getTokenStream();
+        List<Token> tokenRange = tokenStream.get(beginTokenIndex, nextToken.getTokenIndex() - 1);
         MutableList<Token> tokens = tokenRange == null ? Lists.mutable.empty() : ListAdapter.adapt(tokenRange);
         currentLine.addAll(tokens);
         currentLine.add(nextToken);
     }
 
-    private void endLine(Deque<Token> currentLine, Token nextToken)
-    {
-        int               endTokenIndex = this.getEndTokenIndex(nextToken.getLine(), nextToken.getTokenIndex());
-        CommonTokenStream tokenStream   = (CommonTokenStream) this.compilationUnit.getTokenStream();
-        List<Token> tokenRange = tokenStream.get(
-                endTokenIndex,
-                nextToken.getTokenIndex() - 1);
+    private void endLine(Deque<Token> currentLine, Token nextToken) {
+        int endTokenIndex = this.getEndTokenIndex(nextToken.getLine(), nextToken.getTokenIndex());
+        CommonTokenStream tokenStream = (CommonTokenStream) this.compilationUnit.getTokenStream();
+        List<Token> tokenRange = tokenStream.get(endTokenIndex, nextToken.getTokenIndex() - 1);
         MutableList<Token> tokens = tokenRange == null ? Lists.mutable.empty() : ListAdapter.adapt(tokenRange);
         currentLine.add(nextToken);
         currentLine.addAll(tokens);
     }
 
-    private int getBeginTokenIndex(
-            int startLine,
-            int startTokenIndex)
-    {
-        TokenStream tokenStream     = this.compilationUnit.getTokenStream();
-        int         beginTokenIndex = startTokenIndex;
-        while (beginTokenIndex > 0 && tokenStream.get(beginTokenIndex - 1).getLine() == startLine)
-        {
+    private int getBeginTokenIndex(int startLine, int startTokenIndex) {
+        TokenStream tokenStream = this.compilationUnit.getTokenStream();
+        int beginTokenIndex = startTokenIndex;
+        while (beginTokenIndex > 0 && tokenStream.get(beginTokenIndex - 1).getLine() == startLine) {
             beginTokenIndex -= 1;
         }
         return beginTokenIndex;
     }
 
-    private int getEndTokenIndex(
-            int stopLine,
-            int stopTokenIndex)
-    {
-        TokenStream tokenStream   = this.compilationUnit.getTokenStream();
-        int         endTokenIndex = stopTokenIndex;
-        while (endTokenIndex + 1 < tokenStream.size() && tokenStream.get(endTokenIndex + 1).getLine() == stopLine)
-        {
+    private int getEndTokenIndex(int stopLine, int stopTokenIndex) {
+        TokenStream tokenStream = this.compilationUnit.getTokenStream();
+        int endTokenIndex = stopTokenIndex;
+        while (endTokenIndex + 1 < tokenStream.size() && tokenStream.get(endTokenIndex + 1).getLine() == stopLine) {
             endTokenIndex += 1;
         }
         return endTokenIndex;
     }
 
-    private String getUnderline(
-            TokenLine tokenLine,
-            MutableSet<Token> underlinedTokens)
-    {
+    private String getUnderline(TokenLine tokenLine, MutableSet<Token> underlinedTokens) {
         String uncoloredString = tokenLine
-                .getTokens()
-                .collectWith(this::getSpaceOrUnderline, underlinedTokens)
-                .makeString("")
-                .stripTrailing();
+            .getTokens()
+            .collectWith(this::getSpaceOrUnderline, underlinedTokens)
+            .makeString("")
+            .stripTrailing();
 
         Color caretColor = this.getCaretColor();
 
@@ -352,25 +313,22 @@ public abstract class AbstractCompilerAnnotation
     @Nonnull
     protected abstract Color getCaretColor();
 
-    private String getSpaceOrUnderline(Token token, MutableSet<Token> underlinedTokens)
-    {
+    private String getSpaceOrUnderline(Token token, MutableSet<Token> underlinedTokens) {
         String character = underlinedTokens.contains(token) ? "^" : " ";
-        int    length    = token.getText().length();
+        int length = token.getText().length();
         return character.repeat(length);
     }
 
-    private ImmutableList<Token> getUnderlinedTokenRange(@Nonnull ParserRuleContext ctx)
-    {
+    private ImmutableList<Token> getUnderlinedTokenRange(@Nonnull ParserRuleContext ctx) {
         Token startToken = ctx.getStart();
-        Token stopToken  = ctx.getStop();
+        Token stopToken = ctx.getStop();
 
         return this.getTokenRange(startToken, stopToken);
     }
 
-    private ImmutableList<Token> getTokenRange(Token startToken, Token stopToken)
-    {
+    private ImmutableList<Token> getTokenRange(Token startToken, Token stopToken) {
         int startTokenIndex = startToken.getTokenIndex();
-        int stopTokenIndex  = stopToken.getTokenIndex();
+        int stopTokenIndex = stopToken.getTokenIndex();
 
         CommonTokenStream tokenStream = (CommonTokenStream) this.compilationUnit.getTokenStream();
 
@@ -378,45 +336,34 @@ public abstract class AbstractCompilerAnnotation
         return Lists.immutable.withAll(tokens);
     }
 
-    private ImmutableList<Token> getTokenRange(Pair<Token, Token> pair)
-    {
+    private ImmutableList<Token> getTokenRange(Pair<Token, Token> pair) {
         return this.getTokenRange(pair.getOne(), pair.getTwo());
     }
 
-    protected int getLine()
-    {
+    protected int getLine() {
         return this.getOffendingToken().getLine();
     }
 
-    protected int getCharPositionInLine()
-    {
+    protected int getCharPositionInLine() {
         return this.getOffendingToken().getCharPositionInLine();
     }
 
-    private Token getOffendingToken()
-    {
+    private Token getOffendingToken() {
         return this.offendingContexts.getFirst().getStart();
     }
 
     @Nonnull
-    protected String getCauseString()
-    {
-        return this.macroCause
-                .map(CauseCompilerAnnotation::toString)
-                .orElse("");
+    protected String getCauseString() {
+        return this.macroCause.map(CauseCompilerAnnotation::toString).orElse("");
     }
 
     @Nonnull
-    protected String getOptionalLocationMessage()
-    {
-        return this.macroCause
-                .map(ignored -> "")
-                .orElseGet(this::getLocationMessage);
+    protected String getOptionalLocationMessage() {
+        return this.macroCause.map(ignored -> "").orElseGet(this::getLocationMessage);
     }
 
     @Nonnull
-    private String getLocationMessage()
-    {
+    private String getLocationMessage() {
         // @formatter:off
         return Ansi.ansi().a("\n")
                 .fg(Color.CYAN).a("Location:  ").reset().a(this.getFilenameWithoutDirectory()).a(":").a(this.getLine()).reset().a("\n")
@@ -429,15 +376,13 @@ public abstract class AbstractCompilerAnnotation
 
     public abstract String toGitHubAnnotation();
 
-    public ImmutableList<Integer> getLines()
-    {
+    public ImmutableList<Integer> getLines() {
         MutableList<Integer> result = Lists.mutable.empty();
         this.getLines(result);
         return result.toImmutable();
     }
 
-    protected void getLines(MutableList<Integer> lines)
-    {
+    protected void getLines(MutableList<Integer> lines) {
         lines.add(this.getLine());
         this.macroCause.ifPresent(cause -> cause.getLines(lines));
     }

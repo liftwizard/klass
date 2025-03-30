@@ -30,15 +30,17 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-        name = "generate-uml-diagram-nomnoml",
-        defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
-        threadSafe = true,
-        requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class GenerateUmlNomnomlMojo extends AbstractGenerateMojo
-{
+    name = "generate-uml-diagram-nomnoml",
+    defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
+    threadSafe = true,
+    requiresDependencyResolution = ResolutionScope.RUNTIME
+)
+public class GenerateUmlNomnomlMojo extends AbstractGenerateMojo {
+
     @Parameter(
-            property = "outputDirectory",
-            defaultValue = "${project.build.directory}/generated-resources/uml-diagram-nomnoml")
+        property = "outputDirectory",
+        defaultValue = "${project.build.directory}/generated-resources/uml-diagram-nomnoml"
+    )
     private File outputDirectory;
 
     @Parameter(property = "applicationName", required = true)
@@ -48,10 +50,8 @@ public class GenerateUmlNomnomlMojo extends AbstractGenerateMojo
     private String rootPackageName;
 
     @Override
-    public void execute() throws MojoExecutionException
-    {
-        if (!this.outputDirectory.exists())
-        {
+    public void execute() throws MojoExecutionException {
+        if (!this.outputDirectory.exists()) {
             this.outputDirectory.mkdirs();
         }
 
@@ -60,9 +60,10 @@ public class GenerateUmlNomnomlMojo extends AbstractGenerateMojo
         Path outputPath = this.outputDirectory.toPath();
 
         UmlNomnomlGenerator generator = new UmlNomnomlGenerator(
-                domainModel,
-                this.rootPackageName,
-                this.applicationName);
+            domainModel,
+            this.rootPackageName,
+            this.applicationName
+        );
         generator.writeUmlDiagram(outputPath);
 
         Resource resource = new Resource();

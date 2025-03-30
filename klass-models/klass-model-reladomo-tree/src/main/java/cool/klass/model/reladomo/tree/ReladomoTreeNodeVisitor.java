@@ -16,8 +16,7 @@
 
 package cool.klass.model.reladomo.tree;
 
-public interface ReladomoTreeNodeVisitor
-{
+public interface ReladomoTreeNodeVisitor {
     void visitRoot(RootReladomoTreeNode node);
 
     void visitDataTypeProperty(DataTypePropertyReladomoTreeNode node);

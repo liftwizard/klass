@@ -20,24 +20,19 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class AssociationEndList extends AssociationEndListAbstract
-{
-    public AssociationEndList()
-    {
-    }
+public class AssociationEndList extends AssociationEndListAbstract {
 
-    public AssociationEndList(int initialSize)
-    {
+    public AssociationEndList() {}
+
+    public AssociationEndList(int initialSize) {
         super(initialSize);
     }
 
-    public AssociationEndList(Collection<?> c)
-    {
+    public AssociationEndList(Collection<?> c) {
         super(c);
     }
 
-    public AssociationEndList(Operation operation)
-    {
+    public AssociationEndList(Operation operation) {
         super(operation);
     }
 }

@@ -60,74 +60,70 @@ import org.apache.commons.text.StringEscapeUtils;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.tuple.Pair;
 
-public class JavaConstantsMetaModelGenerator
-{
-    private static final Converter<String, String> TO_CONSTANT_CASE =
-            CaseFormat.LOWER_CAMEL.converterTo(CaseFormat.UPPER_UNDERSCORE);
+public class JavaConstantsMetaModelGenerator {
+
+    private static final Converter<String, String> TO_CONSTANT_CASE = CaseFormat.LOWER_CAMEL.converterTo(
+        CaseFormat.UPPER_UNDERSCORE
+    );
 
     @Nonnull
     private final DomainModel domainModel;
+
     @Nonnull
-    private final String      applicationName;
+    private final String applicationName;
+
     @Nonnull
-    private final String      rootPackageName;
+    private final String rootPackageName;
 
     public JavaConstantsMetaModelGenerator(
-            @Nonnull DomainModel domainModel,
-            @Nonnull String applicationName,
-            @Nonnull String rootPackageName)
-    {
-        this.domainModel     = Objects.requireNonNull(domainModel);
+        @Nonnull DomainModel domainModel,
+        @Nonnull String applicationName,
+        @Nonnull String rootPackageName
+    ) {
+        this.domainModel = Objects.requireNonNull(domainModel);
         this.applicationName = Objects.requireNonNull(applicationName);
         this.rootPackageName = Objects.requireNonNull(rootPackageName);
     }
 
-    public void writeJavaConstantsMetaModelFiles(@Nonnull Path outputPath) throws IOException
-    {
+    public void writeJavaConstantsMetaModelFiles(@Nonnull Path outputPath) throws IOException {
         Path domainModelOutputPath = this.getOutputPath(outputPath);
         this.printStringToFile(domainModelOutputPath, this.getDomainModelSourceCode());
 
-        for (Enumeration enumeration : this.domainModel.getEnumerations())
-        {
-            Path   path                  = this.getOutputPath(outputPath, enumeration);
+        for (Enumeration enumeration : this.domainModel.getEnumerations()) {
+            Path path = this.getOutputPath(outputPath, enumeration);
             String enumerationSourceCode = this.getEnumerationSourceCode(enumeration);
             this.printStringToFile(path, enumerationSourceCode);
         }
 
-        for (Interface eachInterface : this.domainModel.getInterfaces())
-        {
-            Path   path            = this.getOutputPath(outputPath, eachInterface);
+        for (Interface eachInterface : this.domainModel.getInterfaces()) {
+            Path path = this.getOutputPath(outputPath, eachInterface);
             String classSourceCode = this.getInterfaceSourceCode(eachInterface);
             this.printStringToFile(path, classSourceCode);
         }
 
-        for (Klass klass : this.domainModel.getClasses())
-        {
-            Path   path            = this.getOutputPath(outputPath, klass);
+        for (Klass klass : this.domainModel.getClasses()) {
+            Path path = this.getOutputPath(outputPath, klass);
             String classSourceCode = this.getClassSourceCode(klass);
             this.printStringToFile(path, classSourceCode);
         }
 
-        for (Association association : this.domainModel.getAssociations())
-        {
-            Path   path                  = this.getOutputPath(outputPath, association);
+        for (Association association : this.domainModel.getAssociations()) {
+            Path path = this.getOutputPath(outputPath, association);
             String associationSourceCode = this.getAssociationSourceCode(association);
             this.printStringToFile(path, associationSourceCode);
         }
 
-        for (Projection projection : this.domainModel.getProjections())
-        {
-            Path   path                 = this.getOutputPath(outputPath, projection);
+        for (Projection projection : this.domainModel.getProjections()) {
+            Path path = this.getOutputPath(outputPath, projection);
             String projectionSourceCode = this.getProjectionSourceCode(projection);
             this.printStringToFile(path, projectionSourceCode);
         }
     }
 
     @Nonnull
-    private String getDomainModelSourceCode()
-    {
-        String imports = this.domainModel
-                .getTopLevelElements()
+    private String getDomainModelSourceCode() {
+        String imports =
+            this.domainModel.getTopLevelElements()
                 .collect(TopLevelElement::getPackageName)
                 .distinct()
                 .toSortedList()
@@ -257,93 +253,74 @@ public class JavaConstantsMetaModelGenerator
     }
 
     @Nonnull
-    private String getTopLevelElementsSourceCode()
-    {
-        return this.domainModel
-                .getTopLevelElements()
-                .collect(this::getTopLevelElementSourceCode)
-                .makeString("");
+    private String getTopLevelElementsSourceCode() {
+        return this.domainModel.getTopLevelElements().collect(this::getTopLevelElementSourceCode).makeString("");
     }
 
     @Nonnull
-    private String getTopLevelElementSourceCode(TopLevelElement topLevelElement)
-    {
-        if (topLevelElement instanceof ServiceGroup)
-        {
+    private String getTopLevelElementSourceCode(TopLevelElement topLevelElement) {
+        if (topLevelElement instanceof ServiceGroup) {
             // TODO: ServiceGroup code generation
             return "";
         }
         return MessageFormat.format(
-                "    public static final {1}_{0} {1} = {1}_{0}.INSTANCE;\n",
-                this.getTypeName(topLevelElement),
-                topLevelElement.getName());
+            "    public static final {1}_{0} {1} = {1}_{0}.INSTANCE;\n",
+            this.getTypeName(topLevelElement),
+            topLevelElement.getName()
+        );
     }
 
     @Nonnull
-    private String getTypeName(Element element)
-    {
-        if (element instanceof Enumeration)
-        {
+    private String getTypeName(Element element) {
+        if (element instanceof Enumeration) {
             return Enumeration.class.getSimpleName();
         }
 
-        if (element instanceof Interface)
-        {
+        if (element instanceof Interface) {
             return Interface.class.getSimpleName();
         }
 
-        if (element instanceof Klass)
-        {
+        if (element instanceof Klass) {
             return Klass.class.getSimpleName();
         }
 
-        if (element instanceof Association)
-        {
+        if (element instanceof Association) {
             return Association.class.getSimpleName();
         }
 
-        if (element instanceof Projection)
-        {
+        if (element instanceof Projection) {
             return Projection.class.getSimpleName();
         }
 
-        if (element instanceof ServiceGroup)
-        {
+        if (element instanceof ServiceGroup) {
             return ServiceGroup.class.getSimpleName();
         }
 
-        if (element instanceof PrimitiveProperty)
-        {
+        if (element instanceof PrimitiveProperty) {
             return PrimitiveProperty.class.getSimpleName();
         }
 
-        if (element instanceof EnumerationProperty)
-        {
+        if (element instanceof EnumerationProperty) {
             return EnumerationProperty.class.getSimpleName();
         }
 
-        if (element instanceof AssociationEnd)
-        {
+        if (element instanceof AssociationEnd) {
             return AssociationEnd.class.getSimpleName();
         }
 
-        if (element instanceof ProjectionDataTypeProperty)
-        {
+        if (element instanceof ProjectionDataTypeProperty) {
             return ProjectionDataTypeProperty.class.getSimpleName();
         }
 
-        if (element instanceof ProjectionReferenceProperty)
-        {
+        if (element instanceof ProjectionReferenceProperty) {
             return ProjectionReferenceProperty.class.getSimpleName();
         }
 
-        if (element instanceof ProjectionProjectionReference)
-        {
+        if (element instanceof ProjectionProjectionReference) {
             return ProjectionProjectionReference.class.getSimpleName();
         }
 
-        if (element instanceof EnumerationLiteral)
-        {
+        if (element instanceof EnumerationLiteral) {
             return EnumerationLiteral.class.getSimpleName();
         }
 
@@ -351,62 +328,42 @@ public class JavaConstantsMetaModelGenerator
     }
 
     @Nonnull
-    public Path getOutputPath(@Nonnull Path outputPath)
-    {
-        String rootPackageRelativePath = this.rootPackageName
-                .replaceAll("\\.", "/");
+    public Path getOutputPath(@Nonnull Path outputPath) {
+        String rootPackageRelativePath = this.rootPackageName.replaceAll("\\.", "/");
 
-        Path directory = outputPath
-                .resolve(rootPackageRelativePath)
-                .resolve("meta")
-                .resolve("constants");
+        Path directory = outputPath.resolve(rootPackageRelativePath).resolve("meta").resolve("constants");
         directory.toFile().mkdirs();
         return directory.resolve(this.applicationName + "DomainModel.java");
     }
 
     @Nonnull
-    public Path getOutputPath(
-            @Nonnull Path outputPath,
-            @Nonnull PackageableElement packageableElement)
-    {
-        String packageRelativePath = packageableElement.getPackageName()
-                .replaceAll("\\.", "/");
-        Path directory = outputPath
-                .resolve(packageRelativePath)
-                .resolve("meta")
-                .resolve("constants");
+    public Path getOutputPath(@Nonnull Path outputPath, @Nonnull PackageableElement packageableElement) {
+        String packageRelativePath = packageableElement.getPackageName().replaceAll("\\.", "/");
+        Path directory = outputPath.resolve(packageRelativePath).resolve("meta").resolve("constants");
         directory.toFile().mkdirs();
         String fileName = packageableElement.getName() + "_" + this.getTypeName(packageableElement) + ".java";
         return directory.resolve(fileName);
     }
 
     @Nonnull
-    public Path getOutputPath(
-            @Nonnull Path outputPath,
-            @Nonnull Projection projection)
-    {
-        String packageRelativePath = projection.getPackageName()
-                .replaceAll("\\.", "/");
-        Path directory = outputPath
-                .resolve(packageRelativePath)
-                .resolve("meta")
-                .resolve("constants");
+    public Path getOutputPath(@Nonnull Path outputPath, @Nonnull Projection projection) {
+        String packageRelativePath = projection.getPackageName().replaceAll("\\.", "/");
+        Path directory = outputPath.resolve(packageRelativePath).resolve("meta").resolve("constants");
         directory.toFile().mkdirs();
         String fileName = projection.getName() + "_" + this.getTypeName(projection) + ".java";
         return directory.resolve(fileName);
     }
 
-    private void printStringToFile(@Nonnull Path path, String contents) throws FileNotFoundException
-    {
-        try (PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8))
-        {
+    private void printStringToFile(@Nonnull Path path, String contents) throws FileNotFoundException {
+        try (
+            PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
+        ) {
             printStream.print(contents);
         }
     }
 
     @Nonnull
-    private String getEnumerationSourceCode(@Nonnull Enumeration enumeration)
-    {
+    private String getEnumerationSourceCode(@Nonnull Enumeration enumeration) {
         String packageName = enumeration.getPackageName() + ".meta.constants";
 
         // @formatter:off
@@ -486,26 +443,26 @@ public class JavaConstantsMetaModelGenerator
     }
 
     @Nonnull
-    private String getEnumerationLiteralsSourceCode(@Nonnull Enumeration enumeration)
-    {
-        return enumeration.getEnumerationLiterals()
-                .collect(this::getEnumerationLiteralSourceCode)
-                .makeString("\n")
-                // https://stackoverflow.com/questions/15888934/how-to-indent-a-multi-line-paragraph-being-written-to-the-console-in-java
-                // https://stackoverflow.com/a/15889069
-                // https://stackoverflow.com/questions/11125459/java-regex-negative-lookahead
-                .replaceAll("(?m)^(?!$)", "    ");
+    private String getEnumerationLiteralsSourceCode(@Nonnull Enumeration enumeration) {
+        return enumeration
+            .getEnumerationLiterals()
+            .collect(this::getEnumerationLiteralSourceCode)
+            .makeString("\n")
+            // https://stackoverflow.com/questions/15888934/how-to-indent-a-multi-line-paragraph-being-written-to-the-console-in-java
+            // https://stackoverflow.com/a/15889069
+            // https://stackoverflow.com/questions/11125459/java-regex-negative-lookahead
+            .replaceAll("(?m)^(?!$)", "    ");
     }
 
     @Nonnull
-    private String getEnumerationLiteralSourceCode(@Nonnull EnumerationLiteral enumerationLiteral)
-    {
+    private String getEnumerationLiteralSourceCode(@Nonnull EnumerationLiteral enumerationLiteral) {
         String uppercaseName = this.getUppercaseName(enumerationLiteral);
 
-        String declaredPrettyName = enumerationLiteral.getDeclaredPrettyName()
-                .map(StringEscapeUtils::escapeJava)
-                .map(string -> String.format("of(\"%s\")", string))
-                .orElse("empty()");
+        String declaredPrettyName = enumerationLiteral
+            .getDeclaredPrettyName()
+            .map(StringEscapeUtils::escapeJava)
+            .map(string -> String.format("of(\"%s\")", string))
+            .orElse("empty()");
 
         // @formatter:off
         // language=JAVA
@@ -556,30 +513,29 @@ public class JavaConstantsMetaModelGenerator
         // @formatter:on
     }
 
-    private String getEnumerationLiteralConstantsSourceCode(@Nonnull Enumeration enumeration)
-    {
-        return enumeration.getEnumerationLiterals()
-                .collect(this::getEnumerationLiteralConstantSourceCode)
-                .makeString("");
+    private String getEnumerationLiteralConstantsSourceCode(@Nonnull Enumeration enumeration) {
+        return enumeration
+            .getEnumerationLiterals()
+            .collect(this::getEnumerationLiteralConstantSourceCode)
+            .makeString("");
     }
 
     @Nonnull
-    private String getEnumerationLiteralConstantSourceCode(@Nonnull EnumerationLiteral enumerationLiteral)
-    {
-        String name          = enumerationLiteral.getName();
+    private String getEnumerationLiteralConstantSourceCode(@Nonnull EnumerationLiteral enumerationLiteral) {
+        String name = enumerationLiteral.getName();
         String uppercaseName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, name);
-        String type          = this.getTypeName(enumerationLiteral);
+        String type = this.getTypeName(enumerationLiteral);
 
         return MessageFormat.format(
-                "    public static final {0}_{1} {2} = {0}_{1}.INSTANCE;\n",
-                uppercaseName,
-                type,
-                name);
+            "    public static final {0}_{1} {2} = {0}_{1}.INSTANCE;\n",
+            uppercaseName,
+            type,
+            name
+        );
     }
 
     @Nonnull
-    private String getInterfaceSourceCode(@Nonnull Interface eachInterface)
-    {
+    private String getInterfaceSourceCode(@Nonnull Interface eachInterface) {
         // @formatter:off
         // language=JAVA
         return ""
@@ -673,8 +629,7 @@ public class JavaConstantsMetaModelGenerator
     }
 
     @Nonnull
-    private String getClassSourceCode(@Nonnull Klass klass)
-    {
+    private String getClassSourceCode(@Nonnull Klass klass) {
         // @formatter:off
         // language=JAVA
         return ""
@@ -810,238 +765,234 @@ public class JavaConstantsMetaModelGenerator
     }
 
     @Nonnull
-    private String getDomainModelConstant(@Nonnull NamedElement namedElement)
-    {
+    private String getDomainModelConstant(@Nonnull NamedElement namedElement) {
         return String.format("%sDomainModel.%s", this.applicationName, namedElement.getName());
     }
 
-    private String getSuperClassSourceCode(@Nonnull Klass klass)
-    {
-        if (klass.getSuperClass().isEmpty())
-        {
+    private String getSuperClassSourceCode(@Nonnull Klass klass) {
+        if (klass.getSuperClass().isEmpty()) {
             return "Optional.empty()";
         }
 
         return String.format(
-                "Optional.of(%sDomainModel.%s)",
-                this.applicationName,
-                klass.getSuperClass().get().getName());
+            "Optional.of(%sDomainModel.%s)",
+            this.applicationName,
+            klass.getSuperClass().get().getName()
+        );
     }
 
-    private String getAssociationEndsSourceCode(@Nonnull Klass klass)
-    {
-        return klass.getDeclaredAssociationEnds()
-                .collect(this::getAssociationEndSourceCode)
-                .makeString("\n");
+    private String getAssociationEndsSourceCode(@Nonnull Klass klass) {
+        return klass.getDeclaredAssociationEnds().collect(this::getAssociationEndSourceCode).makeString("\n");
     }
 
     @Nonnull
-    private String getOptionalAssociationEndSourceCode(@Nonnull Optional<AssociationEnd> optionalAssociationEnd)
-    {
+    private String getOptionalAssociationEndSourceCode(@Nonnull Optional<AssociationEnd> optionalAssociationEnd) {
         return optionalAssociationEnd
-                .map(associationEnd -> String.format(
-                        "Optional.of(%s)",
-                        associationEnd.getName()))
-                .orElse("Optional.empty()");
+            .map(associationEnd -> String.format("Optional.of(%s)", associationEnd.getName()))
+            .orElse("Optional.empty()");
     }
 
-    private String getDataTypePropertiesSourceCode(@Nonnull Classifier classifier)
-    {
-        return classifier.getDeclaredDataTypeProperties()
-                .collect(this::getDataTypePropertySourceCode)
-                .makeString("\n");
+    private String getDataTypePropertiesSourceCode(@Nonnull Classifier classifier) {
+        return classifier.getDeclaredDataTypeProperties().collect(this::getDataTypePropertySourceCode).makeString("\n");
     }
 
     @Nonnull
-    private String getDataTypePropertySourceCode(DataTypeProperty dataTypeProperty)
-    {
-        if (dataTypeProperty instanceof PrimitiveProperty primitiveProperty)
-        {
+    private String getDataTypePropertySourceCode(DataTypeProperty dataTypeProperty) {
+        if (dataTypeProperty instanceof PrimitiveProperty primitiveProperty) {
             return this.getPrimitivePropertySourceCode(primitiveProperty);
         }
-        if (dataTypeProperty instanceof EnumerationProperty enumerationProperty)
-        {
+        if (dataTypeProperty instanceof EnumerationProperty enumerationProperty) {
             return this.getEnumerationPropertySourceCode(enumerationProperty);
         }
         throw new AssertionError();
     }
 
     @Nonnull
-    private String getPrimitivePropertySourceCode(@Nonnull PrimitiveProperty primitiveProperty)
-    {
+    private String getPrimitivePropertySourceCode(@Nonnull PrimitiveProperty primitiveProperty) {
         String uppercaseName = this.getUppercaseName(primitiveProperty);
 
         // language=JAVA
-        return ""
-                + "    public static enum " + uppercaseName + "_PrimitiveProperty implements PrimitiveProperty\n"
-                + "    {\n"
-                + "        INSTANCE;\n"
-                + "\n"
-                + "        @Nonnull\n"
-                + "        @Override\n"
-                + "        public String getName()\n"
-                + "        {\n"
-                + "            return \"" + StringEscapeUtils.escapeJava(primitiveProperty.getName()) + "\";\n"
-                + "        }\n"
-                + "\n"
-                + "        @Override\n"
-                + "        public int getOrdinal()\n"
-                + "        {\n"
-                + "            return " + primitiveProperty.getOrdinal() + ";\n"
-                + "        }\n"
-                + "\n"
-                + "        @Override\n"
-                + "        public Optional<Element> getMacroElement()\n"
-                + "        {\n"
-                + "            return Optional.empty();\n"
-                + "        }\n"
-                + "\n"
-                + "        @Override\n"
-                + "        public boolean isOptional()\n"
-                + "        {\n"
-                + "            return " + primitiveProperty.isOptional() + ";\n"
-                + "        }\n"
-                + "\n"
-                + "        @Override\n"
-                + "        public boolean isForeignKey()\n"
-                + "        {\n"
-                + "            return " + primitiveProperty.isForeignKey() + ";\n"
-                + "        }\n"
-                + "\n"
-                + "        @Nonnull\n"
-                + "        @Override\n"
-                + "        public ImmutableList<Modifier> getModifiers()\n"
-                + "        {\n"
-                + this.getPropertyModifiersSourceCode(primitiveProperty.getModifiers())
-                + "        }\n"
-                + "\n"
-                + "        @Override\n"
-                + "        public Optional<MinLengthPropertyValidation> getMinLengthPropertyValidation()\n"
-                + "        {\n"
-                + "            return Optional.empty();\n"
-                + "        }\n"
-                + "\n"
-                + "        @Override\n"
-                + "        public Optional<MaxLengthPropertyValidation> getMaxLengthPropertyValidation()\n"
-                + "        {\n"
-                + "            return Optional.empty();\n"
-                + "        }\n"
-                + "\n"
-                + "        @Override\n"
-                + "        public Optional<MinPropertyValidation> getMinPropertyValidation()\n"
-                + "        {\n"
-                + "            return Optional.empty();\n"
-                + "        }\n"
-                + "\n"
-                + "        @Override\n"
-                + "        public Optional<MaxPropertyValidation> getMaxPropertyValidation()\n"
-                + "        {\n"
-                + "            return Optional.empty();\n"
-                + "        }\n"
-                + "\n"
-                + "        @Nonnull\n"
-                + "        @Override\n"
-                + "        public Classifier getOwningClassifier()\n"
-                + "        {\n"
-                + "            return "
-                + this.applicationName
-                + "DomainModel."
-                + primitiveProperty.getOwningClassifier().getName()
-                + ";\n"
-                + "        }\n"
-                + "\n"
-                + "        @Nonnull\n"
-                + "        @Override\n"
-                + "        public PrimitiveType getType()\n"
-                + "        {\n"
-                + "            return PrimitiveType."
-                + primitiveProperty.getType().name()
-                + ";\n"
-                + "        }\n"
-                + "\n"
-                + "        @Override\n"
-                + "        public OrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> getKeysMatchingThisForeignKey()\n"
-                + "        {\n"
-                + "            MutableOrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());\n"
-                + this.getKeysMatchingThisForeignKey(primitiveProperty)
-                + "            return result.asUnmodifiable();\n"
-                + "        }\n"
-                + "\n"
-                + "        @Override\n"
-                + "        public OrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> getForeignKeysMatchingThisKey()\n"
-                + "        {\n"
-                + "            MutableOrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());\n"
-                + this.getForeignKeysMatchingThisKey(primitiveProperty)
-                + "            return result.asUnmodifiable();\n"
-                + "        }\n"
-                + "\n"
-                + "        @Override\n"
-                + "        public String toString()\n"
-                + "        {\n"
-                + "            return \"" + StringEscapeUtils.escapeJava(primitiveProperty.toString()) + "\";\n"
-                + "        }\n"
-                + "    }\n";
+        return (
+            "" +
+            "    public static enum " +
+            uppercaseName +
+            "_PrimitiveProperty implements PrimitiveProperty\n" +
+            "    {\n" +
+            "        INSTANCE;\n" +
+            "\n" +
+            "        @Nonnull\n" +
+            "        @Override\n" +
+            "        public String getName()\n" +
+            "        {\n" +
+            "            return \"" +
+            StringEscapeUtils.escapeJava(primitiveProperty.getName()) +
+            "\";\n" +
+            "        }\n" +
+            "\n" +
+            "        @Override\n" +
+            "        public int getOrdinal()\n" +
+            "        {\n" +
+            "            return " +
+            primitiveProperty.getOrdinal() +
+            ";\n" +
+            "        }\n" +
+            "\n" +
+            "        @Override\n" +
+            "        public Optional<Element> getMacroElement()\n" +
+            "        {\n" +
+            "            return Optional.empty();\n" +
+            "        }\n" +
+            "\n" +
+            "        @Override\n" +
+            "        public boolean isOptional()\n" +
+            "        {\n" +
+            "            return " +
+            primitiveProperty.isOptional() +
+            ";\n" +
+            "        }\n" +
+            "\n" +
+            "        @Override\n" +
+            "        public boolean isForeignKey()\n" +
+            "        {\n" +
+            "            return " +
+            primitiveProperty.isForeignKey() +
+            ";\n" +
+            "        }\n" +
+            "\n" +
+            "        @Nonnull\n" +
+            "        @Override\n" +
+            "        public ImmutableList<Modifier> getModifiers()\n" +
+            "        {\n" +
+            this.getPropertyModifiersSourceCode(primitiveProperty.getModifiers()) +
+            "        }\n" +
+            "\n" +
+            "        @Override\n" +
+            "        public Optional<MinLengthPropertyValidation> getMinLengthPropertyValidation()\n" +
+            "        {\n" +
+            "            return Optional.empty();\n" +
+            "        }\n" +
+            "\n" +
+            "        @Override\n" +
+            "        public Optional<MaxLengthPropertyValidation> getMaxLengthPropertyValidation()\n" +
+            "        {\n" +
+            "            return Optional.empty();\n" +
+            "        }\n" +
+            "\n" +
+            "        @Override\n" +
+            "        public Optional<MinPropertyValidation> getMinPropertyValidation()\n" +
+            "        {\n" +
+            "            return Optional.empty();\n" +
+            "        }\n" +
+            "\n" +
+            "        @Override\n" +
+            "        public Optional<MaxPropertyValidation> getMaxPropertyValidation()\n" +
+            "        {\n" +
+            "            return Optional.empty();\n" +
+            "        }\n" +
+            "\n" +
+            "        @Nonnull\n" +
+            "        @Override\n" +
+            "        public Classifier getOwningClassifier()\n" +
+            "        {\n" +
+            "            return " +
+            this.applicationName +
+            "DomainModel." +
+            primitiveProperty.getOwningClassifier().getName() +
+            ";\n" +
+            "        }\n" +
+            "\n" +
+            "        @Nonnull\n" +
+            "        @Override\n" +
+            "        public PrimitiveType getType()\n" +
+            "        {\n" +
+            "            return PrimitiveType." +
+            primitiveProperty.getType().name() +
+            ";\n" +
+            "        }\n" +
+            "\n" +
+            "        @Override\n" +
+            "        public OrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> getKeysMatchingThisForeignKey()\n" +
+            "        {\n" +
+            "            MutableOrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());\n" +
+            this.getKeysMatchingThisForeignKey(primitiveProperty) +
+            "            return result.asUnmodifiable();\n" +
+            "        }\n" +
+            "\n" +
+            "        @Override\n" +
+            "        public OrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> getForeignKeysMatchingThisKey()\n" +
+            "        {\n" +
+            "            MutableOrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());\n" +
+            this.getForeignKeysMatchingThisKey(primitiveProperty) +
+            "            return result.asUnmodifiable();\n" +
+            "        }\n" +
+            "\n" +
+            "        @Override\n" +
+            "        public String toString()\n" +
+            "        {\n" +
+            "            return \"" +
+            StringEscapeUtils.escapeJava(primitiveProperty.toString()) +
+            "\";\n" +
+            "        }\n" +
+            "    }\n"
+        );
     }
 
-    private String getKeysMatchingThisForeignKey(@Nonnull DataTypeProperty dataTypeProperty)
-    {
+    private String getKeysMatchingThisForeignKey(@Nonnull DataTypeProperty dataTypeProperty) {
         return dataTypeProperty
-                .getKeysMatchingThisForeignKey()
-                .keyValuesView()
-                .collect(this::getForeignKeySourceCode)
-                .makeString("");
+            .getKeysMatchingThisForeignKey()
+            .keyValuesView()
+            .collect(this::getForeignKeySourceCode)
+            .makeString("");
     }
 
-    private String getForeignKeySourceCode(@Nonnull Pair<AssociationEnd, DataTypeProperty> each)
-    {
+    private String getForeignKeySourceCode(@Nonnull Pair<AssociationEnd, DataTypeProperty> each) {
         return String.format(
-                "            result.put(%s, Lists.immutable.with(%s));\n",
-                this.getForeignKeySourceCode(each.getOne()),
-                this.getForeignKeySourceCode(each.getTwo()));
+            "            result.put(%s, Lists.immutable.with(%s));\n",
+            this.getForeignKeySourceCode(each.getOne()),
+            this.getForeignKeySourceCode(each.getTwo())
+        );
     }
 
-    private String getForeignKeySourceCode(@Nonnull Property property)
-    {
+    private String getForeignKeySourceCode(@Nonnull Property property) {
         return String.format(
-                "%sDomainModel.%s.%s",
-                this.applicationName,
-                property.getOwningClassifier().getName(),
-                property.getName());
+            "%sDomainModel.%s.%s",
+            this.applicationName,
+            property.getOwningClassifier().getName(),
+            property.getName()
+        );
     }
 
-    private String getForeignKeysMatchingThisKey(DataTypeProperty dataTypeProperty)
-    {
+    private String getForeignKeysMatchingThisKey(DataTypeProperty dataTypeProperty) {
         return dataTypeProperty
-                .getForeignKeysMatchingThisKey()
-                .keyValuesView()
-                .collect(this::getForeignKeySourceCode)
-                .makeString("");
+            .getForeignKeysMatchingThisKey()
+            .keyValuesView()
+            .collect(this::getForeignKeySourceCode)
+            .makeString("");
     }
 
     @Nonnull
-    private String getPropertyModifiersSourceCode(@Nonnull ImmutableList<Modifier> modifiers)
-    {
-        if (modifiers.isEmpty())
-        {
+    private String getPropertyModifiersSourceCode(@Nonnull ImmutableList<Modifier> modifiers) {
+        if (modifiers.isEmpty()) {
             return "            return Lists.immutable.empty();\n";
         }
-        String variablesSourceCode = modifiers
-                .collect(this::getDataTypePropertyModifierSourceCode)
-                .makeString("\n");
+        String variablesSourceCode = modifiers.collect(this::getDataTypePropertyModifierSourceCode).makeString("\n");
 
         ImmutableList<String> variableNames = modifiers
-                .collect(Modifier::getKeyword)
-                .collect(each -> each + "_" + Modifier.class.getSimpleName());
+            .collect(Modifier::getKeyword)
+            .collect(each -> each + "_" + Modifier.class.getSimpleName());
 
-        return variablesSourceCode
-                + "\n"
-                + "            return Lists.immutable.with(" + variableNames.makeString() + ");\n";
+        return (
+            variablesSourceCode +
+            "\n" +
+            "            return Lists.immutable.with(" +
+            variableNames.makeString() +
+            ");\n"
+        );
     }
 
     @Nonnull
-    private String getDataTypePropertyModifierSourceCode(@Nonnull Modifier modifier)
-    {
-        String        className     = Modifier.class.getSimpleName();
+    private String getDataTypePropertyModifierSourceCode(@Nonnull Modifier modifier) {
+        String className = Modifier.class.getSimpleName();
         ModifierOwner modifierOwner = modifier.getModifierOwner();
 
         // @formatter:off
@@ -1084,8 +1035,7 @@ public class JavaConstantsMetaModelGenerator
     }
 
     @Nonnull
-    private String getEnumerationPropertySourceCode(@Nonnull EnumerationProperty enumerationProperty)
-    {
+    private String getEnumerationPropertySourceCode(@Nonnull EnumerationProperty enumerationProperty) {
         String uppercaseName = this.getUppercaseName(enumerationProperty);
 
         // @formatter:off
@@ -1196,31 +1146,30 @@ public class JavaConstantsMetaModelGenerator
         // @formatter:on
     }
 
-    private String getMemberConstantsSourceCode(@Nonnull Classifier classifier)
-    {
+    private String getMemberConstantsSourceCode(@Nonnull Classifier classifier) {
         // TODO: Change from properties to members
-        return classifier.getDeclaredDataTypeProperties()
-                .collect(this::getDataTypePropertyConstantSourceCode)
-                .makeString("");
+        return classifier
+            .getDeclaredDataTypeProperties()
+            .collect(this::getDataTypePropertyConstantSourceCode)
+            .makeString("");
     }
 
     @Nonnull
-    private String getDataTypePropertyConstantSourceCode(@Nonnull DataTypeProperty dataTypeProperty)
-    {
-        String name          = dataTypeProperty.getName();
+    private String getDataTypePropertyConstantSourceCode(@Nonnull DataTypeProperty dataTypeProperty) {
+        String name = dataTypeProperty.getName();
         String uppercaseName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, name);
-        String type          = this.getTypeName(dataTypeProperty);
+        String type = this.getTypeName(dataTypeProperty);
 
         return MessageFormat.format(
-                "    public static final {0}_{1} {2} = {0}_{1}.INSTANCE;\n",
-                uppercaseName,
-                type,
-                name);
+            "    public static final {0}_{1} {2} = {0}_{1}.INSTANCE;\n",
+            uppercaseName,
+            type,
+            name
+        );
     }
 
     @Nonnull
-    private String getAssociationSourceCode(@Nonnull Association association)
-    {
+    private String getAssociationSourceCode(@Nonnull Association association) {
         // @formatter:off
         // language=JAVA
         return ""
@@ -1312,8 +1261,7 @@ public class JavaConstantsMetaModelGenerator
     }
 
     @Nonnull
-    private String getAssociationEndSourceCode(@Nonnull AssociationEnd associationEnd)
-    {
+    private String getAssociationEndSourceCode(@Nonnull AssociationEnd associationEnd) {
         String uppercaseName = this.getUppercaseName(associationEnd);
 
         // @formatter:off
@@ -1396,18 +1344,13 @@ public class JavaConstantsMetaModelGenerator
         // @formatter:on
     }
 
-    private String getAssociationEndModifierConstantsSourceCode(@Nonnull AssociationEnd associationEnd)
-    {
-        return associationEnd
-                .getModifiers()
-                .collect(this::getModifierConstantSourceCode)
-                .makeString("");
+    private String getAssociationEndModifierConstantsSourceCode(@Nonnull AssociationEnd associationEnd) {
+        return associationEnd.getModifiers().collect(this::getModifierConstantSourceCode).makeString("");
     }
 
     @Nonnull
-    private String getModifierConstantSourceCode(@Nonnull Modifier modifier)
-    {
-        String        className     = Modifier.class.getSimpleName();
+    private String getModifierConstantSourceCode(@Nonnull Modifier modifier) {
+        String className = Modifier.class.getSimpleName();
 
         // @formatter:off
         // language=JAVA
@@ -1442,53 +1385,50 @@ public class JavaConstantsMetaModelGenerator
         // @formatter:on
     }
 
-    private String getAssociationEndConstantsSourceCode(@Nonnull Klass klass)
-    {
-        return klass.getDeclaredAssociationEnds()
-                .collect(this::getAssociationEndConstantSourceCode)
-                .makeString("");
+    private String getAssociationEndConstantsSourceCode(@Nonnull Klass klass) {
+        return klass.getDeclaredAssociationEnds().collect(this::getAssociationEndConstantSourceCode).makeString("");
     }
 
     @Nonnull
-    private String getAssociationEndConstantsSourceCode(@Nonnull Association association)
-    {
-        return this.getAssociationEndConstantSourceCode(association.getSourceAssociationEnd(), "source")
-                + this.getAssociationEndConstantSourceCode(association.getTargetAssociationEnd(), "target");
+    private String getAssociationEndConstantsSourceCode(@Nonnull Association association) {
+        return (
+            this.getAssociationEndConstantSourceCode(association.getSourceAssociationEnd(), "source") +
+            this.getAssociationEndConstantSourceCode(association.getTargetAssociationEnd(), "target")
+        );
     }
 
     @Nonnull
-    private String getAssociationEndConstantSourceCode(@Nonnull AssociationEnd associationEnd)
-    {
-        String name          = associationEnd.getName();
+    private String getAssociationEndConstantSourceCode(@Nonnull AssociationEnd associationEnd) {
+        String name = associationEnd.getName();
         String uppercaseName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, name);
-        String type          = this.getTypeName(associationEnd);
+        String type = this.getTypeName(associationEnd);
 
         return MessageFormat.format(
-                "    public static final {0}_{1} {2} = {0}_{1}.INSTANCE;\n",
-                uppercaseName,
-                type,
-                name);
+            "    public static final {0}_{1} {2} = {0}_{1}.INSTANCE;\n",
+            uppercaseName,
+            type,
+            name
+        );
     }
 
     @Nonnull
-    private String getAssociationEndConstantSourceCode(@Nonnull AssociationEnd associationEnd, String sideName)
-    {
-        String name          = associationEnd.getName();
+    private String getAssociationEndConstantSourceCode(@Nonnull AssociationEnd associationEnd, String sideName) {
+        String name = associationEnd.getName();
         String uppercaseName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, name);
 
         return String.format(
-                "    public static final %s_Klass.%s_AssociationEnd %s = %sDomainModel.%s.%s;\n",
-                associationEnd.getOwningClassifier().getName(),
-                uppercaseName,
-                sideName,
-                this.applicationName,
-                associationEnd.getOwningClassifier().getName(),
-                name);
+            "    public static final %s_Klass.%s_AssociationEnd %s = %sDomainModel.%s.%s;\n",
+            associationEnd.getOwningClassifier().getName(),
+            uppercaseName,
+            sideName,
+            this.applicationName,
+            associationEnd.getOwningClassifier().getName(),
+            name
+        );
     }
 
     @Nonnull
-    private String getProjectionSourceCode(@Nonnull Projection projection)
-    {
+    private String getProjectionSourceCode(@Nonnull Projection projection) {
         // @formatter:off
         // language=JAVA
         return ""
@@ -1575,52 +1515,46 @@ public class JavaConstantsMetaModelGenerator
         // @formatter:on
     }
 
-    private String getProjectionChildrenConstantsSourceCode(@Nonnull ProjectionParent projectionParent)
-    {
-        return projectionParent.getChildren()
-                .collect(this::getProjectionChildConstantSourceCode)
-                .makeString("");
+    private String getProjectionChildrenConstantsSourceCode(@Nonnull ProjectionParent projectionParent) {
+        return projectionParent.getChildren().collect(this::getProjectionChildConstantSourceCode).makeString("");
     }
 
     @Nonnull
-    private String getProjectionChildConstantSourceCode(@Nonnull ProjectionElement projectionElement)
-    {
-        String name          = projectionElement.getName();
+    private String getProjectionChildConstantSourceCode(@Nonnull ProjectionElement projectionElement) {
+        String name = projectionElement.getName();
         String uppercaseName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, name) + projectionElement.getDepth();
-        String type          = this.getTypeName(projectionElement);
+        String type = this.getTypeName(projectionElement);
 
         return MessageFormat.format(
-                "    public static final {0}_{1} {2} = {0}_{1}.INSTANCE;\n",
-                uppercaseName,
-                type,
-                name);
+            "    public static final {0}_{1} {2} = {0}_{1}.INSTANCE;\n",
+            uppercaseName,
+            type,
+            name
+        );
     }
 
     @Nonnull
     private String getProjectionChildrenSourceCode(
-            @Nonnull ProjectionParent projectionParent,
-            String projectionParentName)
-    {
-        return projectionParent.getChildren()
-                .collectWith(this::getProjectionChildSourceCode, projectionParentName)
-                .makeString("\n")
-                // https://stackoverflow.com/questions/15888934/how-to-indent-a-multi-line-paragraph-being-written-to-the-console-in-java
-                .replaceAll("(?m)^", "    ");
+        @Nonnull ProjectionParent projectionParent,
+        String projectionParentName
+    ) {
+        return projectionParent
+            .getChildren()
+            .collectWith(this::getProjectionChildSourceCode, projectionParentName)
+            .makeString("\n")
+            // https://stackoverflow.com/questions/15888934/how-to-indent-a-multi-line-paragraph-being-written-to-the-console-in-java
+            .replaceAll("(?m)^", "    ");
     }
 
     @Nonnull
-    private String getProjectionChildSourceCode(ProjectionElement projectionElement, String projectionParentName)
-    {
-        if (projectionElement instanceof ProjectionDataTypeProperty projectionDataTypeProperty)
-        {
+    private String getProjectionChildSourceCode(ProjectionElement projectionElement, String projectionParentName) {
+        if (projectionElement instanceof ProjectionDataTypeProperty projectionDataTypeProperty) {
             return this.getProjectionDataTypePropertySourceCode(projectionDataTypeProperty, projectionParentName);
         }
-        if (projectionElement instanceof ProjectionReferenceProperty projectionReferenceProperty)
-        {
+        if (projectionElement instanceof ProjectionReferenceProperty projectionReferenceProperty) {
             return this.getProjectionReferencePropertySourceCode(projectionReferenceProperty, projectionParentName);
         }
-        if (projectionElement instanceof ProjectionProjectionReference projectionProjectionReference)
-        {
+        if (projectionElement instanceof ProjectionProjectionReference projectionProjectionReference) {
             return this.getProjectionProjectionReferenceSourceCode(projectionProjectionReference, projectionParentName);
         }
         throw new AssertionError(projectionElement.getClass().getSimpleName());
@@ -1628,11 +1562,11 @@ public class JavaConstantsMetaModelGenerator
 
     @Nonnull
     private String getProjectionDataTypePropertySourceCode(
-            @Nonnull ProjectionDataTypeProperty projectionDataTypeProperty,
-            String projectionParentName)
-    {
-        String uppercaseName = this.getUppercaseName(projectionDataTypeProperty)
-                + projectionDataTypeProperty.getDepth();
+        @Nonnull ProjectionDataTypeProperty projectionDataTypeProperty,
+        String projectionParentName
+    ) {
+        String uppercaseName =
+            this.getUppercaseName(projectionDataTypeProperty) + projectionDataTypeProperty.getDepth();
 
         DataTypeProperty dataTypeProperty = projectionDataTypeProperty.getProperty();
 
@@ -1695,11 +1629,11 @@ public class JavaConstantsMetaModelGenerator
 
     @Nonnull
     private String getProjectionReferencePropertySourceCode(
-            @Nonnull ProjectionReferenceProperty projectionReferenceProperty,
-            String projectionParentName)
-    {
-        String uppercaseName = this.getUppercaseName(projectionReferenceProperty)
-                + projectionReferenceProperty.getDepth();
+        @Nonnull ProjectionReferenceProperty projectionReferenceProperty,
+        String projectionParentName
+    ) {
+        String uppercaseName =
+            this.getUppercaseName(projectionReferenceProperty) + projectionReferenceProperty.getDepth();
 
         ReferenceProperty referenceProperty = projectionReferenceProperty.getProperty();
 
@@ -1764,11 +1698,11 @@ public class JavaConstantsMetaModelGenerator
 
     @Nonnull
     private String getProjectionProjectionReferenceSourceCode(
-            @Nonnull ProjectionProjectionReference projectionProjectionReference,
-            String projectionParentName)
-    {
-        String uppercaseName = this.getUppercaseName(projectionProjectionReference)
-                + projectionProjectionReference.getDepth();
+        @Nonnull ProjectionProjectionReference projectionProjectionReference,
+        String projectionParentName
+    ) {
+        String uppercaseName =
+            this.getUppercaseName(projectionProjectionReference) + projectionProjectionReference.getDepth();
 
         ReferenceProperty referenceProperty = projectionProjectionReference.getProperty();
 
@@ -1826,8 +1760,7 @@ public class JavaConstantsMetaModelGenerator
         // @formatter:on
     }
 
-    private String getUppercaseName(NamedElement namedElement)
-    {
+    private String getUppercaseName(NamedElement namedElement) {
         return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, namedElement.getName());
     }
 }

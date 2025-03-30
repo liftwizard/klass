@@ -18,12 +18,10 @@ package klass.model.meta.domain.dropwizard.test;
 
 import org.junit.jupiter.api.Test;
 
-class ProjectionResourceManualTest
-        extends AbstractResourceTestCase
-{
+class ProjectionResourceManualTest extends AbstractResourceTestCase {
+
     @Test
-    void getAllMeta()
-    {
+    void getAllMeta() {
         this.assertUrlReturns("getAllMeta", "/meta/projection");
     }
 }

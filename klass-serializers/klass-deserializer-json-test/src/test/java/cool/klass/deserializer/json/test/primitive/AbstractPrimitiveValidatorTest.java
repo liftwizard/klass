@@ -21,8 +21,8 @@ import java.io.IOException;
 import cool.klass.deserializer.json.test.AbstractValidatorTest;
 import org.junit.jupiter.api.Test;
 
-public abstract class AbstractPrimitiveValidatorTest extends AbstractValidatorTest
-{
+public abstract class AbstractPrimitiveValidatorTest extends AbstractValidatorTest {
+
     @Test
     public abstract void validate_good() throws IOException;
 

@@ -36,39 +36,33 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public record ColorSchemeDefinition(
-        @NotBlank(message = "Color scheme name is required")
-        @Nonnull
-        String name,
+    @NotBlank(message = "Color scheme name is required") @Nonnull String name,
 
-        @NotNull(message = "Color scheme description is required")
-        String description,
+    @NotNull(message = "Color scheme description is required") String description,
 
-        @NotEmpty(message = "Color scheme must define at least one rule")
-        @NotNull(message = "Rules list cannot be null")
-        @Valid
-        MutableList<ColorSchemeRule> rules)
-{
+    @NotEmpty(message = "Color scheme must define at least one rule")
+    @NotNull(message = "Rules list cannot be null")
+    @Valid
+    MutableList<ColorSchemeRule> rules
+) {
     private static final Logger LOGGER = LoggerFactory.getLogger(ColorSchemeDefinition.class);
 
     @ValidationMethod(message = "Color scheme must define a 'background' rule")
     @JsonIgnore
-    public boolean hasBackgroundRule()
-    {
+    public boolean hasBackgroundRule() {
         return this.rules.anySatisfy(rule -> "background".equals(rule.name()));
     }
 
     @ValidationMethod(message = "Unknown rule name in color scheme")
     @JsonIgnore
-    public boolean hasValidRuleNames()
-    {
+    public boolean hasValidRuleNames() {
         ImmutableSet<String> validRuleNames = JsonAnsiColorScheme.getValidRuleNames();
 
         var schemeRuleNames = this.rules.collect(ColorSchemeRule::name).toSet();
 
         var invalidRuleNames = schemeRuleNames.reject(validRuleNames::contains);
 
-        if (invalidRuleNames.notEmpty())
-        {
+        if (invalidRuleNames.notEmpty()) {
             LOGGER.warn("Unknown rule name(s) found in color scheme: {}", invalidRuleNames.makeString(", "));
             return false;
         }
@@ -76,8 +70,7 @@ public record ColorSchemeDefinition(
         return true;
     }
 
-    public MapIterable<String, ColorSchemeRule> toRuleMap()
-    {
+    public MapIterable<String, ColorSchemeRule> toRuleMap() {
         // TODO 2025-03-16: Change the return type to be immutable, once Eclipse Collections supports it.
         MutableOrderedMap<String, ColorSchemeRule> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());
         return this.rules.groupByUniqueKey(ColorSchemeRule::name, result).asUnmodifiable();

@@ -26,8 +26,7 @@ import cool.klass.model.converter.compiler.state.value.literal.AntlrNullLiteral;
 import cool.klass.model.converter.compiler.state.value.literal.AntlrStringLiteralValue;
 import cool.klass.model.converter.compiler.state.value.literal.AntlrUserLiteral;
 
-public interface AntlrExpressionValueVisitor
-{
+public interface AntlrExpressionValueVisitor {
     void visitTypeMember(@Nonnull AntlrTypeMemberReferencePath typeMemberExpressionValue);
 
     void visitThisMember(@Nonnull AntlrThisMemberReferencePath thisMemberExpressionValue);

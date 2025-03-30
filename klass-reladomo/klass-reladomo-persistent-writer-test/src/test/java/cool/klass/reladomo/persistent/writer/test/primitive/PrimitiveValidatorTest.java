@@ -20,8 +20,7 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-public interface PrimitiveValidatorTest
-{
+public interface PrimitiveValidatorTest {
     @Test
     void validate_good() throws IOException;
 

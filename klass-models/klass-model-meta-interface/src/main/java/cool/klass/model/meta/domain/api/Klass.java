@@ -28,21 +28,16 @@ import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.impl.factory.Lists;
 
-public interface Klass
-        extends Classifier
-{
+public interface Klass extends Classifier {
     @Override
-    default void visit(TopLevelElementVisitor visitor)
-    {
+    default void visit(TopLevelElementVisitor visitor) {
         visitor.visitKlass(this);
     }
 
     @Override
-    default ImmutableList<Modifier> getInheritedModifiers()
-    {
-        ImmutableList<Modifier> superClassModifiers = this.getSuperClass()
-                .map(Classifier::getModifiers)
-                .orElseGet(Lists.immutable::empty);
+    default ImmutableList<Modifier> getInheritedModifiers() {
+        ImmutableList<Modifier> superClassModifiers =
+            this.getSuperClass().map(Classifier::getModifiers).orElseGet(Lists.immutable::empty);
 
         ImmutableList<Modifier> interfaceModifiers = Classifier.super.getInheritedModifiers();
 
@@ -61,51 +56,48 @@ public interface Klass
     // TODO: Replace with an implementation that preserves order
     @Nonnull
     @Override
-    default ImmutableList<Property> getProperties()
-    {
-        return Lists.immutable.<Property>empty()
-                .newWithAll(this.getDataTypeProperties())
-                .newWithAll(this.getAssociationEnds());
+    default ImmutableList<Property> getProperties() {
+        return Lists.immutable
+            .<Property>empty()
+            .newWithAll(this.getDataTypeProperties())
+            .newWithAll(this.getAssociationEnds());
     }
 
     @Override
-    default ImmutableList<Property> getDeclaredProperties()
-    {
-        return Lists.immutable.<Property>empty()
-                .newWithAll(this.getDeclaredDataTypeProperties())
-                .newWithAll(this.getDeclaredAssociationEnds());
+    default ImmutableList<Property> getDeclaredProperties() {
+        return Lists.immutable
+            .<Property>empty()
+            .newWithAll(this.getDeclaredDataTypeProperties())
+            .newWithAll(this.getDeclaredAssociationEnds());
     }
 
     @Override
-    default boolean isUniquelyOwned()
-    {
-        return this
-                .getAssociationEnds()
+    default boolean isUniquelyOwned() {
+        return (
+            this.getAssociationEnds()
                 .asLazy()
                 .reject(ReferenceProperty::isToSelf)
                 .collect(AssociationEnd::getOpposite)
-                .count(ReferenceProperty::isOwned) == 1;
+                .count(ReferenceProperty::isOwned) ==
+            1
+        );
     }
 
     @Nonnull
-    default Optional<Property> getPropertyByName(String name)
-    {
-        DataTypeProperty dataTypeProperty   = this.getDataTypePropertyByName(name);
-        AssociationEnd   associationEnd     = this.getAssociationEndByName(name);
+    default Optional<Property> getPropertyByName(String name) {
+        DataTypeProperty dataTypeProperty = this.getDataTypePropertyByName(name);
+        AssociationEnd associationEnd = this.getAssociationEndByName(name);
 
-        if (dataTypeProperty != null && associationEnd != null)
-        {
+        if (dataTypeProperty != null && associationEnd != null) {
             String detailMessage = "Property " + name + " is both a data type property and an association end.";
             throw new AssertionError(detailMessage);
         }
 
-        if (dataTypeProperty != null)
-        {
+        if (dataTypeProperty != null) {
             return Optional.of(dataTypeProperty);
         }
 
-        if (associationEnd != null)
-        {
+        if (associationEnd != null) {
             return Optional.of(associationEnd);
         }
 
@@ -118,17 +110,13 @@ public interface Klass
     @Nonnull
     Optional<AssociationEnd> getVersionedProperty();
 
-    default Optional<DataTypeProperty> getVersionNumberProperty()
-    {
-        ImmutableList<DataTypeProperty> versionProperties = this
-                .getDataTypeProperties()
-                .select(DataTypeProperty::isVersion);
-        if (versionProperties.size() > 1)
-        {
+    default Optional<DataTypeProperty> getVersionNumberProperty() {
+        ImmutableList<DataTypeProperty> versionProperties =
+            this.getDataTypeProperties().select(DataTypeProperty::isVersion);
+        if (versionProperties.size() > 1) {
             throw new AssertionError();
         }
-        if (versionProperties.isEmpty())
-        {
+        if (versionProperties.isEmpty()) {
             return Optional.empty();
         }
         return Optional.of(versionProperties.getOnly());
@@ -143,44 +131,36 @@ public interface Klass
 
     boolean isTransient();
 
-    default boolean isVersioned()
-    {
+    default boolean isVersioned() {
         return this.getVersionProperty().isPresent();
     }
 
-    default boolean isAudited()
-    {
+    default boolean isAudited() {
         return this.getDataTypeProperties().anySatisfy(DataTypeProperty::isAudit);
     }
 
     @Override
-    default boolean isStrictSuperTypeOf(@Nonnull Classifier classifier)
-    {
-        if (Classifier.super.isStrictSuperTypeOf(classifier))
-        {
+    default boolean isStrictSuperTypeOf(@Nonnull Classifier classifier) {
+        if (Classifier.super.isStrictSuperTypeOf(classifier)) {
             return true;
         }
 
-        if (this == classifier)
-        {
+        if (this == classifier) {
             return false;
         }
 
-        if (classifier instanceof Interface)
-        {
+        if (classifier instanceof Interface) {
             return false;
         }
 
-        Klass           klass              = (Klass) classifier;
+        Klass klass = (Klass) classifier;
         Optional<Klass> optionalSuperClass = klass.getSuperClass();
-        if (optionalSuperClass.isEmpty())
-        {
+        if (optionalSuperClass.isEmpty()) {
             return false;
         }
 
         Klass superClass = optionalSuperClass.get();
-        if (this == superClass)
-        {
+        if (this == superClass) {
             return true;
         }
 
@@ -188,27 +168,22 @@ public interface Klass
     }
 
     @Override
-    default boolean isStrictSubTypeOf(Classifier classifier)
-    {
-        if (Classifier.super.isStrictSubTypeOf(classifier))
-        {
+    default boolean isStrictSubTypeOf(Classifier classifier) {
+        if (Classifier.super.isStrictSubTypeOf(classifier)) {
             return true;
         }
 
-        if (this == classifier)
-        {
+        if (this == classifier) {
             return false;
         }
 
         Optional<Klass> optionalSuperClass = this.getSuperClass();
-        if (optionalSuperClass.isEmpty())
-        {
+        if (optionalSuperClass.isEmpty()) {
             return false;
         }
 
         Klass superClass = optionalSuperClass.get();
-        if (superClass == classifier)
-        {
+        if (superClass == classifier) {
             return true;
         }
 
@@ -216,27 +191,19 @@ public interface Klass
     }
 
     // TODO: Consider changing this to BFS to get them ordered by depth
-    default ImmutableList<Klass> getSubClassChain()
-    {
-        return this.getSubClasses()
-                .flatCollect(Klass::getSubClassChainWithThis)
-                .toImmutable();
+    default ImmutableList<Klass> getSubClassChain() {
+        return this.getSubClasses().flatCollect(Klass::getSubClassChainWithThis).toImmutable();
     }
 
-    default ImmutableList<Klass> getSubClassChainWithThis()
-    {
+    default ImmutableList<Klass> getSubClassChainWithThis() {
         return Lists.immutable.with(this).newWithAll(this.getSubClassChain());
     }
 
-    default ImmutableList<Klass> getSuperClassChain()
-    {
-        return this.getSuperClass()
-                .map(Klass::getSuperClassChainWithThis)
-                .orElseGet(Lists.immutable::empty);
+    default ImmutableList<Klass> getSuperClassChain() {
+        return this.getSuperClass().map(Klass::getSuperClassChainWithThis).orElseGet(Lists.immutable::empty);
     }
 
-    default ImmutableList<Klass> getSuperClassChainWithThis()
-    {
+    default ImmutableList<Klass> getSuperClassChainWithThis() {
         return Lists.immutable.with(this).newWithAll(this.getSuperClassChain());
     }
 }

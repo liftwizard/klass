@@ -21,80 +21,67 @@ import javax.annotation.Nonnull;
 import cool.klass.model.meta.domain.api.PrimitiveType;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
 
-public class PrimitiveToReladomoTypeVisitor
-        implements PrimitiveTypeVisitor
-{
+public class PrimitiveToReladomoTypeVisitor implements PrimitiveTypeVisitor {
+
     private String result;
 
-    public static String getJavaType(@Nonnull PrimitiveType primitiveType)
-    {
+    public static String getJavaType(@Nonnull PrimitiveType primitiveType) {
         PrimitiveToReladomoTypeVisitor primitiveToJavaTypeVisitor = new PrimitiveToReladomoTypeVisitor();
         primitiveType.visit(primitiveToJavaTypeVisitor);
         return primitiveToJavaTypeVisitor.getResult();
     }
 
-    public String getResult()
-    {
+    public String getResult() {
         return this.result;
     }
 
     @Override
-    public void visitString()
-    {
+    public void visitString() {
         this.result = "String";
     }
 
     @Override
-    public void visitInteger()
-    {
+    public void visitInteger() {
         this.result = "int";
     }
 
     @Override
-    public void visitLong()
-    {
+    public void visitLong() {
         this.result = "long";
     }
 
     @Override
-    public void visitDouble()
-    {
+    public void visitDouble() {
         this.result = "double";
     }
 
     @Override
-    public void visitFloat()
-    {
+    public void visitFloat() {
         this.result = "float";
     }
 
     @Override
-    public void visitBoolean()
-    {
+    public void visitBoolean() {
         this.result = "boolean";
     }
 
     @Override
-    public void visitInstant()
-    {
+    public void visitInstant() {
         this.result = "Timestamp";
     }
 
     @Override
-    public void visitLocalDate()
-    {
+    public void visitLocalDate() {
         this.result = "Date";
     }
 
     @Override
-    public void visitTemporalInstant()
-    {
+    public void visitTemporalInstant() {
         this.result = "Timestamp";
     }
 
     @Override
-    public void visitTemporalRange()
-    {
+    public void visitTemporalRange() {
         this.result = "Timestamp";
     }
 }

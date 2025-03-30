@@ -46,41 +46,35 @@ import cool.klass.model.meta.grammar.KlassParser.ProjectionDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceGroupDeclarationContext;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class DomainModelDeclarationsTopLevelElementVisitor
-        implements TopLevelElementVisitor
-{
+public class DomainModelDeclarationsTopLevelElementVisitor implements TopLevelElementVisitor {
+
     @Nonnull
     private final DomainModelDeclarations domainModelDeclarations;
 
-    public DomainModelDeclarationsTopLevelElementVisitor(@Nonnull DomainModelDeclarations domainModelDeclarations)
-    {
+    public DomainModelDeclarationsTopLevelElementVisitor(@Nonnull DomainModelDeclarations domainModelDeclarations) {
         this.domainModelDeclarations = Objects.requireNonNull(domainModelDeclarations);
     }
 
     @Override
-    public void visitEnumeration(Enumeration enumeration)
-    {
-        EnumerationWithSourceCode     element     = (EnumerationWithSourceCode) enumeration;
+    public void visitEnumeration(Enumeration enumeration) {
+        EnumerationWithSourceCode element = (EnumerationWithSourceCode) enumeration;
         EnumerationDeclarationContext declaration = element.getElementContext();
         this.domainModelDeclarations.addEnumerationDeclaration(declaration, element);
 
-        for (EnumerationLiteral enumerationLiteral : enumeration.getEnumerationLiterals())
-        {
+        for (EnumerationLiteral enumerationLiteral : enumeration.getEnumerationLiterals()) {
             this.visitEnumerationLiteral(enumerationLiteral);
         }
     }
 
-    private void visitEnumerationLiteral(EnumerationLiteral enumerationLiteral)
-    {
-        EnumerationLiteralWithSourceCode element     = (EnumerationLiteralWithSourceCode) enumerationLiteral;
-        EnumerationLiteralContext        declaration = element.getElementContext();
+    private void visitEnumerationLiteral(EnumerationLiteral enumerationLiteral) {
+        EnumerationLiteralWithSourceCode element = (EnumerationLiteralWithSourceCode) enumerationLiteral;
+        EnumerationLiteralContext declaration = element.getElementContext();
         this.domainModelDeclarations.addEnumerationLiteralDeclaration(declaration, element);
     }
 
     @Override
-    public void visitInterface(Interface anInterface)
-    {
-        InterfaceWithSourceCode     element     = (InterfaceWithSourceCode) anInterface;
+    public void visitInterface(Interface anInterface) {
+        InterfaceWithSourceCode element = (InterfaceWithSourceCode) anInterface;
         InterfaceDeclarationContext declaration = element.getElementContext();
         this.domainModelDeclarations.addInterfaceDeclaration(declaration, element);
 
@@ -88,46 +82,39 @@ public class DomainModelDeclarationsTopLevelElementVisitor
     }
 
     @Override
-    public void visitKlass(Klass klass)
-    {
-        KlassWithSourceCode     element     = (KlassWithSourceCode) klass;
+    public void visitKlass(Klass klass) {
+        KlassWithSourceCode element = (KlassWithSourceCode) klass;
         ClassDeclarationContext declaration = element.getElementContext();
         this.domainModelDeclarations.addKlassDeclaration(declaration, element);
 
         this.visitClassifier(klass);
     }
 
-    private void visitClassifier(Classifier classifier)
-    {
+    private void visitClassifier(Classifier classifier) {
         ImmutableList<Property> properties = classifier.getDeclaredProperties();
-        for (Property property : properties)
-        {
+        for (Property property : properties) {
             property.visit(new DomainModelDeclarationsPropertyVisitor(this.domainModelDeclarations));
         }
     }
 
     @Override
-    public void visitAssociation(Association association)
-    {
-        AssociationWithSourceCode     element     = (AssociationWithSourceCode) association;
+    public void visitAssociation(Association association) {
+        AssociationWithSourceCode element = (AssociationWithSourceCode) association;
         AssociationDeclarationContext declaration = element.getElementContext();
         this.domainModelDeclarations.addAssociationDeclaration(declaration, element);
-
         // Don't need to visit association ends. We get those on the Classifier.
     }
 
     @Override
-    public void visitProjection(Projection projection)
-    {
-        ProjectionWithSourceCode     element     = (ProjectionWithSourceCode) projection;
+    public void visitProjection(Projection projection) {
+        ProjectionWithSourceCode element = (ProjectionWithSourceCode) projection;
         ProjectionDeclarationContext declaration = element.getElementContext();
         this.domainModelDeclarations.addProjectionDeclaration(declaration, element);
     }
 
     @Override
-    public void visitServiceGroup(ServiceGroup serviceGroup)
-    {
-        ServiceGroupWithSourceCode     element     = (ServiceGroupWithSourceCode) serviceGroup;
+    public void visitServiceGroup(ServiceGroup serviceGroup) {
+        ServiceGroupWithSourceCode element = (ServiceGroupWithSourceCode) serviceGroup;
         ServiceGroupDeclarationContext declaration = element.getElementContext();
         this.domainModelDeclarations.addServiceGroupDeclaration(declaration, element);
     }

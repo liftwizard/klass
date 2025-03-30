@@ -35,34 +35,28 @@ import cool.klass.model.reladomo.tree.SuperClassReladomoTreeNode;
 import org.eclipse.collections.api.stack.MutableStack;
 import org.eclipse.collections.impl.stack.mutable.ArrayStack;
 
-public class ReladomoTreeNodeDeepFetcherListener
-        implements ReladomoTreeNodeListener
-{
-    private static final Converter<String, String> UPPER_TO_LOWER_CAMEL =
-            CaseFormat.UPPER_CAMEL.converterTo(CaseFormat.LOWER_CAMEL);
+public class ReladomoTreeNodeDeepFetcherListener implements ReladomoTreeNodeListener {
 
-    private final MutableStack<RelatedFinder<?>> stack        = new ArrayStack<>();
-    private final MutableStack<NamedElement>     contextStack = new ArrayStack<>();
+    private static final Converter<String, String> UPPER_TO_LOWER_CAMEL = CaseFormat.UPPER_CAMEL.converterTo(
+        CaseFormat.LOWER_CAMEL
+    );
+
+    private final MutableStack<RelatedFinder<?>> stack = new ArrayStack<>();
+    private final MutableStack<NamedElement> contextStack = new ArrayStack<>();
 
     private final ReladomoDataStore dataStore;
-    private final DomainList        domainList;
-    private final Klass             klass;
+    private final DomainList domainList;
+    private final Klass klass;
 
-    public ReladomoTreeNodeDeepFetcherListener(
-            ReladomoDataStore dataStore,
-            DomainList domainList,
-            Klass klass)
-    {
-        this.dataStore   = dataStore;
-        this.domainList  = domainList;
-        this.klass       = klass;
+    public ReladomoTreeNodeDeepFetcherListener(ReladomoDataStore dataStore, DomainList domainList, Klass klass) {
+        this.dataStore = dataStore;
+        this.domainList = domainList;
+        this.klass = klass;
     }
 
     @Override
-    public void assertInvariants()
-    {
-        if (this.stack.size() == this.contextStack.size())
-        {
+    public void assertInvariants() {
+        if (this.stack.size() == this.contextStack.size()) {
             return;
         }
 
@@ -71,10 +65,8 @@ public class ReladomoTreeNodeDeepFetcherListener
     }
 
     @Override
-    public void enterRoot(RootReladomoTreeNode rootReladomoTreeNode)
-    {
-        if (this.klass != rootReladomoTreeNode.getOwningClassifier())
-        {
+    public void enterRoot(RootReladomoTreeNode rootReladomoTreeNode) {
+        if (this.klass != rootReladomoTreeNode.getOwningClassifier()) {
             String detailMessage = "Expected " + this.klass + " but got " + rootReladomoTreeNode.getOwningClassifier();
             throw new AssertionError(detailMessage);
         }
@@ -84,94 +76,85 @@ public class ReladomoTreeNodeDeepFetcherListener
     }
 
     @Override
-    public void exitRoot(RootReladomoTreeNode rootReladomoTreeNode)
-    {
+    public void exitRoot(RootReladomoTreeNode rootReladomoTreeNode) {
         this.stack.pop();
         this.contextStack.pop();
     }
 
     @Override
-    public void enterDataTypeProperty(DataTypePropertyReladomoTreeNode dataTypePropertyReladomoTreeNode)
-    {
-    }
+    public void enterDataTypeProperty(DataTypePropertyReladomoTreeNode dataTypePropertyReladomoTreeNode) {}
 
     @Override
-    public void exitDataTypeProperty(DataTypePropertyReladomoTreeNode dataTypePropertyReladomoTreeNode)
-    {
-    }
+    public void exitDataTypeProperty(DataTypePropertyReladomoTreeNode dataTypePropertyReladomoTreeNode) {}
 
     @Override
-    public void enterSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode)
-    {
-        Klass            superClass       = superClassReladomoTreeNode.getType();
-        String           relationshipName = UPPER_TO_LOWER_CAMEL.convert(superClass.getName()) + "SuperClass";
-        RelatedFinder<?> relatedFinder    = this.stack.peek();
-        RelatedFinder<?> nextFinder       = relatedFinder.getRelationshipFinderByName(relationshipName);
+    public void enterSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode) {
+        Klass superClass = superClassReladomoTreeNode.getType();
+        String relationshipName = UPPER_TO_LOWER_CAMEL.convert(superClass.getName()) + "SuperClass";
+        RelatedFinder<?> relatedFinder = this.stack.peek();
+        RelatedFinder<?> nextFinder = relatedFinder.getRelationshipFinderByName(relationshipName);
         this.stack.push(nextFinder);
         this.contextStack.push(superClass);
     }
 
     @Override
-    public void exitSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode)
-    {
+    public void exitSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode) {
         RelatedFinder<?> relatedFinder = this.stack.peek();
-        Navigation<?>    navigation    = (Navigation<?>) relatedFinder;
+        Navigation<?> navigation = (Navigation<?>) relatedFinder;
         this.domainList.deepFetch(navigation);
         this.stack.pop();
         this.contextStack.pop();
     }
 
     @Override
-    public void enterSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode)
-    {
-        Klass            subClass         = subClassReladomoTreeNode.getType();
-        String           relationshipName = UPPER_TO_LOWER_CAMEL.convert(subClass.getName()) + "SubClass";
-        RelatedFinder<?> relatedFinder    = this.stack.peek();
-        RelatedFinder<?> nextFinder       = relatedFinder.getRelationshipFinderByName(relationshipName);
+    public void enterSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode) {
+        Klass subClass = subClassReladomoTreeNode.getType();
+        String relationshipName = UPPER_TO_LOWER_CAMEL.convert(subClass.getName()) + "SubClass";
+        RelatedFinder<?> relatedFinder = this.stack.peek();
+        RelatedFinder<?> nextFinder = relatedFinder.getRelationshipFinderByName(relationshipName);
         this.stack.push(nextFinder);
         this.contextStack.push(subClass);
     }
 
     @Override
-    public void exitSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode)
-    {
+    public void exitSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode) {
         RelatedFinder<?> relatedFinder = this.stack.peek();
-        Navigation<?>    navigation    = (Navigation<?>) relatedFinder;
+        Navigation<?> navigation = (Navigation<?>) relatedFinder;
         this.domainList.deepFetch(navigation);
         this.stack.pop();
         this.contextStack.pop();
     }
 
     @Override
-    public void enterReferenceProperty(ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode)
-    {
+    public void enterReferenceProperty(ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode) {
         ReferenceProperty referenceProperty = referencePropertyReladomoTreeNode.getReferenceProperty();
-        String            propertyName      = referenceProperty.getName();
-        RelatedFinder<?>  relatedFinder     = this.stack.peek();
-        RelatedFinder<?>  nextFinder        = relatedFinder.getRelationshipFinderByName(propertyName);
+        String propertyName = referenceProperty.getName();
+        RelatedFinder<?> relatedFinder = this.stack.peek();
+        RelatedFinder<?> nextFinder = relatedFinder.getRelationshipFinderByName(propertyName);
         this.stack.push(nextFinder);
         this.contextStack.push(referenceProperty);
     }
 
     @Override
-    public void exitReferenceProperty(ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode)
-    {
+    public void exitReferenceProperty(ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode) {
         RelatedFinder<?> relatedFinder = this.stack.peek();
-        Navigation<?>    navigation    = (Navigation<?>) relatedFinder;
+        Navigation<?> navigation = (Navigation<?>) relatedFinder;
         this.domainList.deepFetch(navigation);
         this.stack.pop();
         this.contextStack.pop();
     }
 
     @Override
-    public void enterReference(ReferenceReladomoTreeNode referenceReladomoTreeNode)
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".enterReference() not implemented yet");
+    public void enterReference(ReferenceReladomoTreeNode referenceReladomoTreeNode) {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".enterReference() not implemented yet"
+        );
     }
 
     @Override
-    public void exitReference(ReferenceReladomoTreeNode referenceReladomoTreeNode)
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".exitReference() not implemented yet");
+    public void exitReference(ReferenceReladomoTreeNode referenceReladomoTreeNode) {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".exitReference() not implemented yet"
+        );
     }
 }

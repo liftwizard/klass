@@ -30,24 +30,22 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-        name = "generate-graphql-reladomo-finder",
-        defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
-        threadSafe = true,
-        requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class GenerateGraphQLReladomoFinderMojo
-        extends AbstractGenerateMojo
-{
+    name = "generate-graphql-reladomo-finder",
+    defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
+    threadSafe = true,
+    requiresDependencyResolution = ResolutionScope.RUNTIME
+)
+public class GenerateGraphQLReladomoFinderMojo extends AbstractGenerateMojo {
+
     @Parameter(
-            property = "outputDirectory",
-            defaultValue = "${project.build.directory}/generated-resources/graphql-reladomo-finder")
+        property = "outputDirectory",
+        defaultValue = "${project.build.directory}/generated-resources/graphql-reladomo-finder"
+    )
     private File outputDirectory;
 
     @Override
-    public void execute()
-            throws MojoExecutionException
-    {
-        if (!this.outputDirectory.exists())
-        {
+    public void execute() throws MojoExecutionException {
+        if (!this.outputDirectory.exists()) {
             this.outputDirectory.mkdirs();
         }
 

@@ -20,24 +20,19 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class AnswerList extends AnswerListAbstract
-{
-    public AnswerList()
-    {
-    }
+public class AnswerList extends AnswerListAbstract {
 
-    public AnswerList(int initialSize)
-    {
+    public AnswerList() {}
+
+    public AnswerList(int initialSize) {
         super(initialSize);
     }
 
-    public AnswerList(Collection<?> collection)
-    {
+    public AnswerList(Collection<?> collection) {
         super(collection);
     }
 
-    public AnswerList(Operation operation)
-    {
+    public AnswerList(Operation operation) {
         super(operation);
     }
 }

@@ -30,62 +30,57 @@ import cool.klass.model.meta.domain.parameter.ParameterImpl;
 import cool.klass.model.meta.domain.parameter.ParameterImpl.ParameterBuilder;
 import cool.klass.model.meta.grammar.KlassParser.VariableReferenceContext;
 
-public final class VariableReferenceImpl
-        extends AbstractExpressionValue
-        implements VariableReference
-{
+public final class VariableReferenceImpl extends AbstractExpressionValue implements VariableReference {
+
     @Nonnull
     private final ParameterImpl parameter;
 
     private VariableReferenceImpl(
-            @Nonnull VariableReferenceContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode,
-            @Nonnull ParameterImpl parameter)
-    {
+        @Nonnull VariableReferenceContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode,
+        @Nonnull ParameterImpl parameter
+    ) {
         super(elementContext, macroElement, sourceCode);
         this.parameter = Objects.requireNonNull(parameter);
     }
 
     @Nonnull
     @Override
-    public VariableReferenceContext getElementContext()
-    {
+    public VariableReferenceContext getElementContext() {
         return (VariableReferenceContext) super.getElementContext();
     }
 
     @Override
     @Nonnull
-    public ParameterImpl getParameter()
-    {
+    public ParameterImpl getParameter() {
         return this.parameter;
     }
 
-    public static final class VariableReferenceBuilder
-            extends AbstractExpressionValueBuilder<VariableReferenceImpl>
-    {
+    public static final class VariableReferenceBuilder extends AbstractExpressionValueBuilder<VariableReferenceImpl> {
+
         @Nonnull
         private final ParameterBuilder parameterBuilder;
 
         public VariableReferenceBuilder(
-                @Nonnull VariableReferenceContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode,
-                @Nonnull ParameterBuilder parameterBuilder)
-        {
+            @Nonnull VariableReferenceContext elementContext,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode,
+            @Nonnull ParameterBuilder parameterBuilder
+        ) {
             super(elementContext, macroElement, sourceCode);
             this.parameterBuilder = Objects.requireNonNull(parameterBuilder);
         }
 
         @Override
         @Nonnull
-        protected VariableReferenceImpl buildUnsafe()
-        {
+        protected VariableReferenceImpl buildUnsafe() {
             return new VariableReferenceImpl(
-                    (VariableReferenceContext) this.elementContext,
-                    this.macroElement.map(ElementBuilder::getElement),
-                    this.sourceCode.build(),
-                    this.parameterBuilder.getElement());
+                (VariableReferenceContext) this.elementContext,
+                this.macroElement.map(ElementBuilder::getElement),
+                this.sourceCode.build(),
+                this.parameterBuilder.getElement()
+            );
         }
     }
 }

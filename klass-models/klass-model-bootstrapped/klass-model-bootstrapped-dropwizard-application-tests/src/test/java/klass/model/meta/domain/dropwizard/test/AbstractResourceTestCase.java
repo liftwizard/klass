@@ -34,35 +34,32 @@ import klass.model.meta.domain.dropwizard.application.KlassBootstrappedMetaModel
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public abstract class AbstractResourceTestCase
-        extends AbstractDropwizardAppTest
-{
+public abstract class AbstractResourceTestCase extends AbstractDropwizardAppTest {
+
     @Nonnull
     @Override
-    protected LiftwizardAppExtension<?> getDropwizardAppExtension()
-    {
+    protected LiftwizardAppExtension<?> getDropwizardAppExtension() {
         return new LiftwizardAppExtension<>(
-                KlassBootstrappedMetaModelApplication.class,
-                ResourceHelpers.resourceFilePath("config-test.json5"));
+            KlassBootstrappedMetaModelApplication.class,
+            ResourceHelpers.resourceFilePath("config-test.json5")
+        );
     }
 
-    protected void assertUrlReturns(@Nonnull String testName, @Nonnull String url)
-    {
-        Class<?> klass      = this.getClass();
-        String   clientName = klass.getPackage().getName() + '.' + klass.getSimpleName() + '.' + testName;
-        Client   client     = this.getClient(clientName);
+    protected void assertUrlReturns(@Nonnull String testName, @Nonnull String url) {
+        Class<?> klass = this.getClass();
+        String clientName = klass.getPackage().getName() + '.' + klass.getSimpleName() + '.' + testName;
+        Client client = this.getClient(clientName);
         String resourceClassPathLocation = klass.getSimpleName() + '.' + testName + ".json";
 
         this.assertUrlReturns(client, url, resourceClassPathLocation);
     }
 
-    protected void assertUrlReturns(Client client, @Nonnull String url, String resourceClassPathLocation)
-    {
+    protected void assertUrlReturns(Client client, @Nonnull String url, String resourceClassPathLocation) {
         Response response = client
-                .target("http://localhost:{port}/api/" + url)
-                .resolveTemplate("port", this.appExtension.getLocalPort())
-                .request()
-                .get();
+            .target("http://localhost:{port}/api/" + url)
+            .resolveTemplate("port", this.appExtension.getLocalPort())
+            .request()
+            .get();
 
         this.assertResponseStatus(response, Status.OK);
         String jsonResponse = response.readEntity(String.class);
@@ -70,27 +67,25 @@ public abstract class AbstractResourceTestCase
         this.jsonMatchExtension.assertFileContents(resourceClassPathLocation, jsonResponse);
     }
 
-    protected void assertUrlWrites(@Nonnull String testName, @Nonnull String url)
-    {
-        Class<?> klass      = this.getClass();
-        String   clientName = klass.getPackage().getName() + '.' + klass.getSimpleName() + '.' + testName;
-        Client   client     = this.getClient(clientName);
+    protected void assertUrlWrites(@Nonnull String testName, @Nonnull String url) {
+        Class<?> klass = this.getClass();
+        String clientName = klass.getPackage().getName() + '.' + klass.getSimpleName() + '.' + testName;
+        Client client = this.getClient(clientName);
         String resourceClassPathLocation = klass.getSimpleName() + '.' + testName + ".json";
 
         this.assertUrlWrites(client, url, resourceClassPathLocation);
     }
 
-    protected void assertUrlWrites(Client client, @Nonnull String url, String resourceClassPathLocation)
-    {
+    protected void assertUrlWrites(Client client, @Nonnull String url, String resourceClassPathLocation) {
         InputStream inputStream = this.getClass().getResourceAsStream(resourceClassPathLocation);
         Objects.requireNonNull(inputStream, () -> resourceClassPathLocation + " not found.");
         String expectedStringFromFile = FileSlurper.slurp(inputStream, StandardCharsets.UTF_8);
 
         Response response = client
-                .target("http://localhost:{port}/api/" + url)
-                .resolveTemplate("port", this.appExtension.getLocalPort())
-                .request()
-                .put(Entity.json(expectedStringFromFile));
+            .target("http://localhost:{port}/api/" + url)
+            .resolveTemplate("port", this.appExtension.getLocalPort())
+            .request()
+            .put(Entity.json(expectedStringFromFile));
 
         this.assertResponseStatus(response, Status.OK);
         String jsonResponse = response.readEntity(String.class);

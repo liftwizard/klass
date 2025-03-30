@@ -42,26 +42,19 @@ import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class ReladomoInterfaceFileGenerator
-        extends AbstractReladomoGenerator
-{
-    public ReladomoInterfaceFileGenerator(@Nonnull DomainModel domainModel)
-    {
+public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
+
+    public ReladomoInterfaceFileGenerator(@Nonnull DomainModel domainModel) {
         super(domainModel);
     }
 
-    public void writeObjectFiles(@Nonnull Path outputPath)
-            throws IOException
-    {
-        for (Interface anInterface : this.domainModel.getInterfaces())
-        {
+    public void writeObjectFiles(@Nonnull Path outputPath) throws IOException {
+        for (Interface anInterface : this.domainModel.getInterfaces()) {
             this.writeObjectFile(outputPath, anInterface);
         }
     }
 
-    private void writeObjectFile(@Nonnull Path outputPath, @Nonnull Interface anInterface)
-            throws IOException
-    {
+    private void writeObjectFile(@Nonnull Path outputPath, @Nonnull Interface anInterface) throws IOException {
         var mithraGeneratorMarshaller = new MithraGeneratorMarshaller();
         mithraGeneratorMarshaller.setIndent(true);
         var stringBuilder = new StringBuilder();
@@ -76,18 +69,16 @@ public class ReladomoInterfaceFileGenerator
     }
 
     private void convertAndMarshall(
-            @Nonnull Interface anInterface,
-            @Nonnull MithraGeneratorMarshaller mithraGeneratorMarshaller,
-            StringBuilder stringBuilder)
-            throws IOException
-    {
+        @Nonnull Interface anInterface,
+        @Nonnull MithraGeneratorMarshaller mithraGeneratorMarshaller,
+        StringBuilder stringBuilder
+    ) throws IOException {
         MithraInterface mithraInterface = this.convertToMithraInterface(anInterface);
         mithraGeneratorMarshaller.marshall(stringBuilder, mithraInterface);
     }
 
     @Nonnull
-    private MithraInterface convertToMithraInterface(@Nonnull Interface anInterface)
-    {
+    private MithraInterface convertToMithraInterface(@Nonnull Interface anInterface) {
         MithraInterface mithraInterface = new MithraInterface();
         mithraInterface.setPackageName(anInterface.getPackageName());
         mithraInterface.setClassName(anInterface.getName());
@@ -95,13 +86,15 @@ public class ReladomoInterfaceFileGenerator
         ImmutableList<String> superInterfaceNames = anInterface.getInterfaces().collect(NamedElement::getName);
         mithraInterface.setSuperInterfaces(superInterfaceNames.castToList());
 
-        ImmutableList<AsOfAttributeInterfaceType> asOfAttributeTypes = anInterface.getDataTypeProperties()
-                .select(DataTypeProperty::isTemporalRange)
-                .collect(this::convertToAsOfAttributeType);
+        ImmutableList<AsOfAttributeInterfaceType> asOfAttributeTypes = anInterface
+            .getDataTypeProperties()
+            .select(DataTypeProperty::isTemporalRange)
+            .collect(this::convertToAsOfAttributeType);
 
-        ImmutableList<AttributeInterfaceType> attributeTypes = anInterface.getDataTypeProperties()
-                .reject(DataTypeProperty::isTemporal)
-                .collect(this::convertToAttributeType);
+        ImmutableList<AttributeInterfaceType> attributeTypes = anInterface
+            .getDataTypeProperties()
+            .reject(DataTypeProperty::isTemporal)
+            .collect(this::convertToAttributeType);
 
         // TODO: Test that private properties are not included in Projections
         // TODO: Add foreign keys
@@ -115,56 +108,54 @@ public class ReladomoInterfaceFileGenerator
         return mithraInterface;
     }
 
-    private List<RelationshipInterfaceType> convertRelationships(@Nonnull ImmutableList<AssociationEnd> associationEnds)
-    {
+    private List<RelationshipInterfaceType> convertRelationships(
+        @Nonnull ImmutableList<AssociationEnd> associationEnds
+    ) {
         return associationEnds
-                .select(associationEnd ->
-                        associationEnd == associationEnd.getOwningAssociation().getTargetAssociationEnd())
-                .collectWith(this::convertRelationship, true)
-                .castToList();
+            .select(associationEnd -> associationEnd == associationEnd.getOwningAssociation().getTargetAssociationEnd())
+            .collectWith(this::convertRelationship, true)
+            .castToList();
     }
 
     @Nonnull
-    private RelationshipInterfaceType convertRelationship(@Nonnull AssociationEnd associationEnd, boolean reverse)
-    {
-        AssociationEnd            opposite         = associationEnd.getOpposite();
+    private RelationshipInterfaceType convertRelationship(@Nonnull AssociationEnd associationEnd, boolean reverse) {
+        AssociationEnd opposite = associationEnd.getOpposite();
         RelationshipInterfaceType relationshipType = new RelationshipInterfaceType();
         relationshipType.setName(associationEnd.getName());
         relationshipType.setCardinality(this.getCardinality(associationEnd, opposite));
         relationshipType.setRelatedObject(associationEnd.getType().getName());
-        String relationshipString = this.getRelationshipString(
-                associationEnd.getOwningAssociation().getCriteria(),
-                reverse);
+        String relationshipString =
+            this.getRelationshipString(associationEnd.getOwningAssociation().getCriteria(), reverse);
         relationshipType._setValue(relationshipString);
         return relationshipType;
     }
 
     @Nonnull
-    private String getRelationshipString(@Nonnull Criteria criteria, boolean reverse)
-    {
-        StringBuilder   stringBuilder = new StringBuilder();
-        CriteriaVisitor visitor       = new CriteriaToRelationshipVisitor(stringBuilder, reverse);
+    private String getRelationshipString(@Nonnull Criteria criteria, boolean reverse) {
+        StringBuilder stringBuilder = new StringBuilder();
+        CriteriaVisitor visitor = new CriteriaToRelationshipVisitor(stringBuilder, reverse);
         criteria.visit(visitor);
         return stringBuilder.toString();
     }
 
     @Nonnull
-    private AsOfAttributeInterfaceType convertToAsOfAttributeType(@Nonnull DataTypeProperty dataTypeProperty)
-    {
+    private AsOfAttributeInterfaceType convertToAsOfAttributeType(@Nonnull DataTypeProperty dataTypeProperty) {
         AsOfAttributeInterfaceType asOfAttributeType = new AsOfAttributeInterfaceType();
         this.convertToAsOfAttributeType(dataTypeProperty, asOfAttributeType);
         return asOfAttributeType;
     }
 
     private void convertToAsOfAttributeType(
-            @Nonnull DataTypeProperty dataTypeProperty,
-            @Nonnull AsOfAttributeInterfaceType asOfAttributeType)
-    {
+        @Nonnull DataTypeProperty dataTypeProperty,
+        @Nonnull AsOfAttributeInterfaceType asOfAttributeType
+    ) {
         String propertyName = dataTypeProperty.getName();
 
         asOfAttributeType.setName(propertyName);
         asOfAttributeType.setToIsInclusive(false);
-        asOfAttributeType.setInfinityDate("[com.gs.fw.common.mithra.util.DefaultInfinityTimestamp.getDefaultInfinity()]");
+        asOfAttributeType.setInfinityDate(
+            "[com.gs.fw.common.mithra.util.DefaultInfinityTimestamp.getDefaultInfinity()]"
+        );
         asOfAttributeType.setInfinityIsNull(false);
         // TODO: futureExpiringRowsExist is a de-optimization that allows for future times, and also makes the end dates more understandable. Add a better explanation and allow this to be customizable.
 
@@ -172,46 +163,37 @@ public class ReladomoInterfaceFileGenerator
         timezoneConversion.with("convert-to-utc", asOfAttributeType);
         asOfAttributeType.setTimezoneConversion(timezoneConversion);
 
-        if (dataTypeProperty.isValid())
-        {
+        if (dataTypeProperty.isValid()) {
             asOfAttributeType.setIsProcessingDate(false);
-        }
-        else if (dataTypeProperty.isSystem())
-        {
+        } else if (dataTypeProperty.isSystem()) {
             asOfAttributeType.setIsProcessingDate(true);
-        }
-        else
-        {
+        } else {
             throw new AssertionError(propertyName);
         }
     }
 
     @Nonnull
-    private AttributeInterfaceType convertToAttributeType(@Nonnull DataTypeProperty dataTypeProperty)
-    {
+    private AttributeInterfaceType convertToAttributeType(@Nonnull DataTypeProperty dataTypeProperty) {
         AttributeInterfaceType attributeType = new AttributeInterfaceType();
         this.convertToAttributeType(dataTypeProperty, attributeType);
         return attributeType;
     }
 
     private void convertToAttributeType(
-            @Nonnull DataTypeProperty dataTypeProperty,
-            @Nonnull AttributeInterfaceType attributeType)
-    {
+        @Nonnull DataTypeProperty dataTypeProperty,
+        @Nonnull AttributeInterfaceType attributeType
+    ) {
         String propertyName = dataTypeProperty.getName();
         attributeType.setName(propertyName);
         this.handleType(attributeType, dataTypeProperty);
     }
 
-    private void handleType(@Nonnull AttributeInterfaceType attributeType, DataTypeProperty dataTypeProperty)
-    {
-        if (dataTypeProperty instanceof EnumerationProperty)
-        {
+    private void handleType(@Nonnull AttributeInterfaceType attributeType, DataTypeProperty dataTypeProperty) {
+        if (dataTypeProperty instanceof EnumerationProperty) {
             attributeType.setJavaType("String");
         }
 
-        if (dataTypeProperty instanceof PrimitiveProperty primitiveProperty)
-        {
+        if (dataTypeProperty instanceof PrimitiveProperty primitiveProperty) {
             PrimitiveType primitiveType = primitiveProperty.getType();
             primitiveType.visit(new AttributeInterfaceTypeVisitor(attributeType));
         }

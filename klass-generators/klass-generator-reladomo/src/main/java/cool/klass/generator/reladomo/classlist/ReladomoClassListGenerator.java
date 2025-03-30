@@ -32,15 +32,13 @@ import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.NamedElement;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class ReladomoClassListGenerator extends AbstractReladomoGenerator
-{
-    public ReladomoClassListGenerator(@Nonnull DomainModel domainModel)
-    {
+public class ReladomoClassListGenerator extends AbstractReladomoGenerator {
+
+    public ReladomoClassListGenerator(@Nonnull DomainModel domainModel) {
         super(domainModel);
     }
 
-    public void writeClassListFile(@Nonnull Path path) throws IOException
-    {
+    public void writeClassListFile(@Nonnull Path path) throws IOException {
         MithraGeneratorMarshaller mithraGeneratorMarshaller = new MithraGeneratorMarshaller();
         mithraGeneratorMarshaller.setIndent(true);
 
@@ -54,24 +52,21 @@ public class ReladomoClassListGenerator extends AbstractReladomoGenerator
     }
 
     @Nonnull
-    private Mithra generateMithra()
-    {
-        ImmutableList<MithraObjectResourceType> objectResources = this.domainModel
-                .getClasses()
+    private Mithra generateMithra() {
+        ImmutableList<MithraObjectResourceType> objectResources =
+            this.domainModel.getClasses()
                 .reject(Klass::isTransient)
                 .collect(NamedElement::getName)
                 .collect(this::getObjectResource);
 
-        ImmutableList<MithraPureObjectResourceType> pureObjectResources = this.domainModel
-                .getClasses()
+        ImmutableList<MithraPureObjectResourceType> pureObjectResources =
+            this.domainModel.getClasses()
                 .select(Klass::isTransient)
                 .collect(NamedElement::getName)
                 .collect(this::getPureObjectResource);
 
-        ImmutableList<MithraInterfaceResourceType> interfaceResources = this.domainModel
-                .getInterfaces()
-                .collect(NamedElement::getName)
-                .collect(this::getInterfaceResource);
+        ImmutableList<MithraInterfaceResourceType> interfaceResources =
+            this.domainModel.getInterfaces().collect(NamedElement::getName).collect(this::getInterfaceResource);
 
         Mithra mithra = new Mithra();
         mithra.setMithraObjectResources(objectResources.castToList());
@@ -81,24 +76,21 @@ public class ReladomoClassListGenerator extends AbstractReladomoGenerator
     }
 
     @Nonnull
-    private MithraObjectResourceType getObjectResource(String className)
-    {
+    private MithraObjectResourceType getObjectResource(String className) {
         MithraObjectResourceType objectResource = new MithraObjectResourceType();
         objectResource.setName(className);
         return objectResource;
     }
 
     @Nonnull
-    private MithraPureObjectResourceType getPureObjectResource(String className)
-    {
+    private MithraPureObjectResourceType getPureObjectResource(String className) {
         MithraPureObjectResourceType pureObjectResource = new MithraPureObjectResourceType();
         pureObjectResource.setName(className);
         return pureObjectResource;
     }
 
     @Nonnull
-    private MithraInterfaceResourceType getInterfaceResource(String interfaceName)
-    {
+    private MithraInterfaceResourceType getInterfaceResource(String interfaceName) {
         MithraInterfaceResourceType interfaceResource = new MithraInterfaceResourceType();
         interfaceResource.setName(interfaceName);
         return interfaceResource;

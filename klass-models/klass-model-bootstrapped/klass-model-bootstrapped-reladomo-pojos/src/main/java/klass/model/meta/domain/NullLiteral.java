@@ -16,10 +16,9 @@
 
 package klass.model.meta.domain;
 
-public class NullLiteral extends NullLiteralAbstract
-{
-    public NullLiteral()
-    {
+public class NullLiteral extends NullLiteralAbstract {
+
+    public NullLiteral() {
         // You must not modify this constructor. Mithra calls this internally.
         // You can call this constructor. You can also add new constructors.
     }

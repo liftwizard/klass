@@ -33,30 +33,32 @@ import cool.klass.model.meta.domain.api.property.ParameterizedProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.property.PropertyVisitor;
 
-public class JsonDataTypeValueVisitor implements PropertyVisitor
-{
+public class JsonDataTypeValueVisitor implements PropertyVisitor {
+
     private final JsonNode jsonDataTypeValue;
 
     private Object result;
 
-    public JsonDataTypeValueVisitor(JsonNode jsonDataTypeValue)
-    {
+    public JsonDataTypeValueVisitor(JsonNode jsonDataTypeValue) {
         this.jsonDataTypeValue = Objects.requireNonNull(jsonDataTypeValue);
     }
 
-    public static boolean dataTypePropertyIsNullInJson(@Nonnull DataTypeProperty dataTypeProperty, @Nonnull ObjectNode incomingJson)
-    {
+    public static boolean dataTypePropertyIsNullInJson(
+        @Nonnull DataTypeProperty dataTypeProperty,
+        @Nonnull ObjectNode incomingJson
+    ) {
         JsonNode jsonDataTypeValue = incomingJson.path(dataTypeProperty.getName());
         return jsonDataTypeValue.isMissingNode() || jsonDataTypeValue.isNull();
     }
 
     // TODO: Needs temporal context
     @Nullable
-    public static Object extractDataTypePropertyFromJson(@Nonnull DataTypeProperty dataTypeProperty, @Nonnull ObjectNode incomingJson)
-    {
+    public static Object extractDataTypePropertyFromJson(
+        @Nonnull DataTypeProperty dataTypeProperty,
+        @Nonnull ObjectNode incomingJson
+    ) {
         JsonNode jsonDataTypeValue = incomingJson.path(dataTypeProperty.getName());
-        if (jsonDataTypeValue.isMissingNode() || jsonDataTypeValue.isNull())
-        {
+        if (jsonDataTypeValue.isMissingNode() || jsonDataTypeValue.isNull()) {
             return null;
         }
 
@@ -65,51 +67,48 @@ public class JsonDataTypeValueVisitor implements PropertyVisitor
         return visitor.getResult();
     }
 
-    public Object getResult()
-    {
+    public Object getResult() {
         return this.result;
     }
 
     @Override
-    public void visitPrimitiveProperty(@Nonnull PrimitiveProperty primitiveProperty)
-    {
+    public void visitPrimitiveProperty(@Nonnull PrimitiveProperty primitiveProperty) {
         var visitor = new JsonPrimitiveTypeValueVisitor(this.jsonDataTypeValue);
         primitiveProperty.getType().visit(visitor);
         this.result = visitor.getResult();
     }
 
     @Override
-    public void visitEnumerationProperty(@Nonnull EnumerationProperty enumerationProperty)
-    {
-        if (!this.jsonDataTypeValue.isTextual())
-        {
+    public void visitEnumerationProperty(@Nonnull EnumerationProperty enumerationProperty) {
+        if (!this.jsonDataTypeValue.isTextual()) {
             throw new AssertionError();
         }
         String textValue = this.jsonDataTypeValue.textValue();
-        Optional<EnumerationLiteral> enumerationLiteral = enumerationProperty.getType()
-                .getEnumerationLiterals()
-                .detectOptional(each -> each.getPrettyName().equals(textValue));
+        Optional<EnumerationLiteral> enumerationLiteral = enumerationProperty
+            .getType()
+            .getEnumerationLiterals()
+            .detectOptional(each -> each.getPrettyName().equals(textValue));
         this.result = enumerationLiteral.get();
     }
 
     @Override
-    public void visitAssociationEndSignature(AssociationEndSignature associationEndSignature)
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".visitAssociationEndSignature() not implemented yet");
+    public void visitAssociationEndSignature(AssociationEndSignature associationEndSignature) {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".visitAssociationEndSignature() not implemented yet"
+        );
     }
 
     @Override
-    public void visitAssociationEnd(@Nonnull AssociationEnd associationEnd)
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".visitAssociationEnd() not implemented yet");
+    public void visitAssociationEnd(@Nonnull AssociationEnd associationEnd) {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".visitAssociationEnd() not implemented yet"
+        );
     }
 
     @Override
-    public void visitParameterizedProperty(@Nonnull ParameterizedProperty parameterizedProperty)
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".visitParameterizedProperty() not implemented yet");
+    public void visitParameterizedProperty(@Nonnull ParameterizedProperty parameterizedProperty) {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".visitParameterizedProperty() not implemented yet"
+        );
     }
 }

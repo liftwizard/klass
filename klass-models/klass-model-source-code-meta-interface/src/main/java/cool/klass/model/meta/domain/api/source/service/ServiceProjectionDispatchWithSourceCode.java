@@ -23,9 +23,7 @@ import cool.klass.model.meta.domain.api.source.ElementWithSourceCode;
 import cool.klass.model.meta.domain.api.source.projection.ProjectionWithSourceCode;
 import cool.klass.model.meta.grammar.KlassParser.ServiceProjectionDispatchContext;
 
-public interface ServiceProjectionDispatchWithSourceCode
-        extends ServiceProjectionDispatch, ElementWithSourceCode
-{
+public interface ServiceProjectionDispatchWithSourceCode extends ServiceProjectionDispatch, ElementWithSourceCode {
     @Override
     ServiceProjectionDispatchContext getElementContext();
 

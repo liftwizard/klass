@@ -35,89 +35,87 @@ import cool.klass.model.meta.domain.api.value.literal.StringLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.UserLiteral;
 import org.eclipse.collections.api.map.ImmutableMap;
 
-public class BootstrapExpressionValueVisitor3
-        implements ExpressionValueVisitor
-{
-    private final ImmutableMap<ExpressionValue, klass.model.meta.domain.ExpressionValue> expressionValuesByExpressionValue;
+public class BootstrapExpressionValueVisitor3 implements ExpressionValueVisitor {
+
+    private final ImmutableMap<
+        ExpressionValue,
+        klass.model.meta.domain.ExpressionValue
+    > expressionValuesByExpressionValue;
     private final ImmutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter;
 
     public BootstrapExpressionValueVisitor3(
-            ImmutableMap<ExpressionValue, klass.model.meta.domain.ExpressionValue> expressionValuesByExpressionValue,
-            ImmutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter)
-    {
+        ImmutableMap<ExpressionValue, klass.model.meta.domain.ExpressionValue> expressionValuesByExpressionValue,
+        ImmutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter
+    ) {
         this.expressionValuesByExpressionValue = Objects.requireNonNull(expressionValuesByExpressionValue);
         this.bootstrappedParametersByParameter = bootstrappedParametersByParameter;
     }
 
     @Override
-    public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue)
-    {
-    }
+    public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue) {}
 
     @Override
-    public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue)
-    {
-    }
+    public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue) {}
 
     @Override
-    public void visitVariableReference(@Nonnull VariableReference variableReference)
-    {
+    public void visitVariableReference(@Nonnull VariableReference variableReference) {
         var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(variableReference);
 
         var bootstrappedVariableReference = new klass.model.meta.domain.VariableReference();
         bootstrappedVariableReference.setId(bootstrappedExpressionValue.getId());
         bootstrappedVariableReference.insert();
 
-        klass.model.meta.domain.Parameter parameter = this.bootstrappedParametersByParameter.get(variableReference.getParameter());
+        klass.model.meta.domain.Parameter parameter =
+            this.bootstrappedParametersByParameter.get(variableReference.getParameter());
         bootstrappedVariableReference.setParameterId(parameter.getId());
     }
 
     @Override
-    public void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue)
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".visitBooleanLiteral() not implemented yet");
+    public void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue) {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".visitBooleanLiteral() not implemented yet"
+        );
     }
 
     @Override
-    public void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue)
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".visitIntegerLiteral() not implemented yet");
+    public void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue) {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".visitIntegerLiteral() not implemented yet"
+        );
     }
 
     @Override
-    public void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue)
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".visitFloatingPointLiteral() not implemented yet");
+    public void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue) {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".visitFloatingPointLiteral() not implemented yet"
+        );
     }
 
     @Override
-    public void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue)
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".visitStringLiteral() not implemented yet");
+    public void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue) {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".visitStringLiteral() not implemented yet"
+        );
     }
 
     @Override
-    public void visitLiteralList(@Nonnull LiteralListValue literalListValue)
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".visitLiteralList() not implemented yet");
+    public void visitLiteralList(@Nonnull LiteralListValue literalListValue) {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".visitLiteralList() not implemented yet"
+        );
     }
 
     @Override
-    public void visitUserLiteral(@Nonnull UserLiteral userLiteral)
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".visitUserLiteral() not implemented yet");
+    public void visitUserLiteral(@Nonnull UserLiteral userLiteral) {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".visitUserLiteral() not implemented yet"
+        );
     }
 
     @Override
-    public void visitNullLiteral(@Nonnull NullLiteral nullLiteral)
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".visitNullLiteral() not implemented yet");
+    public void visitNullLiteral(@Nonnull NullLiteral nullLiteral) {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".visitNullLiteral() not implemented yet"
+        );
     }
 }

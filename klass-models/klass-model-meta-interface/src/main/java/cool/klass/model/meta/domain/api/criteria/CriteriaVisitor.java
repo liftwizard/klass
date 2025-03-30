@@ -18,8 +18,7 @@ package cool.klass.model.meta.domain.api.criteria;
 
 import javax.annotation.Nonnull;
 
-public interface CriteriaVisitor
-{
+public interface CriteriaVisitor {
     void visitAll(@Nonnull AllCriteria allCriteria);
 
     void visitAnd(@Nonnull AndCriteria andCriteria);

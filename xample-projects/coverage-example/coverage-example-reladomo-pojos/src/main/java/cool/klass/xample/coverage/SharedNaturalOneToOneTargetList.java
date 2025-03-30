@@ -20,24 +20,19 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class SharedNaturalOneToOneTargetList extends SharedNaturalOneToOneTargetListAbstract
-{
-    public SharedNaturalOneToOneTargetList()
-    {
-    }
+public class SharedNaturalOneToOneTargetList extends SharedNaturalOneToOneTargetListAbstract {
 
-    public SharedNaturalOneToOneTargetList(int initialSize)
-    {
+    public SharedNaturalOneToOneTargetList() {}
+
+    public SharedNaturalOneToOneTargetList(int initialSize) {
         super(initialSize);
     }
 
-    public SharedNaturalOneToOneTargetList(Collection c)
-    {
+    public SharedNaturalOneToOneTargetList(Collection c) {
         super(c);
     }
 
-    public SharedNaturalOneToOneTargetList(Operation operation)
-    {
+    public SharedNaturalOneToOneTargetList(Operation operation) {
         super(operation);
     }
 }

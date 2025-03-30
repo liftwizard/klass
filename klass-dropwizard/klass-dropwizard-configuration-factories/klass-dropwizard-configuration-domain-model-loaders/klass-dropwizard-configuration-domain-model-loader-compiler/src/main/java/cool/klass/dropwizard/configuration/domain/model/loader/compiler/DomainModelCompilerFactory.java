@@ -42,9 +42,8 @@ import org.slf4j.LoggerFactory;
 
 @JsonTypeName("compiler")
 @AutoService(DomainModelFactory.class)
-public class DomainModelCompilerFactory
-        implements DomainModelFactory
-{
+public class DomainModelCompilerFactory implements DomainModelFactory {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(DomainModelCompilerFactory.class);
 
     @NotEmpty
@@ -57,10 +56,8 @@ public class DomainModelCompilerFactory
 
     @Nonnull
     @Override
-    public DomainModelWithSourceCode createDomainModel(ObjectMapper objectMapper)
-    {
-        if (this.domainModel != null)
-        {
+    public DomainModelWithSourceCode createDomainModel(ObjectMapper objectMapper) {
+        if (this.domainModel != null) {
             return this.domainModel;
         }
         ImmutableList<String> klassSourcePackagesImmutable = Lists.immutable.withAll(this.sourcePackages);
@@ -69,50 +66,44 @@ public class DomainModelCompilerFactory
 
         // TODO: We should use an abstract DomainModelFactory here, not necessarily the compiler.
         var domainModelLoader = new DomainModelCompilerLoader(
-                klassSourcePackagesImmutable,
-                Thread.currentThread().getContextClassLoader(),
-                DomainModelCompilerLoader::logCompilerAnnotation,
-                ansiColorScheme);
+            klassSourcePackagesImmutable,
+            Thread.currentThread().getContextClassLoader(),
+            DomainModelCompilerLoader::logCompilerAnnotation,
+            ansiColorScheme
+        );
         this.domainModel = domainModelLoader.load();
         return this.domainModel;
     }
 
     @JsonProperty
-    public List<String> getSourcePackages()
-    {
+    public List<String> getSourcePackages() {
         return Lists.mutable.withAll(this.sourcePackages);
     }
 
     @JsonProperty
-    public void setSourcePackages(List<String> sourcePackages)
-    {
+    public void setSourcePackages(List<String> sourcePackages) {
         this.sourcePackages = sourcePackages;
     }
 
     @JsonProperty
-    public String getColorScheme()
-    {
+    public String getColorScheme() {
         return this.colorScheme;
     }
 
     @JsonProperty
-    public void setColorScheme(String colorScheme)
-    {
+    public void setColorScheme(String colorScheme) {
         this.colorScheme = colorScheme;
     }
 
     @ValidationMethod(message = "Invalid color scheme. Valid options include 'dark', 'light', 'dark-cube', 'dark-rgb'.")
     @JsonIgnore
-    public boolean isColorSchemeValid()
-    {
-        if (this.colorScheme == null)
-        {
+    public boolean isColorSchemeValid() {
+        if (this.colorScheme == null) {
             return false;
         }
 
         boolean exists = ColorSchemeProvider.existsByName(this.colorScheme);
-        if (!exists)
-        {
+        if (!exists) {
             LOGGER.warn("Invalid color scheme '{}': color scheme not found", this.colorScheme);
         }
         return exists;

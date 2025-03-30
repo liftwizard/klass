@@ -27,44 +27,40 @@ import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaAllContext;
 
-public final class AllCriteriaImpl
-        extends AbstractCriteria
-        implements AllCriteria
-{
+public final class AllCriteriaImpl extends AbstractCriteria implements AllCriteria {
+
     public AllCriteriaImpl(
-            @Nonnull CriteriaAllContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode)
-    {
+        @Nonnull CriteriaAllContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode
+    ) {
         super(elementContext, macroElement, sourceCode);
     }
 
     @Nonnull
     @Override
-    public CriteriaAllContext getElementContext()
-    {
+    public CriteriaAllContext getElementContext() {
         return (CriteriaAllContext) super.getElementContext();
     }
 
-    public static final class AllCriteriaBuilder
-            extends AbstractCriteriaBuilder<AllCriteriaImpl>
-    {
+    public static final class AllCriteriaBuilder extends AbstractCriteriaBuilder<AllCriteriaImpl> {
+
         public AllCriteriaBuilder(
-                @Nonnull CriteriaAllContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode)
-        {
+            @Nonnull CriteriaAllContext elementContext,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode
+        ) {
             super(elementContext, macroElement, sourceCode);
         }
 
         @Nonnull
         @Override
-        protected AllCriteriaImpl buildUnsafe()
-        {
+        protected AllCriteriaImpl buildUnsafe() {
             return new AllCriteriaImpl(
-                    (CriteriaAllContext) this.elementContext,
-                    this.macroElement.map(ElementBuilder::getElement),
-                    this.sourceCode.build());
+                (CriteriaAllContext) this.elementContext,
+                this.macroElement.map(ElementBuilder::getElement),
+                this.sourceCode.build()
+            );
         }
     }
 }
