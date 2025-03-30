@@ -16,6 +16,4 @@
 
 package cool.klass.xample.coverage;
 
-public class EveryTypeKeyPropertyDatabaseObject extends EveryTypeKeyPropertyDatabaseObjectAbstract
-{
-}
+public class EveryTypeKeyPropertyDatabaseObject extends EveryTypeKeyPropertyDatabaseObjectAbstract {}

@@ -31,59 +31,53 @@ import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.tuple.Pair;
 
-public class AntlrServiceCriteria
-        extends AntlrElement
-{
+public class AntlrServiceCriteria extends AntlrElement {
+
     @Nonnull
-    private final String       serviceCriteriaKeyword;
+    private final String serviceCriteriaKeyword;
+
     @Nonnull
     private final AntlrService service;
 
     private AntlrCriteria antlrCriteria;
 
     public AntlrServiceCriteria(
-            @Nonnull ServiceCriteriaDeclarationContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            @Nonnull String serviceCriteriaKeyword,
-            @Nonnull AntlrService service)
-    {
+        @Nonnull ServiceCriteriaDeclarationContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        @Nonnull String serviceCriteriaKeyword,
+        @Nonnull AntlrService service
+    ) {
         super(elementContext, compilationUnit);
         this.serviceCriteriaKeyword = Objects.requireNonNull(serviceCriteriaKeyword);
-        this.service                = Objects.requireNonNull(service);
+        this.service = Objects.requireNonNull(service);
     }
 
     @Nonnull
     @Override
-    public Optional<IAntlrElement> getSurroundingElement()
-    {
+    public Optional<IAntlrElement> getSurroundingElement() {
         return Optional.of(this.service);
     }
 
     @Override
-    public boolean isContext()
-    {
+    public boolean isContext() {
         return true;
     }
 
     @Override
-    public Pair<Token, Token> getContextBefore()
-    {
+    public Pair<Token, Token> getContextBefore() {
         return this.getEntireContext();
     }
 
     @Nonnull
-    public AntlrCriteria getCriteria()
-    {
+    public AntlrCriteria getCriteria() {
         return Objects.requireNonNull(this.antlrCriteria);
     }
 
-    public void setCriteria(@Nonnull AntlrCriteria antlrCriteria)
-    {
+    public void setCriteria(@Nonnull AntlrCriteria antlrCriteria) {
         this.antlrCriteria = Objects.requireNonNull(antlrCriteria);
     }
 
-    public void reportDuplicateKeyword(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
-    {
+    public void reportDuplicateKeyword(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         // TODO: Test coverage of duplicate service criteria
         String message = String.format("Duplicate service criteria: '%s'.", this.serviceCriteriaKeyword);
         compilerAnnotationHolder.add("ERR_DUP_CRI", message, this.antlrCriteria, this.getElementContext());
@@ -91,33 +85,27 @@ public class AntlrServiceCriteria
 
     @Nonnull
     @Override
-    public ServiceCriteriaDeclarationContext getElementContext()
-    {
+    public ServiceCriteriaDeclarationContext getElementContext() {
         return (ServiceCriteriaDeclarationContext) super.getElementContext();
     }
 
     @Nonnull
-    public String getServiceCriteriaKeyword()
-    {
+    public String getServiceCriteriaKeyword() {
         return this.serviceCriteriaKeyword;
     }
 
     public void reportAllowedCriteriaTypes(
-            @Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
-            @Nonnull ImmutableList<String> allowedCriteriaTypes)
-    {
-        if (!allowedCriteriaTypes.contains(this.serviceCriteriaKeyword))
-        {
+        @Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
+        @Nonnull ImmutableList<String> allowedCriteriaTypes
+    ) {
+        if (!allowedCriteriaTypes.contains(this.serviceCriteriaKeyword)) {
             String error = String.format(
-                    "Criteria '%s' not allowed for verb '%s'. Must be one of %s.",
-                    this.serviceCriteriaKeyword,
-                    this.service.getVerb().getVerb(),
-                    allowedCriteriaTypes);
-            compilerAnnotationHolder.add(
-                    "ERR_VRB_CRT",
-                    error,
-                    this,
-                    this.getElementContext().serviceCriteriaKeyword());
+                "Criteria '%s' not allowed for verb '%s'. Must be one of %s.",
+                this.serviceCriteriaKeyword,
+                this.service.getVerb().getVerb(),
+                allowedCriteriaTypes
+            );
+            compilerAnnotationHolder.add("ERR_VRB_CRT", error, this, this.getElementContext().serviceCriteriaKeyword());
         }
     }
 }

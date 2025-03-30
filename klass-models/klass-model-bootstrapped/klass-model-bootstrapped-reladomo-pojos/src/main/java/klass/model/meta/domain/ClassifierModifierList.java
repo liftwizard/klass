@@ -20,24 +20,19 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class ClassifierModifierList extends ClassifierModifierListAbstract
-{
-    public ClassifierModifierList()
-    {
-    }
+public class ClassifierModifierList extends ClassifierModifierListAbstract {
 
-    public ClassifierModifierList(int initialSize)
-    {
+    public ClassifierModifierList() {}
+
+    public ClassifierModifierList(int initialSize) {
         super(initialSize);
     }
 
-    public ClassifierModifierList(Collection c)
-    {
+    public ClassifierModifierList(Collection c) {
         super(c);
     }
 
-    public ClassifierModifierList(Operation operation)
-    {
+    public ClassifierModifierList(Operation operation) {
         super(operation);
     }
 }

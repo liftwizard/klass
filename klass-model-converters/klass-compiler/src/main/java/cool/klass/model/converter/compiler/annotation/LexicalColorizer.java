@@ -23,24 +23,20 @@ import org.antlr.v4.runtime.Token;
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.Ansi.Color;
 
-public final class LexicalColorizer
-{
-    private LexicalColorizer()
-    {
+public final class LexicalColorizer {
+
+    private LexicalColorizer() {
         throw new AssertionError("Suppress default constructor for noninstantiability");
     }
 
-    public static String colorize(@Nonnull Token token)
-    {
+    public static String colorize(@Nonnull Token token) {
         String text = token.getText();
 
-        if (token.getChannel() == KlassLexer.WHITESPACE_CHANNEL)
-        {
+        if (token.getChannel() == KlassLexer.WHITESPACE_CHANNEL) {
             return text;
         }
 
-        switch (token.getType())
-        {
+        switch (token.getType()) {
             case KlassLexer.MODIFIER_CLASSIFIER_SYSTEM_TEMPORAL:
             case KlassLexer.MODIFIER_CLASSIFIER_VALID_TEMPORAL:
             case KlassLexer.MODIFIER_CLASSIFIER_BITEMPORAL:
@@ -56,19 +52,16 @@ public final class LexicalColorizer
             case KlassLexer.MODIFIER_PROPERTY_CREATED_BY:
             case KlassLexer.MODIFIER_PROPERTY_CREATED_ON:
             case KlassLexer.MODIFIER_PROPERTY_LAST_UPDATED_BY:
-            case KlassLexer.MODIFIER_PROPERTY_DERIVED:
-            {
+            case KlassLexer.MODIFIER_PROPERTY_DERIVED: {
                 return getStringBright(text, Color.GREEN);
             }
             case KlassLexer.MODIFIER_ASSOCIATION_END_OWNED:
-            case KlassLexer.MODIFIER_ASSOCIATION_END_FINAL:
-            {
+            case KlassLexer.MODIFIER_ASSOCIATION_END_FINAL: {
                 return getStringBright(text, Color.GREEN);
             }
             case KlassLexer.MODIFIER_VERSION:
             case KlassLexer.MODIFIER_USER_ID:
-            case KlassLexer.MODIFIER_ID:
-            {
+            case KlassLexer.MODIFIER_ID: {
                 return getStringBright(text, Color.GREEN);
             }
             case KlassLexer.VALIDATION_MIN_LENGTH:
@@ -78,8 +71,7 @@ public final class LexicalColorizer
             case KlassLexer.VALIDATION_MIN:
             case KlassLexer.VALIDATION_MINIMUM:
             case KlassLexer.VALIDATION_MAX:
-            case KlassLexer.VALIDATION_MAXIMUM:
-            {
+            case KlassLexer.VALIDATION_MAXIMUM: {
                 return getStringBright(text, Color.GREEN);
             }
             // Keywords
@@ -89,8 +81,7 @@ public final class LexicalColorizer
             case KlassLexer.KEYWORD_CLASS:
             case KlassLexer.KEYWORD_ASSOCIATION:
             case KlassLexer.KEYWORD_PROJECTION:
-            case KlassLexer.KEYWORD_SERVICE:
-            {
+            case KlassLexer.KEYWORD_SERVICE: {
                 return getStringDim(text, Color.MAGENTA);
             }
             case KlassLexer.KEYWORD_USER:
@@ -105,13 +96,11 @@ public final class LexicalColorizer
             case KlassLexer.KEYWORD_IMPLEMENTS:
             case KlassLexer.KEYWORD_TABLE_PER_CLASS:
             case KlassLexer.KEYWORD_TABLE_PER_SUBCLASS:
-            case KlassLexer.KEYWORD_TABLE_FOR_ALL_SUBCLASSES:
-            {
+            case KlassLexer.KEYWORD_TABLE_FOR_ALL_SUBCLASSES: {
                 return getStringBright(text, Color.MAGENTA);
             }
             case KlassLexer.LITERAL_NULL:
-            case KlassLexer.LITERAL_THIS:
-            {
+            case KlassLexer.LITERAL_THIS: {
                 return getStringBright(text, Color.GREEN);
             }
             // Primitives
@@ -124,8 +113,7 @@ public final class LexicalColorizer
             case KlassLexer.PRIMITIVE_TYPE_INSTANT:
             case KlassLexer.PRIMITIVE_TYPE_LOCAL_DATE:
             case KlassLexer.PRIMITIVE_TYPE_TEMPORAL_INSTANT:
-            case KlassLexer.PRIMITIVE_TYPE_TEMPORAL_RANGE:
-            {
+            case KlassLexer.PRIMITIVE_TYPE_TEMPORAL_RANGE: {
                 return getStringBright(text, Color.MAGENTA);
             }
             // Literals
@@ -134,12 +122,10 @@ public final class LexicalColorizer
             case KlassLexer.BooleanLiteral:
             case KlassLexer.CharacterLiteral:
             case KlassLexer.FloatingPointLiteral:
-            case KlassLexer.PUNCTUATION_ASTERISK:
-            {
+            case KlassLexer.PUNCTUATION_ASTERISK: {
                 return getStringBright(text, Color.BLUE);
             }
-            case KlassLexer.Identifier:
-            {
+            case KlassLexer.Identifier: {
                 return getStringBright(text, Color.DEFAULT);
             }
             case KlassLexer.PUNCTUATION_LPAREN:
@@ -154,13 +140,11 @@ public final class LexicalColorizer
             case KlassLexer.PUNCTUATION_DOT:
             case KlassLexer.PUNCTUATION_DOTDOT:
             case KlassLexer.PUNCTUATION_SLASH:
-            case KlassLexer.PUNCTUATION_QUESTION:
-            {
+            case KlassLexer.PUNCTUATION_QUESTION: {
                 return getStringDim(text, Color.CYAN);
             }
             // Operators
-            case KlassLexer.OPERATOR_EQ:
-            {
+            case KlassLexer.OPERATOR_EQ: {
                 return getStringDim(text, Color.MAGENTA);
             }
             // Verbs
@@ -168,24 +152,20 @@ public final class LexicalColorizer
             case KlassLexer.VERB_POST:
             case KlassLexer.VERB_PUT:
             case KlassLexer.VERB_PATCH:
-            case KlassLexer.VERB_DELETE:
-            {
+            case KlassLexer.VERB_DELETE: {
                 return getStringBright(text, Color.GREEN);
             }
-            default:
-            {
+            default: {
                 return getStringBright(text, Color.RED);
             }
         }
     }
 
-    private static String getStringBright(String text, @Nonnull Color color)
-    {
+    private static String getStringBright(String text, @Nonnull Color color) {
         return Ansi.ansi().fg(color).a(text).toString();
     }
 
-    private static String getStringDim(String text, @Nonnull Color color)
-    {
+    private static String getStringDim(String text, @Nonnull Color color) {
         return Ansi.ansi().fg(color).a(text).toString();
     }
 }

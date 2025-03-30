@@ -20,25 +20,19 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class NamedProjectionList
-        extends NamedProjectionListAbstract
-{
-    public NamedProjectionList()
-    {
-    }
+public class NamedProjectionList extends NamedProjectionListAbstract {
 
-    public NamedProjectionList(int initialSize)
-    {
+    public NamedProjectionList() {}
+
+    public NamedProjectionList(int initialSize) {
         super(initialSize);
     }
 
-    public NamedProjectionList(Collection c)
-    {
+    public NamedProjectionList(Collection c) {
         super(c);
     }
 
-    public NamedProjectionList(Operation operation)
-    {
+    public NamedProjectionList(Operation operation) {
         super(operation);
     }
 }

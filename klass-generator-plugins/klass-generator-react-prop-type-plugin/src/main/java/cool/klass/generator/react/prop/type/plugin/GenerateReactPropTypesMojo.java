@@ -29,20 +29,21 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-        name = "generate-react-prop-types",
-        defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-        threadSafe = true,
-        requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class GenerateReactPropTypesMojo extends AbstractGenerateMojo
-{
+    name = "generate-react-prop-types",
+    defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+    threadSafe = true,
+    requiresDependencyResolution = ResolutionScope.RUNTIME
+)
+public class GenerateReactPropTypesMojo extends AbstractGenerateMojo {
+
     @Parameter(
-            property = "outputDirectory",
-            defaultValue = "${project.build.directory}/generated-resources/react-prop-types")
+        property = "outputDirectory",
+        defaultValue = "${project.build.directory}/generated-resources/react-prop-types"
+    )
     private File outputDirectory;
 
     @Override
-    public void execute() throws MojoExecutionException
-    {
+    public void execute() throws MojoExecutionException {
         DomainModel domainModel = this.getDomainModel();
         ReactPropTypeGenerator propTypeGenerator = new ReactPropTypeGenerator(domainModel);
         propTypeGenerator.writePropTypes(this.outputDirectory.toPath());

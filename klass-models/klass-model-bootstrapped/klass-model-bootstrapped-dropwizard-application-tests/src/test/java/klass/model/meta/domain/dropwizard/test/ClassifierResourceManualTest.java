@@ -18,12 +18,10 @@ package klass.model.meta.domain.dropwizard.test;
 
 import org.junit.jupiter.api.Test;
 
-class ClassifierResourceManualTest
-        extends AbstractResourceTestCase
-{
+class ClassifierResourceManualTest extends AbstractResourceTestCase {
+
     @Test
-    void getAllMeta()
-    {
+    void getAllMeta() {
         this.assertUrlReturns("getAllMeta", "/meta/classifier");
     }
 }

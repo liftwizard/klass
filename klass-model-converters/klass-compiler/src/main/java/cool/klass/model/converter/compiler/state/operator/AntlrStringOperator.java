@@ -28,51 +28,47 @@ import cool.klass.model.meta.domain.operator.StringOperatorImpl.StringOperatorBu
 import cool.klass.model.meta.grammar.KlassParser.StringOperatorContext;
 import org.eclipse.collections.api.list.ListIterable;
 
-public class AntlrStringOperator
-        extends AntlrOperator
-{
+public class AntlrStringOperator extends AntlrOperator {
+
     private StringOperatorBuilder elementBuilder;
 
     public AntlrStringOperator(
-            @Nonnull StringOperatorContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            @Nonnull String operatorText)
-    {
+        @Nonnull StringOperatorContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        @Nonnull String operatorText
+    ) {
         super(elementContext, compilationUnit, operatorText);
     }
 
     @Nonnull
     @Override
-    public StringOperatorBuilder build()
-    {
-        if (this.elementBuilder != null)
-        {
+    public StringOperatorBuilder build() {
+        if (this.elementBuilder != null) {
             throw new IllegalStateException();
         }
         this.elementBuilder = new StringOperatorBuilder(
-                (StringOperatorContext) this.elementContext,
-                this.getMacroElementBuilder(),
-                this.getSourceCodeBuilder(),
-                this.operatorText);
+            (StringOperatorContext) this.elementContext,
+            this.getMacroElementBuilder(),
+            this.getSourceCodeBuilder(),
+            this.operatorText
+        );
 
         return this.elementBuilder;
     }
 
     @Nonnull
     @Override
-    public StringOperatorBuilder getElementBuilder()
-    {
+    public StringOperatorBuilder getElementBuilder() {
         return Objects.requireNonNull(this.elementBuilder);
     }
 
     @Override
     public void checkTypes(
-            CompilerAnnotationHolder compilerAnnotationHolder,
-            @Nonnull ListIterable<AntlrType> sourceTypes,
-            ListIterable<AntlrType> targetTypes)
-    {
-        if (sourceTypes.equals(targetTypes))
-        {
+        CompilerAnnotationHolder compilerAnnotationHolder,
+        @Nonnull ListIterable<AntlrType> sourceTypes,
+        ListIterable<AntlrType> targetTypes
+    ) {
+        if (sourceTypes.equals(targetTypes)) {
             return;
         }
 

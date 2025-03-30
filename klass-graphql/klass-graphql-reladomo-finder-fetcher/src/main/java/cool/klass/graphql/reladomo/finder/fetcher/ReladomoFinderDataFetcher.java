@@ -41,74 +41,59 @@ import io.liftwizard.reladomo.graphql.operation.GraphQLQueryToOperationConverter
 import io.liftwizard.reladomo.graphql.operation.LiftwizardGraphQLContextException;
 import io.liftwizard.reladomo.graphql.orderby.GraphQLQueryToOrderByConverter;
 
-public class ReladomoFinderDataFetcher<T>
-        implements DataFetcher<List<T>>
-{
-    private final DomainModel                          domainModel;
-    private final ReladomoDataStore                    dataStore;
+public class ReladomoFinderDataFetcher<T> implements DataFetcher<List<T>> {
+
+    private final DomainModel domainModel;
+    private final ReladomoDataStore dataStore;
     private final AbstractRelatedFinder<T, ?, ?, ?, ?> finder;
 
     public ReladomoFinderDataFetcher(
-            DomainModel domainModel,
-            ReladomoDataStore dataStore,
-            AbstractRelatedFinder<T, ?, ?, ?, ?> finder)
-    {
+        DomainModel domainModel,
+        ReladomoDataStore dataStore,
+        AbstractRelatedFinder<T, ?, ?, ?, ?> finder
+    ) {
         this.domainModel = Objects.requireNonNull(domainModel);
-        this.dataStore   = Objects.requireNonNull(dataStore);
-        this.finder      = Objects.requireNonNull(finder);
+        this.dataStore = Objects.requireNonNull(dataStore);
+        this.finder = Objects.requireNonNull(finder);
     }
 
     @Timed
     @Metered
     @ExceptionMetered
     @Override
-    public List<T> get(DataFetchingEnvironment environment)
-    {
-        Map<String, Object> arguments      = environment.getArguments();
-        Object              inputOperation = arguments.get("operation");
-        Operation           operation      = this.getOperation((Map<?, ?>) inputOperation);
-        Object              inputOrderBy   = arguments.get("orderBy");
-        Optional<OrderBy>   orderBys       = this.getOrderBys((List<Map<String, ?>>) inputOrderBy);
-        DomainList<T>       result         = (DomainList<T>) this.finder.findMany(operation);
+    public List<T> get(DataFetchingEnvironment environment) {
+        Map<String, Object> arguments = environment.getArguments();
+        Object inputOperation = arguments.get("operation");
+        Operation operation = this.getOperation((Map<?, ?>) inputOperation);
+        Object inputOrderBy = arguments.get("orderBy");
+        Optional<OrderBy> orderBys = this.getOrderBys((List<Map<String, ?>>) inputOrderBy);
+        DomainList<T> result = (DomainList<T>) this.finder.findMany(operation);
         orderBys.ifPresent(result::setOrderBy);
 
-        Klass klass                = this.domainModel.getClassByName("Enumeration");
-        var   treeGraphqlConverter = new ReladomoTreeGraphqlConverter(this.domainModel);
+        Klass klass = this.domainModel.getClassByName("Enumeration");
+        var treeGraphqlConverter = new ReladomoTreeGraphqlConverter(this.domainModel);
 
-        var deepFetcher = new ReladomoTreeNodeDeepFetcherListener(
-                this.dataStore,
-                (DomainList) result,
-                klass);
-        RootReladomoTreeNode rootReladomoTreeNode = treeGraphqlConverter.convert(
-                klass,
-                environment.getSelectionSet());
+        var deepFetcher = new ReladomoTreeNodeDeepFetcherListener(this.dataStore, (DomainList) result, klass);
+        RootReladomoTreeNode rootReladomoTreeNode = treeGraphqlConverter.convert(klass, environment.getSelectionSet());
 
         deepFetcher.enterRoot(rootReladomoTreeNode);
 
         return result;
     }
 
-    public Operation getOperation(Map<?, ?> inputOperation)
-    {
-        try
-        {
+    public Operation getOperation(Map<?, ?> inputOperation) {
+        try {
             var converter = new GraphQLQueryToOperationConverter();
             return converter.convert(this.finder, inputOperation);
-        }
-        catch (LiftwizardGraphQLContextException e)
-        {
+        } catch (LiftwizardGraphQLContextException e) {
             throw new LiftwizardGraphQLException(e.getMessage(), e.getContext(), e);
         }
     }
 
-    public Optional<OrderBy> getOrderBys(List<Map<String, ?>> inputOrderBy)
-    {
-        try
-        {
+    public Optional<OrderBy> getOrderBys(List<Map<String, ?>> inputOrderBy) {
+        try {
             return GraphQLQueryToOrderByConverter.convertOrderByList(this.finder, inputOrderBy);
-        }
-        catch (LiftwizardGraphQLContextException e)
-        {
+        } catch (LiftwizardGraphQLContextException e) {
             throw new LiftwizardGraphQLException(e.getMessage(), e.getContext(), e);
         }
     }

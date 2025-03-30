@@ -18,7 +18,6 @@ package cool.klass.model.converter.compiler.state.order;
 
 import javax.annotation.Nonnull;
 
-public interface AntlrOrderByVisitor
-{
+public interface AntlrOrderByVisitor {
     void visit(@Nonnull AntlrOrderBy orderBy);
 }

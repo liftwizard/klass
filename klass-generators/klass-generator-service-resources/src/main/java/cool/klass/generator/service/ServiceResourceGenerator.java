@@ -60,93 +60,85 @@ import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.tuple.primitive.ObjectBooleanPair;
 import org.eclipse.collections.impl.tuple.primitive.PrimitiveTuples;
 
-public class ServiceResourceGenerator
-{
-    private static final Converter<String, String> UPPER_TO_LOWER_CAMEL =
-            CaseFormat.UPPER_CAMEL.converterTo(CaseFormat.LOWER_CAMEL);
+public class ServiceResourceGenerator {
+
+    private static final Converter<String, String> UPPER_TO_LOWER_CAMEL = CaseFormat.UPPER_CAMEL.converterTo(
+        CaseFormat.LOWER_CAMEL
+    );
 
     @Nonnull
     private final DomainModel domainModel;
+
     @Nonnull
-    private final String      applicationName;
+    private final String applicationName;
+
     @Nonnull
-    private final String      rootPackageName;
+    private final String rootPackageName;
 
     public ServiceResourceGenerator(
-            @Nonnull DomainModel domainModel,
-            @Nonnull String applicationName,
-            @Nonnull String rootPackageName)
-    {
-        this.domainModel     = Objects.requireNonNull(domainModel);
+        @Nonnull DomainModel domainModel,
+        @Nonnull String applicationName,
+        @Nonnull String rootPackageName
+    ) {
+        this.domainModel = Objects.requireNonNull(domainModel);
         this.applicationName = Objects.requireNonNull(applicationName);
         this.rootPackageName = Objects.requireNonNull(rootPackageName);
     }
 
-    public void writeServiceResourceFiles(@Nonnull Path outputPath)
-            throws IOException
-    {
-        for (ServiceGroup serviceGroup : this.domainModel.getServiceGroups())
-        {
+    public void writeServiceResourceFiles(@Nonnull Path outputPath) throws IOException {
+        for (ServiceGroup serviceGroup : this.domainModel.getServiceGroups()) {
             // TODO: Instead of inferring a resource name, change the DSL to include it in the declaration, like this:
             // service QuestionResource on Question
 
-            String packageRelativePath = serviceGroup
-                    .getKlass()
-                    .getPackageName()
-                    .replaceAll("\\.", "/");
-            Path serviceGroupDirectory = outputPath
-                    .resolve(packageRelativePath)
-                    .resolve("service")
-                    .resolve("resource");
+            String packageRelativePath = serviceGroup.getKlass().getPackageName().replaceAll("\\.", "/");
+            Path serviceGroupDirectory = outputPath.resolve(packageRelativePath).resolve("service").resolve("resource");
             serviceGroupDirectory.toFile().mkdirs();
-            String fileName               = serviceGroup.getKlass().getName() + "Resource.java";
-            Path   serviceGroupOutputPath = serviceGroupDirectory.resolve(fileName);
+            String fileName = serviceGroup.getKlass().getName() + "Resource.java";
+            Path serviceGroupOutputPath = serviceGroupDirectory.resolve(fileName);
 
             this.printStringToFile(serviceGroupOutputPath, this.getServiceGroupSourceCode(serviceGroup));
         }
     }
 
-    private void printStringToFile(@Nonnull Path path, String contents)
-            throws FileNotFoundException
-    {
-        try (PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile())))
-        {
+    private void printStringToFile(@Nonnull Path path, String contents) throws FileNotFoundException {
+        try (PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()))) {
             printStream.print(contents);
         }
     }
 
     @Nonnull
-    public String getServiceGroupSourceCode(@Nonnull ServiceGroup serviceGroup)
-    {
-        Klass  klass               = serviceGroup.getKlass();
-        String packageName         = serviceGroup.getPackageName() + ".service.resource";
+    public String getServiceGroupSourceCode(@Nonnull ServiceGroup serviceGroup) {
+        Klass klass = serviceGroup.getKlass();
+        String packageName = serviceGroup.getPackageName() + ".service.resource";
         String serviceResourceName = serviceGroup.getName();
 
         String serviceMethodsSourceCode = serviceGroup
-                .getUrls()
-                .flatCollect(Url::getServices)
-                .collectWithIndex(this::getServiceSourceCode)
-                .makeString("\n");
+            .getUrls()
+            .flatCollect(Url::getServices)
+            .collectWithIndex(this::getServiceSourceCode)
+            .makeString("\n");
 
         String jsr310Import = serviceGroup.getUrls().anySatisfy(this::hasDropwizardParamWrapper)
-                ? "import io.dropwizard.jersey.jsr310.*;\n"
-                : "";
+            ? "import io.dropwizard.jersey.jsr310.*;\n"
+            : "";
 
-        ImmutableList<Verb> verbs = serviceGroup.getUrls()
-                .asLazy()
-                .flatCollect(Url::getServices)
-                .collect(Service::getVerb)
-                .toImmutableList();
-        boolean hasWriteServices = verbs.contains(Verb.PUT) || verbs.contains(Verb.PATCH) || verbs.contains(Verb.DELETE);
+        ImmutableList<Verb> verbs = serviceGroup
+            .getUrls()
+            .asLazy()
+            .flatCollect(Url::getServices)
+            .collect(Service::getVerb)
+            .toImmutableList();
+        boolean hasWriteServices =
+            verbs.contains(Verb.PUT) || verbs.contains(Verb.PATCH) || verbs.contains(Verb.DELETE);
         String writeImports = hasWriteServices
-                ? """
-                import javax.validation.constraints.NotNull;
-                import com.fasterxml.jackson.databind.node.ObjectNode;
-                import cool.klass.deserializer.json.*;
-                import cool.klass.deserializer.json.type.*;
-                import cool.klass.reladomo.persistent.writer.*;
-                """
-                : "";
+            ? """
+            import javax.validation.constraints.NotNull;
+            import com.fasterxml.jackson.databind.node.ObjectNode;
+            import cool.klass.deserializer.json.*;
+            import cool.klass.deserializer.json.type.*;
+            import cool.klass.reladomo.persistent.writer.*;
+            """
+            : "";
 
         // @formatter:off
         // language=JAVA
@@ -214,49 +206,42 @@ public class ServiceResourceGenerator
         // @formatter:on
     }
 
-    private boolean hasDropwizardParamWrapper(@Nonnull Url url)
-    {
+    private boolean hasDropwizardParamWrapper(@Nonnull Url url) {
         return url.getParameters().anySatisfy(this::hasDropwizardParamWrapper);
     }
 
-    private boolean hasDropwizardParamWrapper(@Nonnull Parameter parameter)
-    {
+    private boolean hasDropwizardParamWrapper(@Nonnull Parameter parameter) {
         DataType dataType = parameter.getType();
-        if (!(dataType instanceof PrimitiveType))
-        {
+        if (!(dataType instanceof PrimitiveType)) {
             return false;
         }
 
-        return ((PrimitiveType) dataType).isTemporal()
-                || dataType == PrimitiveType.LOCAL_DATE
-                || dataType == PrimitiveType.INSTANT;
+        return (
+            ((PrimitiveType) dataType).isTemporal() ||
+            dataType == PrimitiveType.LOCAL_DATE ||
+            dataType == PrimitiveType.INSTANT
+        );
     }
 
     @Nonnull
-    private String getServiceSourceCode(@Nonnull Service service, int index)
-    {
-        if (service.getVerb() == Verb.GET)
-        {
+    private String getServiceSourceCode(@Nonnull Service service, int index) {
+        if (service.getVerb() == Verb.GET) {
             return this.getGetSourceCode(service, index);
         }
 
-        if (service.getVerb() == Verb.POST)
-        {
+        if (service.getVerb() == Verb.POST) {
             return this.getPostSourceCode(service, index);
         }
 
-        if (service.getVerb() == Verb.PUT)
-        {
+        if (service.getVerb() == Verb.PUT) {
             return this.getWriteSourceCode(service, index, "OperationMode.REPLACE");
         }
 
-        if (service.getVerb() == Verb.PATCH)
-        {
+        if (service.getVerb() == Verb.PATCH) {
             return this.getWriteSourceCode(service, index, "OperationMode.PATCH");
         }
 
-        if (service.getVerb() == Verb.DELETE)
-        {
+        if (service.getVerb() == Verb.DELETE) {
             return this.getDeleteSourceCode(service, index);
         }
 
@@ -264,74 +249,81 @@ public class ServiceResourceGenerator
     }
 
     @Nonnull
-    private String getGetSourceCode(@Nonnull Service service, int index)
-    {
+    private String getGetSourceCode(@Nonnull Service service, int index) {
         Url url = service.getUrl();
 
         ServiceGroup serviceGroup = url.getServiceGroup();
 
-        ImmutableList<ObjectBooleanPair<Parameter>> pathParameters = url.getPathParameters()
-                .collectWith(PrimitiveTuples::pair, true);
-        ImmutableList<ObjectBooleanPair<Parameter>> queryParameters = url.getQueryParameters()
-                .collectWith(PrimitiveTuples::pair, false);
+        ImmutableList<ObjectBooleanPair<Parameter>> pathParameters = url
+            .getPathParameters()
+            .collectWith(PrimitiveTuples::pair, true);
+        ImmutableList<ObjectBooleanPair<Parameter>> queryParameters = url
+            .getQueryParameters()
+            .collectWith(PrimitiveTuples::pair, false);
 
-        Klass  klass     = serviceGroup.getKlass();
+        Klass klass = serviceGroup.getKlass();
         String klassName = this.getKlassName(klass);
         String returnType = service.getServiceMultiplicity() == ServiceMultiplicity.ONE
-                ? klassName
-                : "List<" + klassName + ">";
+            ? klassName
+            : "List<" + klassName + ">";
         String returnStatement = this.getReturnStatement(service.getServiceMultiplicity());
 
         String queryParametersString = queryParameters.isEmpty()
-                ? ""
-                : queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
+            ? ""
+            : queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
 
         boolean hasAuthorizeCriteria = service.isAuthorizeClauseRequired();
 
-        int     numParameters      = service.getNumParameters();
+        int numParameters = service.getNumParameters();
         boolean lineWrapParameters = numParameters > 1;
 
         String parameterPrefix = lineWrapParameters ? "\n" : "";
         String parameterIndent = lineWrapParameters ? "            " : "";
 
-        ImmutableList<String> parameterStrings1 = pathParameters.newWithAll(queryParameters)
-                .collectWith(this::getParameterSourceCode, parameterIndent);
+        ImmutableList<String> parameterStrings1 = pathParameters
+            .newWithAll(queryParameters)
+            .collectWith(this::getParameterSourceCode, parameterIndent);
         ImmutableList<String> parameterStrings = hasAuthorizeCriteria
-                ? parameterStrings1.newWith(parameterIndent + "@Context SecurityContext securityContext")
-                : parameterStrings1;
+            ? parameterStrings1.newWith(parameterIndent + "@Context SecurityContext securityContext")
+            : parameterStrings1;
 
         String userPrincipalNameLocalVariable = hasAuthorizeCriteria
-                ? "        String    userPrincipalName  = securityContext.getUserPrincipal().getName();\n"
-                : "";
+            ? "        String    userPrincipalName  = securityContext.getUserPrincipal().getName();\n"
+            : "";
 
         String parametersSourceCode = parameterStrings.makeString(",\n");
 
-        String finderName                   = klassName + "Finder";
-        String queryOperationSourceCode     = this.getOperation(finderName, service.getQueryCriteria(), "query");
-        String authorizeOperationSourceCode = this.getOperation(finderName, service.getAuthorizeCriteria(), "authorize");
-        String validateOperationSourceCode  = this.getOperation(finderName, service.getValidateCriteria(), "validate");
-        String conflictOperationSourceCode  = this.getOperation(finderName, service.getConflictCriteria(), "conflict");
+        String finderName = klassName + "Finder";
+        String queryOperationSourceCode = this.getOperation(finderName, service.getQueryCriteria(), "query");
+        String authorizeOperationSourceCode =
+            this.getOperation(finderName, service.getAuthorizeCriteria(), "authorize");
+        String validateOperationSourceCode = this.getOperation(finderName, service.getValidateCriteria(), "validate");
+        String conflictOperationSourceCode = this.getOperation(finderName, service.getConflictCriteria(), "conflict");
 
-        String authorizePredicateSourceCode = this.checkPredicate(service.getAuthorizeCriteria(), "authorize", "isAuthorized", "ForbiddenException()");
-        String validatePredicateSourceCode  = this.checkPredicate(service.getValidateCriteria(), "validate", "isValidated", "BadRequestException()");
-        String conflictPredicateSourceCode  = this.checkPredicate(service.getConflictCriteria(), "conflict", "hasConflict", "ClientErrorException(Status.CONFLICT)");
+        String authorizePredicateSourceCode =
+            this.checkPredicate(service.getAuthorizeCriteria(), "authorize", "isAuthorized", "ForbiddenException()");
+        String validatePredicateSourceCode =
+            this.checkPredicate(service.getValidateCriteria(), "validate", "isValidated", "BadRequestException()");
+        String conflictPredicateSourceCode =
+            this.checkPredicate(
+                    service.getConflictCriteria(),
+                    "conflict",
+                    "hasConflict",
+                    "ClientErrorException(Status.CONFLICT)"
+                );
 
-        String executeOperationSourceCode = this.getExecuteOperationSourceCode(
-                service.getQueryCriteria(),
-                klassName);
+        String executeOperationSourceCode = this.getExecuteOperationSourceCode(service.getQueryCriteria(), klassName);
 
-        Optional<ServiceProjectionDispatch> projectionDispatch        = service.getProjectionDispatch();
-        ServiceProjectionDispatch           serviceProjectionDispatch = projectionDispatch.get();
-        Projection                          projection                = serviceProjectionDispatch.getProjection();
+        Optional<ServiceProjectionDispatch> projectionDispatch = service.getProjectionDispatch();
+        ServiceProjectionDispatch serviceProjectionDispatch = projectionDispatch.get();
+        Projection projection = serviceProjectionDispatch.getProjection();
 
         var reladomoProjectionConverter = new ReladomoProjectionConverter();
-        RootReladomoNode projectionReladomoNode = reladomoProjectionConverter.getRootReladomoNode(
-                klass,
-                projection);
+        RootReladomoNode projectionReladomoNode = reladomoProjectionConverter.getRootReladomoNode(klass, projection);
         ImmutableList<String> deepFetchStrings = projectionReladomoNode.getDeepFetchStrings();
         String deepFetchSourceCode = deepFetchStrings
-                .collect(each -> "        result.deepFetch(" + each + ");\n")
-                .makeString("");
+            .collect(each -> "        result.deepFetch(" + each + ");\n")
+            .makeString("");
 
         String orderBySourceCode = service.getOrderBy().map(this::getOrderBysSourceCode).orElse("");
 
@@ -367,107 +359,92 @@ public class ServiceResourceGenerator
         // @formatter:on
     }
 
-    private String getKlassName(Klass klass)
-    {
+    private String getKlassName(Klass klass) {
         String klassName = klass.getName();
-        if (klassName.equals("Klass"))
-        {
+        if (klassName.equals("Klass")) {
             return klass.getFullyQualifiedName();
         }
         return klassName;
     }
 
     @Nonnull
-    private String getPostSourceCode(Service service, int index)
-    {
+    private String getPostSourceCode(Service service, int index) {
         return "    // TODO: POST\n";
     }
 
     @Nonnull
-    private String getDeleteSourceCode(@Nonnull Service service, int index)
-    {
+    private String getDeleteSourceCode(@Nonnull Service service, int index) {
         Url url = service.getUrl();
 
         ServiceGroup serviceGroup = url.getServiceGroup();
 
-        ImmutableList<ObjectBooleanPair<Parameter>> pathParameters = url.getPathParameters()
-                .collectWith(PrimitiveTuples::pair, true);
-        ImmutableList<ObjectBooleanPair<Parameter>> queryParameters = url.getQueryParameters()
-                .collectWith(PrimitiveTuples::pair, false);
+        ImmutableList<ObjectBooleanPair<Parameter>> pathParameters = url
+            .getPathParameters()
+            .collectWith(PrimitiveTuples::pair, true);
+        ImmutableList<ObjectBooleanPair<Parameter>> queryParameters = url
+            .getQueryParameters()
+            .collectWith(PrimitiveTuples::pair, false);
 
         String queryParametersString = queryParameters.isEmpty()
-                ? ""
-                : queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
+            ? ""
+            : queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
 
         boolean hasAuthorizeCriteria = service.isAuthorizeClauseRequired();
 
-        int     numParameters      = service.getNumParameters();
+        int numParameters = service.getNumParameters();
         boolean lineWrapParameters = numParameters > 1;
 
         String parameterPrefix = lineWrapParameters ? "\n" : "";
         String parameterIndent = lineWrapParameters ? "            " : "";
 
-        ImmutableList<String> urlParameterStrings = pathParameters.newWithAll(queryParameters)
-                .collectWith(this::getParameterSourceCode, parameterIndent);
+        ImmutableList<String> urlParameterStrings = pathParameters
+            .newWithAll(queryParameters)
+            .collectWith(this::getParameterSourceCode, parameterIndent);
 
         MutableList<String> parameterStrings = urlParameterStrings.toList();
 
-        if (hasAuthorizeCriteria)
-        {
+        if (hasAuthorizeCriteria) {
             parameterStrings.add(parameterIndent + "@Context SecurityContext securityContext");
         }
 
         String userPrincipalNameLocalVariable = hasAuthorizeCriteria
-                ? "        String    userPrincipalName  = securityContext.getUserPrincipal().getName();\n"
-                : "";
+            ? "        String    userPrincipalName  = securityContext.getUserPrincipal().getName();\n"
+            : "";
 
         String parametersSourceCode = parameterStrings.makeString(",\n");
 
-        String klassName                = serviceGroup.getKlass().getName();
-        String finderName               = klassName + "Finder";
+        String klassName = serviceGroup.getKlass().getName();
+        String finderName = klassName + "Finder";
         String queryOperationSourceCode = this.getOperation(finderName, service.getQueryCriteria(), "query");
-        String authorizeOperationSourceCode = this.getOperation(
-                finderName,
-                service.getAuthorizeCriteria(),
-                "authorize");
-        String validateOperationSourceCode = this.getOperation(
-                finderName,
-                service.getValidateCriteria(),
-                "validate");
-        String conflictOperationSourceCode = this.getOperation(
-                finderName,
-                service.getConflictCriteria(),
-                "conflict");
+        String authorizeOperationSourceCode =
+            this.getOperation(finderName, service.getAuthorizeCriteria(), "authorize");
+        String validateOperationSourceCode = this.getOperation(finderName, service.getValidateCriteria(), "validate");
+        String conflictOperationSourceCode = this.getOperation(finderName, service.getConflictCriteria(), "conflict");
 
-        String authorizePredicateSourceCode = this.checkPredicate(
-                service.getAuthorizeCriteria(),
-                "authorize",
-                "isAuthorized",
-                "ForbiddenException()");
-        String validatePredicateSourceCode = this.checkPredicate(
-                service.getValidateCriteria(),
-                "validate",
-                "isValidated",
-                "BadRequestException()");
-        String conflictPredicateSourceCode = this.checkPredicate(
-                service.getConflictCriteria(),
-                "conflict",
-                "hasConflict",
-                "ClientErrorException(Status.CONFLICT)");
+        String authorizePredicateSourceCode =
+            this.checkPredicate(service.getAuthorizeCriteria(), "authorize", "isAuthorized", "ForbiddenException()");
+        String validatePredicateSourceCode =
+            this.checkPredicate(service.getValidateCriteria(), "validate", "isValidated", "BadRequestException()");
+        String conflictPredicateSourceCode =
+            this.checkPredicate(
+                    service.getConflictCriteria(),
+                    "conflict",
+                    "hasConflict",
+                    "ClientErrorException(Status.CONFLICT)"
+                );
 
-        String executeOperationSourceCode = this.getExecuteOperationSourceCode(
-                service.getQueryCriteria(),
-                klassName);
+        String executeOperationSourceCode = this.getExecuteOperationSourceCode(service.getQueryCriteria(), klassName);
 
         Projection writeProjectionKlassAdapter = new WriteProjectionKlassAdapter(serviceGroup.getKlass());
         var reladomoProjectionConverter = new ReladomoProjectionConverter();
         RootReladomoNode rootReladomoNode = reladomoProjectionConverter.getRootReladomoNode(
-                serviceGroup.getKlass(),
-                writeProjectionKlassAdapter);
+            serviceGroup.getKlass(),
+            writeProjectionKlassAdapter
+        );
         ImmutableList<String> deepFetchStrings = rootReladomoNode.getDeepFetchStrings();
         String deepFetchSourceCode = deepFetchStrings
-                .collect(each -> "        result.deepFetch(" + each + ");\n")
-                .makeString("");
+            .collect(each -> "        result.deepFetch(" + each + ");\n")
+            .makeString("");
 
         String orderBySourceCode = service.getOrderBy().map(this::getOrderBysSourceCode).orElse("");
 
@@ -518,106 +495,95 @@ public class ServiceResourceGenerator
     }
 
     @Nonnull
-    private String getWriteSourceCode(@Nonnull Service service, int index, String operationMode)
-    {
+    private String getWriteSourceCode(@Nonnull Service service, int index, String operationMode) {
         Url url = service.getUrl();
 
         ServiceGroup serviceGroup = url.getServiceGroup();
 
-        ImmutableList<ObjectBooleanPair<Parameter>> pathParameters = url.getPathParameters()
-                .collectWith(PrimitiveTuples::pair, true);
-        ImmutableList<ObjectBooleanPair<Parameter>> queryParameters = url.getQueryParameters()
-                .collectWith(PrimitiveTuples::pair, false);
+        ImmutableList<ObjectBooleanPair<Parameter>> pathParameters = url
+            .getPathParameters()
+            .collectWith(PrimitiveTuples::pair, true);
+        ImmutableList<ObjectBooleanPair<Parameter>> queryParameters = url
+            .getQueryParameters()
+            .collectWith(PrimitiveTuples::pair, false);
 
         String queryParametersString = queryParameters.isEmpty()
-                ? ""
-                : queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
+            ? ""
+            : queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
 
         boolean hasAuthorizeCriteria = service.isAuthorizeClauseRequired();
 
         int numParameters = service.getNumParameters() + 1;
-        if (hasAuthorizeCriteria)
-        {
+        if (hasAuthorizeCriteria) {
             numParameters++;
         }
 
         boolean lineWrapParameters = numParameters > 1;
         String parameterPrefix = lineWrapParameters ? "\n" : "";
         String parameterIndent = lineWrapParameters ? "            " : "";
-        ImmutableList<String> urlParameterStrings = pathParameters.newWithAll(queryParameters)
-                .collectWith(this::getParameterSourceCode, parameterIndent);
+        ImmutableList<String> urlParameterStrings = pathParameters
+            .newWithAll(queryParameters)
+            .collectWith(this::getParameterSourceCode, parameterIndent);
 
         MutableList<String> parameterStrings = urlParameterStrings.toList();
 
-        if (hasAuthorizeCriteria)
-        {
+        if (hasAuthorizeCriteria) {
             parameterStrings.add(parameterIndent + "@Context SecurityContext securityContext");
         }
 
         ServiceMultiplicity serviceMultiplicity = service.getServiceMultiplicity();
         String incomingInstanceParameterType = serviceMultiplicity == ServiceMultiplicity.ONE
-                ? "ObjectNode"
-                : "ArrayNode";
+            ? "ObjectNode"
+            : "ArrayNode";
         String incomingInstanceParameterName = serviceMultiplicity == ServiceMultiplicity.ONE
-                ? "incomingInstance"
-                : "incomingInstances";
-        String incomingInstanceSourceCode = "%s@Nonnull @NotNull %s %s".formatted(
-                parameterIndent,
-                incomingInstanceParameterType,
-                incomingInstanceParameterName);
+            ? "incomingInstance"
+            : "incomingInstances";
+        String incomingInstanceSourceCode =
+            "%s@Nonnull @NotNull %s %s".formatted(
+                    parameterIndent,
+                    incomingInstanceParameterType,
+                    incomingInstanceParameterName
+                );
         parameterStrings.add(incomingInstanceSourceCode);
 
         String userPrincipalNameLocalVariable = hasAuthorizeCriteria
-                ? "        String    userPrincipalName  = securityContext.getUserPrincipal().getName();\n"
-                : "";
+            ? "        String    userPrincipalName  = securityContext.getUserPrincipal().getName();\n"
+            : "";
 
         String parametersSourceCode = parameterStrings.makeString(",\n");
 
-        String klassName                = serviceGroup.getKlass().getName();
-        String finderName               = klassName + "Finder";
+        String klassName = serviceGroup.getKlass().getName();
+        String finderName = klassName + "Finder";
         String queryOperationSourceCode = this.getOperation(finderName, service.getQueryCriteria(), "query");
-        String authorizeOperationSourceCode = this.getOperation(
-                finderName,
-                service.getAuthorizeCriteria(),
-                "authorize");
-        String validateOperationSourceCode = this.getOperation(
-                finderName,
-                service.getValidateCriteria(),
-                "validate");
-        String conflictOperationSourceCode = this.getOperation(
-                finderName,
-                service.getConflictCriteria(),
-                "conflict");
+        String authorizeOperationSourceCode =
+            this.getOperation(finderName, service.getAuthorizeCriteria(), "authorize");
+        String validateOperationSourceCode = this.getOperation(finderName, service.getValidateCriteria(), "validate");
+        String conflictOperationSourceCode = this.getOperation(finderName, service.getConflictCriteria(), "conflict");
 
-        String authorizePredicateSourceCode = this.checkPredicate(
-                service.getAuthorizeCriteria(),
-                "authorize",
-                "isAuthorized",
-                "ForbiddenException()");
-        String validatePredicateSourceCode = this.checkPredicate(
-                service.getValidateCriteria(),
-                "validate",
-                "isValidated",
-                "BadRequestException()");
-        String conflictPredicateSourceCode = this.checkPredicate(
-                service.getConflictCriteria(),
-                "conflict",
-                "hasConflict",
-                "ClientErrorException(Status.CONFLICT)");
+        String authorizePredicateSourceCode =
+            this.checkPredicate(service.getAuthorizeCriteria(), "authorize", "isAuthorized", "ForbiddenException()");
+        String validatePredicateSourceCode =
+            this.checkPredicate(service.getValidateCriteria(), "validate", "isValidated", "BadRequestException()");
+        String conflictPredicateSourceCode =
+            this.checkPredicate(
+                    service.getConflictCriteria(),
+                    "conflict",
+                    "hasConflict",
+                    "ClientErrorException(Status.CONFLICT)"
+                );
 
-        String executeOperationSourceCode = this.getExecuteOperationSourceCode(
-                service.getQueryCriteria(),
-                klassName);
+        String executeOperationSourceCode = this.getExecuteOperationSourceCode(service.getQueryCriteria(), klassName);
 
         Projection writeProjectionKlassAdapter = new WriteProjectionKlassAdapter(serviceGroup.getKlass());
         var reladomoProjectionConverter = new ReladomoProjectionConverter();
         RootReladomoNode rootReladomoNode = reladomoProjectionConverter.getRootReladomoNode(
-                serviceGroup.getKlass(),
-                writeProjectionKlassAdapter);
+            serviceGroup.getKlass(),
+            writeProjectionKlassAdapter
+        );
         ImmutableList<String> deepFetchStrings = rootReladomoNode.getDeepFetchStrings();
         String deepFetchSourceCode = deepFetchStrings
-                .collect(each -> "        result.deepFetch(" + each + ");\n")
-                .makeString("");
+            .collect(each -> "        result.deepFetch(" + each + ");\n")
+            .makeString("");
 
         String orderBySourceCode = service.getOrderBy().map(this::getOrderBysSourceCode).orElse("");
 
@@ -722,10 +688,8 @@ public class ServiceResourceGenerator
     }
 
     @Nonnull
-    private String getReturnStatement(ServiceMultiplicity serviceMultiplicity)
-    {
-        if (serviceMultiplicity == ServiceMultiplicity.MANY)
-        {
+    private String getReturnStatement(ServiceMultiplicity serviceMultiplicity) {
+        if (serviceMultiplicity == ServiceMultiplicity.MANY) {
             return "        return result;\n";
         }
 
@@ -741,54 +705,44 @@ public class ServiceResourceGenerator
         // @formatter:on
     }
 
-    private String getParameterSourceCode(@Nonnull ObjectBooleanPair<Parameter> pair, String indent)
-    {
-        Parameter parameter       = pair.getOne();
-        boolean   isPathParameter = pair.getTwo();
+    private String getParameterSourceCode(@Nonnull ObjectBooleanPair<Parameter> pair, String indent) {
+        Parameter parameter = pair.getOne();
+        boolean isPathParameter = pair.getTwo();
 
         // TODO: Hibernate validation annotations
 
-        String nullableAnnotation = parameter.getMultiplicity() == Multiplicity.ZERO_TO_ONE
-                ? "@Nullable "
-                : "";
+        String nullableAnnotation = parameter.getMultiplicity() == Multiplicity.ZERO_TO_ONE ? "@Nullable " : "";
 
         DataType parameterType = parameter.getType();
         String typeString = parameter.getMultiplicity().isToMany()
-                ? "Set<" + this.getParameterType(parameterType) + ">"
-                : this.getParameterType(parameterType);
+            ? "Set<" + this.getParameterType(parameterType) + ">"
+            : this.getParameterType(parameterType);
 
         return String.format(
-                "%s%s@%s(\"%s\") %s %s",
-                indent,
-                nullableAnnotation,
-                isPathParameter ? "PathParam" : "QueryParam",
-                parameter.getName(),
-                typeString,
-                parameter.getName());
+            "%s%s@%s(\"%s\") %s %s",
+            indent,
+            nullableAnnotation,
+            isPathParameter ? "PathParam" : "QueryParam",
+            parameter.getName(),
+            typeString,
+            parameter.getName()
+        );
     }
 
     @Nonnull
-    private String getOperation(
-            String finderName,
-            @Nonnull Optional<Criteria> optionalCriteria,
-            String criteriaName)
-    {
-        return optionalCriteria
-                .map(criteria -> this.getOperation(finderName, criteria, criteriaName))
-                .orElse("");
+    private String getOperation(String finderName, @Nonnull Optional<Criteria> optionalCriteria, String criteriaName) {
+        return optionalCriteria.map(criteria -> this.getOperation(finderName, criteria, criteriaName)).orElse("");
     }
 
     @Nonnull
-    private String getOperation(String finderName, @Nonnull Criteria criteria, String criteriaName)
-    {
-        String operation           = this.getOperation(finderName, criteria);
+    private String getOperation(String finderName, @Nonnull Criteria criteria, String criteriaName) {
+        String operation = this.getOperation(finderName, criteria);
         String paddedOperationName = String.format("%-18s", criteriaName + "Operation");
         return "        Operation " + paddedOperationName + " = " + operation + ";\n";
     }
 
     @Nonnull
-    private String getOperation(String finderName, @Nonnull Criteria criteria)
-    {
+    private String getOperation(String finderName, @Nonnull Criteria criteria) {
         StringBuilder stringBuilder = new StringBuilder();
         criteria.visit(new OperationCriteriaVisitor(finderName, stringBuilder));
         return stringBuilder.toString();
@@ -796,41 +750,47 @@ public class ServiceResourceGenerator
 
     @Nonnull
     private String getOptionalOperation(
-            String finderName,
-            @Nonnull Optional<Criteria> optionalCriteria,
-            String criteriaName)
-    {
+        String finderName,
+        @Nonnull Optional<Criteria> optionalCriteria,
+        String criteriaName
+    ) {
         return optionalCriteria
-                .map(criteria -> this.getOptionalOperation(finderName, criteria, criteriaName))
-                .orElse("");
+            .map(criteria -> this.getOptionalOperation(finderName, criteria, criteriaName))
+            .orElse("");
     }
 
     @Nonnull
-    private String getOptionalOperation(String finderName, @Nonnull Criteria criteria, String criteriaName)
-    {
-        String operation           = this.getOperation(finderName, criteria);
+    private String getOptionalOperation(String finderName, @Nonnull Criteria criteria, String criteriaName) {
+        String operation = this.getOperation(finderName, criteria);
         String paddedOperationName = String.format("%-18s", criteriaName + "Operation");
 
-        return ""
-                + "        Operation " + paddedOperationName + " = " + criteriaName + " == null\n"
-                + "                ? " + finderName + ".all()\n"
-                + "                : " + operation + ";\n";
+        return (
+            "" +
+            "        Operation " +
+            paddedOperationName +
+            " = " +
+            criteriaName +
+            " == null\n" +
+            "                ? " +
+            finderName +
+            ".all()\n" +
+            "                : " +
+            operation +
+            ";\n"
+        );
     }
 
     private String checkPredicate(
-            @Nonnull Optional<Criteria> optionalCriteria,
-            String criteriaName,
-            String flagName,
-            String exceptionName)
-    {
-        return optionalCriteria
-                .map(criteria -> this.checkPredicate(criteriaName, flagName, exceptionName))
-                .orElse("");
+        @Nonnull Optional<Criteria> optionalCriteria,
+        String criteriaName,
+        String flagName,
+        String exceptionName
+    ) {
+        return optionalCriteria.map(criteria -> this.checkPredicate(criteriaName, flagName, exceptionName)).orElse("");
     }
 
     @Nonnull
-    private String checkPredicate(String criteriaName, String flagName, String exceptionName)
-    {
+    private String checkPredicate(String criteriaName, String flagName, String exceptionName) {
         // @formatter:off
         return ""
                 + "        boolean " + flagName + " = !result.asEcList().allSatisfy(" + criteriaName + "Operation::matches);\n"
@@ -843,43 +803,31 @@ public class ServiceResourceGenerator
     }
 
     @Nonnull
-    private String getExecuteOperationSourceCode(
-            @Nonnull Optional<Criteria> queryCriteria,
-            String klassName)
-    {
-        if (queryCriteria.isEmpty())
-        {
+    private String getExecuteOperationSourceCode(@Nonnull Optional<Criteria> queryCriteria, String klassName) {
+        if (queryCriteria.isEmpty()) {
             return "";
         }
 
-        return MessageFormat.format(
-                "        {0}List result = {0}Finder.findMany(queryOperation);\n",
-                klassName);
+        return MessageFormat.format("        {0}List result = {0}Finder.findMany(queryOperation);\n", klassName);
     }
 
     @Nonnull
-    private String getOrderBysSourceCode(@Nonnull OrderBy orderBy)
-    {
+    private String getOrderBysSourceCode(@Nonnull OrderBy orderBy) {
         ImmutableList<String> orderBySourceCodeClauses = orderBy
-                .getOrderByMemberReferencePaths()
-                .reject(each -> each.getThisMemberReferencePath().getProperty().isDerived())
-                .collect(this::getOrderBySourceCode);
+            .getOrderByMemberReferencePaths()
+            .reject(each -> each.getThisMemberReferencePath().getProperty().isDerived())
+            .collect(this::getOrderBySourceCode);
 
-        if (orderBySourceCodeClauses.isEmpty())
-        {
+        if (orderBySourceCodeClauses.isEmpty()) {
             return "";
         }
 
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < orderBySourceCodeClauses.size(); i++)
-        {
+        for (int i = 0; i < orderBySourceCodeClauses.size(); i++) {
             String orderBySourceCodeClause = orderBySourceCodeClauses.get(i);
-            if (i == 0)
-            {
+            if (i == 0) {
                 stringBuilder.append(orderBySourceCodeClause);
-            }
-            else
-            {
+            } else {
                 stringBuilder.append(".and(");
                 stringBuilder.append(orderBySourceCodeClause);
                 stringBuilder.append(")");
@@ -890,39 +838,32 @@ public class ServiceResourceGenerator
     }
 
     @Nonnull
-    private String getOrderBySourceCode(@Nonnull OrderByMemberReferencePath orderByMemberReferencePath)
-    {
-        return this.getThisMemberReferencePathSourceCode(orderByMemberReferencePath.getThisMemberReferencePath())
-                + this.getOrderByDirectionDeclarationSourceCode(orderByMemberReferencePath.getOrderByDirectionDeclaration());
+    private String getOrderBySourceCode(@Nonnull OrderByMemberReferencePath orderByMemberReferencePath) {
+        return (
+            this.getThisMemberReferencePathSourceCode(orderByMemberReferencePath.getThisMemberReferencePath()) +
+            this.getOrderByDirectionDeclarationSourceCode(orderByMemberReferencePath.getOrderByDirectionDeclaration())
+        );
     }
 
-    private String getThisMemberReferencePathSourceCode(@Nonnull ThisMemberReferencePath thisMemberReferencePath)
-    {
-        if (thisMemberReferencePath.getAssociationEnds().notEmpty())
-        {
+    private String getThisMemberReferencePathSourceCode(@Nonnull ThisMemberReferencePath thisMemberReferencePath) {
+        if (thisMemberReferencePath.getAssociationEnds().notEmpty()) {
             throw new AssertionError();
         }
 
-        Klass                klass          = thisMemberReferencePath.getKlass();
-        DataTypeProperty     property       = thisMemberReferencePath.getProperty();
+        Klass klass = thisMemberReferencePath.getKlass();
+        DataTypeProperty property = thisMemberReferencePath.getProperty();
         ImmutableList<Klass> superClassPath = this.getSuperClassPath(klass, property.getOwningClassifier());
         String superClassPathSourceCode = superClassPath
-                .collect(each -> "." + UPPER_TO_LOWER_CAMEL.convert(each.getName()) + "SuperClass()")
-                .makeString("");
-        String result = String.format(
-                "%sFinder%s.%s()",
-                klass.getName(),
-                superClassPathSourceCode,
-                property.getName());
+            .collect(each -> "." + UPPER_TO_LOWER_CAMEL.convert(each.getName()) + "SuperClass()")
+            .makeString("");
+        String result = String.format("%sFinder%s.%s()", klass.getName(), superClassPathSourceCode, property.getName());
         return result;
     }
 
-    private ImmutableList<Klass> getSuperClassPath(Klass klass, Classifier owningClassifier)
-    {
-        MutableList<Klass> result       = Lists.mutable.empty();
-        Klass              currentKlass = klass;
-        while (currentKlass != owningClassifier && currentKlass != null)
-        {
+    private ImmutableList<Klass> getSuperClassPath(Klass klass, Classifier owningClassifier) {
+        MutableList<Klass> result = Lists.mutable.empty();
+        Klass currentKlass = klass;
+        while (currentKlass != owningClassifier && currentKlass != null) {
             Optional<Klass> superClass = currentKlass.getSuperClass();
             superClass.ifPresent(result::add);
             currentKlass = superClass.orElse(null);
@@ -931,26 +872,23 @@ public class ServiceResourceGenerator
     }
 
     @Nonnull
-    private String getOrderByDirectionDeclarationSourceCode(@Nonnull OrderByDirectionDeclaration orderByDirectionDeclaration)
-    {
+    private String getOrderByDirectionDeclarationSourceCode(
+        @Nonnull OrderByDirectionDeclaration orderByDirectionDeclaration
+    ) {
         OrderByDirection orderByDirection = orderByDirectionDeclaration.getOrderByDirection();
-        return switch (orderByDirection)
-        {
+        return switch (orderByDirection) {
             case ASCENDING -> ".ascendingOrderBy()";
             case DESCENDING -> ".descendingOrderBy()";
             default -> throw new AssertionError();
         };
     }
 
-    private String getParameterType(DataType dataType)
-    {
-        if (dataType instanceof Enumeration)
-        {
+    private String getParameterType(DataType dataType) {
+        if (dataType instanceof Enumeration) {
             return "String";
             // return ((Enumeration) dataType).getName();
         }
-        if (dataType instanceof PrimitiveType primitiveType)
-        {
+        if (dataType instanceof PrimitiveType primitiveType) {
             return PrimitiveToJavaParameterTypeVisitor.getJavaType(primitiveType);
         }
         throw new AssertionError();

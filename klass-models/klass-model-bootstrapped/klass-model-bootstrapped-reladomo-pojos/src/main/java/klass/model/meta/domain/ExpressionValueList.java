@@ -20,24 +20,19 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class ExpressionValueList extends ExpressionValueListAbstract
-{
-    public ExpressionValueList()
-    {
-    }
+public class ExpressionValueList extends ExpressionValueListAbstract {
 
-    public ExpressionValueList(int initialSize)
-    {
+    public ExpressionValueList() {}
+
+    public ExpressionValueList(int initialSize) {
         super(initialSize);
     }
 
-    public ExpressionValueList(Collection c)
-    {
+    public ExpressionValueList(Collection c) {
         super(c);
     }
 
-    public ExpressionValueList(Operation operation)
-    {
+    public ExpressionValueList(Operation operation) {
         super(operation);
     }
 }

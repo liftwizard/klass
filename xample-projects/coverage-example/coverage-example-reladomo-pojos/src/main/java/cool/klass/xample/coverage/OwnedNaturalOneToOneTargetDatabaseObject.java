@@ -16,6 +16,4 @@
 
 package cool.klass.xample.coverage;
 
-public class OwnedNaturalOneToOneTargetDatabaseObject extends OwnedNaturalOneToOneTargetDatabaseObjectAbstract
-{
-}
+public class OwnedNaturalOneToOneTargetDatabaseObject extends OwnedNaturalOneToOneTargetDatabaseObjectAbstract {}

@@ -21,15 +21,12 @@ import java.util.Optional;
 import cool.klass.model.meta.domain.api.NamedElement;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public interface ProjectionElement
-        extends NamedElement
-{
+public interface ProjectionElement extends NamedElement {
     Optional<ProjectionParent> getParent();
 
     ImmutableList<? extends ProjectionChild> getChildren();
 
-    default int getDepth()
-    {
+    default int getDepth() {
         return 1 + this.getParent().map(ProjectionElement::getDepth).orElse(0);
     }
 
@@ -39,14 +36,10 @@ public interface ProjectionElement
 
     void visit(ProjectionVisitor visitor);
 
-    default void visit(ProjectionListener listener)
-    {
-        try
-        {
+    default void visit(ProjectionListener listener) {
+        try {
             this.enter(listener);
-        }
-        finally
-        {
+        } finally {
             this.exit(listener);
         }
     }

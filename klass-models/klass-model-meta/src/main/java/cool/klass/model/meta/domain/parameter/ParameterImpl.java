@@ -33,59 +33,53 @@ import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public final class ParameterImpl
-        extends AbstractIdentifierElement
-        implements Parameter
-{
+public final class ParameterImpl extends AbstractIdentifierElement implements Parameter {
+
     @Nonnull
     private final Multiplicity multiplicity;
+
     @Nonnull
-    private final DataType     dataType;
+    private final DataType dataType;
 
     private ParameterImpl(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext,
-            @Nonnull Multiplicity multiplicity,
-            @Nonnull DataType dataType)
-    {
+        @Nonnull ParserRuleContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext,
+        @Nonnull Multiplicity multiplicity,
+        @Nonnull DataType dataType
+    ) {
         super(elementContext, macroElement, sourceCode, ordinal, nameContext);
         this.multiplicity = Objects.requireNonNull(multiplicity);
-        this.dataType     = Objects.requireNonNull(dataType);
+        this.dataType = Objects.requireNonNull(dataType);
     }
 
     @Nonnull
     @Override
-    public ParserRuleContext getElementContext()
-    {
+    public ParserRuleContext getElementContext() {
         return super.getElementContext();
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return String.format("{%s}", this.getName());
     }
 
     @Override
     @Nonnull
-    public DataType getType()
-    {
+    public DataType getType() {
         return this.dataType;
     }
 
     @Override
     @Nonnull
-    public Multiplicity getMultiplicity()
-    {
+    public Multiplicity getMultiplicity() {
         return this.multiplicity;
     }
 
-    public static final class ParameterBuilder
-            extends IdentifierElementBuilder<ParameterImpl>
-    {
+    public static final class ParameterBuilder extends IdentifierElementBuilder<ParameterImpl> {
+
         @Nonnull
         private final DataTypeGetter dataTypeGetter;
 
@@ -93,31 +87,31 @@ public final class ParameterImpl
         private final Multiplicity multiplicity;
 
         public ParameterBuilder(
-                @Nonnull ParserRuleContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode,
-                int ordinal,
-                @Nonnull IdentifierContext nameContext,
-                @Nonnull DataTypeGetter dataType,
-                @Nonnull Multiplicity multiplicity)
-        {
+            @Nonnull ParserRuleContext elementContext,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode,
+            int ordinal,
+            @Nonnull IdentifierContext nameContext,
+            @Nonnull DataTypeGetter dataType,
+            @Nonnull Multiplicity multiplicity
+        ) {
             super(elementContext, macroElement, sourceCode, ordinal, nameContext);
             this.dataTypeGetter = Objects.requireNonNull(dataType);
-            this.multiplicity   = Objects.requireNonNull(multiplicity);
+            this.multiplicity = Objects.requireNonNull(multiplicity);
         }
 
         @Override
         @Nonnull
-        protected ParameterImpl buildUnsafe()
-        {
+        protected ParameterImpl buildUnsafe() {
             return new ParameterImpl(
-                    this.elementContext,
-                    this.macroElement.map(ElementBuilder::getElement),
-                    this.sourceCode.build(),
-                    this.ordinal,
-                    this.getNameContext(),
-                    this.multiplicity,
-                    this.dataTypeGetter.getType());
+                this.elementContext,
+                this.macroElement.map(ElementBuilder::getElement),
+                this.sourceCode.build(),
+                this.ordinal,
+                this.getNameContext(),
+                this.multiplicity,
+                this.dataTypeGetter.getType()
+            );
         }
     }
 }

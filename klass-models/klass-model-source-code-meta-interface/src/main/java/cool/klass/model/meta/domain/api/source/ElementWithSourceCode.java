@@ -21,9 +21,7 @@ import javax.annotation.Nonnull;
 import cool.klass.model.meta.domain.api.Element;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public interface ElementWithSourceCode
-        extends Element
-{
+public interface ElementWithSourceCode extends Element {
     @Nonnull
     SourceCode getSourceCodeObject();
 

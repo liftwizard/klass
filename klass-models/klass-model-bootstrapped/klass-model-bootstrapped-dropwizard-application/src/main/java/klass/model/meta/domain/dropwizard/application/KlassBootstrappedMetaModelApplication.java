@@ -29,58 +29,53 @@ import io.liftwizard.servlet.bundle.singlepage.SinglePageRedirectFilterBundle;
 import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactory;
 import io.liftwizard.servlet.logging.mdc.StructuredArgumentsMDCLogger;
 
-public class KlassBootstrappedMetaModelApplication
-        extends AbstractKlassBootstrappedMetaModelApplication
-{
-    public static void main(String[] args)
-            throws Exception
-    {
+public class KlassBootstrappedMetaModelApplication extends AbstractKlassBootstrappedMetaModelApplication {
+
+    public static void main(String[] args) throws Exception {
         new KlassBootstrappedMetaModelApplication().run(args);
     }
 
     @Override
-    public Class<KlassBootstrappedMetaModelConfiguration> getConfigurationClass()
-    {
+    public Class<KlassBootstrappedMetaModelConfiguration> getConfigurationClass() {
         return super.getConfigurationClass();
     }
 
     @Override
-    protected void initializeCommands(@Nonnull Bootstrap<KlassBootstrappedMetaModelConfiguration> bootstrap)
-    {
+    protected void initializeCommands(@Nonnull Bootstrap<KlassBootstrappedMetaModelConfiguration> bootstrap) {
         super.initializeCommands(bootstrap);
     }
 
     @Override
-    protected void initializeBundles(@Nonnull Bootstrap<KlassBootstrappedMetaModelConfiguration> bootstrap)
-    {
+    protected void initializeBundles(@Nonnull Bootstrap<KlassBootstrappedMetaModelConfiguration> bootstrap) {
         super.initializeBundles(bootstrap);
 
         var structuredLogger = new StructuredArgumentsMDCLogger(bootstrap.getObjectMapper());
         bootstrap.addBundle(new JerseyHttpLoggingBundle(structuredLogger));
         bootstrap.addBundle(new KlassGraphQLBundle<>());
 
-        bootstrap.addBundle(new MigrationsBundle<>()
-        {
-            @Override
-            public DataSourceFactory getDataSourceFactory(KlassBootstrappedMetaModelConfiguration configuration)
-            {
-                return configuration.getNamedDataSourcesFactory().getNamedDataSourceFactoryByName("h2-tcp");
+        bootstrap.addBundle(
+            new MigrationsBundle<>() {
+                @Override
+                public DataSourceFactory getDataSourceFactory(KlassBootstrappedMetaModelConfiguration configuration) {
+                    return configuration.getNamedDataSourcesFactory().getNamedDataSourceFactoryByName("h2-tcp");
+                }
             }
-        });
+        );
 
-        bootstrap.addBundle(new SinglePageRedirectFilterBundle<>()
-        {
-            @Override
-            public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory(KlassBootstrappedMetaModelConfiguration configuration)
-            {
-                return configuration.getSinglePageRedirectFilterFactory();
+        bootstrap.addBundle(
+            new SinglePageRedirectFilterBundle<>() {
+                @Override
+                public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory(
+                    KlassBootstrappedMetaModelConfiguration configuration
+                ) {
+                    return configuration.getSinglePageRedirectFilterFactory();
+                }
             }
-        });
+        );
     }
 
     @Override
-    protected void registerJacksonModules(@Nonnull Environment environment)
-    {
+    protected void registerJacksonModules(@Nonnull Environment environment) {
         super.registerJacksonModules(environment);
 
         environment.getObjectMapper().registerModule(new KlassMetaModelJacksonModule());

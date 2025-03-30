@@ -23,14 +23,10 @@ import javax.annotation.Nonnull;
  * They are primitives, enumerations, and struct-like records with no keys.
  * All instances of a DataType with the same value are considered to be equal instances.
  */
-public interface DataType
-        extends Type
-{
+public interface DataType extends Type {
     String getDataTypeName();
 
-    interface DataTypeGetter
-            extends TypeGetter
-    {
+    interface DataTypeGetter extends TypeGetter {
         @Nonnull
         @Override
         DataType getType();

@@ -18,8 +18,7 @@ package cool.klass.model.meta.domain.api.operator;
 
 import javax.annotation.Nonnull;
 
-public interface OperatorVisitor
-{
+public interface OperatorVisitor {
     void visitEquality(@Nonnull EqualityOperator equalityOperator);
 
     void visitInequality(@Nonnull InequalityOperator inequalityOperator);

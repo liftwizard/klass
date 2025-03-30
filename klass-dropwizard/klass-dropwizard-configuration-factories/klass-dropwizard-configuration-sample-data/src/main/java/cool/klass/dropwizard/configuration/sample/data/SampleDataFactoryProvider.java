@@ -16,7 +16,6 @@
 
 package cool.klass.dropwizard.configuration.sample.data;
 
-public interface SampleDataFactoryProvider
-{
+public interface SampleDataFactoryProvider {
     SampleDataFactory getSampleDataFactory();
 }

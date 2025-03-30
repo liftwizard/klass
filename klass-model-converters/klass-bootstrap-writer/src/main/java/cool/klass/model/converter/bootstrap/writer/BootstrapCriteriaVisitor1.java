@@ -32,50 +32,45 @@ import org.eclipse.collections.api.map.ImmutableMap;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.impl.map.mutable.MapAdapter;
 
-public class BootstrapCriteriaVisitor1
-        implements CriteriaVisitor
-{
-    private final MutableMap<Criteria, klass.model.meta.domain.Criteria> criteriaByCriteria = MapAdapter.adapt(new LinkedHashMap<>());
+public class BootstrapCriteriaVisitor1 implements CriteriaVisitor {
+
+    private final MutableMap<Criteria, klass.model.meta.domain.Criteria> criteriaByCriteria = MapAdapter.adapt(
+        new LinkedHashMap<>()
+    );
 
     private final CriteriaList bootstrappedCriteria = new CriteriaList();
 
-    public ImmutableMap<Criteria, klass.model.meta.domain.Criteria> getCriteriaByCriteria()
-    {
+    public ImmutableMap<Criteria, klass.model.meta.domain.Criteria> getCriteriaByCriteria() {
         return this.criteriaByCriteria.toImmutable();
     }
 
-    public CriteriaList getBootstrappedCriteria()
-    {
+    public CriteriaList getBootstrappedCriteria() {
         return this.bootstrappedCriteria;
     }
 
     @Override
-    public void visitAll(@Nonnull AllCriteria allCriteria)
-    {
+    public void visitAll(@Nonnull AllCriteria allCriteria) {
         var bootstrappedCriteria = new klass.model.meta.domain.Criteria();
         this.criteriaByCriteria.put(allCriteria, bootstrappedCriteria);
         this.bootstrappedCriteria.add(bootstrappedCriteria);
     }
 
     @Override
-    public void visitOperator(@Nonnull OperatorCriteria operatorCriteria)
-    {
+    public void visitOperator(@Nonnull OperatorCriteria operatorCriteria) {
         var bootstrappedCriteria = new klass.model.meta.domain.Criteria();
         this.criteriaByCriteria.put(operatorCriteria, bootstrappedCriteria);
         this.bootstrappedCriteria.add(bootstrappedCriteria);
     }
 
     @Override
-    public void visitEdgePoint(@Nonnull EdgePointCriteria edgePointCriteria)
-    {
+    public void visitEdgePoint(@Nonnull EdgePointCriteria edgePointCriteria) {
         var bootstrappedCriteria = new klass.model.meta.domain.Criteria();
         this.criteriaByCriteria.put(edgePointCriteria, bootstrappedCriteria);
         this.bootstrappedCriteria.add(bootstrappedCriteria);
     }
 
     @Override
-    public void visitAnd(@Nonnull AndCriteria andCriteria)
-    {
+    public void visitAnd(@Nonnull AndCriteria andCriteria) {
         var bootstrappedCriteria = new klass.model.meta.domain.Criteria();
         this.criteriaByCriteria.put(andCriteria, bootstrappedCriteria);
         this.bootstrappedCriteria.add(bootstrappedCriteria);
@@ -85,8 +80,7 @@ public class BootstrapCriteriaVisitor1
     }
 
     @Override
-    public void visitOr(@Nonnull OrCriteria orCriteria)
-    {
+    public void visitOr(@Nonnull OrCriteria orCriteria) {
         var bootstrappedCriteria = new klass.model.meta.domain.Criteria();
         this.criteriaByCriteria.put(orCriteria, bootstrappedCriteria);
         this.bootstrappedCriteria.add(bootstrappedCriteria);

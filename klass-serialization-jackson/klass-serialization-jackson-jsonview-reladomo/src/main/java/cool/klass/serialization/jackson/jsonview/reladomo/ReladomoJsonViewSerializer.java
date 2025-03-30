@@ -50,48 +50,47 @@ import cool.klass.serialization.jackson.jsonview.KlassJsonView;
 import cool.klass.serialization.jackson.model.data.property.SerializeValueToJsonFieldPrimitiveTypeVisitor;
 import org.eclipse.collections.api.map.MutableMap;
 
-public class ReladomoJsonViewSerializer
-        extends JsonSerializer<MithraObject>
-{
+public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
+
     @Nonnull
     private final DomainModel domainModel;
-    @Nonnull
-    private final DataStore   dataStore;
 
-    public ReladomoJsonViewSerializer(
-            @Nonnull DomainModel domainModel,
-            @Nonnull DataStore dataStore)
-    {
+    @Nonnull
+    private final DataStore dataStore;
+
+    public ReladomoJsonViewSerializer(@Nonnull DomainModel domainModel, @Nonnull DataStore dataStore) {
         this.domainModel = Objects.requireNonNull(domainModel);
-        this.dataStore   = Objects.requireNonNull(dataStore);
+        this.dataStore = Objects.requireNonNull(dataStore);
     }
 
     @Override
     public void serialize(
-            @Nonnull MithraObject mithraObject,
-            @Nonnull JsonGenerator jsonGenerator,
-            @Nonnull SerializerProvider serializers) throws IOException
-    {
+        @Nonnull MithraObject mithraObject,
+        @Nonnull JsonGenerator jsonGenerator,
+        @Nonnull SerializerProvider serializers
+    ) throws IOException {
         Class<?> activeViewClass = serializers.getActiveView();
         Objects.requireNonNull(
-                activeViewClass,
-                () -> String.format(
-                        "Could not find json serializer for %s. Usually this is caused by a missing @JsonView() annotation.",
-                        mithraObject.getClass().getCanonicalName()));
+            activeViewClass,
+            () ->
+                String.format(
+                    "Could not find json serializer for %s. Usually this is caused by a missing @JsonView() annotation.",
+                    mithraObject.getClass().getCanonicalName()
+                )
+        );
 
-        if (!KlassJsonView.class.isAssignableFrom(activeViewClass))
-        {
+        if (!KlassJsonView.class.isAssignableFrom(activeViewClass)) {
             throw new IllegalStateException(activeViewClass.getCanonicalName());
         }
 
-        KlassJsonView klassJsonView  = this.instantiate(activeViewClass);
-        String        projectionName = klassJsonView.getProjectionName();
-        Projection    projection     = this.domainModel.getProjectionByName(projectionName);
+        KlassJsonView klassJsonView = this.instantiate(activeViewClass);
+        String projectionName = klassJsonView.getProjectionName();
+        Projection projection = this.domainModel.getProjectionByName(projectionName);
         Objects.requireNonNull(projection);
 
         Klass klass = this.domainModel.getClassByName(mithraObject.getClass().getSimpleName());
 
-        var reladomoProjectionConverter         = new ReladomoProjectionConverter();
+        var reladomoProjectionConverter = new ReladomoProjectionConverter();
         RootReladomoNode projectionReladomoNode = reladomoProjectionConverter.getRootReladomoNode(klass, projection);
 
         // This would work if we consistently used the same DomainModel everywhere (instead of sometimes compiled and sometimes code generated).
@@ -100,133 +99,118 @@ public class ReladomoJsonViewSerializer
     }
 
     private void serialize(
-            @Nonnull MithraObject mithraObject,
-            @Nonnull JsonGenerator jsonGenerator,
-            @Nonnull ProjectionElementReladomoNode projectionReladomoNode) throws IOException
-    {
+        @Nonnull MithraObject mithraObject,
+        @Nonnull JsonGenerator jsonGenerator,
+        @Nonnull ProjectionElementReladomoNode projectionReladomoNode
+    ) throws IOException {
         jsonGenerator.writeStartObject();
-        try
-        {
+        try {
             boolean hasPolymorphicChildren = projectionReladomoNode.hasPolymorphicChildren();
-            if (hasPolymorphicChildren)
-            {
-                Klass type                 = (Klass) projectionReladomoNode.getType();
+            if (hasPolymorphicChildren) {
+                Klass type = (Klass) projectionReladomoNode.getType();
                 Klass mostSpecificSubclass = this.dataStore.getMostSpecificSubclass(mithraObject, type);
                 jsonGenerator.writeStringField("__typename", mostSpecificSubclass.getFullyQualifiedName());
             }
 
             this.handleObjectMembers(mithraObject, jsonGenerator, projectionReladomoNode);
-        }
-        finally
-        {
+        } finally {
             jsonGenerator.writeEndObject();
         }
     }
 
     private void handleObjectMembers(
-            @Nonnull MithraObject mithraObject,
-            @Nonnull JsonGenerator jsonGenerator,
-            @Nonnull ProjectionElementReladomoNode projectionReladomoNode)
-            throws IOException
-    {
+        @Nonnull MithraObject mithraObject,
+        @Nonnull JsonGenerator jsonGenerator,
+        @Nonnull ProjectionElementReladomoNode projectionReladomoNode
+    ) throws IOException {
         Objects.requireNonNull(mithraObject);
 
         // TODO: Use listener?
         MutableMap<String, ProjectionElementReladomoNode> children = projectionReladomoNode.getChildren();
-        for (ProjectionElementReladomoNode projectionElementReladomoNode : children)
-        {
-            if (projectionElementReladomoNode instanceof ProjectionDataTypePropertyReladomoNode projectionDataTypePropertyReladomoNode)
-            {
+        for (ProjectionElementReladomoNode projectionElementReladomoNode : children) {
+            if (
+                projectionElementReladomoNode instanceof
+                ProjectionDataTypePropertyReladomoNode projectionDataTypePropertyReladomoNode
+            ) {
                 this.handleProjectionPrimitiveMember(
                         jsonGenerator,
                         mithraObject,
-                        projectionDataTypePropertyReladomoNode);
-            }
-            else if (projectionElementReladomoNode instanceof ProjectionWithReferencePropertyReladomoNode projectionWithReferencePropertyReladomoNode)
-            {
+                        projectionDataTypePropertyReladomoNode
+                    );
+            } else if (
+                projectionElementReladomoNode instanceof
+                ProjectionWithReferencePropertyReladomoNode projectionWithReferencePropertyReladomoNode
+            ) {
                 this.handleProjectionWithReferenceProperty(
                         jsonGenerator,
                         mithraObject,
-                        projectionWithReferencePropertyReladomoNode);
-            }
-            else if (projectionElementReladomoNode instanceof SuperClassReladomoNode superClassReladomoNode)
-            {
+                        projectionWithReferencePropertyReladomoNode
+                    );
+            } else if (projectionElementReladomoNode instanceof SuperClassReladomoNode superClassReladomoNode) {
                 Classifier owningClassifier = superClassReladomoNode.getOwningClassifier();
-                Classifier type             = superClassReladomoNode.getType();
-                if (((Klass) owningClassifier).getSuperClass().get() != type)
-                {
+                Classifier type = superClassReladomoNode.getType();
+                if (((Klass) owningClassifier).getSuperClass().get() != type) {
                     throw new AssertionError("Expected superclass of " + owningClassifier + " to be " + type);
                 }
                 Object superClass = this.dataStore.getSuperClass(mithraObject, (Klass) owningClassifier);
                 this.handleObjectMembers((MithraObject) superClass, jsonGenerator, superClassReladomoNode);
-            }
-            else if (projectionElementReladomoNode instanceof SubClassReladomoNode subClassReladomoNode)
-            {
+            } else if (projectionElementReladomoNode instanceof SubClassReladomoNode subClassReladomoNode) {
                 Classifier owningClassifier = subClassReladomoNode.getOwningClassifier();
-                Classifier type             = subClassReladomoNode.getType();
-                if (((Klass) type).getSuperClass().get() != owningClassifier)
-                {
+                Classifier type = subClassReladomoNode.getType();
+                if (((Klass) type).getSuperClass().get() != owningClassifier) {
                     throw new AssertionError("Expected subclass of " + owningClassifier + " to be " + type);
                 }
                 Object subClass = this.dataStore.getSubClass(mithraObject, (Klass) owningClassifier, (Klass) type);
                 // TODO: There are two separate concepts of definite subclasses and polymorphic projections.
                 // In other words, we should know in advance whether null is ok here.
-                if (subClass != null)
-                {
+                if (subClass != null) {
                     this.handleObjectMembers((MithraObject) subClass, jsonGenerator, subClassReladomoNode);
                 }
-            }
-            else
-            {
+            } else {
                 throw new AssertionError(projectionElementReladomoNode.getClass().getSimpleName());
             }
         }
     }
 
     @Nonnull
-    private KlassJsonView instantiate(@Nonnull Class<?> activeViewClass)
-    {
-        try
-        {
+    private KlassJsonView instantiate(@Nonnull Class<?> activeViewClass) {
+        try {
             return activeViewClass.asSubclass(KlassJsonView.class).newInstance();
-        }
-        catch (ReflectiveOperationException e)
-        {
+        } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void handleProjectionPrimitiveMember(
-            @Nonnull JsonGenerator jsonGenerator,
-            @Nonnull MithraObject mithraObject,
-            @Nonnull ProjectionDataTypePropertyReladomoNode projectionDataTypePropertyReladomoNode)
-            throws IOException
-    {
+        @Nonnull JsonGenerator jsonGenerator,
+        @Nonnull MithraObject mithraObject,
+        @Nonnull ProjectionDataTypePropertyReladomoNode projectionDataTypePropertyReladomoNode
+    ) throws IOException {
         Objects.requireNonNull(mithraObject);
 
-        DataTypeProperty property     = projectionDataTypePropertyReladomoNode.getProperty();
-        String           propertyName = projectionDataTypePropertyReladomoNode.getName();
-        DataType         dataType     = projectionDataTypePropertyReladomoNode.getType();
+        DataTypeProperty property = projectionDataTypePropertyReladomoNode.getProperty();
+        String propertyName = projectionDataTypePropertyReladomoNode.getName();
+        DataType dataType = projectionDataTypePropertyReladomoNode.getType();
 
         Object dataTypeValue = this.dataStore.getDataTypeProperty(mithraObject, property);
-        if (dataTypeValue == null)
-        {
+        if (dataTypeValue == null) {
             // TODO: Make this configurable
             jsonGenerator.writeNullField(propertyName);
             return;
         }
 
-        if (dataType instanceof Enumeration)
-        {
+        if (dataType instanceof Enumeration) {
             EnumerationLiteral enumerationLiteral = (EnumerationLiteral) dataTypeValue;
             jsonGenerator.writeStringField(propertyName, enumerationLiteral.getPrettyName());
             return;
         }
 
-        if (dataType instanceof PrimitiveType primitiveType)
-        {
-            PrimitiveTypeVisitor visitor =
-                    new SerializeValueToJsonFieldPrimitiveTypeVisitor(jsonGenerator, propertyName, dataTypeValue);
+        if (dataType instanceof PrimitiveType primitiveType) {
+            PrimitiveTypeVisitor visitor = new SerializeValueToJsonFieldPrimitiveTypeVisitor(
+                jsonGenerator,
+                propertyName,
+                dataTypeValue
+            );
             primitiveType.visit(visitor);
             return;
         }
@@ -235,37 +219,36 @@ public class ReladomoJsonViewSerializer
     }
 
     public void handleProjectionWithReferenceProperty(
-            @Nonnull JsonGenerator jsonGenerator,
-            MithraObject mithraObject,
-            @Nonnull ProjectionWithReferencePropertyReladomoNode projectionWithReferencePropertyReladomoNode) throws IOException
-    {
+        @Nonnull JsonGenerator jsonGenerator,
+        MithraObject mithraObject,
+        @Nonnull ProjectionWithReferencePropertyReladomoNode projectionWithReferencePropertyReladomoNode
+    ) throws IOException {
         ReferenceProperty referenceProperty = projectionWithReferencePropertyReladomoNode.getReferenceProperty();
-        Multiplicity      multiplicity       = referenceProperty.getMultiplicity();
-        String            associationEndName = referenceProperty.getName();
+        Multiplicity multiplicity = referenceProperty.getMultiplicity();
+        String associationEndName = referenceProperty.getName();
 
-        if (multiplicity.isToMany())
-        {
-            Object                   value      = this.dataStore.getToMany(mithraObject, referenceProperty);
+        if (multiplicity.isToMany()) {
+            Object value = this.dataStore.getToMany(mithraObject, referenceProperty);
             MithraList<MithraObject> mithraList = (MithraList<MithraObject>) Objects.requireNonNull(value);
 
             // TODO: Add configuration to disable serialization of empty lists
             jsonGenerator.writeArrayFieldStart(associationEndName);
-            try
-            {
-                mithraList.forEachWithCursor(eachChildValue ->
-                        this.recurse((MithraObject) eachChildValue, jsonGenerator, projectionWithReferencePropertyReladomoNode));
-            }
-            finally
-            {
+            try {
+                mithraList.forEachWithCursor(
+                    eachChildValue ->
+                        this.recurse(
+                                (MithraObject) eachChildValue,
+                                jsonGenerator,
+                                projectionWithReferencePropertyReladomoNode
+                            )
+                );
+            } finally {
                 jsonGenerator.writeEndArray();
             }
-        }
-        else
-        {
+        } else {
             Object value = this.dataStore.getToOne(mithraObject, referenceProperty);
             // TODO: Add configuration to disable serialization of null values
-            if (value == null)
-            {
+            if (value == null) {
                 // Should only happen for to-one optional relationships
                 jsonGenerator.writeNullField(associationEndName);
                 return;
@@ -277,16 +260,13 @@ public class ReladomoJsonViewSerializer
     }
 
     public boolean recurse(
-            @Nonnull MithraObject eachChildValue,
-            @Nonnull JsonGenerator jsonGenerator,
-            @Nonnull ProjectionElementReladomoNode projectionReladomoNode)
-    {
-        try
-        {
+        @Nonnull MithraObject eachChildValue,
+        @Nonnull JsonGenerator jsonGenerator,
+        @Nonnull ProjectionElementReladomoNode projectionReladomoNode
+    ) {
+        try {
             this.serialize(eachChildValue, jsonGenerator, projectionReladomoNode);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
         return true;

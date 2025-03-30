@@ -31,27 +31,27 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-        name = "generate-reladomo-runtime-configuration",
-        defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
-        threadSafe = true,
-        requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class GenerateReladomoRuntimeConfigurationMojo extends AbstractGenerateMojo
-{
-    @Parameter(
-            property = "outputDirectory",
-            defaultValue = "${project.build.directory}/generated-test-resources/reladomo-runtime-configuration")
-    private File outputDirectory;
+    name = "generate-reladomo-runtime-configuration",
+    defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
+    threadSafe = true,
+    requiresDependencyResolution = ResolutionScope.RUNTIME
+)
+public class GenerateReladomoRuntimeConfigurationMojo extends AbstractGenerateMojo {
 
     @Parameter(
-            property = "outputFilename",
-            required = true,
-            defaultValue = "TestReladomoRuntimeConfiguration.xml")
+        property = "outputDirectory",
+        defaultValue = "${project.build.directory}/generated-test-resources/reladomo-runtime-configuration"
+    )
+    private File outputDirectory;
+
+    @Parameter(property = "outputFilename", required = true, defaultValue = "TestReladomoRuntimeConfiguration.xml")
     private String outputFilename;
 
     @Parameter(
-            property = "connectionManagerClassName",
-            required = true,
-            defaultValue = "io.liftwizard.reladomo.connection.manager.holder.ConnectionManagerHolder")
+        property = "connectionManagerClassName",
+        required = true,
+        defaultValue = "io.liftwizard.reladomo.connection.manager.holder.ConnectionManagerHolder"
+    )
     private String connectionManagerClassName;
 
     @Parameter(property = "connectionManagerName")
@@ -68,30 +68,26 @@ public class GenerateReladomoRuntimeConfigurationMojo extends AbstractGenerateMo
     private String cacheType;
 
     @Override
-    public void execute() throws MojoExecutionException
-    {
-        if (!this.outputDirectory.exists())
-        {
+    public void execute() throws MojoExecutionException {
+        if (!this.outputDirectory.exists()) {
             this.outputDirectory.mkdirs();
         }
 
         DomainModel domainModel = this.getDomainModel();
 
         Path outputPath = this.outputDirectory.toPath();
-        Path path       = outputPath.resolve(this.outputFilename);
-        try
-        {
+        Path path = outputPath.resolve(this.outputFilename);
+        try {
             ReladomoRuntimeConfigurationGenerator reladomoRuntimeConfigurationGenerator =
-                    new ReladomoRuntimeConfigurationGenerator(
-                            domainModel,
-                            this.connectionManagerClassName,
-                            this.connectionManagerName,
-                            this.rootPackageName,
-                            this.cacheType);
+                new ReladomoRuntimeConfigurationGenerator(
+                    domainModel,
+                    this.connectionManagerClassName,
+                    this.connectionManagerName,
+                    this.rootPackageName,
+                    this.cacheType
+                );
             reladomoRuntimeConfigurationGenerator.writeRuntimeConfigFile(path);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
 
@@ -99,12 +95,9 @@ public class GenerateReladomoRuntimeConfigurationMojo extends AbstractGenerateMo
         resource.setDirectory(this.outputDirectory.getAbsolutePath());
         // TODO: Should be based on the output path
         resource.setTargetPath("reladomo-runtime-configuration");
-        if (this.isTest)
-        {
+        if (this.isTest) {
             this.mavenProject.addTestResource(resource);
-        }
-        else
-        {
+        } else {
             this.mavenProject.addResource(resource);
         }
     }

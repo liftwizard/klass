@@ -28,26 +28,24 @@ import cool.klass.model.meta.domain.api.value.literal.LiteralValue;
 import cool.klass.model.meta.domain.value.AbstractExpressionValue;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public abstract class AbstractLiteralValue
-        extends AbstractExpressionValue
-        implements LiteralValue
-{
+public abstract class AbstractLiteralValue extends AbstractExpressionValue implements LiteralValue {
+
     protected AbstractLiteralValue(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode)
-    {
+        @Nonnull ParserRuleContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode
+    ) {
         super(elementContext, macroElement, sourceCode);
     }
 
     public abstract static class AbstractLiteralValueBuilder<BuiltElement extends AbstractLiteralValue>
-            extends AbstractExpressionValueBuilder<BuiltElement>
-    {
+        extends AbstractExpressionValueBuilder<BuiltElement> {
+
         protected AbstractLiteralValueBuilder(
-                @Nonnull ParserRuleContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode)
-        {
+            @Nonnull ParserRuleContext elementContext,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode
+        ) {
             super(elementContext, macroElement, sourceCode);
         }
     }

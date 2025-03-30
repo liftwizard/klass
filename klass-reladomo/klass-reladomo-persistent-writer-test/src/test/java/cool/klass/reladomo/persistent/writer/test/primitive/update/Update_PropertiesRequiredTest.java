@@ -31,21 +31,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class Update_PropertiesRequiredTest
-        extends AbstractUpdateValidatorTest
-        implements PrimitiveValidatorTest
-{
+public class Update_PropertiesRequiredTest extends AbstractUpdateValidatorTest implements PrimitiveValidatorTest {
+
     @RegisterExtension
     public final ReladomoExtensionBuilder reladomoTestExtension = new ReladomoExtensionBuilder()
-            .setRuntimeConfigurationPath("reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml")
-            .setTestDataFileNames("test-data/User.txt", "test-data/Update_PropertiesRequiredTest.txt");
+        .setRuntimeConfigurationPath("reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml")
+        .setTestDataFileNames("test-data/User.txt", "test-data/Update_PropertiesRequiredTest.txt");
 
     private Object persistentInstance;
 
     @BeforeEach
-    void setUp()
-    {
-        Klass            klass       = this.getKlass();
+    void setUp() {
+        Klass klass = this.getKlass();
         DataTypeProperty keyProperty = (DataTypeProperty) klass.getPropertyByName("propertiesRequiredId").get();
 
         ImmutableMap<DataTypeProperty, Object> keys = Maps.immutable.with(keyProperty, 1L);
@@ -55,97 +52,72 @@ public class Update_PropertiesRequiredTest
 
     @Override
     @Test
-    public void validate_good()
-            throws IOException
-    {
+    public void validate_good() throws IOException {
         this.validate("validate_good", this.persistentInstance);
     }
 
     @Test
     @Override
-    public void validate_mutation_context()
-            throws IOException
-    {
+    public void validate_mutation_context() throws IOException {
         this.validate("validate_mutation_context", this.persistentInstance);
     }
 
     @Override
     @Test
-    public void validate_extra_properties()
-            throws IOException
-    {
+    public void validate_extra_properties() throws IOException {
         this.validate("validate_extra_properties", this.persistentInstance);
     }
 
     @Override
     @Test
-    public void validate_expected_primitive_actual_missing()
-            throws IOException
-    {
+    public void validate_expected_primitive_actual_missing() throws IOException {
         this.validate("validate_expected_primitive_actual_missing", this.persistentInstance);
     }
 
     @Override
     @Test
-    public void validate_expected_primitive_actual_array()
-            throws IOException
-    {
-        this.validate(
-                "validate_expected_primitive_actual_array",
-                this.persistentInstance);
+    public void validate_expected_primitive_actual_array() throws IOException {
+        this.validate("validate_expected_primitive_actual_array", this.persistentInstance);
     }
 
     @Override
     @Test
-    public void validate_expected_primitive_actual_object()
-            throws IOException
-    {
+    public void validate_expected_primitive_actual_object() throws IOException {
         this.validate("validate_expected_primitive_actual_object", this.persistentInstance);
     }
 
     @Override
     @Test
-    public void validate_expected_primitive_actual_null()
-            throws IOException
-    {
+    public void validate_expected_primitive_actual_null() throws IOException {
         this.validate("validate_expected_primitive_actual_null", this.persistentInstance);
     }
 
     @Override
     @Test
-    public void validate_expected_primitive_actual_string()
-            throws IOException
-    {
+    public void validate_expected_primitive_actual_string() throws IOException {
         this.validate("validate_expected_primitive_actual_string", this.persistentInstance);
     }
 
     @Test
     @Override
-    public void validate_version_expected_primitive_actual_object()
-            throws IOException
-    {
-        this.validate(
-                "validate_version_expected_primitive_actual_object",
-                this.persistentInstance);
+    public void validate_version_expected_primitive_actual_object() throws IOException {
+        this.validate("validate_version_expected_primitive_actual_object", this.persistentInstance);
     }
 
     @Nonnull
     @Override
-    protected Klass getKlass()
-    {
+    protected Klass getKlass() {
         return this.domainModel.getClassByName("PropertiesRequired");
     }
 
     @Nonnull
     @Override
-    protected OperationMode getMode()
-    {
+    protected OperationMode getMode() {
         return OperationMode.REPLACE;
     }
 
     @Override
-    protected ImmutableMap<DataTypeProperty, Object> getPropertyDataFromUrl()
-    {
+    protected ImmutableMap<DataTypeProperty, Object> getPropertyDataFromUrl() {
         DataTypeProperty dataTypeProperty = this.getKlass().getDataTypePropertyByName("propertiesRequiredId");
         return Maps.immutable.with(dataTypeProperty, 1L);
     }

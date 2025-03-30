@@ -20,12 +20,10 @@ import javax.ws.rs.client.Client;
 
 import org.junit.jupiter.api.Test;
 
-class ClassResourceManualTest
-        extends AbstractResourceTestCase
-{
+class ClassResourceManualTest extends AbstractResourceTestCase {
+
     @Test
-    void getAllMeta()
-    {
+    void getAllMeta() {
         Class<?> klass = this.getClass();
         String clientName = klass.getPackage().getName() + '.' + klass.getSimpleName() + '.' + "getAllMeta";
         Client client = this.getClient(clientName);

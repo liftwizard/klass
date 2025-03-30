@@ -27,47 +27,43 @@ import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import cool.klass.model.meta.grammar.KlassParser.InOperatorContext;
 
-public final class InOperatorImpl
-        extends AbstractOperator
-        implements InOperator
-{
+public final class InOperatorImpl extends AbstractOperator implements InOperator {
+
     private InOperatorImpl(
-            @Nonnull InOperatorContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode,
-            @Nonnull String operatorText)
-    {
+        @Nonnull InOperatorContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode,
+        @Nonnull String operatorText
+    ) {
         super(elementContext, macroElement, sourceCode, operatorText);
     }
 
     @Nonnull
     @Override
-    public InOperatorContext getElementContext()
-    {
+    public InOperatorContext getElementContext() {
         return (InOperatorContext) super.getElementContext();
     }
 
-    public static final class InOperatorBuilder
-            extends AbstractOperatorBuilder<InOperatorImpl>
-    {
+    public static final class InOperatorBuilder extends AbstractOperatorBuilder<InOperatorImpl> {
+
         public InOperatorBuilder(
-                @Nonnull InOperatorContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode,
-                @Nonnull String operatorText)
-        {
+            @Nonnull InOperatorContext elementContext,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode,
+            @Nonnull String operatorText
+        ) {
             super(elementContext, macroElement, sourceCode, operatorText);
         }
 
         @Override
         @Nonnull
-        protected InOperatorImpl buildUnsafe()
-        {
+        protected InOperatorImpl buildUnsafe() {
             return new InOperatorImpl(
-                    (InOperatorContext) this.elementContext,
-                    this.macroElement.map(ElementBuilder::getElement),
-                    this.sourceCode.build(),
-                    this.operatorText);
+                (InOperatorContext) this.elementContext,
+                this.macroElement.map(ElementBuilder::getElement),
+                this.sourceCode.build(),
+                this.operatorText
+            );
         }
     }
 }

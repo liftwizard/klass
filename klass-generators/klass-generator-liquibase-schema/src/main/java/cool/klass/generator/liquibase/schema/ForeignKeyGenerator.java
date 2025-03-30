@@ -25,87 +25,87 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.api.tuple.Pair;
 
-public final class ForeignKeyGenerator
-{
-    private ForeignKeyGenerator()
-    {
+public final class ForeignKeyGenerator {
+
+    private ForeignKeyGenerator() {
         throw new AssertionError("Suppress default constructor for noninstantiability");
     }
 
-    public static Optional<String> getForeignKeys(Klass klass, int ordinal)
-    {
+    public static Optional<String> getForeignKeys(Klass klass, int ordinal) {
         MutableOrderedMap<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> foreignKeys = klass
-                .getForeignKeys()
-                .reject((key, value) -> key.getOwningClassifier().isTemporal() || key.getType().isTemporal());
-        if (foreignKeys.isEmpty())
-        {
+            .getForeignKeys()
+            .reject((key, value) -> key.getOwningClassifier().isTemporal() || key.getType().isTemporal());
+        if (foreignKeys.isEmpty()) {
             return Optional.empty();
         }
 
         ImmutableList<String> foreignKeyStrings = foreignKeys
-                .keyValuesView()
-                .reject(ForeignKeyGenerator::isSelfToOneOptional)
-                .collect(keyValuePair -> getForeignKey(keyValuePair.getOne(), keyValuePair.getTwo(), ordinal))
-                .toImmutableList();
+            .keyValuesView()
+            .reject(ForeignKeyGenerator::isSelfToOneOptional)
+            .collect(keyValuePair -> getForeignKey(keyValuePair.getOne(), keyValuePair.getTwo(), ordinal))
+            .toImmutableList();
         String result = foreignKeyStrings.makeString("");
         return Optional.of(result);
     }
 
-    private static boolean isSelfToOneOptional(Pair<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> pair)
-    {
+    private static boolean isSelfToOneOptional(
+        Pair<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> pair
+    ) {
         AssociationEnd associationEnd = pair.getOne();
-        boolean result = associationEnd.isToSelf()
-                && associationEnd.getMultiplicity().isToOne()
-                && !associationEnd.getMultiplicity().isRequired();
+        boolean result =
+            associationEnd.isToSelf() &&
+            associationEnd.getMultiplicity().isToOne() &&
+            !associationEnd.getMultiplicity().isRequired();
         return result;
     }
 
     private static String getForeignKey(
-            AssociationEnd associationEnd,
-            MutableOrderedMap<DataTypeProperty, DataTypeProperty> dataTypeProperties,
-            int ordinal)
-    {
+        AssociationEnd associationEnd,
+        MutableOrderedMap<DataTypeProperty, DataTypeProperty> dataTypeProperties,
+        int ordinal
+    ) {
         String tableName = TableGenerator.TABLE_NAME_CONVERTER.convert(associationEnd.getOwningClassifier().getName());
-        String constraintName = tableName
-                + "_FK_"
-                + TableGenerator.COLUMN_NAME_CONVERTER.convert(associationEnd.getName());
+        String constraintName =
+            tableName + "_FK_" + TableGenerator.COLUMN_NAME_CONVERTER.convert(associationEnd.getName());
 
         String foreignKeyColumnNames = dataTypeProperties
-                .keysView()
-                .collect(DataTypeProperty::getName)
-                .collect(TableGenerator.COLUMN_NAME_CONVERTER::convert)
-                .makeString(", ");
+            .keysView()
+            .collect(DataTypeProperty::getName)
+            .collect(TableGenerator.COLUMN_NAME_CONVERTER::convert)
+            .makeString(", ");
 
-        String name                = associationEnd.getType().getName();
+        String name = associationEnd.getType().getName();
         String referencedTableName = TableGenerator.TABLE_NAME_CONVERTER.convert(name);
 
         String referencedKeyColumnNames = dataTypeProperties
-                .valuesView()
-                .collect(DataTypeProperty::getName)
-                .collect(TableGenerator.COLUMN_NAME_CONVERTER::convert)
-                .makeString(", ");
+            .valuesView()
+            .collect(DataTypeProperty::getName)
+            .collect(TableGenerator.COLUMN_NAME_CONVERTER::convert)
+            .makeString(", ");
 
         // language=XML
-        String format = """
-                    <changeSet author="Klass" id="initial-foreign-key-%d-%s">
-                        <addForeignKeyConstraint
-                                constraintName="%s"
-                                baseTableName="%s"
-                                baseColumnNames="%s"
-                                referencedTableName="%s"
-                                referencedColumnNames="%s"
-                        />
-                    </changeSet>
+        String format =
+            """
+                <changeSet author="Klass" id="initial-foreign-key-%d-%s">
+                    <addForeignKeyConstraint
+                            constraintName="%s"
+                            baseTableName="%s"
+                            baseColumnNames="%s"
+                            referencedTableName="%s"
+                            referencedColumnNames="%s"
+                    />
+                </changeSet>
 
-                """;
+            """;
 
         return format.formatted(
-                ordinal,
-                constraintName,
-                constraintName,
-                tableName,
-                foreignKeyColumnNames,
-                referencedTableName,
-                referencedKeyColumnNames);
+            ordinal,
+            constraintName,
+            constraintName,
+            tableName,
+            foreignKeyColumnNames,
+            referencedTableName,
+            referencedKeyColumnNames
+        );
     }
 }

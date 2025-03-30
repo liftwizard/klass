@@ -20,6 +20,4 @@ import java.util.function.Supplier;
 
 import graphql.schema.idl.TypeRuntimeWiring.Builder;
 
-public interface GraphQLTypeRuntimeWiringProvider extends Supplier<Builder>
-{
-}
+public interface GraphQLTypeRuntimeWiringProvider extends Supplier<Builder> {}

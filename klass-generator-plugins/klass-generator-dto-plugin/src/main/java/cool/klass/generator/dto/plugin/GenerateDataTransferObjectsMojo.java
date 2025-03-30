@@ -30,34 +30,31 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-        name = "generate-data-transfer-objects",
-        defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-        threadSafe = true,
-        requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class GenerateDataTransferObjectsMojo extends AbstractGenerateMojo
-{
+    name = "generate-data-transfer-objects",
+    defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+    threadSafe = true,
+    requiresDependencyResolution = ResolutionScope.RUNTIME
+)
+public class GenerateDataTransferObjectsMojo extends AbstractGenerateMojo {
+
     @Parameter(
-            property = "outputDirectory",
-            defaultValue = "${project.build.directory}/generated-sources/data-transfer-objects")
+        property = "outputDirectory",
+        defaultValue = "${project.build.directory}/generated-sources/data-transfer-objects"
+    )
     private File outputDirectory;
 
     @Override
-    public void execute() throws MojoExecutionException
-    {
-        if (!this.outputDirectory.exists())
-        {
+    public void execute() throws MojoExecutionException {
+        if (!this.outputDirectory.exists()) {
             this.outputDirectory.mkdirs();
         }
 
         DomainModel domainModel = this.getDomainModel();
-        Path        outputPath  = this.outputDirectory.toPath();
-        try
-        {
+        Path outputPath = this.outputDirectory.toPath();
+        try {
             DataTransferObjectsGenerator dataTransferObjectsGenerator = new DataTransferObjectsGenerator(domainModel);
             dataTransferObjectsGenerator.writeDataTransferObjectFiles(outputPath);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
 

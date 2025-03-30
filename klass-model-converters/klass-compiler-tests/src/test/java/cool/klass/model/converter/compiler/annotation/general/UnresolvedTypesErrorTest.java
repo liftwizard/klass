@@ -18,7 +18,4 @@ package cool.klass.model.converter.compiler.annotation.general;
 
 import cool.klass.model.converter.compiler.annotation.AbstractKlassCompilerErrorTestCase;
 
-public class UnresolvedTypesErrorTest
-        extends AbstractKlassCompilerErrorTestCase
-{
-}
+public class UnresolvedTypesErrorTest extends AbstractKlassCompilerErrorTestCase {}

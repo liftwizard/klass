@@ -28,28 +28,29 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public class LiquibaseSchemaGeneratorTest
-{
+public class LiquibaseSchemaGeneratorTest {
+
     public static final String FULLY_QUALIFIED_PACKAGE = "com.stackoverflow";
 
     @RegisterExtension
     final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
     @Test
-    void smokeTest()
-    {
+    void smokeTest() {
         ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
 
         var domainModelCompilerLoader = new DomainModelCompilerLoader(
-                klassSourcePackages,
-                Thread.currentThread().getContextClassLoader(),
-                DomainModelCompilerLoader::logCompilerError,
-                ColorSchemeProvider.getByName("dark"));
+            klassSourcePackages,
+            Thread.currentThread().getContextClassLoader(),
+            DomainModelCompilerLoader::logCompilerError,
+            ColorSchemeProvider.getByName("dark")
+        );
 
         DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
 
         this.fileMatchExtension.assertFileContents(
                 this.getClass().getCanonicalName() + ".xml",
-                SchemaGenerator.getSourceCode(domainModel, FULLY_QUALIFIED_PACKAGE));
+                SchemaGenerator.getSourceCode(domainModel, FULLY_QUALIFIED_PACKAGE)
+            );
     }
 }

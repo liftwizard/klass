@@ -243,37 +243,6 @@ jobs:
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
-  checkstyle-formatting-strict:
-    name: checkstyle xml (formatting strict)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - uses: actions/cache@v4
-        with:
-          key: maven-checkstyle-${{ hashFiles('**/pom.xml') }}
-          path: ~/.m2/repository
-          restore-keys: |
-            maven-checkstyle-
-            maven-
-
-      - uses: twosigma/maven-cache-cleaner@v1
-
-      - uses: jdx/mise-action@v2
-
-      - name: "Produce Checkstyle XML: Strict Formatting"
-        run: just checkstyle-profile checkstyle-formatting-strict false
-
-      - uses: motlin/checkstyle-results@v1
-        with:
-          checkstyle_files: "**/checkstyle-result.xml"
-
-      # Remove any jars we may have created before actions/cache caches .m2
-      - name: "Clean Maven cache"
-        run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
-
   maven-rewrite:
     runs-on: ubuntu-latest
     steps:
@@ -348,58 +317,6 @@ jobs:
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
-  spotless-java-sort-imports:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - uses: actions/cache@v4
-        with:
-          key: maven-spotless-${{ hashFiles('**/pom.xml') }}
-          path: ~/.m2/repository
-          restore-keys: |
-            maven-spotless-
-            maven-
-
-      - uses: twosigma/maven-cache-cleaner@v1
-
-      - uses: jdx/mise-action@v2
-
-      - name: "Spotless Check: Java Import Order"
-        run: just spotless java-sort-imports
-
-      # Remove any jars we may have created before actions/cache caches .m2
-      - name: "Clean Maven cache"
-        run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
-
-  spotless-java-unused-imports:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - uses: actions/cache@v4
-        with:
-          key: maven-spotless-${{ hashFiles('**/pom.xml') }}
-          path: ~/.m2/repository
-          restore-keys: |
-            maven-spotless-
-            maven-
-
-      - uses: twosigma/maven-cache-cleaner@v1
-
-      - uses: jdx/mise-action@v2
-
-      - name: "Spotless Check: Java Unused Imports"
-        run: just spotless java-unused-imports
-
-      # Remove any jars we may have created before actions/cache caches .m2
-      - name: "Clean Maven cache"
-        run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
-
   spotless-java-cleanthat:
     runs-on: ubuntu-latest
     steps:
@@ -421,6 +338,32 @@ jobs:
 
       - name: "Spotless Check: Java cleanthat"
         run: just spotless java-cleanthat
+
+      # Remove any jars we may have created before actions/cache caches .m2
+      - name: "Clean Maven cache"
+        run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
+
+  spotless-prettier-java-sort-imports:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - uses: actions/cache@v4
+        with:
+          key: maven-spotless-prettier-java-sort-imports-${{ hashFiles('**/pom.xml') }}
+          path: ~/.m2/repository
+          restore-keys: |
+            maven-spotless-
+            maven-
+
+      - uses: twosigma/maven-cache-cleaner@v1
+
+      - uses: jdx/mise-action@v2
+
+      - name: "Spotless Check: Prettier Java (with sorted imports)"
+        run: just spotless prettier-java-sort-imports
 
       # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
@@ -616,12 +559,10 @@ jobs:
         checkstyle-semantics,
         checkstyle-semantics-strict,
         checkstyle-formatting,
-        checkstyle-formatting-strict,
         maven-rewrite,
         maven-reproducible,
         spotless-formats,
-        spotless-java-sort-imports,
-        spotless-java-unused-imports,
+        spotless-prettier-java-sort-imports,
         spotless-java-cleanthat,
         spotless-sql,
         spotless-pom,

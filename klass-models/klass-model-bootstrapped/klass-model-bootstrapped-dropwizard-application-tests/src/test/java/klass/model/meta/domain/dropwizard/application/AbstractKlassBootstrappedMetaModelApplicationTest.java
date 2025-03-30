@@ -22,15 +22,14 @@ import io.dropwizard.testing.ResourceHelpers;
 import io.liftwizard.dropwizard.testing.junit.AbstractDropwizardAppTest;
 import io.liftwizard.junit.extension.app.LiftwizardAppExtension;
 
-public class AbstractKlassBootstrappedMetaModelApplicationTest
-        extends AbstractDropwizardAppTest
-{
+public class AbstractKlassBootstrappedMetaModelApplicationTest extends AbstractDropwizardAppTest {
+
     @Nonnull
     @Override
-    protected LiftwizardAppExtension<?> getDropwizardAppExtension()
-    {
+    protected LiftwizardAppExtension<?> getDropwizardAppExtension() {
         return new LiftwizardAppExtension<>(
-                KlassBootstrappedMetaModelApplication.class,
-                ResourceHelpers.resourceFilePath("config-test.json5"));
+            KlassBootstrappedMetaModelApplication.class,
+            ResourceHelpers.resourceFilePath("config-test.json5")
+        );
     }
 }

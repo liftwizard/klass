@@ -39,14 +39,14 @@ import cool.klass.model.meta.domain.service.url.UrlImpl;
 import cool.klass.model.meta.domain.service.url.UrlImpl.UrlBuilder;
 import cool.klass.model.meta.grammar.KlassParser.ServiceDeclarationContext;
 
-public final class ServiceImpl
-        extends AbstractElement
-        implements Service
-{
+public final class ServiceImpl extends AbstractElement implements Service {
+
     @Nonnull
-    private final UrlImpl             url;
+    private final UrlImpl url;
+
     @Nonnull
-    private final Verb                verb;
+    private final Verb verb;
+
     @Nonnull
     private final ServiceMultiplicity serviceMultiplicity;
 
@@ -61,58 +61,51 @@ public final class ServiceImpl
     private Optional<OrderBy> orderBy = Optional.empty();
 
     private ServiceImpl(
-            @Nonnull ServiceDeclarationContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode,
-            @Nonnull UrlImpl url,
-            @Nonnull Verb verb,
-            @Nonnull ServiceMultiplicity serviceMultiplicity)
-    {
+        @Nonnull ServiceDeclarationContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode,
+        @Nonnull UrlImpl url,
+        @Nonnull Verb verb,
+        @Nonnull ServiceMultiplicity serviceMultiplicity
+    ) {
         super(elementContext, macroElement, sourceCode);
-        this.url                 = Objects.requireNonNull(url);
-        this.verb                = Objects.requireNonNull(verb);
+        this.url = Objects.requireNonNull(url);
+        this.verb = Objects.requireNonNull(verb);
         this.serviceMultiplicity = Objects.requireNonNull(serviceMultiplicity);
     }
 
     @Nonnull
     @Override
-    public ServiceDeclarationContext getElementContext()
-    {
+    public ServiceDeclarationContext getElementContext() {
         return (ServiceDeclarationContext) super.getElementContext();
     }
 
     @Override
     @Nonnull
-    public UrlImpl getUrl()
-    {
+    public UrlImpl getUrl() {
         return this.url;
     }
 
     @Override
     @Nonnull
-    public Verb getVerb()
-    {
+    public Verb getVerb() {
         return this.verb;
     }
 
     @Override
     @Nonnull
-    public ServiceMultiplicity getServiceMultiplicity()
-    {
+    public ServiceMultiplicity getServiceMultiplicity() {
         return this.serviceMultiplicity;
     }
 
     @Nonnull
     @Override
-    public Optional<Criteria> getQueryCriteria()
-    {
+    public Optional<Criteria> getQueryCriteria() {
         return this.queryCriteria;
     }
 
-    private void setQueryCriteria(@Nonnull Optional<Criteria> queryCriteria)
-    {
-        if (this.queryCriteria != null)
-        {
+    private void setQueryCriteria(@Nonnull Optional<Criteria> queryCriteria) {
+        if (this.queryCriteria != null) {
             throw new IllegalStateException();
         }
         this.queryCriteria = Objects.requireNonNull(queryCriteria);
@@ -120,15 +113,12 @@ public final class ServiceImpl
 
     @Nonnull
     @Override
-    public Optional<Criteria> getAuthorizeCriteria()
-    {
+    public Optional<Criteria> getAuthorizeCriteria() {
         return this.authorizeCriteria;
     }
 
-    private void setAuthorizeCriteria(@Nonnull Optional<Criteria> authorizeCriteria)
-    {
-        if (this.authorizeCriteria != null)
-        {
+    private void setAuthorizeCriteria(@Nonnull Optional<Criteria> authorizeCriteria) {
+        if (this.authorizeCriteria != null) {
             throw new IllegalStateException();
         }
         this.authorizeCriteria = Objects.requireNonNull(authorizeCriteria);
@@ -136,15 +126,12 @@ public final class ServiceImpl
 
     @Nonnull
     @Override
-    public Optional<Criteria> getValidateCriteria()
-    {
+    public Optional<Criteria> getValidateCriteria() {
         return this.validateCriteria;
     }
 
-    private void setValidateCriteria(@Nonnull Optional<Criteria> validateCriteria)
-    {
-        if (this.validateCriteria != null)
-        {
+    private void setValidateCriteria(@Nonnull Optional<Criteria> validateCriteria) {
+        if (this.validateCriteria != null) {
             throw new IllegalStateException();
         }
         this.validateCriteria = Objects.requireNonNull(validateCriteria);
@@ -152,30 +139,24 @@ public final class ServiceImpl
 
     @Nonnull
     @Override
-    public Optional<Criteria> getConflictCriteria()
-    {
+    public Optional<Criteria> getConflictCriteria() {
         return this.conflictCriteria;
     }
 
-    private void setConflictCriteria(@Nonnull Optional<Criteria> conflictCriteria)
-    {
-        if (this.conflictCriteria != null)
-        {
+    private void setConflictCriteria(@Nonnull Optional<Criteria> conflictCriteria) {
+        if (this.conflictCriteria != null) {
             throw new IllegalStateException();
         }
         this.conflictCriteria = Objects.requireNonNull(conflictCriteria);
     }
 
     @Override
-    public Optional<ServiceProjectionDispatch> getProjectionDispatch()
-    {
+    public Optional<ServiceProjectionDispatch> getProjectionDispatch() {
         return Objects.requireNonNull(this.projectionDispatch);
     }
 
-    private void setProjectionDispatch(Optional<ServiceProjectionDispatch> projectionDispatch)
-    {
-        if (this.projectionDispatch != null)
-        {
+    private void setProjectionDispatch(Optional<ServiceProjectionDispatch> projectionDispatch) {
+        if (this.projectionDispatch != null) {
             throw new IllegalStateException();
         }
         this.projectionDispatch = Objects.requireNonNull(projectionDispatch);
@@ -183,45 +164,43 @@ public final class ServiceImpl
 
     @Override
     @Nonnull
-    public Optional<OrderBy> getOrderBy()
-    {
+    public Optional<OrderBy> getOrderBy() {
         return Objects.requireNonNull(this.orderBy);
     }
 
-    private void setOrderBy(@Nonnull Optional<OrderBy> orderBy)
-    {
+    private void setOrderBy(@Nonnull Optional<OrderBy> orderBy) {
         this.orderBy = Objects.requireNonNull(orderBy);
     }
 
     @Override
-    public int getNumParameters()
-    {
-        int numUrlParameters       = this.url.getParameters().size();
-        int numVersionParameters   = this.isVersionClauseRequired() ? 1 : 0;
+    public int getNumParameters() {
+        int numUrlParameters = this.url.getParameters().size();
+        int numVersionParameters = this.isVersionClauseRequired() ? 1 : 0;
         int numAuthorizeParameters = this.isAuthorizeClauseRequired() ? 1 : 0;
         return numUrlParameters + numVersionParameters + numAuthorizeParameters;
     }
 
     @Override
-    public boolean isVersionClauseRequired()
-    {
-        return this.serviceMultiplicity == ServiceMultiplicity.ONE
-                && this.url.getServiceGroup().getKlass().getVersionProperty().isPresent();
+    public boolean isVersionClauseRequired() {
+        return (
+            this.serviceMultiplicity == ServiceMultiplicity.ONE &&
+            this.url.getServiceGroup().getKlass().getVersionProperty().isPresent()
+        );
     }
 
     @Override
-    public boolean isAuthorizeClauseRequired()
-    {
+    public boolean isAuthorizeClauseRequired() {
         return this.authorizeCriteria.isPresent();
     }
 
-    public static final class ServiceBuilder
-            extends ElementBuilder<ServiceImpl>
-    {
+    public static final class ServiceBuilder extends ElementBuilder<ServiceImpl> {
+
         @Nonnull
-        private final UrlBuilder          urlBuilder;
+        private final UrlBuilder urlBuilder;
+
         @Nonnull
-        private final Verb                verb;
+        private final Verb verb;
+
         @Nonnull
         private final ServiceMultiplicity serviceMultiplicity;
 
@@ -230,107 +209,97 @@ public final class ServiceImpl
         @Nonnull
         private Optional<OrderByBuilder> orderByBuilder = Optional.empty();
 
-        private Optional<AbstractCriteriaBuilder<?>> criteria  = Optional.empty();
+        private Optional<AbstractCriteriaBuilder<?>> criteria = Optional.empty();
         private Optional<AbstractCriteriaBuilder<?>> authorize = Optional.empty();
-        private Optional<AbstractCriteriaBuilder<?>> validate  = Optional.empty();
-        private Optional<AbstractCriteriaBuilder<?>> conflict  = Optional.empty();
+        private Optional<AbstractCriteriaBuilder<?>> validate = Optional.empty();
+        private Optional<AbstractCriteriaBuilder<?>> conflict = Optional.empty();
 
         public ServiceBuilder(
-                @Nonnull ServiceDeclarationContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode,
-                @Nonnull UrlBuilder urlBuilder,
-                @Nonnull Verb verb,
-                @Nonnull ServiceMultiplicity serviceMultiplicity)
-        {
+            @Nonnull ServiceDeclarationContext elementContext,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode,
+            @Nonnull UrlBuilder urlBuilder,
+            @Nonnull Verb verb,
+            @Nonnull ServiceMultiplicity serviceMultiplicity
+        ) {
             super(elementContext, macroElement, sourceCode);
-            this.urlBuilder          = Objects.requireNonNull(urlBuilder);
-            this.verb                = Objects.requireNonNull(verb);
+            this.urlBuilder = Objects.requireNonNull(urlBuilder);
+            this.verb = Objects.requireNonNull(verb);
             this.serviceMultiplicity = Objects.requireNonNull(serviceMultiplicity);
         }
 
         public void addCriteriaBuilder(
-                @Nonnull String criteriaKeyword,
-                @Nonnull AbstractCriteriaBuilder<?> criteriaBuilder)
-        {
+            @Nonnull String criteriaKeyword,
+            @Nonnull AbstractCriteriaBuilder<?> criteriaBuilder
+        ) {
             Objects.requireNonNull(criteriaKeyword);
             Objects.requireNonNull(criteriaBuilder);
 
-            switch (criteriaKeyword)
-            {
-                case "criteria":
-                {
-                    if (this.criteria.isPresent())
-                    {
+            switch (criteriaKeyword) {
+                case "criteria": {
+                    if (this.criteria.isPresent()) {
                         throw new IllegalStateException();
                     }
                     this.criteria = Optional.of(criteriaBuilder);
                     return;
                 }
-                case "authorize":
-                {
-                    if (this.authorize.isPresent())
-                    {
+                case "authorize": {
+                    if (this.authorize.isPresent()) {
                         throw new IllegalStateException();
                     }
                     this.authorize = Optional.of(criteriaBuilder);
                     return;
                 }
-                case "validate":
-                {
-                    if (this.validate.isPresent())
-                    {
+                case "validate": {
+                    if (this.validate.isPresent()) {
                         throw new IllegalStateException();
                     }
                     this.validate = Optional.of(criteriaBuilder);
                     return;
                 }
-                case "conflict":
-                {
-                    if (this.conflict.isPresent())
-                    {
+                case "conflict": {
+                    if (this.conflict.isPresent()) {
                         throw new IllegalStateException();
                     }
                     this.conflict = Optional.of(criteriaBuilder);
                     return;
                 }
-                default:
-                {
+                default: {
                     throw new AssertionError();
                 }
             }
         }
 
-        public void setProjectionDispatchBuilder(@Nonnull Optional<ServiceProjectionDispatchBuilder> projectionDispatchBuilder)
-        {
+        public void setProjectionDispatchBuilder(
+            @Nonnull Optional<ServiceProjectionDispatchBuilder> projectionDispatchBuilder
+        ) {
             this.projectionDispatchBuilder = Objects.requireNonNull(projectionDispatchBuilder);
         }
 
-        public void setOrderByBuilder(@Nonnull Optional<OrderByBuilder> orderByBuilder)
-        {
+        public void setOrderByBuilder(@Nonnull Optional<OrderByBuilder> orderByBuilder) {
             this.orderByBuilder = Objects.requireNonNull(orderByBuilder);
         }
 
         @Nonnull
         @Override
-        protected ServiceImpl buildUnsafe()
-        {
+        protected ServiceImpl buildUnsafe() {
             ServiceImpl service = new ServiceImpl(
-                    (ServiceDeclarationContext) this.elementContext,
-                    this.macroElement.map(ElementBuilder::getElement),
-                    this.sourceCode.build(),
-                    this.urlBuilder.getElement(),
-                    this.verb,
-                    this.serviceMultiplicity);
+                (ServiceDeclarationContext) this.elementContext,
+                this.macroElement.map(ElementBuilder::getElement),
+                this.sourceCode.build(),
+                this.urlBuilder.getElement(),
+                this.verb,
+                this.serviceMultiplicity
+            );
 
             Optional<ServiceProjectionDispatch> projectionDispatch =
-                    this.projectionDispatchBuilder.map(ElementBuilder::build);
+                this.projectionDispatchBuilder.map(ElementBuilder::build);
             service.setProjectionDispatch(projectionDispatch);
 
-            Optional<Criteria> queryCriteria     = this.criteria.map(AbstractCriteriaBuilder::build);
+            Optional<Criteria> queryCriteria = this.criteria.map(AbstractCriteriaBuilder::build);
             Optional<Criteria> authorizeCriteria = this.authorize.map(AbstractCriteriaBuilder::build);
-            Optional<Criteria> validateCriteria  = this.validate.map(AbstractCriteriaBuilder::build);
-            Optional<Criteria> conflictCriteria  = this.conflict.map(AbstractCriteriaBuilder::build);
+            Optional<Criteria> validateCriteria = this.validate.map(AbstractCriteriaBuilder::build);
+            Optional<Criteria> conflictCriteria = this.conflict.map(AbstractCriteriaBuilder::build);
 
             service.setQueryCriteria(queryCriteria);
             service.setAuthorizeCriteria(authorizeCriteria);
@@ -341,8 +310,7 @@ public final class ServiceImpl
         }
 
         @Override
-        protected void buildChildren()
-        {
+        protected void buildChildren() {
             Optional<OrderBy> orderBy = this.orderByBuilder.map(OrderByBuilder::build);
             this.element.setOrderBy(orderBy);
         }

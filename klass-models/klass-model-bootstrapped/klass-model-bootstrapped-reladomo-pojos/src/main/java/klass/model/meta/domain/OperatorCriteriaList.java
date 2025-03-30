@@ -20,24 +20,19 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class OperatorCriteriaList extends OperatorCriteriaListAbstract
-{
-    public OperatorCriteriaList()
-    {
-    }
+public class OperatorCriteriaList extends OperatorCriteriaListAbstract {
 
-    public OperatorCriteriaList(int initialSize)
-    {
+    public OperatorCriteriaList() {}
+
+    public OperatorCriteriaList(int initialSize) {
         super(initialSize);
     }
 
-    public OperatorCriteriaList(Collection c)
-    {
+    public OperatorCriteriaList(Collection c) {
         super(c);
     }
 
-    public OperatorCriteriaList(Operation operation)
-    {
+    public OperatorCriteriaList(Operation operation) {
         super(operation);
     }
 }

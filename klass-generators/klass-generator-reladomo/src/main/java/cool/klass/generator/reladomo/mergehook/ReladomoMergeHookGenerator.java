@@ -33,85 +33,73 @@ import cool.klass.model.meta.domain.api.PrimitiveType;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 
 // TODO: Consider moving this into its own module.
-public class ReladomoMergeHookGenerator
-{
-    private static final Converter<String, String> LOWER_CAMEL_TO_UPPER_CAMEL =
-            CaseFormat.LOWER_CAMEL.converterTo(CaseFormat.UPPER_CAMEL);
+public class ReladomoMergeHookGenerator {
+
+    private static final Converter<String, String> LOWER_CAMEL_TO_UPPER_CAMEL = CaseFormat.LOWER_CAMEL.converterTo(
+        CaseFormat.UPPER_CAMEL
+    );
 
     @Nonnull
     private final DomainModel domainModel;
 
-    public ReladomoMergeHookGenerator(@Nonnull DomainModel domainModel)
-    {
+    public ReladomoMergeHookGenerator(@Nonnull DomainModel domainModel) {
         this.domainModel = Objects.requireNonNull(domainModel);
     }
 
-    public void writeMergeHookFiles(@Nonnull Path outputPath)
-    {
-        this.domainModel
-                .getClasses()
-                .reject(Klass::isAbstract)
-                .select(Klass::isVersioned)
-                .forEachWith(this::writeMergeHookFile, outputPath);
+    public void writeMergeHookFiles(@Nonnull Path outputPath) {
+        this.domainModel.getClasses()
+            .reject(Klass::isAbstract)
+            .select(Klass::isVersioned)
+            .forEachWith(this::writeMergeHookFile, outputPath);
     }
 
-    private void writeMergeHookFile(@Nonnull Klass klass, @Nonnull Path outputPath)
-    {
-        Path   mergeHookOutputPath = this.getMergeHookOutputPath(outputPath, klass);
-        String classSourceCode     = this.getMergeHookSourceCode(klass);
+    private void writeMergeHookFile(@Nonnull Klass klass, @Nonnull Path outputPath) {
+        Path mergeHookOutputPath = this.getMergeHookOutputPath(outputPath, klass);
+        String classSourceCode = this.getMergeHookSourceCode(klass);
         this.printStringToFile(mergeHookOutputPath, classSourceCode);
     }
 
     @Nonnull
-    private Path getMergeHookOutputPath(
-            @Nonnull Path outputPath,
-            @Nonnull PackageableElement packageableElement)
-    {
-        String packageRelativePath = packageableElement.getPackageName()
-                .replaceAll("\\.", "/");
+    private Path getMergeHookOutputPath(@Nonnull Path outputPath, @Nonnull PackageableElement packageableElement) {
+        String packageRelativePath = packageableElement.getPackageName().replaceAll("\\.", "/");
         Path mergeHookDirectory = outputPath
-                .resolve(packageRelativePath)
-                .resolve("reladomo")
-                .resolve("merge")
-                .resolve("hook");
+            .resolve(packageRelativePath)
+            .resolve("reladomo")
+            .resolve("merge")
+            .resolve("hook");
         mergeHookDirectory.toFile().mkdirs();
         String fileName = packageableElement.getName() + "MergeHook.java";
         return mergeHookDirectory.resolve(fileName);
     }
 
-    private void printStringToFile(@Nonnull Path path, String contents)
-    {
-        try (PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile())))
-        {
+    private void printStringToFile(@Nonnull Path path, String contents) {
+        try (PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()))) {
             printStream.print(contents);
-        }
-        catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Nonnull
-    private String getMergeHookSourceCode(@Nonnull Klass klass)
-    {
+    private String getMergeHookSourceCode(@Nonnull Klass klass) {
         Klass versionClass = klass.getVersionProperty().get().getType();
 
         String setKeyPropertiesSourceCode = klass
-                .getKeyProperties()
-                .collect(this::getKeyPropertySourceCode)
-                .makeString("");
+            .getKeyProperties()
+            .collect(this::getKeyPropertySourceCode)
+            .makeString("");
 
         String setAuditPropertiesOnCreateSourceCode = klass.isAudited()
-                ? """
-                        version.setCreatedOn(newObject.getCreatedOn());
-                        version.setCreatedById(newObject.getCreatedById());
-                        version.setLastUpdatedById(newObject.getLastUpdatedById());
-                """
-                : "";
+            ? """
+                    version.setCreatedOn(newObject.getCreatedOn());
+                    version.setCreatedById(newObject.getCreatedById());
+                    version.setLastUpdatedById(newObject.getLastUpdatedById());
+            """
+            : "";
 
         String setAuditPropertiesOnUpdateSourceCode = klass.isAudited()
-                ? "        existingVersion.setLastUpdatedById(incoming.getLastUpdatedById());\n"
-                : "";
+            ? "        existingVersion.setLastUpdatedById(incoming.getLastUpdatedById());\n"
+            : "";
 
         // @formatter:off
         // language=JAVA
@@ -167,9 +155,8 @@ public class ReladomoMergeHookGenerator
         return sourceCode;
     }
 
-    private String getKeyPropertySourceCode(DataTypeProperty keyProperty)
-    {
-        String name   = LOWER_CAMEL_TO_UPPER_CAMEL.convert(keyProperty.getName());
+    private String getKeyPropertySourceCode(DataTypeProperty keyProperty) {
+        String name = LOWER_CAMEL_TO_UPPER_CAMEL.convert(keyProperty.getName());
         String prefix = keyProperty.getType() == PrimitiveType.BOOLEAN ? "is" : "get";
         return "        version.set" + name + "(newObject." + prefix + name + "());\n";
     }

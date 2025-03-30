@@ -20,24 +20,19 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class SharedNaturalOneToManySourceList extends SharedNaturalOneToManySourceListAbstract
-{
-    public SharedNaturalOneToManySourceList()
-    {
-    }
+public class SharedNaturalOneToManySourceList extends SharedNaturalOneToManySourceListAbstract {
 
-    public SharedNaturalOneToManySourceList(int initialSize)
-    {
+    public SharedNaturalOneToManySourceList() {}
+
+    public SharedNaturalOneToManySourceList(int initialSize) {
         super(initialSize);
     }
 
-    public SharedNaturalOneToManySourceList(Collection c)
-    {
+    public SharedNaturalOneToManySourceList(Collection c) {
         super(c);
     }
 
-    public SharedNaturalOneToManySourceList(Operation operation)
-    {
+    public SharedNaturalOneToManySourceList(Operation operation) {
         super(operation);
     }
 }

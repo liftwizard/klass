@@ -42,73 +42,66 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public abstract class AbstractValidatorTest
-{
+public abstract class AbstractValidatorTest {
+
     @RegisterExtension
     protected final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
     @RegisterExtension
     protected final JsonMatchExtension jsonMatchExtension = new JsonMatchExtension(this.getClass());
 
-    protected final MutableList<String> actualErrors   = Lists.mutable.empty();
+    protected final MutableList<String> actualErrors = Lists.mutable.empty();
     protected final MutableList<String> actualWarnings = Lists.mutable.empty();
 
     protected final ObjectMapper objectMapper = AbstractValidatorTest.getObjectMapper();
 
     protected final DomainModel domainModel = AbstractValidatorTest.getDomainModel(this.objectMapper);
 
-    protected final void validate(
-            String testName) throws IOException
-    {
+    protected final void validate(String testName) throws IOException {
         String incomingJsonName = this.getClass().getSimpleName() + '.' + testName + ".json5";
-        String incomingJson     = FileSlurper.slurp(incomingJsonName, this.getClass());
+        String incomingJson = FileSlurper.slurp(incomingJsonName, this.getClass());
 
         ObjectNode incomingInstance = (ObjectNode) this.objectMapper.readTree(incomingJson);
         this.performValidation(incomingInstance);
         this.assertErrors(testName);
     }
 
-    protected final void assertErrors(
-            String testName)
-            throws JsonProcessingException
-    {
+    protected final void assertErrors(String testName) throws JsonProcessingException {
         this.jsonMatchExtension.assertFileContents(
                 this.getClass().getSimpleName() + '.' + testName + ".errors.json",
-                this.objectMapper.writeValueAsString(this.actualErrors));
+                this.objectMapper.writeValueAsString(this.actualErrors)
+            );
 
         this.jsonMatchExtension.assertFileContents(
                 this.getClass().getSimpleName() + '.' + testName + ".warnings.json",
-                this.objectMapper.writeValueAsString(this.actualWarnings));
+                this.objectMapper.writeValueAsString(this.actualWarnings)
+            );
     }
 
     @Nonnull
-    private static ObjectMapper getObjectMapper()
-    {
+    private static ObjectMapper getObjectMapper() {
         ObjectMapper objectMapper = Jackson.newObjectMapper();
         ObjectMapperConfig.configure(objectMapper);
         return objectMapper;
     }
 
-    private static DomainModel getDomainModel(ObjectMapper objectMapper)
-    {
+    private static DomainModel getDomainModel(ObjectMapper objectMapper) {
         DomainModelCompilerFactory domainModelCompilerFactory = new DomainModelCompilerFactory();
         domainModelCompilerFactory.setSourcePackages(List.of("cool.klass.xample.coverage"));
         domainModelCompilerFactory.setColorScheme("dark");
         return domainModelCompilerFactory.createDomainModel(objectMapper);
     }
 
-    protected final void performValidation(@Nonnull ObjectNode incomingInstance)
-    {
-        ObjectNodeTypeCheckingValidator.validate(
-                this.actualErrors, incomingInstance,
-                this.getKlass());
+    protected final void performValidation(@Nonnull ObjectNode incomingInstance) {
+        ObjectNodeTypeCheckingValidator.validate(this.actualErrors, incomingInstance, this.getKlass());
 
         RequiredPropertiesValidator.validate(
-                this.actualErrors,
-                this.actualWarnings,
-                this.getKlass(),
-                incomingInstance,
-                this.getMode());
+            this.actualErrors,
+            this.actualWarnings,
+            this.getKlass(),
+            incomingInstance,
+            this.getMode()
+        );
     }
 
     @Nonnull

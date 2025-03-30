@@ -30,41 +30,38 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public class KlassFragmentGeneratorTest
-{
+public class KlassFragmentGeneratorTest {
+
     public static final String FULLY_QUALIFIED_PACKAGE = "cool.klass.xample.coverage";
 
     @RegisterExtension
     final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
     @Test
-    void smokeTest()
-    {
+    void smokeTest() {
         ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
 
         var domainModelCompilerLoader = new DomainModelCompilerLoader(
-                klassSourcePackages,
-                Thread.currentThread().getContextClassLoader(),
-                DomainModelCompilerLoader::logCompilerError,
-                ColorSchemeProvider.getByName("dark"));
+            klassSourcePackages,
+            Thread.currentThread().getContextClassLoader(),
+            DomainModelCompilerLoader::logCompilerError,
+            ColorSchemeProvider.getByName("dark")
+        );
 
         DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
         ImmutableList<String> packageNames = domainModel
-                .getClassifiers()
-                .asLazy()
-                .collect(PackageableElement::getPackageName)
-                .distinct()
-                .toImmutableList();
+            .getClassifiers()
+            .asLazy()
+            .collect(PackageableElement::getPackageName)
+            .distinct()
+            .toImmutableList();
 
-        for (String packageName : packageNames)
-        {
+        for (String packageName : packageNames) {
             String sourceCode = GraphQLFragmentSourceCodeGenerator.getPackageSourceCode(domainModel, packageName);
 
             String resourceClassPathLocation = packageName + ".graphql";
 
-            this.fileMatchExtension.assertFileContents(
-                    resourceClassPathLocation,
-                    sourceCode);
+            this.fileMatchExtension.assertFileContents(resourceClassPathLocation, sourceCode);
         }
     }
 }

@@ -28,45 +28,40 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.tuple.Pair;
 
-public class AntlrPackage
-        extends AntlrNamedElement
-{
+public class AntlrPackage extends AntlrNamedElement {
+
     private final AntlrCompilationUnit compilationUnitState;
 
     public AntlrPackage(
-            @Nonnull PackageDeclarationContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            int ordinal,
-            @Nonnull ParserRuleContext nameContext,
-            @Nonnull AntlrCompilationUnit compilationUnitState)
-    {
+        @Nonnull PackageDeclarationContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        int ordinal,
+        @Nonnull ParserRuleContext nameContext,
+        @Nonnull AntlrCompilationUnit compilationUnitState
+    ) {
         super(elementContext, compilationUnit, ordinal, nameContext);
         this.compilationUnitState = Objects.requireNonNull(compilationUnitState);
     }
 
     @Nonnull
     @Override
-    public PackageDeclarationContext getElementContext()
-    {
+    public PackageDeclarationContext getElementContext() {
         return (PackageDeclarationContext) super.getElementContext();
     }
 
     @Override
-    protected Pattern getNamePattern()
-    {
+    protected Pattern getNamePattern() {
         return PACKAGE_NAME_PATTERN;
     }
 
     @Nonnull
     @Override
-    public Optional<IAntlrElement> getSurroundingElement()
-    {
+    public Optional<IAntlrElement> getSurroundingElement() {
         return Optional.of(this.compilationUnitState);
     }
 
     @Override
-    public Pair<Token, Token> getContextBefore()
-    {
+    public Pair<Token, Token> getContextBefore() {
         return this.getEntireContext();
     }
 }

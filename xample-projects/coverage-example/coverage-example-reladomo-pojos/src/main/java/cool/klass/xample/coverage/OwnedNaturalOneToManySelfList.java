@@ -20,24 +20,19 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class OwnedNaturalOneToManySelfList extends OwnedNaturalOneToManySelfListAbstract
-{
-    public OwnedNaturalOneToManySelfList()
-    {
-    }
+public class OwnedNaturalOneToManySelfList extends OwnedNaturalOneToManySelfListAbstract {
 
-    public OwnedNaturalOneToManySelfList(int initialSize)
-    {
+    public OwnedNaturalOneToManySelfList() {}
+
+    public OwnedNaturalOneToManySelfList(int initialSize) {
         super(initialSize);
     }
 
-    public OwnedNaturalOneToManySelfList(Collection c)
-    {
+    public OwnedNaturalOneToManySelfList(Collection c) {
         super(c);
     }
 
-    public OwnedNaturalOneToManySelfList(Operation operation)
-    {
+    public OwnedNaturalOneToManySelfList(Operation operation) {
         super(operation);
     }
 }

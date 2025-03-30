@@ -41,11 +41,11 @@ import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
 // TODO: Specific subclasses for the specific antlr context types
-public class AntlrOrderBy
-        extends AntlrElement
-{
+public class AntlrOrderBy extends AntlrElement {
+
     @Nonnull
-    private final AntlrClassifier   thisContext;
+    private final AntlrClassifier thisContext;
+
     @Nonnull
     private final AntlrOrderByOwner orderByOwner;
 
@@ -53,105 +53,97 @@ public class AntlrOrderBy
     private final MutableList<AntlrOrderByMemberReferencePath> orderByMemberReferencePaths = Lists.mutable.empty();
 
     @Nonnull
-    private final MutableOrderedMap<ParserRuleContext, AntlrOrderByMemberReferencePath> orderByMemberReferencePathsByContext = OrderedMapAdapter.adapt(new LinkedHashMap<>());
+    private final MutableOrderedMap<
+        ParserRuleContext,
+        AntlrOrderByMemberReferencePath
+    > orderByMemberReferencePathsByContext = OrderedMapAdapter.adapt(new LinkedHashMap<>());
 
     private OrderByBuilder elementBuilder;
 
     public AntlrOrderBy(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            @Nonnull AntlrClassifier thisContext,
-            @Nonnull AntlrOrderByOwner orderByOwner)
-    {
+        @Nonnull ParserRuleContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        @Nonnull AntlrClassifier thisContext,
+        @Nonnull AntlrOrderByOwner orderByOwner
+    ) {
         super(elementContext, compilationUnit);
-        this.thisContext  = Objects.requireNonNull(thisContext);
+        this.thisContext = Objects.requireNonNull(thisContext);
         this.orderByOwner = Objects.requireNonNull(orderByOwner);
     }
 
     @Nonnull
     @Override
-    public Optional<IAntlrElement> getSurroundingElement()
-    {
+    public Optional<IAntlrElement> getSurroundingElement() {
         return Optional.of(this.orderByOwner);
     }
 
     @Override
-    public boolean isContext()
-    {
+    public boolean isContext() {
         return this.orderByOwner instanceof AntlrService;
     }
 
     @Nonnull
-    public ImmutableList<AntlrOrderByMemberReferencePath> getOrderByMemberReferencePaths()
-    {
+    public ImmutableList<AntlrOrderByMemberReferencePath> getOrderByMemberReferencePaths() {
         return this.orderByMemberReferencePaths.toImmutable();
     }
 
     @Override
-    public Pair<Token, Token> getContextBefore()
-    {
+    public Pair<Token, Token> getContextBefore() {
         return this.getEntireContext();
     }
 
-    public int getNumProperties()
-    {
+    public int getNumProperties() {
         return this.orderByMemberReferencePaths.size();
     }
 
-    public void enterOrderByMemberReferencePath(AntlrOrderByMemberReferencePath orderByMemberReferencePath)
-    {
+    public void enterOrderByMemberReferencePath(AntlrOrderByMemberReferencePath orderByMemberReferencePath) {
         this.orderByMemberReferencePaths.add(orderByMemberReferencePath);
 
-        AntlrOrderByMemberReferencePath duplicate = this.orderByMemberReferencePathsByContext.put(
-                orderByMemberReferencePath.getElementContext(),
-                orderByMemberReferencePath);
-        if (duplicate != null)
-        {
+        AntlrOrderByMemberReferencePath duplicate =
+            this.orderByMemberReferencePathsByContext.put(
+                    orderByMemberReferencePath.getElementContext(),
+                    orderByMemberReferencePath
+                );
+        if (duplicate != null) {
             throw new AssertionError();
         }
     }
 
-    public AntlrOrderByMemberReferencePath getOrderByMemberReferencePath(OrderByMemberReferencePathContext ctx)
-    {
+    public AntlrOrderByMemberReferencePath getOrderByMemberReferencePath(OrderByMemberReferencePathContext ctx) {
         return this.orderByMemberReferencePathsByContext.get(ctx);
     }
 
-    public void reportErrors(CompilerAnnotationHolder compilerAnnotationHolder)
-    {
+    public void reportErrors(CompilerAnnotationHolder compilerAnnotationHolder) {
         this.orderByMemberReferencePaths.forEachWith(
                 AntlrOrderByMemberReferencePath::reportErrors,
-                compilerAnnotationHolder);
+                compilerAnnotationHolder
+            );
     }
 
-    public OrderByBuilder build()
-    {
-        if (this.elementBuilder != null)
-        {
+    public OrderByBuilder build() {
+        if (this.elementBuilder != null) {
             throw new IllegalStateException();
         }
         this.elementBuilder = new OrderByBuilder(
-                this.elementContext,
-                this.getMacroElementBuilder(),
-                this.getSourceCodeBuilder(),
-                this.thisContext.getElementBuilder());
+            this.elementContext,
+            this.getMacroElementBuilder(),
+            this.getSourceCodeBuilder(),
+            this.thisContext.getElementBuilder()
+        );
 
         ImmutableList<OrderByMemberReferencePathBuilder> orderByMemberReferencePathBuilders =
-                this.orderByMemberReferencePaths
-                        .collect(AntlrOrderByMemberReferencePath::build)
-                        .toImmutable();
+            this.orderByMemberReferencePaths.collect(AntlrOrderByMemberReferencePath::build).toImmutable();
         this.elementBuilder.setOrderByMemberReferencePathBuilders(orderByMemberReferencePathBuilders);
         return this.elementBuilder;
     }
 
     @Override
     @Nonnull
-    public OrderByBuilder getElementBuilder()
-    {
+    public OrderByBuilder getElementBuilder() {
         return Objects.requireNonNull(this.elementBuilder);
     }
 
-    public void visit(@Nonnull AntlrOrderByVisitor visitor)
-    {
+    public void visit(@Nonnull AntlrOrderByVisitor visitor) {
         visitor.visit(this);
     }
 }

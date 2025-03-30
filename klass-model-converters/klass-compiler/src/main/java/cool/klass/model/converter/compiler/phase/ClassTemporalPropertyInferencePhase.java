@@ -30,77 +30,67 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 
-public class ClassTemporalPropertyInferencePhase
-        extends AbstractCompilerPhase
-{
-    public ClassTemporalPropertyInferencePhase(@Nonnull CompilerState compilerState)
-    {
+public class ClassTemporalPropertyInferencePhase extends AbstractCompilerPhase {
+
+    public ClassTemporalPropertyInferencePhase(@Nonnull CompilerState compilerState) {
         super(compilerState);
     }
 
     @Nonnull
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "Temporal modifier";
     }
 
     @Override
-    public void exitInterfaceBody(InterfaceBodyContext ctx)
-    {
+    public void exitInterfaceBody(InterfaceBodyContext ctx) {
         this.runCompilerMacro(ctx);
         super.exitInterfaceBody(ctx);
     }
 
     @Override
-    public void exitClassBody(ClassBodyContext ctx)
-    {
+    public void exitClassBody(ClassBodyContext ctx) {
         this.runCompilerMacro(ctx);
         super.exitClassBody(ctx);
     }
 
-    private void runCompilerMacro(ParserRuleContext inPlaceContext)
-    {
-        AntlrClassifier                         classifier            = this.compilerState.getCompilerWalk().getClassifier();
-        MutableList<AntlrModifier>              declaredModifiers     = classifier.getDeclaredModifiers();
+    private void runCompilerMacro(ParserRuleContext inPlaceContext) {
+        AntlrClassifier classifier = this.compilerState.getCompilerWalk().getClassifier();
+        MutableList<AntlrModifier> declaredModifiers = classifier.getDeclaredModifiers();
         ImmutableList<AntlrDataTypeProperty<?>> allDataTypeProperties = classifier.getAllDataTypeProperties();
 
-        MutableList<AntlrModifier> validTemporalModifiers  = declaredModifiers.select(modifier -> modifier.is("validTemporal") || modifier.is("bitemporal"));
-        MutableList<AntlrModifier> systemTemporalModifiers = declaredModifiers.select(modifier -> modifier.is("systemTemporal") || modifier.is("bitemporal"));
+        MutableList<AntlrModifier> validTemporalModifiers = declaredModifiers.select(
+            modifier -> modifier.is("validTemporal") || modifier.is("bitemporal")
+        );
+        MutableList<AntlrModifier> systemTemporalModifiers = declaredModifiers.select(
+            modifier -> modifier.is("systemTemporal") || modifier.is("bitemporal")
+        );
 
-        if (validTemporalModifiers.size() == 1)
-        {
+        if (validTemporalModifiers.size() == 1) {
             AntlrModifier validTemporalModifier = validTemporalModifiers.getOnly();
-            StringBuilder sourceCodeText        = new StringBuilder();
-            if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isValidRange))
-            {
+            StringBuilder sourceCodeText = new StringBuilder();
+            if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isValidRange)) {
                 sourceCodeText.append("    valid    : TemporalRange?   valid private;\n");
             }
-            if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isValidFrom))
-            {
+            if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isValidFrom)) {
                 sourceCodeText.append("    validFrom: TemporalInstant? valid from;\n");
             }
-            if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isValidTo))
-            {
+            if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isValidTo)) {
                 sourceCodeText.append("    validTo  : TemporalInstant? valid to;\n");
             }
             this.runCompilerMacro(inPlaceContext, sourceCodeText.toString(), validTemporalModifier);
         }
 
-        if (systemTemporalModifiers.size() == 1)
-        {
+        if (systemTemporalModifiers.size() == 1) {
             AntlrModifier systemTemporalModifier = systemTemporalModifiers.getOnly();
-            StringBuilder sourceCodeText         = new StringBuilder();
-            if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isSystemRange))
-            {
+            StringBuilder sourceCodeText = new StringBuilder();
+            if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isSystemRange)) {
                 sourceCodeText.append("    system    : TemporalRange?   system private;\n");
             }
-            if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isSystemFrom))
-            {
+            if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isSystemFrom)) {
                 sourceCodeText.append("    systemFrom: TemporalInstant? system from;\n");
             }
-            if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isSystemTo))
-            {
+            if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isSystemTo)) {
                 sourceCodeText.append("    systemTo  : TemporalInstant? system to;\n");
             }
             this.runCompilerMacro(inPlaceContext, sourceCodeText.toString(), systemTemporalModifier);
@@ -108,12 +98,11 @@ public class ClassTemporalPropertyInferencePhase
     }
 
     private void runCompilerMacro(
-            ParserRuleContext inPlaceContext,
-            @Nonnull String sourceCodeText,
-            AntlrModifier macroElement)
-    {
-        if (sourceCodeText.isEmpty())
-        {
+        ParserRuleContext inPlaceContext,
+        @Nonnull String sourceCodeText,
+        AntlrModifier macroElement
+    ) {
+        if (sourceCodeText.isEmpty()) {
             return;
         }
         ParseTreeListener compilerPhase = new PropertyPhase(this.compilerState);
@@ -124,6 +113,7 @@ public class ClassTemporalPropertyInferencePhase
                 sourceCodeText,
                 KlassParser::classBody,
                 inPlaceContext,
-                compilerPhase);
+                compilerPhase
+            );
     }
 }

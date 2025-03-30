@@ -29,39 +29,36 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public class KlassServiceGeneratorTest
-{
+public class KlassServiceGeneratorTest {
+
     public static final String FULLY_QUALIFIED_PACKAGE = "klass.model.meta.domain";
 
     @RegisterExtension
     final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
     @Test
-    void smokeTest()
-    {
+    void smokeTest() {
         ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
 
         var domainModelCompilerLoader = new DomainModelCompilerLoader(
-                klassSourcePackages,
-                Thread.currentThread().getContextClassLoader(),
-                DomainModelCompilerLoader::logCompilerError,
-                ColorSchemeProvider.getByName("dark"));
+            klassSourcePackages,
+            Thread.currentThread().getContextClassLoader(),
+            DomainModelCompilerLoader::logCompilerError,
+            ColorSchemeProvider.getByName("dark")
+        );
 
         DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
         ImmutableList<String> packageNames = domainModel
-                .getClassifiers()
-                .asLazy()
-                .collect(PackageableElement::getPackageName)
-                .distinct()
-                .toImmutableList();
-        for (String packageName : packageNames)
-        {
-            String sourceCode                = KlassServiceSourceCodeGenerator.getPackageSourceCode(domainModel, packageName);
+            .getClassifiers()
+            .asLazy()
+            .collect(PackageableElement::getPackageName)
+            .distinct()
+            .toImmutableList();
+        for (String packageName : packageNames) {
+            String sourceCode = KlassServiceSourceCodeGenerator.getPackageSourceCode(domainModel, packageName);
             String resourceClassPathLocation = packageName + ".klass";
 
-            this.fileMatchExtension.assertFileContents(
-                    resourceClassPathLocation,
-                    sourceCode);
+            this.fileMatchExtension.assertFileContents(resourceClassPathLocation, sourceCode);
         }
     }
 }

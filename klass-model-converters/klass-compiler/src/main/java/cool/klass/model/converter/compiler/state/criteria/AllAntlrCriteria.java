@@ -29,69 +29,61 @@ import cool.klass.model.meta.domain.criteria.AllCriteriaImpl.AllCriteriaBuilder;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaAllContext;
 import org.eclipse.collections.api.map.OrderedMap;
 
-public class AllAntlrCriteria
-        extends AntlrCriteria
-{
+public class AllAntlrCriteria extends AntlrCriteria {
+
     private AllCriteriaBuilder elementBuilder;
 
     public AllAntlrCriteria(
-            @Nonnull CriteriaAllContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            @Nonnull IAntlrElement criteriaOwner)
-    {
+        @Nonnull CriteriaAllContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        @Nonnull IAntlrElement criteriaOwner
+    ) {
         super(elementContext, compilationUnit, criteriaOwner);
     }
 
     @Nonnull
     @Override
-    public CriteriaAllContext getElementContext()
-    {
+    public CriteriaAllContext getElementContext() {
         return (CriteriaAllContext) super.getElementContext();
     }
 
     @Nonnull
     @Override
-    public AllCriteriaBuilder build()
-    {
-        if (this.elementBuilder != null)
-        {
+    public AllCriteriaBuilder build() {
+        if (this.elementBuilder != null) {
             throw new IllegalStateException();
         }
         this.elementBuilder = new AllCriteriaBuilder(
-                (CriteriaAllContext) this.elementContext,
-                this.getMacroElementBuilder(),
-                this.getSourceCodeBuilder());
+            (CriteriaAllContext) this.elementContext,
+            this.getMacroElementBuilder(),
+            this.getSourceCodeBuilder()
+        );
         return this.elementBuilder;
     }
 
     @Nonnull
     @Override
-    public AllCriteriaBuilder getElementBuilder()
-    {
+    public AllCriteriaBuilder getElementBuilder() {
         return Objects.requireNonNull(this.elementBuilder);
     }
 
     @Override
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
-    {
+    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         // Intentionally blank
     }
 
     @Override
-    public void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName)
-    {
+    public void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName) {
         // Intentionally blank
     }
 
     @Override
-    public void resolveTypes()
-    {
+    public void resolveTypes() {
         // Intentionally blank
     }
 
     @Override
-    public void visit(AntlrCriteriaVisitor visitor)
-    {
+    public void visit(AntlrCriteriaVisitor visitor) {
         visitor.visitAll(this);
     }
 }

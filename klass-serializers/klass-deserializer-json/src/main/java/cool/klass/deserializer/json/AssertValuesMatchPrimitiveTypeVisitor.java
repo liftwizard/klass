@@ -29,46 +29,49 @@ import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.stack.MutableStack;
 
-public class AssertValuesMatchPrimitiveTypeVisitor
-        implements PrimitiveTypeVisitor
-{
+public class AssertValuesMatchPrimitiveTypeVisitor implements PrimitiveTypeVisitor {
+
     @Nonnull
-    private final PrimitiveProperty    primitiveProperty;
+    private final PrimitiveProperty primitiveProperty;
+
     @Nonnull
-    private final JsonNode             jsonDataTypeValue;
-    private final Object               persistentValue;
+    private final JsonNode jsonDataTypeValue;
+
+    private final Object persistentValue;
+
     @Nonnull
-    private final String               propertyKind;
+    private final String propertyKind;
+
     @Nonnull
     private final MutableStack<String> contextStack;
+
     @Nonnull
-    private final String               severity;
+    private final String severity;
+
     @Nonnull
-    private final MutableList<String>  annotations;
+    private final MutableList<String> annotations;
 
     public AssertValuesMatchPrimitiveTypeVisitor(
-            @Nonnull PrimitiveProperty primitiveProperty,
-            @Nonnull JsonNode jsonDataTypeValue,
-            Object persistentValue,
-            @Nonnull String propertyKind,
-            @Nonnull MutableStack<String> contextStack,
-            String severity,
-            @Nonnull MutableList<String> annotations)
-    {
+        @Nonnull PrimitiveProperty primitiveProperty,
+        @Nonnull JsonNode jsonDataTypeValue,
+        Object persistentValue,
+        @Nonnull String propertyKind,
+        @Nonnull MutableStack<String> contextStack,
+        String severity,
+        @Nonnull MutableList<String> annotations
+    ) {
         this.primitiveProperty = Objects.requireNonNull(primitiveProperty);
         this.jsonDataTypeValue = Objects.requireNonNull(jsonDataTypeValue);
-        this.persistentValue   = persistentValue;
-        this.propertyKind      = Objects.requireNonNull(propertyKind);
-        this.contextStack      = Objects.requireNonNull(contextStack);
-        this.severity          = Objects.requireNonNull(severity);
-        this.annotations       = Objects.requireNonNull(annotations);
+        this.persistentValue = persistentValue;
+        this.propertyKind = Objects.requireNonNull(propertyKind);
+        this.contextStack = Objects.requireNonNull(contextStack);
+        this.severity = Objects.requireNonNull(severity);
+        this.annotations = Objects.requireNonNull(annotations);
     }
 
     @Override
-    public void visitString()
-    {
-        if (!this.jsonDataTypeValue.isTextual())
-        {
+    public void visitString() {
+        if (!this.jsonDataTypeValue.isTextual()) {
             return;
         }
 
@@ -77,10 +80,8 @@ public class AssertValuesMatchPrimitiveTypeVisitor
     }
 
     @Override
-    public void visitInteger()
-    {
-        if (!this.jsonDataTypeValue.isIntegralNumber() || !this.jsonDataTypeValue.canConvertToInt())
-        {
+    public void visitInteger() {
+        if (!this.jsonDataTypeValue.isIntegralNumber() || !this.jsonDataTypeValue.canConvertToInt()) {
             return;
         }
 
@@ -89,10 +90,8 @@ public class AssertValuesMatchPrimitiveTypeVisitor
     }
 
     @Override
-    public void visitLong()
-    {
-        if (!this.jsonDataTypeValue.isIntegralNumber() || !this.jsonDataTypeValue.canConvertToLong())
-        {
+    public void visitLong() {
+        if (!this.jsonDataTypeValue.isIntegralNumber() || !this.jsonDataTypeValue.canConvertToLong()) {
             return;
         }
 
@@ -101,13 +100,13 @@ public class AssertValuesMatchPrimitiveTypeVisitor
     }
 
     @Override
-    public void visitDouble()
-    {
-        if (!this.jsonDataTypeValue.isDouble()
-                && !this.jsonDataTypeValue.isFloat()
-                && !this.jsonDataTypeValue.isInt()
-                && !this.jsonDataTypeValue.isLong())
-        {
+    public void visitDouble() {
+        if (
+            !this.jsonDataTypeValue.isDouble() &&
+            !this.jsonDataTypeValue.isFloat() &&
+            !this.jsonDataTypeValue.isInt() &&
+            !this.jsonDataTypeValue.isLong()
+        ) {
             return;
         }
 
@@ -116,14 +115,14 @@ public class AssertValuesMatchPrimitiveTypeVisitor
     }
 
     @Override
-    public void visitFloat()
-    {
-        if (!this.jsonDataTypeValue.isDouble()
-                && !this.jsonDataTypeValue.isFloat()
-                && !this.jsonDataTypeValue.isInt()
-                && !this.jsonDataTypeValue.isLong()
-                || !this.hasValidFloatString())
-        {
+    public void visitFloat() {
+        if (
+            (!this.jsonDataTypeValue.isDouble() &&
+                !this.jsonDataTypeValue.isFloat() &&
+                !this.jsonDataTypeValue.isInt() &&
+                !this.jsonDataTypeValue.isLong()) ||
+            !this.hasValidFloatString()
+        ) {
             return;
         }
 
@@ -131,20 +130,17 @@ public class AssertValuesMatchPrimitiveTypeVisitor
         this.assertValuesMatch(incomingValue);
     }
 
-    private boolean hasValidFloatString()
-    {
-        double doubleValue  = this.jsonDataTypeValue.doubleValue();
-        float  floatValue   = this.jsonDataTypeValue.floatValue();
+    private boolean hasValidFloatString() {
+        double doubleValue = this.jsonDataTypeValue.doubleValue();
+        float floatValue = this.jsonDataTypeValue.floatValue();
         String doubleString = Double.toString(doubleValue);
-        String floatString  = Float.toString(floatValue);
+        String floatString = Float.toString(floatValue);
         return doubleString.equals(floatString);
     }
 
     @Override
-    public void visitBoolean()
-    {
-        if (!this.jsonDataTypeValue.isBoolean())
-        {
+    public void visitBoolean() {
+        if (!this.jsonDataTypeValue.isBoolean()) {
             return;
         }
 
@@ -153,26 +149,21 @@ public class AssertValuesMatchPrimitiveTypeVisitor
     }
 
     @Override
-    public void visitInstant()
-    {
+    public void visitInstant() {
         this.visitTemporal();
     }
 
     @Override
-    public void visitLocalDate()
-    {
-        if (!this.jsonDataTypeValue.isTextual())
-        {
+    public void visitLocalDate() {
+        if (!this.jsonDataTypeValue.isTextual()) {
             return;
         }
 
         String text = this.jsonDataTypeValue.textValue();
-        if (text.equals("now"))
-        {
+        if (text.equals("now")) {
             throw new RuntimeException("TODO: Support now as a value for dates.");
         }
-        if (text.equals("infinity"))
-        {
+        if (text.equals("infinity")) {
             throw new RuntimeException("TODO: Support infinity as a value for dates.");
         }
 
@@ -181,72 +172,59 @@ public class AssertValuesMatchPrimitiveTypeVisitor
     }
 
     @Override
-    public void visitTemporalInstant()
-    {
+    public void visitTemporalInstant() {
         this.visitTemporal();
     }
 
     @Override
-    public void visitTemporalRange()
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".visitTemporalRange() not implemented yet");
+    public void visitTemporalRange() {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".visitTemporalRange() not implemented yet"
+        );
     }
 
-    private void visitTemporal()
-    {
-        if (!this.jsonDataTypeValue.isTextual())
-        {
+    private void visitTemporal() {
+        if (!this.jsonDataTypeValue.isTextual()) {
             return;
         }
 
         String text = this.jsonDataTypeValue.textValue();
-        if (text.equals("now"))
-        {
+        if (text.equals("now")) {
             throw new RuntimeException("TODO: Support now as a value for dates.");
         }
-        if (text.equals("infinity"))
-        {
+        if (text.equals("infinity")) {
             throw new RuntimeException("TODO: Support infinity as a value for dates.");
         }
 
-        try
-        {
+        try {
             Instant incomingValue = Instant.parse(text);
             this.assertValuesMatch(incomingValue);
-        }
-        catch (DateTimeParseException e)
-        {
+        } catch (DateTimeParseException e) {
             // Deliberately empty
         }
     }
 
-    private void assertValuesMatch(Object incomingValue)
-    {
-        if (Objects.equals(this.persistentValue, incomingValue))
-        {
+    private void assertValuesMatch(Object incomingValue) {
+        if (Objects.equals(this.persistentValue, incomingValue)) {
             return;
         }
 
         String annotation = String.format(
-                "%s at %s. Mismatched value for %s property '%s.%s: %s%s'. Expected absent value or '%s' but value was '%s'.",
-                this.severity,
-                this.getContextString(),
-                this.propertyKind,
-                this.primitiveProperty.getOwningClassifier().getName(),
-                this.primitiveProperty.getName(),
-                this.primitiveProperty.getType(),
-                this.primitiveProperty.isOptional() ? "?" : "",
-                this.persistentValue,
-                incomingValue);
+            "%s at %s. Mismatched value for %s property '%s.%s: %s%s'. Expected absent value or '%s' but value was '%s'.",
+            this.severity,
+            this.getContextString(),
+            this.propertyKind,
+            this.primitiveProperty.getOwningClassifier().getName(),
+            this.primitiveProperty.getName(),
+            this.primitiveProperty.getType(),
+            this.primitiveProperty.isOptional() ? "?" : "",
+            this.persistentValue,
+            incomingValue
+        );
         this.annotations.add(annotation);
     }
 
-    private String getContextString()
-    {
-        return this.contextStack
-                .toList()
-                .asReversed()
-                .makeString(".");
+    private String getContextString() {
+        return this.contextStack.toList().asReversed().makeString(".");
     }
 }

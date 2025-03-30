@@ -27,46 +27,41 @@ import cool.klass.model.meta.domain.AbstractPackageableElement.PackageableElemen
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public abstract class AntlrPackageableElement
-        extends AntlrIdentifierElement
-{
+public abstract class AntlrPackageableElement extends AntlrIdentifierElement {
+
     @Nonnull
     protected final AntlrCompilationUnit compilationUnitState;
 
     protected AntlrPackageableElement(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull AntlrCompilationUnit compilationUnitState,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext)
-    {
+        @Nonnull ParserRuleContext elementContext,
+        @Nonnull AntlrCompilationUnit compilationUnitState,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext
+    ) {
         super(elementContext, compilationUnitState.getCompilationUnit(), ordinal, nameContext);
         this.compilationUnitState = Objects.requireNonNull(compilationUnitState);
     }
 
     @Nonnull
     @Override
-    public Optional<IAntlrElement> getSurroundingElement()
-    {
+    public Optional<IAntlrElement> getSurroundingElement() {
         return Optional.of(this.compilationUnitState);
     }
 
     @Nonnull
-    public String getPackageName()
-    {
+    public String getPackageName() {
         return this.compilationUnitState.getPackage().getName();
     }
 
     @Nonnull
     @Override
-    protected Pattern getNamePattern()
-    {
+    protected Pattern getNamePattern() {
         return TYPE_NAME_PATTERN;
     }
 
     @Nonnull
     @Override
-    public PackageableElementBuilder<?> getElementBuilder()
-    {
+    public PackageableElementBuilder<?> getElementBuilder() {
         return (PackageableElementBuilder<?>) super.getElementBuilder();
     }
 

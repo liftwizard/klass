@@ -44,8 +44,8 @@ import org.eclipse.collections.api.map.ImmutableMap;
 import org.eclipse.collections.impl.factory.Lists;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-public abstract class AbstractValidatorTest
-{
+public abstract class AbstractValidatorTest {
+
     @RegisterExtension
     protected final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
@@ -57,43 +57,41 @@ public abstract class AbstractValidatorTest
 
     @RegisterExtension
     protected final LiquibaseTestExtension liquibaseTestExtension = new LiquibaseTestExtension(
-            "cool/klass/reladomo/persistent/writer/test/migrations.xml");
+        "cool/klass/reladomo/persistent/writer/test/migrations.xml"
+    );
 
-    protected final MutableList<String> actualErrors      = Lists.mutable.empty();
-    protected final MutableList<String> actualWarnings    = Lists.mutable.empty();
-    protected final ReladomoDataStore   reladomoDataStore = this.getReladomoDataStore();
-    protected final ObjectMapper        objectMapper      = AbstractValidatorTest.getObjectMapper();
-    protected final DomainModel         domainModel       = AbstractValidatorTest.getDomainModel(this.objectMapper);
+    protected final MutableList<String> actualErrors = Lists.mutable.empty();
+    protected final MutableList<String> actualWarnings = Lists.mutable.empty();
+    protected final ReladomoDataStore reladomoDataStore = this.getReladomoDataStore();
+    protected final ObjectMapper objectMapper = AbstractValidatorTest.getObjectMapper();
+    protected final DomainModel domainModel = AbstractValidatorTest.getDomainModel(this.objectMapper);
 
-    protected void validate(String testName)
-            throws JsonProcessingException
-    {
+    protected void validate(String testName) throws JsonProcessingException {
         this.validate(testName, null);
     }
 
-    protected void validate(String testName, Object persistentInstance)
-            throws JsonProcessingException
-    {
+    protected void validate(String testName, Object persistentInstance) throws JsonProcessingException {
         String incomingJsonName = this.getClass().getSimpleName() + '.' + testName + ".json5";
-        String incomingJson     = FileSlurper.slurp(incomingJsonName, this.getClass());
+        String incomingJson = FileSlurper.slurp(incomingJsonName, this.getClass());
 
         ObjectNode incomingInstance = (ObjectNode) this.objectMapper.readTree(incomingJson);
         this.validate(incomingInstance, persistentInstance);
 
         this.jsonMatchExtension.assertFileContents(
                 this.getClass().getSimpleName() + '.' + testName + ".errors.json",
-                this.objectMapper.writeValueAsString(this.actualErrors));
+                this.objectMapper.writeValueAsString(this.actualErrors)
+            );
 
         this.jsonMatchExtension.assertFileContents(
                 this.getClass().getSimpleName() + '.' + testName + ".warnings.json",
-                this.objectMapper.writeValueAsString(this.actualWarnings));
+                this.objectMapper.writeValueAsString(this.actualWarnings)
+            );
     }
 
     protected abstract void validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance);
 
     @Nonnull
-    private static ObjectMapper getObjectMapper()
-    {
+    private static ObjectMapper getObjectMapper() {
         ObjectMapper objectMapper = Jackson.newObjectMapper();
         ObjectMapperConfig.configure(objectMapper);
         return objectMapper;
@@ -106,23 +104,20 @@ public abstract class AbstractValidatorTest
     protected abstract OperationMode getMode();
 
     @Nonnull
-    private ReladomoDataStore getReladomoDataStore()
-    {
-        String           seed         = IncomingCreateDataModelValidator.class.getSimpleName();
+    private ReladomoDataStore getReladomoDataStore() {
+        String seed = IncomingCreateDataModelValidator.class.getSimpleName();
         SeedUUIDSupplier uuidSupplier = new SeedUUIDSupplier(seed);
         return new ReladomoDataStore(uuidSupplier, 1);
     }
 
-    private static DomainModel getDomainModel(ObjectMapper objectMapper)
-    {
+    private static DomainModel getDomainModel(ObjectMapper objectMapper) {
         DomainModelCompilerFactory domainModelCompilerFactory = new DomainModelCompilerFactory();
         domainModelCompilerFactory.setSourcePackages(List.of("cool.klass.xample.coverage"));
         domainModelCompilerFactory.setColorScheme("dark");
         return domainModelCompilerFactory.createDomainModel(objectMapper);
     }
 
-    protected ImmutableMap<DataTypeProperty, Object> getPropertyDataFromUrl()
-    {
+    protected ImmutableMap<DataTypeProperty, Object> getPropertyDataFromUrl() {
         return Maps.immutable.empty();
     }
 }

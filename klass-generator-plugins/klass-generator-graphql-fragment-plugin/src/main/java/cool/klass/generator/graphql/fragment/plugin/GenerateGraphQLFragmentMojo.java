@@ -30,21 +30,21 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-        name = "generate-graphql-fragment",
-        defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
-        threadSafe = true,
-        requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class GenerateGraphQLFragmentMojo
-        extends AbstractGenerateMojo
-{
+    name = "generate-graphql-fragment",
+    defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
+    threadSafe = true,
+    requiresDependencyResolution = ResolutionScope.RUNTIME
+)
+public class GenerateGraphQLFragmentMojo extends AbstractGenerateMojo {
+
     @Parameter(
-            property = "outputDirectory",
-            defaultValue = "${project.build.directory}/generated-resources/graphql-fragment")
+        property = "outputDirectory",
+        defaultValue = "${project.build.directory}/generated-resources/graphql-fragment"
+    )
     private File outputDirectory;
 
     @Override
-    public void execute() throws MojoExecutionException
-    {
+    public void execute() throws MojoExecutionException {
         DomainModel domainModel = this.getDomainModel();
 
         var generator = new GraphQLFragmentGenerator(domainModel);

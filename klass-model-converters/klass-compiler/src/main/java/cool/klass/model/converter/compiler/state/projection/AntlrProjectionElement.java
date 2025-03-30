@@ -24,9 +24,7 @@ import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.meta.domain.projection.AbstractProjectionElement.ProjectionElementBuilder;
 
-public interface AntlrProjectionElement
-        extends IAntlrElement
-{
+public interface AntlrProjectionElement extends IAntlrElement {
     @Nonnull
     ProjectionElementBuilder build();
 
@@ -39,8 +37,7 @@ public interface AntlrProjectionElement
 
     @Nonnull
     @Override
-    default Optional<IAntlrElement> getSurroundingElement()
-    {
+    default Optional<IAntlrElement> getSurroundingElement() {
         return Optional.of(this.getParent());
     }
 

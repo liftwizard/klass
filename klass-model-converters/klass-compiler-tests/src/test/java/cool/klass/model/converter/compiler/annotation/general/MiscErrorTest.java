@@ -22,18 +22,18 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class MiscErrorTest
-        extends AbstractKlassCompilerErrorTestCase
-{
+class MiscErrorTest extends AbstractKlassCompilerErrorTestCase {
+
     // TODO: Implement projection parameterized properties
     @Override
     @Test
-    public void smokeTest()
-    {
+    public void smokeTest() {
         RuntimeException runtimeException = assertThrows(
-                RuntimeException.class,
-                () -> this.assertCompilationSucceeds(false));
-        assertThat(runtimeException.getMessage())
-                .isEqualTo("Exception in compiler during phase: ParameterizedPropertyPhase for compilation unit: MiscErrorTest.klass");
+            RuntimeException.class,
+            () -> this.assertCompilationSucceeds(false)
+        );
+        assertThat(runtimeException.getMessage()).isEqualTo(
+            "Exception in compiler during phase: ParameterizedPropertyPhase for compilation unit: MiscErrorTest.klass"
+        );
     }
 }

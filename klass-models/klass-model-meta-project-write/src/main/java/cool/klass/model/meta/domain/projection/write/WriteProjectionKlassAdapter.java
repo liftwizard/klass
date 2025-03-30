@@ -30,61 +30,55 @@ import cool.klass.model.meta.domain.api.projection.ProjectionParent;
 import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class WriteProjectionKlassAdapter implements Projection
-{
+public class WriteProjectionKlassAdapter implements Projection {
+
     private final Klass klass;
 
-    public WriteProjectionKlassAdapter(Klass klass)
-    {
+    public WriteProjectionKlassAdapter(Klass klass) {
         this.klass = Objects.requireNonNull(klass);
     }
 
     @Nonnull
     @Override
-    public String getPackageName()
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".getPackageName() not implemented yet");
+    public String getPackageName() {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".getPackageName() not implemented yet"
+        );
     }
 
     @Nonnull
     @Override
-    public Classifier getClassifier()
-    {
+    public Classifier getClassifier() {
         return this.klass;
     }
 
     @Override
-    public Optional<ProjectionParent> getParent()
-    {
+    public Optional<ProjectionParent> getParent() {
         return Optional.empty();
     }
 
     @Override
-    public ImmutableList<? extends ProjectionChild> getChildren()
-    {
-        return this.klass
-                .getAssociationEnds()
-                .select(ReferenceProperty::isOwned)
-                .collect(associationEnd -> new WriteProjectionAssociationEndAdapter(this, associationEnd));
+    public ImmutableList<? extends ProjectionChild> getChildren() {
+        return this.klass.getAssociationEnds()
+            .select(ReferenceProperty::isOwned)
+            .collect(associationEnd -> new WriteProjectionAssociationEndAdapter(this, associationEnd));
     }
 
     @Nonnull
     @Override
-    public String getName()
-    {
+    public String getName() {
         throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".getName() not implemented yet");
     }
 
     @Override
-    public int getOrdinal()
-    {
+    public int getOrdinal() {
         throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".getOrdinal() not implemented yet");
     }
 
     @Override
-    public Optional<Element> getMacroElement()
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".getMacroElement() not implemented yet");
+    public Optional<Element> getMacroElement() {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".getMacroElement() not implemented yet"
+        );
     }
 }

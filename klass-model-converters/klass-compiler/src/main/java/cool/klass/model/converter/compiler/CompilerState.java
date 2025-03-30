@@ -41,175 +41,161 @@ import org.eclipse.collections.api.block.function.Function;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.impl.factory.Lists;
 
-public class CompilerState
-{
-    @Nonnull
-    private final CompilerInputState       compilerInput;
-    private final CompilerAnnotationHolder compilerAnnotationHolder = new CompilerAnnotationHolder();
-    private final AntlrDomainModel         domainModel              = new AntlrDomainModel();
-    private       CompilerWalkState        compilerWalk             = new CompilerWalkState(this.domainModel);
+public class CompilerState {
 
-    public CompilerState(@Nonnull ImmutableList<CompilationUnit> compilationUnits)
-    {
+    @Nonnull
+    private final CompilerInputState compilerInput;
+
+    private final CompilerAnnotationHolder compilerAnnotationHolder = new CompilerAnnotationHolder();
+    private final AntlrDomainModel domainModel = new AntlrDomainModel();
+    private CompilerWalkState compilerWalk = new CompilerWalkState(this.domainModel);
+
+    public CompilerState(@Nonnull ImmutableList<CompilationUnit> compilationUnits) {
         this.compilerInput = new CompilerInputState(compilationUnits);
     }
 
     public void runInPlaceCompilerMacro(
-            @Nonnull AntlrElement macroElement,
-            @Nonnull AbstractCompilerPhase macroExpansionCompilerPhase,
-            @Nonnull String sourceCodeText,
-            @Nonnull Function<KlassParser, ? extends ParserRuleContext> parserRule,
-            ParserRuleContext inPlaceContext,
-            ParseTreeListener... listeners)
-    {
+        @Nonnull AntlrElement macroElement,
+        @Nonnull AbstractCompilerPhase macroExpansionCompilerPhase,
+        @Nonnull String sourceCodeText,
+        @Nonnull Function<KlassParser, ? extends ParserRuleContext> parserRule,
+        ParserRuleContext inPlaceContext,
+        ParseTreeListener... listeners
+    ) {
         Objects.requireNonNull(macroElement);
 
         CompilationUnit compilationUnit = CompilationUnit.getMacroCompilationUnit(
-                this.compilerInput.getCompilationUnits().size(),
-                macroElement,
-                macroExpansionCompilerPhase,
-                sourceCodeText,
-                parserRule);
+            this.compilerInput.getCompilationUnits().size(),
+            macroElement,
+            macroExpansionCompilerPhase,
+            sourceCodeText,
+            parserRule
+        );
 
         ParserRuleContext parserContext = compilationUnit.getParserContext();
         parserContext.setParent(inPlaceContext);
         inPlaceContext.addChild(parserContext);
 
-        this.compilerWalk.withInPlaceCompilationUnit(compilationUnit, () ->
-                this.compilerInput.runInPlaceCompilerMacro(compilationUnit, Lists.immutable.with(listeners)));
+        this.compilerWalk.withInPlaceCompilationUnit(
+                compilationUnit,
+                () -> this.compilerInput.runInPlaceCompilerMacro(compilationUnit, Lists.immutable.with(listeners))
+            );
     }
 
     public void runRootCompilerMacro(
-            @Nonnull AntlrElement macroElement,
-            @Nonnull AbstractCompilerPhase macroExpansionCompilerPhase,
-            @Nonnull String sourceCodeText,
-            @Nonnull Function<KlassParser, ? extends ParserRuleContext> parserRule,
-            @Nonnull ImmutableList<ParseTreeListener> listeners)
-    {
+        @Nonnull AntlrElement macroElement,
+        @Nonnull AbstractCompilerPhase macroExpansionCompilerPhase,
+        @Nonnull String sourceCodeText,
+        @Nonnull Function<KlassParser, ? extends ParserRuleContext> parserRule,
+        @Nonnull ImmutableList<ParseTreeListener> listeners
+    ) {
         CompilationUnit compilationUnit = CompilationUnit.getMacroCompilationUnit(
-                this.compilerInput.getCompilationUnits().size(),
-                macroElement,
-                macroExpansionCompilerPhase,
-                sourceCodeText,
-                parserRule);
+            this.compilerInput.getCompilationUnits().size(),
+            macroElement,
+            macroExpansionCompilerPhase,
+            sourceCodeText,
+            parserRule
+        );
 
         this.runRootCompilerMacro(listeners, compilationUnit);
     }
 
     private void runRootCompilerMacro(
-            @Nonnull ImmutableList<ParseTreeListener> listeners,
-            @Nonnull CompilationUnit compilationUnit)
-    {
+        @Nonnull ImmutableList<ParseTreeListener> listeners,
+        @Nonnull CompilationUnit compilationUnit
+    ) {
         CompilerWalkState oldCompilerWalk = this.compilerWalk;
-        try
-        {
+        try {
             this.compilerWalk = new CompilerWalkState(this.domainModel);
 
             this.compilerInput.runCompilerMacro(compilationUnit, listeners);
-        }
-        finally
-        {
+        } finally {
             this.compilerWalk = oldCompilerWalk;
         }
     }
 
-    public void reportErrors()
-    {
+    public void reportErrors() {
         this.domainModel.reportErrors(this.compilerAnnotationHolder);
     }
 
     @Nonnull
-    public CompilationResult getCompilationResult(
-            ImmutableList<RootCompilerAnnotation> compilerAnnotations)
-    {
-        if (compilerAnnotations.anySatisfy(AbstractCompilerAnnotation::isError))
-        {
+    public CompilationResult getCompilationResult(ImmutableList<RootCompilerAnnotation> compilerAnnotations) {
+        if (compilerAnnotations.anySatisfy(AbstractCompilerAnnotation::isError)) {
             return new CompilationResult(compilerAnnotations, Optional.empty());
         }
         return new CompilationResult(compilerAnnotations, Optional.of(this.buildDomainModel()));
     }
 
     @Nonnull
-    private DomainModelWithSourceCode buildDomainModel()
-    {
-        ImmutableList<RootCompilerAnnotation> compilerAnnotations = this.compilerAnnotationHolder.getCompilerAnnotations();
+    private DomainModelWithSourceCode buildDomainModel() {
+        ImmutableList<RootCompilerAnnotation> compilerAnnotations =
+            this.compilerAnnotationHolder.getCompilerAnnotations();
 
-        if (compilerAnnotations.anySatisfy(AbstractCompilerAnnotation::isError))
-        {
+        if (compilerAnnotations.anySatisfy(AbstractCompilerAnnotation::isError)) {
             throw new AssertionError(this.compilerAnnotationHolder.getCompilerAnnotations().makeString("\n"));
         }
 
-        ImmutableList<CompilationUnit> compilationUnits   = this.compilerInput.getCompilationUnits().toImmutable();
-        DomainModelBuilder             domainModelBuilder = this.domainModel.build(compilationUnits);
+        ImmutableList<CompilationUnit> compilationUnits = this.compilerInput.getCompilationUnits().toImmutable();
+        DomainModelBuilder domainModelBuilder = this.domainModel.build(compilationUnits);
         return domainModelBuilder.build();
     }
 
     @Nonnull
-    public AntlrDomainModel getDomainModel()
-    {
+    public AntlrDomainModel getDomainModel() {
         return this.domainModel;
     }
 
     @Nonnull
-    public CompilerInputState getCompilerInput()
-    {
+    public CompilerInputState getCompilerInput() {
         return this.compilerInput;
     }
 
     @Nonnull
-    public CompilerAnnotationHolder getCompilerAnnotationHolder()
-    {
+    public CompilerAnnotationHolder getCompilerAnnotationHolder() {
         return this.compilerAnnotationHolder;
     }
 
-    public CompilerWalkState getCompilerWalk()
-    {
+    public CompilerWalkState getCompilerWalk() {
         return this.compilerWalk;
     }
 
-    public Integer getOrdinal(@Nonnull ParserRuleContext ctx)
-    {
+    public Integer getOrdinal(@Nonnull ParserRuleContext ctx) {
         TopLevelDeclarationContext topLevelDeclarationContext = AntlrUtils.getParentOfType(
-                ctx,
-                TopLevelDeclarationContext.class);
+            ctx,
+            TopLevelDeclarationContext.class
+        );
 
-        if (ctx == topLevelDeclarationContext)
-        {
+        if (ctx == topLevelDeclarationContext) {
             throw new AssertionError(ctx);
         }
 
         Integer topLevelElementOrdinalByContext =
-                this.domainModel.getTopLevelElementOrdinalByContext(topLevelDeclarationContext);
+            this.domainModel.getTopLevelElementOrdinalByContext(topLevelDeclarationContext);
         Objects.requireNonNull(topLevelElementOrdinalByContext);
         return topLevelElementOrdinalByContext;
     }
 
     @Nonnull
-    public KlassListener asListener()
-    {
+    public KlassListener asListener() {
         return new ListenerView();
     }
 
-    public class ListenerView
-            extends DelegatingKlassListener
-    {
+    public class ListenerView extends DelegatingKlassListener {
+
         @Override
-        protected KlassListener getDelegate()
-        {
+        protected KlassListener getDelegate() {
             return CompilerState.this.compilerWalk.asListener();
         }
 
         @Override
-        public void enterCompilationUnit(@Nonnull CompilationUnitContext ctx)
-        {
+        public void enterCompilationUnit(@Nonnull CompilationUnitContext ctx) {
             super.enterCompilationUnit(ctx);
             CompilationUnit currentCompilationUnit = CompilerState.this.compilerInput.getCompilationUnitByContext(ctx);
             CompilerState.this.compilerWalk.enterCompilationUnit(currentCompilationUnit);
         }
 
         @Override
-        public void exitCompilationUnit(@Nonnull CompilationUnitContext ctx)
-        {
+        public void exitCompilationUnit(@Nonnull CompilationUnitContext ctx) {
             super.exitCompilationUnit(ctx);
             CompilerState.this.compilerWalk.exitCompilationUnit();
         }

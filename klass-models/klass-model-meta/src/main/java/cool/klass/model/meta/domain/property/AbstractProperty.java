@@ -35,48 +35,47 @@ import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public abstract class AbstractProperty<T extends Type>
-        extends AbstractTypedElement<T>
-        implements Property
-{
+public abstract class AbstractProperty<T extends Type> extends AbstractTypedElement<T> implements Property {
+
     @Nonnull
     private final AbstractClassifier owningClassifier;
 
     protected AbstractProperty(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext,
-            @Nonnull T type,
-            @Nonnull AbstractClassifier owningClassifier)
-    {
+        @Nonnull ParserRuleContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext,
+        @Nonnull T type,
+        @Nonnull AbstractClassifier owningClassifier
+    ) {
         super(elementContext, macroElement, sourceCode, ordinal, nameContext, type);
         this.owningClassifier = Objects.requireNonNull(owningClassifier);
     }
 
     @Override
     @Nonnull
-    public Classifier getOwningClassifier()
-    {
+    public Classifier getOwningClassifier() {
         return this.owningClassifier;
     }
 
-    public abstract static class PropertyBuilder<T extends Type, TG extends TypeGetter, BuiltElement extends AbstractProperty<T>>
-            extends TypedElementBuilder<T, TG, BuiltElement>
-    {
+    public abstract static class PropertyBuilder<
+        T extends Type, TG extends TypeGetter, BuiltElement extends AbstractProperty<T>
+    >
+        extends TypedElementBuilder<T, TG, BuiltElement> {
+
         @Nonnull
         protected final ClassifierBuilder<?> owningClassifierBuilder;
 
         protected PropertyBuilder(
-                @Nonnull ParserRuleContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode,
-                int ordinal,
-                @Nonnull IdentifierContext nameContext,
-                @Nonnull TG typeBuilder,
-                @Nonnull ClassifierBuilder<?> owningClassifierBuilder)
-        {
+            @Nonnull ParserRuleContext elementContext,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode,
+            int ordinal,
+            @Nonnull IdentifierContext nameContext,
+            @Nonnull TG typeBuilder,
+            @Nonnull ClassifierBuilder<?> owningClassifierBuilder
+        ) {
             super(elementContext, macroElement, sourceCode, ordinal, nameContext, typeBuilder);
             this.owningClassifierBuilder = Objects.requireNonNull(owningClassifierBuilder);
         }

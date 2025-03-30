@@ -20,24 +20,19 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class ServiceGroupList extends ServiceGroupListAbstract
-{
-    public ServiceGroupList()
-    {
-    }
+public class ServiceGroupList extends ServiceGroupListAbstract {
 
-    public ServiceGroupList(int initialSize)
-    {
+    public ServiceGroupList() {}
+
+    public ServiceGroupList(int initialSize) {
         super(initialSize);
     }
 
-    public ServiceGroupList(Collection<?> c)
-    {
+    public ServiceGroupList(Collection<?> c) {
         super(c);
     }
 
-    public ServiceGroupList(Operation operation)
-    {
+    public ServiceGroupList(Operation operation) {
         super(operation);
     }
 }

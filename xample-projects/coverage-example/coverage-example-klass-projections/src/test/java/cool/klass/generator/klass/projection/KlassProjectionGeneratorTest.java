@@ -29,40 +29,37 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public class KlassProjectionGeneratorTest
-{
+public class KlassProjectionGeneratorTest {
+
     public static final String FULLY_QUALIFIED_PACKAGE = "cool.klass.xample.coverage";
 
     @RegisterExtension
     final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
     @Test
-    void smokeTest()
-    {
+    void smokeTest() {
         ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
 
         var domainModelCompilerLoader = new DomainModelCompilerLoader(
-                klassSourcePackages,
-                Thread.currentThread().getContextClassLoader(),
-                DomainModelCompilerLoader::logCompilerError,
-                ColorSchemeProvider.getByName("dark"));
+            klassSourcePackages,
+            Thread.currentThread().getContextClassLoader(),
+            DomainModelCompilerLoader::logCompilerError,
+            ColorSchemeProvider.getByName("dark")
+        );
 
         DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
-        ImmutableList<String>     packageNames = domainModel
-                .getClassifiers()
-                .asLazy()
-                .collect(PackageableElement::getPackageName)
-                .distinct()
-                .toImmutableList();
-        for (String packageName : packageNames)
-        {
+        ImmutableList<String> packageNames = domainModel
+            .getClassifiers()
+            .asLazy()
+            .collect(PackageableElement::getPackageName)
+            .distinct()
+            .toImmutableList();
+        for (String packageName : packageNames) {
             String sourceCode = KlassProjectionSourceCodeGenerator.getPackageSourceCode(domainModel, packageName);
 
             String resourceClassPathLocation = packageName + ".klass";
 
-            this.fileMatchExtension.assertFileContents(
-                    resourceClassPathLocation,
-                    sourceCode);
+            this.fileMatchExtension.assertFileContents(resourceClassPathLocation, sourceCode);
         }
     }
 }

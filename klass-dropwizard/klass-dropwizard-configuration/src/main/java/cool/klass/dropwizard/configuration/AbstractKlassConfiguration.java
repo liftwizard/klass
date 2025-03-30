@@ -49,7 +49,8 @@ import io.liftwizard.dropwizard.configuration.reladomo.ReladomoFactoryProvider;
 import io.liftwizard.dropwizard.configuration.uuid.UUIDSupplierFactory;
 import io.liftwizard.dropwizard.configuration.uuid.UUIDSupplierFactoryProvider;
 
-@JsonPropertyOrder({
+@JsonPropertyOrder(
+    {
         "server",
         "logging",
         "metrics",
@@ -66,10 +67,12 @@ import io.liftwizard.dropwizard.configuration.uuid.UUIDSupplierFactoryProvider;
         "connectionManagers",
         "sampleData",
         "bootstrap",
-})
+    }
+)
 public abstract class AbstractKlassConfiguration
-        extends AbstractLiftwizardConfiguration
-        implements H2FactoryProvider,
+    extends AbstractLiftwizardConfiguration
+    implements
+        H2FactoryProvider,
         DdlExecutorFactoryProvider,
         ReladomoFactoryProvider,
         SampleDataFactoryProvider,
@@ -78,35 +81,31 @@ public abstract class AbstractKlassConfiguration
         UUIDSupplierFactoryProvider,
         NamedDataSourceProvider,
         ConnectionManagerProvider,
-        LiquibaseMigrationFactoryProvider
-{
-    private @Valid          KlassFactory            klassFactory;
+        LiquibaseMigrationFactoryProvider {
+
+    private @Valid KlassFactory klassFactory;
 
     // Data
-    private @Valid          H2Factory                 h2Factory;
-    private @Valid @NotNull List<DdlExecutorFactory>  ddlExecutorFactories      = List.of();
-    private @Valid @NotNull ReladomoFactory           reladomoFactory           = new ReladomoFactory();
-    private @Valid @NotNull SampleDataFactory         sampleDataFactory         = new SampleDataFactory();
-    private @Valid @NotNull EnabledFactory            bootstrapFactory          = new EnabledFactory();
+    private @Valid H2Factory h2Factory;
+    private @Valid @NotNull List<DdlExecutorFactory> ddlExecutorFactories = List.of();
+    private @Valid @NotNull ReladomoFactory reladomoFactory = new ReladomoFactory();
+    private @Valid @NotNull SampleDataFactory sampleDataFactory = new SampleDataFactory();
+    private @Valid @NotNull EnabledFactory bootstrapFactory = new EnabledFactory();
     private @Valid @NotNull LiquibaseMigrationFactory liquibaseMigrationFactory = new LiquibaseMigrationFactory();
 
     @JsonUnwrapped
-    private @Valid @NotNull NamedDataSourcesFactory namedDataSourcesFactory =
-            new NamedDataSourcesFactory();
+    private @Valid @NotNull NamedDataSourcesFactory namedDataSourcesFactory = new NamedDataSourcesFactory();
 
     @JsonUnwrapped
-    private @Valid @NotNull ConnectionManagersFactory connectionManagersFactory =
-            new ConnectionManagersFactory();
+    private @Valid @NotNull ConnectionManagersFactory connectionManagersFactory = new ConnectionManagersFactory();
 
     @JsonProperty("klass")
-    public KlassFactory getKlassFactory()
-    {
+    public KlassFactory getKlassFactory() {
         return this.klassFactory;
     }
 
     @JsonProperty("klass")
-    public void setKlassFactory(KlassFactory klassFactory)
-    {
+    public void setKlassFactory(KlassFactory klassFactory) {
         this.klassFactory = klassFactory;
     }
 
@@ -116,136 +115,116 @@ public abstract class AbstractKlassConfiguration
     //   * h2Factory.webPort may not be null
     @Override
     @JsonProperty("h2")
-    public H2Factory getH2Factory()
-    {
+    public H2Factory getH2Factory() {
         return this.h2Factory;
     }
 
     @JsonProperty("h2")
-    public void setH2(H2Factory h2Factory)
-    {
+    public void setH2(H2Factory h2Factory) {
         this.h2Factory = h2Factory;
     }
 
     @JsonProperty("dataSources")
     @JsonUnwrapped
     @Override
-    public NamedDataSourcesFactory getNamedDataSourcesFactory()
-    {
+    public NamedDataSourcesFactory getNamedDataSourcesFactory() {
         return this.namedDataSourcesFactory;
     }
 
     @JsonProperty("dataSources")
     @JsonUnwrapped
-    public void setNamedDataSourcesFactory(NamedDataSourcesFactory namedDataSourcesFactory)
-    {
+    public void setNamedDataSourcesFactory(NamedDataSourcesFactory namedDataSourcesFactory) {
         this.namedDataSourcesFactory = namedDataSourcesFactory;
     }
 
     @JsonProperty("connectionManagers")
     @JsonUnwrapped
     @Override
-    public ConnectionManagersFactory getConnectionManagersFactory()
-    {
+    public ConnectionManagersFactory getConnectionManagersFactory() {
         return this.connectionManagersFactory;
     }
 
     @JsonProperty("connectionManagers")
     @JsonUnwrapped
-    public void setConnectionManagersFactory(ConnectionManagersFactory connectionManagersFactory)
-    {
+    public void setConnectionManagersFactory(ConnectionManagersFactory connectionManagersFactory) {
         this.connectionManagersFactory = connectionManagersFactory;
     }
 
     @Override
     @JsonProperty("ddlExecutors")
-    public List<DdlExecutorFactory> getDdlExecutorFactories()
-    {
+    public List<DdlExecutorFactory> getDdlExecutorFactories() {
         return this.ddlExecutorFactories;
     }
 
     @JsonProperty("ddlExecutors")
-    public void setDdlExecutorFactories(List<DdlExecutorFactory> ddlExecutorFactories)
-    {
+    public void setDdlExecutorFactories(List<DdlExecutorFactory> ddlExecutorFactories) {
         this.ddlExecutorFactories = ddlExecutorFactories;
     }
 
     @Override
     @JsonProperty("reladomo")
-    public ReladomoFactory getReladomoFactory()
-    {
+    public ReladomoFactory getReladomoFactory() {
         return this.reladomoFactory;
     }
 
     @JsonProperty("reladomo")
-    public void setReladomo(ReladomoFactory reladomoFactory)
-    {
+    public void setReladomo(ReladomoFactory reladomoFactory) {
         this.reladomoFactory = reladomoFactory;
     }
 
     @Override
     @JsonProperty("sampleData")
-    public SampleDataFactory getSampleDataFactory()
-    {
+    public SampleDataFactory getSampleDataFactory() {
         return this.sampleDataFactory;
     }
 
     @JsonProperty("sampleData")
-    public void setSampleData(SampleDataFactory sampleDataFactory)
-    {
+    public void setSampleData(SampleDataFactory sampleDataFactory) {
         this.sampleDataFactory = sampleDataFactory;
     }
 
     @JsonProperty("bootstrap")
-    public EnabledFactory getBootstrapFactory()
-    {
+    public EnabledFactory getBootstrapFactory() {
         return this.bootstrapFactory;
     }
 
     @JsonProperty("bootstrap")
-    public void setBootstrap(EnabledFactory bootstrapFactory)
-    {
+    public void setBootstrap(EnabledFactory bootstrapFactory) {
         this.bootstrapFactory = bootstrapFactory;
     }
 
     @JsonProperty("liquibase")
     @Override
-    public LiquibaseMigrationFactory getLiquibaseMigrationFactory()
-    {
+    public LiquibaseMigrationFactory getLiquibaseMigrationFactory() {
         return this.liquibaseMigrationFactory;
     }
 
     @JsonProperty("liquibase")
-    public void setLiquibaseMigrationFactory(LiquibaseMigrationFactory liquibaseMigrationFactory)
-    {
+    public void setLiquibaseMigrationFactory(LiquibaseMigrationFactory liquibaseMigrationFactory) {
         this.liquibaseMigrationFactory = liquibaseMigrationFactory;
     }
 
     @Override
     @JsonIgnore
-    public DataStoreFactory getDataStoreFactory()
-    {
+    public DataStoreFactory getDataStoreFactory() {
         return this.klassFactory.getDataStoreFactory();
     }
 
     @Override
     @JsonIgnore
-    public DomainModelFactory getDomainModelFactory()
-    {
+    public DomainModelFactory getDomainModelFactory() {
         return this.klassFactory.getDomainModelFactory();
     }
 
     @JsonIgnore
     @Override
-    public UUIDSupplierFactory getUuidSupplierFactory()
-    {
+    public UUIDSupplierFactory getUuidSupplierFactory() {
         return this.getDataStoreFactory().getUuidFactory();
     }
 
     @JsonIgnore
     @Nullable
-    public String getColorScheme()
-    {
+    public String getColorScheme() {
         return this.klassFactory == null ? null : this.klassFactory.getColorScheme();
     }
 }

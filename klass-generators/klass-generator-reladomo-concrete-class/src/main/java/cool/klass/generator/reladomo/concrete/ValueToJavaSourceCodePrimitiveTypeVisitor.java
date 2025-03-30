@@ -23,82 +23,71 @@ import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
 import org.apache.commons.text.StringEscapeUtils;
 
 @SuppressWarnings("RedundantCast")
-public class ValueToJavaSourceCodePrimitiveTypeVisitor
-        implements PrimitiveTypeVisitor
-{
+public class ValueToJavaSourceCodePrimitiveTypeVisitor implements PrimitiveTypeVisitor {
+
     private final Object value;
 
     private String result;
 
-    public ValueToJavaSourceCodePrimitiveTypeVisitor(Object value)
-    {
+    public ValueToJavaSourceCodePrimitiveTypeVisitor(Object value) {
         this.value = value;
     }
 
-    public String getResult()
-    {
+    public String getResult() {
         return this.result;
     }
 
     @Override
-    public void visitString()
-    {
+    public void visitString() {
         this.result = "\"" + StringEscapeUtils.escapeJava((String) this.value) + "\"";
     }
 
     @Override
-    public void visitInteger()
-    {
+    public void visitInteger() {
         this.result = Integer.toString((Integer) this.value);
     }
 
     @Override
-    public void visitLong()
-    {
+    public void visitLong() {
         this.result = (Long) this.value + "L";
     }
 
     @Override
-    public void visitDouble()
-    {
+    public void visitDouble() {
         this.result = Double.toString((Double) this.value);
     }
 
     @Override
-    public void visitFloat()
-    {
+    public void visitFloat() {
         this.result = (Float) this.value + "f";
     }
 
     @Override
-    public void visitBoolean()
-    {
+    public void visitBoolean() {
         this.result = Boolean.toString((Boolean) this.value);
     }
 
     @Override
-    public void visitInstant()
-    {
+    public void visitInstant() {
         this.result = "Instant.parse(\"" + ((Instant) this.value) + "\")";
     }
 
     @Override
-    public void visitLocalDate()
-    {
+    public void visitLocalDate() {
         this.result = "LocalDate.parse(\"" + ((LocalDate) this.value) + "\")";
     }
 
     @Override
-    public void visitTemporalInstant()
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".visitTemporalInstant() not implemented yet");
+    public void visitTemporalInstant() {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".visitTemporalInstant() not implemented yet"
+        );
     }
 
     @Override
-    public void visitTemporalRange()
-    {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName()
-                + ".visitTemporalRange() not implemented yet");
+    public void visitTemporalRange() {
+        throw new UnsupportedOperationException(
+            this.getClass().getSimpleName() + ".visitTemporalRange() not implemented yet"
+        );
     }
 }

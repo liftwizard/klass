@@ -34,46 +34,42 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(LogMarkerTestExtension.class)
-class KlassCompilerTest
-{
+class KlassCompilerTest {
+
     @Test
-    void stackOverflow()
-    {
+    void stackOverflow() {
         this.assertNoCompilerErrors("/com/stackoverflow/stackoverflow.klass");
     }
 
     @Test
-    void factorioPrints()
-    {
+    void factorioPrints() {
         this.assertNoCompilerErrors("factorio-prints.klass");
     }
 
     @Test
-    void emoji()
-    {
+    void emoji() {
         this.assertNoCompilerErrors("emoji.klass");
     }
 
     @Test
-    void projectionOnInterface()
-    {
+    void projectionOnInterface() {
         this.assertNoCompilerErrors("projectionOnInterface.klass");
     }
 
-    private void assertNoCompilerErrors(@Nonnull String sourceCodeName)
-    {
+    private void assertNoCompilerErrors(@Nonnull String sourceCodeName) {
         String sourceCodeText = FileSlurper.slurp(sourceCodeName, this.getClass());
         CompilationUnit compilationUnit = CompilationUnit.createFromText(
-                0,
-                Optional.empty(),
-                sourceCodeName,
-                sourceCodeText);
+            0,
+            Optional.empty(),
+            sourceCodeName,
+            sourceCodeText
+        );
         AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
         KlassCompiler compiler = new KlassCompiler(compilationUnit, colorScheme);
         CompilationResult compilationResult = compiler.compile();
         ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult
-                .compilerAnnotations()
-                .select(AbstractCompilerAnnotation::isError);
+            .compilerAnnotations()
+            .select(AbstractCompilerAnnotation::isError);
 
         assertThat(compilerAnnotations).as(compilerAnnotations.makeString("\n")).isEqualTo(Lists.immutable.empty());
 

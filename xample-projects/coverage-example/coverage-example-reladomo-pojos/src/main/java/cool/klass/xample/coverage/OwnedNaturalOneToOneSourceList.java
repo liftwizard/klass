@@ -20,24 +20,19 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class OwnedNaturalOneToOneSourceList extends OwnedNaturalOneToOneSourceListAbstract
-{
-    public OwnedNaturalOneToOneSourceList()
-    {
-    }
+public class OwnedNaturalOneToOneSourceList extends OwnedNaturalOneToOneSourceListAbstract {
 
-    public OwnedNaturalOneToOneSourceList(int initialSize)
-    {
+    public OwnedNaturalOneToOneSourceList() {}
+
+    public OwnedNaturalOneToOneSourceList(int initialSize) {
         super(initialSize);
     }
 
-    public OwnedNaturalOneToOneSourceList(Collection c)
-    {
+    public OwnedNaturalOneToOneSourceList(Collection c) {
         super(c);
     }
 
-    public OwnedNaturalOneToOneSourceList(Operation operation)
-    {
+    public OwnedNaturalOneToOneSourceList(Operation operation) {
         super(operation);
     }
 }

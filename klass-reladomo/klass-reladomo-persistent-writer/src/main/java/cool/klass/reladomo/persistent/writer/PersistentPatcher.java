@@ -27,75 +27,64 @@ import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import org.eclipse.collections.api.map.MapIterable;
 
-public class PersistentPatcher
-        extends PersistentSynchronizer
-{
-    public PersistentPatcher(
-            @Nonnull MutationContext mutationContext,
-            @Nonnull DataStore dataStore)
-    {
+public class PersistentPatcher extends PersistentSynchronizer {
+
+    public PersistentPatcher(@Nonnull MutationContext mutationContext, @Nonnull DataStore dataStore) {
         this(mutationContext, dataStore, false);
     }
 
     public PersistentPatcher(
-            @Nonnull MutationContext mutationContext,
-            @Nonnull DataStore dataStore,
-            boolean inTransaction)
-    {
+        @Nonnull MutationContext mutationContext,
+        @Nonnull DataStore dataStore,
+        boolean inTransaction
+    ) {
         super(mutationContext, dataStore, inTransaction);
     }
 
     @Override
-    protected boolean shouldWriteKey()
-    {
+    protected boolean shouldWriteKey() {
         return false;
     }
 
     @Override
-    protected boolean shouldWriteId()
-    {
+    protected boolean shouldWriteId() {
         return true;
     }
 
     @Override
     protected void synchronizeUpdatedDataTypeProperties(
-            @Nonnull Klass klass,
-            Object persistentInstance,
-            boolean propertyMutationOccurred)
-    {
-        if (propertyMutationOccurred)
-        {
+        @Nonnull Klass klass,
+        Object persistentInstance,
+        boolean propertyMutationOccurred
+    ) {
+        if (propertyMutationOccurred) {
             this.synchronizeUpdatedDataTypeProperties(klass, persistentInstance);
         }
     }
 
     @Override
-    protected void validateSetIdDataTypeProperties(Klass klass, Object persistentInstance)
-    {
+    protected void validateSetIdDataTypeProperties(Klass klass, Object persistentInstance) {
         // Deliberately empty for update operation
     }
 
     @Override
-    protected void synchronizeCreatedDataTypeProperties(Klass klass, Object persistentInstance)
-    {
+    protected void synchronizeCreatedDataTypeProperties(Klass klass, Object persistentInstance) {
         // Deliberately empty for update operation
     }
 
     @Override
     protected boolean synchronizeDataTypeProperty(
-            @Nonnull DataTypeProperty dataTypeProperty,
-            Object persistentInstance,
-            @Nonnull ObjectNode incomingJson)
-    {
+        @Nonnull DataTypeProperty dataTypeProperty,
+        Object persistentInstance,
+        @Nonnull ObjectNode incomingJson
+    ) {
         Object newValue = this.mutationContext.getPropertyDataFromUrl().get(dataTypeProperty);
-        if (newValue != null)
-        {
+        if (newValue != null) {
             return this.dataStore.setDataTypeProperty(persistentInstance, dataTypeProperty, newValue);
         }
 
         JsonNode jsonDataTypeValue = incomingJson.path(dataTypeProperty.getName());
-        if (jsonDataTypeValue.isMissingNode())
-        {
+        if (jsonDataTypeValue.isMissingNode()) {
             return false;
         }
 
@@ -103,35 +92,32 @@ public class PersistentPatcher
     }
 
     @Override
-    protected void handleVersion(
-            AssociationEnd associationEnd,
-            Object persistentInstance)
-    {
+    protected void handleVersion(AssociationEnd associationEnd, Object persistentInstance) {
         Object versionPersistentInstance = this.dataStore.getToOne(persistentInstance, associationEnd);
-        DataTypeProperty versionProperty = associationEnd.getType()
-                .getDataTypeProperties()
-                .select(DataTypeProperty::isVersion)
-                .getOnly();
+        DataTypeProperty versionProperty = associationEnd
+            .getType()
+            .getDataTypeProperties()
+            .select(DataTypeProperty::isVersion)
+            .getOnly();
         Integer versionNumber = (Integer) this.dataStore.getDataTypeProperty(
                 versionPersistentInstance,
-                versionProperty);
+                versionProperty
+            );
         this.dataStore.setDataTypeProperty(versionPersistentInstance, versionProperty, versionNumber + 1);
     }
 
     @Override
-    protected boolean handleMissingToOne(Klass klass, Object persistentChildInstance)
-    {
+    protected boolean handleMissingToOne(Klass klass, Object persistentChildInstance) {
         return false;
     }
 
     @Override
     protected boolean handleToMany(
-            @Nonnull AssociationEnd associationEnd,
-            Object persistentParentInstance,
-            @Nonnull JsonNode incomingChildInstances)
-    {
-        if (incomingChildInstances.isMissingNode())
-        {
+        @Nonnull AssociationEnd associationEnd,
+        Object persistentParentInstance,
+        @Nonnull JsonNode incomingChildInstances
+    ) {
+        if (incomingChildInstances.isMissingNode()) {
             return false;
         }
         return super.handleToMany(associationEnd, persistentParentInstance, incomingChildInstances);
@@ -139,19 +125,18 @@ public class PersistentPatcher
 
     @Override
     protected boolean handleToOneOutsideProjection(
-            @Nonnull AssociationEnd associationEnd,
-            @Nonnull Object persistentParentInstance,
-            @Nonnull ObjectNode incomingParentNode,
-            @Nonnull JsonNode incomingChildInstance)
-    {
-        if (associationEnd.isOwned())
-        {
-            throw new AssertionError("Assumption is that all owned association ends are inside projection, all unowned are outside projection");
+        @Nonnull AssociationEnd associationEnd,
+        @Nonnull Object persistentParentInstance,
+        @Nonnull ObjectNode incomingParentNode,
+        @Nonnull JsonNode incomingChildInstance
+    ) {
+        if (associationEnd.isOwned()) {
+            throw new AssertionError(
+                "Assumption is that all owned association ends are inside projection, all unowned are outside projection"
+            );
         }
 
-        if (incomingChildInstance.isMissingNode()
-                || incomingChildInstance.isNull())
-        {
+        if (incomingChildInstance.isMissingNode() || incomingChildInstance.isNull()) {
             return false;
             // Without otherwise handling lenient property setting, this would overwrite the already-set foreign key with null
             // return this.dataStore.setToOne(persistentParentInstance, associationEnd, null);
@@ -159,29 +144,22 @@ public class PersistentPatcher
 
         Object childPersistentInstanceAssociated = this.dataStore.getToOne(persistentParentInstance, associationEnd);
 
-        Object childPersistentInstanceWithKey = this.findExistingChildPersistentInstance(
-                persistentParentInstance,
-                incomingChildInstance,
-                associationEnd);
-        if (childPersistentInstanceWithKey == null)
-        {
-            MapIterable<DataTypeProperty, Object> keys = this.getKeysFromJsonNode(
-                    incomingChildInstance,
-                    associationEnd,
-                    persistentParentInstance);
+        Object childPersistentInstanceWithKey =
+            this.findExistingChildPersistentInstance(persistentParentInstance, incomingChildInstance, associationEnd);
+        if (childPersistentInstanceWithKey == null) {
+            MapIterable<DataTypeProperty, Object> keys =
+                this.getKeysFromJsonNode(incomingChildInstance, associationEnd, persistentParentInstance);
             String error = String.format("Could not find existing %s with key %s", associationEnd.getType(), keys);
             // TODO: Error message including full path here. Error message earlier, during validation.
             // It's possible to trigger this code path by deleting reference data from tests, like one of the Tags listed in test-data/create-blueprint.txt
             throw new IllegalStateException(error);
         }
 
-        if (childPersistentInstanceAssociated == childPersistentInstanceWithKey)
-        {
+        if (childPersistentInstanceAssociated == childPersistentInstanceWithKey) {
             return false;
         }
 
-        if (associationEnd.isFinal())
-        {
+        if (associationEnd.isFinal()) {
             throw new AssertionError();
         }
 
@@ -190,15 +168,12 @@ public class PersistentPatcher
 
     @Nonnull
     @Override
-    protected PersistentSynchronizer determineNextMode(OperationMode nextMode)
-    {
-        if (nextMode == OperationMode.REPLACE)
-        {
+    protected PersistentSynchronizer determineNextMode(OperationMode nextMode) {
+        if (nextMode == OperationMode.REPLACE) {
             return new PersistentPatcher(this.mutationContext, this.dataStore, this.inTransaction);
         }
 
-        if (nextMode == OperationMode.CREATE)
-        {
+        if (nextMode == OperationMode.CREATE) {
             return new PersistentCreator(this.mutationContext, this.dataStore, this.inTransaction);
         }
 

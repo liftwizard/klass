@@ -25,9 +25,7 @@ import cool.klass.model.meta.domain.api.criteria.Criteria;
 import cool.klass.model.meta.domain.api.order.OrderBy;
 import cool.klass.model.meta.domain.api.service.url.Url;
 
-public interface Service
-        extends Element
-{
+public interface Service extends Element {
     @Nonnull
     Url getUrl();
 
@@ -54,22 +52,21 @@ public interface Service
     @Nonnull
     Optional<OrderBy> getOrderBy();
 
-    default int getNumParameters()
-    {
-        int numUrlParameters       = this.getUrl().getParameters().size();
-        int numVersionParameters   = this.isVersionClauseRequired() ? 1 : 0;
+    default int getNumParameters() {
+        int numUrlParameters = this.getUrl().getParameters().size();
+        int numVersionParameters = this.isVersionClauseRequired() ? 1 : 0;
         int numAuthorizeParameters = this.isAuthorizeClauseRequired() ? 1 : 0;
         return numUrlParameters + numVersionParameters + numAuthorizeParameters;
     }
 
-    default boolean isVersionClauseRequired()
-    {
-        return this.getServiceMultiplicity() == ServiceMultiplicity.ONE
-                && this.getUrl().getServiceGroup().getKlass().getVersionProperty().isPresent();
+    default boolean isVersionClauseRequired() {
+        return (
+            this.getServiceMultiplicity() == ServiceMultiplicity.ONE &&
+            this.getUrl().getServiceGroup().getKlass().getVersionProperty().isPresent()
+        );
     }
 
-    default boolean isAuthorizeClauseRequired()
-    {
+    default boolean isAuthorizeClauseRequired() {
         return this.getAuthorizeCriteria().isPresent();
     }
 }

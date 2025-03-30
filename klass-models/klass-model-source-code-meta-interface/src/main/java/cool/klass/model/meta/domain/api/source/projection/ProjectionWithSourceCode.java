@@ -23,9 +23,7 @@ import cool.klass.model.meta.domain.api.source.ClassifierWithSourceCode;
 import cool.klass.model.meta.domain.api.source.TopLevelElementWithSourceCode;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionDeclarationContext;
 
-public interface ProjectionWithSourceCode
-        extends Projection, TopLevelElementWithSourceCode
-{
+public interface ProjectionWithSourceCode extends Projection, TopLevelElementWithSourceCode {
     @Override
     ProjectionDeclarationContext getElementContext();
 

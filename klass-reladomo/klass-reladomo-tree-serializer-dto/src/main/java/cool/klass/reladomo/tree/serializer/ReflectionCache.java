@@ -26,53 +26,41 @@ import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
 // TODO: Move this to a shared module
-public class ReflectionCache
-{
-    private final MutableOrderedMap<String, Class<?>> classCache  = OrderedMapAdapter.adapt(new LinkedHashMap<>());
+public class ReflectionCache {
+
+    private final MutableOrderedMap<String, Class<?>> classCache = OrderedMapAdapter.adapt(new LinkedHashMap<>());
     private final MutableOrderedMap<CacheKey, Method> methodCache = OrderedMapAdapter.adapt(new LinkedHashMap<>());
 
     @Nonnull
-    public Class<?> classForName(String dtoFQCN)
-    {
-        if (this.classCache.containsKey(dtoFQCN))
-        {
+    public Class<?> classForName(String dtoFQCN) {
+        if (this.classCache.containsKey(dtoFQCN)) {
             return this.classCache.get(dtoFQCN);
         }
 
-        try
-        {
+        try {
             Class<?> result = Class.forName(dtoFQCN);
             this.classCache.put(dtoFQCN, result);
             return result;
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Nonnull
-    public Method getMethod(Class<?> objectClass, String methodName, Class<?>... parameterTypes)
-    {
+    public Method getMethod(Class<?> objectClass, String methodName, Class<?>... parameterTypes) {
         CacheKey key = new CacheKey(objectClass, methodName, List.of(parameterTypes));
-        if (this.methodCache.containsKey(key))
-        {
+        if (this.methodCache.containsKey(key)) {
             return this.methodCache.get(key);
         }
 
-        try
-        {
+        try {
             Method result = objectClass.getMethod(methodName, parameterTypes);
             this.methodCache.put(key, result);
             return result;
-        }
-        catch (NoSuchMethodException e)
-        {
+        } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private record CacheKey(Class<?> objectClass, String methodName, List<Class<?>> parameterTypes)
-    {
-    }
+    private record CacheKey(Class<?> objectClass, String methodName, List<Class<?>> parameterTypes) {}
 }

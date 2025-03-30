@@ -31,9 +31,7 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.OrderedMap;
 
-public interface DataTypeProperty
-        extends Property
-{
+public interface DataTypeProperty extends Property {
     void visit(@Nonnull DataTypePropertyVisitor visitor);
 
     @Nonnull
@@ -55,109 +53,89 @@ public interface DataTypeProperty
 
     OrderedMap<AssociationEnd, DataTypeProperty> getForeignKeysMatchingThisKey();
 
-    default boolean isKey()
-    {
+    default boolean isKey() {
         return this.getModifiers().anySatisfy(Modifier::isKey);
     }
 
     boolean isID();
 
-    default boolean isAudit()
-    {
+    default boolean isAudit() {
         return this.getModifiers().anySatisfy(Modifier::isAudit);
     }
 
-    default boolean isCreatedBy()
-    {
+    default boolean isCreatedBy() {
         return this.getModifiers().anySatisfy(Modifier::isCreatedBy);
     }
 
-    default boolean isCreatedOn()
-    {
+    default boolean isCreatedOn() {
         return this.getModifiers().anySatisfy(Modifier::isCreatedOn);
     }
 
-    default boolean isLastUpdatedBy()
-    {
+    default boolean isLastUpdatedBy() {
         return this.getModifiers().anySatisfy(Modifier::isLastUpdatedBy);
     }
 
-    default boolean isValid()
-    {
+    default boolean isValid() {
         return this.getModifiers().anySatisfy(Modifier::isValid);
     }
 
-    default boolean isValidFrom()
-    {
+    default boolean isValidFrom() {
         return this.isValid() && this.isFrom();
     }
 
-    default boolean isValidTo()
-    {
+    default boolean isValidTo() {
         return this.isValid() && this.isTo();
     }
 
-    default boolean isValidRange()
-    {
+    default boolean isValidRange() {
         return this.isValid() && this.isTemporalRange();
     }
 
-    default boolean isSystem()
-    {
+    default boolean isSystem() {
         return this.getModifiers().anySatisfy(Modifier::isSystem);
     }
 
-    default boolean isSystemFrom()
-    {
+    default boolean isSystemFrom() {
         return this.isSystem() && this.isFrom();
     }
 
-    default boolean isSystemTo()
-    {
+    default boolean isSystemTo() {
         return this.isSystem() && this.isTo();
     }
 
-    default boolean isSystemRange()
-    {
+    default boolean isSystemRange() {
         return this.isSystem() && this.isTemporalRange();
     }
 
-    default boolean isFrom()
-    {
+    default boolean isFrom() {
         return this.getModifiers().anySatisfy(Modifier::isFrom);
     }
 
-    default boolean isTo()
-    {
+    default boolean isTo() {
         return this.getModifiers().anySatisfy(Modifier::isTo);
     }
 
-    default boolean isFinal()
-    {
+    default boolean isFinal() {
         return this.getModifiers().anySatisfy(Modifier::isFinal);
     }
 
     @Override
-    default boolean isPrivate()
-    {
+    default boolean isPrivate() {
         return this.getModifiers().anySatisfy(Modifier::isPrivate);
     }
 
-    default boolean isValidTemporal()
-    {
+    default boolean isValidTemporal() {
         return this.isValid() && this.isTemporalRange();
     }
 
-    default boolean isSystemTemporal()
-    {
+    default boolean isSystemTemporal() {
         return this.isSystem() && this.isTemporalRange();
     }
 
     boolean isOptional();
 
     @Override
-    default boolean isRequired()
-    {
+    default boolean isRequired() {
         return !this.isOptional();
     }
 
@@ -174,32 +152,27 @@ public interface DataTypeProperty
     boolean isVersion();
 
     @Override
-    default boolean isDerived()
-    {
+    default boolean isDerived() {
         return this.getModifiers().anySatisfy(Modifier::isDerived);
     }
 
-    default boolean isForeignKeyWithOpposite()
-    {
+    default boolean isForeignKeyWithOpposite() {
         OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey = this.getKeysMatchingThisForeignKey();
         ImmutableList<DataTypeProperty> dataTypeProperties = keysMatchingThisForeignKey
-                .valuesView()
-                .toList()
-                .toImmutable();
-        return dataTypeProperties
-                .anySatisfyWith((dataTypeProperty, keyProperty1) -> keyProperty1.isOppositeKey(dataTypeProperty), this);
+            .valuesView()
+            .toList()
+            .toImmutable();
+        return dataTypeProperties.anySatisfyWith(
+            (dataTypeProperty, keyProperty1) -> keyProperty1.isOppositeKey(dataTypeProperty),
+            this
+        );
     }
 
-    default boolean isOppositeKey(
-            @Nonnull DataTypeProperty dataTypeProperty)
-    {
-        return dataTypeProperty
-                .getForeignKeysMatchingThisKey()
-                .containsValue(Lists.immutable.with(this));
+    default boolean isOppositeKey(@Nonnull DataTypeProperty dataTypeProperty) {
+        return dataTypeProperty.getForeignKeysMatchingThisKey().containsValue(Lists.immutable.with(this));
     }
 
-    default boolean isForeignKeyMatchingKeyOnPath(AssociationEnd pathHere)
-    {
+    default boolean isForeignKeyMatchingKeyOnPath(AssociationEnd pathHere) {
         var opposite = pathHere.getOpposite();
         return this.getKeysMatchingThisForeignKey().containsKey(opposite);
     }

@@ -30,15 +30,17 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-        name = "generate-service-resources",
-        defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-        threadSafe = true,
-        requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class GenerateServiceResourcesMojo extends AbstractGenerateMojo
-{
+    name = "generate-service-resources",
+    defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+    threadSafe = true,
+    requiresDependencyResolution = ResolutionScope.RUNTIME
+)
+public class GenerateServiceResourcesMojo extends AbstractGenerateMojo {
+
     @Parameter(
-            property = "outputDirectory",
-            defaultValue = "${project.build.directory}/generated-sources/service-resources")
+        property = "outputDirectory",
+        defaultValue = "${project.build.directory}/generated-sources/service-resources"
+    )
     private File outputDirectory;
 
     @Parameter(property = "applicationName", required = true)
@@ -48,25 +50,21 @@ public class GenerateServiceResourcesMojo extends AbstractGenerateMojo
     private String rootPackageName;
 
     @Override
-    public void execute() throws MojoExecutionException
-    {
-        if (!this.outputDirectory.exists())
-        {
+    public void execute() throws MojoExecutionException {
+        if (!this.outputDirectory.exists()) {
             this.outputDirectory.mkdirs();
         }
 
         DomainModel domainModel = this.getDomainModel();
-        Path        outputPath  = this.outputDirectory.toPath();
-        try
-        {
+        Path outputPath = this.outputDirectory.toPath();
+        try {
             ServiceResourceGenerator serviceResourceGenerator = new ServiceResourceGenerator(
-                    domainModel,
-                    this.applicationName,
-                    this.rootPackageName);
+                domainModel,
+                this.applicationName,
+                this.rootPackageName
+            );
             serviceResourceGenerator.writeServiceResourceFiles(outputPath);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
 

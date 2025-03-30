@@ -4,8 +4,8 @@ default_flags    := env('MVN_FLAGS',    "--threads 2C")
 skip_tests_flags := default_flags + " -DskipTests"
 
 default_verify_profiles := env('MVN_VERIFY_PROFILES', "errorprone,maven-enforcer-plugin,maven-dependency-plugin,maven-javadoc-plugin")
-default_checkstyle_profiles := env('MVN_CHECKSTYLE_PROFILES', "checkstyle-semantics,checkstyle-formatting,checkstyle-semantics-strict,checkstyle-formatting-strict")
-default_spotless_profiles := env('MVN_SPOTLESS_PROFILES', "spotless-apply,spotless-formats,spotless-java,spotless-java-sort-imports,spotless-java-unused-imports,spotless-java-cleanthat,spotless-sql,spotless-pom,spotless-markdown,spotless-json,spotless-yaml")
+default_checkstyle_profiles := env('MVN_CHECKSTYLE_PROFILES', "checkstyle-semantics,checkstyle-formatting,checkstyle-semantics-strict")
+default_spotless_profiles := env('MVN_SPOTLESS_PROFILES', "spotless-apply,spotless-formats,spotless-java,spotless-prettier-java-sort-imports,spotless-java-cleanthat,spotless-sql,spotless-pom,spotless-markdown,spotless-json,spotless-yaml")
 default_profiles := env('MVN_PROFILES', "--activate-profiles " + default_verify_profiles + "," + default_checkstyle_profiles + "," + default_spotless_profiles)
 
 # Run `mvn` with configurable target, profiles, and flags
@@ -94,7 +94,7 @@ checkstyle FAIL_ON_VIOLATION="true" MVN="mvn": \
 spotless NAME MVN=default_mvn: _check-local-modifications clean (mvn MVN "spotless:apply" ("--activate-profiles spotless-apply,spotless-" + NAME) default_flags) && _check-local-modifications
 
 # spotless-all
-spotless-all MVN=default_mvn: _check-local-modifications clean (mvn MVN "spotless:apply" "--activate-profiles spotless-apply,spotless-formats,spotless-java-sort-imports,spotless-java-unused-imports,spotless-java-cleanthat,spotless-sql,spotless-pom,spotless-markdown,spotless-json,spotless-yaml" default_flags) && _check-local-modifications
+spotless-all MVN=default_mvn: _check-local-modifications clean (mvn MVN "spotless:apply" ("--activate-profiles " + default_spotless_profiles) default_flags) && _check-local-modifications
 
 # `mvn` with reproducible build check
 reproducible MVN=default_mvn: (mvn MVN "verify artifact:check-buildplan" "" skip_tests_flags) && _check-local-modifications

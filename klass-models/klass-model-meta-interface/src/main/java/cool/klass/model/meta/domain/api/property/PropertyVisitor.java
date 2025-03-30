@@ -16,8 +16,7 @@
 
 package cool.klass.model.meta.domain.api.property;
 
-public interface PropertyVisitor
-{
+public interface PropertyVisitor {
     void visitPrimitiveProperty(PrimitiveProperty primitiveProperty);
 
     void visitEnumerationProperty(EnumerationProperty enumerationProperty);

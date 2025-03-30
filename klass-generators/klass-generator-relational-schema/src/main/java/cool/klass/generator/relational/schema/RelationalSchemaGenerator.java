@@ -32,72 +32,59 @@ import com.google.common.base.Converter;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
 
-public class RelationalSchemaGenerator
-{
-    private static final Converter<String, String> CONVERTER =
-            CaseFormat.UPPER_CAMEL.converterTo(CaseFormat.UPPER_UNDERSCORE);
+public class RelationalSchemaGenerator {
+
+    private static final Converter<String, String> CONVERTER = CaseFormat.UPPER_CAMEL.converterTo(
+        CaseFormat.UPPER_UNDERSCORE
+    );
 
     private final DomainModel domainModel;
 
-    public RelationalSchemaGenerator(DomainModel domainModel)
-    {
+    public RelationalSchemaGenerator(DomainModel domainModel) {
         this.domainModel = Objects.requireNonNull(domainModel);
     }
 
-    public void writeRelationalSchema(@Nonnull Path path)
-    {
-        for (Klass klass : this.domainModel.getClasses())
-        {
+    public void writeRelationalSchema(@Nonnull Path path) {
+        for (Klass klass : this.domainModel.getClasses()) {
             String tableName = CONVERTER.convert(klass.getName());
 
-            String packageName  = klass.getPackageName();
+            String packageName = klass.getPackageName();
             String relativePath = packageName.replaceAll("\\.", "/");
-            Path   parentPath   = path.resolve(relativePath);
+            Path parentPath = path.resolve(relativePath);
             createDirectories(parentPath);
 
             Path ddlOutputPath = parentPath.resolve(tableName + ".ddl");
-            if (!ddlOutputPath.toFile().exists())
-            {
+            if (!ddlOutputPath.toFile().exists()) {
                 String sourceCode = DdlGenerator.getDdl(klass);
                 this.printStringToFile(ddlOutputPath, sourceCode);
             }
 
             Path idxOutputPath = parentPath.resolve(tableName + ".idx");
-            if (!idxOutputPath.toFile().exists())
-            {
+            if (!idxOutputPath.toFile().exists()) {
                 String sourceCode = IdxGenerator.getIdx(klass);
                 this.printStringToFile(idxOutputPath, sourceCode);
             }
 
             Path fkOutputPath = parentPath.resolve(tableName + ".fk");
-            if (!fkOutputPath.toFile().exists())
-            {
+            if (!fkOutputPath.toFile().exists()) {
                 Optional<String> sourceCode = FkGenerator.getFk(klass);
                 sourceCode.ifPresent(s -> this.printStringToFile(fkOutputPath, s));
             }
         }
     }
 
-    private static void createDirectories(Path dir)
-    {
-        try
-        {
+    private static void createDirectories(Path dir) {
+        try {
             Files.createDirectories(dir);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void printStringToFile(@Nonnull Path path, String contents)
-    {
-        try (PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile())))
-        {
+    private void printStringToFile(@Nonnull Path path, String contents) {
+        try (PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()))) {
             printStream.print(contents);
-        }
-        catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

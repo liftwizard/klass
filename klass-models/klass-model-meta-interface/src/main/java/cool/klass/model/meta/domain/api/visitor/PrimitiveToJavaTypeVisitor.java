@@ -20,80 +20,67 @@ import javax.annotation.Nonnull;
 
 import cool.klass.model.meta.domain.api.PrimitiveType;
 
-public class PrimitiveToJavaTypeVisitor
-        implements PrimitiveTypeVisitor
-{
+public class PrimitiveToJavaTypeVisitor implements PrimitiveTypeVisitor {
+
     private String result;
 
-    public static String getJavaType(@Nonnull PrimitiveType primitiveType)
-    {
+    public static String getJavaType(@Nonnull PrimitiveType primitiveType) {
         PrimitiveToJavaTypeVisitor primitiveToJavaTypeVisitor = new PrimitiveToJavaTypeVisitor();
         primitiveType.visit(primitiveToJavaTypeVisitor);
         return primitiveToJavaTypeVisitor.getResult();
     }
 
-    public String getResult()
-    {
+    public String getResult() {
         return this.result;
     }
 
     @Override
-    public void visitString()
-    {
+    public void visitString() {
         this.result = "String";
     }
 
     @Override
-    public void visitInteger()
-    {
+    public void visitInteger() {
         this.result = "Integer";
     }
 
     @Override
-    public void visitLong()
-    {
+    public void visitLong() {
         this.result = "Long";
     }
 
     @Override
-    public void visitDouble()
-    {
+    public void visitDouble() {
         this.result = "Double";
     }
 
     @Override
-    public void visitFloat()
-    {
+    public void visitFloat() {
         this.result = "Float";
     }
 
     @Override
-    public void visitBoolean()
-    {
+    public void visitBoolean() {
         this.result = "Boolean";
     }
 
     @Override
-    public void visitInstant()
-    {
+    public void visitInstant() {
         this.result = "Instant";
     }
 
     @Override
-    public void visitLocalDate()
-    {
+    public void visitLocalDate() {
         this.result = "LocalDate";
     }
 
     @Override
-    public void visitTemporalInstant()
-    {
+    public void visitTemporalInstant() {
         this.result = "Instant";
     }
 
     @Override
-    public void visitTemporalRange()
-    {
+    public void visitTemporalRange() {
         this.result = "Instant";
     }
 }

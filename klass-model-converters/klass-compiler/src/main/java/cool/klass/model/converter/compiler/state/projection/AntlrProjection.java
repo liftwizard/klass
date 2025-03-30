@@ -39,23 +39,20 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.tuple.Tuples;
 
-public class AntlrProjection
-        extends AntlrProjectionParent
-        implements AntlrTopLevelElement
-{
+public class AntlrProjection extends AntlrProjectionParent implements AntlrTopLevelElement {
+
     // <editor-fold desc="AMBIGUOUS">
     public static final AntlrProjection AMBIGUOUS = new AntlrProjection(
-            new ProjectionDeclarationContext(AMBIGUOUS_PARENT, -1),
-            Optional.empty(),
-            -1,
-            AMBIGUOUS_IDENTIFIER_CONTEXT,
-            AntlrCompilationUnit.AMBIGUOUS,
-            AntlrClassifier.AMBIGUOUS,
-            "ambiguous")
-    {
+        new ProjectionDeclarationContext(AMBIGUOUS_PARENT, -1),
+        Optional.empty(),
+        -1,
+        AMBIGUOUS_IDENTIFIER_CONTEXT,
+        AntlrCompilationUnit.AMBIGUOUS,
+        AntlrClassifier.AMBIGUOUS,
+        "ambiguous"
+    ) {
         @Override
-        public String toString()
-        {
+        public String toString() {
             return AntlrProjection.class + ".AMBIGUOUS";
         }
     };
@@ -63,151 +60,139 @@ public class AntlrProjection
 
     // <editor-fold desc="NOT_FOUND">
     public static final AntlrProjection NOT_FOUND = new AntlrProjection(
-            new ProjectionDeclarationContext(NOT_FOUND_PARENT, -1),
-            Optional.empty(),
-            -1,
-            NOT_FOUND_IDENTIFIER_CONTEXT,
-            AntlrCompilationUnit.NOT_FOUND,
-            AntlrClassifier.NOT_FOUND,
-            "not found")
-    {
+        new ProjectionDeclarationContext(NOT_FOUND_PARENT, -1),
+        Optional.empty(),
+        -1,
+        NOT_FOUND_IDENTIFIER_CONTEXT,
+        AntlrCompilationUnit.NOT_FOUND,
+        AntlrClassifier.NOT_FOUND,
+        "not found"
+    ) {
         @Override
-        public String toString()
-        {
+        public String toString() {
             return AntlrProjection.class + ".NOT_FOUND";
         }
     };
+
     // </editor-fold>
 
     @Nonnull
     private final AntlrCompilationUnit compilationUnitState;
-    private final String               packageName;
+
+    private final String packageName;
 
     private ProjectionBuilder projectionBuilder;
 
     public AntlrProjection(
-            @Nonnull ProjectionDeclarationContext elementContext,
-            @Nonnull Optional<CompilationUnit> compilationUnit,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext,
-            @Nonnull AntlrCompilationUnit compilationUnitState,
-            @Nonnull AntlrClassifier classifier,
-            String packageName)
-    {
+        @Nonnull ProjectionDeclarationContext elementContext,
+        @Nonnull Optional<CompilationUnit> compilationUnit,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext,
+        @Nonnull AntlrCompilationUnit compilationUnitState,
+        @Nonnull AntlrClassifier classifier,
+        String packageName
+    ) {
         super(elementContext, compilationUnit, ordinal, nameContext, classifier);
         this.compilationUnitState = Objects.requireNonNull(compilationUnitState);
-        this.packageName          = Objects.requireNonNull(packageName);
+        this.packageName = Objects.requireNonNull(packageName);
     }
 
     @Nonnull
     @Override
-    public Optional<IAntlrElement> getSurroundingElement()
-    {
+    public Optional<IAntlrElement> getSurroundingElement() {
         return Optional.of(this.compilationUnitState);
     }
 
     @Override
-    public Pair<Token, Token> getContextBefore()
-    {
+    public Pair<Token, Token> getContextBefore() {
         return Tuples.pair(this.getElementContext().getStart(), this.getElementContext().projectionBlock().getStart());
     }
 
     @Nonnull
     @Override
-    public ProjectionDeclarationContext getElementContext()
-    {
+    public ProjectionDeclarationContext getElementContext() {
         return (ProjectionDeclarationContext) super.getElementContext();
     }
 
     @Override
-    protected Pattern getNamePattern()
-    {
+    protected Pattern getNamePattern() {
         return TYPE_NAME_PATTERN;
     }
 
-    public ProjectionBuilder build()
-    {
-        if (this.projectionBuilder != null)
-        {
+    public ProjectionBuilder build() {
+        if (this.projectionBuilder != null) {
             throw new IllegalStateException();
         }
 
         this.projectionBuilder = new ProjectionBuilder(
-                (ProjectionDeclarationContext) this.elementContext,
-                this.getMacroElementBuilder(),
-                this.getSourceCodeBuilder(),
-                this.ordinal,
-                this.getNameContext(),
-                this.packageName,
-                this.classifier.getElementBuilder());
+            (ProjectionDeclarationContext) this.elementContext,
+            this.getMacroElementBuilder(),
+            this.getSourceCodeBuilder(),
+            this.ordinal,
+            this.getNameContext(),
+            this.packageName,
+            this.classifier.getElementBuilder()
+        );
 
-        ImmutableList<ProjectionChildBuilder> children = this.children
-                .collect(AntlrProjectionChild::build)
-                .toImmutable();
+        ImmutableList<ProjectionChildBuilder> children =
+            this.children.collect(AntlrProjectionChild::build).toImmutable();
 
         this.projectionBuilder.setChildBuilders(children);
         return this.projectionBuilder;
     }
 
-    public void build2()
-    {
+    public void build2() {
         this.children.each(AntlrProjectionElement::build2);
     }
 
     @Nonnull
     @Override
-    public ProjectionBuilder getElementBuilder()
-    {
+    public ProjectionBuilder getElementBuilder() {
         return this.projectionBuilder;
     }
 
     // <editor-fold desc="Report Compiler Errors">
     @Override
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
-    {
+    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         super.reportErrors(compilerAnnotationHolder);
 
         // TODO: Move not-found and ambiguous error checking from compiler phase here for consistency
-        if (this.classifier == AntlrClassifier.NOT_FOUND
-                || this.classifier == AntlrClass.NOT_FOUND
-                || this.classifier == AntlrInterface.NOT_FOUND)
-        {
+        if (
+            this.classifier == AntlrClassifier.NOT_FOUND ||
+            this.classifier == AntlrClass.NOT_FOUND ||
+            this.classifier == AntlrInterface.NOT_FOUND
+        ) {
             String message = "Projection type not found " + this.getElementContext().classifierReference().getText();
             compilerAnnotationHolder.add("ERR_PRJ_NFD", message, this, this.getElementContext().classifierReference());
             return;
         }
 
-        if (this.classifier == AntlrClassifier.AMBIGUOUS
-                || this.classifier == AntlrClass.AMBIGUOUS
-                || this.classifier == AntlrInterface.AMBIGUOUS)
-        {
+        if (
+            this.classifier == AntlrClassifier.AMBIGUOUS ||
+            this.classifier == AntlrClass.AMBIGUOUS ||
+            this.classifier == AntlrInterface.AMBIGUOUS
+        ) {
             return;
         }
 
         this.reportForwardReference(compilerAnnotationHolder);
 
-        for (AntlrProjectionChild child : this.children)
-        {
+        for (AntlrProjectionChild child : this.children) {
             child.reportErrors(compilerAnnotationHolder);
         }
     }
 
-    protected void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder)
-    {
-        if (this.isForwardReference(this.classifier))
-        {
+    protected void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder) {
+        if (this.isForwardReference(this.classifier)) {
             String message = String.format(
-                    "Projection '%s' is declared on line %d and has a forward reference to classifier '%s' which is declared later in the source file '%s' on line %d.",
-                    this.getName(),
-                    this.getElementContext().getStart().getLine(),
-                    this.classifier.getName(),
-                    this.getCompilationUnit().get().getSourceName(),
-                    this.classifier.getElementContext().getStart().getLine());
-            compilerAnnotationHolder.add(
-                    "ERR_FWD_REF",
-                    message,
-                    this,
-                    this.getElementContext().classifierReference());
+                "Projection '%s' is declared on line %d and has a forward reference to classifier '%s' which is declared later in the source file '%s' on line %d.",
+                this.getName(),
+                this.getElementContext().getStart().getLine(),
+                this.classifier.getName(),
+                this.getCompilationUnit().get().getSourceName(),
+                this.classifier.getElementContext().getStart().getLine()
+            );
+            compilerAnnotationHolder.add("ERR_FWD_REF", message, this, this.getElementContext().classifierReference());
         }
     }
     // </editor-fold>

@@ -16,6 +16,4 @@
 
 package klass.model.meta.domain;
 
-public class MaxLengthPropertyValidationDatabaseObject extends MaxLengthPropertyValidationDatabaseObjectAbstract
-{
-}
+public class MaxLengthPropertyValidationDatabaseObject extends MaxLengthPropertyValidationDatabaseObjectAbstract {}

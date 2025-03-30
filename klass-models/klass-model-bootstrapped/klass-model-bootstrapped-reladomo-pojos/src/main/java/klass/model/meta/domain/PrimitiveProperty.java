@@ -16,10 +16,9 @@
 
 package klass.model.meta.domain;
 
-public class PrimitiveProperty extends PrimitivePropertyAbstract
-{
-    public PrimitiveProperty()
-    {
+public class PrimitiveProperty extends PrimitivePropertyAbstract {
+
+    public PrimitiveProperty() {
         // You must not modify this constructor. Mithra calls this internally.
         // You can call this constructor. You can also add new constructors.
     }

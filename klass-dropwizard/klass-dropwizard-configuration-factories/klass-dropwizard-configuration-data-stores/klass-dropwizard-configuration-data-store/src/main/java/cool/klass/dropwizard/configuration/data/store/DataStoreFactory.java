@@ -25,8 +25,7 @@ import io.liftwizard.dropwizard.configuration.uuid.UUIDSupplierFactory;
 
 @JsonTypeInfo(use = Id.NAME, property = "type")
 @AutoService(Discoverable.class)
-public interface DataStoreFactory extends Discoverable
-{
+public interface DataStoreFactory extends Discoverable {
     UUIDSupplierFactory getUuidFactory();
 
     DataStore createDataStore();

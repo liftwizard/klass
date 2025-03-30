@@ -16,6 +16,5 @@
 
 package klass.model.meta.domain;
 
-public class ParameterizedPropertyParameterDatabaseObject extends ParameterizedPropertyParameterDatabaseObjectAbstract
-{
-}
+public class ParameterizedPropertyParameterDatabaseObject
+    extends ParameterizedPropertyParameterDatabaseObjectAbstract {}

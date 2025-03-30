@@ -20,86 +20,75 @@ import java.util.Objects;
 
 import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
 
-public class ReladomoPrimitiveVisitor implements PrimitiveTypeVisitor
-{
-    private final StringBuilder stringBuilder;
-    private final String        parameterName;
+public class ReladomoPrimitiveVisitor implements PrimitiveTypeVisitor {
 
-    public ReladomoPrimitiveVisitor(StringBuilder stringBuilder, String parameterName)
-    {
+    private final StringBuilder stringBuilder;
+    private final String parameterName;
+
+    public ReladomoPrimitiveVisitor(StringBuilder stringBuilder, String parameterName) {
         this.stringBuilder = Objects.requireNonNull(stringBuilder);
         this.parameterName = Objects.requireNonNull(parameterName);
     }
 
     @Override
-    public void visitString()
-    {
+    public void visitString() {
         this.stringBuilder.append(this.parameterName);
     }
 
     @Override
-    public void visitInteger()
-    {
+    public void visitInteger() {
         this.stringBuilder.append(this.parameterName);
     }
 
     @Override
-    public void visitLong()
-    {
+    public void visitLong() {
         this.stringBuilder.append(this.parameterName);
     }
 
     @Override
-    public void visitDouble()
-    {
+    public void visitDouble() {
         this.stringBuilder.append(this.parameterName);
     }
 
     @Override
-    public void visitFloat()
-    {
+    public void visitFloat() {
         this.stringBuilder.append(this.parameterName);
     }
 
     @Override
-    public void visitBoolean()
-    {
+    public void visitBoolean() {
         this.stringBuilder.append(this.parameterName);
     }
 
     @Override
-    public void visitInstant()
-    {
-        String sourceCode = String.format(
-                "Timestamp.from(%s.get().toZonedDateTime().toInstant())",
-                this.parameterName);
+    public void visitInstant() {
+        String sourceCode = String.format("Timestamp.from(%s.get().toZonedDateTime().toInstant())", this.parameterName);
         this.stringBuilder.append(sourceCode);
     }
 
     @Override
-    public void visitLocalDate()
-    {
+    public void visitLocalDate() {
         String sourceCode = String.format("Timestamp.valueOf(%s.get().atStartOfDay())", this.parameterName);
         this.stringBuilder.append(sourceCode);
     }
 
     @Override
-    public void visitTemporalInstant()
-    {
+    public void visitTemporalInstant() {
         // TODO: Coverage
         String sourceCode = String.format(
-                "Timestamp.valueOf(LocalDateTime.ofInstant((Instant) %s, ZoneOffset.UTC))",
-                this.parameterName);
+            "Timestamp.valueOf(LocalDateTime.ofInstant((Instant) %s, ZoneOffset.UTC))",
+            this.parameterName
+        );
         this.stringBuilder.append(sourceCode);
     }
 
     @Override
-    public void visitTemporalRange()
-    {
+    public void visitTemporalRange() {
         // TODO: Coverage
         String sourceCode = String.format(
-                "Timestamp.valueOf(LocalDateTime.ofInstant((Instant) %s, ZoneOffset.UTC))",
-                this.parameterName);
+            "Timestamp.valueOf(LocalDateTime.ofInstant((Instant) %s, ZoneOffset.UTC))",
+            this.parameterName
+        );
         this.stringBuilder.append(sourceCode);
     }
 }

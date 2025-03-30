@@ -28,33 +28,36 @@ import javax.annotation.Nonnull;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.service.ServiceGroup;
 
-public class ApplicationSuperClassGenerator
-{
+public class ApplicationSuperClassGenerator {
+
     @Nonnull
     private final DomainModel domainModel;
+
     @Nonnull
-    private final String      rootPackageName;
+    private final String rootPackageName;
+
     @Nonnull
-    private final String      applicationName;
+    private final String applicationName;
+
     @Nonnull
-    private final String      packageName;
+    private final String packageName;
+
     @Nonnull
-    private final String      relativePath;
+    private final String relativePath;
 
     public ApplicationSuperClassGenerator(
-            @Nonnull DomainModel domainModel,
-            @Nonnull String rootPackageName,
-            @Nonnull String applicationName)
-    {
-        this.domainModel     = Objects.requireNonNull(domainModel);
+        @Nonnull DomainModel domainModel,
+        @Nonnull String rootPackageName,
+        @Nonnull String applicationName
+    ) {
+        this.domainModel = Objects.requireNonNull(domainModel);
         this.rootPackageName = Objects.requireNonNull(rootPackageName);
         this.applicationName = Objects.requireNonNull(applicationName);
-        this.packageName     = rootPackageName + ".dropwizard.application";
-        this.relativePath    = this.packageName.replaceAll("\\.", "/");
+        this.packageName = rootPackageName + ".dropwizard.application";
+        this.relativePath = this.packageName.replaceAll("\\.", "/");
     }
 
-    public void writeAbstractApplicationFile(@Nonnull Path outputPath) throws IOException
-    {
+    public void writeAbstractApplicationFile(@Nonnull Path outputPath) throws IOException {
         Path path = outputPath.resolve(this.relativePath);
         path.toFile().mkdirs();
         Path javaPath = path.resolve("Abstract" + this.applicationName + "Application.java");
@@ -119,41 +122,27 @@ public class ApplicationSuperClassGenerator
         this.printStringToFile(javaPath, sourceCode);
     }
 
-    private String getResourceImports()
-    {
-        return this.domainModel
-                .getServiceGroups()
-                .collect(this::getResourceImport)
-                .makeString("");
+    private String getResourceImports() {
+        return this.domainModel.getServiceGroups().collect(this::getResourceImport).makeString("");
     }
 
-    private String getRegisterResourcesSourceCode()
-    {
-        return this.domainModel
-                .getServiceGroups()
-                .collect(this::getRegisterResourceSourceCode)
-                .makeString("");
+    private String getRegisterResourcesSourceCode() {
+        return this.domainModel.getServiceGroups().collect(this::getRegisterResourceSourceCode).makeString("");
     }
 
-    private String getResourceImport(ServiceGroup serviceGroup)
-    {
+    private String getResourceImport(ServiceGroup serviceGroup) {
+        return String.format("import %s.service.resource.%s;\n", serviceGroup.getPackageName(), serviceGroup.getName());
+    }
+
+    private String getRegisterResourceSourceCode(@Nonnull ServiceGroup serviceGroup) {
         return String.format(
-                "import %s.service.resource.%s;\n",
-                serviceGroup.getPackageName(),
-                serviceGroup.getName());
+            "        environment.jersey().register(new %s(domainModel, dataStore, clock));\n",
+            serviceGroup.getName()
+        );
     }
 
-    private String getRegisterResourceSourceCode(@Nonnull ServiceGroup serviceGroup)
-    {
-        return String.format(
-                "        environment.jersey().register(new %s(domainModel, dataStore, clock));\n",
-                serviceGroup.getName());
-    }
-
-    private void printStringToFile(@Nonnull Path path, String contents) throws FileNotFoundException
-    {
-        try (PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile())))
-        {
+    private void printStringToFile(@Nonnull Path path, String contents) throws FileNotFoundException {
+        try (PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()))) {
             printStream.print(contents);
         }
     }

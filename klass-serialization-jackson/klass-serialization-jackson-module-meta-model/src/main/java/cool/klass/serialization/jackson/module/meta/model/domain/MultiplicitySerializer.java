@@ -25,14 +25,14 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import cool.klass.model.meta.domain.api.Multiplicity;
 
-public class MultiplicitySerializer extends JsonSerializer<Multiplicity>
-{
+public class MultiplicitySerializer extends JsonSerializer<Multiplicity> {
+
     @Override
     public void serialize(
-            @Nonnull Multiplicity multiplicity,
-            @Nonnull JsonGenerator jsonGenerator,
-            SerializerProvider serializerProvider) throws IOException
-    {
+        @Nonnull Multiplicity multiplicity,
+        @Nonnull JsonGenerator jsonGenerator,
+        SerializerProvider serializerProvider
+    ) throws IOException {
         jsonGenerator.writeString(multiplicity.getPrettyName());
     }
 }

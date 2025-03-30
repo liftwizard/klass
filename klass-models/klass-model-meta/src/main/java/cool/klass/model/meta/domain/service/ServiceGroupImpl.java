@@ -35,102 +35,93 @@ import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceGroupDeclarationContext;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public final class ServiceGroupImpl
-        extends AbstractPackageableElement
-        implements ServiceGroupWithSourceCode
-{
+public final class ServiceGroupImpl extends AbstractPackageableElement implements ServiceGroupWithSourceCode {
+
     @Nonnull
     private final KlassImpl klass;
 
     private ImmutableList<Url> urls;
 
     private ServiceGroupImpl(
-            @Nonnull ServiceGroupDeclarationContext elementContext,
-            @Nonnull Optional<Element> macroElement,
-            @Nullable SourceCode sourceCode,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext,
-            @Nonnull String packageName,
-            @Nonnull KlassImpl klass)
-    {
+        @Nonnull ServiceGroupDeclarationContext elementContext,
+        @Nonnull Optional<Element> macroElement,
+        @Nullable SourceCode sourceCode,
+        int ordinal,
+        @Nonnull IdentifierContext nameContext,
+        @Nonnull String packageName,
+        @Nonnull KlassImpl klass
+    ) {
         super(elementContext, macroElement, sourceCode, ordinal, nameContext, packageName);
         this.klass = Objects.requireNonNull(klass);
     }
 
     @Nonnull
     @Override
-    public ServiceGroupDeclarationContext getElementContext()
-    {
+    public ServiceGroupDeclarationContext getElementContext() {
         return (ServiceGroupDeclarationContext) super.getElementContext();
     }
 
     @Override
     @Nonnull
-    public KlassImpl getKlass()
-    {
+    public KlassImpl getKlass() {
         return this.klass;
     }
 
     @Override
     @Nonnull
-    public ImmutableList<Url> getUrls()
-    {
+    public ImmutableList<Url> getUrls() {
         return Objects.requireNonNull(this.urls);
     }
 
-    private void setUrls(@Nonnull ImmutableList<Url> urls)
-    {
-        if (this.urls != null)
-        {
+    private void setUrls(@Nonnull ImmutableList<Url> urls) {
+        if (this.urls != null) {
             throw new IllegalStateException();
         }
         this.urls = Objects.requireNonNull(urls);
     }
 
     public static final class ServiceGroupBuilder
-            extends PackageableElementBuilder<ServiceGroupImpl>
-            implements TopLevelElementBuilderWithSourceCode
-    {
+        extends PackageableElementBuilder<ServiceGroupImpl>
+        implements TopLevelElementBuilderWithSourceCode {
+
         @Nonnull
         private final KlassBuilder klassBuilder;
 
         private ImmutableList<UrlBuilder> urlBuilders;
 
         public ServiceGroupBuilder(
-                @Nonnull ServiceGroupDeclarationContext elementContext,
-                @Nonnull Optional<ElementBuilder<?>> macroElement,
-                @Nullable SourceCodeBuilder sourceCode,
-                int ordinal,
-                @Nonnull IdentifierContext nameContext,
-                @Nonnull String packageName,
-                @Nonnull KlassBuilder klassBuilder)
-        {
+            @Nonnull ServiceGroupDeclarationContext elementContext,
+            @Nonnull Optional<ElementBuilder<?>> macroElement,
+            @Nullable SourceCodeBuilder sourceCode,
+            int ordinal,
+            @Nonnull IdentifierContext nameContext,
+            @Nonnull String packageName,
+            @Nonnull KlassBuilder klassBuilder
+        ) {
             super(elementContext, macroElement, sourceCode, ordinal, nameContext, packageName);
             this.klassBuilder = Objects.requireNonNull(klassBuilder);
         }
 
-        public void setUrlBuilders(@Nonnull ImmutableList<UrlBuilder> urlBuilders)
-        {
+        public void setUrlBuilders(@Nonnull ImmutableList<UrlBuilder> urlBuilders) {
             this.urlBuilders = Objects.requireNonNull(urlBuilders);
         }
 
         @Override
         @Nonnull
-        protected ServiceGroupImpl buildUnsafe()
-        {
+        protected ServiceGroupImpl buildUnsafe() {
             return new ServiceGroupImpl(
-                    (ServiceGroupDeclarationContext) this.elementContext,
-                    this.macroElement.map(ElementBuilder::getElement),
-                    this.sourceCode.build(),
-                    this.ordinal,
-                    this.getNameContext(),
-                    this.packageName,
-                    this.klassBuilder.getElement());
+                (ServiceGroupDeclarationContext) this.elementContext,
+                this.macroElement.map(ElementBuilder::getElement),
+                this.sourceCode.build(),
+                this.ordinal,
+                this.getNameContext(),
+                this.packageName,
+                this.klassBuilder.getElement()
+            );
         }
 
         @Override
-        protected void buildChildren()
-        {
+        protected void buildChildren() {
             ImmutableList<Url> urls = this.urlBuilders.collect(UrlBuilder::build);
             this.element.setUrls(urls);
         }

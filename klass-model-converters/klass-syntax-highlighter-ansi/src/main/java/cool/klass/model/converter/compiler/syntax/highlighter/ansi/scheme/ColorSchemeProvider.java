@@ -35,14 +35,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Loads color schemes from JSON files by name.
  */
-public final class ColorSchemeProvider
-{
+public final class ColorSchemeProvider {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ColorSchemeProvider.class);
     private static final String COLOR_SCHEME_PATH = "klass/color-scheme/";
     private static final Validator VALIDATOR = Validators.newValidator();
 
-    private ColorSchemeProvider()
-    {
+    private ColorSchemeProvider() {
         throw new AssertionError("Suppress default constructor for noninstantiability");
     }
 
@@ -51,8 +50,7 @@ public final class ColorSchemeProvider
      *
      * @param schemeName The name of the color scheme to load, like "dark", "light", or "dark-rgb".
      */
-    public static AnsiColorScheme getByName(String schemeName)
-    {
+    public static AnsiColorScheme getByName(String schemeName) {
         Objects.requireNonNull(schemeName, "schemeName");
 
         String jsonPath = COLOR_SCHEME_PATH + schemeName.toLowerCase() + ".json";
@@ -65,20 +63,15 @@ public final class ColorSchemeProvider
      * @param schemeName The name of the color scheme to check, like "dark", "light", or "dark-rgb".
      * @return true if the color scheme file exists, false otherwise
      */
-    public static boolean existsByName(String schemeName)
-    {
-        if (schemeName == null)
-        {
+    public static boolean existsByName(String schemeName) {
+        if (schemeName == null) {
             return false;
         }
 
         String jsonPath = COLOR_SCHEME_PATH + schemeName.toLowerCase() + ".json";
-        try (InputStream inputStream = ColorSchemeProvider.class.getClassLoader().getResourceAsStream(jsonPath))
-        {
+        try (InputStream inputStream = ColorSchemeProvider.class.getClassLoader().getResourceAsStream(jsonPath)) {
             return inputStream != null;
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             LOGGER.warn("Error checking color scheme existence: {}", e.getMessage());
             return false;
         }
@@ -88,12 +81,9 @@ public final class ColorSchemeProvider
      * Attempt to load a color scheme from a JSON file.
      */
     @Nonnull
-    private static AnsiColorScheme getByClasspath(String path)
-    {
-        try (InputStream inputStream = ColorSchemeProvider.class.getClassLoader().getResourceAsStream(path))
-        {
-            if (inputStream == null)
-            {
+    private static AnsiColorScheme getByClasspath(String path) {
+        try (InputStream inputStream = ColorSchemeProvider.class.getClassLoader().getResourceAsStream(path)) {
+            if (inputStream == null) {
                 throw new IllegalArgumentException("No color scheme found for path " + path);
             }
 
@@ -101,24 +91,20 @@ public final class ColorSchemeProvider
             var colorSchemeDefinition = objectMapper.readValue(inputStream, ColorSchemeDefinition.class);
 
             Set<ConstraintViolation<ColorSchemeDefinition>> violations = VALIDATOR.validate(colorSchemeDefinition);
-            if (violations.isEmpty())
-            {
+            if (violations.isEmpty()) {
                 return new JsonAnsiColorScheme(colorSchemeDefinition);
             }
 
             StringBuilder errorMessage = new StringBuilder("Color scheme validation errors:");
-            for (ConstraintViolation<ColorSchemeDefinition> violation : violations)
-            {
+            for (ConstraintViolation<ColorSchemeDefinition> violation : violations) {
                 errorMessage
-                        .append("\n  - ")
-                        .append(violation.getPropertyPath())
-                        .append(": ")
-                        .append(violation.getMessage());
+                    .append("\n  - ")
+                    .append(violation.getPropertyPath())
+                    .append(": ")
+                    .append(violation.getMessage());
             }
             throw new IllegalArgumentException(errorMessage.toString());
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new RuntimeException("Failed to load color scheme from " + path, e);
         }
     }
