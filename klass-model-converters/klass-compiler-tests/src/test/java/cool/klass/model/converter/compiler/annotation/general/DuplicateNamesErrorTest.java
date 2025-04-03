@@ -21,6 +21,4 @@ import cool.klass.model.converter.compiler.annotation.AbstractKlassCompilerError
 public class DuplicateNamesErrorTest
         extends AbstractKlassCompilerErrorTestCase
 {
-    // TODO: sort compiler errors by source file name, line number
-    // TODO: Duplicate duplicate errors
 }
