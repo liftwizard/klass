@@ -58,7 +58,14 @@ public class AntlrUrl
             Optional.empty(),
             AntlrServiceGroup.AMBIGUOUS);
 
-    private static final Object SENTINEL = new Object();
+    private static final Object SENTINEL = new Object()
+    {
+        @Override
+        public String toString()
+        {
+            return "SENTINEL";
+        }
+    };
 
     private final MutableList<IAntlrElement> urlPathSegments = Lists.mutable.empty();
 

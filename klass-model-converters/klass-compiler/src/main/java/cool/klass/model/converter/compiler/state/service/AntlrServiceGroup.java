@@ -126,8 +126,6 @@ public class AntlrServiceGroup
             url.reportErrors(compilerAnnotationHolder);
         }
 
-        // TODO: Not here, but report if there are more than one service group for a class.
-
         if (this.klass == AntlrClass.NOT_FOUND)
         {
             this.reportTypeNotFound(compilerAnnotationHolder);
@@ -157,14 +155,30 @@ public class AntlrServiceGroup
 
     private void reportDuplicateUrls(CompilerAnnotationHolder compilerAnnotationHolder)
     {
-        // TODO: reportDuplicateUrls
         HashBagWithHashingStrategy<AntlrUrl> antlrUrls =
                 new HashBagWithHashingStrategy<>(HashingStrategies.fromFunction(AntlrUrl::getNormalizedPathSegments));
 
-        MutableBag<AntlrUrl> duplicateUrls = antlrUrls.selectByOccurrences(occurrences -> occurrences > 1);
-        if (duplicateUrls.notEmpty())
+        antlrUrls.addAll(this.urls);
+
+        MutableBag<AntlrUrl> duplicateUrlMatches = antlrUrls.selectByOccurrences(occurrences -> occurrences > 1);
+        MutableList<AntlrUrl> duplicateUrls = this.urls.select(duplicateUrlMatches::contains);
+        if (duplicateUrls.isEmpty())
         {
-            throw new AssertionError();
+            return;
+        }
+
+        for (AntlrUrl url : duplicateUrls)
+        {
+            String message = String.format(
+                    "Duplicate URL: '%s' in service group for class '%s'.",
+                    url.getElementContext().url().getText(),
+                    this.klass.getName());
+
+            compilerAnnotationHolder.add(
+                    "ERR_DUP_URL",
+                    message,
+                    url,
+                    url.getElementContext().url());
         }
     }
 
