@@ -19,7 +19,7 @@
     <parent>
         <groupId>io.liftwizard</groupId>
         <artifactId>liftwizard-parent-build</artifactId>
-        <version>2.1.27</version>
+        <version>2.1.28</version>
     </parent>
 
     <groupId>cool.klass</groupId>
@@ -103,7 +103,7 @@
         <checkstyle.suppressions>${maven.multiModuleProjectDirectory}/checkstyle-suppressions.xml</checkstyle.suppressions>
         <checkstyle.cache>${project.build.directory}/checkstyle-cache</checkstyle.cache>
 
-        <liftwizard.version>2.1.27</liftwizard.version>
+        <liftwizard.version>2.1.28</liftwizard.version>
         <klass.version>0.3.0</klass.version>
     </properties>
 
@@ -160,35 +160,6 @@
                                 <enforceBytecodeVersion>
                                     <maxJdkVersion>17</maxJdkVersion>
                                 </enforceBytecodeVersion>
-                                <requirePluginVersions>
-                                    <unCheckedPluginList xml:space="preserve">
-                                        org.apache.maven.plugins:maven-site-plugin,
-                                        org.apache.maven.plugins:maven-deploy-plugin,
-                                        io.liftwizard:liftwizard-generator-reladomo-code-plugin,
-                                        io.liftwizard:liftwizard-generator-reladomo-database-plugin,
-                                        io.liftwizard:liftwizard-generator-xsd2bean-plugin,
-                                        cool.klass:klass-compiler-plugin,
-                                        cool.klass:klass-generator-dropwizard-plugin,
-                                        cool.klass:klass-generator-dto-plugin,
-                                        cool.klass:klass-generator-graphql-fragment-plugin,
-                                        cool.klass:klass-generator-graphql-reladomo-finder-plugin,
-                                        cool.klass:klass-generator-graphql-schema-plugin,
-                                        cool.klass:klass-generator-graphql-schema-query-plugin,
-                                        cool.klass:klass-generator-json-view-plugin,
-                                        cool.klass:klass-generator-klass-html-plugin,
-                                        cool.klass:klass-generator-klass-projection-plugin,
-                                        cool.klass:klass-generator-klass-service-plugin,
-                                        cool.klass:klass-generator-liquibase-schema-plugin,
-                                        cool.klass:klass-generator-meta-constants-plugin,
-                                        cool.klass:klass-generator-react-prop-type-plugin,
-                                        cool.klass:klass-generator-reladomo-merge-hooks-plugin,
-                                        cool.klass:klass-generator-reladomo-plugin,
-                                        cool.klass:klass-generator-reladomo-readable-interface-plugin,
-                                        cool.klass:klass-generator-relational-schema-plugin,
-                                        cool.klass:klass-generator-service-resources-plugin,
-                                        cool.klass:klass-generator-uml-nomnoml-plugin
-                                    </unCheckedPluginList>
-                                </requirePluginVersions>
                                 <bannedDependencies>
                                     <excludes>
                                         <exclude>ch.qos.reload4j:reload4j</exclude>
