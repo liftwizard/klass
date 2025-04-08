@@ -28,7 +28,7 @@ jobs:
 
       - uses: jdx/mise-action@v2
 
-      - run: just test
+      - run: just test "mvn" "-Dklass.logGitHubAnnotations=true"
 
       # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
