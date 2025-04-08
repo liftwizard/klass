@@ -57,7 +57,7 @@ _clean-m2:
 compile MVN=default_mvn: (mvn MVN "verify" "" skip_tests_flags) && _check-local-modifications
 
 # `mvn verify` with tests
-test MVN=default_mvn: (mvn MVN "verify" "" default_flags) && _check-local-modifications
+test MVN=default_mvn *FLAGS="": (mvn MVN "verify" "" (default_flags + " " + FLAGS)) && _check-local-modifications
 
 # `mvn install`
 install MVN=default_mvn: (mvn MVN "install" "" skip_tests_flags) && _check-local-modifications

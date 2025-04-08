@@ -59,6 +59,9 @@ public abstract class AbstractGenerateMojo
     @Parameter(property = "logCompilerAnnotations")
     protected boolean logCompilerAnnotations;
 
+    @Parameter(property = "klass.logGitHubAnnotations", defaultValue = "false")
+    protected boolean logGitHubAnnotations;
+
     @Parameter(property = "colorScheme")
     protected String colorScheme;
 
@@ -201,12 +204,18 @@ public abstract class AbstractGenerateMojo
 
         if (compilerAnnotation.isError())
         {
-            this.getLog().info("\n" + compilerAnnotation.toGitHubAnnotation());
+            if (this.logGitHubAnnotations)
+            {
+                this.getLog().info("\n" + compilerAnnotation.toGitHubAnnotation());
+            }
             this.getLog().error("\n" + compilerAnnotation);
         }
         else if (compilerAnnotation.isWarning() && this.logCompilerAnnotations)
         {
-            this.getLog().info("\n" + compilerAnnotation.toGitHubAnnotation());
+            if (this.logGitHubAnnotations)
+            {
+                this.getLog().info("\n" + compilerAnnotation.toGitHubAnnotation());
+            }
             this.getLog().warn("\n" + compilerAnnotation);
         }
     }
