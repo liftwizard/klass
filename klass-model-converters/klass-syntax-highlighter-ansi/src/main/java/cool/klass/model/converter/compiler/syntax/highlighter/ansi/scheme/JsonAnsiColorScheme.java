@@ -16,7 +16,9 @@
 
 package cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme;
 
+import java.awt.Color;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
 
@@ -28,10 +30,10 @@ import org.eclipse.collections.api.factory.Sets;
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.eclipse.collections.api.map.MapIterable;
 import org.eclipse.collections.api.map.MutableMap;
+import org.eclipse.collections.api.set.ImmutableSet;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 import org.fusesource.jansi.Ansi;
-import org.fusesource.jansi.Ansi.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +43,7 @@ public class JsonAnsiColorScheme
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonAnsiColorScheme.class);
 
     private static final ImmutableMap<String, String> FALLBACK_RULES = getFallbacks();
+    private static final Pattern HEX_COLOR_PATTERN = Pattern.compile("#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?");
 
     private final ColorSchemeDefinition definition;
     private final MapIterable<String, ColorSchemeRule> ruleMap;
@@ -49,6 +52,19 @@ public class JsonAnsiColorScheme
     {
         this.definition = Objects.requireNonNull(definition);
         this.ruleMap = definition.toRuleMap();
+    }
+
+    public static ImmutableSet<String> getValidRuleNames()
+    {
+        MutableSet<String> validRules = Sets.mutable.empty();
+
+        validRules.addAllIterable(FALLBACK_RULES.keysView());
+        validRules.addAllIterable(FALLBACK_RULES.valuesView());
+
+        validRules.add("background");
+        validRules.add("foreground");
+
+        return validRules.toImmutable();
     }
 
     private static ImmutableMap<String, String> getFallbacks()
@@ -186,8 +202,7 @@ public class JsonAnsiColorScheme
     private static void applyColorString(Ansi ansi, String colorValue, boolean isForeground)
     {
         // Handle hex RGB colors (e.g., "#111111", "#F4A7B9")
-        // TODO 2025-03-20: Switch to a regex for hex color format validation
-        if (colorValue.startsWith("#") && (colorValue.length() == 7 || colorValue.length() == 9))
+        if (colorValue.startsWith("#") && HEX_COLOR_PATTERN.matcher(colorValue).matches())
         {
             applyColorRGB(ansi, isForeground, colorValue);
         }
@@ -199,11 +214,10 @@ public class JsonAnsiColorScheme
 
     private static void applyColorRGB(Ansi ansi, boolean isForeground, String colorStr)
     {
-        // TODO 2025-03-20: Switch to java.awt.Color.decode() for decoding
-        // Extract RGB values
-        int r = Integer.parseInt(colorStr.substring(1, 3), 16);
-        int g = Integer.parseInt(colorStr.substring(3, 5), 16);
-        int b = Integer.parseInt(colorStr.substring(5, 7), 16);
+        Color decodedColor = Color.decode(colorStr);
+        int r = decodedColor.getRed();
+        int g = decodedColor.getGreen();
+        int b = decodedColor.getBlue();
 
         if (isForeground)
         {
@@ -220,7 +234,7 @@ public class JsonAnsiColorScheme
     {
         try
         {
-            Color namedColor = Color.valueOf(colorStr);
+            Ansi.Color namedColor = Ansi.Color.valueOf(colorStr);
 
             if (isForeground)
             {
@@ -233,11 +247,10 @@ public class JsonAnsiColorScheme
         }
         catch (IllegalArgumentException e)
         {
-            // TODO 2025-03-21: The contents of the color scheme are being validated here, while being applied to syntax. Instead, the validation should happen when the color scheme is loaded.
             String detailMessage = "Invalid color name: '"
                     + colorStr
                     + "'. Must be a valid ANSI color enum, integer, or RGB hex format (#RRGGBB). Valid enum values are: "
-                    + ArrayAdapter.adapt(Color.values()).makeString();
+                    + ArrayAdapter.adapt(Ansi.Color.values()).makeString();
             throw new IllegalArgumentException(detailMessage);
         }
     }
