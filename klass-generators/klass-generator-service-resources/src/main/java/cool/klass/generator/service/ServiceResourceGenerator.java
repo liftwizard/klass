@@ -907,7 +907,7 @@ public class ServiceResourceGenerator
         DataTypeProperty     property       = thisMemberReferencePath.getProperty();
         ImmutableList<Klass> superClassPath = this.getSuperClassPath(klass, property.getOwningClassifier());
         String superClassPathSourceCode = superClassPath
-                .collect(each -> "." + UPPER_TO_LOWER_CAMEL.apply(each.getName()) + "SuperClass()")
+                .collect(each -> "." + UPPER_TO_LOWER_CAMEL.convert(each.getName()) + "SuperClass()")
                 .makeString("");
         String result = String.format(
                 "%sFinder%s.%s()",

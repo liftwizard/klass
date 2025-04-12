@@ -244,8 +244,8 @@ public abstract class PersistentSynchronizer
                 || dataTypeProperty.isTemporal()
                 || dataTypeProperty.isDerived()
                 || this.hasReferencePropertyDependentOnDataTypeProperty(klass, dataTypeProperty)
-                || dataTypeProperty.isKey() && !this.shouldWriteKey()
-                || dataTypeProperty.isID() && !this.shouldWriteId();
+                || (dataTypeProperty.isKey() && !this.shouldWriteKey())
+                || (dataTypeProperty.isID() && !this.shouldWriteId());
     }
     // endregion
 
@@ -326,8 +326,8 @@ public abstract class PersistentSynchronizer
             return true;
         }
 
-        if (persistentChildInstance != null
-                && incomingChildInstance.isMissingNode()
+        if ((persistentChildInstance != null
+                && incomingChildInstance.isMissingNode())
                 || incomingChildInstance.isNull())
         {
             if (incomingChildInstance.isMissingNode())

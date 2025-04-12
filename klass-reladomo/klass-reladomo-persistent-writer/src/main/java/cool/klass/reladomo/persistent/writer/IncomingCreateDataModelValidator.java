@@ -17,6 +17,7 @@
 package cool.klass.reladomo.persistent.writer;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -613,7 +614,7 @@ public class IncomingCreateDataModelValidator
                         "Error at '%s'. Expected JSON object for owned association end '%s' but got %s.",
                         this.getContextString(),
                         associationEnd,
-                        childJsonNode.getNodeType().toString().toLowerCase());
+                        childJsonNode.getNodeType().toString().toLowerCase(Locale.ROOT));
                 this.errors.add(error);
             }
             ObjectNode childObjectNode = (ObjectNode) childJsonNode;
