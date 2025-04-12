@@ -100,7 +100,6 @@ public final class DomainModelImpl
     private final ImmutableMap<String, Klass>           classesByName;
     private final ImmutableMap<String, Association>     associationsByName;
     private final ImmutableMap<String, Projection>      projectionsByName;
-    private final ImmutableMap<Klass, ServiceGroup>     serviceGroupsByKlass;
     private final ImmutableMap<String, Classifier>      classifiersByName;
 
     private DomainModelImpl(
@@ -142,7 +141,6 @@ public final class DomainModelImpl
         this.classesByName          = this.classes.groupByUniqueKey(NamedElement::getName).toImmutable();
         this.associationsByName     = this.associations.groupByUniqueKey(NamedElement::getName).toImmutable();
         this.projectionsByName      = this.projections.groupByUniqueKey(NamedElement::getName).toImmutable();
-        this.serviceGroupsByKlass   = this.serviceGroups.groupByUniqueKey(ServiceGroup::getKlass).toImmutable();
     }
 
     @Override

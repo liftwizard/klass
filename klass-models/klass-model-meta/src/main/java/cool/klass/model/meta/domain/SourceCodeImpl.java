@@ -16,12 +16,14 @@
 
 package cool.klass.model.meta.domain;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.base.Splitter;
 import cool.klass.model.meta.domain.AbstractElement.ElementBuilder;
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.source.SourceCode;
@@ -72,8 +74,8 @@ public final class SourceCodeImpl
     {
         if (this.macroElement.isEmpty())
         {
-            String[] split = this.sourceName.split("/");
-            return split[split.length - 1];
+            List<String> split = Splitter.on('/').splitToList(this.sourceName);
+            return split.get(split.size() - 1);
         }
 
         String fullPathSourceName = this.macroSourceCode

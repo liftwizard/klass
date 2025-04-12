@@ -25,6 +25,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.base.Splitter;
 import com.google.common.collect.Comparators;
 import cool.klass.model.converter.compiler.CompilationResult;
 import cool.klass.model.converter.compiler.CompilationUnit;
@@ -213,7 +214,7 @@ public abstract class AbstractKlassCompilerErrorTestCase
             int columnNumber = Integer.parseInt(matcher.group(2));
             String errorCode = matcher.group(3);
 
-            String[] lineNumbersArray = lineNumbersStr.split("_");
+            Iterable<String> lineNumbersArray = Splitter.on('_').split(lineNumbersStr);
             MutableList<Integer> lineNumbers = Lists.mutable.empty();
             for (String lineNumber : lineNumbersArray)
             {
