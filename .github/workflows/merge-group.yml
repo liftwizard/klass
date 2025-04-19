@@ -269,7 +269,7 @@ jobs:
 
       - uses: jdx/mise-action@v2
 
-      - name: Run rewrite-maven-plugin
+      - name: Run rewrite-maven-plugin (dry run)
         run: just rewrite-dry-run
 
       # Remove any jars we may have created before actions/cache caches .m2
