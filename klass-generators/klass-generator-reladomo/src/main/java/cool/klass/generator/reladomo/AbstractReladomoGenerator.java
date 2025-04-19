@@ -34,7 +34,7 @@ public abstract class AbstractReladomoGenerator
     @Nonnull
     protected final DomainModel domainModel;
 
-    public AbstractReladomoGenerator(@Nonnull DomainModel domainModel)
+    protected AbstractReladomoGenerator(@Nonnull DomainModel domainModel)
     {
         this.domainModel = Objects.requireNonNull(domainModel);
     }
