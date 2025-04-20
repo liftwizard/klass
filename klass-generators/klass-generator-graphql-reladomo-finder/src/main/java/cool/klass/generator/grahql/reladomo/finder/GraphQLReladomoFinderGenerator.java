@@ -60,8 +60,7 @@ public class GraphQLReladomoFinderGenerator extends AbstractPerPackageGenerator 
 
     private String getSourceCode(@Nonnull Classifier classifier) {
         String classifierName = classifier.getName();
-        return (
-            "" +
+        return "" +
             "input _" +
             classifierName +
             "Finder {\n" +
@@ -80,8 +79,7 @@ public class GraphQLReladomoFinderGenerator extends AbstractPerPackageGenerator 
             "Finder\n" +
             classifier.getProperties().collect(this::getSourceCode).makeString("") +
             "}\n" +
-            "\n"
-        );
+            "\n";
     }
 
     private String getSourceCode(Property property) {

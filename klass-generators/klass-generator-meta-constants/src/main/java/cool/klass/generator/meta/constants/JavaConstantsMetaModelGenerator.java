@@ -809,8 +809,7 @@ public class JavaConstantsMetaModelGenerator {
         String uppercaseName = this.getUppercaseName(primitiveProperty);
 
         // language=JAVA
-        return (
-            "" +
+        return "" +
             "    public static enum " +
             uppercaseName +
             "_PrimitiveProperty implements PrimitiveProperty\n" +
@@ -930,8 +929,7 @@ public class JavaConstantsMetaModelGenerator {
             StringEscapeUtils.escapeJava(primitiveProperty.toString()) +
             "\";\n" +
             "        }\n" +
-            "    }\n"
-        );
+            "    }\n";
     }
 
     private String getKeysMatchingThisForeignKey(@Nonnull DataTypeProperty dataTypeProperty) {
@@ -978,13 +976,11 @@ public class JavaConstantsMetaModelGenerator {
             .collect(Modifier::getKeyword)
             .collect(each -> each + "_" + Modifier.class.getSimpleName());
 
-        return (
-            variablesSourceCode +
+        return variablesSourceCode +
             "\n" +
             "            return Lists.immutable.with(" +
             variableNames.makeString() +
-            ");\n"
-        );
+            ");\n";
     }
 
     @Nonnull
@@ -1388,10 +1384,8 @@ public class JavaConstantsMetaModelGenerator {
 
     @Nonnull
     private String getAssociationEndConstantsSourceCode(@Nonnull Association association) {
-        return (
-            this.getAssociationEndConstantSourceCode(association.getSourceAssociationEnd(), "source") +
-            this.getAssociationEndConstantSourceCode(association.getTargetAssociationEnd(), "target")
-        );
+        return this.getAssociationEndConstantSourceCode(association.getSourceAssociationEnd(), "source") +
+            this.getAssociationEndConstantSourceCode(association.getTargetAssociationEnd(), "target");
     }
 
     @Nonnull

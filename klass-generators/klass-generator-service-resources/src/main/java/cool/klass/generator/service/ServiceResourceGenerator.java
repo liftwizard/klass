@@ -216,11 +216,9 @@ public class ServiceResourceGenerator {
             return false;
         }
 
-        return (
-            ((PrimitiveType) dataType).isTemporal() ||
+        return ((PrimitiveType) dataType).isTemporal() ||
             dataType == PrimitiveType.LOCAL_DATE ||
-            dataType == PrimitiveType.INSTANT
-        );
+            dataType == PrimitiveType.INSTANT;
     }
 
     @Nonnull
@@ -764,8 +762,7 @@ public class ServiceResourceGenerator {
         String operation = this.getOperation(finderName, criteria);
         String paddedOperationName = String.format("%-18s", criteriaName + "Operation");
 
-        return (
-            "" +
+        return "" +
             "        Operation " +
             paddedOperationName +
             " = " +
@@ -776,8 +773,7 @@ public class ServiceResourceGenerator {
             ".all()\n" +
             "                : " +
             operation +
-            ";\n"
-        );
+            ";\n";
     }
 
     private String checkPredicate(
@@ -839,10 +835,8 @@ public class ServiceResourceGenerator {
 
     @Nonnull
     private String getOrderBySourceCode(@Nonnull OrderByMemberReferencePath orderByMemberReferencePath) {
-        return (
-            this.getThisMemberReferencePathSourceCode(orderByMemberReferencePath.getThisMemberReferencePath()) +
-            this.getOrderByDirectionDeclarationSourceCode(orderByMemberReferencePath.getOrderByDirectionDeclaration())
-        );
+        return this.getThisMemberReferencePathSourceCode(orderByMemberReferencePath.getThisMemberReferencePath()) +
+            this.getOrderByDirectionDeclarationSourceCode(orderByMemberReferencePath.getOrderByDirectionDeclaration());
     }
 
     private String getThisMemberReferencePathSourceCode(@Nonnull ThisMemberReferencePath thisMemberReferencePath) {

@@ -215,15 +215,13 @@ public abstract class PersistentSynchronizer {
     }
 
     private boolean shouldSkipDataTypeProperty(@Nonnull DataTypeProperty dataTypeProperty, @Nonnull Klass klass) {
-        return (
-            dataTypeProperty.isForeignKey() ||
+        return dataTypeProperty.isForeignKey() ||
             dataTypeProperty.isAudit() ||
             dataTypeProperty.isTemporal() ||
             dataTypeProperty.isDerived() ||
             this.hasReferencePropertyDependentOnDataTypeProperty(klass, dataTypeProperty) ||
             (dataTypeProperty.isKey() && !this.shouldWriteKey()) ||
-            (dataTypeProperty.isID() && !this.shouldWriteId())
-        );
+            (dataTypeProperty.isID() && !this.shouldWriteId());
     }
 
     // endregion

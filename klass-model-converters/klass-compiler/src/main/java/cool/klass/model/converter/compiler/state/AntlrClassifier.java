@@ -694,10 +694,8 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
 
     @OverridingMethodsMustInvokeSuper
     public boolean implementsInterface(AntlrInterface iface) {
-        return (
-            this.declaredInterfaces.contains(iface) ||
-            this.declaredInterfaces.anySatisfyWith(AntlrClassifier::implementsInterface, iface)
-        );
+        return this.declaredInterfaces.contains(iface) ||
+            this.declaredInterfaces.anySatisfyWith(AntlrClassifier::implementsInterface, iface);
     }
 
     public ImmutableList<AntlrDataTypeProperty<?>> getAllKeyProperties() {

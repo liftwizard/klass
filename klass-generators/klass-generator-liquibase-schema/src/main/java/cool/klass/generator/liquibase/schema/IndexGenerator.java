@@ -88,8 +88,7 @@ public final class IndexGenerator {
             .collect(columnName -> "            <column name=\"" + columnName + "\" />\n");
 
         // language=XML
-        return (
-            "    <changeSet author=\"Klass\" id=\"initial-indices-" +
+        return "    <changeSet author=\"Klass\" id=\"initial-indices-" +
             ordinal +
             "-" +
             constraintName +
@@ -103,8 +102,7 @@ public final class IndexGenerator {
             "\">\n" +
             foreignKeyColumns.makeString("") +
             "        </createIndex>\n" +
-            "    </changeSet>\n\n"
-        );
+            "    </changeSet>\n\n";
     }
 
     private static boolean isPrefixList(ImmutableList<DataTypeProperty> list1, ImmutableList<DataTypeProperty> list2) {

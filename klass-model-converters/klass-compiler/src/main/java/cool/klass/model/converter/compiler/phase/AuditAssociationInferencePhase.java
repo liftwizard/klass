@@ -149,8 +149,7 @@ public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
         AntlrDataTypeProperty<?> auditProperty = klass.getAllDataTypeProperties().detect(predicate);
 
         // language=Klass
-        return (
-            "\n" +
+        return "\n" +
             "association " +
             className +
             "Has" +
@@ -179,7 +178,6 @@ public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
             "." +
             userIdPropertyName +
             "\n" +
-            "}\n"
-        );
+            "}\n";
     }
 }

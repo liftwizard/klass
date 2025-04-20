@@ -73,14 +73,12 @@ public interface Klass extends Classifier {
 
     @Override
     default boolean isUniquelyOwned() {
-        return (
-            this.getAssociationEnds()
+        return this.getAssociationEnds()
                 .asLazy()
                 .reject(ReferenceProperty::isToSelf)
                 .collect(AssociationEnd::getOpposite)
                 .count(ReferenceProperty::isOwned) ==
-            1
-        );
+            1;
     }
 
     @Nonnull

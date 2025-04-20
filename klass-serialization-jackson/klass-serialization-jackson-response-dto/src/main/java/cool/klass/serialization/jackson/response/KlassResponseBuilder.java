@@ -116,8 +116,7 @@ public class KlassResponseBuilder {
 
     @Override
     public String toString() {
-        return (
-            "KlassResponseBuilder{" +
+        return "KlassResponseBuilder{" +
             "projection=" +
             this.projection +
             ", multiplicity=" +
@@ -132,7 +131,6 @@ public class KlassResponseBuilder {
             this.criteria +
             ", orderBy=" +
             this.orderBy +
-            "}"
-        );
+            "}";
     }
 }

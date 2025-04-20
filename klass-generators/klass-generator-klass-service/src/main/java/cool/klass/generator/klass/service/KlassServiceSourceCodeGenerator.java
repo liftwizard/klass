@@ -43,8 +43,7 @@ public final class KlassServiceSourceCodeGenerator {
             .makeString("");
 
         // language=Klass
-        return (
-            "" +
+        return "" +
             "package " +
             fullyQualifiedPackage +
             ".inference\n" +
@@ -55,8 +54,7 @@ public final class KlassServiceSourceCodeGenerator {
             "}\n" +
             " */\n" +
             "\n" +
-            sourceCode
-        );
+            sourceCode;
     }
 
     private static String getSourceCode(Klass klass) {
@@ -65,8 +63,7 @@ public final class KlassServiceSourceCodeGenerator {
         ListIterable<String> urlPaths = getUrlPaths(klass);
         ListIterable<String> criteria = getCriteria(klass);
 
-        return (
-            "" +
+        return "" +
             "service " +
             className +
             "Resource on " +
@@ -99,8 +96,7 @@ public final class KlassServiceSourceCodeGenerator {
             "Projection;\n" +
             "        }\n" +
             "}\n" +
-            "\n"
-        );
+            "\n";
     }
 
     private static ListIterable<String> getUrlPaths(Klass klass) {

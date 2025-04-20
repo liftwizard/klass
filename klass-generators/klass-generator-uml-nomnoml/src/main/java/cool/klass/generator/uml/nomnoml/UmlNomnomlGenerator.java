@@ -142,8 +142,7 @@ public class UmlNomnomlGenerator {
 
             String propertiesSourceCode = this.getClassifierPropertiesSourceCode(classifier);
 
-            return (
-                "" +
+            return "" +
                 "[ " +
                 classifier.getName() +
                 " |\n" +
@@ -152,8 +151,7 @@ public class UmlNomnomlGenerator {
                 "]\n" +
                 interfaceGeneralizationsSourceCode +
                 classGeneralizationSourceCode +
-                "\n"
-            );
+                "\n";
         }
 
         private String getClassGeneralizationSourceCode(Klass klass) {

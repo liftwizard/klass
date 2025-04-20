@@ -88,8 +88,7 @@ public class VersionAssociationInferencePhase extends AbstractCompilerPhase {
         String associationEndName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, className);
 
         // language=Klass
-        return (
-            "" +
+        return "" +
             "package " +
             klass.getPackageName() +
             "\n" +
@@ -110,7 +109,6 @@ public class VersionAssociationInferencePhase extends AbstractCompilerPhase {
             "    relationship " +
             relationshipKeyClauses +
             "\n" +
-            "}\n"
-        );
+            "}\n";
     }
 }

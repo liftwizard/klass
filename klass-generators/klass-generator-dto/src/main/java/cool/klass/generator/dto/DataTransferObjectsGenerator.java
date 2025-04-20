@@ -194,8 +194,7 @@ public class DataTransferObjectsGenerator {
     @Nonnull
     private String getGetterSetter(String type, String name, String uppercaseName) {
         // language=JAVA
-        return (
-            "" +
+        return "" +
             "\n" +
             "    public " +
             type +
@@ -221,8 +220,7 @@ public class DataTransferObjectsGenerator {
             " = " +
             name +
             ";\n" +
-            "    }\n"
-        );
+            "    }\n";
     }
 
     @Nonnull

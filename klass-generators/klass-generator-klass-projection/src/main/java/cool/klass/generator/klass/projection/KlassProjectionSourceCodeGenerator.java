@@ -42,8 +42,7 @@ public final class KlassProjectionSourceCodeGenerator {
             .makeString("\n");
 
         // language=Klass
-        return (
-            "package " +
+        return "package " +
             fullyQualifiedPackage +
             ".inference\n" +
             '\n' +
@@ -53,8 +52,7 @@ public final class KlassProjectionSourceCodeGenerator {
             "}\n" +
             " */\n" +
             '\n' +
-            sourceCode
-        );
+            sourceCode;
     }
 
     private static String getClassifierSourceCode(Classifier classifier) {
@@ -78,8 +76,7 @@ public final class KlassProjectionSourceCodeGenerator {
             return "";
         }
 
-        return (
-            "projection " +
+        return "projection " +
             classifier.getName() +
             "Projection on " +
             classifier.getName() +
@@ -88,8 +85,7 @@ public final class KlassProjectionSourceCodeGenerator {
             dataTypePropertiesSourceCode +
             referencePropertiesSourceCode +
             subClassesSourceCode +
-            "}\n"
-        );
+            "}\n";
     }
 
     @Nonnull
@@ -168,20 +164,16 @@ public final class KlassProjectionSourceCodeGenerator {
     }
 
     private static boolean isOneRequiredToOneOptional(ReferenceProperty referenceProperty) {
-        return (
-            referenceProperty instanceof AssociationEnd associationEnd &&
+        return referenceProperty instanceof AssociationEnd associationEnd &&
             associationEnd.getMultiplicity().isToOne() &&
             !associationEnd.getMultiplicity().isRequired() &&
             associationEnd.getOpposite().getMultiplicity().isToOne() &&
-            associationEnd.getOpposite().getMultiplicity().isRequired()
-        );
+            associationEnd.getOpposite().getMultiplicity().isRequired();
     }
 
     private static boolean includeInProjection(ReferenceProperty referenceProperty) {
-        return (
-            !(referenceProperty instanceof AssociationEnd associationEnd) ||
+        return !(referenceProperty instanceof AssociationEnd associationEnd) ||
             associationEnd.getOwningAssociation().getTargetAssociationEnd() == associationEnd ||
-            (associationEnd.isToSelf() && associationEnd.getMultiplicity().isToOne())
-        );
+            (associationEnd.isToSelf() && associationEnd.getMultiplicity().isToOne());
     }
 }

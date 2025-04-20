@@ -67,16 +67,14 @@ public class GraphQLSchemaGenerator extends AbstractPerPackageGenerator {
 
     private String getOrderBySourceCode(Classifier classifier) {
         // language=GraphQL
-        return (
-            "input _" +
+        return "input _" +
             classifier.getName() +
             "OrderBy {\n" +
             "    attribute: _" +
             classifier.getName() +
             "Finder\n" +
             "    direction: _OrderByDirection\n" +
-            "}\n\n"
-        );
+            "}\n\n";
     }
 
     private String getSourceCode(@Nonnull TopLevelElement topLevelElement) {

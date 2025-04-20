@@ -85,8 +85,7 @@ public class VersionClassInferencePhase extends AbstractCompilerPhase {
 
         // TODO: If main class is transient, version should also be transient, so copy classifier modifiers
         // language=Klass
-        return (
-            "package " +
+        return "package " +
             klass.getPackageName() +
             "\n" +
             "\n" +
@@ -98,8 +97,7 @@ public class VersionClassInferencePhase extends AbstractCompilerPhase {
             "{\n" +
             propertySourceCode +
             "    number: Integer version;\n" +
-            "}\n"
-        );
+            "}\n";
     }
 
     private String getSourceCode(@Nonnull AntlrDataTypeProperty<?> dataTypeProperty) {

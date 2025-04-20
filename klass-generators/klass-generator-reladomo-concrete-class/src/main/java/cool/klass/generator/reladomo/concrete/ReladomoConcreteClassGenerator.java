@@ -84,8 +84,7 @@ public class ReladomoConcreteClassGenerator {
         String derivedPropertiesSourceCode = this.getDerivedPropertiesSourceCode(primitiveProperties);
 
         // language=JAVA
-        return (
-            "" +
+        return "" +
             "package " +
             packageName +
             ";\n" +
@@ -130,8 +129,7 @@ public class ReladomoConcreteClassGenerator {
             "        this(DefaultInfinityTimestamp.getDefaultInfinity());\n" +
             "    }\n" +
             derivedPropertiesSourceCode +
-            "}\n"
-        );
+            "}\n";
     }
 
     private String getDerivedPropertiesSourceCode(ImmutableList<PrimitiveProperty> derivedProperties) {
@@ -155,8 +153,7 @@ public class ReladomoConcreteClassGenerator {
         String valueSourceCode = sourceCodeVisitor.getResult();
 
         // language=JAVA
-        return (
-            "" +
+        return "" +
             "\n" +
             "    @Override\n" +
             "    public " +
@@ -171,8 +168,7 @@ public class ReladomoConcreteClassGenerator {
             "        return " +
             valueSourceCode +
             ";\n" +
-            "    }\n"
-        );
+            "    }\n";
     }
 
     private void printStringToFile(@Nonnull Path path, String contents) {

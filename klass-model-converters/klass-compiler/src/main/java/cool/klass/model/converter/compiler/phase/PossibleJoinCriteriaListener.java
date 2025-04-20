@@ -55,13 +55,11 @@ public class PossibleJoinCriteriaListener extends KlassBaseListener {
     }
 
     public boolean hasForeignKeys() {
-        return (
-            this.allEqualityOperators &&
+        return this.allEqualityOperators &&
             this.allOperatorsCrossTypes &&
             this.allMemberReferencesAreDirect &&
             this.allTypeMembersMatch &&
-            this.allReferencesResolve
-        );
+            this.allReferencesResolve;
     }
 
     @Override

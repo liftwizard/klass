@@ -594,10 +594,8 @@ public class AntlrClass extends AntlrClassifier {
 
     @Override
     protected boolean isInterfaceRedundant(int index, @Nonnull AntlrInterface iface) {
-        return (
-            (this.superClass.isPresent() && this.superClass.get().implementsInterface(iface)) ||
-            this.interfaceNotAtIndexImplements(index, iface)
-        );
+        return (this.superClass.isPresent() && this.superClass.get().implementsInterface(iface)) ||
+            this.interfaceNotAtIndexImplements(index, iface);
     }
 
     @Override

@@ -135,9 +135,7 @@ public class GraphQLElementToSchemaSourceVisitor implements TopLevelElementVisit
     }
 
     private static boolean isMany(@Nonnull Property property) {
-        return (
-            property instanceof ReferenceProperty referenceProperty && referenceProperty.getMultiplicity().isToMany()
-        );
+        return property instanceof ReferenceProperty referenceProperty && referenceProperty.getMultiplicity().isToMany();
     }
 
     public String getSourceCode() {

@@ -173,16 +173,12 @@ public class KlassSourceCodeHtmlGenerator {
             return Optional.of(element).equals(topLevelElementToHighlight);
         }
         if (element instanceof Property property) {
-            return (
-                Optional.of(property.getName()).equals(memberNameToHighlight) &&
-                Optional.of(property.getOwningClassifier()).equals(topLevelElementToHighlight)
-            );
+            return Optional.of(property.getName()).equals(memberNameToHighlight) &&
+                Optional.of(property.getOwningClassifier()).equals(topLevelElementToHighlight);
         }
         if (element instanceof EnumerationLiteral enumerationLiteral) {
-            return (
-                Optional.of(enumerationLiteral.getName()).equals(memberNameToHighlight) &&
-                Optional.of(enumerationLiteral.getType()).equals(topLevelElementToHighlight)
-            );
+            return Optional.of(enumerationLiteral.getName()).equals(memberNameToHighlight) &&
+                Optional.of(enumerationLiteral.getType()).equals(topLevelElementToHighlight);
         }
         return false;
     }
