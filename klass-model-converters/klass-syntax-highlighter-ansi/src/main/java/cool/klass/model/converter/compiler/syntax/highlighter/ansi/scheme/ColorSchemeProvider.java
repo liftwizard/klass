@@ -19,11 +19,15 @@ package cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto.ColorSchemeDefinition;
+import io.dropwizard.jersey.validation.Validators;
 import io.liftwizard.serialization.jackson.config.ObjectMapperConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +39,7 @@ public final class ColorSchemeProvider
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(ColorSchemeProvider.class);
     private static final String COLOR_SCHEME_PATH = "klass/color-scheme/";
+    private static final Validator VALIDATOR = Validators.newValidator();
 
     private ColorSchemeProvider()
     {
@@ -94,8 +99,23 @@ public final class ColorSchemeProvider
 
             ObjectMapper objectMapper = ObjectMapperConfig.configure(new ObjectMapper());
             var colorSchemeDefinition = objectMapper.readValue(inputStream, ColorSchemeDefinition.class);
-            var jsonScheme = new JsonAnsiColorScheme(colorSchemeDefinition);
-            return jsonScheme;
+
+            Set<ConstraintViolation<ColorSchemeDefinition>> violations = VALIDATOR.validate(colorSchemeDefinition);
+            if (violations.isEmpty())
+            {
+                return new JsonAnsiColorScheme(colorSchemeDefinition);
+            }
+
+            StringBuilder errorMessage = new StringBuilder("Color scheme validation errors:");
+            for (ConstraintViolation<ColorSchemeDefinition> violation : violations)
+            {
+                errorMessage
+                        .append("\n  - ")
+                        .append(violation.getPropertyPath())
+                        .append(": ")
+                        .append(violation.getMessage());
+            }
+            throw new IllegalArgumentException(errorMessage.toString());
         }
         catch (IOException e)
         {
