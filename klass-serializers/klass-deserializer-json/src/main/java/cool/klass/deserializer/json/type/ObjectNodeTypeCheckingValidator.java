@@ -16,6 +16,7 @@
 
 package cool.klass.deserializer.json.type;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -72,7 +73,7 @@ public final class ObjectNodeTypeCheckingValidator
         {
             String error = String.format(
                     "Expected json object but value was %s: %s.",
-                    this.jsonNode.getNodeType().toString().toLowerCase(),
+                    this.jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT),
                     this.jsonNode);
             this.contextStack.addError(error);
         }

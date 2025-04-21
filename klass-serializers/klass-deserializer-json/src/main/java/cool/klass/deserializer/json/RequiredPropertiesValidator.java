@@ -16,6 +16,7 @@
 
 package cool.klass.deserializer.json;
 
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -203,7 +204,7 @@ public class RequiredPropertiesValidator
                         dataTypeProperty.getName(),
                         dataTypeProperty.getType(),
                         dataTypeProperty.isOptional() ? "?" : "",
-                        jsonNode.getNodeType().toString().toLowerCase());
+                        jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT));
                 this.contextStack.addError(error);
             }
         }
@@ -257,7 +258,7 @@ public class RequiredPropertiesValidator
                     dataTypeProperty.getName(),
                     dataTypeProperty.getType(),
                     dataTypeProperty.isOptional() ? "?" : "",
-                    jsonNode.getNodeType().toString().toLowerCase());
+                    jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT));
             this.contextStack.addError(error);
         }
     }
@@ -324,7 +325,7 @@ public class RequiredPropertiesValidator
                 property.getName(),
                 property.getType(),
                 property.isOptional() ? "?" : "",
-                jsonNode.getNodeType().toString().toLowerCase(),
+                jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT),
                 jsonNodeString);
         switch (severity)
         {
@@ -350,7 +351,7 @@ public class RequiredPropertiesValidator
                 property.getName(),
                 property.getType(),
                 property.getMultiplicity().getPrettyName(),
-                jsonNode.getNodeType().toString().toLowerCase(),
+                jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT),
                 jsonNodeString);
         this.contextStack.addWarning(warning);
     }
@@ -382,7 +383,7 @@ public class RequiredPropertiesValidator
                     property.getName(),
                     property.getType(),
                     property.isOptional() ? "?" : "",
-                    jsonNode.getNodeType().toString().toLowerCase());
+                    jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT));
             this.contextStack.addError(error);
         }
     }
@@ -408,7 +409,7 @@ public class RequiredPropertiesValidator
                     property.getName(),
                     property.getType(),
                     property.isOptional() ? "?" : "",
-                    jsonNode.getNodeType().toString().toLowerCase());
+                    jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT));
             this.contextStack.addError(error);
         }
     }
@@ -506,7 +507,7 @@ public class RequiredPropertiesValidator
                         associationEnd.getName(),
                         associationEnd.getType(),
                         associationEnd.getMultiplicity().getPrettyName(),
-                        jsonNode.getNodeType().toString().toLowerCase());
+                        jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT));
                 this.contextStack.addWarning(warning);
                 return;
             }
@@ -519,7 +520,7 @@ public class RequiredPropertiesValidator
                         associationEnd.getName(),
                         associationEnd.getType(),
                         associationEnd.getMultiplicity().getPrettyName(),
-                        jsonNode.getNodeType().toString().toLowerCase());
+                        jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT));
                 this.contextStack.addWarning(warning);
                 return;
             }
@@ -534,7 +535,7 @@ public class RequiredPropertiesValidator
                         associationEnd.getName(),
                         associationEnd.getType(),
                         associationEnd.getMultiplicity().getPrettyName(),
-                        jsonNode.getNodeType().toString().toLowerCase());
+                        jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT));
                 this.contextStack.addError(error);
                 return;
             }
@@ -570,7 +571,7 @@ public class RequiredPropertiesValidator
                         associationEnd.getName(),
                         associationEnd.getType(),
                         associationEnd.getMultiplicity().getPrettyName(),
-                        jsonNode.getNodeType().toString().toLowerCase());
+                        jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT));
                 this.contextStack.addError(error);
             }
             return;
@@ -627,7 +628,7 @@ public class RequiredPropertiesValidator
                         associationEnd.getName(),
                         associationEnd.getType(),
                         associationEnd.getMultiplicity().getPrettyName(),
-                        jsonNode.getNodeType().toString().toLowerCase());
+                        jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT));
                 this.contextStack.addError(error);
             }
             return;
@@ -691,7 +692,7 @@ public class RequiredPropertiesValidator
                 associationEnd.getName(),
                 associationEnd.getType(),
                 associationEnd.getMultiplicity().getPrettyName(),
-                jsonNode.getNodeType().toString().toLowerCase());
+                jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT));
         this.contextStack.addError(error);
     }
 
@@ -730,7 +731,7 @@ public class RequiredPropertiesValidator
                         associationEnd.getName(),
                         associationEnd.getType(),
                         associationEnd.getMultiplicity().getPrettyName(),
-                        jsonNode.getNodeType().toString().toLowerCase());
+                        jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT));
                 this.contextStack.addWarning(warning);
                 return;
             }
@@ -743,7 +744,7 @@ public class RequiredPropertiesValidator
                         associationEnd.getName(),
                         associationEnd.getType(),
                         associationEnd.getMultiplicity().getPrettyName(),
-                        jsonNode.getNodeType().toString().toLowerCase());
+                        jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT));
                 this.contextStack.addWarning(warning);
                 return;
             }
@@ -758,7 +759,7 @@ public class RequiredPropertiesValidator
                         associationEnd.getName(),
                         associationEnd.getType(),
                         associationEnd.getMultiplicity().getPrettyName(),
-                        jsonNode.getNodeType().toString().toLowerCase());
+                        jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT));
                 this.contextStack.addError(error);
                 return;
             }

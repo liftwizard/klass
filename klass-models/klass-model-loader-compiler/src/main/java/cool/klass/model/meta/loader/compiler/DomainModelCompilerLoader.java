@@ -19,6 +19,7 @@ package cool.klass.model.meta.loader.compiler;
 import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
@@ -107,7 +108,7 @@ public class DomainModelCompilerLoader
         Duration duration = Duration.between(start, end);
         String durationPrettyString = duration.toString().substring(2)
                 .replaceAll("(\\d[HMS])(?!$)", "$1 ")
-                .toLowerCase();
+                .toLowerCase(Locale.ROOT);
         LOGGER.info("Domain model compilation completed in {}", durationPrettyString);
 
         return domainModel;

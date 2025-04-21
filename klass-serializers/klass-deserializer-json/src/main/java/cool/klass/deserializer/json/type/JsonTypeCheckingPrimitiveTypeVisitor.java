@@ -19,6 +19,7 @@ package cool.klass.deserializer.json.type;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.annotation.Nonnull;
@@ -59,7 +60,7 @@ public class JsonTypeCheckingPrimitiveTypeVisitor implements PrimitiveTypeVisito
                 this.primitiveProperty.getType().getPrettyName(),
                 this.primitiveProperty.isOptional() ? "?" : "",
                 this.jsonDataTypeValue,
-                this.jsonDataTypeValue.getNodeType().toString().toLowerCase());
+                this.jsonDataTypeValue.getNodeType().toString().toLowerCase(Locale.ROOT));
         this.contextStack.addError(error);
     }
 
