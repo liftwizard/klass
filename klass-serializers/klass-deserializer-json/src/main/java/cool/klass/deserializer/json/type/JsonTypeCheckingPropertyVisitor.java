@@ -16,6 +16,7 @@
 
 package cool.klass.deserializer.json.type;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.annotation.Nonnull;
@@ -101,7 +102,7 @@ public record JsonTypeCheckingPropertyVisitor(
                     enumerationProperty.getType().getName(),
                     enumerationProperty.isOptional() ? "?" : "",
                     this.childJsonNode,
-                    this.childJsonNode.getNodeType().toString().toLowerCase());
+                    this.childJsonNode.getNodeType().toString().toLowerCase(Locale.ROOT));
             this.contextStack.addError(error);
         }
 
@@ -124,7 +125,7 @@ public record JsonTypeCheckingPropertyVisitor(
                     enumerationProperty.getType().getName(),
                     enumerationProperty.isOptional() ? "?" : "",
                     this.childJsonNode,
-                    this.childJsonNode.getNodeType().toString().toLowerCase(),
+                    this.childJsonNode.getNodeType().toString().toLowerCase(Locale.ROOT),
                     quotedPrettyNames.makeString());
             this.contextStack.addError(error);
         }

@@ -18,6 +18,7 @@ package cool.klass.reladomo.persistent.writer;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -476,7 +477,7 @@ public class IncomingUpdateDataModelValidator
                 associationEnd.getName(),
                 associationEnd.getType(),
                 associationEnd.getMultiplicity().getPrettyName(),
-                jsonNode.getNodeType().toString().toLowerCase());
+                jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT));
         this.errors.add(error);
     }
 
@@ -497,7 +498,7 @@ public class IncomingUpdateDataModelValidator
                 property.getName(),
                 property.getType(),
                 property.getMultiplicity().getPrettyName(),
-                jsonNode.getNodeType().toString().toLowerCase(),
+                jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT),
                 jsonNodeString);
         this.warnings.add(warning);
     }
@@ -765,7 +766,7 @@ public class IncomingUpdateDataModelValidator
         String error = String.format(
                 "Error at %s. Expected json array but value was %s.",
                 this.getContextString(),
-                incomingChildInstances.getNodeType().toString().toLowerCase());
+                incomingChildInstances.getNodeType().toString().toLowerCase(Locale.ROOT));
         this.errors.add(error);
         this.contextStack.pop();
     }

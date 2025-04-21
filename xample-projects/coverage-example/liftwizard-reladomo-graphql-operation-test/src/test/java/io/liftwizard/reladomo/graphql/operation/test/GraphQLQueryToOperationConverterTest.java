@@ -38,7 +38,6 @@ import graphql.scalars.java.JavaPrimitives;
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.RuntimeWiring;
-import graphql.schema.idl.RuntimeWiring.Builder;
 import graphql.schema.idl.SchemaGenerator;
 import graphql.schema.idl.SchemaParser;
 import graphql.schema.idl.TypeDefinitionRegistry;
@@ -425,7 +424,7 @@ public class GraphQLQueryToOperationConverterTest
 
     private RuntimeWiring getRuntimeWiring()
     {
-        Builder builder = RuntimeWiring.newRuntimeWiring();
+        RuntimeWiring.Builder builder = RuntimeWiring.newRuntimeWiring();
         builder
                 .scalar(GraphQLTemporalScalar.INSTANT_INSTANCE)
                 .scalar(GraphQLTemporalScalar.TEMPORAL_INSTANT_INSTANCE)

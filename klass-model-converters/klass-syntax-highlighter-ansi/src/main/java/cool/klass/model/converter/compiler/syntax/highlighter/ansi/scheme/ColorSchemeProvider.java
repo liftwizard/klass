@@ -18,6 +18,7 @@ package cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
@@ -55,7 +56,7 @@ public final class ColorSchemeProvider
     {
         Objects.requireNonNull(schemeName, "schemeName");
 
-        String jsonPath = COLOR_SCHEME_PATH + schemeName.toLowerCase() + ".json";
+        String jsonPath = COLOR_SCHEME_PATH + schemeName.toLowerCase(Locale.ROOT) + ".json";
         return getByClasspath(jsonPath);
     }
 
@@ -72,7 +73,7 @@ public final class ColorSchemeProvider
             return false;
         }
 
-        String jsonPath = COLOR_SCHEME_PATH + schemeName.toLowerCase() + ".json";
+        String jsonPath = COLOR_SCHEME_PATH + schemeName.toLowerCase(Locale.ROOT) + ".json";
         try (InputStream inputStream = ColorSchemeProvider.class.getClassLoader().getResourceAsStream(jsonPath))
         {
             return inputStream != null;
