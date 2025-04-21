@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
@@ -128,7 +129,7 @@ public class ReladomoReadableInterfaceGenerator
 
     private void printStringToFile(@Nonnull Path path, String contents)
     {
-        try (PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile())))
+        try (PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8))
         {
             printStream.print(contents);
         }
