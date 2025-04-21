@@ -25,18 +25,17 @@ import javax.annotation.Nullable;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.meta.domain.api.Multiplicity;
 import cool.klass.model.meta.grammar.KlassParser.MultiplicityContext;
-import org.antlr.v4.runtime.ParserRuleContext;
 
 public class AntlrMultiplicity
         extends AntlrElement
 {
-    private String lowerBoundText;
-    private String upperBoundText;
+    private final String lowerBoundText;
+    private final String upperBoundText;
 
     @Nullable
     private final Multiplicity multiplicity;
 
-    @Nonnull
+    @Nullable
     private final AntlrMultiplicityOwner multiplicityOwner;
 
     public AntlrMultiplicity(
@@ -52,13 +51,6 @@ public class AntlrMultiplicity
         this.multiplicity = this.findMultiplicity();
 
         this.multiplicityOwner = Objects.requireNonNull(multiplicityOwner);
-    }
-
-    private AntlrMultiplicity()
-    {
-        super(new ParserRuleContext(), Optional.empty());
-        this.multiplicity      = Multiplicity.ONE_TO_ONE;
-        this.multiplicityOwner = null;
     }
 
     @Nullable
@@ -126,6 +118,6 @@ public class AntlrMultiplicity
     @Override
     public String toString()
     {
-        return this.multiplicity.getPrettyName();
+        return this.lowerBoundText + ".." + this.upperBoundText;
     }
 }
