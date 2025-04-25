@@ -19,6 +19,7 @@ package cool.klass.model.converter.compiler.state.service;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,9 +28,11 @@ import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrElement;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
+import cool.klass.model.converter.compiler.state.ReferencedPropertiesCriteriaVisitor;
 import cool.klass.model.converter.compiler.state.criteria.AntlrCriteria;
 import cool.klass.model.converter.compiler.state.order.AntlrOrderBy;
 import cool.klass.model.converter.compiler.state.order.AntlrOrderByOwner;
+import cool.klass.model.converter.compiler.state.parameter.AntlrParameter;
 import cool.klass.model.converter.compiler.state.service.url.AntlrUrl;
 import cool.klass.model.meta.domain.api.service.ServiceMultiplicity;
 import cool.klass.model.meta.domain.api.service.Verb;
@@ -47,9 +50,11 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.eclipse.collections.api.map.MutableOrderedMap;
+import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.factory.Maps;
+import org.eclipse.collections.impl.factory.Sets;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 import org.eclipse.collections.impl.tuple.Tuples;
 
@@ -167,9 +172,7 @@ public class AntlrService extends AntlrElement implements AntlrOrderByOwner {
     // <editor-fold desc="Report Compiler Errors">
     public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         this.reportDuplicateKeywords(compilerAnnotationHolder);
-
-        // TODO: ☑ reportErrors: Find url parameters which are unused by any criteria
-
+        this.reportUnreferencedUrlParameters(compilerAnnotationHolder);
         this.reportInvalidProjection(compilerAnnotationHolder);
 
         Verb verb = this.verb.getVerb();
@@ -184,6 +187,34 @@ public class AntlrService extends AntlrElement implements AntlrOrderByOwner {
         }
 
         this.orderBy.ifPresent(orderBy -> orderBy.reportErrors(compilerAnnotationHolder));
+    }
+
+    private void reportUnreferencedUrlParameters(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+        ImmutableList<AntlrParameter> urlParameters = this.url.getFormalParametersByName().toImmutableList();
+
+        MutableSet<AntlrParameter> referencedParameters = Sets.mutable.empty();
+
+        for (AntlrServiceCriteria serviceCriteria : this.serviceCriterias) {
+            AntlrCriteria criteria = serviceCriteria.getCriteria();
+            var visitor = new ReferencedPropertiesCriteriaVisitor();
+            criteria.visit(visitor);
+
+            Set<AntlrParameter> parametersReferencedByCriteria = visitor.getParametersReferencedByCriteria();
+            referencedParameters.addAll(parametersReferencedByCriteria);
+        }
+
+        for (AntlrParameter parameter : urlParameters) {
+            if (parameter == AntlrParameter.AMBIGUOUS || parameter == AntlrParameter.NOT_FOUND) {
+                continue;
+            }
+            if (!referencedParameters.contains(parameter)) {
+                String message = String.format(
+                    "URL parameter '%s' is not referenced in any criteria or order by.",
+                    parameter.getName()
+                );
+                compilerAnnotationHolder.add("ERR_URL_REF", message, parameter);
+            }
+        }
     }
 
     protected void reportDuplicateKeywords(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {

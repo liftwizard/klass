@@ -27,7 +27,7 @@ service DummyClassResource on DummyClass
         GET
         {
             multiplicity: one;
-            criteria    : this.id == 1;
+            criteria    : this.id in id;
             projection  : DummyProjection;
         }
     /equalMany?{id: Long[1..*]}

@@ -24,15 +24,16 @@ import cool.klass.model.converter.compiler.state.criteria.AntlrCriteriaVisitor;
 import cool.klass.model.converter.compiler.state.criteria.AntlrOrCriteria;
 import cool.klass.model.converter.compiler.state.criteria.EdgePointAntlrCriteria;
 import cool.klass.model.converter.compiler.state.criteria.OperatorAntlrCriteria;
+import cool.klass.model.converter.compiler.state.parameter.AntlrParameter;
 import cool.klass.model.converter.compiler.state.property.AntlrAssociationEnd;
 import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
 import cool.klass.model.converter.compiler.state.value.AntlrExpressionValue;
 import cool.klass.model.converter.compiler.state.value.AntlrMemberReferencePath;
 
-public class UnreferencedPrivatePropertiesCriteriaVisitor implements AntlrCriteriaVisitor {
+public class ReferencedPropertiesCriteriaVisitor implements AntlrCriteriaVisitor {
 
-    private final UnreferencedPrivatePropertiesExpressionValueVisitor expressionValueVisitor =
-        new UnreferencedPrivatePropertiesExpressionValueVisitor();
+    private final ReferencedPropertiesExpressionValueVisitor expressionValueVisitor =
+        new ReferencedPropertiesExpressionValueVisitor();
 
     public Set<AntlrAssociationEnd> getAssociationEndsReferencedByCriteria() {
         return this.expressionValueVisitor.getAssociationEndsReferencedByCriteria();
@@ -40,6 +41,10 @@ public class UnreferencedPrivatePropertiesCriteriaVisitor implements AntlrCriter
 
     public Set<AntlrDataTypeProperty<?>> getDataTypePropertiesReferencedByCriteria() {
         return this.expressionValueVisitor.getDataTypePropertiesReferencedByCriteria();
+    }
+
+    public Set<AntlrParameter> getParametersReferencedByCriteria() {
+        return this.expressionValueVisitor.getParametersReferencedByCriteria();
     }
 
     @Override

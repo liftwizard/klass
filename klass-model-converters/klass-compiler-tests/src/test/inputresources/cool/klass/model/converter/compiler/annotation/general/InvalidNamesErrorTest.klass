@@ -50,6 +50,7 @@ service badClassResource on badClass
     /bad/{BadParameter: String[1..1]}
         GET
         {
+            criteria    : this.BadPrimitiveProperty == BadParameter;
             projection  : badProjection;
         }
 }

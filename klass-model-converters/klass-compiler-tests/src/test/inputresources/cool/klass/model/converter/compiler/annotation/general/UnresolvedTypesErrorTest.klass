@@ -148,7 +148,7 @@ service ClassWithUnresolvedResource on ClassWithUnresolved
         GET
         {
             multiplicity: one;
-            criteria    : this.unresolvedEnumerationProperty == unresolvedParameter;
+            criteria    : this.unresolvedEnumerationProperty == unresolvedDeclaration || this.unresolvedEnumerationProperty == unresolvedParameterDeclaration;
             projection  : UnresolvedProjection;
             orderBy     : this.unresolvedEnumerationProperty;
         }

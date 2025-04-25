@@ -1,5 +1,5 @@
 ════════════════════════════════════════ [35mERR_VAR_REF[m ════════════════════════════════════════
-[31mError: Cannot find parameter 'unresolvedParameter'.[m
+[31mError: Cannot find parameter 'unresolvedDeclaration'.[m
 
 At (UnresolvedTypesErrorTest.klass:151)
 
@@ -9,8 +9,8 @@ At (UnresolvedTypesErrorTest.klass:151)
 [39m147║     [36m/[39munresolved[36m/[36m{[39munresolvedParameterDeclaration[36m: [39mUnresolvedEnumeration[36m[[34m1[36m..[34m1[36m][36m}
 [39m148║         [32mGET
 [39m149║         [36m{
-[39m151║             [35mcriteria    [36m: [32mthis[36m.[39munresolvedEnumerationProperty [35m== [39munresolvedParameter[36m;
-[39m   ║ [31m                                                                ^^^^^^^^^^^^^^^^^^^
+[39m151║             [35mcriteria    [36m: [32mthis[36m.[39munresolvedEnumerationProperty [35m== [39munresolvedDeclaration [35m|| [32mthis[36m.[39munresolvedEnumerationProperty [35m== [39munresolvedParameterDeclaration[36m;
+[39m   ║ [31m                                                                ^^^^^^^^^^^^^^^^^^^^^
 [39m154║         [36m}
 [39m163║ [36m}
 [m

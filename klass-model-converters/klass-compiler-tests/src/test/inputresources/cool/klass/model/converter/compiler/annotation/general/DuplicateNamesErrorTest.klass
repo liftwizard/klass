@@ -60,6 +60,7 @@ service DuplicateTopLevelElementResource on DuplicateTopLevelElement
     /duplicate/duplicate/{different: String[1..1]}/{duplicate: String[1..1]}
         GET
         {
+            criteria    : this.duplicateMember == different && this.duplicateMember == duplicate;
             projection  : DuplicateTopLevelElement;
         }
 }

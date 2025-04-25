@@ -8,7 +8,7 @@ At (InvalidNamesErrorTest.klass:50)
 [39m49║ [36m{
 [39m50║     [36m/[39mbad[36m/[36m{[39mBadParameter[36m: [35mString[36m[[34m1[36m..[34m1[36m][36m}
 [39m  ║ [31m          ^^^^^^^^^^^^
-[39m55║ [36m}
+[39m56║ [36m}
 [m
 [36mLocation:  [mInvalidNamesErrorTest.klass:50[m
 [36mFile:      [mInvalidNamesErrorTest.klass[m

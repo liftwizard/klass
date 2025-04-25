@@ -1,0 +1,31 @@
+package dummy
+
+class ExampleClass
+{
+    id: Long id key;
+    name: String;
+}
+
+projection ExampleProjection on ExampleClass
+{
+    id: "ID",
+    name: "Name",
+}
+
+service ExampleService on ExampleClass
+{
+    /queryParam?{unreferencedQueryParam1: String[1..1]}&{unreferencedQueryParam2: Long[1..1]}
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : ExampleProjection;
+        }
+    /pathParam/{unreferencedPathParam: Long[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : all;
+            projection  : ExampleProjection;
+        }
+}
