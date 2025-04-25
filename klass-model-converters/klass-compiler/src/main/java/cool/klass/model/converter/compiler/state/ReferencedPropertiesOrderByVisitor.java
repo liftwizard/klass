@@ -28,12 +28,12 @@ import cool.klass.model.converter.compiler.state.property.AntlrAssociationEnd;
 import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
 import cool.klass.model.converter.compiler.state.value.AntlrThisMemberReferencePath;
 
-public class UnreferencedPrivatePropertiesOrderByVisitor implements AntlrOrderByVisitor {
+public class ReferencedPropertiesOrderByVisitor implements AntlrOrderByVisitor {
 
     private final Set<AntlrAssociationEnd> associationEndsReferencedByOrderBy = new LinkedHashSet<>();
     private final Set<AntlrDataTypeProperty<?>> dataTypePropertiesReferencedByOrderBy = new LinkedHashSet<>();
-    private final UnreferencedPrivatePropertiesExpressionValueVisitor expressionValueVisitor =
-        new UnreferencedPrivatePropertiesExpressionValueVisitor();
+    private final ReferencedPropertiesExpressionValueVisitor expressionValueVisitor =
+        new ReferencedPropertiesExpressionValueVisitor();
 
     public Set<AntlrAssociationEnd> getAssociationEndsReferencedByOrderBy() {
         return this.associationEndsReferencedByOrderBy;

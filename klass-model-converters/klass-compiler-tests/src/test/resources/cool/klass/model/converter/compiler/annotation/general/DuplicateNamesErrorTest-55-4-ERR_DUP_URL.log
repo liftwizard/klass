@@ -8,7 +8,7 @@ At (DuplicateNamesErrorTest.klass:55)
 [39m54║ [36m{
 [39m55║     [36m/[39mduplicate[36m/[39mduplicate[36m/[36m{[39mduplicate[36m: [35mString[36m[[34m1[36m..[34m1[36m][36m}[36m/[36m{[39mduplicate[36m: [35mString[36m[[34m1[36m..[34m1[36m][36m}
 [39m  ║ [31m    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[39m65║ [36m}
+[39m66║ [36m}
 [m
 [36mLocation:  [mDuplicateNamesErrorTest.klass:55[m
 [36mFile:      [mDuplicateNamesErrorTest.klass[m

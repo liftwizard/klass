@@ -54,6 +54,11 @@ public class AntlrVariableReference extends AntlrExpressionValue {
         this.variableName = Objects.requireNonNull(variableName);
     }
 
+    @Nullable
+    public AntlrParameter getAntlrParameter() {
+        return this.antlrParameter;
+    }
+
     @Nonnull
     @Override
     public VariableReferenceBuilder build() {

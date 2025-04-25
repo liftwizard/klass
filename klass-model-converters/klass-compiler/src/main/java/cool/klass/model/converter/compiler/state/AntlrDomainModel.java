@@ -437,8 +437,8 @@ public class AntlrDomainModel {
     }
 
     private void reportUnreferencedPrivateProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        var criteriaVisitor = new UnreferencedPrivatePropertiesCriteriaVisitor();
-        var orderByVisitor = new UnreferencedPrivatePropertiesOrderByVisitor();
+        var criteriaVisitor = new ReferencedPropertiesCriteriaVisitor();
+        var orderByVisitor = new ReferencedPropertiesOrderByVisitor();
 
         this.visitCriteria(criteriaVisitor);
         this.visitOrderBy(orderByVisitor);
