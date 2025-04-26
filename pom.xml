@@ -104,7 +104,7 @@
         <checkstyle.cache>${project.build.directory}/checkstyle-cache</checkstyle.cache>
 
         <liftwizard.version>2.1.29</liftwizard.version>
-        <klass.version>0.5.0-SNAPSHOT</klass.version>
+        <klass.version>${project.version}</klass.version>
     </properties>
 
     <dependencyManagement>
