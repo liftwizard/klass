@@ -21,12 +21,12 @@
     <parent>
         <groupId>cool.klass</groupId>
         <artifactId>xample-projects</artifactId>
-        <version>0.5.0-SNAPSHOT</version>
+        <version>0.5.0</version>
     </parent>
 
     <groupId>com.stackoverflow</groupId>
     <artifactId>stackoverflow</artifactId>
-    <version>0.5.0-SNAPSHOT</version>
+    <version>0.5.0</version>
     <packaging>pom</packaging>
 
     <name>${app.name} (Module Group)</name>
@@ -86,7 +86,7 @@
             <dependency>
                 <groupId>cool.klass</groupId>
                 <artifactId>klass-bom</artifactId>
-                <version>0.5.0-SNAPSHOT</version>
+                <version>0.5.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

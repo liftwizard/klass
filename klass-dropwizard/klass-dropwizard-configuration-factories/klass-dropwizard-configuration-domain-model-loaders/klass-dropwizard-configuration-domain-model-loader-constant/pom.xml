@@ -19,7 +19,7 @@
     <parent>
         <groupId>cool.klass</groupId>
         <artifactId>klass-dropwizard-configuration-domain-model-loaders</artifactId>
-        <version>0.5.0-SNAPSHOT</version>
+        <version>0.5.0</version>
     </parent>
 
     <artifactId>klass-dropwizard-configuration-domain-model-loader-constant</artifactId>

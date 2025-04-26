@@ -20,7 +20,7 @@
     <parent>
         <groupId>cool.klass.xample.coverage</groupId>
         <artifactId>coverage-example</artifactId>
-        <version>0.5.0-SNAPSHOT</version>
+        <version>0.5.0</version>
     </parent>
 
     <artifactId>coverage-example-klass-projections</artifactId>
