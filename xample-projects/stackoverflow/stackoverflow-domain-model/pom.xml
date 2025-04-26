@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.stackoverflow</groupId>
         <artifactId>stackoverflow</artifactId>
-        <version>0.5.0</version>
+        <version>0.6.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>stackoverflow-domain-model</artifactId>

@@ -20,7 +20,7 @@
     <parent>
         <groupId>cool.klass.xample.coverage</groupId>
         <artifactId>coverage-example</artifactId>
-        <version>0.5.0</version>
+        <version>0.6.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>coverage-example-domain-model</artifactId>
@@ -33,7 +33,7 @@
             <plugin>
                 <groupId>cool.klass</groupId>
                 <artifactId>klass-compiler-plugin</artifactId>
-                <version>0.5.0</version>
+                <version>0.6.0-SNAPSHOT</version>
                 <configuration>
                     <klassSourcePackages>
                         <klassSourcePackage>klass.model.meta.domain</klassSourcePackage>

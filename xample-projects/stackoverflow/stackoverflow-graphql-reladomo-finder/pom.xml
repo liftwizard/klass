@@ -19,7 +19,7 @@
     <parent>
         <groupId>com.stackoverflow</groupId>
         <artifactId>stackoverflow</artifactId>
-        <version>0.5.0</version>
+        <version>0.6.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>stackoverflow-graphql-reladomo-finder</artifactId>
@@ -33,7 +33,7 @@
             <plugin>
                 <groupId>cool.klass</groupId>
                 <artifactId>klass-generator-graphql-reladomo-finder-plugin</artifactId>
-                <version>0.5.0</version>
+                <version>0.6.0-SNAPSHOT</version>
 
                 <configuration>
                     <klassSourcePackages>

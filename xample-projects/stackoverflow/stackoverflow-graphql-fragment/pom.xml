@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.stackoverflow</groupId>
         <artifactId>stackoverflow</artifactId>
-        <version>0.5.0</version>
+        <version>0.6.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>stackoverflow-graphql-fragment</artifactId>
@@ -34,7 +34,7 @@
             <plugin>
                 <groupId>cool.klass</groupId>
                 <artifactId>klass-generator-graphql-fragment-plugin</artifactId>
-                <version>0.5.0</version>
+                <version>0.6.0-SNAPSHOT</version>
 
                 <configuration>
                     <klassSourcePackages>
