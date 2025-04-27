@@ -76,6 +76,33 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
         fallbacks.put("verb", "keyword");
         fallbacks.put("modifier", "keyword");
 
+        // Keyword specific fallbacks
+        fallbacks.put("keywordEnumeration", "keyword");
+        fallbacks.put("keywordInterface", "keyword");
+        fallbacks.put("keywordUser", "keyword");
+        fallbacks.put("keywordClass", "keyword");
+        fallbacks.put("keywordProjection", "keyword");
+        fallbacks.put("keywordService", "keyword");
+        fallbacks.put("keywordAbstract", "keyword");
+        fallbacks.put("keywordExtends", "keyword");
+        fallbacks.put("keywordImplements", "keyword");
+        fallbacks.put("keywordInheritanceType", "keyword");
+        fallbacks.put("keywordAssociation", "keyword");
+        fallbacks.put("keywordRelationship", "keyword");
+        fallbacks.put("keywordOrderBy", "keyword");
+        fallbacks.put("keywordOrderByDirection", "keyword");
+        fallbacks.put("keywordOn", "keyword");
+        fallbacks.put("keywordMultiplicity", "keyword");
+        fallbacks.put("keywordMultiplicityChoice", "keyword");
+        fallbacks.put("keywordServiceCriteria", "keyword");
+
+        // Verb specific fallbacks
+        fallbacks.put("verbGet", "verb");
+        fallbacks.put("verbPost", "verb");
+        fallbacks.put("verbPut", "verb");
+        fallbacks.put("verbPatch", "verb");
+        fallbacks.put("verbDelete", "verb");
+
         // Modifier fallbacks
         fallbacks.put("classifierModifier", "modifier");
         fallbacks.put("dataTypePropertyModifier", "modifier");
@@ -142,6 +169,27 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
         fallbacks.put("dot", "punctuation");
         fallbacks.put("semi", "punctuation");
         fallbacks.put("operator", "punctuation");
+        fallbacks.put("colon", "punctuation");
+        fallbacks.put("slash", "punctuation");
+        fallbacks.put("question", "punctuation");
+        fallbacks.put("ampersand", "punctuation");
+        fallbacks.put("pairedPunctuation", "punctuation");
+        fallbacks.put("parentheses", "pairedPunctuation");
+        fallbacks.put("curlyBraces", "pairedPunctuation");
+        fallbacks.put("squareBrackets", "pairedPunctuation");
+
+        // Operator fallbacks
+        fallbacks.put("wordOperator", "operator");
+        fallbacks.put("operatorEquals", "operator");
+        fallbacks.put("operatorNotEquals", "operator");
+        fallbacks.put("operatorLessThan", "operator");
+        fallbacks.put("operatorGreaterThan", "operator");
+        fallbacks.put("operatorLessThanOrEqual", "operator");
+        fallbacks.put("operatorGreaterThanOrEqual", "operator");
+        fallbacks.put("operatorAnd", "operator");
+        fallbacks.put("operatorOr", "operator");
+        fallbacks.put("operatorIn", "operator");
+        fallbacks.put("operatorString", "operator");
 
         // Special case: dotDot fallbacks to dot
         fallbacks.put("dotDot", "dot");

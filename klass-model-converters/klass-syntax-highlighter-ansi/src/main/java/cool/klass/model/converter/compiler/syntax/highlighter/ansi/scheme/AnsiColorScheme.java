@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Craig Motlin
+ * Copyright 2025 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,12 +33,104 @@ public interface AnsiColorScheme {
         this.keyword(ansi);
     }
 
+    default void keywordEnumeration(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordInterface(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordUser(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordClass(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordProjection(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordService(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordAbstract(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordExtends(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordImplements(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordInheritanceType(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordAssociation(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordRelationship(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordOrderBy(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordOrderByDirection(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordOn(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordMultiplicity(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordMultiplicityChoice(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
+    default void keywordServiceCriteria(Ansi ansi) {
+        this.keyword(ansi);
+    }
+
     default void primitiveType(Ansi ansi) {
         this.keyword(ansi);
     }
 
     default void verb(Ansi ansi) {
         this.keyword(ansi);
+    }
+
+    default void verbGet(Ansi ansi) {
+        this.verb(ansi);
+    }
+
+    default void verbPost(Ansi ansi) {
+        this.verb(ansi);
+    }
+
+    default void verbPut(Ansi ansi) {
+        this.verb(ansi);
+    }
+
+    default void verbPatch(Ansi ansi) {
+        this.verb(ansi);
+    }
+
+    default void verbDelete(Ansi ansi) {
+        this.verb(ansi);
     }
 
     default void modifier(Ansi ansi) {
@@ -235,8 +327,84 @@ public interface AnsiColorScheme {
         this.punctuation(ansi);
     }
 
+    default void colon(Ansi ansi) {
+        this.punctuation(ansi);
+    }
+
+    default void slash(Ansi ansi) {
+        this.punctuation(ansi);
+    }
+
+    default void question(Ansi ansi) {
+        this.punctuation(ansi);
+    }
+
+    default void ampersand(Ansi ansi) {
+        this.punctuation(ansi);
+    }
+
+    default void pairedPunctuation(Ansi ansi) {
+        this.punctuation(ansi);
+    }
+
+    default void parentheses(Ansi ansi) {
+        this.pairedPunctuation(ansi);
+    }
+
+    default void curlyBraces(Ansi ansi) {
+        this.pairedPunctuation(ansi);
+    }
+
+    default void squareBrackets(Ansi ansi) {
+        this.pairedPunctuation(ansi);
+    }
+
     default void operator(Ansi ansi) {
         this.punctuation(ansi);
+    }
+
+    default void wordOperator(Ansi ansi) {
+        this.operator(ansi);
+    }
+
+    default void operatorEquals(Ansi ansi) {
+        this.operator(ansi);
+    }
+
+    default void operatorNotEquals(Ansi ansi) {
+        this.operator(ansi);
+    }
+
+    default void operatorLessThan(Ansi ansi) {
+        this.operator(ansi);
+    }
+
+    default void operatorGreaterThan(Ansi ansi) {
+        this.operator(ansi);
+    }
+
+    default void operatorLessThanOrEqual(Ansi ansi) {
+        this.operator(ansi);
+    }
+
+    default void operatorGreaterThanOrEqual(Ansi ansi) {
+        this.operator(ansi);
+    }
+
+    default void operatorAnd(Ansi ansi) {
+        this.operator(ansi);
+    }
+
+    default void operatorOr(Ansi ansi) {
+        this.operator(ansi);
+    }
+
+    default void operatorIn(Ansi ansi) {
+        this.operator(ansi);
+    }
+
+    default void operatorString(Ansi ansi) {
+        this.operator(ansi);
     }
 
     default void urlConstant(Ansi ansi) {
