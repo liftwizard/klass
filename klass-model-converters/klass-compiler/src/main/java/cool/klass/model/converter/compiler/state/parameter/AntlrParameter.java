@@ -45,7 +45,7 @@ import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.factory.Lists;
 
 // TODO: Specific subclasses for the specific antlr context types
-public final class AntlrParameter extends AntlrIdentifierElement implements AntlrMultiplicityOwner {
+public class AntlrParameter extends AntlrIdentifierElement implements AntlrMultiplicityOwner {
 
     public static final AntlrParameter AMBIGUOUS = new AntlrParameter(
         new ParserRuleContext(AMBIGUOUS_PARENT, -1),
@@ -54,7 +54,12 @@ public final class AntlrParameter extends AntlrIdentifierElement implements Antl
         AMBIGUOUS_IDENTIFIER_CONTEXT,
         AntlrEnumeration.AMBIGUOUS,
         AntlrParameterizedProperty.AMBIGUOUS
-    );
+    ) {
+        @Override
+        public String toString() {
+            return "Ambiguous parameter";
+        }
+    };
 
     public static final AntlrParameter NOT_FOUND = new AntlrParameter(
         new ParserRuleContext(NOT_FOUND_PARENT, -1),
@@ -63,7 +68,12 @@ public final class AntlrParameter extends AntlrIdentifierElement implements Antl
         NOT_FOUND_IDENTIFIER_CONTEXT,
         AntlrEnumeration.NOT_FOUND,
         AntlrParameterizedProperty.AMBIGUOUS
-    );
+    ) {
+        @Override
+        public String toString() {
+            return "Not found parameter";
+        }
+    };
 
     @Nonnull
     private final IAntlrElement parameterOwner;
