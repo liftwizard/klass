@@ -266,6 +266,7 @@ public final class TokenCategoryToAnsiColor {
             case COLON:
             case SLASH:
             case QUESTION:
+            case AMPERSAND:
             case PAIRED_PUNCTUATION:
             case PARENTHESES:
             case PARENTHESIS_LEFT:
