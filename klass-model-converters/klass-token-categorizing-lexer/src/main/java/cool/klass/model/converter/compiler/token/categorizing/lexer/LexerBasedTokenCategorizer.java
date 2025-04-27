@@ -90,6 +90,7 @@ public final class LexerBasedTokenCategorizer {
             case KlassLexer.PUNCTUATION_DOTDOT -> TokenCategory.DOTDOT;
             case KlassLexer.PUNCTUATION_DOT -> TokenCategory.DOT;
             case KlassLexer.PUNCTUATION_SEMI -> TokenCategory.SEMICOLON;
+            case KlassLexer.PUNCTUATION_AMPERSAND -> TokenCategory.AMPERSAND;
             case KlassLexer.OPERATOR_EQ -> TokenCategory.OPERATOR_EQ;
             case KlassLexer.OPERATOR_NE -> TokenCategory.OPERATOR_NE;
             case KlassLexer.OPERATOR_LT -> TokenCategory.OPERATOR_LT;
