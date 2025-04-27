@@ -74,7 +74,7 @@ public final class AnsiTokenColorizer {
             case KlassLexer.WHITESPACE -> Optional.empty();
             case KlassLexer.NEWLINE -> Optional.empty();
             case KlassLexer.EOF -> Optional.empty();
-            default -> throw new AssertionError(token);
+            default -> throw new AssertionError("Expected token category for " + token.getText());
         };
     }
 }
