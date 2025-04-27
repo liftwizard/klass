@@ -21,6 +21,10 @@ mise:
 markdownlint:
     markdownlint --config .markdownlint.jsonc  --fix .
 
+# Run all formatting tools for pre-commit
+precommit: spotless-all
+    uv tool run pre-commit run
+
 # mvn archetype
 @archetype MVN=default_mvn:
     just _run "{{MVN}} {{ANSI_GREEN}}install{{ANSI_DEFAULT}} --also-make --projects klass-maven-archetype"
