@@ -97,16 +97,17 @@ projection PropertiesRequiredProjection on PropertiesRequired
 
 service PropertiesRequiredResource on PropertiesRequired
 {
+    /propertiesRequired
+        POST
+        {
+            multiplicity: one;
+        }
     /propertiesRequired/{propertiesRequiredId: Long[1..1]}
         GET
         {
             multiplicity: one;
             criteria    : this.propertiesRequiredId == propertiesRequiredId;
             projection  : PropertiesRequiredProjection;
-        }
-        POST
-        {
-            multiplicity: one;
         }
         PUT
         {
@@ -174,16 +175,17 @@ projection PropertiesOptionalProjection on PropertiesOptional
 
 service PropertiesOptionalResource on PropertiesOptional
 {
+    /propertiesOptional
+        POST
+        {
+            multiplicity: one;
+        }
     /propertiesOptional/{propertiesOptionalId: Long[1..1]}
         GET
         {
             multiplicity: one;
             criteria    : this.propertiesOptionalId == propertiesOptionalId;
             projection  : PropertiesOptionalProjection;
-        }
-        POST
-        {
-            multiplicity: one;
         }
         PUT
         {
@@ -286,6 +288,10 @@ service EveryTypeKeyPropertyResource on EveryTypeKeyProperty
             criteria    : all;
             projection  : EveryTypeKeyPropertyProjection;
         }
+        POST
+        {
+            multiplicity: one;
+        }
     /everyTypeKeyProperty/{keyString: String[1..1]}/{keyInteger: Integer[1..1]}/{keyLong: Long[1..1]}/{keyDouble: Double[1..1]}/{keyFloat: Float[1..1]}/{keyBoolean: Boolean[1..1]}/{keyInstant: Instant[1..1]}/{keyLocalDate: LocalDate[1..1]}
         GET
         {
@@ -299,10 +305,6 @@ service EveryTypeKeyPropertyResource on EveryTypeKeyProperty
                     && this.keyInstant == keyInstant
                     && this.keyLocalDate == keyLocalDate;
             projection  : EveryTypeKeyPropertyProjection;
-        }
-        POST
-        {
-            multiplicity: one;
         }
         PUT
         {
