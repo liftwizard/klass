@@ -45,7 +45,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 140,
                 "parameter": {
                   "id": 1,
@@ -128,7 +128,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 142,
                 "parameter": {
                   "id": 2,
@@ -211,7 +211,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 144,
                 "parameter": {
                   "id": 3,
@@ -294,7 +294,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 146,
                 "parameter": {
                   "id": 4,
@@ -329,7 +329,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 148,
                 "parameter": {
                   "id": 4,
@@ -364,7 +364,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 150,
                 "parameter": {
                   "id": 4,
@@ -471,7 +471,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 152,
                 "parameter": {
                   "id": 5,
@@ -554,7 +554,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 154,
                 "parameter": {
                   "id": 6,
@@ -637,7 +637,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 156,
                 "parameter": {
                   "id": 7,
@@ -720,7 +720,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 158,
                 "parameter": {
                   "id": 8,

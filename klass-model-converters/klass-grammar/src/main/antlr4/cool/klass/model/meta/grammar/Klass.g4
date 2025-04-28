@@ -143,7 +143,7 @@ argument
     : literal
     | literalList
     | nativeLiteral
-    | variableReference
+    | parameterReference
     ;
 
 // multiplicity
@@ -185,7 +185,7 @@ expressionValue
     | thisMemberReferencePath
     | typeMemberReferencePath
     | nativeLiteral
-    | variableReference
+    | parameterReference
     ;
 expressionMemberReference: thisMemberReferencePath | typeMemberReferencePath;
 literalList: '(' literal (',' literal)* ')';
@@ -209,7 +209,7 @@ enumerationReference: identifier;
 projectionReference: identifier;
 memberReference: identifier;
 associationEndReference: identifier;
-variableReference: identifier;
+parameterReference: identifier;
 
 thisMemberReferencePath: 'this' ('.' associationEndReference)* '.' memberReference;
 typeMemberReferencePath: classReference ('.' associationEndReference)* '.' memberReference;

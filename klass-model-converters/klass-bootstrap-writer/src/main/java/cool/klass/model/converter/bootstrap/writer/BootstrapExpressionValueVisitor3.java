@@ -23,9 +23,9 @@ import javax.annotation.Nonnull;
 import cool.klass.model.meta.domain.api.parameter.Parameter;
 import cool.klass.model.meta.domain.api.value.ExpressionValue;
 import cool.klass.model.meta.domain.api.value.ExpressionValueVisitor;
+import cool.klass.model.meta.domain.api.value.ParameterReference;
 import cool.klass.model.meta.domain.api.value.ThisMemberReferencePath;
 import cool.klass.model.meta.domain.api.value.TypeMemberReferencePath;
-import cool.klass.model.meta.domain.api.value.VariableReference;
 import cool.klass.model.meta.domain.api.value.literal.BooleanLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.FloatingPointLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.IntegerLiteralValue;
@@ -58,16 +58,16 @@ public class BootstrapExpressionValueVisitor3 implements ExpressionValueVisitor 
     public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue) {}
 
     @Override
-    public void visitVariableReference(@Nonnull VariableReference variableReference) {
-        var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(variableReference);
+    public void visitParameterReference(@Nonnull ParameterReference parameterReference) {
+        var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(parameterReference);
 
-        var bootstrappedVariableReference = new klass.model.meta.domain.VariableReference();
-        bootstrappedVariableReference.setId(bootstrappedExpressionValue.getId());
-        bootstrappedVariableReference.insert();
+        var bootstrappedParameterReference = new klass.model.meta.domain.ParameterReference();
+        bootstrappedParameterReference.setId(bootstrappedExpressionValue.getId());
+        bootstrappedParameterReference.insert();
 
         klass.model.meta.domain.Parameter parameter =
-            this.bootstrappedParametersByParameter.get(variableReference.getParameter());
-        bootstrappedVariableReference.setParameterId(parameter.getId());
+            this.bootstrappedParametersByParameter.get(parameterReference.getParameter());
+        bootstrappedParameterReference.setParameterId(parameter.getId());
     }
 
     @Override

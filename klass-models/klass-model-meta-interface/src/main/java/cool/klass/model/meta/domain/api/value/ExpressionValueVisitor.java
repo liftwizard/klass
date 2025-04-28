@@ -31,7 +31,7 @@ public interface ExpressionValueVisitor {
 
     void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue);
 
-    void visitVariableReference(@Nonnull VariableReference variableReference);
+    void visitParameterReference(@Nonnull ParameterReference parameterReference);
 
     void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue);
 

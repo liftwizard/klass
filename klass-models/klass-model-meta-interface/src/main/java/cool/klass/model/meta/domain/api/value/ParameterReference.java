@@ -20,12 +20,12 @@ import javax.annotation.Nonnull;
 
 import cool.klass.model.meta.domain.api.parameter.Parameter;
 
-public interface VariableReference extends ExpressionValue {
+public interface ParameterReference extends ExpressionValue {
     @Nonnull
     Parameter getParameter();
 
     @Override
     default void visit(@Nonnull ExpressionValueVisitor visitor) {
-        visitor.visitVariableReference(this);
+        visitor.visitParameterReference(this);
     }
 }

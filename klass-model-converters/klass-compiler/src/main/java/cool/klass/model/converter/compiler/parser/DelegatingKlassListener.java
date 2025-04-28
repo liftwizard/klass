@@ -105,6 +105,7 @@ import cool.klass.model.meta.grammar.KlassParser.PackageNameContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterDeclarationListContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterModifierContext;
+import cool.klass.model.meta.grammar.KlassParser.ParameterReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertyContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertyModifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertySignatureContext;
@@ -146,7 +147,6 @@ import cool.klass.model.meta.grammar.KlassParser.UrlDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlParameterDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlParameterDeclarationEOFContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlPathSegmentContext;
-import cool.klass.model.meta.grammar.KlassParser.VariableReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.VerbContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -1566,14 +1566,14 @@ public class DelegatingKlassListener implements KlassListener {
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void enterVariableReference(VariableReferenceContext ctx) {
-        this.getDelegate().enterVariableReference(ctx);
+    public void enterParameterReference(ParameterReferenceContext ctx) {
+        this.getDelegate().enterParameterReference(ctx);
     }
 
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void exitVariableReference(VariableReferenceContext ctx) {
-        this.getDelegate().exitVariableReference(ctx);
+    public void exitParameterReference(ParameterReferenceContext ctx) {
+        this.getDelegate().exitParameterReference(ctx);
     }
 
     @Override

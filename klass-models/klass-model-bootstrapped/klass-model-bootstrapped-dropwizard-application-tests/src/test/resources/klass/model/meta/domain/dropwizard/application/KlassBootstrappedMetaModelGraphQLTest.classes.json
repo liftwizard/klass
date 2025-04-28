@@ -706,7 +706,7 @@
         "parameterizedProperties": []
       },
       {
-        "name": "VariableReference",
+        "name": "ParameterReference",
         "packageName": "klass.model.meta.domain",
         "abstractClass": false,
         "superInterfaces": [],

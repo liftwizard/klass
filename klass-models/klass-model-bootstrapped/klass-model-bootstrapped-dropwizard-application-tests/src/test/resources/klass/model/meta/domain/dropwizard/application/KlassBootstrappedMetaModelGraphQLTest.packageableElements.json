@@ -1048,7 +1048,7 @@
       },
       {
         "__typename": "Klass",
-        "name": "VariableReference",
+        "name": "ParameterReference",
         "packageName": "klass.model.meta.domain",
         "superInterfaces": [],
         "classifierModifiers": [],
@@ -3152,15 +3152,15 @@
       },
       {
         "__typename": "Association",
-        "name": "VariableReferenceHasParameter",
+        "name": "ParameterReferenceHasParameter",
         "packageName": "klass.model.meta.domain",
         "associationEnds": [
           {
-            "name": "variableReferences",
+            "name": "parameterReferences",
             "direction": "SOURCE",
             "multiplicity": "ZERO_TO_MANY",
             "resultType": {
-              "name": "VariableReference"
+              "name": "ParameterReference"
             },
             "associationEndModifiers": [],
             "orderBys": []

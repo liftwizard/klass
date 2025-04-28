@@ -212,7 +212,7 @@ projection PrimitiveParameterProjection on PrimitiveParameter
 projection ExpressionValueProjection on ExpressionValue
 {
     id: "ExpressionValue id",
-    VariableReference.parameter: {
+    ParameterReference.parameter: {
         Parameter.id: "Parameter id",
     },
     MemberReferencePath.klass: {
@@ -234,7 +234,7 @@ projection NullLiteralProjection on NullLiteral
     id: "ExpressionValue id",
 }
 
-projection VariableReferenceProjection on VariableReference
+projection ParameterReferenceProjection on ParameterReference
 {
     id: "ExpressionValue id",
     parameter: {

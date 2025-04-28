@@ -859,7 +859,7 @@
     "superClass": null,
     "associationEnds": [
       {
-        "name": "variableReferences"
+        "name": "parameterReferences"
       },
       {
         "name": "urlParameter"
@@ -999,7 +999,7 @@
   },
   {
     "__typename": "klass.model.meta.domain.Klass",
-    "name": "VariableReference",
+    "name": "ParameterReference",
     "packageName": "klass.model.meta.domain",
     "superInterfaces": [],
     "classifierModifiers": [],

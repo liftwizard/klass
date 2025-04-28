@@ -25,9 +25,9 @@ import cool.klass.model.converter.compiler.state.parameter.AntlrParameter;
 import cool.klass.model.converter.compiler.state.property.AntlrAssociationEnd;
 import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
 import cool.klass.model.converter.compiler.state.value.AntlrExpressionValueVisitor;
+import cool.klass.model.converter.compiler.state.value.AntlrParameterReference;
 import cool.klass.model.converter.compiler.state.value.AntlrThisMemberReferencePath;
 import cool.klass.model.converter.compiler.state.value.AntlrTypeMemberReferencePath;
-import cool.klass.model.converter.compiler.state.value.AntlrVariableReference;
 import cool.klass.model.converter.compiler.state.value.literal.AntlrBooleanLiteralValue;
 import cool.klass.model.converter.compiler.state.value.literal.AntlrFloatingPointLiteralValue;
 import cool.klass.model.converter.compiler.state.value.literal.AntlrIntegerLiteralValue;
@@ -72,8 +72,8 @@ public class ReferencedPropertiesExpressionValueVisitor implements AntlrExpressi
     }
 
     @Override
-    public void visitVariableReference(@Nonnull AntlrVariableReference variableReference) {
-        AntlrParameter antlrParameter = variableReference.getAntlrParameter();
+    public void visitParameterReference(@Nonnull AntlrParameterReference parameterReference) {
+        AntlrParameter antlrParameter = parameterReference.getAntlrParameter();
         this.parametersReferencedByCriteria.add(antlrParameter);
     }
 

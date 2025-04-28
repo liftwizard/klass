@@ -21,9 +21,9 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 
 import cool.klass.model.meta.domain.api.value.ExpressionValueVisitor;
+import cool.klass.model.meta.domain.api.value.ParameterReference;
 import cool.klass.model.meta.domain.api.value.ThisMemberReferencePath;
 import cool.klass.model.meta.domain.api.value.TypeMemberReferencePath;
-import cool.klass.model.meta.domain.api.value.VariableReference;
 import cool.klass.model.meta.domain.api.value.literal.BooleanLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.FloatingPointLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.IntegerLiteralValue;
@@ -69,9 +69,9 @@ class ExpressionValueToRelationshipVisitor implements ExpressionValueVisitor {
     }
 
     @Override
-    public void visitVariableReference(@Nonnull VariableReference variableReference) {
+    public void visitParameterReference(@Nonnull ParameterReference parameterReference) {
         throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitVariableReference() not implemented yet"
+            this.getClass().getSimpleName() + ".visitParameterReference() not implemented yet"
         );
     }
 

@@ -58,6 +58,7 @@ import cool.klass.model.meta.grammar.KlassParser.OrderByDirectionContext;
 import cool.klass.model.meta.grammar.KlassParser.PackageDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.PackageNameContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterModifierContext;
+import cool.klass.model.meta.grammar.KlassParser.ParameterReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertyContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertyModifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertySignatureContext;
@@ -78,7 +79,6 @@ import cool.klass.model.meta.grammar.KlassParser.ServiceMultiplicityDeclarationC
 import cool.klass.model.meta.grammar.KlassParser.ServiceProjectionDispatchContext;
 import cool.klass.model.meta.grammar.KlassParser.ThisMemberReferencePathContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlConstantContext;
-import cool.klass.model.meta.grammar.KlassParser.VariableReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.VerbContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -210,7 +210,7 @@ public class ParserBasedTokenCategorizer extends KlassBaseListener {
 
     // TODO: Rename Variable to Parameter
     @Override
-    public void enterVariableReference(VariableReferenceContext ctx) {
+    public void enterParameterReference(ParameterReferenceContext ctx) {
         this.put(ctx.identifier().getStart(), TokenCategory.PARAMETER_REFERENCE);
     }
 

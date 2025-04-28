@@ -1339,7 +1339,7 @@
   },
   {
     "__typename": "klass.model.meta.domain.Klass",
-    "name": "VariableReference",
+    "name": "ParameterReference",
     "packageName": "klass.model.meta.domain",
     "superInterfaces": [],
     "classifierModifiers": [],
@@ -1433,15 +1433,15 @@
   },
   {
     "__typename": "klass.model.meta.domain.Association",
-    "name": "VariableReferenceHasParameter",
+    "name": "ParameterReferenceHasParameter",
     "packageName": "klass.model.meta.domain",
     "associationEnds": [
       {
-        "name": "variableReferences",
+        "name": "parameterReferences",
         "direction": "source",
         "multiplicity": "0..*",
         "resultType": {
-          "name": "VariableReference"
+          "name": "ParameterReference"
         },
         "associationEndModifiers": [],
         "orderBys": []
@@ -4655,7 +4655,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 140,
                 "parameter": {
                   "id": 1,
@@ -4739,7 +4739,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 142,
                 "parameter": {
                   "id": 2,
@@ -4831,7 +4831,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 144,
                 "parameter": {
                   "id": 3,
@@ -4939,7 +4939,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 146,
                 "parameter": {
                   "id": 4,
@@ -4974,7 +4974,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 148,
                 "parameter": {
                   "id": 4,
@@ -5009,7 +5009,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 150,
                 "parameter": {
                   "id": 4,
@@ -5125,7 +5125,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 152,
                 "parameter": {
                   "id": 5,
@@ -5281,7 +5281,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 154,
                 "parameter": {
                   "id": 6,
@@ -5365,7 +5365,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 156,
                 "parameter": {
                   "id": 7,
@@ -5449,7 +5449,7 @@
                 }
               },
               "targetExpressionValue": {
-                "__typename": "klass.model.meta.domain.VariableReference",
+                "__typename": "klass.model.meta.domain.ParameterReference",
                 "id": 158,
                 "parameter": {
                   "id": 8,

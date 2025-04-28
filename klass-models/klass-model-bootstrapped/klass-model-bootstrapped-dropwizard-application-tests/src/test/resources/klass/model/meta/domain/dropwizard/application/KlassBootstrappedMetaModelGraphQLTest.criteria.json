@@ -562,7 +562,7 @@
           "__typename": "ThisMemberReferencePath",
           "id": 35,
           "klass": {
-            "name": "VariableReference"
+            "name": "ParameterReference"
           },
           "associationEnds": [],
           "dataTypeProperty": {
@@ -2223,7 +2223,7 @@
           }
         },
         "targetExpressionValue": {
-          "__typename": "VariableReference",
+          "__typename": "ParameterReference",
           "id": 140,
           "parameter": {
             "__typename": "PrimitiveParameter",
@@ -2252,7 +2252,7 @@
           }
         },
         "targetExpressionValue": {
-          "__typename": "VariableReference",
+          "__typename": "ParameterReference",
           "id": 142,
           "parameter": {
             "__typename": "PrimitiveParameter",
@@ -2281,7 +2281,7 @@
           }
         },
         "targetExpressionValue": {
-          "__typename": "VariableReference",
+          "__typename": "ParameterReference",
           "id": 144,
           "parameter": {
             "__typename": "PrimitiveParameter",
@@ -2310,7 +2310,7 @@
           }
         },
         "targetExpressionValue": {
-          "__typename": "VariableReference",
+          "__typename": "ParameterReference",
           "id": 146,
           "parameter": {
             "__typename": "PrimitiveParameter",
@@ -2335,7 +2335,7 @@
           }
         },
         "targetExpressionValue": {
-          "__typename": "VariableReference",
+          "__typename": "ParameterReference",
           "id": 148,
           "parameter": {
             "__typename": "PrimitiveParameter",
@@ -2360,7 +2360,7 @@
           }
         },
         "targetExpressionValue": {
-          "__typename": "VariableReference",
+          "__typename": "ParameterReference",
           "id": 150,
           "parameter": {
             "__typename": "PrimitiveParameter",
@@ -2397,7 +2397,7 @@
           }
         },
         "targetExpressionValue": {
-          "__typename": "VariableReference",
+          "__typename": "ParameterReference",
           "id": 152,
           "parameter": {
             "__typename": "PrimitiveParameter",
@@ -2426,7 +2426,7 @@
           }
         },
         "targetExpressionValue": {
-          "__typename": "VariableReference",
+          "__typename": "ParameterReference",
           "id": 154,
           "parameter": {
             "__typename": "PrimitiveParameter",
@@ -2455,7 +2455,7 @@
           }
         },
         "targetExpressionValue": {
-          "__typename": "VariableReference",
+          "__typename": "ParameterReference",
           "id": 156,
           "parameter": {
             "__typename": "PrimitiveParameter",
@@ -2484,7 +2484,7 @@
           }
         },
         "targetExpressionValue": {
-          "__typename": "VariableReference",
+          "__typename": "ParameterReference",
           "id": 158,
           "parameter": {
             "__typename": "PrimitiveParameter",

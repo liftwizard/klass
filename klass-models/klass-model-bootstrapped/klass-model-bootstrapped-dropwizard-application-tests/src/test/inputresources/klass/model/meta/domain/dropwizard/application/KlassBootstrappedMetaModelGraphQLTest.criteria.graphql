@@ -1,7 +1,7 @@
 fragment ExpressionValueFragment on ExpressionValue {
   __typename
   id
-  ... on VariableReference {
+  ... on ParameterReference {
     parameter {
       __typename
       id

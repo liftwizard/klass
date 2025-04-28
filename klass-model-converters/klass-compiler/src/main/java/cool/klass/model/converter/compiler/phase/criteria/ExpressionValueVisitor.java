@@ -28,9 +28,9 @@ import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.converter.compiler.state.property.AntlrAssociationEnd;
 import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
 import cool.klass.model.converter.compiler.state.value.AntlrExpressionValue;
+import cool.klass.model.converter.compiler.state.value.AntlrParameterReference;
 import cool.klass.model.converter.compiler.state.value.AntlrThisMemberReferencePath;
 import cool.klass.model.converter.compiler.state.value.AntlrTypeMemberReferencePath;
-import cool.klass.model.converter.compiler.state.value.AntlrVariableReference;
 import cool.klass.model.converter.compiler.state.value.literal.AbstractAntlrLiteralValue;
 import cool.klass.model.converter.compiler.state.value.literal.AntlrLiteralListValue;
 import cool.klass.model.converter.compiler.state.value.literal.AntlrUserLiteral;
@@ -41,9 +41,9 @@ import cool.klass.model.meta.grammar.KlassParser.LiteralContext;
 import cool.klass.model.meta.grammar.KlassParser.LiteralListContext;
 import cool.klass.model.meta.grammar.KlassParser.MemberReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.NativeLiteralContext;
+import cool.klass.model.meta.grammar.KlassParser.ParameterReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ThisMemberReferencePathContext;
 import cool.klass.model.meta.grammar.KlassParser.TypeMemberReferencePathContext;
-import cool.klass.model.meta.grammar.KlassParser.VariableReferenceContext;
 import cool.klass.model.meta.grammar.KlassVisitor;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.eclipse.collections.api.list.ImmutableList;
@@ -124,10 +124,10 @@ public class ExpressionValueVisitor extends KlassBaseVisitor<AntlrExpressionValu
 
     @Nonnull
     @Override
-    public AntlrVariableReference visitVariableReference(@Nonnull VariableReferenceContext ctx) {
+    public AntlrParameterReference visitParameterReference(@Nonnull ParameterReferenceContext ctx) {
         IdentifierContext identifier = ctx.identifier();
         String variableName = identifier.getText();
-        return new AntlrVariableReference(
+        return new AntlrParameterReference(
             ctx,
             Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
             variableName,
