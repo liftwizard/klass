@@ -313,10 +313,10 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-23-VARIABLE_REFERENCE">
-        <createTable tableName="VARIABLE_REFERENCE">
+    <changeSet author="Klass" id="initial-table-23-PARAMETER_REFERENCE">
+        <createTable tableName="PARAMETER_REFERENCE">
             <column name="ID" type="bigint">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="VARIABLE_REFERENCE_PK" />
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PARAMETER_REFERENCE_PK" />
             </column>
 
             <column name="PARAMETER_ID" type="bigint">
@@ -897,10 +897,10 @@
         />
     </changeSet>
 
-    <changeSet author="Klass" id="initial-foreign-key-23-VARIABLE_REFERENCE_FK_PARAMETER">
+    <changeSet author="Klass" id="initial-foreign-key-23-PARAMETER_REFERENCE_FK_PARAMETER">
         <addForeignKeyConstraint
-                constraintName="VARIABLE_REFERENCE_FK_PARAMETER"
-                baseTableName="VARIABLE_REFERENCE"
+                constraintName="PARAMETER_REFERENCE_FK_PARAMETER"
+                baseTableName="PARAMETER_REFERENCE"
                 baseColumnNames="PARAMETER_ID"
                 referencedTableName="PARAMETER"
                 referencedColumnNames="ID"
@@ -1309,10 +1309,10 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-23-VARIABLE_REFERENCE_IDX_PARAMETER">
+    <changeSet author="Klass" id="initial-indices-23-PARAMETER_REFERENCE_IDX_PARAMETER">
         <createIndex
-                indexName="VARIABLE_REFERENCE_IDX_PARAMETER"
-                tableName="VARIABLE_REFERENCE">
+                indexName="PARAMETER_REFERENCE_IDX_PARAMETER"
+                tableName="PARAMETER_REFERENCE">
             <column name="PARAMETER_ID" />
         </createIndex>
     </changeSet>

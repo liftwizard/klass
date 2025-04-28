@@ -28,13 +28,13 @@ import cool.klass.model.converter.compiler.state.AntlrEnumeration;
 import cool.klass.model.converter.compiler.state.AntlrType;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.converter.compiler.state.parameter.AntlrParameter;
-import cool.klass.model.meta.domain.value.VariableReferenceImpl.VariableReferenceBuilder;
-import cool.klass.model.meta.grammar.KlassParser.VariableReferenceContext;
+import cool.klass.model.meta.domain.value.ParameterReferenceImpl.ParameterReferenceBuilder;
+import cool.klass.model.meta.grammar.KlassParser.ParameterReferenceContext;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.OrderedMap;
 import org.eclipse.collections.impl.factory.Lists;
 
-public class AntlrVariableReference extends AntlrExpressionValue {
+public class AntlrParameterReference extends AntlrExpressionValue {
 
     @Nonnull
     private final String variableName;
@@ -42,10 +42,10 @@ public class AntlrVariableReference extends AntlrExpressionValue {
     @Nullable
     private AntlrParameter antlrParameter;
 
-    private VariableReferenceBuilder elementBuilder;
+    private ParameterReferenceBuilder elementBuilder;
 
-    public AntlrVariableReference(
-        @Nonnull VariableReferenceContext elementContext,
+    public AntlrParameterReference(
+        @Nonnull ParameterReferenceContext elementContext,
         @Nonnull Optional<CompilationUnit> compilationUnit,
         @Nonnull String variableName,
         @Nonnull IAntlrElement expressionValueOwner
@@ -61,12 +61,12 @@ public class AntlrVariableReference extends AntlrExpressionValue {
 
     @Nonnull
     @Override
-    public VariableReferenceBuilder build() {
+    public ParameterReferenceBuilder build() {
         if (this.elementBuilder != null) {
             throw new IllegalStateException();
         }
-        this.elementBuilder = new VariableReferenceBuilder(
-            (VariableReferenceContext) this.elementContext,
+        this.elementBuilder = new ParameterReferenceBuilder(
+            (ParameterReferenceContext) this.elementContext,
             this.getMacroElementBuilder(),
             this.getSourceCodeBuilder(),
             this.antlrParameter.getElementBuilder()
@@ -76,7 +76,7 @@ public class AntlrVariableReference extends AntlrExpressionValue {
 
     @Nonnull
     @Override
-    public VariableReferenceBuilder getElementBuilder() {
+    public ParameterReferenceBuilder getElementBuilder() {
         return Objects.requireNonNull(this.elementBuilder);
     }
 
@@ -109,6 +109,6 @@ public class AntlrVariableReference extends AntlrExpressionValue {
 
     @Override
     public void visit(AntlrExpressionValueVisitor visitor) {
-        visitor.visitVariableReference(this);
+        visitor.visitParameterReference(this);
     }
 }

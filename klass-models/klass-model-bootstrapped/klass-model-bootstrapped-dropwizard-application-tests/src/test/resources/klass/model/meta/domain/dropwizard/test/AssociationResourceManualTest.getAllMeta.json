@@ -938,15 +938,15 @@
     }
   },
   {
-    "name": "VariableReferenceHasParameter",
+    "name": "ParameterReferenceHasParameter",
     "packageName": "klass.model.meta.domain",
     "associationEnds": [
       {
-        "name": "variableReferences",
+        "name": "parameterReferences",
         "direction": "source",
         "multiplicity": "0..*",
         "resultType": {
-          "name": "VariableReference"
+          "name": "ParameterReference"
         },
         "associationEndModifiers": [],
         "orderBys": []
@@ -969,12 +969,12 @@
         "__typename": "klass.model.meta.domain.ThisMemberReferencePath",
         "id": 35,
         "klass": {
-          "name": "VariableReference"
+          "name": "ParameterReference"
         },
         "associationEnds": [],
         "dataTypeProperty": {
           "owningClassifier": {
-            "name": "VariableReference"
+            "name": "ParameterReference"
           },
           "name": "parameterId"
         }

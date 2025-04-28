@@ -47,9 +47,9 @@ import cool.klass.model.meta.grammar.KlassParser.InequalityOperatorContext;
 import cool.klass.model.meta.grammar.KlassParser.LiteralContext;
 import cool.klass.model.meta.grammar.KlassParser.LiteralListContext;
 import cool.klass.model.meta.grammar.KlassParser.NativeLiteralContext;
+import cool.klass.model.meta.grammar.KlassParser.ParameterReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.StringOperatorContext;
 import cool.klass.model.meta.grammar.KlassParser.TypeMemberReferencePathContext;
-import cool.klass.model.meta.grammar.KlassParser.VariableReferenceContext;
 import cool.klass.model.meta.grammar.KlassVisitor;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -228,9 +228,9 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
     @Nonnull
     @Override
-    public AntlrCriteria visitVariableReference(VariableReferenceContext ctx) {
+    public AntlrCriteria visitParameterReference(ParameterReferenceContext ctx) {
         throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitVariableReference() not implemented yet"
+            this.getClass().getSimpleName() + ".visitParameterReference() not implemented yet"
         );
     }
 

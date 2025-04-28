@@ -31,7 +31,7 @@ public interface AntlrExpressionValueVisitor {
 
     void visitThisMember(@Nonnull AntlrThisMemberReferencePath thisMemberExpressionValue);
 
-    void visitVariableReference(@Nonnull AntlrVariableReference variableReference);
+    void visitParameterReference(@Nonnull AntlrParameterReference parameterReference);
 
     void visitBooleanLiteral(@Nonnull AntlrBooleanLiteralValue booleanLiteralValue);
 

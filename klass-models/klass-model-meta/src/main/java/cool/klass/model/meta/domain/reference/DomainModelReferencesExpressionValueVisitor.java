@@ -29,9 +29,9 @@ import cool.klass.model.meta.domain.api.source.property.DataTypePropertyWithSour
 import cool.klass.model.meta.domain.api.source.value.ThisMemberReferencePathWithSourceCode;
 import cool.klass.model.meta.domain.api.source.value.TypeMemberReferencePathWithSourceCode;
 import cool.klass.model.meta.domain.api.value.ExpressionValueVisitor;
+import cool.klass.model.meta.domain.api.value.ParameterReference;
 import cool.klass.model.meta.domain.api.value.ThisMemberReferencePath;
 import cool.klass.model.meta.domain.api.value.TypeMemberReferencePath;
-import cool.klass.model.meta.domain.api.value.VariableReference;
 import cool.klass.model.meta.domain.api.value.literal.BooleanLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.FloatingPointLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.IntegerLiteralValue;
@@ -106,7 +106,7 @@ public class DomainModelReferencesExpressionValueVisitor implements ExpressionVa
     }
 
     @Override
-    public void visitVariableReference(@Nonnull VariableReference variableReference) {
+    public void visitParameterReference(@Nonnull ParameterReference parameterReference) {
         // TODO: Implement more references
     }
 

@@ -2223,7 +2223,7 @@
           ],
           "associationEnd": {
             "owningClass": {
-              "name": "VariableReference"
+              "name": "ParameterReference"
             },
             "name": "parameter"
           }

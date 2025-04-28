@@ -220,21 +220,21 @@ service NullLiteralResource on NullLiteral
         }
 }
 
-service VariableReferenceResource on VariableReference
+service ParameterReferenceResource on ParameterReference
 {
-    /variableReference/{id: Long[1..1]}
+    /parameterReference/{id: Long[1..1]}
         GET
         {
             multiplicity: one;
             criteria    : this.id == id;
-            projection  : VariableReferenceProjection;
+            projection  : ParameterReferenceProjection;
         }
-    /variableReference
+    /parameterReference
         GET
         {
             multiplicity: many;
             criteria    : all;
-            projection  : VariableReferenceProjection;
+            projection  : ParameterReferenceProjection;
         }
 }
 

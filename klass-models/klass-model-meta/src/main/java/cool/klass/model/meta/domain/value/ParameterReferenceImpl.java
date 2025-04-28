@@ -25,18 +25,18 @@ import javax.annotation.Nullable;
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
-import cool.klass.model.meta.domain.api.value.VariableReference;
+import cool.klass.model.meta.domain.api.value.ParameterReference;
 import cool.klass.model.meta.domain.parameter.ParameterImpl;
 import cool.klass.model.meta.domain.parameter.ParameterImpl.ParameterBuilder;
-import cool.klass.model.meta.grammar.KlassParser.VariableReferenceContext;
+import cool.klass.model.meta.grammar.KlassParser.ParameterReferenceContext;
 
-public final class VariableReferenceImpl extends AbstractExpressionValue implements VariableReference {
+public final class ParameterReferenceImpl extends AbstractExpressionValue implements ParameterReference {
 
     @Nonnull
     private final ParameterImpl parameter;
 
-    private VariableReferenceImpl(
-        @Nonnull VariableReferenceContext elementContext,
+    private ParameterReferenceImpl(
+        @Nonnull ParameterReferenceContext elementContext,
         @Nonnull Optional<Element> macroElement,
         @Nullable SourceCode sourceCode,
         @Nonnull ParameterImpl parameter
@@ -47,8 +47,8 @@ public final class VariableReferenceImpl extends AbstractExpressionValue impleme
 
     @Nonnull
     @Override
-    public VariableReferenceContext getElementContext() {
-        return (VariableReferenceContext) super.getElementContext();
+    public ParameterReferenceContext getElementContext() {
+        return (ParameterReferenceContext) super.getElementContext();
     }
 
     @Override
@@ -57,13 +57,13 @@ public final class VariableReferenceImpl extends AbstractExpressionValue impleme
         return this.parameter;
     }
 
-    public static final class VariableReferenceBuilder extends AbstractExpressionValueBuilder<VariableReferenceImpl> {
+    public static final class ParameterReferenceBuilder extends AbstractExpressionValueBuilder<ParameterReferenceImpl> {
 
         @Nonnull
         private final ParameterBuilder parameterBuilder;
 
-        public VariableReferenceBuilder(
-            @Nonnull VariableReferenceContext elementContext,
+        public ParameterReferenceBuilder(
+            @Nonnull ParameterReferenceContext elementContext,
             @Nonnull Optional<ElementBuilder<?>> macroElement,
             @Nullable SourceCodeBuilder sourceCode,
             @Nonnull ParameterBuilder parameterBuilder
@@ -74,9 +74,9 @@ public final class VariableReferenceImpl extends AbstractExpressionValue impleme
 
         @Override
         @Nonnull
-        protected VariableReferenceImpl buildUnsafe() {
-            return new VariableReferenceImpl(
-                (VariableReferenceContext) this.elementContext,
+        protected ParameterReferenceImpl buildUnsafe() {
+            return new ParameterReferenceImpl(
+                (ParameterReferenceContext) this.elementContext,
                 this.macroElement.map(ElementBuilder::getElement),
                 this.sourceCode.build(),
                 this.parameterBuilder.getElement()

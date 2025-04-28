@@ -280,7 +280,7 @@ class NullLiteral
 {
 }
 
-class VariableReference
+class ParameterReference
     extends ExpressionValue
 {
     parameterId: Long private;
@@ -295,9 +295,9 @@ class MemberReferencePath
     propertyName: String private maximumLength(256);
 }
 
-association VariableReferenceHasParameter
+association ParameterReferenceHasParameter
 {
-    variableReferences: VariableReference[0..*];
+    parameterReferences: ParameterReference[0..*];
     parameter: Parameter[1..1];
 }
 
@@ -1303,7 +1303,7 @@ projection MemberReferencePathAssociationEndMappingProjection on MemberReference
 projection ExpressionValueProjection on ExpressionValue
 {
     id: "ExpressionValue id",
-    VariableReference.parameter: {
+    ParameterReference.parameter: {
         id: "Parameter id",
         name: "Parameter name",
     },

@@ -44,7 +44,7 @@
               }
             },
             "targetExpressionValue": {
-              "__typename": "klass.model.meta.domain.VariableReference",
+              "__typename": "klass.model.meta.domain.ParameterReference",
               "id": 158,
               "parameter": {
                 "id": 8,

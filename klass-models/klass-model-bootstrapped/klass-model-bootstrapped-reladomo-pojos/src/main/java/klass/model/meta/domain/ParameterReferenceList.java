@@ -16,10 +16,23 @@
 
 package klass.model.meta.domain;
 
-public class VariableReference extends VariableReferenceAbstract {
+import java.util.Collection;
 
-    public VariableReference() {
-        // You must not modify this constructor. Mithra calls this internally.
-        // You can call this constructor. You can also add new constructors.
+import com.gs.fw.finder.Operation;
+
+public class ParameterReferenceList extends ParameterReferenceListAbstract {
+
+    public ParameterReferenceList() {}
+
+    public ParameterReferenceList(int initialSize) {
+        super(initialSize);
+    }
+
+    public ParameterReferenceList(Collection c) {
+        super(c);
+    }
+
+    public ParameterReferenceList(Operation operation) {
+        super(operation);
     }
 }

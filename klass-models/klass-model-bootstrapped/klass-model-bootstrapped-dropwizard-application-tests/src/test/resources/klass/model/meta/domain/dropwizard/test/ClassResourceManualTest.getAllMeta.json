@@ -727,7 +727,7 @@
     "superClass": null,
     "associationEnds": [
       {
-        "name": "variableReferences"
+        "name": "parameterReferences"
       },
       {
         "name": "urlParameter"
@@ -861,7 +861,7 @@
     "parameterizedProperties": []
   },
   {
-    "name": "VariableReference",
+    "name": "ParameterReference",
     "packageName": "klass.model.meta.domain",
     "superInterfaces": [],
     "classifierModifiers": [],

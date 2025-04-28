@@ -429,15 +429,15 @@
         }
       },
       {
-        "name": "VariableReferenceHasParameter",
+        "name": "ParameterReferenceHasParameter",
         "packageName": "klass.model.meta.domain",
         "associationEnds": [
           {
-            "name": "variableReferences",
+            "name": "parameterReferences",
             "direction": "SOURCE",
             "multiplicity": "ZERO_TO_MANY",
             "resultType": {
-              "name": "VariableReference"
+              "name": "ParameterReference"
             },
             "associationEndModifiers": [],
             "orderBys": []

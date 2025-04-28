@@ -29,9 +29,9 @@ import cool.klass.model.meta.domain.api.Type;
 import cool.klass.model.meta.domain.api.parameter.Parameter;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.value.ExpressionValueVisitor;
+import cool.klass.model.meta.domain.api.value.ParameterReference;
 import cool.klass.model.meta.domain.api.value.ThisMemberReferencePath;
 import cool.klass.model.meta.domain.api.value.TypeMemberReferencePath;
-import cool.klass.model.meta.domain.api.value.VariableReference;
 import cool.klass.model.meta.domain.api.value.literal.BooleanLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.FloatingPointLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.IntegerLiteralValue;
@@ -88,8 +88,8 @@ public class OperationExpressionValueVisitor implements ExpressionValueVisitor {
     }
 
     @Override
-    public void visitVariableReference(@Nonnull VariableReference variableReference) {
-        Parameter parameter = variableReference.getParameter();
+    public void visitParameterReference(@Nonnull ParameterReference parameterReference) {
+        Parameter parameter = parameterReference.getParameter();
         DataType dataType = parameter.getType();
         Multiplicity multiplicity = parameter.getMultiplicity();
 

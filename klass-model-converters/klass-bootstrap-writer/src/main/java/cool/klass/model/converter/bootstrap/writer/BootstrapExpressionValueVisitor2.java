@@ -24,9 +24,9 @@ import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.meta.domain.api.value.ExpressionValue;
 import cool.klass.model.meta.domain.api.value.ExpressionValueVisitor;
+import cool.klass.model.meta.domain.api.value.ParameterReference;
 import cool.klass.model.meta.domain.api.value.ThisMemberReferencePath;
 import cool.klass.model.meta.domain.api.value.TypeMemberReferencePath;
-import cool.klass.model.meta.domain.api.value.VariableReference;
 import cool.klass.model.meta.domain.api.value.literal.BooleanLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.FloatingPointLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.IntegerLiteralValue;
@@ -117,12 +117,12 @@ public class BootstrapExpressionValueVisitor2 implements ExpressionValueVisitor 
     }
 
     @Override
-    public void visitVariableReference(@Nonnull VariableReference variableReference) {
-        var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(variableReference);
+    public void visitParameterReference(@Nonnull ParameterReference parameterReference) {
+        var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(parameterReference);
 
-        var bootstrappedVariableReference = new klass.model.meta.domain.VariableReference();
-        bootstrappedVariableReference.setId(bootstrappedExpressionValue.getId());
-        // bootstrappedVariableReference.setParameterId(parameterId);
+        var bootstrappedParameterReference = new klass.model.meta.domain.ParameterReference();
+        bootstrappedParameterReference.setId(bootstrappedExpressionValue.getId());
+        // bootstrappedParameterReference.setParameterId(parameterId);
     }
 
     @Override

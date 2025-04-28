@@ -21,9 +21,9 @@ import java.util.LinkedHashMap;
 import javax.annotation.Nonnull;
 
 import cool.klass.model.meta.domain.api.value.ExpressionValueVisitor;
+import cool.klass.model.meta.domain.api.value.ParameterReference;
 import cool.klass.model.meta.domain.api.value.ThisMemberReferencePath;
 import cool.klass.model.meta.domain.api.value.TypeMemberReferencePath;
-import cool.klass.model.meta.domain.api.value.VariableReference;
 import cool.klass.model.meta.domain.api.value.literal.BooleanLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.FloatingPointLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.IntegerLiteralValue;
@@ -72,10 +72,10 @@ public class BootstrapExpressionValueVisitor1 implements ExpressionValueVisitor 
     }
 
     @Override
-    public void visitVariableReference(@Nonnull VariableReference variableReference) {
+    public void visitParameterReference(@Nonnull ParameterReference parameterReference) {
         var bootstrappedExpressionValue = new ExpressionValue();
         this.bootstrappedExpressionValues.add(bootstrappedExpressionValue);
-        this.expressionValuesByExpressionValue.put(variableReference, bootstrappedExpressionValue);
+        this.expressionValuesByExpressionValue.put(parameterReference, bootstrappedExpressionValue);
     }
 
     @Override
