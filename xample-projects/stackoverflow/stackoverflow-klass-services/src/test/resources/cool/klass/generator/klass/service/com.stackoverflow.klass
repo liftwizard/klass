@@ -93,4 +93,3 @@ service TagResource on Tag
             projection  : TagProjection;
         }
 }
-
