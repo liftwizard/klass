@@ -597,4 +597,3 @@ service ServiceGroupResource on ServiceGroup
             projection  : ServiceGroupProjection;
         }
 }
-

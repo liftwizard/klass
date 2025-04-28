@@ -40,7 +40,7 @@ public final class KlassServiceSourceCodeGenerator {
             .select(c -> c.getPackageName().equals(fullyQualifiedPackage))
             .reject(Klass::isUniquelyOwned)
             .collect(KlassServiceSourceCodeGenerator::getSourceCode)
-            .makeString("");
+            .makeString("\n");
 
         // language=Klass
         return (
@@ -98,8 +98,7 @@ public final class KlassServiceSourceCodeGenerator {
             className +
             "Projection;\n" +
             "        }\n" +
-            "}\n" +
-            "\n"
+            "}\n"
         );
     }
 
