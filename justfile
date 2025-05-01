@@ -7,8 +7,9 @@ import ".just/maven.just"
 import ".just/git.just"
 import ".just/git-test.just"
 
-# Setup the project (mise) and run the default build (mvn)
-default: mise mvn
+# `just --list--unsorted`
+default:
+    @just --list --unsorted
 
 # `mise install`
 mise:
