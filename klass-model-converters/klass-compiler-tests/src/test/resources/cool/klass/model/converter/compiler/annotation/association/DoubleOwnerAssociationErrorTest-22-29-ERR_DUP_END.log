@@ -3,12 +3,12 @@
 
 At (DoubleOwnerAssociationErrorTest.klass:22)
 
-[39m 1║ [35mpackage[m·[39mdummy
-[39m19║ [35massociation[m·[39mOwner1HasOwnedAssociation[m¶[m
-[39m20║ [36m{
-[39m22║ [m····[39mowned[m·[36m:[m·[39mOwnedClass[36m[[34m0[36m..[34m*[36m][m·[32mowned[36m;
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mdummy
+[39m19║ [38;5;175massociation[38;5;238m·[38;5;217mOwner1HasOwnedAssociation[38;5;240m¶[m
+[39m20║ [38;5;252m{
+[39m22║ [38;5;238m····[38;5;150mowned[38;5;238m·[38;5;255m:[38;5;238m·[38;5;212mOwnedClass[38;5;254m[[38;5;44m0[38;5;251m..[38;5;44m*[38;5;254m][38;5;238m·[38;5;78mowned[38;5;254m;
 [39m  ║ [33m                             ^^^^^
-[39m25║ }
+[39m25║ [38;5;252m}
 [m
 [36mLocation:  [mDoubleOwnerAssociationErrorTest.klass:22[m
 [36mFile:      [mDoubleOwnerAssociationErrorTest.klass[m

@@ -3,12 +3,12 @@
 
 At (DuplicateValidationErrorTest.klass:12)
 
-[39m 1║ [35mpackage[m·[39mdummy
-[39m 8║ [35mclass[m·[39mDummyClass[m¶[m
-[39m 9║ [36m{
-[39m12║ [m····[39mstring[36m:[m·[35mString[m·[32mminimumLength[36m([34m1[36m)[m·[32mminLength[36m([34m1[36m)[m·[32mmaximumLength[36m([34m10[36m)[m·[32mmaxLength[36m([34m10[36m);
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mdummy
+[39m 8║ [38;5;208mclass[38;5;238m·[38;5;205mDummyClass[38;5;240m¶[m
+[39m 9║ [38;5;252m{
+[39m12║ [38;5;238m····[38;5;148mstring[38;5;255m:[38;5;238m·[38;5;172mString[38;5;238m·[38;5;107mminimumLength[38;5;253m([38;5;44m1[38;5;253m)[38;5;238m·[38;5;107mminLength[38;5;253m([38;5;44m1[38;5;253m)[38;5;238m·[38;5;107mmaximumLength[38;5;253m([38;5;44m10[38;5;253m)[38;5;238m·[38;5;107mmaxLength[38;5;253m([38;5;44m10[38;5;253m)[38;5;254m;
 [39m  ║ [31m                                    ^^^^^^^^^
-[39m14║ }
+[39m14║ [38;5;252m}
 [m
 [36mLocation:  [mDuplicateValidationErrorTest.klass:12[m
 [36mFile:      [mDuplicateValidationErrorTest.klass[m

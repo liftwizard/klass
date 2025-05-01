@@ -3,12 +3,12 @@
 
 At (DuplicateValidationErrorTest.klass:11)
 
-[39m 1║ [35mpackage[m·[39mdummy
-[39m 8║ [35mclass[m·[39mDummyClass[m¶[m
-[39m 9║ [36m{
-[39m11║ [m····[39mnumber[36m:[m·[35mLong[m·[32mminimum[36m([34m1[36m)[m·[32mmin[36m([34m1[36m)[m·[32mmaximum[36m([34m10[36m)[m·[32mmax[36m([34m10[36m);
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mdummy
+[39m 8║ [38;5;208mclass[38;5;238m·[38;5;205mDummyClass[38;5;240m¶[m
+[39m 9║ [38;5;252m{
+[39m11║ [38;5;238m····[38;5;148mnumber[38;5;255m:[38;5;238m·[38;5;172mLong[38;5;238m·[38;5;107mminimum[38;5;253m([38;5;44m1[38;5;253m)[38;5;238m·[38;5;107mmin[38;5;253m([38;5;44m1[38;5;253m)[38;5;238m·[38;5;107mmaximum[38;5;253m([38;5;44m10[38;5;253m)[38;5;238m·[38;5;107mmax[38;5;253m([38;5;44m10[38;5;253m)[38;5;254m;
 [39m  ║ [31m                            ^^^
-[39m14║ }
+[39m14║ [38;5;252m}
 [m
 [36mLocation:  [mDuplicateValidationErrorTest.klass:11[m
 [36mFile:      [mDuplicateValidationErrorTest.klass[m

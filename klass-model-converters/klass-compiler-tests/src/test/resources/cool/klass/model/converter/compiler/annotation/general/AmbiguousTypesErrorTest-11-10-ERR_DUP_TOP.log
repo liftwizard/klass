@@ -3,8 +3,8 @@
 
 At (AmbiguousTypesErrorTest.klass:11)
 
-[39m 1║ [35mpackage[m·[39mdummy
-[39m11║ [35minterface[m·[39mAmbiguousInterface[m·[36m{}
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mdummy
+[39m11║ [38;5;177minterface[38;5;238m·[38;5;176mAmbiguousInterface[38;5;238m·[38;5;252m{}
 [39m  ║ [31m          ^^^^^^^^^^^^^^^^^^
 [m
 [36mLocation:  [mAmbiguousTypesErrorTest.klass:11[m

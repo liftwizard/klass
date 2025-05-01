@@ -3,10 +3,10 @@
 
 At (UnreferencedUrlParameterServiceErrorTest.klass:17)
 
-[39m 1║ [35mpackage[m·[39mdummy
-[39m15║ [35mservice[m·[39mExampleService[m·[35mon[m·[39mExampleClass[m¶[m
-[39m16║ [36m{
-[39m17║ [m····[36m/[39mqueryParam[36m?{[39munreferencedQueryParam1[36m:[m·[35mString[36m[[34m1[36m..[34m1[36m]}&{[39munreferencedQueryParam2[36m:[m·[35mLong[36m[[34m1[36m..[34m1[36m]}
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mdummy
+[39m15║ [38;5;209mservice[38;5;238m·[38;5;213mExampleService[38;5;238m·[38;5;179mon[38;5;238m·[38;5;212mExampleClass[38;5;240m¶[m
+[39m16║ [38;5;252m{
+[39m17║ [38;5;238m····[38;5;249m/[38;5;75mqueryParam[38;5;250m?[38;5;252m{[38;5;183munreferencedQueryParam1[38;5;255m:[38;5;238m·[38;5;172mString[38;5;254m[[38;5;44m1[38;5;251m..[38;5;44m1[38;5;254m][38;5;252m}[38;5;247m&[38;5;252m{[38;5;183munreferencedQueryParam2[38;5;255m:[38;5;238m·[38;5;172mLong[38;5;254m[[38;5;44m1[38;5;251m..[38;5;44m1[38;5;254m][38;5;252m}
 [39m  ║ [31m                                                         ^^^^^^^^^^^^^^^^^^^^^^^
 [39m31║ }
 [m

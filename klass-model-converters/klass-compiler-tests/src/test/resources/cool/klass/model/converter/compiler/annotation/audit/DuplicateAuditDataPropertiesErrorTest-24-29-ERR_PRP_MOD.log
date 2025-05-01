@@ -3,14 +3,14 @@
 
 At (DuplicateAuditDataPropertiesErrorTest.klass:24)
 
-[39m 1║ [35mpackage[m·[39mcom[36m.[39merrors
-[39m10║ [35mclass[m·[39mDummyClass[m¶[m
-[39m11║ ····[32msystemTemporal[m¶[m
-[39m12║ ····[32mversioned[m¶[m
-[39m13║ [36m{
-[39m24║ [m····[39mlastUpdatedById2[36m:[m·[35mString[m·[32mlastUpdatedBy[m·[32muserId[m·[32mprivate[m·[32mmaximumLength[36m([34m256[36m);
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mcom[38;5;252m.[38;5;141merrors
+[39m10║ [38;5;208mclass[38;5;238m·[38;5;205mDummyClass[38;5;240m¶[m
+[39m11║ [38;5;238m····[38;5;114msystemTemporal[38;5;240m¶[m
+[39m12║ [38;5;238m····[38;5;114mversioned[38;5;240m¶[m
+[39m13║ [38;5;252m{
+[39m24║ [38;5;238m····[38;5;148mlastUpdatedById2[38;5;255m:[38;5;238m·[38;5;172mString[38;5;238m·[38;5;115mlastUpdatedBy[38;5;238m·[38;5;115muserId[38;5;238m·[38;5;115mprivate[38;5;238m·[38;5;107mmaximumLength[38;5;253m([38;5;44m256[38;5;253m)[38;5;254m;
 [39m  ║ [31m                             ^^^^^^^^^^^^^
-[39m25║ }
+[39m25║ [38;5;252m}
 [m
 [36mLocation:  [mDuplicateAuditDataPropertiesErrorTest.klass:24[m
 [36mFile:      [mDuplicateAuditDataPropertiesErrorTest.klass[m

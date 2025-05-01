@@ -3,15 +3,15 @@
 
 At (ServiceErrorTest.klass:73)
 
-[39m 1║ [35mpackage[m·[39mdummy
-[39m67║ [35mservice[m·[39mStringKeyClassResource[m·[35mon[m·[39mStringKeyClass[m¶[m
-[39m68║ [36m{
-[39m69║ [m····[36m/[39mstringKey
-[39m70║ [m········[32mPUT[m¶[m
-[39m71║ ········[36m{
-[39m73║ [m············[35mprojection[m··[36m:[m·[39mStringKeyProjection[36m;
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mdummy
+[39m67║ [38;5;209mservice[38;5;238m·[38;5;213mStringKeyClassResource[38;5;238m·[38;5;179mon[38;5;238m·[38;5;212mStringKeyClass[38;5;240m¶[m
+[39m68║ [38;5;252m{
+[39m69║ [38;5;238m····[38;5;249m/[38;5;75mstringKey
+[39m70║ [38;5;238m········[38;5;47mPUT[38;5;240m¶[m
+[39m71║ [38;5;238m········[38;5;252m{
+[39m73║ [38;5;238m············[38;5;215mprojection[38;5;238m··[38;5;255m:[38;5;238m·[38;5;214mStringKeyProjection[38;5;254m;
 [39m  ║ [31m            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[39m74║ [m········[36m}
+[39m74║ [38;5;238m········[38;5;252m}
 [39m75║ }
 [m
 [36mLocation:  [mServiceErrorTest.klass:73[m

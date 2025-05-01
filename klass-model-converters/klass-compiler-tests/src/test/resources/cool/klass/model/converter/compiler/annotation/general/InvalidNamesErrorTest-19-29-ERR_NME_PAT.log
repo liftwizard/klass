@@ -3,14 +3,14 @@
 
 At (InvalidNamesErrorTest.klass:19)
 
-[39m 1║ [35mpackage[m·[39mBADPACKAGE
-[39m14║ [35mclass[m·[39mbadClass[m¶[m
-[39m15║ [36m{
-[39m19║ [m····[39mBadParameterizedProperty[36m([39mBadParameter[36m:[m·[35mString[36m[[34m1[36m..[34m1[36m]):[m·[39mbadClass[36m[[34m1[36m..[34m1[36m][m¶[m
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mBADPACKAGE
+[39m14║ [38;5;208mclass[38;5;238m·[38;5;205mbadClass[38;5;240m¶[m
+[39m15║ [38;5;252m{
+[39m19║ [38;5;238m····[38;5;144mBadParameterizedProperty[38;5;253m([38;5;183mBadParameter[38;5;255m:[38;5;238m·[38;5;172mString[38;5;254m[[38;5;44m1[38;5;251m..[38;5;44m1[38;5;254m][38;5;253m)[38;5;255m:[38;5;238m·[38;5;212mbadClass[38;5;254m[[38;5;44m1[38;5;251m..[38;5;44m1[38;5;254m][38;5;240m¶[m
 [39m  ║ [31m                             ^^^^^^^^^^^^
-[39m20║ ····[36m{[m¶[m
-[39m21║ ········[32mthis[36m.[39mBadPrimitiveProperty[m·[35m==[m·[39mBadParameter[m¶[m
-[39m22║ ····[36m}
+[39m20║ [38;5;238m····[38;5;252m{[38;5;240m¶[m
+[39m21║ [38;5;238m········[38;5;50mthis[38;5;252m.[38;5;140mBadPrimitiveProperty[38;5;238m·[38;5;197m==[38;5;238m·[38;5;189mBadParameter[38;5;240m¶[m
+[39m22║ [38;5;238m····[38;5;252m}
 [39m33║ }
 [m
 [36mLocation:  [mInvalidNamesErrorTest.klass:19[m

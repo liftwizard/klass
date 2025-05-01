@@ -3,10 +3,10 @@
 
 At (AuditInferenceWithoutUserClassErrorTest.klass:3)
 
-[39m1║ [35mpackage[m·[39mcom[36m.[39merrors
-[39m3║ [35mclass[m·[39mDummyClass[m·[32msystemTemporal[m·[32mversioned[m·[32maudited[m¶[m
+[39m1║ [38;5;173mpackage[38;5;238m·[38;5;141mcom[38;5;252m.[38;5;141merrors
+[39m3║ [38;5;208mclass[38;5;238m·[38;5;205mDummyClass[38;5;238m·[38;5;114msystemTemporal[38;5;238m·[38;5;114mversioned[38;5;238m·[38;5;114maudited[38;5;240m¶[m
 [39m ║ [31m                                          ^^^^^^^
-[39m4║ [36m{
+[39m4║ [38;5;252m{
 [39m6║ }
 [m
 [36mLocation:  [mAuditInferenceWithoutUserClassErrorTest.klass:3[m

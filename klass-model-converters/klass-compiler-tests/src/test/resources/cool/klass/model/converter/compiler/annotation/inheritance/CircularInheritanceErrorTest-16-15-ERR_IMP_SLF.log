@@ -3,11 +3,11 @@
 
 At (CircularInheritanceErrorTest.klass:16)
 
-[39m 1║ [35mpackage[m·[39mexample
-[39m15║ [35minterface[m·[39mInterface2[m¶[m
-[39m16║ ····[35mimplements[m·[39mInterface1[m¶[m
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mexample
+[39m15║ [38;5;177minterface[38;5;238m·[38;5;176mInterface2[38;5;240m¶[m
+[39m16║ [38;5;238m····[38;5;169mimplements[38;5;238m·[38;5;177mInterface1[38;5;240m¶[m
 [39m  ║ [31m               ^^^^^^^^^^
-[39m17║ [36m{
+[39m17║ [38;5;252m{
 [39m19║ }
 [m
 [36mLocation:  [mCircularInheritanceErrorTest.klass:16[m

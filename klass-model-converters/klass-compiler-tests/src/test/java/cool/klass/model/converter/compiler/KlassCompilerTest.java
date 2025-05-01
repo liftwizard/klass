@@ -64,7 +64,7 @@ class KlassCompilerTest {
             sourceCodeName,
             sourceCodeText
         );
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-cube");
         KlassCompiler compiler = new KlassCompiler(compilationUnit, colorScheme);
         CompilationResult compilationResult = compiler.compile();
         ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult

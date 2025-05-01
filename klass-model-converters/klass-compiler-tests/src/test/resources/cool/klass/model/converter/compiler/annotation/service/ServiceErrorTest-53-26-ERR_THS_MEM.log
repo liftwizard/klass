@@ -3,15 +3,15 @@
 
 At (ServiceErrorTest.klass:53)
 
-[39m 1║ [35mpackage[m·[39mdummy
-[39m24║ [35mservice[m·[39mDummyClassResource[m·[35mon[m·[39mDummyClass[m¶[m
-[39m25║ [36m{
-[39m47║ [m····[36m/[39mdummies
-[39m48║ [m········[32mGET[m¶[m
-[39m49║ ········[36m{
-[39m53║ [m············[35morderBy[36m:[m·[32mthis[36m.[39minvalidMember[m·[35mdescending[36m;
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mdummy
+[39m24║ [38;5;209mservice[38;5;238m·[38;5;213mDummyClassResource[38;5;238m·[38;5;179mon[38;5;238m·[38;5;212mDummyClass[38;5;240m¶[m
+[39m25║ [38;5;252m{
+[39m47║ [38;5;238m····[38;5;249m/[38;5;75mdummies
+[39m48║ [38;5;238m········[38;5;35mGET[38;5;240m¶[m
+[39m49║ [38;5;238m········[38;5;252m{
+[39m53║ [38;5;238m············[38;5;172morderBy[38;5;255m:[38;5;238m·[38;5;50mthis[38;5;252m.[38;5;140minvalidMember[38;5;238m·[38;5;178mdescending[38;5;254m;
 [39m  ║ [31m                          ^^^^^^^^^^^^^
-[39m54║ [m········[36m}
+[39m54║ [38;5;238m········[38;5;252m}
 [39m55║ }
 [m
 [36mLocation:  [mServiceErrorTest.klass:53[m

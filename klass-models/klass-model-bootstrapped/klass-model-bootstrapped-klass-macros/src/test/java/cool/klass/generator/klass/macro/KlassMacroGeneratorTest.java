@@ -49,7 +49,7 @@ public class KlassMacroGeneratorTest {
             klassSourcePackages,
             Thread.currentThread().getContextClassLoader(),
             DomainModelCompilerLoader::logCompilerError,
-            ColorSchemeProvider.getByName("dark")
+            ColorSchemeProvider.getByName("dark-cube")
         );
 
         DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();

@@ -3,12 +3,12 @@
 
 At (RedundantImplementsErrorTest.klass:53)
 
-[39m 1║ [35mpackage[m·[39mexample
-[39m51║ [35mclass[m·[39mConcreteSubClass[m¶[m
-[39m52║ ····[35mextends[m·[39mAbstractBottomClass[m¶[m
-[39m53║ ····[35mimplements[m·[39mRedundantTopInterface[36m,[m·[39mRedundantLeftInterface[36m,[m·[39mRedundantRightInterface[m¶[m
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mexample
+[39m51║ [38;5;208mclass[38;5;238m·[38;5;205mConcreteSubClass[38;5;240m¶[m
+[39m52║ [38;5;238m····[38;5;168mextends[38;5;238m·[38;5;212mAbstractBottomClass[38;5;240m¶[m
+[39m53║ [38;5;238m····[38;5;169mimplements[38;5;238m·[38;5;177mRedundantTopInterface[38;5;253m,[38;5;238m·[38;5;177mRedundantLeftInterface[38;5;253m,[38;5;238m·[38;5;177mRedundantRightInterface[38;5;240m¶[m
 [39m  ║ [31m               ^^^^^^^^^^^^^^^^^^^^^
-[39m54║ [36m{
+[39m54║ [38;5;252m{
 [39m56║ }
 [m
 [36mLocation:  [mRedundantImplementsErrorTest.klass:53[m

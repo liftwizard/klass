@@ -3,12 +3,12 @@
 
 At (AuditDataPropertyTypeErrorTest.klass:47)
 
-[39m 1║ [35mpackage[m·[39mcom[36m.[39merrors
-[39m43║ [35mclass[m·[39mDummyClass4[m¶[m
-[39m44║ [36m{
-[39m47║ [m····[39mlastUpdatedById[36m:[m·[35mString[m·[32muserId[36m;
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mcom[38;5;252m.[38;5;141merrors
+[39m43║ [38;5;208mclass[38;5;238m·[38;5;205mDummyClass4[38;5;240m¶[m
+[39m44║ [38;5;252m{
+[39m47║ [38;5;238m····[38;5;148mlastUpdatedById[38;5;255m:[38;5;238m·[38;5;172mString[38;5;238m·[38;5;115muserId[38;5;254m;
 [39m  ║ [31m                            ^^^^^^
-[39m48║ }
+[39m48║ [38;5;252m}
 [m
 [36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:47[m
 [36mFile:      [mAuditDataPropertyTypeErrorTest.klass[m

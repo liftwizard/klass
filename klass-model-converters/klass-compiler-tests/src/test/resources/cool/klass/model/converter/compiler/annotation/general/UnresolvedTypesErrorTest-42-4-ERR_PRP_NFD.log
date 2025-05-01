@@ -3,13 +3,13 @@
 
 At (UnresolvedTypesErrorTest.klass:42)
 
-[39m 1║ [35mpackage[m·[39mdummy
-[39m35║ [35mprojection[m·[39mProjectionWithUnresolved[m·[35mon[m·[39mClassWithUnresolved[m¶[m
-[39m36║ [36m{
-[39m42║ [m····[39munresolvedReferenceProperty[36m:{
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mdummy
+[39m35║ [38;5;215mprojection[38;5;238m·[38;5;218mProjectionWithUnresolved[38;5;238m·[38;5;179mon[38;5;238m·[38;5;206mClassWithUnresolved[38;5;240m¶[m
+[39m36║ [38;5;252m{
+[39m42║ [38;5;238m····[38;5;156munresolvedReferenceProperty[38;5;255m:[38;5;252m{
 [39m  ║ [31m    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[39m44║ [m····[36m},
-[39m47║ }
+[39m44║ [38;5;238m····[38;5;252m}[38;5;253m,
+[39m47║ [38;5;252m}
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:42[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m

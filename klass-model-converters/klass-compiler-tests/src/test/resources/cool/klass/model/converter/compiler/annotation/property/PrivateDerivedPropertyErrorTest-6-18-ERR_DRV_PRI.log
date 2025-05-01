@@ -3,12 +3,12 @@
 
 At (PrivateDerivedPropertyErrorTest.klass:6)
 
-[39m1║ [35mpackage[m·[39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mproperty
-[39m3║ [35mclass[m·[39mClassWithPrivateDerived[m¶[m
-[39m4║ [36m{
-[39m6║ [m····[39mvalue[36m:[m·[35mString[m·[32mderived[m·[32mprivate[36m;
+[39m1║ [38;5;173mpackage[38;5;238m·[38;5;141mcool[38;5;252m.[38;5;141mklass[38;5;252m.[38;5;141mmodel[38;5;252m.[38;5;141mconverter[38;5;252m.[38;5;141mcompiler[38;5;252m.[38;5;141mannotation[38;5;252m.[38;5;141mproperty
+[39m3║ [38;5;208mclass[38;5;238m·[38;5;205mClassWithPrivateDerived[38;5;240m¶[m
+[39m4║ [38;5;252m{
+[39m6║ [38;5;238m····[38;5;148mvalue[38;5;255m:[38;5;238m·[38;5;172mString[38;5;238m·[38;5;115mderived[38;5;238m·[38;5;115mprivate[38;5;254m;
 [39m ║ [31m                  ^^^^^^^ ^^^^^^^
-[39m7║ }
+[39m7║ [38;5;252m}
 [m
 [36mLocation:  [mPrivateDerivedPropertyErrorTest.klass:6[m
 [36mFile:      [mPrivateDerivedPropertyErrorTest.klass[m

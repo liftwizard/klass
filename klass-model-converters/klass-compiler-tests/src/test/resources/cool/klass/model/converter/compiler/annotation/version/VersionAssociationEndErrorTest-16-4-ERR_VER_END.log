@@ -3,12 +3,12 @@
 
 At (VersionAssociationEndErrorTest.klass:16)
 
-[39m 1║ [35mpackage[m·[39mcom[36m.[39merrors
-[39m13║ [35massociation[m·[39mExampleClassHasVersion[m¶[m
-[39m14║ [36m{
-[39m16║ [m····[39mnotVersion[36m:[m·[39mNotVersion[36m[[34m1[36m..[34m1[36m][m·[32mowned[m·[32mversion[36m;
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mcom[38;5;252m.[38;5;141merrors
+[39m13║ [38;5;175massociation[38;5;238m·[38;5;217mExampleClassHasVersion[38;5;240m¶[m
+[39m14║ [38;5;252m{
+[39m16║ [38;5;238m····[38;5;150mnotVersion[38;5;255m:[38;5;238m·[38;5;212mNotVersion[38;5;254m[[38;5;44m1[38;5;251m..[38;5;44m1[38;5;254m][38;5;238m·[38;5;78mowned[38;5;238m·[38;5;78mversion[38;5;254m;
 [39m  ║ [31m    ^^^^^^^^^^
-[39m19║ }
+[39m19║ [38;5;252m}
 [m
 [36mLocation:  [mVersionAssociationEndErrorTest.klass:16[m
 [36mFile:      [mVersionAssociationEndErrorTest.klass[m

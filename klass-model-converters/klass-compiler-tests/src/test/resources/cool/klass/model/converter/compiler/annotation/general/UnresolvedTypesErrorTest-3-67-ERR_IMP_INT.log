@@ -3,10 +3,10 @@
 
 At (UnresolvedTypesErrorTest.klass:3)
 
-[39m1║ [35mpackage[m·[39mdummy
-[39m3║ [35minterface[m·[39mInterfaceWithUnresolved[m·[35mimplements[m·[39mUnresolvedInterface1[36m,[m·[39mUnresolvedInterface2[m¶[m
+[39m1║ [38;5;173mpackage[38;5;238m·[38;5;141mdummy
+[39m3║ [38;5;177minterface[38;5;238m·[38;5;176mInterfaceWithUnresolved[38;5;238m·[38;5;169mimplements[38;5;238m·[38;5;177mUnresolvedInterface1[38;5;253m,[38;5;238m·[38;5;177mUnresolvedInterface2[38;5;240m¶[m
 [39m ║ [31m                                                                   ^^^^^^^^^^^^^^^^^^^^
-[39m4║ [36m{
+[39m4║ [38;5;252m{
 [39m6║ }
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:3[m

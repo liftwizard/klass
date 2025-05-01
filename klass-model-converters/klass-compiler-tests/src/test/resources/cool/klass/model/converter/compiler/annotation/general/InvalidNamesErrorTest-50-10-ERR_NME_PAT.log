@@ -3,10 +3,10 @@
 
 At (InvalidNamesErrorTest.klass:50)
 
-[39m 1║ [35mpackage[m·[39mBADPACKAGE
-[39m48║ [35mservice[m·[39mbadClassResource[m·[35mon[m·[39mbadClass[m¶[m
-[39m49║ [36m{
-[39m50║ [m····[36m/[39mbad[36m/{[39mBadParameter[36m:[m·[35mString[36m[[34m1[36m..[34m1[36m]}
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mBADPACKAGE
+[39m48║ [38;5;209mservice[38;5;238m·[38;5;213mbadClassResource[38;5;238m·[38;5;179mon[38;5;238m·[38;5;212mbadClass[38;5;240m¶[m
+[39m49║ [38;5;252m{
+[39m50║ [38;5;238m····[38;5;249m/[38;5;75mbad[38;5;249m/[38;5;252m{[38;5;183mBadParameter[38;5;255m:[38;5;238m·[38;5;172mString[38;5;254m[[38;5;44m1[38;5;251m..[38;5;44m1[38;5;254m][38;5;252m}
 [39m  ║ [31m          ^^^^^^^^^^^^
 [39m56║ }
 [m

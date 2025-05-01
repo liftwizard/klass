@@ -3,7 +3,7 @@
 
 At (InvalidNamesErrorTest.klass:1)
 
-[39m1║ [35mpackage[m·[39mBADPACKAGE
+[39m1║ [38;5;173mpackage[38;5;238m·[38;5;141mBADPACKAGE
 [39m ║ [31m        ^^^^^^^^^^
 [m
 [36mLocation:  [mInvalidNamesErrorTest.klass:1[m

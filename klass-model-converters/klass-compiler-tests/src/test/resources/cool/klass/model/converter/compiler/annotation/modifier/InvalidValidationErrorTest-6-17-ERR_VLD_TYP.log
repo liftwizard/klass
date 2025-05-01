@@ -3,12 +3,12 @@
 
 At (InvalidValidationErrorTest.klass:6)
 
-[39m1║ [35mpackage[m·[39mdummy
-[39m3║ [35mclass[m·[39mDummy[m¶[m
-[39m4║ [36m{
-[39m6║ [m····[39mnumber[36m:[m·[35mLong[m·[32mminLength[36m([34m1[36m)[m·[32mmaxLength[36m([34m10[36m);
+[39m1║ [38;5;173mpackage[38;5;238m·[38;5;141mdummy
+[39m3║ [38;5;208mclass[38;5;238m·[38;5;205mDummy[38;5;240m¶[m
+[39m4║ [38;5;252m{
+[39m6║ [38;5;238m····[38;5;148mnumber[38;5;255m:[38;5;238m·[38;5;172mLong[38;5;238m·[38;5;107mminLength[38;5;253m([38;5;44m1[38;5;253m)[38;5;238m·[38;5;107mmaxLength[38;5;253m([38;5;44m10[38;5;253m)[38;5;254m;
 [39m ║ [31m                 ^^^^^^^^^
-[39m8║ }
+[39m8║ [38;5;252m}
 [m
 [36mLocation:  [mInvalidValidationErrorTest.klass:6[m
 [36mFile:      [mInvalidValidationErrorTest.klass[m

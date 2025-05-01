@@ -3,13 +3,13 @@
 
 At (ProjectionTypeTest.klass:36)
 
-[39m 1║ [35mpackage[m·[39mdummy
-[39m28║ [35mprojection[m·[39mProjection1[m·[35mon[m·[39mParent[m¶[m
-[39m29║ [36m{
-[39m36║ [m····[39mkey[36m:[m·[36m{
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mdummy
+[39m28║ [38;5;215mprojection[38;5;238m·[38;5;218mProjection1[38;5;238m·[38;5;179mon[38;5;238m·[38;5;206mParent[38;5;240m¶[m
+[39m29║ [38;5;252m{
+[39m36║ [38;5;238m····[38;5;156mkey[38;5;255m:[38;5;238m·[38;5;252m{
 [39m  ║ [31m    ^^^
-[39m38║ [m····[36m},
-[39m40║ }
+[39m38║ [38;5;238m····[38;5;252m}[38;5;253m,
+[39m40║ [38;5;252m}
 [m
 [36mLocation:  [mProjectionTypeTest.klass:36[m
 [36mFile:      [mProjectionTypeTest.klass[m

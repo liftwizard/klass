@@ -3,12 +3,12 @@
 
 At (DuplicateVersionPropertyErrorTest.klass:7)
 
-[39m1║ [35mpackage[m·[39mcom[36m.[39merrors
-[39m3║ [35mclass[m·[39mExampleVersion[m·[32msystemTemporal[m¶[m
-[39m4║ [36m{
-[39m7║ [m····[39mnumber2[36m:[m·[35mInteger[m·[32mversion[36m;
+[39m1║ [38;5;173mpackage[38;5;238m·[38;5;141mcom[38;5;252m.[38;5;141merrors
+[39m3║ [38;5;208mclass[38;5;238m·[38;5;205mExampleVersion[38;5;238m·[38;5;114msystemTemporal[38;5;240m¶[m
+[39m4║ [38;5;252m{
+[39m7║ [38;5;238m····[38;5;148mnumber2[38;5;255m:[38;5;238m·[38;5;172mInteger[38;5;238m·[38;5;115mversion[38;5;254m;
 [39m ║ [31m                     ^^^^^^^
-[39m8║ }
+[39m8║ [38;5;252m}
 [m
 [36mLocation:  [mDuplicateVersionPropertyErrorTest.klass:7[m
 [36mFile:      [mDuplicateVersionPropertyErrorTest.klass[m

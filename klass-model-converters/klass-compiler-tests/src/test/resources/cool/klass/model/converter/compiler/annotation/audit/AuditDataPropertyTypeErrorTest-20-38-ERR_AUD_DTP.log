@@ -3,12 +3,12 @@
 
 At (AuditDataPropertyTypeErrorTest.klass:20)
 
-[39m 1║ [35mpackage[m·[39mcom[36m.[39merrors
-[39m13║ [35mclass[m·[39mDummyClass[m·[32msystemTemporal[m·[32mversioned[m·[32maudited[m¶[m
-[39m14║ [36m{
-[39m20║ [m····[39mcreatedOn[m······[36m:[m·[39mDummyEnumeration[m·[32mcreatedOn[m·[32mfinal[36m;
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mcom[38;5;252m.[38;5;141merrors
+[39m13║ [38;5;208mclass[38;5;238m·[38;5;205mDummyClass[38;5;238m·[38;5;114msystemTemporal[38;5;238m·[38;5;114mversioned[38;5;238m·[38;5;114maudited[38;5;240m¶[m
+[39m14║ [38;5;252m{
+[39m20║ [38;5;238m····[38;5;149mcreatedOn[38;5;238m······[38;5;255m:[38;5;238m·[38;5;175mDummyEnumeration[38;5;238m·[38;5;115mcreatedOn[38;5;238m·[38;5;115mfinal[38;5;254m;
 [39m  ║ [31m                     ^^^^^^^^^^^^^^^^ ^^^^^^^^^
-[39m22║ }
+[39m22║ [38;5;252m}
 [m
 [36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:20[m
 [36mFile:      [mAuditDataPropertyTypeErrorTest.klass[m

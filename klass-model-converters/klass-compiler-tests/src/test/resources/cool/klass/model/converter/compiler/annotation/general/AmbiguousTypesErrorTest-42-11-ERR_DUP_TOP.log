@@ -3,8 +3,8 @@
 
 At (AmbiguousTypesErrorTest.klass:42)
 
-[39m 1║ [35mpackage[m·[39mdummy
-[39m42║ [35mprojection[m·[39mAmbiguousProjection[m·[35mon[m·[39mGoodClass[m·[36m{}
+[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mdummy
+[39m42║ [38;5;215mprojection[38;5;238m·[38;5;218mAmbiguousProjection[38;5;238m·[38;5;179mon[38;5;238m·[38;5;206mGoodClass[38;5;238m·[38;5;252m{}
 [39m  ║ [31m           ^^^^^^^^^^^^^^^^^^^
 [m
 [36mLocation:  [mAmbiguousTypesErrorTest.klass:42[m

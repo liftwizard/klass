@@ -3,12 +3,12 @@
 
 At (AmbiguousTypesErrorTest.klass:112)
 
-[39m  1║ [35mpackage[m·[39mdummy
-[39m109║ [35massociation[m·[39mIrrelevantGoodAssociation2[m¶[m
-[39m110║ [36m{
-[39m112║ [m····[39mambiguousAssociationEnd[36m:[m·[39mGoodClass[36m[[34m0[36m..[34m*[36m];
+[39m  1║ [38;5;173mpackage[38;5;238m·[38;5;141mdummy
+[39m109║ [38;5;175massociation[38;5;238m·[38;5;217mIrrelevantGoodAssociation2[38;5;240m¶[m
+[39m110║ [38;5;252m{
+[39m112║ [38;5;238m····[38;5;150mambiguousAssociationEnd[38;5;255m:[38;5;238m·[38;5;212mGoodClass[38;5;254m[[38;5;44m0[38;5;251m..[38;5;44m*[38;5;254m][m;
 [39m   ║ [31m    ^^^^^^^^^^^^^^^^^^^^^^^
-[39m115║ }
+[39m115║ [38;5;252m}
 [m
 [36mLocation:  [mAmbiguousTypesErrorTest.klass:112[m
 [36mFile:      [mAmbiguousTypesErrorTest.klass[m
