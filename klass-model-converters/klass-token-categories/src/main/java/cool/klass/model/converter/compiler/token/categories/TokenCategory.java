@@ -144,7 +144,13 @@ public enum TokenCategory {
     SQUARE_BRACKET_LEFT(SQUARE_BRACKETS),
     SQUARE_BRACKET_RIGHT(SQUARE_BRACKETS),
 
-    URL_CONSTANT(IDENTIFIER);
+    URL_CONSTANT(IDENTIFIER),
+
+    // Non-visible tokens
+    INVISIBLE_TOKEN(null),
+    WHITESPACE(INVISIBLE_TOKEN),
+    NEWLINE(INVISIBLE_TOKEN),
+    END_OF_FILE(INVISIBLE_TOKEN);
 
     private final TokenCategory parentCategory;
 

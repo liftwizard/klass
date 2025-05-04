@@ -71,7 +71,8 @@ public final class LexerBasedTokenCategorizer {
             return TokenCategory.LINE_COMMENT;
         }
 
-        return switch (token.getType()) {
+        int tokenType = token.getType();
+        return switch (tokenType) {
             case KlassLexer.StringLiteral -> TokenCategory.STRING_LITERAL;
             case KlassLexer.IntegerLiteral -> TokenCategory.INTEGER_LITERAL;
             case KlassLexer.BooleanLiteral -> TokenCategory.BOOLEAN_LITERAL;
@@ -91,6 +92,7 @@ public final class LexerBasedTokenCategorizer {
             case KlassLexer.PUNCTUATION_DOT -> TokenCategory.DOT;
             case KlassLexer.PUNCTUATION_SEMI -> TokenCategory.SEMICOLON;
             case KlassLexer.PUNCTUATION_AMPERSAND -> TokenCategory.AMPERSAND;
+            case KlassLexer.PUNCTUATION_ASTERISK -> TokenCategory.ASTERISK_LITERAL;
             case KlassLexer.OPERATOR_EQ -> TokenCategory.OPERATOR_EQ;
             case KlassLexer.OPERATOR_NE -> TokenCategory.OPERATOR_NE;
             case KlassLexer.OPERATOR_LT -> TokenCategory.OPERATOR_LT;
@@ -99,6 +101,9 @@ public final class LexerBasedTokenCategorizer {
             case KlassLexer.OPERATOR_GE -> TokenCategory.OPERATOR_GE;
             case KlassLexer.OPERATOR_AND -> TokenCategory.OPERATOR_AND;
             case KlassLexer.OPERATOR_OR -> TokenCategory.OPERATOR_OR;
+            case KlassLexer.WHITESPACE -> TokenCategory.WHITESPACE;
+            case KlassLexer.NEWLINE -> TokenCategory.NEWLINE;
+            case KlassLexer.EOF -> TokenCategory.END_OF_FILE;
             default -> null;
         };
     }

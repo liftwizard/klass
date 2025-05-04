@@ -19,109 +19,109 @@
 <pre>
 <span class='klass-block-comment'>/*
  * Simplified StackOverflow domain model. One question has many answers.
- */</span>
-
-<span class='klass-line-comment'>// TODO: There should be a maven plugin that compiles the klass files and does nothing else, just to fail the build at the right module</span>
-<span class='klass-package-keyword'>package</span> <span class='klass-package-name'>com</span><span class='klass-dot'>.</span><span class='klass-package-name'>stackoverflow</span>
-
-<span class='klass-line-comment'>// 'user' is just a special class that represents logged in users</span>
-<span class='klass-line-comment'>// There must only be a single user class in the model, it must have a single key, and the key must be of type String. Other properties must be nullable</span>
-<span class='klass-keyword-user'>user</span> <span class='klass-class-name'><a id="User" href="/api/meta/code/element/User#User">User</a></span>
-    <span class='klass-service-category-modifier'>read</span>
-    <span class='klass-classifier-modifier'>systemTemporal</span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-line-comment'>// `read` keyword with no projection means create read services with the default read projection</span>
-    <span class='klass-line-comment'>// The default read projection includes just this class and all its properties</span>
-    <span class='klass-primitive-property-name'><a id="User.userId" href="/api/meta/code/element/User/userId#User.userId">userId</a></span>                 <span class='klass-colon'>:</span> <span class='klass-primitive-type'>String</span> <span class='klass-data-type-property-modifier'>key</span> <span class='klass-data-type-property-modifier'>userId</span><span class='klass-semicolon'>;</span>
-
-    <span class='klass-line-comment'>// TODO: String max lengths</span>
-    <span class='klass-primitive-property-name'><a id="User.firstName" href="/api/meta/code/element/User/firstName#User.firstName">firstName</a></span>              <span class='klass-colon'>:</span> <span class='klass-primitive-type'>String</span><span class='klass-question'>?</span><span class='klass-semicolon'>;</span>
-    <span class='klass-primitive-property-name'><a id="User.lastName" href="/api/meta/code/element/User/lastName#User.lastName">lastName</a></span><span class='klass-colon'>:</span> <span class='klass-primitive-type'>String</span><span class='klass-question'>?</span><span class='klass-semicolon'>;</span>
-
-    <span class='klass-line-comment'>// TODO: Consider adding primitive types like email address and url</span>
-    <span class='klass-primitive-property-name'><a id="User.email" href="/api/meta/code/element/User/email#User.email">email</a></span>                  <span class='klass-colon'>:</span> <span class='klass-primitive-type'>String</span><span class='klass-question'>?</span><span class='klass-semicolon'>;</span>
-
-    <span class='klass-line-comment'>// TODO: Unique property sets</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-keyword-enumeration'>enumeration</span> <span class='klass-enumeration-name'><a id="Status" href="/api/meta/code/element/Status#Status">Status</a></span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-enumeration-literal-name'><a id="Status.OPEN" href="/api/meta/code/element/Status/OPEN#Status.OPEN">OPEN</a></span><span class='klass-parenthesis-left'>(</span><span class='klass-string-literal'>&quot;Open&quot;</span><span class='klass-parenthesis-right'>)</span><span class='klass-comma'>,</span>
-    <span class='klass-enumeration-literal-name'><a id="Status.ON_HOLD" href="/api/meta/code/element/Status/ON_HOLD#Status.ON_HOLD">ON_HOLD</a></span><span class='klass-parenthesis-left'>(</span><span class='klass-string-literal'>&quot;On hold&quot;</span><span class='klass-parenthesis-right'>)</span><span class='klass-comma'>,</span>
-    <span class='klass-enumeration-literal-name'><a id="Status.CLOSED" href="/api/meta/code/element/Status/CLOSED#Status.CLOSED">CLOSED</a></span><span class='klass-parenthesis-left'>(</span><span class='klass-string-literal'>&quot;Closed&quot;</span><span class='klass-parenthesis-right'>)</span><span class='klass-comma'>,</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-keyword-interface'>interface</span> <span class='klass-interface-name'><a id="Document" href="/api/meta/code/element/Document#Document">Document</a></span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-primitive-property-name'><a id="Document.id" href="/api/meta/code/element/Document/id#Document.id">id</a></span>                     <span class='klass-colon'>:</span> <span class='klass-primitive-type'>Long</span> <span class='klass-data-type-property-modifier'>key</span> <span class='klass-data-type-property-modifier'>id</span><span class='klass-semicolon'>;</span>
-    <span class='klass-primitive-property-name'><a id="Document.body" href="/api/meta/code/element/Document/body#Document.body">body</a></span>                   <span class='klass-colon'>:</span> <span class='klass-primitive-type'>String</span><span class='klass-semicolon'>;</span>
-
-    <span class='klass-line-comment'>// votes          : Vote[0..*];</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-line-comment'>// TODO: Sets of unique properties other than keys</span>
-<span class='klass-line-comment'>// TODO: Try to infer whether a query is for a unique item and assert multiplicity one</span>
-<span class='klass-line-comment'>// TODO: Check for ownership cycles and give a good error message</span>
-<span class='klass-line-comment'>// TODO: Errors for using reserved names like system, systemFrom, systemTo, etc.</span>
-<span class='klass-line-comment'>// TODO: Errors for using versioned when not systemTemporal, audited when not systemTemporal</span>
-<span class='klass-keyword-class'>class</span> <span class='klass-class-name'><a id="Question" href="/api/meta/code/element/Question#Question">Question</a></span>
-    <span class='klass-keyword-implements'>implements</span> <span class='klass-interface-reference'>Document</span>
-    <span class='klass-service-category-modifier'>read</span><span class='klass-parenthesis-left'>(</span><span class='klass-projection-reference'>QuestionReadProjection</span><span class='klass-parenthesis-right'>)</span>
-    <span class='klass-classifier-modifier'>systemTemporal</span>
-    <span class='klass-classifier-modifier'>versioned</span>
-    <span class='klass-classifier-modifier'>audited</span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-line-comment'>// TODO: When copying id to QuestionVersion, id should be Long key but not id.</span>
-    <span class='klass-primitive-property-name'><a id="Question.id" href="/api/meta/code/element/Question/id#Question.id">id</a></span>                     <span class='klass-colon'>:</span> <span class='klass-primitive-type'>Long</span> <span class='klass-data-type-property-modifier'>key</span> <span class='klass-data-type-property-modifier'>id</span><span class='klass-semicolon'>;</span>
-
-    <span class='klass-line-comment'>// This isn't a real property. It's referenced in criteria as a shorthand. For example Question.system == {time} is shorthand for Question.systemFrom &lt;= {time} &amp;&amp; Question.systemTo &gt; {time}</span>
-    <span class='klass-primitive-property-name'><a id="Question.system" href="/api/meta/code/element/Question/system#Question.system">system</a></span>                 <span class='klass-colon'>:</span> <span class='klass-primitive-type'>TemporalRange</span><span class='klass-question'>?</span> <span class='klass-data-type-property-modifier'>system</span> <span class='klass-data-type-property-modifier'>private</span><span class='klass-semicolon'>;</span>
-
-    <span class='klass-line-comment'>// These two properties are implied by systemTemporal, and are not supposed to actually be declared</span>
-    <span class='klass-primitive-property-name'><a id="Question.systemFrom" href="/api/meta/code/element/Question/systemFrom#Question.systemFrom">systemFrom</a></span>             <span class='klass-colon'>:</span> <span class='klass-primitive-type'>TemporalInstant</span><span class='klass-question'>?</span> <span class='klass-data-type-property-modifier'>system</span> <span class='klass-data-type-property-modifier'>from</span><span class='klass-semicolon'>;</span>
-    <span class='klass-primitive-property-name'><a id="Question.systemTo" href="/api/meta/code/element/Question/systemTo#Question.systemTo">systemTo</a></span>               <span class='klass-colon'>:</span> <span class='klass-primitive-type'>TemporalInstant</span><span class='klass-question'>?</span> <span class='klass-data-type-property-modifier'>system</span> <span class='klass-data-type-property-modifier'>to</span><span class='klass-semicolon'>;</span>
-
-    <span class='klass-line-comment'>// TODO: private properties must not be used in projections</span>
-    <span class='klass-line-comment'>// These three properties and two parameterized properties are implied by audited, and are not supposed to actually be declared</span>
-    <span class='klass-line-comment'>// They could automatically be part of read projections and not write projections</span>
-    <span class='klass-primitive-property-name'><a id="Question.createdById" href="/api/meta/code/element/Question/createdById#Question.createdById">createdById</a></span>            <span class='klass-colon'>:</span> <span class='klass-primitive-type'>String</span> <span class='klass-data-type-property-modifier'>createdBy</span> <span class='klass-data-type-property-modifier'>userId</span> <span class='klass-data-type-property-modifier'>final</span> <span class='klass-data-type-property-modifier'>private</span><span class='klass-semicolon'>;</span>
-
-    <span class='klass-line-comment'>// createdOn, or createdDate?</span>
-    <span class='klass-primitive-property-name'><a id="Question.createdOn" href="/api/meta/code/element/Question/createdOn#Question.createdOn">createdOn</a></span>              <span class='klass-colon'>:</span> <span class='klass-primitive-type'>Instant</span> <span class='klass-data-type-property-modifier'>createdOn</span> <span class='klass-data-type-property-modifier'>final</span><span class='klass-semicolon'>;</span>
-    <span class='klass-primitive-property-name'><a id="Question.lastUpdatedById" href="/api/meta/code/element/Question/lastUpdatedById#Question.lastUpdatedById">lastUpdatedById</a></span>        <span class='klass-colon'>:</span> <span class='klass-primitive-type'>String</span> <span class='klass-data-type-property-modifier'>lastUpdatedBy</span> <span class='klass-data-type-property-modifier'>userId</span> <span class='klass-data-type-property-modifier'>private</span><span class='klass-semicolon'>;</span>
-
-    <span class='klass-line-comment'>// createdBy(): User[1..1] createdBy</span>
-    <span class='klass-line-comment'>// {</span>
-    <span class='klass-line-comment'>//     this.createdById == User.userId</span>
-    <span class='klass-line-comment'>// }</span>
-    <span class='klass-line-comment'>//</span>
-    <span class='klass-line-comment'>// lastUpdatedBy(): User[1..1] lastUpdatedBy</span>
-    <span class='klass-line-comment'>// {</span>
-    <span class='klass-line-comment'>//     this.lastUpdatedById == User.userId</span>
-    <span class='klass-line-comment'>// }</span>
-
-    <span class='klass-primitive-property-name'><a id="Question.title" href="/api/meta/code/element/Question/title#Question.title">title</a></span>                  <span class='klass-colon'>:</span> <span class='klass-primitive-type'>String</span><span class='klass-semicolon'>;</span>
-
-    <span class='klass-line-comment'>// TODO: Statemachine</span>
-    <span class='klass-enumeration-property-name'><a id="Question.status" href="/api/meta/code/element/Question/status#Question.status">status</a></span>                 <span class='klass-colon'>:</span> <span class='klass-enumeration-reference'><a href="/api/meta/code/element/Status#Status">Status</a></span><span class='klass-semicolon'>;</span>
-    <span class='klass-primitive-property-name'><a id="Question.deleted" href="/api/meta/code/element/Question/deleted#Question.deleted">deleted</a></span><span class='klass-colon'>:</span> <span class='klass-primitive-type'>Boolean</span><span class='klass-semicolon'>;</span>
-
-    <span class='klass-line-comment'>// TODO: Consider type inference on paramterized property parameters based on usage in relationship</span>
-    <span class='klass-line-comment'>// orderBy natural key ascending is the default</span>
-    <span class='klass-parameterized-property-name'>answersWithSubstring</span><span class='klass-parenthesis-left'>(</span><span class='klass-parameter-name'>substring</span><span class='klass-colon'>:</span> <span class='klass-primitive-type'>String</span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>1</span><span class='klass-dotdot'>..</span><span class='klass-integer-literal'>1</span><span class='klass-square-bracket-right'>]</span><span class='klass-parenthesis-right'>)</span><span class='klass-colon'>:</span> <span class='klass-class-reference'>Answer</span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>0</span><span class='klass-dotdot'>..</span><span class='klass-asterisk-literal'>*</span><span class='klass-square-bracket-right'>]</span>
-        <span class='klass-keyword-order-by'>orderBy</span><span class='klass-colon'>:</span> <span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'>id</span> <span class='klass-keyword-order-by-direction'>ascending</span>
-    <span class='klass-curly-left'>{</span>
-        <span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'>id</span> <span class='klass-operator-eq'>==</span> <span class='klass-class-reference'>Answer</span><span class='klass-dot'>.</span><span class='klass-property-reference'>questionId</span>
-            <span class='klass-operator-and'>&amp;&amp;</span> <span class='klass-class-reference'>Answer</span><span class='klass-dot'>.</span><span class='klass-property-reference'>body</span> <span class='klass-operator-string'>contains</span> <span class='klass-parameter-reference'>substring</span>
-    <span class='klass-curly-right'>}</span>
-
-    <span class='klass-parameterized-property-name'>activeAnswers</span><span class='klass-parenthesis-left'>(</span><span class='klass-parenthesis-right'>)</span><span class='klass-colon'>:</span> <span class='klass-class-reference'>Answer</span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>0</span><span class='klass-dotdot'>..</span><span class='klass-asterisk-literal'>*</span><span class='klass-square-bracket-right'>]</span>
-    <span class='klass-curly-left'>{</span>
-        <span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'>id</span> <span class='klass-operator-eq'>==</span> <span class='klass-class-reference'>Answer</span><span class='klass-dot'>.</span><span class='klass-property-reference'>questionId</span>
-            <span class='klass-operator-and'>&amp;&amp;</span> <span class='klass-class-reference'>Answer</span><span class='klass-dot'>.</span><span class='klass-property-reference'>deleted</span> <span class='klass-operator-eq'>==</span> <span class='klass-boolean-literal'>false</span>
-    <span class='klass-curly-right'>}</span>
-
-    <span class='klass-block-comment'>/*
+ */</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// TODO: There should be a maven plugin that compiles the klass files and does nothing else, just to fail the build at the right module</span><span class='klass-newline'>
+</span><span class='klass-package-keyword'>package</span><span class='klass-whitespace'> </span><span class='klass-package-name'>com</span><span class='klass-dot'>.</span><span class='klass-package-name'>stackoverflow</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// 'user' is just a special class that represents logged in users</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// There must only be a single user class in the model, it must have a single key, and the key must be of type String. Other properties must be nullable</span><span class='klass-newline'>
+</span><span class='klass-keyword-user'>user</span><span class='klass-whitespace'> </span><span class='klass-class-name'><a id="User" href="/api/meta/code/element/User#User">User</a></span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-service-category-modifier'>read</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-classifier-modifier'>systemTemporal</span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// `read` keyword with no projection means create read services with the default read projection</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// The default read projection includes just this class and all its properties</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="User.userId" href="/api/meta/code/element/User/userId#User.userId">userId</a></span><span class='klass-whitespace'>                 </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>String</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>key</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>userId</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// TODO: String max lengths</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="User.firstName" href="/api/meta/code/element/User/firstName#User.firstName">firstName</a></span><span class='klass-whitespace'>              </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>String</span><span class='klass-question'>?</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="User.lastName" href="/api/meta/code/element/User/lastName#User.lastName">lastName</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>String</span><span class='klass-question'>?</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// TODO: Consider adding primitive types like email address and url</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="User.email" href="/api/meta/code/element/User/email#User.email">email</a></span><span class='klass-whitespace'>                  </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>String</span><span class='klass-question'>?</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// TODO: Unique property sets</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-enumeration'>enumeration</span><span class='klass-whitespace'> </span><span class='klass-enumeration-name'><a id="Status" href="/api/meta/code/element/Status#Status">Status</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-enumeration-literal-name'><a id="Status.OPEN" href="/api/meta/code/element/Status/OPEN#Status.OPEN">OPEN</a></span><span class='klass-parenthesis-left'>(</span><span class='klass-string-literal'>&quot;Open&quot;</span><span class='klass-parenthesis-right'>)</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-enumeration-literal-name'><a id="Status.ON_HOLD" href="/api/meta/code/element/Status/ON_HOLD#Status.ON_HOLD">ON_HOLD</a></span><span class='klass-parenthesis-left'>(</span><span class='klass-string-literal'>&quot;On hold&quot;</span><span class='klass-parenthesis-right'>)</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-enumeration-literal-name'><a id="Status.CLOSED" href="/api/meta/code/element/Status/CLOSED#Status.CLOSED">CLOSED</a></span><span class='klass-parenthesis-left'>(</span><span class='klass-string-literal'>&quot;Closed&quot;</span><span class='klass-parenthesis-right'>)</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-interface'>interface</span><span class='klass-whitespace'> </span><span class='klass-interface-name'><a id="Document" href="/api/meta/code/element/Document#Document">Document</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Document.id" href="/api/meta/code/element/Document/id#Document.id">id</a></span><span class='klass-whitespace'>                     </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>Long</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>key</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>id</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Document.body" href="/api/meta/code/element/Document/body#Document.body">body</a></span><span class='klass-whitespace'>                   </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>String</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// votes          : Vote[0..*];</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// TODO: Sets of unique properties other than keys</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// TODO: Try to infer whether a query is for a unique item and assert multiplicity one</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// TODO: Check for ownership cycles and give a good error message</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// TODO: Errors for using reserved names like system, systemFrom, systemTo, etc.</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// TODO: Errors for using versioned when not systemTemporal, audited when not systemTemporal</span><span class='klass-newline'>
+</span><span class='klass-keyword-class'>class</span><span class='klass-whitespace'> </span><span class='klass-class-name'><a id="Question" href="/api/meta/code/element/Question#Question">Question</a></span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-keyword-implements'>implements</span><span class='klass-whitespace'> </span><span class='klass-interface-reference'>Document</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-service-category-modifier'>read</span><span class='klass-parenthesis-left'>(</span><span class='klass-projection-reference'>QuestionReadProjection</span><span class='klass-parenthesis-right'>)</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-classifier-modifier'>systemTemporal</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-classifier-modifier'>versioned</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-classifier-modifier'>audited</span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// TODO: When copying id to QuestionVersion, id should be Long key but not id.</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Question.id" href="/api/meta/code/element/Question/id#Question.id">id</a></span><span class='klass-whitespace'>                     </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>Long</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>key</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>id</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// This isn't a real property. It's referenced in criteria as a shorthand. For example Question.system == {time} is shorthand for Question.systemFrom &lt;= {time} &amp;&amp; Question.systemTo &gt; {time}</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Question.system" href="/api/meta/code/element/Question/system#Question.system">system</a></span><span class='klass-whitespace'>                 </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>TemporalRange</span><span class='klass-question'>?</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>system</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>private</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// These two properties are implied by systemTemporal, and are not supposed to actually be declared</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Question.systemFrom" href="/api/meta/code/element/Question/systemFrom#Question.systemFrom">systemFrom</a></span><span class='klass-whitespace'>             </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>TemporalInstant</span><span class='klass-question'>?</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>system</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>from</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Question.systemTo" href="/api/meta/code/element/Question/systemTo#Question.systemTo">systemTo</a></span><span class='klass-whitespace'>               </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>TemporalInstant</span><span class='klass-question'>?</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>system</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>to</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// TODO: private properties must not be used in projections</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// These three properties and two parameterized properties are implied by audited, and are not supposed to actually be declared</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// They could automatically be part of read projections and not write projections</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Question.createdById" href="/api/meta/code/element/Question/createdById#Question.createdById">createdById</a></span><span class='klass-whitespace'>            </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>String</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>createdBy</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>userId</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>final</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>private</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// createdOn, or createdDate?</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Question.createdOn" href="/api/meta/code/element/Question/createdOn#Question.createdOn">createdOn</a></span><span class='klass-whitespace'>              </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>Instant</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>createdOn</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>final</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Question.lastUpdatedById" href="/api/meta/code/element/Question/lastUpdatedById#Question.lastUpdatedById">lastUpdatedById</a></span><span class='klass-whitespace'>        </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>String</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>lastUpdatedBy</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>userId</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>private</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// createdBy(): User[1..1] createdBy</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// {</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>//     this.createdById == User.userId</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// }</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>//</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// lastUpdatedBy(): User[1..1] lastUpdatedBy</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// {</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>//     this.lastUpdatedById == User.userId</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// }</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Question.title" href="/api/meta/code/element/Question/title#Question.title">title</a></span><span class='klass-whitespace'>                  </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>String</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// TODO: Statemachine</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-enumeration-property-name'><a id="Question.status" href="/api/meta/code/element/Question/status#Question.status">status</a></span><span class='klass-whitespace'>                 </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-enumeration-reference'><a href="/api/meta/code/element/Status#Status">Status</a></span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Question.deleted" href="/api/meta/code/element/Question/deleted#Question.deleted">deleted</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>Boolean</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// TODO: Consider type inference on paramterized property parameters based on usage in relationship</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// orderBy natural key ascending is the default</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-parameterized-property-name'>answersWithSubstring</span><span class='klass-parenthesis-left'>(</span><span class='klass-parameter-name'>substring</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>String</span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>1</span><span class='klass-dotdot'>..</span><span class='klass-integer-literal'>1</span><span class='klass-square-bracket-right'>]</span><span class='klass-parenthesis-right'>)</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-class-reference'>Answer</span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>0</span><span class='klass-dotdot'>..</span><span class='klass-asterisk-literal'>*</span><span class='klass-square-bracket-right'>]</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-keyword-order-by'>orderBy</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'>id</span><span class='klass-whitespace'> </span><span class='klass-keyword-order-by-direction'>ascending</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'>id</span><span class='klass-whitespace'> </span><span class='klass-operator-eq'>==</span><span class='klass-whitespace'> </span><span class='klass-class-reference'>Answer</span><span class='klass-dot'>.</span><span class='klass-property-reference'>questionId</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-operator-and'>&amp;&amp;</span><span class='klass-whitespace'> </span><span class='klass-class-reference'>Answer</span><span class='klass-dot'>.</span><span class='klass-property-reference'>body</span><span class='klass-whitespace'> </span><span class='klass-operator-string'>contains</span><span class='klass-whitespace'> </span><span class='klass-parameter-reference'>substring</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-parameterized-property-name'>activeAnswers</span><span class='klass-parenthesis-left'>(</span><span class='klass-parenthesis-right'>)</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-class-reference'>Answer</span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>0</span><span class='klass-dotdot'>..</span><span class='klass-asterisk-literal'>*</span><span class='klass-square-bracket-right'>]</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'>id</span><span class='klass-whitespace'> </span><span class='klass-operator-eq'>==</span><span class='klass-whitespace'> </span><span class='klass-class-reference'>Answer</span><span class='klass-dot'>.</span><span class='klass-property-reference'>questionId</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-operator-and'>&amp;&amp;</span><span class='klass-whitespace'> </span><span class='klass-class-reference'>Answer</span><span class='klass-dot'>.</span><span class='klass-property-reference'>deleted</span><span class='klass-whitespace'> </span><span class='klass-operator-eq'>==</span><span class='klass-whitespace'> </span><span class='klass-boolean-literal'>false</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-block-comment'>/*
     voteBy(userId: String[1..1] userId): QuestionVote[0..1]
     {
         this.id == QuestionVote.questionId
@@ -136,14 +136,14 @@
     {
         count(this.votes.direction == VoteDirection.DOWN)
     }
-    */</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-line-comment'>// The _Version class is implied by the versioned annotation, and not supposed to actually be declared</span>
-<span class='klass-line-comment'>// TODO: If you do declare one, we'd need a special keyword version instead of class</span>
-<span class='klass-line-comment'>// TODO: Needs a syntax like versions(Question)</span>
-<span class='klass-line-comment'>// TODO: Error message if versions does point to a version, if the versioned type isn't systemTemporal, maybe also if the versioned type isn't systemTemporal/versioned</span>
-<span class='klass-block-comment'>/*
+    */</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// The _Version class is implied by the versioned annotation, and not supposed to actually be declared</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// TODO: If you do declare one, we'd need a special keyword version instead of class</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// TODO: Needs a syntax like versions(Question)</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// TODO: Error message if versions does point to a version, if the versioned type isn't systemTemporal, maybe also if the versioned type isn't systemTemporal/versioned</span><span class='klass-newline'>
+</span><span class='klass-block-comment'>/*
 class QuestionVersion
     systemTemporal
     versions(Question)
@@ -157,30 +157,30 @@ class QuestionVersion
     // TODO: Consider a primitive property type VersionNumber
     number            : Integer
 }
-*/</span>
-
-<span class='klass-keyword-class'>class</span> <span class='klass-class-name'><a id="Answer" href="/api/meta/code/element/Answer#Answer">Answer</a></span>
-    <span class='klass-keyword-implements'>implements</span> <span class='klass-interface-reference'>Document</span>
-    <span class='klass-classifier-modifier'>systemTemporal</span>
-    <span class='klass-classifier-modifier'>versioned</span>
-    <span class='klass-classifier-modifier'>audited</span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-primitive-property-name'><a id="Answer.id" href="/api/meta/code/element/Answer/id#Answer.id">id</a></span>                     <span class='klass-colon'>:</span> <span class='klass-primitive-type'>Long</span> <span class='klass-data-type-property-modifier'>key</span> <span class='klass-data-type-property-modifier'>id</span><span class='klass-semicolon'>;</span>
-    <span class='klass-primitive-property-name'><a id="Answer.questionId" href="/api/meta/code/element/Answer/questionId#Answer.questionId">questionId</a></span>             <span class='klass-colon'>:</span> <span class='klass-primitive-type'>Long</span> <span class='klass-data-type-property-modifier'>private</span> <span class='klass-data-type-property-modifier'>final</span><span class='klass-semicolon'>;</span>
-    <span class='klass-primitive-property-name'><a id="Answer.deleted" href="/api/meta/code/element/Answer/deleted#Answer.deleted">deleted</a></span>                <span class='klass-colon'>:</span> <span class='klass-primitive-type'>Boolean</span><span class='klass-semicolon'>;</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-line-comment'>// TODO: Error message if versions doesn't point to a version class</span>
-<span class='klass-keyword-association'>association</span> <span class='klass-association-name'><a id="QuestionHasAnswer" href="/api/meta/code/element/QuestionHasAnswer#QuestionHasAnswer">QuestionHasAnswer</a></span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-association-end-name'><a id="Answer.question" href="/api/meta/code/element/Answer/question#Answer.question">question</a></span>               <span class='klass-colon'>:</span> <span class='klass-class-reference'><a href="/api/meta/code/element/Question#Question">Question</a></span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>1</span><span class='klass-dotdot'>..</span><span class='klass-integer-literal'>1</span><span class='klass-square-bracket-right'>]</span> <span class='klass-association-end-modifier'>final</span><span class='klass-semicolon'>;</span>
-    <span class='klass-association-end-name'><a id="Question.answers" href="/api/meta/code/element/Question/answers#Question.answers">answers</a></span>                <span class='klass-colon'>:</span> <span class='klass-class-reference'><a href="/api/meta/code/element/Answer#Answer">Answer</a></span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>0</span><span class='klass-dotdot'>..</span><span class='klass-asterisk-literal'>*</span><span class='klass-square-bracket-right'>]</span>
-        <span class='klass-keyword-order-by'>orderBy</span><span class='klass-colon'>:</span> <span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Answer/id#Answer.id">id</a></span> <span class='klass-keyword-order-by-direction'>ascending</span><span class='klass-semicolon'>;</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-line-comment'>// The _HasVersion association is implied by the versioned annotation, and not supposed to actually be declared</span>
-<span class='klass-line-comment'>// It could automatically be part of read projections and not write projections</span>
-<span class='klass-block-comment'>/*
+*/</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-class'>class</span><span class='klass-whitespace'> </span><span class='klass-class-name'><a id="Answer" href="/api/meta/code/element/Answer#Answer">Answer</a></span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-keyword-implements'>implements</span><span class='klass-whitespace'> </span><span class='klass-interface-reference'>Document</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-classifier-modifier'>systemTemporal</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-classifier-modifier'>versioned</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-classifier-modifier'>audited</span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Answer.id" href="/api/meta/code/element/Answer/id#Answer.id">id</a></span><span class='klass-whitespace'>                     </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>Long</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>key</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>id</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Answer.questionId" href="/api/meta/code/element/Answer/questionId#Answer.questionId">questionId</a></span><span class='klass-whitespace'>             </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>Long</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>private</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>final</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Answer.deleted" href="/api/meta/code/element/Answer/deleted#Answer.deleted">deleted</a></span><span class='klass-whitespace'>                </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>Boolean</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// TODO: Error message if versions doesn't point to a version class</span><span class='klass-newline'>
+</span><span class='klass-keyword-association'>association</span><span class='klass-whitespace'> </span><span class='klass-association-name'><a id="QuestionHasAnswer" href="/api/meta/code/element/QuestionHasAnswer#QuestionHasAnswer">QuestionHasAnswer</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-name'><a id="Answer.question" href="/api/meta/code/element/Answer/question#Answer.question">question</a></span><span class='klass-whitespace'>               </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-class-reference'><a href="/api/meta/code/element/Question#Question">Question</a></span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>1</span><span class='klass-dotdot'>..</span><span class='klass-integer-literal'>1</span><span class='klass-square-bracket-right'>]</span><span class='klass-whitespace'> </span><span class='klass-association-end-modifier'>final</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-name'><a id="Question.answers" href="/api/meta/code/element/Question/answers#Question.answers">answers</a></span><span class='klass-whitespace'>                </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-class-reference'><a href="/api/meta/code/element/Answer#Answer">Answer</a></span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>0</span><span class='klass-dotdot'>..</span><span class='klass-asterisk-literal'>*</span><span class='klass-square-bracket-right'>]</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-keyword-order-by'>orderBy</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Answer/id#Answer.id">id</a></span><span class='klass-whitespace'> </span><span class='klass-keyword-order-by-direction'>ascending</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// The _HasVersion association is implied by the versioned annotation, and not supposed to actually be declared</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// It could automatically be part of read projections and not write projections</span><span class='klass-newline'>
+</span><span class='klass-block-comment'>/*
 association QuestionHasVersion
 {
     question: Question[1..1];
@@ -190,40 +190,40 @@ association QuestionHasVersion
     relationship this.id == QuestionVersion.id
             &amp;&amp; this.system == QuestionVersion.system
 }
-*/</span>
-
-<span class='klass-keyword-enumeration'>enumeration</span> <span class='klass-enumeration-name'><a id="VoteDirection" href="/api/meta/code/element/VoteDirection#VoteDirection">VoteDirection</a></span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-enumeration-literal-name'><a id="VoteDirection.UP" href="/api/meta/code/element/VoteDirection/UP#VoteDirection.UP">UP</a></span><span class='klass-parenthesis-left'>(</span><span class='klass-string-literal'>&quot;up&quot;</span><span class='klass-parenthesis-right'>)</span><span class='klass-comma'>,</span>
-    <span class='klass-enumeration-literal-name'><a id="VoteDirection.DOWN" href="/api/meta/code/element/VoteDirection/DOWN#VoteDirection.DOWN">DOWN</a></span><span class='klass-parenthesis-left'>(</span><span class='klass-string-literal'>&quot;down&quot;</span><span class='klass-parenthesis-right'>)</span><span class='klass-comma'>,</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-keyword-interface'>interface</span> <span class='klass-interface-name'><a id="Vote" href="/api/meta/code/element/Vote#Vote">Vote</a></span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-enumeration-property-name'><a id="Vote.direction" href="/api/meta/code/element/Vote/direction#Vote.direction">direction</a></span>              <span class='klass-colon'>:</span> <span class='klass-enumeration-reference'><a href="/api/meta/code/element/VoteDirection#VoteDirection">VoteDirection</a></span><span class='klass-semicolon'>;</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-line-comment'>// TODO Aggregation for number of upvotes and downvotes</span>
-<span class='klass-keyword-class'>class</span> <span class='klass-class-name'><a id="QuestionVote" href="/api/meta/code/element/QuestionVote#QuestionVote">QuestionVote</a></span>
-    <span class='klass-keyword-implements'>implements</span> <span class='klass-interface-reference'>Vote</span>
-    <span class='klass-classifier-modifier'>systemTemporal</span>
-    <span class='klass-classifier-modifier'>audited</span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-primitive-property-name'><a id="QuestionVote.questionId" href="/api/meta/code/element/QuestionVote/questionId#QuestionVote.questionId">questionId</a></span>             <span class='klass-colon'>:</span> <span class='klass-primitive-type'>Long</span> <span class='klass-data-type-property-modifier'>key</span> <span class='klass-data-type-property-modifier'>final</span><span class='klass-semicolon'>;</span>
-    <span class='klass-primitive-property-name'><a id="QuestionVote.createdById" href="/api/meta/code/element/QuestionVote/createdById#QuestionVote.createdById">createdById</a></span>            <span class='klass-colon'>:</span> <span class='klass-primitive-type'>String</span> <span class='klass-data-type-property-modifier'>key</span> <span class='klass-data-type-property-modifier'>createdBy</span> <span class='klass-data-type-property-modifier'>userId</span> <span class='klass-data-type-property-modifier'>final</span> <span class='klass-data-type-property-modifier'>private</span><span class='klass-semicolon'>;</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-keyword-association'>association</span> <span class='klass-association-name'><a id="QuestionHasVotes" href="/api/meta/code/element/QuestionHasVotes#QuestionHasVotes">QuestionHasVotes</a></span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-association-end-name'><a id="QuestionVote.question" href="/api/meta/code/element/QuestionVote/question#QuestionVote.question">question</a></span>               <span class='klass-colon'>:</span> <span class='klass-class-reference'><a href="/api/meta/code/element/Question#Question">Question</a></span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>1</span><span class='klass-dotdot'>..</span><span class='klass-integer-literal'>1</span><span class='klass-square-bracket-right'>]</span> <span class='klass-association-end-modifier'>final</span><span class='klass-semicolon'>;</span>
-    <span class='klass-association-end-name'><a id="Question.votes" href="/api/meta/code/element/Question/votes#Question.votes">votes</a></span>                  <span class='klass-colon'>:</span> <span class='klass-class-reference'><a href="/api/meta/code/element/QuestionVote#QuestionVote">QuestionVote</a></span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>0</span><span class='klass-dotdot'>..</span><span class='klass-asterisk-literal'>*</span><span class='klass-square-bracket-right'>]</span><span class='klass-semicolon'>;</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-keyword-projection'>projection</span> <span class='klass-projection-name'><a id="QuestionVoteWriteProjection" href="/api/meta/code/element/QuestionVoteWriteProjection#QuestionVoteWriteProjection">QuestionVoteWriteProjection</a></span> <span class='klass-keyword-on'>on</span> <span class='klass-classifier-reference'><a href="/api/meta/code/element/QuestionVote#QuestionVote">QuestionVote</a></span>
-<span class='klass-curly-left'>{</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-block-comment'>/*
+*/</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-enumeration'>enumeration</span><span class='klass-whitespace'> </span><span class='klass-enumeration-name'><a id="VoteDirection" href="/api/meta/code/element/VoteDirection#VoteDirection">VoteDirection</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-enumeration-literal-name'><a id="VoteDirection.UP" href="/api/meta/code/element/VoteDirection/UP#VoteDirection.UP">UP</a></span><span class='klass-parenthesis-left'>(</span><span class='klass-string-literal'>&quot;up&quot;</span><span class='klass-parenthesis-right'>)</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-enumeration-literal-name'><a id="VoteDirection.DOWN" href="/api/meta/code/element/VoteDirection/DOWN#VoteDirection.DOWN">DOWN</a></span><span class='klass-parenthesis-left'>(</span><span class='klass-string-literal'>&quot;down&quot;</span><span class='klass-parenthesis-right'>)</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-interface'>interface</span><span class='klass-whitespace'> </span><span class='klass-interface-name'><a id="Vote" href="/api/meta/code/element/Vote#Vote">Vote</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-enumeration-property-name'><a id="Vote.direction" href="/api/meta/code/element/Vote/direction#Vote.direction">direction</a></span><span class='klass-whitespace'>              </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-enumeration-reference'><a href="/api/meta/code/element/VoteDirection#VoteDirection">VoteDirection</a></span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// TODO Aggregation for number of upvotes and downvotes</span><span class='klass-newline'>
+</span><span class='klass-keyword-class'>class</span><span class='klass-whitespace'> </span><span class='klass-class-name'><a id="QuestionVote" href="/api/meta/code/element/QuestionVote#QuestionVote">QuestionVote</a></span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-keyword-implements'>implements</span><span class='klass-whitespace'> </span><span class='klass-interface-reference'>Vote</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-classifier-modifier'>systemTemporal</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-classifier-modifier'>audited</span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="QuestionVote.questionId" href="/api/meta/code/element/QuestionVote/questionId#QuestionVote.questionId">questionId</a></span><span class='klass-whitespace'>             </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>Long</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>key</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>final</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="QuestionVote.createdById" href="/api/meta/code/element/QuestionVote/createdById#QuestionVote.createdById">createdById</a></span><span class='klass-whitespace'>            </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>String</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>key</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>createdBy</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>userId</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>final</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>private</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-association'>association</span><span class='klass-whitespace'> </span><span class='klass-association-name'><a id="QuestionHasVotes" href="/api/meta/code/element/QuestionHasVotes#QuestionHasVotes">QuestionHasVotes</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-name'><a id="QuestionVote.question" href="/api/meta/code/element/QuestionVote/question#QuestionVote.question">question</a></span><span class='klass-whitespace'>               </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-class-reference'><a href="/api/meta/code/element/Question#Question">Question</a></span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>1</span><span class='klass-dotdot'>..</span><span class='klass-integer-literal'>1</span><span class='klass-square-bracket-right'>]</span><span class='klass-whitespace'> </span><span class='klass-association-end-modifier'>final</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-name'><a id="Question.votes" href="/api/meta/code/element/Question/votes#Question.votes">votes</a></span><span class='klass-whitespace'>                  </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-class-reference'><a href="/api/meta/code/element/QuestionVote#QuestionVote">QuestionVote</a></span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>0</span><span class='klass-dotdot'>..</span><span class='klass-asterisk-literal'>*</span><span class='klass-square-bracket-right'>]</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-projection'>projection</span><span class='klass-whitespace'> </span><span class='klass-projection-name'><a id="QuestionVoteWriteProjection" href="/api/meta/code/element/QuestionVoteWriteProjection#QuestionVoteWriteProjection">QuestionVoteWriteProjection</a></span><span class='klass-whitespace'> </span><span class='klass-keyword-on'>on</span><span class='klass-whitespace'> </span><span class='klass-classifier-reference'><a href="/api/meta/code/element/QuestionVote#QuestionVote">QuestionVote</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-block-comment'>/*
 service QuestionVoteResource on QuestionVote
 {
     /question/vote/{questionId: Long[1..1]}
@@ -246,113 +246,113 @@ service QuestionVoteResource on QuestionVote
             projection  : QuestionVoteWriteProjection;
         }
 }
-*/</span>
-
-<span class='klass-keyword-class'>class</span> <span class='klass-class-name'><a id="Tag" href="/api/meta/code/element/Tag#Tag">Tag</a></span>
-    <span class='klass-classifier-modifier'>systemTemporal</span>
-    <span class='klass-classifier-modifier'>versioned</span>
-    <span class='klass-classifier-modifier'>audited</span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-primitive-property-name'><a id="Tag.name" href="/api/meta/code/element/Tag/name#Tag.name">name</a></span>                   <span class='klass-colon'>:</span> <span class='klass-primitive-type'>String</span> <span class='klass-data-type-property-modifier'>key</span><span class='klass-semicolon'>;</span>
-    <span class='klass-primitive-property-name'><a id="Tag.description" href="/api/meta/code/element/Tag/description#Tag.description">description</a></span>            <span class='klass-colon'>:</span> <span class='klass-primitive-type'>String</span><span class='klass-semicolon'>;</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-keyword-class'>class</span> <span class='klass-class-name'><a id="QuestionTagMapping" href="/api/meta/code/element/QuestionTagMapping#QuestionTagMapping">QuestionTagMapping</a></span>
-    <span class='klass-classifier-modifier'>systemTemporal</span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-primitive-property-name'><a id="QuestionTagMapping.questionId" href="/api/meta/code/element/QuestionTagMapping/questionId#QuestionTagMapping.questionId">questionId</a></span>             <span class='klass-colon'>:</span> <span class='klass-primitive-type'>Long</span> <span class='klass-data-type-property-modifier'>key</span> <span class='klass-data-type-property-modifier'>private</span> <span class='klass-data-type-property-modifier'>final</span><span class='klass-semicolon'>;</span>
-    <span class='klass-primitive-property-name'><a id="QuestionTagMapping.tagName" href="/api/meta/code/element/QuestionTagMapping/tagName#QuestionTagMapping.tagName">tagName</a></span>                <span class='klass-colon'>:</span> <span class='klass-primitive-type'>String</span> <span class='klass-data-type-property-modifier'>key</span> <span class='klass-data-type-property-modifier'>private</span> <span class='klass-data-type-property-modifier'>final</span><span class='klass-semicolon'>;</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-keyword-association'>association</span> <span class='klass-association-name'><a id="QuestionHasTagMappings" href="/api/meta/code/element/QuestionHasTagMappings#QuestionHasTagMappings">QuestionHasTagMappings</a></span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-association-end-name'><a id="QuestionTagMapping.question" href="/api/meta/code/element/QuestionTagMapping/question#QuestionTagMapping.question">question</a></span>               <span class='klass-colon'>:</span> <span class='klass-class-reference'><a href="/api/meta/code/element/Question#Question">Question</a></span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>1</span><span class='klass-dotdot'>..</span><span class='klass-integer-literal'>1</span><span class='klass-square-bracket-right'>]</span> <span class='klass-association-end-modifier'>final</span><span class='klass-semicolon'>;</span>
-    <span class='klass-association-end-name'><a id="Question.tags" href="/api/meta/code/element/Question/tags#Question.tags">tags</a></span><span class='klass-colon'>:</span> <span class='klass-class-reference'><a href="/api/meta/code/element/QuestionTagMapping#QuestionTagMapping">QuestionTagMapping</a></span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>0</span><span class='klass-dotdot'>..</span><span class='klass-asterisk-literal'>*</span><span class='klass-square-bracket-right'>]</span> <span class='klass-association-end-modifier'>owned</span>
-        <span class='klass-keyword-order-by'>orderBy</span><span class='klass-colon'>:</span> <span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/QuestionTagMapping/tagName#QuestionTagMapping.tagName">tagName</a></span><span class='klass-semicolon'>;</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-keyword-association'>association</span> <span class='klass-association-name'><a id="TagHasQuestionMappings" href="/api/meta/code/element/TagHasQuestionMappings#TagHasQuestionMappings">TagHasQuestionMappings</a></span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-association-end-name'><a id="Tag.questions" href="/api/meta/code/element/Tag/questions#Tag.questions">questions</a></span>              <span class='klass-colon'>:</span> <span class='klass-class-reference'><a href="/api/meta/code/element/QuestionTagMapping#QuestionTagMapping">QuestionTagMapping</a></span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>0</span><span class='klass-dotdot'>..</span><span class='klass-asterisk-literal'>*</span><span class='klass-square-bracket-right'>]</span>
-        <span class='klass-keyword-order-by'>orderBy</span><span class='klass-colon'>:</span> <span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/QuestionTagMapping/questionId#QuestionTagMapping.questionId">questionId</a></span><span class='klass-semicolon'>;</span>
-    <span class='klass-association-end-name'><a id="QuestionTagMapping.tag" href="/api/meta/code/element/QuestionTagMapping/tag#QuestionTagMapping.tag">tag</a></span>                    <span class='klass-colon'>:</span> <span class='klass-class-reference'><a href="/api/meta/code/element/Tag#Tag">Tag</a></span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>1</span><span class='klass-dotdot'>..</span><span class='klass-integer-literal'>1</span><span class='klass-square-bracket-right'>]</span> <span class='klass-association-end-modifier'>final</span><span class='klass-semicolon'>;</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-keyword-projection'>projection</span> <span class='klass-projection-name'><a id="UserProjection" href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span> <span class='klass-keyword-on'>on</span> <span class='klass-classifier-reference'><a href="/api/meta/code/element/User#User">User</a></span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/User/userId#User.userId">userId</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;User userId&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/User/systemFrom#User.systemFrom">systemFrom</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;User systemFrom&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/User/systemTo#User.systemTo">systemTo</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;User systemTo&quot;</span><span class='klass-comma'>,</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-keyword-projection'>projection</span> <span class='klass-projection-name'><a id="AnswerVersionProjection" href="/api/meta/code/element/AnswerVersionProjection#AnswerVersionProjection">AnswerVersionProjection</a></span> <span class='klass-keyword-on'>on</span> <span class='klass-classifier-reference'><a href="/api/meta/code/element/AnswerVersion#AnswerVersion">AnswerVersion</a></span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/AnswerVersion/systemFrom#AnswerVersion.systemFrom">systemFrom</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;AnswerVersion systemFrom&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/AnswerVersion/systemTo#AnswerVersion.systemTo">systemTo</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;AnswerVersion systemTo&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/AnswerVersion/createdOn#AnswerVersion.createdOn">createdOn</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;AnswerVersion createdOn&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/AnswerVersion/number#AnswerVersion.number">number</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;AnswerVersion number&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-association-end-reference'><a href="/api/meta/code/element/AnswerVersion/createdBy#AnswerVersion.createdBy">createdBy</a></span><span class='klass-colon'>:</span> <span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span>
-    <span class='klass-association-end-reference'><a href="/api/meta/code/element/AnswerVersion/lastUpdatedBy#AnswerVersion.lastUpdatedBy">lastUpdatedBy</a></span><span class='klass-colon'>:</span> <span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-keyword-projection'>projection</span> <span class='klass-projection-name'><a id="AnswerProjection" href="/api/meta/code/element/AnswerProjection#AnswerProjection">AnswerProjection</a></span> <span class='klass-keyword-on'>on</span> <span class='klass-classifier-reference'><a href="/api/meta/code/element/Answer#Answer">Answer</a></span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Answer/id#Answer.id">id</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Answer id&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Answer/systemFrom#Answer.systemFrom">systemFrom</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Answer systemFrom&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Answer/systemTo#Answer.systemTo">systemTo</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Answer systemTo&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Answer/createdOn#Answer.createdOn">createdOn</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Answer createdOn&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Document/body#Document.body">body</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Document body&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Answer/deleted#Answer.deleted">deleted</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Answer deleted&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-association-end-reference'><a href="/api/meta/code/element/Answer/version#Answer.version">version</a></span><span class='klass-colon'>:</span> <span class='klass-projection-reference'><a href="/api/meta/code/element/AnswerVersionProjection#AnswerVersionProjection">AnswerVersionProjection</a></span><span class='klass-comma'>,</span>
-    <span class='klass-association-end-reference'><a href="/api/meta/code/element/Answer/createdBy#Answer.createdBy">createdBy</a></span><span class='klass-colon'>:</span> <span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span>
-    <span class='klass-association-end-reference'><a href="/api/meta/code/element/Answer/lastUpdatedBy#Answer.lastUpdatedBy">lastUpdatedBy</a></span><span class='klass-colon'>:</span> <span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-keyword-projection'>projection</span> <span class='klass-projection-name'><a id="TagProjection" href="/api/meta/code/element/TagProjection#TagProjection">TagProjection</a></span> <span class='klass-keyword-on'>on</span> <span class='klass-classifier-reference'><a href="/api/meta/code/element/Tag#Tag">Tag</a></span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Tag/name#Tag.name">name</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Tag name&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Tag/systemFrom#Tag.systemFrom">systemFrom</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Tag systemFrom&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Tag/systemTo#Tag.systemTo">systemTo</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Tag systemTo&quot;</span><span class='klass-comma'>,</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-keyword-projection'>projection</span> <span class='klass-projection-name'><a id="QuestionTagMappingProjection" href="/api/meta/code/element/QuestionTagMappingProjection#QuestionTagMappingProjection">QuestionTagMappingProjection</a></span> <span class='klass-keyword-on'>on</span> <span class='klass-classifier-reference'><a href="/api/meta/code/element/QuestionTagMapping#QuestionTagMapping">QuestionTagMapping</a></span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/QuestionTagMapping/systemFrom#QuestionTagMapping.systemFrom">systemFrom</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;QuestionTagMapping systemFrom&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/QuestionTagMapping/systemTo#QuestionTagMapping.systemTo">systemTo</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;QuestionTagMapping systemTo&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-association-end-reference'><a href="/api/meta/code/element/QuestionTagMapping/tag#QuestionTagMapping.tag">tag</a></span><span class='klass-colon'>:</span> <span class='klass-projection-reference'><a href="/api/meta/code/element/TagProjection#TagProjection">TagProjection</a></span><span class='klass-comma'>,</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-keyword-projection'>projection</span> <span class='klass-projection-name'><a id="QuestionVersionProjection" href="/api/meta/code/element/QuestionVersionProjection#QuestionVersionProjection">QuestionVersionProjection</a></span> <span class='klass-keyword-on'>on</span> <span class='klass-classifier-reference'><a href="/api/meta/code/element/QuestionVersion#QuestionVersion">QuestionVersion</a></span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/QuestionVersion/systemFrom#QuestionVersion.systemFrom">systemFrom</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;QuestionVersion systemFrom&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/QuestionVersion/systemTo#QuestionVersion.systemTo">systemTo</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;QuestionVersion systemTo&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/QuestionVersion/createdOn#QuestionVersion.createdOn">createdOn</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;QuestionVersion createdOn&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/QuestionVersion/number#QuestionVersion.number">number</a></span><span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;QuestionVersion number&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-association-end-reference'><a href="/api/meta/code/element/QuestionVersion/createdBy#QuestionVersion.createdBy">createdBy</a></span><span class='klass-colon'>:</span> <span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span>
-    <span class='klass-association-end-reference'><a href="/api/meta/code/element/QuestionVersion/lastUpdatedBy#QuestionVersion.lastUpdatedBy">lastUpdatedBy</a></span><span class='klass-colon'>:</span> <span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-line-comment'>// TODO: Projection inheritance? QuestionReadProjection extends QuestionWriteProjection</span>
-<span class='klass-keyword-projection'>projection</span> <span class='klass-projection-name'><a id="QuestionReadProjection" href="/api/meta/code/element/QuestionReadProjection#QuestionReadProjection">QuestionReadProjection</a></span> <span class='klass-keyword-on'>on</span> <span class='klass-classifier-reference'><a href="/api/meta/code/element/Question#Question">Question</a></span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-line-comment'>// field names are &quot;includes&quot;, field values are column headers when serializing to a tabular format</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/id#Question.id">id</a></span>             <span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Question id&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/systemFrom#Question.systemFrom">systemFrom</a></span>     <span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Question system From&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/systemTo#Question.systemTo">systemTo</a></span>       <span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Question system To&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/createdOn#Question.createdOn">createdOn</a></span>      <span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Question created on&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/title#Question.title">title</a></span>          <span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Question title&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Document/body#Document.body">body</a></span>           <span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Question body&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/status#Question.status">status</a></span>         <span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Question status&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/deleted#Question.deleted">deleted</a></span>        <span class='klass-colon'>:</span> <span class='klass-string-literal'>&quot;Question is deleted&quot;</span><span class='klass-comma'>,</span>
-    <span class='klass-association-end-reference'><a href="/api/meta/code/element/Question/answers#Question.answers">answers</a></span><span class='klass-colon'>:</span> <span class='klass-projection-reference'><a href="/api/meta/code/element/AnswerProjection#AnswerProjection">AnswerProjection</a></span><span class='klass-comma'>,</span>
-    <span class='klass-association-end-reference'><a href="/api/meta/code/element/Question/tags#Question.tags">tags</a></span><span class='klass-colon'>:</span> <span class='klass-projection-reference'><a href="/api/meta/code/element/QuestionTagMappingProjection#QuestionTagMappingProjection">QuestionTagMappingProjection</a></span><span class='klass-comma'>,</span>
-    <span class='klass-association-end-reference'><a href="/api/meta/code/element/Question/version#Question.version">version</a></span><span class='klass-colon'>:</span> <span class='klass-projection-reference'><a href="/api/meta/code/element/QuestionVersionProjection#QuestionVersionProjection">QuestionVersionProjection</a></span><span class='klass-comma'>,</span>
-    <span class='klass-association-end-reference'><a href="/api/meta/code/element/Question/createdBy#Question.createdBy">createdBy</a></span><span class='klass-colon'>:</span> <span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span>
-    <span class='klass-association-end-reference'><a href="/api/meta/code/element/Question/lastUpdatedBy#Question.lastUpdatedBy">lastUpdatedBy</a></span><span class='klass-colon'>:</span> <span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span>
-<span class='klass-curly-right'>}</span>
-
-<span class='klass-line-comment'>// TODO: Type inference on projection paramters</span>
-<span class='klass-block-comment'>/*
+*/</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-class'>class</span><span class='klass-whitespace'> </span><span class='klass-class-name'><a id="Tag" href="/api/meta/code/element/Tag#Tag">Tag</a></span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-classifier-modifier'>systemTemporal</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-classifier-modifier'>versioned</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-classifier-modifier'>audited</span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Tag.name" href="/api/meta/code/element/Tag/name#Tag.name">name</a></span><span class='klass-whitespace'>                   </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>String</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>key</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Tag.description" href="/api/meta/code/element/Tag/description#Tag.description">description</a></span><span class='klass-whitespace'>            </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>String</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-class'>class</span><span class='klass-whitespace'> </span><span class='klass-class-name'><a id="QuestionTagMapping" href="/api/meta/code/element/QuestionTagMapping#QuestionTagMapping">QuestionTagMapping</a></span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-classifier-modifier'>systemTemporal</span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="QuestionTagMapping.questionId" href="/api/meta/code/element/QuestionTagMapping/questionId#QuestionTagMapping.questionId">questionId</a></span><span class='klass-whitespace'>             </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>Long</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>key</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>private</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>final</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="QuestionTagMapping.tagName" href="/api/meta/code/element/QuestionTagMapping/tagName#QuestionTagMapping.tagName">tagName</a></span><span class='klass-whitespace'>                </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>String</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>key</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>private</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>final</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-association'>association</span><span class='klass-whitespace'> </span><span class='klass-association-name'><a id="QuestionHasTagMappings" href="/api/meta/code/element/QuestionHasTagMappings#QuestionHasTagMappings">QuestionHasTagMappings</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-name'><a id="QuestionTagMapping.question" href="/api/meta/code/element/QuestionTagMapping/question#QuestionTagMapping.question">question</a></span><span class='klass-whitespace'>               </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-class-reference'><a href="/api/meta/code/element/Question#Question">Question</a></span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>1</span><span class='klass-dotdot'>..</span><span class='klass-integer-literal'>1</span><span class='klass-square-bracket-right'>]</span><span class='klass-whitespace'> </span><span class='klass-association-end-modifier'>final</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-name'><a id="Question.tags" href="/api/meta/code/element/Question/tags#Question.tags">tags</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-class-reference'><a href="/api/meta/code/element/QuestionTagMapping#QuestionTagMapping">QuestionTagMapping</a></span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>0</span><span class='klass-dotdot'>..</span><span class='klass-asterisk-literal'>*</span><span class='klass-square-bracket-right'>]</span><span class='klass-whitespace'> </span><span class='klass-association-end-modifier'>owned</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-keyword-order-by'>orderBy</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/QuestionTagMapping/tagName#QuestionTagMapping.tagName">tagName</a></span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-association'>association</span><span class='klass-whitespace'> </span><span class='klass-association-name'><a id="TagHasQuestionMappings" href="/api/meta/code/element/TagHasQuestionMappings#TagHasQuestionMappings">TagHasQuestionMappings</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-name'><a id="Tag.questions" href="/api/meta/code/element/Tag/questions#Tag.questions">questions</a></span><span class='klass-whitespace'>              </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-class-reference'><a href="/api/meta/code/element/QuestionTagMapping#QuestionTagMapping">QuestionTagMapping</a></span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>0</span><span class='klass-dotdot'>..</span><span class='klass-asterisk-literal'>*</span><span class='klass-square-bracket-right'>]</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-keyword-order-by'>orderBy</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/QuestionTagMapping/questionId#QuestionTagMapping.questionId">questionId</a></span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-name'><a id="QuestionTagMapping.tag" href="/api/meta/code/element/QuestionTagMapping/tag#QuestionTagMapping.tag">tag</a></span><span class='klass-whitespace'>                    </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-class-reference'><a href="/api/meta/code/element/Tag#Tag">Tag</a></span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>1</span><span class='klass-dotdot'>..</span><span class='klass-integer-literal'>1</span><span class='klass-square-bracket-right'>]</span><span class='klass-whitespace'> </span><span class='klass-association-end-modifier'>final</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-projection'>projection</span><span class='klass-whitespace'> </span><span class='klass-projection-name'><a id="UserProjection" href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-whitespace'> </span><span class='klass-keyword-on'>on</span><span class='klass-whitespace'> </span><span class='klass-classifier-reference'><a href="/api/meta/code/element/User#User">User</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/User/userId#User.userId">userId</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;User userId&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/User/systemFrom#User.systemFrom">systemFrom</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;User systemFrom&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/User/systemTo#User.systemTo">systemTo</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;User systemTo&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-projection'>projection</span><span class='klass-whitespace'> </span><span class='klass-projection-name'><a id="AnswerVersionProjection" href="/api/meta/code/element/AnswerVersionProjection#AnswerVersionProjection">AnswerVersionProjection</a></span><span class='klass-whitespace'> </span><span class='klass-keyword-on'>on</span><span class='klass-whitespace'> </span><span class='klass-classifier-reference'><a href="/api/meta/code/element/AnswerVersion#AnswerVersion">AnswerVersion</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/AnswerVersion/systemFrom#AnswerVersion.systemFrom">systemFrom</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;AnswerVersion systemFrom&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/AnswerVersion/systemTo#AnswerVersion.systemTo">systemTo</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;AnswerVersion systemTo&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/AnswerVersion/createdOn#AnswerVersion.createdOn">createdOn</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;AnswerVersion createdOn&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/AnswerVersion/number#AnswerVersion.number">number</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;AnswerVersion number&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-reference'><a href="/api/meta/code/element/AnswerVersion/createdBy#AnswerVersion.createdBy">createdBy</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-reference'><a href="/api/meta/code/element/AnswerVersion/lastUpdatedBy#AnswerVersion.lastUpdatedBy">lastUpdatedBy</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-projection'>projection</span><span class='klass-whitespace'> </span><span class='klass-projection-name'><a id="AnswerProjection" href="/api/meta/code/element/AnswerProjection#AnswerProjection">AnswerProjection</a></span><span class='klass-whitespace'> </span><span class='klass-keyword-on'>on</span><span class='klass-whitespace'> </span><span class='klass-classifier-reference'><a href="/api/meta/code/element/Answer#Answer">Answer</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Answer/id#Answer.id">id</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Answer id&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Answer/systemFrom#Answer.systemFrom">systemFrom</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Answer systemFrom&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Answer/systemTo#Answer.systemTo">systemTo</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Answer systemTo&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Answer/createdOn#Answer.createdOn">createdOn</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Answer createdOn&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Document/body#Document.body">body</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Document body&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Answer/deleted#Answer.deleted">deleted</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Answer deleted&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-reference'><a href="/api/meta/code/element/Answer/version#Answer.version">version</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/AnswerVersionProjection#AnswerVersionProjection">AnswerVersionProjection</a></span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-reference'><a href="/api/meta/code/element/Answer/createdBy#Answer.createdBy">createdBy</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-reference'><a href="/api/meta/code/element/Answer/lastUpdatedBy#Answer.lastUpdatedBy">lastUpdatedBy</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-projection'>projection</span><span class='klass-whitespace'> </span><span class='klass-projection-name'><a id="TagProjection" href="/api/meta/code/element/TagProjection#TagProjection">TagProjection</a></span><span class='klass-whitespace'> </span><span class='klass-keyword-on'>on</span><span class='klass-whitespace'> </span><span class='klass-classifier-reference'><a href="/api/meta/code/element/Tag#Tag">Tag</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Tag/name#Tag.name">name</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Tag name&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Tag/systemFrom#Tag.systemFrom">systemFrom</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Tag systemFrom&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Tag/systemTo#Tag.systemTo">systemTo</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Tag systemTo&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-projection'>projection</span><span class='klass-whitespace'> </span><span class='klass-projection-name'><a id="QuestionTagMappingProjection" href="/api/meta/code/element/QuestionTagMappingProjection#QuestionTagMappingProjection">QuestionTagMappingProjection</a></span><span class='klass-whitespace'> </span><span class='klass-keyword-on'>on</span><span class='klass-whitespace'> </span><span class='klass-classifier-reference'><a href="/api/meta/code/element/QuestionTagMapping#QuestionTagMapping">QuestionTagMapping</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/QuestionTagMapping/systemFrom#QuestionTagMapping.systemFrom">systemFrom</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;QuestionTagMapping systemFrom&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/QuestionTagMapping/systemTo#QuestionTagMapping.systemTo">systemTo</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;QuestionTagMapping systemTo&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-reference'><a href="/api/meta/code/element/QuestionTagMapping/tag#QuestionTagMapping.tag">tag</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/TagProjection#TagProjection">TagProjection</a></span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-keyword-projection'>projection</span><span class='klass-whitespace'> </span><span class='klass-projection-name'><a id="QuestionVersionProjection" href="/api/meta/code/element/QuestionVersionProjection#QuestionVersionProjection">QuestionVersionProjection</a></span><span class='klass-whitespace'> </span><span class='klass-keyword-on'>on</span><span class='klass-whitespace'> </span><span class='klass-classifier-reference'><a href="/api/meta/code/element/QuestionVersion#QuestionVersion">QuestionVersion</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/QuestionVersion/systemFrom#QuestionVersion.systemFrom">systemFrom</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;QuestionVersion systemFrom&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/QuestionVersion/systemTo#QuestionVersion.systemTo">systemTo</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;QuestionVersion systemTo&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/QuestionVersion/createdOn#QuestionVersion.createdOn">createdOn</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;QuestionVersion createdOn&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/QuestionVersion/number#QuestionVersion.number">number</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;QuestionVersion number&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-reference'><a href="/api/meta/code/element/QuestionVersion/createdBy#QuestionVersion.createdBy">createdBy</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-reference'><a href="/api/meta/code/element/QuestionVersion/lastUpdatedBy#QuestionVersion.lastUpdatedBy">lastUpdatedBy</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// TODO: Projection inheritance? QuestionReadProjection extends QuestionWriteProjection</span><span class='klass-newline'>
+</span><span class='klass-keyword-projection'>projection</span><span class='klass-whitespace'> </span><span class='klass-projection-name'><a id="QuestionReadProjection" href="/api/meta/code/element/QuestionReadProjection#QuestionReadProjection">QuestionReadProjection</a></span><span class='klass-whitespace'> </span><span class='klass-keyword-on'>on</span><span class='klass-whitespace'> </span><span class='klass-classifier-reference'><a href="/api/meta/code/element/Question#Question">Question</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// field names are &quot;includes&quot;, field values are column headers when serializing to a tabular format</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/id#Question.id">id</a></span><span class='klass-whitespace'>             </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Question id&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/systemFrom#Question.systemFrom">systemFrom</a></span><span class='klass-whitespace'>     </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Question system From&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/systemTo#Question.systemTo">systemTo</a></span><span class='klass-whitespace'>       </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Question system To&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/createdOn#Question.createdOn">createdOn</a></span><span class='klass-whitespace'>      </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Question created on&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/title#Question.title">title</a></span><span class='klass-whitespace'>          </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Question title&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Document/body#Document.body">body</a></span><span class='klass-whitespace'>           </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Question body&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/status#Question.status">status</a></span><span class='klass-whitespace'>         </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Question status&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/deleted#Question.deleted">deleted</a></span><span class='klass-whitespace'>        </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Question is deleted&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-reference'><a href="/api/meta/code/element/Question/answers#Question.answers">answers</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/AnswerProjection#AnswerProjection">AnswerProjection</a></span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-reference'><a href="/api/meta/code/element/Question/tags#Question.tags">tags</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/QuestionTagMappingProjection#QuestionTagMappingProjection">QuestionTagMappingProjection</a></span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-reference'><a href="/api/meta/code/element/Question/version#Question.version">version</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/QuestionVersionProjection#QuestionVersionProjection">QuestionVersionProjection</a></span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-reference'><a href="/api/meta/code/element/Question/createdBy#Question.createdBy">createdBy</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-association-end-reference'><a href="/api/meta/code/element/Question/lastUpdatedBy#Question.lastUpdatedBy">lastUpdatedBy</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/UserProjection#UserProjection">UserProjection</a></span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// TODO: Type inference on projection paramters</span><span class='klass-newline'>
+</span><span class='klass-block-comment'>/*
 projection FilteredAnswersProjection(substring: String[1..1]) on Question
 {
     title                          : &quot;Question title&quot;,
@@ -362,13 +362,13 @@ projection FilteredAnswersProjection(substring: String[1..1]) on Question
         body: &quot;Answer body&quot;,
     },
 }
-*/</span>
-
-<span class='klass-line-comment'>// Just embed inside the Question class?</span>
-<span class='klass-keyword-service'>service</span> <span class='klass-service-name'><a id="QuestionResource" href="/api/meta/code/element/QuestionResource#QuestionResource">QuestionResource</a></span> <span class='klass-keyword-on'>on</span> <span class='klass-class-reference'><a href="/api/meta/code/element/Question#Question">Question</a></span>
-<span class='klass-curly-left'>{</span>
-    <span class='klass-line-comment'>// TODO: matrix url params</span>
-    <span class='klass-block-comment'>/*
+*/</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-line-comment'>// Just embed inside the Question class?</span><span class='klass-newline'>
+</span><span class='klass-keyword-service'>service</span><span class='klass-whitespace'> </span><span class='klass-service-name'><a id="QuestionResource" href="/api/meta/code/element/QuestionResource#QuestionResource">QuestionResource</a></span><span class='klass-whitespace'> </span><span class='klass-keyword-on'>on</span><span class='klass-whitespace'> </span><span class='klass-class-reference'><a href="/api/meta/code/element/Question#Question">Question</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// TODO: matrix url params</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-block-comment'>/*
         /question/{id: Long[1..1]}/{substring: String[1..1]}
             GET
             {
@@ -383,59 +383,59 @@ projection FilteredAnswersProjection(substring: String[1..1]) on Question
                 criteria    : this.title startsWith titleSubstring
                 projection  : QuestionReadProjection
             }
-    */</span>
-
-    <span class='klass-line-comment'>// TODO: Service syntax. Parameter must be a message type or projection type.</span>
-    <span class='klass-block-comment'>/*
+    */</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// TODO: Service syntax. Parameter must be a message type or projection type.</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-block-comment'>/*
     read getById(id: Long[1..1]): QuestionReadProjection[1]
     {
         resource: QuestionResource
         url     : /question/{id: Long[1..1]}
         criteria: this.id == id
     }
-    */</span>
-
-    <span class='klass-line-comment'>// TODO: Consider forcing exact type matches. Meaning id's type here would be ID, not Long.</span>
-    <span class='klass-slash'>/</span><span class='klass-url-constant'>question</span><span class='klass-slash'>/</span><span class='klass-curly-left'>{</span><span class='klass-parameter-name'>id</span><span class='klass-colon'>:</span> <span class='klass-primitive-type'>Long</span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>1</span><span class='klass-dotdot'>..</span><span class='klass-integer-literal'>1</span><span class='klass-square-bracket-right'>]</span><span class='klass-curly-right'>}</span>
-        <span class='klass-verb-get'>GET</span>
-        <span class='klass-curly-left'>{</span>
-            <span class='klass-keyword-multiplicity'>multiplicity</span><span class='klass-colon'>:</span> <span class='klass-keyword-multiplicity-choice'>one</span><span class='klass-semicolon'>;</span>
-            <span class='klass-keyword-service-criteria'>criteria</span>    <span class='klass-colon'>:</span> <span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Question/id#Question.id">id</a></span> <span class='klass-operator-eq'>==</span> <span class='klass-parameter-reference'>id</span><span class='klass-semicolon'>;</span>
-            <span class='klass-keyword-projection'>projection</span>  <span class='klass-colon'>:</span> <span class='klass-projection-reference'><a href="/api/meta/code/element/QuestionReadProjection#QuestionReadProjection">QuestionReadProjection</a></span><span class='klass-semicolon'>;</span>
-
-            <span class='klass-line-comment'>// TODO: format: json</span>
-        <span class='klass-curly-right'>}</span>
-        <span class='klass-verb-put'>PUT</span>
-        <span class='klass-curly-left'>{</span>
-            <span class='klass-line-comment'>// PUT, PATCH, and DELETE should implicitly get ?{version: Integer[1..1]} due to optimistic locking</span>
-            <span class='klass-line-comment'>// TODO Version should be a primitive type, as in {version: Version[1..1]}</span>
-            <span class='klass-keyword-multiplicity'>multiplicity</span><span class='klass-colon'>:</span> <span class='klass-keyword-multiplicity-choice'>one</span><span class='klass-semicolon'>;</span>
-            <span class='klass-keyword-service-criteria'>criteria</span>    <span class='klass-colon'>:</span> <span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Question/id#Question.id">id</a></span> <span class='klass-operator-eq'>==</span> <span class='klass-parameter-reference'>id</span><span class='klass-semicolon'>;</span>
-
-            <span class='klass-line-comment'>// TODO: Consider 'conflict' 409, 412 Precondition Failed, or 417 Expectation Failed</span>
-            <span class='klass-line-comment'>// TODO: Allow anonymous/undeclared projections created from all owned association ends</span>
-        <span class='klass-curly-right'>}</span>
-        <span class='klass-verb-delete'>DELETE</span>
-        <span class='klass-curly-left'>{</span>
-            <span class='klass-line-comment'>// TODO</span>
-            <span class='klass-line-comment'>// PUT, PATCH, and DELETE should implicitly get ?version={version} due to optimistic locking</span>
-            <span class='klass-keyword-multiplicity'>multiplicity</span><span class='klass-colon'>:</span> <span class='klass-keyword-multiplicity-choice'>one</span><span class='klass-semicolon'>;</span>
-            <span class='klass-keyword-service-criteria'>criteria</span>    <span class='klass-colon'>:</span> <span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Question/id#Question.id">id</a></span> <span class='klass-operator-eq'>==</span> <span class='klass-parameter-reference'>id</span><span class='klass-semicolon'>;</span>
-
-            <span class='klass-line-comment'>// 'authorize' is like 'validate' but should give 401 Unauthorized or 403 forbidden instead of 400</span>
-            <span class='klass-line-comment'>// TODO: conditions implemented in code, like `|| native(UserIsModeratorClass)`</span>
-            <span class='klass-keyword-service-criteria'>authorize</span>   <span class='klass-colon'>:</span> <span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Question/createdById#Question.createdById">createdById</a></span> <span class='klass-operator-eq'>==</span> <span class='klass-literal-native'><a href="/api/meta/code/element/User#User">user</a></span><span class='klass-semicolon'>;</span>
-        <span class='klass-curly-right'>}</span>
-    <span class='klass-slash'>/</span><span class='klass-url-constant'>question</span><span class='klass-slash'>/</span><span class='klass-url-constant'>in</span><span class='klass-question'>?</span><span class='klass-curly-left'>{</span><span class='klass-parameter-name'>ids</span><span class='klass-colon'>:</span> <span class='klass-primitive-type'>Long</span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>0</span><span class='klass-dotdot'>..</span><span class='klass-asterisk-literal'>*</span><span class='klass-square-bracket-right'>]</span><span class='klass-curly-right'>}</span>
-        <span class='klass-verb-get'>GET</span>
-        <span class='klass-curly-left'>{</span>
-            <span class='klass-keyword-multiplicity'>multiplicity</span><span class='klass-colon'>:</span> <span class='klass-keyword-multiplicity-choice'>many</span><span class='klass-semicolon'>;</span>
-            <span class='klass-keyword-service-criteria'>criteria</span>    <span class='klass-colon'>:</span> <span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Question/id#Question.id">id</a></span> <span class='klass-operator-in'>in</span> <span class='klass-parameter-reference'>ids</span><span class='klass-semicolon'>;</span>
-            <span class='klass-keyword-projection'>projection</span>  <span class='klass-colon'>:</span> <span class='klass-projection-reference'><a href="/api/meta/code/element/QuestionReadProjection#QuestionReadProjection">QuestionReadProjection</a></span><span class='klass-semicolon'>;</span>
-        <span class='klass-curly-right'>}</span>
-
-    <span class='klass-line-comment'>// TODO: Test urls containing unusual characters like emoji, and %20</span>
-    <span class='klass-block-comment'>/*
+    */</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// TODO: Consider forcing exact type matches. Meaning id's type here would be ID, not Long.</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-slash'>/</span><span class='klass-url-constant'>question</span><span class='klass-slash'>/</span><span class='klass-curly-left'>{</span><span class='klass-parameter-name'>id</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>Long</span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>1</span><span class='klass-dotdot'>..</span><span class='klass-integer-literal'>1</span><span class='klass-square-bracket-right'>]</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-verb-get'>GET</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-multiplicity'>multiplicity</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-keyword-multiplicity-choice'>one</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-service-criteria'>criteria</span><span class='klass-whitespace'>    </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Question/id#Question.id">id</a></span><span class='klass-whitespace'> </span><span class='klass-operator-eq'>==</span><span class='klass-whitespace'> </span><span class='klass-parameter-reference'>id</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-projection'>projection</span><span class='klass-whitespace'>  </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/QuestionReadProjection#QuestionReadProjection">QuestionReadProjection</a></span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-line-comment'>// TODO: format: json</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-verb-put'>PUT</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-line-comment'>// PUT, PATCH, and DELETE should implicitly get ?{version: Integer[1..1]} due to optimistic locking</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-line-comment'>// TODO Version should be a primitive type, as in {version: Version[1..1]}</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-multiplicity'>multiplicity</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-keyword-multiplicity-choice'>one</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-service-criteria'>criteria</span><span class='klass-whitespace'>    </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Question/id#Question.id">id</a></span><span class='klass-whitespace'> </span><span class='klass-operator-eq'>==</span><span class='klass-whitespace'> </span><span class='klass-parameter-reference'>id</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-line-comment'>// TODO: Consider 'conflict' 409, 412 Precondition Failed, or 417 Expectation Failed</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-line-comment'>// TODO: Allow anonymous/undeclared projections created from all owned association ends</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-verb-delete'>DELETE</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-line-comment'>// TODO</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-line-comment'>// PUT, PATCH, and DELETE should implicitly get ?version={version} due to optimistic locking</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-multiplicity'>multiplicity</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-keyword-multiplicity-choice'>one</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-service-criteria'>criteria</span><span class='klass-whitespace'>    </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Question/id#Question.id">id</a></span><span class='klass-whitespace'> </span><span class='klass-operator-eq'>==</span><span class='klass-whitespace'> </span><span class='klass-parameter-reference'>id</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-line-comment'>// 'authorize' is like 'validate' but should give 401 Unauthorized or 403 forbidden instead of 400</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-line-comment'>// TODO: conditions implemented in code, like `|| native(UserIsModeratorClass)`</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-service-criteria'>authorize</span><span class='klass-whitespace'>   </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Question/createdById#Question.createdById">createdById</a></span><span class='klass-whitespace'> </span><span class='klass-operator-eq'>==</span><span class='klass-whitespace'> </span><span class='klass-literal-native'><a href="/api/meta/code/element/User#User">user</a></span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-slash'>/</span><span class='klass-url-constant'>question</span><span class='klass-slash'>/</span><span class='klass-url-constant'>in</span><span class='klass-question'>?</span><span class='klass-curly-left'>{</span><span class='klass-parameter-name'>ids</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>Long</span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>0</span><span class='klass-dotdot'>..</span><span class='klass-asterisk-literal'>*</span><span class='klass-square-bracket-right'>]</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-verb-get'>GET</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-multiplicity'>multiplicity</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-keyword-multiplicity-choice'>many</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-service-criteria'>criteria</span><span class='klass-whitespace'>    </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Question/id#Question.id">id</a></span><span class='klass-whitespace'> </span><span class='klass-operator-in'>in</span><span class='klass-whitespace'> </span><span class='klass-parameter-reference'>ids</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-projection'>projection</span><span class='klass-whitespace'>  </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/QuestionReadProjection#QuestionReadProjection">QuestionReadProjection</a></span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// TODO: Test urls containing unusual characters like emoji, and %20</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-block-comment'>/*
     /question/firstTwo
         GET
         {
@@ -444,38 +444,38 @@ projection FilteredAnswersProjection(substring: String[1..1]) on Question
             criteria    : this.id in (1, 2);
             projection  : QuestionReadProjection;
         }
-    */</span>
-    <span class='klass-slash'>/</span><span class='klass-url-constant'>question</span>
-        <span class='klass-verb-post'>POST</span>
-        <span class='klass-curly-left'>{</span>
-            <span class='klass-keyword-multiplicity'>multiplicity</span><span class='klass-colon'>:</span> <span class='klass-keyword-multiplicity-choice'>one</span><span class='klass-semicolon'>;</span>
-        <span class='klass-curly-right'>}</span>
-    <span class='klass-block-comment'>/*
+    */</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-slash'>/</span><span class='klass-url-constant'>question</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-verb-post'>POST</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-multiplicity'>multiplicity</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-keyword-multiplicity-choice'>one</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-block-comment'>/*
     GET
     {
         multiplicity: many;
         criteria    : this.title startsWith &quot;Why do&quot;;
         projection  : QuestionReadProjection;
     }
-    */</span>
-
-    <span class='klass-line-comment'>// TODO: Type inference on url parameters</span>
-    <span class='klass-line-comment'>// TODO: Consider adding a primitive type UserId</span>
-    <span class='klass-slash'>/</span><span class='klass-url-constant'>user</span><span class='klass-slash'>/</span><span class='klass-curly-left'>{</span><span class='klass-parameter-name'>userId</span><span class='klass-colon'>:</span> <span class='klass-primitive-type'>String</span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>1</span><span class='klass-dotdot'>..</span><span class='klass-integer-literal'>1</span><span class='klass-square-bracket-right'>]</span><span class='klass-curly-right'>}</span><span class='klass-slash'>/</span><span class='klass-url-constant'>questions</span>
-        <span class='klass-verb-get'>GET</span>
-        <span class='klass-curly-left'>{</span>
-            <span class='klass-line-comment'>//?page=1&amp;pageSize=25</span>
-            <span class='klass-keyword-multiplicity'>multiplicity</span><span class='klass-colon'>:</span> <span class='klass-keyword-multiplicity-choice'>many</span><span class='klass-semicolon'>;</span>
-            <span class='klass-keyword-service-criteria'>criteria</span>    <span class='klass-colon'>:</span> <span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Question/createdById#Question.createdById">createdById</a></span> <span class='klass-operator-eq'>==</span> <span class='klass-parameter-reference'>userId</span><span class='klass-semicolon'>;</span>
-            <span class='klass-keyword-projection'>projection</span>  <span class='klass-colon'>:</span> <span class='klass-projection-reference'><a href="/api/meta/code/element/QuestionReadProjection#QuestionReadProjection">QuestionReadProjection</a></span><span class='klass-semicolon'>;</span>
-
-            <span class='klass-line-comment'>// Deliberately shallow</span>
-            <span class='klass-keyword-order-by'>orderBy</span>     <span class='klass-colon'>:</span> <span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Question/createdOn#Question.createdOn">createdOn</a></span><span class='klass-semicolon'>;</span>
-
-            <span class='klass-line-comment'>// pageSize: ???</span>
-            <span class='klass-line-comment'>// page: ???</span>
-        <span class='klass-curly-right'>}</span>
-<span class='klass-curly-right'>}</span>
-</pre>
+    */</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// TODO: Type inference on url parameters</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// TODO: Consider adding a primitive type UserId</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-slash'>/</span><span class='klass-url-constant'>user</span><span class='klass-slash'>/</span><span class='klass-curly-left'>{</span><span class='klass-parameter-name'>userId</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>String</span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>1</span><span class='klass-dotdot'>..</span><span class='klass-integer-literal'>1</span><span class='klass-square-bracket-right'>]</span><span class='klass-curly-right'>}</span><span class='klass-slash'>/</span><span class='klass-url-constant'>questions</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-verb-get'>GET</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-line-comment'>//?page=1&amp;pageSize=25</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-multiplicity'>multiplicity</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-keyword-multiplicity-choice'>many</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-service-criteria'>criteria</span><span class='klass-whitespace'>    </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Question/createdById#Question.createdById">createdById</a></span><span class='klass-whitespace'> </span><span class='klass-operator-eq'>==</span><span class='klass-whitespace'> </span><span class='klass-parameter-reference'>userId</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-projection'>projection</span><span class='klass-whitespace'>  </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/QuestionReadProjection#QuestionReadProjection">QuestionReadProjection</a></span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-line-comment'>// Deliberately shallow</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-order-by'>orderBy</span><span class='klass-whitespace'>     </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Question/createdOn#Question.createdOn">createdOn</a></span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-line-comment'>// pageSize: ???</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-line-comment'>// page: ???</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span></pre>
 </body>
 </html>

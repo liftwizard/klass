@@ -410,4 +410,20 @@ public interface AnsiColorScheme {
     default void urlConstant(Ansi ansi) {
         this.identifier(ansi);
     }
+
+    default void invisibleToken(Ansi ansi) {
+        // Invisible tokens are not colored
+    }
+
+    default void whitespace(Ansi ansi) {
+        this.invisibleToken(ansi);
+    }
+
+    default void newline(Ansi ansi) {
+        this.invisibleToken(ansi);
+    }
+
+    default void endOfFile(Ansi ansi) {
+        this.invisibleToken(ansi);
+    }
 }

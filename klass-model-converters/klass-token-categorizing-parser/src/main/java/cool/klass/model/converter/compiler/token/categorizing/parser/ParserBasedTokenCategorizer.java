@@ -49,7 +49,6 @@ import cool.klass.model.meta.grammar.KlassParser.InterfaceHeaderContext;
 import cool.klass.model.meta.grammar.KlassParser.InterfaceReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.InvalidParameterDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.MemberReferenceContext;
-import cool.klass.model.meta.grammar.KlassParser.MultiplicityBodyContext;
 import cool.klass.model.meta.grammar.KlassParser.NativeLiteralContext;
 import cool.klass.model.meta.grammar.KlassParser.NullLiteralContext;
 import cool.klass.model.meta.grammar.KlassParser.OperatorContext;
@@ -84,7 +83,6 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import org.antlr.v4.runtime.tree.TerminalNode;
 import org.eclipse.collections.api.map.MapIterable;
 import org.eclipse.collections.api.map.MutableMapIterable;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
@@ -268,16 +266,6 @@ public class ParserBasedTokenCategorizer extends KlassBaseListener {
     @Override
     public void enterParameterizedPropertySignature(ParameterizedPropertySignatureContext ctx) {
         this.put(ctx.identifier().getStart(), TokenCategory.PARAMETERIZED_PROPERTY_NAME);
-    }
-
-    @Override
-    public void enterMultiplicityBody(MultiplicityBodyContext ctx) {
-        TerminalNode terminalNode = ctx.PUNCTUATION_ASTERISK();
-        if (terminalNode == null) {
-            return;
-        }
-
-        this.put(terminalNode.getSymbol(), TokenCategory.ASTERISK_LITERAL);
     }
 
     @Override
