@@ -28,6 +28,8 @@ public final class TokenCategoryToAnsiColor {
 
     public static void applyColor(TokenCategory tokenCategory, Ansi ansi, AnsiColorScheme colorScheme) {
         switch (tokenCategory) {
+            case COMMENT:
+                throw new AssertionError("Comment categories will always be more specific.");
             case BLOCK_COMMENT: {
                 colorScheme.blockComment(ansi);
                 return;
@@ -433,6 +435,21 @@ public final class TokenCategoryToAnsiColor {
             }
             case URL_CONSTANT: {
                 colorScheme.urlConstant(ansi);
+                return;
+            }
+            case INVISIBLE_TOKEN: {
+                throw new AssertionError("Invisible token categories will always be more specific.");
+            }
+            case WHITESPACE: {
+                colorScheme.whitespace(ansi);
+                return;
+            }
+            case NEWLINE: {
+                colorScheme.newline(ansi);
+                return;
+            }
+            case END_OF_FILE: {
+                colorScheme.endOfFile(ansi);
                 return;
             }
             default: {
