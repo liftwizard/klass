@@ -9,6 +9,18 @@
       }
     },
     {
+      "name": "whitespace",
+      "style": {}
+    },
+    {
+      "name": "newline",
+      "style": {}
+    },
+    {
+      "name": "endOfFile",
+      "style": {}
+    },
+    {
       "name": "blockComment",
       "style": {
         "foreground": "#a9b7c6"

@@ -58,8 +58,8 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
         validRules.addAllIterable(FALLBACK_RULES.keysView());
         validRules.addAllIterable(FALLBACK_RULES.valuesView());
 
-        validRules.add("background");
         validRules.add("foreground");
+        validRules.add("background");
 
         return validRules.toImmutable();
     }
@@ -67,16 +67,23 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
     private static ImmutableMap<String, String> getFallbacks() {
         MutableMap<String, String> fallbacks = Maps.mutable.empty();
 
+        // Invisible token fallbacks
+        fallbacks.put("invisibleToken", "foreground");
+        fallbacks.put("whitespace", "invisibleToken");
+        fallbacks.put("newline", "invisibleToken");
+        fallbacks.put("endOfFile", "invisibleToken");
+
         // Comment fallbacks
-        fallbacks.put("lineComment", "blockComment");
+        fallbacks.put("comment", "foreground");
+        fallbacks.put("lineComment", "comment");
+        fallbacks.put("blockComment", "comment");
 
         // Keyword fallbacks
-        fallbacks.put("packageKeyword", "keyword");
         fallbacks.put("primitiveType", "keyword");
-        fallbacks.put("verb", "keyword");
-        fallbacks.put("modifier", "keyword");
 
         // Keyword specific fallbacks
+        fallbacks.put("keyword", "foreground");
+        fallbacks.put("packageKeyword", "keyword");
         fallbacks.put("keywordEnumeration", "keyword");
         fallbacks.put("keywordInterface", "keyword");
         fallbacks.put("keywordUser", "keyword");
@@ -97,6 +104,7 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
         fallbacks.put("keywordServiceCriteria", "keyword");
 
         // Verb specific fallbacks
+        fallbacks.put("verb", "keyword");
         fallbacks.put("verbGet", "verb");
         fallbacks.put("verbPost", "verb");
         fallbacks.put("verbPut", "verb");
@@ -104,6 +112,7 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
         fallbacks.put("verbDelete", "verb");
 
         // Modifier fallbacks
+        fallbacks.put("modifier", "keyword");
         fallbacks.put("classifierModifier", "modifier");
         fallbacks.put("dataTypePropertyModifier", "modifier");
         fallbacks.put("associationEndModifier", "modifier");
@@ -113,6 +122,7 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
         fallbacks.put("serviceCategoryModifier", "modifier");
 
         // Identifier fallbacks
+        fallbacks.put("identifier", "foreground");
         fallbacks.put("packageName", "identifier");
         fallbacks.put("topLevelElementName", "identifier");
         fallbacks.put("enumerationLiteralName", "identifier");
@@ -156,6 +166,7 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
         fallbacks.put("parameterReference", "parameterName");
 
         // Literal fallbacks
+        fallbacks.put("literal", "foreground");
         fallbacks.put("stringLiteral", "literal");
         fallbacks.put("integerLiteral", "literal");
         fallbacks.put("booleanLiteral", "literal");
@@ -165,6 +176,7 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
         fallbacks.put("literalNative", "literal");
 
         // Punctuation fallbacks
+        fallbacks.put("punctuation", "foreground");
         fallbacks.put("comma", "punctuation");
         fallbacks.put("dot", "punctuation");
         fallbacks.put("semi", "punctuation");
@@ -174,6 +186,7 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
         fallbacks.put("question", "punctuation");
         fallbacks.put("ampersand", "punctuation");
         fallbacks.put("pairedPunctuation", "punctuation");
+        fallbacks.put("dotdot", "punctuation");
         fallbacks.put("parentheses", "pairedPunctuation");
         fallbacks.put("curlyBraces", "pairedPunctuation");
         fallbacks.put("squareBrackets", "pairedPunctuation");

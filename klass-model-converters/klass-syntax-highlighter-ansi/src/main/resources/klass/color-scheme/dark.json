@@ -3,10 +3,28 @@
   "description": "Default dark color scheme",
   "rules": [
     {
+      "name": "foreground",
+      "style": {
+        "foreground": "WHITE"
+      }
+    },
+    {
       "name": "background",
       "style": {
         "background": "BLACK"
       }
+    },
+    {
+      "name": "whitespace",
+      "style": {}
+    },
+    {
+      "name": "newline",
+      "style": {}
+    },
+    {
+      "name": "endOfFile",
+      "style": {}
     },
     {
       "name": "blockComment",

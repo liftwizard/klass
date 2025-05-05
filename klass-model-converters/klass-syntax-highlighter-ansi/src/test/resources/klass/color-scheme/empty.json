@@ -1,0 +1,18 @@
+{
+  "name": "test-only",
+  "description": "A minimal color scheme for testing with only foreground and background rules",
+  "rules": [
+    {
+      "name": "background",
+      "style": {
+        "background": "BLACK"
+      }
+    },
+    {
+      "name": "foreground",
+      "style": {
+        "foreground": "WHITE"
+      }
+    }
+  ]
+}

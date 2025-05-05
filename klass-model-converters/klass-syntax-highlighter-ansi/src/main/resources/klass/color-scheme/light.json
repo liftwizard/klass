@@ -3,10 +3,28 @@
   "description": "Light color scheme",
   "rules": [
     {
+      "name": "foreground",
+      "style": {
+        "foreground": "BLACK"
+      }
+    },
+    {
       "name": "background",
       "style": {
         "background": "WHITE"
       }
+    },
+    {
+      "name": "whitespace",
+      "style": {}
+    },
+    {
+      "name": "newline",
+      "style": {}
+    },
+    {
+      "name": "endOfFile",
+      "style": {}
     },
     {
       "name": "blockComment",
