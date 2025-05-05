@@ -93,12 +93,12 @@ public final class LexerBasedTokenCategorizer {
             case KlassLexer.PUNCTUATION_SEMI -> TokenCategory.SEMICOLON;
             case KlassLexer.PUNCTUATION_AMPERSAND -> TokenCategory.AMPERSAND;
             case KlassLexer.PUNCTUATION_ASTERISK -> TokenCategory.ASTERISK_LITERAL;
-            case KlassLexer.OPERATOR_EQ -> TokenCategory.OPERATOR_EQ;
-            case KlassLexer.OPERATOR_NE -> TokenCategory.OPERATOR_NE;
-            case KlassLexer.OPERATOR_LT -> TokenCategory.OPERATOR_LT;
-            case KlassLexer.OPERATOR_GT -> TokenCategory.OPERATOR_GT;
-            case KlassLexer.OPERATOR_LE -> TokenCategory.OPERATOR_LE;
-            case KlassLexer.OPERATOR_GE -> TokenCategory.OPERATOR_GE;
+            case KlassLexer.OPERATOR_EQUALS -> TokenCategory.OPERATOR_EQUALS;
+            case KlassLexer.OPERATOR_NOT_EQUALS -> TokenCategory.OPERATOR_NOT_EQUALS;
+            case KlassLexer.OPERATOR_LESS_THAN -> TokenCategory.OPERATOR_LESS_THAN;
+            case KlassLexer.OPERATOR_GREATER_THAN -> TokenCategory.OPERATOR_GREATER_THAN;
+            case KlassLexer.OPERATOR_LESS_THAN_OR_EQUAL -> TokenCategory.OPERATOR_LESS_THAN_OR_EQUAL;
+            case KlassLexer.OPERATOR_GREATER_THAN_OR_EQUAL -> TokenCategory.OPERATOR_GREATER_THAN_OR_EQUAL;
             case KlassLexer.OPERATOR_AND -> TokenCategory.OPERATOR_AND;
             case KlassLexer.OPERATOR_OR -> TokenCategory.OPERATOR_OR;
             case KlassLexer.WHITESPACE -> TokenCategory.WHITESPACE;

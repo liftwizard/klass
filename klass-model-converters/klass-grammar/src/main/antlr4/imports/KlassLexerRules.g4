@@ -105,18 +105,18 @@ VERB_DELETE : 'DELETE';
 LITERAL_NULL  : 'null';
 LITERAL_THIS  : 'this';
 
-OPERATOR_EQ          : '==';
-OPERATOR_NE          : '!=';
-OPERATOR_LT          : '<';
-OPERATOR_GT          : '>';
-OPERATOR_LE          : '<=';
-OPERATOR_GE          : '>=';
-OPERATOR_IN          : 'in';
-OPERATOR_CONTAINS    : 'contains';
-OPERATOR_STARTS_WITH : 'startsWith';
-OPERATOR_ENDS_WITH   : 'endsWith';
-OPERATOR_AND         : '&&';
-OPERATOR_OR          : '||';
+OPERATOR_EQUALS                : '==';
+OPERATOR_NOT_EQUALS            : '!=';
+OPERATOR_LESS_THAN             : '<';
+OPERATOR_GREATER_THAN          : '>';
+OPERATOR_LESS_THAN_OR_EQUAL    : '<=';
+OPERATOR_GREATER_THAN_OR_EQUAL : '>=';
+OPERATOR_IN                    : 'in';
+OPERATOR_CONTAINS              : 'contains';
+OPERATOR_STARTS_WITH           : 'startsWith';
+OPERATOR_ENDS_WITH             : 'endsWith';
+OPERATOR_AND                   : '&&';
+OPERATOR_OR                    : '||';
 
 // Channels
 WHITESPACE  : [ \t\u000C]+  -> channel(1000);

@@ -401,27 +401,27 @@ public final class TokenCategoryToAnsiColor {
                 colorScheme.operator(ansi);
                 return;
             }
-            case OPERATOR_EQ: {
+            case OPERATOR_EQUALS: {
                 colorScheme.operatorEquals(ansi);
                 return;
             }
-            case OPERATOR_NE: {
+            case OPERATOR_NOT_EQUALS: {
                 colorScheme.operatorNotEquals(ansi);
                 return;
             }
-            case OPERATOR_LT: {
+            case OPERATOR_LESS_THAN: {
                 colorScheme.operatorLessThan(ansi);
                 return;
             }
-            case OPERATOR_GT: {
+            case OPERATOR_GREATER_THAN: {
                 colorScheme.operatorGreaterThan(ansi);
                 return;
             }
-            case OPERATOR_LE: {
+            case OPERATOR_LESS_THAN_OR_EQUAL: {
                 colorScheme.operatorLessThanOrEqual(ansi);
                 return;
             }
-            case OPERATOR_GE: {
+            case OPERATOR_GREATER_THAN_OR_EQUAL: {
                 colorScheme.operatorGreaterThanOrEqual(ansi);
                 return;
             }
