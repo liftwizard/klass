@@ -17,6 +17,7 @@
 package cool.klass.model.converter.compiler.syntax.highlighter;
 
 import java.time.Duration;
+import java.util.stream.Stream;
 
 import com.google.common.base.Stopwatch;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
@@ -36,8 +37,10 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.eclipse.collections.api.map.MapIterable;
 import org.fusesource.jansi.Ansi;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,31 +49,21 @@ class SyntaxHighlighterListenerTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SyntaxHighlighterListenerTest.class);
 
-    @Test
-    void lightColorScheme() {
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("light");
-        this.testColorScheme(colorScheme);
+    private static Stream<Arguments> colorSchemeProvider() {
+        return Stream.of(
+            Arguments.of("light"),
+            Arguments.of("light-rgb"),
+            Arguments.of("dark"),
+            Arguments.of("dark-cube"),
+            Arguments.of("dark-rgb"),
+            Arguments.of("empty")
+        );
     }
 
-    @Test
-    void darkColorScheme() {
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
-        this.testColorScheme(colorScheme);
-    }
-
-    @Test
-    void darkCubeColorScheme() {
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
-        this.testColorScheme(colorScheme);
-    }
-
-    @Test
-    void rgbColorScheme() {
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
-        this.testColorScheme(colorScheme);
-    }
-
-    private void testColorScheme(AnsiColorScheme colorScheme) {
+    @ParameterizedTest
+    @MethodSource("colorSchemeProvider")
+    void colorScheme(String schemeName) {
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName(schemeName);
         Stopwatch lexerStopwatch = Stopwatch.createStarted();
         String sourceCodeText = FileSlurper.slurp("/com/stackoverflow/stackoverflow.klass", this.getClass());
         String sourceName = "example.klass";

@@ -3,6 +3,12 @@
   "description": "Dark scheme with more precise color control",
   "rules": [
     {
+      "name": "foreground",
+      "style": {
+        "foreground": 255
+      }
+    },
+    {
       "name": "background",
       "style": {
         "background": "BLACK"
@@ -489,6 +495,18 @@
       "name": "punctuation",
       "style": {
         "foreground": 251
+      }
+    },
+    {
+      "name": "whitespace",
+      "style": {
+        "foreground": 238
+      }
+    },
+    {
+      "name": "newline",
+      "style": {
+        "foreground": 240
       }
     },
     {

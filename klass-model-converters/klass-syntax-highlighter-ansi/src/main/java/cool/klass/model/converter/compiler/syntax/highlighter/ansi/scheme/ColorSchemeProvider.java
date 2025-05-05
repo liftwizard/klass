@@ -104,7 +104,7 @@ public final class ColorSchemeProvider {
                     .append(": ")
                     .append(violation.getMessage());
             }
-            throw new IllegalArgumentException(errorMessage.toString());
+            throw new IllegalArgumentException(errorMessage.toString() + " for path " + path);
         } catch (IOException e) {
             throw new RuntimeException("Failed to load color scheme from " + path, e);
         }
