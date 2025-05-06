@@ -3,15 +3,15 @@
 
 At (InvalidNamesErrorTest.klass:19)
 
-[39m 1║ [35mpackage [39mBADPACKAGE
-[39m14║ [35mclass [39mbadClass
+[39m 1║ [35mpackage[m·[39mBADPACKAGE
+[39m14║ [35mclass[m·[39mbadClass[m¶[m
 [39m15║ [36m{
-[39m19║     [39mBadParameterizedProperty[36m([39mBadParameter[36m: [35mString[36m[[34m1[36m..[34m1[36m][36m)[36m: [39mbadClass[36m[[34m1[36m..[34m1[36m]
+[39m19║ [m····[39mBadParameterizedProperty[36m([39mBadParameter[36m:[m·[35mString[36m[[34m1[36m..[34m1[36m]):[m·[39mbadClass[36m[[34m1[36m..[34m1[36m][m¶[m
 [39m  ║ [31m                             ^^^^^^^^^^^^
-[39m20║     [36m{
-[39m21║         [32mthis[36m.[39mBadPrimitiveProperty [35m== [39mBadParameter
-[39m22║     [36m}
-[39m33║ [36m}
+[39m20║ ····[36m{[m¶[m
+[39m21║ ········[32mthis[36m.[39mBadPrimitiveProperty[m·[35m==[m·[39mBadParameter[m¶[m
+[39m22║ ····[36m}
+[39m33║ }
 [m
 [36mLocation:  [mInvalidNamesErrorTest.klass:19[m
 [36mFile:      [mInvalidNamesErrorTest.klass[m

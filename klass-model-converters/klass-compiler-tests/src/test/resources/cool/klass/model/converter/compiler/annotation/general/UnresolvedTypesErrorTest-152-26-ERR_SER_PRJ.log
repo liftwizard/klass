@@ -3,16 +3,16 @@
 
 At (UnresolvedTypesErrorTest.klass:152)
 
-[39m  1║ [35mpackage [39mdummy
-[39m145║ [35mservice [39mClassWithUnresolvedResource [35mon [39mClassWithUnresolved
+[39m  1║ [35mpackage[m·[39mdummy
+[39m145║ [35mservice[m·[39mClassWithUnresolvedResource[m·[35mon[m·[39mClassWithUnresolved[m¶[m
 [39m146║ [36m{
-[39m147║     [36m/[39munresolved[36m/[36m{[39munresolvedParameterDeclaration[36m: [39mUnresolvedEnumeration[36m[[34m1[36m..[34m1[36m][36m}
-[39m148║         [32mGET
-[39m149║         [36m{
-[39m152║             [35mprojection  [36m: [39mUnresolvedProjection[36m;
+[39m147║ [m····[36m/[39munresolved[36m/{[39munresolvedParameterDeclaration[36m:[m·[39mUnresolvedEnumeration[36m[[34m1[36m..[34m1[36m]}
+[39m148║ [m········[32mGET[m¶[m
+[39m149║ ········[36m{
+[39m152║ [m············[35mprojection[m··[36m:[m·[39mUnresolvedProjection[36m;
 [39m   ║ [31m                          ^^^^^^^^^^^^^^^^^^^^
-[39m154║         [36m}
-[39m163║ [36m}
+[39m154║ [m········[36m}
+[39m163║ }
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:152[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m

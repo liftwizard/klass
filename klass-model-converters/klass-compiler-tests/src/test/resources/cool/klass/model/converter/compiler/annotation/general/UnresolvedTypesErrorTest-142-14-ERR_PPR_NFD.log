@@ -3,12 +3,12 @@
 
 At (UnresolvedTypesErrorTest.klass:142)
 
-[39m  1║ [35mpackage [39mdummy
-[39m140║ [35mprojection [39mParentProjection2 [35mon [39mParent
+[39m  1║ [35mpackage[m·[39mdummy
+[39m140║ [35mprojection[m·[39mParentProjection2[m·[35mon[m·[39mParent[m¶[m
 [39m141║ [36m{
-[39m142║     [39mchildren[36m: [39mChildProjection[36m,
+[39m142║ [m····[39mchildren[36m:[m·[39mChildProjection[36m,
 [39m   ║ [31m              ^^^^^^^^^^^^^^^
-[39m143║ [36m}
+[39m143║ }
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:142[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m

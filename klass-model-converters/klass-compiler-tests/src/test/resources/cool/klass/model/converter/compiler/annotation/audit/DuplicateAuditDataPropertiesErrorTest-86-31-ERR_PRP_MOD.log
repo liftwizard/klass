@@ -3,12 +3,12 @@
 
 At (DuplicateAuditDataPropertiesErrorTest.klass:86)
 
-[39m 1║ [35mpackage [39mcom[36m.[39merrors
-[39m83║ [35massociation [39mDummyClassVersionHasLastUpdatedBy2
+[39m 1║ [35mpackage[m·[39mcom[36m.[39merrors
+[39m83║ [35massociation[m·[39mDummyClassVersionHasLastUpdatedBy2[m¶[m
 [39m84║ [36m{
-[39m86║     [39mlastUpdatedBy2[36m: [39mUser[36m[[34m1[36m..[34m1[36m] [32mlastUpdatedBy[36m;
+[39m86║ [m····[39mlastUpdatedBy2[36m:[m·[39mUser[36m[[34m1[36m..[34m1[36m][m·[32mlastUpdatedBy[36m;
 [39m  ║ [31m                               ^^^^^^^^^^^^^
-[39m89║ [36m}
+[39m89║ }
 [m
 [36mLocation:  [mDuplicateAuditDataPropertiesErrorTest.klass:86[m
 [36mFile:      [mDuplicateAuditDataPropertiesErrorTest.klass[m

@@ -3,12 +3,12 @@
 
 At (PrivatePropertyInProjectionErrorTest.klass:6)
 
-[39m1║ [35mpackage [39mdummy
-[39m3║ [35mclass [39mClassWithPrivateProperty
+[39m1║ [35mpackage[m·[39mdummy
+[39m3║ [35mclass[m·[39mClassWithPrivateProperty[m¶[m
 [39m4║ [36m{
-[39m6║     [39mprivateString[36m: [35mString [32mprivate[36m;
+[39m6║ [m····[39mprivateString[36m:[m·[35mString[m·[32mprivate[36m;
 [39m ║ [33m    ^^^^^^^^^^^^^
-[39m7║ [36m}
+[39m7║ }
 [m
 [36mLocation:  [mPrivatePropertyInProjectionErrorTest.klass:6[m
 [36mFile:      [mPrivatePropertyInProjectionErrorTest.klass[m

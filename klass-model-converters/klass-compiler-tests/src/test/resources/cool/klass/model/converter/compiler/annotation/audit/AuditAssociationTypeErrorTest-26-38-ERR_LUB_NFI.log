@@ -3,12 +3,12 @@
 
 At (AuditAssociationTypeErrorTest.klass:26)
 
-[39m 1║ [35mpackage [39mcom[36m.[39merrors
-[39m23║ [35massociation [39mLastUpdatedBy
+[39m 1║ [35mpackage[m·[39mcom[36m.[39merrors
+[39m23║ [35massociation[m·[39mLastUpdatedBy[m¶[m
 [39m24║ [36m{
-[39m26║     [39mlastUpdatedBy[36m: [39mNotUserClass[36m[[34m1[36m..[34m1[36m] [32mlastUpdatedBy [32mfinal[36m;
+[39m26║ [m····[39mlastUpdatedBy[36m:[m·[39mNotUserClass[36m[[34m1[36m..[34m1[36m][m·[32mlastUpdatedBy[m·[32mfinal[36m;
 [39m  ║ [31m                                      ^^^^^^^^^^^^^ ^^^^^
-[39m29║ [36m}
+[39m29║ }
 [m
 [36mLocation:  [mAuditAssociationTypeErrorTest.klass:26[m
 [36mFile:      [mAuditAssociationTypeErrorTest.klass[m

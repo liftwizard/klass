@@ -3,10 +3,10 @@
 
 At (CriteriaTypeMismatchErrorTest.klass:19)
 
-[39m 1║ [35mpackage [39mdummy
-[39m14║ [35massociation [39mDoubleOwnedAssociation
+[39m 1║ [35mpackage[m·[39mdummy
+[39m14║ [35massociation[m·[39mDoubleOwnedAssociation[m¶[m
 [39m15║ [36m{
-[39m19║     [35mrelationship [32mthis[36m.[39mlongKey [35m== [39mExampleClass2[36m.[39mstringForeignKey
+[39m19║ [m····[35mrelationship[m·[32mthis[36m.[39mlongKey[m·[35m==[m·[39mExampleClass2[36m.[39mstringForeignKey
 [39m  ║ [31m                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 [39m20║ [36m}
 [m

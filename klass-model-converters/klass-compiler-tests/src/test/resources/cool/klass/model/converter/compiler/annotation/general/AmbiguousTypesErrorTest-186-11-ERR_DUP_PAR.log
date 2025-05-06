@@ -3,12 +3,12 @@
 
 At (AmbiguousTypesErrorTest.klass:186)
 
-[39m  1║ [35mpackage [39mdummy
-[39m177║ [35mservice [39mGoodClassResource [35mon [39mGoodClass
+[39m  1║ [35mpackage[m·[39mdummy
+[39m177║ [35mservice[m·[39mGoodClassResource[m·[35mon[m·[39mGoodClass[m¶[m
 [39m178║ [36m{
-[39m186║     [36m/[39murl2[36m/[36m{[39mambiguousParameter[36m: [35mString[36m[[34m1[36m..[34m1[36m][36m}[36m/[36m{[39mambiguousParameter[36m: [35mString[36m[[34m1[36m..[34m1[36m][36m}
+[39m186║ [m····[36m/[39murl2[36m/{[39mambiguousParameter[36m:[m·[35mString[36m[[34m1[36m..[34m1[36m]}/{[39mambiguousParameter[36m:[m·[35mString[36m[[34m1[36m..[34m1[36m]}
 [39m   ║ [31m           ^^^^^^^^^^^^^^^^^^
-[39m200║ [36m}
+[39m200║ }
 [m
 [36mLocation:  [mAmbiguousTypesErrorTest.klass:186[m
 [36mFile:      [mAmbiguousTypesErrorTest.klass[m

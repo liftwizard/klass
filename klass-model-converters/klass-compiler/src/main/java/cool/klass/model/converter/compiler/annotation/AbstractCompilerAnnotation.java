@@ -196,7 +196,9 @@ public abstract class AbstractCompilerAnnotation {
             Ansi ansi = Ansi.ansi();
             tokenLine.getTokens().forEach(token -> this.ansiTokenColorizer.colorizeText(ansi, token));
 
-            if (!ansi.toString().endsWith(System.getProperty("line.separator"))) {
+            // Add an explicit newline at the end of each line for consistent formatting
+            String content = ansi.toString();
+            if (!content.endsWith(System.getProperty("line.separator"))) {
                 ansi.newline();
             }
             contextStrings.add(new ContextString(tokenLine.getLine(), ansi.toString()));
@@ -239,18 +241,30 @@ public abstract class AbstractCompilerAnnotation {
         Deque<Token> currentLine = new ArrayDeque<>();
         Token currentToken = null;
         MutableList<TokenLine> tokenLines = Lists.mutable.empty();
+
+        if (!contextTokenIterator.hasNext()) {
+            return Lists.immutable.empty();
+        }
+
         while (contextTokenIterator.hasNext()) {
             Token nextToken = contextTokenIterator.next();
+
+            // First token handling
             if (currentLine.isEmpty()) {
                 this.startLine(currentLine, nextToken);
                 currentToken = nextToken;
-            } else if (
+            }
+            // Same line token handling
+            else if (
                 currentToken.getTokenSource() == nextToken.getTokenSource() &&
                 currentToken.getLine() == nextToken.getLine()
             ) {
                 this.endLine(currentLine, nextToken);
                 currentToken = nextToken;
-            } else {
+            }
+            // New line token handling
+            else {
+                // Add the completed line
                 tokenLines.add(new TokenLine(currentToken.getLine(), Lists.immutable.withAll(currentLine)));
                 currentLine.clear();
 
@@ -258,7 +272,12 @@ public abstract class AbstractCompilerAnnotation {
                 currentToken = nextToken;
             }
         }
-        tokenLines.add(new TokenLine(currentToken.getLine(), Lists.immutable.withAll(currentLine)));
+
+        // Add the final line
+        if (!currentLine.isEmpty()) {
+            tokenLines.add(new TokenLine(currentToken.getLine(), Lists.immutable.withAll(currentLine)));
+        }
+
         return tokenLines.toImmutable();
     }
 

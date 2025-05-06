@@ -3,12 +3,12 @@
 
 At (UserClassWithDuplicateUserIdErrorTest.klass:5)
 
-[39m1║ [35mpackage [39mcom[36m.[39merrors
-[39m3║ [35muser [39mUser
+[39m1║ [35mpackage[m·[39mcom[36m.[39merrors
+[39m3║ [35muser[m·[39mUser[m¶[m
 [39m4║ [36m{
-[39m5║     [39muserId1[36m: [35mString [32mkey [32muserId [32mmaximumLength[36m([34m256[36m)[36m;
+[39m5║ [m····[39muserId1[36m:[m·[35mString[m·[32mkey[m·[32muserId[m·[32mmaximumLength[36m([34m256[36m);
 [39m ║ [31m                    ^^^ ^^^^^^
-[39m7║ [36m}
+[39m7║ }
 [m
 [36mLocation:  [mUserClassWithDuplicateUserIdErrorTest.klass:5[m
 [36mFile:      [mUserClassWithDuplicateUserIdErrorTest.klass[m

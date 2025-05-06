@@ -3,12 +3,12 @@
 
 At (IdAndKeyPropertiesErrorTest.klass:5)
 
-[39m1║ [35mpackage [39mexample
-[39m3║ [35mclass [39mExampleClass
+[39m1║ [35mpackage[m·[39mexample
+[39m3║ [35mclass[m·[39mExampleClass[m¶[m
 [39m4║ [36m{
-[39m5║     [39mkey[36m: [35mLong [32mkey[36m;
+[39m5║ [m····[39mkey[36m:[m·[35mLong[m·[32mkey[36m;
 [39m ║ [31m    ^^^
-[39m7║ [36m}
+[39m7║ }
 [m
 [36mLocation:  [mIdAndKeyPropertiesErrorTest.klass:5[m
 [36mFile:      [mIdAndKeyPropertiesErrorTest.klass[m

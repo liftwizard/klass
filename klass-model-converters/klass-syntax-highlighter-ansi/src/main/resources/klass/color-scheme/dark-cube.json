@@ -500,13 +500,15 @@
     {
       "name": "whitespace",
       "style": {
-        "foreground": 238
+        "foreground": 238,
+        "underline": true
       }
     },
     {
       "name": "newline",
       "style": {
-        "foreground": 240
+        "foreground": 240,
+        "underline": true
       }
     },
     {

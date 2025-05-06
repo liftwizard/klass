@@ -3,12 +3,12 @@
 
 At (ProjectionTypeTest.klass:51)
 
-[39m 1║ [35mpackage [39mdummy
-[39m49║ [35mprojection [39mProjection2 [35mon [39mParent
+[39m 1║ [35mpackage[m·[39mdummy
+[39m49║ [35mprojection[m·[39mProjection2[m·[35mon[m·[39mParent[m¶[m
 [39m50║ [36m{
-[39m51║     [39menumProperty[36m: [39mChildProjection[36m,
+[39m51║ [m····[39menumProperty[36m:[m·[39mChildProjection[36m,
 [39m  ║ [31m    ^^^^^^^^^^^^
-[39m54║ [36m}
+[39m54║ }
 [m
 [36mLocation:  [mProjectionTypeTest.klass:51[m
 [36mFile:      [mProjectionTypeTest.klass[m

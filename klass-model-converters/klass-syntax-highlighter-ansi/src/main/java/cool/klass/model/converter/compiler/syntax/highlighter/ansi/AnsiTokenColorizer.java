@@ -22,6 +22,9 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.style.StyleExtractor;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.style.StyleState;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.style.StyleTransition;
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.map.MapIterable;
@@ -38,6 +41,9 @@ public final class AnsiTokenColorizer {
     @Nonnull
     private final MapIterable<Token, TokenCategory> tokenCategoriesFromLexer;
 
+    @Nonnull
+    private StyleState currentStyleState = StyleState.EMPTY;
+
     public AnsiTokenColorizer(
         @Nonnull AnsiColorScheme colorScheme,
         @Nonnull MapIterable<Token, TokenCategory> tokenCategoriesFromParser,
@@ -48,13 +54,41 @@ public final class AnsiTokenColorizer {
         this.tokenCategoriesFromLexer = Objects.requireNonNull(tokenCategoriesFromLexer);
     }
 
+    public void resetStyle() {
+        this.currentStyleState = StyleState.EMPTY;
+    }
+
+    public void applyFinalReset(Ansi ansi) {
+        ansi.a(Ansi.Attribute.RESET);
+        resetStyle();
+    }
+
     @Nonnull
     public void colorizeText(Ansi ansi, Token token) {
         Optional<TokenCategory> tokenCategory = this.getTokenCategory(token);
-        tokenCategory.ifPresent(
-            justTokenCategory -> TokenCategoryToAnsiColor.applyColor(justTokenCategory, ansi, this.colorScheme)
-        );
-        ansi.a(token.getText());
+        String tokenText = token.getText();
+
+        if (tokenCategory.isEmpty()) {
+            ansi.a(tokenText);
+            return;
+        }
+
+        TokenCategory category = tokenCategory.get();
+
+        StyleState targetStyleState = StyleExtractor.extractStyleState(category, this.colorScheme);
+
+        this.currentStyleState = StyleTransition.transition(this.currentStyleState, targetStyleState, ansi);
+
+        if (category == TokenCategory.WHITESPACE) {
+            ansi.a(tokenText.replace(' ', '·'));
+        } else if (category == TokenCategory.NEWLINE) {
+            ansi.a("¶");
+            // Don't add the actual newline text yet - this prevents line duplication
+            // when the newline is processed separately
+            applyFinalReset(ansi);
+        } else {
+            ansi.a(tokenText);
+        }
     }
 
     private Optional<TokenCategory> getTokenCategory(Token token) {

@@ -26,7 +26,17 @@ import org.fusesource.jansi.Ansi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public record StyleSettings(Object foreground, Object background) {
+public record StyleSettings(
+    Object foreground,
+    Object background,
+    Boolean bold,
+    Boolean italic,
+    Boolean underline,
+    Boolean blink,
+    Boolean reverse,
+    Boolean strikethrough,
+    Boolean faint
+) {
     private static final Logger LOGGER = LoggerFactory.getLogger(StyleSettings.class);
     private static final Pattern HEX_COLOR_PATTERN = Pattern.compile("#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?");
 

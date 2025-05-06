@@ -3,12 +3,12 @@
 
 At (InvalidIdPropertyTypeErrorTest.klass:20)
 
-[39m 1║ [35mpackage [39mexample
-[39m18║ [35mclass [39mDoubleId
+[39m 1║ [35mpackage[m·[39mexample
+[39m18║ [35mclass[m·[39mDoubleId[m¶[m
 [39m19║ [36m{
-[39m20║     [39mdoubleId        [36m: [35mDouble [32mid [32mkey[36m;
+[39m20║ [m····[39mdoubleId[m········[36m:[m·[35mDouble[m·[32mid[m·[32mkey[36m;
 [39m  ║ [31m                             ^^
-[39m21║ [36m}
+[39m21║ }
 [m
 [36mLocation:  [mInvalidIdPropertyTypeErrorTest.klass:20[m
 [36mFile:      [mInvalidIdPropertyTypeErrorTest.klass[m

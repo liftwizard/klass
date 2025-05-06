@@ -3,12 +3,12 @@
 
 At (AmbiguousTypesErrorTest.klass:144)
 
-[39m  1║ [35mpackage [39mdummy
-[39m138║ [35mprojection [39mProjectionWithGoodClass [35mon [39mGoodClass
+[39m  1║ [35mpackage[m·[39mdummy
+[39m138║ [35mprojection[m·[39mProjectionWithGoodClass[m·[35mon[m·[39mGoodClass[m¶[m
 [39m139║ [36m{
-[39m144║     [39mgoodParameterizedProperty3[36m: [34m"Header"[36m,
+[39m144║ [m····[39mgoodParameterizedProperty3[36m:[m·[34m"Header"[36m,
 [39m   ║ [31m    ^^^^^^^^^^^^^^^^^^^^^^^^^^
-[39m170║ [36m}
+[39m170║ }
 [m
 [36mLocation:  [mAmbiguousTypesErrorTest.klass:144[m
 [36mFile:      [mAmbiguousTypesErrorTest.klass[m

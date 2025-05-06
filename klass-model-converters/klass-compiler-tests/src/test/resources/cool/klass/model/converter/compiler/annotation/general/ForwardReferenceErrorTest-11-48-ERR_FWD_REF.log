@@ -3,11 +3,11 @@
 
 At (ForwardReferenceErrorTest.klass:11)
 
-[39m 1║ [35mpackage [39mdummy
-[39m11║ [35mservice [39mClassWithEnumerationPropertyResource [35mon [39mClassWithEnumerationProperty
+[39m 1║ [35mpackage[m·[39mdummy
+[39m11║ [35mservice[m·[39mClassWithEnumerationPropertyResource[m·[35mon[m·[39mClassWithEnumerationProperty[m¶[m
 [39m  ║ [31m                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 [39m12║ [36m{
-[39m20║ [36m}
+[39m20║ }
 [m
 [36mLocation:  [mForwardReferenceErrorTest.klass:11[m
 [36mFile:      [mForwardReferenceErrorTest.klass[m

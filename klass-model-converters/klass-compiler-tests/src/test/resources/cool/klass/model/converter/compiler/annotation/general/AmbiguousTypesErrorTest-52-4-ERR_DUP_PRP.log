@@ -3,12 +3,12 @@
 
 At (AmbiguousTypesErrorTest.klass:52)
 
-[39m 1║ [35mpackage [39mdummy
-[39m49║ [35mclass [39mClassWithAmbiguousExtends [35mextends [39mAmbiguousClass [35mimplements [39mAmbiguousInterface
+[39m 1║ [35mpackage[m·[39mdummy
+[39m49║ [35mclass[m·[39mClassWithAmbiguousExtends[m·[35mextends[m·[39mAmbiguousClass[m·[35mimplements[m·[39mAmbiguousInterface[m¶[m
 [39m50║ [36m{
-[39m52║     [39mambiguousDataProperty[36m: [39mGoodEnum[36m;
+[39m52║ [m····[39mambiguousDataProperty[36m:[m·[39mGoodEnum[36m;
 [39m  ║ [31m    ^^^^^^^^^^^^^^^^^^^^^
-[39m67║ [36m}
+[39m67║ }
 [m
 [36mLocation:  [mAmbiguousTypesErrorTest.klass:52[m
 [36mFile:      [mAmbiguousTypesErrorTest.klass[m

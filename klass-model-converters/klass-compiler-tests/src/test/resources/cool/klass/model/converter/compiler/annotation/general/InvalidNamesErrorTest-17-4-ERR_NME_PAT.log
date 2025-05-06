@@ -3,12 +3,12 @@
 
 At (InvalidNamesErrorTest.klass:17)
 
-[39m 1║ [35mpackage [39mBADPACKAGE
-[39m14║ [35mclass [39mbadClass
+[39m 1║ [35mpackage[m·[39mBADPACKAGE
+[39m14║ [35mclass[m·[39mbadClass[m¶[m
 [39m15║ [36m{
-[39m17║     [39mBadEnumerationProperty[36m: [39mbadEnumeration[36m;
+[39m17║ [m····[39mBadEnumerationProperty[36m:[m·[39mbadEnumeration[36m;
 [39m  ║ [31m    ^^^^^^^^^^^^^^^^^^^^^^
-[39m33║ [36m}
+[39m33║ }
 [m
 [36mLocation:  [mInvalidNamesErrorTest.klass:17[m
 [36mFile:      [mInvalidNamesErrorTest.klass[m

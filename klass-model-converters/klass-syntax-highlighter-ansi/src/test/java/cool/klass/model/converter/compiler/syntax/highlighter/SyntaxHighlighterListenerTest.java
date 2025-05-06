@@ -17,10 +17,9 @@
 package cool.klass.model.converter.compiler.syntax.highlighter;
 
 import java.time.Duration;
-import java.util.stream.Stream;
 
 import com.google.common.base.Stopwatch;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.FunctionalSyntaxHighlighter;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
@@ -37,9 +36,9 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.eclipse.collections.api.map.MapIterable;
 import org.fusesource.jansi.Ansi;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,15 +48,70 @@ class SyntaxHighlighterListenerTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SyntaxHighlighterListenerTest.class);
 
-    private static Stream<Arguments> colorSchemeProvider() {
-        return Stream.of(
-            Arguments.of("light"),
-            Arguments.of("light-rgb"),
-            Arguments.of("dark"),
-            Arguments.of("dark-cube"),
-            Arguments.of("dark-rgb"),
-            Arguments.of("empty")
+    static String[] colorSchemeProvider() {
+        return new String[] { "light", "light-rgb", "dark", "dark-rgb", "dark-cube" };
+    }
+
+    @Test
+    void lightColorScheme() {
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("light");
+        this.testColorScheme(colorScheme);
+    }
+
+    @Test
+    void darkColorScheme() {
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
+        this.testColorScheme(colorScheme);
+    }
+
+    @Test
+    void darkCubeColorScheme() {
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-cube");
+        this.testColorScheme(colorScheme);
+    }
+
+    private void testColorScheme(AnsiColorScheme colorScheme) {
+        Stopwatch lexerStopwatch = Stopwatch.createStarted();
+        String sourceCodeText = FileSlurper.slurp("/com/stackoverflow/stackoverflow.klass", this.getClass());
+        String sourceName = "example.klass";
+        CodePointCharStream charStream = CharStreams.fromString(sourceCodeText, sourceName);
+        KlassLexer lexer = new KlassLexer(charStream);
+        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+        lexerStopwatch.stop();
+        Duration elapsedLexer = lexerStopwatch.elapsed();
+        LOGGER.info("elapsedLexer = {}", elapsedLexer);
+
+        Stopwatch parserStopwatch = Stopwatch.createStarted();
+        KlassParser parser = new KlassParser(tokenStream);
+        ParseTree parseTree = parser.compilationUnit();
+        parserStopwatch.stop();
+        Duration elapsedParser = parserStopwatch.elapsed();
+        LOGGER.info("elapsedParser = {}", elapsedParser);
+
+        Stopwatch tokenCategorizerStopwatch = Stopwatch.createStarted();
+        MapIterable<Token, TokenCategory> tokenCategoriesFromLexer =
+            LexerBasedTokenCategorizer.findTokenCategoriesFromLexer(tokenStream);
+        MapIterable<Token, TokenCategory> tokenCategoriesFromParser =
+            ParserBasedTokenCategorizer.findTokenCategoriesFromParser(parseTree);
+        tokenCategorizerStopwatch.stop();
+        Duration elapsedTokenCategorizer = tokenCategorizerStopwatch.elapsed();
+        LOGGER.info("elapsedTokenCategorizer = {}", elapsedTokenCategorizer);
+
+        Stopwatch rewriteStopwatch = Stopwatch.createStarted();
+
+        FunctionalSyntaxHighlighter functionalHighlighter = new FunctionalSyntaxHighlighter(
+            colorScheme,
+            tokenCategoriesFromLexer,
+            tokenCategoriesFromParser
         );
+
+        Ansi ansi = functionalHighlighter.highlightTokens(tokenStream.getTokens());
+
+        rewriteStopwatch.stop();
+        Duration elapsedRewrite = rewriteStopwatch.elapsed();
+        LOGGER.info("elapsedRewrite = {}", elapsedRewrite);
+
+        LOGGER.info("rewriteText =\n{}", ansi);
     }
 
     @ParameterizedTest
@@ -91,17 +145,14 @@ class SyntaxHighlighterListenerTest {
         LOGGER.info("elapsedTokenCategorizer = {}", elapsedTokenCategorizer);
 
         Stopwatch rewriteStopwatch = Stopwatch.createStarted();
-        AnsiTokenColorizer ansiTokenColorizer = new AnsiTokenColorizer(
+
+        FunctionalSyntaxHighlighter functionalHighlighter = new FunctionalSyntaxHighlighter(
             colorScheme,
             tokenCategoriesFromLexer,
             tokenCategoriesFromParser
         );
 
-        Ansi ansi = Ansi.ansi();
-        colorScheme.background(ansi);
-
-        tokenStream.getTokens().forEach(token -> ansiTokenColorizer.colorizeText(ansi, token));
-        ansi.reset();
+        Ansi ansi = functionalHighlighter.highlightTokens(tokenStream.getTokens());
 
         rewriteStopwatch.stop();
         Duration elapsedRewrite = rewriteStopwatch.elapsed();

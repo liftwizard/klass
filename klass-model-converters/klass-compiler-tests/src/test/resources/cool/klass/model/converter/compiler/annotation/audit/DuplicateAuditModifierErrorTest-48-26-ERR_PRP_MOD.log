@@ -3,12 +3,12 @@
 
 At (DuplicateAuditModifierErrorTest.klass:48)
 
-[39m 1║ [35mpackage [39mcom[36m.[39merrors
-[39m45║ [35massociation [39mVersionCreatedBy
+[39m 1║ [35mpackage[m·[39mcom[36m.[39merrors
+[39m45║ [35massociation[m·[39mVersionCreatedBy[m¶[m
 [39m46║ [36m{
-[39m48║     [39mcreatedBy[36m: [39mUser[36m[[34m1[36m..[34m1[36m] [32mcreatedBy [32mlastUpdatedBy[36m;
+[39m48║ [m····[39mcreatedBy[36m:[m·[39mUser[36m[[34m1[36m..[34m1[36m][m·[32mcreatedBy[m·[32mlastUpdatedBy[36m;
 [39m  ║ [31m                          ^^^^^^^^^
-[39m51║ [36m}
+[39m51║ }
 [m
 [36mLocation:  [mDuplicateAuditModifierErrorTest.klass:48[m
 [36mFile:      [mDuplicateAuditModifierErrorTest.klass[m
