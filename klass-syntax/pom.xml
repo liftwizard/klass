@@ -29,8 +29,8 @@
 
     <modules>
         <module>klass-service-klass-html</module>
-        <module>klass-syntax-css-class-generator</module>
         <module>klass-syntax-css-class</module>
+        <module>klass-syntax-css-maven-plugin</module>
     </modules>
 
     <dependencyManagement>

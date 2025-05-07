@@ -26,4 +26,26 @@
 
     <name>Klass Syntax: Token Category CSS Classes</name>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>cool.klass</groupId>
+                <artifactId>klass-syntax-css-maven-plugin</artifactId>
+                <version>${project.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-css</id>
+                        <goals>
+                            <goal>generate-css</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/generated-resources/ui/static/css</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
