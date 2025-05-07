@@ -109,3 +109,50 @@ jobs:
       # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
+
+  spotless-prettier-java-sort-imports-fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/cache@v4
+        with:
+          key: maven-spotless-prettier-java-sort-imports-${{ hashFiles('**/pom.xml') }}
+          path: ~/.m2/repository
+          restore-keys: |
+            maven-spotless-
+            maven-
+
+      - uses: twosigma/maven-cache-cleaner@v1
+
+      - uses: jdx/mise-action@v2
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+
+      - name: Run Spotless Apply for Prettier Java with Sorted Imports
+        run: |
+          # Run spotless for prettier-java-sort-imports
+          just spotless prettier-java-sort-imports
+
+          # Commit the changes if any files were modified
+          if [[ -n $(git status --porcelain) ]]; then
+            git add --all
+            git commit -m "Auto-fix: Apply Spotless Prettier Java with Sorted Imports"
+            git push
+            echo "Committed and pushed Spotless fixes"
+          else
+            echo "No changes needed by Spotless"
+          fi
+
+      # Remove any jars we may have created before actions/cache caches .m2
+      - name: "Clean Maven cache"
+        run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
