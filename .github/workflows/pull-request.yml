@@ -206,3 +206,52 @@ jobs:
       # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
+
+  liftwizard-file-match-rerecord-fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/cache@v4
+        with:
+          key: maven-liftwizard-rerecord-${{ hashFiles('**/pom.xml') }}
+          path: ~/.m2/repository
+          restore-keys: |
+            maven-liftwizard-rerecord-
+            maven-
+
+      - uses: twosigma/maven-cache-cleaner@v1
+
+      - uses: jdx/mise-action@v2
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+
+      - name: Run Maven with LIFTWIZARD_FILE_MATCH_RULE_RERECORD=true
+        env:
+          LIFTWIZARD_FILE_MATCH_RULE_RERECORD: true
+        run: |
+          # Run Maven with file match rule rerecord enabled
+          just mvn
+
+          # Commit the changes if any files were modified
+          if [[ -n $(git status --porcelain) ]]; then
+            git add --all
+            git commit -m "Auto-fix: Update file match test expectations"
+            git push
+            echo "Committed and pushed updated test expectations"
+          else
+            echo "No changes needed in test expectations"
+          fi
+
+      # Remove any jars we may have created before actions/cache caches .m2
+      - name: "Clean Maven cache"
+        run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
