@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2024 Craig Motlin
+  ~ Copyright 2025 Craig Motlin
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -82,12 +82,6 @@
         </dependency>
 
         <dependency>
-            <groupId>io.liftwizard</groupId>
-            <artifactId>liftwizard-junit-extension-match-abstract</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.eclipse.collections</groupId>
             <artifactId>eclipse-collections-api</artifactId>
             <scope>test</scope>
@@ -100,14 +94,15 @@
         </dependency>
 
         <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-syntax-highlighter-ansi</artifactId>
+            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>cool.klass</groupId>
-            <artifactId>klass-syntax-highlighter-ansi</artifactId>
+            <artifactId>klass-model-loader-compiler</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>

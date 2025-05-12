@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Craig Motlin
+ * Copyright 2025 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,51 +16,39 @@
 
 package cool.klass.generator.klass.html.test;
 
-import java.util.Optional;
-
 import cool.klass.generator.klass.html.KlassSourceCodeHtmlGenerator;
-import cool.klass.model.converter.compiler.CompilationResult;
-import cool.klass.model.converter.compiler.CompilationUnit;
-import cool.klass.model.converter.compiler.KlassCompiler;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode;
+import cool.klass.model.meta.loader.compiler.DomainModelCompilerLoader;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
-import io.liftwizard.junit.extension.match.FileSlurper;
 import io.liftwizard.junit.extension.match.file.FileMatchExtension;
+import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.list.ImmutableList;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-
 @ExtendWith(LogMarkerTestExtension.class)
 public class KlassSourceCodeHtmlGeneratorTest {
+
+    public static final String FULLY_QUALIFIED_PACKAGE = "com.stackoverflow";
 
     @RegisterExtension
     final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
     @Test
     void smokeTest() {
-        String sourceCodeText = FileSlurper.slurp("/com/stackoverflow/stackoverflow.klass", this.getClass());
-        CompilationUnit compilationUnit = CompilationUnit.createFromText(
-            0,
-            Optional.empty(),
-            "example.klass",
-            sourceCodeText
-        );
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
-        KlassCompiler compiler = new KlassCompiler(compilationUnit, colorScheme);
-        CompilationResult compilationResult = compiler.compile();
-        if (compilationResult.domainModelWithSourceCode().isEmpty()) {
-            String message = compilationResult.compilerAnnotations().makeString("\n");
-            fail(message);
-        }
+        ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
 
-        DomainModelWithSourceCode domainModel = compilationResult.domainModelWithSourceCode().get();
-        assertThat(domainModel).isNotNull();
+        var domainModelCompilerLoader = new DomainModelCompilerLoader(
+            klassSourcePackages,
+            Thread.currentThread().getContextClassLoader(),
+            DomainModelCompilerLoader::logCompilerError,
+            ColorSchemeProvider.getByName("dark")
+        );
+
+        DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
 
         for (SourceCode sourceCode : domainModel.getSourceCodes()) {
             String fullPathSourceName = sourceCode.getFullPathSourceName();
