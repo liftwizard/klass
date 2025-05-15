@@ -80,6 +80,9 @@ errorprone MVN=default_mvn: (mvn MVN "verify" "--activate-profiles errorprone" s
 # `mvn` with errorprone-strict
 errorprone-strict MVN=default_mvn: (mvn MVN "verify" "--activate-profiles errorprone-strict" skip_tests_flags)
 
+# `mvn` with errorprone-patch to generate auto-fixes
+errorprone-patch MVN=default_mvn: (mvn MVN "verify" "--activate-profiles errorprone-patch" skip_tests_flags)
+
 # `mvn` with spotbugs
 spotbugs MVN=default_mvn: (mvn MVN "verify" "--activate-profiles spotbugs-maven-plugin" skip_tests_flags)
 
@@ -109,7 +112,7 @@ rewrite-dry-run MVN=default_mvn: (mvn MVN "install org.openrewrite.maven:rewrite
 rewrite-run MVN=default_mvn: clean (mvn MVN "install org.openrewrite.maven:rewrite-maven-plugin:run" "--activate-profiles rewrite-maven-plugin" skip_tests_flags)
 
 # `mvn` with rewrite-maven-plugin for single recipe
-rewrite RECIPE MVN=default_mvn: clean (mvn MVN "install org.openrewrite.maven:rewrite-maven-plugin:run" ("--activate-profiles rewrite-maven-plugin -Drewrite.activeRecipes=" + RECIPE) skip_tests_flags)
+rewrite RECIPE MVN=default_mvn: (mvn MVN "install org.openrewrite.maven:rewrite-maven-plugin:run" ("--activate-profiles rewrite-maven-plugin -Drewrite.activeRecipes=" + RECIPE) skip_tests_flags)
 
 # display available updates (dependencies, plugins, properties)
 @display-updates:
