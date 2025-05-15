@@ -23,6 +23,8 @@ import java.io.InputStreamReader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Converter;
@@ -55,7 +57,7 @@ public class GenerateCssMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        getLog().info("Generating CSS for token categories");
+        this.getLog().info("Generating CSS for token categories");
 
         if (!this.outputDirectory.exists()) {
             if (!this.outputDirectory.mkdirs()) {
@@ -67,36 +69,31 @@ public class GenerateCssMojo extends AbstractMojo {
 
         File cssFile = new File(this.outputDirectory, "klass-syntax.css");
         try {
-            generateCssFile(cssFile);
-            addResourceDirectory();
+            this.generateCssFile(cssFile);
+            this.addResourceDirectory();
         } catch (IOException e) {
             throw new MojoExecutionException("Error generating CSS file", e);
         }
     }
 
-    private void generateCssFile(File cssFile) throws IOException {
-        String headerContent = readCssTemplate();
+    private void generateCssFile(File cssFile) throws IOException, MojoExecutionException {
+        String headerContent = this.readCssTemplate();
 
-        StringBuilder cssBuilder = new StringBuilder(headerContent);
-
-        // Generate CSS classes for all token categories
-        for (TokenCategory tokenCategory : TokenCategory.values()) {
-            cssBuilder.append(generateCssClass(tokenCategory));
-        }
+        String cssBuilder = Arrays.stream(TokenCategory.values())
+            .map(this::generateCssClass)
+            .collect(Collectors.joining("", headerContent, ""));
 
         try (Writer writer = Files.newBufferedWriter(cssFile.toPath(), StandardCharsets.UTF_8)) {
-            writer.write(cssBuilder.toString());
+            writer.write(cssBuilder);
         }
 
-        getLog().info("Generated CSS file: " + cssFile.getAbsolutePath());
+        this.getLog().info("Generated CSS file: " + cssFile.getAbsolutePath());
     }
 
-    private String readCssTemplate() throws IOException {
-        try (InputStream inputStream = getClass().getResourceAsStream(CSS_TEMPLATE_PATH)) {
+    private String readCssTemplate() throws IOException, MojoExecutionException {
+        try (InputStream inputStream = this.getClass().getResourceAsStream(CSS_TEMPLATE_PATH)) {
             if (inputStream == null) {
-                getLog().warn("CSS template file not found on classpath: " + CSS_TEMPLATE_PATH);
-                // Return empty string if template file is not found
-                return "";
+                throw new MojoExecutionException("CSS template file not found on classpath: " + CSS_TEMPLATE_PATH);
             }
             try (InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
                 return CharStreams.toString(reader);
@@ -109,26 +106,21 @@ public class GenerateCssMojo extends AbstractMojo {
         resource.setDirectory(this.outputDirectory.getAbsolutePath());
         this.mavenProject.addResource(resource);
 
-        getLog().info("Added resource directory: " + this.outputDirectory.getAbsolutePath());
+        this.getLog().info("Added resource directory: " + this.outputDirectory.getAbsolutePath());
     }
 
     private String generateCssClass(TokenCategory tokenCategory) {
-        return (
-            ".klass-" +
-            getTokenCategoryName(tokenCategory) +
-            " {\n" +
-            "    color: " +
-            getCssVar(tokenCategory) +
-            ";\n" +
-            "}\n"
-        );
+        return ".klass-%s {\n    color: %s;\n}\n".formatted(
+                this.getTokenCategoryName(tokenCategory),
+                this.getCssVar(tokenCategory)
+            );
     }
 
     private String getCssVar(TokenCategory tokenCategory) {
         TokenCategory parentCategory = tokenCategory.getParentCategory();
-        String fallbackCssVar = parentCategory == null ? "--color-foreground" : getCssVar(parentCategory);
+        String fallbackCssVar = parentCategory == null ? "--color-foreground" : this.getCssVar(parentCategory);
 
-        return String.format("var(--klass-color-%s, %s)", getTokenCategoryName(tokenCategory), fallbackCssVar);
+        return String.format("var(--klass-color-%s, %s)", this.getTokenCategoryName(tokenCategory), fallbackCssVar);
     }
 
     private String getTokenCategoryName(TokenCategory tokenCategory) {
