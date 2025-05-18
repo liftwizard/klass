@@ -3,12 +3,12 @@
 
 At (DuplicateDataTypePropertyModifiersErrorTest.klass:5)
 
-[39m1║ [35mpackage [39mdummy
-[39m3║ [35mclass [39mDummy
+[39m1║ [35mpackage[m·[39mdummy
+[39m3║ [35mclass[m·[39mDummy[m¶[m
 [39m4║ [36m{
-[39m5║     [39mid[36m: [35mLong [32mid [32mkey [32mkey[36m;
+[39m5║ [m····[39mid[36m:[m·[35mLong[m·[32mid[m·[32mkey[m·[32mkey[36m;
 [39m ║ [31m                    ^^^
-[39m6║ [36m}
+[39m6║ }
 [m
 [36mLocation:  [mDuplicateDataTypePropertyModifiersErrorTest.klass:5[m
 [36mFile:      [mDuplicateDataTypePropertyModifiersErrorTest.klass[m

@@ -3,16 +3,16 @@
 
 At (ServiceProjectionTypeMismatchErrorTest.klass:23)
 
-[39m 1║ [35mpackage [39mcom[36m.[39merrors
-[39m17║ [35mservice [39mClass2Resource [35mon [39mClass2
+[39m 1║ [35mpackage[m·[39mcom[36m.[39merrors
+[39m17║ [35mservice[m·[39mClass2Resource[m·[35mon[m·[39mClass2[m¶[m
 [39m18║ [36m{
-[39m19║     [36m/[39mexample
-[39m20║         [32mGET
-[39m21║         [36m{
-[39m23║             [35mprojection  [36m: [39mExampleProjection[36m;
+[39m19║ [m····[36m/[39mexample
+[39m20║ [m········[32mGET[m¶[m
+[39m21║ ········[36m{
+[39m23║ [m············[35mprojection[m··[36m:[m·[39mExampleProjection[36m;
 [39m  ║ [31m                          ^^^^^^^^^^^^^^^^^
-[39m24║         [36m}
-[39m25║ [36m}
+[39m24║ [m········[36m}
+[39m25║ }
 [m
 [36mLocation:  [mServiceProjectionTypeMismatchErrorTest.klass:23[m
 [36mFile:      [mServiceProjectionTypeMismatchErrorTest.klass[m

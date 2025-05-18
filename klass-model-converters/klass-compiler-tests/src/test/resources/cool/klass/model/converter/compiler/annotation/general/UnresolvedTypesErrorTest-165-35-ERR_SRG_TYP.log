@@ -3,11 +3,11 @@
 
 At (UnresolvedTypesErrorTest.klass:165)
 
-[39m  1║ [35mpackage [39mdummy
-[39m165║ [35mservice [39mUnresolvedClassResource [35mon [39mUnresolvedClass
+[39m  1║ [35mpackage[m·[39mdummy
+[39m165║ [35mservice[m·[39mUnresolvedClassResource[m·[35mon[m·[39mUnresolvedClass[m¶[m
 [39m   ║ [31m                                   ^^^^^^^^^^^^^^^
 [39m166║ [36m{
-[39m175║ [36m}
+[39m175║ }
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:165[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m

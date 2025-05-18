@@ -3,12 +3,12 @@
 
 At (IdWithoutKeyPropertyErrorTest.klass:5)
 
-[39m1║ [35mpackage [39mexample
-[39m3║ [35mclass [39mStringId
+[39m1║ [35mpackage[m·[39mexample
+[39m3║ [35mclass[m·[39mStringId[m¶[m
 [39m4║ [36m{
-[39m5║     [39mstringId[36m: [35mString [32mid[36m;
+[39m5║ [m····[39mstringId[36m:[m·[35mString[m·[32mid[36m;
 [39m ║ [31m                     ^^
-[39m6║ [36m}
+[39m6║ }
 [m
 [36mLocation:  [mIdWithoutKeyPropertyErrorTest.klass:5[m
 [36mFile:      [mIdWithoutKeyPropertyErrorTest.klass[m

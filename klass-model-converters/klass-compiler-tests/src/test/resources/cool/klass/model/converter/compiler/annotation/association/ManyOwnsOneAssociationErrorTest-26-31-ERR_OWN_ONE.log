@@ -3,12 +3,12 @@
 
 At (ManyOwnsOneAssociationErrorTest.klass:26)
 
-[39m 1║ [35mpackage [39mdummy
-[39m23║ [35massociation [39mAssociation2
+[39m 1║ [35mpackage[m·[39mdummy
+[39m23║ [35massociation[m·[39mAssociation2[m¶[m
 [39m24║ [36m{
-[39m26║     [39mparent[36m: [39mExampleType2[36m[[34m0[36m..[34m1[36m] [32mowned[36m;
+[39m26║ [m····[39mparent[36m:[m·[39mExampleType2[36m[[34m0[36m..[34m1[36m][m·[32mowned[36m;
 [39m  ║ [31m                        ^^^^^^ ^^^^^
-[39m29║ [36m}
+[39m29║ }
 [m
 [36mLocation:  [mManyOwnsOneAssociationErrorTest.klass:26[m
 [36mFile:      [mManyOwnsOneAssociationErrorTest.klass[m

@@ -3,11 +3,11 @@
 
 At (InvalidNamesErrorTest.klass:35)
 
-[39m 1║ [35mpackage [39mBADPACKAGE
-[39m35║ [35massociation [39mbadAssociation
+[39m 1║ [35mpackage[m·[39mBADPACKAGE
+[39m35║ [35massociation[m·[39mbadAssociation[m¶[m
 [39m  ║ [31m            ^^^^^^^^^^^^^^
 [39m36║ [36m{
-[39m41║ [36m}
+[39m41║ }
 [m
 [36mLocation:  [mInvalidNamesErrorTest.klass:35[m
 [36mFile:      [mInvalidNamesErrorTest.klass[m

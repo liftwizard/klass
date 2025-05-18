@@ -3,10 +3,10 @@
 
 At (UnresolvedTypesErrorTest.klass:91)
 
-[39m 1║ [35mpackage [39mdummy
-[39m86║ [35massociation [39mBadRelationship2
+[39m 1║ [35mpackage[m·[39mdummy
+[39m86║ [35massociation[m·[39mBadRelationship2[m¶[m
 [39m87║ [36m{
-[39m91║     [35mrelationship [32mthis[36m.[39munresolvedMember [35m== [39mChild[36m.[39munresolvedMember
+[39m91║ [m····[35mrelationship[m·[32mthis[36m.[39munresolvedMember[m·[35m==[m·[39mChild[36m.[39munresolvedMember
 [39m  ║ [31m                      ^^^^^^^^^^^^^^^^
 [39m92║ [36m}
 [m

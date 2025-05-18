@@ -3,12 +3,12 @@
 
 At (UnresolvedTypesErrorTest.klass:5)
 
-[39m1║ [35mpackage [39mdummy
-[39m3║ [35minterface [39mInterfaceWithUnresolved [35mimplements [39mUnresolvedInterface1[36m, [39mUnresolvedInterface2
+[39m1║ [35mpackage[m·[39mdummy
+[39m3║ [35minterface[m·[39mInterfaceWithUnresolved[m·[35mimplements[m·[39mUnresolvedInterface1[36m,[m·[39mUnresolvedInterface2[m¶[m
 [39m4║ [36m{
-[39m5║     [39munresolvedEnumerationProperty[36m: [39mUnresolvedEnumeration [32mkey[36m;
+[39m5║ [m····[39munresolvedEnumerationProperty[36m:[m·[39mUnresolvedEnumeration[m·[32mkey[36m;
 [39m ║ [31m                                   ^^^^^^^^^^^^^^^^^^^^^
-[39m6║ [36m}
+[39m6║ }
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:5[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m

@@ -3,16 +3,16 @@
 
 At (ServiceErrorTest.klass:53)
 
-[39m 1║ [35mpackage [39mdummy
-[39m24║ [35mservice [39mDummyClassResource [35mon [39mDummyClass
+[39m 1║ [35mpackage[m·[39mdummy
+[39m24║ [35mservice[m·[39mDummyClassResource[m·[35mon[m·[39mDummyClass[m¶[m
 [39m25║ [36m{
-[39m47║     [36m/[39mdummies
-[39m48║         [32mGET
-[39m49║         [36m{
-[39m53║             [35morderBy[36m: [32mthis[36m.[39minvalidMember [35mdescending[36m;
+[39m47║ [m····[36m/[39mdummies
+[39m48║ [m········[32mGET[m¶[m
+[39m49║ ········[36m{
+[39m53║ [m············[35morderBy[36m:[m·[32mthis[36m.[39minvalidMember[m·[35mdescending[36m;
 [39m  ║ [31m                          ^^^^^^^^^^^^^
-[39m54║         [36m}
-[39m55║ [36m}
+[39m54║ [m········[36m}
+[39m55║ }
 [m
 [36mLocation:  [mServiceErrorTest.klass:53[m
 [36mFile:      [mServiceErrorTest.klass[m

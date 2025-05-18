@@ -3,13 +3,13 @@
 
 At (UnresolvedTypesErrorTest.klass:83)
 
-[39m 1║ [35mpackage [39mdummy
-[39m79║ [35massociation [39mParentHasChild
+[39m 1║ [35mpackage[m·[39mdummy
+[39m79║ [35massociation[m·[39mParentHasChild[m¶[m
 [39m80║ [36m{
-[39m82║     [39mchildren[36m: [39mChild[36m[[34m0[36m..[34m*[36m]
-[39m83║         [35morderBy[36m: [32mthis[36m.[39munresolvedMember [35mascending[36m;
+[39m82║ [m····[39mchildren[36m:[m·[39mChild[36m[[34m0[36m..[34m*[36m][m¶[m
+[39m83║ ········[35morderBy[36m:[m·[32mthis[36m.[39munresolvedMember[m·[35mascending[36m;
 [39m  ║ [31m                      ^^^^^^^^^^^^^^^^
-[39m84║ [36m}
+[39m84║ }
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:83[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m

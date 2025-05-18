@@ -196,9 +196,13 @@ public abstract class AbstractCompilerAnnotation {
             Ansi ansi = Ansi.ansi();
             tokenLine.getTokens().forEach(token -> this.ansiTokenColorizer.colorizeText(ansi, token));
 
-            if (!ansi.toString().endsWith(System.getProperty("line.separator"))) {
+            String content = ansi.toString();
+            if (!content.endsWith(System.getProperty("line.separator"))) {
                 ansi.newline();
+            } else {
+                throw new AssertionError("The ansi string should not end with a newline");
             }
+
             contextStrings.add(new ContextString(tokenLine.getLine(), ansi.toString()));
             if (underlinedLines.contains(tokenLine.getLine())) {
                 String underline = this.getUnderline(tokenLine, underlinedTokens);

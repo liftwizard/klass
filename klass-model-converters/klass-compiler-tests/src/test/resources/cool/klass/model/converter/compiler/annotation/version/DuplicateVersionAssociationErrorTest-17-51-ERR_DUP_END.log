@@ -3,12 +3,12 @@
 
 At (DuplicateVersionAssociationErrorTest.klass:17)
 
-[39m 1║ [35mpackage [39mcom[36m.[39merrors
-[39m14║ [35massociation [39mExampleClass2HasVersion
+[39m 1║ [35mpackage[m·[39mcom[36m.[39merrors
+[39m14║ [35massociation[m·[39mExampleClass2HasVersion[m¶[m
 [39m15║ [36m{
-[39m17║     [39mexampleClassVersion[36m: [39mExampleClassVersion[36m[[34m1[36m..[34m1[36m] [32mowned [32mversion[36m;
+[39m17║ [m····[39mexampleClassVersion[36m:[m·[39mExampleClassVersion[36m[[34m1[36m..[34m1[36m][m·[32mowned[m·[32mversion[36m;
 [39m  ║ [33m                                                   ^^^^^
-[39m20║ [36m}
+[39m20║ }
 [m
 [36mLocation:  [mDuplicateVersionAssociationErrorTest.klass:17[m
 [36mFile:      [mDuplicateVersionAssociationErrorTest.klass[m

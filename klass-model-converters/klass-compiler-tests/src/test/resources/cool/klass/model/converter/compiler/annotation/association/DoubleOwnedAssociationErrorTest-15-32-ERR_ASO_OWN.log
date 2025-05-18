@@ -3,14 +3,14 @@
 
 At (DoubleOwnedAssociationErrorTest.klass:15)
 
-[39m 1║ [35mpackage [39mdummy
-[39m13║ [35massociation [39mDoubleOwnedAssociation
+[39m 1║ [35mpackage[m·[39mdummy
+[39m13║ [35massociation[m·[39mDoubleOwnedAssociation[m¶[m
 [39m14║ [36m{
-[39m15║     [39msource[36m: [39mExampleClass1[36m[[34m1[36m..[34m1[36m] [32mowned[36m;
+[39m15║ [m····[39msource[36m:[m·[39mExampleClass1[36m[[34m1[36m..[34m1[36m][m·[32mowned[36m;
 [39m  ║ [31m                                ^^^^^
-[39m16║     [39mtarget[36m: [39mExampleClass2[36m[[34m1[36m..[34m1[36m] [32mowned[36m;
+[39m16║ [m····[39mtarget[36m:[m·[39mExampleClass2[36m[[34m1[36m..[34m1[36m][m·[32mowned[36m;
 [39m  ║ [31m                                ^^^^^
-[39m19║ [36m}
+[39m19║ }
 [m
 [36mLocation:  [mDoubleOwnedAssociationErrorTest.klass:15[m
 [36mFile:      [mDoubleOwnedAssociationErrorTest.klass[m

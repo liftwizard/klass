@@ -3,12 +3,12 @@
 
 At (ForeignKeyMultiplicityErrorTest.klass:16)
 
-[39m 1║ [35mpackage [39mdummy
-[39m14║ [35massociation [39mOwnedHasOwner
+[39m 1║ [35mpackage[m·[39mdummy
+[39m14║ [35massociation[m·[39mOwnedHasOwner[m¶[m
 [39m15║ [36m{
-[39m16║     [39mownerDummy[36m: [39mDummyOwner[36m[[34m1[36m..[34m1[36m][36m;
+[39m16║ [m····[39mownerDummy[36m:[m·[39mDummyOwner[36m[[34m1[36m..[34m1[36m];
 [39m  ║ [31m                          ^^^^^^
-[39m20║ [36m}
+[39m20║ }
 [m
 [36mLocation:  [mForeignKeyMultiplicityErrorTest.klass:16[m
 [36mFile:      [mForeignKeyMultiplicityErrorTest.klass[m

@@ -3,12 +3,12 @@
 
 At (UnresolvedTypesErrorTest.klass:147)
 
-[39m  1║ [35mpackage [39mdummy
-[39m145║ [35mservice [39mClassWithUnresolvedResource [35mon [39mClassWithUnresolved
+[39m  1║ [35mpackage[m·[39mdummy
+[39m145║ [35mservice[m·[39mClassWithUnresolvedResource[m·[35mon[m·[39mClassWithUnresolved[m¶[m
 [39m146║ [36m{
-[39m147║     [36m/[39munresolved[36m/[36m{[39munresolvedParameterDeclaration[36m: [39mUnresolvedEnumeration[36m[[34m1[36m..[34m1[36m][36m}
+[39m147║ [m····[36m/[39munresolved[36m/{[39munresolvedParameterDeclaration[36m:[m·[39mUnresolvedEnumeration[36m[[34m1[36m..[34m1[36m]}
 [39m   ║ [31m                                                 ^^^^^^^^^^^^^^^^^^^^^
-[39m163║ [36m}
+[39m163║ }
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:147[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m

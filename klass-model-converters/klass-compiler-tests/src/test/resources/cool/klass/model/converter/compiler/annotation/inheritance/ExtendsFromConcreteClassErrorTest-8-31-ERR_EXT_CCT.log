@@ -3,11 +3,11 @@
 
 At (ExtendsFromConcreteClassErrorTest.klass:8)
 
-[39m 1║ [35mpackage [39mexample
-[39m 8║ [35mclass [39mConcreteSubclass [35mextends [39mConcreteSuperclass
+[39m 1║ [35mpackage[m·[39mexample
+[39m 8║ [35mclass[m·[39mConcreteSubclass[m·[35mextends[m·[39mConcreteSuperclass[m¶[m
 [39m  ║ [31m                               ^^^^^^^^^^^^^^^^^^
 [39m 9║ [36m{
-[39m11║ [36m}
+[39m11║ }
 [m
 [36mLocation:  [mExtendsFromConcreteClassErrorTest.klass:8[m
 [36mFile:      [mExtendsFromConcreteClassErrorTest.klass[m

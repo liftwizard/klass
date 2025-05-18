@@ -3,12 +3,12 @@
 
 At (InvalidModifierErrorTest.klass:23)
 
-[39m 1║ [35mpackage [39mtest
-[39m21║ [35massociation [39mQuestionHasAnswer1
+[39m 1║ [35mpackage[m·[39mtest
+[39m21║ [35massociation[m·[39mQuestionHasAnswer1[m¶[m
 [39m22║ [36m{
-[39m23║     [39mquestion               [36m: [39mQuestion1[36m[[34m1[36m..[34m1[36m] [32mfinal[36m;
+[39m23║ [m····[39mquestion[m···············[36m:[m·[39mQuestion1[36m[[34m1[36m..[34m1[36m][m·[32mfinal[36m;
 [39m  ║ [31m                                             ^^^^^
-[39m26║ [36m}
+[39m26║ }
 [m
 [36mLocation:  [mInvalidModifierErrorTest.klass:23[m
 [36mFile:      [mInvalidModifierErrorTest.klass[m

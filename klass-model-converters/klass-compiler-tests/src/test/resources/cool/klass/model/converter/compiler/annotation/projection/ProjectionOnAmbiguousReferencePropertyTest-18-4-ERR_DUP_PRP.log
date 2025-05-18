@@ -3,12 +3,12 @@
 
 At (ProjectionOnAmbiguousReferencePropertyTest.klass:18)
 
-[39m 1║ [35mpackage [39mdummy
-[39m15║ [35massociation [39mParentHasChild1
+[39m 1║ [35mpackage[m·[39mdummy
+[39m15║ [35massociation[m·[39mParentHasChild1[m¶[m
 [39m16║ [36m{
-[39m18║     [39mchildren[36m: [39mChild[36m[[34m0[36m..[34m*[36m][36m;
+[39m18║ [m····[39mchildren[36m:[m·[39mChild[36m[[34m0[36m..[34m*[36m];
 [39m  ║ [31m    ^^^^^^^^
-[39m21║ [36m}
+[39m21║ }
 [m
 [36mLocation:  [mProjectionOnAmbiguousReferencePropertyTest.klass:18[m
 [36mFile:      [mProjectionOnAmbiguousReferencePropertyTest.klass[m

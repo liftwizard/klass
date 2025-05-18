@@ -3,16 +3,16 @@
 
 At (UnresolvedTypesErrorTest.klass:171)
 
-[39m  1║ [35mpackage [39mdummy
-[39m165║ [35mservice [39mUnresolvedClassResource [35mon [39mUnresolvedClass
+[39m  1║ [35mpackage[m·[39mdummy
+[39m165║ [35mservice[m·[39mUnresolvedClassResource[m·[35mon[m·[39mUnresolvedClass[m¶[m
 [39m166║ [36m{
-[39m167║     [36m/[39mfake
-[39m168║         [32mGET
-[39m169║         [36m{
-[39m171║             [35mcriteria    [36m: [32mthis[36m.[39mirrelevantProperty [35m== [39mirrelevantParameter[36m;
+[39m167║ [m····[36m/[39mfake
+[39m168║ [m········[32mGET[m¶[m
+[39m169║ ········[36m{
+[39m171║ [m············[35mcriteria[m····[36m:[m·[32mthis[36m.[39mirrelevantProperty[m·[35m==[m·[39mirrelevantParameter[36m;
 [39m   ║ [31m                                                     ^^^^^^^^^^^^^^^^^^^
-[39m174║         [36m}
-[39m175║ [36m}
+[39m174║ [m········[36m}
+[39m175║ }
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:171[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m

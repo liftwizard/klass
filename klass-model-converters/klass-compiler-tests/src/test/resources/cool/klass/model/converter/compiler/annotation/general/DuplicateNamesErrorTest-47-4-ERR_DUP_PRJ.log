@@ -3,14 +3,14 @@
 
 At (DuplicateNamesErrorTest.klass:47)
 
-[39m 1║ [35mpackage [39mdummy
-[39m42║ [35mprojection [39mDuplicateTopLevelElement [35mon [39mDuplicateTopLevelElement
+[39m 1║ [35mpackage[m·[39mdummy
+[39m42║ [35mprojection[m·[39mDuplicateTopLevelElement[m·[35mon[m·[39mDuplicateTopLevelElement[m¶[m
 [39m43║ [36m{
-[39m47║     [39mduplicateMember[36m:
+[39m47║ [m····[39mduplicateMember[36m:[m¶[m
 [39m  ║ [31m    ^^^^^^^^^^^^^^^
-[39m48║     [36m{
-[39m50║     [36m}[36m,
-[39m51║ [36m}
+[39m48║ ····[36m{
+[39m50║ [m····[36m},
+[39m51║ }
 [m
 [36mLocation:  [mDuplicateNamesErrorTest.klass:47[m
 [36mFile:      [mDuplicateNamesErrorTest.klass[m

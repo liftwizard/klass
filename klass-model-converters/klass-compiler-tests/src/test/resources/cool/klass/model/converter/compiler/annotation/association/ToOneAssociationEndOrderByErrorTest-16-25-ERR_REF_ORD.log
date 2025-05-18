@@ -3,12 +3,12 @@
 
 At (ToOneAssociationEndOrderByErrorTest.klass:16)
 
-[39m 1║ [35mpackage [39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mtest
-[39m14║ [35massociation [39mParentHasChildren
+[39m 1║ [35mpackage[m·[39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mtest
+[39m14║ [35massociation[m·[39mParentHasChildren[m¶[m
 [39m15║ [36m{
-[39m16║     [39mparent[36m: [39mParent[36m[[34m1[36m..[34m1[36m] [35morderBy[36m: [32mthis[36m.[39mkey [35mascending[36m;
+[39m16║ [m····[39mparent[36m:[m·[39mParent[36m[[34m1[36m..[34m1[36m][m·[35morderBy[36m:[m·[32mthis[36m.[39mkey[m·[35mascending[36m;
 [39m  ║ [31m                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[39m18║ [36m}
+[39m18║ }
 [m
 [36mLocation:  [mToOneAssociationEndOrderByErrorTest.klass:16[m
 [36mFile:      [mToOneAssociationEndOrderByErrorTest.klass[m

@@ -3,12 +3,12 @@
 
 At (UnreferencedUrlParameterServiceErrorTest.klass:24)
 
-[39m 1║ [35mpackage [39mdummy
-[39m15║ [35mservice [39mExampleService [35mon [39mExampleClass
+[39m 1║ [35mpackage[m·[39mdummy
+[39m15║ [35mservice[m·[39mExampleService[m·[35mon[m·[39mExampleClass[m¶[m
 [39m16║ [36m{
-[39m24║     [36m/[39mpathParam[36m/[36m{[39munreferencedPathParam[36m: [35mLong[36m[[34m1[36m..[34m1[36m][36m}
+[39m24║ [m····[36m/[39mpathParam[36m/{[39munreferencedPathParam[36m:[m·[35mLong[36m[[34m1[36m..[34m1[36m]}
 [39m  ║ [31m                ^^^^^^^^^^^^^^^^^^^^^
-[39m31║ [36m}
+[39m31║ }
 [m
 [36mLocation:  [mUnreferencedUrlParameterServiceErrorTest.klass:24[m
 [36mFile:      [mUnreferencedUrlParameterServiceErrorTest.klass[m

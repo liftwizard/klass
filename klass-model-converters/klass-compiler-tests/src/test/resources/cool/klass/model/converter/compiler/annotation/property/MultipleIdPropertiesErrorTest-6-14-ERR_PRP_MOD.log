@@ -3,12 +3,12 @@
 
 At (MultipleIdPropertiesErrorTest.klass:6)
 
-[39m1║ [35mpackage [39mexample
-[39m3║ [35mclass [39mExampleClass
+[39m1║ [35mpackage[m·[39mexample
+[39m3║ [35mclass[m·[39mExampleClass[m¶[m
 [39m4║ [36m{
-[39m6║     [39mid2[36m: [35mLong [32mid [32mkey[36m;
+[39m6║ [m····[39mid2[36m:[m·[35mLong[m·[32mid[m·[32mkey[36m;
 [39m ║ [31m              ^^
-[39m7║ [36m}
+[39m7║ }
 [m
 [36mLocation:  [mMultipleIdPropertiesErrorTest.klass:6[m
 [36mFile:      [mMultipleIdPropertiesErrorTest.klass[m

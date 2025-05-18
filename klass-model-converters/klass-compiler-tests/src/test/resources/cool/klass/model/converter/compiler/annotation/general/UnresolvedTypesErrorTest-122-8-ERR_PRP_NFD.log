@@ -3,17 +3,17 @@
 
 At (UnresolvedTypesErrorTest.klass:122)
 
-[39m  1║ [35mpackage [39mdummy
-[39m110║ [35mprojection [39mParentProjection [35mon [39mParent
+[39m  1║ [35mpackage[m·[39mdummy
+[39m110║ [35mprojection[m·[39mParentProjection[m·[35mon[m·[39mParent[m¶[m
 [39m111║ [36m{
-[39m119║     [39mchildren[36m:
-[39m120║     [36m{
-[39m122║         [39munresolvedProjectionAssociationEnd[36m:
+[39m119║ [m····[39mchildren[36m:[m¶[m
+[39m120║ ····[36m{
+[39m122║ [m········[39munresolvedProjectionAssociationEnd[36m:[m¶[m
 [39m   ║ [31m        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[39m123║         [36m{
-[39m125║         [36m}[36m,
-[39m127║     [36m}[36m,
-[39m138║ [36m}
+[39m123║ ········[36m{
+[39m125║ [m········[36m},
+[39m127║ [m····[36m},
+[39m138║ }
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:122[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m

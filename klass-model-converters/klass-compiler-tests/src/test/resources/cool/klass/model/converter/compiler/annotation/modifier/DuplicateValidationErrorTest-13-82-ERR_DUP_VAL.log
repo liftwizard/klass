@@ -3,12 +3,12 @@
 
 At (DuplicateValidationErrorTest.klass:13)
 
-[39m 1║ [35mpackage [39mdummy
-[39m 8║ [35mclass [39mDummyClass
+[39m 1║ [35mpackage[m·[39mdummy
+[39m 8║ [35mclass[m·[39mDummyClass[m¶[m
 [39m 9║ [36m{
-[39m13║     [39menumeration[36m: [39mDummyEnumeration [32mminimumLength[36m([34m1[36m) [32mminLength[36m([34m1[36m) [32mmaximumLength[36m([34m10[36m) [32mmaxLength[36m([34m10[36m)[36m;
+[39m13║ [m····[39menumeration[36m:[m·[39mDummyEnumeration[m·[32mminimumLength[36m([34m1[36m)[m·[32mminLength[36m([34m1[36m)[m·[32mmaximumLength[36m([34m10[36m)[m·[32mmaxLength[36m([34m10[36m);
 [39m  ║ [31m                                                                                  ^^^^^^^^^
-[39m14║ [36m}
+[39m14║ }
 [m
 [36mLocation:  [mDuplicateValidationErrorTest.klass:13[m
 [36mFile:      [mDuplicateValidationErrorTest.klass[m

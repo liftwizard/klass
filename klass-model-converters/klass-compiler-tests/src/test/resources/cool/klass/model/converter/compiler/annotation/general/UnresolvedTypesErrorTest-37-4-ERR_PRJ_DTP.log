@@ -3,12 +3,12 @@
 
 At (UnresolvedTypesErrorTest.klass:37)
 
-[39m 1║ [35mpackage [39mdummy
-[39m35║ [35mprojection [39mProjectionWithUnresolved [35mon [39mClassWithUnresolved
+[39m 1║ [35mpackage[m·[39mdummy
+[39m35║ [35mprojection[m·[39mProjectionWithUnresolved[m·[35mon[m·[39mClassWithUnresolved[m¶[m
 [39m36║ [36m{
-[39m37║     [39munresolvedDataProperty[36m: [34m"Header"[36m,
+[39m37║ [m····[39munresolvedDataProperty[36m:[m·[34m"Header"[36m,
 [39m  ║ [31m    ^^^^^^^^^^^^^^^^^^^^^^
-[39m47║ [36m}
+[39m47║ }
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:37[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m

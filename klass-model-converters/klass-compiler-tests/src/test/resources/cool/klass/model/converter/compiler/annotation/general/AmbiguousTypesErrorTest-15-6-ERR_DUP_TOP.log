@@ -3,10 +3,10 @@
 
 At (AmbiguousTypesErrorTest.klass:15)
 
-[39m 1║ [35mpackage [39mdummy
-[39m15║ [35mclass [39mAmbiguousClass [36m{
+[39m 1║ [35mpackage[m·[39mdummy
+[39m15║ [35mclass[m·[39mAmbiguousClass[m·[36m{
 [39m  ║ [31m      ^^^^^^^^^^^^^^
-[39m17║ [36m}
+[39m17║ }
 [m
 [36mLocation:  [mAmbiguousTypesErrorTest.klass:15[m
 [36mFile:      [mAmbiguousTypesErrorTest.klass[m

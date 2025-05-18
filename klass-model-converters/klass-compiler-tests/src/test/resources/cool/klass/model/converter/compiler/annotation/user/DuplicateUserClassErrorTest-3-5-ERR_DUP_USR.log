@@ -3,11 +3,11 @@
 
 At (DuplicateUserClassErrorTest.klass:3)
 
-[39m1║ [35mpackage [39mcom[36m.[39merrors
-[39m3║ [35muser [39mUser1
+[39m1║ [35mpackage[m·[39mcom[36m.[39merrors
+[39m3║ [35muser[m·[39mUser1[m¶[m
 [39m ║ [31m     ^^^^^
 [39m4║ [36m{
-[39m6║ [36m}
+[39m6║ }
 [m
 [36mLocation:  [mDuplicateUserClassErrorTest.klass:3[m
 [36mFile:      [mDuplicateUserClassErrorTest.klass[m

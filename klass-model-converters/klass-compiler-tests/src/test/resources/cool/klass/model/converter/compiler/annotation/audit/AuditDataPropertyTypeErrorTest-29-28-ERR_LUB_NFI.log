@@ -3,12 +3,12 @@
 
 At (AuditDataPropertyTypeErrorTest.klass:29)
 
-[39m 1║ [35mpackage [39mcom[36m.[39merrors
-[39m24║ [35mclass [39mDummyClass2
+[39m 1║ [35mpackage[m·[39mcom[36m.[39merrors
+[39m24║ [35mclass[m·[39mDummyClass2[m¶[m
 [39m25║ [36m{
-[39m29║     [39mlastUpdatedById[36m: [35mString [32mlastUpdatedBy [32mfinal[36m;
+[39m29║ [m····[39mlastUpdatedById[36m:[m·[35mString[m·[32mlastUpdatedBy[m·[32mfinal[36m;
 [39m  ║ [31m                            ^^^^^^^^^^^^^ ^^^^^
-[39m33║ [36m}
+[39m33║ }
 [m
 [36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:29[m
 [36mFile:      [mAuditDataPropertyTypeErrorTest.klass[m

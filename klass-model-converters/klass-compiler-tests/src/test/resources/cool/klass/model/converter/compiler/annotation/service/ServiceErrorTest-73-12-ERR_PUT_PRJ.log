@@ -3,16 +3,16 @@
 
 At (ServiceErrorTest.klass:73)
 
-[39m 1║ [35mpackage [39mdummy
-[39m67║ [35mservice [39mStringKeyClassResource [35mon [39mStringKeyClass
+[39m 1║ [35mpackage[m·[39mdummy
+[39m67║ [35mservice[m·[39mStringKeyClassResource[m·[35mon[m·[39mStringKeyClass[m¶[m
 [39m68║ [36m{
-[39m69║     [36m/[39mstringKey
-[39m70║         [32mPUT
-[39m71║         [36m{
-[39m73║             [35mprojection  [36m: [39mStringKeyProjection[36m;
+[39m69║ [m····[36m/[39mstringKey
+[39m70║ [m········[32mPUT[m¶[m
+[39m71║ ········[36m{
+[39m73║ [m············[35mprojection[m··[36m:[m·[39mStringKeyProjection[36m;
 [39m  ║ [31m            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[39m74║         [36m}
-[39m75║ [36m}
+[39m74║ [m········[36m}
+[39m75║ }
 [m
 [36mLocation:  [mServiceErrorTest.klass:73[m
 [36mFile:      [mServiceErrorTest.klass[m

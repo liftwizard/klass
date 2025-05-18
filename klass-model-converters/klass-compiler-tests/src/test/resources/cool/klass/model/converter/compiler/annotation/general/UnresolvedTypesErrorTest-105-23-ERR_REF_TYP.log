@@ -3,12 +3,12 @@
 
 At (UnresolvedTypesErrorTest.klass:105)
 
-[39m  1║ [35mpackage [39mdummy
-[39m102║ [35massociation [39mParentDoesNotHaveUnresolvedClass
+[39m  1║ [35mpackage[m·[39mdummy
+[39m102║ [35massociation[m·[39mParentDoesNotHaveUnresolvedClass[m¶[m
 [39m103║ [36m{
-[39m105║     [39munresolvedClasses[36m: [39mUnresolvedClass[36m[[34m0[36m..[34m*[36m][36m;
+[39m105║ [m····[39munresolvedClasses[36m:[m·[39mUnresolvedClass[36m[[34m0[36m..[34m*[36m];
 [39m   ║ [31m                       ^^^^^^^^^^^^^^^
-[39m108║ [36m}
+[39m108║ }
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:105[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m

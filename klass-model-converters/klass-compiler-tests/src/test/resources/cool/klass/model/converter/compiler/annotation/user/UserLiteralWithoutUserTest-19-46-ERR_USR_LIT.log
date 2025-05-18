@@ -3,16 +3,16 @@
 
 At (UserLiteralWithoutUserTest.klass:19)
 
-[39m 1║ [35mpackage [39mcom[36m.[39mstackoverflow
-[39m12║ [35mservice [39mQuestionResource [35mon [39mQuestion
+[39m 1║ [35mpackage[m·[39mcom[36m.[39mstackoverflow
+[39m12║ [35mservice[m·[39mQuestionResource[m·[35mon[m·[39mQuestion[m¶[m
 [39m13║ [36m{
-[39m14║     [36m/[39mquestion[36m/[36m{[39mid[36m: [35mLong[36m[[34m1[36m..[34m1[36m][36m}
-[39m15║         [32mDELETE
-[39m16║         [36m{
-[39m19║             [35mauthorize   [36m: [32mthis[36m.[39mcreatedById [35m== [32muser[36m;
+[39m14║ [m····[36m/[39mquestion[36m/{[39mid[36m:[m·[35mLong[36m[[34m1[36m..[34m1[36m]}
+[39m15║ [m········[32mDELETE[m¶[m
+[39m16║ ········[36m{
+[39m19║ [m············[35mauthorize[m···[36m:[m·[32mthis[36m.[39mcreatedById[m·[35m==[m·[32muser[36m;
 [39m  ║ [31m                                              ^^^^
-[39m20║         [36m}
-[39m21║ [36m}
+[39m20║ [m········[36m}
+[39m21║ }
 [m
 [36mLocation:  [mUserLiteralWithoutUserTest.klass:19[m
 [36mFile:      [mUserLiteralWithoutUserTest.klass[m

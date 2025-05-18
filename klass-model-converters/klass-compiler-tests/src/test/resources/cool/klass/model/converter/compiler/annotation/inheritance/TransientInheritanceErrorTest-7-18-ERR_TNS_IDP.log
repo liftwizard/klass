@@ -3,14 +3,14 @@
 
 At (TransientInheritanceErrorTest.klass:7)
 
-[39m1║ [35mpackage [39mexample
-[39m3║ [35mclass [39mTransientSuperClass
-[39m4║     [35mabstract
-[39m5║     [32mtransient
+[39m1║ [35mpackage[m·[39mexample
+[39m3║ [35mclass[m·[39mTransientSuperClass[m¶[m
+[39m4║ ····[35mabstract[m¶[m
+[39m5║ ····[32mtransient[m¶[m
 [39m6║ [36m{
-[39m7║     [39mkey[36m: [35mLong [32mkey [32mid[36m;
+[39m7║ [m····[39mkey[36m:[m·[35mLong[m·[32mkey[m·[32mid[36m;
 [39m ║ [31m                  ^^
-[39m8║ [36m}
+[39m8║ }
 [m
 [36mLocation:  [mTransientInheritanceErrorTest.klass:7[m
 [36mFile:      [mTransientInheritanceErrorTest.klass[m
