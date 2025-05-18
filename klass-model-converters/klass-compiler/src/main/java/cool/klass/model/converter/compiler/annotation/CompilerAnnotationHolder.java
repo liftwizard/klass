@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.state.AntlrNamedElement;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.FunctionalSyntaxHighlighter;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
@@ -34,7 +34,7 @@ public class CompilerAnnotationHolder {
 
     private final MutableList<RootCompilerAnnotation> compilerAnnotations = Lists.mutable.empty();
 
-    private AnsiTokenColorizer ansiTokenColorizer;
+    private FunctionalSyntaxHighlighter syntaxHighlighter;
 
     public void add(@Nonnull String annotationCode, @Nonnull String message, @Nonnull IAntlrElement element) {
         this.add(annotationCode, message, element, AnnotationSeverity.ERROR);
@@ -141,7 +141,7 @@ public class CompilerAnnotationHolder {
             surroundingElements,
             annotationCode,
             message,
-            this.ansiTokenColorizer,
+            this.syntaxHighlighter,
             severity
         );
     }
@@ -161,7 +161,7 @@ public class CompilerAnnotationHolder {
             macroCause,
             offendingContexts,
             surroundingElements,
-            this.ansiTokenColorizer,
+            this.syntaxHighlighter,
             severity
         );
     }
@@ -191,7 +191,7 @@ public class CompilerAnnotationHolder {
         return this.compilerAnnotations.notEmpty();
     }
 
-    public void setAnsiTokenColorizer(@Nonnull AnsiTokenColorizer ansiTokenColorizer) {
-        this.ansiTokenColorizer = Objects.requireNonNull(ansiTokenColorizer);
+    public void setSyntaxHighlighter(@Nonnull FunctionalSyntaxHighlighter syntaxHighlighter) {
+        this.syntaxHighlighter = Objects.requireNonNull(syntaxHighlighter);
     }
 }

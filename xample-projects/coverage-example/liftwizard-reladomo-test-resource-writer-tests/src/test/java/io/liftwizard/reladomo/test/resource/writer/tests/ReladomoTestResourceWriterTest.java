@@ -75,7 +75,7 @@ public class ReladomoTestResourceWriterTest {
     private static DomainModel getDomainModel(ObjectMapper objectMapper) {
         DomainModelCompilerFactory domainModelCompilerFactory = new DomainModelCompilerFactory();
         domainModelCompilerFactory.setSourcePackages(List.of("cool.klass.xample.coverage"));
-        domainModelCompilerFactory.setColorScheme("dark");
+        domainModelCompilerFactory.setColorScheme("craig-light");
         return domainModelCompilerFactory.createDomainModel(objectMapper);
     }
 }

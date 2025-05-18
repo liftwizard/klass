@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Craig Motlin
+ * Copyright 2025 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,16 @@ package cool.klass.model.converter.compiler.annotation;
 
 import javax.annotation.Nonnull;
 
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.FunctionalSyntaxHighlighter;
+
 public class UnderlineContextString extends AbstractContextString {
 
-    public UnderlineContextString(int line, @Nonnull String string) {
-        super(line, string);
+    public UnderlineContextString(
+        int line,
+        @Nonnull String string,
+        @Nonnull FunctionalSyntaxHighlighter syntaxHighlighter
+    ) {
+        super(line, string, syntaxHighlighter);
     }
 
     @Override
