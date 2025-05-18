@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Craig Motlin
+ * Copyright 2024 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,7 +69,7 @@ class KlassCompilerTest {
             sourceCodeName,
             sourceCodeText
         );
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-light");
         KlassCompiler compiler = new KlassCompiler(compilationUnit, colorScheme);
         CompilationResult compilationResult = compiler.compile();
         ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult

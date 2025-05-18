@@ -24,13 +24,12 @@ import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.FunctionalSyntaxHighlighter;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.tuple.Pair;
 import org.fusesource.jansi.Ansi;
-import org.fusesource.jansi.Ansi.Color;
 
 public class RootCompilerAnnotation extends AbstractCompilerAnnotation implements Comparable<RootCompilerAnnotation> {
 
@@ -54,10 +53,10 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
         @Nonnull ImmutableList<IAntlrElement> sourceContexts,
         @Nonnull String annotationCode,
         @Nonnull String message,
-        @Nonnull AnsiTokenColorizer ansiTokenColorizer,
+        @Nonnull FunctionalSyntaxHighlighter syntaxHighlighter,
         @Nonnull AnnotationSeverity severity
     ) {
-        super(compilationUnit, macroCause, offendingContexts, sourceContexts, ansiTokenColorizer, severity);
+        super(compilationUnit, macroCause, offendingContexts, sourceContexts, syntaxHighlighter, severity);
         this.annotationCode = Objects.requireNonNull(annotationCode);
         this.message = Objects.requireNonNull(message);
     }
@@ -78,41 +77,54 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
         String contextString = this.getContextString();
         String locationMessage = this.getOptionalLocationMessage();
         String causeString = this.getCauseString();
-        String severityColor = this.severity == AnnotationSeverity.ERROR ? "red" : "yellow";
         String severityName = this.severity == AnnotationSeverity.ERROR ? "Error" : "Warning";
 
-        String format = """
-            ════════════════════════════════════════ @|magenta %s|@ ════════════════════════════════════════
-            @|%s %s: %s|@
+        Ansi ansi = Ansi.ansi();
 
-            At %s
+        // Apply theme background
+        this.syntaxHighlighter.applyInitialThemeStyles(ansi);
 
-            %s%s%s
-            ═════════════════════════════════════════════════════════════════════════════════════════════
-            """;
+        // Header line
+        ansi.a("════════════════════════════════════════ ");
+        this.syntaxHighlighter.getColorScheme().annotationCode(ansi);
+        ansi.a(this.annotationCode);
+        this.syntaxHighlighter.applyInitialThemeStyles(ansi);
+        ansi.a(" ════════════════════════════════════════\n");
 
-        String ansi = String.format(
-            format,
-            this.annotationCode,
-            severityColor,
-            severityName,
-            this.message,
-            this.getShortLocationString(),
-            contextString,
-            locationMessage,
-            causeString
-        );
+        // Error/Warning line
+        if (this.severity == AnnotationSeverity.ERROR) {
+            this.syntaxHighlighter.getColorScheme().errorAnnotation(ansi);
+        } else {
+            this.syntaxHighlighter.getColorScheme().warningAnnotation(ansi);
+        }
+        ansi.a(severityName).a(": ").a(this.message);
 
-        return Ansi.ansi().render(ansi).toString();
+        // Apply only background for theme consistency, don't override foreground color
+        this.syntaxHighlighter.getColorScheme().background(ansi);
+        ansi.a("\n\nAt ").a(this.getShortLocationString()).a("\n\n");
+
+        // Context, location, and cause
+        ansi.a(contextString);
+        ansi.a(locationMessage);
+        ansi.a(causeString);
+
+        // Footer line - ensure it uses theme foreground color
+        this.syntaxHighlighter.getColorScheme().foreground(ansi);
+        ansi.a("═════════════════════════════════════════════════════════════════════════════════════════════\n\n");
+
+        // Final reset
+        this.syntaxHighlighter.applyFinalReset(ansi);
+
+        return ansi.toString() + "\n";
     }
 
-    @Nonnull
     @Override
-    protected Color getCaretColor() {
-        return switch (this.severity) {
-            case ERROR -> Color.RED;
-            case WARNING -> Color.YELLOW;
-        };
+    protected void applyCaretColor(Ansi ansi) {
+        switch (this.severity) {
+            case ERROR -> this.syntaxHighlighter.getColorScheme().errorCaret(ansi);
+            case WARNING -> this.syntaxHighlighter.getColorScheme().warningCaret(ansi);
+            default -> throw new AssertionError("Unexpected severity: " + this.severity);
+        }
     }
 
     @Override

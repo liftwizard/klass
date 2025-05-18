@@ -1,17 +1,19 @@
-════════════════════════════════════════ [35mERR_FWD_REF[m ════════════════════════════════════════
-[31mError: Enumeration property 'ClassWithEnumerationProperty.enumerationProperty: ExampleEnumeration key' is declared on line 29 and has a forward reference to enumeration 'ExampleEnumeration' which is declared later in the source file 'ForwardReferenceErrorTest.klass' on line 38.[m
+[38;2;0;0;0;48;2;255;255;255m════════════════════════════════════════ [35mERR_FWD_REF[38;2;0;0;0;48;2;255;255;255m ════════════════════════════════════════
+[38;2;204;0;0mError: Enumeration property 'ClassWithEnumerationProperty.enumerationProperty: ExampleEnumeration key' is declared on line 29 and has a forward reference to enumeration 'ExampleEnumeration' which is declared later in the source file 'ForwardReferenceErrorTest.klass' on line 38.[48;2;255;255;255m
 
 At (ForwardReferenceErrorTest.klass:29)
 
-[39m 1║ [35mpackage [39mdummy
-[39m27║ [35mclass [39mClassWithEnumerationProperty
-[39m28║ [36m{
-[39m29║     [39menumerationProperty[36m: [39mExampleEnumeration [32mkey[36m;
-[39m  ║ [31m                         ^^^^^^^^^^^^^^^^^^
-[39m31║ [36m}
+[0;38;2;0;0;0;48;2;255;255;255;38;2;140;140;140m 1║[38;2;0;0;0;48;2;255;255;255m [0;38;2;0;0;0;48;2;255;255;255;38;2;0;51;179mpackage[38;2;240;240;240m·[38;2;170;0;0mdummy
+[0;38;2;0;0;0;48;2;255;255;255;38;2;140;140;140m27║[38;2;0;0;0;48;2;255;255;255m [0;38;2;0;0;0;48;2;255;255;255;38;2;0;51;179mclass[38;2;240;240;240m·[38;2;170;0;0mClassWithEnumerationProperty[38;2;240;240;240m¶
+[0;38;2;0;0;0;48;2;255;255;255;38;2;140;140;140m28║[38;2;0;0;0;48;2;255;255;255m [0;38;2;0;0;0;48;2;255;255;255m{
+[0;38;2;0;0;0;48;2;255;255;255;38;2;140;140;140m29║[38;2;0;0;0;48;2;255;255;255m [0;38;2;0;0;0;48;2;255;255;255;38;2;240;240;240m····[38;2;135;16;148menumerationProperty[38;2;0;0;0m:[38;2;240;240;240m·[38;2;170;0;0mExampleEnumeration[38;2;240;240;240m·[38;2;0;51;179mkey[38;2;204;204;204m;
+[0;38;2;0;0;0;48;2;255;255;255;38;2;140;140;140m  ║[38;2;0;0;0;48;2;255;255;255m [31m                         ^^^^^^^^^^^^^^^^^^
+[0;38;2;0;0;0;48;2;255;255;255;38;2;140;140;140m31║[38;2;0;0;0;48;2;255;255;255m [0;38;2;0;0;0;48;2;255;255;255m}
+
+[38;2;0;0;0;48;2;255;255;255;36mLocation:  [38;2;0;0;0mForwardReferenceErrorTest.klass:29
+[36mFile:      [38;2;0;0;0mForwardReferenceErrorTest.klass
+[36mLine:      [38;2;0;0;0m29
+[36mCharacter: [38;2;0;0;0m26
+[38;2;0;0;0m═════════════════════════════════════════════════════════════════════════════════════════════
+
 [m
-[36mLocation:  [mForwardReferenceErrorTest.klass:29[m
-[36mFile:      [mForwardReferenceErrorTest.klass[m
-[36mLine:      [m29[m
-[36mCharacter: [m26
-═════════════════════════════════════════════════════════════════════════════════════════════

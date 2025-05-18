@@ -18,10 +18,16 @@ package cool.klass.model.converter.compiler.annotation;
 
 import javax.annotation.Nonnull;
 
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.FunctionalSyntaxHighlighter;
+
 public class UnderlineContextString extends AbstractContextString {
 
-    public UnderlineContextString(int line, @Nonnull String string) {
-        super(line, string);
+    public UnderlineContextString(
+        int line,
+        @Nonnull String string,
+        @Nonnull FunctionalSyntaxHighlighter syntaxHighlighter
+    ) {
+        super(line, string, syntaxHighlighter);
     }
 
     @Override

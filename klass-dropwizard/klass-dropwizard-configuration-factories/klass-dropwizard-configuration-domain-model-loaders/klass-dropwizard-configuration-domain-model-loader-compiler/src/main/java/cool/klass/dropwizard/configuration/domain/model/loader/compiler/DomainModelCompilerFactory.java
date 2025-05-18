@@ -95,7 +95,9 @@ public class DomainModelCompilerFactory implements DomainModelFactory {
         this.colorScheme = colorScheme;
     }
 
-    @ValidationMethod(message = "Invalid color scheme. Valid options include 'dark', 'light', 'dark-cube', 'dark-rgb'.")
+    @ValidationMethod(
+        message = "Invalid color scheme. Valid options include 'dark', 'light', 'dark-cube', 'dark-rgb', 'craig-light', 'craig-dark'."
+    )
     @JsonIgnore
     public boolean isColorSchemeValid() {
         if (this.colorScheme == null) {

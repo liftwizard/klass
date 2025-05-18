@@ -18,10 +18,12 @@ package cool.klass.model.converter.compiler.annotation;
 
 import javax.annotation.Nonnull;
 
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.FunctionalSyntaxHighlighter;
+
 public class ContextString extends AbstractContextString {
 
-    public ContextString(int line, @Nonnull String string) {
-        super(line, string);
+    public ContextString(int line, @Nonnull String string, @Nonnull FunctionalSyntaxHighlighter syntaxHighlighter) {
+        super(line, string, syntaxHighlighter);
     }
 
     @Nonnull

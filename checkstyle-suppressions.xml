@@ -35,5 +35,7 @@
     <suppress files=".*" checks="VisibilityModifier" />
     <suppress files=".*" id="checkASCII" />
     <suppress files="[\\/]AssociationEnd.java" checks="UnusedLocalVariable" />
+    <suppress files="[\\/]SyntaxHighlightingVerificationTest.java" checks="AvoidEscapedUnicodeCharacters" />
+    <suppress files="[\\/]AnsiSyntaxHighlightingTest.java" checks="AvoidEscapedUnicodeCharacters" />
 
 </suppressions>

@@ -17,33 +17,17 @@
 package cool.klass.model.converter.compiler.syntax.highlighter;
 
 import java.time.Duration;
-import java.util.stream.Stream;
 
 import com.google.common.base.Stopwatch;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.functional.AnsiSyntaxHighlighter;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
-import cool.klass.model.converter.compiler.token.categories.TokenCategory;
-import cool.klass.model.converter.compiler.token.categorizing.lexer.LexerBasedTokenCategorizer;
-import cool.klass.model.converter.compiler.token.categorizing.parser.ParserBasedTokenCategorizer;
-import cool.klass.model.meta.grammar.KlassLexer;
-import cool.klass.model.meta.grammar.KlassParser;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.junit.extension.match.FileSlurper;
-import org.antlr.v4.runtime.BaseErrorListener;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.CodePointCharStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.RecognitionException;
-import org.antlr.v4.runtime.Recognizer;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.misc.ParseCancellationException;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.eclipse.collections.api.map.MapIterable;
 import org.fusesource.jansi.Ansi;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,81 +37,54 @@ class SyntaxHighlighterListenerTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SyntaxHighlighterListenerTest.class);
 
-    private static final BaseErrorListener THROWING_ERROR_LISTENER = new BaseErrorListener() {
-        @Override
-        public void syntaxError(
-            Recognizer<?, ?> recognizer,
-            Object offendingSymbol,
-            int line,
-            int charPositionInLine,
-            String msg,
-            RecognitionException e
-        ) {
-            throw new ParseCancellationException("line " + line + ":" + charPositionInLine + " " + msg);
-        }
-    };
+    static String[] colorSchemeProvider() {
+        return new String[] { "light", "light-rgb", "dark", "dark-rgb", "dark-cube", "craig-light", "craig-dark" };
+    }
 
-    private static Stream<Arguments> colorSchemeProvider() {
-        return Stream.of(
-            Arguments.of("light"),
-            Arguments.of("light-rgb"),
-            Arguments.of("dark"),
-            Arguments.of("dark-cube"),
-            Arguments.of("dark-rgb"),
-            Arguments.of("empty")
-        );
+    @Test
+    void lightColorScheme() {
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("light");
+        this.testColorScheme(colorScheme);
+    }
+
+    @Test
+    void darkColorScheme() {
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
+        this.testColorScheme(colorScheme);
+    }
+
+    @Test
+    void darkCubeColorScheme() {
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-light");
+        this.testColorScheme(colorScheme);
+    }
+
+    private void testColorScheme(AnsiColorScheme colorScheme) {
+        String sourceCodeText = FileSlurper.slurp("/com/stackoverflow/stackoverflow.klass", this.getClass());
+        String sourceName = "example.klass";
+
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        Ansi ansi = AnsiSyntaxHighlighter.highlightSourceCode(sourceCodeText, sourceName, colorScheme);
+        stopwatch.stop();
+        Duration elapsed = stopwatch.elapsed();
+        LOGGER.info("elapsed = {}", elapsed);
+
+        LOGGER.info("highlightedText =\n{}", ansi);
     }
 
     @ParameterizedTest
     @MethodSource("colorSchemeProvider")
     void colorScheme(String schemeName) {
         AnsiColorScheme colorScheme = ColorSchemeProvider.getByName(schemeName);
-        Stopwatch lexerStopwatch = Stopwatch.createStarted();
         String sourceCodeText = FileSlurper.slurp("/com/stackoverflow/stackoverflow.klass", this.getClass());
         String sourceName = "example.klass";
-        CodePointCharStream charStream = CharStreams.fromString(sourceCodeText, sourceName);
-        KlassLexer lexer = new KlassLexer(charStream);
-        lexer.addErrorListener(THROWING_ERROR_LISTENER);
-        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        lexerStopwatch.stop();
-        Duration elapsedLexer = lexerStopwatch.elapsed();
-        LOGGER.info("elapsedLexer = {}", elapsedLexer);
 
-        Stopwatch parserStopwatch = Stopwatch.createStarted();
-        KlassParser parser = new KlassParser(tokenStream);
-        parser.removeErrorListeners();
-        parser.addErrorListener(THROWING_ERROR_LISTENER);
-        ParseTree parseTree = parser.compilationUnit();
-        parserStopwatch.stop();
-        Duration elapsedParser = parserStopwatch.elapsed();
-        LOGGER.info("elapsedParser = {}", elapsedParser);
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        Ansi ansi = AnsiSyntaxHighlighter.highlightSourceCode(sourceCodeText, sourceName, colorScheme);
+        stopwatch.stop();
+        Duration elapsed = stopwatch.elapsed();
+        LOGGER.info("elapsed = {}", elapsed);
 
-        Stopwatch tokenCategorizerStopwatch = Stopwatch.createStarted();
-        MapIterable<Token, TokenCategory> tokenCategoriesFromLexer =
-            LexerBasedTokenCategorizer.findTokenCategoriesFromLexer(tokenStream);
-        MapIterable<Token, TokenCategory> tokenCategoriesFromParser =
-            ParserBasedTokenCategorizer.findTokenCategoriesFromParser(parseTree);
-        tokenCategorizerStopwatch.stop();
-        Duration elapsedTokenCategorizer = tokenCategorizerStopwatch.elapsed();
-        LOGGER.info("elapsedTokenCategorizer = {}", elapsedTokenCategorizer);
-
-        Stopwatch rewriteStopwatch = Stopwatch.createStarted();
-        AnsiTokenColorizer ansiTokenColorizer = new AnsiTokenColorizer(
-            colorScheme,
-            tokenCategoriesFromParser,
-            tokenCategoriesFromLexer
-        );
-
-        Ansi ansi = Ansi.ansi();
-        colorScheme.background(ansi);
-
-        tokenStream.getTokens().forEach((token) -> ansiTokenColorizer.colorizeText(ansi, token));
-        ansi.reset();
-
-        rewriteStopwatch.stop();
-        Duration elapsedRewrite = rewriteStopwatch.elapsed();
-        LOGGER.info("elapsedRewrite = {}", elapsedRewrite);
-
-        LOGGER.info("rewriteText =\n{}", ansi);
+        LOGGER.info("highlightedText =\n{}", ansi);
     }
 }

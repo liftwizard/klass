@@ -20,8 +20,7 @@ import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
-import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.FunctionalSyntaxHighlighter;
 import org.fusesource.jansi.Ansi;
 
 public abstract class AbstractContextString {
@@ -31,9 +30,25 @@ public abstract class AbstractContextString {
     @Nonnull
     private final String string;
 
-    protected AbstractContextString(int line, @Nonnull String string) {
+    @Nonnull
+    private final FunctionalSyntaxHighlighter syntaxHighlighter;
+
+    protected AbstractContextString(
+        int line,
+        @Nonnull String string,
+        @Nonnull FunctionalSyntaxHighlighter syntaxHighlighter
+    ) {
         this.line = line;
         this.string = Objects.requireNonNull(string);
+        this.syntaxHighlighter = Objects.requireNonNull(syntaxHighlighter);
+
+        // Enforce that content strings don't contain newlines - they should represent single logical lines
+        if (this.string.contains("\n")) {
+            throw new AssertionError(
+                "Context string content must not contain newlines. Found: " +
+                this.string.replace('\n', '↵').replace('\r', '↵')
+            );
+        }
     }
 
     private static String padLeft(String string, int width) {
@@ -45,16 +60,25 @@ public abstract class AbstractContextString {
     }
 
     public String toString(int lineNumberWidth) {
-        MutableList<String> strings = ArrayAdapter.adapt(this.string.split("\n"));
-        return strings
-            .collectWithIndex((string, index) -> this.toString(string, index, lineNumberWidth))
-            .makeString("\n");
+        // Content should never contain newlines, so don't split
+        // If content contains newlines, this will be caught by the assertion in the constructor
+        return this.toString(this.string, 0, lineNumberWidth);
     }
 
     private String toString(String string, int offset, int lineNumberWidth) {
         String lineNumberString = this.getLineNumberString(this.line + offset);
         String paddedLineNumberString = AbstractContextString.padLeft(lineNumberString, lineNumberWidth);
-        return Ansi.ansi().fgDefault().a(paddedLineNumberString).a(" ").a(string).toString();
+
+        Ansi ansi = Ansi.ansi();
+        ansi.reset();
+
+        this.syntaxHighlighter.applyInitialThemeStyles(ansi);
+        this.syntaxHighlighter.applyLineNumberStyle(ansi);
+        ansi.a(paddedLineNumberString);
+
+        this.syntaxHighlighter.applyInitialThemeStyles(ansi);
+        ansi.a(" ").a(string);
+        return ansi.toString();
     }
 
     @Override

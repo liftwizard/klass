@@ -49,7 +49,7 @@ public final class ColorSchemeProvider {
     /**
      * Get a color scheme by name, loading from JSONC if available. Looks in the classpath. If the {@code schemeName} is "dark" then the classpath is searched for a file named "klass/color-scheme/dark.jsonc".
      *
-     * @param schemeName The name of the color scheme to load, like "dark", "light", or "dark-rgb".
+     * @param schemeName The name of the color scheme to load, like "dark", "light", "dark-cube", "dark-rgb", "craig-light", or "craig-dark".
      */
     public static AnsiColorScheme getByName(String schemeName) {
         Objects.requireNonNull(
@@ -67,7 +67,7 @@ public final class ColorSchemeProvider {
     /**
      * Checks if a color scheme exists by name without loading it.
      *
-     * @param schemeName The name of the color scheme to check, like "dark", "light", or "dark-rgb".
+     * @param schemeName The name of the color scheme to check, like "dark", "light", "dark-cube", "dark-rgb", "craig-light", or "craig-dark".
      * @return true if the color scheme file exists, false otherwise
      */
     public static boolean existsByName(String schemeName) {

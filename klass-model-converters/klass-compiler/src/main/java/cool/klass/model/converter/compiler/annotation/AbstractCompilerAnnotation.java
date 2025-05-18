@@ -29,7 +29,7 @@ import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.FunctionalSyntaxHighlighter;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
@@ -45,7 +45,6 @@ import org.eclipse.collections.impl.list.mutable.ListAdapter;
 import org.eclipse.collections.impl.set.mutable.SetAdapter;
 import org.eclipse.collections.impl.tuple.Tuples;
 import org.fusesource.jansi.Ansi;
-import org.fusesource.jansi.Ansi.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,6 +63,9 @@ public abstract class AbstractCompilerAnnotation {
     protected final AnnotationSeverity severity;
 
     @Nonnull
+    protected final FunctionalSyntaxHighlighter syntaxHighlighter;
+
+    @Nonnull
     private final Optional<CauseCompilerAnnotation> macroCause;
 
     // TODO: Change type of offendingContexts to also be SourceContexts
@@ -73,22 +75,19 @@ public abstract class AbstractCompilerAnnotation {
     @Nonnull
     private final ImmutableList<IAntlrElement> sourceContexts;
 
-    @Nonnull
-    private final AnsiTokenColorizer ansiTokenColorizer;
-
     protected AbstractCompilerAnnotation(
         @Nonnull CompilationUnit compilationUnit,
         @Nonnull Optional<CauseCompilerAnnotation> macroCause,
         @Nonnull ImmutableList<ParserRuleContext> offendingContexts,
         @Nonnull ImmutableList<IAntlrElement> sourceContexts,
-        @Nonnull AnsiTokenColorizer ansiTokenColorizer,
+        @Nonnull FunctionalSyntaxHighlighter syntaxHighlighter,
         @Nonnull AnnotationSeverity severity
     ) {
         this.macroCause = Objects.requireNonNull(macroCause);
         this.compilationUnit = Objects.requireNonNull(compilationUnit);
         this.offendingContexts = Objects.requireNonNull(offendingContexts);
         this.sourceContexts = Objects.requireNonNull(sourceContexts).select(IAntlrElement::isContext);
-        this.ansiTokenColorizer = Objects.requireNonNull(ansiTokenColorizer);
+        this.syntaxHighlighter = Objects.requireNonNull(syntaxHighlighter);
         this.severity = Objects.requireNonNull(severity);
 
         if (offendingContexts.isEmpty()) {
@@ -129,7 +128,8 @@ public abstract class AbstractCompilerAnnotation {
         String entireContext = contextStrings
             .collect((contextString) -> contextString.toString(lineNumberWidth))
             .makeString("", "\n", "\n");
-        return Ansi.ansi().a(entireContext).reset().toString();
+        Ansi ansi = Ansi.ansi();
+        return ansi.a(entireContext).toString();
     }
 
     @Nonnull
@@ -191,16 +191,14 @@ public abstract class AbstractCompilerAnnotation {
         MutableList<AbstractContextString> contextStrings = Lists.mutable.empty();
 
         for (TokenLine tokenLine : tokenLines) {
-            Ansi ansi = Ansi.ansi();
-            tokenLine.getTokens().forEach((token) -> this.ansiTokenColorizer.colorizeText(ansi, token));
+            // Use FunctionalSyntaxHighlighter to highlight all tokens in the line
+            Ansi ansi = this.syntaxHighlighter.highlightTokens(tokenLine.getTokens());
+            String content = ansi.toString();
 
-            if (!ansi.toString().endsWith(System.getProperty("line.separator"))) {
-                ansi.newline();
-            }
-            contextStrings.add(new ContextString(tokenLine.getLine(), ansi.toString()));
+            contextStrings.add(new ContextString(tokenLine.getLine(), content, this.syntaxHighlighter));
             if (underlinedLines.contains(tokenLine.getLine())) {
-                String underline = this.getUnderline(tokenLine, underlinedTokens);
-                contextStrings.add(new UnderlineContextString(tokenLine.getLine(), underline));
+                String underline = this.getUnderlineForContextString(tokenLine, underlinedTokens);
+                contextStrings.add(new UnderlineContextString(tokenLine.getLine(), underline, this.syntaxHighlighter));
             }
         }
 
@@ -303,13 +301,24 @@ public abstract class AbstractCompilerAnnotation {
             .makeString("")
             .stripTrailing();
 
-        Color caretColor = this.getCaretColor();
-
-        return Ansi.ansi().fg(caretColor).a(uncoloredString + "\n").toString();
+        Ansi ansi = Ansi.ansi();
+        this.applyCaretColor(ansi);
+        return ansi.a(uncoloredString + "\n").toString();
     }
 
-    @Nonnull
-    protected abstract Color getCaretColor();
+    private String getUnderlineForContextString(TokenLine tokenLine, MutableSet<Token> underlinedTokens) {
+        String uncoloredString = tokenLine
+            .getTokens()
+            .collectWith(this::getSpaceOrUnderline, underlinedTokens)
+            .makeString("")
+            .stripTrailing();
+
+        Ansi ansi = Ansi.ansi();
+        this.applyCaretColor(ansi);
+        return ansi.a(uncoloredString).toString(); // No newline for context strings
+    }
+
+    protected abstract void applyCaretColor(Ansi ansi);
 
     private String getSpaceOrUnderline(Token token, MutableSet<Token> underlinedTokens) {
         String character = underlinedTokens.contains(token) ? "^" : " ";
@@ -362,14 +371,35 @@ public abstract class AbstractCompilerAnnotation {
 
     @Nonnull
     private String getLocationMessage() {
-        // @formatter:off
-        return Ansi.ansi().a("\n")
-                .fg(Color.CYAN).a("Location:  ").reset().a(this.getFilenameWithoutDirectory()).a(":").a(this.getLine()).reset().a("\n")
-                .fg(Color.CYAN).a("File:      ").reset().a(this.compilationUnit).reset().a("\n")
-                .fg(Color.CYAN).a("Line:      ").reset().a(this.getLine()).reset().a("\n")
-                .fg(Color.CYAN).a("Character: ").reset().a(this.getCharPositionInLine() + 1)
-                .toString();
-        // @formatter:on
+        Ansi ansi = Ansi.ansi();
+        ansi.a("\n");
+
+        // Location line
+        this.syntaxHighlighter.applyInitialThemeStyles(ansi);
+        this.syntaxHighlighter.getColorScheme().metadataLabel(ansi);
+        ansi.a("Location:  ");
+        this.syntaxHighlighter.getColorScheme().foreground(ansi);
+        ansi.a(this.getFilenameWithoutDirectory()).a(":").a(this.getLine()).a("\n");
+
+        // File line
+        this.syntaxHighlighter.getColorScheme().metadataLabel(ansi);
+        ansi.a("File:      ");
+        this.syntaxHighlighter.getColorScheme().foreground(ansi);
+        ansi.a(this.compilationUnit).a("\n");
+
+        // Line line
+        this.syntaxHighlighter.getColorScheme().metadataLabel(ansi);
+        ansi.a("Line:      ");
+        this.syntaxHighlighter.getColorScheme().foreground(ansi);
+        ansi.a(this.getLine()).a("\n");
+
+        // Character line
+        this.syntaxHighlighter.getColorScheme().metadataLabel(ansi);
+        ansi.a("Character: ");
+        this.syntaxHighlighter.getColorScheme().foreground(ansi);
+        ansi.a(this.getCharPositionInLine() + 1).a("\n");
+
+        return ansi.toString();
     }
 
     public abstract String toGitHubAnnotation();
