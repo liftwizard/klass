@@ -16,10 +16,33 @@
 
 package cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme;
 
+import javax.annotation.Nonnull;
+
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto.StyleSettings;
+import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import org.fusesource.jansi.Ansi;
 
 public interface AnsiColorScheme {
+    @Nonnull
+    StyleSettings getStyleSettings(TokenCategory tokenCategory);
+
+    void foreground(Ansi ansi);
+
     void background(Ansi ansi);
+
+    void errorAnnotation(Ansi ansi);
+
+    void warningAnnotation(Ansi ansi);
+
+    void errorCaret(Ansi ansi);
+
+    void warningCaret(Ansi ansi);
+
+    void causeCaret(Ansi ansi);
+
+    void annotationCode(Ansi ansi);
+
+    void metadataLabel(Ansi ansi);
 
     void blockComment(Ansi ansi);
 

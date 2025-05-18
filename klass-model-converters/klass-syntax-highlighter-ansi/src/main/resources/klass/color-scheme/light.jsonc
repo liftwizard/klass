@@ -15,16 +15,46 @@
       }
     },
     {
-      "name": "whitespace",
-      "style": {}
+      "name": "errorAnnotation",
+      "style": {
+        "foreground": "RED"
+      }
     },
     {
-      "name": "newline",
-      "style": {}
+      "name": "warningAnnotation",
+      "style": {
+        "foreground": "YELLOW"
+      }
     },
     {
-      "name": "endOfFile",
-      "style": {}
+      "name": "errorCaret",
+      "style": {
+        "foreground": "RED"
+      }
+    },
+    {
+      "name": "warningCaret",
+      "style": {
+        "foreground": "YELLOW"
+      }
+    },
+    {
+      "name": "causeCaret",
+      "style": {
+        "foreground": "GREEN"
+      }
+    },
+    {
+      "name": "annotationCode",
+      "style": {
+        "foreground": "MAGENTA"
+      }
+    },
+    {
+      "name": "metadataLabel",
+      "style": {
+        "foreground": "CYAN"
+      }
     },
     {
       "name": "blockComment",
@@ -53,7 +83,7 @@
     {
       "name": "identifier",
       "style": {
-        "foreground": "DEFAULT"
+        "foreground": "BLACK"
       }
     },
     {

@@ -48,7 +48,7 @@ public class KlassSourceCodeHtmlGeneratorTest {
             klassSourcePackages,
             Thread.currentThread().getContextClassLoader(),
             DomainModelCompilerLoader::logCompilerError,
-            ColorSchemeProvider.getByName("dark")
+            ColorSchemeProvider.getByName("craig-light")
         );
 
         DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();

@@ -67,6 +67,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
         </dependency>
@@ -123,12 +128,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>io.liftwizard</groupId>
             <artifactId>liftwizard-logging-buffered-appender</artifactId>
             <version>${liftwizard.version}</version>
@@ -158,14 +157,12 @@
             <groupId>cool.klass</groupId>
             <artifactId>klass-token-categorizing-lexer</artifactId>
             <version>${project.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-token-categorizing-parser</artifactId>
             <version>${project.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <dependency>

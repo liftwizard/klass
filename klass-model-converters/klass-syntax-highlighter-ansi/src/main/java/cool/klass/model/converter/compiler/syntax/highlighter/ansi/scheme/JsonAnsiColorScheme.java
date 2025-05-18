@@ -16,15 +16,18 @@
 
 package cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme;
 
-import java.awt.Color;
+import java.util.LinkedHashSet;
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.base.CaseFormat;
+import com.google.common.base.Converter;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto.ColorSchemeDefinition;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto.ColorSchemeRule;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto.StyleSettings;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.util.AnsiColorUtils;
+import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import org.eclipse.collections.api.factory.Maps;
 import org.eclipse.collections.api.factory.Sets;
 import org.eclipse.collections.api.map.ImmutableMap;
@@ -32,8 +35,9 @@ import org.eclipse.collections.api.map.MapIterable;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.set.ImmutableSet;
 import org.eclipse.collections.api.set.MutableSet;
-import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
+import org.eclipse.collections.impl.set.mutable.SetAdapter;
 import org.fusesource.jansi.Ansi;
+import org.fusesource.jansi.Ansi.Attribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +46,8 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonAnsiColorScheme.class);
 
     private static final ImmutableMap<String, String> FALLBACK_RULES = getFallbacks();
-    private static final Pattern HEX_COLOR_PATTERN = Pattern.compile("#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?");
+    private static final Converter<String, String> UPPER_UNDERSCORE_TO_LOWER_CAMEL =
+        CaseFormat.UPPER_UNDERSCORE.converterTo(CaseFormat.LOWER_CAMEL);
 
     private final ColorSchemeDefinition definition;
     private final MapIterable<String, ColorSchemeRule> ruleMap;
@@ -60,6 +65,13 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
 
         validRules.add("foreground");
         validRules.add("background");
+        validRules.add("errorAnnotation");
+        validRules.add("warningAnnotation");
+        validRules.add("errorCaret");
+        validRules.add("warningCaret");
+        validRules.add("causeCaret");
+        validRules.add("annotationCode");
+        validRules.add("metadataLabel");
 
         return validRules.toImmutable();
     }
@@ -77,6 +89,17 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
         fallbacks.put("comment", "foreground");
         fallbacks.put("lineComment", "comment");
         fallbacks.put("blockComment", "comment");
+
+        // Annotation fallbacks
+        fallbacks.put("errorAnnotation", "foreground");
+        fallbacks.put("warningAnnotation", "foreground");
+
+        // Compiler annotation color fallbacks
+        fallbacks.put("errorCaret", "errorAnnotation");
+        fallbacks.put("warningCaret", "warningAnnotation");
+        fallbacks.put("causeCaret", "foreground");
+        fallbacks.put("annotationCode", "foreground");
+        fallbacks.put("metadataLabel", "foreground");
 
         // Keyword fallbacks
         fallbacks.put("primitiveType", "keyword");
@@ -216,112 +239,107 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
         StyleSettings style = rule.style();
 
         if (style.foreground() != null) {
-            this.applyColor(ansi, style.foreground(), true);
+            AnsiColorUtils.applyColor(ansi, style.foreground(), true, false);
         }
 
         if (style.background() != null) {
-            this.applyColor(ansi, style.background(), false);
+            AnsiColorUtils.applyColor(ansi, style.background(), false, false);
         }
-    }
 
-    /**
-     * Apply a color to the Ansi instance.
-     *
-     * @param ansi         The Ansi instance to modify
-     * @param colorValue   The color value (can be a string enum name, an RGB hex string, or an integer)
-     * @param isForeground True for foreground color, false for background
-     */
-    private void applyColor(Ansi ansi, Object colorValue, boolean isForeground) {
-        if (colorValue instanceof String) {
-            applyColorString(ansi, (String) colorValue, isForeground);
-        } else if (colorValue instanceof Number) {
-            applyColorNumber(ansi, (Number) colorValue, isForeground);
-        } else if (colorValue == null) {
-            LOGGER.warn("Null color value provided");
-        } else {
-            LOGGER.warn("Unsupported color value type: {}", colorValue.getClass().getName());
+        if (style.bold() != null && style.bold()) {
+            ansi.a(Attribute.INTENSITY_BOLD);
         }
-    }
 
-    private static void applyColorString(Ansi ansi, String colorValue, boolean isForeground) {
-        // Handle hex RGB colors (e.g., "#111111", "#F4A7B9")
-        if (colorValue.startsWith("#") && HEX_COLOR_PATTERN.matcher(colorValue).matches()) {
-            applyColorRGB(ansi, isForeground, colorValue);
-        } else {
-            applyColorNamed(ansi, isForeground, colorValue);
+        if (style.faint() != null && style.faint()) {
+            ansi.a(Attribute.INTENSITY_FAINT);
         }
-    }
 
-    private static void applyColorRGB(Ansi ansi, boolean isForeground, String colorStr) {
-        Color decodedColor = Color.decode(colorStr);
-        int r = decodedColor.getRed();
-        int g = decodedColor.getGreen();
-        int b = decodedColor.getBlue();
-
-        if (isForeground) {
-            ansi.fgRgb(r, g, b);
-        } else {
-            ansi.bgRgb(r, g, b);
+        if (style.italic() != null && style.italic()) {
+            ansi.a(Attribute.ITALIC);
         }
-    }
 
-    // Handle named colors (e.g., "RED", "BLUE")
-    private static void applyColorNamed(Ansi ansi, boolean isForeground, String colorStr) {
-        try {
-            Ansi.Color namedColor = Ansi.Color.valueOf(colorStr);
-
-            if (isForeground) {
-                ansi.fg(namedColor);
-            } else {
-                ansi.bg(namedColor);
-            }
-        } catch (IllegalArgumentException e) {
-            String detailMessage =
-                "Invalid color name: '"
-                + colorStr
-                + "'. Must be a valid ANSI color enum, integer, or RGB hex format (#RRGGBB). Valid enum values are: "
-                + ArrayAdapter.adapt(Ansi.Color.values()).makeString();
-            throw new IllegalArgumentException(detailMessage);
+        if (style.underline() != null && style.underline()) {
+            ansi.a(Attribute.UNDERLINE);
         }
-    }
 
-    /**
-     * Handle numeric color codes (e.g., 256-color terminal codes)
-     */
-    private static void applyColorNumber(Ansi ansi, Number colorValue, boolean isForeground) {
-        int colorCode = colorValue.intValue();
+        if (style.blink() != null && style.blink()) {
+            ansi.a(Attribute.BLINK_SLOW);
+        }
 
-        if (isForeground) {
-            ansi.fg(colorCode);
-        } else {
-            ansi.bg(colorCode);
+        if (style.reverse() != null && style.reverse()) {
+            ansi.a(Attribute.NEGATIVE_ON);
+        }
+
+        if (style.strikethrough() != null && style.strikethrough()) {
+            ansi.a(Attribute.STRIKETHROUGH_ON);
         }
     }
 
     @Nonnull
     private ColorSchemeRule getColorSchemeRule(String ruleName) {
         String eachRuleName = ruleName;
-        MutableSet<String> visitedRules = Sets.mutable.empty();
+        MutableSet<String> visitedRules = SetAdapter.adapt(new LinkedHashSet<>());
 
         while (true) {
             if (visitedRules.contains(eachRuleName)) {
                 throw new IllegalStateException("Circular rule reference detected: " + visitedRules);
             }
             visitedRules.add(eachRuleName);
-            if (eachRuleName == null) {
-                throw new IllegalArgumentException("No rule found for: " + ruleName + " in " + this.definition.name());
-            }
             ColorSchemeRule result = this.ruleMap.get(eachRuleName);
             if (result != null) {
                 return result;
             }
             eachRuleName = FALLBACK_RULES.get(eachRuleName);
+            if (eachRuleName == null) {
+                String detailMessage = "No rule found for: " + visitedRules + " in " + this.definition.name();
+                throw new IllegalArgumentException(detailMessage);
+            }
         }
+    }
+
+    @Override
+    public void foreground(Ansi ansi) {
+        this.applyRule("foreground", ansi);
     }
 
     @Override
     public void background(Ansi ansi) {
         this.applyRule("background", ansi);
+    }
+
+    @Override
+    public void errorAnnotation(Ansi ansi) {
+        this.applyRule("errorAnnotation", ansi);
+    }
+
+    @Override
+    public void warningAnnotation(Ansi ansi) {
+        this.applyRule("warningAnnotation", ansi);
+    }
+
+    @Override
+    public void errorCaret(Ansi ansi) {
+        this.applyRule("errorCaret", ansi);
+    }
+
+    @Override
+    public void warningCaret(Ansi ansi) {
+        this.applyRule("warningCaret", ansi);
+    }
+
+    @Override
+    public void causeCaret(Ansi ansi) {
+        this.applyRule("causeCaret", ansi);
+    }
+
+    @Override
+    public void annotationCode(Ansi ansi) {
+        this.applyRule("annotationCode", ansi);
+    }
+
+    @Override
+    public void metadataLabel(Ansi ansi) {
+        this.applyRule("metadataLabel", ansi);
     }
 
     @Override
@@ -612,5 +630,62 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
     @Override
     public void urlConstant(Ansi ansi) {
         this.applyRule("urlConstant", ansi);
+    }
+
+    @Override
+    public void invisibleToken(Ansi ansi) {
+        this.applyRule("invisibleToken", ansi);
+    }
+
+    @Override
+    public void whitespace(Ansi ansi) {
+        this.applyRule("whitespace", ansi);
+    }
+
+    @Override
+    public void newline(Ansi ansi) {
+        this.applyRule("newline", ansi);
+    }
+
+    @Override
+    public void endOfFile(Ansi ansi) {
+        this.applyRule("endOfFile", ansi);
+    }
+
+    @Override
+    @Nonnull
+    public StyleSettings getStyleSettings(TokenCategory tokenCategory) {
+        if (tokenCategory == null) {
+            ColorSchemeRule rule = this.getColorSchemeRule("background");
+            return rule.style();
+        }
+
+        String ruleName = this.getRuleNameForTokenCategory(tokenCategory);
+        ColorSchemeRule rule = this.getColorSchemeRule(ruleName);
+        return rule.style();
+    }
+
+    private String getRuleNameForTokenCategory(TokenCategory tokenCategory) {
+        // Handle exceptions first
+        if (tokenCategory == TokenCategory.COMMENT) {
+            throw new AssertionError("Comment categories will always be more specific.");
+        }
+        if (tokenCategory == TokenCategory.INVISIBLE_TOKEN) {
+            throw new AssertionError("Invisible token categories will always be more specific.");
+        }
+
+        // Special cases for multi-token mappings and exceptions to camelCase naming pattern
+        return switch (tokenCategory) {
+            // Multi-token mappings
+            case PARENTHESES, PARENTHESIS_LEFT, PARENTHESIS_RIGHT -> "parentheses";
+            case CURLY_BRACES, CURLY_LEFT, CURLY_RIGHT -> "curlyBraces";
+            case SQUARE_BRACKETS, SQUARE_BRACKET_LEFT, SQUARE_BRACKET_RIGHT -> "squareBrackets";
+            case INTEGER_LITERAL, ASTERISK_LITERAL -> "integerLiteral";
+            // Special cases with non-standard naming
+            case SEMICOLON -> "semi";
+            case END_OF_FILE -> "endOfFile";
+            // Default case: Use automatic conversion
+            default -> UPPER_UNDERSCORE_TO_LOWER_CAMEL.convert(tokenCategory.name());
+        };
     }
 }

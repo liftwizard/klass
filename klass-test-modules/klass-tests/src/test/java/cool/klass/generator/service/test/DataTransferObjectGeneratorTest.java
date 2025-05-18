@@ -53,7 +53,7 @@ public class DataTransferObjectGeneratorTest {
             "example.klass",
             sourceCodeText
         );
-        KlassCompiler compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("dark"));
+        KlassCompiler compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("craig-light"));
         CompilationResult compilationResult = compiler.compile();
 
         if (compilationResult.domainModelWithSourceCode().isEmpty()) {

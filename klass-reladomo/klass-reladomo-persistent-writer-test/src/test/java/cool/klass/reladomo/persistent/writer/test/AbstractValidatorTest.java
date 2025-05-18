@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Craig Motlin
+ * Copyright 2024 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -113,7 +113,7 @@ public abstract class AbstractValidatorTest {
     private static DomainModel getDomainModel(ObjectMapper objectMapper) {
         DomainModelCompilerFactory domainModelCompilerFactory = new DomainModelCompilerFactory();
         domainModelCompilerFactory.setSourcePackages(List.of("cool.klass.xample.coverage"));
-        domainModelCompilerFactory.setColorScheme("dark");
+        domainModelCompilerFactory.setColorScheme("craig-light");
         return domainModelCompilerFactory.createDomainModel(objectMapper);
     }
 

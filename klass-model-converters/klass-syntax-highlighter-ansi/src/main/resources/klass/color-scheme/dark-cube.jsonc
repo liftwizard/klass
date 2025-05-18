@@ -15,6 +15,48 @@
       }
     },
     {
+      "name": "errorAnnotation",
+      "style": {
+        "foreground": 196
+      }
+    },
+    {
+      "name": "warningAnnotation",
+      "style": {
+        "foreground": 214
+      }
+    },
+    {
+      "name": "errorCaret",
+      "style": {
+        "foreground": "RED"
+      }
+    },
+    {
+      "name": "warningCaret",
+      "style": {
+        "foreground": "YELLOW"
+      }
+    },
+    {
+      "name": "causeCaret",
+      "style": {
+        "foreground": "GREEN"
+      }
+    },
+    {
+      "name": "annotationCode",
+      "style": {
+        "foreground": "MAGENTA"
+      }
+    },
+    {
+      "name": "metadataLabel",
+      "style": {
+        "foreground": "CYAN"
+      }
+    },
+    {
       "name": "blockComment",
       "style": {
         "foreground": 246

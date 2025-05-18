@@ -53,7 +53,7 @@ import cool.klass.model.converter.compiler.phase.UrlParameterPhase;
 import cool.klass.model.converter.compiler.phase.VariableResolutionPhase;
 import cool.klass.model.converter.compiler.phase.VersionAssociationInferencePhase;
 import cool.klass.model.converter.compiler.phase.VersionClassInferencePhase;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.FunctionalSyntaxHighlighter;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import cool.klass.model.converter.compiler.token.categorizing.lexer.LexerBasedTokenCategorizer;
@@ -169,12 +169,12 @@ public class KlassCompiler {
 
         CompilerAnnotationHolder compilerAnnotationHolder = this.compilerState.getCompilerAnnotationHolder();
 
-        var ansiTokenColorizer = new AnsiTokenColorizer(
+        var syntaxHighlighter = new FunctionalSyntaxHighlighter(
             this.colorScheme,
-            tokenCategoriesFromParser,
-            tokenCategoriesFromLexer
+            tokenCategoriesFromLexer,
+            tokenCategoriesFromParser
         );
-        compilerAnnotationHolder.setAnsiTokenColorizer(ansiTokenColorizer);
+        compilerAnnotationHolder.setSyntaxHighlighter(syntaxHighlighter);
 
         this.compilerState.reportErrors();
         ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilerAnnotationHolder.getCompilerAnnotations();

@@ -70,6 +70,36 @@ public record ColorSchemeDefinition(
         return true;
     }
 
+    @ValidationMethod(message = "Color scheme rules should not have completely empty styles")
+    @JsonIgnore
+    public boolean hasValidStyles() {
+        var rulesWithEmptyStyles =
+            this.rules.select(rule -> {
+                    var style = rule.style();
+                    return (
+                        style.foreground() == null &&
+                        style.background() == null &&
+                        style.bold() == null &&
+                        style.italic() == null &&
+                        style.underline() == null &&
+                        style.blink() == null &&
+                        style.reverse() == null &&
+                        style.strikethrough() == null &&
+                        style.faint() == null
+                    );
+                });
+
+        if (rulesWithEmptyStyles.notEmpty()) {
+            LOGGER.warn(
+                "Rules with completely empty styles found: {}",
+                rulesWithEmptyStyles.collect(ColorSchemeRule::name).makeString(", ")
+            );
+            return false;
+        }
+
+        return true;
+    }
+
     public MapIterable<String, ColorSchemeRule> toRuleMap() {
         // TODO 2025-03-16: Change the return type to be immutable, once Eclipse Collections supports it.
         MutableOrderedMap<String, ColorSchemeRule> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());

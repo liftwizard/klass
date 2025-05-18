@@ -22,10 +22,10 @@ import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.FunctionalSyntaxHighlighter;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.fusesource.jansi.Ansi.Color;
+import org.fusesource.jansi.Ansi;
 
 public class CauseCompilerAnnotation extends AbstractCompilerAnnotation {
 
@@ -34,16 +34,15 @@ public class CauseCompilerAnnotation extends AbstractCompilerAnnotation {
         @Nonnull Optional<CauseCompilerAnnotation> macroCause,
         @Nonnull ImmutableList<ParserRuleContext> offendingContexts,
         @Nonnull ImmutableList<IAntlrElement> sourceContexts,
-        @Nonnull AnsiTokenColorizer ansiTokenColorizer,
+        @Nonnull FunctionalSyntaxHighlighter syntaxHighlighter,
         @Nonnull AnnotationSeverity severity
     ) {
-        super(compilationUnit, macroCause, offendingContexts, sourceContexts, ansiTokenColorizer, severity);
+        super(compilationUnit, macroCause, offendingContexts, sourceContexts, syntaxHighlighter, severity);
     }
 
-    @Nonnull
     @Override
-    protected Color getCaretColor() {
-        return Color.GREEN;
+    protected void applyCaretColor(Ansi ansi) {
+        this.syntaxHighlighter.getColorScheme().causeCaret(ansi);
     }
 
     @Nonnull

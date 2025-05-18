@@ -3,22 +3,16 @@
   "description": "Dark scheme with RGB colors from Craig Dark IntelliJ scheme",
   "rules": [
     {
+      "name": "foreground",
+      "style": {
+        "foreground": "#a9b7c6"
+      }
+    },
+    {
       "name": "background",
       "style": {
         "background": "#111111"
       }
-    },
-    {
-      "name": "whitespace",
-      "style": {}
-    },
-    {
-      "name": "newline",
-      "style": {}
-    },
-    {
-      "name": "endOfFile",
-      "style": {}
     },
     {
       "name": "blockComment",
@@ -30,6 +24,48 @@
       "name": "lineComment",
       "style": {
         "foreground": "#a9b7c6"
+      }
+    },
+    {
+      "name": "errorAnnotation",
+      "style": {
+        "foreground": "#cc0000"
+      }
+    },
+    {
+      "name": "warningAnnotation",
+      "style": {
+        "foreground": "#ff8800"
+      }
+    },
+    {
+      "name": "errorCaret",
+      "style": {
+        "foreground": "RED"
+      }
+    },
+    {
+      "name": "warningCaret",
+      "style": {
+        "foreground": "YELLOW"
+      }
+    },
+    {
+      "name": "causeCaret",
+      "style": {
+        "foreground": "GREEN"
+      }
+    },
+    {
+      "name": "annotationCode",
+      "style": {
+        "foreground": "MAGENTA"
+      }
+    },
+    {
+      "name": "metadataLabel",
+      "style": {
+        "foreground": "CYAN"
       }
     },
     {
