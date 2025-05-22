@@ -73,7 +73,7 @@
     domainModel: {
       type: "compiler",
       sourcePackages: ["com.stackoverflow"],
-      colorScheme: "dark-cube",
+      colorScheme: "craig-dark",
     },
     dataStore: {
       type: "reladomo",

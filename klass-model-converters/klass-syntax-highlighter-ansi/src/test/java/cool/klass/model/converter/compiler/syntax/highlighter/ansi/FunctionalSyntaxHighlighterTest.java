@@ -44,12 +44,12 @@ class FunctionalSyntaxHighlighterTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(FunctionalSyntaxHighlighterTest.class);
 
     static String[] colorSchemeProvider() {
-        return new String[] { "light", "light-rgb", "dark", "dark-rgb", "dark-cube" };
+        return new String[] { "light", "light-rgb", "dark", "dark-rgb", "dark-cube", "craig-light", "craig-dark" };
     }
 
     @Test
     void basicHighlighting() {
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-cube");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
 
         var keywordToken = new CommonToken(1, "class");
         var identifierToken = new CommonToken(2, "Example");
@@ -78,7 +78,7 @@ class FunctionalSyntaxHighlighterTest {
 
     @Test
     void uncategorizedTokens() {
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-cube");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
 
         var uncategorizedToken = new CommonToken(1, "uncategorized");
 
@@ -94,7 +94,7 @@ class FunctionalSyntaxHighlighterTest {
 
     @Test
     void emptyInput() {
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-cube");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
 
         var highlighter = new FunctionalSyntaxHighlighter(colorScheme, Maps.immutable.empty(), Maps.immutable.empty());
 
@@ -109,7 +109,7 @@ class FunctionalSyntaxHighlighterTest {
 
     @Test
     void resetStyle() {
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-cube");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
 
         var keywordToken1 = new CommonToken(1, "keyword1");
         var keywordToken2 = new CommonToken(2, "keyword2");
@@ -139,7 +139,7 @@ class FunctionalSyntaxHighlighterTest {
 
     @Test
     void applyFinalReset() {
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-cube");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
 
         var highlighter = new FunctionalSyntaxHighlighter(colorScheme, Maps.immutable.empty(), Maps.immutable.empty());
 
@@ -154,7 +154,7 @@ class FunctionalSyntaxHighlighterTest {
 
     @Test
     void styleTransitions() {
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-cube");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
 
         var keywordToken = new CommonToken(1, "class");
         var identifierToken = new CommonToken(2, "Example");
@@ -222,7 +222,7 @@ class FunctionalSyntaxHighlighterTest {
 
     @Test
     void lexerAndParserTokenPriority() {
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-cube");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
 
         var token = new CommonToken(1, "test");
 

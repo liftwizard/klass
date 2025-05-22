@@ -148,7 +148,7 @@ public abstract class AbstractKlassCompilerErrorTestCase {
             sourceName,
             sourceCodeText
         );
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-cube");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
         var compiler = new KlassCompiler(compilationUnit, colorScheme);
         CompilationResult compilationResult = compiler.compile();
 

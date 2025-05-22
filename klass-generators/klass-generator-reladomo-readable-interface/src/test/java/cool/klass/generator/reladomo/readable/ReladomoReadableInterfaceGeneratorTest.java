@@ -54,7 +54,7 @@ public class ReladomoReadableInterfaceGeneratorTest {
             "example.klass",
             klassSourceCode
         );
-        KlassCompiler compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("dark-cube"));
+        KlassCompiler compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("craig-dark"));
         CompilationResult compilationResult = compiler.compile();
 
         if (compilationResult.domainModelWithSourceCode().isEmpty()) {

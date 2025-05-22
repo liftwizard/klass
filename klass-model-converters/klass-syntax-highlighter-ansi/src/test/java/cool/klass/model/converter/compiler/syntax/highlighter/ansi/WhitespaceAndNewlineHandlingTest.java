@@ -41,7 +41,7 @@ class WhitespaceAndNewlineHandlingTest {
     @Test
     void testWhitespaceHandling() {
         // Setup
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-cube");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
 
         // Create a whitespace token
         CommonToken whitespaceToken = new CommonToken(1, "   ");
@@ -70,7 +70,7 @@ class WhitespaceAndNewlineHandlingTest {
     @Test
     void testNewlineHandling() {
         // Setup
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-cube");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
 
         // Create a newline token
         CommonToken newlineToken = new CommonToken(1, "\n");
@@ -96,7 +96,7 @@ class WhitespaceAndNewlineHandlingTest {
     @Test
     void testMixedContent() {
         // Setup
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-cube");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
 
         // Create tokens with mixed content: text, whitespace, newline
         CommonToken textToken1 = new CommonToken(1, "class");
@@ -143,7 +143,7 @@ class WhitespaceAndNewlineHandlingTest {
     @Test
     void testResetAfterNewline() {
         // Setup
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-cube");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
 
         // Create tokens to test style reset after newline
         CommonToken textToken1 = new CommonToken(1, "keyword1");

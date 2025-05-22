@@ -44,7 +44,7 @@ public class KlassProjectionGeneratorTest {
             klassSourcePackages,
             Thread.currentThread().getContextClassLoader(),
             DomainModelCompilerLoader::logCompilerError,
-            ColorSchemeProvider.getByName("dark-cube")
+            ColorSchemeProvider.getByName("craig-dark")
         );
 
         DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();

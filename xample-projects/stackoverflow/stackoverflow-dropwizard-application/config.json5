@@ -52,7 +52,7 @@
     domainModel: {
       type: "compiler",
       sourcePackages: ["klass.model.meta.domain", "com.stackoverflow"],
-      colorScheme: "dark-cube",
+      colorScheme: "craig-dark",
     },
     dataStore: {
       type: "reladomo",

@@ -42,7 +42,7 @@
     domainModel: {
       type: "compiler",
       sourcePackages: ["klass.model.meta.domain"],
-      colorScheme: "dark-cube",
+      colorScheme: "craig-dark",
     },
     dataStore: {
       type: "reladomo",
