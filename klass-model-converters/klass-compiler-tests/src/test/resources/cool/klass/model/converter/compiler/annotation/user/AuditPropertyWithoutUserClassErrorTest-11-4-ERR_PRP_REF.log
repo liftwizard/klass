@@ -3,12 +3,12 @@
 
 At (AuditPropertyWithoutUserClassErrorTest.klass:11)
 
-[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mcom[38;5;252m.[38;5;141merrors
-[39m 3║ [38;5;208mclass[38;5;238m·[38;5;205mDummyClass[38;5;238m·[38;5;114msystemTemporal[38;5;238m·[38;5;114mversioned[38;5;238m·[38;5;114maudited[38;5;240m¶[m
-[39m 4║ [38;5;252m{
-[39m11║ [38;5;238m····[38;5;148mlastUpdatedById[38;5;255m:[38;5;238m·[38;5;172mString[38;5;238m·[38;5;115mlastUpdatedBy[38;5;238m·[38;5;115muserId[38;5;238m·[38;5;115mprivate[38;5;238m·[38;5;107mmaximumLength[38;5;253m([38;5;44m256[38;5;253m)[38;5;254m;
+[39m 1║ [38;2;0;51;179mpackage[38;2;45;45;45m·[38;2;169;183;198mcom.errors
+[39m 3║ [38;2;0;51;179mclass[38;2;45;45;45m·[38;2;221;68;136mDummyClass[38;2;45;45;45m·[38;2;0;51;179msystemTemporal[38;2;45;45;45m·[38;2;0;51;179mversioned[38;2;45;45;45m·[38;2;0;51;179maudited[38;2;45;45;45m¶[m
+[39m 4║ [38;2;169;183;198m{
+[39m11║ [38;2;45;45;45m····[38;2;152;118;170mlastUpdatedById[38;2;169;183;198m:[38;2;45;45;45m·[38;2;0;51;179mString[38;2;45;45;45m·[38;2;0;51;179mlastUpdatedBy[38;2;45;45;45m·[38;2;0;51;179muserId[38;2;45;45;45m·[38;2;0;51;179mprivate[38;2;45;45;45m·[38;2;0;51;179mmaximumLength[38;2;169;183;198m([38;2;23;80;235m256[38;2;169;183;198m);
 [39m  ║ [31m    ^^^^^^^^^^^^^^^
-[39m12║ [38;5;252m}
+[39m12║ }
 [m
 [36mLocation:  [mAuditPropertyWithoutUserClassErrorTest.klass:11[m
 [36mFile:      [mAuditPropertyWithoutUserClassErrorTest.klass[m

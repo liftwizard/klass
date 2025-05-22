@@ -49,7 +49,7 @@ class SyntaxHighlighterListenerTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(SyntaxHighlighterListenerTest.class);
 
     static String[] colorSchemeProvider() {
-        return new String[] { "light", "light-rgb", "dark", "dark-rgb", "dark-cube" };
+        return new String[] { "light", "light-rgb", "dark", "dark-rgb", "dark-cube", "craig-light", "craig-dark" };
     }
 
     @Test
@@ -66,7 +66,7 @@ class SyntaxHighlighterListenerTest {
 
     @Test
     void darkCubeColorScheme() {
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-cube");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
         this.testColorScheme(colorScheme);
     }
 

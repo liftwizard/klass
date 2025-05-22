@@ -33,7 +33,7 @@ class FunctionalSyntaxHighlighterExample {
 
     @Test
     void functionalDarkCubeColorScheme() {
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark-cube");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
         this.applyFunctionalColoring(colorScheme);
     }
 

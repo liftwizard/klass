@@ -3,12 +3,12 @@
 
 At (UnresolvedTypesErrorTest.klass:142)
 
-[39m  1║ [38;5;173mpackage[38;5;238m·[38;5;141mdummy
-[39m140║ [38;5;215mprojection[38;5;238m·[38;5;218mParentProjection2[38;5;238m·[38;5;179mon[38;5;238m·[38;5;206mParent[38;5;240m¶[m
-[39m141║ [38;5;252m{
-[39m142║ [38;5;238m····[38;5;156mchildren[38;5;255m:[38;5;238m·[38;5;214mChildProjection[38;5;253m,
+[39m  1║ [38;2;0;51;179mpackage[38;2;45;45;45m·[38;2;169;183;198mdummy
+[39m140║ [38;2;0;51;179mprojection[38;2;45;45;45m·[38;2;221;68;136mParentProjection2[38;2;45;45;45m·[38;2;0;51;179mon[38;2;45;45;45m·[38;2;221;68;136mParent[38;2;45;45;45m¶[m
+[39m141║ [38;2;169;183;198m{
+[39m142║ [38;2;45;45;45m····[38;2;152;118;170mchildren[38;2;169;183;198m:[38;2;45;45;45m·[38;2;221;68;136mChildProjection[38;2;169;183;198m,
 [39m   ║ [31m              ^^^^^^^^^^^^^^^
-[39m143║ [38;5;252m}
+[39m143║ }
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:142[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m

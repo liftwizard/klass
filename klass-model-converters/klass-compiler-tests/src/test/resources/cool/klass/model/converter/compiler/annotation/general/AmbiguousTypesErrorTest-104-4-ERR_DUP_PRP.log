@@ -3,12 +3,12 @@
 
 At (AmbiguousTypesErrorTest.klass:104)
 
-[39m  1║ [38;5;173mpackage[38;5;238m·[38;5;141mdummy
-[39m101║ [38;5;175massociation[38;5;238m·[38;5;217mIrrelevantGoodAssociation1[38;5;240m¶[m
-[39m102║ [38;5;252m{
-[39m104║ [38;5;238m····[38;5;150mambiguousAssociationEnd[38;5;255m:[38;5;238m·[38;5;212mGoodClass[38;5;254m[[38;5;44m0[38;5;251m..[38;5;44m*[38;5;254m][m;
+[39m  1║ [38;2;0;51;179mpackage[38;2;45;45;45m·[38;2;169;183;198mdummy
+[39m101║ [38;2;0;51;179massociation[38;2;45;45;45m·[38;2;221;68;136mIrrelevantGoodAssociation1[38;2;45;45;45m¶[m
+[39m102║ [38;2;169;183;198m{
+[39m104║ [38;2;45;45;45m····[38;2;152;118;170mambiguousAssociationEnd[38;2;169;183;198m:[38;2;45;45;45m·[38;2;221;68;136mGoodClass[38;2;169;183;198m[[38;2;23;80;235m0[38;2;169;183;198m..[38;2;23;80;235m*[38;2;169;183;198m];
 [39m   ║ [31m    ^^^^^^^^^^^^^^^^^^^^^^^
-[39m107║ [38;5;252m}
+[39m107║ }
 [m
 [36mLocation:  [mAmbiguousTypesErrorTest.klass:104[m
 [36mFile:      [mAmbiguousTypesErrorTest.klass[m

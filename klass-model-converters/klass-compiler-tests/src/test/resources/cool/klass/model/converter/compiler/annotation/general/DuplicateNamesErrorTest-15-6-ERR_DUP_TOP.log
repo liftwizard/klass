@@ -3,10 +3,10 @@
 
 At (DuplicateNamesErrorTest.klass:15)
 
-[39m 1║ [38;5;173mpackage[38;5;238m·[38;5;141mdummy
-[39m15║ [38;5;208mclass[38;5;238m·[38;5;205mDuplicateTopLevelElement[38;5;240m¶[m
+[39m 1║ [38;2;0;51;179mpackage[38;2;45;45;45m·[38;2;169;183;198mdummy
+[39m15║ [38;2;0;51;179mclass[38;2;45;45;45m·[38;2;221;68;136mDuplicateTopLevelElement[38;2;45;45;45m¶[m
 [39m  ║ [31m      ^^^^^^^^^^^^^^^^^^^^^^^^
-[39m16║ [38;5;252m{
+[39m16║ [38;2;169;183;198m{
 [39m24║ }
 [m
 [36mLocation:  [mDuplicateNamesErrorTest.klass:15[m
