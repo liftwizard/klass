@@ -45,7 +45,7 @@ public class KlassFragmentGeneratorTest {
             klassSourcePackages,
             Thread.currentThread().getContextClassLoader(),
             DomainModelCompilerLoader::logCompilerError,
-            ColorSchemeProvider.getByName("craig-dark")
+            ColorSchemeProvider.getByName("craig-light")
         );
 
         DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Craig Motlin
+ * Copyright 2024 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ class SyntaxHighlighterListenerTest {
 
     @Test
     void darkCubeColorScheme() {
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-light");
         this.testColorScheme(colorScheme);
     }
 

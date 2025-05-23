@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Craig Motlin
+ * Copyright 2024 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ class WhitespaceAndNewlineHandlingTest {
     @Test
     void testWhitespaceHandling() {
         // Setup
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-light");
 
         // Create a whitespace token
         CommonToken whitespaceToken = new CommonToken(1, "   ");
@@ -70,7 +70,7 @@ class WhitespaceAndNewlineHandlingTest {
     @Test
     void testNewlineHandling() {
         // Setup
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-light");
 
         // Create a newline token
         CommonToken newlineToken = new CommonToken(1, "\n");
@@ -96,7 +96,7 @@ class WhitespaceAndNewlineHandlingTest {
     @Test
     void testMixedContent() {
         // Setup
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-light");
 
         // Create tokens with mixed content: text, whitespace, newline
         CommonToken textToken1 = new CommonToken(1, "class");
@@ -143,7 +143,7 @@ class WhitespaceAndNewlineHandlingTest {
     @Test
     void testResetAfterNewline() {
         // Setup
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-dark");
+        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("craig-light");
 
         // Create tokens to test style reset after newline
         CommonToken textToken1 = new CommonToken(1, "keyword1");

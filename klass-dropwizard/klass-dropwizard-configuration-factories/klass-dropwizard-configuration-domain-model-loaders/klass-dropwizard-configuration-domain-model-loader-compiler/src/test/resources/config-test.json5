@@ -1,5 +1,5 @@
 {
   type: "compiler",
   sourcePackages: ["com.example"],
-  colorScheme: "craig-dark",
+  colorScheme: "craig-light",
 }
