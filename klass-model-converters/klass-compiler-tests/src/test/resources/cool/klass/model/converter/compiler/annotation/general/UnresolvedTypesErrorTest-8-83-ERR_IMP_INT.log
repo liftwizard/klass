@@ -3,10 +3,10 @@
 
 At (UnresolvedTypesErrorTest.klass:8)
 
-[39m 1║ [38;2;0;51;179mpackage[38;2;45;45;45m·[38;2;169;183;198mdummy
-[39m 8║ [38;2;0;51;179mclass[38;2;45;45;45m·[38;2;221;68;136mClassWithUnresolved[38;2;45;45;45m·[38;2;0;51;179mextends[38;2;45;45;45m·[38;2;221;68;136mUnresolvedClass[38;2;45;45;45m·[38;2;0;51;179mimplements[38;2;45;45;45m·[38;2;68;221;221mUnresolvedInterface1[38;2;169;183;198m,[38;2;45;45;45m·[38;2;68;221;221mUnresolvedInterface2[38;2;45;45;45m¶[m
+[39m 1║ [38;2;0;51;179mpackage[38;2;240;240;240m·[38;2;8;8;8mdummy
+[39m 8║ [38;2;0;51;179mclass[38;2;240;240;240m·[38;2;170;0;0mClassWithUnresolved[38;2;240;240;240m·[38;2;0;51;179mextends[38;2;240;240;240m·[38;2;170;0;0mUnresolvedClass[38;2;240;240;240m·[38;2;0;51;179mimplements[38;2;240;240;240m·[38;2;0;170;170mUnresolvedInterface1[38;2;255;21;180m,[38;2;240;240;240m·[38;2;0;170;170mUnresolvedInterface2[38;2;240;240;240m¶[m
 [39m  ║ [31m                                                                                   ^^^^^^^^^^^^^^^^^^^^
-[39m 9║ [38;2;169;183;198m{
+[39m 9║ [38;2;8;8;8m{
 [39m16║ }
 [m
 [36mLocation:  [mUnresolvedTypesErrorTest.klass:8[m

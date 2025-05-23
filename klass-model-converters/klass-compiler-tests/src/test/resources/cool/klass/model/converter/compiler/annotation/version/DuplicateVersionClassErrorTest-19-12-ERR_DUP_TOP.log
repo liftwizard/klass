@@ -3,10 +3,10 @@
 
 At (DuplicateVersionClassErrorTest.klass:19)
 
-[39m 1║ [38;2;0;51;179mpackage[38;2;45;45;45m·[38;2;169;183;198mcom.errors
-[39m19║ [38;2;0;51;179massociation[38;2;45;45;45m·[38;2;221;68;136mExampleClassHasVersion[38;2;45;45;45m¶[m
+[39m 1║ [38;2;0;51;179mpackage[38;2;240;240;240m·[38;2;8;8;8mcom.errors
+[39m19║ [38;2;0;51;179massociation[38;2;240;240;240m·[38;2;170;0;0mExampleClassHasVersion[38;2;240;240;240m¶[m
 [39m  ║ [31m            ^^^^^^^^^^^^^^^^^^^^^^
-[39m20║ [38;2;169;183;198m{
+[39m20║ [38;2;8;8;8m{
 [39m25║ }
 [m
 [36mLocation:  [mDuplicateVersionClassErrorTest.klass:19[m
