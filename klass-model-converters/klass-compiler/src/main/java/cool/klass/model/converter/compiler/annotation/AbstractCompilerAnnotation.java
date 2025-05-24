@@ -126,10 +126,14 @@ public abstract class AbstractCompilerAnnotation {
         String maxLineString = String.valueOf(maxLine);
         int lineNumberWidth = maxLineString.length();
 
+        // Create ANSI with theme background
+        Ansi ansi = Ansi.ansi();
+        this.ansiTokenColorizer.applyInitialThemeStyles(ansi);
+
         String entireContext = contextStrings
             .collect(contextString -> contextString.toString(lineNumberWidth))
             .makeString("", "\n", "\n");
-        return Ansi.ansi().a(entireContext).reset().toString();
+        return ansi.a(entireContext).reset().toString();
     }
 
     @Nonnull

@@ -58,6 +58,13 @@ public final class AnsiTokenColorizer {
         this.currentStyleState = StyleState.EMPTY;
     }
 
+    public void applyInitialThemeStyles(Ansi ansi) {
+        ansi.a(Ansi.Attribute.RESET);
+
+        // Apply background color from theme
+        this.colorScheme.background(ansi);
+    }
+
     public void applyFinalReset(Ansi ansi) {
         ansi.a(Ansi.Attribute.RESET);
         resetStyle();
