@@ -3,7 +3,7 @@
 
 At (UnresolvedTypesErrorTest.klass:5)
 
-[39m1║ [38;2;0;51;179mpackage[38;2;240;240;240m·[38;2;8;8;8mdummy
+[0;48;2;255;255;255m[39m1║ [38;2;0;51;179mpackage[38;2;240;240;240m·[38;2;8;8;8mdummy
 [39m3║ [38;2;0;51;179minterface[38;2;240;240;240m·[38;2;0;170;170mInterfaceWithUnresolved[38;2;240;240;240m·[38;2;0;51;179mimplements[38;2;240;240;240m·[38;2;0;170;170mUnresolvedInterface1[38;2;255;21;180m,[38;2;240;240;240m·[38;2;0;170;170mUnresolvedInterface2[38;2;240;240;240m¶[m
 [39m4║ [38;2;8;8;8m{
 [39m5║ [38;2;240;240;240m····[38;2;135;16;148munresolvedEnumerationProperty[38;2;8;8;8m:[38;2;240;240;240m·[38;2;170;0;0mUnresolvedEnumeration[38;2;240;240;240m·[38;2;0;51;179mkey[38;2;204;204;204m;

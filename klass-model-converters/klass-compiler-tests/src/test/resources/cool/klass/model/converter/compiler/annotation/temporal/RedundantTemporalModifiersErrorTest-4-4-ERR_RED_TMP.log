@@ -3,7 +3,7 @@
 
 At (RedundantTemporalModifiersErrorTest.klass:4)
 
-[39m1║ [38;2;0;51;179mpackage[38;2;240;240;240m·[38;2;8;8;8mcool.klass.model.converter.compiler.annotation.temporal
+[0;48;2;255;255;255m[39m1║ [38;2;0;51;179mpackage[38;2;240;240;240m·[38;2;8;8;8mcool.klass.model.converter.compiler.annotation.temporal
 [39m3║ [38;2;0;51;179mclass[38;2;240;240;240m·[38;2;170;0;0mClassWithRedundantTemporalModifiers[38;2;240;240;240m¶[m
 [39m4║ [38;2;240;240;240m····[38;2;0;51;179msystemTemporal[38;2;240;240;240m¶[m
 [39m ║ [31m    ^^^^^^^^^^^^^^

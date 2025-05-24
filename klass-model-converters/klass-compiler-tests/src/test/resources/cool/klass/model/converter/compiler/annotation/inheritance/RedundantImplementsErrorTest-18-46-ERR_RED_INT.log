@@ -3,7 +3,7 @@
 
 At (RedundantImplementsErrorTest.klass:18)
 
-[39m 1║ [38;2;0;51;179mpackage[38;2;240;240;240m·[38;2;8;8;8mexample
+[0;48;2;255;255;255m[39m 1║ [38;2;0;51;179mpackage[38;2;240;240;240m·[38;2;8;8;8mexample
 [39m18║ [38;2;0;51;179minterface[38;2;240;240;240m·[38;2;0;170;170mRedundantBottomInterface[38;2;240;240;240m·[38;2;0;51;179mimplements[38;2;240;240;240m·[38;2;0;170;170mRedundantTopInterface[38;2;255;21;180m,[38;2;240;240;240m·[38;2;0;170;170mRedundantLeftInterface[38;2;255;21;180m,[38;2;240;240;240m·[38;2;0;170;170mRedundantRightInterface[38;2;240;240;240m¶[m
 [39m  ║ [31m                                              ^^^^^^^^^^^^^^^^^^^^^
 [39m19║ [38;2;8;8;8m{
