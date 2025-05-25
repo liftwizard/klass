@@ -33,6 +33,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @ExtendWith(LogMarkerTestExtension.class)
 class WhitespaceAndNewlineHandlingTest {
 
@@ -64,7 +66,7 @@ class WhitespaceAndNewlineHandlingTest {
         LOGGER.info("Whitespace test result: {}", result);
 
         // The result should contain "···" (three middle dots) instead of three spaces
-        assert result.contains("···") : "Expected whitespace to be rendered as middle dots";
+        assertThat(result).contains("···");
     }
 
     @Test
@@ -90,7 +92,7 @@ class WhitespaceAndNewlineHandlingTest {
         LOGGER.info("Newline test result: {}", result);
 
         // The result should contain "¶" (pilcrow) instead of a newline character
-        assert result.contains("¶") : "Expected newline to be rendered as pilcrow";
+        assertThat(result).contains("¶");
     }
 
     @Test
@@ -134,10 +136,10 @@ class WhitespaceAndNewlineHandlingTest {
         LOGGER.info("Mixed content test result: {}", result);
 
         // Verify we have all the expected content with special characters
-        assert result.contains("class") : "Expected 'class' keyword in the output";
-        assert result.contains("···") : "Expected whitespace to be rendered as middle dots";
-        assert result.contains("Example") : "Expected 'Example' class name in the output";
-        assert result.contains("¶") : "Expected newline to be rendered as pilcrow";
+        assertThat(result).contains("class");
+        assertThat(result).contains("···");
+        assertThat(result).contains("Example");
+        assertThat(result).contains("¶");
     }
 
     @Test
@@ -173,9 +175,9 @@ class WhitespaceAndNewlineHandlingTest {
         LOGGER.info("Reset after newline test result: {}", result);
 
         // The output should include the reset sequence after the newline
-        assert result.contains("keyword1") : "Expected 'keyword1' in the output";
-        assert result.contains("¶") : "Expected newline to be rendered as pilcrow";
-        assert result.contains("keyword2") : "Expected 'keyword2' in the output";
+        assertThat(result).contains("keyword1");
+        assertThat(result).contains("¶");
+        assertThat(result).contains("keyword2");
         // This is a bit tricky to test with Ansi sequences, but we're mostly
         // checking if the code runs without exceptions and produces expected visible output
     }
