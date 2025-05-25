@@ -1,0 +1,17 @@
+════════════════════════════════════════ [35mERR_REF_ORD[m ════════════════════════════════════════
+[31mError: Reference property 'Child.parent' is to-one but has an order-by clause. Order by clauses are only valid for to-many properties.[m
+
+At (ToOneAssociationEndOrderByErrorTest.klass:16)
+
+[0;48;2;255;255;255m[39m 1║ [38;2;0;51;179mpackage[38;2;240;240;240m·[38;2;8;8;8mcool.klass.model.converter.compiler.annotation.test
+[39m14║ [38;2;0;51;179massociation[38;2;240;240;240m·[38;2;170;0;0mParentHasChildren[38;2;240;240;240m¶[m
+[39m15║ [38;2;8;8;8m{
+[39m16║ [38;2;240;240;240m····[38;2;135;16;148mparent[38;2;8;8;8m:[38;2;240;240;240m·[38;2;170;0;0mParent[38;2;8;8;8m[[38;2;23;80;235m1[38;2;8;8;8m..[38;2;23;80;235m1[38;2;8;8;8m][38;2;240;240;240m·[38;2;0;51;179morderBy[38;2;8;8;8m:[38;2;240;240;240m·[38;2;0;51;179mthis[38;2;8;8;8m.[38;2;135;16;148mkey[38;2;240;240;240m·[38;2;0;51;179mascending[38;2;204;204;204m;
+[39m  ║ [31m                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[39m18║ [38;2;8;8;8m}
+[m
+[36mLocation:  [mToOneAssociationEndOrderByErrorTest.klass:16[m
+[36mFile:      [mToOneAssociationEndOrderByErrorTest.klass[m
+[36mLine:      [m16[m
+[36mCharacter: [m26
+═════════════════════════════════════════════════════════════════════════════════════════════

@@ -44,6 +44,9 @@ public final class AnsiTokenColorizer {
     @Nonnull
     private StyleState currentStyleState = StyleState.EMPTY;
 
+    @Nonnull
+    private final StyleState themeDefaultStyleState;
+
     public AnsiTokenColorizer(
         @Nonnull AnsiColorScheme colorScheme,
         @Nonnull MapIterable<Token, TokenCategory> tokenCategoriesFromParser,
@@ -52,22 +55,37 @@ public final class AnsiTokenColorizer {
         this.colorScheme = Objects.requireNonNull(colorScheme);
         this.tokenCategoriesFromParser = Objects.requireNonNull(tokenCategoriesFromParser);
         this.tokenCategoriesFromLexer = Objects.requireNonNull(tokenCategoriesFromLexer);
+
+        // Extract theme defaults for foreground and background
+        StyleSettings backgroundSettings = this.colorScheme.getStyleSettings(null);
+        StyleSettings foregroundSettings = this.colorScheme.getStyleSettings(TokenCategory.IDENTIFIER);
+        this.themeDefaultStyleState = new StyleState(
+            foregroundSettings.foreground(),
+            backgroundSettings.background(),
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+        );
     }
 
     public void resetStyle() {
-        this.currentStyleState = StyleState.EMPTY;
+        this.currentStyleState = this.themeDefaultStyleState;
     }
 
     public void applyInitialThemeStyles(Ansi ansi) {
         ansi.a(Ansi.Attribute.RESET);
 
-        // Apply background color from theme
-        this.colorScheme.background(ansi);
+        // Apply theme defaults
+        this.currentStyleState = StyleTransition.transition(StyleState.EMPTY, this.themeDefaultStyleState, ansi);
     }
 
     public void applyFinalReset(Ansi ansi) {
-        ansi.a(Ansi.Attribute.RESET);
-        resetStyle();
+        // Don't do a full reset, just transition back to theme defaults
+        this.currentStyleState = StyleTransition.transition(this.currentStyleState, this.themeDefaultStyleState, ansi);
     }
 
     @Nonnull
@@ -76,6 +94,8 @@ public final class AnsiTokenColorizer {
         String tokenText = token.getText();
 
         if (tokenCategory.isEmpty()) {
+            // For tokens without a category, ensure we maintain theme defaults
+            this.currentStyleState = StyleTransition.transition(this.currentStyleState, this.themeDefaultStyleState, ansi);
             ansi.a(tokenText);
             return;
         }
@@ -84,7 +104,20 @@ public final class AnsiTokenColorizer {
 
         StyleState targetStyleState = StyleExtractor.extractStyleState(category, this.colorScheme);
 
-        this.currentStyleState = StyleTransition.transition(this.currentStyleState, targetStyleState, ansi);
+        // Merge with theme defaults to ensure background is always set
+        StyleState mergedStyleState = new StyleState(
+            targetStyleState.foreground() != null ? targetStyleState.foreground() : this.themeDefaultStyleState.foreground(),
+            targetStyleState.background() != null ? targetStyleState.background() : this.themeDefaultStyleState.background(),
+            targetStyleState.bold(),
+            targetStyleState.italic(),
+            targetStyleState.underline(),
+            targetStyleState.blink(),
+            targetStyleState.reverse(),
+            targetStyleState.strikethrough(),
+            targetStyleState.faint()
+        );
+
+        this.currentStyleState = StyleTransition.transition(this.currentStyleState, mergedStyleState, ansi);
 
         if (category == TokenCategory.WHITESPACE) {
             ansi.a(tokenText.replace(' ', '·'));

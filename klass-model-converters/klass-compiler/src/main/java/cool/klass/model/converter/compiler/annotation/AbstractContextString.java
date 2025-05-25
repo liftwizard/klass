@@ -54,7 +54,9 @@ public abstract class AbstractContextString {
     private String toString(String string, int offset, int lineNumberWidth) {
         String lineNumberString = this.getLineNumberString(this.line + offset);
         String paddedLineNumberString = AbstractContextString.padLeft(lineNumberString, lineNumberWidth);
-        return Ansi.ansi().fgDefault().a(paddedLineNumberString).a(" ").a(string).toString();
+        // Don't use fgDefault() as it resets to terminal defaults
+        // The line already contains the appropriate ANSI codes from colorization
+        return Ansi.ansi().a(paddedLineNumberString).a(" ").a(string).toString();
     }
 
     @Override

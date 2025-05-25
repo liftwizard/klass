@@ -133,7 +133,8 @@ public abstract class AbstractCompilerAnnotation {
         String entireContext = contextStrings
             .collect(contextString -> contextString.toString(lineNumberWidth))
             .makeString("", "\n", "\n");
-        return ansi.a(entireContext).reset().toString();
+        // Don't call reset() as it resets to terminal defaults
+        return ansi.a(entireContext).toString();
     }
 
     @Nonnull
