@@ -3,13 +3,13 @@
 
 At (DoubleVersionAssociationErrorTest.klass:3)
 
-[0;48;2;255;255;255m[39m1║ [38;2;0;51;179mpackage[38;2;240;240;240m·[38;2;8;8;8mdummy
-[39m3║ [38;2;0;51;179mclass[38;2;240;240;240m·[38;2;170;0;0mExampleSource[38;2;240;240;240m¶[m
-[39m ║ [31m      ^^^^^^^^^^^^^
-[39m4║ [38;2;240;240;240m····[38;2;0;51;179msystemTemporal[38;2;240;240;240m¶[m
-[39m5║ [38;2;8;8;8m{
-[39m8║ }
-[m
+[0;38;2;0;170;0m1║ [38;2;0;51;179mpackage[38;2;240;240;240m·[38;2;8;8;8mdummy
+3║ [38;2;0;51;179mclass[38;2;240;240;240m·[38;2;170;0;0mExampleSource[38;2;240;240;240m¶[38;2;0;170;0m
+ ║ [31m      ^^^^^^^^^^^^^
+4║ [38;2;240;240;240m····[38;2;0;51;179msystemTemporal[38;2;240;240;240m¶[38;2;0;170;0m
+5║ [38;2;8;8;8m{
+8║ }
+
 [36mLocation:  [mDoubleVersionAssociationErrorTest.klass:3[m
 [36mFile:      [mDoubleVersionAssociationErrorTest.klass[m
 [36mLine:      [m3[m

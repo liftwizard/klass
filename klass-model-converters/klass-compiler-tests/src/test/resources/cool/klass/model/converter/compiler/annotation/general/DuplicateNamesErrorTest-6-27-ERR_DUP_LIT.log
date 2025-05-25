@@ -3,13 +3,13 @@
 
 At (DuplicateNamesErrorTest.klass:6)
 
-[0;48;2;255;255;255m[39m1║ [38;2;0;51;179mpackage[38;2;240;240;240m·[38;2;8;8;8mdummy
-[39m3║ [38;2;0;51;179menumeration[38;2;240;240;240m·[38;2;170;0;0mDuplicateTopLevelElement[38;2;240;240;240m¶[m
-[39m4║ [38;2;8;8;8m{
-[39m6║ [38;2;240;240;240m····[38;2;135;16;148;1mDUPLICATE_ENUM_LITERAL[38;2;8;8;8m([38;2;0;103;209m"Duplicate pretty name"[38;2;8;8;8m)[38;2;255;21;180m,
-[39m ║ [31m                           ^^^^^^^^^^^^^^^^^^^^^^^
-[39m7║ [38;2;8;8;8m}
-[m
+[0;38;2;0;170;0m1║ [38;2;0;51;179mpackage[38;2;240;240;240m·[38;2;8;8;8mdummy
+3║ [38;2;0;51;179menumeration[38;2;240;240;240m·[38;2;170;0;0mDuplicateTopLevelElement[38;2;240;240;240m¶[38;2;0;170;0m
+4║ [38;2;8;8;8m{
+6║ [38;2;240;240;240m····[38;2;135;16;148;1mDUPLICATE_ENUM_LITERAL[38;2;8;8;8m([38;2;0;103;209m"Duplicate pretty name"[38;2;8;8;8m)[38;2;255;21;180m,
+ ║ [31m                           ^^^^^^^^^^^^^^^^^^^^^^^
+7║ [38;2;8;8;8m}
+
 [36mLocation:  [mDuplicateNamesErrorTest.klass:6[m
 [36mFile:      [mDuplicateNamesErrorTest.klass[m
 [36mLine:      [m6[m

@@ -3,10 +3,10 @@
 
 At (AmbiguousTypesErrorTest.klass:9)
 
-[0;48;2;255;255;255m[39m1║ [38;2;0;51;179mpackage[38;2;240;240;240m·[38;2;8;8;8mdummy
-[39m9║ [38;2;0;51;179menumeration[38;2;240;240;240m·[38;2;170;0;0mAmbiguousEnumeration[38;2;240;240;240m·[38;2;8;8;8m{}
-[39m ║ [31m            ^^^^^^^^^^^^^^^^^^^^
-[m
+[0;38;2;0;170;0m1║ [38;2;0;51;179mpackage[38;2;240;240;240m·[38;2;8;8;8mdummy
+9║ [38;2;0;51;179menumeration[38;2;240;240;240m·[38;2;170;0;0mAmbiguousEnumeration[38;2;240;240;240m·[38;2;8;8;8m{}
+ ║ [31m            ^^^^^^^^^^^^^^^^^^^^
+
 [36mLocation:  [mAmbiguousTypesErrorTest.klass:9[m
 [36mFile:      [mAmbiguousTypesErrorTest.klass[m
 [36mLine:      [m9[m
