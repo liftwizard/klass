@@ -96,7 +96,11 @@ public final class AnsiTokenColorizer {
 
         if (tokenCategory.isEmpty()) {
             // For tokens without a category, ensure we maintain theme defaults
-            this.currentStyleState = StyleTransition.transition(this.currentStyleState, this.themeDefaultStyleState, ansi);
+            this.currentStyleState = StyleTransition.transition(
+                this.currentStyleState,
+                this.themeDefaultStyleState,
+                ansi
+            );
             ansi.a(tokenText);
             return;
         }
@@ -107,8 +111,12 @@ public final class AnsiTokenColorizer {
 
         // Merge with theme defaults to ensure background is always set
         StyleState mergedStyleState = new StyleState(
-            targetStyleState.foreground() != null ? targetStyleState.foreground() : this.themeDefaultStyleState.foreground(),
-            targetStyleState.background() != null ? targetStyleState.background() : this.themeDefaultStyleState.background(),
+            targetStyleState.foreground() != null
+                ? targetStyleState.foreground()
+                : this.themeDefaultStyleState.foreground(),
+            targetStyleState.background() != null
+                ? targetStyleState.background()
+                : this.themeDefaultStyleState.background(),
             targetStyleState.bold(),
             targetStyleState.italic(),
             targetStyleState.underline(),
