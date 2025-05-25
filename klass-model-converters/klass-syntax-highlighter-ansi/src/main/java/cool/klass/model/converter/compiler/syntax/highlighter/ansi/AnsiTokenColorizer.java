@@ -22,6 +22,7 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto.StyleSettings;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.style.StyleExtractor;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.style.StyleState;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.style.StyleTransition;
