@@ -89,6 +89,23 @@ public final class AnsiTokenColorizer {
         this.currentStyleState = StyleTransition.transition(this.currentStyleState, this.themeDefaultStyleState, ansi);
     }
 
+    public void applyLineNumberStyle(Ansi ansi) {
+        // Use the block comment style for line numbers (typically muted/gray)
+        StyleSettings lineNumberSettings = this.colorScheme.getStyleSettings(TokenCategory.BLOCK_COMMENT);
+        StyleState lineNumberStyleState = new StyleState(
+            lineNumberSettings.foreground(),
+            this.themeDefaultStyleState.background(),
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+        );
+        this.currentStyleState = StyleTransition.transition(this.currentStyleState, lineNumberStyleState, ansi);
+    }
+
     @Nonnull
     public void colorizeText(Ansi ansi, Token token) {
         Optional<TokenCategory> tokenCategory = this.getTokenCategory(token);

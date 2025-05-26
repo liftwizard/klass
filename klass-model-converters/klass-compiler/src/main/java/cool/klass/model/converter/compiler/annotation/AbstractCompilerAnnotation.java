@@ -208,10 +208,10 @@ public abstract class AbstractCompilerAnnotation {
                 throw new AssertionError("The ansi string should not end with a newline");
             }
 
-            contextStrings.add(new ContextString(tokenLine.getLine(), ansi.toString()));
+            contextStrings.add(new ContextString(tokenLine.getLine(), ansi.toString(), this.ansiTokenColorizer));
             if (underlinedLines.contains(tokenLine.getLine())) {
                 String underline = this.getUnderline(tokenLine, underlinedTokens);
-                contextStrings.add(new UnderlineContextString(tokenLine.getLine(), underline));
+                contextStrings.add(new UnderlineContextString(tokenLine.getLine(), underline, this.ansiTokenColorizer));
             }
         }
 
