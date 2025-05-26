@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Craig Motlin
+ * Copyright 2025 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
 import org.fusesource.jansi.Ansi;
 
 public abstract class AbstractContextString {
@@ -31,9 +32,13 @@ public abstract class AbstractContextString {
     @Nonnull
     private final String string;
 
-    protected AbstractContextString(int line, @Nonnull String string) {
+    @Nonnull
+    private final AnsiTokenColorizer ansiTokenColorizer;
+
+    protected AbstractContextString(int line, @Nonnull String string, @Nonnull AnsiTokenColorizer ansiTokenColorizer) {
         this.line = line;
         this.string = Objects.requireNonNull(string);
+        this.ansiTokenColorizer = Objects.requireNonNull(ansiTokenColorizer);
     }
 
     private static String padLeft(String string, int width) {
@@ -54,9 +59,20 @@ public abstract class AbstractContextString {
     private String toString(String string, int offset, int lineNumberWidth) {
         String lineNumberString = this.getLineNumberString(this.line + offset);
         String paddedLineNumberString = AbstractContextString.padLeft(lineNumberString, lineNumberWidth);
-        // Don't use fgDefault() as it resets to terminal defaults
-        // The line already contains the appropriate ANSI codes from colorization
-        return Ansi.ansi().a(paddedLineNumberString).a(" ").a(string).toString();
+
+        // Reset all ANSI styles first to prevent color bleeding
+        Ansi ansi = Ansi.ansi();
+        ansi.reset();
+
+        // Apply theme defaults first, then line number styling
+        this.ansiTokenColorizer.applyInitialThemeStyles(ansi);
+        this.ansiTokenColorizer.applyLineNumberStyle(ansi);
+        ansi.a(paddedLineNumberString);
+
+        // Reset back to theme defaults before the content
+        this.ansiTokenColorizer.applyInitialThemeStyles(ansi);
+        ansi.a(" ").a(string);
+        return ansi.toString();
     }
 
     @Override

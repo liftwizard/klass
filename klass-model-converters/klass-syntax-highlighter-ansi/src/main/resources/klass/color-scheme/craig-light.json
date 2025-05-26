@@ -5,7 +5,7 @@
     {
       "name": "foreground",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
@@ -217,19 +217,19 @@
     {
       "name": "identifier",
       "style": {
-        "foreground": "#00aa00"
+        "foreground": "#000000"
       }
     },
     {
       "name": "packageName",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#aa0000"
       }
     },
     {
       "name": "topLevelElementName",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#aa0000"
       }
     },
     {
@@ -254,7 +254,7 @@
     {
       "name": "urlConstant",
       "style": {
-        "foreground": "#0067d1"
+        "foreground": "#00aa00"
       }
     },
     {
@@ -408,7 +408,7 @@
     {
       "name": "stringLiteral",
       "style": {
-        "foreground": "#0067d1"
+        "foreground": "#067d17"
       }
     },
     {
@@ -426,7 +426,7 @@
     {
       "name": "characterLiteral",
       "style": {
-        "foreground": "#0067d1"
+        "foreground": "#067d17"
       }
     },
     {
@@ -452,7 +452,7 @@
     {
       "name": "punctuation",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
@@ -470,49 +470,49 @@
     {
       "name": "colon",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
       "name": "slash",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
       "name": "question",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
       "name": "ampersand",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
       "name": "pairedPunctuation",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
       "name": "parentheses",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
       "name": "curlyBraces",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
       "name": "squareBrackets",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
@@ -524,13 +524,13 @@
     {
       "name": "dot",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
       "name": "dotDot",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
@@ -544,7 +544,7 @@
     {
       "name": "operator",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
@@ -568,49 +568,49 @@
     {
       "name": "operatorEquals",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
       "name": "operatorNotEquals",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
       "name": "operatorLessThan",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
       "name": "operatorGreaterThan",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
       "name": "operatorLessThanOrEqual",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
       "name": "operatorGreaterThanOrEqual",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
       "name": "operatorAnd",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     },
     {
       "name": "operatorOr",
       "style": {
-        "foreground": "#080808"
+        "foreground": "#000000"
       }
     }
   ]

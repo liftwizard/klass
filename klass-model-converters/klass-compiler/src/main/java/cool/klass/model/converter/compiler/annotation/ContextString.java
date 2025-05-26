@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Craig Motlin
+ * Copyright 2025 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,12 @@ package cool.klass.model.converter.compiler.annotation;
 
 import javax.annotation.Nonnull;
 
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
+
 public class ContextString extends AbstractContextString {
 
-    public ContextString(int line, @Nonnull String string) {
-        super(line, string);
+    public ContextString(int line, @Nonnull String string, @Nonnull AnsiTokenColorizer ansiTokenColorizer) {
+        super(line, string, ansiTokenColorizer);
     }
 
     @Nonnull

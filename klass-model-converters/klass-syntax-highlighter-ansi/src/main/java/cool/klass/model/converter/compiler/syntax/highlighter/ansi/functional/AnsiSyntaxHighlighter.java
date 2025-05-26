@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import com.google.common.base.Stopwatch;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.functional.AnsiStreamWriter.StyledToken;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto.StyleSettings;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.style.StyleExtractor;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.style.StyleState;
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
@@ -57,7 +58,14 @@ public final class AnsiSyntaxHighlighter {
         @Nonnull String sourceName,
         @Nonnull AnsiColorScheme colorScheme
     ) {
-        return highlightSourceCode(sourceCodeText, sourceName, colorScheme, "WHITE", "BLACK");
+        // Get theme defaults for foreground and background
+        StyleSettings foregroundSettings = colorScheme.getStyleSettings(TokenCategory.IDENTIFIER);
+        StyleSettings backgroundSettings = colorScheme.getStyleSettings(null);
+
+        Object defaultForeground = foregroundSettings.foreground();
+        Object defaultBackground = backgroundSettings.background();
+
+        return highlightSourceCode(sourceCodeText, sourceName, colorScheme, defaultForeground, defaultBackground);
     }
 
     @Nonnull
