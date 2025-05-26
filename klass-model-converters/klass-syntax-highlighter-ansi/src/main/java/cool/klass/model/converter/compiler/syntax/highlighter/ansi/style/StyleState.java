@@ -37,9 +37,9 @@ public record StyleState(
     boolean strikethrough,
     boolean faint
 ) {
-    private static final Pattern HEX_COLOR_PATTERN = Pattern.compile("#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?");
-
     public static final StyleState EMPTY = new StyleState(null, null, false, false, false, false, false, false, false);
+
+    private static final Pattern HEX_COLOR_PATTERN = Pattern.compile("#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?");
 
     public static StyleState fromStyleSettings(StyleSettings styleSettings) {
         return new StyleState(

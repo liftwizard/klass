@@ -26,8 +26,6 @@ public final class AnsiStreamWriter {
         throw new AssertionError("Suppress default constructor for noninstantiability");
     }
 
-    public record StyledToken(AnsiColorStyle style, String text) {}
-
     public static Ansi write(ImmutableList<StyledToken> tokens, Object defaultForeground, Object defaultBackground) {
         Ansi ansi = Ansi.ansi();
 
@@ -95,4 +93,6 @@ public final class AnsiStreamWriter {
             instruction.apply(ansi);
         }
     }
+
+    public record StyledToken(AnsiColorStyle style, String text) {}
 }

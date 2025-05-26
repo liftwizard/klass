@@ -24,6 +24,81 @@ import org.fusesource.jansi.Ansi.Attribute;
 public sealed interface AnsiInstruction {
     void apply(Ansi ansi);
 
+    AnsiInstruction RESET = new Reset();
+    ForegroundInstruction RESET_FOREGROUND = new ResetForeground();
+    BackgroundInstruction RESET_BACKGROUND = new ResetBackground();
+
+    FontStyleInstruction BOLD_ON = new BoldOn();
+    FontStyleInstruction BOLD_OFF = new BoldOff();
+
+    FontStyleInstruction ITALIC_ON = new ItalicOn();
+    FontStyleInstruction ITALIC_OFF = new ItalicOff();
+
+    FontStyleInstruction UNDERLINE_ON = new UnderlineOn();
+    FontStyleInstruction UNDERLINE_OFF = new UnderlineOff();
+
+    FontStyleInstruction BLINK_ON = new BlinkOn();
+    FontStyleInstruction BLINK_OFF = new BlinkOff();
+
+    FontStyleInstruction REVERSE_ON = new ReverseOn();
+    FontStyleInstruction REVERSE_OFF = new ReverseOff();
+
+    FontStyleInstruction STRIKETHROUGH_ON = new StrikethroughOn();
+    FontStyleInstruction STRIKETHROUGH_OFF = new StrikethroughOff();
+
+    FontStyleInstruction FAINT_ON = new FaintOn();
+    FontStyleInstruction FAINT_OFF = new FaintOff();
+
+    static ForegroundInstruction createForegroundColor(Object colorValue) {
+        if (colorValue == null) {
+            return RESET_FOREGROUND;
+        }
+
+        if (colorValue instanceof String stringColor) {
+            if (stringColor.startsWith("#")) {
+                Color decodedColor = Color.decode(stringColor);
+                return new RgbForegroundColor(decodedColor.getRed(), decodedColor.getGreen(), decodedColor.getBlue());
+            }
+
+            try {
+                Ansi.Color namedColor = Ansi.Color.valueOf(stringColor);
+                return new NamedForegroundColor(namedColor);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid color name: '" + stringColor + '\'');
+            }
+        }
+
+        if (colorValue instanceof Number numberColor) {
+            return new IndexedForegroundColor(numberColor.intValue());
+        }
+        throw new IllegalArgumentException("Unsupported color type: " + colorValue.getClass().getName());
+    }
+
+    static BackgroundInstruction createBackgroundColor(Object colorValue) {
+        if (colorValue == null) {
+            return RESET_BACKGROUND;
+        }
+
+        if (colorValue instanceof String stringColor) {
+            if (stringColor.startsWith("#")) {
+                Color decodedColor = Color.decode(stringColor);
+                return new RgbBackgroundColor(decodedColor.getRed(), decodedColor.getGreen(), decodedColor.getBlue());
+            }
+
+            try {
+                Ansi.Color namedColor = Ansi.Color.valueOf(stringColor);
+                return new NamedBackgroundColor(namedColor);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid color name: '" + stringColor + '\'');
+            }
+        }
+
+        if (colorValue instanceof Number numberColor) {
+            return new IndexedBackgroundColor(numberColor.intValue());
+        }
+        throw new IllegalArgumentException("Unsupported color type: " + colorValue.getClass().getName());
+    }
+
     record Reset() implements AnsiInstruction {
         @Override
         public void apply(Ansi ansi) {
@@ -190,79 +265,4 @@ public sealed interface AnsiInstruction {
             ansi.a(Attribute.INTENSITY_BOLD_OFF);
         }
     }
-
-    static ForegroundInstruction createForegroundColor(Object colorValue) {
-        if (colorValue == null) {
-            return RESET_FOREGROUND;
-        }
-
-        if (colorValue instanceof String stringColor) {
-            if (stringColor.startsWith("#")) {
-                Color decodedColor = Color.decode(stringColor);
-                return new RgbForegroundColor(decodedColor.getRed(), decodedColor.getGreen(), decodedColor.getBlue());
-            }
-
-            try {
-                Ansi.Color namedColor = Ansi.Color.valueOf(stringColor);
-                return new NamedForegroundColor(namedColor);
-            } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Invalid color name: '" + stringColor + '\'');
-            }
-        }
-
-        if (colorValue instanceof Number numberColor) {
-            return new IndexedForegroundColor(numberColor.intValue());
-        }
-        throw new IllegalArgumentException("Unsupported color type: " + colorValue.getClass().getName());
-    }
-
-    static BackgroundInstruction createBackgroundColor(Object colorValue) {
-        if (colorValue == null) {
-            return RESET_BACKGROUND;
-        }
-
-        if (colorValue instanceof String stringColor) {
-            if (stringColor.startsWith("#")) {
-                Color decodedColor = Color.decode(stringColor);
-                return new RgbBackgroundColor(decodedColor.getRed(), decodedColor.getGreen(), decodedColor.getBlue());
-            }
-
-            try {
-                Ansi.Color namedColor = Ansi.Color.valueOf(stringColor);
-                return new NamedBackgroundColor(namedColor);
-            } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Invalid color name: '" + stringColor + '\'');
-            }
-        }
-
-        if (colorValue instanceof Number numberColor) {
-            return new IndexedBackgroundColor(numberColor.intValue());
-        }
-        throw new IllegalArgumentException("Unsupported color type: " + colorValue.getClass().getName());
-    }
-
-    AnsiInstruction RESET = new Reset();
-    ForegroundInstruction RESET_FOREGROUND = new ResetForeground();
-    BackgroundInstruction RESET_BACKGROUND = new ResetBackground();
-
-    FontStyleInstruction BOLD_ON = new BoldOn();
-    FontStyleInstruction BOLD_OFF = new BoldOff();
-
-    FontStyleInstruction ITALIC_ON = new ItalicOn();
-    FontStyleInstruction ITALIC_OFF = new ItalicOff();
-
-    FontStyleInstruction UNDERLINE_ON = new UnderlineOn();
-    FontStyleInstruction UNDERLINE_OFF = new UnderlineOff();
-
-    FontStyleInstruction BLINK_ON = new BlinkOn();
-    FontStyleInstruction BLINK_OFF = new BlinkOff();
-
-    FontStyleInstruction REVERSE_ON = new ReverseOn();
-    FontStyleInstruction REVERSE_OFF = new ReverseOff();
-
-    FontStyleInstruction STRIKETHROUGH_ON = new StrikethroughOn();
-    FontStyleInstruction STRIKETHROUGH_OFF = new StrikethroughOff();
-
-    FontStyleInstruction FAINT_ON = new FaintOn();
-    FontStyleInstruction FAINT_OFF = new FaintOff();
 }
