@@ -27,6 +27,7 @@
                         <klassSourcePackage>${app.rootPackageName}</klassSourcePackage>
                     </klassSourcePackages>
                     <logCompilerAnnotations>true</logCompilerAnnotations>
+                    <colorScheme>dark</colorScheme>
                 </configuration>
                 <executions>
                     <execution>

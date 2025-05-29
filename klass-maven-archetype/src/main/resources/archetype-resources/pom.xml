@@ -8,7 +8,7 @@
     <parent>
         <groupId>io.liftwizard</groupId>
         <artifactId>liftwizard-parent-build</artifactId>
-        <version>2.1.12</version>
+        <version>2.1.31</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -27,7 +27,7 @@
 
         <mainClass>${app.rootPackageName}.dropwizard.application.${app.name}Application</mainClass>
 
-        <liftwizard.version>2.1.12</liftwizard.version>
+        <liftwizard.version>2.1.31</liftwizard.version>
     </properties>
 
     <name>${app.name} (Module Group)</name>
@@ -61,5 +61,35 @@
 
         </dependencies>
     </dependencyManagement>
+
+    <profiles>
+
+        <!--region Phase 21: verify-->
+        <profile>
+            <id>maven-dependency-plugin</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <configuration>
+                            <ignoredUnusedDeclaredDependencies combine.children="append">
+                                <ignoredUnusedDeclaredDependency>\${groupId}:\${app.artifactId}-domain-model</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>\${groupId}:\${app.artifactId}-dtos</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>\${groupId}:\${app.artifactId}-graphql-reladomo-finder</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>\${groupId}:\${app.artifactId}-graphql-schema-query</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>\${groupId}:\${app.artifactId}-graphql-schema</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>\${groupId}:\${app.artifactId}-liquibase-schema</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>\${groupId}:\${app.artifactId}-reladomo-runtime-configuration</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>\${groupId}:\${app.artifactId}-relational-schema</ignoredUnusedDeclaredDependency>
+                            </ignoredUnusedDeclaredDependencies>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!--endregion-->
+
+    </profiles>
 
 </project>

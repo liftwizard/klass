@@ -33,15 +33,54 @@
             <directory>.mvn</directory>
         </fileSet>
 
+        <fileSet filtered="true">
+            <directory>.github</directory>
+            <includes>
+                <include>dependabot.yml</include>
+                <include>errorprone.json</include>
+            </includes>
+        </fileSet>
+
+        <fileSet filtered="true">
+            <directory>.github/workflows</directory>
+            <includes>
+                <include>merge-group.yml</include>
+                <include>pull-request.yml</include>
+                <include>push.yml</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>.just</directory>
+            <includes>
+                <include>console.just</include>
+                <include>git-test.just</include>
+                <include>git.just</include>
+                <include>maven.just</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>.mise</directory>
+            <includes>
+                <include>.gitignore</include>
+                <include>config.toml</include>
+            </includes>
+        </fileSet>
+
         <fileSet>
             <directory></directory>
             <includes>
+                <include>.markdownlint.jsonc</include>
+                <include>.pre-commit-config.yaml</include>
                 <include>.prettierrc.yaml</include>
                 <include>.tool-versions</include>
+                <include>.yamllint.yaml</include>
                 <include>checkstyle-suppressions.xml</include>
                 <include>gitignore</include>
                 <include>mvnw.cmd</include>
                 <include>mvnw</include>
+                <include>spotbugs-exclude.xml</include>
             </includes>
         </fileSet>
 
