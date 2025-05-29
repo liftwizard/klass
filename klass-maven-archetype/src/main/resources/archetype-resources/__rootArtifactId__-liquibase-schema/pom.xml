@@ -96,6 +96,13 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-syntax-highlighter-ansi</artifactId>
+            <version>${klass.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -110,6 +117,7 @@
                     <klassSourcePackages>
                         <klassSourcePackage>${app.rootPackageName}</klassSourcePackage>
                     </klassSourcePackages>
+                    <colorScheme>dark</colorScheme>
                 </configuration>
 
                 <executions>
