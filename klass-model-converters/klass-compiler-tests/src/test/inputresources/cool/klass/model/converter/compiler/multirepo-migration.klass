@@ -1,0 +1,397 @@
+package com.twosigma.multirepo.migration
+
+user User
+    systemTemporal
+    versioned
+{
+    userId: String key userId;
+    email: String?;
+}
+
+class TeamOrgMapping
+    systemTemporal
+    versioned
+{
+    teamName: String key maximumLength(255);
+    orgName: String key maximumLength(255);
+}
+
+class Product
+    systemTemporal
+    versioned
+{
+    name: String key maximumLength(255);
+}
+
+class Language
+    systemTemporal
+    versioned
+{
+    name: String key maximumLength(100);
+}
+
+class JiraTicket
+    systemTemporal
+    versioned
+{
+    ticketKey: String key maximumLength(255);
+}
+
+class GithubRepo
+    systemTemporal
+    versioned
+{
+    org: String key maximumLength(255);
+    name: String key maximumLength(255);
+}
+
+class GithubRepoProduct
+    systemTemporal
+    versioned
+{
+    githubRepoOrg: String key maximumLength(255);
+    githubRepoName: String key maximumLength(255);
+    productName: String key maximumLength(255);
+}
+
+association GithubRepoHasProducts
+{
+    githubRepo: GithubRepo[1..1];
+    productMappings: GithubRepoProduct[0..*] owned;
+}
+
+association ProductHasGithubRepos
+{
+    product: Product[1..1];
+    githubRepoMappings: GithubRepoProduct[0..*];
+}
+
+class MonorepoModule
+    systemTemporal
+    versioned
+{
+    name: String key maximumLength(1024);
+    teamName: String? private maximumLength(255);
+    orgName: String? private maximumLength(255);
+    migrationJiraTicketKey: String? private maximumLength(255);
+    detectedDate: Instant?;
+    migratedDate: Instant?;
+    deleted: Boolean;
+}
+
+association TeamOrgMappingHasModules
+{
+    teamOrgMapping: TeamOrgMapping[0..1];
+    modules: MonorepoModule[0..*];
+
+    relationship this.teamName == MonorepoModule.teamName
+        && this.orgName == MonorepoModule.orgName
+}
+
+association JiraTicketForMigration
+{
+    migrationJira: JiraTicket[0..1];
+    monorepoModules: MonorepoModule[0..*];
+
+    relationship this.ticketKey == MonorepoModule.migrationJiraTicketKey
+}
+
+class MonorepoModuleLanguage
+    systemTemporal
+    versioned
+{
+    monorepoModuleName: String key maximumLength(1024);
+    languageName: String key maximumLength(100);
+}
+
+association MonorepoModuleHasLanguages
+{
+    monorepoModule: MonorepoModule[1..1];
+    languageMappings: MonorepoModuleLanguage[0..*] owned;
+}
+
+association LanguageHasMonorepoModules
+{
+    language: Language[1..1];
+    monorepoModuleMappings: MonorepoModuleLanguage[0..*];
+}
+
+class MonorepoModuleProduct
+    systemTemporal
+    versioned
+{
+    monorepoModuleName: String key maximumLength(1024);
+    productName: String key maximumLength(255);
+}
+
+association MonorepoModuleHasProducts
+{
+    monorepoModule: MonorepoModule[1..1];
+    productMappings: MonorepoModuleProduct[0..*] owned;
+}
+
+association ProductHasMonorepoModules
+{
+    product: Product[1..1];
+    monorepoModuleMappings: MonorepoModuleProduct[0..*];
+}
+
+class MonorepoModuleJiraTicket
+    systemTemporal
+    versioned
+{
+    monorepoModuleName: String key maximumLength(1024);
+    jiraTicketKey: String key maximumLength(255);
+}
+
+association MonorepoModuleHasStrategicProjectJiras
+{
+    monorepoModule: MonorepoModule[1..1];
+    strategicProjectJiraMappings: MonorepoModuleJiraTicket[0..*] owned;
+}
+
+association JiraTicketHasMonorepoModules
+{
+    jiraTicket: JiraTicket[1..1];
+    monorepoModuleMappings: MonorepoModuleJiraTicket[0..*];
+
+    relationship this.ticketKey == MonorepoModuleJiraTicket.jiraTicketKey
+}
+
+class MonorepoModuleNotes
+    systemTemporal
+    audited
+{
+    monorepoModuleName: String key maximumLength(1024);
+    notes: String? maximumLength(65535);
+}
+
+class MonorepoModuleIgnored
+    systemTemporal
+    audited
+{
+    monorepoModuleName: String key maximumLength(1024);
+    ignored: Boolean;
+}
+
+class MonorepoModuleMultirepoSourceOfTruth
+    systemTemporal
+    audited
+{
+    monorepoModuleName: String key maximumLength(1024);
+    multirepoSourceOfTruth: Boolean;
+}
+
+class MonorepoModulePlannedFor
+    systemTemporal
+    audited
+{
+    monorepoModuleName: String key maximumLength(1024);
+    plannedFor: String? maximumLength(255);
+}
+
+association MonorepoModuleHasNotes
+{
+    monorepoModule: MonorepoModule[1..1];
+    notes: MonorepoModuleNotes[0..1] owned;
+}
+
+association MonorepoModuleHasIgnored
+{
+    monorepoModule: MonorepoModule[1..1];
+    ignored: MonorepoModuleIgnored[0..1] owned;
+}
+
+association MonorepoModuleHasMultirepoSourceOfTruth
+{
+    monorepoModule: MonorepoModule[1..1];
+    multirepoSourceOfTruth: MonorepoModuleMultirepoSourceOfTruth[0..1] owned;
+}
+
+association MonorepoModuleHasPlannedFor
+{
+    monorepoModule: MonorepoModule[1..1];
+    plannedFor: MonorepoModulePlannedFor[0..1] owned;
+}
+
+class GithubRepoMonorepoModule
+    systemTemporal
+    audited
+{
+    monorepoModuleName: String? key maximumLength(1024);
+    githubRepoOrg: String? key maximumLength(255);
+    githubRepoName: String? key maximumLength(255);
+}
+
+association MonorepoModuleToGithubRepo
+{
+    monorepoModule: MonorepoModule[0..1];
+    githubRepoMappings: GithubRepoMonorepoModule[0..*];
+}
+
+association GithubRepoToMonorepoModule
+{
+    githubRepo: GithubRepo[0..1];
+    monorepoModuleMappings: GithubRepoMonorepoModule[0..*];
+}
+
+class MonorepoModuleDependency
+    systemTemporal
+    versioned
+{
+    monorepoModuleName: String key maximumLength(1024);
+    dependencyName: String key maximumLength(1024);
+}
+
+association MonorepoModuleHasDependencies
+{
+    monorepoModule: MonorepoModule[1..1];
+    dependencies: MonorepoModuleDependency[0..*] owned;
+}
+
+projection MonorepoModuleProjection on MonorepoModule
+{
+    name: "name",
+    detectedDate: "detectedDate",
+    migratedDate: "migratedDate",
+    deleted: "deleted",
+    teamOrgMapping:
+    {
+        teamName: "teamName",
+        orgName: "orgName",
+    },
+    migrationJira:
+    {
+        ticketKey: "ticketKey",
+    },
+    languageMappings:
+    {
+        languageName: "languageName",
+    },
+    productMappings:
+    {
+        productName: "productName",
+    },
+    strategicProjectJiraMappings:
+    {
+        jiraTicketKey: "jiraTicketKey",
+    },
+    notes:
+    {
+        notes: "notes",
+    },
+    ignored:
+    {
+        ignored: "ignored",
+    },
+    multirepoSourceOfTruth:
+    {
+        multirepoSourceOfTruth: "multirepoSourceOfTruth",
+    },
+    plannedFor:
+    {
+        plannedFor: "plannedFor",
+    },
+    githubRepoMappings:
+    {
+        githubRepo:
+        {
+            org: "org",
+            name: "name",
+        },
+    },
+    dependencies:
+    {
+        dependencyName: "dependencyName",
+    },
+}
+
+projection GithubRepoProjection on GithubRepo
+{
+    org: "org",
+    name: "name",
+    productMappings:
+    {
+        productName: "productName",
+    },
+    monorepoModuleMappings:
+    {
+        monorepoModule:
+        {
+            name: "name",
+            deleted: "deleted",
+        },
+    },
+}
+
+service MonorepoModuleResource on MonorepoModule
+{
+    /monorepoModules
+        GET
+        {
+            multiplicity: many;
+            criteria: all;
+            projection: MonorepoModuleProjection;
+        }
+
+        POST
+        {
+            multiplicity: one;
+        }
+
+    /monorepoModules/{name: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria: this.name == name;
+            projection: MonorepoModuleProjection;
+        }
+
+        PUT
+        {
+            multiplicity: one;
+            criteria: this.name == name;
+        }
+
+        DELETE
+        {
+            multiplicity: one;
+            criteria: this.name == name;
+        }
+}
+
+service GithubRepoResource on GithubRepo
+{
+    /githubRepos
+        GET
+        {
+            multiplicity: many;
+            criteria: all;
+            projection: GithubRepoProjection;
+        }
+
+        POST
+        {
+            multiplicity: one;
+        }
+
+    /githubRepos/{org: String[1..1]}/{name: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria: this.org == org && this.name == name;
+            projection: GithubRepoProjection;
+        }
+
+        PUT
+        {
+            multiplicity: one;
+            criteria: this.org == org && this.name == name;
+        }
+
+        DELETE
+        {
+            multiplicity: one;
+            criteria: this.org == org && this.name == name;
+        }
+}

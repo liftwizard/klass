@@ -61,6 +61,11 @@ class KlassCompilerTest {
 		this.assertNoCompilerErrors("/cool/klass/xample/coverage/coverage-example.klass");
 	}
 
+	@Test
+	void multirepoMigration() {
+		this.assertNoCompilerErrors("multirepo-migration.klass");
+	}
+
 	private void assertNoCompilerErrors(@Nonnull String sourceCodeName) {
 		String sourceCodeText = FileSlurper.slurp(sourceCodeName, this.getClass());
 		CompilationUnit compilationUnit = CompilationUnit.createFromText(
