@@ -94,7 +94,7 @@ public abstract class AbstractCompilerAnnotation {
         if (offendingContexts.isEmpty()) {
             throw new AssertionError();
         }
-        if (!offendingContexts.noneSatisfy(offendingContext -> offendingContext.getStart() == null)) {
+        if (offendingContexts.anySatisfy(offendingContext -> offendingContext.getStart() == null)) {
             throw new AssertionError();
         }
 
