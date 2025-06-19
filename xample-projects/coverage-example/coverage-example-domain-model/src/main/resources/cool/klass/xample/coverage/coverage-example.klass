@@ -153,6 +153,13 @@ projection PropertiesOptionalVersionProjection on PropertiesOptionalVersion
     lastUpdatedBy: UserProjection,
 }
 
+projection PropertiesOptionalCreatedProjection on PropertiesOptional
+{
+    propertiesOptionalId: "propertiesOptionalId",
+    createdOn           : "createdOn",
+    optionalString      : "optionalString",
+}
+
 projection PropertiesOptionalProjection on PropertiesOptional
 {
     propertiesOptionalId: "propertiesOptionalId",
@@ -179,6 +186,7 @@ service PropertiesOptionalResource on PropertiesOptional
         POST
         {
             multiplicity: one;
+            projection  : PropertiesOptionalCreatedProjection;
         }
     /propertiesOptional/{propertiesOptionalId: Long[1..1]}
         GET
