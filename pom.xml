@@ -104,7 +104,7 @@
         <checkstyle.cache>${project.build.directory}/checkstyle-cache</checkstyle.cache>
 
         <liftwizard.version>2.1.32</liftwizard.version>
-        <eclipse.collections.version>12.0.0</eclipse.collections.version>
+        <eclipse.collections.version>13.0.0</eclipse.collections.version>
         <klass.version>${project.version}</klass.version>
     </properties>
 
