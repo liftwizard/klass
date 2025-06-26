@@ -51,7 +51,7 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
             .request()
             .post(Entity.json(json));
 
-        this.assertResponse("post", Status.METHOD_NOT_ALLOWED, response);
+        this.assertEmptyResponse(Status.NO_CONTENT, response);
     }
 
     @Test
