@@ -17,6 +17,7 @@
 package cool.klass.serialization.jackson.response;
 
 import java.security.Principal;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
@@ -39,7 +40,7 @@ public class KlassResponseBuilder {
     private final Multiplicity multiplicity;
 
     @Nonnull
-    private final Instant transactionTimestamp;
+    private final Timestamp transactionTimestamp;
 
     @Nonnull
     private Optional<KlassResponsePagination> pagination = Optional.empty();
@@ -57,7 +58,7 @@ public class KlassResponseBuilder {
         @Nullable Object data,
         @Nonnull Projection projection,
         @Nonnull Multiplicity multiplicity,
-        @Nonnull Instant transactionTimestamp
+        @Nonnull Timestamp transactionTimestamp
     ) {
         this.data = data;
         this.projection = Objects.requireNonNull(projection);
@@ -102,16 +103,32 @@ public class KlassResponseBuilder {
     }
 
     public KlassResponse build() {
+        // Special handling for infinity timestamp to ensure consistent UTC representation
+        Instant instant;
+        if (isInfinityTimestamp(this.transactionTimestamp)) {
+            // Always use the UTC representation of infinity: "9999-12-01T23:59:00Z"
+            instant = Instant.parse("9999-12-01T23:59:00Z");
+        } else {
+            // For regular timestamps, preserve the exact moment in time
+            instant = this.transactionTimestamp.toInstant();
+        }
+
         KlassResponseMetadata metadata = new KlassResponseMetadata(
             this.criteria,
             this.orderBy,
             this.multiplicity,
             this.projection,
-            this.transactionTimestamp,
+            instant,
             this.pagination,
             this.principal
         );
         return new KlassResponse(metadata, this.data);
+    }
+
+    private boolean isInfinityTimestamp(Timestamp timestamp) {
+        // Check if this is the infinity timestamp (year 9999)
+        // Using getYear() + 1900 because Timestamp.getYear() returns years since 1900
+        return timestamp.toLocalDateTime().getYear() == 9999;
     }
 
     @Override

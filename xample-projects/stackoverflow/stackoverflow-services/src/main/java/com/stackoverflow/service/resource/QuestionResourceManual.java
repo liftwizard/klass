@@ -137,14 +137,13 @@ public class QuestionResourceManual {
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
         MithraTimestamp transactionTimestamp = DefaultInfinityTimestamp.getDefaultInfinity();
-        Instant transactionInstant = transactionTimestamp.toInstant();
         Object persistentInstance = Iterate.getOnly(result);
 
         var responseBuilder = new KlassResponseBuilder(
             persistentInstance,
             projection,
             Multiplicity.ONE_TO_ONE,
-            transactionInstant
+            transactionTimestamp
         ).setCriteria(operation.toString());
 
         return Response.ok().entity(responseBuilder.build()).build();
@@ -224,12 +223,13 @@ public class QuestionResourceManual {
         replacer.synchronize(klass, persistentInstance, incomingInstance);
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
+        MithraTimestamp transactionTimestamp = new MithraTimestamp(transactionInstant.toEpochMilli());
 
         var responseBuilder = new KlassResponseBuilder(
             persistentInstance,
             projection,
             Multiplicity.ONE_TO_ONE,
-            transactionInstant
+            transactionTimestamp
         ).setCriteria(queryOperation.toString());
 
         return Response.ok().entity(responseBuilder.build()).build();
@@ -275,13 +275,12 @@ public class QuestionResourceManual {
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
         MithraTimestamp transactionTimestamp = DefaultInfinityTimestamp.getDefaultInfinity();
-        Instant transactionInstant = transactionTimestamp.toInstant();
 
         var responseBuilder = new KlassResponseBuilder(
             persistentInstance,
             projection,
             Multiplicity.ONE_TO_ONE,
-            transactionInstant
+            transactionTimestamp
         ).setCriteria(queryOperation.toString());
 
         return Response.ok().entity(responseBuilder.build()).build();
@@ -307,13 +306,12 @@ public class QuestionResourceManual {
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
         MithraTimestamp transactionTimestamp = DefaultInfinityTimestamp.getDefaultInfinity();
-        Instant transactionInstant = transactionTimestamp.toInstant();
 
         var responseBuilder = new KlassResponseBuilder(
             result,
             projection,
             Multiplicity.ONE_TO_ONE,
-            transactionInstant
+            transactionTimestamp
         ).setCriteria(queryOperation.toString());
 
         return Response.ok().entity(responseBuilder.build()).build();
@@ -338,13 +336,12 @@ public class QuestionResourceManual {
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
         MithraTimestamp transactionTimestamp = DefaultInfinityTimestamp.getDefaultInfinity();
-        Instant transactionInstant = transactionTimestamp.toInstant();
 
         var responseBuilder = new KlassResponseBuilder(
             result,
             projection,
             Multiplicity.ONE_TO_ONE,
-            transactionInstant
+            transactionTimestamp
         ).setCriteria(queryOperation.toString());
 
         return Response.ok().entity(responseBuilder.build()).build();
@@ -383,13 +380,12 @@ public class QuestionResourceManual {
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
         MithraTimestamp transactionTimestamp = DefaultInfinityTimestamp.getDefaultInfinity();
-        Instant transactionInstant = transactionTimestamp.toInstant();
 
         var responseBuilder = new KlassResponseBuilder(
             Iterate.getOnly(result),
             projection,
             Multiplicity.ONE_TO_ONE,
-            transactionInstant
+            transactionTimestamp
         ).setCriteria(queryOperation.toString());
 
         return Response.ok().entity(responseBuilder.build()).build();
@@ -430,13 +426,12 @@ public class QuestionResourceManual {
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
         MithraTimestamp transactionTimestamp = DefaultInfinityTimestamp.getDefaultInfinity();
-        Instant transactionInstant = transactionTimestamp.toInstant();
 
         var responseBuilder = new KlassResponseBuilder(
             Iterate.getOnly(result),
             projection,
             Multiplicity.ONE_TO_ONE,
-            transactionInstant
+            transactionTimestamp
         ).setCriteria(queryOperation.toString());
 
         return Response.ok().entity(responseBuilder.build()).build();
@@ -505,12 +500,13 @@ public class QuestionResourceManual {
         uriBuilder.path(Long.toString(persistentInstance.getId()));
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
+        MithraTimestamp transactionTimestamp = new MithraTimestamp(transactionInstant.toEpochMilli());
 
         var responseBuilder = new KlassResponseBuilder(
             persistentInstance,
             projection,
             Multiplicity.ONE_TO_ONE,
-            transactionInstant
+            transactionTimestamp
         ).setCriteria(QuestionFinder.id().eq(persistentInstance.getId()).toString());
 
         return Response.created(uriBuilder.build()).entity(responseBuilder.build()).build();
@@ -534,13 +530,12 @@ public class QuestionResourceManual {
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
         MithraTimestamp transactionTimestamp = DefaultInfinityTimestamp.getDefaultInfinity();
-        Instant transactionInstant = transactionTimestamp.toInstant();
 
         var responseBuilder = new KlassResponseBuilder(
             result,
             projection,
             Multiplicity.ZERO_TO_MANY,
-            transactionInstant
+            transactionTimestamp
         ).setCriteria(queryOperation.toString());
 
         return Response.ok().entity(responseBuilder.build()).build();
@@ -561,13 +556,12 @@ public class QuestionResourceManual {
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
         MithraTimestamp transactionTimestamp = DefaultInfinityTimestamp.getDefaultInfinity();
-        Instant transactionInstant = transactionTimestamp.toInstant();
 
         var responseBuilder = new KlassResponseBuilder(
             result,
             projection,
             Multiplicity.ZERO_TO_MANY,
-            transactionInstant
+            transactionTimestamp
         ).setCriteria(queryOperation.toString());
 
         return Response.ok().entity(responseBuilder.build()).build();
