@@ -1,44 +1,68 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-<project
-        xmlns="http://maven.apache.org/POM/4.0.0"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>io.liftwizard</groupId>
-        <artifactId>liftwizard-parent-build</artifactId>
-        <version>2.1.31</version>
+        <artifactId>liftwizard-profile-parent</artifactId>
+        <version>2.1.32</version>
     </parent>
-
-    <modelVersion>4.0.0</modelVersion>
 
     <groupId>\${groupId}</groupId>
     <artifactId>\${artifactId}</artifactId>
     <version>\${version}</version>
+
     <packaging>pom</packaging>
 
-    <properties>
-        <klass.version>${project.version}</klass.version>
+    <name>${app.name} (Module Group)</name>
 
+    <properties>
         <app.artifactId>\${artifactId}</app.artifactId>
         <app.rootPackageName>\${package}</app.rootPackageName>
         <app.name>\${name}</app.name>
 
         <mainClass>${app.rootPackageName}.dropwizard.application.${app.name}Application</mainClass>
 
-        <liftwizard.version>2.1.31</liftwizard.version>
-    </properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <name>${app.name} (Module Group)</name>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.parameters>true</maven.compiler.parameters>
+
+        <checkstyle.configuration>${maven.multiModuleProjectDirectory}/checkstyle-configuration.xml</checkstyle.configuration>
+        <checkstyle.suppressions>${maven.multiModuleProjectDirectory}/checkstyle-suppressions.xml</checkstyle.suppressions>
+        <checkstyle.cache>${project.build.directory}/checkstyle-cache</checkstyle.cache>
+
+        <liftwizard.version>2.1.32</liftwizard.version>
+        <klass.version>0.5.0</klass.version>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
 
             <dependency>
-                <groupId>io.liftwizard</groupId>
-                <artifactId>liftwizard-dependencies</artifactId>
-                <version>${liftwizard.version}</version>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>2.19.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.dropwizard</groupId>
+                <artifactId>dropwizard-bom</artifactId>
+                <version>2.1.12</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.dropwizard</groupId>
+                <artifactId>dropwizard-dependencies</artifactId>
+                <version>2.1.12</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -46,6 +70,14 @@
             <dependency>
                 <groupId>io.liftwizard</groupId>
                 <artifactId>liftwizard-bom</artifactId>
+                <version>${liftwizard.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.liftwizard</groupId>
+                <artifactId>liftwizard-dependencies</artifactId>
                 <version>${liftwizard.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -64,6 +96,31 @@
 
     <profiles>
 
+        <!--region Phase 1: validate-->
+        <profile>
+            <id>maven-enforcer-plugin</id>
+
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <configuration>
+                            <rules combine.children="append">
+                                <requireJavaVersion>
+                                    <version>21</version>
+                                </requireJavaVersion>
+                                <requireMavenVersion>
+                                    <version>3.9.5</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!--endregion Phase 1: validate-->
+
         <!--region Phase 21: verify-->
         <profile>
             <id>maven-dependency-plugin</id>
@@ -75,21 +132,13 @@
                         <configuration>
                             <ignoredUnusedDeclaredDependencies combine.children="append">
                                 <ignoredUnusedDeclaredDependency>\${groupId}:\${app.artifactId}-domain-model</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>\${groupId}:\${app.artifactId}-dtos</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>\${groupId}:\${app.artifactId}-graphql-reladomo-finder</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>\${groupId}:\${app.artifactId}-graphql-schema-query</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>\${groupId}:\${app.artifactId}-graphql-schema</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>\${groupId}:\${app.artifactId}-liquibase-schema</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>\${groupId}:\${app.artifactId}-reladomo-runtime-configuration</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>\${groupId}:\${app.artifactId}-relational-schema</ignoredUnusedDeclaredDependency>
                             </ignoredUnusedDeclaredDependencies>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
-        <!--endregion-->
-
+        <!--endregion Phase 21: verify-->
     </profiles>
 
 </project>
