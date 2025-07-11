@@ -11,3 +11,12 @@
 /encodings.xml
 /libraries
 /modules.xml
+/jarRepositories.xml
+/checkstyle-idea.xml
+/git_toolbox_prj.xml
+
+/jsonSchemas.xml
+/misc.xml
+
+# GitHub Copilot persisted chat sessions
+/copilot/chatSessions
