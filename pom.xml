@@ -15,10 +15,12 @@
   ~ limitations under the License.
   -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>io.liftwizard</groupId>
-        <artifactId>liftwizard-parent-build</artifactId>
+        <artifactId>liftwizard-profile-parent</artifactId>
         <version>2.1.32</version>
     </parent>
 
@@ -142,6 +144,22 @@
             </plugins>
         </pluginManagement>
 
+        <plugins>
+            <!--region Phase 7: compile-->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths combine.children="append">
+                        <path>
+                            <groupId>com.google.auto.service</groupId>
+                            <artifactId>auto-service</artifactId>
+                            <version>1.0.1</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <!--endregion Phase 7: compile-->
+        </plugins>
     </build>
 
     <profiles>
