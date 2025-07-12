@@ -41,8 +41,9 @@ build-first:
     git commit -m "Initial import."
 
     git mv gitignore .gitignore
+    git mv gitattributes .gitattributes
     git mv .idea/gitignore .idea/.gitignore
-    git commit -m "Move .gitignore in place."
+    git commit -m "Move .gitignore and .gitattributes in place."
 
 build-second:
     git rm *-reladomo-pojos/src/main/java/{{group_id_with_slashes}}/DeleteMe*.java
