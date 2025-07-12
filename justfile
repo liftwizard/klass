@@ -23,7 +23,7 @@ markdownlint:
     markdownlint --config .markdownlint.jsonc  --fix .
 
 # Run all formatting tools for pre-commit
-precommit: spotless-all
+precommit: mvn
     uv tool run pre-commit run
 
 # mvn archetype
