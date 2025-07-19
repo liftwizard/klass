@@ -13,7 +13,21 @@ env:
 
 jobs:
   maven-test:
+    name: Test in ${{ matrix.timezone }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        timezone:
+          # UTC - UTC+0
+          - "UTC"
+          # EST/EDT - UTC-5/-4
+          - "America/New_York"
+          # IST - UTC+5:30, 30-minute offset!
+          - "Asia/Kolkata"
+          # NZST/NZDT - UTC+12/+13
+          - "Pacific/Auckland"
+    env:
+      TZ: ${{ matrix.timezone }}
     steps:
       - uses: actions/checkout@v4
 
@@ -27,6 +41,12 @@ jobs:
       - uses: twosigma/maven-cache-cleaner@v1
 
       - uses: jdx/mise-action@v2
+
+      - name: Display timezone info
+        run: |
+          echo "Testing with timezone: $TZ"
+          echo "Current date: $(date)"
+          echo "Current date (UTC): $(date -u)"
 
       - run: just test "mvn" "-Dklass.logGitHubAnnotations=true"
 
