@@ -1,0 +1,37 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+	"files": {
+		"includes": ["*.json", "*.json5"],
+		"experimentalScannerIgnores": [
+			".llm/**/*",
+			"node_modules",
+			"dist",
+			"build",
+			"coverage",
+			"target",
+			"package-lock.json",
+			"pnpm-lock.yaml",
+			"yarn.lock"
+		],
+		"ignoreUnknown": true
+	},
+	"formatter": {
+		"enabled": true,
+		"formatWithErrors": false,
+		"indentStyle": "tab",
+		"indentWidth": 4,
+		"lineWidth": 120,
+		"lineEnding": "lf"
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true
+		}
+	},
+	"json": {
+		"formatter": {
+			"trailingCommas": "none"
+		}
+	}
+}

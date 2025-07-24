@@ -1,0 +1,9 @@
+{
+  "name": "klass",
+  "version": "0.6.0",
+  "private": true,
+  "scripts": {
+    "biome-ci": "biome check --error-on-warnings",
+    "prettier-ci": "prettier --check ."
+  }
+}
