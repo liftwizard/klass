@@ -619,7 +619,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: reviewdog/action-shellcheck@v1.29.0
+      - uses: reviewdog/action-shellcheck@v1.30.0
         with:
           reporter: github-pr-check
           filter_mode: nofilter
