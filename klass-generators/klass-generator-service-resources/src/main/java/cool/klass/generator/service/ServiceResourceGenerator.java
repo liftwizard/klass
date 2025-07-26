@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Craig Motlin
+ * Copyright 2025 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -772,7 +772,7 @@ public class ServiceResourceGenerator {
                 service.getQueryCriteria(),
                 klassName);
 
-        ImmutableList<String> deepFetchStrings = DeepFetchWalker.walk(serviceGroup.getKlass());
+        ImmutableList<String> deepFetchStrings = this.getDeepFetchStrings(serviceGroup.getKlass());
         String deepFetchSourceCode = deepFetchStrings
                 .collect(each -> "        result.deepFetch(" + each + ");\n")
                 .makeString("");
@@ -1084,5 +1084,23 @@ public class ServiceResourceGenerator {
             return PrimitiveToJavaParameterTypeVisitor.getJavaType(primitiveType);
         }
         throw new AssertionError();
+    }
+
+    private ImmutableList<String> getDeepFetchStrings(Klass klass) {
+        var deepFetchStrings = Lists.mutable.<String>empty();
+        this.collectDeepFetchStrings(klass, "", deepFetchStrings);
+        return deepFetchStrings.toImmutable();
+    }
+
+    private void collectDeepFetchStrings(Klass klass, String path, MutableList<String> deepFetchStrings) {
+        for (var referenceProperty : klass.getReferenceProperties()) {
+            String propertyName = referenceProperty.getName();
+            String navigationPath = path.isEmpty() ? propertyName : path + "()." + propertyName;
+            deepFetchStrings.add(navigationPath + "()");
+
+            if (referenceProperty.getType() instanceof Klass targetKlass) {
+                this.collectDeepFetchStrings(targetKlass, navigationPath, deepFetchStrings);
+            }
+        }
     }
 }
