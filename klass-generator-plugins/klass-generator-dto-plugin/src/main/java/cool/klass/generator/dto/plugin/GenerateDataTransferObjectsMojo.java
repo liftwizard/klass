@@ -17,7 +17,6 @@
 package cool.klass.generator.dto.plugin;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 
 import cool.klass.generator.dto.DataTransferObjectsGenerator;
@@ -44,18 +43,25 @@ public class GenerateDataTransferObjectsMojo extends AbstractGenerateMojo {
     private File outputDirectory;
 
     @Override
-    public void execute() throws MojoExecutionException {
-        if (!this.outputDirectory.exists()) {
-            this.outputDirectory.mkdirs();
-        }
+    protected InputSource getInputSource() {
+        return InputSource.CLASSPATH;
+    }
 
-        DomainModel domainModel = this.getDomainModel();
-        Path outputPath = this.outputDirectory.toPath();
-        try {
-            DataTransferObjectsGenerator dataTransferObjectsGenerator = new DataTransferObjectsGenerator(domainModel);
-            dataTransferObjectsGenerator.writeDataTransferObjectFiles(outputPath);
-        } catch (IOException e) {
-            throw new MojoExecutionException(e.getMessage(), e);
+    @Override
+    public void execute() throws MojoExecutionException {
+        boolean wasGenerated =
+            this.executeWithCaching(this.outputDirectory, () -> {
+                    DomainModel domainModel = this.getDomainModel();
+                    Path outputPath = this.outputDirectory.toPath();
+                    DataTransferObjectsGenerator dataTransferObjectsGenerator = new DataTransferObjectsGenerator(
+                        domainModel
+                    );
+                    dataTransferObjectsGenerator.writeDataTransferObjectFiles(outputPath);
+                    return null;
+                });
+
+        if (wasGenerated) {
+            this.getLog().info("Generated data transfer objects in: " + this.outputDirectory.getPath());
         }
 
         this.mavenProject.addCompileSourceRoot(this.outputDirectory.getPath());

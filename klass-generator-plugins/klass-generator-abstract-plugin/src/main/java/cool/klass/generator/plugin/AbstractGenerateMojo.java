@@ -17,11 +17,18 @@
 package cool.klass.generator.plugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.URLConnection;
+import java.nio.file.Files;
+import java.security.MessageDigest;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.Callable;
 import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
@@ -38,15 +45,19 @@ import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;
 import org.eclipse.collections.api.list.MutableList;
+import org.eclipse.collections.api.map.ImmutableMap;
 import org.eclipse.collections.impl.factory.Lists;
+import org.eclipse.collections.impl.factory.Maps;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 import org.eclipse.collections.impl.list.mutable.ListAdapter;
 import org.fusesource.jansi.AnsiConsole;
+import org.sonatype.plexus.build.incremental.BuildContext;
 
 public abstract class AbstractGenerateMojo extends AbstractMojo {
 
@@ -67,6 +78,20 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     protected MavenProject mavenProject;
 
+    @Component
+    protected BuildContext buildContext;
+
+    private ImmutableList<File> cachedInputFiles;
+    private ImmutableList<URL> cachedClasspathResources;
+    private ImmutableMap<String, String> cachedFileContents = Maps.immutable.empty();
+
+    public enum InputSource {
+        FILESYSTEM,
+        CLASSPATH,
+    }
+
+    protected abstract InputSource getInputSource();
+
     @Nonnull
     protected DomainModelWithSourceCode getDomainModelFromFiles() throws MojoExecutionException {
         CompilationResult compilationResult = this.getCompilationResultFromFiles();
@@ -78,7 +103,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 
     @Nonnull
     private CompilationResult getCompilationResultFromFiles() throws MojoExecutionException {
-        MutableList<File> klassLocations = this.loadFiles();
+        ImmutableList<File> klassLocations = this.loadInputFiles();
 
         if (klassLocations.isEmpty()) {
             String message =
@@ -89,7 +114,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
             throw new MojoExecutionException(message);
         }
 
-        ImmutableList<CompilationUnit> compilationUnits = this.getCompilationUnits(klassLocations.toImmutable());
+        ImmutableList<CompilationUnit> compilationUnits = this.getCompilationUnits(klassLocations);
 
         AnsiColorScheme ansiColorScheme = ColorSchemeProvider.getByName(this.colorScheme);
         if (this.colorScheme != null) {
@@ -126,14 +151,20 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
         return loader.load();
     }
 
-    private MutableList<File> loadFiles() {
+    private ImmutableList<File> loadInputFiles() {
+        if (this.cachedInputFiles != null) {
+            return this.cachedInputFiles;
+        }
+
         MutableList<String> adaptedKlassSourcePackages = ListAdapter.adapt(this.klassSourcePackages);
 
         MutableList<File> klassLocations = Lists.mutable.empty();
         for (Resource resource : this.mavenProject.getResources()) {
             this.loadfiles(klassLocations, adaptedKlassSourcePackages, resource);
         }
-        return klassLocations;
+
+        this.cachedInputFiles = klassLocations.toImmutable();
+        return this.cachedInputFiles;
     }
 
     private void loadfiles(
@@ -203,11 +234,28 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
     private ImmutableList<CompilationUnit> getCompilationUnits(ImmutableList<File> klassLocations) {
         this.getLog().debug("Found source files on classpath: " + klassLocations);
 
-        ImmutableList<CompilationUnit> compilationUnits = klassLocations.collectWithIndex(
-            (each, index) -> CompilationUnit.createFromFile(index, each)
-        );
+        // Build cache if needed
+        if (this.cachedFileContents.isEmpty() && klassLocations.notEmpty()) {
+            this.cachedFileContents = this.buildFileContentCache(klassLocations);
+        }
+
+        ImmutableList<CompilationUnit> compilationUnits = klassLocations.collectWithIndex((file, index) -> {
+            String path = file.getAbsolutePath();
+            String content = this.cachedFileContents.get(path);
+            return CompilationUnit.createFromText(index, Optional.empty(), path, content);
+        });
 
         return compilationUnits;
+    }
+
+    private ImmutableMap<String, String> buildFileContentCache(ImmutableList<File> files) {
+        return files.toImmutableMap(File::getAbsolutePath, file -> {
+            try {
+                return Files.readString(file.toPath());
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to read file: " + file.getAbsolutePath(), e);
+            }
+        });
     }
 
     @Nonnull
@@ -234,5 +282,184 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
         } catch (MalformedURLException e) {
             throw new MojoExecutionException(classpathElement + " is an invalid classpath element", e);
         }
+    }
+
+    protected boolean shouldSkipGeneration(File outputDirectory) throws MojoExecutionException {
+        if (!outputDirectory.exists()) {
+            this.getLog().info("Output directory does not exist, generating");
+            return false;
+        }
+
+        File[] outputFiles = outputDirectory.listFiles();
+        if (outputFiles == null || outputFiles.length == 0) {
+            this.getLog().info("No output files exist, generating");
+            return false;
+        }
+
+        ArrayAdapter<File> outputFilesAdapter = ArrayAdapter.adapt(outputFiles);
+        long oldestOutputTime = outputFilesAdapter.collect(File::lastModified).min();
+
+        return this.getInputSource() == InputSource.FILESYSTEM
+            ? this.shouldSkipFilesystemGeneration(oldestOutputTime)
+            : this.shouldSkipClasspathGeneration(outputDirectory);
+    }
+
+    private boolean shouldSkipFilesystemGeneration(long oldestOutputTime) {
+        ImmutableList<File> inputFiles = this.loadInputFiles();
+        for (File inputFile : inputFiles) {
+            if (this.buildContext.hasDelta(inputFile)) {
+                this.getLog().debug("Input file changed: " + inputFile.getPath());
+                this.getLog().info("Input files changed, regenerating outputs");
+                return false;
+            }
+        }
+
+        long newestInputTime = inputFiles.collect(File::lastModified).max();
+
+        if (newestInputTime > oldestOutputTime) {
+            this.getLog().info("Input files newer than outputs, regenerating");
+            return false;
+        }
+
+        this.getLog().info("No input changes detected, skipping generation");
+        return true;
+    }
+
+    private boolean shouldSkipClasspathGeneration(File outputDirectory) {
+        try {
+            String currentInputHash = this.calculateClasspathHash();
+            String previousInputHash = this.loadPreviousInputHash(outputDirectory);
+
+            if (!currentInputHash.equals(previousInputHash)) {
+                this.getLog().info("Classpath inputs changed, regenerating outputs");
+                return false;
+            }
+
+            this.getLog().info("No input changes detected, skipping generation");
+            return true;
+        } catch (Exception e) {
+            this.getLog().warn("Failed to calculate classpath hash, regenerating: " + e.getMessage());
+            return false;
+        }
+    }
+
+    private ImmutableList<URL> loadClasspathResources() throws MojoExecutionException, IOException {
+        if (this.cachedClasspathResources != null) {
+            return this.cachedClasspathResources;
+        }
+
+        ClassLoader classLoader = this.getClassLoader();
+        MutableList<URL> resources = Lists.mutable.empty();
+
+        for (String klassSourcePackage : this.klassSourcePackages) {
+            String resourcePath = klassSourcePackage.replaceAll("\\.", "/");
+            Enumeration<URL> packageResources = classLoader.getResources(resourcePath);
+
+            while (packageResources.hasMoreElements()) {
+                resources.add(packageResources.nextElement());
+            }
+        }
+
+        this.cachedClasspathResources = resources.toImmutable();
+        return this.cachedClasspathResources;
+    }
+
+    private String calculateClasspathHash() throws MojoExecutionException {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            ImmutableList<URL> resources = this.loadClasspathResources();
+            MutableList<String> sortedUrlStrings = Lists.mutable.empty();
+
+            for (URL resource : resources) {
+                String urlString = resource.toString();
+
+                try {
+                    URLConnection connection = resource.openConnection();
+                    connection.setUseCaches(false);
+                    long lastModified = connection.getLastModified();
+                    urlString += ":" + lastModified;
+                } catch (Exception e) {
+                    // If we can't get last modified, just use the URL
+                }
+
+                sortedUrlStrings.add(urlString);
+            }
+
+            sortedUrlStrings.sortThis();
+
+            for (String urlString : sortedUrlStrings) {
+                digest.update(urlString.getBytes("UTF-8"));
+            }
+
+            byte[] hashBytes = digest.digest();
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+
+            String finalHash = hexString.toString();
+            return finalHash;
+        } catch (Exception e) {
+            throw new MojoExecutionException("Failed to calculate classpath hash", e);
+        }
+    }
+
+    private String loadPreviousInputHash(File outputDirectory) {
+        File hashFile = new File(outputDirectory, ".input-hash");
+        if (!hashFile.exists()) {
+            return "";
+        }
+
+        try {
+            return Files.readString(hashFile.toPath()).trim();
+        } catch (IOException e) {
+            this.getLog().warn("Failed to read previous input hash: " + e.getMessage());
+            return "";
+        }
+    }
+
+    private void saveCurrentInputHash(File outputDirectory, String hash) {
+        File hashFile = new File(outputDirectory, ".input-hash");
+        try {
+            Files.writeString(hashFile.toPath(), hash);
+        } catch (IOException e) {
+            this.getLog().warn("Failed to save input hash: " + e.getMessage());
+        }
+    }
+
+    protected boolean executeWithCaching(File outputDirectory, Callable<Void> task) throws MojoExecutionException {
+        this.getLog().info("Checking if generation should be skipped for: " + outputDirectory.getPath());
+        if (this.shouldSkipGeneration(outputDirectory)) {
+            this.getLog().info("Skipping generation based on caching logic");
+            return false;
+        }
+
+        this.getLog().info("Proceeding with generation");
+        if (!outputDirectory.exists()) {
+            outputDirectory.mkdirs();
+        }
+
+        try {
+            task.call();
+
+            InputSource inputSource = this.getInputSource();
+            if (inputSource == InputSource.CLASSPATH) {
+                try {
+                    String currentInputHash = this.calculateClasspathHash();
+                    this.saveCurrentInputHash(outputDirectory, currentInputHash);
+                } catch (Exception e) {
+                    this.getLog().warn("Failed to save classpath hash: " + e.getMessage());
+                }
+            }
+        } catch (MojoExecutionException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new MojoExecutionException("Generation failed", e);
+        }
+        return true;
     }
 }

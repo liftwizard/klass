@@ -17,7 +17,6 @@
 package cool.klass.generator.json.view.plugin;
 
 import java.io.File;
-import java.io.IOException;
 
 import cool.klass.generator.json.view.JsonViewGenerator;
 import cool.klass.generator.plugin.AbstractGenerateMojo;
@@ -46,21 +45,29 @@ public class GenerateJsonViewsMojo extends AbstractGenerateMojo {
     private String rootPackageName;
 
     @Override
+    protected InputSource getInputSource() {
+        return InputSource.CLASSPATH;
+    }
+
+    @Override
     public void execute() throws MojoExecutionException {
-        DomainModel domainModel = this.getDomainModel();
-        try {
-            JsonViewGenerator jsonViewGenerator = new JsonViewGenerator(
-                domainModel,
-                this.rootPackageName,
-                this.applicationName
-            );
-            jsonViewGenerator.writeJsonViews(this.outputDirectory.toPath());
-        } catch (IOException e) {
-            throw new MojoExecutionException(e.getMessage(), e);
+        boolean wasGenerated =
+            this.executeWithCaching(this.outputDirectory, () -> {
+                    DomainModel domainModel = this.getDomainModel();
+                    JsonViewGenerator jsonViewGenerator = new JsonViewGenerator(
+                        domainModel,
+                        this.rootPackageName,
+                        this.applicationName
+                    );
+                    jsonViewGenerator.writeJsonViews(this.outputDirectory.toPath());
+                    return null;
+                });
+
+        if (wasGenerated) {
+            this.getLog().info("Generated JSON views in: " + this.outputDirectory.getPath());
         }
 
         String outputDirectoryPath = this.outputDirectory.getPath();
-        this.getLog().info("Adding compile source root: " + outputDirectoryPath);
         this.mavenProject.addCompileSourceRoot(outputDirectoryPath);
     }
 }
