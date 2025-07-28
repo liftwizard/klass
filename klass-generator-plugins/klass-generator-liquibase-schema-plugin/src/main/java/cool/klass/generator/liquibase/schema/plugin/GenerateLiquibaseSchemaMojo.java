@@ -47,20 +47,28 @@ public class GenerateLiquibaseSchemaMojo extends AbstractGenerateMojo {
     private final String fileName = "migrations-initial-schema.xml";
 
     @Override
+    protected InputSource getInputSource() {
+        return InputSource.CLASSPATH;
+    }
+
+    @Override
     public void execute() throws MojoExecutionException {
-        if (!this.outputDirectory.exists()) {
-            this.outputDirectory.mkdirs();
-        }
+        boolean wasGenerated =
+            this.executeWithCaching(this.outputDirectory, () -> {
+                    DomainModel domainModel = this.getDomainModel();
+                    Path outputPath = this.outputDirectory.toPath();
 
-        DomainModel domainModel = this.getDomainModel();
+                    LiquibaseSchemaGenerator generator = new LiquibaseSchemaGenerator(domainModel, this.fileName);
+                    try {
+                        generator.writeFiles(outputPath);
+                    } catch (RuntimeException e) {
+                        throw new MojoExecutionException(e.getMessage(), e);
+                    }
+                    return null;
+                });
 
-        Path outputPath = this.outputDirectory.toPath();
-
-        LiquibaseSchemaGenerator generator = new LiquibaseSchemaGenerator(domainModel, this.fileName);
-        try {
-            generator.writeFiles(outputPath);
-        } catch (RuntimeException e) {
-            throw new MojoExecutionException(e.getMessage(), e);
+        if (wasGenerated) {
+            this.getLog().info("Generated Liquibase schema in: " + this.outputDirectory.getPath());
         }
 
         Resource resource = new Resource();

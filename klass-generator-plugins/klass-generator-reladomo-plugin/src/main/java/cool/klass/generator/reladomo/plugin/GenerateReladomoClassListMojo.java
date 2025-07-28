@@ -45,6 +45,11 @@ public class GenerateReladomoClassListMojo extends AbstractGenerateMojo {
     private String outputFilename;
 
     @Override
+    protected InputSource getInputSource() {
+        return InputSource.CLASSPATH;
+    }
+
+    @Override
     public void execute() throws MojoExecutionException {
         if (!this.outputDirectory.exists()) {
             this.outputDirectory.mkdirs();

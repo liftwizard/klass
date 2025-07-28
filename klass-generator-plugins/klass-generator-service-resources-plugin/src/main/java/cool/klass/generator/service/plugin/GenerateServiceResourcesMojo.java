@@ -50,6 +50,11 @@ public class GenerateServiceResourcesMojo extends AbstractGenerateMojo {
     private String rootPackageName;
 
     @Override
+    protected InputSource getInputSource() {
+        return InputSource.CLASSPATH;
+    }
+
+    @Override
     public void execute() throws MojoExecutionException {
         if (!this.outputDirectory.exists()) {
             this.outputDirectory.mkdirs();
