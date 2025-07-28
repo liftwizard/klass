@@ -44,20 +44,28 @@ public class GenerateRelationalSchemaMojo extends AbstractGenerateMojo {
     private File outputDirectory;
 
     @Override
+    protected InputSource getInputSource() {
+        return InputSource.CLASSPATH;
+    }
+
+    @Override
     public void execute() throws MojoExecutionException {
-        if (!this.outputDirectory.exists()) {
-            this.outputDirectory.mkdirs();
-        }
+        boolean wasGenerated =
+            this.executeWithCaching(this.outputDirectory, () -> {
+                    DomainModel domainModel = this.getDomainModel();
+                    Path outputPath = this.outputDirectory.toPath();
 
-        DomainModel domainModel = this.getDomainModel();
+                    RelationalSchemaGenerator generator = new RelationalSchemaGenerator(domainModel);
+                    try {
+                        generator.writeRelationalSchema(outputPath);
+                    } catch (RuntimeException e) {
+                        throw new MojoExecutionException(e.getMessage(), e);
+                    }
+                    return null;
+                });
 
-        Path outputPath = this.outputDirectory.toPath();
-
-        RelationalSchemaGenerator generator = new RelationalSchemaGenerator(domainModel);
-        try {
-            generator.writeRelationalSchema(outputPath);
-        } catch (RuntimeException e) {
-            throw new MojoExecutionException(e.getMessage(), e);
+        if (wasGenerated) {
+            this.getLog().info("Generated relational schema in: " + this.outputDirectory.getPath());
         }
 
         Resource resource = new Resource();

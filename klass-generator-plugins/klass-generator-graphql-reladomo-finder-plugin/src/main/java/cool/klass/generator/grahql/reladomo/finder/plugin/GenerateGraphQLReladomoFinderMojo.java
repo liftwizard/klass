@@ -44,6 +44,11 @@ public class GenerateGraphQLReladomoFinderMojo extends AbstractGenerateMojo {
     private File outputDirectory;
 
     @Override
+    protected InputSource getInputSource() {
+        return InputSource.CLASSPATH;
+    }
+
+    @Override
     public void execute() throws MojoExecutionException {
         if (!this.outputDirectory.exists()) {
             this.outputDirectory.mkdirs();

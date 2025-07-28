@@ -34,6 +34,11 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 public class KlassCompilerMojo extends AbstractGenerateMojo {
 
     @Override
+    protected InputSource getInputSource() {
+        return InputSource.FILESYSTEM;
+    }
+
+    @Override
     public void execute() throws MojoExecutionException {
         this.getDomainModelFromFiles();
     }

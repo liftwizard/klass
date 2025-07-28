@@ -43,11 +43,24 @@ public class GenerateGraphQLSchemaMojo extends AbstractGenerateMojo {
     private File outputDirectory;
 
     @Override
-    public void execute() throws MojoExecutionException {
-        DomainModel domainModel = this.getDomainModel();
+    protected InputSource getInputSource() {
+        return InputSource.CLASSPATH;
+    }
 
-        var generator = new GraphQLSchemaGenerator(domainModel);
-        generator.writeFiles(this.outputDirectory.toPath());
+    @Override
+    public void execute() throws MojoExecutionException {
+        boolean wasGenerated =
+            this.executeWithCaching(this.outputDirectory, () -> {
+                    DomainModel domainModel = this.getDomainModel();
+
+                    var generator = new GraphQLSchemaGenerator(domainModel);
+                    generator.writeFiles(this.outputDirectory.toPath());
+                    return null;
+                });
+
+        if (wasGenerated) {
+            this.getLog().info("Generated GraphQL schema in: " + this.outputDirectory.getPath());
+        }
 
         Resource resource = new Resource();
         resource.setDirectory(this.outputDirectory.getAbsolutePath());

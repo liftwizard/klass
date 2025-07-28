@@ -39,6 +39,11 @@ public class GenerateReladomoConcreteClassMojo extends AbstractGenerateMojo {
     private File outputDirectory;
 
     @Override
+    protected InputSource getInputSource() {
+        return InputSource.CLASSPATH;
+    }
+
+    @Override
     public void execute() throws MojoExecutionException {
         DomainModel domainModel = this.getDomainModel();
 

@@ -50,22 +50,32 @@ public class GenerateJavaConstantsMetaModelMojo extends AbstractGenerateMojo {
     private String rootPackageName;
 
     @Override
-    public void execute() throws MojoExecutionException {
-        if (!this.outputDirectory.exists()) {
-            this.outputDirectory.mkdirs();
-        }
+    protected InputSource getInputSource() {
+        return InputSource.CLASSPATH;
+    }
 
-        DomainModel domainModel = this.getDomainModel();
-        Path outputPath = this.outputDirectory.toPath();
-        try {
-            JavaConstantsMetaModelGenerator javaConstantsMetaModelGenerator = new JavaConstantsMetaModelGenerator(
-                domainModel,
-                this.applicationName,
-                this.rootPackageName
-            );
-            javaConstantsMetaModelGenerator.writeJavaConstantsMetaModelFiles(outputPath);
-        } catch (IOException e) {
-            throw new MojoExecutionException(e.getMessage(), e);
+    @Override
+    public void execute() throws MojoExecutionException {
+        boolean wasGenerated =
+            this.executeWithCaching(this.outputDirectory, () -> {
+                    DomainModel domainModel = this.getDomainModel();
+                    Path outputPath = this.outputDirectory.toPath();
+                    try {
+                        JavaConstantsMetaModelGenerator javaConstantsMetaModelGenerator =
+                            new JavaConstantsMetaModelGenerator(
+                                domainModel,
+                                this.applicationName,
+                                this.rootPackageName
+                            );
+                        javaConstantsMetaModelGenerator.writeJavaConstantsMetaModelFiles(outputPath);
+                    } catch (IOException e) {
+                        throw new MojoExecutionException(e.getMessage(), e);
+                    }
+                    return null;
+                });
+
+        if (wasGenerated) {
+            this.getLog().info("Generated meta model constants in: " + this.outputDirectory.getPath());
         }
 
         this.mavenProject.addCompileSourceRoot(this.outputDirectory.getPath());
