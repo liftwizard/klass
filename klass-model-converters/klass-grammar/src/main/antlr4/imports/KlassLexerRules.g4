@@ -123,3 +123,7 @@ WHITESPACE  : [ \t\u000C]+  -> channel(1000);
 NEWLINE     : [\r\n]        -> channel(1000);
 COMMENT     : '/*' .*? '*/' -> channel(2000);
 LINE_COMMENT: '//' ~[\r\n]* -> channel(3000);
+
+// URL identifiers that contain dashes (e.g., /api/user-profile)
+// Must contain at least one dash; regular Identifier handles non-dash cases
+UrlIdentifier: [a-zA-Z] [a-zA-Z0-9_]* '-' [a-zA-Z0-9_-]*;

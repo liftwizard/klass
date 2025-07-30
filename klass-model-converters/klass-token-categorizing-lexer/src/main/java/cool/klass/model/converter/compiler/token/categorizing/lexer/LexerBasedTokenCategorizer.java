@@ -104,6 +104,10 @@ public final class LexerBasedTokenCategorizer {
             case KlassLexer.WHITESPACE -> TokenCategory.WHITESPACE;
             case KlassLexer.NEWLINE -> TokenCategory.NEWLINE;
             case KlassLexer.EOF -> TokenCategory.END_OF_FILE;
+            // Let parser categorize UrlIdentifiers based on context
+            case KlassLexer.UrlIdentifier -> null;
+            // Let parser categorize Identifiers based on context
+            case KlassLexer.Identifier -> null;
             default -> null;
         };
     }
