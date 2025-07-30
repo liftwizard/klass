@@ -31,6 +31,7 @@ mvn MVN=default_mvn TARGET=default_target PROFILES=default_profiles *FLAGS=defau
     fi
 
     DIRECTORY=$(basename $(pwd))
+    COMMIT_MESSAGE=$(git log --format=%B -n 1 HEAD)
 
     MESSAGE="Failed in directory ${DIRECTORY} on commit: '${COMMIT_MESSAGE}' with exit code ${EXIT_CODE}"
     {{echo_command}} "$MESSAGE"
@@ -154,4 +155,4 @@ release: clean _check-local-modifications && _clean-git _check-local-modificatio
     just _run "mvn {{ANSI_MAGENTA}}--batch-mode{{ANSI_DEFAULT}} clean release:clean release:prepare -DdevelopmentVersion={{ANSI_YELLOW}}$NEXT_VERSION{{ANSI_DEFAULT}}"
 
 # `mvn deploy`
-deploy MVN="mvn": (mvn MVN "deploy" "--activate-profiles liftwizard-deploy,deploy,maven-javadoc-plugin" "")
+deploy MVN="mvn": (mvn MVN "deploy" "--activate-profiles maven-central-deploy,deploy,maven-javadoc-plugin" "")
