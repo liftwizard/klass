@@ -30,10 +30,14 @@ import cool.klass.model.meta.grammar.KlassLexer;
 import cool.klass.model.meta.grammar.KlassParser;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.junit.extension.match.FileSlurper;
+import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.eclipse.collections.api.map.MapIterable;
 import org.fusesource.jansi.Ansi;
@@ -48,6 +52,20 @@ import org.slf4j.LoggerFactory;
 class SyntaxHighlighterListenerTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SyntaxHighlighterListenerTest.class);
+
+    private static final BaseErrorListener THROWING_ERROR_LISTENER = new BaseErrorListener() {
+        @Override
+        public void syntaxError(
+            Recognizer<?, ?> recognizer,
+            Object offendingSymbol,
+            int line,
+            int charPositionInLine,
+            String msg,
+            RecognitionException e
+        ) {
+            throw new ParseCancellationException("line " + line + ":" + charPositionInLine + " " + msg);
+        }
+    };
 
     private static Stream<Arguments> colorSchemeProvider() {
         return Stream.of(
@@ -69,6 +87,7 @@ class SyntaxHighlighterListenerTest {
         String sourceName = "example.klass";
         CodePointCharStream charStream = CharStreams.fromString(sourceCodeText, sourceName);
         KlassLexer lexer = new KlassLexer(charStream);
+        lexer.addErrorListener(THROWING_ERROR_LISTENER);
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
         lexerStopwatch.stop();
         Duration elapsedLexer = lexerStopwatch.elapsed();
@@ -76,6 +95,8 @@ class SyntaxHighlighterListenerTest {
 
         Stopwatch parserStopwatch = Stopwatch.createStarted();
         KlassParser parser = new KlassParser(tokenStream);
+        parser.removeErrorListeners();
+        parser.addErrorListener(THROWING_ERROR_LISTENER);
         ParseTree parseTree = parser.compilationUnit();
         parserStopwatch.stop();
         Duration elapsedParser = parserStopwatch.elapsed();

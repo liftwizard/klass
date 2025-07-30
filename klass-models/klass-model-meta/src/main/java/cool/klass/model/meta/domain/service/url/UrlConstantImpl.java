@@ -16,28 +16,32 @@
 
 package cool.klass.model.meta.domain.service.url;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import cool.klass.model.meta.domain.AbstractIdentifierElement;
+import cool.klass.model.meta.domain.AbstractOrdinalElement;
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
-import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlConstantContext;
 
-public final class UrlConstantImpl extends AbstractIdentifierElement {
+public final class UrlConstantImpl extends AbstractOrdinalElement {
+
+    @Nonnull
+    private final String name;
 
     private UrlConstantImpl(
         @Nonnull UrlConstantContext elementContext,
         @Nonnull Optional<Element> macroElement,
         @Nullable SourceCode sourceCode,
         int ordinal,
-        @Nonnull IdentifierContext nameContext
+        @Nonnull String name
     ) {
-        super(elementContext, macroElement, sourceCode, ordinal, nameContext);
+        super(elementContext, macroElement, sourceCode, ordinal);
+        this.name = Objects.requireNonNull(name);
     }
 
     @Nonnull
@@ -46,16 +50,30 @@ public final class UrlConstantImpl extends AbstractIdentifierElement {
         return (UrlConstantContext) super.getElementContext();
     }
 
-    public static final class UrlConstantBuilder extends IdentifierElementBuilder<UrlConstantImpl> {
+    @Nonnull
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
+    public static final class UrlConstantBuilder extends OrdinalElementBuilder<UrlConstantImpl> {
+
+        @Nonnull
+        private final String name;
 
         public UrlConstantBuilder(
             @Nonnull UrlConstantContext elementContext,
             @Nonnull Optional<ElementBuilder<?>> macroElement,
             @Nullable SourceCodeBuilder sourceCode,
             int ordinal,
-            @Nonnull IdentifierContext nameContext
+            @Nonnull String name
         ) {
-            super(elementContext, macroElement, sourceCode, ordinal, nameContext);
+            super(elementContext, macroElement, sourceCode, ordinal);
+            this.name = Objects.requireNonNull(name);
         }
 
         @Override
@@ -66,7 +84,7 @@ public final class UrlConstantImpl extends AbstractIdentifierElement {
                 this.macroElement.map(ElementBuilder::getElement),
                 this.sourceCode.build(),
                 this.ordinal,
-                this.getNameContext()
+                this.name
             );
         }
     }
