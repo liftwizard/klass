@@ -77,8 +77,7 @@ public class UrlParameterPhase extends AbstractCompilerPhase {
         AntlrUrlConstant antlrUrlConstant = new AntlrUrlConstant(
             ctx,
             Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            url.getNumPathSegments() + 1,
-            ctx.identifier()
+            url.getNumPathSegments() + 1
         );
         url.enterUrlConstant(antlrUrlConstant);
     }

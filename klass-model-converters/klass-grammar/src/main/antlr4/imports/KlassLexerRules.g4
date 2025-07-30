@@ -105,6 +105,8 @@ VERB_DELETE : 'DELETE';
 LITERAL_NULL  : 'null';
 LITERAL_THIS  : 'this';
 
+UrlIdentifier : [a-zA-Z] [a-zA-Z0-9_-]*;
+
 OPERATOR_EQUALS                : '==';
 OPERATOR_NOT_EQUALS            : '!=';
 OPERATOR_LESS_THAN             : '<';

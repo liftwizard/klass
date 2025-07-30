@@ -24,23 +24,21 @@ import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
-import cool.klass.model.converter.compiler.state.AntlrIdentifierElement;
+import cool.klass.model.converter.compiler.state.AntlrElement;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.meta.domain.service.url.UrlConstantImpl.UrlConstantBuilder;
-import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlConstantContext;
 
-public class AntlrUrlConstant extends AntlrIdentifierElement {
+public class AntlrUrlConstant extends AntlrElement {
 
     private UrlConstantBuilder elementBuilder;
 
     public AntlrUrlConstant(
         @Nonnull UrlConstantContext elementContext,
         @Nonnull Optional<CompilationUnit> compilationUnit,
-        int ordinal,
-        @Nonnull IdentifierContext nameContext
+        int ordinal
     ) {
-        super(elementContext, compilationUnit, ordinal, nameContext);
+        super(elementContext, compilationUnit, ordinal);
     }
 
     @Nonnull
@@ -56,12 +54,13 @@ public class AntlrUrlConstant extends AntlrIdentifierElement {
         if (this.elementBuilder != null) {
             throw new IllegalStateException();
         }
+
         this.elementBuilder = new UrlConstantBuilder(
             (UrlConstantContext) this.elementContext,
             this.getMacroElementBuilder(),
             this.getSourceCodeBuilder(),
             this.ordinal,
-            this.getNameContext()
+            this.elementContext
         );
         return this.elementBuilder;
     }
@@ -72,17 +71,12 @@ public class AntlrUrlConstant extends AntlrIdentifierElement {
         return Objects.requireNonNull(this.elementBuilder);
     }
 
-    @Nonnull
-    @Override
-    protected Pattern getNamePattern() {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".getNamePattern() not implemented yet"
-        );
+    public String getName() {
+        return this.elementContext.getText();
     }
 
-    @Override
     public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        // TODO: URLs can contain almost anything. The parser is probably already more strict than any error checking that needs to happen here.
+        // URLs can contain almost anything. The parser is already more strict than any error checking that needs to happen here.
         // https://stackoverflow.com/questions/7109143/what-characters-are-valid-in-a-url
     }
 }
