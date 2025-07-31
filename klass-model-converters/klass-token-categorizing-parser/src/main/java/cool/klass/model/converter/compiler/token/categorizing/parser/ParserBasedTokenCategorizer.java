@@ -377,9 +377,7 @@ public class ParserBasedTokenCategorizer extends KlassBaseListener {
 
     @Override
     public void enterUrlConstant(UrlConstantContext ctx) {
-        Token token = ctx.identifier() != null
-            ? ctx.identifier().getStart()
-            : ctx.UrlIdentifier().getSymbol();
+        Token token = ctx.identifier() != null ? ctx.identifier().getStart() : ctx.UrlIdentifier().getSymbol();
         this.put(token, TokenCategory.URL_CONSTANT);
     }
 
