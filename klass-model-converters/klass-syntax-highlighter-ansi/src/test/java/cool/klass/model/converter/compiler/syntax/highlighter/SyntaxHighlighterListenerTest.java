@@ -93,8 +93,8 @@ class SyntaxHighlighterListenerTest {
         Stopwatch rewriteStopwatch = Stopwatch.createStarted();
         AnsiTokenColorizer ansiTokenColorizer = new AnsiTokenColorizer(
             colorScheme,
-            tokenCategoriesFromLexer,
-            tokenCategoriesFromParser
+            tokenCategoriesFromParser,
+            tokenCategoriesFromLexer
         );
 
         Ansi ansi = Ansi.ansi();
