@@ -624,6 +624,22 @@ jobs:
           reporter: github-pr-check
           filter_mode: nofilter
 
+  biome:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
+
+      - run: just biome-ci
+
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
+
+      - run: just prettier-ci
+
   all-checks:
     name: All checks
     needs:
@@ -654,6 +670,8 @@ jobs:
         reviewdog-languagetool,
         reviewdog-actionlint,
         reviewdog-shellcheck,
+        biome,
+        prettier,
       ]
     runs-on: ubuntu-latest
     steps:
