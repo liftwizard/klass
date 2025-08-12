@@ -101,6 +101,7 @@ public final class LexerBasedTokenCategorizer {
             case KlassLexer.OPERATOR_GREATER_THAN_OR_EQUAL -> TokenCategory.OPERATOR_GREATER_THAN_OR_EQUAL;
             case KlassLexer.OPERATOR_AND -> TokenCategory.OPERATOR_AND;
             case KlassLexer.OPERATOR_OR -> TokenCategory.OPERATOR_OR;
+            case KlassLexer.KEYWORD_USER -> TokenCategory.KEYWORD_USER;
             case KlassLexer.WHITESPACE -> TokenCategory.WHITESPACE;
             case KlassLexer.NEWLINE -> TokenCategory.NEWLINE;
             case KlassLexer.EOF -> TokenCategory.END_OF_FILE;
