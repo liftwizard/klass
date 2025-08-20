@@ -39,8 +39,7 @@ class ColorSchemeValidationTest {
 
     @Test
     void validScheme() {
-        String json =
-            """
+        String json = """
             {
               "name": "test",
               "description": "Valid test color scheme",
@@ -63,16 +62,18 @@ class ColorSchemeValidationTest {
 
         ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-        List<String> actualViolationMessages =
-            this.validator.validate(definition).stream().map(ConstraintViolation::getMessage).sorted().toList();
+        List<String> actualViolationMessages = this.validator.validate(definition)
+            .stream()
+            .map(ConstraintViolation::getMessage)
+            .sorted()
+            .toList();
 
         assertThat(actualViolationMessages).as("There should be no validation violations for a valid scheme").isEmpty();
     }
 
     @Test
     void missingName() {
-        String json =
-            """
+        String json = """
             {
               "name": "",
               "description": "Invalid test color scheme",
@@ -89,8 +90,11 @@ class ColorSchemeValidationTest {
 
         ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-        List<String> actualViolationMessages =
-            this.validator.validate(definition).stream().map(ConstraintViolation::getMessage).sorted().toList();
+        List<String> actualViolationMessages = this.validator.validate(definition)
+            .stream()
+            .map(ConstraintViolation::getMessage)
+            .sorted()
+            .toList();
 
         assertThat(actualViolationMessages)
             .as("Should have correct violation message for missing name")
@@ -99,8 +103,7 @@ class ColorSchemeValidationTest {
 
     @Test
     void missingDescription() {
-        String json =
-            """
+        String json = """
             {
               "name": "test",
               "description": null,
@@ -117,8 +120,11 @@ class ColorSchemeValidationTest {
 
         ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-        List<String> actualViolationMessages =
-            this.validator.validate(definition).stream().map(ConstraintViolation::getMessage).sorted().toList();
+        List<String> actualViolationMessages = this.validator.validate(definition)
+            .stream()
+            .map(ConstraintViolation::getMessage)
+            .sorted()
+            .toList();
 
         assertThat(actualViolationMessages)
             .as("Should have correct violation message for null description")
@@ -127,8 +133,7 @@ class ColorSchemeValidationTest {
 
     @Test
     void emptyRules() {
-        String json =
-            """
+        String json = """
             {
               "name": "test",
               "description": "Test scheme",
@@ -138,8 +143,11 @@ class ColorSchemeValidationTest {
 
         ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-        List<String> actualViolationMessages =
-            this.validator.validate(definition).stream().map(ConstraintViolation::getMessage).sorted().toList();
+        List<String> actualViolationMessages = this.validator.validate(definition)
+            .stream()
+            .map(ConstraintViolation::getMessage)
+            .sorted()
+            .toList();
 
         assertThat(actualViolationMessages)
             .as("Should have correct violation messages for empty rules")
@@ -151,8 +159,7 @@ class ColorSchemeValidationTest {
 
     @Test
     void noBackgroundRule() {
-        String json =
-            """
+        String json = """
             {
               "name": "test",
               "description": "Test scheme",
@@ -169,8 +176,11 @@ class ColorSchemeValidationTest {
 
         ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-        List<String> actualViolationMessages =
-            this.validator.validate(definition).stream().map(ConstraintViolation::getMessage).sorted().toList();
+        List<String> actualViolationMessages = this.validator.validate(definition)
+            .stream()
+            .map(ConstraintViolation::getMessage)
+            .sorted()
+            .toList();
 
         assertThat(actualViolationMessages)
             .as("Should have correct violation message for missing background rule")
@@ -179,8 +189,7 @@ class ColorSchemeValidationTest {
 
     @Test
     void invalidColorName() {
-        String json =
-            """
+        String json = """
             {
               "name": "test",
               "description": "Test scheme",
@@ -203,26 +212,29 @@ class ColorSchemeValidationTest {
 
         ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-        List<String> actualViolationMessages =
-            this.validator.validate(definition).stream().map(ConstraintViolation::getMessage).sorted().toList();
+        List<String> actualViolationMessages = this.validator.validate(definition)
+            .stream()
+            .map(ConstraintViolation::getMessage)
+            .sorted()
+            .toList();
 
         assertThat(actualViolationMessages)
             .as("Should have correct violation message for invalid color name")
             .containsExactly("Invalid foreground color value");
 
         // Also check the detailed error in the logs
-        Set<ConstraintViolation<ColorSchemeRule>> ruleViolations =
-            this.validator.validate(definition.rules().getFirst());
+        Set<ConstraintViolation<ColorSchemeRule>> ruleViolations = this.validator.validate(
+            definition.rules().getFirst()
+        );
 
         assertThat(ruleViolations).as("Rule itself should be valid since name is present").isEmpty();
 
         // Style settings should have the validation error
-        List<String> actualStyleViolationMessages =
-            this.validator.validate(definition.rules().get(1).style())
-                .stream()
-                .map(ConstraintViolation::getMessage)
-                .sorted()
-                .toList();
+        List<String> actualStyleViolationMessages = this.validator.validate(definition.rules().get(1).style())
+            .stream()
+            .map(ConstraintViolation::getMessage)
+            .sorted()
+            .toList();
 
         assertThat(actualStyleViolationMessages)
             .as("Should have correct style validation messages")
@@ -231,8 +243,7 @@ class ColorSchemeValidationTest {
 
     @Test
     void invalidHexColor() {
-        String json =
-            """
+        String json = """
             {
               "name": "test",
               "description": "Test scheme",
@@ -255,8 +266,11 @@ class ColorSchemeValidationTest {
 
         ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-        List<String> actualViolationMessages =
-            this.validator.validate(definition).stream().map(ConstraintViolation::getMessage).sorted().toList();
+        List<String> actualViolationMessages = this.validator.validate(definition)
+            .stream()
+            .map(ConstraintViolation::getMessage)
+            .sorted()
+            .toList();
 
         assertThat(actualViolationMessages)
             .as("Should have correct violation message for invalid hex color")
@@ -265,8 +279,7 @@ class ColorSchemeValidationTest {
 
     @Test
     void invalidNumericColor() {
-        String json =
-            """
+        String json = """
             {
               "name": "test",
               "description": "Test scheme",
@@ -289,8 +302,11 @@ class ColorSchemeValidationTest {
 
         ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-        List<String> actualViolationMessages =
-            this.validator.validate(definition).stream().map(ConstraintViolation::getMessage).sorted().toList();
+        List<String> actualViolationMessages = this.validator.validate(definition)
+            .stream()
+            .map(ConstraintViolation::getMessage)
+            .sorted()
+            .toList();
 
         assertThat(actualViolationMessages)
             .as("Should have correct violation message for out-of-range numeric color")
@@ -299,8 +315,7 @@ class ColorSchemeValidationTest {
 
     @Test
     void invalidRuleName() {
-        String json =
-            """
+        String json = """
             {
               "name": "test",
               "description": "Test scheme with invalid rule name",
@@ -323,8 +338,11 @@ class ColorSchemeValidationTest {
 
         ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-        List<String> actualViolationMessages =
-            this.validator.validate(definition).stream().map(ConstraintViolation::getMessage).sorted().toList();
+        List<String> actualViolationMessages = this.validator.validate(definition)
+            .stream()
+            .map(ConstraintViolation::getMessage)
+            .sorted()
+            .toList();
 
         assertThat(actualViolationMessages)
             .as("Should report unknown rule names")
@@ -333,8 +351,7 @@ class ColorSchemeValidationTest {
 
     @Test
     void multipleInvalidRuleNames() {
-        String json =
-            """
+        String json = """
             {
               "name": "test",
               "description": "Test scheme with multiple invalid rule names",
@@ -363,8 +380,11 @@ class ColorSchemeValidationTest {
 
         ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-        List<String> actualViolationMessages =
-            this.validator.validate(definition).stream().map(ConstraintViolation::getMessage).sorted().toList();
+        List<String> actualViolationMessages = this.validator.validate(definition)
+            .stream()
+            .map(ConstraintViolation::getMessage)
+            .sorted()
+            .toList();
 
         assertThat(actualViolationMessages)
             .as("Should report unknown rule name")
@@ -373,8 +393,7 @@ class ColorSchemeValidationTest {
 
     @Test
     void invalidJson() {
-        String json =
-            """
+        String json = """
             {
               "name": "",
               "description": null,

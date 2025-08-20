@@ -61,11 +61,10 @@ public class KlassHtmlResource {
         TopLevelElementWithSourceCode topLevelElement = this.domainModel.getTopLevelElementByName(topLevelElementName);
 
         if (topLevelElement == null) {
-            String message =
-                this.domainModel.getTopLevelElements()
-                    .selectInstancesOf(NamedElementWithSourceCode.class)
-                    .collect(NamedElementWithSourceCode::getName)
-                    .toString();
+            String message = this.domainModel.getTopLevelElements()
+                .selectInstancesOf(NamedElementWithSourceCode.class)
+                .collect(NamedElementWithSourceCode::getName)
+                .toString();
             throw new NotFoundException(message);
         }
 
@@ -93,11 +92,10 @@ public class KlassHtmlResource {
         TopLevelElementWithSourceCode topLevelElement = this.domainModel.getTopLevelElementByName(topLevelElementName);
 
         if (topLevelElement == null) {
-            String message =
-                this.domainModel.getTopLevelElements()
-                    .selectInstancesOf(NamedElementWithSourceCode.class)
-                    .collect(NamedElementWithSourceCode::getName)
-                    .toString();
+            String message = this.domainModel.getTopLevelElements()
+                .selectInstancesOf(NamedElementWithSourceCode.class)
+                .collect(NamedElementWithSourceCode::getName)
+                .toString();
             throw new NotFoundException(message);
         }
 
@@ -153,8 +151,9 @@ public class KlassHtmlResource {
     @Path("/meta/code/file/{fileName}.html")
     @Produces(MediaType.TEXT_HTML)
     public String fileSourceCode(@PathParam("fileName") String fileName) {
-        ImmutableList<SourceCode> sourceCodes =
-            this.domainModel.getSourceCodes().select(each -> each.getSourceName().equals(fileName));
+        ImmutableList<SourceCode> sourceCodes = this.domainModel.getSourceCodes().select(each ->
+            each.getSourceName().equals(fileName)
+        );
 
         if (sourceCodes.size() != 1) {
             throw new NotFoundException(

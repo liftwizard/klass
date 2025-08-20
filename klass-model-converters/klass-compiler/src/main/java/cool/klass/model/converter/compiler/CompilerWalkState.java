@@ -443,8 +443,8 @@ public class CompilerWalkState {
         public void enterCompilationUnit(CompilationUnitContext ctx) {
             CompilerWalkState.assertNull(CompilerWalkState.this.compilationUnit);
             CompilerWalkState.this.compilationUnit = CompilerWalkState.this.domainModel.getCompilationUnitByContext(
-                    ctx
-                );
+                ctx
+            );
         }
 
         @Override
@@ -462,8 +462,8 @@ public class CompilerWalkState {
         public void enterTopLevelDeclaration(@Nonnull TopLevelDeclarationContext ctx) {
             CompilerWalkState.assertNull(CompilerWalkState.this.topLevelDeclaration);
             CompilerWalkState.this.topLevelDeclaration = CompilerWalkState.this.domainModel.getTopLevelElementByContext(
-                    ctx
-                );
+                ctx
+            );
         }
 
         @Override
@@ -726,8 +726,8 @@ public class CompilerWalkState {
             }
 
             CompilerWalkState.this.classifierModifier = CompilerWalkState.this.classifier.getDeclaredModifierByContext(
-                    ctx
-                );
+                ctx
+            );
         }
 
         @Override
@@ -743,8 +743,9 @@ public class CompilerWalkState {
                 return;
             }
 
-            CompilerWalkState.this.orderByOwner.getOrderBy()
-                .ifPresent(antlrOrderBy -> CompilerWalkState.this.orderBy = antlrOrderBy);
+            CompilerWalkState.this.orderByOwner.getOrderBy().ifPresent(antlrOrderBy ->
+                CompilerWalkState.this.orderBy = antlrOrderBy
+            );
         }
 
         @Override

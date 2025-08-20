@@ -60,21 +60,21 @@ public final class ReladomoProjectionConverter {
         this.projectionChildrenToReladomoTree(projectionReladomoNode, projection);
         this.rootNodesByProjection.put(projection, projectionReladomoNode);
 
-        this.projectionHoldersByProjectionReference.toImmutable()
-            .forEachKeyValue((eachProjectionReference, eachProjectionReferenceNode) -> {
-                RootReladomoNode rootReladomoNode =
-                    this.rootNodesByProjection.getIfAbsent(
-                            eachProjectionReference.getProjection(),
-                            () ->
-                                this.getRootReladomoNode(
-                                        eachProjectionReference.getClassifier(),
-                                        eachProjectionReference.getProjection()
-                                    )
-                        );
+        this.projectionHoldersByProjectionReference.toImmutable().forEachKeyValue(
+                (eachProjectionReference, eachProjectionReferenceNode) -> {
+                    RootReladomoNode rootReladomoNode = this.rootNodesByProjection.getIfAbsent(
+                        eachProjectionReference.getProjection(),
+                        () ->
+                            this.getRootReladomoNode(
+                                eachProjectionReference.getClassifier(),
+                                eachProjectionReference.getProjection()
+                            )
+                    );
 
-                eachProjectionReferenceNode.setProjection(rootReladomoNode);
-                this.projectionHoldersByProjectionReference.remove(eachProjectionReference);
-            });
+                    eachProjectionReferenceNode.setProjection(rootReladomoNode);
+                    this.projectionHoldersByProjectionReference.remove(eachProjectionReference);
+                }
+            );
 
         return projectionReladomoNode;
     }

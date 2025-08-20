@@ -131,8 +131,10 @@ public class AntlrDomainModel {
     }
 
     public void enterTopLevelDeclaration(TopLevelDeclarationContext ctx) {
-        Integer duplicate =
-            this.topLevelElementOrdinalsByContext.put(ctx, this.topLevelElementOrdinalsByContext.size() + 1);
+        Integer duplicate = this.topLevelElementOrdinalsByContext.put(
+            ctx,
+            this.topLevelElementOrdinalsByContext.size() + 1
+        );
 
         if (duplicate != null) {
             throw new AssertionError();
@@ -141,8 +143,10 @@ public class AntlrDomainModel {
 
     public void exitCompilationUnit(@Nonnull AntlrCompilationUnit compilationUnit) {
         this.compilationUnits.add(compilationUnit);
-        AntlrCompilationUnit duplicateCompilationUnit =
-            this.compilationUnitsByContext.put(compilationUnit.getElementContext(), compilationUnit);
+        AntlrCompilationUnit duplicateCompilationUnit = this.compilationUnitsByContext.put(
+            compilationUnit.getElementContext(),
+            compilationUnit
+        );
         if (duplicateCompilationUnit != null) {
             throw new AssertionError();
         }
@@ -151,13 +155,14 @@ public class AntlrDomainModel {
     public void exitEnumerationDeclaration(@Nonnull AntlrEnumeration enumeration) {
         this.topLevelElements.add(enumeration);
         this.enumerations.add(enumeration);
-        this.enumerationsByName.compute(
-                enumeration.getName(),
-                (name, builder) -> builder == null ? enumeration : AntlrEnumeration.AMBIGUOUS
-            );
+        this.enumerationsByName.compute(enumeration.getName(), (name, builder) ->
+            builder == null ? enumeration : AntlrEnumeration.AMBIGUOUS
+        );
 
-        AntlrEnumeration duplicateEnumeration =
-            this.enumerationsByContext.put(enumeration.getElementContext(), enumeration);
+        AntlrEnumeration duplicateEnumeration = this.enumerationsByContext.put(
+            enumeration.getElementContext(),
+            enumeration
+        );
         if (duplicateEnumeration != null) {
             throw new AssertionError();
         }
@@ -166,8 +171,10 @@ public class AntlrDomainModel {
             enumeration.getElementContext(),
             TopLevelDeclarationContext.class
         );
-        AntlrTopLevelElement duplicateTopLevelElement =
-            this.topLevelElementsByContext.put(topLevelDeclarationContext, enumeration);
+        AntlrTopLevelElement duplicateTopLevelElement = this.topLevelElementsByContext.put(
+            topLevelDeclarationContext,
+            enumeration
+        );
         if (duplicateTopLevelElement != null) {
             throw new AssertionError();
         }
@@ -178,14 +185,12 @@ public class AntlrDomainModel {
         this.classifiers.add(iface);
         this.interfaces.add(iface);
 
-        this.classifiersByName.compute(
-                iface.getName(),
-                (name, builder) -> builder == null ? iface : AntlrClassifier.AMBIGUOUS
-            );
-        this.interfacesByName.compute(
-                iface.getName(),
-                (name, builder) -> builder == null ? iface : AntlrInterface.AMBIGUOUS
-            );
+        this.classifiersByName.compute(iface.getName(), (name, builder) ->
+            builder == null ? iface : AntlrClassifier.AMBIGUOUS
+        );
+        this.interfacesByName.compute(iface.getName(), (name, builder) ->
+            builder == null ? iface : AntlrInterface.AMBIGUOUS
+        );
 
         AntlrClassifier duplicateClassifier = this.classifiersByContext.put(iface.getElementContext(), iface);
         if (duplicateClassifier != null) {
@@ -201,8 +206,10 @@ public class AntlrDomainModel {
             iface.getElementContext(),
             TopLevelDeclarationContext.class
         );
-        AntlrTopLevelElement duplicateTopLevelElement =
-            this.topLevelElementsByContext.put(topLevelDeclarationContext, iface);
+        AntlrTopLevelElement duplicateTopLevelElement = this.topLevelElementsByContext.put(
+            topLevelDeclarationContext,
+            iface
+        );
         if (duplicateTopLevelElement != null) {
             throw new AssertionError();
         }
@@ -217,10 +224,9 @@ public class AntlrDomainModel {
             this.userClasses.add(klass);
         }
 
-        this.classifiersByName.compute(
-                klass.getName(),
-                (name, builder) -> builder == null ? klass : AntlrClassifier.AMBIGUOUS
-            );
+        this.classifiersByName.compute(klass.getName(), (name, builder) ->
+            builder == null ? klass : AntlrClassifier.AMBIGUOUS
+        );
         this.classesByName.compute(klass.getName(), (name, builder) -> builder == null ? klass : AntlrClass.AMBIGUOUS);
 
         AntlrClassifier duplicateClassifier = this.classifiersByContext.put(klass.getElementContext(), klass);
@@ -237,8 +243,10 @@ public class AntlrDomainModel {
             klass.getElementContext(),
             TopLevelDeclarationContext.class
         );
-        AntlrTopLevelElement duplicateTopLevelElement =
-            this.topLevelElementsByContext.put(topLevelDeclarationContext, klass);
+        AntlrTopLevelElement duplicateTopLevelElement = this.topLevelElementsByContext.put(
+            topLevelDeclarationContext,
+            klass
+        );
         if (duplicateTopLevelElement != null) {
             throw new AssertionError();
         }
@@ -247,13 +255,14 @@ public class AntlrDomainModel {
     public void exitAssociationDeclaration(@Nonnull AntlrAssociation association) {
         this.topLevelElements.add(association);
         this.associations.add(association);
-        this.associationsByName.compute(
-                association.getName(),
-                (name, builder) -> builder == null ? association : AntlrAssociation.AMBIGUOUS
-            );
+        this.associationsByName.compute(association.getName(), (name, builder) ->
+            builder == null ? association : AntlrAssociation.AMBIGUOUS
+        );
 
-        AntlrAssociation duplicateAssociation =
-            this.associationsByContext.put(association.getElementContext(), association);
+        AntlrAssociation duplicateAssociation = this.associationsByContext.put(
+            association.getElementContext(),
+            association
+        );
         if (duplicateAssociation != null) {
             throw new AssertionError();
         }
@@ -262,8 +271,10 @@ public class AntlrDomainModel {
             association.getElementContext(),
             TopLevelDeclarationContext.class
         );
-        AntlrTopLevelElement duplicateTopLevelElement =
-            this.topLevelElementsByContext.put(topLevelDeclarationContext, association);
+        AntlrTopLevelElement duplicateTopLevelElement = this.topLevelElementsByContext.put(
+            topLevelDeclarationContext,
+            association
+        );
         if (duplicateTopLevelElement != null) {
             throw new AssertionError();
         }
@@ -272,10 +283,9 @@ public class AntlrDomainModel {
     public void exitProjectionDeclaration(@Nonnull AntlrProjection projection) {
         this.topLevelElements.add(projection);
         this.projections.add(projection);
-        this.projectionsByName.compute(
-                projection.getName(),
-                (name, builder) -> builder == null ? projection : AntlrProjection.AMBIGUOUS
-            );
+        this.projectionsByName.compute(projection.getName(), (name, builder) ->
+            builder == null ? projection : AntlrProjection.AMBIGUOUS
+        );
 
         AntlrProjection duplicateProjection = this.projectionsByContext.put(projection.getElementContext(), projection);
         if (duplicateProjection != null) {
@@ -286,8 +296,10 @@ public class AntlrDomainModel {
             projection.getElementContext(),
             TopLevelDeclarationContext.class
         );
-        AntlrTopLevelElement duplicateTopLevelElement =
-            this.topLevelElementsByContext.put(topLevelDeclarationContext, projection);
+        AntlrTopLevelElement duplicateTopLevelElement = this.topLevelElementsByContext.put(
+            topLevelDeclarationContext,
+            projection
+        );
         if (duplicateTopLevelElement != null) {
             throw new AssertionError();
         }
@@ -296,13 +308,14 @@ public class AntlrDomainModel {
     public void exitServiceGroupDeclaration(@Nonnull AntlrServiceGroup serviceGroup) {
         this.topLevelElements.add(serviceGroup);
         this.serviceGroups.add(serviceGroup);
-        this.serviceGroupsByClass.compute(
-                serviceGroup.getKlass(),
-                (name, builder) -> builder == null ? serviceGroup : AntlrServiceGroup.AMBIGUOUS
-            );
+        this.serviceGroupsByClass.compute(serviceGroup.getKlass(), (name, builder) ->
+            builder == null ? serviceGroup : AntlrServiceGroup.AMBIGUOUS
+        );
 
-        AntlrServiceGroup duplicateServiceGroup =
-            this.serviceGroupsByContext.put(serviceGroup.getElementContext(), serviceGroup);
+        AntlrServiceGroup duplicateServiceGroup = this.serviceGroupsByContext.put(
+            serviceGroup.getElementContext(),
+            serviceGroup
+        );
         if (duplicateServiceGroup != null) {
             throw new AssertionError();
         }
@@ -311,8 +324,10 @@ public class AntlrDomainModel {
             serviceGroup.getElementContext(),
             TopLevelDeclarationContext.class
         );
-        AntlrTopLevelElement duplicateTopLevelElement =
-            this.topLevelElementsByContext.put(topLevelDeclarationContext, serviceGroup);
+        AntlrTopLevelElement duplicateTopLevelElement = this.topLevelElementsByContext.put(
+            topLevelDeclarationContext,
+            serviceGroup
+        );
         if (duplicateTopLevelElement != null) {
             throw new AssertionError();
         }
@@ -414,17 +429,18 @@ public class AntlrDomainModel {
     }
 
     private void reportDuplicateTopLevelNames(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        ImmutableList<String> topLevelNames =
-            this.topLevelElements.collect(AntlrTopLevelElement::getName).toImmutable();
+        ImmutableList<String> topLevelNames = this.topLevelElements.collect(
+            AntlrTopLevelElement::getName
+        ).toImmutable();
 
         ImmutableBag<String> duplicateTopLevelNames = topLevelNames
             .toBag()
             .selectByOccurrences(occurrences -> occurrences > 1)
             .toImmutable();
 
-        this.topLevelElements.select(
-                topLevelElement -> duplicateTopLevelNames.contains(topLevelElement.getName())
-            ).forEachWith(AntlrTopLevelElement::reportDuplicateTopLevelName, compilerAnnotationHolder);
+        this.topLevelElements.select(topLevelElement ->
+            duplicateTopLevelNames.contains(topLevelElement.getName())
+        ).forEachWith(AntlrTopLevelElement::reportDuplicateTopLevelName, compilerAnnotationHolder);
     }
 
     private ImmutableBag<AntlrClass> getDuplicateServiceGroupClasses() {
@@ -452,10 +468,10 @@ public class AntlrDomainModel {
             orderByVisitor.getAssociationEndsReferencedByOrderBy()
         );
         this.reportUnreferencedPrivateProperty(
-                compilerAnnotationHolder,
-                dataTypePropertiesReferenced,
-                associationEndsReferenced
-            );
+            compilerAnnotationHolder,
+            dataTypePropertiesReferenced,
+            associationEndsReferenced
+        );
     }
 
     private void visitCriteria(AntlrCriteriaVisitor criteriaVisitor) {
@@ -544,28 +560,35 @@ public class AntlrDomainModel {
     @Nonnull
     public DomainModelBuilder build(ImmutableList<CompilationUnit> compilationUnits) {
         ImmutableList<SourceCodeBuilderImpl> sourceCodeBuilders = compilationUnits.collect(CompilationUnit::build);
-        ImmutableList<EnumerationBuilder> enumerationBuilders =
-            this.enumerations.collect(AntlrEnumeration::build).toImmutable();
-        ImmutableList<InterfaceBuilder> interfaceBuilders =
-            this.interfaces.collect(AntlrInterface::build1).toImmutable();
+        ImmutableList<EnumerationBuilder> enumerationBuilders = this.enumerations.collect(
+            AntlrEnumeration::build
+        ).toImmutable();
+        ImmutableList<InterfaceBuilder> interfaceBuilders = this.interfaces.collect(
+            AntlrInterface::build1
+        ).toImmutable();
         ImmutableList<KlassBuilder> classBuilders = this.klasses.collect(AntlrClass::build1).toImmutable();
 
-        ImmutableList<ClassifierBuilder<?>> classifierBuilders =
-            this.classifiers.<ClassifierBuilder<?>>collect(AntlrClassifier::getElementBuilder).toImmutable();
+        ImmutableList<ClassifierBuilder<?>> classifierBuilders = this.classifiers.<ClassifierBuilder<?>>collect(
+            AntlrClassifier::getElementBuilder
+        ).toImmutable();
 
-        ImmutableList<AssociationBuilder> associationBuilders =
-            this.associations.collect(AntlrAssociation::build).toImmutable();
+        ImmutableList<AssociationBuilder> associationBuilders = this.associations.collect(
+            AntlrAssociation::build
+        ).toImmutable();
         this.interfaces.each(AntlrInterface::build2);
         this.klasses.each(AntlrClass::build2);
 
-        ImmutableList<ProjectionBuilder> projectionBuilders =
-            this.projections.collect(AntlrProjection::build).toImmutable();
+        ImmutableList<ProjectionBuilder> projectionBuilders = this.projections.collect(
+            AntlrProjection::build
+        ).toImmutable();
         this.projections.each(AntlrProjection::build2);
-        ImmutableList<ServiceGroupBuilder> serviceGroupBuilders =
-            this.serviceGroups.collect(AntlrServiceGroup::build).toImmutable();
+        ImmutableList<ServiceGroupBuilder> serviceGroupBuilders = this.serviceGroups.collect(
+            AntlrServiceGroup::build
+        ).toImmutable();
 
-        ImmutableList<TopLevelElementBuilder> topLevelElementBuilders =
-            this.topLevelElements.collect(AntlrTopLevelElement::getElementBuilder).toImmutable();
+        ImmutableList<TopLevelElementBuilder> topLevelElementBuilders = this.topLevelElements.collect(
+            AntlrTopLevelElement::getElementBuilder
+        ).toImmutable();
 
         compilationUnits.each(CompilationUnit::build2);
 
