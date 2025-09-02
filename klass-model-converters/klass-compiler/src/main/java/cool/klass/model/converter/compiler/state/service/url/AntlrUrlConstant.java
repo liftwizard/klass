@@ -18,7 +18,6 @@ package cool.klass.model.converter.compiler.state.service.url;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
 
