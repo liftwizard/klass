@@ -22,6 +22,14 @@ mise:
 markdownlint:
     markdownlint --config .markdownlint.jsonc  --fix .
 
+# Run Biome CI checks
+biome-ci:
+    npm run biome-ci
+
+# Run Prettier CI checks
+prettier-ci:
+    npm run prettier-ci
+
 # Run all formatting tools for pre-commit
 precommit: mvn
     uv tool run pre-commit run
