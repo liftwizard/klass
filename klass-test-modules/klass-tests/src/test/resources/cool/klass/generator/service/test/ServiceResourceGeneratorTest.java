@@ -242,7 +242,56 @@ public class QuestionResource
         return result;
     }
 
-    // TODO: POST
+    @Timed
+    @ExceptionMetered
+    @POST
+    @Path("/question")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void method4(
+            @Nonnull @NotNull ObjectNode incomingInstance,
+            @Nonnull @Context UriInfo uriInfo)
+    {
+        Klass klass = this.domainModel.getClassByName("Question");
+
+        MutableList<String> errors = Lists.mutable.empty();
+        MutableList<String> warnings = Lists.mutable.empty();
+        ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, klass);
+        RequiredPropertiesValidator.validate(
+                errors,
+                warnings,
+                klass,
+                incomingInstance,
+                OperationMode.CREATE);
+
+        if (errors.notEmpty())
+        {
+            Response response = Response
+                    .status(Status.BAD_REQUEST)
+                    .entity(errors)
+                    .build();
+            throw new BadRequestException("Incoming data failed validation.", response);
+        }
+
+        if (warnings.notEmpty())
+        {
+            Response response = Response
+                    .status(Status.BAD_REQUEST)
+                    .entity(warnings)
+                    .build();
+            throw new BadRequestException("Incoming data failed validation.", response);
+        }
+
+
+
+        // Create the instance
+        Instant transactionInstant = Instant.now(this.clock);
+        MutationContext mutationContext = new MutationContext(Optional.empty(), transactionInstant, Maps.immutable.empty());
+        PersistentCreator creator = new PersistentCreator(mutationContext, this.dataStore);
+        Object persistentInstance = this.dataStore.instantiate(klass, Maps.immutable.empty());
+        creator.synchronize(klass, persistentInstance, incomingInstance);
+        this.dataStore.insert(persistentInstance);
+
+    }
 
     @Timed
     @ExceptionMetered
