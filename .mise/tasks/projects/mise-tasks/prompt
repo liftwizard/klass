@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#MISE description="Prompt llm with repomix output attachment"
+#MISE depends=["llm:repomix:mise-tasks"]
+
+#USAGE flag "-m --model <model>"         help="LLM model to use" default="claude-3.7-sonnet"
+#USAGE flag "-p --prompt <prompt>"       help="Prompt to pass along to llm"
+#USAGE complete "model"                  run="llm models | cut -d':' -f2 | cut -d' ' -f2"
+
+set -Eeuo pipefail
+
+source .mise/tasks/console/ansi-colors
+
+if [ -z "${usage_prompt-}" ]; then
+  echo "Error: --prompt flag is required"
+  exit 1
+fi
+
+COMMAND="cat repomix-output-mise-tasks.txt | llm prompt --model \"${ANSI_YELLOW}${usage_model}${ANSI_DEFAULT}\" --option max_tokens 128000 --option thinking_budget 4000 \"${ANSI_YELLOW}${usage_prompt}${ANSI_DEFAULT}\""
+mise run console:run "$COMMAND"
