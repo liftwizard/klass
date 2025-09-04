@@ -572,7 +572,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v5
-            - uses: reviewdog/action-languagetool@v1.22.0
+            - uses: reviewdog/action-languagetool@v1.23.0
               with:
                   reporter: github-pr-check
 
