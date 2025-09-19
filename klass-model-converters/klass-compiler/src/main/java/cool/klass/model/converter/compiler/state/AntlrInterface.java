@@ -117,14 +117,14 @@ public class AntlrInterface extends AntlrClassifier {
             this.getPackageName()
         );
 
-        ImmutableList<ModifierBuilder> declaredModifiers =
-            this.declaredModifiers.collect(AntlrModifier::build).toImmutable();
+        ImmutableList<ModifierBuilder> declaredModifiers = this.declaredModifiers.collect(
+            AntlrModifier::build
+        ).toImmutable();
         this.interfaceBuilder.setDeclaredModifiers(declaredModifiers);
 
-        ImmutableList<DataTypePropertyBuilder<?, ?, ?>> declaredDataTypeProperties =
-            this.declaredDataTypeProperties.<DataTypePropertyBuilder<?, ?, ?>>collect(
-                    AntlrDataTypeProperty::build
-                ).toImmutable();
+        ImmutableList<DataTypePropertyBuilder<?, ?, ?>> declaredDataTypeProperties = this.declaredDataTypeProperties.<
+            DataTypePropertyBuilder<?, ?, ?>
+        >collect(AntlrDataTypeProperty::build).toImmutable();
 
         this.interfaceBuilder.setDeclaredDataTypeProperties(declaredDataTypeProperties);
         return this.interfaceBuilder;
@@ -161,16 +161,18 @@ public class AntlrInterface extends AntlrClassifier {
 
         ImmutableList<ReferencePropertyBuilder<?, ?, ?>> declaredReferenceProperties =
             this.declaredReferenceProperties.<ReferencePropertyBuilder<?, ?, ?>>collect(
-                    AntlrReferenceProperty::getElementBuilder
-                ).toImmutable();
+                AntlrReferenceProperty::getElementBuilder
+            ).toImmutable();
         this.interfaceBuilder.setDeclaredReferenceProperties(declaredReferenceProperties);
 
-        ImmutableList<PropertyBuilder<?, ?, ?>> declaredProperties =
-            this.declaredProperties.<PropertyBuilder<?, ?, ?>>collect(AntlrProperty::getElementBuilder).toImmutable();
+        ImmutableList<PropertyBuilder<?, ?, ?>> declaredProperties = this.declaredProperties.<
+            PropertyBuilder<?, ?, ?>
+        >collect(AntlrProperty::getElementBuilder).toImmutable();
         this.interfaceBuilder.setDeclaredProperties(declaredProperties);
 
-        ImmutableList<InterfaceBuilder> declaredInterfaces =
-            this.declaredInterfaces.collect(AntlrInterface::getElementBuilder).toImmutable();
+        ImmutableList<InterfaceBuilder> declaredInterfaces = this.declaredInterfaces.collect(
+            AntlrInterface::getElementBuilder
+        ).toImmutable();
         this.interfaceBuilder.setDeclaredInterfaces(declaredInterfaces);
     }
 
@@ -229,8 +231,9 @@ public class AntlrInterface extends AntlrClassifier {
 
     private void reportTransientModifier(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         // Only need to check declared modifiers
-        Optional<AntlrModifier> maybeTransientModifier =
-            this.declaredModifiers.detectOptional(AntlrModifier::isTransient);
+        Optional<AntlrModifier> maybeTransientModifier = this.declaredModifiers.detectOptional(
+            AntlrModifier::isTransient
+        );
 
         if (maybeTransientModifier.isEmpty()) {
             return;
@@ -272,9 +275,9 @@ public class AntlrInterface extends AntlrClassifier {
         }
 
         visitedInterfaces.add(this);
-        return this.declaredInterfaces.anySatisfy(
-                eachSuperInterface -> eachSuperInterface.extendsInterface(iface, visitedInterfaces)
-            );
+        return this.declaredInterfaces.anySatisfy(eachSuperInterface ->
+            eachSuperInterface.extendsInterface(iface, visitedInterfaces)
+        );
     }
 
     @Override
@@ -289,7 +292,10 @@ public class AntlrInterface extends AntlrClassifier {
 
     @Override
     public ImmutableBag<String> getDuplicateMemberNames() {
-        return this.getDeclaredMemberNames().toBag().selectByOccurrences(occurrences -> occurrences > 1).toImmutable();
+        return this.getDeclaredMemberNames()
+            .toBag()
+            .selectByOccurrences(occurrences -> occurrences > 1)
+            .toImmutable();
     }
 
     private ImmutableList<String> getDeclaredMemberNames() {

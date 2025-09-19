@@ -135,9 +135,9 @@ public abstract class AbstractCompilerAnnotation {
     @Nonnull
     protected String getFilenameWithoutDirectory() {
         String sourceName = this.compilationUnit.getSourceName();
-        return this.macroCause.map(ignore -> sourceName).orElseGet(
-                () -> sourceName.substring(sourceName.lastIndexOf('/') + 1)
-            );
+        return this.macroCause.map(ignore -> sourceName).orElseGet(() ->
+            sourceName.substring(sourceName.lastIndexOf('/') + 1)
+        );
     }
 
     protected String getShortLocationString() {
@@ -160,10 +160,9 @@ public abstract class AbstractCompilerAnnotation {
     protected ImmutableList<AbstractContextString> applyListenerToStack() {
         SetIterable<Token> contextTokens = this.getContextTokens();
 
-        MutableSet<Token> underlinedTokens =
-            this.offendingContexts.asLazy()
-                .flatCollect(this::getUnderlinedTokenRange)
-                .into(SetAdapter.adapt(new LinkedHashSet<>()));
+        MutableSet<Token> underlinedTokens = this.offendingContexts.asLazy()
+            .flatCollect(this::getUnderlinedTokenRange)
+            .into(SetAdapter.adapt(new LinkedHashSet<>()));
 
         MutableSet<Integer> contextLines = contextTokens
             .asLazy()
@@ -176,12 +175,11 @@ public abstract class AbstractCompilerAnnotation {
             .into(SetAdapter.adapt(new LinkedHashSet<>()));
 
         if (!contextTokens.containsAll(underlinedTokens)) {
-            String message =
-                this.offendingContexts.asLazy()
-                    .flatCollect(this::getUnderlinedTokenRange)
-                    .collect(Token::getText)
-                    .toList()
-                    .makeString("");
+            String message = this.offendingContexts.asLazy()
+                .flatCollect(this::getUnderlinedTokenRange)
+                .collect(Token::getText)
+                .toList()
+                .makeString("");
             LOGGER.warn("Not all underlined tokens are in the context: {}", message);
         }
 

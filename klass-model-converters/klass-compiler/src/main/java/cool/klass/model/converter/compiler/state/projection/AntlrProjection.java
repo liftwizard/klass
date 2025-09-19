@@ -134,8 +134,9 @@ public class AntlrProjection extends AntlrProjectionParent implements AntlrTopLe
             this.classifier.getElementBuilder()
         );
 
-        ImmutableList<ProjectionChildBuilder> children =
-            this.children.collect(AntlrProjectionChild::build).toImmutable();
+        ImmutableList<ProjectionChildBuilder> children = this.children.collect(
+            AntlrProjectionChild::build
+        ).toImmutable();
 
         this.projectionBuilder.setChildBuilders(children);
         return this.projectionBuilder;

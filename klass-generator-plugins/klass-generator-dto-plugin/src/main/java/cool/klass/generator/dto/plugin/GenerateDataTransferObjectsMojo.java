@@ -49,16 +49,15 @@ public class GenerateDataTransferObjectsMojo extends AbstractGenerateMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        boolean wasGenerated =
-            this.executeWithCaching(this.outputDirectory, () -> {
-                    DomainModel domainModel = this.getDomainModel();
-                    Path outputPath = this.outputDirectory.toPath();
-                    DataTransferObjectsGenerator dataTransferObjectsGenerator = new DataTransferObjectsGenerator(
-                        domainModel
-                    );
-                    dataTransferObjectsGenerator.writeDataTransferObjectFiles(outputPath);
-                    return null;
-                });
+        boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
+                DomainModel domainModel = this.getDomainModel();
+                Path outputPath = this.outputDirectory.toPath();
+                DataTransferObjectsGenerator dataTransferObjectsGenerator = new DataTransferObjectsGenerator(
+                    domainModel
+                );
+                dataTransferObjectsGenerator.writeDataTransferObjectFiles(outputPath);
+                return null;
+            });
 
         if (wasGenerated) {
             this.getLog().info("Generated data transfer objects in: " + this.outputDirectory.getPath());

@@ -372,8 +372,9 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
             ImmutableList<Modifier> modifiers = this.declaredModifiers.collect(ModifierBuilder::build);
             this.element.setModifiers(modifiers);
 
-            ImmutableList<DataTypeProperty> dataTypeProperties =
-                this.declaredDataTypeProperties.<DataTypeProperty>collect(DataTypePropertyBuilder::build).toImmutable();
+            ImmutableList<DataTypeProperty> dataTypeProperties = this.declaredDataTypeProperties.<
+                DataTypeProperty
+            >collect(DataTypePropertyBuilder::build).toImmutable();
             this.element.setDeclaredDataTypeProperties(dataTypeProperties);
         }
 
@@ -392,18 +393,18 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 
             ImmutableList<AssociationEndSignature> declaredAssociationEndSignatures =
                 this.declaredAssociationEndSignatureBuilders.<AssociationEndSignature>collect(
-                        AssociationEndSignatureBuilder::build
-                    ).toImmutable();
+                    AssociationEndSignatureBuilder::build
+                ).toImmutable();
             this.element.setDeclaredAssociationEndSignatures(declaredAssociationEndSignatures);
 
-            ImmutableList<ReferenceProperty> declaredReferenceProperties =
-                this.declaredReferenceProperties.<ReferenceProperty>collect(
-                        ReferencePropertyBuilder::getElement
-                    ).toImmutable();
+            ImmutableList<ReferenceProperty> declaredReferenceProperties = this.declaredReferenceProperties.<
+                ReferenceProperty
+            >collect(ReferencePropertyBuilder::getElement).toImmutable();
             this.element.setDeclaredReferenceProperties(declaredReferenceProperties);
 
-            ImmutableList<Property> properties =
-                this.declaredProperties.<Property>collect(PropertyBuilder::getElement).toImmutable();
+            ImmutableList<Property> properties = this.declaredProperties.<Property>collect(
+                PropertyBuilder::getElement
+            ).toImmutable();
             this.element.setDeclaredProperties(properties);
         }
 
@@ -480,21 +481,23 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
             this.element.setCreatedByProperty(primitiveProperties.detectOptional(DataTypeProperty::isCreatedBy));
             this.element.setCreatedOnProperty(primitiveProperties.detectOptional(DataTypeProperty::isCreatedOn));
             this.element.setLastUpdatedByProperty(
-                    primitiveProperties.detectOptional(DataTypeProperty::isLastUpdatedBy)
-                );
+                primitiveProperties.detectOptional(DataTypeProperty::isLastUpdatedBy)
+            );
 
             ImmutableList<ReferenceProperty> referenceProperties = this.getReferenceProperties();
             this.element.setReferenceProperties(referenceProperties);
         }
 
         protected ImmutableList<DataTypeProperty> getDataTypeProperties() {
-            ImmutableList<DataTypeProperty> declaredDataTypeProperties =
-                this.declaredDataTypeProperties.collect(property -> property.getElement());
+            ImmutableList<DataTypeProperty> declaredDataTypeProperties = this.declaredDataTypeProperties.collect(
+                property -> property.getElement()
+            );
 
-            ImmutableList<DataTypeProperty> interfaceProperties =
-                this.declaredInterfaces.collect(ElementBuilder::getElement)
-                    .flatCollect(Classifier::getDataTypeProperties)
-                    .toImmutable();
+            ImmutableList<DataTypeProperty> interfaceProperties = this.declaredInterfaces.collect(
+                    ElementBuilder::getElement
+                )
+                .flatCollect(Classifier::getDataTypeProperties)
+                .toImmutable();
 
             ImmutableList<DataTypeProperty> allDataTypeProperties = interfaceProperties.newWithAll(
                 declaredDataTypeProperties
@@ -509,13 +512,15 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
         }
 
         protected ImmutableList<ReferenceProperty> getReferenceProperties() {
-            ImmutableList<ReferenceProperty> declaredReferenceProperties =
-                this.declaredReferenceProperties.collect(property -> property.getElement());
+            ImmutableList<ReferenceProperty> declaredReferenceProperties = this.declaredReferenceProperties.collect(
+                property -> property.getElement()
+            );
 
-            ImmutableList<ReferenceProperty> interfaceProperties =
-                this.declaredInterfaces.collect(ElementBuilder::getElement)
-                    .flatCollect(Classifier::getReferenceProperties)
-                    .toImmutable();
+            ImmutableList<ReferenceProperty> interfaceProperties = this.declaredInterfaces.collect(
+                    ElementBuilder::getElement
+                )
+                .flatCollect(Classifier::getReferenceProperties)
+                .toImmutable();
 
             ImmutableList<ReferenceProperty> allReferenceProperties = interfaceProperties.newWithAll(
                 declaredReferenceProperties
