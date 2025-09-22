@@ -4,6 +4,7 @@ JUSTFILE_BRANCH
 # Project-specific
 _book
 spy.log
+.worktrees/
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,maven,intellij+iml,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,maven,intellij+iml,visualstudiocode
