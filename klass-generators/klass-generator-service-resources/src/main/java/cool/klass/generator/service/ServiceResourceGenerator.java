@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Craig Motlin
+ * Copyright 2025 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -132,7 +132,18 @@ public class ServiceResourceGenerator {
             .collect(Service::getVerb)
             .toImmutableList();
         boolean hasWriteServices =
-            verbs.contains(Verb.PUT) || verbs.contains(Verb.PATCH) || verbs.contains(Verb.DELETE);
+            verbs.contains(Verb.POST) ||
+            verbs.contains(Verb.PUT) ||
+            verbs.contains(Verb.PATCH) ||
+            verbs.contains(Verb.DELETE);
+
+        boolean hasPostWithProjection = serviceGroup
+            .getUrls()
+            .asLazy()
+            .flatCollect(Url::getServices)
+            .select(service -> service.getVerb() == Verb.POST)
+            .anySatisfy(service -> service.getProjectionDispatch().isPresent());
+
         String writeImports = hasWriteServices
             ? """
             import javax.validation.constraints.NotNull;
@@ -140,6 +151,13 @@ public class ServiceResourceGenerator {
             import cool.klass.deserializer.json.*;
             import cool.klass.deserializer.json.type.*;
             import cool.klass.reladomo.persistent.writer.*;
+            """
+            : "";
+
+        String projectionImports = hasPostWithProjection
+            ? """
+            import cool.klass.model.meta.domain.api.projection.Projection;
+            import cool.klass.serialization.jackson.response.KlassResponseBuilder;
             """
             : "";
 
@@ -172,6 +190,7 @@ public class ServiceResourceGenerator {
                 + "import cool.klass.model.meta.domain.api.Multiplicity;\n"
                 + jsr310Import
                 + writeImports
+                + projectionImports
                 + "\n"
                 + "import org.eclipse.collections.api.factory.Maps;\n"
                 + "import org.eclipse.collections.api.list.MutableList;\n"
@@ -372,7 +391,177 @@ public class ServiceResourceGenerator {
 
     @Nonnull
     private String getPostSourceCode(Service service, int index) {
-        return "    // TODO: POST\n";
+        Url url = service.getUrl();
+        ServiceGroup serviceGroup = url.getServiceGroup();
+
+        ImmutableList<ObjectBooleanPair<Parameter>> pathParameters = url
+            .getPathParameters()
+            .collectWith(PrimitiveTuples::pair, true);
+        ImmutableList<ObjectBooleanPair<Parameter>> queryParameters = url
+            .getQueryParameters()
+            .collectWith(PrimitiveTuples::pair, false);
+
+        String queryParametersString = queryParameters.isEmpty()
+            ? ""
+            : queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
+
+        boolean hasAuthorizeCriteria = service.isAuthorizeClauseRequired();
+
+        int numParameters = service.getNumParameters() + 2; // +1 for ObjectNode, +1 for UriInfo
+        if (hasAuthorizeCriteria) {
+            numParameters++;
+        }
+
+        boolean lineWrapParameters = numParameters > 1;
+        String parameterPrefix = lineWrapParameters ? "\n" : "";
+        String parameterIndent = lineWrapParameters ? "            " : "";
+
+        ImmutableList<String> urlParameterStrings = pathParameters
+            .newWithAll(queryParameters)
+            .collectWith(this::getParameterSourceCode, parameterIndent);
+
+        MutableList<String> parameterStrings = urlParameterStrings.toList();
+        parameterStrings.add(parameterIndent + "@Nonnull @NotNull ObjectNode incomingInstance");
+        parameterStrings.add(parameterIndent + "@Nonnull @Context UriInfo uriInfo");
+
+        if (hasAuthorizeCriteria) {
+            parameterStrings.add(parameterIndent + "@Context SecurityContext securityContext");
+        }
+
+        String userPrincipalNameLocalVariable = hasAuthorizeCriteria
+            ? "        String    userPrincipalName  = securityContext.getUserPrincipal().getName();\n"
+            : "";
+
+        String parametersSourceCode = parameterStrings.makeString(",\n");
+
+        String klassName = serviceGroup.getKlass().getName();
+        String finderName = klassName + "Finder";
+
+        String authorizeOperationSourceCode =
+            this.getOperation(finderName, service.getAuthorizeCriteria(), "authorize");
+        String validateOperationSourceCode = this.getOperation(finderName, service.getValidateCriteria(), "validate");
+        String conflictOperationSourceCode = this.getOperation(finderName, service.getConflictCriteria(), "conflict");
+
+        String authorizePredicateSourceCode =
+            this.checkPredicate(service.getAuthorizeCriteria(), "authorize", "isAuthorized", "ForbiddenException()");
+        String validatePredicateSourceCode =
+            this.checkPredicate(service.getValidateCriteria(), "validate", "isValidated", "BadRequestException()");
+        String conflictPredicateSourceCode =
+            this.checkPredicate(
+                    service.getConflictCriteria(),
+                    "conflict",
+                    "hasConflict",
+                    "ClientErrorException(Status.CONFLICT)"
+                );
+
+        // Determine return type and JsonView based on projection
+        Optional<ServiceProjectionDispatch> projectionDispatch = service.getProjectionDispatch();
+        String returnType = projectionDispatch.isPresent() ? "Response" : "void";
+        String jsonViewAnnotation = projectionDispatch
+            .map(dispatch -> "    @JsonView(" + dispatch.getProjection().getName() + "_JsonView.class)\n")
+            .orElse("");
+
+        // Generate response code based on projection
+        String responseCode;
+        if (projectionDispatch.isPresent()) {
+            Projection projection = projectionDispatch.get().getProjection();
+            String projectionName = projection.getName();
+
+            var reladomoProjectionConverter = new ReladomoProjectionConverter();
+            RootReladomoNode projectionReladomoNode = reladomoProjectionConverter.getRootReladomoNode(
+                serviceGroup.getKlass(),
+                projection
+            );
+            ImmutableList<String> deepFetchStrings = projectionReladomoNode.getDeepFetchStrings();
+            String deepFetchSourceCode = deepFetchStrings.isEmpty()
+                ? ""
+                : deepFetchStrings
+                    .collect(each -> "        // Deep fetch if needed: result.deepFetch(" + each + ");\n")
+                    .makeString("");
+
+            responseCode = "" +
+            "        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();\n" +
+            "        // TODO: Append appropriate ID to the URI\n" +
+            "        // uriBuilder.path(Long.toString(persistentInstance.getId()));\n" +
+            "\n" +
+            deepFetchSourceCode +
+            "\n" +
+            "        Projection projection = this.domainModel.getProjectionByName(\"" +
+            projectionName +
+            "\");\n" +
+            "\n" +
+            "        var responseBuilder = new KlassResponseBuilder(\n" +
+            "                persistentInstance,\n" +
+            "                projection,\n" +
+            "                Multiplicity.ONE_TO_ONE,\n" +
+            "                this.clock.instant());\n" +
+            "\n" +
+            "        return Response.created(uriBuilder.build()).entity(responseBuilder.build()).build();\n";
+        } else {
+            responseCode = "";
+        }
+
+        // @formatter:off
+        // language=JAVA
+        return ""
+                + "    @Timed\n"
+                + "    @ExceptionMetered\n"
+                + "    @" + service.getVerb().name() + "\n"
+                + "    @Path(\"" + url.getUrlString() + "\")" + queryParametersString + "\n"
+                + "    @Produces(MediaType.APPLICATION_JSON)\n"
+                + jsonViewAnnotation
+                + "    public " + returnType + " method" + index + "(" + parameterPrefix + parametersSourceCode + ")\n"
+                + "    {\n"
+                + "        Klass klass = this.domainModel.getClassByName(\"" + klassName + "\");\n"
+                + "\n"
+                + "        MutableList<String> errors = Lists.mutable.empty();\n"
+                + "        MutableList<String> warnings = Lists.mutable.empty();\n"
+                + "        ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, klass);\n"
+                + "        RequiredPropertiesValidator.validate(\n"
+                + "                errors,\n"
+                + "                warnings,\n"
+                + "                klass,\n"
+                + "                incomingInstance,\n"
+                + "                OperationMode.CREATE);\n"
+                + "\n"
+                + "        if (errors.notEmpty())\n"
+                + "        {\n"
+                + "            Response response = Response\n"
+                + "                    .status(Status.BAD_REQUEST)\n"
+                + "                    .entity(errors)\n"
+                + "                    .build();\n"
+                + "            throw new BadRequestException(\"Incoming data failed validation.\", response);\n"
+                + "        }\n"
+                + "\n"
+                + "        if (warnings.notEmpty())\n"
+                + "        {\n"
+                + "            Response response = Response\n"
+                + "                    .status(Status.BAD_REQUEST)\n"
+                + "                    .entity(warnings)\n"
+                + "                    .build();\n"
+                + "            throw new BadRequestException(\"Incoming data failed validation.\", response);\n"
+                + "        }\n"
+                + "\n"
+                + userPrincipalNameLocalVariable
+                + authorizeOperationSourceCode
+                + validateOperationSourceCode
+                + conflictOperationSourceCode
+                + "\n"
+                + authorizePredicateSourceCode
+                + validatePredicateSourceCode
+                + conflictPredicateSourceCode
+                + "\n"
+                + "        // Create the instance\n"
+                + "        Instant transactionInstant = Instant.now(this.clock);\n"
+                + "        MutationContext mutationContext = new MutationContext(Optional.empty(), transactionInstant, Maps.immutable.empty());\n"
+                + "        PersistentCreator creator = new PersistentCreator(mutationContext, this.dataStore);\n"
+                + "        Object persistentInstance = this.dataStore.instantiate(klass, Maps.immutable.empty());\n"
+                + "        creator.synchronize(klass, persistentInstance, incomingInstance);\n"
+                + "        this.dataStore.insert(persistentInstance);\n"
+                + "\n"
+                + responseCode
+                + "    }\n";
+        // @formatter:on
     }
 
     @Nonnull
