@@ -119,10 +119,9 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
             .select(DataTypeProperty::isTemporalRange)
             .collect(this::convertToAsOfAttributePureType);
 
-        ImmutableList<AttributePureType> attributeTypes =
-            this.getDataTypeProperties(klass).collect(
-                    dataTypeProperty -> this.convertToAttributePureType(klass, dataTypeProperty)
-                );
+        ImmutableList<AttributePureType> attributeTypes = this.getDataTypeProperties(klass).collect(dataTypeProperty ->
+            this.convertToAttributePureType(klass, dataTypeProperty)
+        );
 
         // TODO: Test that private properties are not included in Projections
         // TODO: Add foreign keys
@@ -150,11 +149,10 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
             .select(DataTypeProperty::isTemporalRange)
             .collect(this::convertToAsOfAttributeType);
 
-        ImmutableList<AttributeType> attributeTypes =
-            this.getDataTypeProperties(klass)
-                .reject(DataTypeProperty::isTemporal)
-                .reject(DataTypeProperty::isDerived)
-                .collect(dataTypeProperty -> this.convertToAttributeType(klass, dataTypeProperty));
+        ImmutableList<AttributeType> attributeTypes = this.getDataTypeProperties(klass)
+            .reject(DataTypeProperty::isTemporal)
+            .reject(DataTypeProperty::isDerived)
+            .collect(dataTypeProperty -> this.convertToAttributeType(klass, dataTypeProperty));
 
         mithraObject.setAsOfAttributes(asOfAttributeTypes.castToList());
         mithraObject.setAttributes(attributeTypes.castToList());
@@ -260,8 +258,10 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
         relationshipType.setRelatedIsDependent(associationEnd.isOwned());
         relationshipType.setRelatedObject(associationEnd.getType().getName());
         relationshipType.setOrderBy(this.getOrderBy(associationEnd));
-        String relationshipString =
-            this.getRelationshipString(associationEnd.getOwningAssociation().getCriteria(), reverse);
+        String relationshipString = this.getRelationshipString(
+            associationEnd.getOwningAssociation().getCriteria(),
+            reverse
+        );
         relationshipType._setValue(relationshipString);
         return relationshipType;
     }

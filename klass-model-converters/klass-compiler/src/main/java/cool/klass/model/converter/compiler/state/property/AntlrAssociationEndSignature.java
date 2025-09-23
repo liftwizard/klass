@@ -90,8 +90,9 @@ public class AntlrAssociationEndSignature
             this.multiplicity.getMultiplicity()
         );
 
-        ImmutableList<ModifierBuilder> modifierBuilders =
-            this.getModifiers().collect(AntlrModifier::build).toImmutable();
+        ImmutableList<ModifierBuilder> modifierBuilders = this.getModifiers()
+            .collect(AntlrModifier::build)
+            .toImmutable();
 
         this.associationEndSignatureBuilder.setModifiers(modifierBuilders);
 

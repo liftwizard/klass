@@ -60,8 +60,9 @@ public class AntlrThisMemberReferencePath extends AntlrMemberReferencePath {
         if (this.elementBuilder != null) {
             throw new IllegalStateException();
         }
-        ImmutableList<AssociationEndBuilder> associationEndBuilders =
-            this.associationEnd.collect(AntlrAssociationEnd::getElementBuilder);
+        ImmutableList<AssociationEndBuilder> associationEndBuilders = this.associationEnd.collect(
+            AntlrAssociationEnd::getElementBuilder
+        );
 
         this.elementBuilder = new ThisMemberReferencePathBuilder(
             (ThisMemberReferencePathContext) this.elementContext,
@@ -84,8 +85,10 @@ public class AntlrThisMemberReferencePath extends AntlrMemberReferencePath {
     public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         List<AssociationEndReferenceContext> associationEndReferenceContexts =
             this.getElementContext().associationEndReference();
-        AntlrClass currentClass =
-            this.reportErrorsAssociationEnds(compilerAnnotationHolder, associationEndReferenceContexts);
+        AntlrClass currentClass = this.reportErrorsAssociationEnds(
+            compilerAnnotationHolder,
+            associationEndReferenceContexts
+        );
         if (currentClass == null || currentClass == AntlrClass.AMBIGUOUS) {
             // Covered by ERR_DUP_TOP
             return;
