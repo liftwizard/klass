@@ -122,13 +122,12 @@ public class JavaConstantsMetaModelGenerator {
 
     @Nonnull
     private String getDomainModelSourceCode() {
-        String imports =
-            this.domainModel.getTopLevelElements()
-                .collect(TopLevelElement::getPackageName)
-                .distinct()
-                .toSortedList()
-                .collect(packageName -> "import " + packageName + ".meta.constants.*;\n")
-                .makeString("");
+        String imports = this.domainModel.getTopLevelElements()
+            .collect(TopLevelElement::getPackageName)
+            .distinct()
+            .toSortedList()
+            .collect(packageName -> "import " + packageName + ".meta.constants.*;\n")
+            .makeString("");
 
         // @formatter:off
         // language=JAVA

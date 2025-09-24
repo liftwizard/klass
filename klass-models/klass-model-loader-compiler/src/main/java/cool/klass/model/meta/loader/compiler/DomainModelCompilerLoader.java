@@ -113,8 +113,10 @@ public class DomainModelCompilerLoader implements DomainModelLoader {
 
     @Nonnull
     private ImmutableList<CompilationUnit> getCompilationUnits() {
-        ImmutableList<URL> urls =
-            this.klassSourcePackages.flatCollectWith(ClasspathHelper::forPackage, this.classLoader);
+        ImmutableList<URL> urls = this.klassSourcePackages.flatCollectWith(
+            ClasspathHelper::forPackage,
+            this.classLoader
+        );
         FilterBuilder filterBuilder = new FilterBuilder();
         this.klassSourcePackages.forEach(filterBuilder::includePackage);
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
@@ -126,8 +128,8 @@ public class DomainModelCompilerLoader implements DomainModelLoader {
 
         LOGGER.debug("Found source files on classpath: {}", klassLocations);
 
-        ImmutableList<CompilationUnit> compilationUnits = klassLocations.collectWithIndex(
-            (each, index) -> CompilationUnit.createFromClasspathLocation(index, each)
+        ImmutableList<CompilationUnit> compilationUnits = klassLocations.collectWithIndex((each, index) ->
+            CompilationUnit.createFromClasspathLocation(index, each)
         );
 
         if (compilationUnits.isEmpty()) {

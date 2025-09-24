@@ -47,12 +47,18 @@ public class SampleDataGeneratorBundle implements PrioritizedBundle {
 
     @Override
     public void runWithMdc(@Nonnull Object configuration, @Nonnull Environment environment) {
-        SampleDataFactoryProvider sampleDataFactoryProvider =
-            this.safeCastConfiguration(SampleDataFactoryProvider.class, configuration);
-        DomainModelFactoryProvider domainModelFactoryProvider =
-            this.safeCastConfiguration(DomainModelFactoryProvider.class, configuration);
-        DataStoreFactoryProvider dataStoreFactoryProvider =
-            this.safeCastConfiguration(DataStoreFactoryProvider.class, configuration);
+        SampleDataFactoryProvider sampleDataFactoryProvider = this.safeCastConfiguration(
+            SampleDataFactoryProvider.class,
+            configuration
+        );
+        DomainModelFactoryProvider domainModelFactoryProvider = this.safeCastConfiguration(
+            DomainModelFactoryProvider.class,
+            configuration
+        );
+        DataStoreFactoryProvider dataStoreFactoryProvider = this.safeCastConfiguration(
+            DataStoreFactoryProvider.class,
+            configuration
+        );
 
         SampleDataFactory sampleDataFactory = sampleDataFactoryProvider.getSampleDataFactory();
         if (!sampleDataFactory.isEnabled()) {

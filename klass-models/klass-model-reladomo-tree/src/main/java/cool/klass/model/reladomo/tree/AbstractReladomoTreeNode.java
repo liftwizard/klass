@@ -48,8 +48,11 @@ public abstract class AbstractReladomoTreeNode implements ReladomoTreeNode {
     @Override
     public ReladomoTreeNode computeChild(String childName, ReladomoTreeNode childNode) {
         if (this.getType() != childNode.getOwningClassifier() && childNode.getOwningClassifier() instanceof Klass) {
-            String detailMessage =
-                "Type mismatch: %s != %s for %s".formatted(this.getType(), childNode.getOwningClassifier(), childName);
+            String detailMessage = "Type mismatch: %s != %s for %s".formatted(
+                this.getType(),
+                childNode.getOwningClassifier(),
+                childName
+            );
             throw new AssertionError(detailMessage);
         }
         ReladomoTreeNode result = this.children.getIfAbsentPut(childName, childNode);
@@ -67,8 +70,9 @@ public abstract class AbstractReladomoTreeNode implements ReladomoTreeNode {
 
     @Override
     public String toString(String indent) {
-        RichIterable<String> childrenStrings =
-            this.getChildren().keyValuesView().collect(pair -> pair.getTwo().toString(indent + "  "));
+        RichIterable<String> childrenStrings = this.getChildren()
+            .keyValuesView()
+            .collect(pair -> pair.getTwo().toString(indent + "  "));
         String result = this.getNodeString(indent) + childrenStrings.makeString("");
         return result;
     }

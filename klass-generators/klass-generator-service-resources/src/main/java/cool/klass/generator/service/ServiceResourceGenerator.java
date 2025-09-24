@@ -298,22 +298,32 @@ public class ServiceResourceGenerator {
 
         String finderName = klassName + "Finder";
         String queryOperationSourceCode = this.getOperation(finderName, service.getQueryCriteria(), "query");
-        String authorizeOperationSourceCode =
-            this.getOperation(finderName, service.getAuthorizeCriteria(), "authorize");
+        String authorizeOperationSourceCode = this.getOperation(
+            finderName,
+            service.getAuthorizeCriteria(),
+            "authorize"
+        );
         String validateOperationSourceCode = this.getOperation(finderName, service.getValidateCriteria(), "validate");
         String conflictOperationSourceCode = this.getOperation(finderName, service.getConflictCriteria(), "conflict");
 
-        String authorizePredicateSourceCode =
-            this.checkPredicate(service.getAuthorizeCriteria(), "authorize", "isAuthorized", "ForbiddenException()");
-        String validatePredicateSourceCode =
-            this.checkPredicate(service.getValidateCriteria(), "validate", "isValidated", "BadRequestException()");
-        String conflictPredicateSourceCode =
-            this.checkPredicate(
-                    service.getConflictCriteria(),
-                    "conflict",
-                    "hasConflict",
-                    "ClientErrorException(Status.CONFLICT)"
-                );
+        String authorizePredicateSourceCode = this.checkPredicate(
+            service.getAuthorizeCriteria(),
+            "authorize",
+            "isAuthorized",
+            "ForbiddenException()"
+        );
+        String validatePredicateSourceCode = this.checkPredicate(
+            service.getValidateCriteria(),
+            "validate",
+            "isValidated",
+            "BadRequestException()"
+        );
+        String conflictPredicateSourceCode = this.checkPredicate(
+            service.getConflictCriteria(),
+            "conflict",
+            "hasConflict",
+            "ClientErrorException(Status.CONFLICT)"
+        );
 
         String executeOperationSourceCode = this.getExecuteOperationSourceCode(service.getQueryCriteria(), klassName);
 
@@ -419,22 +429,32 @@ public class ServiceResourceGenerator {
         String klassName = serviceGroup.getKlass().getName();
         String finderName = klassName + "Finder";
         String queryOperationSourceCode = this.getOperation(finderName, service.getQueryCriteria(), "query");
-        String authorizeOperationSourceCode =
-            this.getOperation(finderName, service.getAuthorizeCriteria(), "authorize");
+        String authorizeOperationSourceCode = this.getOperation(
+            finderName,
+            service.getAuthorizeCriteria(),
+            "authorize"
+        );
         String validateOperationSourceCode = this.getOperation(finderName, service.getValidateCriteria(), "validate");
         String conflictOperationSourceCode = this.getOperation(finderName, service.getConflictCriteria(), "conflict");
 
-        String authorizePredicateSourceCode =
-            this.checkPredicate(service.getAuthorizeCriteria(), "authorize", "isAuthorized", "ForbiddenException()");
-        String validatePredicateSourceCode =
-            this.checkPredicate(service.getValidateCriteria(), "validate", "isValidated", "BadRequestException()");
-        String conflictPredicateSourceCode =
-            this.checkPredicate(
-                    service.getConflictCriteria(),
-                    "conflict",
-                    "hasConflict",
-                    "ClientErrorException(Status.CONFLICT)"
-                );
+        String authorizePredicateSourceCode = this.checkPredicate(
+            service.getAuthorizeCriteria(),
+            "authorize",
+            "isAuthorized",
+            "ForbiddenException()"
+        );
+        String validatePredicateSourceCode = this.checkPredicate(
+            service.getValidateCriteria(),
+            "validate",
+            "isValidated",
+            "BadRequestException()"
+        );
+        String conflictPredicateSourceCode = this.checkPredicate(
+            service.getConflictCriteria(),
+            "conflict",
+            "hasConflict",
+            "ClientErrorException(Status.CONFLICT)"
+        );
 
         String executeOperationSourceCode = this.getExecuteOperationSourceCode(service.getQueryCriteria(), klassName);
 
@@ -541,12 +561,11 @@ public class ServiceResourceGenerator {
         String incomingInstanceParameterName = serviceMultiplicity == ServiceMultiplicity.ONE
             ? "incomingInstance"
             : "incomingInstances";
-        String incomingInstanceSourceCode =
-            "%s@Nonnull @NotNull %s %s".formatted(
-                    parameterIndent,
-                    incomingInstanceParameterType,
-                    incomingInstanceParameterName
-                );
+        String incomingInstanceSourceCode = "%s@Nonnull @NotNull %s %s".formatted(
+            parameterIndent,
+            incomingInstanceParameterType,
+            incomingInstanceParameterName
+        );
         parameterStrings.add(incomingInstanceSourceCode);
 
         String userPrincipalNameLocalVariable = hasAuthorizeCriteria
@@ -558,22 +577,32 @@ public class ServiceResourceGenerator {
         String klassName = serviceGroup.getKlass().getName();
         String finderName = klassName + "Finder";
         String queryOperationSourceCode = this.getOperation(finderName, service.getQueryCriteria(), "query");
-        String authorizeOperationSourceCode =
-            this.getOperation(finderName, service.getAuthorizeCriteria(), "authorize");
+        String authorizeOperationSourceCode = this.getOperation(
+            finderName,
+            service.getAuthorizeCriteria(),
+            "authorize"
+        );
         String validateOperationSourceCode = this.getOperation(finderName, service.getValidateCriteria(), "validate");
         String conflictOperationSourceCode = this.getOperation(finderName, service.getConflictCriteria(), "conflict");
 
-        String authorizePredicateSourceCode =
-            this.checkPredicate(service.getAuthorizeCriteria(), "authorize", "isAuthorized", "ForbiddenException()");
-        String validatePredicateSourceCode =
-            this.checkPredicate(service.getValidateCriteria(), "validate", "isValidated", "BadRequestException()");
-        String conflictPredicateSourceCode =
-            this.checkPredicate(
-                    service.getConflictCriteria(),
-                    "conflict",
-                    "hasConflict",
-                    "ClientErrorException(Status.CONFLICT)"
-                );
+        String authorizePredicateSourceCode = this.checkPredicate(
+            service.getAuthorizeCriteria(),
+            "authorize",
+            "isAuthorized",
+            "ForbiddenException()"
+        );
+        String validatePredicateSourceCode = this.checkPredicate(
+            service.getValidateCriteria(),
+            "validate",
+            "isValidated",
+            "BadRequestException()"
+        );
+        String conflictPredicateSourceCode = this.checkPredicate(
+            service.getConflictCriteria(),
+            "conflict",
+            "hasConflict",
+            "ClientErrorException(Status.CONFLICT)"
+        );
 
         String executeOperationSourceCode = this.getExecuteOperationSourceCode(service.getQueryCriteria(), klassName);
 

@@ -42,8 +42,7 @@ public record JsonTypeCheckingPropertyVisitor(
     @Nonnull ContextStack contextStack,
     Property property,
     JsonNode childJsonNode
-)
-    implements PropertyVisitor {
+) implements PropertyVisitor {
     public JsonTypeCheckingPropertyVisitor(
         @Nonnull ContextStack contextStack,
         @Nonnull Property property,

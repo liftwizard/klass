@@ -67,8 +67,10 @@ public class RelationshipPhase extends AbstractCompilerPhase {
             return;
         }
 
-        boolean possibleJoinCriteria =
-            this.hasPossibleJoinCriteria(criteriaExpressionContext, association.getTargetEnd().getType());
+        boolean possibleJoinCriteria = this.hasPossibleJoinCriteria(
+            criteriaExpressionContext,
+            association.getTargetEnd().getType()
+        );
 
         if (possibleJoinCriteria) {
             criteria.addForeignKeys();
