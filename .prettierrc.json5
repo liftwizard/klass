@@ -1,11 +1,11 @@
 {
   // Number of spaces per indentation level
   // Default: 2
-  tabWidth: 4,
+  tabWidth: 2,
 
   // Indent with tabs instead of spaces
   // Default: false
-  useTabs: false,
+  useTabs: true,
 
   // Add semicolons at the end of statements
   // Default: true
@@ -13,7 +13,7 @@
 
   // Use single quotes instead of double quotes
   // Default: false
-  singleQuote: true,
+  singleQuote: false,
 
   // Print trailing commas wherever possible in multi-line comma-separated structures
   // Default: "es5"

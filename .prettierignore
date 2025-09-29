@@ -1,1 +1,21 @@
+# Ignore everything by default
+**/*
+
+# Only format these file types
+!**/*.yml
+!**/*.yaml
+!**/*.md
+!**/*.html
+
+# But still ignore these directories
 .github/workflows
+.idea
+node_modules
+dist
+build
+target
+.m2
+.llm
+package.json
+package-lock.json
+pnpm-lock.yaml

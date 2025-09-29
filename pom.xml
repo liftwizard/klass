@@ -336,9 +336,7 @@
                                 </excludes>
 
                                 <prettier>
-                                    <config>
-                                        <singleQuote>false</singleQuote>
-                                    </config>
+                                    <configFile>${project.basedir}/.prettierrc.json5</configFile>
                                 </prettier>
                             </json>
                         </configuration>
