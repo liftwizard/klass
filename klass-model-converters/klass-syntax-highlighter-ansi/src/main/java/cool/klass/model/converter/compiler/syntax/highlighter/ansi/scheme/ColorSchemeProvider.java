@@ -47,14 +47,14 @@ public final class ColorSchemeProvider {
     }
 
     /**
-     * Get a color scheme by name, loading from JSON if available. Looks in the classpath. If the {@code schemeName} is "dark" then the classpath is searched for a file named "klass/color-scheme/dark.json".
+     * Get a color scheme by name, loading from JSONC if available. Looks in the classpath. If the {@code schemeName} is "dark" then the classpath is searched for a file named "klass/color-scheme/dark.jsonc".
      *
      * @param schemeName The name of the color scheme to load, like "dark", "light", or "dark-rgb".
      */
     public static AnsiColorScheme getByName(String schemeName) {
         Objects.requireNonNull(schemeName, "schemeName");
 
-        String jsonPath = COLOR_SCHEME_PATH + schemeName.toLowerCase(Locale.ROOT) + ".json";
+        String jsonPath = COLOR_SCHEME_PATH + schemeName.toLowerCase(Locale.ROOT) + ".jsonc";
         return getByClasspath(jsonPath);
     }
 
@@ -69,7 +69,7 @@ public final class ColorSchemeProvider {
             return false;
         }
 
-        String jsonPath = COLOR_SCHEME_PATH + schemeName.toLowerCase(Locale.ROOT) + ".json";
+        String jsonPath = COLOR_SCHEME_PATH + schemeName.toLowerCase(Locale.ROOT) + ".jsonc";
         try (InputStream inputStream = ColorSchemeProvider.class.getClassLoader().getResourceAsStream(jsonPath)) {
             return inputStream != null;
         } catch (IOException e) {
