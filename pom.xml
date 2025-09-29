@@ -254,6 +254,42 @@
         </profile>
         <!--endregion-->
 
+        <!--region Spotless JSON5-->
+        <profile>
+            <id>spotless-json</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.diffplug.spotless</groupId>
+                        <artifactId>spotless-maven-plugin</artifactId>
+                        <configuration>
+                            <json>
+                                <toggleOffOn />
+
+                                <includes>
+                                    <include>**/*.json5</include>
+                                </includes>
+
+                                <excludes>
+                                    <exclude>.*/**/*.json5</exclude>
+                                    <exclude>**/target/**/*.json5</exclude>
+                                    <exclude>**/archetype-resources/**/*.json5</exclude>
+                                </excludes>
+
+                                <prettier>
+                                    <config>
+                                        <singleQuote>false</singleQuote>
+                                    </config>
+                                </prettier>
+                            </json>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!--endregion-->
+
     </profiles>
 
 </project>
