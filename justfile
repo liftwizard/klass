@@ -28,7 +28,7 @@ biome-format:
 
 # Run all formatting tools for pre-commit
 precommit: mvn biome-format
-    uv tool run pre-commit run || true
+    uv tool run pre-commit run --all-files
 
 # mvn archetype
 @archetype MVN=default_mvn:
