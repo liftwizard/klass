@@ -1,11 +1,8 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
   "files": {
-    "includes": ["**/*.json", "**/*.jsonc", "**/*.json5"],
-    "experimentalScannerIgnores": [
-      ".llm/**/*",
-      "target/**/*"
-    ],
+    "includes": ["**/*.json", "**/*.jsonc"],
+    "experimentalScannerIgnores": [".llm/**/*", "target/**/*"],
     "ignoreUnknown": true
   },
   "formatter": {
