@@ -168,12 +168,12 @@ public class AntlrProjectionProjectionReference extends AntlrIdentifierElement i
             } else {
                 String message =
                     "Projection reference '%s' requires a reference property with type '%s', but found a data type property '%s.%s' with type '%s'.".formatted(
-                            this.referencedProjection.getName(),
-                            this.referencedProjection.getClassifier().getName(),
-                            parentClassifier.getName(),
-                            this.getName(),
-                            dataTypeProperty.getTypeName()
-                        );
+                        this.referencedProjection.getName(),
+                        this.referencedProjection.getClassifier().getName(),
+                        parentClassifier.getName(),
+                        this.getName(),
+                        dataTypeProperty.getTypeName()
+                    );
 
                 compilerAnnotationHolder.add("ERR_PPR_TYP", message, this);
             }

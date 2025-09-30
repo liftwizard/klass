@@ -217,7 +217,9 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
     }
 
     public abstract static class DataTypePropertyBuilder<
-        T extends DataType, TG extends DataTypeGetter, BuiltElement extends AbstractDataTypeProperty<T>
+        T extends DataType,
+        TG extends DataTypeGetter,
+        BuiltElement extends AbstractDataTypeProperty<T>
     >
         extends PropertyBuilder<T, TG, BuiltElement> {
 
@@ -317,16 +319,16 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
                 this.minLengthPropertyValidationBuilder.map(ElementBuilder::build);
             Optional<MaxLengthPropertyValidation> maxLengthPropertyValidation =
                 this.maxLengthPropertyValidationBuilder.map(ElementBuilder::build);
-            Optional<MinPropertyValidation> minPropertyValidation =
-                this.minPropertyValidationBuilder.map(ElementBuilder::build);
-            Optional<MaxPropertyValidation> maxPropertyValidation =
-                this.maxPropertyValidationBuilder.map(ElementBuilder::build);
+            Optional<MinPropertyValidation> minPropertyValidation = this.minPropertyValidationBuilder.map(
+                ElementBuilder::build
+            );
+            Optional<MaxPropertyValidation> maxPropertyValidation = this.maxPropertyValidationBuilder.map(
+                ElementBuilder::build
+            );
 
-            ImmutableList<PropertyValidation> propertyValidations =
-                this.propertyValidationBuilders.collect(
-                        (PropertyValidationBuilder<?> propertyValidationBuilder) ->
-                            propertyValidationBuilder.getElement()
-                    );
+            ImmutableList<PropertyValidation> propertyValidations = this.propertyValidationBuilders.collect(
+                (PropertyValidationBuilder<?> propertyValidationBuilder) -> propertyValidationBuilder.getElement()
+            );
 
             property.setMinLengthPropertyValidation(minLengthPropertyValidation);
             property.setMaxLengthPropertyValidation(maxLengthPropertyValidation);
@@ -337,16 +339,14 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 
         public final void build2() {
             MutableOrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey =
-                this.keyBuildersMatchingThisForeignKey.collect(
-                        (associationEndBuilder, dataTypePropertyBuilder) ->
-                            Tuples.pair(associationEndBuilder.getElement(), dataTypePropertyBuilder.getElement())
-                    );
+                this.keyBuildersMatchingThisForeignKey.collect((associationEndBuilder, dataTypePropertyBuilder) ->
+                    Tuples.pair(associationEndBuilder.getElement(), dataTypePropertyBuilder.getElement())
+                );
 
             MutableOrderedMap<AssociationEnd, DataTypeProperty> foreignKeysMatchingThisKey =
-                this.foreignKeyBuildersMatchingThisKey.collect(
-                        (associationEndBuilder, dataTypePropertyBuilder) ->
-                            Tuples.pair(associationEndBuilder.getElement(), dataTypePropertyBuilder.getElement())
-                    );
+                this.foreignKeyBuildersMatchingThisKey.collect((associationEndBuilder, dataTypePropertyBuilder) ->
+                    Tuples.pair(associationEndBuilder.getElement(), dataTypePropertyBuilder.getElement())
+                );
 
             AbstractDataTypeProperty<T> property = this.getElement();
             property.setKeysMatchingThisForeignKey(keysMatchingThisForeignKey.asUnmodifiable());

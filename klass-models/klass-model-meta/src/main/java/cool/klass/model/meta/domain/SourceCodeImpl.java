@@ -84,11 +84,11 @@ public final class SourceCodeImpl implements SourceCode {
         Token startToken = abstractElement.getElementContext().getStart();
 
         return "%s:%d:%d --> %s".formatted(
-                fullPathSourceName,
-                startToken.getLine(),
-                startToken.getCharPositionInLine(),
-                this.sourceName
-            );
+            fullPathSourceName,
+            startToken.getLine(),
+            startToken.getCharPositionInLine(),
+            this.sourceName
+        );
     }
 
     @Override

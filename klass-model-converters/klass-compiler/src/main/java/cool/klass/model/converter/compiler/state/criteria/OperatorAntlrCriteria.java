@@ -166,8 +166,11 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
             throw new AssertionError("TODO: Support many-to-many associations");
         }
 
-        AntlrAssociationEnd endWithForeignKeys =
-            this.getEndWithForeignKeys(association, thisDataTypeProperty, typeDataTypeProperty);
+        AntlrAssociationEnd endWithForeignKeys = this.getEndWithForeignKeys(
+            association,
+            thisDataTypeProperty,
+            typeDataTypeProperty
+        );
 
         if (endWithForeignKeys == null) {
             return;

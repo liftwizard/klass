@@ -99,11 +99,10 @@ public class AntlrOrderBy extends AntlrElement {
     public void enterOrderByMemberReferencePath(AntlrOrderByMemberReferencePath orderByMemberReferencePath) {
         this.orderByMemberReferencePaths.add(orderByMemberReferencePath);
 
-        AntlrOrderByMemberReferencePath duplicate =
-            this.orderByMemberReferencePathsByContext.put(
-                    orderByMemberReferencePath.getElementContext(),
-                    orderByMemberReferencePath
-                );
+        AntlrOrderByMemberReferencePath duplicate = this.orderByMemberReferencePathsByContext.put(
+            orderByMemberReferencePath.getElementContext(),
+            orderByMemberReferencePath
+        );
         if (duplicate != null) {
             throw new AssertionError();
         }
@@ -115,9 +114,9 @@ public class AntlrOrderBy extends AntlrElement {
 
     public void reportErrors(CompilerAnnotationHolder compilerAnnotationHolder) {
         this.orderByMemberReferencePaths.forEachWith(
-                AntlrOrderByMemberReferencePath::reportErrors,
-                compilerAnnotationHolder
-            );
+            AntlrOrderByMemberReferencePath::reportErrors,
+            compilerAnnotationHolder
+        );
     }
 
     public OrderByBuilder build() {

@@ -224,11 +224,11 @@ public class IncomingCreateDataModelValidator {
 
             String warning =
                 "Warning at %s. Expected audit property '%s' to match current user '%s' but got '%s'.".formatted(
-                        this.getContextString(),
-                        dataTypeProperty.getName(),
-                        maybeUserId.get(),
-                        jsonDataTypeValue.asText()
-                    );
+                    this.getContextString(),
+                    dataTypeProperty.getName(),
+                    maybeUserId.get(),
+                    jsonDataTypeValue.asText()
+                );
             this.warnings.add(warning);
         } finally {
             this.contextStack.pop();
@@ -252,12 +252,11 @@ public class IncomingCreateDataModelValidator {
                 return;
             }
 
-            String error =
-                "Error at %s. Expected version property '%s' to be 1 but got %s.".formatted(
-                        this.getContextString(),
-                        dataTypeProperty.getName(),
-                        jsonDataTypeValue.asText()
-                    );
+            String error = "Error at %s. Expected version property '%s' to be 1 but got %s.".formatted(
+                this.getContextString(),
+                dataTypeProperty.getName(),
+                jsonDataTypeValue.asText()
+            );
             this.errors.add(error);
         } finally {
             this.contextStack.pop();
@@ -442,8 +441,11 @@ public class IncomingCreateDataModelValidator {
                 return;
             }
 
-            MapIterable<DataTypeProperty, Object> keys =
-                this.getKeysFromJsonNode(childJsonNode, associationEnd, parentJsonNode);
+            MapIterable<DataTypeProperty, Object> keys = this.getKeysFromJsonNode(
+                childJsonNode,
+                associationEnd,
+                parentJsonNode
+            );
             if (keys.contains(null)) {
                 return;
             }

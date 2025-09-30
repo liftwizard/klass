@@ -55,7 +55,9 @@ public abstract class AbstractTypedElement<T extends Type> extends AbstractIdent
     }
 
     public abstract static class TypedElementBuilder<
-        T extends Type, TG extends TypeGetter, BuiltElement extends AbstractTypedElement<T>
+        T extends Type,
+        TG extends TypeGetter,
+        BuiltElement extends AbstractTypedElement<T>
     >
         extends IdentifierElementBuilder<BuiltElement> {
 
