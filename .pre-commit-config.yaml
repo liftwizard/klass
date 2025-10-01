@@ -6,13 +6,13 @@ repos:
             args: ['--allow-multiple-documents']
           - id: check-json
             # Exclude JSONC files (JSON with Comments) as they need comment support
-            exclude: "tsconfig.*\\.json|package-lock\\.json|biome\\.jsonc"
+            exclude: "biome\\.jsonc"
           - id: check-toml
           - id: check-xml
           - id: end-of-file-fixer
-            exclude: "package-lock\\.json|^\\.idea/"
+            exclude: "^\\.idea/"
           - id: trailing-whitespace
-            exclude: "package-lock\\.json|^\\.idea/"
+            exclude: "^\\.idea/"
           - id: check-added-large-files
             args: ['--maxkb=1000']
           - id: check-case-conflict
