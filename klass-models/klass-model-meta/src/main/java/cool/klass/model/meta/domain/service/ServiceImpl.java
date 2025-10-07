@@ -292,8 +292,9 @@ public final class ServiceImpl extends AbstractElement implements Service {
                 this.serviceMultiplicity
             );
 
-            Optional<ServiceProjectionDispatch> projectionDispatch =
-                this.projectionDispatchBuilder.map(ElementBuilder::build);
+            Optional<ServiceProjectionDispatch> projectionDispatch = this.projectionDispatchBuilder.map(
+                ElementBuilder::build
+            );
             service.setProjectionDispatch(projectionDispatch);
 
             Optional<Criteria> queryCriteria = this.criteria.map(AbstractCriteriaBuilder::build);

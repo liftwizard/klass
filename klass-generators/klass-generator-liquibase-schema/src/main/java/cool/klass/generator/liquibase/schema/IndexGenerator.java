@@ -39,9 +39,8 @@ public final class IndexGenerator {
 
         MutableList<String> result = foreignKeyConstraints
             .keyValuesView()
-            .collect(
-                keyValuePair ->
-                    getForeignKeyIndex(keyValuePair.getOne(), keyValuePair.getTwo(), klass, tableName, ordinal)
+            .collect(keyValuePair ->
+                getForeignKeyIndex(keyValuePair.getOne(), keyValuePair.getTwo(), klass, tableName, ordinal)
             )
             .reject(String::isEmpty)
             .toList();

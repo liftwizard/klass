@@ -56,19 +56,18 @@ public class GenerateUmlNomnomlMojo extends AbstractGenerateMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        boolean wasGenerated =
-            this.executeWithCaching(this.outputDirectory, () -> {
-                    DomainModel domainModel = this.getDomainModel();
-                    Path outputPath = this.outputDirectory.toPath();
+        boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
+                DomainModel domainModel = this.getDomainModel();
+                Path outputPath = this.outputDirectory.toPath();
 
-                    UmlNomnomlGenerator generator = new UmlNomnomlGenerator(
-                        domainModel,
-                        this.rootPackageName,
-                        this.applicationName
-                    );
-                    generator.writeUmlDiagram(outputPath);
-                    return null;
-                });
+                UmlNomnomlGenerator generator = new UmlNomnomlGenerator(
+                    domainModel,
+                    this.rootPackageName,
+                    this.applicationName
+                );
+                generator.writeUmlDiagram(outputPath);
+                return null;
+            });
 
         if (wasGenerated) {
             this.getLog().info("Generated UML diagram in: " + this.outputDirectory.getPath());

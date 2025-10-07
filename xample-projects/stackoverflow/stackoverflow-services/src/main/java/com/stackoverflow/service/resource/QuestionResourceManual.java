@@ -297,8 +297,9 @@ public class QuestionResourceManual {
         // Question
 
         // this.id in ids
-        Operation queryOperation = QuestionFinder.id()
-            .in(SetAdapter.adapt(ids).collectLong(x -> x, LongSets.mutable.empty()));
+        Operation queryOperation = QuestionFinder.id().in(
+            SetAdapter.adapt(ids).collectLong(x -> x, LongSets.mutable.empty())
+        );
 
         QuestionList result = QuestionFinder.findMany(queryOperation);
         // Deep fetch using projection QuestionReadProjection
@@ -488,8 +489,7 @@ public class QuestionResourceManual {
             warnings.clear();
         }
 
-        Question persistentInstance = MithraManagerProvider.getMithraManager()
-            .executeTransactionalCommand(tx -> {
+        Question persistentInstance = MithraManagerProvider.getMithraManager().executeTransactionalCommand(tx -> {
                 tx.setProcessingStartTime(transactionInstant.toEpochMilli());
 
                 Question question = new Question();

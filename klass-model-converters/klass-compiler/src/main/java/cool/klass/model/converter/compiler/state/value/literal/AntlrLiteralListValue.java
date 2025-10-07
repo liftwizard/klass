@@ -65,8 +65,9 @@ public class AntlrLiteralListValue extends AbstractAntlrLiteralValue {
             this.getInferredType().getTypeGetter()
         );
 
-        ImmutableList<AbstractLiteralValueBuilder<?>> literalValueBuilders =
-            this.literals.<AbstractLiteralValueBuilder<?>>collect(AbstractAntlrLiteralValue::build).toImmutable();
+        ImmutableList<AbstractLiteralValueBuilder<?>> literalValueBuilders = this.literals.<
+            AbstractLiteralValueBuilder<?>
+        >collect(AbstractAntlrLiteralValue::build).toImmutable();
         this.elementBuilder.setLiteralValueBuilders(literalValueBuilders);
 
         return this.elementBuilder;

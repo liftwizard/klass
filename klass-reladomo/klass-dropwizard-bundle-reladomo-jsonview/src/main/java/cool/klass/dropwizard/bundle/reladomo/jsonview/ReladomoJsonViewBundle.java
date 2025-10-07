@@ -45,11 +45,15 @@ public class ReladomoJsonViewBundle implements PrioritizedBundle {
 
     @Override
     public void runWithMdc(@Nonnull Object configuration, @Nonnull Environment environment) {
-        DomainModelFactoryProvider domainModelFactoryProvider =
-            this.safeCastConfiguration(DomainModelFactoryProvider.class, configuration);
+        DomainModelFactoryProvider domainModelFactoryProvider = this.safeCastConfiguration(
+            DomainModelFactoryProvider.class,
+            configuration
+        );
 
-        DataStoreFactoryProvider dataStoreFactoryProvider =
-            this.safeCastConfiguration(DataStoreFactoryProvider.class, configuration);
+        DataStoreFactoryProvider dataStoreFactoryProvider = this.safeCastConfiguration(
+            DataStoreFactoryProvider.class,
+            configuration
+        );
 
         LOGGER.info("Running {}.", this.getClass().getSimpleName());
 
