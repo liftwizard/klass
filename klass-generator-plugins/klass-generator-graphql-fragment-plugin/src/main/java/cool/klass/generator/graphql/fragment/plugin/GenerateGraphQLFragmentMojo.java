@@ -50,15 +50,14 @@ public class GenerateGraphQLFragmentMojo extends AbstractGenerateMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        boolean wasGenerated =
-            this.executeWithCaching(this.outputDirectory, () -> {
-                    DomainModel domainModel = this.getDomainModel();
+        boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
+                DomainModel domainModel = this.getDomainModel();
 
-                    var generator = new GraphQLFragmentGenerator(domainModel);
-                    Path outputPath = this.outputDirectory.toPath();
-                    generator.writeFiles(outputPath);
-                    return null;
-                });
+                var generator = new GraphQLFragmentGenerator(domainModel);
+                Path outputPath = this.outputDirectory.toPath();
+                generator.writeFiles(outputPath);
+                return null;
+            });
 
         if (wasGenerated) {
             this.getLog().info("Generated GraphQL fragments in: " + this.outputDirectory.getPath());

@@ -97,28 +97,28 @@ public class AntlrRelationship extends AntlrElement {
 
         if ((targetEnd.isToOne() && sourceEnd.isToMany()) || (sourceEnd.isToOne() && sourceEnd.isOwned())) {
             this.reportInferredEnd(
-                    compilerAnnotationHolder,
-                    sourceEnd,
-                    AntlrRelationship::getSourceInferredRelationshipText
-                );
+                compilerAnnotationHolder,
+                sourceEnd,
+                AntlrRelationship::getSourceInferredRelationshipText
+            );
         } else if ((sourceEnd.isToOne() && targetEnd.isToMany()) || (targetEnd.isToOne() && targetEnd.isOwned())) {
             this.reportInferredEnd(
-                    compilerAnnotationHolder,
-                    targetEnd,
-                    AntlrRelationship::getTargetInferredRelationshipText
-                );
+                compilerAnnotationHolder,
+                targetEnd,
+                AntlrRelationship::getTargetInferredRelationshipText
+            );
         } else if (sourceEnd.isToOne() && targetEnd.isToOneRequired()) {
             this.reportInferredEnd(
-                    compilerAnnotationHolder,
-                    sourceEnd,
-                    AntlrRelationship::getSourceInferredRelationshipText
-                );
+                compilerAnnotationHolder,
+                sourceEnd,
+                AntlrRelationship::getSourceInferredRelationshipText
+            );
         } else if (targetEnd.isToOne() && sourceEnd.isToOneRequired()) {
             this.reportInferredEnd(
-                    compilerAnnotationHolder,
-                    targetEnd,
-                    AntlrRelationship::getTargetInferredRelationshipText
-                );
+                compilerAnnotationHolder,
+                targetEnd,
+                AntlrRelationship::getTargetInferredRelationshipText
+            );
         }
 
         this.criteria.reportErrors(compilerAnnotationHolder);
@@ -144,8 +144,8 @@ public class AntlrRelationship extends AntlrElement {
             compilerAnnotationHolder.add(
                 "ERR_REL_INF",
                 "Relationship in association '%s' is inferred and can be removed.".formatted(
-                        this.association.getName()
-                    ),
+                    this.association.getName()
+                ),
                 this.criteria,
                 criteriaExpressionContext,
                 AnnotationSeverity.WARNING
@@ -161,14 +161,13 @@ public class AntlrRelationship extends AntlrElement {
 
         return oppositeType
             .getAllKeyProperties()
-            .collect(
-                each ->
-                    "this.%s%s==%s.%s".formatted(
-                            UPPER_TO_LOWER_CAMEL.convert(oppositeType.getName()),
-                            LOWER_CAMEL_TO_UPPER_CAMEL.convert(each.getName()),
-                            oppositeType.getName(),
-                            each.getName()
-                        )
+            .collect(each ->
+                "this.%s%s==%s.%s".formatted(
+                    UPPER_TO_LOWER_CAMEL.convert(oppositeType.getName()),
+                    LOWER_CAMEL_TO_UPPER_CAMEL.convert(each.getName()),
+                    oppositeType.getName(),
+                    each.getName()
+                )
             )
             .makeString("&&");
     }
@@ -179,14 +178,13 @@ public class AntlrRelationship extends AntlrElement {
 
         return oppositeType
             .getAllKeyProperties()
-            .collect(
-                each ->
-                    "this.%s==%s.%s%s".formatted(
-                            each.getName(),
-                            associationEnd.getType().getName(),
-                            UPPER_TO_LOWER_CAMEL.convert(oppositeType.getName()),
-                            LOWER_CAMEL_TO_UPPER_CAMEL.convert(each.getName())
-                        )
+            .collect(each ->
+                "this.%s==%s.%s%s".formatted(
+                    each.getName(),
+                    associationEnd.getType().getName(),
+                    UPPER_TO_LOWER_CAMEL.convert(oppositeType.getName()),
+                    LOWER_CAMEL_TO_UPPER_CAMEL.convert(each.getName())
+                )
             )
             .makeString("&&");
     }
