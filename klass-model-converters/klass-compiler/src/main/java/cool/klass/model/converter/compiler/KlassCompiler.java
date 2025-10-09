@@ -120,8 +120,9 @@ public class KlassCompiler {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         // Compiler macros may add new compilation units within a compiler phase, so take an immutable copy
-        ImmutableList<CompilationUnit> immutableCompilationUnits =
-            this.compilerState.getCompilerInput().getCompilationUnits().toImmutable();
+        ImmutableList<CompilationUnit> immutableCompilationUnits = this.compilerState.getCompilerInput()
+            .getCompilationUnits()
+            .toImmutable();
 
         ParseTreeWalker parseTreeWalker = new ParseTreeWalker();
         for (CompilationUnit compilationUnit : immutableCompilationUnits) {
@@ -130,11 +131,10 @@ public class KlassCompiler {
                 parseTreeWalker.walk(compilerPhase, compilationUnit.getParserContext());
                 this.compilerState.getCompilerWalk().assertEmpty();
             } catch (RuntimeException e) {
-                String message =
-                    "Exception in compiler during phase: %s for compilation unit: %s".formatted(
-                            compilerPhase.getClass().getSimpleName(),
-                            compilationUnit.getFullPathSourceName()
-                        );
+                String message = "Exception in compiler during phase: %s for compilation unit: %s".formatted(
+                    compilerPhase.getClass().getSimpleName(),
+                    compilationUnit.getFullPathSourceName()
+                );
                 throw new RuntimeException(message, e);
             }
         }
@@ -163,8 +163,9 @@ public class KlassCompiler {
         CompilerInputState compilerInputState = this.compilerState.getCompilerInput();
         ImmutableList<CompilationUnit> compilationUnits = compilerInputState.getCompilationUnits().toImmutable();
         MapIterable<Token, TokenCategory> tokenCategoriesFromLexer = this.getTokenCategoriesFromLexer(compilationUnits);
-        MapIterable<Token, TokenCategory> tokenCategoriesFromParser =
-            this.getTokenCategoriesFromParser(compilationUnits);
+        MapIterable<Token, TokenCategory> tokenCategoriesFromParser = this.getTokenCategoriesFromParser(
+            compilationUnits
+        );
 
         CompilerAnnotationHolder compilerAnnotationHolder = this.compilerState.getCompilerAnnotationHolder();
 

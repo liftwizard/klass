@@ -51,10 +51,9 @@ public class ByKeyDataFetcher implements DataFetcher<Object> {
 
     @Override
     public Object get(DataFetchingEnvironment environment) throws Exception {
-        MutableMap<DataTypeProperty, Object> keys =
-            this.klass.getKeyProperties()
-                .tap(keyProperty -> this.assertEnvironmentContains(environment, keyProperty))
-                .toMap(each -> each, keyProperty -> environment.getArgument(keyProperty.getName()));
+        MutableMap<DataTypeProperty, Object> keys = this.klass.getKeyProperties()
+            .tap(keyProperty -> this.assertEnvironmentContains(environment, keyProperty))
+            .toMap(each -> each, keyProperty -> environment.getArgument(keyProperty.getName()));
 
         List<Object> result = this.dataStore.findByKeyReturningList(this.klass, keys);
 

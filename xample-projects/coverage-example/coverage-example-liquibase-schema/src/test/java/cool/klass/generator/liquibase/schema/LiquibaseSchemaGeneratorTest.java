@@ -49,8 +49,8 @@ public class LiquibaseSchemaGeneratorTest {
         DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
 
         this.fileMatchExtension.assertFileContents(
-                this.getClass().getCanonicalName() + ".xml",
-                SchemaGenerator.getSourceCode(domainModel, FULLY_QUALIFIED_PACKAGE)
-            );
+            this.getClass().getCanonicalName() + ".xml",
+            SchemaGenerator.getSourceCode(domainModel, FULLY_QUALIFIED_PACKAGE)
+        );
     }
 }

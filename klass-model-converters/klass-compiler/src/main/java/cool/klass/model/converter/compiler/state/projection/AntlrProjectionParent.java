@@ -77,10 +77,9 @@ public abstract class AntlrProjectionParent extends AntlrIdentifierElement {
 
     public void enterAntlrProjectionMember(@Nonnull AntlrProjectionChild child) {
         this.children.add(child);
-        this.childrenByName.compute(
-                child.getName(),
-                (name, builder) -> builder == null ? child : AntlrProjectionDataTypeProperty.AMBIGUOUS
-            );
+        this.childrenByName.compute(child.getName(), (name, builder) ->
+            builder == null ? child : AntlrProjectionDataTypeProperty.AMBIGUOUS
+        );
     }
 
     protected ImmutableBag<String> getDuplicateMemberNames() {

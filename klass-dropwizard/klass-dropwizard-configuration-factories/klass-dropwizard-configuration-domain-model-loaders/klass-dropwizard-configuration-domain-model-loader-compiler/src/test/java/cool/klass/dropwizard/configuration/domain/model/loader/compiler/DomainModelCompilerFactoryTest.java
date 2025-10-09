@@ -57,8 +57,10 @@ class DomainModelCompilerFactoryTest {
 
     @Test
     void domainModelCompiler() throws Exception {
-        DomainModelFactory domainModelFactory =
-            this.factory.build(new ResourceConfigurationSourceProvider(), "config-test.json5");
+        DomainModelFactory domainModelFactory = this.factory.build(
+            new ResourceConfigurationSourceProvider(),
+            "config-test.json5"
+        );
         assertThat(domainModelFactory).isInstanceOf(DomainModelCompilerFactory.class);
     }
 
