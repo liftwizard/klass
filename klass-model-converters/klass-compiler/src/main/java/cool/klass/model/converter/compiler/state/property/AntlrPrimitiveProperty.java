@@ -188,10 +188,10 @@ public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType>
 
         String message =
             "'id' properties may not be overridden. The property '%s' in class '%s' overrides the 'id' property in class '%s'.".formatted(
-                    this.getName(),
-                    owningClass.getName(),
-                    overriddenPropertyOwningClass.getName()
-                );
+                this.getName(),
+                owningClass.getName(),
+                overriddenPropertyOwningClass.getName()
+            );
         ListIterable<AntlrModifier> idModifiers = this.getModifiersByName("id");
         if (idModifiers.notEmpty()) {
             for (AntlrModifier idModifier : idModifiers) {

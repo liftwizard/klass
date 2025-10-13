@@ -28,7 +28,7 @@ public final class AntlrUtils {
     }
 
     @Nullable
-    public static <T> T getParentOfType(@Nonnull ParserRuleContext ctx, @Nonnull Class<T> aClass/* klass? */) {
+    public static <T> T getParentOfType(@Nonnull ParserRuleContext ctx, @Nonnull Class<T> aClass /* klass? */) {
         if (aClass.isInstance(ctx)) {
             return aClass.cast(ctx);
         }

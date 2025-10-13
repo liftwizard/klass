@@ -78,14 +78,14 @@ public abstract class AbstractValidatorTest {
         this.validate(incomingInstance, persistentInstance);
 
         this.jsonMatchExtension.assertFileContents(
-                this.getClass().getSimpleName() + '.' + testName + ".errors.json",
-                this.objectMapper.writeValueAsString(this.actualErrors)
-            );
+            this.getClass().getSimpleName() + '.' + testName + ".errors.json",
+            this.objectMapper.writeValueAsString(this.actualErrors)
+        );
 
         this.jsonMatchExtension.assertFileContents(
-                this.getClass().getSimpleName() + '.' + testName + ".warnings.json",
-                this.objectMapper.writeValueAsString(this.actualWarnings)
-            );
+            this.getClass().getSimpleName() + '.' + testName + ".warnings.json",
+            this.objectMapper.writeValueAsString(this.actualWarnings)
+        );
     }
 
     protected abstract void validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance);

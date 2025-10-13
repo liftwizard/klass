@@ -36,8 +36,9 @@ public interface Klass extends Classifier {
 
     @Override
     default ImmutableList<Modifier> getInheritedModifiers() {
-        ImmutableList<Modifier> superClassModifiers =
-            this.getSuperClass().map(Classifier::getModifiers).orElseGet(Lists.immutable::empty);
+        ImmutableList<Modifier> superClassModifiers = this.getSuperClass()
+            .map(Classifier::getModifiers)
+            .orElseGet(Lists.immutable::empty);
 
         ImmutableList<Modifier> interfaceModifiers = Classifier.super.getInheritedModifiers();
 
@@ -111,8 +112,9 @@ public interface Klass extends Classifier {
     Optional<AssociationEnd> getVersionedProperty();
 
     default Optional<DataTypeProperty> getVersionNumberProperty() {
-        ImmutableList<DataTypeProperty> versionProperties =
-            this.getDataTypeProperties().select(DataTypeProperty::isVersion);
+        ImmutableList<DataTypeProperty> versionProperties = this.getDataTypeProperties().select(
+            DataTypeProperty::isVersion
+        );
         if (versionProperties.size() > 1) {
             throw new AssertionError();
         }
