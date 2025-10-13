@@ -102,8 +102,9 @@ public class OrderByPhase extends AbstractCompilerPhase {
     private AntlrOrderByMemberReferencePath convertOrderByMemberReferencePath(
         @Nonnull OrderByMemberReferencePathContext orderByMemberReferencePathContext
     ) {
-        AntlrThisMemberReferencePath thisMemberReferencePath =
-            this.getAntlrThisMemberReferencePath(orderByMemberReferencePathContext);
+        AntlrThisMemberReferencePath thisMemberReferencePath = this.getAntlrThisMemberReferencePath(
+            orderByMemberReferencePathContext
+        );
 
         return new AntlrOrderByMemberReferencePath(
             orderByMemberReferencePathContext,

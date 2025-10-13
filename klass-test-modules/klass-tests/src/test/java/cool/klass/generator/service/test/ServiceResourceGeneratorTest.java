@@ -71,9 +71,9 @@ public class ServiceResourceGeneratorTest {
             String serviceGroupSourceCode = serviceResourceGenerator.getServiceGroupSourceCode(serviceGroup);
 
             this.fileMatchExtension.assertFileContents(
-                    this.getClass().getSimpleName() + ".java",
-                    serviceGroupSourceCode
-                );
+                this.getClass().getSimpleName() + ".java",
+                serviceGroupSourceCode
+            );
         }
     }
 }

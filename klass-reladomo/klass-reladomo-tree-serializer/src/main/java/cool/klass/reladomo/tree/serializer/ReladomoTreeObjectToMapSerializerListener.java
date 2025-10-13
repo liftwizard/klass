@@ -131,8 +131,9 @@ public class ReladomoTreeObjectToMapSerializerListener implements ReladomoTreeNo
             String detailMessage = "Expected " + this.klass + " but got " + rootReladomoTreeNode.getOwningClassifier();
             throw new AssertionError(detailMessage);
         }
-        AbstractRelatedFinder relatedFinder =
-            this.dataStore.getRelatedFinder(rootReladomoTreeNode.getOwningClassifier());
+        AbstractRelatedFinder relatedFinder = this.dataStore.getRelatedFinder(
+            rootReladomoTreeNode.getOwningClassifier()
+        );
 
         this.contextStack.push(rootReladomoTreeNode.getOwningClassifier());
         this.finderStack.push(relatedFinder);
@@ -212,8 +213,11 @@ public class ReladomoTreeObjectToMapSerializerListener implements ReladomoTreeNo
         );
         Object persistentInstance = this.persistentInstanceStack.peek();
 
-        Object subClassPersistentInstance =
-            this.dataStore.getSubClassPersistentInstance(owningClassifier, subClass, (MithraObject) persistentInstance);
+        Object subClassPersistentInstance = this.dataStore.getSubClassPersistentInstance(
+            owningClassifier,
+            subClass,
+            (MithraObject) persistentInstance
+        );
 
         if (subClassPersistentInstance != null) {
             MutableMap<String, Object> resultNode = (MutableMap<String, Object>) this.resultNodeStack.peek();

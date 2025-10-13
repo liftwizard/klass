@@ -135,8 +135,9 @@ public final class AssociationImpl extends AbstractPackageableElement implements
 
         @Override
         protected void buildChildren() {
-            ImmutableList<AssociationEnd> associationEnds =
-                this.associationEndBuilders.collect(AssociationEndBuilder::build);
+            ImmutableList<AssociationEnd> associationEnds = this.associationEndBuilders.collect(
+                AssociationEndBuilder::build
+            );
             this.element.setAssociationEnds(associationEnds);
 
             AbstractCriteria criteria = this.criteriaBuilder.build();

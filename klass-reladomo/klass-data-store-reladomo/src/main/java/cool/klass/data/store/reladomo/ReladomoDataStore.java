@@ -109,8 +109,7 @@ public class ReladomoDataStore implements DataStore {
 
     @Override
     public <Result> Result runInTransaction(@Nonnull TransactionalCommand<Result> transactionalCommand) {
-        return MithraManagerProvider.getMithraManager()
-            .executeTransactionalCommand(
+        return MithraManagerProvider.getMithraManager().executeTransactionalCommand(
                 transaction -> {
                     try {
                         Transaction transactionAdapter = new TransactionAdapter(transaction);
@@ -125,8 +124,7 @@ public class ReladomoDataStore implements DataStore {
 
     @Override
     public void runInTransaction(@Nonnull Runnable runnable) {
-        MithraManagerProvider.getMithraManager()
-            .executeTransactionalCommand(
+        MithraManagerProvider.getMithraManager().executeTransactionalCommand(
                 tx -> {
                     runnable.run();
                     return null;
@@ -183,10 +181,10 @@ public class ReladomoDataStore implements DataStore {
             if (keyProperty.getOwningClassifier() != klass) {
                 String message =
                     "Expected key property '%s' to be owned by the given class: '%s' but got '%s'.".formatted(
-                            keyProperty,
-                            klass,
-                            keyProperty.getOwningClassifier()
-                        );
+                        keyProperty,
+                        klass,
+                        keyProperty.getOwningClassifier()
+                    );
                 throw new AssertionError(message);
             }
         });
@@ -356,11 +354,10 @@ public class ReladomoDataStore implements DataStore {
             owningClassifier instanceof Klass &&
             !Objects.equals(owningClassifier.getName(), persistentInstance.getClass().getSimpleName())
         ) {
-            String detailMessage =
-                "Expected %s but got %s".formatted(
-                        owningClassifier.getName(),
-                        persistentInstance.getClass().getSimpleName()
-                    );
+            String detailMessage = "Expected %s but got %s".formatted(
+                owningClassifier.getName(),
+                persistentInstance.getClass().getSimpleName()
+            );
             throw new AssertionError(detailMessage);
         }
 
@@ -421,11 +418,8 @@ public class ReladomoDataStore implements DataStore {
                 .getEnumerationLiterals()
                 .detectOptional(each -> each.getPrettyName().equals(prettyName));
 
-            return enumerationLiteral.orElseThrow(
-                () ->
-                    new AssertionError(
-                        "No enumeration literal found for " + prettyName + " in " + enumeration.getName()
-                    )
+            return enumerationLiteral.orElseThrow(() ->
+                new AssertionError("No enumeration literal found for " + prettyName + " in " + enumeration.getName())
             );
         }
 
@@ -716,8 +710,11 @@ public class ReladomoDataStore implements DataStore {
         ImmutableList<Klass> potentialSubClasses = klass
             .getSubClasses()
             .select(subClass -> {
-                MithraObject subClassPersistentInstance =
-                    this.getSubClassPersistentInstance(klass, subClass, (MithraObject) persistentInstance);
+                MithraObject subClassPersistentInstance = this.getSubClassPersistentInstance(
+                    klass,
+                    subClass,
+                    (MithraObject) persistentInstance
+                );
                 return subClassPersistentInstance != null;
             });
 
@@ -727,8 +724,11 @@ public class ReladomoDataStore implements DataStore {
 
         if (potentialSubClasses.size() == 1) {
             Klass onlySubClass = potentialSubClasses.getOnly();
-            MithraObject subClassPersistentInstance =
-                this.getSubClassPersistentInstance(klass, onlySubClass, (MithraObject) persistentInstance);
+            MithraObject subClassPersistentInstance = this.getSubClassPersistentInstance(
+                klass,
+                onlySubClass,
+                (MithraObject) persistentInstance
+            );
 
             Klass result = this.getMostSpecificSubclass(subClassPersistentInstance, onlySubClass);
             return result;
@@ -776,13 +776,11 @@ public class ReladomoDataStore implements DataStore {
         }
 
         Object result = relationshipFinder.valueOf(persistentInstance);
-        Objects.requireNonNull(
-            result,
-            () ->
-                "Expected result to not be null for superClass: %s, persistentInstance: %s".formatted(
-                        klass,
-                        persistentInstance
-                    )
+        Objects.requireNonNull(result, () ->
+            "Expected result to not be null for superClass: %s, persistentInstance: %s".formatted(
+                klass,
+                persistentInstance
+            )
         );
         return result;
     }

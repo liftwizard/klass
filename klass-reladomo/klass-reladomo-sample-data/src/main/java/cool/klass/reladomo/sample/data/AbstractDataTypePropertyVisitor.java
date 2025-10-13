@@ -44,8 +44,8 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
     private Object result;
 
     private static Comparator<DataTypeProperty> getDataTypePropertyComparator() {
-        Comparator<DataTypeProperty> byClassifierName = Comparator.comparing(
-            dtp -> dtp.getOwningClassifier().getName()
+        Comparator<DataTypeProperty> byClassifierName = Comparator.comparing(dtp ->
+            dtp.getOwningClassifier().getName()
         );
         return byClassifierName.thenComparing(NamedElement::getName);
     }

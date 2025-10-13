@@ -86,8 +86,8 @@ public class AntlrInequalityOperator extends AntlrOperator {
             targetTypes.getFirst()
         );
         // Cast is a deliberate assertion
-        CriteriaOperatorContext criteriaOperatorContext = (CriteriaOperatorContext) this.elementContext.getParent()
-            .getParent();
+        CriteriaOperatorContext criteriaOperatorContext =
+            (CriteriaOperatorContext) this.elementContext.getParent().getParent();
         compilerAnnotationHolder.add("ERR_OPR_NEQ", message, this, criteriaOperatorContext);
     }
 }

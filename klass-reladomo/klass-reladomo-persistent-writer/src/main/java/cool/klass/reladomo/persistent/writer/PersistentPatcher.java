@@ -100,9 +100,9 @@ public class PersistentPatcher extends PersistentSynchronizer {
             .select(DataTypeProperty::isVersion)
             .getOnly();
         Integer versionNumber = (Integer) this.dataStore.getDataTypeProperty(
-                versionPersistentInstance,
-                versionProperty
-            );
+            versionPersistentInstance,
+            versionProperty
+        );
         this.dataStore.setDataTypeProperty(versionPersistentInstance, versionProperty, versionNumber + 1);
     }
 
@@ -144,11 +144,17 @@ public class PersistentPatcher extends PersistentSynchronizer {
 
         Object childPersistentInstanceAssociated = this.dataStore.getToOne(persistentParentInstance, associationEnd);
 
-        Object childPersistentInstanceWithKey =
-            this.findExistingChildPersistentInstance(persistentParentInstance, incomingChildInstance, associationEnd);
+        Object childPersistentInstanceWithKey = this.findExistingChildPersistentInstance(
+            persistentParentInstance,
+            incomingChildInstance,
+            associationEnd
+        );
         if (childPersistentInstanceWithKey == null) {
-            MapIterable<DataTypeProperty, Object> keys =
-                this.getKeysFromJsonNode(incomingChildInstance, associationEnd, persistentParentInstance);
+            MapIterable<DataTypeProperty, Object> keys = this.getKeysFromJsonNode(
+                incomingChildInstance,
+                associationEnd,
+                persistentParentInstance
+            );
             String error = String.format("Could not find existing %s with key %s", associationEnd.getType(), keys);
             // TODO: Error message including full path here. Error message earlier, during validation.
             // It's possible to trigger this code path by deleting reference data from tests, like one of the Tags listed in test-data/create-blueprint.txt

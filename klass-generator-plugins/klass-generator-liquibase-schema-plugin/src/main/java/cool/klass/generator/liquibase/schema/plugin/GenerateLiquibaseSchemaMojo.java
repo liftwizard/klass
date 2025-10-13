@@ -53,19 +53,18 @@ public class GenerateLiquibaseSchemaMojo extends AbstractGenerateMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        boolean wasGenerated =
-            this.executeWithCaching(this.outputDirectory, () -> {
-                    DomainModel domainModel = this.getDomainModel();
-                    Path outputPath = this.outputDirectory.toPath();
+        boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
+                DomainModel domainModel = this.getDomainModel();
+                Path outputPath = this.outputDirectory.toPath();
 
-                    LiquibaseSchemaGenerator generator = new LiquibaseSchemaGenerator(domainModel, this.fileName);
-                    try {
-                        generator.writeFiles(outputPath);
-                    } catch (RuntimeException e) {
-                        throw new MojoExecutionException(e.getMessage(), e);
-                    }
-                    return null;
-                });
+                LiquibaseSchemaGenerator generator = new LiquibaseSchemaGenerator(domainModel, this.fileName);
+                try {
+                    generator.writeFiles(outputPath);
+                } catch (RuntimeException e) {
+                    throw new MojoExecutionException(e.getMessage(), e);
+                }
+                return null;
+            });
 
         if (wasGenerated) {
             this.getLog().info("Generated Liquibase schema in: " + this.outputDirectory.getPath());

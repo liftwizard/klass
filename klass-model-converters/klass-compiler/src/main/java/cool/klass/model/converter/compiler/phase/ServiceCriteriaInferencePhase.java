@@ -57,12 +57,12 @@ public class ServiceCriteriaInferencePhase extends AbstractCompilerPhase {
         ParseTreeListener compilerPhase = new ServiceCriteriaPhase(this.compilerState);
 
         this.compilerState.runInPlaceCompilerMacro(
-                service,
-                this,
-                sourceCodeText,
-                KlassParser::serviceCriteriaDeclaration,
-                inPlaceContext,
-                compilerPhase
-            );
+            service,
+            this,
+            sourceCodeText,
+            KlassParser::serviceCriteriaDeclaration,
+            inPlaceContext,
+            compilerPhase
+        );
     }
 }

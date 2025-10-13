@@ -119,20 +119,19 @@ public final class CompilationUnit {
             return split.get(split.size() - 1);
         }
 
-        String fullPathSourceName =
-            this.macroElement.flatMap(AntlrElement::getCompilationUnit)
-                .map(CompilationUnit::getFullPathSourceName)
-                .orElseThrow();
+        String fullPathSourceName = this.macroElement.flatMap(AntlrElement::getCompilationUnit)
+            .map(CompilationUnit::getFullPathSourceName)
+            .orElseThrow();
 
         var abstractElement = this.macroElement.orElseThrow();
         Token startToken = abstractElement.getElementContext().getStart();
 
         return "%s:%d:%d --> %s".formatted(
-                fullPathSourceName,
-                startToken.getLine(),
-                startToken.getCharPositionInLine(),
-                this.sourceName
-            );
+            fullPathSourceName,
+            startToken.getLine(),
+            startToken.getCharPositionInLine(),
+            this.sourceName
+        );
     }
 
     @Nonnull
@@ -273,8 +272,9 @@ public final class CompilationUnit {
 
     public SourceCodeBuilderImpl build() {
         if (this.sourceCodeBuilder == null) {
-            Optional<SourceCodeBuilderImpl> macroSourceCodeBuilder =
-                this.macroElement.flatMap(AntlrElement::getCompilationUnit).map(CompilationUnit::build);
+            Optional<SourceCodeBuilderImpl> macroSourceCodeBuilder = this.macroElement.flatMap(
+                AntlrElement::getCompilationUnit
+            ).map(CompilationUnit::build);
 
             this.sourceCodeBuilder = this.getSourceCodeBuilder(macroSourceCodeBuilder);
         }

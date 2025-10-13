@@ -77,13 +77,12 @@ public abstract class AbstractKlassCompilerErrorTestCase {
         MutableList<String> expectedLogFileNames = Lists.mutable.empty();
 
         for (RootCompilerAnnotation compilerAnnotation : compilerAnnotations) {
-            String annotationSourceName =
-                "%s-%s-%d-%s.log".formatted(
-                        testName,
-                        compilerAnnotation.getLines().toReversed().makeString("_"),
-                        compilerAnnotation.getCharPositionInLine(),
-                        compilerAnnotation.getAnnotationCode()
-                    );
+            String annotationSourceName = "%s-%s-%d-%s.log".formatted(
+                testName,
+                compilerAnnotation.getLines().toReversed().makeString("_"),
+                compilerAnnotation.getCharPositionInLine(),
+                compilerAnnotation.getAnnotationCode()
+            );
 
             expectedLogFileNames.add(annotationSourceName);
 
@@ -152,8 +151,10 @@ public abstract class AbstractKlassCompilerErrorTestCase {
         var compiler = new KlassCompiler(compilationUnit, colorScheme);
         CompilationResult compilationResult = compiler.compile();
 
-        ImmutableList<String> expectedLogFileNames =
-            this.assertCompilerAnnotationsExist(compilationResult, this.getTestName());
+        ImmutableList<String> expectedLogFileNames = this.assertCompilerAnnotationsExist(
+            compilationResult,
+            this.getTestName()
+        );
         this.assertNoExtraAnnotationFilesExist(expectedLogFileNames);
 
         if (expectDomainModel) {
@@ -170,8 +171,7 @@ public abstract class AbstractKlassCompilerErrorTestCase {
         int columnNumber,
         String errorCode,
         String filename
-    )
-        implements Comparable<CompilerAnnotationKey> {
+    ) implements Comparable<CompilerAnnotationKey> {
         private static final Comparator<Iterable<Integer>> LEXICOGRAPHICAL = Comparators.lexicographical(
             Comparator.<Integer>naturalOrder()
         );

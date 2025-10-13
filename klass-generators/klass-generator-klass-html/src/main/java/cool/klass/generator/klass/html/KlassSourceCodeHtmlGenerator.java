@@ -91,8 +91,11 @@ public class KlassSourceCodeHtmlGenerator {
             String linkForElement = KlassSourceCodeHtmlGenerator.getLinkForElement(element);
             String escapedName = StringEscapeUtils.escapeHtml4(((NamedElement) element).getName());
 
-            String declarationAnchor =
-                "<a id=\"%s\" href=\"%s\">%s</a>".formatted(idForElement, linkForElement, escapedName);
+            String declarationAnchor = "<a id=\"%s\" href=\"%s\">%s</a>".formatted(
+                idForElement,
+                linkForElement,
+                escapedName
+            );
 
             boolean shouldHighlight = matchesElementToHighlight(
                 maybeElementByDeclaration.get(),
@@ -137,8 +140,7 @@ public class KlassSourceCodeHtmlGenerator {
             .makeString("");
 
         // language=HTML
-        String prefix =
-            """
+        String prefix = """
             <html>
             <head>
                 <link rel='stylesheet' type='text/css' href='/static/css/light.css' media='(prefers-color-scheme: light)'>

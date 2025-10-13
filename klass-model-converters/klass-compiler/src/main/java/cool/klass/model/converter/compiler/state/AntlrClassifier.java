@@ -167,10 +167,9 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
 
         MutableSet<String> propertyNames = this.declaredProperties.collect(AntlrNamedElement::getName).toSet();
 
-        ImmutableList<AntlrProperty> inheritedProperties =
-            this.getInheritedProperties(visited).reject(
-                    inheritedProperty -> propertyNames.contains(inheritedProperty.getName())
-                );
+        ImmutableList<AntlrProperty> inheritedProperties = this.getInheritedProperties(visited).reject(
+            inheritedProperty -> propertyNames.contains(inheritedProperty.getName())
+        );
 
         return this.declaredProperties.toImmutable().newWithAll(inheritedProperties);
     }
@@ -195,10 +194,9 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
 
         MutableSet<String> propertyNames = this.declaredDataTypeProperties.collect(AntlrNamedElement::getName).toSet();
 
-        ImmutableList<AntlrDataTypeProperty<?>> inheritedProperties =
-            this.getInheritedDataTypeProperties(visited).reject(
-                    inheritedProperty -> propertyNames.contains(inheritedProperty.getName())
-                );
+        ImmutableList<AntlrDataTypeProperty<?>> inheritedProperties = this.getInheritedDataTypeProperties(
+            visited
+        ).reject(inheritedProperty -> propertyNames.contains(inheritedProperty.getName()));
 
         return this.declaredDataTypeProperties.toImmutable().newWithAll(inheritedProperties);
     }
@@ -223,10 +221,9 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
 
         MutableSet<String> modifierNames = this.declaredModifiers.collect(AntlrModifier::getKeyword).toSet();
 
-        ImmutableList<AntlrModifier> inheritedModifiers =
-            this.getInheritedModifiers(visited).reject(
-                    inheritedProperty -> modifierNames.contains(inheritedProperty.getKeyword())
-                );
+        ImmutableList<AntlrModifier> inheritedModifiers = this.getInheritedModifiers(visited).reject(
+            inheritedProperty -> modifierNames.contains(inheritedProperty.getKeyword())
+        );
 
         return this.declaredModifiers.toImmutable().newWithAll(inheritedModifiers);
     }
@@ -246,10 +243,9 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
         this.declaredProperties.add(antlrDataTypeProperty);
         this.declaredMembers.add(antlrDataTypeProperty);
         this.declaredDataTypeProperties.add(antlrDataTypeProperty);
-        this.declaredDataTypePropertiesByName.compute(
-                antlrDataTypeProperty.getName(),
-                (name, builder) -> builder == null ? antlrDataTypeProperty : AntlrDataTypeProperty.AMBIGUOUS
-            );
+        this.declaredDataTypePropertiesByName.compute(antlrDataTypeProperty.getName(), (name, builder) ->
+            builder == null ? antlrDataTypeProperty : AntlrDataTypeProperty.AMBIGUOUS
+        );
     }
 
     public AntlrAssociationEndSignature getDeclaredAssociationEndSignatureByContext(
@@ -269,29 +265,25 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
         this.declaredProperties.add(associationEndSignature);
         this.declaredMembers.add(associationEndSignature);
         this.declaredAssociationEndSignatures.add(associationEndSignature);
-        this.declaredAssociationEndSignaturesByName.compute(
-                associationEndSignature.getName(),
-                (name, builder) -> builder == null ? associationEndSignature : AntlrAssociationEndSignature.AMBIGUOUS
-            );
-        AntlrAssociationEndSignature duplicate1 =
-            this.declaredAssociationEndSignaturesByContext.put(
-                    associationEndSignature.getElementContext(),
-                    associationEndSignature
-                );
+        this.declaredAssociationEndSignaturesByName.compute(associationEndSignature.getName(), (name, builder) ->
+            builder == null ? associationEndSignature : AntlrAssociationEndSignature.AMBIGUOUS
+        );
+        AntlrAssociationEndSignature duplicate1 = this.declaredAssociationEndSignaturesByContext.put(
+            associationEndSignature.getElementContext(),
+            associationEndSignature
+        );
         if (duplicate1 != null) {
             throw new AssertionError();
         }
 
         this.declaredReferenceProperties.add(associationEndSignature);
-        this.declaredReferencePropertiesByName.compute(
-                associationEndSignature.getName(),
-                (name, builder) -> builder == null ? associationEndSignature : AntlrAssociationEndSignature.AMBIGUOUS
-            );
-        AntlrReferenceProperty<?> duplicate2 =
-            this.declaredReferencePropertiesByContext.put(
-                    associationEndSignature.getElementContext(),
-                    associationEndSignature
-                );
+        this.declaredReferencePropertiesByName.compute(associationEndSignature.getName(), (name, builder) ->
+            builder == null ? associationEndSignature : AntlrAssociationEndSignature.AMBIGUOUS
+        );
+        AntlrReferenceProperty<?> duplicate2 = this.declaredReferencePropertiesByContext.put(
+            associationEndSignature.getElementContext(),
+            associationEndSignature
+        );
         if (duplicate2 != null) {
             throw new AssertionError();
         }
@@ -300,10 +292,9 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
     public void enterModifier(@Nonnull AntlrModifier modifier) {
         Objects.requireNonNull(modifier);
         this.declaredModifiers.add(modifier);
-        this.declaredModifiersByName.compute(
-                modifier.getKeyword(),
-                (name, builder) -> builder == null ? modifier : AntlrModifier.AMBIGUOUS
-            );
+        this.declaredModifiersByName.compute(modifier.getKeyword(), (name, builder) ->
+            builder == null ? modifier : AntlrModifier.AMBIGUOUS
+        );
 
         AntlrModifier duplicate = this.declaredModifiersByContext.put(modifier.getElementContext(), modifier);
         if (duplicate != null) {
@@ -336,35 +327,35 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
         this.reportDuplicatePropertyNames(compilerAnnotationHolder);
         this.reportMultiplePropertiesWithModifiers(compilerAnnotationHolder, this.declaredDataTypeProperties, "id");
         this.reportMultiplePropertiesWithModifiers(
-                compilerAnnotationHolder,
-                this.declaredDataTypeProperties,
-                "version"
-            );
+            compilerAnnotationHolder,
+            this.declaredDataTypeProperties,
+            "version"
+        );
         this.reportMultiplePropertiesWithModifiers(
-                compilerAnnotationHolder,
-                this.declaredDataTypeProperties,
-                "createdBy"
-            );
+            compilerAnnotationHolder,
+            this.declaredDataTypeProperties,
+            "createdBy"
+        );
         this.reportMultiplePropertiesWithModifiers(
-                compilerAnnotationHolder,
-                this.declaredDataTypeProperties,
-                "lastUpdatedBy"
-            );
+            compilerAnnotationHolder,
+            this.declaredDataTypeProperties,
+            "lastUpdatedBy"
+        );
         this.reportMultiplePropertiesWithModifiers(
-                compilerAnnotationHolder,
-                this.declaredReferenceProperties,
-                "version"
-            );
+            compilerAnnotationHolder,
+            this.declaredReferenceProperties,
+            "version"
+        );
         this.reportMultiplePropertiesWithModifiers(
-                compilerAnnotationHolder,
-                this.declaredReferenceProperties,
-                "createdBy"
-            );
+            compilerAnnotationHolder,
+            this.declaredReferenceProperties,
+            "createdBy"
+        );
         this.reportMultiplePropertiesWithModifiers(
-                compilerAnnotationHolder,
-                this.declaredReferenceProperties,
-                "lastUpdatedBy"
-            );
+            compilerAnnotationHolder,
+            this.declaredReferenceProperties,
+            "lastUpdatedBy"
+        );
         this.reportIdAndKeyProperties(compilerAnnotationHolder);
         this.reportInterfaceNotFound(compilerAnnotationHolder);
         this.reportRedundantInterface(compilerAnnotationHolder);
@@ -390,9 +381,8 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
         String... modifiersArray
     ) {
         ImmutableList<String> modifiers = Lists.immutable.with(modifiersArray);
-        MutableList<T> duplicatePropertyWithModifiers = properties.select(
-            property ->
-                modifiers.allSatisfy(modifier -> property.getModifiers().anySatisfyWith(AntlrModifier::is, modifier))
+        MutableList<T> duplicatePropertyWithModifiers = properties.select(property ->
+            modifiers.allSatisfy(modifier -> property.getModifiers().anySatisfyWith(AntlrModifier::is, modifier))
         );
 
         if (duplicatePropertyWithModifiers.size() <= 1) {
@@ -405,14 +395,16 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
     }
 
     private void reportIdAndKeyProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        MutableList<AntlrDataTypeProperty<?>> idProperties =
-            this.declaredDataTypeProperties.select(AntlrDataTypeProperty::isId);
+        MutableList<AntlrDataTypeProperty<?>> idProperties = this.declaredDataTypeProperties.select(
+            AntlrDataTypeProperty::isId
+        );
         if (idProperties.isEmpty()) {
             return;
         }
 
-        ImmutableList<AntlrDataTypeProperty<?>> nonIdKeyProperties =
-            this.getAllKeyProperties().reject(AntlrDataTypeProperty::isId);
+        ImmutableList<AntlrDataTypeProperty<?>> nonIdKeyProperties = this.getAllKeyProperties().reject(
+            AntlrDataTypeProperty::isId
+        );
         if (nonIdKeyProperties.isEmpty()) {
             return;
         }
@@ -506,8 +498,9 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
     }
 
     protected void reportPropertyDeclarationOrder(CompilerAnnotationHolder compilerAnnotationHolder) {
-        ImmutableList<AntlrDataTypeProperty<?>> dataTypeProperties =
-            this.declaredDataTypeProperties.reject(AntlrElement::hasMacro).toImmutable();
+        ImmutableList<AntlrDataTypeProperty<?>> dataTypeProperties = this.declaredDataTypeProperties.reject(
+            AntlrElement::hasMacro
+        ).toImmutable();
 
         MutableList<AntlrDataTypeProperty<?>> orderedDataTypeProperties = Lists.mutable.empty();
 
@@ -726,8 +719,9 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
             overriddenProperties.add(antlrDataTypeProperty);
         }
 
-        this.getSuperClass()
-            .ifPresent(antlrClass -> antlrClass.getOverriddenDataTypeProperties(name, overriddenProperties, visited));
+        this.getSuperClass().ifPresent(antlrClass ->
+            antlrClass.getOverriddenDataTypeProperties(name, overriddenProperties, visited)
+        );
 
         for (AntlrInterface iface : this.declaredInterfaces) {
             iface.getOverriddenDataTypeProperties(name, overriddenProperties, visited);

@@ -65,8 +65,9 @@ public class BootstrapExpressionValueVisitor3 implements ExpressionValueVisitor 
         bootstrappedParameterReference.setId(bootstrappedExpressionValue.getId());
         bootstrappedParameterReference.insert();
 
-        klass.model.meta.domain.Parameter parameter =
-            this.bootstrappedParametersByParameter.get(parameterReference.getParameter());
+        klass.model.meta.domain.Parameter parameter = this.bootstrappedParametersByParameter.get(
+            parameterReference.getParameter()
+        );
         bootstrappedParameterReference.setParameterId(parameter.getId());
     }
 

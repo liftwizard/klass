@@ -53,20 +53,19 @@ public class ReladomoClassListGenerator extends AbstractReladomoGenerator {
 
     @Nonnull
     private Mithra generateMithra() {
-        ImmutableList<MithraObjectResourceType> objectResources =
-            this.domainModel.getClasses()
-                .reject(Klass::isTransient)
-                .collect(NamedElement::getName)
-                .collect(this::getObjectResource);
+        ImmutableList<MithraObjectResourceType> objectResources = this.domainModel.getClasses()
+            .reject(Klass::isTransient)
+            .collect(NamedElement::getName)
+            .collect(this::getObjectResource);
 
-        ImmutableList<MithraPureObjectResourceType> pureObjectResources =
-            this.domainModel.getClasses()
-                .select(Klass::isTransient)
-                .collect(NamedElement::getName)
-                .collect(this::getPureObjectResource);
+        ImmutableList<MithraPureObjectResourceType> pureObjectResources = this.domainModel.getClasses()
+            .select(Klass::isTransient)
+            .collect(NamedElement::getName)
+            .collect(this::getPureObjectResource);
 
-        ImmutableList<MithraInterfaceResourceType> interfaceResources =
-            this.domainModel.getInterfaces().collect(NamedElement::getName).collect(this::getInterfaceResource);
+        ImmutableList<MithraInterfaceResourceType> interfaceResources = this.domainModel.getInterfaces()
+            .collect(NamedElement::getName)
+            .collect(this::getInterfaceResource);
 
         Mithra mithra = new Mithra();
         mithra.setMithraObjectResources(objectResources.castToList());

@@ -37,12 +37,11 @@ public final class IdxGenerator {
 
         String primaryKeyColumnNames = getPrimaryKeyColumnNames(klass);
 
-        String primaryKeyIndex =
-            "alter table %s add constraint %s primary key (%s);\n\n".formatted(
-                    tableName,
-                    constraintName,
-                    primaryKeyColumnNames
-                );
+        String primaryKeyIndex = "alter table %s add constraint %s primary key (%s);\n\n".formatted(
+            tableName,
+            constraintName,
+            primaryKeyColumnNames
+        );
 
         MutableOrderedMap<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> foreignKeyConstraints =
             klass.getForeignKeys();

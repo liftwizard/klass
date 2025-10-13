@@ -270,10 +270,10 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
             ) {
                 String message =
                     "Expected to-many association end '%s.%s' to have a plural name, but name exactly matched type association end type '%s'.".formatted(
-                            this.getOwningClassifier().getName(),
-                            this.getName(),
-                            this.classReference.getElementContext().identifier().getText()
-                        );
+                        this.getOwningClassifier().getName(),
+                        this.getName(),
+                        this.classReference.getElementContext().identifier().getText()
+                    );
                 compilerAnnotationHolder.add("ERR_ASS_PLU", message, this, this.nameContext);
             }
         }

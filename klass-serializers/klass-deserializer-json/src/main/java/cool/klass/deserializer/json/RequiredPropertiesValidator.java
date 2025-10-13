@@ -187,10 +187,10 @@ public class RequiredPropertiesValidator {
         // TODO: Exclude path here
         if (this.isForeignKeyMatchingRequiredNested(dataTypeProperty)) {
             this.handleIfPresent(
-                    dataTypeProperty,
-                    "foreign key matching key of required nested object",
-                    Severity.WARNING
-                );
+                dataTypeProperty,
+                "foreign key matching key of required nested object",
+                Severity.WARNING
+            );
             return;
         }
 
@@ -772,8 +772,8 @@ public class RequiredPropertiesValidator {
         Klass type = associationEnd.getType();
         ImmutableList<DataTypeProperty> keyProperties = type.getKeyProperties();
         ImmutableList<DataTypeProperty> nonForeignKeyProperties = keyProperties.reject(DataTypeProperty::isForeignKey);
-        return nonForeignKeyProperties.collect(
-            keyProperty -> this.getKeyFromJsonNode(keyProperty, jsonNode, associationEnd, parentJsonNode)
+        return nonForeignKeyProperties.collect(keyProperty ->
+            this.getKeyFromJsonNode(keyProperty, jsonNode, associationEnd, parentJsonNode)
         );
     }
 

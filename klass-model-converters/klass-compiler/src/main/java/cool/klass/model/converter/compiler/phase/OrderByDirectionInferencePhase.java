@@ -56,12 +56,12 @@ public class OrderByDirectionInferencePhase extends AbstractCompilerPhase {
         ParseTreeListener compilerPhase = new OrderByDirectionPhase(this.compilerState);
 
         this.compilerState.runInPlaceCompilerMacro(
-                orderByMemberReferencePath,
-                this,
-                sourceCodeText,
-                KlassParser::orderByDirection,
-                inPlaceContext,
-                compilerPhase
-            );
+            orderByMemberReferencePath,
+            this,
+            sourceCodeText,
+            KlassParser::orderByDirection,
+            inPlaceContext,
+            compilerPhase
+        );
     }
 }

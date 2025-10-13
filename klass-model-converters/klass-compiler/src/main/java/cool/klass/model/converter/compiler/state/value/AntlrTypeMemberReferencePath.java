@@ -61,8 +61,9 @@ public class AntlrTypeMemberReferencePath extends AntlrMemberReferencePath {
         if (this.elementBuilder != null) {
             throw new IllegalStateException();
         }
-        ImmutableList<AssociationEndBuilder> associationEndBuilders =
-            this.associationEnd.collect(AntlrAssociationEnd::getElementBuilder);
+        ImmutableList<AssociationEndBuilder> associationEndBuilders = this.associationEnd.collect(
+            AntlrAssociationEnd::getElementBuilder
+        );
 
         this.elementBuilder = new TypeMemberReferencePathBuilder(
             (TypeMemberReferencePathContext) this.elementContext,
@@ -99,8 +100,10 @@ public class AntlrTypeMemberReferencePath extends AntlrMemberReferencePath {
 
         List<AssociationEndReferenceContext> associationEndReferenceContexts =
             this.getElementContext().associationEndReference();
-        AntlrClass currentClass =
-            this.reportErrorsAssociationEnds(compilerAnnotationHolder, associationEndReferenceContexts);
+        AntlrClass currentClass = this.reportErrorsAssociationEnds(
+            compilerAnnotationHolder,
+            associationEndReferenceContexts
+        );
         if (currentClass == null) {
             return;
         }

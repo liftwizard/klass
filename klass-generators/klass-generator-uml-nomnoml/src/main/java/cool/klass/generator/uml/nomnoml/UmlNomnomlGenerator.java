@@ -63,8 +63,9 @@ public class UmlNomnomlGenerator {
     }
 
     public void writeUmlDiagram(@Nonnull Path outputPath) {
-        String topLevelElementsSourceCode =
-            this.domainModel.getTopLevelElements().collect(this::getSourceCode).makeString("");
+        String topLevelElementsSourceCode = this.domainModel.getTopLevelElements()
+            .collect(this::getSourceCode)
+            .makeString("");
 
         String sourceCode =
             "" +
@@ -117,15 +118,16 @@ public class UmlNomnomlGenerator {
                 .collect(each -> "     " + each)
                 .makeString(";\n");
 
-            this.sourceCode = "" +
-            "[ < enumeration >\n" +
-            enumeration.getName() +
-            "\n" +
-            "|\n" +
-            enumerationLiteralsSourceCode +
-            "\n" +
-            "]\n" +
-            "\n";
+            this.sourceCode =
+                "" +
+                "[ < enumeration >\n" +
+                enumeration.getName() +
+                "\n" +
+                "|\n" +
+                enumerationLiteralsSourceCode +
+                "\n" +
+                "]\n" +
+                "\n";
         }
 
         @Override

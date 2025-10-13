@@ -478,11 +478,15 @@ public class IncomingUpdateDataModelValidator {
                 associationEnd);
         */
 
-        ImmutableList<JsonNode> incomingInstancesForUpdate =
-            this.filterIncomingInstancesForUpdate(incomingChildInstances, associationEnd);
+        ImmutableList<JsonNode> incomingInstancesForUpdate = this.filterIncomingInstancesForUpdate(
+            incomingChildInstances,
+            associationEnd
+        );
 
-        MapIterable<ImmutableList<Object>, JsonNode> incomingChildInstancesByKey =
-            this.indexIncomingJsonInstances(incomingInstancesForUpdate, associationEnd);
+        MapIterable<ImmutableList<Object>, JsonNode> incomingChildInstancesByKey = this.indexIncomingJsonInstances(
+            incomingInstancesForUpdate,
+            associationEnd
+        );
 
         MapIterable<ImmutableList<Object>, Object> persistentChildInstancesByKey =
             this.getPersistentChildInstancesByKey(incomingChildInstancesByKey, associationEnd);
@@ -498,8 +502,11 @@ public class IncomingUpdateDataModelValidator {
                     continue;
                 }
 
-                ImmutableList<Object> keysFromJsonNode =
-                    this.getKeysFromJsonNode(childJsonNode, associationEnd, this.objectNode);
+                ImmutableList<Object> keysFromJsonNode = this.getKeysFromJsonNode(
+                    childJsonNode,
+                    associationEnd,
+                    this.objectNode
+                );
                 Object childPersistentInstance = persistentChildInstancesByKey.get(keysFromJsonNode);
                 if (childPersistentInstance == null) {
                     // recurse in create mode
@@ -554,11 +561,15 @@ public class IncomingUpdateDataModelValidator {
         */
 
         // TODO: Figure out how to recurse without checking key
-        ImmutableList<JsonNode> incomingInstancesForUpdate =
-            this.filterIncomingInstancesForUpdate(incomingChildInstances, associationEnd);
+        ImmutableList<JsonNode> incomingInstancesForUpdate = this.filterIncomingInstancesForUpdate(
+            incomingChildInstances,
+            associationEnd
+        );
 
-        MapIterable<ImmutableList<Object>, JsonNode> incomingChildInstancesByKey =
-            this.indexIncomingJsonInstances(incomingInstancesForUpdate, associationEnd);
+        MapIterable<ImmutableList<Object>, JsonNode> incomingChildInstancesByKey = this.indexIncomingJsonInstances(
+            incomingInstancesForUpdate,
+            associationEnd
+        );
 
         MapIterable<ImmutableList<Object>, Object> persistentChildInstancesByKey =
             this.getPersistentChildInstancesByKey(incomingChildInstancesByKey, associationEnd);
@@ -573,8 +584,11 @@ public class IncomingUpdateDataModelValidator {
                     continue;
                 }
 
-                ImmutableList<Object> keysFromJsonNode =
-                    this.getKeysFromJsonNode(childJsonNode, associationEnd, this.objectNode);
+                ImmutableList<Object> keysFromJsonNode = this.getKeysFromJsonNode(
+                    childJsonNode,
+                    associationEnd,
+                    this.objectNode
+                );
                 Object childPersistentInstance = persistentChildInstancesByKey.get(keysFromJsonNode);
                 if (childPersistentInstance == null) {
                     // recurse in create mode
@@ -725,8 +739,8 @@ public class IncomingUpdateDataModelValidator {
     ) {
         Klass type = associationEnd.getType();
         ImmutableList<DataTypeProperty> keyProperties = type.getKeyProperties();
-        return keyProperties.collect(
-            keyProperty -> this.getKeyFromJsonNode(keyProperty, jsonNode, associationEnd, parentJsonNode)
+        return keyProperties.collect(keyProperty ->
+            this.getKeyFromJsonNode(keyProperty, jsonNode, associationEnd, parentJsonNode)
         );
     }
 

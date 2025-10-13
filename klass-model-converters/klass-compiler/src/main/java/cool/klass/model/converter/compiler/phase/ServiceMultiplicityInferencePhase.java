@@ -56,12 +56,12 @@ public class ServiceMultiplicityInferencePhase extends AbstractCompilerPhase {
         ParseTreeListener compilerPhase = new ServiceMultiplicityPhase(this.compilerState);
 
         this.compilerState.runInPlaceCompilerMacro(
-                service,
-                this,
-                sourceCodeText,
-                KlassParser::serviceMultiplicityDeclaration,
-                inPlaceContext,
-                compilerPhase
-            );
+            service,
+            this,
+            sourceCodeText,
+            KlassParser::serviceMultiplicityDeclaration,
+            inPlaceContext,
+            compilerPhase
+        );
     }
 }

@@ -56,23 +56,18 @@ public class GenerateJavaConstantsMetaModelMojo extends AbstractGenerateMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        boolean wasGenerated =
-            this.executeWithCaching(this.outputDirectory, () -> {
-                    DomainModel domainModel = this.getDomainModel();
-                    Path outputPath = this.outputDirectory.toPath();
-                    try {
-                        JavaConstantsMetaModelGenerator javaConstantsMetaModelGenerator =
-                            new JavaConstantsMetaModelGenerator(
-                                domainModel,
-                                this.applicationName,
-                                this.rootPackageName
-                            );
-                        javaConstantsMetaModelGenerator.writeJavaConstantsMetaModelFiles(outputPath);
-                    } catch (IOException e) {
-                        throw new MojoExecutionException(e.getMessage(), e);
-                    }
-                    return null;
-                });
+        boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
+                DomainModel domainModel = this.getDomainModel();
+                Path outputPath = this.outputDirectory.toPath();
+                try {
+                    JavaConstantsMetaModelGenerator javaConstantsMetaModelGenerator =
+                        new JavaConstantsMetaModelGenerator(domainModel, this.applicationName, this.rootPackageName);
+                    javaConstantsMetaModelGenerator.writeJavaConstantsMetaModelFiles(outputPath);
+                } catch (IOException e) {
+                    throw new MojoExecutionException(e.getMessage(), e);
+                }
+                return null;
+            });
 
         if (wasGenerated) {
             this.getLog().info("Generated meta model constants in: " + this.outputDirectory.getPath());

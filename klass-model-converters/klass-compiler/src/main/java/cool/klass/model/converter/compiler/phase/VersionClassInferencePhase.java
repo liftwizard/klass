@@ -62,12 +62,12 @@ public class VersionClassInferencePhase extends AbstractCompilerPhase {
         );
 
         this.compilerState.runRootCompilerMacro(
-                classifierModifierState,
-                this,
-                klassSourceCode,
-                KlassParser::compilationUnit,
-                compilerPhases
-            );
+            classifierModifierState,
+            this,
+            klassSourceCode,
+            KlassParser::compilationUnit,
+            compilerPhases
+        );
     }
 
     @Nonnull

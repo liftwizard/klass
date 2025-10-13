@@ -99,8 +99,9 @@ public final class EnumerationImpl extends AbstractPackageableElement implements
 
         @Override
         protected void buildChildren() {
-            ImmutableList<EnumerationLiteral> enumerationLiterals =
-                this.enumerationLiteralBuilders.collect(EnumerationLiteralBuilder::build);
+            ImmutableList<EnumerationLiteral> enumerationLiterals = this.enumerationLiteralBuilders.collect(
+                EnumerationLiteralBuilder::build
+            );
             this.element.setEnumerationLiterals(enumerationLiterals);
         }
 

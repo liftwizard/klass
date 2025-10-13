@@ -72,9 +72,9 @@ public class DomainModelReferencesExpressionValueVisitor implements ExpressionVa
             AssociationEndReferenceContext associationEndReference = associationEndReferenceContexts.get(i);
             AssociationEnd associationEnd = associationEnds.get(i);
             this.domainModelReferences.addAssociationEndReference(
-                    associationEndReference,
-                    (AssociationEndWithSourceCode) associationEnd
-                );
+                associationEndReference,
+                (AssociationEndWithSourceCode) associationEnd
+            );
         }
 
         IdentifierContext propertyReference = elementContext.memberReference().identifier();
@@ -95,9 +95,9 @@ public class DomainModelReferencesExpressionValueVisitor implements ExpressionVa
             AssociationEndReferenceContext associationEndReference = associationEndReferenceContexts.get(i);
             AssociationEnd associationEnd = associationEnds.get(i);
             this.domainModelReferences.addAssociationEndReference(
-                    associationEndReference,
-                    (AssociationEndWithSourceCode) associationEnd
-                );
+                associationEndReference,
+                (AssociationEndWithSourceCode) associationEnd
+            );
         }
 
         IdentifierContext propertyReference = elementContext.memberReference().identifier();

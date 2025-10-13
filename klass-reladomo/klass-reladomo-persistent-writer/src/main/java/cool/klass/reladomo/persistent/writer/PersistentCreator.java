@@ -89,12 +89,11 @@ public class PersistentCreator extends PersistentSynchronizer {
             Optional<String> optionalUserId = this.mutationContext.getUserId();
             String userId = optionalUserId.orElseThrow(() -> this.expectAuditProperty(primitiveProperty));
             if (!this.dataStore.setDataTypeProperty(persistentInstance, primitiveProperty, userId)) {
-                String detailMessage =
-                    "Expected to set createdBy property: %s on %s to %s".formatted(
-                            primitiveProperty,
-                            persistentInstance,
-                            userId
-                        );
+                String detailMessage = "Expected to set createdBy property: %s on %s to %s".formatted(
+                    primitiveProperty,
+                    persistentInstance,
+                    userId
+                );
                 throw new AssertionError(detailMessage);
             }
         });
@@ -102,12 +101,11 @@ public class PersistentCreator extends PersistentSynchronizer {
         createdOnProperty.ifPresent(primitiveProperty -> {
             Instant transactionTime = this.mutationContext.getTransactionTime();
             if (!this.dataStore.setDataTypeProperty(persistentInstance, primitiveProperty, transactionTime)) {
-                String detailMessage =
-                    "Expected to set createdOn property: %s on %s to %s".formatted(
-                            primitiveProperty,
-                            persistentInstance,
-                            transactionTime
-                        );
+                String detailMessage = "Expected to set createdOn property: %s on %s to %s".formatted(
+                    primitiveProperty,
+                    persistentInstance,
+                    transactionTime
+                );
                 throw new AssertionError(detailMessage);
             }
         });
@@ -128,8 +126,10 @@ public class PersistentCreator extends PersistentSynchronizer {
             throw new AssertionError();
         }
 
-        ImmutableMap<DataTypeProperty, Object> keys =
-            this.getKeysFromPersistentInstance(persistentInstance, associationEnd.getOwningClassifier());
+        ImmutableMap<DataTypeProperty, Object> keys = this.getKeysFromPersistentInstance(
+            persistentInstance,
+            associationEnd.getOwningClassifier()
+        );
 
         MutableMap<DataTypeProperty, Object> versionKeys = getVersionKeys(associationEnd, keys);
 
@@ -164,10 +164,10 @@ public class PersistentCreator extends PersistentSynchronizer {
 
         String message =
             "Expected version key property '%s' to be owned by '%s' but it's owned by '%s' instead.".formatted(
-                    versionKeyProperty,
-                    associationEnd.getType(),
-                    versionKeyProperty.getOwningClassifier()
-                );
+                versionKeyProperty,
+                associationEnd.getType(),
+                versionKeyProperty.getOwningClassifier()
+            );
         throw new AssertionError(message);
     }
 
@@ -188,8 +188,11 @@ public class PersistentCreator extends PersistentSynchronizer {
             return false;
         }
 
-        Object childPersistentInstanceWithKey =
-            this.findExistingChildPersistentInstance(persistentParentInstance, incomingChildInstance, associationEnd);
+        Object childPersistentInstanceWithKey = this.findExistingChildPersistentInstance(
+            persistentParentInstance,
+            incomingChildInstance,
+            associationEnd
+        );
         if (childPersistentInstanceWithKey == null) {
             // It's possible to trigger this code path when there is an id pointing at missing reference data.
             // We also hit this path when including an embedded to-one object that's outside the projection, during creation.
