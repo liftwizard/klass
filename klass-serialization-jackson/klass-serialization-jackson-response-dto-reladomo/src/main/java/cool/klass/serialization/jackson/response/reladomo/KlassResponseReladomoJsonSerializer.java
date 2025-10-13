@@ -53,10 +53,9 @@ public class KlassResponseReladomoJsonSerializer extends JsonSerializer<KlassRes
     ) throws IOException {
         Class<?> activeViewClass = serializerProvider.getActiveView();
         if (activeViewClass != null) {
-            String detailMessage =
-                "Expected no active view while serializing KlassResponse but got %s".formatted(
-                        activeViewClass.getCanonicalName()
-                    );
+            String detailMessage = "Expected no active view while serializing KlassResponse but got %s".formatted(
+                activeViewClass.getCanonicalName()
+            );
             throw new IllegalStateException(detailMessage);
         }
 
@@ -107,8 +106,10 @@ public class KlassResponseReladomoJsonSerializer extends JsonSerializer<KlassRes
     ) throws IOException {
         Object data = klassResponse.getData();
         if (!(data instanceof List<?>)) {
-            String detailMessage =
-                "%s cannot be cast to %s".formatted(data.getClass().getCanonicalName(), List.class.getCanonicalName());
+            String detailMessage = "%s cannot be cast to %s".formatted(
+                data.getClass().getCanonicalName(),
+                List.class.getCanonicalName()
+            );
             throw new ClassCastException(detailMessage);
         }
 

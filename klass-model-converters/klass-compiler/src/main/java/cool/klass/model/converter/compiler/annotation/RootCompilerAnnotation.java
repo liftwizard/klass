@@ -81,8 +81,7 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
         String severityColor = this.severity == AnnotationSeverity.ERROR ? "red" : "yellow";
         String severityName = this.severity == AnnotationSeverity.ERROR ? "Error" : "Warning";
 
-        String format =
-            """
+        String format = """
             ════════════════════════════════════════ @|magenta %s|@ ════════════════════════════════════════
             @|%s %s: %s|@
 
@@ -124,15 +123,15 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
 
         String sourceName = this.compilationUnit.getSourceName();
         return "::%s file=%s,line=%d,endLine=%d,col=%d,endColumn=%d,title=%s::%s".formatted(
-                this.getSeverityString(),
-                sourceName,
-                startToken.getLine(),
-                endToken.getLine(),
-                startToken.getCharPositionInLine(),
-                endToken.getCharPositionInLine(),
-                this.annotationCode,
-                this.message
-            );
+            this.getSeverityString(),
+            sourceName,
+            startToken.getLine(),
+            endToken.getLine(),
+            startToken.getCharPositionInLine(),
+            endToken.getCharPositionInLine(),
+            this.annotationCode,
+            this.message
+        );
     }
 
     @Nonnull

@@ -181,10 +181,10 @@ public class AntlrProjectionDataTypeProperty extends AntlrIdentifierElement impl
             } else {
                 String message =
                     "Leaf projection nodes require a data type property, but found a reference property '%s.%s' with type '%s'".formatted(
-                            parentClassifier.getName(),
-                            referenceProperty.getName(),
-                            referenceProperty.getTypeName()
-                        );
+                        parentClassifier.getName(),
+                        referenceProperty.getName(),
+                        referenceProperty.getTypeName()
+                    );
                 compilerAnnotationHolder.add("ERR_PRJ_TYP", message, this);
             }
         }

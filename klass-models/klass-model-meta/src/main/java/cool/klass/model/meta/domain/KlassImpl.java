@@ -243,8 +243,9 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
         public void build2() {
             super.build2();
 
-            ImmutableList<AssociationEnd> declaredAssociationEnds =
-                this.declaredAssociationEnds.<AssociationEnd>collect(AssociationEndBuilder::getElement).toImmutable();
+            ImmutableList<AssociationEnd> declaredAssociationEnds = this.declaredAssociationEnds.<
+                AssociationEnd
+            >collect(AssociationEndBuilder::getElement).toImmutable();
             this.element.setDeclaredAssociationEnds(declaredAssociationEnds);
 
             Optional<Klass> maybeSuperClass = this.superClass.map(ElementBuilder::getElement);
@@ -265,18 +266,19 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
 
         @Override
         protected ImmutableList<DataTypeProperty> getDataTypeProperties() {
-            ImmutableList<DataTypeProperty> declaredDataTypeProperties =
-                this.declaredDataTypeProperties.collect(property -> property.getElement());
+            ImmutableList<DataTypeProperty> declaredDataTypeProperties = this.declaredDataTypeProperties.collect(
+                property -> property.getElement()
+            );
 
-            ImmutableList<DataTypeProperty> interfaceProperties =
-                this.declaredInterfaces.collect(ElementBuilder::getElement)
-                    .flatCollect(Classifier::getDataTypeProperties)
-                    .toImmutable();
+            ImmutableList<DataTypeProperty> interfaceProperties = this.declaredInterfaces.collect(
+                    ElementBuilder::getElement
+                )
+                .flatCollect(Classifier::getDataTypeProperties)
+                .toImmutable();
 
-            ImmutableList<DataTypeProperty> superClassProperties =
-                this.superClass.map(ElementBuilder::getElement)
-                    .map(Classifier::getDataTypeProperties)
-                    .orElseGet(Lists.immutable::empty);
+            ImmutableList<DataTypeProperty> superClassProperties = this.superClass.map(ElementBuilder::getElement)
+                .map(Classifier::getDataTypeProperties)
+                .orElseGet(Lists.immutable::empty);
 
             ImmutableList<DataTypeProperty> allDataTypeProperties = interfaceProperties
                 .newWithAll(superClassProperties)
@@ -292,16 +294,19 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
 
         @Override
         protected ImmutableList<ReferenceProperty> getReferenceProperties() {
-            ImmutableList<ReferenceProperty> declaredReferenceProperties =
-                this.declaredReferenceProperties.collect(property -> property.getElement());
+            ImmutableList<ReferenceProperty> declaredReferenceProperties = this.declaredReferenceProperties.collect(
+                property -> property.getElement()
+            );
 
-            ImmutableList<ReferenceProperty> superClassProperties =
-                this.superClass.map(KlassBuilder::getReferenceProperties).orElseGet(Lists.immutable::empty);
+            ImmutableList<ReferenceProperty> superClassProperties = this.superClass.map(
+                KlassBuilder::getReferenceProperties
+            ).orElseGet(Lists.immutable::empty);
 
-            ImmutableList<ReferenceProperty> interfaceProperties =
-                this.declaredInterfaces.collect(ElementBuilder::getElement)
-                    .flatCollect(Classifier::getReferenceProperties)
-                    .toImmutable();
+            ImmutableList<ReferenceProperty> interfaceProperties = this.declaredInterfaces.collect(
+                    ElementBuilder::getElement
+                )
+                .flatCollect(Classifier::getReferenceProperties)
+                .toImmutable();
 
             ImmutableList<ReferenceProperty> allReferenceProperties = interfaceProperties
                 .newWithAll(superClassProperties)

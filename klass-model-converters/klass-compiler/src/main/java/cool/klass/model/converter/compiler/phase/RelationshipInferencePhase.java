@@ -100,14 +100,13 @@ public class RelationshipInferencePhase extends AbstractCompilerPhase {
         }
 
         String sourceCodeText = allKeyProperties
-            .collect(
-                each ->
-                    "this.%s%s == %s.%s".formatted(
-                            UPPER_TO_LOWER_CAMEL.convert(oppositeType.getName()),
-                            LOWER_CAMEL_TO_UPPER_CAMEL.convert(each.getName()),
-                            oppositeType.getName(),
-                            each.getName()
-                        )
+            .collect(each ->
+                "this.%s%s == %s.%s".formatted(
+                    UPPER_TO_LOWER_CAMEL.convert(oppositeType.getName()),
+                    LOWER_CAMEL_TO_UPPER_CAMEL.convert(each.getName()),
+                    oppositeType.getName(),
+                    each.getName()
+                )
             )
             .makeString("relationship ", " && ", "");
 
@@ -123,14 +122,13 @@ public class RelationshipInferencePhase extends AbstractCompilerPhase {
         }
 
         String sourceCodeText = allKeyProperties
-            .collect(
-                each ->
-                    "this.%s == %s.%s%s".formatted(
-                            each.getName(),
-                            associationEnd.getType().getName(),
-                            UPPER_TO_LOWER_CAMEL.convert(oppositeType.getName()),
-                            LOWER_CAMEL_TO_UPPER_CAMEL.convert(each.getName())
-                        )
+            .collect(each ->
+                "this.%s == %s.%s%s".formatted(
+                    each.getName(),
+                    associationEnd.getType().getName(),
+                    UPPER_TO_LOWER_CAMEL.convert(oppositeType.getName()),
+                    LOWER_CAMEL_TO_UPPER_CAMEL.convert(each.getName())
+                )
             )
             .makeString("relationship ", " && ", "");
 
@@ -143,12 +141,12 @@ public class RelationshipInferencePhase extends AbstractCompilerPhase {
         ParseTreeListener compilerPhase = new RelationshipPhase(this.compilerState);
 
         this.compilerState.runInPlaceCompilerMacro(
-                association,
-                this,
-                sourceCodeText,
-                KlassParser::relationship,
-                inPlaceContext,
-                compilerPhase
-            );
+            association,
+            this,
+            sourceCodeText,
+            KlassParser::relationship,
+            inPlaceContext,
+            compilerPhase
+        );
     }
 }

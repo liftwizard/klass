@@ -144,10 +144,9 @@ public class AntlrUrl extends AntlrElement {
 
     public void exitServiceDeclaration(@Nonnull AntlrService antlrService) {
         this.services.add(antlrService);
-        this.servicesByVerb.compute(
-                antlrService.getVerb().getVerb(),
-                (name, builder) -> builder == null ? antlrService : AntlrService.AMBIGUOUS
-            );
+        this.servicesByVerb.compute(antlrService.getVerb().getVerb(), (name, builder) ->
+            builder == null ? antlrService : AntlrService.AMBIGUOUS
+        );
 
         AntlrService duplicate = this.servicesByContext.put(antlrService.getElementContext(), antlrService);
         if (duplicate != null) {
@@ -166,12 +165,11 @@ public class AntlrUrl extends AntlrElement {
     }
 
     private void reportDuplicateParameterErrors(CompilerAnnotationHolder compilerAnnotationHolder) {
-        ImmutableBag<String> duplicateNames =
-            this.urlParameters.getParameters()
-                .collect(AntlrNamedElement::getName)
-                .toBag()
-                .selectByOccurrences(occurrences -> occurrences > 1)
-                .toImmutable();
+        ImmutableBag<String> duplicateNames = this.urlParameters.getParameters()
+            .collect(AntlrNamedElement::getName)
+            .toBag()
+            .selectByOccurrences(occurrences -> occurrences > 1)
+            .toImmutable();
 
         this.urlParameters.getParameters()
             .select(each -> duplicateNames.contains(each.getName()))
@@ -179,17 +177,16 @@ public class AntlrUrl extends AntlrElement {
     }
 
     private void reportDuplicateVerbErrors(CompilerAnnotationHolder compilerAnnotationHolder) {
-        ImmutableBag<Verb> duplicateVerbs =
-            this.services.collect(AntlrService::getVerb)
-                .collect(AntlrVerb::getVerb)
-                .toBag()
-                .selectByOccurrences(occurrences -> occurrences > 1)
-                .toImmutable();
+        ImmutableBag<Verb> duplicateVerbs = this.services.collect(AntlrService::getVerb)
+            .collect(AntlrVerb::getVerb)
+            .toBag()
+            .selectByOccurrences(occurrences -> occurrences > 1)
+            .toImmutable();
 
         this.services.select(each -> duplicateVerbs.contains(each.getVerb().getVerb())).forEachWith(
-                AntlrService::reportDuplicateVerb,
-                compilerAnnotationHolder
-            );
+            AntlrService::reportDuplicateVerb,
+            compilerAnnotationHolder
+        );
     }
 
     private void reportNoVerbs(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
@@ -244,20 +241,24 @@ public class AntlrUrl extends AntlrElement {
             this.serviceGroup.getElementBuilder()
         );
 
-        ImmutableList<ElementBuilder<?>> pathSegments =
-            this.urlPathSegments.<ElementBuilder<?>>collect(this::buildPathSegment).toImmutable();
+        ImmutableList<ElementBuilder<?>> pathSegments = this.urlPathSegments.<ElementBuilder<?>>collect(
+            this::buildPathSegment
+        ).toImmutable();
         this.elementBuilder.setPathSegmentBuilders(pathSegments);
 
-        ImmutableList<ParameterBuilder> queryParameterBuilders =
-            this.queryParameters.getParameters().collect(AntlrParameter::build).toImmutable();
+        ImmutableList<ParameterBuilder> queryParameterBuilders = this.queryParameters.getParameters()
+            .collect(AntlrParameter::build)
+            .toImmutable();
         this.elementBuilder.setQueryParameterBuilders(queryParameterBuilders);
 
-        ImmutableList<ParameterBuilder> pathParameterBuilders =
-            this.pathParameters.getParameters().collect(AntlrParameter::getElementBuilder).toImmutable();
+        ImmutableList<ParameterBuilder> pathParameterBuilders = this.pathParameters.getParameters()
+            .collect(AntlrParameter::getElementBuilder)
+            .toImmutable();
         this.elementBuilder.setPathParameterBuilders(pathParameterBuilders);
 
-        ImmutableList<ParameterBuilder> parameterBuilders =
-            this.urlParameters.getParameters().collect(AntlrParameter::getElementBuilder).toImmutable();
+        ImmutableList<ParameterBuilder> parameterBuilders = this.urlParameters.getParameters()
+            .collect(AntlrParameter::getElementBuilder)
+            .toImmutable();
         this.elementBuilder.setParameterBuilders(parameterBuilders);
 
         ImmutableList<ServiceBuilder> serviceBuilders = this.services.collect(AntlrService::build).toImmutable();

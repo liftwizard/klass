@@ -120,8 +120,9 @@ public class AntlrEnumerationProperty extends AntlrDataTypeProperty<EnumerationI
             this.isOptional
         );
 
-        ImmutableList<ModifierBuilder> modifierBuilders =
-            this.getModifiers().collect(AntlrModifier::build).toImmutable();
+        ImmutableList<ModifierBuilder> modifierBuilders = this.getModifiers()
+            .collect(AntlrModifier::build)
+            .toImmutable();
         this.elementBuilder.setModifierBuilders(modifierBuilders);
 
         this.buildValidations();

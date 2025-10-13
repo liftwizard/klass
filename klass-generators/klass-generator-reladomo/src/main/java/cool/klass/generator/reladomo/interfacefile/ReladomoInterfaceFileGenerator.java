@@ -124,8 +124,10 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
         relationshipType.setName(associationEnd.getName());
         relationshipType.setCardinality(this.getCardinality(associationEnd, opposite));
         relationshipType.setRelatedObject(associationEnd.getType().getName());
-        String relationshipString =
-            this.getRelationshipString(associationEnd.getOwningAssociation().getCriteria(), reverse);
+        String relationshipString = this.getRelationshipString(
+            associationEnd.getOwningAssociation().getCriteria(),
+            reverse
+        );
         relationshipType._setValue(relationshipString);
         return relationshipType;
     }

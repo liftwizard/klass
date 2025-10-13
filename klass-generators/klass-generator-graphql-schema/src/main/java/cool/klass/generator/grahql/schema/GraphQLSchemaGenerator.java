@@ -48,8 +48,9 @@ public class GraphQLSchemaGenerator extends AbstractPerPackageGenerator {
     protected String getPackageSourceCode(@Nonnull String fullyQualifiedPackage) {
         String orderBySourceCode = this.domainModel.getClassifiers().collect(this::getOrderBySourceCode).makeString("");
 
-        String topLevelElementsCode =
-            this.domainModel.getTopLevelElements().collect(this::getSourceCode).makeString("");
+        String topLevelElementsCode = this.domainModel.getTopLevelElements()
+            .collect(this::getSourceCode)
+            .makeString("");
 
         // language=GraphQL
         String sourceCode =

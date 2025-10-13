@@ -75,8 +75,9 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
             this.criteriaOwner
         );
 
-        KlassVisitor<AntlrExpressionValue> expressionValueVisitor =
-            this.getExpressionValueVisitor(edgePointAntlrCriteria);
+        KlassVisitor<AntlrExpressionValue> expressionValueVisitor = this.getExpressionValueVisitor(
+            edgePointAntlrCriteria
+        );
         AntlrMemberReferencePath memberExpressionValue =
             (AntlrMemberReferencePath) expressionValueVisitor.visitExpressionMemberReference(
                 ctx.expressionMemberReference()
@@ -146,8 +147,9 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
         // TODO: This is probably backwards
         operator.setOwningOperatorAntlrCriteria(operatorAntlrCriteria);
 
-        KlassVisitor<AntlrExpressionValue> expressionValueVisitor =
-            this.getExpressionValueVisitor(operatorAntlrCriteria);
+        KlassVisitor<AntlrExpressionValue> expressionValueVisitor = this.getExpressionValueVisitor(
+            operatorAntlrCriteria
+        );
 
         AntlrExpressionValue sourceValue = expressionValueVisitor.visitExpressionValue(ctx.source);
         AntlrExpressionValue targetValue = expressionValueVisitor.visitExpressionValue(ctx.target);

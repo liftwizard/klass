@@ -51,17 +51,16 @@ public class GenerateJsonViewsMojo extends AbstractGenerateMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        boolean wasGenerated =
-            this.executeWithCaching(this.outputDirectory, () -> {
-                    DomainModel domainModel = this.getDomainModel();
-                    JsonViewGenerator jsonViewGenerator = new JsonViewGenerator(
-                        domainModel,
-                        this.rootPackageName,
-                        this.applicationName
-                    );
-                    jsonViewGenerator.writeJsonViews(this.outputDirectory.toPath());
-                    return null;
-                });
+        boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
+                DomainModel domainModel = this.getDomainModel();
+                JsonViewGenerator jsonViewGenerator = new JsonViewGenerator(
+                    domainModel,
+                    this.rootPackageName,
+                    this.applicationName
+                );
+                jsonViewGenerator.writeJsonViews(this.outputDirectory.toPath());
+                return null;
+            });
 
         if (wasGenerated) {
             this.getLog().info("Generated JSON views in: " + this.outputDirectory.getPath());

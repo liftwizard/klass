@@ -57,8 +57,10 @@ class ReladomoDataStoreFactoryTest {
 
     @Test
     void reladomoDataStore() throws Exception {
-        DataStoreFactory dataStoreFactory =
-            this.factory.build(new ResourceConfigurationSourceProvider(), "config-test.json5");
+        DataStoreFactory dataStoreFactory = this.factory.build(
+            new ResourceConfigurationSourceProvider(),
+            "config-test.json5"
+        );
         assertThat(dataStoreFactory).isInstanceOf(ReladomoDataStoreFactory.class);
     }
 

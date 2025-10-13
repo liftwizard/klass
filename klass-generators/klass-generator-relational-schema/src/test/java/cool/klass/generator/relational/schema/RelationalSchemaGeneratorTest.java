@@ -67,8 +67,8 @@ public class RelationalSchemaGeneratorTest {
             this.fileMatchExtension.assertFileContents(tableName + ".idx", idxSourceCode);
 
             Optional<String> maybeFkSourceCode = FkGenerator.getFk(klass);
-            maybeFkSourceCode.ifPresent(
-                fkSourceCode -> this.fileMatchExtension.assertFileContents(tableName + ".fk", fkSourceCode)
+            maybeFkSourceCode.ifPresent(fkSourceCode ->
+                this.fileMatchExtension.assertFileContents(tableName + ".fk", fkSourceCode)
             );
         }
     }

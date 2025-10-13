@@ -142,12 +142,12 @@ public class AuditPropertyInferencePhase extends AbstractCompilerPhase {
         ParseTreeListener compilerPhase = new PropertyPhase(this.compilerState);
 
         this.compilerState.runInPlaceCompilerMacro(
-                macroElement,
-                this,
-                sourceCodeText,
-                KlassParser::classBody,
-                inPlaceContext,
-                compilerPhase
-            );
+            macroElement,
+            this,
+            sourceCodeText,
+            KlassParser::classBody,
+            inPlaceContext,
+            compilerPhase
+        );
     }
 }

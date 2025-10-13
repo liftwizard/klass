@@ -76,10 +76,9 @@ public class CompilerState {
         parserContext.setParent(inPlaceContext);
         inPlaceContext.addChild(parserContext);
 
-        this.compilerWalk.withInPlaceCompilationUnit(
-                compilationUnit,
-                () -> this.compilerInput.runInPlaceCompilerMacro(compilationUnit, Lists.immutable.with(listeners))
-            );
+        this.compilerWalk.withInPlaceCompilationUnit(compilationUnit, () ->
+            this.compilerInput.runInPlaceCompilerMacro(compilationUnit, Lists.immutable.with(listeners))
+        );
     }
 
     public void runRootCompilerMacro(
@@ -169,8 +168,9 @@ public class CompilerState {
             throw new AssertionError(ctx);
         }
 
-        Integer topLevelElementOrdinalByContext =
-            this.domainModel.getTopLevelElementOrdinalByContext(topLevelDeclarationContext);
+        Integer topLevelElementOrdinalByContext = this.domainModel.getTopLevelElementOrdinalByContext(
+            topLevelDeclarationContext
+        );
         Objects.requireNonNull(topLevelElementOrdinalByContext);
         return topLevelElementOrdinalByContext;
     }

@@ -153,8 +153,11 @@ public class KlassGraphQLBundle<
             .scalar(JavaPrimitives.GraphQLLong)
             .scalar(GraphQLLocalDateScalar.INSTANCE);
 
-        TypeRuntimeWiring.Builder queryTypeBuilder =
-            this.getQueryTypeBuilder(domainModel, dataStore, new ReladomoTreeGraphqlConverter(domainModel));
+        TypeRuntimeWiring.Builder queryTypeBuilder = this.getQueryTypeBuilder(
+            domainModel,
+            dataStore,
+            new ReladomoTreeGraphqlConverter(domainModel)
+        );
         builder.type(queryTypeBuilder);
 
         domainModel.getClasses().select(Classifier::isAbstract).collect(this::getTypeResolver).each(builder::type);
@@ -189,8 +192,8 @@ public class KlassGraphQLBundle<
     ) {
         domainModel
             .getClasses()
-            .each(
-                eachKlass -> this.handleQueryAll(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
+            .each(eachKlass ->
+                this.handleQueryAll(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
             );
     }
 
@@ -236,8 +239,8 @@ public class KlassGraphQLBundle<
     ) {
         domainModel
             .getClasses()
-            .each(
-                eachKlass -> this.handleQueryByKey(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
+            .each(eachKlass ->
+                this.handleQueryByKey(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
             );
     }
 
@@ -261,9 +264,8 @@ public class KlassGraphQLBundle<
     ) {
         domainModel
             .getClasses()
-            .each(
-                eachKlass ->
-                    this.handleQueryByOperation(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
+            .each(eachKlass ->
+                this.handleQueryByOperation(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
             );
     }
 
@@ -291,9 +293,8 @@ public class KlassGraphQLBundle<
     ) {
         domainModel
             .getClasses()
-            .each(
-                eachKlass ->
-                    this.handleQueryByFinder(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
+            .each(eachKlass ->
+                this.handleQueryByFinder(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
             );
     }
 

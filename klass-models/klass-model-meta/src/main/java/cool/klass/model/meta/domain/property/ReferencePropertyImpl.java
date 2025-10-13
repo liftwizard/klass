@@ -92,7 +92,9 @@ public abstract class ReferencePropertyImpl<T extends ClassifierWithSourceCode>
     }
 
     public abstract static class ReferencePropertyBuilder<
-        T extends ClassifierWithSourceCode, TG extends TypeGetter, BuiltElement extends ReferencePropertyImpl<T>
+        T extends ClassifierWithSourceCode,
+        TG extends TypeGetter,
+        BuiltElement extends ReferencePropertyImpl<T>
     >
         extends PropertyBuilder<T, TG, BuiltElement> {
 

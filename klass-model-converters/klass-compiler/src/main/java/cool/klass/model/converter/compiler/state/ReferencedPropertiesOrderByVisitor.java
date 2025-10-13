@@ -55,10 +55,10 @@ public class ReferencedPropertiesOrderByVisitor implements AntlrOrderByVisitor {
         thisMemberReferencePath.visit(this.expressionValueVisitor);
 
         this.associationEndsReferencedByOrderBy.addAll(
-                this.expressionValueVisitor.getAssociationEndsReferencedByCriteria()
-            );
+            this.expressionValueVisitor.getAssociationEndsReferencedByCriteria()
+        );
         this.dataTypePropertiesReferencedByOrderBy.addAll(
-                this.expressionValueVisitor.getDataTypePropertiesReferencedByCriteria()
-            );
+            this.expressionValueVisitor.getDataTypePropertiesReferencedByCriteria()
+        );
     }
 }

@@ -340,32 +340,40 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 
         @Nonnull
         public DomainModelImpl build() {
-            ImmutableList<SourceCode> sourceCodes =
-                this.sourceCodeBuilders.<SourceCode>collect(SourceCodeBuilderImpl::build).toImmutable();
-            ImmutableList<Enumeration> enumerations =
-                this.enumerationBuilders.<Enumeration>collect(EnumerationBuilder::build).toImmutable();
-            ImmutableList<Interface> interfaces =
-                this.interfaceBuilders.<Interface>collect(InterfaceBuilder::build).toImmutable();
+            ImmutableList<SourceCode> sourceCodes = this.sourceCodeBuilders.<SourceCode>collect(
+                SourceCodeBuilderImpl::build
+            ).toImmutable();
+            ImmutableList<Enumeration> enumerations = this.enumerationBuilders.<Enumeration>collect(
+                EnumerationBuilder::build
+            ).toImmutable();
+            ImmutableList<Interface> interfaces = this.interfaceBuilders.<Interface>collect(
+                InterfaceBuilder::build
+            ).toImmutable();
             ImmutableList<Klass> classes = this.classBuilders.<Klass>collect(KlassBuilder::build).toImmutable();
             ImmutableList<Classifier> classifiers = this.classifierBuilders.collect(ClassifierBuilder::getElement);
-            ImmutableList<Association> associations =
-                this.associationBuilders.<Association>collect(AssociationBuilder::build).toImmutable();
+            ImmutableList<Association> associations = this.associationBuilders.<Association>collect(
+                AssociationBuilder::build
+            ).toImmutable();
             this.interfaceBuilders.each(InterfaceBuilder::build2);
             this.classBuilders.each(KlassBuilder::build2);
             this.interfaceBuilders.each(InterfaceBuilder::build3);
             this.classBuilders.each(KlassBuilder::build3);
 
-            ImmutableList<Projection> projections =
-                this.projectionBuilders.<Projection>collect(ProjectionBuilder::build).toImmutable();
+            ImmutableList<Projection> projections = this.projectionBuilders.<Projection>collect(
+                ProjectionBuilder::build
+            ).toImmutable();
             this.projectionBuilders.each(AbstractProjectionParentBuilder::build2);
-            ImmutableList<ServiceGroup> serviceGroups =
-                this.serviceGroupBuilders.<ServiceGroup>collect(ServiceGroupBuilder::build).toImmutable();
-            ImmutableList<TopLevelElement> topLevelElements =
-                this.topLevelElementBuilders.collect(TopLevelElementBuilder::getElement);
+            ImmutableList<ServiceGroup> serviceGroups = this.serviceGroupBuilders.<ServiceGroup>collect(
+                ServiceGroupBuilder::build
+            ).toImmutable();
+            ImmutableList<TopLevelElement> topLevelElements = this.topLevelElementBuilders.collect(
+                TopLevelElementBuilder::getElement
+            );
 
             MapIterable<Token, TokenCategory> tokenCategoriesFromLexer = this.getTokenCategoriesFromLexer(sourceCodes);
-            MapIterable<Token, TokenCategory> tokenCategoriesFromParser =
-                this.getTokenCategoriesFromParser(sourceCodes);
+            MapIterable<Token, TokenCategory> tokenCategoriesFromParser = this.getTokenCategoriesFromParser(
+                sourceCodes
+            );
 
             ImmutableList<Token> duplicateTokens = tokenCategoriesFromLexer
                 .keysView()

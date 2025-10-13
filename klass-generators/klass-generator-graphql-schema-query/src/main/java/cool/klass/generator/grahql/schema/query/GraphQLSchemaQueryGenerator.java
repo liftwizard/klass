@@ -56,8 +56,9 @@ public class GraphQLSchemaQueryGenerator extends AbstractPerPackageGenerator {
     @Nonnull
     @Override
     protected String getPackageSourceCode(@Nonnull String fullyQualifiedPackage) {
-        ImmutableList<Klass> classes =
-            this.domainModel.getClasses().select(each -> each.getPackageName().equals(fullyQualifiedPackage));
+        ImmutableList<Klass> classes = this.domainModel.getClasses().select(each ->
+            each.getPackageName().equals(fullyQualifiedPackage)
+        );
 
         String allSourceCode = classes.collect(this::getAllSourceCode).makeString("");
 

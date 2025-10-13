@@ -47,8 +47,9 @@ public interface IAntlrElement {
             return Optional.of(elementClass.cast(this));
         }
 
-        return this.getSurroundingElement()
-            .flatMap(surroundingElement -> surroundingElement.getSurroundingElement(elementClass));
+        return this.getSurroundingElement().flatMap(surroundingElement ->
+            surroundingElement.getSurroundingElement(elementClass)
+        );
     }
 
     @Nonnull

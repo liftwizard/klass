@@ -68,14 +68,14 @@ public abstract class AbstractValidatorTest {
 
     protected final void assertErrors(String testName) throws JsonProcessingException {
         this.jsonMatchExtension.assertFileContents(
-                this.getClass().getSimpleName() + '.' + testName + ".errors.json",
-                this.objectMapper.writeValueAsString(this.actualErrors)
-            );
+            this.getClass().getSimpleName() + '.' + testName + ".errors.json",
+            this.objectMapper.writeValueAsString(this.actualErrors)
+        );
 
         this.jsonMatchExtension.assertFileContents(
-                this.getClass().getSimpleName() + '.' + testName + ".warnings.json",
-                this.objectMapper.writeValueAsString(this.actualWarnings)
-            );
+            this.getClass().getSimpleName() + '.' + testName + ".warnings.json",
+            this.objectMapper.writeValueAsString(this.actualWarnings)
+        );
     }
 
     @Nonnull

@@ -106,11 +106,10 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
         ImmutableList<File> klassLocations = this.loadInputFiles();
 
         if (klassLocations.isEmpty()) {
-            String message =
-                "Could not find any files matching %s in: %s".formatted(
-                        KLASS_FILE_EXTENSION,
-                        this.mavenProject.getResources()
-                    );
+            String message = "Could not find any files matching %s in: %s".formatted(
+                KLASS_FILE_EXTENSION,
+                this.mavenProject.getResources()
+            );
             throw new MojoExecutionException(message);
         }
 
@@ -173,8 +172,10 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
         Resource resource
     ) {
         String directory = resource.getDirectory();
-        String message =
-            "Scanning source packages: %s in directory: %s".formatted(klassSourcePackages.makeString(), directory);
+        String message = "Scanning source packages: %s in directory: %s".formatted(
+            klassSourcePackages.makeString(),
+            directory
+        );
         this.getLog().info(message);
 
         klassSourcePackages
@@ -196,12 +197,11 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
             .collect(File::listFiles)
             .reject(Objects::isNull)
             .collect(ArrayAdapter::adapt)
-            .forEach(
-                files ->
-                    files
-                        .asLazy()
-                        .select(file -> KLASS_FILE_EXTENSION.matcher(file.getAbsolutePath()).matches())
-                        .into(resultKlassLocations)
+            .forEach(files ->
+                files
+                    .asLazy()
+                    .select(file -> KLASS_FILE_EXTENSION.matcher(file.getAbsolutePath()).matches())
+                    .into(resultKlassLocations)
             );
     }
 

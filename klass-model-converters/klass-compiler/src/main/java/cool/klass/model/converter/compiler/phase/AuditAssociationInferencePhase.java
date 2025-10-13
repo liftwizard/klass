@@ -100,8 +100,12 @@ public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
             stringBuilder.append(sourceCode);
         }
         if (needsLastUpdatedBy) {
-            String sourceCode =
-                this.getSourceCode(userClass, "lastUpdatedBy", AntlrDataTypeProperty::isLastUpdatedBy, false);
+            String sourceCode = this.getSourceCode(
+                userClass,
+                "lastUpdatedBy",
+                AntlrDataTypeProperty::isLastUpdatedBy,
+                false
+            );
             stringBuilder.append(sourceCode);
         }
 
@@ -118,12 +122,12 @@ public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
         );
 
         this.compilerState.runRootCompilerMacro(
-                classifierModifierState,
-                this,
-                sourceCode,
-                KlassParser::compilationUnit,
-                compilerPhases
-            );
+            classifierModifierState,
+            this,
+            sourceCode,
+            KlassParser::compilationUnit,
+            compilerPhases
+        );
     }
 
     @Nonnull

@@ -110,15 +110,14 @@ public class CompilerAnnotationHolder {
         @Nonnull ImmutableList<ParserRuleContext> offendingContexts,
         @Nonnull AnnotationSeverity severity
     ) {
-        RootCompilerAnnotation compilerAnnotation =
-            this.getCompilerAnnotation(
-                    annotationCode,
-                    message,
-                    element,
-                    surroundingElements,
-                    offendingContexts,
-                    severity
-                );
+        RootCompilerAnnotation compilerAnnotation = this.getCompilerAnnotation(
+            annotationCode,
+            message,
+            element,
+            surroundingElements,
+            offendingContexts,
+            severity
+        );
         this.compilerAnnotations.add(compilerAnnotation);
     }
 
@@ -172,14 +171,13 @@ public class CompilerAnnotationHolder {
     ) {
         return element
             .getMacroElement()
-            .map(
-                macroElement ->
-                    this.getCauseCompilerAnnotation(
-                            macroElement,
-                            macroElement.getSurroundingElements(),
-                            Lists.immutable.with(macroElement.getElementContext()),
-                            severity
-                        )
+            .map(macroElement ->
+                this.getCauseCompilerAnnotation(
+                    macroElement,
+                    macroElement.getSurroundingElements(),
+                    Lists.immutable.with(macroElement.getElementContext()),
+                    severity
+                )
             );
     }
 

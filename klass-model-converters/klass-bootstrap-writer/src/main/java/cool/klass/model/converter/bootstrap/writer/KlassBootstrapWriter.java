@@ -151,8 +151,9 @@ public class KlassBootstrapWriter {
             .flatCollect(this::handleDataTypeProperty, new DataTypePropertyList())
             .insertAll();
 
-        ImmutableList<DataTypeProperty> allDataTypeProperties =
-            this.domainModel.getClassifiers().flatCollect(Classifier::getDeclaredDataTypeProperties);
+        ImmutableList<DataTypeProperty> allDataTypeProperties = this.domainModel.getClassifiers().flatCollect(
+            Classifier::getDeclaredDataTypeProperties
+        );
         allDataTypeProperties.flatCollect(this::handlePropertyModifier, new PropertyModifierList()).insertAll();
         allDataTypeProperties
             .collect(this::handleMinLengthPropertyValidation)
@@ -188,24 +189,25 @@ public class KlassBootstrapWriter {
         ImmutableList<Url> urls = this.domainModel.getServiceGroups().flatCollect(ServiceGroup::getUrls);
         ImmutableList<Service> services = urls.flatCollect(Url::getServices);
         ImmutableList<Criteria> serviceCriteria = services
-            .flatCollect(
-                each ->
-                    Lists.immutable.with(
-                        each.getQueryCriteria(),
-                        each.getAuthorizeCriteria(),
-                        each.getValidateCriteria(),
-                        each.getConflictCriteria()
-                    )
+            .flatCollect(each ->
+                Lists.immutable.with(
+                    each.getQueryCriteria(),
+                    each.getAuthorizeCriteria(),
+                    each.getValidateCriteria(),
+                    each.getConflictCriteria()
+                )
             )
             .reject(Optional::isEmpty)
             .collect(Optional::get);
 
-        ImmutableList<Criteria> associationCriteria =
-            this.domainModel.getAssociations().collect(Association::getCriteria);
+        ImmutableList<Criteria> associationCriteria = this.domainModel.getAssociations().collect(
+            Association::getCriteria
+        );
         ImmutableList<Criteria> allCriteria = associationCriteria.newWithAll(serviceCriteria);
 
-        ImmutableList<AssociationEnd> associationEnds =
-            this.domainModel.getAssociations().flatCollect(Association::getAssociationEnds);
+        ImmutableList<AssociationEnd> associationEnds = this.domainModel.getAssociations().flatCollect(
+            Association::getAssociationEnds
+        );
         ImmutableList<ThisMemberReferencePath> orderByReferencePaths = associationEnds
             .collect(AssociationEnd::getOrderBy)
             .reject(Optional::isEmpty)
@@ -268,13 +270,12 @@ public class KlassBootstrapWriter {
                         .getOrderBy()
                         .map(OrderBy::getOrderByMemberReferencePaths)
                         .orElseGet(Lists.immutable::empty)
-                        .collect(
-                            memberReferencePath ->
-                                this.handleOrderByMemberReferencePath(
-                                        memberReferencePath,
-                                        associationEnd,
-                                        expressionValuesByExpressionValue
-                                    )
+                        .collect(memberReferencePath ->
+                            this.handleOrderByMemberReferencePath(
+                                memberReferencePath,
+                                associationEnd,
+                                expressionValuesByExpressionValue
+                            )
                         ),
                 new AssociationEndOrderByList()
             )
@@ -305,8 +306,9 @@ public class KlassBootstrapWriter {
             )
             .insertAll();
 
-        this.domainModel.getProjections()
-            .each(projection -> this.handleProjectionChildren(projection, rootProjectionByProjection.get(projection)));
+        this.domainModel.getProjections().each(projection ->
+            this.handleProjectionChildren(projection, rootProjectionByProjection.get(projection))
+        );
 
         this.domainModel.getServiceGroups().collect(this::handleServiceGroup, new ServiceGroupList()).insertAll();
 
@@ -320,14 +322,8 @@ public class KlassBootstrapWriter {
                 url ->
                     url
                         .getPathParameters()
-                        .collect(
-                            eachPathParameter ->
-                                this.handleUrlParameter(
-                                        url,
-                                        eachPathParameter,
-                                        "path",
-                                        bootstrappedParametersByParameter
-                                    )
+                        .collect(eachPathParameter ->
+                            this.handleUrlParameter(url, eachPathParameter, "path", bootstrappedParametersByParameter)
                         ),
                 new UrlParameterList()
             )
@@ -338,14 +334,8 @@ public class KlassBootstrapWriter {
                 url ->
                     url
                         .getQueryParameters()
-                        .collect(
-                            eachPathParameter ->
-                                this.handleUrlParameter(
-                                        url,
-                                        eachPathParameter,
-                                        "query",
-                                        bootstrappedParametersByParameter
-                                    )
+                        .collect(eachPathParameter ->
+                            this.handleUrlParameter(url, eachPathParameter, "query", bootstrappedParametersByParameter)
                         ),
                 new UrlParameterList()
             )
@@ -733,9 +723,9 @@ public class KlassBootstrapWriter {
 
                     for (ProjectionChild projectionChild : projectionReferenceProperty.getChildren()) {
                         KlassBootstrapWriter.this.handleElementProjection(
-                                projectionChild,
-                                bootstrappedProjectionElement
-                            );
+                            projectionChild,
+                            bootstrappedProjectionElement
+                        );
                     }
                 }
 

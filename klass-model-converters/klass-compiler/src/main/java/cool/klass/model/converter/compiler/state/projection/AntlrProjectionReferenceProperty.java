@@ -118,8 +118,9 @@ public class AntlrProjectionReferenceProperty extends AntlrProjectionParent impl
             this.referenceProperty.getElementBuilder()
         );
 
-        ImmutableList<ProjectionChildBuilder> projectionMemberBuilders =
-            this.children.collect(AntlrProjectionChild::build).toImmutable();
+        ImmutableList<ProjectionChildBuilder> projectionMemberBuilders = this.children.collect(
+            AntlrProjectionChild::build
+        ).toImmutable();
 
         this.projectionReferencePropertyBuilder.setChildBuilders(projectionMemberBuilders);
         return this.projectionReferencePropertyBuilder;
@@ -185,10 +186,10 @@ public class AntlrProjectionReferenceProperty extends AntlrProjectionParent impl
             } else {
                 String message =
                     "Nested projection nodes require a reference property, but found a data type property '%s.%s' with type '%s'.".formatted(
-                            parentClassifier.getName(),
-                            this.getName(),
-                            dataTypeProperty.getTypeName()
-                        );
+                        parentClassifier.getName(),
+                        this.getName(),
+                        dataTypeProperty.getTypeName()
+                    );
                 compilerAnnotationHolder.add("ERR_PRP_TYP", message, this);
             }
 

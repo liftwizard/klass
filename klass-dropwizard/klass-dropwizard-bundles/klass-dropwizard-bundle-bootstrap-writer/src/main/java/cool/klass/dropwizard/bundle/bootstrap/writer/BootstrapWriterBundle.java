@@ -42,8 +42,10 @@ public class BootstrapWriterBundle implements PrioritizedBundle {
 
     @Override
     public void runWithMdc(@Nonnull Object configuration, @Nonnull Environment environment) {
-        AbstractKlassConfiguration klassConfiguration =
-            this.safeCastConfiguration(AbstractKlassConfiguration.class, configuration);
+        AbstractKlassConfiguration klassConfiguration = this.safeCastConfiguration(
+            AbstractKlassConfiguration.class,
+            configuration
+        );
         boolean enabled = klassConfiguration.getBootstrapFactory().isEnabled();
         if (!enabled) {
             LOGGER.info("{} disabled.", this.getClass().getSimpleName());

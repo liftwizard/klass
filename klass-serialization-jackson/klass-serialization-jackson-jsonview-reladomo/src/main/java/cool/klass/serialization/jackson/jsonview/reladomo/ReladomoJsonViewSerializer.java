@@ -70,13 +70,11 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
         @Nonnull SerializerProvider serializers
     ) throws IOException {
         Class<?> activeViewClass = serializers.getActiveView();
-        Objects.requireNonNull(
-            activeViewClass,
-            () ->
-                String.format(
-                    "Could not find json serializer for %s. Usually this is caused by a missing @JsonView() annotation.",
-                    mithraObject.getClass().getCanonicalName()
-                )
+        Objects.requireNonNull(activeViewClass, () ->
+            String.format(
+                "Could not find json serializer for %s. Usually this is caused by a missing @JsonView() annotation.",
+                mithraObject.getClass().getCanonicalName()
+            )
         );
 
         if (!KlassJsonView.class.isAssignableFrom(activeViewClass)) {
@@ -133,19 +131,19 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
                 ProjectionDataTypePropertyReladomoNode projectionDataTypePropertyReladomoNode
             ) {
                 this.handleProjectionPrimitiveMember(
-                        jsonGenerator,
-                        mithraObject,
-                        projectionDataTypePropertyReladomoNode
-                    );
+                    jsonGenerator,
+                    mithraObject,
+                    projectionDataTypePropertyReladomoNode
+                );
             } else if (
                 projectionElementReladomoNode instanceof
                 ProjectionWithReferencePropertyReladomoNode projectionWithReferencePropertyReladomoNode
             ) {
                 this.handleProjectionWithReferenceProperty(
-                        jsonGenerator,
-                        mithraObject,
-                        projectionWithReferencePropertyReladomoNode
-                    );
+                    jsonGenerator,
+                    mithraObject,
+                    projectionWithReferencePropertyReladomoNode
+                );
             } else if (projectionElementReladomoNode instanceof SuperClassReladomoNode superClassReladomoNode) {
                 Classifier owningClassifier = superClassReladomoNode.getOwningClassifier();
                 Classifier type = superClassReladomoNode.getType();
@@ -234,13 +232,12 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
             // TODO: Add configuration to disable serialization of empty lists
             jsonGenerator.writeArrayFieldStart(associationEndName);
             try {
-                mithraList.forEachWithCursor(
-                    eachChildValue ->
-                        this.recurse(
-                                (MithraObject) eachChildValue,
-                                jsonGenerator,
-                                projectionWithReferencePropertyReladomoNode
-                            )
+                mithraList.forEachWithCursor(eachChildValue ->
+                    this.recurse(
+                        (MithraObject) eachChildValue,
+                        jsonGenerator,
+                        projectionWithReferencePropertyReladomoNode
+                    )
                 );
             } finally {
                 jsonGenerator.writeEndArray();

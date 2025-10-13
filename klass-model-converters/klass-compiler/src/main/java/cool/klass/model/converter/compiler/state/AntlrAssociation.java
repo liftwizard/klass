@@ -120,8 +120,10 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
     }
 
     public void enterAssociationEnd(@Nonnull AntlrAssociationEnd associationEnd) {
-        AntlrAssociationEnd duplicate =
-            this.associationEndsByContext.put(associationEnd.getElementContext(), associationEnd);
+        AntlrAssociationEnd duplicate = this.associationEndsByContext.put(
+            associationEnd.getElementContext(),
+            associationEnd
+        );
         if (duplicate != null) {
             throw new AssertionError();
         }
@@ -172,8 +174,9 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
             this.getPackageName()
         );
 
-        ImmutableList<AssociationEndBuilder> associationEndBuilders =
-            this.associationEnds.collect(AntlrAssociationEnd::build).toImmutable();
+        ImmutableList<AssociationEndBuilder> associationEndBuilders = this.associationEnds.collect(
+            AntlrAssociationEnd::build
+        ).toImmutable();
 
         this.associationBuilder.setAssociationEndBuilders(associationEndBuilders);
 
