@@ -48,7 +48,6 @@ public final class AnsiTokenColorizer {
         this.tokenCategoriesFromLexer = Objects.requireNonNull(tokenCategoriesFromLexer);
     }
 
-    @Nonnull
     public void colorizeText(Ansi ansi, Token token) {
         Optional<TokenCategory> tokenCategory = this.getTokenCategory(token);
         tokenCategory.ifPresent(justTokenCategory ->
