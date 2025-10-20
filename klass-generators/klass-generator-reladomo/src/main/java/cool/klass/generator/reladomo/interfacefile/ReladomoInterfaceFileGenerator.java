@@ -157,9 +157,7 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
 
 		asOfAttributeType.setName(propertyName);
 		asOfAttributeType.setToIsInclusive(false);
-		asOfAttributeType.setInfinityDate(
-			"[com.gs.fw.common.mithra.util.DefaultInfinityTimestamp.getDefaultInfinity()]"
-		);
+		asOfAttributeType.setInfinityDate("[cool.klass.data.store.reladomo.UtcInfinityTimestamp.getDefaultInfinity()]");
 		asOfAttributeType.setInfinityIsNull(false);
 		// TODO: futureExpiringRowsExist is a de-optimization that allows for future times, and also makes the end dates more understandable. Add a better explanation and allow this to be customizable.
 

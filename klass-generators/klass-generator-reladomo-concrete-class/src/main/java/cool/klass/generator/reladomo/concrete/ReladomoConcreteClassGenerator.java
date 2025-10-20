@@ -93,7 +93,7 @@ public class ReladomoConcreteClassGenerator {
 			+ "\n"
 			+ "import java.sql.Timestamp;\n"
 			+ "\n"
-			+ "import com.gs.fw.common.mithra.util.DefaultInfinityTimestamp;\n"
+			+ "import cool.klass.data.store.reladomo.UtcInfinityTimestamp;\n"
 			+ "import "
 			+ packageName
 			+ ".reladomo.readable."
@@ -128,7 +128,7 @@ public class ReladomoConcreteClassGenerator {
 			+ className
 			+ "()\n"
 			+ "    {\n"
-			+ "        this(DefaultInfinityTimestamp.getDefaultInfinity());\n"
+			+ "        this(UtcInfinityTimestamp.getDefaultInfinity());\n"
 			+ "    }\n"
 			+ derivedPropertiesSourceCode
 			+ "}\n"
