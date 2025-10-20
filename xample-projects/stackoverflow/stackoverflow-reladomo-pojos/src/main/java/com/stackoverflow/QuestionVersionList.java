@@ -28,8 +28,8 @@ public class QuestionVersionList extends QuestionVersionListAbstract {
 		super(initialSize);
 	}
 
-	public QuestionVersionList(Collection<?> collection) {
-		super(collection);
+	public QuestionVersionList(Collection c) {
+		super(c);
 	}
 
 	public QuestionVersionList(Operation operation) {

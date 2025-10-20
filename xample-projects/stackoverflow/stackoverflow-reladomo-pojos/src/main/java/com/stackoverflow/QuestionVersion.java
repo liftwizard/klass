@@ -18,7 +18,7 @@ package com.stackoverflow;
 
 import java.sql.Timestamp;
 
-import com.gs.fw.common.mithra.util.DefaultInfinityTimestamp;
+import cool.klass.data.store.reladomo.UtcInfinityTimestamp;
 
 public class QuestionVersion extends QuestionVersionAbstract {
 
@@ -29,6 +29,6 @@ public class QuestionVersion extends QuestionVersionAbstract {
 	}
 
 	public QuestionVersion() {
-		this(DefaultInfinityTimestamp.getDefaultInfinity());
+		this(UtcInfinityTimestamp.getDefaultInfinity());
 	}
 }

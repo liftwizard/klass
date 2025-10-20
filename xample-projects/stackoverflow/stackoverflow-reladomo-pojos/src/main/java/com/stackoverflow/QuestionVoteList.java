@@ -28,8 +28,8 @@ public class QuestionVoteList extends QuestionVoteListAbstract {
 		super(initialSize);
 	}
 
-	public QuestionVoteList(Collection<?> collection) {
-		super(collection);
+	public QuestionVoteList(Collection c) {
+		super(c);
 	}
 
 	public QuestionVoteList(Operation operation) {

@@ -28,8 +28,8 @@ public class UserList extends UserListAbstract {
 		super(initialSize);
 	}
 
-	public UserList(Collection<?> collection) {
-		super(collection);
+	public UserList(Collection c) {
+		super(c);
 	}
 
 	public UserList(Operation operation) {

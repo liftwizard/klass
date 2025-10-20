@@ -18,17 +18,17 @@ package com.stackoverflow;
 
 import java.sql.Timestamp;
 
-import com.gs.fw.common.mithra.util.DefaultInfinityTimestamp;
+import cool.klass.data.store.reladomo.UtcInfinityTimestamp;
 
 public class AnswerVersion extends AnswerVersionAbstract {
-
-	public AnswerVersion() {
-		this(DefaultInfinityTimestamp.getDefaultInfinity());
-	}
 
 	public AnswerVersion(Timestamp system) {
 		super(system);
 		// You must not modify this constructor. Mithra calls this internally.
 		// You can call this constructor. You can also add new constructors.
+	}
+
+	public AnswerVersion() {
+		this(UtcInfinityTimestamp.getDefaultInfinity());
 	}
 }
