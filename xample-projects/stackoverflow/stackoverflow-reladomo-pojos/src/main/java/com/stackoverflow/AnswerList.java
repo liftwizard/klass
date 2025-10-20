@@ -28,8 +28,8 @@ public class AnswerList extends AnswerListAbstract {
 		super(initialSize);
 	}
 
-	public AnswerList(Collection<?> collection) {
-		super(collection);
+	public AnswerList(Collection c) {
+		super(c);
 	}
 
 	public AnswerList(Operation operation) {

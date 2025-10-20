@@ -18,7 +18,7 @@ package cool.klass.xample.coverage;
 
 import java.sql.Timestamp;
 
-import com.gs.fw.common.mithra.util.DefaultInfinityTimestamp;
+import cool.klass.data.store.reladomo.UtcInfinityTimestamp;
 
 public class PropertiesRequiredVersion extends PropertiesRequiredVersionAbstract {
 
@@ -29,6 +29,6 @@ public class PropertiesRequiredVersion extends PropertiesRequiredVersionAbstract
 	}
 
 	public PropertiesRequiredVersion() {
-		this(DefaultInfinityTimestamp.getDefaultInfinity());
+		this(UtcInfinityTimestamp.getDefaultInfinity());
 	}
 }

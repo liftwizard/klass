@@ -28,8 +28,8 @@ public class QuestionList extends QuestionListAbstract {
 		super(initialSize);
 	}
 
-	public QuestionList(Collection<?> collection) {
-		super(collection);
+	public QuestionList(Collection c) {
+		super(c);
 	}
 
 	public QuestionList(Operation operation) {

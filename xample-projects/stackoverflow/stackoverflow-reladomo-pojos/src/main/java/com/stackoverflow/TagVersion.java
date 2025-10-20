@@ -18,7 +18,7 @@ package com.stackoverflow;
 
 import java.sql.Timestamp;
 
-import com.gs.fw.common.mithra.util.DefaultInfinityTimestamp;
+import cool.klass.data.store.reladomo.UtcInfinityTimestamp;
 
 public class TagVersion extends TagVersionAbstract {
 
@@ -29,6 +29,6 @@ public class TagVersion extends TagVersionAbstract {
 	}
 
 	public TagVersion() {
-		this(DefaultInfinityTimestamp.getDefaultInfinity());
+		this(UtcInfinityTimestamp.getDefaultInfinity());
 	}
 }
