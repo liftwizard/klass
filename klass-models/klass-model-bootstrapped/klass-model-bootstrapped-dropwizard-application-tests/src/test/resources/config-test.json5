@@ -92,7 +92,7 @@
       readOnlyByDefault: false,
       user: "sa",
       password: "",
-      url: "jdbc:p6spy:h2:mem:",
+      url: "jdbc:p6spy:h2:mem:;NON_KEYWORDS=USER",
       properties: {
         charSet: "UTF-8",
       },
@@ -105,7 +105,7 @@
       readOnlyByDefault: false,
       user: "sa",
       password: "",
-      url: "jdbc:p6spy:h2:tcp://localhost:9072/klass-bootstrapped-h2",
+      url: "jdbc:p6spy:h2:tcp://localhost:9072/klass-bootstrapped-h2;NON_KEYWORDS=USER",
       properties: {
         charSet: "UTF-8",
       },
@@ -118,7 +118,7 @@
       readOnlyByDefault: false,
       user: "sa",
       password: "",
-      url: "jdbc:p6spy:h2:file:./target/h2db/klass-bootstrapped-h2",
+      url: "jdbc:p6spy:h2:file:./target/h2db/klass-bootstrapped-h2;NON_KEYWORDS=USER",
       properties: {
         charSet: "UTF-8",
       },

@@ -51,7 +51,7 @@
       readOnlyByDefault: false,
       user: "sa",
       password: "",
-      url: "jdbc:p6spy:h2:file:./target/h2db/coverage-example-h2;query_timeout=600000",
+      url: "jdbc:p6spy:h2:file:./target/h2db/coverage-example-h2;NON_KEYWORDS=USER;query_timeout=600000",
       properties: {
         charSet: "UTF-8",
       },

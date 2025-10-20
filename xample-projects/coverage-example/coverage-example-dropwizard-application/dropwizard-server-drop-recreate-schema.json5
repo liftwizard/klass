@@ -67,7 +67,7 @@
       readOnlyByDefault: false,
       user: "sa",
       password: "",
-      url: "jdbc:p6spy:h2:tcp://localhost:9079/coverage-example-h2",
+      url: "jdbc:p6spy:h2:tcp://localhost:9079/coverage-example-h2;NON_KEYWORDS=USER",
       properties: {
         charSet: "UTF-8",
       },
