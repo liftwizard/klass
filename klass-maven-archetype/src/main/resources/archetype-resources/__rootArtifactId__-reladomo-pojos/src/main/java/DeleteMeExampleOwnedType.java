@@ -1,8 +1,7 @@
 package ${package};
 
 import java.sql.Timestamp;
-
-import com.gs.fw.common.mithra.util.DefaultInfinityTimestamp;
+import cool.klass.data.store.reladomo.UtcInfinityTimestamp;
 
 public class DeleteMeExampleOwnedType
         extends DeleteMeExampleOwnedTypeAbstract
@@ -16,6 +15,6 @@ public class DeleteMeExampleOwnedType
 
     public DeleteMeExampleOwnedType()
     {
-        this(DefaultInfinityTimestamp.getDefaultInfinity());
+        this(UtcInfinityTimestamp.getDefaultInfinity());
     }
 }

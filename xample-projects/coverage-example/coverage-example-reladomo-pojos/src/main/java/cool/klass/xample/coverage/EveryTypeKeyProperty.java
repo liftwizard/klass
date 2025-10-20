@@ -18,7 +18,7 @@ package cool.klass.xample.coverage;
 
 import java.sql.Timestamp;
 
-import com.gs.fw.common.mithra.util.DefaultInfinityTimestamp;
+import cool.klass.data.store.reladomo.UtcInfinityTimestamp;
 
 public class EveryTypeKeyProperty extends EveryTypeKeyPropertyAbstract {
 
@@ -29,6 +29,6 @@ public class EveryTypeKeyProperty extends EveryTypeKeyPropertyAbstract {
     }
 
     public EveryTypeKeyProperty() {
-        this(DefaultInfinityTimestamp.getDefaultInfinity());
+        this(UtcInfinityTimestamp.getDefaultInfinity());
     }
 }

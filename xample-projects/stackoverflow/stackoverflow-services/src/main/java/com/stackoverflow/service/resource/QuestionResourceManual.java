@@ -52,12 +52,11 @@ import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.gs.fw.common.mithra.MithraManagerProvider;
 import com.gs.fw.common.mithra.finder.Operation;
-import com.gs.fw.common.mithra.util.DefaultInfinityTimestamp;
-import com.gs.fw.common.mithra.util.MithraTimestamp;
 import com.stackoverflow.Question;
 import com.stackoverflow.QuestionFinder;
 import com.stackoverflow.QuestionList;
 import cool.klass.data.store.DataStore;
+import cool.klass.data.store.reladomo.UtcInfinityTimestamp;
 import cool.klass.deserializer.json.OperationMode;
 import cool.klass.deserializer.json.RequiredPropertiesValidator;
 import cool.klass.deserializer.json.type.ObjectNodeTypeCheckingValidator;
@@ -136,8 +135,7 @@ public class QuestionResourceManual {
         }
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
-        MithraTimestamp transactionTimestamp = DefaultInfinityTimestamp.getDefaultInfinity();
-        Instant transactionInstant = transactionTimestamp.toInstant();
+        Instant transactionInstant = UtcInfinityTimestamp.getDefaultInfinityInstant();
         Object persistentInstance = Iterate.getOnly(result);
 
         var responseBuilder = new KlassResponseBuilder(
@@ -274,8 +272,7 @@ public class QuestionResourceManual {
         Question persistentInstance = Iterate.getOnly(result);
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
-        MithraTimestamp transactionTimestamp = DefaultInfinityTimestamp.getDefaultInfinity();
-        Instant transactionInstant = transactionTimestamp.toInstant();
+        Instant transactionInstant = UtcInfinityTimestamp.getDefaultInfinityInstant();
 
         var responseBuilder = new KlassResponseBuilder(
             persistentInstance,
@@ -307,8 +304,7 @@ public class QuestionResourceManual {
         result.deepFetch(QuestionFinder.version());
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
-        MithraTimestamp transactionTimestamp = DefaultInfinityTimestamp.getDefaultInfinity();
-        Instant transactionInstant = transactionTimestamp.toInstant();
+        Instant transactionInstant = UtcInfinityTimestamp.getDefaultInfinityInstant();
 
         var responseBuilder = new KlassResponseBuilder(
             result,
@@ -338,8 +334,7 @@ public class QuestionResourceManual {
         result.deepFetch(QuestionFinder.version());
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
-        MithraTimestamp transactionTimestamp = DefaultInfinityTimestamp.getDefaultInfinity();
-        Instant transactionInstant = transactionTimestamp.toInstant();
+        Instant transactionInstant = UtcInfinityTimestamp.getDefaultInfinityInstant();
 
         var responseBuilder = new KlassResponseBuilder(
             result,
@@ -383,8 +378,7 @@ public class QuestionResourceManual {
         }
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
-        MithraTimestamp transactionTimestamp = DefaultInfinityTimestamp.getDefaultInfinity();
-        Instant transactionInstant = transactionTimestamp.toInstant();
+        Instant transactionInstant = UtcInfinityTimestamp.getDefaultInfinityInstant();
 
         var responseBuilder = new KlassResponseBuilder(
             Iterate.getOnly(result),
@@ -430,8 +424,7 @@ public class QuestionResourceManual {
         }
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
-        MithraTimestamp transactionTimestamp = DefaultInfinityTimestamp.getDefaultInfinity();
-        Instant transactionInstant = transactionTimestamp.toInstant();
+        Instant transactionInstant = UtcInfinityTimestamp.getDefaultInfinityInstant();
 
         var responseBuilder = new KlassResponseBuilder(
             Iterate.getOnly(result),
@@ -533,8 +526,7 @@ public class QuestionResourceManual {
         result.deepFetch(QuestionFinder.version());
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
-        MithraTimestamp transactionTimestamp = DefaultInfinityTimestamp.getDefaultInfinity();
-        Instant transactionInstant = transactionTimestamp.toInstant();
+        Instant transactionInstant = UtcInfinityTimestamp.getDefaultInfinityInstant();
 
         var responseBuilder = new KlassResponseBuilder(
             result,
@@ -560,8 +552,7 @@ public class QuestionResourceManual {
         QuestionList result = QuestionFinder.findMany(queryOperation);
 
         Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
-        MithraTimestamp transactionTimestamp = DefaultInfinityTimestamp.getDefaultInfinity();
-        Instant transactionInstant = transactionTimestamp.toInstant();
+        Instant transactionInstant = UtcInfinityTimestamp.getDefaultInfinityInstant();
 
         var responseBuilder = new KlassResponseBuilder(
             result,

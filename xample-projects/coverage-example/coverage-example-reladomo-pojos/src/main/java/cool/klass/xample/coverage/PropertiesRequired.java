@@ -20,7 +20,7 @@ import java.sql.Timestamp;
 
 import javax.annotation.Nonnull;
 
-import com.gs.fw.common.mithra.util.DefaultInfinityTimestamp;
+import cool.klass.data.store.reladomo.UtcInfinityTimestamp;
 
 public class PropertiesRequired extends PropertiesRequiredAbstract {
 
@@ -31,7 +31,7 @@ public class PropertiesRequired extends PropertiesRequiredAbstract {
     }
 
     public PropertiesRequired() {
-        this(DefaultInfinityTimestamp.getDefaultInfinity());
+        this(UtcInfinityTimestamp.getDefaultInfinity());
     }
 
     @Nonnull
