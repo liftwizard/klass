@@ -1,0 +1,14 @@
+package com.audit
+
+user TestUser systemTemporal
+{
+    userId: String id key userId maxLength(256) minLength(1);
+    name: String?;
+}
+
+class AuditedDocument systemTemporal audited
+{
+    id: Long id key;
+    title: String maxLength(500);
+    content: String?;
+}
