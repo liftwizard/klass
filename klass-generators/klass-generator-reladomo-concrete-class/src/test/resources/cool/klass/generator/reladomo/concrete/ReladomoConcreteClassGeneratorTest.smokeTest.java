@@ -2,7 +2,7 @@ package cool.klass.test;
 
 import java.sql.Timestamp;
 
-import com.gs.fw.common.mithra.util.DefaultInfinityTimestamp;
+import cool.klass.data.store.reladomo.UtcInfinityTimestamp;
 import cool.klass.test.reladomo.readable.ClassWithDerivedProperty;
 
 /**
@@ -21,7 +21,7 @@ public class ClassWithDerivedProperty
 
     public ClassWithDerivedProperty()
     {
-        this(DefaultInfinityTimestamp.getDefaultInfinity());
+        this(UtcInfinityTimestamp.getDefaultInfinity());
     }
 
     @Override
