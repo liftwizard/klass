@@ -1,7 +1,0 @@
-class cool.klass.xample.coverage.PropertiesRequired
-propertiesRequiredId, requiredString                          , requiredInteger, requiredLong, requiredDouble, requiredFloat, requiredBoolean, requiredInstant        , requiredLocalDate, systemFrom               , systemTo                 , createdById  , createdOn                , lastUpdatedById
-1                   , "PropertiesRequired requiredString 1 ☝", 1              , 100000000000, 1.0123456789  , 1.0123457    , true           , "1999-12-31 23:59:00.0", "1999-12-31"     , "1999-12-31 23:59:59.999", "9999-12-01 23:59:00.000", "test user 1", "1999-12-31 23:59:59.999.0", "test user 1"
-
-class cool.klass.xample.coverage.PropertiesRequiredVersion
-propertiesRequiredId, number, systemFrom                 , systemTo                 , createdById  , createdOn                , lastUpdatedById
-1                   , 1     , "1999-12-31 23:59:59.999.0", "9999-12-01 23:59:00.000", "test user 1", "1999-12-31 23:59:59.999.0", "test user 1"

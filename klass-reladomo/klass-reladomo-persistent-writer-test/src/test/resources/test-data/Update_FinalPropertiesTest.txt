@@ -1,3 +1,0 @@
-class cool.klass.xample.coverage.FinalProperties
-id, data
-1 , "FinalProperties data 1 ☝"
