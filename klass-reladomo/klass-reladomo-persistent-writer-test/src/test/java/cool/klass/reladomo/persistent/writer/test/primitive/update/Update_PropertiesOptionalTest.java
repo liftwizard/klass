@@ -24,6 +24,7 @@ import cool.klass.deserializer.json.OperationMode;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.reladomo.persistent.writer.test.primitive.PrimitiveValidatorTest;
+import io.liftwizard.reladomo.csv.test.extension.CsvTestDataExtension;
 import io.liftwizard.reladomo.test.extension.ReladomoExtensionBuilder;
 import org.eclipse.collections.api.factory.Maps;
 import org.eclipse.collections.api.map.ImmutableMap;
@@ -34,9 +35,17 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 public class Update_PropertiesOptionalTest extends AbstractUpdateValidatorTest implements PrimitiveValidatorTest {
 
 	@RegisterExtension
-	public final ReladomoExtensionBuilder reladomoTestExtension = new ReladomoExtensionBuilder()
-		.setRuntimeConfigurationPath("reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml")
-		.setTestDataFileNames("test-data/User.txt", "test-data/Update_PropertiesOptionalTest.txt");
+	public final ReladomoExtensionBuilder reladomoTestExtension =
+		new ReladomoExtensionBuilder().setRuntimeConfigurationPath(
+			"reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml"
+		);
+
+	@RegisterExtension
+	public final CsvTestDataExtension csvTestDataExtension = new CsvTestDataExtension(
+		"test-data/cool.klass.xample.coverage.User.csv",
+		"test-data/cool.klass.xample.coverage.PropertiesOptional.csv",
+		"test-data/cool.klass.xample.coverage.PropertiesOptionalVersion.csv"
+	);
 
 	private Object persistentInstance;
 
