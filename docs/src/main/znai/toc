@@ -1,0 +1,22 @@
+vision
+    overview
+    classes
+    associations
+    projections-and-services
+audit-data
+    overview
+    audit-model
+    audited-services
+bootstrapped-metamodel
+    overview
+    bootstrapped-model-data
+    bootstrapped-meta-model-data
+    dynamic-query
+    dynamic-ui
+    dynamic-model
+additional-features
+    overview
+alternative-implementations
+    overview
+related-works
+    overview
