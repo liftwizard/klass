@@ -207,6 +207,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-reladomo-csv-test-extension</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
         <!--</editor-fold>-->
 
         <dependency>

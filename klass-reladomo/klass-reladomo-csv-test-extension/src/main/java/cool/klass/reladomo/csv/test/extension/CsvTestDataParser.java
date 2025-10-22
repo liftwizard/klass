@@ -23,8 +23,10 @@ import java.io.Reader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -32,7 +34,9 @@ import javax.annotation.Nonnull;
 import com.gs.fw.common.mithra.MithraDataObject;
 import com.gs.fw.common.mithra.attribute.Attribute;
 import com.gs.fw.common.mithra.attribute.BooleanAttribute;
+import com.gs.fw.common.mithra.attribute.DateAttribute;
 import com.gs.fw.common.mithra.attribute.DoubleAttribute;
+import com.gs.fw.common.mithra.attribute.FloatAttribute;
 import com.gs.fw.common.mithra.attribute.IntegerAttribute;
 import com.gs.fw.common.mithra.attribute.LongAttribute;
 import com.gs.fw.common.mithra.attribute.StringAttribute;
@@ -150,6 +154,8 @@ public class CsvTestDataParser {
     private void setNullValue(@Nonnull MithraDataObject dataObject, @Nonnull Attribute<?, ?> attribute) {
         if (attribute instanceof TimestampAttribute timestampAttribute) {
             timestampAttribute.setTimestampValue(dataObject, null);
+        } else if (attribute instanceof DateAttribute dateAttribute) {
+            dateAttribute.setDateValue(dataObject, null);
         } else if (attribute instanceof StringAttribute stringAttribute) {
             stringAttribute.setStringValue(dataObject, null);
         } else if (attribute instanceof IntegerAttribute integerAttribute) {
@@ -158,6 +164,8 @@ public class CsvTestDataParser {
             longAttribute.setValueNull(dataObject);
         } else if (attribute instanceof DoubleAttribute doubleAttribute) {
             doubleAttribute.setValueNull(dataObject);
+        } else if (attribute instanceof FloatAttribute floatAttribute) {
+            floatAttribute.setValueNull(dataObject);
         } else if (attribute instanceof BooleanAttribute booleanAttribute) {
             booleanAttribute.setValueNull(dataObject);
         } else {
@@ -170,6 +178,10 @@ public class CsvTestDataParser {
             Instant instant = Instant.parse(value);
             Timestamp timestamp = Timestamp.from(instant);
             timestampAttribute.setTimestampValue(dataObject, timestamp);
+        } else if (attribute instanceof DateAttribute dateAttribute) {
+            LocalDate localDate = LocalDate.parse(value);
+            Date date = Date.valueOf(localDate);
+            dateAttribute.setDateValue(dataObject, date);
         } else if (attribute instanceof StringAttribute stringAttribute) {
             stringAttribute.setStringValue(dataObject, value);
         } else if (attribute instanceof IntegerAttribute integerAttribute) {
@@ -178,6 +190,8 @@ public class CsvTestDataParser {
             longAttribute.setLongValue(dataObject, Long.parseLong(value));
         } else if (attribute instanceof DoubleAttribute doubleAttribute) {
             doubleAttribute.setDoubleValue(dataObject, Double.parseDouble(value));
+        } else if (attribute instanceof FloatAttribute floatAttribute) {
+            floatAttribute.setFloatValue(dataObject, Float.parseFloat(value));
         } else if (attribute instanceof BooleanAttribute booleanAttribute) {
             booleanAttribute.setBooleanValue(dataObject, Boolean.parseBoolean(value));
         } else {

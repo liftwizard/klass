@@ -26,10 +26,10 @@ import cool.klass.deserializer.json.RequiredPropertiesValidator;
 import cool.klass.deserializer.json.type.ObjectNodeTypeCheckingValidator;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import cool.klass.reladomo.csv.test.extension.CsvTestDataExtension;
 import cool.klass.reladomo.persistent.writer.IncomingCreateDataModelValidator;
 import cool.klass.reladomo.persistent.writer.MutationContext;
 import cool.klass.reladomo.persistent.writer.test.AbstractValidatorTest;
-import io.liftwizard.reladomo.csv.test.extension.CsvTestDataExtension;
 import io.liftwizard.reladomo.test.extension.ReladomoExtensionBuilder;
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -39,10 +39,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public abstract class AbstractCreateValidatorTest extends AbstractValidatorTest {
 
 	@RegisterExtension
-	public final ReladomoExtensionBuilder reladomoTestExtension =
-		new ReladomoExtensionBuilder().setRuntimeConfigurationPath(
-			"reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml"
-		);
+	public final ReladomoExtensionBuilder reladomoTestExtension = new ReladomoExtensionBuilder()
+		.setRuntimeConfigurationPath("reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml");
 
 	@RegisterExtension
 	public final CsvTestDataExtension csvTestDataExtension = new CsvTestDataExtension(
