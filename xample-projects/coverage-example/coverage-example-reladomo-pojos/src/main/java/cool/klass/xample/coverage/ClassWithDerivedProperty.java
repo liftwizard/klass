@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Craig Motlin
+ * Copyright 2025 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package cool.klass.xample.coverage;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 public class ClassWithDerivedProperty extends ClassWithDerivedPropertyAbstract {
 
@@ -55,7 +56,7 @@ public class ClassWithDerivedProperty extends ClassWithDerivedPropertyAbstract {
     }
 
     public LocalDate getDerivedRequiredLocalDate() {
-        return LocalDate.now();
+        return LocalDate.now(ZoneId.of("UTC"));
     }
 
     public String getDerivedOptionalString() {
@@ -87,6 +88,6 @@ public class ClassWithDerivedProperty extends ClassWithDerivedPropertyAbstract {
     }
 
     public LocalDate getDerivedOptionalLocalDate() {
-        return LocalDate.now();
+        return LocalDate.now(ZoneId.of("UTC"));
     }
 }
