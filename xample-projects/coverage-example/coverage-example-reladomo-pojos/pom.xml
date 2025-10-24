@@ -29,20 +29,17 @@
 
     <dependencies>
 
+        <!--region Klass compile dependencies -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-reladomo-utc-infinity-timestamp</artifactId>
+            <version>${project.version}</version>
         </dependency>
+        <!--endregion-->
 
         <dependency>
             <groupId>com.goldmansachs.reladomo</groupId>
             <artifactId>reladomo</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>cool.klass</groupId>
-            <artifactId>klass-data-store-reladomo</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
         <dependency>
@@ -59,6 +56,11 @@
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
 
         <dependency>

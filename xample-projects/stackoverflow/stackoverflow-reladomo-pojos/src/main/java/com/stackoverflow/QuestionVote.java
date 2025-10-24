@@ -18,7 +18,7 @@ package com.stackoverflow;
 
 import java.sql.Timestamp;
 
-import cool.klass.data.store.reladomo.UtcInfinityTimestamp;
+import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
 
 public class QuestionVote extends QuestionVoteAbstract {
 

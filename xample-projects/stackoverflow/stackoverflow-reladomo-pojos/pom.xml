@@ -34,15 +34,17 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
 
+        <!--region Klass compile dependencies -->
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-reladomo-utc-infinity-timestamp</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--endregion-->
+
         <dependency>
             <groupId>com.goldmansachs.reladomo</groupId>
             <artifactId>reladomo</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>cool.klass</groupId>
-            <artifactId>klass-data-store-reladomo</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
         <dependency>
