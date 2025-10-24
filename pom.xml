@@ -267,6 +267,7 @@
                                 <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-graphql-schema</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-liquibase-schema</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-reladomo-pojos</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass:klass-reladomo-utc-infinity-timestamp</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass:klass-syntax-css-class</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-auth-filter</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-connection-manager-holder</ignoredUnusedDeclaredDependency>

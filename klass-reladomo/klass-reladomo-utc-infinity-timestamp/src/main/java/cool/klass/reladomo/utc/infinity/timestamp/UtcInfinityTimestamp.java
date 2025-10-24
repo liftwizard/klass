@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package cool.klass.data.store.reladomo;
+package cool.klass.reladomo.utc.infinity.timestamp;
 
 import java.time.Instant;
 import java.util.Calendar;

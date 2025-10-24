@@ -41,6 +41,12 @@
         </dependency>
 
         <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-reladomo-utc-infinity-timestamp</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.goldmansachs.reladomo</groupId>
             <artifactId>reladomo</artifactId>
         </dependency>
