@@ -93,7 +93,7 @@ public class ReladomoConcreteClassGenerator {
 			+ "\n"
 			+ "import java.sql.Timestamp;\n"
 			+ "\n"
-			+ "import cool.klass.data.store.reladomo.UtcInfinityTimestamp;\n"
+			+ "import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;\n"
 			+ "import "
 			+ packageName
 			+ ".reladomo.readable."

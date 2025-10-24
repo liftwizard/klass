@@ -70,6 +70,7 @@ import cool.klass.reladomo.persistent.writer.IncomingUpdateDataModelValidator;
 import cool.klass.reladomo.persistent.writer.MutationContext;
 import cool.klass.reladomo.persistent.writer.PersistentCreator;
 import cool.klass.reladomo.persistent.writer.PersistentReplacer;
+import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
 import cool.klass.serialization.jackson.response.KlassResponseBuilder;
 import io.dropwizard.auth.Auth;
 import org.eclipse.collections.api.factory.Lists;

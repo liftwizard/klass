@@ -2,7 +2,7 @@ package cool.klass.test;
 
 import java.sql.Timestamp;
 
-import cool.klass.data.store.reladomo.UtcInfinityTimestamp;
+import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
 import cool.klass.test.reladomo.readable.ClassWithDerivedProperty;
 
 /**

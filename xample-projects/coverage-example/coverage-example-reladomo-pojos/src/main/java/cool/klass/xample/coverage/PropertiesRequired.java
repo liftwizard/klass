@@ -20,22 +20,22 @@ import java.sql.Timestamp;
 
 import javax.annotation.Nonnull;
 
-import cool.klass.data.store.reladomo.UtcInfinityTimestamp;
+import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
 
 public class PropertiesRequired extends PropertiesRequiredAbstract {
 
-	public PropertiesRequired(Timestamp system) {
-		super(system);
-		// You must not modify this constructor. Mithra calls this internally.
-		// You can call this constructor. You can also add new constructors.
-	}
+    public PropertiesRequired(Timestamp system) {
+        super(system);
+        // You must not modify this constructor. Mithra calls this internally.
+        // You can call this constructor. You can also add new constructors.
+    }
 
-	public PropertiesRequired() {
-		this(UtcInfinityTimestamp.getDefaultInfinity());
-	}
+    public PropertiesRequired() {
+        this(UtcInfinityTimestamp.getDefaultInfinity());
+    }
 
-	@Nonnull
-	public String getRequiredDerived() {
-		return "cool.klass.xample.coverage.PropertiesRequired.getRequiredDerived";
-	}
+    @Nonnull
+    public String getRequiredDerived() {
+        return "cool.klass.xample.coverage.PropertiesRequired.getRequiredDerived";
+    }
 }
