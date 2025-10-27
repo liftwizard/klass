@@ -24,7 +24,7 @@ markdownlint:
 
 # Run all formatting tools for pre-commit
 precommit: mvn
-    uv tool run pre-commit run
+    uv tool run pre-commit run --all-files
 
 # mvn archetype
 @archetype MVN=default_mvn:
