@@ -47,6 +47,7 @@
         <module>klass-generator-reladomo</module>
         <module>klass-generator-relational-schema</module>
         <module>klass-generator-service-resources</module>
+        <module>klass-generator-swagger</module>
         <module>klass-generator-uml-nomnoml</module>
     </modules>
 
