@@ -30,6 +30,7 @@
     <modules>
         <module>klass-dropwizard-bundle-bootstrap-writer</module>
         <module>klass-dropwizard-bundle-sample-data</module>
+        <module>klass-dropwizard-bundle-redoc</module>
         <module>klass-dropwizard-bundle-swagger-ui</module>
     </modules>
 
