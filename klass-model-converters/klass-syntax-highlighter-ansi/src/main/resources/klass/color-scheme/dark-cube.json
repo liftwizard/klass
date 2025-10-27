@@ -26,8 +26,6 @@
         "foreground": 242
       }
     },
-
-    /* Keywords */
     {
       "name": "keyword",
       "style": {
@@ -162,8 +160,6 @@
         "foreground": 172
       }
     },
-
-    /* Verbs */
     {
       "name": "verb",
       "style": {
@@ -205,8 +201,6 @@
         "background": 52
       }
     },
-
-    /* Modifiers */
     {
       "name": "modifier",
       "style": {
@@ -255,8 +249,6 @@
         "foreground": 72
       }
     },
-
-    /* Identifiers */
     {
       "name": "identifier",
       "style": {
@@ -377,8 +369,6 @@
         "foreground": 150
       }
     },
-
-    /* References */
     {
       "name": "enumerationReference",
       "style": {
@@ -439,8 +429,6 @@
         "foreground": 189
       }
     },
-
-    /* Literals */
     {
       "name": "literal",
       "style": {
@@ -489,8 +477,6 @@
         "foreground": 80
       }
     },
-
-    /* Punctuation */
     {
       "name": "punctuation",
       "style": {
@@ -584,8 +570,6 @@
         "foreground": 254
       }
     },
-
-    /* Operators */
     {
       "name": "operator",
       "style": {

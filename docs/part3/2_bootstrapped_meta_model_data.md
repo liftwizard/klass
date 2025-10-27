@@ -72,4 +72,3 @@ Since the metamodel is part of the model, the bootstrap process populates metamo
   "parameterizedProperties": []
 }
 ```
-

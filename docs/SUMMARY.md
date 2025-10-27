@@ -30,4 +30,3 @@ Summary
   * [OpenAPI](part6/README.md#openapi)
   * [Spring Boot / JHipster](part6/README.md#spring-boot--jhipster)
   * [GraphQL](part6/README.md#graphql)
-

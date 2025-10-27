@@ -223,4 +223,3 @@ The Klass metamodel is part of every Klass model. When a Klass application start
   ]
 }
 ```
-

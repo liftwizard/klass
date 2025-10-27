@@ -22,4 +22,3 @@ Klass treats these as separate features, which build upon each other.
 * **Versioning** adds simple version numbers (1, 2, 3, ...) to each active time range. Versioned data must be temporally milestoned.
 * **Auditing** adds tracking of the created-by author, last-updated-by author, and created-on time. Audited data must be temporally milestoned.
 * **Optimistic locking** enhances "mutating" services to expect a version parameter, and to fail with a helpful error message on stale versions. Optimistically locked data must be versioned.
-

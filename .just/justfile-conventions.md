@@ -40,4 +40,3 @@ In this example, we only highlight one of the two variables. It's the shorter an
 ```bash
 echo "Skipping due to [{{ANSI_YELLOW}}${word}{{ANSI_DEFAULT}}] in commit: '${COMMIT_MESSAGE}'"
 ```
-

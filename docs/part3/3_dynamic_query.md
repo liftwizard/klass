@@ -31,4 +31,3 @@ If there's an existing projection that you want to reuse, you can just refer to 
   "projection": "QuestionReadProjection"
 }
 ```
-

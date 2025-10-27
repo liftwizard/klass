@@ -214,4 +214,3 @@ Book.xml
 
 </MithraObject>
 ```
-

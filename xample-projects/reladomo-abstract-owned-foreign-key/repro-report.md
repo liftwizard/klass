@@ -169,4 +169,3 @@ ConcreteChild.xml
             trim="false" />
 </MithraObject>
 ```
-
