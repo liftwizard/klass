@@ -171,6 +171,29 @@
 
     <profiles>
 
+        <!--region No phase-->
+        <profile>
+            <!--Rules that are meant to always pass. They can run in CI with dryRun, or one-off for rewrites.-->
+            <id>rewrite-maven-plugin</id>
+
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.openrewrite.maven</groupId>
+                            <artifactId>rewrite-maven-plugin</artifactId>
+                            <configuration>
+                                <activeRecipes combine.children="append">
+                                    <recipe>cool.klass.UpdateCopyrightYear</recipe>
+                                </activeRecipes>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <!--endregion No phase-->
+
         <!--region Phase 1: validate-->
         <profile>
             <id>maven-enforcer-plugin</id>
