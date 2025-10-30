@@ -32,4 +32,9 @@
   // Line length where Prettier will try to wrap
   // Default: 80
   printWidth: 120,
+
+  // Experimental: Put binary operators at the start of lines when wrapping
+  // This is an experimental feature that may be removed in future versions
+  // Options: "end" (default) | "start"
+  experimentalOperatorPosition: "start",
 }
