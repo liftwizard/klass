@@ -1,5 +1,4 @@
-Klass
-=====
+# Klass
 
 ![Maven Central](https://img.shields.io/maven-central/v/cool.klass/klass)
 ![GitHub](https://img.shields.io/github/license/motlin/klass)
@@ -12,7 +11,6 @@ Klass
 
 Klass is a rapid application development framework for Java with first class support for temporal data.
 
-Documentation
--------------
+## Documentation
 
 See the full docs at <https://klass.cool/>

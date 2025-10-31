@@ -1,0 +1,8 @@
+*.graphqls
+**/*.jsonc
+**/*.json
+**/*.just
+**/pom.xml
+.prettierignore
+**/*-min.css
+xample-projects/*/repro-report.md
