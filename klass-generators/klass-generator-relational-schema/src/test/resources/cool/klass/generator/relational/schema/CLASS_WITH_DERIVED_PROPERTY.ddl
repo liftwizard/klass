@@ -4,3 +4,4 @@ create table CLASS_WITH_DERIVED_PROPERTY
 (
     key varchar(255) not null
 );
+
