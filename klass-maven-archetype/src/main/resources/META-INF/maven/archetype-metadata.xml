@@ -117,8 +117,8 @@
                     <directory></directory>
                     <includes>
                         <include>gitignore</include>
-                        <include>config.json5</include>
-                        <include>src/test/resources/config-test.json5</include>
+                        <include>config.json5.vm</include>
+                        <include>src/test/resources/config-test.json5.vm</include>
                         <include>README.md</include>
                     </includes>
                 </fileSet>
