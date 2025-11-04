@@ -516,7 +516,7 @@ jobs:
               run: just _check-local-modifications
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     biome-format:
