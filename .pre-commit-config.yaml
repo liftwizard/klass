@@ -35,4 +35,5 @@ repos:
             name: prettier
             entry: npx prettier --write
             language: system
-            types_or: [yaml, markdown, html]
+            types_or: [json5, yaml, markdown, html]
+            exclude: "^\\.idea/|/target/"
