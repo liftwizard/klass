@@ -65,4 +65,7 @@
   // This is an experimental feature that may be removed in future versions
   // Options: "end" (default) | "start"
   experimentalOperatorPosition: "start",
+
+  // Plugins for language support
+  plugins: ["prettier-plugin-java"],
 }

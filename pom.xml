@@ -277,6 +277,41 @@
         </profile>
         <!--endregion-->
 
+        <profile>
+            <id>spotless-prettier-java-sort-imports</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.diffplug.spotless</groupId>
+                        <artifactId>spotless-maven-plugin</artifactId>
+                        <configuration>
+                            <java>
+                                <toggleOffOn>
+                                    <off>@formatter:off</off>
+                                    <on>@formatter:on</on>
+                                </toggleOffOn>
+
+                                <prettier>
+                                    <configFile>${maven.multiModuleProjectDirectory}/.prettierrc.json5</configFile>
+                                    <devDependencies>
+                                        <prettier>3.3.2</prettier>
+                                        <prettier-plugin-java>2.7.4</prettier-plugin-java>
+                                    </devDependencies>
+                                </prettier>
+
+                                <importOrder>
+                                    <order>java,javax,,\#java|\#javax,\#</order>
+                                </importOrder>
+
+                                <removeUnusedImports />
+                            </java>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
 
 </project>
