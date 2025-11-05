@@ -32,4 +32,9 @@
   // Line length where Prettier will try to wrap
   // Default: 80
   printWidth: 120,
+
+  // How to wrap prose in markdown
+  // Default: "preserve"
+  // Options: "always" | "never" | "preserve"
+  proseWrap: "preserve",
 }
