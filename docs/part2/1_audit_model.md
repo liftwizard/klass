@@ -1,5 +1,4 @@
-Audit Model
------------
+## Audit Model
 
 All four features are activated using classifier modifiers.
 
@@ -128,4 +127,3 @@ class QuestionVersion
 }
 
 ```
-

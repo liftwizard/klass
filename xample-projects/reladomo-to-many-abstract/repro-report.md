@@ -1,5 +1,4 @@
-ClassCastException from generated code when using inheritance
-=============================================================
+# ClassCastException from generated code when using inheritance
 
 I'm getting a `ClassCastException` from within Reladomo-generated code when invoking getters and setters on a subclass. I haven't used inheritance before, so it's likely I'm doing something wrong. In that case I'd expect an error message rather than a runtime exception.
 
@@ -105,8 +104,7 @@ protected MithraDataObject zSetString(StringAttribute attr, String newValue, boo
 
 Is this a bug? If not, what am I doing wrong? Is there a missing error message?
 
-xml definitions
----------------
+## xml definitions
 
 AbstractChapter.xml
 
@@ -214,4 +212,3 @@ Book.xml
 
 </MithraObject>
 ```
-
