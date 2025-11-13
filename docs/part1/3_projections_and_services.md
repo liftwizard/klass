@@ -21,7 +21,7 @@ service QuestionResource
 * We'll be able to `GET` `/api/question/1` to fetch the Question with id 1.
 * The response will be json.
 * The return multiplicity is one, so the response body will be a json object, not a json array.
-* The criteria matches `Question.id` against the path parameter `questionId`, like the sql `where q.id = ?`
+* The criterion matches `Question.id` against the path parameter `questionId`, like the sql `where q.id = ?`
 * The projection defines how much data will get serialized in the response body.
 
 ### Projection

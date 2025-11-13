@@ -94,7 +94,7 @@ He can GET http://.../api/question/1 to get the full body.
 
 ### Read by version
 
-To read old versions, we can enhance the read service with an *optional* version parameter and an optional criteria.
+To read old versions, we can enhance the read service with an *optional* version parameter and an optional criterion.
 
 ```klass
 service QuestionResource
