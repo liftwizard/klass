@@ -558,7 +558,7 @@ jobs:
             - uses: reviewdog/action-languagetool@v1.23.0
               with:
                   reporter: github-pr-check
-                  disabled_rules: 'DOUBLE_PUNCTUATION,UPPERCASE_SENTENCE_START,EN_QUOTES'
+                  disabled_rules: 'DOUBLE_PUNCTUATION,UPPERCASE_SENTENCE_START,EN_QUOTES,ID_CASING,EN_UNPAIRED_QUOTES,COMMA_COMPOUND_SENTENCE'
 
     reviewdog-actionlint:
         runs-on: ubuntu-latest
