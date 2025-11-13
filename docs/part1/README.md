@@ -1,5 +1,4 @@
-Scope
------
+## Scope
 
 This document covers long-term vision. A shorter-term, **minimal-viable-product** is discussed [here](../part5/README.md).
 
@@ -11,13 +10,11 @@ Business value, rationale, justification are discussed [here](TODO).
 
 Internal design is discussed [here](TODO).
 
-Running example
----------------
+## Running example
 
 To demonstrate the framework's capabilities, we will walk through building a realistic subset of Stack Overflow functionality.
 
-Getting started
----------------
+## Getting started
 
 First, run the maven archetype.
 
@@ -35,8 +32,7 @@ mvn archetype:generate \
 
 This command creates a new project in `./stackoverflow/`. The project compiles and runs, but doesn't yet do anything interesting.
 
-Model
------
+## Model
 
 The model was generated in `./stackoverflow/stackoverflow-domain-model/src/main/resources/com/stackoverflow/stackoverflow.klass`. It is nearly empty except for the package declaration.
 

@@ -1,5 +1,4 @@
-Projections and Services
-------------------------
+## Projections and Services
 
 Let's add the service to fetch a question by its id.
 
@@ -17,12 +16,12 @@ service QuestionResource
 }
 ```
 
-* Read operations translate to the `GET` verb when using http.
-* We'll be able to `GET` `/api/question/1` to fetch the Question with id 1.
-* The response will be json.
-* The return multiplicity is one, so the response body will be a json object, not a json array.
-* The criterion matches `Question.id` against the path parameter `questionId`, like the sql `where q.id = ?`
-* The projection defines how much data will get serialized in the response body.
+- Read operations translate to the `GET` verb when using http.
+- We'll be able to `GET` `/api/question/1` to fetch the Question with id 1.
+- The response will be json.
+- The return multiplicity is one, so the response body will be a json object, not a json array.
+- The criterion matches `Question.id` against the path parameter `questionId`, like the sql `where q.id = ?`
+- The projection defines how much data will get serialized in the response body.
 
 ### Projection
 
@@ -51,19 +50,19 @@ Since the service definition includes `format: json`, the response body will mat
 
 ```json
 {
-  "id": 1,
-  "title": "Question title 1",
-  "body": "Question body 1",
-  "answers": [
-    {
-      "id": 1,
-      "body": "Answer body 1"
-    },
-    {
-      "id": 2,
-      "body": "Answer body 2"
-    }
-  ]
+    "id": 1,
+    "title": "Question title 1",
+    "body": "Question body 1",
+    "answers": [
+        {
+            "id": 1,
+            "body": "Answer body 1"
+        },
+        {
+            "id": 2,
+            "body": "Answer body 2"
+        }
+    ]
 }
 ```
 

@@ -1,12 +1,11 @@
-Bootstrapped Metamodel
-======================
+# Bootstrapped Metamodel
 
 Klass has a metamodel; a model of models. In fact, it has several representations of the same metamodel.
 
-* The Abstract Syntax Tree used internally by the compiler.
-* The in-memory DomainModel object returned upon successful compilation.
-* The bootstrapped metamodel.
-* etc.
+- The Abstract Syntax Tree used internally by the compiler.
+- The in-memory DomainModel object returned upon successful compilation.
+- The bootstrapped metamodel.
+- etc.
 
 The bootstrapped metamodel is expressed like a regular model. The first few meta-types are defined like this:
 
@@ -131,4 +130,3 @@ service KlassResource on Klass
         }
 }
 ```
-

@@ -1,5 +1,4 @@
-Audited Services
-----------------
+## Audited Services
 
 Stack Overflow allows collaborative editing. Let's walk through an example where Alice creates a new question and Bob edits the text. Since all audit features are on, both versions of the question are retained and can be fetched through services.
 
@@ -9,8 +8,8 @@ Alice POSTs a new question to `/api/question` on December 31.
 
 ```json
 {
-  "title": "example title",
-  "body": "example body"
+    "title": "example title",
+    "body": "example body"
 }
 ```
 
@@ -20,31 +19,31 @@ She can GET http://.../api/question/1 to get the full body.
 
 ```json
 {
-  "id": 1,
-  "title": "example title",
-  "body": "example body",
-  "systemFrom": "2017-12-31T23:59:59.000Z",
-  "systemTo": null,
-  "createdById": "Alice",
-  "createdOn": "2017-12-31T23:59:59.000Z",
-  "lastUpdatedById": "Alice",
-  "answers": [],
-  "version": {
-    "number": 1,
+    "id": 1,
+    "title": "example title",
+    "body": "example body",
     "systemFrom": "2017-12-31T23:59:59.000Z",
     "systemTo": null,
     "createdById": "Alice",
     "createdOn": "2017-12-31T23:59:59.000Z",
     "lastUpdatedById": "Alice",
-  }
+    "answers": [],
+    "version": {
+        "number": 1,
+        "systemFrom": "2017-12-31T23:59:59.000Z",
+        "systemTo": null,
+        "createdById": "Alice",
+        "createdOn": "2017-12-31T23:59:59.000Z",
+        "lastUpdatedById": "Alice"
+    }
 }
 ```
 
-* `id` was set to 1. The next created question will be 2. The next Answer will be 1. Each type gets its own sequence.
-* `systemFrom` was set to December 31. `systemTo` is null, indicating that there is no phase-out time; that this data is currently active.
-* `createdOn` matches `systemFrom` for now.
-* `createdById` matches `lastUpdatedById` for now.
-* The audit properties appear duplicated on the version. This explained later in [composite writes](TODO).
+- `id` was set to 1. The next created question will be 2. The next Answer will be 1. Each type gets its own sequence.
+- `systemFrom` was set to December 31. `systemTo` is null, indicating that there is no phase-out time; that this data is currently active.
+- `createdOn` matches `systemFrom` for now.
+- `createdById` matches `lastUpdatedById` for now.
+- The audit properties appear duplicated on the version. This explained later in [composite writes](TODO).
 
 ### Update
 
@@ -52,11 +51,11 @@ Bob PUTs a new version to `/api/question/1` the next day, on January 1.
 
 ```json
 {
-  "title": "edited title",
-  "body": "edited body",
-  "version": {
-    "number": 1,
-  }
+    "title": "edited title",
+    "body": "edited body",
+    "version": {
+        "number": 1
+    }
 }
 ```
 
@@ -66,35 +65,35 @@ He can GET http://.../api/question/1 to get the full body.
 
 ```json
 {
-  "id": 1,
-  "title": "edited title",
-  "body": "edited body",
-  "systemFrom": "2018-01-01T23:59:59.000Z",
-  "systemTo": null,
-  "createdById": "Alice",
-  "createdOn": "2017-12-31T23:59:59.000Z",
-  "lastUpdatedById": "Bob",
-  "answers": [],
-  "version": {
-    "number": 2,
+    "id": 1,
+    "title": "edited title",
+    "body": "edited body",
     "systemFrom": "2018-01-01T23:59:59.000Z",
     "systemTo": null,
     "createdById": "Alice",
     "createdOn": "2017-12-31T23:59:59.000Z",
     "lastUpdatedById": "Bob",
-  }
+    "answers": [],
+    "version": {
+        "number": 2,
+        "systemFrom": "2018-01-01T23:59:59.000Z",
+        "systemTo": null,
+        "createdById": "Alice",
+        "createdOn": "2017-12-31T23:59:59.000Z",
+        "lastUpdatedById": "Bob"
+    }
 }
 ```
 
-* `systemFrom` was set to January 1. `systemTo` is null again.
-* Version 1 (which we'll look at next) had its `systemTo` updated to the same time, January 1.
-* The version number was updated to 2.
-* `lastUpdatedById` was updated to Bob.
-* `createdById` and `createdOn` are unchanged.
+- `systemFrom` was set to January 1. `systemTo` is null again.
+- Version 1 (which we'll look at next) had its `systemTo` updated to the same time, January 1.
+- The version number was updated to 2.
+- `lastUpdatedById` was updated to Bob.
+- `createdById` and `createdOn` are unchanged.
 
 ### Read by version
 
-To read old versions, we can enhance the read service with an *optional* version parameter and an optional criterion.
+To read old versions, we can enhance the read service with an _optional_ version parameter and an optional criterion.
 
 ```klass
 service QuestionResource
@@ -114,23 +113,23 @@ Leaving off the version query parameter would give the latest version. But now w
 
 ```json
 {
-  "id": 1,
-  "title": "example title",
-  "body": "example body",
-  "systemFrom": "2017-12-31T23:59:59.000Z",
-  "systemTo": "2018-01-01T23:59:59.000Z",
-  "createdById": "Alice",
-  "createdOn": "2017-12-31T23:59:59.000Z",
-  "lastUpdatedById": "Alice",
-  "answers": [],
-  "version": {
-    "number": 1,
+    "id": 1,
+    "title": "example title",
+    "body": "example body",
     "systemFrom": "2017-12-31T23:59:59.000Z",
     "systemTo": "2018-01-01T23:59:59.000Z",
     "createdById": "Alice",
     "createdOn": "2017-12-31T23:59:59.000Z",
     "lastUpdatedById": "Alice",
-  }
+    "answers": [],
+    "version": {
+        "number": 1,
+        "systemFrom": "2017-12-31T23:59:59.000Z",
+        "systemTo": "2018-01-01T23:59:59.000Z",
+        "createdById": "Alice",
+        "createdOn": "2017-12-31T23:59:59.000Z",
+        "lastUpdatedById": "Alice"
+    }
 }
 ```
 

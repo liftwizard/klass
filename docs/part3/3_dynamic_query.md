@@ -1,5 +1,4 @@
-Dynamic Query
--------------
+## Dynamic Query
 
 In a production application, we only enable modeled services. In development, it can be useful to allow dynamic queries.
 
@@ -9,12 +8,12 @@ Say we wanted to query for all questions that start with the words "Why do". We 
 
 ```json
 {
-  "className": "Question",
-  "multiplicity": "many",
-  "criteria": "this.title startsWith \"Why do\"",
-  "projection": {
-    "title": "Question title"
-  }
+    "className": "Question",
+    "multiplicity": "many",
+    "criteria": "this.title startsWith \"Why do\"",
+    "projection": {
+        "title": "Question title"
+    }
 }
 ```
 
@@ -26,9 +25,8 @@ If there's an existing projection that you want to reuse, you can just refer to 
 
 ```json
 {
-  "multiplicity": "many",
-  "criteria": "this.title startsWith \"Why do\"",
-  "projection": "QuestionReadProjection"
+    "multiplicity": "many",
+    "criteria": "this.title startsWith \"Why do\"",
+    "projection": "QuestionReadProjection"
 }
 ```
-
