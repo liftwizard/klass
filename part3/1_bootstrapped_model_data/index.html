@@ -6,7 +6,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.816394634222">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.816409353106">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.11.0">
@@ -33,12 +33,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=3.11.0.816394634222" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.11.0.816409353106" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.11.0.816394634222" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.11.0.816409353106" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.11.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.11.0.816394634222" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.11.0.816394634222" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.11.0.816409353106" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.11.0.816409353106" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -168,222 +168,222 @@
 <p>The Klass metamodel is part of every Klass model. When a Klass application starts, it &quot;bootstraps&quot; the metamodel by populating model data into the data store. This means that in the Stack Overflow application, we can GET <code v-pre>/api/meta/class/Question</code> to get the Question class as data.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
-  &quot;name&quot;: &quot;Question&quot;,
-  &quot;inferred&quot;: false,
-  &quot;packageName&quot;: &quot;com.stackoverflow&quot;,
-  &quot;ordinal&quot;: 1,
-  &quot;sourceCode&quot;: &quot;class Question\n    systemTemporal\n    versioned\n    audited\n{\n    id                : Long key id;\n    title             : String;\n    body              : String;\n    system            : TemporalRange system;\n    systemFrom        : TemporalInstant system from;\n    systemTo          : TemporalInstant system to;\n    createdById       : String private createdBy;\n    createdOn         : Instant createdOn;\n    lastUpdatedById   : String private lastUpdatedBy;\n    answers: Answer[0..*]\n        orderBy: this.id ascending;\n    version: QuestionVersion[1..1] version;\n}\n&quot;,
-  &quot;classifierModifiers&quot;: [
-    {
-      &quot;name&quot;: &quot;systemTemporal&quot;,
-      &quot;inferred&quot;: false,
-      &quot;ordinal&quot;: 1
-    },
-    {
-      &quot;name&quot;: &quot;versioned&quot;,
-      &quot;inferred&quot;: false,
-      &quot;ordinal&quot;: 2
-    },
-    {
-      &quot;name&quot;: &quot;audited&quot;,
-      &quot;inferred&quot;: false,
-      &quot;ordinal&quot;: 3
-    }
-  ],
-  &quot;primitiveProperties&quot;: [
-    {
-      &quot;name&quot;: &quot;id&quot;,
-      &quot;inferred&quot;: false,
-      &quot;primitiveType&quot;: &quot;Long&quot;,
-      &quot;optional&quot;: false,
-      &quot;key&quot;: true,
-      &quot;id&quot;: true,
-      &quot;ordinal&quot;: 1,
-      &quot;primitivePropertyModifiers&quot;: [
+    &quot;name&quot;: &quot;Question&quot;,
+    &quot;inferred&quot;: false,
+    &quot;packageName&quot;: &quot;com.stackoverflow&quot;,
+    &quot;ordinal&quot;: 1,
+    &quot;sourceCode&quot;: &quot;class Question\n    systemTemporal\n    versioned\n    audited\n{\n    id                : Long key id;\n    title             : String;\n    body              : String;\n    system            : TemporalRange system;\n    systemFrom        : TemporalInstant system from;\n    systemTo          : TemporalInstant system to;\n    createdById       : String private createdBy;\n    createdOn         : Instant createdOn;\n    lastUpdatedById   : String private lastUpdatedBy;\n    answers: Answer[0..*]\n        orderBy: this.id ascending;\n    version: QuestionVersion[1..1] version;\n}\n&quot;,
+    &quot;classifierModifiers&quot;: [
         {
-          &quot;name&quot;: &quot;key&quot;,
-          &quot;inferred&quot;: false,
-          &quot;ordinal&quot;: 1
+            &quot;name&quot;: &quot;systemTemporal&quot;,
+            &quot;inferred&quot;: false,
+            &quot;ordinal&quot;: 1
         },
         {
-          &quot;name&quot;: &quot;id&quot;,
-          &quot;inferred&quot;: false,
-          &quot;ordinal&quot;: 2
-        }
-      ]
-    },
-    {
-      &quot;name&quot;: &quot;title&quot;,
-      &quot;inferred&quot;: false,
-      &quot;primitiveType&quot;: &quot;String&quot;,
-      &quot;optional&quot;: false,
-      &quot;key&quot;: false,
-      &quot;id&quot;: false,
-      &quot;ordinal&quot;: 2,
-      &quot;primitivePropertyModifiers&quot;: []
-    },
-    {
-      &quot;name&quot;: &quot;body&quot;,
-      &quot;inferred&quot;: false,
-      &quot;primitiveType&quot;: &quot;String&quot;,
-      &quot;optional&quot;: false,
-      &quot;key&quot;: false,
-      &quot;id&quot;: false,
-      &quot;ordinal&quot;: 3,
-      &quot;primitivePropertyModifiers&quot;: []
-    },
-    {
-      &quot;name&quot;: &quot;system&quot;,
-      &quot;inferred&quot;: false,
-      &quot;primitiveType&quot;: &quot;TemporalRange&quot;,
-      &quot;optional&quot;: false,
-      &quot;key&quot;: false,
-      &quot;id&quot;: false,
-      &quot;ordinal&quot;: 4,
-      &quot;primitivePropertyModifiers&quot;: [
-        {
-          &quot;name&quot;: &quot;system&quot;,
-          &quot;inferred&quot;: false,
-          &quot;ordinal&quot;: 1
-        }
-      ]
-    },
-    {
-      &quot;name&quot;: &quot;systemFrom&quot;,
-      &quot;inferred&quot;: false,
-      &quot;primitiveType&quot;: &quot;TemporalInstant&quot;,
-      &quot;optional&quot;: false,
-      &quot;key&quot;: false,
-      &quot;id&quot;: false,
-      &quot;ordinal&quot;: 5,
-      &quot;primitivePropertyModifiers&quot;: [
-        {
-          &quot;name&quot;: &quot;system&quot;,
-          &quot;inferred&quot;: false,
-          &quot;ordinal&quot;: 1
+            &quot;name&quot;: &quot;versioned&quot;,
+            &quot;inferred&quot;: false,
+            &quot;ordinal&quot;: 2
         },
         {
-          &quot;name&quot;: &quot;from&quot;,
-          &quot;inferred&quot;: false,
-          &quot;ordinal&quot;: 2
+            &quot;name&quot;: &quot;audited&quot;,
+            &quot;inferred&quot;: false,
+            &quot;ordinal&quot;: 3
         }
-      ]
-    },
-    {
-      &quot;name&quot;: &quot;systemTo&quot;,
-      &quot;inferred&quot;: false,
-      &quot;primitiveType&quot;: &quot;TemporalInstant&quot;,
-      &quot;optional&quot;: false,
-      &quot;key&quot;: false,
-      &quot;id&quot;: false,
-      &quot;ordinal&quot;: 6,
-      &quot;primitivePropertyModifiers&quot;: [
+    ],
+    &quot;primitiveProperties&quot;: [
         {
-          &quot;name&quot;: &quot;system&quot;,
-          &quot;inferred&quot;: false,
-          &quot;ordinal&quot;: 1
+            &quot;name&quot;: &quot;id&quot;,
+            &quot;inferred&quot;: false,
+            &quot;primitiveType&quot;: &quot;Long&quot;,
+            &quot;optional&quot;: false,
+            &quot;key&quot;: true,
+            &quot;id&quot;: true,
+            &quot;ordinal&quot;: 1,
+            &quot;primitivePropertyModifiers&quot;: [
+                {
+                    &quot;name&quot;: &quot;key&quot;,
+                    &quot;inferred&quot;: false,
+                    &quot;ordinal&quot;: 1
+                },
+                {
+                    &quot;name&quot;: &quot;id&quot;,
+                    &quot;inferred&quot;: false,
+                    &quot;ordinal&quot;: 2
+                }
+            ]
         },
         {
-          &quot;name&quot;: &quot;to&quot;,
-          &quot;inferred&quot;: false,
-          &quot;ordinal&quot;: 2
-        }
-      ]
-    },
-    {
-      &quot;name&quot;: &quot;createdById&quot;,
-      &quot;inferred&quot;: false,
-      &quot;primitiveType&quot;: &quot;String&quot;,
-      &quot;optional&quot;: false,
-      &quot;key&quot;: false,
-      &quot;id&quot;: false,
-      &quot;ordinal&quot;: 7,
-      &quot;primitivePropertyModifiers&quot;: [
-        {
-          &quot;name&quot;: &quot;private&quot;,
-          &quot;inferred&quot;: false,
-          &quot;ordinal&quot;: 1
+            &quot;name&quot;: &quot;title&quot;,
+            &quot;inferred&quot;: false,
+            &quot;primitiveType&quot;: &quot;String&quot;,
+            &quot;optional&quot;: false,
+            &quot;key&quot;: false,
+            &quot;id&quot;: false,
+            &quot;ordinal&quot;: 2,
+            &quot;primitivePropertyModifiers&quot;: []
         },
         {
-          &quot;name&quot;: &quot;createdBy&quot;,
-          &quot;inferred&quot;: false,
-          &quot;ordinal&quot;: 2
-        }
-      ]
-    },
-    {
-      &quot;name&quot;: &quot;createdOn&quot;,
-      &quot;inferred&quot;: false,
-      &quot;primitiveType&quot;: &quot;Instant&quot;,
-      &quot;optional&quot;: false,
-      &quot;key&quot;: false,
-      &quot;id&quot;: false,
-      &quot;ordinal&quot;: 8,
-      &quot;primitivePropertyModifiers&quot;: [
-        {
-          &quot;name&quot;: &quot;createdOn&quot;,
-          &quot;inferred&quot;: false,
-          &quot;ordinal&quot;: 1
-        }
-      ]
-    },
-    {
-      &quot;name&quot;: &quot;lastUpdatedById&quot;,
-      &quot;inferred&quot;: false,
-      &quot;primitiveType&quot;: &quot;String&quot;,
-      &quot;optional&quot;: false,
-      &quot;key&quot;: false,
-      &quot;id&quot;: false,
-      &quot;ordinal&quot;: 9,
-      &quot;primitivePropertyModifiers&quot;: [
-        {
-          &quot;name&quot;: &quot;private&quot;,
-          &quot;inferred&quot;: false,
-          &quot;ordinal&quot;: 1
+            &quot;name&quot;: &quot;body&quot;,
+            &quot;inferred&quot;: false,
+            &quot;primitiveType&quot;: &quot;String&quot;,
+            &quot;optional&quot;: false,
+            &quot;key&quot;: false,
+            &quot;id&quot;: false,
+            &quot;ordinal&quot;: 3,
+            &quot;primitivePropertyModifiers&quot;: []
         },
         {
-          &quot;name&quot;: &quot;lastUpdatedBy&quot;,
-          &quot;inferred&quot;: false,
-          &quot;ordinal&quot;: 2
-        }
-      ]
-    }
-  ],
-  &quot;enumerationProperties&quot;: [],
-  &quot;associationEnds&quot;: [
-    {
-      &quot;name&quot;: &quot;answers&quot;,
-      &quot;inferred&quot;: false,
-      &quot;direction&quot;: &quot;target&quot;,
-      &quot;multiplicity&quot;: &quot;0..*&quot;,
-      &quot;resultType&quot;: {
-        &quot;name&quot;: &quot;Answer&quot;
-      },
-      &quot;owningAssociation&quot;: {
-        &quot;name&quot;: &quot;QuestionHasAnswer&quot;
-      },
-      &quot;associationEndModifiers&quot;: []
-    },
-    {
-      &quot;name&quot;: &quot;version&quot;,
-      &quot;inferred&quot;: true,
-      &quot;direction&quot;: &quot;target&quot;,
-      &quot;multiplicity&quot;: &quot;1..1&quot;,
-      &quot;resultType&quot;: {
-        &quot;name&quot;: &quot;QuestionVersion&quot;
-      },
-      &quot;owningAssociation&quot;: {
-        &quot;name&quot;: &quot;QuestionHasVersion&quot;
-      },
-      &quot;associationEndModifiers&quot;: [
+            &quot;name&quot;: &quot;system&quot;,
+            &quot;inferred&quot;: false,
+            &quot;primitiveType&quot;: &quot;TemporalRange&quot;,
+            &quot;optional&quot;: false,
+            &quot;key&quot;: false,
+            &quot;id&quot;: false,
+            &quot;ordinal&quot;: 4,
+            &quot;primitivePropertyModifiers&quot;: [
+                {
+                    &quot;name&quot;: &quot;system&quot;,
+                    &quot;inferred&quot;: false,
+                    &quot;ordinal&quot;: 1
+                }
+            ]
+        },
         {
-          &quot;name&quot;: &quot;version&quot;,
-          &quot;inferred&quot;: true,
-          &quot;ordinal&quot;: 1
+            &quot;name&quot;: &quot;systemFrom&quot;,
+            &quot;inferred&quot;: false,
+            &quot;primitiveType&quot;: &quot;TemporalInstant&quot;,
+            &quot;optional&quot;: false,
+            &quot;key&quot;: false,
+            &quot;id&quot;: false,
+            &quot;ordinal&quot;: 5,
+            &quot;primitivePropertyModifiers&quot;: [
+                {
+                    &quot;name&quot;: &quot;system&quot;,
+                    &quot;inferred&quot;: false,
+                    &quot;ordinal&quot;: 1
+                },
+                {
+                    &quot;name&quot;: &quot;from&quot;,
+                    &quot;inferred&quot;: false,
+                    &quot;ordinal&quot;: 2
+                }
+            ]
+        },
+        {
+            &quot;name&quot;: &quot;systemTo&quot;,
+            &quot;inferred&quot;: false,
+            &quot;primitiveType&quot;: &quot;TemporalInstant&quot;,
+            &quot;optional&quot;: false,
+            &quot;key&quot;: false,
+            &quot;id&quot;: false,
+            &quot;ordinal&quot;: 6,
+            &quot;primitivePropertyModifiers&quot;: [
+                {
+                    &quot;name&quot;: &quot;system&quot;,
+                    &quot;inferred&quot;: false,
+                    &quot;ordinal&quot;: 1
+                },
+                {
+                    &quot;name&quot;: &quot;to&quot;,
+                    &quot;inferred&quot;: false,
+                    &quot;ordinal&quot;: 2
+                }
+            ]
+        },
+        {
+            &quot;name&quot;: &quot;createdById&quot;,
+            &quot;inferred&quot;: false,
+            &quot;primitiveType&quot;: &quot;String&quot;,
+            &quot;optional&quot;: false,
+            &quot;key&quot;: false,
+            &quot;id&quot;: false,
+            &quot;ordinal&quot;: 7,
+            &quot;primitivePropertyModifiers&quot;: [
+                {
+                    &quot;name&quot;: &quot;private&quot;,
+                    &quot;inferred&quot;: false,
+                    &quot;ordinal&quot;: 1
+                },
+                {
+                    &quot;name&quot;: &quot;createdBy&quot;,
+                    &quot;inferred&quot;: false,
+                    &quot;ordinal&quot;: 2
+                }
+            ]
+        },
+        {
+            &quot;name&quot;: &quot;createdOn&quot;,
+            &quot;inferred&quot;: false,
+            &quot;primitiveType&quot;: &quot;Instant&quot;,
+            &quot;optional&quot;: false,
+            &quot;key&quot;: false,
+            &quot;id&quot;: false,
+            &quot;ordinal&quot;: 8,
+            &quot;primitivePropertyModifiers&quot;: [
+                {
+                    &quot;name&quot;: &quot;createdOn&quot;,
+                    &quot;inferred&quot;: false,
+                    &quot;ordinal&quot;: 1
+                }
+            ]
+        },
+        {
+            &quot;name&quot;: &quot;lastUpdatedById&quot;,
+            &quot;inferred&quot;: false,
+            &quot;primitiveType&quot;: &quot;String&quot;,
+            &quot;optional&quot;: false,
+            &quot;key&quot;: false,
+            &quot;id&quot;: false,
+            &quot;ordinal&quot;: 9,
+            &quot;primitivePropertyModifiers&quot;: [
+                {
+                    &quot;name&quot;: &quot;private&quot;,
+                    &quot;inferred&quot;: false,
+                    &quot;ordinal&quot;: 1
+                },
+                {
+                    &quot;name&quot;: &quot;lastUpdatedBy&quot;,
+                    &quot;inferred&quot;: false,
+                    &quot;ordinal&quot;: 2
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ],
+    &quot;enumerationProperties&quot;: [],
+    &quot;associationEnds&quot;: [
+        {
+            &quot;name&quot;: &quot;answers&quot;,
+            &quot;inferred&quot;: false,
+            &quot;direction&quot;: &quot;target&quot;,
+            &quot;multiplicity&quot;: &quot;0..*&quot;,
+            &quot;resultType&quot;: {
+                &quot;name&quot;: &quot;Answer&quot;
+            },
+            &quot;owningAssociation&quot;: {
+                &quot;name&quot;: &quot;QuestionHasAnswer&quot;
+            },
+            &quot;associationEndModifiers&quot;: []
+        },
+        {
+            &quot;name&quot;: &quot;version&quot;,
+            &quot;inferred&quot;: true,
+            &quot;direction&quot;: &quot;target&quot;,
+            &quot;multiplicity&quot;: &quot;1..1&quot;,
+            &quot;resultType&quot;: {
+                &quot;name&quot;: &quot;QuestionVersion&quot;
+            },
+            &quot;owningAssociation&quot;: {
+                &quot;name&quot;: &quot;QuestionHasVersion&quot;
+            },
+            &quot;associationEndModifiers&quot;: [
+                {
+                    &quot;name&quot;: &quot;version&quot;,
+                    &quot;inferred&quot;: true,
+                    &quot;ordinal&quot;: 1
+                }
+            ]
+        }
+    ]
 }</code></pre>
 </doc-codeblock></div>
 

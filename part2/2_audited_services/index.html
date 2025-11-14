@@ -6,7 +6,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.816394634222">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.816409353106">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.11.0">
@@ -33,12 +33,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=3.11.0.816394634222" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.11.0.816409353106" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.11.0.816394634222" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.11.0.816409353106" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.11.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.11.0.816394634222" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.11.0.816394634222" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.11.0.816409353106" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.11.0.816409353106" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -175,31 +175,31 @@
 <p>Alice POSTs a new question to <code v-pre>/api/question</code> on December 31.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
-  &quot;title&quot;: &quot;example title&quot;,
-  &quot;body&quot;: &quot;example body&quot;
+    &quot;title&quot;: &quot;example title&quot;,
+    &quot;body&quot;: &quot;example body&quot;
 }</code></pre>
 </doc-codeblock></div>
 <p>She gets back 201 Created and a location header Location: http://.../api/question/1.</p>
 <p>She can GET http://.../api/question/1 to get the full body.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
-  &quot;id&quot;: 1,
-  &quot;title&quot;: &quot;example title&quot;,
-  &quot;body&quot;: &quot;example body&quot;,
-  &quot;systemFrom&quot;: &quot;2017-12-31T23:59:59.000Z&quot;,
-  &quot;systemTo&quot;: null,
-  &quot;createdById&quot;: &quot;Alice&quot;,
-  &quot;createdOn&quot;: &quot;2017-12-31T23:59:59.000Z&quot;,
-  &quot;lastUpdatedById&quot;: &quot;Alice&quot;,
-  &quot;answers&quot;: [],
-  &quot;version&quot;: {
-    &quot;number&quot;: 1,
+    &quot;id&quot;: 1,
+    &quot;title&quot;: &quot;example title&quot;,
+    &quot;body&quot;: &quot;example body&quot;,
     &quot;systemFrom&quot;: &quot;2017-12-31T23:59:59.000Z&quot;,
     &quot;systemTo&quot;: null,
     &quot;createdById&quot;: &quot;Alice&quot;,
     &quot;createdOn&quot;: &quot;2017-12-31T23:59:59.000Z&quot;,
     &quot;lastUpdatedById&quot;: &quot;Alice&quot;,
-  }
+    &quot;answers&quot;: [],
+    &quot;version&quot;: {
+        &quot;number&quot;: 1,
+        &quot;systemFrom&quot;: &quot;2017-12-31T23:59:59.000Z&quot;,
+        &quot;systemTo&quot;: null,
+        &quot;createdById&quot;: &quot;Alice&quot;,
+        &quot;createdOn&quot;: &quot;2017-12-31T23:59:59.000Z&quot;,
+        &quot;lastUpdatedById&quot;: &quot;Alice&quot;
+    }
 }</code></pre>
 </doc-codeblock></div>
 <ul>
@@ -218,34 +218,34 @@
 <p>Bob PUTs a new version to <code v-pre>/api/question/1</code> the next day, on January 1.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
-  &quot;title&quot;: &quot;edited title&quot;,
-  &quot;body&quot;: &quot;edited body&quot;,
-  &quot;version&quot;: {
-    &quot;number&quot;: 1,
-  }
+    &quot;title&quot;: &quot;edited title&quot;,
+    &quot;body&quot;: &quot;edited body&quot;,
+    &quot;version&quot;: {
+        &quot;number&quot;: 1
+    }
 }</code></pre>
 </doc-codeblock></div>
 <p>The version number is present and matches, so the edit succeeds. He gets back 204 No Content.</p>
 <p>He can GET http://.../api/question/1 to get the full body.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
-  &quot;id&quot;: 1,
-  &quot;title&quot;: &quot;edited title&quot;,
-  &quot;body&quot;: &quot;edited body&quot;,
-  &quot;systemFrom&quot;: &quot;2018-01-01T23:59:59.000Z&quot;,
-  &quot;systemTo&quot;: null,
-  &quot;createdById&quot;: &quot;Alice&quot;,
-  &quot;createdOn&quot;: &quot;2017-12-31T23:59:59.000Z&quot;,
-  &quot;lastUpdatedById&quot;: &quot;Bob&quot;,
-  &quot;answers&quot;: [],
-  &quot;version&quot;: {
-    &quot;number&quot;: 2,
+    &quot;id&quot;: 1,
+    &quot;title&quot;: &quot;edited title&quot;,
+    &quot;body&quot;: &quot;edited body&quot;,
     &quot;systemFrom&quot;: &quot;2018-01-01T23:59:59.000Z&quot;,
     &quot;systemTo&quot;: null,
     &quot;createdById&quot;: &quot;Alice&quot;,
     &quot;createdOn&quot;: &quot;2017-12-31T23:59:59.000Z&quot;,
     &quot;lastUpdatedById&quot;: &quot;Bob&quot;,
-  }
+    &quot;answers&quot;: [],
+    &quot;version&quot;: {
+        &quot;number&quot;: 2,
+        &quot;systemFrom&quot;: &quot;2018-01-01T23:59:59.000Z&quot;,
+        &quot;systemTo&quot;: null,
+        &quot;createdById&quot;: &quot;Alice&quot;,
+        &quot;createdOn&quot;: &quot;2017-12-31T23:59:59.000Z&quot;,
+        &quot;lastUpdatedById&quot;: &quot;Bob&quot;
+    }
 }</code></pre>
 </doc-codeblock></div>
 <ul>
@@ -279,23 +279,23 @@
 <p>Leaving off the version query parameter would give the latest version. But now we can GET http://.../api/question/1?version=1 to see the previous version.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
-  &quot;id&quot;: 1,
-  &quot;title&quot;: &quot;example title&quot;,
-  &quot;body&quot;: &quot;example body&quot;,
-  &quot;systemFrom&quot;: &quot;2017-12-31T23:59:59.000Z&quot;,
-  &quot;systemTo&quot;: &quot;2018-01-01T23:59:59.000Z&quot;,
-  &quot;createdById&quot;: &quot;Alice&quot;,
-  &quot;createdOn&quot;: &quot;2017-12-31T23:59:59.000Z&quot;,
-  &quot;lastUpdatedById&quot;: &quot;Alice&quot;,
-  &quot;answers&quot;: [],
-  &quot;version&quot;: {
-    &quot;number&quot;: 1,
+    &quot;id&quot;: 1,
+    &quot;title&quot;: &quot;example title&quot;,
+    &quot;body&quot;: &quot;example body&quot;,
     &quot;systemFrom&quot;: &quot;2017-12-31T23:59:59.000Z&quot;,
     &quot;systemTo&quot;: &quot;2018-01-01T23:59:59.000Z&quot;,
     &quot;createdById&quot;: &quot;Alice&quot;,
     &quot;createdOn&quot;: &quot;2017-12-31T23:59:59.000Z&quot;,
     &quot;lastUpdatedById&quot;: &quot;Alice&quot;,
-  }
+    &quot;answers&quot;: [],
+    &quot;version&quot;: {
+        &quot;number&quot;: 1,
+        &quot;systemFrom&quot;: &quot;2017-12-31T23:59:59.000Z&quot;,
+        &quot;systemTo&quot;: &quot;2018-01-01T23:59:59.000Z&quot;,
+        &quot;createdById&quot;: &quot;Alice&quot;,
+        &quot;createdOn&quot;: &quot;2017-12-31T23:59:59.000Z&quot;,
+        &quot;lastUpdatedById&quot;: &quot;Alice&quot;
+    }
 }</code></pre>
 </doc-codeblock></div>
 <p>Everything is identical as when Alice first created it, except for <code v-pre>systemTo</code>. It started as <code v-pre>null</code> and was changed to January 1, the time version 2 was created.</p>
