@@ -306,7 +306,7 @@ public class ReladomoDataStore implements DataStore {
 
         if (idProperty.getType().isNumeric()) {
             try {
-                Method generateAndSetIdMethod = getGenerateAndSetIdMethod(persistentInstance.getClass(), idProperty);
+                Method generateAndSetIdMethod = this.getGenerateAndSetIdMethod(persistentInstance.getClass(), idProperty);
                 generateAndSetIdMethod.invoke(persistentInstance);
             } catch (ReflectiveOperationException e) {
                 throw new RuntimeException(e);
@@ -485,7 +485,7 @@ public class ReladomoDataStore implements DataStore {
 
     private Object getPropertyReflectively(@Nonnull Object persistentInstance, @Nonnull Property property) {
         try {
-            Method method = getMethod(property);
+            Method method = this.getMethod(property);
             return method.invoke(persistentInstance);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e);
