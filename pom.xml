@@ -183,8 +183,23 @@
                             <groupId>org.openrewrite.maven</groupId>
                             <artifactId>rewrite-maven-plugin</artifactId>
                             <configuration>
-                                <activeRecipes combine.children="append">
+                                <activeRecipes>
                                     <recipe>cool.klass.UpdateCopyrightYear</recipe>
+                                    <recipe>io.liftwizard.rewrite.BestPractices</recipe>
+                                    <recipe>io.liftwizard.rewrite.assertj.AssertJMigration</recipe>
+                                    <recipe>io.liftwizard.rewrite.eclipse.collections.EclipseCollectionsAdoption</recipe>
+                                    <recipe>io.liftwizard.rewrite.eclipse.collections.EclipseCollectionsBestPractices</recipe>
+                                    <recipe>io.liftwizard.rewrite.eclipse.collections.EclipseCollectionsRemoval</recipe>
+                                    <recipe>io.liftwizard.rewrite.java.style.ExplicitThis</recipe>
+                                    <recipe>io.liftwizard.staticanalysis.CodeCleanup</recipe>
+                                    <recipe>cool.klass.CommonStaticAnalysis</recipe>
+                                    <recipe>org.openrewrite.apache.commons.codec.ApacheBase64ToJavaBase64</recipe>
+                                    <recipe>org.openrewrite.apache.commons.io.ApacheCommonsFileUtilsRecipes</recipe>
+                                    <recipe>org.openrewrite.apache.commons.lang.ApacheCommonsStringUtilsRecipes</recipe>
+                                    <recipe>org.openrewrite.java.logging.slf4j.LoggersNamedForEnclosingClass</recipe>
+                                    <recipe>org.openrewrite.java.logging.slf4j.Slf4jLogShouldBeConstant</recipe>
+                                    <recipe>org.openrewrite.java.testing.assertj.CollapseConsecutiveAssertThatStatements</recipe>
+                                    <recipe>org.openrewrite.java.testing.assertj.SimplifyChainedAssertJAssertions</recipe>
                                 </activeRecipes>
                             </configuration>
                         </plugin>
