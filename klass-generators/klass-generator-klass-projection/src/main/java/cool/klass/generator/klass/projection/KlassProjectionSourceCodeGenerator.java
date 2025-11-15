@@ -119,7 +119,7 @@ public final class KlassProjectionSourceCodeGenerator {
     private static String getDataTypePropertySourceCode(DataTypeProperty dataTypeProperty, boolean subClassMode) {
         String prefix = subClassMode ? dataTypeProperty.getOwningClassifier().getName() + "." : "";
         return String.format(
-            "    %s%s: \"%s %s\",\n",
+            "    %s%s: \"%s %s\",%n",
             prefix,
             dataTypeProperty.getName(),
             dataTypeProperty.getOwningClassifier().getName(),
@@ -142,7 +142,7 @@ public final class KlassProjectionSourceCodeGenerator {
         if (referenceProperty.isOwned() || isOneRequiredToOneOptional(referenceProperty)) {
             String prefix = subClassMode ? referenceProperty.getOwningClassifier().getName() + "." : "";
             return String.format(
-                "    %s%s: %sProjection,\n",
+                "    %s%s: %sProjection,%n",
                 prefix,
                 referenceProperty.getName(),
                 referenceProperty.getType().getName()
@@ -158,7 +158,7 @@ public final class KlassProjectionSourceCodeGenerator {
             .reject(property -> property.isForeignKey() && !property.isForeignKeyToSelf())
             .collectWith(KlassProjectionSourceCodeGenerator::getDataTypePropertySourceCode, subClassMode);
 
-        String result = "    %s%s: {\n%s    },\n".formatted(
+        String result = "    %s%s: {%n%s    },%n".formatted(
             prefix,
             referenceProperty.getName(),
             keyPropertiesSourceCode.makeString("    ", "    ", "")

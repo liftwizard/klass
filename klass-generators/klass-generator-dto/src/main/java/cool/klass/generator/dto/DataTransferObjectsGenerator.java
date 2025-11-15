@@ -252,7 +252,7 @@ public class DataTransferObjectsGenerator {
     private String getDataField(@Nonnull DataTypeProperty dataTypeProperty) {
         String annotation = this.getAnnotation(dataTypeProperty);
         String type = this.getType(dataTypeProperty.getType());
-        return String.format("%s    private %s %s;\n", annotation, type, dataTypeProperty.getName());
+        return String.format("%s    private %s %s;%n", annotation, type, dataTypeProperty.getName());
     }
 
     @Nonnull
@@ -271,6 +271,6 @@ public class DataTransferObjectsGenerator {
         String annotation = "";
         // String annotation = multiplicity.isToMany() || multiplicity == Multiplicity.ONE_TO_ONE ? "    @NotNull\n" : "";
         String type = this.getType(associationEnd.getType(), multiplicity);
-        return String.format("%s    private %s %s;\n", annotation, type, associationEnd.getName());
+        return String.format("%s    private %s %s;%n", annotation, type, associationEnd.getName());
     }
 }
