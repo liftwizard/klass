@@ -60,7 +60,7 @@ public class CompilerAnnotationHolder {
         @Nonnull IAntlrElement element,
         @Nonnull ParserRuleContext offendingContext
     ) {
-        add(annotationCode, message, element, offendingContext, AnnotationSeverity.ERROR);
+        this.add(annotationCode, message, element, offendingContext, AnnotationSeverity.ERROR);
     }
 
     public void add(
@@ -79,7 +79,7 @@ public class CompilerAnnotationHolder {
         @Nonnull IAntlrElement element,
         @Nonnull ImmutableList<ParserRuleContext> offendingContexts
     ) {
-        add(annotationCode, message, element, offendingContexts, AnnotationSeverity.ERROR);
+        this.add(annotationCode, message, element, offendingContexts, AnnotationSeverity.ERROR);
     }
 
     public void add(
@@ -99,7 +99,7 @@ public class CompilerAnnotationHolder {
         @Nonnull ImmutableList<IAntlrElement> surroundingElements,
         @Nonnull ImmutableList<ParserRuleContext> offendingContexts
     ) {
-        add(annotationCode, message, element, surroundingElements, offendingContexts, AnnotationSeverity.ERROR);
+        this.add(annotationCode, message, element, surroundingElements, offendingContexts, AnnotationSeverity.ERROR);
     }
 
     public void add(
