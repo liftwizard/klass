@@ -186,9 +186,6 @@
                                 <activeRecipes combine.children="append">
                                     <recipe>cool.klass.UpdateCopyrightYear</recipe>
                                 </activeRecipes>
-                                <exclusions>
-                                    <exclusion>org.openrewrite.staticanalysis.UnnecessaryExplicitTypeArguments</exclusion>
-                                </exclusions>
                             </configuration>
                         </plugin>
                     </plugins>
