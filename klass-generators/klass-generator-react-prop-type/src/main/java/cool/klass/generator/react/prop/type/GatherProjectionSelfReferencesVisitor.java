@@ -91,7 +91,7 @@ public class GatherProjectionSelfReferencesVisitor implements ProjectionListener
             : toOnePropType;
 
         String result = String.format(
-            "%s.%s = %s;\n",
+            "%s.%s = %s;%n",
             this.originalProjection.getName(),
             this.context.makeString("."),
             propType

@@ -110,7 +110,7 @@ public class GenerateCssMojo extends AbstractMojo {
     }
 
     private String generateCssClass(TokenCategory tokenCategory) {
-        return ".klass-%s {\n    color: %s;\n}\n".formatted(
+        return ".klass-%s {%n    color: %s;%n}%n".formatted(
             this.getTokenCategoryName(tokenCategory),
             this.getCssVar(tokenCategory)
         );

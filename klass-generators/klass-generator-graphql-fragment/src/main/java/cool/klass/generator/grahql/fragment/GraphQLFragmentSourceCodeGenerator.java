@@ -121,7 +121,7 @@ public final class GraphQLFragmentSourceCodeGenerator {
 
     private static String getDataTypePropertySourceCode(DataTypeProperty dataTypeProperty, boolean subClassMode) {
         String indentation = subClassMode ? "  " : "";
-        return String.format("  %s%s\n", indentation, dataTypeProperty.getName());
+        return String.format("  %s%s%n", indentation, dataTypeProperty.getName());
     }
 
     private static ImmutableList<String> getReferencePropertiesSourceCode(Classifier classifier, boolean subClassMode) {
@@ -164,7 +164,7 @@ public final class GraphQLFragmentSourceCodeGenerator {
             .getType()
             .getKeyProperties()
             .reject(dataTypeProperty -> dataTypeProperty.isForeignKey() && !dataTypeProperty.isForeignKeyToSelf())
-            .collect(dataTypeProperty -> String.format("    %s%s\n", indentation, dataTypeProperty.getName()))
+            .collect(dataTypeProperty -> String.format("    %s%s%n", indentation, dataTypeProperty.getName()))
             .makeString("");
         return typeNameString + keyPropertiesSourceCode;
     }

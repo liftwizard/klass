@@ -118,7 +118,7 @@ public class ReladomoReadableInterfaceGenerator {
         String javaReturnType = PrimitiveToReladomoTypeVisitor.getJavaType(primitiveType);
         String prefix = primitiveType == PrimitiveType.BOOLEAN ? "is" : "get";
 
-        return String.format("%s%s    %s %s%s();\n", comment, nonNull, javaReturnType, prefix, propertyName);
+        return String.format("%s%s    %s %s%s();%n", comment, nonNull, javaReturnType, prefix, propertyName);
     }
 
     private void printStringToFile(@Nonnull Path path, String contents) {
