@@ -132,12 +132,12 @@ public class ApplicationSuperClassGenerator {
     }
 
     private String getResourceImport(ServiceGroup serviceGroup) {
-        return String.format("import %s.service.resource.%s;\n", serviceGroup.getPackageName(), serviceGroup.getName());
+        return String.format("import %s.service.resource.%s;%n", serviceGroup.getPackageName(), serviceGroup.getName());
     }
 
     private String getRegisterResourceSourceCode(@Nonnull ServiceGroup serviceGroup) {
         return String.format(
-            "        environment.jersey().register(new %s(domainModel, dataStore, clock));\n",
+            "        environment.jersey().register(new %s(domainModel, dataStore, clock));%n",
             serviceGroup.getName()
         );
     }

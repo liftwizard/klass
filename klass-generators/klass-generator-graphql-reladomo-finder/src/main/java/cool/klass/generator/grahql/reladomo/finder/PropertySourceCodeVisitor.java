@@ -36,12 +36,12 @@ public class PropertySourceCodeVisitor implements PropertyVisitor {
     public void visitPrimitiveProperty(PrimitiveProperty primitiveProperty) {
         var visitor = new PrimitiveTypeSourceCodeVisitor();
         primitiveProperty.getType().visit(visitor);
-        this.sourceCode = String.format("    %s: _%sAttribute\n", primitiveProperty.getName(), visitor.getSourceCode());
+        this.sourceCode = String.format("    %s: _%sAttribute%n", primitiveProperty.getName(), visitor.getSourceCode());
     }
 
     @Override
     public void visitEnumerationProperty(EnumerationProperty enumerationProperty) {
-        this.sourceCode = String.format("    %s: _StringAttribute\n", enumerationProperty.getName());
+        this.sourceCode = String.format("    %s: _StringAttribute%n", enumerationProperty.getName());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class PropertySourceCodeVisitor implements PropertyVisitor {
 
     public void visitReferenceProperty(ReferenceProperty referenceProperty) {
         this.sourceCode = String.format(
-            "    %s: _%sFinder\n",
+            "    %s: _%sFinder%n",
             referenceProperty.getName(),
             referenceProperty.getType().getName()
         );

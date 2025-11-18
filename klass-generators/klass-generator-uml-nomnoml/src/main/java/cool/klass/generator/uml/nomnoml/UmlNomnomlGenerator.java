@@ -182,11 +182,11 @@ public class UmlNomnomlGenerator {
         }
 
         private String getGeneralizationSourceCode(Klass superClass, Klass klass) {
-            return String.format("[%s] -:> [%s]\n", klass.getName(), superClass.getName());
+            return String.format("[%s] -:> [%s]%n", klass.getName(), superClass.getName());
         }
 
         private String getImplementationSourceCode(Interface anInterface, Classifier classifier) {
-            return String.format("[%s] --:> [%s]\n", classifier.getName(), anInterface.getName());
+            return String.format("[%s] --:> [%s]%n", classifier.getName(), anInterface.getName());
         }
 
         @Override
