@@ -22,8 +22,12 @@ mise:
 markdownlint:
     markdownlint --config .markdownlint.jsonc  --fix .
 
+# Format JSON files with Biome
+biome-format:
+    npx @biomejs/biome format --write .
+
 # Run all formatting tools for pre-commit
-precommit: mvn
+precommit: mvn biome-format
     uv tool run pre-commit run || true
 
 # mvn archetype
