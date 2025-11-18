@@ -71,7 +71,7 @@ public class GraphQLElementToSchemaSourceVisitor implements TopLevelElementVisit
         String enumerationLiteralsSourceCode = enumeration
             .getEnumerationLiterals()
             .collect(NamedElement::getName)
-            .collect(name -> String.format("    %s\n", name))
+            .collect(name -> String.format("    %s%n", name))
             .makeString("");
 
         return "" + "enum " + enumeration.getName() + " {\n" + enumerationLiteralsSourceCode + "}\n" + '\n';
@@ -82,7 +82,7 @@ public class GraphQLElementToSchemaSourceVisitor implements TopLevelElementVisit
         String fieldsSourceCode = anInterface
             .getProperties()
             .collect(GraphQLElementToSchemaSourceVisitor::getPropertySourceCode)
-            .collect(name -> String.format("    %s\n", name))
+            .collect(name -> String.format("    %s%n", name))
             .makeString("");
 
         return "" + "interface " + anInterface.getName() + " {\n" + fieldsSourceCode + "}\n" + '\n';
@@ -102,7 +102,7 @@ public class GraphQLElementToSchemaSourceVisitor implements TopLevelElementVisit
             .reject(Property::isDerived)
             .reject(Property::isPrivate)
             .collect(GraphQLElementToSchemaSourceVisitor::getPropertySourceCode)
-            .collect(name -> String.format("    %s\n", name))
+            .collect(name -> String.format("    %s%n", name))
             .makeString("");
 
         return "" + keyword + " " + klass.getName() + implementsSourceCode + " {\n" + fieldsSourceCode + "}\n" + '\n';

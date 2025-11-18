@@ -946,7 +946,7 @@ public class JavaConstantsMetaModelGenerator {
 
     private String getForeignKeySourceCode(@Nonnull Pair<AssociationEnd, DataTypeProperty> each) {
         return String.format(
-            "            result.put(%s, Lists.immutable.with(%s));\n",
+            "            result.put(%s, Lists.immutable.with(%s));%n",
             this.getForeignKeySourceCode(each.getOne()),
             this.getForeignKeySourceCode(each.getTwo())
         );
@@ -1416,7 +1416,7 @@ public class JavaConstantsMetaModelGenerator {
         String uppercaseName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, name);
 
         return String.format(
-            "    public static final %s_Klass.%s_AssociationEnd %s = %sDomainModel.%s.%s;\n",
+            "    public static final %s_Klass.%s_AssociationEnd %s = %sDomainModel.%s.%s;%n",
             associationEnd.getOwningClassifier().getName(),
             uppercaseName,
             sideName,

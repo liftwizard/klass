@@ -116,7 +116,7 @@ public class PropTypeSourceCodeProjectionVisitor implements ProjectionVisitor {
             ? "PropTypes.arrayOf(" + toOnePropType + ").isRequired"
             : toOnePropType;
 
-        this.result = String.format("%s%s: %s,\n", indent, projectionReferenceProperty.getName(), propType);
+        this.result = String.format("%s%s: %s,%n", indent, projectionReferenceProperty.getName(), propType);
     }
 
     @Override
@@ -137,7 +137,7 @@ public class PropTypeSourceCodeProjectionVisitor implements ProjectionVisitor {
             ? "PropTypes.arrayOf(" + toOnePropType + ").isRequired"
             : toOnePropType;
 
-        this.result = String.format("%s%s: %s,\n", indent, projectionProjectionReference.getName(), propType);
+        this.result = String.format("%s%s: %s,%n", indent, projectionProjectionReference.getName(), propType);
     }
 
     @Override
@@ -153,7 +153,7 @@ public class PropTypeSourceCodeProjectionVisitor implements ProjectionVisitor {
         String indent = getIndent(this.indentLevel);
 
         this.result = String.format(
-            "%s%s: PropTypes.%s%s,\n",
+            "%s%s: PropTypes.%s%s,%n",
             indent,
             projectionDataTypeProperty.getName(),
             visitor.getResult(),

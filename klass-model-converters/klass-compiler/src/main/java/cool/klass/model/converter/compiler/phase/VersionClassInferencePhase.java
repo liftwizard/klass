@@ -77,7 +77,7 @@ public class VersionClassInferencePhase extends AbstractCompilerPhase {
             .getAllDataTypeProperties()
             .select(property -> property.isKey() || property.isValid() || property.isSystem() || property.isAudit())
             .collect(this::getSourceCode)
-            .collect(each -> String.format("    %s\n", each))
+            .collect(each -> String.format("    %s%n", each))
             .makeString("");
 
         AntlrModifier auditedModifier = klass.getModifierByName("audited");
