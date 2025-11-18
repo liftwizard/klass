@@ -399,7 +399,6 @@ jobs:
                     echo "No changes needed by Biome"
                   fi
 
-
     errorprone-fix:
         runs-on: ubuntu-latest
         permissions:
@@ -490,7 +489,7 @@ jobs:
                   just test
 
                   # Format JSON files after re-recording tests
-                  just spotless json
+                  just biome-format
 
                   if [[ -n $(git status --porcelain) ]]; then
                     FIX_BRANCH="fix-${{ github.event.pull_request.number }}-liftwizard-file-match-rerecord"
