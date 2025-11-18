@@ -66,6 +66,6 @@ public class CauseCompilerAnnotation extends AbstractCompilerAnnotation {
 
     @Override
     public String toGitHubAnnotation() {
-        return toString();
+        return this.toString();
     }
 }
