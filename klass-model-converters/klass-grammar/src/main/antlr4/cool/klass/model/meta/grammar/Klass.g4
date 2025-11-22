@@ -79,7 +79,7 @@ serviceGroupBody: urlDeclaration*;
 urlDeclaration: url serviceDeclaration+;
 url: urlPathSegment+ '/'? queryParameterList?;
 urlPathSegment: '/' (urlConstant | urlParameterDeclaration);
-urlConstant: identifier;
+urlConstant: identifier | UrlIdentifier;
 queryParameterList: '?' urlParameterDeclaration ('&' urlParameterDeclaration)*;
 urlParameterDeclaration: '{' parameterDeclaration '}';
 // service
