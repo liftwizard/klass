@@ -57,7 +57,10 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
     @Test
     void postSingleWithProjection() {
         Client client = this.getClient("postSingleWithProjection");
-        String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".postSingleWithProjection.json5", this.getClass());
+        String json = FileSlurper.slurp(
+            this.getClass().getSimpleName() + ".postSingleWithProjection.json5",
+            this.getClass()
+        );
 
         Response response = client
             .target("http://localhost:{port}/api/everyTypeKeyProperty/singleWithProjection")
@@ -87,7 +90,10 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
     @Test
     void postMultipleWithProjection() {
         Client client = this.getClient("postMultipleWithProjection");
-        String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".postMultipleWithProjection.json5", this.getClass());
+        String json = FileSlurper.slurp(
+            this.getClass().getSimpleName() + ".postMultipleWithProjection.json5",
+            this.getClass()
+        );
 
         Response response = client
             .target("http://localhost:{port}/api/everyTypeKeyProperty/multipleWithProjection")

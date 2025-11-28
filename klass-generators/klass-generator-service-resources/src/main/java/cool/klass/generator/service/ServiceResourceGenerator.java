@@ -158,13 +158,9 @@ public class ServiceResourceGenerator {
             .select(service -> service.getVerb() == Verb.POST)
             .anySatisfy(service -> service.isAuthorizeClauseRequired() || klass.isAudited());
 
-        String authImport = hasPostNeedingAuth
-            ? "import io.dropwizard.auth.Auth;\n"
-            : "";
+        String authImport = hasPostNeedingAuth ? "import io.dropwizard.auth.Auth;\n" : "";
 
-        String arrayNodeImport = hasPostWithMany
-            ? "import com.fasterxml.jackson.databind.node.ArrayNode;\n"
-            : "";
+        String arrayNodeImport = hasPostWithMany ? "import com.fasterxml.jackson.databind.node.ArrayNode;\n" : "";
 
         String writeImports = hasWriteServices
             ? """
@@ -377,7 +373,8 @@ public class ServiceResourceGenerator {
         String executeOperationSourceCode = this.getExecuteOperationSourceCode(service.getQueryCriteria(), klassName);
 
         // Compiler validates GET services have projections in AntlrService.reportInvalidProjection() (ERR_GET_PRJ)
-        ServiceProjectionDispatch serviceProjectionDispatch = service.getProjectionDispatch()
+        ServiceProjectionDispatch serviceProjectionDispatch = service
+            .getProjectionDispatch()
             .orElseThrow(() -> new AssertionError("GET service missing projection: " + url.getUrlString()));
         Projection projection = serviceProjectionDispatch.getProjection();
 
@@ -495,31 +492,39 @@ public class ServiceResourceGenerator {
         String klassName = serviceGroup.getKlass().getName();
         String finderName = klassName + "Finder";
 
-        String authorizeOperationSourceCode =
-            this.getOperation(finderName, service.getAuthorizeCriteria(), "authorize");
+        String authorizeOperationSourceCode = this.getOperation(
+            finderName,
+            service.getAuthorizeCriteria(),
+            "authorize"
+        );
         String validateOperationSourceCode = this.getOperation(finderName, service.getValidateCriteria(), "validate");
         String conflictOperationSourceCode = this.getOperation(finderName, service.getConflictCriteria(), "conflict");
 
-        String authorizePredicateSourceCode =
-            this.checkPredicate(service.getAuthorizeCriteria(), "authorize", "isAuthorized", "ForbiddenException()");
-        String validatePredicateSourceCode =
-            this.checkPredicate(service.getValidateCriteria(), "validate", "isValidated", "BadRequestException()");
-        String conflictPredicateSourceCode =
-            this.checkPredicate(
-                    service.getConflictCriteria(),
-                    "conflict",
-                    "hasConflict",
-                    "ClientErrorException(Status.CONFLICT)"
-                );
+        String authorizePredicateSourceCode = this.checkPredicate(
+            service.getAuthorizeCriteria(),
+            "authorize",
+            "isAuthorized",
+            "ForbiddenException()"
+        );
+        String validatePredicateSourceCode = this.checkPredicate(
+            service.getValidateCriteria(),
+            "validate",
+            "isValidated",
+            "BadRequestException()"
+        );
+        String conflictPredicateSourceCode = this.checkPredicate(
+            service.getConflictCriteria(),
+            "conflict",
+            "hasConflict",
+            "ClientErrorException(Status.CONFLICT)"
+        );
 
         // Determine return type and JsonView based on projection
         // Note: For POST, we use KlassResponseBuilder which handles serialization internally,
         // so we don't need @JsonView annotation (it would conflict with KlassResponseBuilder)
         Optional<ServiceProjectionDispatch> projectionDispatch = service.getProjectionDispatch();
         String returnType = "Response";
-        String producesAnnotation = projectionDispatch.isPresent()
-            ? "    @Produces(MediaType.APPLICATION_JSON)\n"
-            : "";
+        String producesAnnotation = projectionDispatch.isPresent() ? "    @Produces(MediaType.APPLICATION_JSON)\n" : "";
         String jsonViewAnnotation = "";
 
         // Generate response code based on projection
@@ -540,24 +545,25 @@ public class ServiceResourceGenerator {
                     .collect(each -> "        // Deep fetch if needed: result.deepFetch(" + each + ");\n")
                     .makeString("");
 
-            responseCode = "" +
-            "        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();\n" +
-            "        // TODO: Append appropriate ID to the URI\n" +
-            "        // uriBuilder.path(Long.toString(persistentInstance.getId()));\n" +
-            "\n" +
-            deepFetchSourceCode +
-            "\n" +
-            "        Projection projection = this.domainModel.getProjectionByName(\"" +
-            projectionName +
-            "\");\n" +
-            "\n" +
-            "        var responseBuilder = new KlassResponseBuilder(\n" +
-            "                persistentInstance,\n" +
-            "                projection,\n" +
-            "                Multiplicity.ONE_TO_ONE,\n" +
-            "                this.clock.instant());\n" +
-            "\n" +
-            "        return Response.created(uriBuilder.build()).entity(responseBuilder.build()).build();\n";
+            responseCode =
+                "" +
+                "        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();\n" +
+                "        // TODO: Append appropriate ID to the URI\n" +
+                "        // uriBuilder.path(Long.toString(persistentInstance.getId()));\n" +
+                "\n" +
+                deepFetchSourceCode +
+                "\n" +
+                "        Projection projection = this.domainModel.getProjectionByName(\"" +
+                projectionName +
+                "\");\n" +
+                "\n" +
+                "        var responseBuilder = new KlassResponseBuilder(\n" +
+                "                persistentInstance,\n" +
+                "                projection,\n" +
+                "                Multiplicity.ONE_TO_ONE,\n" +
+                "                this.clock.instant());\n" +
+                "\n" +
+                "        return Response.created(uriBuilder.build()).entity(responseBuilder.build()).build();\n";
         } else {
             responseCode = "        return Response.noContent().build();\n";
         }
@@ -565,135 +571,163 @@ public class ServiceResourceGenerator {
         // Generate validation and creation code based on multiplicity
         String validationAndCreationCode;
         if (serviceMultiplicity == ServiceMultiplicity.ONE) {
-            validationAndCreationCode = ""
-                + "        MutableList<String> errors = Lists.mutable.empty();\n"
-                + "        MutableList<String> warnings = Lists.mutable.empty();\n"
-                + "        ObjectNodeTypeCheckingValidator.validate(errors, " + incomingInstanceParameterName + ", klass);\n"
-                + "        RequiredPropertiesValidator.validate(\n"
-                + "                errors,\n"
-                + "                warnings,\n"
-                + "                klass,\n"
-                + "                " + incomingInstanceParameterName + ",\n"
-                + "                OperationMode.CREATE);\n"
-                + "\n"
-                + "        if (errors.notEmpty())\n"
-                + "        {\n"
-                + "            Response response = Response\n"
-                + "                    .status(Status.BAD_REQUEST)\n"
-                + "                    .entity(errors)\n"
-                + "                    .build();\n"
-                + "            throw new BadRequestException(\"Incoming data failed validation.\", response);\n"
-                + "        }\n"
-                + "\n"
-                + "        // Note: warnings are logged but do not cause request failure\n"
-                + "        // TODO: Consider returning warnings in response headers\n"
-                + "\n"
-                + userPrincipalNameLocalVariable
-                + authorizeOperationSourceCode
-                + validateOperationSourceCode
-                + conflictOperationSourceCode
-                + "\n"
-                + authorizePredicateSourceCode
-                + validatePredicateSourceCode
-                + conflictPredicateSourceCode
-                + "\n"
-                + "        // Extract key values from incoming JSON\n"
-                + "        MutableMap<DataTypeProperty, Object> keys = MapAdapter.adapt(new LinkedHashMap<>());\n"
-                + "        for (DataTypeProperty keyProperty : klass.getKeyProperties())\n"
-                + "        {\n"
-                + "            Object keyValue = JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(keyProperty, " + incomingInstanceParameterName + ");\n"
-                + "            if (keyValue != null)\n"
-                + "            {\n"
-                + "                keys.put(keyProperty, keyValue);\n"
-                + "            }\n"
-                + "        }\n"
-                + "\n"
-                + "        // Create the instance inside a transaction\n"
-                + "        Instant transactionInstant = Instant.now(this.clock);\n"
-                + (needsSecurityContext
-                    ? "        MutationContext mutationContext = new MutationContext(Optional.of(userPrincipalName), transactionInstant, Maps.immutable.empty());\n"
-                    : "        MutationContext mutationContext = new MutationContext(Optional.empty(), transactionInstant, Maps.immutable.empty());\n")
-                + "        PersistentCreator creator = new PersistentCreator(mutationContext, this.dataStore);\n"
-                + "        ImmutableMap<DataTypeProperty, Object> finalKeys = keys.toImmutable();\n"
-                + "        ObjectNode finalIncomingInstance = " + incomingInstanceParameterName + ";\n"
-                + "        Object persistentInstance = this.dataStore.runInTransaction(transaction -> {\n"
-                + "            Object instance = this.dataStore.instantiate(klass, finalKeys);\n"
-                + "            creator.synchronize(klass, instance, finalIncomingInstance);\n"
-                + "            this.dataStore.insert(instance);\n"
-                + "            return instance;\n"
-                + "        });\n";
+            validationAndCreationCode =
+                "" +
+                "        MutableList<String> errors = Lists.mutable.empty();\n" +
+                "        MutableList<String> warnings = Lists.mutable.empty();\n" +
+                "        ObjectNodeTypeCheckingValidator.validate(errors, " +
+                incomingInstanceParameterName +
+                ", klass);\n" +
+                "        RequiredPropertiesValidator.validate(\n" +
+                "                errors,\n" +
+                "                warnings,\n" +
+                "                klass,\n" +
+                "                " +
+                incomingInstanceParameterName +
+                ",\n" +
+                "                OperationMode.CREATE);\n" +
+                "\n" +
+                "        if (errors.notEmpty())\n" +
+                "        {\n" +
+                "            Response response = Response\n" +
+                "                    .status(Status.BAD_REQUEST)\n" +
+                "                    .entity(errors)\n" +
+                "                    .build();\n" +
+                "            throw new BadRequestException(\"Incoming data failed validation.\", response);\n" +
+                "        }\n" +
+                "\n" +
+                "        // Note: warnings are logged but do not cause request failure\n" +
+                "        // TODO: Consider returning warnings in response headers\n" +
+                "\n" +
+                userPrincipalNameLocalVariable +
+                authorizeOperationSourceCode +
+                validateOperationSourceCode +
+                conflictOperationSourceCode +
+                "\n" +
+                authorizePredicateSourceCode +
+                validatePredicateSourceCode +
+                conflictPredicateSourceCode +
+                "\n" +
+                "        // Extract key values from incoming JSON\n" +
+                "        MutableMap<DataTypeProperty, Object> keys = MapAdapter.adapt(new LinkedHashMap<>());\n" +
+                "        for (DataTypeProperty keyProperty : klass.getKeyProperties())\n" +
+                "        {\n" +
+                "            Object keyValue = JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(keyProperty, " +
+                incomingInstanceParameterName +
+                ");\n" +
+                "            if (keyValue != null)\n" +
+                "            {\n" +
+                "                keys.put(keyProperty, keyValue);\n" +
+                "            }\n" +
+                "        }\n" +
+                "\n" +
+                "        // Create the instance inside a transaction\n" +
+                "        Instant transactionInstant = Instant.now(this.clock);\n" +
+                (needsSecurityContext
+                        ? "        MutationContext mutationContext = new MutationContext(Optional.of(userPrincipalName), transactionInstant, Maps.immutable.empty());\n"
+                        : "        MutationContext mutationContext = new MutationContext(Optional.empty(), transactionInstant, Maps.immutable.empty());\n") +
+                "        PersistentCreator creator = new PersistentCreator(mutationContext, this.dataStore);\n" +
+                "        ImmutableMap<DataTypeProperty, Object> finalKeys = keys.toImmutable();\n" +
+                "        ObjectNode finalIncomingInstance = " +
+                incomingInstanceParameterName +
+                ";\n" +
+                "        Object persistentInstance = this.dataStore.runInTransaction(transaction -> {\n" +
+                "            Object instance = this.dataStore.instantiate(klass, finalKeys);\n" +
+                "            creator.synchronize(klass, instance, finalIncomingInstance);\n" +
+                "            this.dataStore.insert(instance);\n" +
+                "            return instance;\n" +
+                "        });\n";
         } else {
             // MANY multiplicity - bulk creation
             String singularName = incomingInstanceParameterName.replaceAll("s$", "");
-            validationAndCreationCode = ""
-                + "        MutableList<String> errors = Lists.mutable.empty();\n"
-                + "        MutableList<String> warnings = Lists.mutable.empty();\n"
-                + "\n"
-                + "        // Validate all instances\n"
-                + "        for (int i = 0; i < " + incomingInstanceParameterName + ".size(); i++)\n"
-                + "        {\n"
-                + "            ObjectNode " + singularName + " = (ObjectNode) " + incomingInstanceParameterName + ".get(i);\n"
-                + "            ObjectNodeTypeCheckingValidator.validate(errors, " + singularName + ", klass);\n"
-                + "            RequiredPropertiesValidator.validate(\n"
-                + "                    errors,\n"
-                + "                    warnings,\n"
-                + "                    klass,\n"
-                + "                    " + singularName + ",\n"
-                + "                    OperationMode.CREATE);\n"
-                + "        }\n"
-                + "\n"
-                + "        if (errors.notEmpty())\n"
-                + "        {\n"
-                + "            Response response = Response\n"
-                + "                    .status(Status.BAD_REQUEST)\n"
-                + "                    .entity(errors)\n"
-                + "                    .build();\n"
-                + "            throw new BadRequestException(\"Incoming data failed validation.\", response);\n"
-                + "        }\n"
-                + "\n"
-                + "        // Note: warnings are logged but do not cause request failure\n"
-                + "        // TODO: Consider returning warnings in response headers\n"
-                + "\n"
-                + userPrincipalNameLocalVariable
-                + authorizeOperationSourceCode
-                + validateOperationSourceCode
-                + conflictOperationSourceCode
-                + "\n"
-                + authorizePredicateSourceCode
-                + validatePredicateSourceCode
-                + conflictPredicateSourceCode
-                + "\n"
-                + "        // Create all instances inside a transaction\n"
-                + "        Instant transactionInstant = Instant.now(this.clock);\n"
-                + (needsSecurityContext
-                    ? "        MutationContext mutationContext = new MutationContext(Optional.of(userPrincipalName), transactionInstant, Maps.immutable.empty());\n"
-                    : "        MutationContext mutationContext = new MutationContext(Optional.empty(), transactionInstant, Maps.immutable.empty());\n")
-                + "        PersistentCreator creator = new PersistentCreator(mutationContext, this.dataStore);\n"
-                + "        ArrayNode finalIncomingInstances = " + incomingInstanceParameterName + ";\n"
-                + "        MutableList<Object> persistentInstances = this.dataStore.runInTransaction(transaction -> {\n"
-                + "            MutableList<Object> instances = Lists.mutable.empty();\n"
-                + "            for (int i = 0; i < finalIncomingInstances.size(); i++)\n"
-                + "            {\n"
-                + "                ObjectNode " + singularName + " = (ObjectNode) finalIncomingInstances.get(i);\n"
-                + "\n"
-                + "                // Extract key values from incoming JSON\n"
-                + "                MutableMap<DataTypeProperty, Object> keys = MapAdapter.adapt(new LinkedHashMap<>());\n"
-                + "                for (DataTypeProperty keyProperty : klass.getKeyProperties())\n"
-                + "                {\n"
-                + "                    Object keyValue = JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(keyProperty, " + singularName + ");\n"
-                + "                    if (keyValue != null)\n"
-                + "                    {\n"
-                + "                        keys.put(keyProperty, keyValue);\n"
-                + "                    }\n"
-                + "                }\n"
-                + "\n"
-                + "                Object instance = this.dataStore.instantiate(klass, keys.toImmutable());\n"
-                + "                creator.synchronize(klass, instance, " + singularName + ");\n"
-                + "                this.dataStore.insert(instance);\n"
-                + "                instances.add(instance);\n"
-                + "            }\n"
-                + "            return instances;\n"
-                + "        });\n";
+            validationAndCreationCode =
+                "" +
+                "        MutableList<String> errors = Lists.mutable.empty();\n" +
+                "        MutableList<String> warnings = Lists.mutable.empty();\n" +
+                "\n" +
+                "        // Validate all instances\n" +
+                "        for (int i = 0; i < " +
+                incomingInstanceParameterName +
+                ".size(); i++)\n" +
+                "        {\n" +
+                "            ObjectNode " +
+                singularName +
+                " = (ObjectNode) " +
+                incomingInstanceParameterName +
+                ".get(i);\n" +
+                "            ObjectNodeTypeCheckingValidator.validate(errors, " +
+                singularName +
+                ", klass);\n" +
+                "            RequiredPropertiesValidator.validate(\n" +
+                "                    errors,\n" +
+                "                    warnings,\n" +
+                "                    klass,\n" +
+                "                    " +
+                singularName +
+                ",\n" +
+                "                    OperationMode.CREATE);\n" +
+                "        }\n" +
+                "\n" +
+                "        if (errors.notEmpty())\n" +
+                "        {\n" +
+                "            Response response = Response\n" +
+                "                    .status(Status.BAD_REQUEST)\n" +
+                "                    .entity(errors)\n" +
+                "                    .build();\n" +
+                "            throw new BadRequestException(\"Incoming data failed validation.\", response);\n" +
+                "        }\n" +
+                "\n" +
+                "        // Note: warnings are logged but do not cause request failure\n" +
+                "        // TODO: Consider returning warnings in response headers\n" +
+                "\n" +
+                userPrincipalNameLocalVariable +
+                authorizeOperationSourceCode +
+                validateOperationSourceCode +
+                conflictOperationSourceCode +
+                "\n" +
+                authorizePredicateSourceCode +
+                validatePredicateSourceCode +
+                conflictPredicateSourceCode +
+                "\n" +
+                "        // Create all instances inside a transaction\n" +
+                "        Instant transactionInstant = Instant.now(this.clock);\n" +
+                (needsSecurityContext
+                        ? "        MutationContext mutationContext = new MutationContext(Optional.of(userPrincipalName), transactionInstant, Maps.immutable.empty());\n"
+                        : "        MutationContext mutationContext = new MutationContext(Optional.empty(), transactionInstant, Maps.immutable.empty());\n") +
+                "        PersistentCreator creator = new PersistentCreator(mutationContext, this.dataStore);\n" +
+                "        ArrayNode finalIncomingInstances = " +
+                incomingInstanceParameterName +
+                ";\n" +
+                "        MutableList<Object> persistentInstances = this.dataStore.runInTransaction(transaction -> {\n" +
+                "            MutableList<Object> instances = Lists.mutable.empty();\n" +
+                "            for (int i = 0; i < finalIncomingInstances.size(); i++)\n" +
+                "            {\n" +
+                "                ObjectNode " +
+                singularName +
+                " = (ObjectNode) finalIncomingInstances.get(i);\n" +
+                "\n" +
+                "                // Extract key values from incoming JSON\n" +
+                "                MutableMap<DataTypeProperty, Object> keys = MapAdapter.adapt(new LinkedHashMap<>());\n" +
+                "                for (DataTypeProperty keyProperty : klass.getKeyProperties())\n" +
+                "                {\n" +
+                "                    Object keyValue = JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(keyProperty, " +
+                singularName +
+                ");\n" +
+                "                    if (keyValue != null)\n" +
+                "                    {\n" +
+                "                        keys.put(keyProperty, keyValue);\n" +
+                "                    }\n" +
+                "                }\n" +
+                "\n" +
+                "                Object instance = this.dataStore.instantiate(klass, keys.toImmutable());\n" +
+                "                creator.synchronize(klass, instance, " +
+                singularName +
+                ");\n" +
+                "                this.dataStore.insert(instance);\n" +
+                "                instances.add(instance);\n" +
+                "            }\n" +
+                "            return instances;\n" +
+                "        });\n";
         }
 
         // Generate response code for MANY multiplicity
@@ -701,23 +735,28 @@ public class ServiceResourceGenerator {
         if (projectionDispatch.isPresent()) {
             Projection projection = projectionDispatch.get().getProjection();
             String projectionName = projection.getName();
-            manyResponseCode = ""
-                + "        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();\n"
-                + "\n"
-                + "        Projection projection = this.domainModel.getProjectionByName(\"" + projectionName + "\");\n"
-                + "\n"
-                + "        var responseBuilder = new KlassResponseBuilder(\n"
-                + "                persistentInstances,\n"
-                + "                projection,\n"
-                + "                Multiplicity.ONE_TO_MANY,\n"
-                + "                this.clock.instant());\n"
-                + "\n"
-                + "        return Response.created(uriBuilder.build()).entity(responseBuilder.build()).build();\n";
+            manyResponseCode =
+                "" +
+                "        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();\n" +
+                "\n" +
+                "        Projection projection = this.domainModel.getProjectionByName(\"" +
+                projectionName +
+                "\");\n" +
+                "\n" +
+                "        var responseBuilder = new KlassResponseBuilder(\n" +
+                "                persistentInstances,\n" +
+                "                projection,\n" +
+                "                Multiplicity.ONE_TO_MANY,\n" +
+                "                this.clock.instant());\n" +
+                "\n" +
+                "        return Response.created(uriBuilder.build()).entity(responseBuilder.build()).build();\n";
         } else {
             manyResponseCode = "        return Response.noContent().build();\n";
         }
 
-        String effectiveResponseCode = serviceMultiplicity == ServiceMultiplicity.MANY ? manyResponseCode : responseCode;
+        String effectiveResponseCode = serviceMultiplicity == ServiceMultiplicity.MANY
+            ? manyResponseCode
+            : responseCode;
 
         // @formatter:off
         // language=JAVA
