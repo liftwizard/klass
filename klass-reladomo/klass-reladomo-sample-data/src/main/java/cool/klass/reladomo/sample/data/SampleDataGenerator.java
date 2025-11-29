@@ -56,7 +56,7 @@ public class SampleDataGenerator {
     }
 
     public void generate() {
-        this.dataStore.runInTransaction(transaction -> {
+        this.dataStore.runInTransaction((transaction) -> {
                 transaction.setSystemTime(this.systemTime.toEpochMilli());
                 this.domainModel.getClasses().each(this::generate);
                 return null;

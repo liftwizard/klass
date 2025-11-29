@@ -52,12 +52,12 @@ public interface ReladomoTreeNode {
 
     default String getNodeString(String indent) {
         return (
-            indent +
-            this.getOwningClassifier().getName() +
-            this.getShortString() +
-            ": " +
-            this.getType().getName() +
-            "\n"
+            indent
+            + this.getOwningClassifier().getName()
+            + this.getShortString()
+            + ": "
+            + this.getType().getName()
+            + "\n"
         );
     }
 

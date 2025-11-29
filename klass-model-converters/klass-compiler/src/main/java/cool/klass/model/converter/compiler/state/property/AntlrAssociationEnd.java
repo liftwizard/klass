@@ -154,7 +154,7 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
     public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         super.reportErrors(compilerAnnotationHolder);
 
-        this.orderBy.ifPresent(o -> o.reportErrors(compilerAnnotationHolder));
+        this.orderBy.ifPresent((o) -> o.reportErrors(compilerAnnotationHolder));
 
         this.reportInvalidMultiplicity(compilerAnnotationHolder);
         this.reportVersionEndUnowned(compilerAnnotationHolder);
@@ -187,11 +187,11 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
             compilerAnnotationHolder.add("ERR_VER_END", message, this, this.nameContext);
         }
         if (
-            !this.getOwningClassifier().isUser() &&
-            !this.isVersion() &&
-            this.getType().isVersion() &&
-            !this.opposite.isCreatedBy() &&
-            !this.opposite.isLastUpdatedBy()
+            !this.getOwningClassifier().isUser()
+            && !this.isVersion()
+            && this.getType().isVersion()
+            && !this.opposite.isCreatedBy()
+            && !this.opposite.isLastUpdatedBy()
         ) {
             String message = String.format(
                 "Association end '%s.%s' has version type %s, but is missing the version modifier.",

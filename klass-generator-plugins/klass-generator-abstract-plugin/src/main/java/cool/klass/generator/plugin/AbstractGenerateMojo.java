@@ -130,12 +130,12 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
     protected DomainModelWithSourceCode getDomainModel() throws MojoExecutionException {
         if (this.klassSourcePackages.isEmpty()) {
             String message =
-                "" +
-                "Klass maven plugins must be configured with at least one klassSourcePackage. For example:\n" +
-                "<klassSourcePackages>\n" +
-                "    <klassSourcePackage>klass.model.meta.domain</klassSourcePackage>\n" +
-                "    <klassSourcePackage>${app.rootPackageName}</klassSourcePackage>\n" +
-                "</klassSourcePackages>";
+                ""
+                + "Klass maven plugins must be configured with at least one klassSourcePackage. For example:\n"
+                + "<klassSourcePackages>\n"
+                + "    <klassSourcePackage>klass.model.meta.domain</klassSourcePackage>\n"
+                + "    <klassSourcePackage>${app.rootPackageName}</klassSourcePackage>\n"
+                + "</klassSourcePackages>";
             throw new MojoExecutionException(message);
         }
 
@@ -180,9 +180,9 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 
         klassSourcePackages
             .asLazy()
-            .collect(klassSourcePackage -> klassSourcePackage.replaceAll("\\.", "/"))
-            .collect(relativeDirectory -> new File(directory, relativeDirectory))
-            .forEach(file -> {
+            .collect((klassSourcePackage) -> klassSourcePackage.replaceAll("\\.", "/"))
+            .collect((relativeDirectory) -> new File(directory, relativeDirectory))
+            .forEach((file) -> {
                 File[] files = file.listFiles();
                 if (files == null) {
                     this.getLog().warn("Could not find directory: " + file.getAbsolutePath());
@@ -192,15 +192,15 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
         // list all files in sourceDirectory
         klassSourcePackages
             .asLazy()
-            .collect(klassSourcePackage -> klassSourcePackage.replaceAll("\\.", "/"))
-            .collect(relativeDirectory -> new File(directory, relativeDirectory))
+            .collect((klassSourcePackage) -> klassSourcePackage.replaceAll("\\.", "/"))
+            .collect((relativeDirectory) -> new File(directory, relativeDirectory))
             .collect(File::listFiles)
             .reject(Objects::isNull)
             .collect(ArrayAdapter::adapt)
-            .forEach(files ->
+            .forEach((files) ->
                 files
                     .asLazy()
-                    .select(file -> KLASS_FILE_EXTENSION.matcher(file.getAbsolutePath()).matches())
+                    .select((file) -> KLASS_FILE_EXTENSION.matcher(file.getAbsolutePath()).matches())
                     .into(resultKlassLocations)
             );
     }
@@ -249,7 +249,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
     }
 
     private ImmutableMap<String, String> buildFileContentCache(ImmutableList<File> files) {
-        return files.toImmutableMap(File::getAbsolutePath, file -> {
+        return files.toImmutableMap(File::getAbsolutePath, (file) -> {
             try {
                 return Files.readString(file.toPath());
             } catch (IOException e) {

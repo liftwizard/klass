@@ -75,9 +75,9 @@ public class VersionClassInferencePhase extends AbstractCompilerPhase {
         AntlrClass klass = this.compilerState.getCompilerWalk().getKlass();
         String propertySourceCode = klass
             .getAllDataTypeProperties()
-            .select(property -> property.isKey() || property.isValid() || property.isSystem() || property.isAudit())
+            .select((property) -> property.isKey() || property.isValid() || property.isSystem() || property.isAudit())
             .collect(this::getSourceCode)
-            .collect(each -> String.format("    %s%n", each))
+            .collect((each) -> String.format("    %s%n", each))
             .makeString("");
 
         AntlrModifier auditedModifier = klass.getModifierByName("audited");
@@ -86,19 +86,19 @@ public class VersionClassInferencePhase extends AbstractCompilerPhase {
         // TODO: If main class is transient, version should also be transient, so copy classifier modifiers
         // language=Klass
         return (
-            "package " +
-            klass.getPackageName() +
-            "\n" +
-            "\n" +
-            "class " +
-            klass.getName() +
-            "Version systemTemporal" +
-            auditedSourceCode +
-            "\n" +
-            "{\n" +
-            propertySourceCode +
-            "    number: Integer version;\n" +
-            "}\n"
+            "package "
+            + klass.getPackageName()
+            + "\n"
+            + "\n"
+            + "class "
+            + klass.getName()
+            + "Version systemTemporal"
+            + auditedSourceCode
+            + "\n"
+            + "{\n"
+            + propertySourceCode
+            + "    number: Integer version;\n"
+            + "}\n"
         );
     }
 

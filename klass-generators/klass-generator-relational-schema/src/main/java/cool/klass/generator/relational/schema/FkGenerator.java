@@ -42,7 +42,7 @@ public final class FkGenerator {
 
         String result = foreignKeys
             .keyValuesView()
-            .collect(keyValuePair -> getFk(klass, keyValuePair.getOne(), keyValuePair.getTwo()))
+            .collect((keyValuePair) -> getFk(klass, keyValuePair.getOne(), keyValuePair.getTwo()))
             .makeString("");
         return Optional.of(result);
     }

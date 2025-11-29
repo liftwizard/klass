@@ -68,10 +68,10 @@ public class JsonPrimitiveTypeValueVisitor implements PrimitiveTypeVisitor {
     @Override
     public void visitDouble() {
         if (
-            !this.jsonDataTypeValue.isDouble() &&
-            !this.jsonDataTypeValue.isFloat() &&
-            !this.jsonDataTypeValue.isInt() &&
-            !this.jsonDataTypeValue.isLong()
+            !this.jsonDataTypeValue.isDouble()
+            && !this.jsonDataTypeValue.isFloat()
+            && !this.jsonDataTypeValue.isInt()
+            && !this.jsonDataTypeValue.isLong()
         ) {
             throw new AssertionError();
         }
@@ -82,11 +82,11 @@ public class JsonPrimitiveTypeValueVisitor implements PrimitiveTypeVisitor {
     @Override
     public void visitFloat() {
         if (
-            (!this.jsonDataTypeValue.isDouble() &&
-                !this.jsonDataTypeValue.isFloat() &&
-                !this.jsonDataTypeValue.isInt() &&
-                !this.jsonDataTypeValue.isLong()) ||
-            !this.hasValidFloatString()
+            (!this.jsonDataTypeValue.isDouble()
+                && !this.jsonDataTypeValue.isFloat()
+                && !this.jsonDataTypeValue.isInt()
+                && !this.jsonDataTypeValue.isLong())
+            || !this.hasValidFloatString()
         ) {
             throw new AssertionError();
         }

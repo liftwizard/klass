@@ -55,7 +55,7 @@ public class KlassMacroGeneratorTest {
         DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
         ImmutableList<SourceCode> sourceCodesFromMacros = domainModel
             .getSourceCodes()
-            .select(each -> each.getMacroSourceCode().isPresent());
+            .select((each) -> each.getMacroSourceCode().isPresent());
         ImmutableListMultimap<String, SourceCode> sourceCodesByFullPath = sourceCodesFromMacros.groupBy(
             SourceCode::getFullPathSourceName
         );

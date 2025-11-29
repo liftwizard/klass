@@ -50,17 +50,17 @@ public final class TableGenerator {
         String propertiesSourceCode = getPropertiesSourceCode(klass, tableName);
 
         return (
-            "    <changeSet author=\"Klass\" id=\"initial-table-" +
-            ordinal +
-            "-" +
-            tableName +
-            "\">\n" +
-            "        <createTable tableName=\"" +
-            tableName +
-            "\">\n" +
-            propertiesSourceCode +
-            "        </createTable>\n" +
-            "    </changeSet>\n\n"
+            "    <changeSet author=\"Klass\" id=\"initial-table-"
+            + ordinal
+            + "-"
+            + tableName
+            + "\">\n"
+            + "        <createTable tableName=\""
+            + tableName
+            + "\">\n"
+            + propertiesSourceCode
+            + "        </createTable>\n"
+            + "    </changeSet>\n\n"
         );
     }
 
@@ -69,7 +69,7 @@ public final class TableGenerator {
         return getDataTypeProperties(klass)
             .reject(DataTypeProperty::isDerived)
             .reject(DataTypeProperty::isTemporalRange)
-            .collect(dataTypeProperty -> getPropertySourceCode(dataTypeProperty, tableName))
+            .collect((dataTypeProperty) -> getPropertySourceCode(dataTypeProperty, tableName))
             .makeString("\n");
     }
 
@@ -82,7 +82,7 @@ public final class TableGenerator {
 
         return klass
             .getDataTypeProperties()
-            .select(each -> each.isKey() || !superClassPropertyNames.contains(each.getName()));
+            .select((each) -> each.isKey() || !superClassPropertyNames.contains(each.getName()));
     }
 
     private static String getPropertySourceCode(DataTypeProperty dataTypeProperty, String tableName) {
@@ -96,16 +96,16 @@ public final class TableGenerator {
         }
 
         return (
-            "            <column name=\"" +
-            name +
-            "\" type=\"" +
-            dataType +
-            "\">\n" +
-            "                <constraints" +
-            nullability +
-            primaryKey +
-            " />\n" +
-            "            </column>\n"
+            "            <column name=\""
+            + name
+            + "\" type=\""
+            + dataType
+            + "\">\n"
+            + "                <constraints"
+            + nullability
+            + primaryKey
+            + " />\n"
+            + "            </column>\n"
         );
     }
 

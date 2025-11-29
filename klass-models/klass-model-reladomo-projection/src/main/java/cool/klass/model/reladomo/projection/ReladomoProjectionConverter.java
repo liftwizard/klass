@@ -118,8 +118,8 @@ public final class ReladomoProjectionConverter {
             reladomoNode = reladomoNode.computeChild(name, childNode);
         } else {
             throw new AssertionError(
-                "Expected ProjectionProjectionReference or ProjectionReferenceProperty but got " +
-                projectionChild.getClass().getCanonicalName()
+                "Expected ProjectionProjectionReference or ProjectionReferenceProperty but got "
+                + projectionChild.getClass().getCanonicalName()
             );
         }
     }

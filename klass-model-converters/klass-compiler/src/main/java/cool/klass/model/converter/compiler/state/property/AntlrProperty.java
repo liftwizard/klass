@@ -159,7 +159,7 @@ public abstract class AntlrProperty extends AntlrIdentifierElement {
     protected void reportDuplicateAuditModifiers(CompilerAnnotationHolder compilerAnnotationHolder) {
         if (this.isCreatedBy() && this.isLastUpdatedBy()) {
             ImmutableList<AntlrModifier> modifiers = this.getModifiers()
-                .select(modifier -> modifier.isCreatedBy() || modifier.isLastUpdatedBy())
+                .select((modifier) -> modifier.isCreatedBy() || modifier.isLastUpdatedBy())
                 .toImmutable();
             ImmutableList<ParserRuleContext> modifierContexts = modifiers.collect(AntlrElement::getElementContext);
             String message = "Property may not have both 'createdBy' and lastUpdatedBy' modifiers.";
@@ -187,7 +187,7 @@ public abstract class AntlrProperty extends AntlrIdentifierElement {
 
         if (this.isLastUpdatedBy() && this.isFinal()) {
             ImmutableList<ParserRuleContext> parserRuleContexts = this.getModifiers()
-                .select(antlrModifier -> antlrModifier.isLastUpdatedBy() || antlrModifier.isFinal())
+                .select((antlrModifier) -> antlrModifier.isLastUpdatedBy() || antlrModifier.isFinal())
                 .collect(AntlrElement::getElementContext)
                 .toImmutable();
             String message = String.format("Expected lastUpdatedBy property '%s' to not be final.", this);

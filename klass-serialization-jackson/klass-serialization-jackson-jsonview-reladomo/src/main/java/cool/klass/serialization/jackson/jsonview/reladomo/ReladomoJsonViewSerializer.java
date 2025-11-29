@@ -127,8 +127,8 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
         MutableMap<String, ProjectionElementReladomoNode> children = projectionReladomoNode.getChildren();
         for (ProjectionElementReladomoNode projectionElementReladomoNode : children) {
             if (
-                projectionElementReladomoNode instanceof
-                ProjectionDataTypePropertyReladomoNode projectionDataTypePropertyReladomoNode
+                projectionElementReladomoNode
+                instanceof ProjectionDataTypePropertyReladomoNode projectionDataTypePropertyReladomoNode
             ) {
                 this.handleProjectionPrimitiveMember(
                     jsonGenerator,
@@ -136,8 +136,8 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
                     projectionDataTypePropertyReladomoNode
                 );
             } else if (
-                projectionElementReladomoNode instanceof
-                ProjectionWithReferencePropertyReladomoNode projectionWithReferencePropertyReladomoNode
+                projectionElementReladomoNode
+                instanceof ProjectionWithReferencePropertyReladomoNode projectionWithReferencePropertyReladomoNode
             ) {
                 this.handleProjectionWithReferenceProperty(
                     jsonGenerator,
@@ -232,7 +232,7 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
             // TODO: Add configuration to disable serialization of empty lists
             jsonGenerator.writeArrayFieldStart(associationEndName);
             try {
-                mithraList.forEachWithCursor(eachChildValue ->
+                mithraList.forEachWithCursor((eachChildValue) ->
                     this.recurse(
                         (MithraObject) eachChildValue,
                         jsonGenerator,

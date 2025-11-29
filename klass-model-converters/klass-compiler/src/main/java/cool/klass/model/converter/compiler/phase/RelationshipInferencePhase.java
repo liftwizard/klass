@@ -100,7 +100,7 @@ public class RelationshipInferencePhase extends AbstractCompilerPhase {
         }
 
         String sourceCodeText = allKeyProperties
-            .collect(each ->
+            .collect((each) ->
                 "this.%s%s == %s.%s".formatted(
                     UPPER_TO_LOWER_CAMEL.convert(oppositeType.getName()),
                     LOWER_CAMEL_TO_UPPER_CAMEL.convert(each.getName()),
@@ -122,7 +122,7 @@ public class RelationshipInferencePhase extends AbstractCompilerPhase {
         }
 
         String sourceCodeText = allKeyProperties
-            .collect(each ->
+            .collect((each) ->
                 "this.%s == %s.%s%s".formatted(
                     each.getName(),
                     associationEnd.getType().getName(),

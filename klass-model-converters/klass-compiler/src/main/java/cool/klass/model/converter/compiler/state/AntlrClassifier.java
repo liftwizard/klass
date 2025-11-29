@@ -168,7 +168,7 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
         MutableSet<String> propertyNames = this.declaredProperties.collect(AntlrNamedElement::getName).toSet();
 
         ImmutableList<AntlrProperty> inheritedProperties = this.getInheritedProperties(visited).reject(
-            inheritedProperty -> propertyNames.contains(inheritedProperty.getName())
+            (inheritedProperty) -> propertyNames.contains(inheritedProperty.getName())
         );
 
         return this.declaredProperties.toImmutable().newWithAll(inheritedProperties);
@@ -196,7 +196,7 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
 
         ImmutableList<AntlrDataTypeProperty<?>> inheritedProperties = this.getInheritedDataTypeProperties(
             visited
-        ).reject(inheritedProperty -> propertyNames.contains(inheritedProperty.getName()));
+        ).reject((inheritedProperty) -> propertyNames.contains(inheritedProperty.getName()));
 
         return this.declaredDataTypeProperties.toImmutable().newWithAll(inheritedProperties);
     }
@@ -222,7 +222,7 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
         MutableSet<String> modifierNames = this.declaredModifiers.collect(AntlrModifier::getKeyword).toSet();
 
         ImmutableList<AntlrModifier> inheritedModifiers = this.getInheritedModifiers(visited).reject(
-            inheritedProperty -> modifierNames.contains(inheritedProperty.getKeyword())
+            (inheritedProperty) -> modifierNames.contains(inheritedProperty.getKeyword())
         );
 
         return this.declaredModifiers.toImmutable().newWithAll(inheritedModifiers);
@@ -381,8 +381,8 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
         String... modifiersArray
     ) {
         ImmutableList<String> modifiers = Lists.immutable.with(modifiersArray);
-        MutableList<T> duplicatePropertyWithModifiers = properties.select(property ->
-            modifiers.allSatisfy(modifier -> property.getModifiers().anySatisfyWith(AntlrModifier::is, modifier))
+        MutableList<T> duplicatePropertyWithModifiers = properties.select((property) ->
+            modifiers.allSatisfy((modifier) -> property.getModifiers().anySatisfyWith(AntlrModifier::is, modifier))
         );
 
         if (duplicatePropertyWithModifiers.size() <= 1) {
@@ -572,20 +572,20 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
 
         if (!dataTypeProperties.equals(orderedDataTypeProperties)) {
             String allAdditionalContext =
-                "" +
-                this.getContext("keys and foreign keys:     ", keysAndForeignKeys) +
-                this.getContext("keys:                      ", keys) +
-                this.getContext("foreign keys but not keys: ", nonKeyForeignKeys) +
-                this.getContext("system range:              ", system) +
-                this.getContext("system from:               ", systemFrom) +
-                this.getContext("system to:                 ", systemTo) +
-                this.getContext("valid range:               ", valid) +
-                this.getContext("valid from:                ", validFrom) +
-                this.getContext("valid to:                  ", validTo) +
-                this.getContext("created by:                ", createdBy) +
-                this.getContext("created on:                ", createdOn) +
-                this.getContext("last updated by:           ", lastUpdatedBy) +
-                this.getContext("Other:                     ", otherDataTypeProperties);
+                ""
+                + this.getContext("keys and foreign keys:     ", keysAndForeignKeys)
+                + this.getContext("keys:                      ", keys)
+                + this.getContext("foreign keys but not keys: ", nonKeyForeignKeys)
+                + this.getContext("system range:              ", system)
+                + this.getContext("system from:               ", systemFrom)
+                + this.getContext("system to:                 ", systemTo)
+                + this.getContext("valid range:               ", valid)
+                + this.getContext("valid from:                ", validFrom)
+                + this.getContext("valid to:                  ", validTo)
+                + this.getContext("created by:                ", createdBy)
+                + this.getContext("created on:                ", createdOn)
+                + this.getContext("last updated by:           ", lastUpdatedBy)
+                + this.getContext("Other:                     ", otherDataTypeProperties);
 
             String message = String.format(
                 "The properties of class '%s' are not declared in the correct order. Expected '%s' but found '%s'.%n%s",
@@ -606,7 +606,7 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
     @OverridingMethodsMustInvokeSuper
     public void reportAuditErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         this.reportAuditErrors(compilerAnnotationHolder, this.declaredModifiers, this);
-        this.declaredDataTypeProperties.each(each -> each.reportAuditErrors(compilerAnnotationHolder));
+        this.declaredDataTypeProperties.each((each) -> each.reportAuditErrors(compilerAnnotationHolder));
     }
 
     protected void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder) {
@@ -637,7 +637,7 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
     protected boolean interfaceNotAtIndexImplements(int index, @Nonnull AntlrInterface iface) {
         return Interval.zeroTo(this.declaredInterfaces.size() - 1)
             .asLazy()
-            .reject(i -> i == index)
+            .reject((i) -> i == index)
             .collect(this.declaredInterfaces::get)
             .anySatisfyWith(AntlrClassifier::implementsInterface, iface);
     }
@@ -657,14 +657,14 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
     protected AntlrDataTypeProperty<?> getInterfaceDataTypePropertyByName(String name) {
         return this.declaredInterfaces.asLazy()
             .<String, AntlrDataTypeProperty<?>>collectWith(AntlrInterface::getDataTypePropertyByName, name)
-            .detectOptional(interfaceProperty -> interfaceProperty != AntlrEnumerationProperty.NOT_FOUND)
+            .detectOptional((interfaceProperty) -> interfaceProperty != AntlrEnumerationProperty.NOT_FOUND)
             .orElse(AntlrEnumerationProperty.NOT_FOUND);
     }
 
     protected AntlrModifier getInterfaceClassifierModifierByName(String name) {
         return this.declaredInterfaces.asLazy()
             .collectWith(AntlrInterface::getModifierByName, name)
-            .detectOptional(interfaceModifier -> interfaceModifier != AntlrModifier.NOT_FOUND)
+            .detectOptional((interfaceModifier) -> interfaceModifier != AntlrModifier.NOT_FOUND)
             .orElse(AntlrModifier.NOT_FOUND);
     }
 
@@ -688,8 +688,8 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
     @OverridingMethodsMustInvokeSuper
     public boolean implementsInterface(AntlrInterface iface) {
         return (
-            this.declaredInterfaces.contains(iface) ||
-            this.declaredInterfaces.anySatisfyWith(AntlrClassifier::implementsInterface, iface)
+            this.declaredInterfaces.contains(iface)
+            || this.declaredInterfaces.anySatisfyWith(AntlrClassifier::implementsInterface, iface)
         );
     }
 
@@ -719,7 +719,7 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
             overriddenProperties.add(antlrDataTypeProperty);
         }
 
-        this.getSuperClass().ifPresent(antlrClass ->
+        this.getSuperClass().ifPresent((antlrClass) ->
             antlrClass.getOverriddenDataTypeProperties(name, overriddenProperties, visited)
         );
 

@@ -454,7 +454,7 @@ public class IncomingCreateDataModelValidator {
             if (childPersistentInstanceWithKey == null) {
                 String keysString = keys
                     .keyValuesView()
-                    .collect(keyValue -> keyValue.getOne().getName() + ": " + keyValue.getTwo())
+                    .collect((keyValue) -> keyValue.getOne().getName() + ": " + keyValue.getTwo())
                     .makeString("{", ", ", "}");
 
                 String error = String.format(
@@ -648,7 +648,7 @@ public class IncomingCreateDataModelValidator {
         return associationEnd
             .getType()
             .getKeyProperties()
-            .allSatisfy(keyProperty -> this.jsonNodeNeedsIdInferredOnInsert(keyProperty, jsonNode, associationEnd));
+            .allSatisfy((keyProperty) -> this.jsonNodeNeedsIdInferredOnInsert(keyProperty, jsonNode, associationEnd));
     }
 
     private boolean jsonNodeNeedsIdInferredOnInsert(

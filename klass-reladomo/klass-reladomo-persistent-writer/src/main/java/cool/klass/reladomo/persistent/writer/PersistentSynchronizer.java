@@ -88,7 +88,7 @@ public abstract class PersistentSynchronizer {
             throw new AssertionError();
         }
 
-        return this.dataStore.runInTransaction(transaction -> {
+        return this.dataStore.runInTransaction((transaction) -> {
                 Instant transactionTime = this.mutationContext.getTransactionTime();
                 long transactionTimeMillis = transactionTime.toEpochMilli();
                 transaction.setSystemTime(transactionTimeMillis);
@@ -155,7 +155,7 @@ public abstract class PersistentSynchronizer {
             // TODO: Bump version number and version audit properties
             klass
                 .getVersionProperty()
-                .ifPresent(associationEnd -> this.handleVersion(associationEnd, persistentInstance));
+                .ifPresent((associationEnd) -> this.handleVersion(associationEnd, persistentInstance));
         }
 
         return mutationOccurred;
@@ -169,7 +169,7 @@ public abstract class PersistentSynchronizer {
 
     protected void synchronizeUpdatedDataTypeProperties(Klass klass, Object persistentInstance) {
         Optional<PrimitiveProperty> lastUpdatedByProperty = klass.getLastUpdatedByProperty();
-        lastUpdatedByProperty.ifPresent(primitiveProperty -> {
+        lastUpdatedByProperty.ifPresent((primitiveProperty) -> {
             Optional<String> optionalUserId = this.mutationContext.getUserId();
             String userId = optionalUserId.orElseThrow(() -> new AssertionError(primitiveProperty));
             this.dataStore.setDataTypeProperty(persistentInstance, primitiveProperty, userId);
@@ -221,13 +221,13 @@ public abstract class PersistentSynchronizer {
 
     private boolean shouldSkipDataTypeProperty(@Nonnull DataTypeProperty dataTypeProperty, @Nonnull Klass klass) {
         return (
-            dataTypeProperty.isForeignKey() ||
-            dataTypeProperty.isAudit() ||
-            dataTypeProperty.isTemporal() ||
-            dataTypeProperty.isDerived() ||
-            this.hasReferencePropertyDependentOnDataTypeProperty(klass, dataTypeProperty) ||
-            (dataTypeProperty.isKey() && !this.shouldWriteKey()) ||
-            (dataTypeProperty.isID() && !this.shouldWriteId())
+            dataTypeProperty.isForeignKey()
+            || dataTypeProperty.isAudit()
+            || dataTypeProperty.isTemporal()
+            || dataTypeProperty.isDerived()
+            || this.hasReferencePropertyDependentOnDataTypeProperty(klass, dataTypeProperty)
+            || (dataTypeProperty.isKey() && !this.shouldWriteKey())
+            || (dataTypeProperty.isID() && !this.shouldWriteId())
         );
     }
 
@@ -242,7 +242,7 @@ public abstract class PersistentSynchronizer {
     ) {
         PartitionImmutableList<AssociationEnd> forwardOwnedAssociationEnds = klass
             .getAssociationEnds()
-            .reject(associationEnd -> pathHere.equals(Optional.of(associationEnd.getOpposite())))
+            .reject((associationEnd) -> pathHere.equals(Optional.of(associationEnd.getOpposite())))
             .reject(AssociationEnd::isVersion)
             .reject(AssociationEnd::isAudit)
             .partition(AssociationEnd::isOwned);
@@ -593,8 +593,8 @@ public abstract class PersistentSynchronizer {
         return klass
             .getKeyProperties()
             .toImmutableMap(
-                keyProperty -> keyProperty,
-                keyProperty -> this.dataStore.getDataTypeProperty(persistentInstance, keyProperty)
+                (keyProperty) -> keyProperty,
+                (keyProperty) -> this.dataStore.getDataTypeProperty(persistentInstance, keyProperty)
             );
     }
 
@@ -676,7 +676,7 @@ public abstract class PersistentSynchronizer {
 
         ListIterate.groupByUniqueKey(
             persistentInstances,
-            persistentInstance -> this.getKeysFromPersistentInstance(persistentInstance, klass),
+            (persistentInstance) -> this.getKeysFromPersistentInstance(persistentInstance, klass),
             result
         );
 
@@ -687,7 +687,7 @@ public abstract class PersistentSynchronizer {
         return associationEnd
             .getType()
             .getKeyProperties()
-            .allSatisfy(keyProperty -> this.jsonNodeNeedsIdInferredOnInsert(keyProperty, jsonNode, associationEnd));
+            .allSatisfy((keyProperty) -> this.jsonNodeNeedsIdInferredOnInsert(keyProperty, jsonNode, associationEnd));
     }
 
     private boolean jsonNodeNeedsIdInferredOnInsert(
@@ -724,8 +724,8 @@ public abstract class PersistentSynchronizer {
 
         for (DataTypeProperty keyProperty : associationEnd.getType().getKeyProperties()) {
             if (
-                !jsonNode.has(keyProperty.getName()) &&
-                this.jsonNodeNeedsIdInferredOnInsert(keyProperty, jsonNode, associationEnd)
+                !jsonNode.has(keyProperty.getName())
+                && this.jsonNodeNeedsIdInferredOnInsert(keyProperty, jsonNode, associationEnd)
             ) {
                 continue;
             }

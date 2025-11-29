@@ -50,7 +50,7 @@ public final class AnsiTokenColorizer {
 
     public void colorizeText(Ansi ansi, Token token) {
         Optional<TokenCategory> tokenCategory = this.getTokenCategory(token);
-        tokenCategory.ifPresent(justTokenCategory ->
+        tokenCategory.ifPresent((justTokenCategory) ->
             TokenCategoryToAnsiColor.applyColor(justTokenCategory, ansi, this.colorScheme)
         );
         ansi.a(token.getText());

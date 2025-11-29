@@ -275,7 +275,7 @@ public class AntlrInterface extends AntlrClassifier {
         }
 
         visitedInterfaces.add(this);
-        return this.declaredInterfaces.anySatisfy(eachSuperInterface ->
+        return this.declaredInterfaces.anySatisfy((eachSuperInterface) ->
             eachSuperInterface.extendsInterface(iface, visitedInterfaces)
         );
     }
@@ -294,7 +294,7 @@ public class AntlrInterface extends AntlrClassifier {
     public ImmutableBag<String> getDuplicateMemberNames() {
         return this.getDeclaredMemberNames()
             .toBag()
-            .selectByOccurrences(occurrences -> occurrences > 1)
+            .selectByOccurrences((occurrences) -> occurrences > 1)
             .toImmutable();
     }
 

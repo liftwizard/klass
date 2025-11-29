@@ -133,7 +133,7 @@ public class KlassHtmlResource {
         if (topLevelElement instanceof EnumerationWithSourceCode enumeration) {
             Optional<EnumerationLiteral> enumerationLiteral = enumeration
                 .getEnumerationLiterals()
-                .detectOptional(each -> each.getName().equals(memberName));
+                .detectOptional((each) -> each.getName().equals(memberName));
             if (enumerationLiteral.isEmpty()) {
                 return Optional.empty();
             }
@@ -151,7 +151,7 @@ public class KlassHtmlResource {
     @Path("/meta/code/file/{fileName}.html")
     @Produces(MediaType.TEXT_HTML)
     public String fileSourceCode(@PathParam("fileName") String fileName) {
-        ImmutableList<SourceCode> sourceCodes = this.domainModel.getSourceCodes().select(each ->
+        ImmutableList<SourceCode> sourceCodes = this.domainModel.getSourceCodes().select((each) ->
             each.getSourceName().equals(fileName)
         );
 

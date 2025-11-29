@@ -53,7 +53,7 @@ public interface ReferenceProperty extends Property {
 
     // TODO: Delete overrides
     default boolean isOwned() {
-        return this.getModifiers().anySatisfy(modifier -> modifier.is("owned"));
+        return this.getModifiers().anySatisfy((modifier) -> modifier.is("owned"));
     }
 
     default boolean isVersion() {

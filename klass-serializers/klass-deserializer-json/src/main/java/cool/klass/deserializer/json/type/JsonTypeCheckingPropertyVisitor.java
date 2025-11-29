@@ -105,7 +105,7 @@ public record JsonTypeCheckingPropertyVisitor(
         if (!enumerationLiterals.asLazy().collect(EnumerationLiteral::getPrettyName).contains(textValue)) {
             ImmutableList<String> quotedPrettyNames = enumerationLiterals
                 .collect(EnumerationLiteral::getPrettyName)
-                .collect(each -> '"' + each + '"');
+                .collect((each) -> '"' + each + '"');
 
             String error = String.format(
                 "Expected enumerated property with type '%s.%s: %s%s' but got %s with type '%s'. Expected one of %s.",

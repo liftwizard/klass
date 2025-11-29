@@ -107,7 +107,7 @@ public class AntlrAssociationEndSignature
         super.reportErrors(compilerAnnotationHolder);
 
         if (this.orderBy != null) {
-            this.orderBy.ifPresent(o -> o.reportErrors(compilerAnnotationHolder));
+            this.orderBy.ifPresent((o) -> o.reportErrors(compilerAnnotationHolder));
         }
 
         this.reportInvalidMultiplicity(compilerAnnotationHolder);

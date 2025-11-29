@@ -161,10 +161,10 @@ public class AntlrProjectionDataTypeProperty extends AntlrIdentifierElement impl
 
         AntlrClassifier parentClassifier = this.antlrProjectionParent.getClassifier();
         if (
-            parentClassifier == AntlrClass.NOT_FOUND ||
-            parentClassifier == AntlrClass.AMBIGUOUS ||
-            parentClassifier == AntlrClassifier.AMBIGUOUS ||
-            parentClassifier == AntlrClassifier.NOT_FOUND
+            parentClassifier == AntlrClass.NOT_FOUND
+            || parentClassifier == AntlrClass.AMBIGUOUS
+            || parentClassifier == AntlrClassifier.AMBIGUOUS
+            || parentClassifier == AntlrClassifier.NOT_FOUND
         ) {
             return;
         }
