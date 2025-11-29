@@ -1,8 +1,10 @@
 package com.stackoverflow.service.resource;
 
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.Clock;
 import java.time.Instant;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -17,11 +19,13 @@ import com.stackoverflow.*;
 import com.stackoverflow.json.view.*;
 import com.codahale.metrics.annotation.*;
 import com.fasterxml.jackson.annotation.JsonView;
+import io.dropwizard.auth.Auth;
 import com.gs.fw.common.mithra.finder.*;
 import cool.klass.data.store.*;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.Multiplicity;
+import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import cool.klass.deserializer.json.*;
@@ -30,7 +34,10 @@ import cool.klass.reladomo.persistent.writer.*;
 
 import org.eclipse.collections.api.factory.Maps;
 import org.eclipse.collections.api.list.MutableList;
+import org.eclipse.collections.api.map.ImmutableMap;
+import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.impl.factory.Lists;
+import org.eclipse.collections.impl.map.mutable.MapAdapter;
 import org.eclipse.collections.impl.factory.primitive.LongSets;
 import org.eclipse.collections.impl.set.mutable.*;
 import org.eclipse.collections.impl.utility.*;
@@ -242,7 +249,68 @@ public class QuestionResource
         return result;
     }
 
-    // TODO: POST
+    @Timed
+    @ExceptionMetered
+    @POST
+    @Path("/question")
+    public Response method4(
+            @Nonnull @NotNull ObjectNode incomingInstance,
+            @Nonnull @Context UriInfo uriInfo,
+            @Nonnull @Auth Principal principal)
+    {
+        Klass klass = this.domainModel.getClassByName("Question");
+
+        MutableList<String> errors = Lists.mutable.empty();
+        MutableList<String> warnings = Lists.mutable.empty();
+        ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, klass);
+        RequiredPropertiesValidator.validate(
+                errors,
+                warnings,
+                klass,
+                incomingInstance,
+                OperationMode.CREATE);
+
+        if (errors.notEmpty())
+        {
+            Response response = Response
+                    .status(Status.BAD_REQUEST)
+                    .entity(errors)
+                    .build();
+            throw new BadRequestException("Incoming data failed validation.", response);
+        }
+
+        // Note: warnings are logged but do not cause request failure
+        // TODO: Consider returning warnings in response headers
+
+        String    userPrincipalName  = principal.getName();
+
+
+        // Extract key values from incoming JSON
+        MutableMap<DataTypeProperty, Object> keys = MapAdapter.adapt(new LinkedHashMap<>());
+        for (DataTypeProperty keyProperty : klass.getKeyProperties())
+        {
+            Object keyValue = JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(keyProperty, incomingInstance);
+            if (keyValue != null)
+            {
+                keys.put(keyProperty, keyValue);
+            }
+        }
+
+        // Create the instance inside a transaction
+        Instant transactionInstant = Instant.now(this.clock);
+        MutationContext mutationContext = new MutationContext(Optional.of(userPrincipalName), transactionInstant, Maps.immutable.empty());
+        PersistentCreator creator = new PersistentCreator(mutationContext, this.dataStore);
+        ImmutableMap<DataTypeProperty, Object> finalKeys = keys.toImmutable();
+        ObjectNode finalIncomingInstance = incomingInstance;
+        Object persistentInstance = this.dataStore.runInTransaction(transaction -> {
+            Object instance = this.dataStore.instantiate(klass, finalKeys);
+            creator.synchronize(klass, instance, finalIncomingInstance);
+            this.dataStore.insert(instance);
+            return instance;
+        });
+
+        return Response.noContent().build();
+    }
 
     @Timed
     @ExceptionMetered
