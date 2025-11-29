@@ -47,6 +47,7 @@ public interface Service extends Element {
     @Nonnull
     Optional<Criteria> getConflictCriteria();
 
+    @Nonnull
     Optional<ServiceProjectionDispatch> getProjectionDispatch();
 
     @Nonnull
