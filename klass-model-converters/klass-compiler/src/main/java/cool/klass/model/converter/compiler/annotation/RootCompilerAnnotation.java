@@ -37,7 +37,7 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
     private static final Comparator<RootCompilerAnnotation> COMPILER_ANNOTATION_COMPARATOR = Comparator.comparing(
         RootCompilerAnnotation::getSeverity
     )
-        .thenComparingInt(each -> each.getCompilationUnit().getOrdinal())
+        .thenComparingInt((each) -> each.getCompilationUnit().getOrdinal())
         .thenComparingInt(RootCompilerAnnotation::getLine)
         .thenComparingInt(RootCompilerAnnotation::getCharPositionInLine);
 

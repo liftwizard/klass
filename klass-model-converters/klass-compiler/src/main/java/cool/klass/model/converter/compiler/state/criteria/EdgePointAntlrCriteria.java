@@ -92,7 +92,7 @@ public class EdgePointAntlrCriteria extends AntlrCriteria {
     public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         this.memberExpressionValue.reportErrors(compilerAnnotationHolder);
         ListIterable<AntlrType> possibleTypes = this.memberExpressionValue.getPossibleTypes();
-        if (possibleTypes.anySatisfy(each -> each.getTypeGetter() == PrimitiveType.TEMPORAL_RANGE)) {
+        if (possibleTypes.anySatisfy((each) -> each.getTypeGetter() == PrimitiveType.TEMPORAL_RANGE)) {
             return;
         }
 

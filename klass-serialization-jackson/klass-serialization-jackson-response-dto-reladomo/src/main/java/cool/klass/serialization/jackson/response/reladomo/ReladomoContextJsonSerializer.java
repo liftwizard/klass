@@ -189,7 +189,7 @@ public class ReladomoContextJsonSerializer extends JsonSerializer<MithraObject> 
             // TODO: Add configuration to disable serialization of empty lists
             jsonGenerator.writeArrayFieldStart(associationEndName);
             try {
-                mithraList.forEachWithCursor(eachChildValue ->
+                mithraList.forEachWithCursor((eachChildValue) ->
                     this.recurse((MithraObject) eachChildValue, jsonGenerator, projectionWithAssociationEnd)
                 );
             } finally {

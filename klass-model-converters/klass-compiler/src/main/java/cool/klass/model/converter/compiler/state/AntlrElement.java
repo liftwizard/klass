@@ -52,7 +52,7 @@ public abstract class AntlrElement implements IAntlrElement {
         this.elementContext = Objects.requireNonNull(elementContext);
         this.compilationUnit = Objects.requireNonNull(compilationUnit);
 
-        compilationUnit.ifPresent(cu -> AntlrElement.assertContextContains(cu.getParserContext(), elementContext));
+        compilationUnit.ifPresent((cu) -> AntlrElement.assertContextContains(cu.getParserContext(), elementContext));
     }
 
     private static void assertContextContains(ParserRuleContext parentContext, ParserRuleContext childContext) {
@@ -86,12 +86,12 @@ public abstract class AntlrElement implements IAntlrElement {
         int childCount = parserRuleContext.getChildCount();
 
         if (
-            start == null ||
-            stop == null ||
-            (parent == null && !(parserRuleContext instanceof CompilationUnitContext)) ||
-            payload != parserRuleContext ||
-            ruleContext != parserRuleContext ||
-            childCount == 0
+            start == null
+            || stop == null
+            || (parent == null && !(parserRuleContext instanceof CompilationUnitContext))
+            || payload != parserRuleContext
+            || ruleContext != parserRuleContext
+            || childCount == 0
         ) {
             if (start != null) {
                 throw new AssertionError();
@@ -158,7 +158,7 @@ public abstract class AntlrElement implements IAntlrElement {
 
     @Nonnull
     protected Optional<ElementBuilder<?>> getMacroElementBuilder() {
-        return this.getMacroElement().map(antlrElement -> Objects.requireNonNull(antlrElement.getElementBuilder()));
+        return this.getMacroElement().map((antlrElement) -> Objects.requireNonNull(antlrElement.getElementBuilder()));
     }
 
     protected SourceCodeBuilder getSourceCodeBuilder() {
@@ -173,16 +173,17 @@ public abstract class AntlrElement implements IAntlrElement {
 
     public boolean isInSameCompilationUnit(AntlrElement other) {
         return (
-            this.compilationUnit.isPresent() &&
-            other.compilationUnit.isPresent() &&
-            this.compilationUnit.equals(other.compilationUnit)
+            this.compilationUnit.isPresent()
+            && other.compilationUnit.isPresent()
+            && this.compilationUnit.equals(other.compilationUnit)
         );
     }
 
     public boolean isForwardReference(AntlrElement other) {
         return (
-            this.isInSameCompilationUnit(other) &&
-            this.getElementContext().getStart().getStartIndex() < other.getElementContext().getStart().getStartIndex()
+            this.isInSameCompilationUnit(other)
+            && this.getElementContext().getStart().getStartIndex()
+            < other.getElementContext().getStart().getStartIndex()
         );
     }
 

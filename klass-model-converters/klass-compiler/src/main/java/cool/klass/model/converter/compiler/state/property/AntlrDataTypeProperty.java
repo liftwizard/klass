@@ -275,14 +275,14 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
     }
 
     public void setKeyMatchingThisForeignKey(AntlrAssociationEnd associationEnd, AntlrDataTypeProperty<?> keyProperty) {
-        this.keysMatchingThisForeignKey.computeIfAbsent(associationEnd, k -> Lists.mutable.empty()).add(keyProperty);
+        this.keysMatchingThisForeignKey.computeIfAbsent(associationEnd, (k) -> Lists.mutable.empty()).add(keyProperty);
     }
 
     public void setForeignKeyMatchingThisKey(
         AntlrAssociationEnd associationEnd,
         AntlrDataTypeProperty<?> foreignKeyProperty
     ) {
-        this.foreignKeysMatchingThisKey.computeIfAbsent(associationEnd, k -> Lists.mutable.empty()).add(
+        this.foreignKeysMatchingThisKey.computeIfAbsent(associationEnd, (k) -> Lists.mutable.empty()).add(
             foreignKeyProperty
         );
     }
@@ -348,15 +348,15 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 
     protected void buildValidations() {
         Optional<MinLengthPropertyValidationBuilder> minLengthPropertyValidationBuilders =
-            this.minLengthValidations.collect(AntlrMinLengthPropertyValidation::build).detectOptional(x -> true);
+            this.minLengthValidations.collect(AntlrMinLengthPropertyValidation::build).detectOptional((x) -> true);
         Optional<MaxLengthPropertyValidationBuilder> maxLengthPropertyValidationBuilders =
-            this.maxLengthValidations.collect(AntlrMaxLengthPropertyValidation::build).detectOptional(x -> true);
+            this.maxLengthValidations.collect(AntlrMaxLengthPropertyValidation::build).detectOptional((x) -> true);
         Optional<MinPropertyValidationBuilder> minPropertyValidationBuilders = this.minValidations.collect(
             AntlrMinPropertyValidation::build
-        ).detectOptional(x -> true);
+        ).detectOptional((x) -> true);
         Optional<MaxPropertyValidationBuilder> maxPropertyValidationBuilders = this.maxValidations.collect(
             AntlrMaxPropertyValidation::build
-        ).detectOptional(x -> true);
+        ).detectOptional((x) -> true);
 
         MutableList<PropertyValidationBuilder<?>> propertyValidationBuilders = this.validations.collect(
             AbstractAntlrPropertyValidation::getElementBuilder
@@ -526,8 +526,8 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 
         AntlrType antlrType = this.getType();
         if (
-            antlrType instanceof AntlrPrimitiveType primitiveType &&
-            primitiveType.getPrimitiveType() == PrimitiveType.STRING
+            antlrType instanceof AntlrPrimitiveType primitiveType
+            && primitiveType.getPrimitiveType() == PrimitiveType.STRING
         ) {
             return;
         }
@@ -555,8 +555,8 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 
         AntlrType antlrType = this.getType();
         if (
-            antlrType instanceof AntlrPrimitiveType primitiveType &&
-            ALLOWED_VERSION_TYPES.contains(primitiveType.getPrimitiveType())
+            antlrType instanceof AntlrPrimitiveType primitiveType
+            && ALLOWED_VERSION_TYPES.contains(primitiveType.getPrimitiveType())
         ) {
             return;
         }
@@ -588,7 +588,7 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
                     offendingToken.getText()
                 );
                 ListIterable<AntlrModifier> modifiers = this.getModifiers().select(
-                    antlrModifier -> antlrModifier.isSystem() || antlrModifier.isVersion()
+                    (antlrModifier) -> antlrModifier.isSystem() || antlrModifier.isVersion()
                 );
                 ListIterable<ParserRuleContext> modifierContexts = modifiers.collect(AntlrElement::getElementContext);
                 compilerAnnotationHolder.add(
@@ -601,7 +601,7 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
         } else if (this.isFrom() || this.isTo()) {
             if (!this.isValid() && !this.isSystem()) {
                 ImmutableList<AntlrModifier> modifiers = this.getModifiers()
-                    .select(modifier -> modifier.isFrom() || modifier.isTo())
+                    .select((modifier) -> modifier.isFrom() || modifier.isTo())
                     .toImmutable();
                 String message = String.format(
                     "Property '%s' with temporal modifier(s) %s must be marked as 'system' or 'valid'.",
@@ -622,7 +622,7 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
                     offendingToken.getText()
                 );
                 ListIterable<AntlrModifier> modifiers = this.getModifiers().select(
-                    modifier -> modifier.isSystem() || modifier.isVersion() || modifier.isFrom() || modifier.isTo()
+                    (modifier) -> modifier.isSystem() || modifier.isVersion() || modifier.isFrom() || modifier.isTo()
                 );
                 ListIterable<ParserRuleContext> modifierContexts = modifiers.collect(AntlrElement::getElementContext);
                 compilerAnnotationHolder.add(
@@ -633,7 +633,7 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
                 );
             } else if (this.isFrom() && this.isTo()) {
                 ImmutableList<AntlrModifier> modifiers = this.getModifiers()
-                    .select(modifier -> modifier.isFrom() || modifier.isTo())
+                    .select((modifier) -> modifier.isFrom() || modifier.isTo())
                     .toImmutable();
                 ImmutableList<ParserRuleContext> modifierContexts = modifiers.collect(AntlrElement::getElementContext);
                 String message = "Property may not have both 'from' and to' modifiers.";
@@ -666,11 +666,11 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
         if (this.isCreatedBy() || this.isLastUpdatedBy()) {
             AntlrType antlrType = this.getType();
             if (
-                !(antlrType instanceof AntlrPrimitiveType) ||
-                ((AntlrPrimitiveType) antlrType).getPrimitiveType() != PrimitiveType.STRING
+                !(antlrType instanceof AntlrPrimitiveType)
+                || ((AntlrPrimitiveType) antlrType).getPrimitiveType() != PrimitiveType.STRING
             ) {
                 AntlrModifier modifier = this.getModifiers().detect(
-                    antlrModifier -> antlrModifier.isCreatedBy() || antlrModifier.isLastUpdatedBy()
+                    (antlrModifier) -> antlrModifier.isCreatedBy() || antlrModifier.isLastUpdatedBy()
                 );
                 String message = String.format(
                     "Expected type '%s' but was '%s' for '%s' property '%s'.",
@@ -687,7 +687,7 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
                 );
             } else if (!this.isUserId()) {
                 AntlrModifier modifier = this.getModifiers().detect(
-                    antlrModifier -> antlrModifier.isCreatedBy() || antlrModifier.isLastUpdatedBy()
+                    (antlrModifier) -> antlrModifier.isCreatedBy() || antlrModifier.isLastUpdatedBy()
                 );
                 String message = String.format(
                     "Expected property '%s' with modifier '%s' to also have the userId modifier.",
@@ -702,7 +702,7 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
                 );
             } else if (!this.isPrivate()) {
                 AntlrModifier modifier = this.getModifiers().detect(
-                    antlrModifier -> antlrModifier.isCreatedBy() || antlrModifier.isLastUpdatedBy()
+                    (antlrModifier) -> antlrModifier.isCreatedBy() || antlrModifier.isLastUpdatedBy()
                 );
                 String message = String.format(
                     "Expected property '%s' with modifier '%s' to also have the private modifier.",
@@ -721,8 +721,8 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
         if (this.isCreatedOn()) {
             AntlrType antlrType = this.getType();
             if (
-                !(antlrType instanceof AntlrPrimitiveType) ||
-                ((AntlrPrimitiveType) antlrType).getPrimitiveType() != PrimitiveType.INSTANT
+                !(antlrType instanceof AntlrPrimitiveType)
+                || ((AntlrPrimitiveType) antlrType).getPrimitiveType() != PrimitiveType.INSTANT
             ) {
                 AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isCreatedOn);
                 String message = String.format(

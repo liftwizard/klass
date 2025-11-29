@@ -61,8 +61,8 @@ public interface Service extends Element {
 
     default boolean isVersionClauseRequired() {
         return (
-            this.getServiceMultiplicity() == ServiceMultiplicity.ONE &&
-            this.getUrl().getServiceGroup().getKlass().getVersionProperty().isPresent()
+            this.getServiceMultiplicity() == ServiceMultiplicity.ONE
+            && this.getUrl().getServiceGroup().getKlass().getVersionProperty().isPresent()
         );
     }
 

@@ -490,7 +490,7 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 
         protected ImmutableList<DataTypeProperty> getDataTypeProperties() {
             ImmutableList<DataTypeProperty> declaredDataTypeProperties = this.declaredDataTypeProperties.collect(
-                property -> property.getElement()
+                (property) -> property.getElement()
             );
 
             ImmutableList<DataTypeProperty> interfaceProperties = this.declaredInterfaces.collect(
@@ -513,7 +513,7 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 
         protected ImmutableList<ReferenceProperty> getReferenceProperties() {
             ImmutableList<ReferenceProperty> declaredReferenceProperties = this.declaredReferenceProperties.collect(
-                property -> property.getElement()
+                (property) -> property.getElement()
             );
 
             ImmutableList<ReferenceProperty> interfaceProperties = this.declaredInterfaces.collect(

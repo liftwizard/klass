@@ -133,6 +133,6 @@ public class KlassResponseMetadata {
         mdc.put("klass.response.projection.classifier", this.projection.getClassifier().getFullyQualifiedName());
         mdc.put("klass.response.transactionTimestamp", String.valueOf(this.transactionTimestamp));
         mdc.put("klass.response.principal", this.principal.map(Object::toString).orElse(null));
-        this.pagination.ifPresent(responsePagination -> responsePagination.withMDC(mdc));
+        this.pagination.ifPresent((responsePagination) -> responsePagination.withMDC(mdc));
     }
 }

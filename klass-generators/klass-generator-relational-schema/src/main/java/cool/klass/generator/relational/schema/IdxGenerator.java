@@ -47,7 +47,9 @@ public final class IdxGenerator {
             klass.getForeignKeys();
         String foreignKeyIndexes = foreignKeyConstraints
             .keyValuesView()
-            .collect(keyValuePair -> getForeignKeyIndex(keyValuePair.getOne(), keyValuePair.getTwo(), klass, tableName))
+            .collect((keyValuePair) ->
+                getForeignKeyIndex(keyValuePair.getOne(), keyValuePair.getTwo(), klass, tableName)
+            )
             .makeString("");
 
         return primaryKeyIndex + foreignKeyIndexes;

@@ -743,7 +743,7 @@ public class CompilerWalkState {
                 return;
             }
 
-            CompilerWalkState.this.orderByOwner.getOrderBy().ifPresent(antlrOrderBy ->
+            CompilerWalkState.this.orderByOwner.getOrderBy().ifPresent((antlrOrderBy) ->
                 CompilerWalkState.this.orderBy = antlrOrderBy
             );
         }

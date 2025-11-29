@@ -47,7 +47,7 @@ public class GraphQLReladomoFinderGenerator extends AbstractPerPackageGenerator 
     @Override
     protected String getPackageSourceCode(@Nonnull String fullyQualifiedPackage) {
         String topLevelElementsCode = this.domainModel.getClassifiers()
-            .select(each -> each.getPackageName().equals(fullyQualifiedPackage))
+            .select((each) -> each.getPackageName().equals(fullyQualifiedPackage))
             .collect(this::getSourceCode)
             .makeString("");
 
@@ -60,26 +60,26 @@ public class GraphQLReladomoFinderGenerator extends AbstractPerPackageGenerator 
     private String getSourceCode(@Nonnull Classifier classifier) {
         String classifierName = classifier.getName();
         return (
-            "" +
-            "input _" +
-            classifierName +
-            "Finder {\n" +
-            "    AND: [_" +
-            classifierName +
-            "Finder!]\n" +
-            "    OR:  [_" +
-            classifierName +
-            "Finder!]\n" +
-            "    exists            : _Empty\n" +
-            "    notExists         : _" +
-            classifierName +
-            "Finder\n" +
-            "    recursiveNotExists: _" +
-            classifierName +
-            "Finder\n" +
-            classifier.getProperties().collect(this::getSourceCode).makeString("") +
-            "}\n" +
-            "\n"
+            ""
+            + "input _"
+            + classifierName
+            + "Finder {\n"
+            + "    AND: [_"
+            + classifierName
+            + "Finder!]\n"
+            + "    OR:  [_"
+            + classifierName
+            + "Finder!]\n"
+            + "    exists            : _Empty\n"
+            + "    notExists         : _"
+            + classifierName
+            + "Finder\n"
+            + "    recursiveNotExists: _"
+            + classifierName
+            + "Finder\n"
+            + classifier.getProperties().collect(this::getSourceCode).makeString("")
+            + "}\n"
+            + "\n"
         );
     }
 

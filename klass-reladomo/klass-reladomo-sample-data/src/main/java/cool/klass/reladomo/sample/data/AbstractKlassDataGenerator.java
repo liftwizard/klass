@@ -47,7 +47,7 @@ public abstract class AbstractKlassDataGenerator {
             .reject(DataTypeProperty::isKey)
             .reject(DataTypeProperty::isSystem)
             .reject(DataTypeProperty::isDerived)
-            .each(dataTypeProperty -> this.generateIfRequired(persistentInstance, dataTypeProperty));
+            .each((dataTypeProperty) -> this.generateIfRequired(persistentInstance, dataTypeProperty));
 
         this.dataStore.insert(persistentInstance);
     }
@@ -56,7 +56,7 @@ public abstract class AbstractKlassDataGenerator {
     private Object instantiate(@Nonnull Klass klass) {
         ImmutableList<DataTypeProperty> keyProperties = klass.getKeyProperties().reject(DataTypeProperty::isID);
         ImmutableMap<DataTypeProperty, Object> keyValues = keyProperties.toImmutableMap(
-            keyProperty -> keyProperty,
+            (keyProperty) -> keyProperty,
             this::getNonNullValue
         );
 

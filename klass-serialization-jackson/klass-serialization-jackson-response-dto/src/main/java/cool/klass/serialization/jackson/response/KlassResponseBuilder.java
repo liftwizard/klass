@@ -117,22 +117,22 @@ public class KlassResponseBuilder {
     @Override
     public String toString() {
         return (
-            "KlassResponseBuilder{" +
-            "projection=" +
-            this.projection +
-            ", multiplicity=" +
-            this.multiplicity +
-            ", transactionTimestamp=" +
-            this.transactionTimestamp +
-            ", pagination=" +
-            this.pagination +
-            ", principal=" +
-            this.principal +
-            ", criteria=" +
-            this.criteria +
-            ", orderBy=" +
-            this.orderBy +
-            "}"
+            "KlassResponseBuilder{"
+            + "projection="
+            + this.projection
+            + ", multiplicity="
+            + this.multiplicity
+            + ", transactionTimestamp="
+            + this.transactionTimestamp
+            + ", pagination="
+            + this.pagination
+            + ", principal="
+            + this.principal
+            + ", criteria="
+            + this.criteria
+            + ", orderBy="
+            + this.orderBy
+            + "}"
         );
     }
 }

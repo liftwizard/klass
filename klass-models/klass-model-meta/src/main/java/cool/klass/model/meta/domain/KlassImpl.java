@@ -267,7 +267,7 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
         @Override
         protected ImmutableList<DataTypeProperty> getDataTypeProperties() {
             ImmutableList<DataTypeProperty> declaredDataTypeProperties = this.declaredDataTypeProperties.collect(
-                property -> property.getElement()
+                (property) -> property.getElement()
             );
 
             ImmutableList<DataTypeProperty> interfaceProperties = this.declaredInterfaces.collect(
@@ -295,7 +295,7 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
         @Override
         protected ImmutableList<ReferenceProperty> getReferenceProperties() {
             ImmutableList<ReferenceProperty> declaredReferenceProperties = this.declaredReferenceProperties.collect(
-                property -> property.getElement()
+                (property) -> property.getElement()
             );
 
             ImmutableList<ReferenceProperty> superClassProperties = this.superClass.map(

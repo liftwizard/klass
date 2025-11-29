@@ -244,8 +244,8 @@ public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType>
             return;
         }
 
-        this.minLengthValidations.each(each -> each.reportInvalidType(compilerAnnotationHolder, primitiveType));
-        this.maxLengthValidations.each(each -> each.reportInvalidType(compilerAnnotationHolder, primitiveType));
+        this.minLengthValidations.each((each) -> each.reportInvalidType(compilerAnnotationHolder, primitiveType));
+        this.maxLengthValidations.each((each) -> each.reportInvalidType(compilerAnnotationHolder, primitiveType));
     }
 
     private void reportInvalidNumericValidations(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
@@ -254,8 +254,8 @@ public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType>
             return;
         }
 
-        this.minValidations.each(each -> each.reportInvalidType(compilerAnnotationHolder, primitiveType));
-        this.maxValidations.each(each -> each.reportInvalidType(compilerAnnotationHolder, primitiveType));
+        this.minValidations.each((each) -> each.reportInvalidType(compilerAnnotationHolder, primitiveType));
+        this.maxValidations.each((each) -> each.reportInvalidType(compilerAnnotationHolder, primitiveType));
     }
     // </editor-fold>
 }

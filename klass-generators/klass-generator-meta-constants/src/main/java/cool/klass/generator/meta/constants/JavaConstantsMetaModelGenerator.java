@@ -126,7 +126,7 @@ public class JavaConstantsMetaModelGenerator {
             .collect(TopLevelElement::getPackageName)
             .distinct()
             .toSortedList()
-            .collect(packageName -> "import " + packageName + ".meta.constants.*;\n")
+            .collect((packageName) -> "import " + packageName + ".meta.constants.*;\n")
             .makeString("");
 
         // @formatter:off
@@ -460,7 +460,7 @@ public class JavaConstantsMetaModelGenerator {
         String declaredPrettyName = enumerationLiteral
             .getDeclaredPrettyName()
             .map(StringEscapeUtils::escapeJava)
-            .map(string -> String.format("of(\"%s\")", string))
+            .map((string) -> String.format("of(\"%s\")", string))
             .orElse("empty()");
 
         // @formatter:off
@@ -787,7 +787,7 @@ public class JavaConstantsMetaModelGenerator {
     @Nonnull
     private String getOptionalAssociationEndSourceCode(@Nonnull Optional<AssociationEnd> optionalAssociationEnd) {
         return optionalAssociationEnd
-            .map(associationEnd -> String.format("Optional.of(%s)", associationEnd.getName()))
+            .map((associationEnd) -> String.format("Optional.of(%s)", associationEnd.getName()))
             .orElse("Optional.empty()");
     }
 
@@ -812,127 +812,127 @@ public class JavaConstantsMetaModelGenerator {
 
         // language=JAVA
         return (
-            "" +
-            "    public static enum " +
-            uppercaseName +
-            "_PrimitiveProperty implements PrimitiveProperty\n" +
-            "    {\n" +
-            "        INSTANCE;\n" +
-            "\n" +
-            "        @Nonnull\n" +
-            "        @Override\n" +
-            "        public String getName()\n" +
-            "        {\n" +
-            "            return \"" +
-            StringEscapeUtils.escapeJava(primitiveProperty.getName()) +
-            "\";\n" +
-            "        }\n" +
-            "\n" +
-            "        @Override\n" +
-            "        public int getOrdinal()\n" +
-            "        {\n" +
-            "            return " +
-            primitiveProperty.getOrdinal() +
-            ";\n" +
-            "        }\n" +
-            "\n" +
-            "        @Override\n" +
-            "        public Optional<Element> getMacroElement()\n" +
-            "        {\n" +
-            "            return Optional.empty();\n" +
-            "        }\n" +
-            "\n" +
-            "        @Override\n" +
-            "        public boolean isOptional()\n" +
-            "        {\n" +
-            "            return " +
-            primitiveProperty.isOptional() +
-            ";\n" +
-            "        }\n" +
-            "\n" +
-            "        @Override\n" +
-            "        public boolean isForeignKey()\n" +
-            "        {\n" +
-            "            return " +
-            primitiveProperty.isForeignKey() +
-            ";\n" +
-            "        }\n" +
-            "\n" +
-            "        @Nonnull\n" +
-            "        @Override\n" +
-            "        public ImmutableList<Modifier> getModifiers()\n" +
-            "        {\n" +
-            this.getPropertyModifiersSourceCode(primitiveProperty.getModifiers()) +
-            "        }\n" +
-            "\n" +
-            "        @Override\n" +
-            "        public Optional<MinLengthPropertyValidation> getMinLengthPropertyValidation()\n" +
-            "        {\n" +
-            "            return Optional.empty();\n" +
-            "        }\n" +
-            "\n" +
-            "        @Override\n" +
-            "        public Optional<MaxLengthPropertyValidation> getMaxLengthPropertyValidation()\n" +
-            "        {\n" +
-            "            return Optional.empty();\n" +
-            "        }\n" +
-            "\n" +
-            "        @Override\n" +
-            "        public Optional<MinPropertyValidation> getMinPropertyValidation()\n" +
-            "        {\n" +
-            "            return Optional.empty();\n" +
-            "        }\n" +
-            "\n" +
-            "        @Override\n" +
-            "        public Optional<MaxPropertyValidation> getMaxPropertyValidation()\n" +
-            "        {\n" +
-            "            return Optional.empty();\n" +
-            "        }\n" +
-            "\n" +
-            "        @Nonnull\n" +
-            "        @Override\n" +
-            "        public Classifier getOwningClassifier()\n" +
-            "        {\n" +
-            "            return " +
-            this.applicationName +
-            "DomainModel." +
-            primitiveProperty.getOwningClassifier().getName() +
-            ";\n" +
-            "        }\n" +
-            "\n" +
-            "        @Nonnull\n" +
-            "        @Override\n" +
-            "        public PrimitiveType getType()\n" +
-            "        {\n" +
-            "            return PrimitiveType." +
-            primitiveProperty.getType().name() +
-            ";\n" +
-            "        }\n" +
-            "\n" +
-            "        @Override\n" +
-            "        public OrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> getKeysMatchingThisForeignKey()\n" +
-            "        {\n" +
-            "            MutableOrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());\n" +
-            this.getKeysMatchingThisForeignKey(primitiveProperty) +
-            "            return result.asUnmodifiable();\n" +
-            "        }\n" +
-            "\n" +
-            "        @Override\n" +
-            "        public OrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> getForeignKeysMatchingThisKey()\n" +
-            "        {\n" +
-            "            MutableOrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());\n" +
-            this.getForeignKeysMatchingThisKey(primitiveProperty) +
-            "            return result.asUnmodifiable();\n" +
-            "        }\n" +
-            "\n" +
-            "        @Override\n" +
-            "        public String toString()\n" +
-            "        {\n" +
-            "            return \"" +
-            StringEscapeUtils.escapeJava(primitiveProperty.toString()) +
-            "\";\n" +
-            "        }\n" +
-            "    }\n"
+            ""
+            + "    public static enum "
+            + uppercaseName
+            + "_PrimitiveProperty implements PrimitiveProperty\n"
+            + "    {\n"
+            + "        INSTANCE;\n"
+            + "\n"
+            + "        @Nonnull\n"
+            + "        @Override\n"
+            + "        public String getName()\n"
+            + "        {\n"
+            + "            return \""
+            + StringEscapeUtils.escapeJava(primitiveProperty.getName())
+            + "\";\n"
+            + "        }\n"
+            + "\n"
+            + "        @Override\n"
+            + "        public int getOrdinal()\n"
+            + "        {\n"
+            + "            return "
+            + primitiveProperty.getOrdinal()
+            + ";\n"
+            + "        }\n"
+            + "\n"
+            + "        @Override\n"
+            + "        public Optional<Element> getMacroElement()\n"
+            + "        {\n"
+            + "            return Optional.empty();\n"
+            + "        }\n"
+            + "\n"
+            + "        @Override\n"
+            + "        public boolean isOptional()\n"
+            + "        {\n"
+            + "            return "
+            + primitiveProperty.isOptional()
+            + ";\n"
+            + "        }\n"
+            + "\n"
+            + "        @Override\n"
+            + "        public boolean isForeignKey()\n"
+            + "        {\n"
+            + "            return "
+            + primitiveProperty.isForeignKey()
+            + ";\n"
+            + "        }\n"
+            + "\n"
+            + "        @Nonnull\n"
+            + "        @Override\n"
+            + "        public ImmutableList<Modifier> getModifiers()\n"
+            + "        {\n"
+            + this.getPropertyModifiersSourceCode(primitiveProperty.getModifiers())
+            + "        }\n"
+            + "\n"
+            + "        @Override\n"
+            + "        public Optional<MinLengthPropertyValidation> getMinLengthPropertyValidation()\n"
+            + "        {\n"
+            + "            return Optional.empty();\n"
+            + "        }\n"
+            + "\n"
+            + "        @Override\n"
+            + "        public Optional<MaxLengthPropertyValidation> getMaxLengthPropertyValidation()\n"
+            + "        {\n"
+            + "            return Optional.empty();\n"
+            + "        }\n"
+            + "\n"
+            + "        @Override\n"
+            + "        public Optional<MinPropertyValidation> getMinPropertyValidation()\n"
+            + "        {\n"
+            + "            return Optional.empty();\n"
+            + "        }\n"
+            + "\n"
+            + "        @Override\n"
+            + "        public Optional<MaxPropertyValidation> getMaxPropertyValidation()\n"
+            + "        {\n"
+            + "            return Optional.empty();\n"
+            + "        }\n"
+            + "\n"
+            + "        @Nonnull\n"
+            + "        @Override\n"
+            + "        public Classifier getOwningClassifier()\n"
+            + "        {\n"
+            + "            return "
+            + this.applicationName
+            + "DomainModel."
+            + primitiveProperty.getOwningClassifier().getName()
+            + ";\n"
+            + "        }\n"
+            + "\n"
+            + "        @Nonnull\n"
+            + "        @Override\n"
+            + "        public PrimitiveType getType()\n"
+            + "        {\n"
+            + "            return PrimitiveType."
+            + primitiveProperty.getType().name()
+            + ";\n"
+            + "        }\n"
+            + "\n"
+            + "        @Override\n"
+            + "        public OrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> getKeysMatchingThisForeignKey()\n"
+            + "        {\n"
+            + "            MutableOrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());\n"
+            + this.getKeysMatchingThisForeignKey(primitiveProperty)
+            + "            return result.asUnmodifiable();\n"
+            + "        }\n"
+            + "\n"
+            + "        @Override\n"
+            + "        public OrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> getForeignKeysMatchingThisKey()\n"
+            + "        {\n"
+            + "            MutableOrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());\n"
+            + this.getForeignKeysMatchingThisKey(primitiveProperty)
+            + "            return result.asUnmodifiable();\n"
+            + "        }\n"
+            + "\n"
+            + "        @Override\n"
+            + "        public String toString()\n"
+            + "        {\n"
+            + "            return \""
+            + StringEscapeUtils.escapeJava(primitiveProperty.toString())
+            + "\";\n"
+            + "        }\n"
+            + "    }\n"
         );
     }
 
@@ -978,14 +978,14 @@ public class JavaConstantsMetaModelGenerator {
 
         ImmutableList<String> variableNames = modifiers
             .collect(Modifier::getKeyword)
-            .collect(each -> each + "_" + Modifier.class.getSimpleName());
+            .collect((each) -> each + "_" + Modifier.class.getSimpleName());
 
         return (
-            variablesSourceCode +
-            "\n" +
-            "            return Lists.immutable.with(" +
-            variableNames.makeString() +
-            ");\n"
+            variablesSourceCode
+            + "\n"
+            + "            return Lists.immutable.with("
+            + variableNames.makeString()
+            + ");\n"
         );
     }
 
@@ -1391,8 +1391,8 @@ public class JavaConstantsMetaModelGenerator {
     @Nonnull
     private String getAssociationEndConstantsSourceCode(@Nonnull Association association) {
         return (
-            this.getAssociationEndConstantSourceCode(association.getSourceAssociationEnd(), "source") +
-            this.getAssociationEndConstantSourceCode(association.getTargetAssociationEnd(), "target")
+            this.getAssociationEndConstantSourceCode(association.getSourceAssociationEnd(), "source")
+            + this.getAssociationEndConstantSourceCode(association.getTargetAssociationEnd(), "target")
         );
     }
 

@@ -189,7 +189,7 @@ public class KlassBootstrapWriter {
         ImmutableList<Url> urls = this.domainModel.getServiceGroups().flatCollect(ServiceGroup::getUrls);
         ImmutableList<Service> services = urls.flatCollect(Url::getServices);
         ImmutableList<Criteria> serviceCriteria = services
-            .flatCollect(each ->
+            .flatCollect((each) ->
                 Lists.immutable.with(
                     each.getQueryCriteria(),
                     each.getAuthorizeCriteria(),
@@ -218,7 +218,7 @@ public class KlassBootstrapWriter {
         BootstrapExpressionValueVisitor1 expressionValueVisitor1 = new BootstrapExpressionValueVisitor1();
         var criteriaVisitor1 = new BootstrapExpressionValueCriteriaVisitor(expressionValueVisitor1);
 
-        allCriteria.each(criteria -> criteria.visit(criteriaVisitor1));
+        allCriteria.each((criteria) -> criteria.visit(criteriaVisitor1));
         orderByReferencePaths.each(expressionValueVisitor1::visitThisMember);
 
         expressionValueVisitor1.getBootstrappedExpressionValues().insertAll();
@@ -229,7 +229,7 @@ public class KlassBootstrapWriter {
         var expressionValueVisitor2 = new BootstrapExpressionValueVisitor2(expressionValuesByExpressionValue);
         var criteriaVisitor2 = new BootstrapExpressionValueCriteriaVisitor(expressionValueVisitor2);
 
-        allCriteria.each(criteria -> criteria.visit(criteriaVisitor2));
+        allCriteria.each((criteria) -> criteria.visit(criteriaVisitor2));
         orderByReferencePaths.each(expressionValueVisitor2::visitThisMember);
 
         new MemberReferencePathList(expressionValueVisitor2.getBootstrappedMemberReferencePaths()).insertAll();
@@ -237,13 +237,13 @@ public class KlassBootstrapWriter {
         new TypeMemberReferencePathList(expressionValueVisitor2.getBootstrappedTypeMemberReferencePaths()).insertAll();
 
         var criteriaVisitor3 = new BootstrapCriteriaVisitor1();
-        allCriteria.each(criteria -> criteria.visit(criteriaVisitor3));
+        allCriteria.each((criteria) -> criteria.visit(criteriaVisitor3));
         criteriaVisitor3.getBootstrappedCriteria().insertAll();
 
         ImmutableMap<Criteria, klass.model.meta.domain.Criteria> criteriaByCriteria =
             criteriaVisitor3.getCriteriaByCriteria();
         var criteriaVisitor4 = new BootstrapCriteriaVisitor2(criteriaByCriteria, expressionValuesByExpressionValue);
-        allCriteria.each(criteria -> criteria.visit(criteriaVisitor4));
+        allCriteria.each((criteria) -> criteria.visit(criteriaVisitor4));
         criteriaVisitor4.getAllCriteria().insertAll();
         criteriaVisitor4.getEdgePointCriteria().insertAll();
         criteriaVisitor4.getOperatorCriteria().insertAll();
@@ -257,7 +257,7 @@ public class KlassBootstrapWriter {
         associationEnds.collect(this::handleAssociationEnd, new AssociationEndList()).insertAll();
         associationEnds
             .flatCollect(
-                associationEnd ->
+                (associationEnd) ->
                     associationEnd.getModifiers().collectWith(this::handleAssociationEndModifier, associationEnd),
                 new AssociationEndModifierList()
             )
@@ -265,12 +265,12 @@ public class KlassBootstrapWriter {
 
         associationEnds
             .flatCollect(
-                associationEnd ->
+                (associationEnd) ->
                     associationEnd
                         .getOrderBy()
                         .map(OrderBy::getOrderByMemberReferencePaths)
                         .orElseGet(Lists.immutable::empty)
-                        .collect(memberReferencePath ->
+                        .collect((memberReferencePath) ->
                             this.handleOrderByMemberReferencePath(
                                 memberReferencePath,
                                 associationEnd,
@@ -294,19 +294,19 @@ public class KlassBootstrapWriter {
 
         this.domainModel.getProjections()
             .collect(
-                each -> this.handleRootProjection(each, rootProjectionByProjection.get(each)),
+                (each) -> this.handleRootProjection(each, rootProjectionByProjection.get(each)),
                 new RootProjectionList()
             )
             .insertAll();
 
         this.domainModel.getProjections()
             .collect(
-                projection -> this.handleNamedProjection(projection, rootProjectionByProjection),
+                (projection) -> this.handleNamedProjection(projection, rootProjectionByProjection),
                 new NamedProjectionList()
             )
             .insertAll();
 
-        this.domainModel.getProjections().each(projection ->
+        this.domainModel.getProjections().each((projection) ->
             this.handleProjectionChildren(projection, rootProjectionByProjection.get(projection))
         );
 
@@ -319,10 +319,10 @@ public class KlassBootstrapWriter {
 
         urls
             .flatCollect(
-                url ->
+                (url) ->
                     url
                         .getPathParameters()
-                        .collect(eachPathParameter ->
+                        .collect((eachPathParameter) ->
                             this.handleUrlParameter(url, eachPathParameter, "path", bootstrappedParametersByParameter)
                         ),
                 new UrlParameterList()
@@ -331,10 +331,10 @@ public class KlassBootstrapWriter {
 
         urls
             .flatCollect(
-                url ->
+                (url) ->
                     url
                         .getQueryParameters()
-                        .collect(eachPathParameter ->
+                        .collect((eachPathParameter) ->
                             this.handleUrlParameter(url, eachPathParameter, "query", bootstrappedParametersByParameter)
                         ),
                 new UrlParameterList()
@@ -344,17 +344,17 @@ public class KlassBootstrapWriter {
         ImmutableList<Parameter> parameters = urls.flatCollect(Url::getParameters);
 
         parameters
-            .select(each -> each.getType() instanceof PrimitiveType)
+            .select((each) -> each.getType() instanceof PrimitiveType)
             .collect(
-                each -> this.handleUrlPrimitiveParameter(each, bootstrappedParametersByParameter),
+                (each) -> this.handleUrlPrimitiveParameter(each, bootstrappedParametersByParameter),
                 new PrimitiveParameterList()
             )
             .insertAll();
 
         parameters
-            .select(each -> each.getType() instanceof Enumeration)
+            .select((each) -> each.getType() instanceof Enumeration)
             .collect(
-                each -> this.handleUrlEnumerationParameter(each, bootstrappedParametersByParameter),
+                (each) -> this.handleUrlEnumerationParameter(each, bootstrappedParametersByParameter),
                 new EnumerationParameterList()
             )
             .insertAll();
@@ -365,7 +365,7 @@ public class KlassBootstrapWriter {
         );
         var criteriaVisitor5 = new BootstrapExpressionValueCriteriaVisitor(expressionValueVisitor3);
 
-        serviceCriteria.each(criteria -> criteria.visit(criteriaVisitor5));
+        serviceCriteria.each((criteria) -> criteria.visit(criteriaVisitor5));
 
         services.collectWith(this::handleService, criteriaByCriteria, new ServiceList()).insertAll();
     }
@@ -414,7 +414,7 @@ public class KlassBootstrapWriter {
     private ImmutableList<ClassifierInterfaceMapping> handleSuperInterface(@Nonnull Classifier classifier) {
         return classifier
             .getInterfaces()
-            .collect(superInterface -> getClassifierInterfaceMapping(classifier, superInterface));
+            .collect((superInterface) -> getClassifierInterfaceMapping(classifier, superInterface));
     }
 
     @Nonnull
@@ -429,7 +429,7 @@ public class KlassBootstrapWriter {
     }
 
     private ImmutableList<ClassifierModifier> handleClassifierModifier(@Nonnull Classifier classifier) {
-        return classifier.getModifiers().collect(modifier -> this.getClassifierModifier(classifier, modifier));
+        return classifier.getModifiers().collect((modifier) -> this.getClassifierModifier(classifier, modifier));
     }
 
     private ClassifierModifier getClassifierModifier(Classifier classifier, Modifier modifier) {
@@ -460,7 +460,7 @@ public class KlassBootstrapWriter {
     private ImmutableList<PropertyModifier> handlePropertyModifier(@Nonnull DataTypeProperty dataTypeProperty) {
         return dataTypeProperty
             .getModifiers()
-            .collect(modifier -> this.getPropertyModifier(dataTypeProperty, modifier));
+            .collect((modifier) -> this.getPropertyModifier(dataTypeProperty, modifier));
     }
 
     private PropertyModifier getPropertyModifier(DataTypeProperty dataTypeProperty, Modifier modifier) {
@@ -475,7 +475,7 @@ public class KlassBootstrapWriter {
     private Optional<MinLengthPropertyValidation> handleMinLengthPropertyValidation(DataTypeProperty dataTypeProperty) {
         return dataTypeProperty
             .getMinLengthPropertyValidation()
-            .map(validation -> {
+            .map((validation) -> {
                 Classifier classifier = dataTypeProperty.getOwningClassifier();
 
                 var bootstrappedMinLengthPropertyValidation = new MinLengthPropertyValidation();
@@ -490,7 +490,7 @@ public class KlassBootstrapWriter {
     private Optional<MaxLengthPropertyValidation> handleMaxLengthPropertyValidation(DataTypeProperty dataTypeProperty) {
         return dataTypeProperty
             .getMaxLengthPropertyValidation()
-            .map(validation -> {
+            .map((validation) -> {
                 Classifier classifier = dataTypeProperty.getOwningClassifier();
 
                 var bootstrappedMaxLengthPropertyValidation = new MaxLengthPropertyValidation();
@@ -505,7 +505,7 @@ public class KlassBootstrapWriter {
     private Optional<MinPropertyValidation> handleMinPropertyValidation(DataTypeProperty dataTypeProperty) {
         return dataTypeProperty
             .getMinPropertyValidation()
-            .map(validation -> {
+            .map((validation) -> {
                 Classifier classifier = dataTypeProperty.getOwningClassifier();
 
                 var bootstrappedMinPropertyValidation = new MinPropertyValidation();
@@ -520,7 +520,7 @@ public class KlassBootstrapWriter {
     private Optional<MaxPropertyValidation> handleMaxPropertyValidation(DataTypeProperty dataTypeProperty) {
         return dataTypeProperty
             .getMaxPropertyValidation()
-            .map(validation -> {
+            .map((validation) -> {
                 Classifier classifier = dataTypeProperty.getOwningClassifier();
 
                 var bootstrappedMaxPropertyValidation = new MaxPropertyValidation();
@@ -893,7 +893,7 @@ public class KlassBootstrapWriter {
 
         service
             .getQueryCriteria()
-            .ifPresent(criteria -> {
+            .ifPresent((criteria) -> {
                 klass.model.meta.domain.Criteria queryCriteria = criteriaByCriteria.get(criteria);
                 Objects.requireNonNull(queryCriteria, "queryCriteria");
                 bootstrappedService.setQueryCriteriaId(queryCriteria.getId());

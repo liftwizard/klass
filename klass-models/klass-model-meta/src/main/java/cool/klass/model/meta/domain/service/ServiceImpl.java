@@ -183,8 +183,8 @@ public final class ServiceImpl extends AbstractElement implements Service {
     @Override
     public boolean isVersionClauseRequired() {
         return (
-            this.serviceMultiplicity == ServiceMultiplicity.ONE &&
-            this.url.getServiceGroup().getKlass().getVersionProperty().isPresent()
+            this.serviceMultiplicity == ServiceMultiplicity.ONE
+            && this.url.getServiceGroup().getKlass().getVersionProperty().isPresent()
         );
     }
 

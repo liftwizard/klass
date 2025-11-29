@@ -72,7 +72,7 @@ public abstract class AbstractReladomoTreeNode implements ReladomoTreeNode {
     public String toString(String indent) {
         RichIterable<String> childrenStrings = this.getChildren()
             .keyValuesView()
-            .collect(pair -> pair.getTwo().toString(indent + "  "));
+            .collect((pair) -> pair.getTwo().toString(indent + "  "));
         String result = this.getNodeString(indent) + childrenStrings.makeString("");
         return result;
     }
