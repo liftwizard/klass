@@ -153,6 +153,13 @@ projection PropertiesOptionalVersionProjection on PropertiesOptionalVersion
     lastUpdatedBy: UserProjection,
 }
 
+projection PropertiesOptionalCreatedProjection on PropertiesOptional
+{
+    propertiesOptionalId: "propertiesOptionalId",
+    createdOn           : "createdOn",
+    optionalString      : "optionalString",
+}
+
 projection PropertiesOptionalProjection on PropertiesOptional
 {
     propertiesOptionalId: "propertiesOptionalId",
@@ -179,6 +186,7 @@ service PropertiesOptionalResource on PropertiesOptional
         POST
         {
             multiplicity: one;
+            projection  : PropertiesOptionalCreatedProjection;
         }
     /propertiesOptional/{propertiesOptionalId: Long[1..1]}
         GET
@@ -288,9 +296,27 @@ service EveryTypeKeyPropertyResource on EveryTypeKeyProperty
             criteria    : all;
             projection  : EveryTypeKeyPropertyProjection;
         }
+    /everyTypeKeyProperty/single
         POST
         {
             multiplicity: one;
+        }
+    /everyTypeKeyProperty/singleWithProjection
+        POST
+        {
+            multiplicity: one;
+            projection  : EveryTypeKeyPropertyProjection;
+        }
+    /everyTypeKeyProperty/multiple
+        POST
+        {
+            multiplicity: many;
+        }
+    /everyTypeKeyProperty/multipleWithProjection
+        POST
+        {
+            multiplicity: many;
+            projection  : EveryTypeKeyPropertyProjection;
         }
     /everyTypeKeyProperty/{keyString: String[1..1]}/{keyInteger: Integer[1..1]}/{keyLong: Long[1..1]}/{keyDouble: Double[1..1]}/{keyFloat: Float[1..1]}/{keyBoolean: Boolean[1..1]}/{keyInstant: Instant[1..1]}/{keyLocalDate: LocalDate[1..1]}
         GET

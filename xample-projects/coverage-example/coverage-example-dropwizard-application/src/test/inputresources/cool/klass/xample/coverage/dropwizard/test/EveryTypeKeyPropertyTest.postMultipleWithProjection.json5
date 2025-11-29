@@ -1,0 +1,22 @@
+[
+  {
+    keyString: "EveryTypeKeyProperty keyString 5",
+    keyInteger: 5,
+    keyLong: 500000000000,
+    keyDouble: 5.0123456789,
+    keyFloat: 5.5,
+    keyBoolean: true,
+    keyInstant: "2001-01-01T00:00:00Z",
+    keyLocalDate: "2001-01-01",
+  },
+  {
+    keyString: "EveryTypeKeyProperty keyString 6",
+    keyInteger: 6,
+    keyLong: 600000000000,
+    keyDouble: 6.0123456789,
+    keyFloat: 6.5,
+    keyBoolean: false,
+    keyInstant: "2001-06-15T12:00:00Z",
+    keyLocalDate: "2001-06-15",
+  },
+]

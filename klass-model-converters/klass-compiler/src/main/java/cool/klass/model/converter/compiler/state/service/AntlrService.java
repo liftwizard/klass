@@ -240,6 +240,10 @@ public class AntlrService extends AntlrElement implements AntlrOrderByOwner {
                 (projectionDispatch) -> projectionDispatch.reportErrors(compilerAnnotationHolder),
                 () -> this.reportMissingProjection(compilerAnnotationHolder)
             );
+        } else if (verb == Verb.POST) {
+            this.serviceProjectionDispatch.ifPresent((projectionDispatch) ->
+                projectionDispatch.reportErrors(compilerAnnotationHolder)
+            );
         } else {
             this.serviceProjectionDispatch.ifPresent((projectionDispatch) ->
                 this.reportPresentProjection(projectionDispatch, compilerAnnotationHolder)

@@ -40,18 +40,69 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
     }
 
     @Test
-    void post() {
-        Client client = this.getClient("post");
-        String jsonName = this.getClass().getSimpleName() + ".post.json5";
-        String json = FileSlurper.slurp(jsonName, this.getClass());
+    void postSingle() {
+        Client client = this.getClient("postSingle");
+        String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".postSingle.json5", this.getClass());
 
         Response response = client
-            .target("http://localhost:{port}/api/everyTypeKeyProperty")
+            .target("http://localhost:{port}/api/everyTypeKeyProperty/single")
             .resolveTemplate("port", this.appExtension.getLocalPort())
             .request()
+            .header("Authorization", "Impersonation test-user")
             .post(Entity.json(json));
 
-        this.assertResponse("post", Status.METHOD_NOT_ALLOWED, response);
+        this.assertEmptyResponse(Status.NO_CONTENT, response);
+    }
+
+    @Test
+    void postSingleWithProjection() {
+        Client client = this.getClient("postSingleWithProjection");
+        String json = FileSlurper.slurp(
+            this.getClass().getSimpleName() + ".postSingleWithProjection.json5",
+            this.getClass()
+        );
+
+        Response response = client
+            .target("http://localhost:{port}/api/everyTypeKeyProperty/singleWithProjection")
+            .resolveTemplate("port", this.appExtension.getLocalPort())
+            .request()
+            .header("Authorization", "Impersonation test-user")
+            .post(Entity.json(json));
+
+        this.assertResponse("postSingleWithProjection", Status.CREATED, response);
+    }
+
+    @Test
+    void postMultiple() {
+        Client client = this.getClient("postMultiple");
+        String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".postMultiple.json5", this.getClass());
+
+        Response response = client
+            .target("http://localhost:{port}/api/everyTypeKeyProperty/multiple")
+            .resolveTemplate("port", this.appExtension.getLocalPort())
+            .request()
+            .header("Authorization", "Impersonation test-user")
+            .post(Entity.json(json));
+
+        this.assertEmptyResponse(Status.NO_CONTENT, response);
+    }
+
+    @Test
+    void postMultipleWithProjection() {
+        Client client = this.getClient("postMultipleWithProjection");
+        String json = FileSlurper.slurp(
+            this.getClass().getSimpleName() + ".postMultipleWithProjection.json5",
+            this.getClass()
+        );
+
+        Response response = client
+            .target("http://localhost:{port}/api/everyTypeKeyProperty/multipleWithProjection")
+            .resolveTemplate("port", this.appExtension.getLocalPort())
+            .request()
+            .header("Authorization", "Impersonation test-user")
+            .post(Entity.json(json));
+
+        this.assertResponse("postMultipleWithProjection", Status.CREATED, response);
     }
 
     @Test
