@@ -43,13 +43,13 @@
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-data-store</artifactId>
-            <version>0.7.0-SNAPSHOT</version>
+            <version>${klass.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-model-meta-interface</artifactId>
-            <version>0.7.0-SNAPSHOT</version>
+            <version>${klass.version}</version>
         </dependency>
 
         <dependency>
@@ -100,13 +100,13 @@
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-deserializer-json</artifactId>
-            <version>0.7.0-SNAPSHOT</version>
+            <version>${klass.version}</version>
         </dependency>
 
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-reladomo-persistent-writer</artifactId>
-            <version>0.7.0-SNAPSHOT</version>
+            <version>${klass.version}</version>
         </dependency>
 
         <dependency>
@@ -133,7 +133,7 @@
             <plugin>
                 <groupId>cool.klass</groupId>
                 <artifactId>klass-generator-service-resources-plugin</artifactId>
-                <version>0.7.0-SNAPSHOT</version>
+                <version>${klass.version}</version>
                 <configuration>
                     <rootPackageName>${app.rootPackageName}</rootPackageName>
                     <applicationName>${app.name}</applicationName>
