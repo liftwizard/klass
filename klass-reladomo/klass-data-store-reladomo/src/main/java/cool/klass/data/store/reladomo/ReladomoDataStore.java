@@ -306,7 +306,10 @@ public class ReladomoDataStore implements DataStore {
 
         if (idProperty.getType().isNumeric()) {
             try {
-                Method generateAndSetIdMethod = this.getGenerateAndSetIdMethod(persistentInstance.getClass(), idProperty);
+                Method generateAndSetIdMethod = this.getGenerateAndSetIdMethod(
+                    persistentInstance.getClass(),
+                    idProperty
+                );
                 generateAndSetIdMethod.invoke(persistentInstance);
             } catch (ReflectiveOperationException e) {
                 throw new RuntimeException(e);
