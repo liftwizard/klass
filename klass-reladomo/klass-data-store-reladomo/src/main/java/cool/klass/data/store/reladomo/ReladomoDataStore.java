@@ -110,7 +110,7 @@ public class ReladomoDataStore implements DataStore {
     @Override
     public <Result> Result runInTransaction(@Nonnull TransactionalCommand<Result> transactionalCommand) {
         return MithraManagerProvider.getMithraManager().executeTransactionalCommand(
-                transaction -> {
+                (transaction) -> {
                     try {
                         Transaction transactionAdapter = new TransactionAdapter(transaction);
                         return transactionalCommand.run(transactionAdapter);
@@ -125,7 +125,7 @@ public class ReladomoDataStore implements DataStore {
     @Override
     public void runInTransaction(@Nonnull Runnable runnable) {
         MithraManagerProvider.getMithraManager().executeTransactionalCommand(
-                tx -> {
+                (tx) -> {
                     runnable.run();
                     return null;
                 },
@@ -199,7 +199,7 @@ public class ReladomoDataStore implements DataStore {
         }
 
         RelatedFinder<?> finder = this.getRelatedFinder(klass);
-        ImmutableList<Operation> operations = keyProperties.collect(keyProperty -> {
+        ImmutableList<Operation> operations = keyProperties.collect((keyProperty) -> {
             Object key = keys.get(keyProperty);
             if (!keys.containsKey(keyProperty)) {
                 String detailMessage = "Expected key for property: " + keyProperty;
@@ -354,8 +354,8 @@ public class ReladomoDataStore implements DataStore {
 
         Classifier owningClassifier = dataTypeProperty.getOwningClassifier();
         if (
-            owningClassifier instanceof Klass &&
-            !Objects.equals(owningClassifier.getName(), persistentInstance.getClass().getSimpleName())
+            owningClassifier instanceof Klass
+            && !Objects.equals(owningClassifier.getName(), persistentInstance.getClass().getSimpleName())
         ) {
             String detailMessage = "Expected %s but got %s".formatted(
                 owningClassifier.getName(),
@@ -369,8 +369,8 @@ public class ReladomoDataStore implements DataStore {
         Attribute attribute = finder.getAttributeByName(attributeName);
         if (attribute == null) {
             String detailMessage =
-                "Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find attribute: " +
-                attributeName;
+                "Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find attribute: "
+                + attributeName;
             throw new AssertionError(detailMessage);
         }
 
@@ -419,7 +419,7 @@ public class ReladomoDataStore implements DataStore {
 
             Optional<EnumerationLiteral> enumerationLiteral = enumeration
                 .getEnumerationLiterals()
-                .detectOptional(each -> each.getPrettyName().equals(prettyName));
+                .detectOptional((each) -> each.getPrettyName().equals(prettyName));
 
             return enumerationLiteral.orElseThrow(() ->
                 new AssertionError("No enumeration literal found for " + prettyName + " in " + enumeration.getName())
@@ -442,8 +442,8 @@ public class ReladomoDataStore implements DataStore {
         Attribute attribute = finder.getAttributeByName(dataTypeProperty.getName());
         if (attribute == null) {
             String detailMessage =
-                "Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find: " +
-                dataTypeProperty;
+                "Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find: "
+                + dataTypeProperty;
             throw new AssertionError(detailMessage);
         }
 
@@ -478,7 +478,7 @@ public class ReladomoDataStore implements DataStore {
 
             Optional<EnumerationLiteral> enumerationLiteral = enumeration
                 .getEnumerationLiterals()
-                .detectOptional(each -> each.getPrettyName().equals(prettyName));
+                .detectOptional((each) -> each.getPrettyName().equals(prettyName));
 
             return enumerationLiteral.orElseThrow(() -> new AssertionError(prettyName));
         }
@@ -584,8 +584,8 @@ public class ReladomoDataStore implements DataStore {
 
         if (relationshipFinder == null) {
             String detailMessage =
-                "Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property " +
-                referenceProperty;
+                "Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property "
+                + referenceProperty;
             throw new AssertionError(detailMessage);
         }
 
@@ -712,7 +712,7 @@ public class ReladomoDataStore implements DataStore {
 
         ImmutableList<Klass> potentialSubClasses = klass
             .getSubClasses()
-            .select(subClass -> {
+            .select((subClass) -> {
                 MithraObject subClassPersistentInstance = this.getSubClassPersistentInstance(
                     klass,
                     subClass,
@@ -752,8 +752,8 @@ public class ReladomoDataStore implements DataStore {
 
         if (relationshipFinder == null) {
             String detailMessage =
-                "Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property " +
-                relationshipName;
+                "Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property "
+                + relationshipName;
             throw new AssertionError(detailMessage);
         }
 
@@ -773,8 +773,8 @@ public class ReladomoDataStore implements DataStore {
 
         if (relationshipFinder == null) {
             String detailMessage =
-                "Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property " +
-                relationshipName;
+                "Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property "
+                + relationshipName;
             throw new AssertionError(detailMessage);
         }
 
@@ -804,8 +804,8 @@ public class ReladomoDataStore implements DataStore {
 
         if (relationshipFinder == null) {
             String detailMessage =
-                "Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property " +
-                relationshipName;
+                "Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property "
+                + relationshipName;
             throw new AssertionError(detailMessage);
         }
 

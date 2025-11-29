@@ -256,11 +256,11 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
                 )
             );
         } else if (
-            this.getSourceEnd().isToOne() &&
-            this.getTargetEnd().isToOne() &&
-            this.getSourceEnd().isToOneRequired() == this.getTargetEnd().isToOneRequired() &&
-            !this.getSourceEnd().isOwned() &&
-            !this.getTargetEnd().isOwned()
+            this.getSourceEnd().isToOne()
+            && this.getTargetEnd().isToOne()
+            && this.getSourceEnd().isToOneRequired() == this.getTargetEnd().isToOneRequired()
+            && !this.getSourceEnd().isOwned()
+            && !this.getTargetEnd().isOwned()
         ) {
             String message = String.format(
                 "Association '%s' is perfectly symmetrical, so foreign keys cannot be inferred. To break the symmetry, make one end owned, or make one end required and the other end optional.",
@@ -282,8 +282,8 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
         }
 
         if (
-            this.getSourceEnd().getType() == AntlrClass.NOT_FOUND ||
-            this.getTargetEnd().getType() == AntlrClass.NOT_FOUND
+            this.getSourceEnd().getType() == AntlrClass.NOT_FOUND
+            || this.getTargetEnd().getType() == AntlrClass.NOT_FOUND
         ) {
             this.getSourceEnd().reportTypeNotFound(compilerAnnotationHolder);
             this.getTargetEnd().reportTypeNotFound(compilerAnnotationHolder);
@@ -292,8 +292,8 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
         }
 
         if (
-            this.getSourceEnd().getType() == AntlrClass.AMBIGUOUS ||
-            this.getTargetEnd().getType() == AntlrClass.AMBIGUOUS
+            this.getSourceEnd().getType() == AntlrClass.AMBIGUOUS
+            || this.getTargetEnd().getType() == AntlrClass.AMBIGUOUS
         ) {
             return;
         }

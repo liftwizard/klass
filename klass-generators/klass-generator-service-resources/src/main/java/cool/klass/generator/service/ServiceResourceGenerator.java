@@ -220,9 +220,9 @@ public class ServiceResourceGenerator {
         }
 
         return (
-            ((PrimitiveType) dataType).isTemporal() ||
-            dataType == PrimitiveType.LOCAL_DATE ||
-            dataType == PrimitiveType.INSTANT
+            ((PrimitiveType) dataType).isTemporal()
+            || dataType == PrimitiveType.LOCAL_DATE
+            || dataType == PrimitiveType.INSTANT
         );
     }
 
@@ -335,7 +335,7 @@ public class ServiceResourceGenerator {
         RootReladomoNode projectionReladomoNode = reladomoProjectionConverter.getRootReladomoNode(klass, projection);
         ImmutableList<String> deepFetchStrings = projectionReladomoNode.getDeepFetchStrings();
         String deepFetchSourceCode = deepFetchStrings
-            .collect(each -> "        result.deepFetch(" + each + ");\n")
+            .collect((each) -> "        result.deepFetch(" + each + ");\n")
             .makeString("");
 
         String orderBySourceCode = service.getOrderBy().map(this::getOrderBysSourceCode).orElse("");
@@ -466,7 +466,7 @@ public class ServiceResourceGenerator {
         );
         ImmutableList<String> deepFetchStrings = rootReladomoNode.getDeepFetchStrings();
         String deepFetchSourceCode = deepFetchStrings
-            .collect(each -> "        result.deepFetch(" + each + ");\n")
+            .collect((each) -> "        result.deepFetch(" + each + ");\n")
             .makeString("");
 
         String orderBySourceCode = service.getOrderBy().map(this::getOrderBysSourceCode).orElse("");
@@ -614,7 +614,7 @@ public class ServiceResourceGenerator {
         );
         ImmutableList<String> deepFetchStrings = rootReladomoNode.getDeepFetchStrings();
         String deepFetchSourceCode = deepFetchStrings
-            .collect(each -> "        result.deepFetch(" + each + ");\n")
+            .collect((each) -> "        result.deepFetch(" + each + ");\n")
             .makeString("");
 
         String orderBySourceCode = service.getOrderBy().map(this::getOrderBysSourceCode).orElse("");
@@ -763,7 +763,7 @@ public class ServiceResourceGenerator {
 
     @Nonnull
     private String getOperation(String finderName, @Nonnull Optional<Criteria> optionalCriteria, String criteriaName) {
-        return optionalCriteria.map(criteria -> this.getOperation(finderName, criteria, criteriaName)).orElse("");
+        return optionalCriteria.map((criteria) -> this.getOperation(finderName, criteria, criteriaName)).orElse("");
     }
 
     @Nonnull
@@ -787,7 +787,7 @@ public class ServiceResourceGenerator {
         String criteriaName
     ) {
         return optionalCriteria
-            .map(criteria -> this.getOptionalOperation(finderName, criteria, criteriaName))
+            .map((criteria) -> this.getOptionalOperation(finderName, criteria, criteriaName))
             .orElse("");
     }
 
@@ -797,18 +797,18 @@ public class ServiceResourceGenerator {
         String paddedOperationName = String.format("%-18s", criteriaName + "Operation");
 
         return (
-            "" +
-            "        Operation " +
-            paddedOperationName +
-            " = " +
-            criteriaName +
-            " == null\n" +
-            "                ? " +
-            finderName +
-            ".all()\n" +
-            "                : " +
-            operation +
-            ";\n"
+            ""
+            + "        Operation "
+            + paddedOperationName
+            + " = "
+            + criteriaName
+            + " == null\n"
+            + "                ? "
+            + finderName
+            + ".all()\n"
+            + "                : "
+            + operation
+            + ";\n"
         );
     }
 
@@ -818,7 +818,9 @@ public class ServiceResourceGenerator {
         String flagName,
         String exceptionName
     ) {
-        return optionalCriteria.map(criteria -> this.checkPredicate(criteriaName, flagName, exceptionName)).orElse("");
+        return optionalCriteria
+            .map((criteria) -> this.checkPredicate(criteriaName, flagName, exceptionName))
+            .orElse("");
     }
 
     @Nonnull
@@ -847,7 +849,7 @@ public class ServiceResourceGenerator {
     private String getOrderBysSourceCode(@Nonnull OrderBy orderBy) {
         ImmutableList<String> orderBySourceCodeClauses = orderBy
             .getOrderByMemberReferencePaths()
-            .reject(each -> each.getThisMemberReferencePath().getProperty().isDerived())
+            .reject((each) -> each.getThisMemberReferencePath().getProperty().isDerived())
             .collect(this::getOrderBySourceCode);
 
         if (orderBySourceCodeClauses.isEmpty()) {
@@ -872,8 +874,8 @@ public class ServiceResourceGenerator {
     @Nonnull
     private String getOrderBySourceCode(@Nonnull OrderByMemberReferencePath orderByMemberReferencePath) {
         return (
-            this.getThisMemberReferencePathSourceCode(orderByMemberReferencePath.getThisMemberReferencePath()) +
-            this.getOrderByDirectionDeclarationSourceCode(orderByMemberReferencePath.getOrderByDirectionDeclaration())
+            this.getThisMemberReferencePathSourceCode(orderByMemberReferencePath.getThisMemberReferencePath())
+            + this.getOrderByDirectionDeclarationSourceCode(orderByMemberReferencePath.getOrderByDirectionDeclaration())
         );
     }
 
@@ -886,7 +888,7 @@ public class ServiceResourceGenerator {
         DataTypeProperty property = thisMemberReferencePath.getProperty();
         ImmutableList<Klass> superClassPath = this.getSuperClassPath(klass, property.getOwningClassifier());
         String superClassPathSourceCode = superClassPath
-            .collect(each -> "." + UPPER_TO_LOWER_CAMEL.convert(each.getName()) + "SuperClass()")
+            .collect((each) -> "." + UPPER_TO_LOWER_CAMEL.convert(each.getName()) + "SuperClass()")
             .makeString("");
         String result = String.format("%sFinder%s.%s()", klass.getName(), superClassPathSourceCode, property.getName());
         return result;

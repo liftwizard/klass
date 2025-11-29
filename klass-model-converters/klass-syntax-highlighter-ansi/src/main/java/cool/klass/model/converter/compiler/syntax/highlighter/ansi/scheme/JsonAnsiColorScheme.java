@@ -277,10 +277,10 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
             }
         } catch (IllegalArgumentException e) {
             String detailMessage =
-                "Invalid color name: '" +
-                colorStr +
-                "'. Must be a valid ANSI color enum, integer, or RGB hex format (#RRGGBB). Valid enum values are: " +
-                ArrayAdapter.adapt(Ansi.Color.values()).makeString();
+                "Invalid color name: '"
+                + colorStr
+                + "'. Must be a valid ANSI color enum, integer, or RGB hex format (#RRGGBB). Valid enum values are: "
+                + ArrayAdapter.adapt(Ansi.Color.values()).makeString();
             throw new IllegalArgumentException(detailMessage);
         }
     }

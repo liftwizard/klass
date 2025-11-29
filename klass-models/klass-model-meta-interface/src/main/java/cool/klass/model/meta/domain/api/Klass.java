@@ -79,8 +79,8 @@ public interface Klass extends Classifier {
                 .asLazy()
                 .reject(ReferenceProperty::isToSelf)
                 .collect(AssociationEnd::getOpposite)
-                .count(ReferenceProperty::isOwned) ==
-            1
+                .count(ReferenceProperty::isOwned)
+            == 1
         );
     }
 

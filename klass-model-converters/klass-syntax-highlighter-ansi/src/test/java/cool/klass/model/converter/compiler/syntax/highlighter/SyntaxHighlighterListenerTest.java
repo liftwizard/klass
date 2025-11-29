@@ -100,7 +100,7 @@ class SyntaxHighlighterListenerTest {
         Ansi ansi = Ansi.ansi();
         colorScheme.background(ansi);
 
-        tokenStream.getTokens().forEach(token -> ansiTokenColorizer.colorizeText(ansi, token));
+        tokenStream.getTokens().forEach((token) -> ansiTokenColorizer.colorizeText(ansi, token));
         ansi.reset();
 
         rewriteStopwatch.stop();

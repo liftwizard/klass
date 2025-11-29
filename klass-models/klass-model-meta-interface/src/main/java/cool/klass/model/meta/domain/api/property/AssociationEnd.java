@@ -57,7 +57,7 @@ public interface AssociationEnd extends ReferenceProperty {
         return this.getType()
             .getKeyProperties()
             .anySatisfy(
-                keyProperty ->
+                (keyProperty) ->
                     !keyProperty.isForeignKeyWithOpposite() && !keyProperty.isForeignKeyMatchingKeyOnPath(this)
             );
     }

@@ -82,35 +82,35 @@ public class VersionAssociationInferencePhase extends AbstractCompilerPhase {
 
         String relationshipKeyClauses = keyProperties
             .collect(AntlrProperty::getName)
-            .collect(each -> "this." + each + " == " + className + "Version." + each)
+            .collect((each) -> "this." + each + " == " + className + "Version." + each)
             .makeString("\n        && ");
 
         String associationEndName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, className);
 
         // language=Klass
         return (
-            "" +
-            "package " +
-            klass.getPackageName() +
-            "\n" +
-            "\n" +
-            "association " +
-            className +
-            "HasVersion\n" +
-            "{\n" +
-            "    " +
-            associationEndName +
-            ": " +
-            className +
-            "[1..1];\n" +
-            "    version: " +
-            className +
-            "Version[1..1] owned version;\n" +
-            "\n" +
-            "    relationship " +
-            relationshipKeyClauses +
-            "\n" +
-            "}\n"
+            ""
+            + "package "
+            + klass.getPackageName()
+            + "\n"
+            + "\n"
+            + "association "
+            + className
+            + "HasVersion\n"
+            + "{\n"
+            + "    "
+            + associationEndName
+            + ": "
+            + className
+            + "[1..1];\n"
+            + "    version: "
+            + className
+            + "Version[1..1] owned version;\n"
+            + "\n"
+            + "    relationship "
+            + relationshipKeyClauses
+            + "\n"
+            + "}\n"
         );
     }
 }

@@ -621,7 +621,7 @@ public class IncomingUpdateDataModelValidator {
     ) {
         List<Object> persistentChildInstances = this.dataStore.getToMany(this.persistentInstance, associationEnd);
         MutableList<Object> nonTerminatedPersistentChildInstances = ListAdapter.adapt(persistentChildInstances).reject(
-            persistentChildInstance ->
+            (persistentChildInstance) ->
                 this.needsTermination(persistentChildInstance, associationEnd.getType(), incomingChildInstancesByKey)
         );
         return this.indexPersistentInstances(nonTerminatedPersistentChildInstances, associationEnd.getType());
@@ -657,7 +657,7 @@ public class IncomingUpdateDataModelValidator {
     protected ImmutableList<Object> getKeysFromPersistentInstance(Object persistentInstance, @Nonnull Klass klass) {
         return klass
             .getKeyProperties()
-            .collect(keyProperty -> this.dataStore.getDataTypeProperty(persistentInstance, keyProperty));
+            .collect((keyProperty) -> this.dataStore.getDataTypeProperty(persistentInstance, keyProperty));
     }
 
     private void emitNonArrayError(@Nonnull AssociationEnd associationEnd, @Nonnull JsonNode incomingChildInstances) {
@@ -678,7 +678,7 @@ public class IncomingUpdateDataModelValidator {
     ) {
         MutableOrderedMap<ImmutableList<Object>, Object> result = ListIterate.groupByUniqueKey(
             persistentInstances,
-            persistentInstance -> this.getKeysFromPersistentInstance(persistentInstance, klass),
+            (persistentInstance) -> this.getKeysFromPersistentInstance(persistentInstance, klass),
             OrderedMapAdapter.adapt(new LinkedHashMap<>())
         );
         return result.asUnmodifiable();
@@ -704,7 +704,7 @@ public class IncomingUpdateDataModelValidator {
         return associationEnd
             .getType()
             .getKeyProperties()
-            .allSatisfy(keyProperty -> this.jsonNodeNeedsIdInferredOnInsert(keyProperty, jsonNode, associationEnd));
+            .allSatisfy((keyProperty) -> this.jsonNodeNeedsIdInferredOnInsert(keyProperty, jsonNode, associationEnd));
     }
 
     private boolean jsonNodeNeedsIdInferredOnInsert(
@@ -739,7 +739,7 @@ public class IncomingUpdateDataModelValidator {
     ) {
         Klass type = associationEnd.getType();
         ImmutableList<DataTypeProperty> keyProperties = type.getKeyProperties();
-        return keyProperties.collect(keyProperty ->
+        return keyProperties.collect((keyProperty) ->
             this.getKeyFromJsonNode(keyProperty, jsonNode, associationEnd, parentJsonNode)
         );
     }

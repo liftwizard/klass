@@ -141,10 +141,10 @@ public class AntlrProjectionProjectionReference extends AntlrIdentifierElement i
     public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         AntlrClassifier parentClassifier = this.antlrProjectionParent.getClassifier();
         if (
-            parentClassifier == AntlrClass.NOT_FOUND ||
-            parentClassifier == AntlrClass.AMBIGUOUS ||
-            parentClassifier == AntlrClassifier.AMBIGUOUS ||
-            parentClassifier == AntlrClassifier.NOT_FOUND
+            parentClassifier == AntlrClass.NOT_FOUND
+            || parentClassifier == AntlrClass.AMBIGUOUS
+            || parentClassifier == AntlrClassifier.AMBIGUOUS
+            || parentClassifier == AntlrClassifier.NOT_FOUND
         ) {
             return;
         }
@@ -154,8 +154,8 @@ public class AntlrProjectionProjectionReference extends AntlrIdentifierElement i
         }
 
         if (
-            this.referenceProperty == AntlrReferenceProperty.NOT_FOUND ||
-            this.referenceProperty == AntlrAssociationEnd.NOT_FOUND
+            this.referenceProperty == AntlrReferenceProperty.NOT_FOUND
+            || this.referenceProperty == AntlrAssociationEnd.NOT_FOUND
         ) {
             AntlrDataTypeProperty<?> dataTypeProperty = parentClassifier.getDataTypePropertyByName(this.getName());
             if (dataTypeProperty == AntlrEnumerationProperty.NOT_FOUND) {
@@ -178,8 +178,8 @@ public class AntlrProjectionProjectionReference extends AntlrIdentifierElement i
                 compilerAnnotationHolder.add("ERR_PPR_TYP", message, this);
             }
         } else if (
-            this.referenceProperty == AntlrReferenceProperty.AMBIGUOUS ||
-            this.referenceProperty == AntlrAssociationEnd.AMBIGUOUS
+            this.referenceProperty == AntlrReferenceProperty.AMBIGUOUS
+            || this.referenceProperty == AntlrAssociationEnd.AMBIGUOUS
         ) {
             String message = String.format("Ambiguous: '%s'.", this);
             compilerAnnotationHolder.add("ERR_PPR_AMB", message, this);
@@ -197,8 +197,8 @@ public class AntlrProjectionProjectionReference extends AntlrIdentifierElement i
 
     private void reportTypeMismatch(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
         if (
-            this.classifier == this.referencedProjection.getClassifier() ||
-            this.classifier.isSubTypeOf(this.referencedProjection.getClassifier())
+            this.classifier == this.referencedProjection.getClassifier()
+            || this.classifier.isSubTypeOf(this.referencedProjection.getClassifier())
         ) {
             return;
         }

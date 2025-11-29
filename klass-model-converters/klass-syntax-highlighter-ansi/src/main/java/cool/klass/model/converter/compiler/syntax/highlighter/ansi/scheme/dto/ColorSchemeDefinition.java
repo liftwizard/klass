@@ -50,7 +50,7 @@ public record ColorSchemeDefinition(
     @ValidationMethod(message = "Color scheme must define a 'background' rule")
     @JsonIgnore
     public boolean hasBackgroundRule() {
-        return this.rules.anySatisfy(rule -> "background".equals(rule.name()));
+        return this.rules.anySatisfy((rule) -> "background".equals(rule.name()));
     }
 
     @ValidationMethod(message = "Unknown rule name in color scheme")

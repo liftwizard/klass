@@ -219,7 +219,7 @@ public abstract class AntlrReferenceProperty<Type extends AntlrClassifier>
         if (this.multiplicity.getMultiplicity() == null) {
             String multiplicityChoices = ArrayAdapter.adapt(Multiplicity.values())
                 .collect(Multiplicity::getPrettyName)
-                .collect(each -> '[' + each + ']')
+                .collect((each) -> '[' + each + ']')
                 .makeString();
 
             String message = String.format(
@@ -290,8 +290,8 @@ public abstract class AntlrReferenceProperty<Type extends AntlrClassifier>
         }
 
         String message = String.format(
-            "Reference property '%s.%s' is to-one but has an order-by clause. Order by clauses are only valid for " +
-            "to-many properties.",
+            "Reference property '%s.%s' is to-one but has an order-by clause. Order by clauses are only valid for "
+            + "to-many properties.",
             this.getOwningClassifier().getName(),
             this.getName()
         );

@@ -85,7 +85,7 @@ public class PersistentCreator extends PersistentSynchronizer {
         Optional<PrimitiveProperty> createdByProperty = klass.getCreatedByProperty();
         Optional<PrimitiveProperty> createdOnProperty = klass.getCreatedOnProperty();
 
-        createdByProperty.ifPresent(primitiveProperty -> {
+        createdByProperty.ifPresent((primitiveProperty) -> {
             Optional<String> optionalUserId = this.mutationContext.getUserId();
             String userId = optionalUserId.orElseThrow(() -> this.expectAuditProperty(primitiveProperty));
             if (!this.dataStore.setDataTypeProperty(persistentInstance, primitiveProperty, userId)) {
@@ -98,7 +98,7 @@ public class PersistentCreator extends PersistentSynchronizer {
             }
         });
 
-        createdOnProperty.ifPresent(primitiveProperty -> {
+        createdOnProperty.ifPresent((primitiveProperty) -> {
             Instant transactionTime = this.mutationContext.getTransactionTime();
             if (!this.dataStore.setDataTypeProperty(persistentInstance, primitiveProperty, transactionTime)) {
                 String detailMessage = "Expected to set createdOn property: %s on %s to %s".formatted(

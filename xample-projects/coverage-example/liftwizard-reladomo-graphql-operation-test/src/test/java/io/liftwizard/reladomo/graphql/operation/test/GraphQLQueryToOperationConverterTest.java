@@ -519,7 +519,7 @@ public class GraphQLQueryToOperationConverterTest {
             .scalar(GraphQLTemporalScalar.TEMPORAL_RANGE_INSTANCE)
             .scalar(JavaPrimitives.GraphQLLong)
             .scalar(GraphQLLocalDateScalar.INSTANCE);
-        builder.type("Query", typeWiring ->
+        builder.type("Query", (typeWiring) ->
             typeWiring
                 .dataFetcher(
                     "propertiesRequiredByFinder",

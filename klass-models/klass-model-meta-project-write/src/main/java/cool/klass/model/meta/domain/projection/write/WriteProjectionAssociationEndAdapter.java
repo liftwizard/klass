@@ -66,7 +66,7 @@ public class WriteProjectionAssociationEndAdapter implements ProjectionReference
         return klass
             .getAssociationEnds()
             .select(ReferenceProperty::isOwned)
-            .collect(associationEnd -> new WriteProjectionAssociationEndAdapter(this, associationEnd));
+            .collect((associationEnd) -> new WriteProjectionAssociationEndAdapter(this, associationEnd));
     }
 
     @Nonnull

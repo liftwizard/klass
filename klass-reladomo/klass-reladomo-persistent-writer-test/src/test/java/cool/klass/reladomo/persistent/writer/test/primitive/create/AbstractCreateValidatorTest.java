@@ -46,7 +46,7 @@ public abstract class AbstractCreateValidatorTest extends AbstractValidatorTest 
     protected final void validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance) {
         Klass klass = this.getKlass();
         ImmutableMap<DataTypeProperty, Object> propertyDataFromUrl = this.getPropertyDataFromUrl();
-        propertyDataFromUrl.forEachKey(property -> assertThat(property.getOwningClassifier()).isSameAs(klass));
+        propertyDataFromUrl.forEachKey((property) -> assertThat(property.getOwningClassifier()).isSameAs(klass));
 
         ObjectNodeTypeCheckingValidator.validate(this.actualErrors, incomingInstance, klass);
 

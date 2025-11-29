@@ -119,8 +119,8 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
             .select(DataTypeProperty::isTemporalRange)
             .collect(this::convertToAsOfAttributePureType);
 
-        ImmutableList<AttributePureType> attributeTypes = this.getDataTypeProperties(klass).collect(dataTypeProperty ->
-            this.convertToAttributePureType(klass, dataTypeProperty)
+        ImmutableList<AttributePureType> attributeTypes = this.getDataTypeProperties(klass).collect(
+            (dataTypeProperty) -> this.convertToAttributePureType(klass, dataTypeProperty)
         );
 
         // TODO: Test that private properties are not included in Projections
@@ -152,7 +152,7 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
         ImmutableList<AttributeType> attributeTypes = this.getDataTypeProperties(klass)
             .reject(DataTypeProperty::isTemporal)
             .reject(DataTypeProperty::isDerived)
-            .collect(dataTypeProperty -> this.convertToAttributeType(klass, dataTypeProperty));
+            .collect((dataTypeProperty) -> this.convertToAttributeType(klass, dataTypeProperty));
 
         mithraObject.setAsOfAttributes(asOfAttributeTypes.castToList());
         mithraObject.setAttributes(attributeTypes.castToList());
@@ -171,7 +171,7 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
 
         return klass
             .getDataTypeProperties()
-            .select(each -> each.isKey() || !superClassPropertyNames.contains(each.getName()));
+            .select((each) -> each.isKey() || !superClassPropertyNames.contains(each.getName()));
     }
 
     private void convertCommonObject(@Nonnull Klass klass, @Nonnull MithraCommonObjectType mithraCommonObject) {
@@ -329,8 +329,8 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
         }
 
         if (
-            property.getOwningClassifier() instanceof Interface anInterface &&
-            klass.getInterfaces().contains(anInterface)
+            property.getOwningClassifier() instanceof Interface anInterface
+            && klass.getInterfaces().contains(anInterface)
         ) {
             return true;
         }

@@ -171,7 +171,7 @@ public class CompilerAnnotationHolder {
     ) {
         return element
             .getMacroElement()
-            .map(macroElement ->
+            .map((macroElement) ->
                 this.getCauseCompilerAnnotation(
                     macroElement,
                     macroElement.getSurroundingElements(),

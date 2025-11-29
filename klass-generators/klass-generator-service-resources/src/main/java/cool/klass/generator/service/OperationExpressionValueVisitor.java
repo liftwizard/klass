@@ -59,10 +59,10 @@ public class OperationExpressionValueVisitor implements ExpressionValueVisitor {
 
         String associationEndsString = associationEnds.isEmpty()
             ? ""
-            : "." +
-            associationEnds
+            : "."
+            + associationEnds
                 .collect(NamedElement::getName)
-                .collect(string -> string + "()")
+                .collect((string) -> string + "()")
                 .makeString(".");
 
         String attribute = String.format(
@@ -80,10 +80,10 @@ public class OperationExpressionValueVisitor implements ExpressionValueVisitor {
 
         String associationEndsString = associationEnds.isEmpty()
             ? ""
-            : "." +
-            associationEnds
+            : "."
+            + associationEnds
                 .collect(NamedElement::getName)
-                .collect(string -> string + "()")
+                .collect((string) -> string + "()")
                 .makeString(".");
 
         String attribute = String.format(

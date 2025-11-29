@@ -159,9 +159,9 @@ public class AntlrProjection extends AntlrProjectionParent implements AntlrTopLe
 
         // TODO: Move not-found and ambiguous error checking from compiler phase here for consistency
         if (
-            this.classifier == AntlrClassifier.NOT_FOUND ||
-            this.classifier == AntlrClass.NOT_FOUND ||
-            this.classifier == AntlrInterface.NOT_FOUND
+            this.classifier == AntlrClassifier.NOT_FOUND
+            || this.classifier == AntlrClass.NOT_FOUND
+            || this.classifier == AntlrInterface.NOT_FOUND
         ) {
             String message = "Projection type not found " + this.getElementContext().classifierReference().getText();
             compilerAnnotationHolder.add("ERR_PRJ_NFD", message, this, this.getElementContext().classifierReference());
@@ -169,9 +169,9 @@ public class AntlrProjection extends AntlrProjectionParent implements AntlrTopLe
         }
 
         if (
-            this.classifier == AntlrClassifier.AMBIGUOUS ||
-            this.classifier == AntlrClass.AMBIGUOUS ||
-            this.classifier == AntlrInterface.AMBIGUOUS
+            this.classifier == AntlrClassifier.AMBIGUOUS
+            || this.classifier == AntlrClass.AMBIGUOUS
+            || this.classifier == AntlrInterface.AMBIGUOUS
         ) {
             return;
         }

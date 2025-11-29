@@ -102,10 +102,10 @@ public class AssertValuesMatchPrimitiveTypeVisitor implements PrimitiveTypeVisit
     @Override
     public void visitDouble() {
         if (
-            !this.jsonDataTypeValue.isDouble() &&
-            !this.jsonDataTypeValue.isFloat() &&
-            !this.jsonDataTypeValue.isInt() &&
-            !this.jsonDataTypeValue.isLong()
+            !this.jsonDataTypeValue.isDouble()
+            && !this.jsonDataTypeValue.isFloat()
+            && !this.jsonDataTypeValue.isInt()
+            && !this.jsonDataTypeValue.isLong()
         ) {
             return;
         }
@@ -117,11 +117,11 @@ public class AssertValuesMatchPrimitiveTypeVisitor implements PrimitiveTypeVisit
     @Override
     public void visitFloat() {
         if (
-            (!this.jsonDataTypeValue.isDouble() &&
-                !this.jsonDataTypeValue.isFloat() &&
-                !this.jsonDataTypeValue.isInt() &&
-                !this.jsonDataTypeValue.isLong()) ||
-            !this.hasValidFloatString()
+            (!this.jsonDataTypeValue.isDouble()
+                && !this.jsonDataTypeValue.isFloat()
+                && !this.jsonDataTypeValue.isInt()
+                && !this.jsonDataTypeValue.isLong())
+            || !this.hasValidFloatString()
         ) {
             return;
         }

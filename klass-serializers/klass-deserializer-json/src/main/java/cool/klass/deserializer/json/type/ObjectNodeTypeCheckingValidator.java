@@ -78,7 +78,7 @@ public final class ObjectNodeTypeCheckingValidator {
     private void validateObjectNode(@Nonnull ObjectNode objectNode) {
         objectNode
             .fields()
-            .forEachRemaining(entry -> {
+            .forEachRemaining((entry) -> {
                 String childFieldName = entry.getKey();
                 JsonNode childJsonNode = entry.getValue();
                 Optional<Property> optionalProperty = this.klass.getPropertyByName(childFieldName);

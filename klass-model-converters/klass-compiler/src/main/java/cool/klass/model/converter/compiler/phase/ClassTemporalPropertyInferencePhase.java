@@ -60,10 +60,10 @@ public class ClassTemporalPropertyInferencePhase extends AbstractCompilerPhase {
         ImmutableList<AntlrDataTypeProperty<?>> allDataTypeProperties = classifier.getAllDataTypeProperties();
 
         MutableList<AntlrModifier> validTemporalModifiers = declaredModifiers.select(
-            modifier -> modifier.is("validTemporal") || modifier.is("bitemporal")
+            (modifier) -> modifier.is("validTemporal") || modifier.is("bitemporal")
         );
         MutableList<AntlrModifier> systemTemporalModifiers = declaredModifiers.select(
-            modifier -> modifier.is("systemTemporal") || modifier.is("bitemporal")
+            (modifier) -> modifier.is("systemTemporal") || modifier.is("bitemporal")
         );
 
         if (validTemporalModifiers.size() == 1) {

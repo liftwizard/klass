@@ -94,7 +94,7 @@ public abstract class AbstractCompilerAnnotation {
         if (offendingContexts.isEmpty()) {
             throw new AssertionError();
         }
-        if (offendingContexts.anySatisfy(offendingContext -> offendingContext.getStart() == null)) {
+        if (offendingContexts.anySatisfy((offendingContext) -> offendingContext.getStart() == null)) {
             throw new AssertionError();
         }
 
@@ -127,7 +127,7 @@ public abstract class AbstractCompilerAnnotation {
         int lineNumberWidth = maxLineString.length();
 
         String entireContext = contextStrings
-            .collect(contextString -> contextString.toString(lineNumberWidth))
+            .collect((contextString) -> contextString.toString(lineNumberWidth))
             .makeString("", "\n", "\n");
         return Ansi.ansi().a(entireContext).reset().toString();
     }
@@ -135,13 +135,13 @@ public abstract class AbstractCompilerAnnotation {
     @Nonnull
     protected String getFilenameWithoutDirectory() {
         String sourceName = this.compilationUnit.getSourceName();
-        return this.macroCause.map(ignore -> sourceName).orElseGet(() ->
+        return this.macroCause.map((ignore) -> sourceName).orElseGet(() ->
             sourceName.substring(sourceName.lastIndexOf('/') + 1)
         );
     }
 
     protected String getShortLocationString() {
-        return this.macroCause.map(ignore -> this.getLocationWithoutLine()).orElseGet(this::getLocationWithLine);
+        return this.macroCause.map((ignore) -> this.getLocationWithoutLine()).orElseGet(this::getLocationWithLine);
     }
 
     private String getLocationWithoutLine() {
@@ -192,7 +192,7 @@ public abstract class AbstractCompilerAnnotation {
 
         for (TokenLine tokenLine : tokenLines) {
             Ansi ansi = Ansi.ansi();
-            tokenLine.getTokens().forEach(token -> this.ansiTokenColorizer.colorizeText(ansi, token));
+            tokenLine.getTokens().forEach((token) -> this.ansiTokenColorizer.colorizeText(ansi, token));
 
             if (!ansi.toString().endsWith(System.getProperty("line.separator"))) {
                 ansi.newline();
@@ -243,8 +243,8 @@ public abstract class AbstractCompilerAnnotation {
                 this.startLine(currentLine, nextToken);
                 currentToken = nextToken;
             } else if (
-                currentToken.getTokenSource() == nextToken.getTokenSource() &&
-                currentToken.getLine() == nextToken.getLine()
+                currentToken.getTokenSource() == nextToken.getTokenSource()
+                && currentToken.getLine() == nextToken.getLine()
             ) {
                 this.endLine(currentLine, nextToken);
                 currentToken = nextToken;
@@ -357,7 +357,7 @@ public abstract class AbstractCompilerAnnotation {
 
     @Nonnull
     protected String getOptionalLocationMessage() {
-        return this.macroCause.map(ignored -> "").orElseGet(this::getLocationMessage);
+        return this.macroCause.map((ignored) -> "").orElseGet(this::getLocationMessage);
     }
 
     @Nonnull
@@ -382,6 +382,6 @@ public abstract class AbstractCompilerAnnotation {
 
     protected void getLines(MutableList<Integer> lines) {
         lines.add(this.getLine());
-        this.macroCause.ifPresent(cause -> cause.getLines(lines));
+        this.macroCause.ifPresent((cause) -> cause.getLines(lines));
     }
 }

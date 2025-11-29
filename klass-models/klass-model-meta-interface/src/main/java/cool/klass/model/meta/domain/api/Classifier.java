@@ -47,7 +47,7 @@ public interface Classifier extends Type, ModifierOwner, TopLevelElement {
 
         MutableSet<String> propertyNames = this.getDeclaredModifiers().collect(Modifier::getKeyword).toSet();
 
-        ImmutableList<Modifier> inheritedProperties = this.getInheritedModifiers().reject(inheritedProperty ->
+        ImmutableList<Modifier> inheritedProperties = this.getInheritedModifiers().reject((inheritedProperty) ->
             propertyNames.contains(inheritedProperty.getKeyword())
         );
 
@@ -150,7 +150,7 @@ public interface Classifier extends Type, ModifierOwner, TopLevelElement {
 
             keysMatchingThisForeignKey.forEachKeyValue((associationEnd, key) -> {
                 MutableOrderedMap<DataTypeProperty, DataTypeProperty> dataTypeProperties =
-                    foreignKeyConstraints.computeIfAbsent(associationEnd, ignored ->
+                    foreignKeyConstraints.computeIfAbsent(associationEnd, (ignored) ->
                         OrderedMapAdapter.adapt(new LinkedHashMap<>())
                     );
                 dataTypeProperties.put(foreignKey, key);

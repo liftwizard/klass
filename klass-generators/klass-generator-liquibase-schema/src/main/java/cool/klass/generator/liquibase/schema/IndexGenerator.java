@@ -39,7 +39,7 @@ public final class IndexGenerator {
 
         MutableList<String> result = foreignKeyConstraints
             .keyValuesView()
-            .collect(keyValuePair ->
+            .collect((keyValuePair) ->
                 getForeignKeyIndex(keyValuePair.getOne(), keyValuePair.getTwo(), klass, tableName, ordinal)
             )
             .reject(String::isEmpty)
@@ -47,12 +47,12 @@ public final class IndexGenerator {
 
         if (!Objects.equals(result, result.distinct())) {
             throw new AssertionError(
-                "Duplicate foreign key index detected for " +
-                tableName +
-                " in " +
-                klass.getName() +
-                ". Indexes: " +
-                result
+                "Duplicate foreign key index detected for "
+                + tableName
+                + " in "
+                + klass.getName()
+                + ". Indexes: "
+                + result
             );
         }
 
@@ -84,25 +84,25 @@ public final class IndexGenerator {
         ImmutableList<String> foreignKeyColumns = allKeyProperties
             .collect(DataTypeProperty::getName)
             .collect(TableGenerator.COLUMN_NAME_CONVERTER::convert)
-            .collect(columnName -> "            <column name=\"" + columnName + "\" />\n");
+            .collect((columnName) -> "            <column name=\"" + columnName + "\" />\n");
 
         // language=XML
         return (
-            "    <changeSet author=\"Klass\" id=\"initial-indices-" +
-            ordinal +
-            "-" +
-            constraintName +
-            "\">\n" +
-            "        <createIndex\n" +
-            "                indexName=\"" +
-            constraintName +
-            "\"\n" +
-            "                tableName=\"" +
-            tableName +
-            "\">\n" +
-            foreignKeyColumns.makeString("") +
-            "        </createIndex>\n" +
-            "    </changeSet>\n\n"
+            "    <changeSet author=\"Klass\" id=\"initial-indices-"
+            + ordinal
+            + "-"
+            + constraintName
+            + "\">\n"
+            + "        <createIndex\n"
+            + "                indexName=\""
+            + constraintName
+            + "\"\n"
+            + "                tableName=\""
+            + tableName
+            + "\">\n"
+            + foreignKeyColumns.makeString("")
+            + "        </createIndex>\n"
+            + "    </changeSet>\n\n"
         );
     }
 

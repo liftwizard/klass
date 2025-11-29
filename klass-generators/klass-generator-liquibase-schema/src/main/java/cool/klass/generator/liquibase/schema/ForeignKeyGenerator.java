@@ -42,7 +42,7 @@ public final class ForeignKeyGenerator {
         ImmutableList<String> foreignKeyStrings = foreignKeys
             .keyValuesView()
             .reject(ForeignKeyGenerator::isSelfToOneOptional)
-            .collect(keyValuePair -> getForeignKey(keyValuePair.getOne(), keyValuePair.getTwo(), ordinal))
+            .collect((keyValuePair) -> getForeignKey(keyValuePair.getOne(), keyValuePair.getTwo(), ordinal))
             .toImmutableList();
         String result = foreignKeyStrings.makeString("");
         return Optional.of(result);
@@ -53,9 +53,9 @@ public final class ForeignKeyGenerator {
     ) {
         AssociationEnd associationEnd = pair.getOne();
         boolean result =
-            associationEnd.isToSelf() &&
-            associationEnd.getMultiplicity().isToOne() &&
-            !associationEnd.getMultiplicity().isRequired();
+            associationEnd.isToSelf()
+            && associationEnd.getMultiplicity().isToOne()
+            && !associationEnd.getMultiplicity().isRequired();
         return result;
     }
 

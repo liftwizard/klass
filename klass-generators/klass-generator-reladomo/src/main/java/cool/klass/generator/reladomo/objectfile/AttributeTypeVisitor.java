@@ -61,9 +61,9 @@ class AttributeTypeVisitor implements PrimitiveTypeVisitor {
         this.attributeType.setJavaType("long");
 
         if (
-            this.primitiveProperty.isID() &&
-            (this.owningClass == this.primitiveProperty.getOwningClassifier() ||
-                this.owningClass.getSuperClass().isEmpty())
+            this.primitiveProperty.isID()
+            && (this.owningClass == this.primitiveProperty.getOwningClassifier()
+                || this.owningClass.getSuperClass().isEmpty())
         ) {
             // TODO: Infer during compilation that ID properties are key properties, or add an error when they are not.
             PrimaryKeyGeneratorStrategyType primaryKeyGeneratorStrategyType = new PrimaryKeyGeneratorStrategyType();

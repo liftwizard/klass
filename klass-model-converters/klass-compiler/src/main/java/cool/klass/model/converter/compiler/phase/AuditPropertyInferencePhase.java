@@ -65,7 +65,7 @@ public class AuditPropertyInferencePhase extends AbstractCompilerPhase {
         MutableList<AntlrModifier> declaredModifiers = classifier.getDeclaredModifiers();
         ImmutableList<AntlrDataTypeProperty<?>> allDataTypeProperties = classifier.getAllDataTypeProperties();
 
-        MutableList<AntlrModifier> auditedModifiers = declaredModifiers.select(modifier -> modifier.is("audited"));
+        MutableList<AntlrModifier> auditedModifiers = declaredModifiers.select((modifier) -> modifier.is("audited"));
         if (auditedModifiers.size() != 1) {
             return;
         }

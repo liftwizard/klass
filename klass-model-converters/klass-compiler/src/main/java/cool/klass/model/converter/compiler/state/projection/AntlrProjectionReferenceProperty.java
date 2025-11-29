@@ -161,18 +161,18 @@ public class AntlrProjectionReferenceProperty extends AntlrProjectionParent impl
 
         AntlrClassifier parentClassifier = this.antlrProjectionParent.getClassifier();
         if (
-            parentClassifier == AntlrClass.NOT_FOUND ||
-            parentClassifier == AntlrClass.AMBIGUOUS ||
-            parentClassifier == AntlrClassifier.AMBIGUOUS ||
-            parentClassifier == AntlrClassifier.NOT_FOUND
+            parentClassifier == AntlrClass.NOT_FOUND
+            || parentClassifier == AntlrClass.AMBIGUOUS
+            || parentClassifier == AntlrClassifier.AMBIGUOUS
+            || parentClassifier == AntlrClassifier.NOT_FOUND
         ) {
             return;
         }
 
         if (
-            this.referenceProperty == AntlrReferenceProperty.NOT_FOUND ||
-            this.referenceProperty == AntlrAssociationEnd.NOT_FOUND ||
             this.referenceProperty == AntlrReferenceProperty.NOT_FOUND
+            || this.referenceProperty == AntlrAssociationEnd.NOT_FOUND
+            || this.referenceProperty == AntlrReferenceProperty.NOT_FOUND
         ) {
             AntlrDataTypeProperty<?> dataTypeProperty = parentClassifier.getDataTypePropertyByName(this.getName());
 
@@ -197,9 +197,9 @@ public class AntlrProjectionReferenceProperty extends AntlrProjectionParent impl
         }
 
         if (
-            this.referenceProperty == AntlrReferenceProperty.AMBIGUOUS ||
-            this.referenceProperty == AntlrAssociationEnd.AMBIGUOUS ||
-            this.referenceProperty == AntlrAssociationEndSignature.AMBIGUOUS
+            this.referenceProperty == AntlrReferenceProperty.AMBIGUOUS
+            || this.referenceProperty == AntlrAssociationEnd.AMBIGUOUS
+            || this.referenceProperty == AntlrAssociationEndSignature.AMBIGUOUS
         ) {
             return;
         }

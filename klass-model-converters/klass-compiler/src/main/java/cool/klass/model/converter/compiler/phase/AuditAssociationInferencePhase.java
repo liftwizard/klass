@@ -81,11 +81,11 @@ public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
         }
 
         boolean needsCreatedBy =
-            !this.hasAuditReferenceProperty(AntlrReferenceProperty::isCreatedBy) &&
-            this.hasAuditDataTypeProperty(AntlrDataTypeProperty::isCreatedBy);
+            !this.hasAuditReferenceProperty(AntlrReferenceProperty::isCreatedBy)
+            && this.hasAuditDataTypeProperty(AntlrDataTypeProperty::isCreatedBy);
         boolean needsLastUpdatedBy =
-            !this.hasAuditReferenceProperty(AntlrReferenceProperty::isLastUpdatedBy) &&
-            this.hasAuditDataTypeProperty(AntlrDataTypeProperty::isLastUpdatedBy);
+            !this.hasAuditReferenceProperty(AntlrReferenceProperty::isLastUpdatedBy)
+            && this.hasAuditDataTypeProperty(AntlrDataTypeProperty::isLastUpdatedBy);
 
         if (!needsCreatedBy && !needsLastUpdatedBy) {
             return;
@@ -154,36 +154,36 @@ public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
 
         // language=Klass
         return (
-            "\n" +
-            "association " +
-            className +
-            "Has" +
-            suffix +
-            "\n" +
-            "{\n" +
-            "    " +
-            associationEndName +
-            suffix +
-            ": " +
-            className +
-            "[0..*];\n" +
-            "    " +
-            modifier +
-            ": " +
-            userClass.getName() +
-            "[1..1] " +
-            modifier +
-            finalModifier +
-            ";\n" +
-            "\n" +
-            "    relationship this." +
-            auditProperty.getName() +
-            " == " +
-            userClass.getName() +
-            "." +
-            userIdPropertyName +
-            "\n" +
-            "}\n"
+            "\n"
+            + "association "
+            + className
+            + "Has"
+            + suffix
+            + "\n"
+            + "{\n"
+            + "    "
+            + associationEndName
+            + suffix
+            + ": "
+            + className
+            + "[0..*];\n"
+            + "    "
+            + modifier
+            + ": "
+            + userClass.getName()
+            + "[1..1] "
+            + modifier
+            + finalModifier
+            + ";\n"
+            + "\n"
+            + "    relationship this."
+            + auditProperty.getName()
+            + " == "
+            + userClass.getName()
+            + "."
+            + userIdPropertyName
+            + "\n"
+            + "}\n"
         );
     }
 }

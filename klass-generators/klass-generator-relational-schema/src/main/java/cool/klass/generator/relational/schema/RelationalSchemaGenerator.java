@@ -69,7 +69,7 @@ public class RelationalSchemaGenerator {
             Path fkOutputPath = parentPath.resolve(tableName + ".fk");
             if (!fkOutputPath.toFile().exists()) {
                 Optional<String> sourceCode = FkGenerator.getFk(klass);
-                sourceCode.ifPresent(s -> this.printStringToFile(fkOutputPath, s));
+                sourceCode.ifPresent((s) -> this.printStringToFile(fkOutputPath, s));
             }
         }
     }

@@ -91,10 +91,10 @@ public class JsonTypeCheckingPrimitiveTypeVisitor implements PrimitiveTypeVisito
     @Override
     public void visitDouble() {
         if (
-            !this.jsonDataTypeValue.isDouble() &&
-            !this.jsonDataTypeValue.isFloat() &&
-            !this.jsonDataTypeValue.isInt() &&
-            !this.jsonDataTypeValue.isLong()
+            !this.jsonDataTypeValue.isDouble()
+            && !this.jsonDataTypeValue.isFloat()
+            && !this.jsonDataTypeValue.isInt()
+            && !this.jsonDataTypeValue.isLong()
         ) {
             this.emitTypeError();
         }
@@ -103,11 +103,11 @@ public class JsonTypeCheckingPrimitiveTypeVisitor implements PrimitiveTypeVisito
     @Override
     public void visitFloat() {
         if (
-            (!this.jsonDataTypeValue.isDouble() &&
-                !this.jsonDataTypeValue.isFloat() &&
-                !this.jsonDataTypeValue.isInt() &&
-                !this.jsonDataTypeValue.isLong()) ||
-            !this.hasValidFloatString()
+            (!this.jsonDataTypeValue.isDouble()
+                && !this.jsonDataTypeValue.isFloat()
+                && !this.jsonDataTypeValue.isInt()
+                && !this.jsonDataTypeValue.isLong())
+            || !this.hasValidFloatString()
         ) {
             this.emitTypeError();
         }
@@ -169,9 +169,9 @@ public class JsonTypeCheckingPrimitiveTypeVisitor implements PrimitiveTypeVisito
 
     private void visitTemporal() {
         if (
-            this.jsonDataTypeValue.isNull() &&
-            this.primitiveProperty.isTemporalInstant() &&
-            this.primitiveProperty.getModifiers().anySatisfy(Modifier::isTo)
+            this.jsonDataTypeValue.isNull()
+            && this.primitiveProperty.isTemporalInstant()
+            && this.primitiveProperty.getModifiers().anySatisfy(Modifier::isTo)
         ) {
             // TODO: Other validations might make this one unreachable
             return;

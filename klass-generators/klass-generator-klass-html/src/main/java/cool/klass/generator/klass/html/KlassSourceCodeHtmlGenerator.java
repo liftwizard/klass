@@ -135,8 +135,8 @@ public class KlassSourceCodeHtmlGenerator {
         MutableList<Token> tokens = ListAdapter.adapt(tokenStream.getTokens());
 
         String body = tokens
-            .reject(token -> token.getType() == Token.EOF)
-            .collect(token -> getSourceCode(token, domainModel, topLevelElementToHighlight, memberNameToHighlight))
+            .reject((token) -> token.getType() == Token.EOF)
+            .collect((token) -> getSourceCode(token, domainModel, topLevelElementToHighlight, memberNameToHighlight))
             .makeString("");
 
         // language=HTML
@@ -177,14 +177,14 @@ public class KlassSourceCodeHtmlGenerator {
         }
         if (element instanceof Property property) {
             return (
-                Optional.of(property.getName()).equals(memberNameToHighlight) &&
-                Optional.of(property.getOwningClassifier()).equals(topLevelElementToHighlight)
+                Optional.of(property.getName()).equals(memberNameToHighlight)
+                && Optional.of(property.getOwningClassifier()).equals(topLevelElementToHighlight)
             );
         }
         if (element instanceof EnumerationLiteral enumerationLiteral) {
             return (
-                Optional.of(enumerationLiteral.getName()).equals(memberNameToHighlight) &&
-                Optional.of(enumerationLiteral.getType()).equals(topLevelElementToHighlight)
+                Optional.of(enumerationLiteral.getName()).equals(memberNameToHighlight)
+                && Optional.of(enumerationLiteral.getType()).equals(topLevelElementToHighlight)
             );
         }
         return false;
@@ -244,7 +244,7 @@ public class KlassSourceCodeHtmlGenerator {
     public void writeHtmlFiles(@Nonnull Path outputPath) {
         this.domainModel.getSourceCodes()
             // TODO: Graft in macros
-            .select(sourceCode -> sourceCode.getMacroSourceCode().isEmpty())
+            .select((sourceCode) -> sourceCode.getMacroSourceCode().isEmpty())
             .forEachWith(this::writeHtmlFile, outputPath);
     }
 

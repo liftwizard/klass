@@ -39,7 +39,7 @@ public class ContextNode {
     @Override
     public String toString() {
         String name = this.namedElement.getName();
-        String indexString = this.index.map(present -> String.format("[%d]", present)).orElse("");
+        String indexString = this.index.map((present) -> String.format("[%d]", present)).orElse("");
         return name + indexString;
     }
 }

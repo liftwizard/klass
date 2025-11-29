@@ -122,14 +122,14 @@ public final class OperatorCriteriaImpl extends AbstractCriteria implements Oper
         @Override
         public String toString() {
             return (
-                "OperatorCriteriaBuilder{" +
-                "operator=" +
-                this.operator +
-                ", sourceValue=" +
-                this.sourceValue +
-                ", targetValue=" +
-                this.targetValue +
-                '}'
+                "OperatorCriteriaBuilder{"
+                + "operator="
+                + this.operator
+                + ", sourceValue="
+                + this.sourceValue
+                + ", targetValue="
+                + this.targetValue
+                + '}'
             );
         }
     }

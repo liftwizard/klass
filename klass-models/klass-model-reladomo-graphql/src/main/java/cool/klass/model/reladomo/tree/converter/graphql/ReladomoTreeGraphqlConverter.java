@@ -138,7 +138,7 @@ public final class ReladomoTreeGraphqlConverter {
         Klass result = classes
             .getFirst()
             .getSuperClassChainWithThis()
-            .detect(each -> classCounts.occurrencesOf(each) == classes.size());
+            .detect((each) -> classCounts.occurrencesOf(each) == classes.size());
         return Objects.requireNonNull(result);
     }
 

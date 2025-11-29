@@ -112,7 +112,9 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
         @Nonnull ImmutableList<AssociationEnd> associationEnds
     ) {
         return associationEnds
-            .select(associationEnd -> associationEnd == associationEnd.getOwningAssociation().getTargetAssociationEnd())
+            .select(
+                (associationEnd) -> associationEnd == associationEnd.getOwningAssociation().getTargetAssociationEnd()
+            )
             .collectWith(this::convertRelationship, true)
             .castToList();
     }

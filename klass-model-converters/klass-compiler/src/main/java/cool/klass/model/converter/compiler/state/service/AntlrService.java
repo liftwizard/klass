@@ -188,7 +188,7 @@ public class AntlrService extends AntlrElement implements AntlrOrderByOwner {
             serviceCriteria.getCriteria().reportErrors(compilerAnnotationHolder);
         }
 
-        this.orderBy.ifPresent(orderBy -> orderBy.reportErrors(compilerAnnotationHolder));
+        this.orderBy.ifPresent((orderBy) -> orderBy.reportErrors(compilerAnnotationHolder));
     }
 
     private void reportUnreferencedUrlParameters(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
@@ -224,13 +224,12 @@ public class AntlrService extends AntlrElement implements AntlrOrderByOwner {
                 AntlrServiceCriteria::getServiceCriteriaKeyword
             )
             .toBag()
-            .selectByOccurrences(occurrences -> occurrences > 1)
+            .selectByOccurrences((occurrences) -> occurrences > 1)
             .toImmutable();
 
-        this.serviceCriterias.select(each -> duplicateKeywords.contains(each.getServiceCriteriaKeyword())).forEachWith(
-            AntlrServiceCriteria::reportDuplicateKeyword,
-            compilerAnnotationHolder
-        );
+        this.serviceCriterias.select((each) ->
+            duplicateKeywords.contains(each.getServiceCriteriaKeyword())
+        ).forEachWith(AntlrServiceCriteria::reportDuplicateKeyword, compilerAnnotationHolder);
     }
 
     private void reportInvalidProjection(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
@@ -238,11 +237,11 @@ public class AntlrService extends AntlrElement implements AntlrOrderByOwner {
 
         if (verb == Verb.GET) {
             this.serviceProjectionDispatch.ifPresentOrElse(
-                projectionDispatch -> projectionDispatch.reportErrors(compilerAnnotationHolder),
+                (projectionDispatch) -> projectionDispatch.reportErrors(compilerAnnotationHolder),
                 () -> this.reportMissingProjection(compilerAnnotationHolder)
             );
         } else {
-            this.serviceProjectionDispatch.ifPresent(projectionDispatch ->
+            this.serviceProjectionDispatch.ifPresent((projectionDispatch) ->
                 this.reportPresentProjection(projectionDispatch, compilerAnnotationHolder)
             );
         }

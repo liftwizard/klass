@@ -147,7 +147,7 @@ public class AntlrServiceGroup extends AntlrPackageableElement implements AntlrT
 
         antlrUrls.addAll(this.urls);
 
-        MutableBag<AntlrUrl> duplicateUrlMatches = antlrUrls.selectByOccurrences(occurrences -> occurrences > 1);
+        MutableBag<AntlrUrl> duplicateUrlMatches = antlrUrls.selectByOccurrences((occurrences) -> occurrences > 1);
         MutableList<AntlrUrl> duplicateUrls = this.urls.select(duplicateUrlMatches::contains);
         if (duplicateUrls.isEmpty()) {
             return;

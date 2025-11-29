@@ -61,7 +61,7 @@ public class WriteProjectionKlassAdapter implements Projection {
     public ImmutableList<? extends ProjectionChild> getChildren() {
         return this.klass.getAssociationEnds()
             .select(ReferenceProperty::isOwned)
-            .collect(associationEnd -> new WriteProjectionAssociationEndAdapter(this, associationEnd));
+            .collect((associationEnd) -> new WriteProjectionAssociationEndAdapter(this, associationEnd));
     }
 
     @Nonnull

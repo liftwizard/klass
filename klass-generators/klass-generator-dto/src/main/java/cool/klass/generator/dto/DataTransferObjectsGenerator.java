@@ -86,7 +86,7 @@ public class DataTransferObjectsGenerator {
 
         boolean hasPrettyName = enumeration
             .getEnumerationLiterals()
-            .anySatisfy(each -> each.getDeclaredPrettyName().isPresent());
+            .anySatisfy((each) -> each.getDeclaredPrettyName().isPresent());
         String prettyNameImport = hasPrettyName ? "import com.fasterxml.jackson.annotation.JsonProperty;\n" : "";
 
         // @formatter:off
@@ -111,7 +111,7 @@ public class DataTransferObjectsGenerator {
 
         ImmutableList<DataTypeProperty> dataTypeProperties = klass
             .getDataTypeProperties()
-            .select(each -> each.getOwningClassifier() == klass || each.getOwningClassifier() instanceof Interface)
+            .select((each) -> each.getOwningClassifier() == klass || each.getOwningClassifier() instanceof Interface)
             .reject(DataTypeProperty::isPrivate);
         String dataFieldsSourceCode =
             dataTypeProperties.collect(this::getDataField).makeString("") + (dataTypeProperties.isEmpty() ? "" : "\n");
@@ -170,7 +170,7 @@ public class DataTransferObjectsGenerator {
     private String getLiteral(@Nonnull EnumerationLiteral enumerationLiteral) {
         String line1 = enumerationLiteral
             .getDeclaredPrettyName()
-            .map(prettyName -> "    @JsonProperty(\"" + prettyName + "\")\n")
+            .map((prettyName) -> "    @JsonProperty(\"" + prettyName + "\")\n")
             .orElse("");
 
         String line2 = "    " + enumerationLiteral.getName() + ",\n";
@@ -198,33 +198,33 @@ public class DataTransferObjectsGenerator {
     private String getGetterSetter(String type, String name, String uppercaseName) {
         // language=JAVA
         return (
-            "" +
-            "\n" +
-            "    public " +
-            type +
-            " get" +
-            uppercaseName +
-            "()\n" +
-            "    {\n" +
-            "        return this." +
-            name +
-            ";\n" +
-            "    }\n" +
-            "\n" +
-            "    public void set" +
-            uppercaseName +
-            "(" +
-            type +
-            " " +
-            name +
-            ")\n" +
-            "    {\n" +
-            "        this." +
-            name +
-            " = " +
-            name +
-            ";\n" +
-            "    }\n"
+            ""
+            + "\n"
+            + "    public "
+            + type
+            + " get"
+            + uppercaseName
+            + "()\n"
+            + "    {\n"
+            + "        return this."
+            + name
+            + ";\n"
+            + "    }\n"
+            + "\n"
+            + "    public void set"
+            + uppercaseName
+            + "("
+            + type
+            + " "
+            + name
+            + ")\n"
+            + "    {\n"
+            + "        this."
+            + name
+            + " = "
+            + name
+            + ";\n"
+            + "    }\n"
         );
     }
 

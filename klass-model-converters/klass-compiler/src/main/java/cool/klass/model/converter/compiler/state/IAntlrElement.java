@@ -47,7 +47,7 @@ public interface IAntlrElement {
             return Optional.of(elementClass.cast(this));
         }
 
-        return this.getSurroundingElement().flatMap(surroundingElement ->
+        return this.getSurroundingElement().flatMap((surroundingElement) ->
             surroundingElement.getSurroundingElement(elementClass)
         );
     }
@@ -61,7 +61,7 @@ public interface IAntlrElement {
 
     default void gatherSurroundingElements(@Nonnull MutableList<IAntlrElement> result) {
         result.add(this);
-        this.getSurroundingElement().ifPresent(element -> element.gatherSurroundingElements(result));
+        this.getSurroundingElement().ifPresent((element) -> element.gatherSurroundingElements(result));
     }
 
     default boolean isContext() {
@@ -93,7 +93,7 @@ public interface IAntlrElement {
         IAntlrElement element
     ) {
         ImmutableList<AntlrModifier> offendingModifiers = modifiers
-            .select(modifier -> modifier.isAudit() || modifier.isUser())
+            .select((modifier) -> modifier.isAudit() || modifier.isUser())
             .toImmutable();
         if (offendingModifiers.isEmpty()) {
             return;

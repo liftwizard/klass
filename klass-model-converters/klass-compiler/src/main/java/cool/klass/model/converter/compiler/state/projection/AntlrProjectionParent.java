@@ -85,7 +85,7 @@ public abstract class AntlrProjectionParent extends AntlrIdentifierElement {
     protected ImmutableBag<String> getDuplicateMemberNames() {
         return this.children.collect(AntlrProjectionElement::getName)
             .toBag()
-            .selectByOccurrences(occurrences -> occurrences > 1)
+            .selectByOccurrences((occurrences) -> occurrences > 1)
             .toImmutable();
     }
 

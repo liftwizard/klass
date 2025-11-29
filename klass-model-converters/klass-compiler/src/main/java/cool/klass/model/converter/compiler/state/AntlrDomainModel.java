@@ -435,10 +435,10 @@ public class AntlrDomainModel {
 
         ImmutableBag<String> duplicateTopLevelNames = topLevelNames
             .toBag()
-            .selectByOccurrences(occurrences -> occurrences > 1)
+            .selectByOccurrences((occurrences) -> occurrences > 1)
             .toImmutable();
 
-        this.topLevelElements.select(topLevelElement ->
+        this.topLevelElements.select((topLevelElement) ->
             duplicateTopLevelNames.contains(topLevelElement.getName())
         ).forEachWith(AntlrTopLevelElement::reportDuplicateTopLevelName, compilerAnnotationHolder);
     }
@@ -446,7 +446,7 @@ public class AntlrDomainModel {
     private ImmutableBag<AntlrClass> getDuplicateServiceGroupClasses() {
         return this.serviceGroups.collect(AntlrServiceGroup::getKlass)
             .toBag()
-            .selectByOccurrences(occurrences -> occurrences > 1)
+            .selectByOccurrences((occurrences) -> occurrences > 1)
             .reject(AntlrClass.AMBIGUOUS::equals)
             .reject(AntlrClass.NOT_FOUND::equals)
             .toImmutable();
@@ -533,9 +533,9 @@ public class AntlrDomainModel {
                 ImmutableList<AntlrDataTypeProperty<?>> overriddenProperties =
                     dataTypeProperty.getOverriddenProperties();
                 if (
-                    dataTypeProperty.isPrivate() &&
-                    dataTypeProperty.getType() != AntlrPrimitiveType.TEMPORAL_RANGE &&
-                    overriddenProperties.noneSatisfy(dataTypePropertiesReferenced::contains)
+                    dataTypeProperty.isPrivate()
+                    && dataTypeProperty.getType() != AntlrPrimitiveType.TEMPORAL_RANGE
+                    && overriddenProperties.noneSatisfy(dataTypePropertiesReferenced::contains)
                 ) {
                     dataTypeProperty.reportUnreferencedPrivateProperty(compilerAnnotationHolder);
                 }
@@ -545,9 +545,9 @@ public class AntlrDomainModel {
         for (AntlrClass klass : this.klasses) {
             for (AntlrAssociationEnd associationEnds : klass.getDeclaredAssociationEnds()) {
                 if (
-                    associationEnds.isPrivate() &&
-                    !associationEndsReferenced.contains(associationEnds) &&
-                    !associationEndsReferenced.contains(associationEnds.getOpposite())
+                    associationEnds.isPrivate()
+                    && !associationEndsReferenced.contains(associationEnds)
+                    && !associationEndsReferenced.contains(associationEnds.getOpposite())
                 ) {
                     associationEnds.reportUnreferencedPrivateProperty(compilerAnnotationHolder);
                 }

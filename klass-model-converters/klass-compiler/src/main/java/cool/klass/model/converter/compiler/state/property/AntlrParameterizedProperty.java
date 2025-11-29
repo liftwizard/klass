@@ -168,7 +168,7 @@ public class AntlrParameterizedProperty extends AntlrClassReferenceProperty impl
         super.reportErrors(compilerAnnotationHolder);
 
         if (this.orderBy != null) {
-            this.orderBy.ifPresent(o -> o.reportErrors(compilerAnnotationHolder));
+            this.orderBy.ifPresent((o) -> o.reportErrors(compilerAnnotationHolder));
         }
 
         this.reportTypeNotFound(compilerAnnotationHolder);

@@ -93,7 +93,7 @@ public class AntlrLiteralListValue extends AbstractAntlrLiteralValue {
     public ImmutableList<AntlrType> getPossibleTypes() {
         return this.literals.flatCollect(AntlrExpressionValue::getPossibleTypes)
             .toBag()
-            .selectByOccurrences(occurrences -> occurrences == this.literals.size())
+            .selectByOccurrences((occurrences) -> occurrences == this.literals.size())
             .toList()
             .distinct()
             .toImmutable();

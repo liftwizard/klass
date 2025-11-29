@@ -56,7 +56,7 @@ public class CoverageExampleApplication extends AbstractCoverageExampleApplicati
         var mdcLogger = new StructuredArgumentsMDCLogger(bootstrap.getObjectMapper());
         var logstashLogger = new StructuredArgumentsLogstashEncoderLogger();
 
-        Consumer<StructuredArguments> structuredLogger = structuredArguments -> {
+        Consumer<StructuredArguments> structuredLogger = (structuredArguments) -> {
             mdcLogger.accept(structuredArguments);
             logstashLogger.accept(structuredArguments);
         };

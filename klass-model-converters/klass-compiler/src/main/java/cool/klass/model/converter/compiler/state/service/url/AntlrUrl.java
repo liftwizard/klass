@@ -168,11 +168,11 @@ public class AntlrUrl extends AntlrElement {
         ImmutableBag<String> duplicateNames = this.urlParameters.getParameters()
             .collect(AntlrNamedElement::getName)
             .toBag()
-            .selectByOccurrences(occurrences -> occurrences > 1)
+            .selectByOccurrences((occurrences) -> occurrences > 1)
             .toImmutable();
 
         this.urlParameters.getParameters()
-            .select(each -> duplicateNames.contains(each.getName()))
+            .select((each) -> duplicateNames.contains(each.getName()))
             .forEachWith(AntlrParameter::reportDuplicateParameterName, compilerAnnotationHolder);
     }
 
@@ -180,10 +180,10 @@ public class AntlrUrl extends AntlrElement {
         ImmutableBag<Verb> duplicateVerbs = this.services.collect(AntlrService::getVerb)
             .collect(AntlrVerb::getVerb)
             .toBag()
-            .selectByOccurrences(occurrences -> occurrences > 1)
+            .selectByOccurrences((occurrences) -> occurrences > 1)
             .toImmutable();
 
-        this.services.select(each -> duplicateVerbs.contains(each.getVerb().getVerb())).forEachWith(
+        this.services.select((each) -> duplicateVerbs.contains(each.getVerb().getVerb())).forEachWith(
             AntlrService::reportDuplicateVerb,
             compilerAnnotationHolder
         );

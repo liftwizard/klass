@@ -148,10 +148,10 @@ public class AntlrEnumeration extends AntlrPackageableElement implements AntlrTy
     public void logDuplicateLiteralNames(CompilerAnnotationHolder compilerAnnotationHolder) {
         MutableBag<String> duplicateNames = this.enumerationLiteral.collect(AntlrNamedElement::getName)
             .toBag()
-            .selectByOccurrences(occurrences -> occurrences > 1);
+            .selectByOccurrences((occurrences) -> occurrences > 1);
 
         this.enumerationLiteral.asLazy()
-            .select(enumerationLiteral -> duplicateNames.contains(enumerationLiteral.getName()))
+            .select((enumerationLiteral) -> duplicateNames.contains(enumerationLiteral.getName()))
             .forEachWith(AntlrEnumerationLiteral::reportDuplicateName, compilerAnnotationHolder);
     }
 
@@ -162,11 +162,11 @@ public class AntlrEnumeration extends AntlrPackageableElement implements AntlrTy
             .select(Optional::isPresent)
             .collect(Optional::get)
             .toBag()
-            .selectByOccurrences(occurrences -> occurrences > 1);
+            .selectByOccurrences((occurrences) -> occurrences > 1);
 
         this.enumerationLiteral.asLazy()
-            .select(each -> each.getPrettyName().isPresent())
-            .select(each -> duplicatePrettyNames.contains(each.getPrettyName().get()))
+            .select((each) -> each.getPrettyName().isPresent())
+            .select((each) -> duplicatePrettyNames.contains(each.getPrettyName().get()))
             .forEachWith(AntlrEnumerationLiteral::reportDuplicatePrettyName, compilerAnnotationHolder);
     }
 

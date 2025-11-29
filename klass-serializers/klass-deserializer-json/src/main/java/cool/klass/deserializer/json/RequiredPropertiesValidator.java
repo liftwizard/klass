@@ -236,8 +236,8 @@ public class RequiredPropertiesValidator {
         if (this.isInProjection && this.operationMode == OperationMode.CREATE) {
             this.handleIfPresent(dataTypeProperty, "audit", Severity.WARNING);
         } else if (
-            this.isInProjection &&
-            (this.operationMode == OperationMode.REPLACE || this.operationMode == OperationMode.PATCH)
+            this.isInProjection
+            && (this.operationMode == OperationMode.REPLACE || this.operationMode == OperationMode.PATCH)
         ) {
             // Validate in Incoming(Create|Update)DataModelValidator
         } else if (!this.isInProjection) {
@@ -442,9 +442,9 @@ public class RequiredPropertiesValidator {
             }
 
             if (
-                this.operationMode == OperationMode.CREATE ||
-                this.operationMode == OperationMode.REPLACE ||
-                (this.operationMode == OperationMode.PATCH && jsonNode.isNull())
+                this.operationMode == OperationMode.CREATE
+                || this.operationMode == OperationMode.REPLACE
+                || (this.operationMode == OperationMode.PATCH && jsonNode.isNull())
             ) {
                 String error = String.format(
                     "Expected value for required property '%s.%s: %s[%s]' but value was %s.",
@@ -646,9 +646,9 @@ public class RequiredPropertiesValidator {
             }
 
             if (
-                this.operationMode == OperationMode.CREATE ||
-                this.operationMode == OperationMode.REPLACE ||
-                (this.operationMode == OperationMode.PATCH && jsonNode.isNull())
+                this.operationMode == OperationMode.CREATE
+                || this.operationMode == OperationMode.REPLACE
+                || (this.operationMode == OperationMode.PATCH && jsonNode.isNull())
             ) {
                 String error = String.format(
                     "Expected value for required property '%s.%s: %s[%s]' but value was %s.",
@@ -748,10 +748,10 @@ public class RequiredPropertiesValidator {
             return OperationMode.PATCH;
         }
         if (
-            (operationMode == OperationMode.CREATE ||
-                operationMode == OperationMode.PATCH ||
-                operationMode == OperationMode.REPLACE) &&
-            !associationEnd.isOwned()
+            (operationMode == OperationMode.CREATE
+                || operationMode == OperationMode.PATCH
+                || operationMode == OperationMode.REPLACE)
+            && !associationEnd.isOwned()
         ) {
             return OperationMode.REFERENCE_OUTSIDE_PROJECTION;
         }
@@ -772,7 +772,7 @@ public class RequiredPropertiesValidator {
         Klass type = associationEnd.getType();
         ImmutableList<DataTypeProperty> keyProperties = type.getKeyProperties();
         ImmutableList<DataTypeProperty> nonForeignKeyProperties = keyProperties.reject(DataTypeProperty::isForeignKey);
-        return nonForeignKeyProperties.collect(keyProperty ->
+        return nonForeignKeyProperties.collect((keyProperty) ->
             this.getKeyFromJsonNode(keyProperty, jsonNode, associationEnd, parentJsonNode)
         );
     }

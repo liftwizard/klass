@@ -39,7 +39,7 @@ public final class ProjectionWalker {
         projectionElement.enter(listener);
         projectionElement
             .getChildren()
-            .forEach(eachChild -> {
+            .forEach((eachChild) -> {
                 boolean notYetVisited = visited.add(eachChild);
                 if (notYetVisited) {
                     ProjectionWalker.recursiveWalk(eachChild, listener, visited);

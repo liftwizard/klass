@@ -65,11 +65,11 @@ public class KlassResponseStructuredLoggingFilter implements ContainerResponseFi
         structuredArgumentsMap.put("klass.request.transactionTimestamp", metadata.getTransactionTimestamp());
         this.put(structuredArgumentsMap, "klass.request.principal", metadata.getPrincipal());
 
-        metadata.getPagination().ifPresent(pagination -> this.setPagination(pagination, structuredArgumentsMap));
+        metadata.getPagination().ifPresent((pagination) -> this.setPagination(pagination, structuredArgumentsMap));
     }
 
     private void put(Map<String, Object> structuredArgumentsMap, String key, Optional<?> optionalValue) {
-        optionalValue.ifPresent(object -> structuredArgumentsMap.put(key, object));
+        optionalValue.ifPresent((object) -> structuredArgumentsMap.put(key, object));
     }
 
     private void setPagination(KlassResponsePagination pagination, Map<String, Object> structuredArgumentsMap) {

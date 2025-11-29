@@ -192,7 +192,7 @@ public class KlassGraphQLBundle<
     ) {
         domainModel
             .getClasses()
-            .each(eachKlass ->
+            .each((eachKlass) ->
                 this.handleQueryAll(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
             );
     }
@@ -239,7 +239,7 @@ public class KlassGraphQLBundle<
     ) {
         domainModel
             .getClasses()
-            .each(eachKlass ->
+            .each((eachKlass) ->
                 this.handleQueryByKey(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
             );
     }
@@ -264,7 +264,7 @@ public class KlassGraphQLBundle<
     ) {
         domainModel
             .getClasses()
-            .each(eachKlass ->
+            .each((eachKlass) ->
                 this.handleQueryByOperation(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
             );
     }
@@ -293,7 +293,7 @@ public class KlassGraphQLBundle<
     ) {
         domainModel
             .getClasses()
-            .each(eachKlass ->
+            .each((eachKlass) ->
                 this.handleQueryByFinder(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
             );
     }
