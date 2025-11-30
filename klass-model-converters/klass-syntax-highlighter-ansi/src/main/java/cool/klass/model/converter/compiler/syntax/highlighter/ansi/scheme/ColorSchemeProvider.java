@@ -52,7 +52,13 @@ public final class ColorSchemeProvider {
      * @param schemeName The name of the color scheme to load, like "dark", "light", or "dark-rgb".
      */
     public static AnsiColorScheme getByName(String schemeName) {
-        Objects.requireNonNull(schemeName, "schemeName");
+        Objects.requireNonNull(
+            schemeName,
+            () ->
+                "colorScheme is required but was not configured. "
+                + "Add <colorScheme>dark</colorScheme> to the plugin configuration in your pom.xml. "
+                + "Available schemes: dark, light, dark-rgb, light-rgb, dark-cube"
+        );
 
         String jsonPath = COLOR_SCHEME_PATH + schemeName.toLowerCase(Locale.ROOT) + ".jsonc";
         return getByClasspath(jsonPath);
