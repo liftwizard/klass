@@ -1,15 +1,15 @@
 # Jobs that run on merge_group, meaning they must pass before changes land. They also run on pull_request.
 
 on:
-    pull_request:
-    merge_group:
+  pull_request:
+  merge_group:
 
 concurrency:
-    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-    cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 env:
-    GROUP_ID: 'cool/klass'
+  GROUP_ID: "cool/klass"
 
 jobs:
     maven-test:
@@ -581,6 +581,7 @@ jobs:
 
     all-checks:
         name: All checks
+        if: ${{ !cancelled() }}
         needs:
             [
                 maven-test,
@@ -611,5 +612,6 @@ jobs:
             ]
         runs-on: ubuntu-latest
         steps:
-            - name: All checks passed
-              run: echo "All checks passed!"
+            - uses: re-actors/alls-green@release/v1
+              with:
+                  jobs: ${{ toJSON(needs) }}
