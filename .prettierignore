@@ -1,1 +1,22 @@
+# Build output
+target/
+
+# Package files
+package-lock.json
+pnpm-lock.yaml
+
+# Maven archetype resources (contain template syntax like ${package})
+klass-maven-archetype/src/main/resources/archetype-resources/
+
+# LLM context
+.llm/
+
+# GitHub workflows
 .github/workflows
+
+# IDE and build directories
+.idea
+node_modules
+dist
+build
+.m2

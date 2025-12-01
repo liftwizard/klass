@@ -18,7 +18,7 @@
   // Print trailing commas wherever possible in multi-line comma-separated structures
   // Default: "es5"
   // Options: "none" | "es5" | "all"
-  trailingComma: "all",
+  trailingComma: 'all',
 
   // Print spaces between brackets in object literals
   // Default: true
@@ -27,7 +27,7 @@
   // Include parentheses around a sole arrow function parameter
   // Default: "always"
   // Options: "avoid" | "always"
-  arrowParens: "always",
+  arrowParens: 'always',
 
   // Line length where Prettier will try to wrap
   // Default: 80
@@ -36,7 +36,7 @@
   // Change when properties in objects are quoted
   // Default: "as-needed"
   // Options: "as-needed" | "consistent" | "preserve"
-  quoteProps: "as-needed",
+  quoteProps: 'as-needed',
 
   // Use single quotes in JSX
   // Default: false
@@ -49,23 +49,23 @@
   // How to wrap prose in markdown
   // Default: "preserve"
   // Options: "always" | "never" | "preserve"
-  proseWrap: "preserve",
+  proseWrap: 'preserve',
 
   // How to handle whitespace in HTML
   // Default: "css"
   // Options: "css" | "strict" | "ignore"
-  htmlWhitespaceSensitivity: "css",
+  htmlWhitespaceSensitivity: 'css',
 
   // Line ending style
   // Default: "lf"
   // Options: "lf" | "crlf" | "cr" | "auto"
-  endOfLine: "lf",
+  endOfLine: 'lf',
 
   // Experimental: Put binary operators at the start of lines when wrapping
   // This is an experimental feature that may be removed in future versions
   // Options: "end" (default) | "start"
-  experimentalOperatorPosition: "start",
+  experimentalOperatorPosition: 'start',
 
   // Plugins for language support
-  plugins: ["prettier-plugin-java"],
+  plugins: ['prettier-plugin-java'],
 }
