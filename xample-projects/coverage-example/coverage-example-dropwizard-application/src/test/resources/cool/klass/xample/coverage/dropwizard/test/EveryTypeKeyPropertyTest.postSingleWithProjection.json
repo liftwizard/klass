@@ -13,7 +13,7 @@
     "keyBoolean": false,
     "keyInstant": "2000-01-01T00:00:00Z",
     "keyLocalDate": "2000-01-01",
-    "everyTypeForeignKeyProperties": [],
+    "everyTypeForeignKeyProperties": [ ],
     "version": null
   }
 }
