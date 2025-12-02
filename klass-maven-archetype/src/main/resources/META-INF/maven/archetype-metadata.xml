@@ -25,15 +25,54 @@
     </requiredProperties>
 
     <fileSets>
+        <fileSet>
+            <directory>.idea/codeStyles</directory>
+        </fileSet>
+
+        <fileSet>
+            <directory>.idea/fileTemplates</directory>
+        </fileSet>
+
+        <fileSet>
+            <directory>.idea/inspectionProfiles</directory>
+        </fileSet>
+
         <fileSet filtered="true">
+            <directory>.idea/runConfigurations</directory>
+            <includes>
+                <include>Application__Local_.xml.vm</include>
+                <include>dependency_go_offline.xml.vm</include>
+                <include>H2_Server__Disk_.xml.vm</include>
+                <include>Whole_project.xml.vm</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>.idea/runConfigurations</directory>
+            <includes>
+                <include>checkstyle_check.xml</include>
+                <include>clean_install.xml</include>
+                <include>display_dependency_updates.xml</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
             <directory>.idea</directory>
+            <includes>
+                <include>compiler.xml</include>
+                <include>encodings.xml</include>
+                <include>gitignore</include>
+                <include>misc.xml</include>
+                <include>modules.xml</include>
+                <include>vcs.xml</include>
+            </includes>
         </fileSet>
 
         <fileSet>
             <directory>.mvn</directory>
         </fileSet>
 
-        <fileSet filtered="true">
+        <fileSet>
             <directory>.github</directory>
             <includes>
                 <include>dependabot.yml</include>
@@ -44,9 +83,9 @@
         <fileSet filtered="true">
             <directory>.github/workflows</directory>
             <includes>
-                <include>merge-group.yml</include>
-                <include>pull-request.yml</include>
-                <include>push.yml</include>
+                <include>merge-group.yml.vm</include>
+                <include>pull-request.yml.vm</include>
+                <include>push.yml.vm</include>
             </includes>
         </fileSet>
 
@@ -88,7 +127,7 @@
         <fileSet filtered="true">
             <directory></directory>
             <includes>
-                <include>justfile</include>
+                <include>justfile.vm</include>
             </includes>
         </fileSet>
     </fileSets>
@@ -116,10 +155,10 @@
                 <fileSet filtered="true" encoding="UTF-8">
                     <directory></directory>
                     <includes>
-                        <include>gitignore</include>
+                        <include>.gitignore.vm</include>
                         <include>config.json5.vm</include>
                         <include>src/test/resources/config-test.json5.vm</include>
-                        <include>README.md</include>
+                        <include>README.md.vm</include>
                     </includes>
                 </fileSet>
 
