@@ -142,26 +142,26 @@ public class KlassSourceCodeHtmlGenerator {
         // language=HTML
         String prefix = """
             <html>
-            <head>
-                <link rel='stylesheet' type='text/css' href='/static/css/light.css' media='(prefers-color-scheme: light)'>
-                <link rel='stylesheet' type='text/css' href='/static/css/dark.css' media='(prefers-color-scheme: dark)'>
-                <link rel='stylesheet' type='text/css' href='/static/css/slider.css'>
-                <link rel='stylesheet' type='text/css' href='/static/css/klass-syntax.css'>
-                <script type='module' src='https://unpkg.com/dark-mode-toggle'></script>
-                <style>
-                    :root {
-                        font-family: "Lucida Console", Courier, monospace;
-                        font-size: 16px;
-                    }
-                </style>
-            </head>
-            <body class='klass'>
-            <aside>
-                <dark-mode-toggle class='slider' legend='Dark Mode' appearance='toggle'></dark-mode-toggle>
-            </aside>
-            <pre>
+                <head>
+                    <link rel="stylesheet" type="text/css" href="/static/css/light.css" media="(prefers-color-scheme: light)" />
+                    <link rel="stylesheet" type="text/css" href="/static/css/dark.css" media="(prefers-color-scheme: dark)" />
+                    <link rel="stylesheet" type="text/css" href="/static/css/slider.css" />
+                    <link rel="stylesheet" type="text/css" href="/static/css/klass-syntax.css" />
+                    <script type="module" src="https://unpkg.com/dark-mode-toggle"></script>
+                    <style>
+                        :root {
+                            font-family: "Lucida Console", Courier, monospace;
+                            font-size: 16px;
+                        }
+                    </style>
+                </head>
+                <body class="klass">
+                    <aside>
+                        <dark-mode-toggle class="slider" legend="Dark Mode" appearance="toggle"></dark-mode-toggle>
+                    </aside>
+                    <pre>
             """;
-        return prefix + body + "</pre>\n" + "</body>\n" + "</html>\n";
+        return prefix + body + "</pre>\n    </body>\n</html>\n";
     }
 
     private static boolean matchesElementToHighlight(
