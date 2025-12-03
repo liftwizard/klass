@@ -3,7 +3,7 @@ repos:
       rev: v5.0.0
       hooks:
           - id: check-yaml
-            args: ['--allow-multiple-documents']
+            args: ["--allow-multiple-documents"]
           - id: check-json
             # Exclude JSONC files (JSON with Comments) as they need comment support
             exclude: "biome\\.jsonc"
@@ -14,12 +14,12 @@ repos:
           - id: trailing-whitespace
             exclude: "^\\.idea/"
           - id: check-added-large-files
-            args: ['--maxkb=1000']
+            args: ["--maxkb=1000"]
           - id: check-case-conflict
           - id: check-merge-conflict
           - id: detect-private-key
           - id: mixed-line-ending
-            args: ['--fix=lf']
+            args: ["--fix=lf"]
 
     - repo: local
       hooks:
@@ -33,7 +33,7 @@ repos:
 
           - id: prettier
             name: prettier
-            entry: npx prettier --write
+            entry: npx prettier --write --no-config --tab-width 4 --print-width 120 --end-of-line lf
             language: system
             types_or: [json5, yaml, markdown, html]
-            exclude: "^\\.idea/|/target/"
+            exclude: "^\\.idea/|/target/|\\.github/workflows/"
