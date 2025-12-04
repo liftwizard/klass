@@ -8,7 +8,7 @@ concurrency:
     cancel-in-progress: true
 
 env:
-    GROUP_ID: '${packageInPathFormat}'
+    GROUP_ID: "${packageInPathFormat}"
 
 jobs:
     maven-coverage:
@@ -34,13 +34,13 @@ jobs:
                   paths: |
                       ${{ github.workspace }}/**/target/site/jacoco/jacoco.xml
                   token: ${{ secrets.GITHUB_TOKEN }}
-                  title: 'Jacoco Code Coverage'
+                  title: "Jacoco Code Coverage"
                   update-comment: true
                   min-coverage-overall: 0
                   min-coverage-changed-files: 0
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     # Check if the new commits in a Pull Request contain a merge commit. If so, fail and print them out.
@@ -110,7 +110,7 @@ jobs:
                   fi
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     spotless-pom-fix:
@@ -160,7 +160,7 @@ jobs:
                   fi
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     spotless-java-fix:
@@ -210,7 +210,7 @@ jobs:
                   fi
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     spotless-prettier-java-sort-imports-fix:
@@ -260,7 +260,7 @@ jobs:
                   fi
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     spotless-java-cleanthat-fix:
@@ -310,7 +310,7 @@ jobs:
                   fi
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     errorprone-fix:
@@ -365,7 +365,7 @@ jobs:
                   fi
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     liftwizard-file-match-rerecord-fix:
@@ -417,5 +417,5 @@ jobs:
                   fi
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
