@@ -6,7 +6,7 @@ description: Updates existing copyright year to 2025 in all files
 recipeList:
     - org.openrewrite.text.FindAndReplace:
           find: "Copyright \\d{4} Craig Motlin"
-          replace: 'Copyright 2025 Craig Motlin'
+          replace: "Copyright 2025 Craig Motlin"
           regex: true
 ---
 type: specs.openrewrite.org/v1beta/recipe
