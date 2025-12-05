@@ -10,7 +10,7 @@ concurrency:
     cancel-in-progress: true
 
 env:
-    GROUP_ID: '${packageInPathFormat}'
+    GROUP_ID: "${packageInPathFormat}"
 
 jobs:
     maven:
@@ -32,5 +32,5 @@ jobs:
             - run: just mvn
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}

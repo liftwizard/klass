@@ -2,14 +2,14 @@ input: .
 output: .retype
 url: klass.cool
 branding:
-  title: Klass
-  label: Docs
+    title: Klass
+    label: Docs
 edit:
-  repo: "https://github.com/motlin/klass/edit/"
-  base: /docs
-  label: Edit on GitHub
+    repo: "https://github.com/motlin/klass/edit/"
+    base: /docs
+    label: Edit on GitHub
 footer:
-  copyright: "&copy; Copyright {{ year }}. All rights reserved."
+    copyright: "&copy; Copyright {{ year }}. All rights reserved."
 integrations:
-  googleAnalytics:
-    id: G-ESDQJR61QN
+    googleAnalytics:
+        id: G-ESDQJR61QN
