@@ -1,18 +1,20 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
   "files": {
-    "includes": ["**/*.json", "**/*.jsonc", "**/*.json5"],
-    "experimentalScannerIgnores": [
-      ".llm/**/*",
-      "node_modules",
-      "dist",
-      "build",
-      "coverage",
-      "target",
-      "package-lock.json",
-      "pnpm-lock.yaml",
-      "yarn.lock",
-      ".prettierrc.json5"
+    "includes": [
+      "**/*.json",
+      "**/*.jsonc",
+      "**/*.json5",
+      "!!**/.llm/**/*",
+      "!!**/node_modules",
+      "!!**/dist",
+      "!!**/build",
+      "!!**/coverage",
+      "!!**/target",
+      "!!**/package-lock.json",
+      "!!**/pnpm-lock.yaml",
+      "!!**/yarn.lock",
+      "!!**/.prettierrc.json5"
     ],
     "ignoreUnknown": true
   },
