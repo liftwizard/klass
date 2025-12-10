@@ -49,12 +49,12 @@ import cool.klass.model.meta.domain.property.validation.MinPropertyValidationImp
 import cool.klass.model.meta.grammar.KlassParser.ClassDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.api.map.OrderedMap;
-import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 import org.eclipse.collections.impl.tuple.Tuples;
 
@@ -832,7 +832,7 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 
     @Override
     public String getShortString() {
-        MutableList<String> sourceCodeStrings = org.eclipse.collections.api.factory.Lists.mutable.empty();
+        MutableList<String> sourceCodeStrings = Lists.mutable.empty();
 
         String typeSourceCode = this.getType().getName();
         sourceCodeStrings.add(typeSourceCode);

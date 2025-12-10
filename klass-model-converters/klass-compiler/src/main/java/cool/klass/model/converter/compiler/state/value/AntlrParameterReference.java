@@ -30,9 +30,9 @@ import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.converter.compiler.state.parameter.AntlrParameter;
 import cool.klass.model.meta.domain.value.ParameterReferenceImpl.ParameterReferenceBuilder;
 import cool.klass.model.meta.grammar.KlassParser.ParameterReferenceContext;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.OrderedMap;
-import org.eclipse.collections.impl.factory.Lists;
 
 public class AntlrParameterReference extends AntlrExpressionValue {
 

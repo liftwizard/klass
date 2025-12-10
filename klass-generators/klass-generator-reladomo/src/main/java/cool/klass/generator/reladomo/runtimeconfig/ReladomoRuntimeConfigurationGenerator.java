@@ -36,8 +36,8 @@ import cool.klass.generator.reladomo.AbstractReladomoGenerator;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.PackageableElement;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.impl.factory.Lists;
 
 // TODO: Split out into Liftwizard by passing in a list of class names (and Sequence name) into the constructor
 public class ReladomoRuntimeConfigurationGenerator extends AbstractReladomoGenerator {

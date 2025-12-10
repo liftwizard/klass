@@ -61,10 +61,10 @@ import cool.klass.model.converter.compiler.token.categorizing.parser.ParserBased
 import cool.klass.model.meta.grammar.KlassListener;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.MapIterable;
 import org.eclipse.collections.api.map.MutableMapIterable;
-import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

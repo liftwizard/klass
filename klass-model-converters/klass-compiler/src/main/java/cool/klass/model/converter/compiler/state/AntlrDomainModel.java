@@ -59,10 +59,11 @@ import cool.klass.model.meta.grammar.KlassParser.ServiceGroupDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.TopLevelDeclarationContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.bag.ImmutableBag;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableOrderedMap;
-import org.eclipse.collections.impl.factory.Lists;
+import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.impl.factory.Sets;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
@@ -459,11 +460,11 @@ public class AntlrDomainModel {
         this.visitCriteria(criteriaVisitor);
         this.visitOrderBy(orderByVisitor);
 
-        Set<AntlrDataTypeProperty<?>> dataTypePropertiesReferenced = Sets.union(
+        MutableSet<AntlrDataTypeProperty<?>> dataTypePropertiesReferenced = Sets.union(
             criteriaVisitor.getDataTypePropertiesReferencedByCriteria(),
             orderByVisitor.getDataTypePropertiesReferencedByOrderBy()
         );
-        Set<AntlrAssociationEnd> associationEndsReferenced = Sets.union(
+        MutableSet<AntlrAssociationEnd> associationEndsReferenced = Sets.union(
             criteriaVisitor.getAssociationEndsReferencedByCriteria(),
             orderByVisitor.getAssociationEndsReferencedByOrderBy()
         );

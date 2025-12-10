@@ -24,9 +24,9 @@ import cool.klass.model.meta.domain.api.projection.ProjectionElement;
 import cool.klass.model.meta.domain.api.projection.ProjectionProjectionReference;
 import cool.klass.model.meta.domain.api.projection.ProjectionReferenceProperty;
 import cool.klass.model.meta.domain.api.projection.ProjectionVisitor;
+import org.eclipse.collections.api.factory.Sets;
 import org.eclipse.collections.api.set.ImmutableSet;
 import org.eclipse.collections.api.set.MutableSet;
-import org.eclipse.collections.impl.factory.Sets;
 
 public class GatherProjectionReferencesVisitor implements ProjectionVisitor {
 

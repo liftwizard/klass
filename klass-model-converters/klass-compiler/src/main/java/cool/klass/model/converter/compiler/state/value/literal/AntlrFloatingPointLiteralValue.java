@@ -29,8 +29,8 @@ import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.converter.compiler.state.value.AntlrExpressionValueVisitor;
 import cool.klass.model.meta.domain.value.literal.FloatingPointLiteralValueImpl.FloatingPointLiteralValueBuilder;
 import cool.klass.model.meta.grammar.KlassParser.FloatingPointLiteralContext;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.impl.factory.Lists;
 
 public final class AntlrFloatingPointLiteralValue extends AbstractAntlrLiteralValue {
 

@@ -36,8 +36,8 @@ import io.liftwizard.junit.extension.match.FileSlurper;
 import io.liftwizard.junit.extension.match.file.FileMatchExtension;
 import io.liftwizard.junit.extension.match.json.JsonMatchExtension;
 import io.liftwizard.serialization.jackson.config.ObjectMapperConfig;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.impl.factory.Lists;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 

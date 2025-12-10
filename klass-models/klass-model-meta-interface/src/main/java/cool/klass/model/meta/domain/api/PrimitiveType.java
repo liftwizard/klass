@@ -25,9 +25,9 @@ import javax.annotation.Nonnull;
 
 import cool.klass.model.meta.domain.api.DataType.DataTypeGetter;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
-import org.eclipse.collections.impl.factory.Lists;
 
 /**
  * Predefined native types.

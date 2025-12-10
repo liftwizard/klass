@@ -23,7 +23,7 @@ import javax.ws.rs.core.Response.Status;
 
 import io.liftwizard.junit.extension.match.FileSlurper;
 import io.liftwizard.reladomo.test.extension.ReladomoTestFile;
-import org.eclipse.collections.impl.factory.Maps;
+import org.eclipse.collections.api.factory.Maps;
 import org.junit.jupiter.api.Test;
 
 class StackOverflowGraphQLTest extends AbstractStackOverflowApplicationTest {

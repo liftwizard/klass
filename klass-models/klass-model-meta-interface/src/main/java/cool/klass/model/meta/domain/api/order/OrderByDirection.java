@@ -20,9 +20,9 @@ import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
-import org.eclipse.collections.impl.factory.Lists;
 
 public enum OrderByDirection {
     ASCENDING("ascending"),

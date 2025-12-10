@@ -27,8 +27,8 @@ import cool.klass.model.converter.compiler.state.property.AntlrProperty;
 import cool.klass.model.meta.grammar.KlassParser;
 import cool.klass.model.meta.grammar.KlassParser.ClassifierModifierContext;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.impl.factory.Lists;
 
 public class VersionAssociationInferencePhase extends AbstractCompilerPhase {
 

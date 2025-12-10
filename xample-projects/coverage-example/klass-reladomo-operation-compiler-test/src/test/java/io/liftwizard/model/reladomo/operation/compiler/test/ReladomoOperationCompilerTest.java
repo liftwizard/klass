@@ -36,11 +36,11 @@ import cool.klass.xample.coverage.PropertiesRequiredFinder;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.model.reladomo.operation.compiler.ReladomoOperationCompiler;
 import io.liftwizard.reladomo.test.extension.ReladomoInitializeExtension;
-import org.eclipse.collections.impl.factory.primitive.BooleanSets;
-import org.eclipse.collections.impl.factory.primitive.DoubleSets;
-import org.eclipse.collections.impl.factory.primitive.FloatSets;
-import org.eclipse.collections.impl.factory.primitive.IntSets;
-import org.eclipse.collections.impl.factory.primitive.LongSets;
+import org.eclipse.collections.api.factory.primitive.BooleanSets;
+import org.eclipse.collections.api.factory.primitive.DoubleSets;
+import org.eclipse.collections.api.factory.primitive.FloatSets;
+import org.eclipse.collections.api.factory.primitive.IntSets;
+import org.eclipse.collections.api.factory.primitive.LongSets;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
