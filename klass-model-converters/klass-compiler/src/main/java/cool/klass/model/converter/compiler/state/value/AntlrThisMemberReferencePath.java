@@ -36,8 +36,8 @@ import cool.klass.model.meta.domain.value.ThisMemberReferencePathImpl.ThisMember
 import cool.klass.model.meta.grammar.KlassParser.AssociationEndReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ThisMemberReferencePathContext;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.impl.factory.Lists;
 
 public class AntlrThisMemberReferencePath extends AntlrMemberReferencePath {
 

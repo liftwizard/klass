@@ -42,10 +42,10 @@ import cool.klass.model.reladomo.tree.ReladomoTreeNodeToManyAwareListener;
 import cool.klass.model.reladomo.tree.RootReladomoTreeNode;
 import cool.klass.model.reladomo.tree.SubClassReladomoTreeNode;
 import cool.klass.model.reladomo.tree.SuperClassReladomoTreeNode;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.stack.ImmutableStack;
 import org.eclipse.collections.api.stack.MutableStack;
-import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.stack.mutable.ArrayStack;
 
 public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNodeToManyAwareListener {

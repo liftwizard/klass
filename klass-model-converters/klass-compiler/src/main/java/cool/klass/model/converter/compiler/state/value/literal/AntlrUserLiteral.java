@@ -31,8 +31,8 @@ import cool.klass.model.converter.compiler.state.value.AntlrExpressionValueVisit
 import cool.klass.model.meta.domain.KlassImpl.KlassBuilder;
 import cool.klass.model.meta.domain.value.literal.UserLiteralImpl.UserLiteralBuilder;
 import cool.klass.model.meta.grammar.KlassParser.NativeLiteralContext;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.impl.factory.Lists;
 
 public class AntlrUserLiteral extends AbstractAntlrLiteralValue {
 

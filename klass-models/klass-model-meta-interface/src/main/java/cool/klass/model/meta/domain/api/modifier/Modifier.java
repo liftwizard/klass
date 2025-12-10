@@ -17,8 +17,8 @@
 package cool.klass.model.meta.domain.api.modifier;
 
 import cool.klass.model.meta.domain.api.OrdinalElement;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.impl.factory.Lists;
 
 public interface Modifier extends OrdinalElement {
     String CREATED_BY = "createdBy";

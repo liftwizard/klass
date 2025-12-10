@@ -21,8 +21,8 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.state.IAntlrElement;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.impl.factory.Lists;
 
 public interface AntlrOrderByOwner extends IAntlrElement {
     void enterOrderByDeclaration(@Nonnull AntlrOrderBy orderBy);

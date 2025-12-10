@@ -39,8 +39,8 @@ import cool.klass.model.meta.grammar.KlassParser.ProjectionPrimitiveMemberContex
 import cool.klass.model.meta.grammar.KlassParser.ProjectionProjectionReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionReferencePropertyContext;
+import org.eclipse.collections.api.factory.Stacks;
 import org.eclipse.collections.api.stack.MutableStack;
-import org.eclipse.collections.impl.factory.Stacks;
 
 public class ProjectionPhase extends AbstractCompilerPhase {
 

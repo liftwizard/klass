@@ -48,14 +48,15 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.factory.Maps;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
-import org.eclipse.collections.impl.factory.Lists;
-import org.eclipse.collections.impl.factory.Maps;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 import org.eclipse.collections.impl.list.mutable.ListAdapter;
+import org.eclipse.collections.impl.utility.ArrayIterate;
 import org.fusesource.jansi.AnsiConsole;
 import org.sonatype.plexus.build.incremental.BuildContext;
 
@@ -291,7 +292,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
         }
 
         File[] outputFiles = outputDirectory.listFiles();
-        if (outputFiles == null || outputFiles.length == 0) {
+        if (ArrayIterate.isEmpty(outputFiles)) {
             this.getLog().info("No output files exist, generating");
             return false;
         }

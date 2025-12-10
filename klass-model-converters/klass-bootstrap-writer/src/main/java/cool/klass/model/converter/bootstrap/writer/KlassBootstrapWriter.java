@@ -104,11 +104,11 @@ import klass.model.meta.domain.TypeMemberReferencePathList;
 import klass.model.meta.domain.UrlList;
 import klass.model.meta.domain.UrlParameter;
 import klass.model.meta.domain.UrlParameterList;
+import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.factory.Maps;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.eclipse.collections.api.map.MutableMap;
-import org.eclipse.collections.impl.factory.Lists;
-import org.eclipse.collections.impl.factory.Maps;
 
 public class KlassBootstrapWriter {
 

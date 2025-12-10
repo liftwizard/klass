@@ -29,8 +29,8 @@ import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.converter.compiler.state.value.AntlrExpressionValueVisitor;
 import cool.klass.model.meta.domain.value.literal.NullLiteralImpl.NullLiteralBuilder;
 import cool.klass.model.meta.grammar.KlassParser.NullLiteralContext;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.impl.factory.Lists;
 
 public class AntlrNullLiteral extends AbstractAntlrLiteralValue {
 

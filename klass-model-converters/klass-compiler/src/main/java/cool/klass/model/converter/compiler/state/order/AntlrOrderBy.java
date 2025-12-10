@@ -33,11 +33,11 @@ import cool.klass.model.meta.domain.order.OrderByMemberReferencePathImpl.OrderBy
 import cool.klass.model.meta.grammar.KlassParser.OrderByMemberReferencePathContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.api.tuple.Pair;
-import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
 // TODO: Specific subclasses for the specific antlr context types

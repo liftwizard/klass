@@ -24,9 +24,9 @@ import javax.annotation.Nonnull;
 import cool.klass.model.meta.domain.PrimitiveTypeBuilder;
 import cool.klass.model.meta.domain.api.PrimitiveType;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
-import org.eclipse.collections.impl.factory.Lists;
 
 public final class AntlrPrimitiveType extends AntlrElement implements AntlrType {
 
