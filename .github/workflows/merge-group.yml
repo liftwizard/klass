@@ -581,6 +581,7 @@ jobs:
 
     all-checks:
         name: All checks
+        if: ${{ !cancelled() }}
         needs:
             [
                 maven-test,
@@ -611,5 +612,6 @@ jobs:
             ]
         runs-on: ubuntu-latest
         steps:
-            - name: All checks passed
-              run: echo "All checks passed!"
+            - uses: re-actors/alls-green@release/v1
+              with:
+                  jobs: ${{ toJSON(needs) }}
