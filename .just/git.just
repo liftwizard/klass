@@ -2,9 +2,11 @@ upstream_remote := env('UPSTREAM_REMOTE', "upstream")
 upstream_branch := env('UPSTREAM_BRANCH', "main")
 
 # git clean helper
+[group('clean')]
 _clean-git:
 
 # Fail if there are local modifications or untracked files
+[group('git')]
 _check-local-modifications:
     #!/usr/bin/env bash
     set -uo pipefail

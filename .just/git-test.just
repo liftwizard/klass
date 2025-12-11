@@ -1,4 +1,5 @@
 # set up `git-test`
+[group('test')]
 setup-git-test:
     # Combined
     git test add --forget --test default                      'just clean _check-local-modifications mvn'

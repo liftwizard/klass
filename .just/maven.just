@@ -9,6 +9,7 @@ default_spotless_profiles := env('MVN_SPOTLESS_PROFILES', "spotless-apply,spotle
 default_profiles := env('MVN_PROFILES', "--activate-profiles " + default_verify_profiles + "," + default_checkstyle_profiles + "," + default_spotless_profiles)
 
 # Run `mvn` with configurable target, profiles, and flags
+[group('build')]
 mvn MVN=default_mvn TARGET=default_target PROFILES=default_profiles *FLAGS=default_flags:
     #!/usr/bin/env bash
     set -uo pipefail
@@ -38,6 +39,7 @@ mvn MVN=default_mvn TARGET=default_target PROFILES=default_profiles *FLAGS=defau
     exit $EXIT_CODE
 
 # clean ~/.m2 with `rm -rf ~/.m2/repository/...`
+[group('clean')]
 _clean-m2:
     #!/usr/bin/env bash
     set -uo pipefail
@@ -45,91 +47,117 @@ _clean-m2:
     exit 0
 
 # `mvn clean`
+[group('clean')]
 @_clean-maven MVN=default_mvn *FLAGS=default_flags: && (mvn MVN "clean" "--activate-profiles spotless-preserve-cache" FLAGS)
     just _run "git clean --quiet --force -dx release.properties **/pom.xml.releaseBackup"
 
 # `mvn verify` without tests
+[group('build')]
 compile MVN=default_mvn: (mvn MVN "verify" "" skip_tests_flags)
 
 # `mvn verify` with tests
+[group('test')]
 test MVN=default_mvn *FLAGS="": (mvn MVN "verify" "" (default_flags + " " + FLAGS))
 
 # `mvn install`
+[group('build')]
 install MVN=default_mvn: (mvn MVN "install" "" skip_tests_flags)
 
 # `mvn` with enforcer plugin
+[group('lint')]
 enforcer MVN=default_mvn: (mvn MVN "verify" "--activate-profiles maven-enforcer-plugin" skip_tests_flags)
 
 # `mvn` with dependency plugin
+[group('lint')]
 dependency MVN=default_mvn: (mvn MVN "verify" "--activate-profiles maven-dependency-plugin" skip_tests_flags)
 
 # `mvn` with javadoc plugin
+[group('lint')]
 javadoc MVN=default_mvn: (mvn MVN "verify" "--activate-profiles maven-javadoc-plugin" skip_tests_flags)
 
 # `mvn` with jacoco plugin for code coverage
+[group('test')]
 coverage MVN=default_mvn: (mvn MVN "verify" "--activate-profiles jacoco-maven-plugin" default_flags)
 
 # `mvn` with errorprone
+[group('lint')]
 errorprone MVN=default_mvn: (mvn MVN "verify" "--activate-profiles errorprone" skip_tests_flags)
 
 # `mvn` with errorprone-strict
+[group('lint')]
 errorprone-strict MVN=default_mvn: (mvn MVN "verify" "--activate-profiles errorprone-strict" skip_tests_flags)
 
 # `mvn` with errorprone-patch to generate auto-fixes
+[group('lint')]
 errorprone-patch MVN=default_mvn: (mvn MVN "verify" "--activate-profiles errorprone-patch" skip_tests_flags)
 
 # `mvn` with spotbugs
+[group('lint')]
 spotbugs MVN=default_mvn: (mvn MVN "verify" "--activate-profiles spotbugs-maven-plugin" skip_tests_flags)
 
 # `mvn checkstyle:check` with the given profile
+[group('lint')]
 checkstyle-profile PROFILE FAIL_ON_VIOLATION="true" MVN="mvn": (mvn MVN "checkstyle:check" ("--activate-profiles " + PROFILE) (default_flags + " -Dcheckstyle.failOnViolation=" + FAIL_ON_VIOLATION))
 
 # Run checkstyle with all profiles
+[group('lint')]
 checkstyle FAIL_ON_VIOLATION="true" MVN="mvn": \
     (checkstyle-profile "checkstyle-semantics" FAIL_ON_VIOLATION MVN) \
     (checkstyle-profile "checkstyle-formatting" FAIL_ON_VIOLATION MVN) \
     (checkstyle-profile "checkstyle-semantics-strict" FAIL_ON_VIOLATION MVN) \
     (checkstyle-profile "checkstyle-formatting-strict" FAIL_ON_VIOLATION MVN)
 
-# spotless
+# `mvn spotless:apply` with a single formatter
+[group('format')]
 spotless NAME MVN=default_mvn: (mvn MVN "spotless:apply" ("--activate-profiles spotless-apply,spotless-" + NAME) default_flags)
 
-# spotless-all
+# `mvn spotless:apply` with all formatters
+[group('format')]
 spotless-all MVN=default_mvn: (mvn MVN "spotless:apply" ("--activate-profiles " + default_spotless_profiles) default_flags)
 
 # `mvn` with reproducible build check
+[group('lint')]
 reproducible MVN=default_mvn: (mvn MVN "verify artifact:check-buildplan" "" skip_tests_flags)
 
 # `mvn` rewrite dry run
+[group('format')]
 rewrite-dry-run MVN=default_mvn: (mvn MVN "install org.openrewrite.maven:rewrite-maven-plugin:dryRun" "--activate-profiles rewrite-maven-plugin,rewrite-maven-plugin-dryRun" skip_tests_flags)
 
 # `mvn` rewrite run
+[group('format')]
 rewrite-run MVN=default_mvn: clean (mvn MVN "install org.openrewrite.maven:rewrite-maven-plugin:run" "--activate-profiles rewrite-maven-plugin" skip_tests_flags)
 
 # `mvn` with rewrite-maven-plugin for single recipe
+[group('format')]
 rewrite RECIPE MVN=default_mvn: (mvn MVN "install org.openrewrite.maven:rewrite-maven-plugin:run" ("--activate-profiles rewrite-maven-plugin -Drewrite.activeRecipes=" + RECIPE) skip_tests_flags)
 
 # display available updates (dependencies, plugins, properties)
+[group('maven')]
 @display-updates:
     just _run "mvn {{ANSI_MAGENTA}}--threads 1{{ANSI_DEFAULT}} versions:display-dependency-updates versions:display-plugin-updates versions:display-property-updates"
 
 # `mvn dependency:tree`
+[group('maven')]
 @dependency-tree:
     just _run "mvn {{ANSI_MAGENTA}}--threads 1{{ANSI_DEFAULT}} dependency:tree"
 
-# `mvn buildplan-list`
+# `mvn buildplan:list`
+[group('maven')]
 @buildplan-list:
     just _run "mvn {{ANSI_MAGENTA}}--threads 1{{ANSI_DEFAULT}} buildplan:list"
 
-# `mvn buildplan-list-phase`
+# `mvn buildplan:list-phase`
+[group('maven')]
 @buildplan-list-phase:
     just _run "mvn {{ANSI_MAGENTA}}--threads 1{{ANSI_DEFAULT}} buildplan:list-phase"
 
 # `mvn wrapper:wrapper`
+[group('maven')]
 @wrapper VERSION:
     just _run "mvn {{ANSI_MAGENTA}}--threads 1{{ANSI_DEFAULT}} wrapper:wrapper -Dmaven={{ANSI_YELLOW}}{{VERSION}}{{ANSI_DEFAULT}}"
 
 # `mvn release:prepare`
+[group('deploy')]
 release: clean _check-local-modifications && _clean-git _check-local-modifications
     #!/usr/bin/env bash
     set -Eeuo pipefail
@@ -155,4 +183,5 @@ release: clean _check-local-modifications && _clean-git _check-local-modificatio
     just _run "mvn {{ANSI_MAGENTA}}--batch-mode{{ANSI_DEFAULT}} clean release:clean release:prepare -DdevelopmentVersion={{ANSI_YELLOW}}$NEXT_VERSION{{ANSI_DEFAULT}}"
 
 # `mvn deploy`
+[group('deploy')]
 deploy MVN="mvn": (mvn MVN "deploy" "--activate-profiles maven-central-deploy,deploy,maven-javadoc-plugin" "--threads 1")
