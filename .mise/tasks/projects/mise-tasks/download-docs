@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#MISE description="Download mise task documentation from GitHub"
+
+set -Eeuo pipefail
+
+source .mise/tasks/console/ansi-colors
+
+mise run console:run "mkdir -p .docs"
+
+mise run console:run "curl -s ${ANSI_YELLOW}https://raw.githubusercontent.com/jdx/mise/refs/heads/main/docs/tasks/file-tasks.md${ANSI_DEFAULT} -o .docs/${ANSI_YELLOW}file-tasks.md${ANSI_DEFAULT}"
+mise run console:run "curl -s ${ANSI_YELLOW}https://raw.githubusercontent.com/jdx/mise/refs/heads/main/docs/tasks/toml-tasks.md${ANSI_DEFAULT} -o .docs/${ANSI_YELLOW}toml-tasks.md${ANSI_DEFAULT}"
+mise run console:run "curl -s ${ANSI_YELLOW}https://raw.githubusercontent.com/jdx/mise/refs/heads/main/docs/tasks/task-configuration.md${ANSI_DEFAULT} -o .docs/${ANSI_YELLOW}task-configuration.md${ANSI_DEFAULT}"
