@@ -37,7 +37,7 @@ public final class IdxGenerator {
 
         String primaryKeyColumnNames = getPrimaryKeyColumnNames(klass);
 
-        String primaryKeyIndex = "alter table %s add constraint %s primary key (%s);%n%n".formatted(
+        String primaryKeyIndex = "alter table %s add constraint %s primary key (%s);%n".formatted(
             tableName,
             constraintName,
             primaryKeyColumnNames
@@ -81,7 +81,7 @@ public final class IdxGenerator {
             .collect(DdlGenerator.COLUMN_NAME_CONVERTER::convert)
             .makeString(", ");
 
-        return "create index %s on %s(%s);%n%n".formatted(constraintName, tableName, foreignKeyColumnNames);
+        return "create index %s on %s(%s);%n".formatted(constraintName, tableName, foreignKeyColumnNames);
     }
 
     private static boolean isPrefixList(ImmutableList<DataTypeProperty> list1, ImmutableList<DataTypeProperty> list2) {
