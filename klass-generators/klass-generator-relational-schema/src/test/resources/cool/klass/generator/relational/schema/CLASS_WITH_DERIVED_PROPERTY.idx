@@ -1,2 +1,1 @@
 alter table CLASS_WITH_DERIVED_PROPERTY add constraint CLASS_WITH_DERIVED_PROPERTY_PK primary key (key);
-

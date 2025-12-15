@@ -53,7 +53,6 @@ public final class DdlGenerator {
             (
             {1}
             );
-
             """;
         return MessageFormat.format(format, tableName, propertiesSourceCode);
     }
