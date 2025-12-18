@@ -24,7 +24,6 @@ import javax.annotation.Nonnull;
 import cool.klass.data.store.DataStore;
 import cool.klass.model.meta.domain.api.Association;
 import cool.klass.model.meta.domain.api.Classifier;
-import cool.klass.model.meta.domain.api.DataType;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Enumeration;
 import cool.klass.model.meta.domain.api.EnumerationLiteral;
@@ -88,6 +87,7 @@ import klass.model.meta.domain.NamedElementAbstract;
 import klass.model.meta.domain.NamedProjection;
 import klass.model.meta.domain.NamedProjectionList;
 import klass.model.meta.domain.PackageableElementList;
+import klass.model.meta.domain.ParameterList;
 import klass.model.meta.domain.PrimitiveParameter;
 import klass.model.meta.domain.PrimitiveParameterList;
 import klass.model.meta.domain.PrimitivePropertyList;
@@ -317,6 +317,23 @@ public class KlassBootstrapWriter {
         MutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter =
             Maps.mutable.empty();
 
+        ImmutableList<Parameter> allPathParameters = urls.flatCollect(Url::getPathParameters);
+        ImmutableList<Parameter> allQueryParameters = urls.flatCollect(Url::getQueryParameters);
+
+        allPathParameters
+            .collect(
+                (parameter) -> this.handleParameter(parameter, bootstrappedParametersByParameter),
+                new ParameterList()
+            )
+            .insertAll();
+
+        allQueryParameters
+            .collect(
+                (parameter) -> this.handleParameter(parameter, bootstrappedParametersByParameter),
+                new ParameterList()
+            )
+            .insertAll();
+
         urls
             .flatCollect(
                 (url) ->
@@ -334,8 +351,8 @@ public class KlassBootstrapWriter {
                 (url) ->
                     url
                         .getQueryParameters()
-                        .collect((eachPathParameter) ->
-                            this.handleUrlParameter(url, eachPathParameter, "query", bootstrappedParametersByParameter)
+                        .collect((eachQueryParameter) ->
+                            this.handleUrlParameter(url, eachQueryParameter, "query", bootstrappedParametersByParameter)
                         ),
                 new UrlParameterList()
             )
@@ -810,37 +827,30 @@ public class KlassBootstrapWriter {
         return bootstrappedUrl;
     }
 
+    private klass.model.meta.domain.Parameter handleParameter(
+        @Nonnull Parameter parameter,
+        @Nonnull MutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter
+    ) {
+        var bootstrappedParameter = new klass.model.meta.domain.Parameter();
+        handleNamedElement(bootstrappedParameter, parameter);
+        bootstrappedParameter.setMultiplicity(parameter.getMultiplicity().getPrettyName());
+        bootstrappedParametersByParameter.put(parameter, bootstrappedParameter);
+        return bootstrappedParameter;
+    }
+
     private UrlParameter handleUrlParameter(
         Url url,
         @Nonnull Parameter parameter,
         String urlParameterType,
         @Nonnull MutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter
     ) {
-        var bootstrappedParameter = new klass.model.meta.domain.Parameter();
-        handleNamedElement(bootstrappedParameter, parameter);
-        bootstrappedParameter.setMultiplicity(parameter.getMultiplicity().getPrettyName());
-        bootstrappedParameter.insert();
-
-        DataType dataType = parameter.getType();
-        if (dataType instanceof PrimitiveType primitiveType) {
-            PrimitiveParameter bootstrappedPrimitiveParameter = new PrimitiveParameter();
-            bootstrappedPrimitiveParameter.setPrimitiveType(primitiveType.getPrettyName());
-            bootstrappedPrimitiveParameter.setId(bootstrappedParameter.getId());
-        } else if (dataType instanceof Enumeration enumeration) {
-            EnumerationParameter bootstrappedEnumerationParameter = new EnumerationParameter();
-            bootstrappedEnumerationParameter.setEnumerationName(enumeration.getName());
-            bootstrappedEnumerationParameter.setId(bootstrappedParameter.getId());
-        } else {
-            throw new AssertionError();
-        }
+        var bootstrappedParameter = bootstrappedParametersByParameter.get(parameter);
 
         UrlParameter bootstrappedUrlParameter = new UrlParameter();
         bootstrappedUrlParameter.setParameter(bootstrappedParameter);
         bootstrappedUrlParameter.setServiceGroupName(url.getServiceGroup().getName());
         bootstrappedUrlParameter.setUrlString(url.getUrlString());
         bootstrappedUrlParameter.setType(urlParameterType);
-
-        bootstrappedParametersByParameter.put(parameter, bootstrappedParameter);
 
         return bootstrappedUrlParameter;
     }
