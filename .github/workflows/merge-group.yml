@@ -574,7 +574,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v6
-            - uses: reviewdog/action-shellcheck@v1.31.0
+            - uses: reviewdog/action-shellcheck@v1.32.0
               with:
                   reporter: github-pr-check
                   filter_mode: nofilter
