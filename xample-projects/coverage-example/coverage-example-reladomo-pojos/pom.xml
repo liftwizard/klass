@@ -89,6 +89,32 @@
                 </executions>
             </plugin>
             <!--endregion-->
+
+            <!--region Phase 4: process-sources-->
+            <plugin>
+                <!--
+                Delete temporary log files created by Reladomo code generator to ensure reproducible builds.
+                See: https://github.com/motlin/klass/issues/425
+                -->
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>delete-reladomo-log-files</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <delete failonerror="false">
+                                    <fileset dir="${project.build.directory}/generated-sources" includes="**/*.log" />
+                                </delete>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--endregion-->
         </plugins>
     </build>
 </project>
