@@ -1,19 +1,19 @@
 {
-  "_metadata": {
-    "multiplicity": "1..1",
-    "projection": "cool.klass.xample.coverage.EveryTypeKeyPropertyProjection",
-    "transactionTimestamp": "2001-01-02T23:59:59Z"
-  },
-  "_data": {
-    "keyString": "EveryTypeKeyProperty keyString 2",
-    "keyInteger": 2,
-    "keyLong": 200000000000,
-    "keyDouble": 2.0123456789,
-    "keyFloat": 2.5,
-    "keyBoolean": false,
-    "keyInstant": "2000-01-01T00:00:00Z",
-    "keyLocalDate": "2000-01-01",
-    "everyTypeForeignKeyProperties": [ ],
-    "version": null
-  }
+	"_metadata": {
+		"multiplicity": "1..1",
+		"projection": "cool.klass.xample.coverage.EveryTypeKeyPropertyProjection",
+		"transactionTimestamp": "2001-01-02T23:59:59Z"
+	},
+	"_data": {
+		"keyString": "EveryTypeKeyProperty keyString 2",
+		"keyInteger": 2,
+		"keyLong": 200000000000,
+		"keyDouble": 2.0123456789,
+		"keyFloat": 2.5,
+		"keyBoolean": false,
+		"keyInstant": "2000-01-01T00:00:00Z",
+		"keyLocalDate": "2000-01-01",
+		"everyTypeForeignKeyProperties": [],
+		"version": null
+	}
 }

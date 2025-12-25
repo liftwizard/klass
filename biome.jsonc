@@ -1,41 +1,41 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
-  "files": {
-    "includes": [
-      "**/*.json",
-      "**/*.jsonc",
-      "**/*.json5",
-      "!!**/.llm/**/*",
-      "!!**/node_modules",
-      "!!**/dist",
-      "!!**/build",
-      "!!**/coverage",
-      "!!**/target",
-      "!!**/package-lock.json",
-      "!!**/pnpm-lock.yaml",
-      "!!**/yarn.lock",
-      "!!**/.prettierrc.json5"
-    ],
-    "ignoreUnknown": true
-  },
-  "formatter": {
-    "enabled": true,
-    "formatWithErrors": false,
-    "indentStyle": "space",
-    "indentWidth": 2,
-    "lineWidth": 120,
-    "lineEnding": "lf"
-  },
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true
-    }
-  },
-  "json": {
-    "formatter": {
-      "trailingCommas": "none",
-      "bracketSpacing": false
-    }
-  }
+	"$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
+	"files": {
+		"includes": ["**/*.json", "**/*.jsonc"],
+		"ignoreUnknown": true,
+	},
+	"formatter": {
+		"enabled": true,
+		"formatWithErrors": false,
+		"indentStyle": "tab",
+		"indentWidth": 4,
+		"lineWidth": 120,
+		"lineEnding": "lf",
+	},
+	"linter": {
+		"enabled": false,
+	},
+	"json": {
+		"formatter": {
+			"bracketSpacing": false,
+		},
+	},
+	"overrides": [
+		{
+			"includes": ["**/*.json"],
+			"json": {
+				"formatter": {
+					"trailingCommas": "none",
+				},
+			},
+		},
+		{
+			"includes": ["**/*.jsonc"],
+			"json": {
+				"formatter": {
+					"trailingCommas": "all",
+				},
+			},
+		},
+	],
 }

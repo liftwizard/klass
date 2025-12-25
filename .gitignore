@@ -1,5 +1,8 @@
 .envrc
+.llm/
+/.claude/
 JUSTFILE_BRANCH
+node_modules/
 
 # Project-specific
 _book

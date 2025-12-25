@@ -8,7 +8,7 @@ node = "24.12.0"
 "npm:strip-ansi-cli" = "4.0.0"
 shellcheck = "0.11.0"
 
-[alias]
+[tool_alias]
 mvnd = "asdf:https://github.com/joschi/asdf-mvnd"
 
 [env]
