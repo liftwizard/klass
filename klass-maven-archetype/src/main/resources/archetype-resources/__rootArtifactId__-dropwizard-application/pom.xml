@@ -394,6 +394,12 @@
 
         <dependency>
             <groupId>cool.klass</groupId>
+            <artifactId>klass-service-swagger</artifactId>
+            <version>${klass.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
             <artifactId>klass-serialization-jackson-module-meta-model</artifactId>
             <version>${klass.version}</version>
         </dependency>
@@ -494,6 +500,20 @@
             <artifactId>klass-model-bootstrapped-graphql-reladomo-finder</artifactId>
             <version>${klass.version}</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-model-bootstrapped-swagger</artifactId>
+            <version>${klass.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!--endregion-->
+
+        <!--region Eclipse Collections compile dependencies -->
+        <dependency>
+            <groupId>org.eclipse.collections</groupId>
+            <artifactId>eclipse-collections-api</artifactId>
         </dependency>
         <!--endregion-->
 
@@ -701,6 +721,7 @@
                                 <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-domain-model</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-graphql-schema</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-graphql-reladomo-finder</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-swagger</ignoredUnusedDeclaredDependency>
 
                                 <!-- Runtime dependencies -->
                                 <ignoredUnusedDeclaredDependency>org.glassfish.jaxb:jaxb-runtime</ignoredUnusedDeclaredDependency>
