@@ -50,6 +50,7 @@
         <module>klass-generator-reladomo-readable-interface-plugin</module>
         <module>klass-generator-relational-schema-plugin</module>
         <module>klass-generator-service-resources-plugin</module>
+        <module>klass-generator-swagger-plugin</module>
         <module>klass-generator-uml-nomnoml-plugin</module>
     </modules>
 

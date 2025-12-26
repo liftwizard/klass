@@ -52,6 +52,7 @@
         <module>coverage-example-reladomo-runtime-configuration</module>
         <module>coverage-example-relational-schema</module>
         <module>coverage-example-services</module>
+        <module>coverage-example-swagger</module>
         <module>coverage-example-uml-nomnoml</module>
         <module>klass-generator-klass-html-test</module>
         <module>klass-reladomo-operation-compiler-test</module>

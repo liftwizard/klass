@@ -108,6 +108,7 @@
         <liftwizard.version>2.1.41</liftwizard.version>
         <klass.version>${project.version}</klass.version>
         <h2.version>2.4.240</h2.version>
+        <auto-service.version>1.0.1</auto-service.version>
     </properties>
 
     <dependencyManagement>

@@ -295,6 +295,12 @@
 
         <dependency>
             <groupId>cool.klass</groupId>
+            <artifactId>klass-service-swagger</artifactId>
+            <version>0.7.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
             <artifactId>klass-serialization-jackson-module-meta-model</artifactId>
             <version>0.7.0-SNAPSHOT</version>
         </dependency>
@@ -395,6 +401,13 @@
             <artifactId>klass-model-bootstrapped-graphql-reladomo-finder</artifactId>
             <version>0.7.0-SNAPSHOT</version>
             <scope>runtime</scope>
+        </dependency>
+        <!--endregion-->
+
+        <!--region Eclipse Collections compile dependencies -->
+        <dependency>
+            <groupId>org.eclipse.collections</groupId>
+            <artifactId>eclipse-collections-api</artifactId>
         </dependency>
         <!--endregion-->
 
@@ -520,12 +533,6 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.collections</groupId>
-            <artifactId>eclipse-collections-api</artifactId>
             <scope>test</scope>
         </dependency>
 
