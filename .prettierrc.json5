@@ -49,7 +49,7 @@
 	// How to wrap prose in markdown
 	// Default: "preserve"
 	// Options: "always" | "never" | "preserve"
-	proseWrap: "preserve",
+	proseWrap: "never",
 
 	// How to handle whitespace in HTML
 	// Default: "css"

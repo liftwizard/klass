@@ -11,7 +11,7 @@
 					"klass": {
 						"name": "Enumeration"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -23,7 +23,7 @@
 					"klass": {
 						"name": "EnumerationLiteral"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "enumerationName"
@@ -40,7 +40,7 @@
 					"klass": {
 						"name": "Classifier"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -52,7 +52,7 @@
 					"klass": {
 						"name": "ClassifierInterfaceMapping"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -69,7 +69,7 @@
 					"klass": {
 						"name": "ClassifierInterfaceMapping"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "interfaceName"
@@ -81,7 +81,7 @@
 					"klass": {
 						"name": "Interface"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -98,7 +98,7 @@
 					"klass": {
 						"name": "Classifier"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -110,7 +110,7 @@
 					"klass": {
 						"name": "ClassifierModifier"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -127,7 +127,7 @@
 					"klass": {
 						"name": "Klass"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "superClassName"
@@ -139,7 +139,7 @@
 					"klass": {
 						"name": "Klass"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -156,7 +156,7 @@
 					"klass": {
 						"name": "EnumerationProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "enumerationName"
@@ -168,7 +168,7 @@
 					"klass": {
 						"name": "Enumeration"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -185,7 +185,7 @@
 					"klass": {
 						"name": "Classifier"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -197,7 +197,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -226,7 +226,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -238,7 +238,7 @@
 					"klass": {
 						"name": "MinLengthPropertyValidation"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -255,7 +255,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -267,7 +267,7 @@
 					"klass": {
 						"name": "MinLengthPropertyValidation"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "propertyName"
@@ -296,7 +296,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -308,7 +308,7 @@
 					"klass": {
 						"name": "MaxLengthPropertyValidation"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -325,7 +325,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -337,7 +337,7 @@
 					"klass": {
 						"name": "MaxLengthPropertyValidation"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "propertyName"
@@ -366,7 +366,7 @@
 					"klass": {
 						"name": "PrimitiveProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -378,7 +378,7 @@
 					"klass": {
 						"name": "MinPropertyValidation"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -395,7 +395,7 @@
 					"klass": {
 						"name": "PrimitiveProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -407,7 +407,7 @@
 					"klass": {
 						"name": "MinPropertyValidation"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "propertyName"
@@ -436,7 +436,7 @@
 					"klass": {
 						"name": "PrimitiveProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -448,7 +448,7 @@
 					"klass": {
 						"name": "MaxPropertyValidation"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -465,7 +465,7 @@
 					"klass": {
 						"name": "PrimitiveProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -477,7 +477,7 @@
 					"klass": {
 						"name": "MaxPropertyValidation"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "propertyName"
@@ -506,7 +506,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -518,7 +518,7 @@
 					"klass": {
 						"name": "PropertyModifier"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -535,7 +535,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -547,7 +547,7 @@
 					"klass": {
 						"name": "PropertyModifier"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "propertyName"
@@ -564,7 +564,7 @@
 					"klass": {
 						"name": "ParameterReference"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "parameterId"
@@ -576,7 +576,7 @@
 					"klass": {
 						"name": "Parameter"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -593,7 +593,7 @@
 					"klass": {
 						"name": "Association"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -605,7 +605,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "associationName"
@@ -622,7 +622,7 @@
 					"klass": {
 						"name": "Klass"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -634,7 +634,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "owningClassName"
@@ -651,7 +651,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "resultTypeName"
@@ -663,7 +663,7 @@
 					"klass": {
 						"name": "Klass"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -692,7 +692,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "owningClassName"
@@ -704,7 +704,7 @@
 					"klass": {
 						"name": "AssociationEndModifier"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "owningClassName"
@@ -721,7 +721,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -733,7 +733,7 @@
 					"klass": {
 						"name": "AssociationEndModifier"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "associationEndName"
@@ -750,7 +750,7 @@
 					"klass": {
 						"name": "Association"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "criteriaId"
@@ -762,7 +762,7 @@
 					"klass": {
 						"name": "Criteria"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -779,7 +779,7 @@
 					"klass": {
 						"name": "OperatorCriteria"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "sourceExpressionId"
@@ -791,7 +791,7 @@
 					"klass": {
 						"name": "ExpressionValue"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -808,7 +808,7 @@
 					"klass": {
 						"name": "OperatorCriteria"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "targetExpressionId"
@@ -820,7 +820,7 @@
 					"klass": {
 						"name": "ExpressionValue"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -837,7 +837,7 @@
 					"klass": {
 						"name": "EdgePointCriteria"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "memberReferencePathId"
@@ -849,7 +849,7 @@
 					"klass": {
 						"name": "MemberReferencePath"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -866,7 +866,7 @@
 					"klass": {
 						"name": "EnumerationParameter"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "enumerationName"
@@ -878,7 +878,7 @@
 					"klass": {
 						"name": "Enumeration"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -895,7 +895,7 @@
 					"klass": {
 						"name": "MemberReferencePath"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "className"
@@ -907,7 +907,7 @@
 					"klass": {
 						"name": "Klass"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -924,7 +924,7 @@
 					"klass": {
 						"name": "MemberReferencePath"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -936,7 +936,7 @@
 					"klass": {
 						"name": "MemberReferencePathAssociationEndMapping"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "memberReferencePathId"
@@ -965,7 +965,7 @@
 					"klass": {
 						"name": "MemberReferencePathAssociationEndMapping"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "associationOwningClassName"
@@ -977,7 +977,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "owningClassName"
@@ -994,7 +994,7 @@
 					"klass": {
 						"name": "MemberReferencePathAssociationEndMapping"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "associationEndName"
@@ -1006,7 +1006,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -1035,7 +1035,7 @@
 					"klass": {
 						"name": "MemberReferencePath"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "propertyClassName"
@@ -1047,7 +1047,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -1064,7 +1064,7 @@
 					"klass": {
 						"name": "MemberReferencePath"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "propertyName"
@@ -1076,7 +1076,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -1093,7 +1093,7 @@
 					"klass": {
 						"name": "BinaryCriteria"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "leftId"
@@ -1105,7 +1105,7 @@
 					"klass": {
 						"name": "Criteria"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -1122,7 +1122,7 @@
 					"klass": {
 						"name": "BinaryCriteria"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "rightId"
@@ -1134,7 +1134,7 @@
 					"klass": {
 						"name": "Criteria"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -1151,7 +1151,7 @@
 					"klass": {
 						"name": "Klass"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -1163,7 +1163,7 @@
 					"klass": {
 						"name": "ParameterizedProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "owningClassName"
@@ -1192,7 +1192,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "owningClassName"
@@ -1204,7 +1204,7 @@
 					"klass": {
 						"name": "AssociationEndOrderBy"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "associationEndClassName"
@@ -1221,7 +1221,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -1233,7 +1233,7 @@
 					"klass": {
 						"name": "AssociationEndOrderBy"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "associationEndName"
@@ -1250,7 +1250,7 @@
 					"klass": {
 						"name": "AssociationEndOrderBy"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "thisMemberReferencePathId"
@@ -1262,7 +1262,7 @@
 					"klass": {
 						"name": "ThisMemberReferencePath"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -1279,7 +1279,7 @@
 					"klass": {
 						"name": "ParameterizedProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "resultTypeName"
@@ -1291,7 +1291,7 @@
 					"klass": {
 						"name": "Klass"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -1320,7 +1320,7 @@
 					"klass": {
 						"name": "ParameterizedProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "owningClassName"
@@ -1332,7 +1332,7 @@
 					"klass": {
 						"name": "ParameterizedPropertyOrdering"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "owningClassName"
@@ -1349,7 +1349,7 @@
 					"klass": {
 						"name": "ParameterizedProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -1361,7 +1361,7 @@
 					"klass": {
 						"name": "ParameterizedPropertyOrdering"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -1390,7 +1390,7 @@
 					"klass": {
 						"name": "ParameterizedProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "owningClassName"
@@ -1402,7 +1402,7 @@
 					"klass": {
 						"name": "ParameterizedPropertyParameter"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -1419,7 +1419,7 @@
 					"klass": {
 						"name": "ParameterizedProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -1431,7 +1431,7 @@
 					"klass": {
 						"name": "ParameterizedPropertyParameter"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "parameterizedPropertyName"
@@ -1448,7 +1448,7 @@
 					"klass": {
 						"name": "NamedProjection"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "projectionId"
@@ -1460,7 +1460,7 @@
 					"klass": {
 						"name": "RootProjection"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -1477,7 +1477,7 @@
 					"klass": {
 						"name": "ProjectionElement"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -1489,7 +1489,7 @@
 					"klass": {
 						"name": "ProjectionElement"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "parentId"
@@ -1518,7 +1518,7 @@
 					"klass": {
 						"name": "ProjectionWithAssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "associationEndClass"
@@ -1530,7 +1530,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "owningClassName"
@@ -1547,7 +1547,7 @@
 					"klass": {
 						"name": "ProjectionWithAssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "associationEndName"
@@ -1559,7 +1559,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -1588,7 +1588,7 @@
 					"klass": {
 						"name": "ProjectionDataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "propertyClassifierName"
@@ -1600,7 +1600,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -1617,7 +1617,7 @@
 					"klass": {
 						"name": "ProjectionDataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "propertyName"
@@ -1629,7 +1629,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -1646,7 +1646,7 @@
 					"klass": {
 						"name": "RootProjection"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "classifierName"
@@ -1658,7 +1658,7 @@
 					"klass": {
 						"name": "Classifier"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -1675,7 +1675,7 @@
 					"klass": {
 						"name": "ProjectionProjectionReference"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "projectionName"
@@ -1687,7 +1687,7 @@
 					"klass": {
 						"name": "NamedProjection"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -1704,7 +1704,7 @@
 					"klass": {
 						"name": "ServiceGroup"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "className"
@@ -1716,7 +1716,7 @@
 					"klass": {
 						"name": "Klass"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -1745,7 +1745,7 @@
 					"klass": {
 						"name": "Url"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "serviceGroupName"
@@ -1757,7 +1757,7 @@
 					"klass": {
 						"name": "UrlParameter"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "serviceGroupName"
@@ -1774,7 +1774,7 @@
 					"klass": {
 						"name": "Url"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "url"
@@ -1786,7 +1786,7 @@
 					"klass": {
 						"name": "UrlParameter"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "urlString"
@@ -1803,7 +1803,7 @@
 					"klass": {
 						"name": "UrlParameter"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "parameterId"
@@ -1815,7 +1815,7 @@
 					"klass": {
 						"name": "Parameter"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -1832,7 +1832,7 @@
 					"klass": {
 						"name": "ServiceGroup"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -1844,7 +1844,7 @@
 					"klass": {
 						"name": "Url"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "serviceGroupName"
@@ -1873,7 +1873,7 @@
 					"klass": {
 						"name": "Url"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "serviceGroupName"
@@ -1885,7 +1885,7 @@
 					"klass": {
 						"name": "Service"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "serviceGroupName"
@@ -1902,7 +1902,7 @@
 					"klass": {
 						"name": "Url"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "url"
@@ -1914,7 +1914,7 @@
 					"klass": {
 						"name": "Service"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "urlString"
@@ -1931,7 +1931,7 @@
 					"klass": {
 						"name": "Service"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "projectionName"
@@ -1943,7 +1943,7 @@
 					"klass": {
 						"name": "NamedProjection"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -1960,7 +1960,7 @@
 					"klass": {
 						"name": "Service"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "queryCriteriaId"
@@ -1972,7 +1972,7 @@
 					"klass": {
 						"name": "Criteria"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -1989,7 +1989,7 @@
 					"klass": {
 						"name": "Service"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "authorizeCriteriaId"
@@ -2001,7 +2001,7 @@
 					"klass": {
 						"name": "Criteria"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -2018,7 +2018,7 @@
 					"klass": {
 						"name": "Service"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "validateCriteriaId"
@@ -2030,7 +2030,7 @@
 					"klass": {
 						"name": "Criteria"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -2047,7 +2047,7 @@
 					"klass": {
 						"name": "Service"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "conflictCriteriaId"
@@ -2059,7 +2059,7 @@
 					"klass": {
 						"name": "Criteria"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -2100,7 +2100,7 @@
 					"klass": {
 						"name": "Service"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "serviceGroupName"
@@ -2112,7 +2112,7 @@
 					"klass": {
 						"name": "ServiceOrderBy"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "serviceGroupName"
@@ -2129,7 +2129,7 @@
 					"klass": {
 						"name": "Service"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "urlString"
@@ -2141,7 +2141,7 @@
 					"klass": {
 						"name": "ServiceOrderBy"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "serviceUrlString"
@@ -2158,7 +2158,7 @@
 					"klass": {
 						"name": "Service"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "EnumerationProperty",
 						"name": "verb"
@@ -2170,7 +2170,7 @@
 					"klass": {
 						"name": "ServiceOrderBy"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "EnumerationProperty",
 						"name": "serviceVerb"
@@ -2187,7 +2187,7 @@
 					"klass": {
 						"name": "ServiceOrderBy"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "thisMemberReferencePathId"
@@ -2199,7 +2199,7 @@
 					"klass": {
 						"name": "ThisMemberReferencePath"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "id"
@@ -2216,7 +2216,7 @@
 					"klass": {
 						"name": "PackageableElement"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -2245,7 +2245,7 @@
 					"klass": {
 						"name": "Enumeration"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -2274,7 +2274,7 @@
 					"klass": {
 						"name": "Interface"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -2303,7 +2303,7 @@
 					"klass": {
 						"name": "Klass"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -2328,7 +2328,7 @@
 					"klass": {
 						"name": "Klass"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -2353,7 +2353,7 @@
 					"klass": {
 						"name": "Klass"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -2390,7 +2390,7 @@
 					"klass": {
 						"name": "Classifier"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -2419,7 +2419,7 @@
 					"klass": {
 						"name": "Association"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -2448,7 +2448,7 @@
 					"klass": {
 						"name": "NamedProjection"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"
@@ -2477,7 +2477,7 @@
 					"klass": {
 						"name": "ServiceGroup"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
 						"name": "name"

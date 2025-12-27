@@ -35,7 +35,7 @@
 							"klass": {
 								"name": "ServiceGroup"
 							},
-							"associationEnds": [ ],
+							"associationEnds": [],
 							"dataTypeProperty": {
 								"owningClassifier": {
 									"name": "NamedElement"
@@ -55,13 +55,13 @@
 					"authorizeCriteria": null,
 					"validateCriteria": null,
 					"conflictCriteria": null,
-					"orderBys": [ ]
+					"orderBys": []
 				}
 			]
 		},
 		{
 			"url": "/meta/serviceGroup",
-			"parameters": [ ],
+			"parameters": [],
 			"services": [
 				{
 					"verb": "GET",
@@ -75,7 +75,7 @@
 					"authorizeCriteria": null,
 					"validateCriteria": null,
 					"conflictCriteria": null,
-					"orderBys": [ ]
+					"orderBys": []
 				}
 			]
 		}

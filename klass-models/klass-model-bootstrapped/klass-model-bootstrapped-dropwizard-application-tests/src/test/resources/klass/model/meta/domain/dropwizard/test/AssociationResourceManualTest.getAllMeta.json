@@ -10,8 +10,8 @@
 				"resultType": {
 					"name": "Enumeration"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "enumerationLiterals",
@@ -44,7 +44,7 @@
 				"klass": {
 					"name": "Enumeration"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -58,7 +58,7 @@
 				"klass": {
 					"name": "EnumerationLiteral"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "EnumerationLiteral"
@@ -79,8 +79,8 @@
 				"resultType": {
 					"name": "Classifier"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "superInterfaces",
@@ -113,7 +113,7 @@
 				"klass": {
 					"name": "Classifier"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -127,7 +127,7 @@
 				"klass": {
 					"name": "ClassifierInterfaceMapping"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ClassifierInterfaceMapping"
@@ -148,8 +148,8 @@
 				"resultType": {
 					"name": "ClassifierInterfaceMapping"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "superInterface",
@@ -158,8 +158,8 @@
 				"resultType": {
 					"name": "Interface"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -171,7 +171,7 @@
 				"klass": {
 					"name": "ClassifierInterfaceMapping"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ClassifierInterfaceMapping"
@@ -185,7 +185,7 @@
 				"klass": {
 					"name": "Interface"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -206,8 +206,8 @@
 				"resultType": {
 					"name": "Classifier"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "classifierModifiers",
@@ -240,7 +240,7 @@
 				"klass": {
 					"name": "Classifier"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -254,7 +254,7 @@
 				"klass": {
 					"name": "ClassifierModifier"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ClassifierModifier"
@@ -275,8 +275,8 @@
 				"resultType": {
 					"name": "Klass"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "superClass",
@@ -285,8 +285,8 @@
 				"resultType": {
 					"name": "Klass"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -298,7 +298,7 @@
 				"klass": {
 					"name": "Klass"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Klass"
@@ -312,7 +312,7 @@
 				"klass": {
 					"name": "Klass"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -333,8 +333,8 @@
 				"resultType": {
 					"name": "EnumerationProperty"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "enumeration",
@@ -343,8 +343,8 @@
 				"resultType": {
 					"name": "Enumeration"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -356,7 +356,7 @@
 				"klass": {
 					"name": "EnumerationProperty"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "EnumerationProperty"
@@ -370,7 +370,7 @@
 				"klass": {
 					"name": "Enumeration"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -391,8 +391,8 @@
 				"resultType": {
 					"name": "Classifier"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "dataTypeProperties",
@@ -425,7 +425,7 @@
 				"klass": {
 					"name": "Classifier"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -439,7 +439,7 @@
 				"klass": {
 					"name": "DataTypeProperty"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "DataTypeProperty"
@@ -460,8 +460,8 @@
 				"resultType": {
 					"name": "DataTypeProperty"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "minLengthValidation",
@@ -475,7 +475,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [ ]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -489,7 +489,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "DataTypeProperty"
@@ -503,7 +503,7 @@
 					"klass": {
 						"name": "MinLengthPropertyValidation"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NumericPropertyValidation"
@@ -521,7 +521,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NamedElement"
@@ -535,7 +535,7 @@
 					"klass": {
 						"name": "MinLengthPropertyValidation"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NumericPropertyValidation"
@@ -557,8 +557,8 @@
 				"resultType": {
 					"name": "DataTypeProperty"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "maxLengthValidation",
@@ -572,7 +572,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [ ]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -586,7 +586,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "DataTypeProperty"
@@ -600,7 +600,7 @@
 					"klass": {
 						"name": "MaxLengthPropertyValidation"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NumericPropertyValidation"
@@ -618,7 +618,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NamedElement"
@@ -632,7 +632,7 @@
 					"klass": {
 						"name": "MaxLengthPropertyValidation"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NumericPropertyValidation"
@@ -654,8 +654,8 @@
 				"resultType": {
 					"name": "PrimitiveProperty"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "minValidation",
@@ -669,7 +669,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [ ]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -683,7 +683,7 @@
 					"klass": {
 						"name": "PrimitiveProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "DataTypeProperty"
@@ -697,7 +697,7 @@
 					"klass": {
 						"name": "MinPropertyValidation"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NumericPropertyValidation"
@@ -715,7 +715,7 @@
 					"klass": {
 						"name": "PrimitiveProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NamedElement"
@@ -729,7 +729,7 @@
 					"klass": {
 						"name": "MinPropertyValidation"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NumericPropertyValidation"
@@ -751,8 +751,8 @@
 				"resultType": {
 					"name": "PrimitiveProperty"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "maxValidation",
@@ -766,7 +766,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [ ]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -780,7 +780,7 @@
 					"klass": {
 						"name": "PrimitiveProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "DataTypeProperty"
@@ -794,7 +794,7 @@
 					"klass": {
 						"name": "MaxPropertyValidation"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NumericPropertyValidation"
@@ -812,7 +812,7 @@
 					"klass": {
 						"name": "PrimitiveProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NamedElement"
@@ -826,7 +826,7 @@
 					"klass": {
 						"name": "MaxPropertyValidation"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NumericPropertyValidation"
@@ -848,8 +848,8 @@
 				"resultType": {
 					"name": "DataTypeProperty"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "propertyModifiers",
@@ -858,7 +858,7 @@
 				"resultType": {
 					"name": "PropertyModifier"
 				},
-				"associationEndModifiers": [ ],
+				"associationEndModifiers": [],
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
@@ -880,7 +880,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "DataTypeProperty"
@@ -894,7 +894,7 @@
 					"klass": {
 						"name": "PropertyModifier"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "PropertyModifier"
@@ -912,7 +912,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NamedElement"
@@ -926,7 +926,7 @@
 					"klass": {
 						"name": "PropertyModifier"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "PropertyModifier"
@@ -948,8 +948,8 @@
 				"resultType": {
 					"name": "ParameterReference"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "parameter",
@@ -958,8 +958,8 @@
 				"resultType": {
 					"name": "Parameter"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -971,7 +971,7 @@
 				"klass": {
 					"name": "ParameterReference"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ParameterReference"
@@ -985,7 +985,7 @@
 				"klass": {
 					"name": "Parameter"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Parameter"
@@ -1006,8 +1006,8 @@
 				"resultType": {
 					"name": "Association"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "associationEnds",
@@ -1040,7 +1040,7 @@
 				"klass": {
 					"name": "Association"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -1054,7 +1054,7 @@
 				"klass": {
 					"name": "AssociationEnd"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "AssociationEnd"
@@ -1075,8 +1075,8 @@
 				"resultType": {
 					"name": "Klass"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "associationEnds",
@@ -1085,8 +1085,8 @@
 				"resultType": {
 					"name": "AssociationEnd"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -1098,7 +1098,7 @@
 				"klass": {
 					"name": "Klass"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -1112,7 +1112,7 @@
 				"klass": {
 					"name": "AssociationEnd"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "AssociationEnd"
@@ -1133,8 +1133,8 @@
 				"resultType": {
 					"name": "AssociationEnd"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "resultType",
@@ -1143,8 +1143,8 @@
 				"resultType": {
 					"name": "Klass"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -1156,7 +1156,7 @@
 				"klass": {
 					"name": "AssociationEnd"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "AssociationEnd"
@@ -1170,7 +1170,7 @@
 				"klass": {
 					"name": "Klass"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -1191,8 +1191,8 @@
 				"resultType": {
 					"name": "AssociationEnd"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "associationEndModifiers",
@@ -1227,7 +1227,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "AssociationEnd"
@@ -1241,7 +1241,7 @@
 					"klass": {
 						"name": "AssociationEndModifier"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "AssociationEndModifier"
@@ -1259,7 +1259,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NamedElement"
@@ -1273,7 +1273,7 @@
 					"klass": {
 						"name": "AssociationEndModifier"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "AssociationEndModifier"
@@ -1295,8 +1295,8 @@
 				"resultType": {
 					"name": "Association"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "criteria",
@@ -1310,7 +1310,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [ ]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -1322,7 +1322,7 @@
 				"klass": {
 					"name": "Association"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Association"
@@ -1336,7 +1336,7 @@
 				"klass": {
 					"name": "Criteria"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Criteria"
@@ -1357,8 +1357,8 @@
 				"resultType": {
 					"name": "OperatorCriteria"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "sourceExpressionValue",
@@ -1372,7 +1372,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [ ]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -1384,7 +1384,7 @@
 				"klass": {
 					"name": "OperatorCriteria"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "OperatorCriteria"
@@ -1398,7 +1398,7 @@
 				"klass": {
 					"name": "ExpressionValue"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ExpressionValue"
@@ -1419,8 +1419,8 @@
 				"resultType": {
 					"name": "OperatorCriteria"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "targetExpressionValue",
@@ -1434,7 +1434,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [ ]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -1446,7 +1446,7 @@
 				"klass": {
 					"name": "OperatorCriteria"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "OperatorCriteria"
@@ -1460,7 +1460,7 @@
 				"klass": {
 					"name": "ExpressionValue"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ExpressionValue"
@@ -1481,8 +1481,8 @@
 				"resultType": {
 					"name": "EdgePointCriteria"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "memberReferencePath",
@@ -1491,8 +1491,8 @@
 				"resultType": {
 					"name": "MemberReferencePath"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -1504,7 +1504,7 @@
 				"klass": {
 					"name": "EdgePointCriteria"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "EdgePointCriteria"
@@ -1518,7 +1518,7 @@
 				"klass": {
 					"name": "MemberReferencePath"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ExpressionValue"
@@ -1539,8 +1539,8 @@
 				"resultType": {
 					"name": "EnumerationParameter"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "enumeration",
@@ -1549,8 +1549,8 @@
 				"resultType": {
 					"name": "Enumeration"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -1562,7 +1562,7 @@
 				"klass": {
 					"name": "EnumerationParameter"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "EnumerationParameter"
@@ -1576,7 +1576,7 @@
 				"klass": {
 					"name": "Enumeration"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -1597,8 +1597,8 @@
 				"resultType": {
 					"name": "MemberReferencePath"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "klass",
@@ -1607,8 +1607,8 @@
 				"resultType": {
 					"name": "Klass"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -1620,7 +1620,7 @@
 				"klass": {
 					"name": "MemberReferencePath"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "MemberReferencePath"
@@ -1634,7 +1634,7 @@
 				"klass": {
 					"name": "Klass"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -1655,8 +1655,8 @@
 				"resultType": {
 					"name": "MemberReferencePath"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "associationEnds",
@@ -1689,7 +1689,7 @@
 				"klass": {
 					"name": "MemberReferencePath"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ExpressionValue"
@@ -1703,7 +1703,7 @@
 				"klass": {
 					"name": "MemberReferencePathAssociationEndMapping"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "MemberReferencePathAssociationEndMapping"
@@ -1724,8 +1724,8 @@
 				"resultType": {
 					"name": "MemberReferencePathAssociationEndMapping"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "associationEnd",
@@ -1734,8 +1734,8 @@
 				"resultType": {
 					"name": "AssociationEnd"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -1749,7 +1749,7 @@
 					"klass": {
 						"name": "MemberReferencePathAssociationEndMapping"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "MemberReferencePathAssociationEndMapping"
@@ -1763,7 +1763,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "AssociationEnd"
@@ -1781,7 +1781,7 @@
 					"klass": {
 						"name": "MemberReferencePathAssociationEndMapping"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "MemberReferencePathAssociationEndMapping"
@@ -1795,7 +1795,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NamedElement"
@@ -1817,8 +1817,8 @@
 				"resultType": {
 					"name": "MemberReferencePath"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "dataTypeProperty",
@@ -1827,8 +1827,8 @@
 				"resultType": {
 					"name": "DataTypeProperty"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -1842,7 +1842,7 @@
 					"klass": {
 						"name": "MemberReferencePath"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "MemberReferencePath"
@@ -1856,7 +1856,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "DataTypeProperty"
@@ -1874,7 +1874,7 @@
 					"klass": {
 						"name": "MemberReferencePath"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "MemberReferencePath"
@@ -1888,7 +1888,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NamedElement"
@@ -1910,8 +1910,8 @@
 				"resultType": {
 					"name": "BinaryCriteria"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "left",
@@ -1920,8 +1920,8 @@
 				"resultType": {
 					"name": "Criteria"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -1933,7 +1933,7 @@
 				"klass": {
 					"name": "BinaryCriteria"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "BinaryCriteria"
@@ -1947,7 +1947,7 @@
 				"klass": {
 					"name": "Criteria"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Criteria"
@@ -1968,8 +1968,8 @@
 				"resultType": {
 					"name": "BinaryCriteria"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "right",
@@ -1978,8 +1978,8 @@
 				"resultType": {
 					"name": "Criteria"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -1991,7 +1991,7 @@
 				"klass": {
 					"name": "BinaryCriteria"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "BinaryCriteria"
@@ -2005,7 +2005,7 @@
 				"klass": {
 					"name": "Criteria"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Criteria"
@@ -2026,8 +2026,8 @@
 				"resultType": {
 					"name": "Klass"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "parameterizedProperties",
@@ -2060,7 +2060,7 @@
 				"klass": {
 					"name": "Klass"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -2074,7 +2074,7 @@
 				"klass": {
 					"name": "ParameterizedProperty"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ParameterizedProperty"
@@ -2095,8 +2095,8 @@
 				"resultType": {
 					"name": "AssociationEnd"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "orderBys",
@@ -2131,7 +2131,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "AssociationEnd"
@@ -2145,7 +2145,7 @@
 					"klass": {
 						"name": "AssociationEndOrderBy"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "AssociationEndOrderBy"
@@ -2163,7 +2163,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NamedElement"
@@ -2177,7 +2177,7 @@
 					"klass": {
 						"name": "AssociationEndOrderBy"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "AssociationEndOrderBy"
@@ -2199,8 +2199,8 @@
 				"resultType": {
 					"name": "AssociationEndOrderBy"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "thisMemberReferencePath",
@@ -2209,8 +2209,8 @@
 				"resultType": {
 					"name": "ThisMemberReferencePath"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -2222,7 +2222,7 @@
 				"klass": {
 					"name": "AssociationEndOrderBy"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "AssociationEndOrderBy"
@@ -2236,7 +2236,7 @@
 				"klass": {
 					"name": "ThisMemberReferencePath"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ExpressionValue"
@@ -2257,8 +2257,8 @@
 				"resultType": {
 					"name": "ParameterizedProperty"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "resultType",
@@ -2267,8 +2267,8 @@
 				"resultType": {
 					"name": "Klass"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -2280,7 +2280,7 @@
 				"klass": {
 					"name": "ParameterizedProperty"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ParameterizedProperty"
@@ -2294,7 +2294,7 @@
 				"klass": {
 					"name": "Klass"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -2315,8 +2315,8 @@
 				"resultType": {
 					"name": "ParameterizedProperty"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "parameterizedPropertyOrderings",
@@ -2351,7 +2351,7 @@
 					"klass": {
 						"name": "ParameterizedProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "ParameterizedProperty"
@@ -2365,7 +2365,7 @@
 					"klass": {
 						"name": "ParameterizedPropertyOrdering"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "ParameterizedPropertyOrdering"
@@ -2383,7 +2383,7 @@
 					"klass": {
 						"name": "ParameterizedProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NamedElement"
@@ -2397,7 +2397,7 @@
 					"klass": {
 						"name": "ParameterizedPropertyOrdering"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "ParameterizedPropertyOrdering"
@@ -2419,8 +2419,8 @@
 				"resultType": {
 					"name": "ParameterizedProperty"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "parameters",
@@ -2429,7 +2429,7 @@
 				"resultType": {
 					"name": "ParameterizedPropertyParameter"
 				},
-				"associationEndModifiers": [ ],
+				"associationEndModifiers": [],
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
@@ -2451,7 +2451,7 @@
 					"klass": {
 						"name": "ParameterizedProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "ParameterizedProperty"
@@ -2465,7 +2465,7 @@
 					"klass": {
 						"name": "ParameterizedPropertyParameter"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "ParameterizedPropertyParameter"
@@ -2483,7 +2483,7 @@
 					"klass": {
 						"name": "ParameterizedProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NamedElement"
@@ -2497,7 +2497,7 @@
 					"klass": {
 						"name": "ParameterizedPropertyParameter"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "ParameterizedPropertyParameter"
@@ -2519,8 +2519,8 @@
 				"resultType": {
 					"name": "NamedProjection"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "rootProjection",
@@ -2529,8 +2529,8 @@
 				"resultType": {
 					"name": "RootProjection"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -2542,7 +2542,7 @@
 				"klass": {
 					"name": "NamedProjection"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedProjection"
@@ -2556,7 +2556,7 @@
 				"klass": {
 					"name": "RootProjection"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ProjectionElement"
@@ -2577,8 +2577,8 @@
 				"resultType": {
 					"name": "ProjectionElement"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "children",
@@ -2587,7 +2587,7 @@
 				"resultType": {
 					"name": "ProjectionElement"
 				},
-				"associationEndModifiers": [ ],
+				"associationEndModifiers": [],
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
@@ -2607,7 +2607,7 @@
 				"klass": {
 					"name": "ProjectionElement"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ProjectionElement"
@@ -2621,7 +2621,7 @@
 				"klass": {
 					"name": "ProjectionElement"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ProjectionElement"
@@ -2642,8 +2642,8 @@
 				"resultType": {
 					"name": "ProjectionWithAssociationEnd"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "associationEnd",
@@ -2652,8 +2652,8 @@
 				"resultType": {
 					"name": "AssociationEnd"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -2667,7 +2667,7 @@
 					"klass": {
 						"name": "ProjectionWithAssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "ProjectionWithAssociationEnd"
@@ -2681,7 +2681,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "AssociationEnd"
@@ -2699,7 +2699,7 @@
 					"klass": {
 						"name": "ProjectionWithAssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "ProjectionWithAssociationEnd"
@@ -2713,7 +2713,7 @@
 					"klass": {
 						"name": "AssociationEnd"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NamedElement"
@@ -2735,8 +2735,8 @@
 				"resultType": {
 					"name": "ProjectionDataTypeProperty"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "dataTypeProperty",
@@ -2745,8 +2745,8 @@
 				"resultType": {
 					"name": "DataTypeProperty"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -2760,7 +2760,7 @@
 					"klass": {
 						"name": "ProjectionDataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "ProjectionDataTypeProperty"
@@ -2774,7 +2774,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "DataTypeProperty"
@@ -2792,7 +2792,7 @@
 					"klass": {
 						"name": "ProjectionDataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "ProjectionDataTypeProperty"
@@ -2806,7 +2806,7 @@
 					"klass": {
 						"name": "DataTypeProperty"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "NamedElement"
@@ -2828,8 +2828,8 @@
 				"resultType": {
 					"name": "RootProjection"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "classifier",
@@ -2838,8 +2838,8 @@
 				"resultType": {
 					"name": "Classifier"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -2851,7 +2851,7 @@
 				"klass": {
 					"name": "RootProjection"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "RootProjection"
@@ -2865,7 +2865,7 @@
 				"klass": {
 					"name": "Classifier"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -2886,8 +2886,8 @@
 				"resultType": {
 					"name": "ProjectionProjectionReference"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "projection",
@@ -2896,8 +2896,8 @@
 				"resultType": {
 					"name": "NamedProjection"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -2909,7 +2909,7 @@
 				"klass": {
 					"name": "ProjectionProjectionReference"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ProjectionProjectionReference"
@@ -2923,7 +2923,7 @@
 				"klass": {
 					"name": "NamedProjection"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -2944,8 +2944,8 @@
 				"resultType": {
 					"name": "ServiceGroup"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "owningClass",
@@ -2954,8 +2954,8 @@
 				"resultType": {
 					"name": "Klass"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -2967,7 +2967,7 @@
 				"klass": {
 					"name": "ServiceGroup"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ServiceGroup"
@@ -2981,7 +2981,7 @@
 				"klass": {
 					"name": "Klass"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -3002,8 +3002,8 @@
 				"resultType": {
 					"name": "Url"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "parameters",
@@ -3038,7 +3038,7 @@
 					"klass": {
 						"name": "Url"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "Url"
@@ -3052,7 +3052,7 @@
 					"klass": {
 						"name": "UrlParameter"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "UrlParameter"
@@ -3070,7 +3070,7 @@
 					"klass": {
 						"name": "Url"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "Url"
@@ -3084,7 +3084,7 @@
 					"klass": {
 						"name": "UrlParameter"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "UrlParameter"
@@ -3106,8 +3106,8 @@
 				"resultType": {
 					"name": "UrlParameter"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "parameter",
@@ -3116,8 +3116,8 @@
 				"resultType": {
 					"name": "Parameter"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -3129,7 +3129,7 @@
 				"klass": {
 					"name": "UrlParameter"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "UrlParameter"
@@ -3143,7 +3143,7 @@
 				"klass": {
 					"name": "Parameter"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Parameter"
@@ -3164,8 +3164,8 @@
 				"resultType": {
 					"name": "ServiceGroup"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "urls",
@@ -3198,7 +3198,7 @@
 				"klass": {
 					"name": "ServiceGroup"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -3212,7 +3212,7 @@
 				"klass": {
 					"name": "Url"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Url"
@@ -3233,8 +3233,8 @@
 				"resultType": {
 					"name": "Url"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "services",
@@ -3269,7 +3269,7 @@
 					"klass": {
 						"name": "Url"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "Url"
@@ -3283,7 +3283,7 @@
 					"klass": {
 						"name": "Service"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "Service"
@@ -3301,7 +3301,7 @@
 					"klass": {
 						"name": "Url"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "Url"
@@ -3315,7 +3315,7 @@
 					"klass": {
 						"name": "Service"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "Service"
@@ -3337,8 +3337,8 @@
 				"resultType": {
 					"name": "Service"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "projection",
@@ -3347,8 +3347,8 @@
 				"resultType": {
 					"name": "NamedProjection"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -3360,7 +3360,7 @@
 				"klass": {
 					"name": "Service"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Service"
@@ -3374,7 +3374,7 @@
 				"klass": {
 					"name": "NamedProjection"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -3395,8 +3395,8 @@
 				"resultType": {
 					"name": "Service"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "queryCriteria",
@@ -3410,7 +3410,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [ ]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -3422,7 +3422,7 @@
 				"klass": {
 					"name": "Service"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Service"
@@ -3436,7 +3436,7 @@
 				"klass": {
 					"name": "Criteria"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Criteria"
@@ -3457,8 +3457,8 @@
 				"resultType": {
 					"name": "Service"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "authorizeCriteria",
@@ -3472,7 +3472,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [ ]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -3484,7 +3484,7 @@
 				"klass": {
 					"name": "Service"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Service"
@@ -3498,7 +3498,7 @@
 				"klass": {
 					"name": "Criteria"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Criteria"
@@ -3519,8 +3519,8 @@
 				"resultType": {
 					"name": "Service"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "validateCriteria",
@@ -3534,7 +3534,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [ ]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -3546,7 +3546,7 @@
 				"klass": {
 					"name": "Service"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Service"
@@ -3560,7 +3560,7 @@
 				"klass": {
 					"name": "Criteria"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Criteria"
@@ -3581,8 +3581,8 @@
 				"resultType": {
 					"name": "Service"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "conflictCriteria",
@@ -3596,7 +3596,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [ ]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -3608,7 +3608,7 @@
 				"klass": {
 					"name": "Service"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Service"
@@ -3622,7 +3622,7 @@
 				"klass": {
 					"name": "Criteria"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "Criteria"
@@ -3643,8 +3643,8 @@
 				"resultType": {
 					"name": "Service"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "orderBys",
@@ -3681,7 +3681,7 @@
 						"klass": {
 							"name": "Service"
 						},
-						"associationEnds": [ ],
+						"associationEnds": [],
 						"dataTypeProperty": {
 							"owningClassifier": {
 								"name": "Service"
@@ -3695,7 +3695,7 @@
 						"klass": {
 							"name": "ServiceOrderBy"
 						},
-						"associationEnds": [ ],
+						"associationEnds": [],
 						"dataTypeProperty": {
 							"owningClassifier": {
 								"name": "ServiceOrderBy"
@@ -3713,7 +3713,7 @@
 						"klass": {
 							"name": "Service"
 						},
-						"associationEnds": [ ],
+						"associationEnds": [],
 						"dataTypeProperty": {
 							"owningClassifier": {
 								"name": "Service"
@@ -3727,7 +3727,7 @@
 						"klass": {
 							"name": "ServiceOrderBy"
 						},
-						"associationEnds": [ ],
+						"associationEnds": [],
 						"dataTypeProperty": {
 							"owningClassifier": {
 								"name": "ServiceOrderBy"
@@ -3746,7 +3746,7 @@
 					"klass": {
 						"name": "Service"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "Service"
@@ -3760,7 +3760,7 @@
 					"klass": {
 						"name": "ServiceOrderBy"
 					},
-					"associationEnds": [ ],
+					"associationEnds": [],
 					"dataTypeProperty": {
 						"owningClassifier": {
 							"name": "ServiceOrderBy"
@@ -3782,8 +3782,8 @@
 				"resultType": {
 					"name": "ServiceOrderBy"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			},
 			{
 				"name": "thisMemberReferencePath",
@@ -3792,8 +3792,8 @@
 				"resultType": {
 					"name": "ThisMemberReferencePath"
 				},
-				"associationEndModifiers": [ ],
-				"orderBys": [ ]
+				"associationEndModifiers": [],
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -3805,7 +3805,7 @@
 				"klass": {
 					"name": "ServiceOrderBy"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ServiceOrderBy"
@@ -3819,7 +3819,7 @@
 				"klass": {
 					"name": "ThisMemberReferencePath"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "ExpressionValue"

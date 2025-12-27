@@ -1,6 +1,16 @@
-*.graphqls
-**/*.jsonc
-**/*.json
-**/*.just
-**/pom.xml
-.prettierignore
+# Ignore everything by default
+**/*
+
+# Only format these file types
+!**/*.yml
+!**/*.yaml
+!**/*.md
+!**/*.html
+
+# But still ignore these directories
+node_modules
+dist
+build
+.llm
+target
+.m2

@@ -14,7 +14,7 @@
 		"body": "edited body 1",
 		"status": "On hold",
 		"deleted": true,
-		"answers": [ ],
+		"answers": [],
 		"tags": [
 			{
 				"systemFrom": "1999-12-31T23:59:59.999Z",
