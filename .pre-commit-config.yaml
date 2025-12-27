@@ -29,7 +29,6 @@ repos:
             language: system
             types: [file]
             files: \.(json|jsonc)$
-            exclude: src/test/resources/
 
           - id: prettier
             name: prettier

@@ -1,5 +1,6 @@
 .envrc
-.llm
+.llm/
+/.claude/
 JUSTFILE_BRANCH
 
 # Project-specific
