@@ -1,3 +1,3 @@
 [
-  "Warning at OwnedNaturalOneToOneSource.key. Didn't expect to receive value for root key property 'OwnedNaturalOneToOneSource.key: String' but value was array: []."
+	"Warning at OwnedNaturalOneToOneSource.key. Didn't expect to receive value for root key property 'OwnedNaturalOneToOneSource.key: String' but value was array: []."
 ]

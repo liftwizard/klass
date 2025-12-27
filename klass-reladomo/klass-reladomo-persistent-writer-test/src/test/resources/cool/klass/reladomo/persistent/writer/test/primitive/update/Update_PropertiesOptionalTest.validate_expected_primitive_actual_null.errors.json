@@ -1,6 +1,6 @@
 [
-  "Error at PropertiesOptional.system. Didn't expect to receive value for temporal range property 'PropertiesOptional.system: TemporalRange?' but value was null.",
-  "Error at PropertiesOptional.createdById. Didn't expect to receive value for audit property 'PropertiesOptional.createdById: String' but value was null.",
-  "Error at PropertiesOptional.lastUpdatedById. Didn't expect to receive value for audit property 'PropertiesOptional.lastUpdatedById: String' but value was null.",
-  "Error at PropertiesOptional. Expected value for version property 'PropertiesOptional.version: PropertiesOptionalVersion[1..1]' but value was null."
+	"Error at PropertiesOptional.system. Didn't expect to receive value for temporal range property 'PropertiesOptional.system: TemporalRange?' but value was null.",
+	"Error at PropertiesOptional.createdById. Didn't expect to receive value for audit property 'PropertiesOptional.createdById: String' but value was null.",
+	"Error at PropertiesOptional.lastUpdatedById. Didn't expect to receive value for audit property 'PropertiesOptional.lastUpdatedById: String' but value was null.",
+	"Error at PropertiesOptional. Expected value for version property 'PropertiesOptional.version: PropertiesOptionalVersion[1..1]' but value was null."
 ]

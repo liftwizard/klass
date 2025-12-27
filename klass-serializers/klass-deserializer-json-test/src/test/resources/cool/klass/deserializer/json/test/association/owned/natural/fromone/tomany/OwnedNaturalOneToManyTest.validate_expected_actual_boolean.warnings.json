@@ -1,3 +1,3 @@
 [
-  "Warning at OwnedNaturalOneToManySource.key. Didn't expect to receive value for root key property 'OwnedNaturalOneToManySource.key: String' but value was boolean: true."
+	"Warning at OwnedNaturalOneToManySource.key. Didn't expect to receive value for root key property 'OwnedNaturalOneToManySource.key: String' but value was boolean: true."
 ]

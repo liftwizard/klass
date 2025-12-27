@@ -1,202 +1,202 @@
 {
-  "data": {
-    "enumerations": [
-      {
-        "name": "AssociationEndDirection",
-        "packageName": "klass.model.meta.domain",
-        "enumerationLiterals": [
-          {
-            "name": "SOURCE",
-            "prettyName": "source"
-          },
-          {
-            "name": "TARGET",
-            "prettyName": "target"
-          }
-        ]
-      },
-      {
-        "name": "Multiplicity",
-        "packageName": "klass.model.meta.domain",
-        "enumerationLiterals": [
-          {
-            "name": "ZERO_TO_ONE",
-            "prettyName": "0..1"
-          },
-          {
-            "name": "ONE_TO_ONE",
-            "prettyName": "1..1"
-          },
-          {
-            "name": "ZERO_TO_MANY",
-            "prettyName": "0..*"
-          },
-          {
-            "name": "ONE_TO_MANY",
-            "prettyName": "1..*"
-          }
-        ]
-      },
-      {
-        "name": "Operator",
-        "packageName": "klass.model.meta.domain",
-        "enumerationLiterals": [
-          {
-            "name": "EQUALS",
-            "prettyName": "=="
-          },
-          {
-            "name": "NOT_EQUALS",
-            "prettyName": "!="
-          },
-          {
-            "name": "LESS_THAN",
-            "prettyName": "<"
-          },
-          {
-            "name": "GREATER_THAN",
-            "prettyName": ">"
-          },
-          {
-            "name": "LESS_THAN_EQUAL",
-            "prettyName": "<="
-          },
-          {
-            "name": "GREATER_THAN_EQUAL",
-            "prettyName": ">="
-          },
-          {
-            "name": "IN",
-            "prettyName": "in"
-          },
-          {
-            "name": "CONTAINS",
-            "prettyName": "contains"
-          },
-          {
-            "name": "STARTS_WITH",
-            "prettyName": "startsWith"
-          },
-          {
-            "name": "ENDS_WITH",
-            "prettyName": "endsWith"
-          }
-        ]
-      },
-      {
-        "name": "OrderByDirection",
-        "packageName": "klass.model.meta.domain",
-        "enumerationLiterals": [
-          {
-            "name": "ASCENDING",
-            "prettyName": "ascending"
-          },
-          {
-            "name": "DESCENDING",
-            "prettyName": "descending"
-          }
-        ]
-      },
-      {
-        "name": "PrimitiveType",
-        "packageName": "klass.model.meta.domain",
-        "enumerationLiterals": [
-          {
-            "name": "INTEGER",
-            "prettyName": "Integer"
-          },
-          {
-            "name": "LONG",
-            "prettyName": "Long"
-          },
-          {
-            "name": "DOUBLE",
-            "prettyName": "Double"
-          },
-          {
-            "name": "FLOAT",
-            "prettyName": "Float"
-          },
-          {
-            "name": "BOOLEAN",
-            "prettyName": "Boolean"
-          },
-          {
-            "name": "STRING",
-            "prettyName": "String"
-          },
-          {
-            "name": "INSTANT",
-            "prettyName": "Instant"
-          },
-          {
-            "name": "LOCAL_DATE",
-            "prettyName": "LocalDate"
-          },
-          {
-            "name": "TEMPORAL_INSTANT",
-            "prettyName": "TemporalInstant"
-          },
-          {
-            "name": "TEMPORAL_RANGE",
-            "prettyName": "TemporalRange"
-          }
-        ]
-      },
-      {
-        "name": "ServiceMultiplicity",
-        "packageName": "klass.model.meta.domain",
-        "enumerationLiterals": [
-          {
-            "name": "ONE",
-            "prettyName": "one"
-          },
-          {
-            "name": "MANY",
-            "prettyName": "many"
-          }
-        ]
-      },
-      {
-        "name": "UrlParameterType",
-        "packageName": "klass.model.meta.domain",
-        "enumerationLiterals": [
-          {
-            "name": "QUERY",
-            "prettyName": "query"
-          },
-          {
-            "name": "PATH",
-            "prettyName": "path"
-          }
-        ]
-      },
-      {
-        "name": "Verb",
-        "packageName": "klass.model.meta.domain",
-        "enumerationLiterals": [
-          {
-            "name": "GET",
-            "prettyName": null
-          },
-          {
-            "name": "POST",
-            "prettyName": null
-          },
-          {
-            "name": "PUT",
-            "prettyName": null
-          },
-          {
-            "name": "PATCH",
-            "prettyName": null
-          },
-          {
-            "name": "DELETE",
-            "prettyName": null
-          }
-        ]
-      }
-    ]
-  }
+	"data": {
+		"enumerations": [
+			{
+				"name": "AssociationEndDirection",
+				"packageName": "klass.model.meta.domain",
+				"enumerationLiterals": [
+					{
+						"name": "SOURCE",
+						"prettyName": "source"
+					},
+					{
+						"name": "TARGET",
+						"prettyName": "target"
+					}
+				]
+			},
+			{
+				"name": "Multiplicity",
+				"packageName": "klass.model.meta.domain",
+				"enumerationLiterals": [
+					{
+						"name": "ZERO_TO_ONE",
+						"prettyName": "0..1"
+					},
+					{
+						"name": "ONE_TO_ONE",
+						"prettyName": "1..1"
+					},
+					{
+						"name": "ZERO_TO_MANY",
+						"prettyName": "0..*"
+					},
+					{
+						"name": "ONE_TO_MANY",
+						"prettyName": "1..*"
+					}
+				]
+			},
+			{
+				"name": "Operator",
+				"packageName": "klass.model.meta.domain",
+				"enumerationLiterals": [
+					{
+						"name": "EQUALS",
+						"prettyName": "=="
+					},
+					{
+						"name": "NOT_EQUALS",
+						"prettyName": "!="
+					},
+					{
+						"name": "LESS_THAN",
+						"prettyName": "<"
+					},
+					{
+						"name": "GREATER_THAN",
+						"prettyName": ">"
+					},
+					{
+						"name": "LESS_THAN_EQUAL",
+						"prettyName": "<="
+					},
+					{
+						"name": "GREATER_THAN_EQUAL",
+						"prettyName": ">="
+					},
+					{
+						"name": "IN",
+						"prettyName": "in"
+					},
+					{
+						"name": "CONTAINS",
+						"prettyName": "contains"
+					},
+					{
+						"name": "STARTS_WITH",
+						"prettyName": "startsWith"
+					},
+					{
+						"name": "ENDS_WITH",
+						"prettyName": "endsWith"
+					}
+				]
+			},
+			{
+				"name": "OrderByDirection",
+				"packageName": "klass.model.meta.domain",
+				"enumerationLiterals": [
+					{
+						"name": "ASCENDING",
+						"prettyName": "ascending"
+					},
+					{
+						"name": "DESCENDING",
+						"prettyName": "descending"
+					}
+				]
+			},
+			{
+				"name": "PrimitiveType",
+				"packageName": "klass.model.meta.domain",
+				"enumerationLiterals": [
+					{
+						"name": "INTEGER",
+						"prettyName": "Integer"
+					},
+					{
+						"name": "LONG",
+						"prettyName": "Long"
+					},
+					{
+						"name": "DOUBLE",
+						"prettyName": "Double"
+					},
+					{
+						"name": "FLOAT",
+						"prettyName": "Float"
+					},
+					{
+						"name": "BOOLEAN",
+						"prettyName": "Boolean"
+					},
+					{
+						"name": "STRING",
+						"prettyName": "String"
+					},
+					{
+						"name": "INSTANT",
+						"prettyName": "Instant"
+					},
+					{
+						"name": "LOCAL_DATE",
+						"prettyName": "LocalDate"
+					},
+					{
+						"name": "TEMPORAL_INSTANT",
+						"prettyName": "TemporalInstant"
+					},
+					{
+						"name": "TEMPORAL_RANGE",
+						"prettyName": "TemporalRange"
+					}
+				]
+			},
+			{
+				"name": "ServiceMultiplicity",
+				"packageName": "klass.model.meta.domain",
+				"enumerationLiterals": [
+					{
+						"name": "ONE",
+						"prettyName": "one"
+					},
+					{
+						"name": "MANY",
+						"prettyName": "many"
+					}
+				]
+			},
+			{
+				"name": "UrlParameterType",
+				"packageName": "klass.model.meta.domain",
+				"enumerationLiterals": [
+					{
+						"name": "QUERY",
+						"prettyName": "query"
+					},
+					{
+						"name": "PATH",
+						"prettyName": "path"
+					}
+				]
+			},
+			{
+				"name": "Verb",
+				"packageName": "klass.model.meta.domain",
+				"enumerationLiterals": [
+					{
+						"name": "GET",
+						"prettyName": null
+					},
+					{
+						"name": "POST",
+						"prettyName": null
+					},
+					{
+						"name": "PUT",
+						"prettyName": null
+					},
+					{
+						"name": "PATCH",
+						"prettyName": null
+					},
+					{
+						"name": "DELETE",
+						"prettyName": null
+					}
+				]
+			}
+		]
+	}
 }

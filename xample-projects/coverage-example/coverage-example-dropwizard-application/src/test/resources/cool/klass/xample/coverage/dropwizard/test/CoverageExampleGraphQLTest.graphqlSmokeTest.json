@@ -1,108 +1,108 @@
 {
-  "data": {
-    "everyTypeKeyProperties": [
-      {
-        "keyString": "EveryTypeKeyProperty keyString 1 ☝",
-        "keyInteger": 1,
-        "keyLong": 1,
-        "keyDouble": 1.0123456789,
-        "keyFloat": 1.0123457,
-        "keyBoolean": true,
-        "keyInstant": "1999-12-31T23:59:00Z",
-        "keyLocalDate": "1999-12-31",
-        "everyTypeForeignKeyProperties": [
-          {
-            "id": 1,
-            "foreignKeyString": "EveryTypeKeyProperty keyString 1 ☝",
-            "foreignKeyInteger": 1,
-            "foreignKeyLong": 1,
-            "foreignKeyDouble": 1.0123456789,
-            "foreignKeyFloat": 1.0123457,
-            "foreignKeyBoolean": true,
-            "foreignKeyInstant": "1999-12-31T23:59:00Z",
-            "foreignKeyLocalDate": "1999-12-31",
-            "data": "EveryTypeForeignKeyProperty data 1 ☝"
-          }
-        ],
-        "version": {
-          "number": 1
-        }
-      },
-      {
-        "keyString": "EveryTypeKeyProperty keyString 2 ✌",
-        "keyInteger": 2,
-        "keyLong": 2,
-        "keyDouble": 2.0123456789,
-        "keyFloat": 2.0123456,
-        "keyBoolean": false,
-        "keyInstant": "2000-01-01T00:00:00Z",
-        "keyLocalDate": "2000-01-01",
-        "everyTypeForeignKeyProperties": [
-          {
-            "id": 2,
-            "foreignKeyString": "EveryTypeKeyProperty keyString 2 ✌",
-            "foreignKeyInteger": 2,
-            "foreignKeyLong": 2,
-            "foreignKeyDouble": 2.0123456789,
-            "foreignKeyFloat": 2.0123456,
-            "foreignKeyBoolean": false,
-            "foreignKeyInstant": "2000-01-01T00:00:00Z",
-            "foreignKeyLocalDate": "2000-01-01",
-            "data": "EveryTypeForeignKeyProperty data 2 ✌"
-          }
-        ],
-        "version": {
-          "number": 1
-        }
-      }
-    ],
-    "propertiesOptionals": [
-      {
-        "propertiesOptionalId": 1,
-        "optionalLong": 100000000000,
-        "optionalInteger": 1,
-        "optionalDouble": 1.0123456789,
-        "optionalFloat": 1.0123457,
-        "optionalString": "PropertiesOptional optionalString 1 ☝",
-        "optionalBoolean": true,
-        "systemFrom": "1999-12-31T23:59:00Z",
-        "systemTo": null,
-        "lastUpdatedBy": {
-          "userId": "User userId 1 ☝",
-          "email": "User email 1 ☝"
-        },
-        "createdOn": "1999-12-31T23:59:00Z",
-        "createdBy": {
-          "userId": "User userId 1 ☝",
-          "email": "User email 1 ☝"
-        },
-        "version": {
-          "number": 1
-        }
-      },
-      {
-        "propertiesOptionalId": 2,
-        "optionalLong": null,
-        "optionalInteger": null,
-        "optionalDouble": null,
-        "optionalFloat": null,
-        "optionalString": null,
-        "optionalBoolean": null,
-        "systemFrom": "1999-12-31T23:59:00Z",
-        "systemTo": null,
-        "lastUpdatedBy": {
-          "userId": "User userId 2 ✌",
-          "email": null
-        },
-        "createdOn": "2000-01-01T00:00:00Z",
-        "createdBy": {
-          "userId": "User userId 2 ✌",
-          "email": null
-        },
-        "version": {
-          "number": 1
-        }
-      }
-    ]
-  }
+	"data": {
+		"everyTypeKeyProperties": [
+			{
+				"keyString": "EveryTypeKeyProperty keyString 1 ☝",
+				"keyInteger": 1,
+				"keyLong": 1,
+				"keyDouble": 1.0123456789,
+				"keyFloat": 1.0123457,
+				"keyBoolean": true,
+				"keyInstant": "1999-12-31T23:59:00Z",
+				"keyLocalDate": "1999-12-31",
+				"everyTypeForeignKeyProperties": [
+					{
+						"id": 1,
+						"foreignKeyString": "EveryTypeKeyProperty keyString 1 ☝",
+						"foreignKeyInteger": 1,
+						"foreignKeyLong": 1,
+						"foreignKeyDouble": 1.0123456789,
+						"foreignKeyFloat": 1.0123457,
+						"foreignKeyBoolean": true,
+						"foreignKeyInstant": "1999-12-31T23:59:00Z",
+						"foreignKeyLocalDate": "1999-12-31",
+						"data": "EveryTypeForeignKeyProperty data 1 ☝"
+					}
+				],
+				"version": {
+					"number": 1
+				}
+			},
+			{
+				"keyString": "EveryTypeKeyProperty keyString 2 ✌",
+				"keyInteger": 2,
+				"keyLong": 2,
+				"keyDouble": 2.0123456789,
+				"keyFloat": 2.0123456,
+				"keyBoolean": false,
+				"keyInstant": "2000-01-01T00:00:00Z",
+				"keyLocalDate": "2000-01-01",
+				"everyTypeForeignKeyProperties": [
+					{
+						"id": 2,
+						"foreignKeyString": "EveryTypeKeyProperty keyString 2 ✌",
+						"foreignKeyInteger": 2,
+						"foreignKeyLong": 2,
+						"foreignKeyDouble": 2.0123456789,
+						"foreignKeyFloat": 2.0123456,
+						"foreignKeyBoolean": false,
+						"foreignKeyInstant": "2000-01-01T00:00:00Z",
+						"foreignKeyLocalDate": "2000-01-01",
+						"data": "EveryTypeForeignKeyProperty data 2 ✌"
+					}
+				],
+				"version": {
+					"number": 1
+				}
+			}
+		],
+		"propertiesOptionals": [
+			{
+				"propertiesOptionalId": 1,
+				"optionalLong": 100000000000,
+				"optionalInteger": 1,
+				"optionalDouble": 1.0123456789,
+				"optionalFloat": 1.0123457,
+				"optionalString": "PropertiesOptional optionalString 1 ☝",
+				"optionalBoolean": true,
+				"systemFrom": "1999-12-31T23:59:00Z",
+				"systemTo": null,
+				"lastUpdatedBy": {
+					"userId": "User userId 1 ☝",
+					"email": "User email 1 ☝"
+				},
+				"createdOn": "1999-12-31T23:59:00Z",
+				"createdBy": {
+					"userId": "User userId 1 ☝",
+					"email": "User email 1 ☝"
+				},
+				"version": {
+					"number": 1
+				}
+			},
+			{
+				"propertiesOptionalId": 2,
+				"optionalLong": null,
+				"optionalInteger": null,
+				"optionalDouble": null,
+				"optionalFloat": null,
+				"optionalString": null,
+				"optionalBoolean": null,
+				"systemFrom": "1999-12-31T23:59:00Z",
+				"systemTo": null,
+				"lastUpdatedBy": {
+					"userId": "User userId 2 ✌",
+					"email": null
+				},
+				"createdOn": "2000-01-01T00:00:00Z",
+				"createdBy": {
+					"userId": "User userId 2 ✌",
+					"email": null
+				},
+				"version": {
+					"number": 1
+				}
+			}
+		]
+	}
 }

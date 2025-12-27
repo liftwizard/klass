@@ -1,53 +1,53 @@
 {
-  "propertiesOptionalId": 1,
-  "systemFrom": "1999-12-31T23:59:00Z",
-  "systemTo": null,
-  "createdOn": "1999-12-31T23:59:00Z",
-  "optionalString": "PropertiesOptional optionalString 1 ☝",
-  "optionalInteger": 1,
-  "optionalLong": 100000000000,
-  "optionalDouble": 1.0123456789,
-  "optionalFloat": 1.0123457,
-  "optionalBoolean": true,
-  "optionalInstant": "1999-12-31T23:59:00Z",
-  "optionalLocalDate": "1999-12-31",
-  "optionalDerived": "cool.klass.xample.coverage.PropertiesOptional.getOptionalDerived",
-  "version": {
-    "systemFrom": "1999-12-31T23:59:00Z",
-    "systemTo": null,
-    "createdOn": "1999-12-31T23:59:00Z",
-    "number": 1,
-    "createdBy": {
-      "userId": "User userId 1 ☝",
-      "systemFrom": "1999-12-31T23:59:00Z",
-      "systemTo": null,
-      "firstName": "User firstName 1 ☝",
-      "lastName": "User lastName 1 ☝",
-      "email": "User email 1 ☝"
-    },
-    "lastUpdatedBy": {
-      "userId": "User userId 1 ☝",
-      "systemFrom": "1999-12-31T23:59:00Z",
-      "systemTo": null,
-      "firstName": "User firstName 1 ☝",
-      "lastName": "User lastName 1 ☝",
-      "email": "User email 1 ☝"
-    }
-  },
-  "createdBy": {
-    "userId": "User userId 1 ☝",
-    "systemFrom": "1999-12-31T23:59:00Z",
-    "systemTo": null,
-    "firstName": "User firstName 1 ☝",
-    "lastName": "User lastName 1 ☝",
-    "email": "User email 1 ☝"
-  },
-  "lastUpdatedBy": {
-    "userId": "User userId 1 ☝",
-    "systemFrom": "1999-12-31T23:59:00Z",
-    "systemTo": null,
-    "firstName": "User firstName 1 ☝",
-    "lastName": "User lastName 1 ☝",
-    "email": "User email 1 ☝"
-  }
+	"propertiesOptionalId": 1,
+	"systemFrom": "1999-12-31T23:59:00Z",
+	"systemTo": null,
+	"createdOn": "1999-12-31T23:59:00Z",
+	"optionalString": "PropertiesOptional optionalString 1 ☝",
+	"optionalInteger": 1,
+	"optionalLong": 100000000000,
+	"optionalDouble": 1.0123456789,
+	"optionalFloat": 1.0123457,
+	"optionalBoolean": true,
+	"optionalInstant": "1999-12-31T23:59:00Z",
+	"optionalLocalDate": "1999-12-31",
+	"optionalDerived": "cool.klass.xample.coverage.PropertiesOptional.getOptionalDerived",
+	"version": {
+		"systemFrom": "1999-12-31T23:59:00Z",
+		"systemTo": null,
+		"createdOn": "1999-12-31T23:59:00Z",
+		"number": 1,
+		"createdBy": {
+			"userId": "User userId 1 ☝",
+			"systemFrom": "1999-12-31T23:59:00Z",
+			"systemTo": null,
+			"firstName": "User firstName 1 ☝",
+			"lastName": "User lastName 1 ☝",
+			"email": "User email 1 ☝"
+		},
+		"lastUpdatedBy": {
+			"userId": "User userId 1 ☝",
+			"systemFrom": "1999-12-31T23:59:00Z",
+			"systemTo": null,
+			"firstName": "User firstName 1 ☝",
+			"lastName": "User lastName 1 ☝",
+			"email": "User email 1 ☝"
+		}
+	},
+	"createdBy": {
+		"userId": "User userId 1 ☝",
+		"systemFrom": "1999-12-31T23:59:00Z",
+		"systemTo": null,
+		"firstName": "User firstName 1 ☝",
+		"lastName": "User lastName 1 ☝",
+		"email": "User email 1 ☝"
+	},
+	"lastUpdatedBy": {
+		"userId": "User userId 1 ☝",
+		"systemFrom": "1999-12-31T23:59:00Z",
+		"systemTo": null,
+		"firstName": "User firstName 1 ☝",
+		"lastName": "User lastName 1 ☝",
+		"email": "User email 1 ☝"
+	}
 }
