@@ -36,7 +36,7 @@
 								"klass": {
 									"name": "PackageableElement"
 								},
-								"associationEnds": [ ],
+								"associationEnds": [],
 								"dataTypeProperty": {
 									"owningClassifier": {
 										"name": "NamedElement"
@@ -56,13 +56,13 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				]
 			},
 			{
 				"url": "/meta/packageableElement",
-				"parameters": [ ],
+				"parameters": [],
 				"services": [
 					{
 						"verb": "GET",
@@ -76,7 +76,7 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				]
 			}
@@ -119,7 +119,7 @@
 								"klass": {
 									"name": "Enumeration"
 								},
-								"associationEnds": [ ],
+								"associationEnds": [],
 								"dataTypeProperty": {
 									"owningClassifier": {
 										"name": "NamedElement"
@@ -139,13 +139,13 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				]
 			},
 			{
 				"url": "/meta/enumeration",
-				"parameters": [ ],
+				"parameters": [],
 				"services": [
 					{
 						"verb": "GET",
@@ -159,7 +159,7 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				]
 			}
@@ -202,7 +202,7 @@
 								"klass": {
 									"name": "Interface"
 								},
-								"associationEnds": [ ],
+								"associationEnds": [],
 								"dataTypeProperty": {
 									"owningClassifier": {
 										"name": "NamedElement"
@@ -222,13 +222,13 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				]
 			},
 			{
 				"url": "/meta/interface",
-				"parameters": [ ],
+				"parameters": [],
 				"services": [
 					{
 						"verb": "GET",
@@ -242,7 +242,7 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				]
 			}
@@ -285,7 +285,7 @@
 								"klass": {
 									"name": "Klass"
 								},
-								"associationEnds": [ ],
+								"associationEnds": [],
 								"dataTypeProperty": {
 									"owningClassifier": {
 										"name": "NamedElement"
@@ -305,7 +305,7 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					},
 					{
 						"verb": "PUT",
@@ -320,7 +320,7 @@
 								"klass": {
 									"name": "Klass"
 								},
-								"associationEnds": [ ],
+								"associationEnds": [],
 								"dataTypeProperty": {
 									"owningClassifier": {
 										"name": "NamedElement"
@@ -340,7 +340,7 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					},
 					{
 						"verb": "DELETE",
@@ -355,7 +355,7 @@
 								"klass": {
 									"name": "Klass"
 								},
-								"associationEnds": [ ],
+								"associationEnds": [],
 								"dataTypeProperty": {
 									"owningClassifier": {
 										"name": "NamedElement"
@@ -375,13 +375,13 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				]
 			},
 			{
 				"url": "/meta/class",
-				"parameters": [ ],
+				"parameters": [],
 				"services": [
 					{
 						"verb": "GET",
@@ -395,7 +395,7 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					},
 					{
 						"verb": "PUT",
@@ -407,7 +407,7 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					},
 					{
 						"verb": "DELETE",
@@ -419,7 +419,7 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				]
 			}
@@ -462,7 +462,7 @@
 								"klass": {
 									"name": "Classifier"
 								},
-								"associationEnds": [ ],
+								"associationEnds": [],
 								"dataTypeProperty": {
 									"owningClassifier": {
 										"name": "NamedElement"
@@ -482,13 +482,13 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				]
 			},
 			{
 				"url": "/meta/classifier",
-				"parameters": [ ],
+				"parameters": [],
 				"services": [
 					{
 						"verb": "GET",
@@ -502,7 +502,7 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				]
 			}
@@ -545,7 +545,7 @@
 								"klass": {
 									"name": "Association"
 								},
-								"associationEnds": [ ],
+								"associationEnds": [],
 								"dataTypeProperty": {
 									"owningClassifier": {
 										"name": "NamedElement"
@@ -565,13 +565,13 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				]
 			},
 			{
 				"url": "/meta/association",
-				"parameters": [ ],
+				"parameters": [],
 				"services": [
 					{
 						"verb": "GET",
@@ -585,7 +585,7 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				]
 			}
@@ -628,7 +628,7 @@
 								"klass": {
 									"name": "NamedProjection"
 								},
-								"associationEnds": [ ],
+								"associationEnds": [],
 								"dataTypeProperty": {
 									"owningClassifier": {
 										"name": "NamedElement"
@@ -648,13 +648,13 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				]
 			},
 			{
 				"url": "/meta/projection",
-				"parameters": [ ],
+				"parameters": [],
 				"services": [
 					{
 						"verb": "GET",
@@ -668,7 +668,7 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				]
 			}
@@ -711,7 +711,7 @@
 								"klass": {
 									"name": "ServiceGroup"
 								},
-								"associationEnds": [ ],
+								"associationEnds": [],
 								"dataTypeProperty": {
 									"owningClassifier": {
 										"name": "NamedElement"
@@ -731,13 +731,13 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				]
 			},
 			{
 				"url": "/meta/serviceGroup",
-				"parameters": [ ],
+				"parameters": [],
 				"services": [
 					{
 						"verb": "GET",
@@ -751,7 +751,7 @@
 						"authorizeCriteria": null,
 						"validateCriteria": null,
 						"conflictCriteria": null,
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				]
 			}
