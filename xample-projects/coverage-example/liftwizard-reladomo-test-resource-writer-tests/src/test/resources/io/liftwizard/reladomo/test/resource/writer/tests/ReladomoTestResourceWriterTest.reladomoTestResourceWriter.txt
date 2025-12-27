@@ -1,11 +1,11 @@
 class cool.klass.xample.coverage.PropertiesRequired
 systemFrom               , systemTo               , propertiesRequiredId, createdById  , createdOn                , lastUpdatedById, requiredString      , requiredInteger, requiredLong, requiredDouble, requiredFloat, requiredBoolean, requiredInstant        , requiredLocalDate
-"1999-12-31 23:59:59.999", "9999-12-01 23:59:00.0",                    1, "test user 1", "1999-12-31 23:59:59.999", "test user 1"  , "requiredString 1 ☝",               1, 100000000000,   1.0123456789,     1.0123457,            true, "1999-12-31 23:59:00.0", "1999-12-31"
+"1999-12-31 23:59:59.999", "9999-12-01 23:59:00.0",                    1, "test user 1", "1999-12-31 23:59:59.999", "test user 1"  , "requiredString 1 ☝",               1, 100000000000,   1.0123456789,     1.0123457,            true, "1999-12-31 23:59:00.0", "1999-12-31"     
 
 class cool.klass.xample.coverage.PropertiesOptional
 systemFrom               , systemTo               , propertiesOptionalId, createdById  , createdOn                , lastUpdatedById, optionalString      , optionalInteger, optionalLong, optionalDouble, optionalFloat, optionalBoolean, optionalInstant        , optionalLocalDate
-"1999-12-31 23:59:59.999", "9999-12-01 23:59:00.0",                    1, "test user 1", "1999-12-31 23:59:59.999", "test user 1"  , "optionalString 1 ☝",               1, 100000000000,   1.0123456789,     1.0123457,            true, "1999-12-31 23:59:00.0", "1999-12-31"
-"1999-12-31 23:59:59.999", "9999-12-01 23:59:00.0",                    2, "test user 1", "1999-12-31 23:59:59.999", "test user 1"  , null                ,            null,         null,           null,          null,            null, null                   , null
+"1999-12-31 23:59:59.999", "9999-12-01 23:59:00.0",                    1, "test user 1", "1999-12-31 23:59:59.999", "test user 1"  , "optionalString 1 ☝",               1, 100000000000,   1.0123456789,     1.0123457,            true, "1999-12-31 23:59:00.0", "1999-12-31"     
+"1999-12-31 23:59:59.999", "9999-12-01 23:59:00.0",                    2, "test user 1", "1999-12-31 23:59:59.999", "test user 1"  , null                ,            null,         null,           null,          null,            null, null                   , null             
 
 class cool.klass.xample.coverage.PropertiesRequiredVersion
 systemFrom               , systemTo               , propertiesRequiredId, createdById  , createdOn                , lastUpdatedById, number
