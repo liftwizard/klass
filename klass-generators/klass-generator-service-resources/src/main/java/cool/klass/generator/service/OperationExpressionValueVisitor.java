@@ -160,9 +160,7 @@ public class OperationExpressionValueVisitor implements ExpressionValueVisitor {
 
     @Override
     public void visitNullLiteral(@Nonnull NullLiteral nullLiteral) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitNullLiteral() not implemented yet"
-        );
+        this.stringBuilder.append("null");
     }
 
     @Nonnull
