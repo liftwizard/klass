@@ -46,7 +46,6 @@ projection MirrorProjection on Mirror
     id: "Mirror id",
     systemFrom: "Mirror systemFrom",
     systemTo: "Mirror systemTo",
-    mirrorType: "Mirror mirrorType",
 }
 
 projection SharedItemProjection on SharedItem

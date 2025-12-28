@@ -106,27 +106,18 @@ association ItemHasChildren
 }
 
 /*
- * Mirror represents a reference/link to another item.
+ * Mirror represents a link between an original item and its mirror copy.
  * Workflowy allows creating "live copies" of items called mirrors.
  * When you edit a mirrored item, changes appear everywhere it's mirrored.
  *
- * Types:
- * - source: The original item being mirrored
- * - virtual: The mirror/reference pointing to the source
+ * The direction is implicit: sourceItemId → virtualItemId
  */
-enumeration MirrorType
-{
-    SOURCE("source"),
-    VIRTUAL("virtual"),
-}
-
 class Mirror
     systemTemporal
 {
     id            : String key;
     sourceItemId  : String private;
     virtualItemId : String private;
-    mirrorType    : MirrorType;
 }
 
 association MirrorSourceItem
@@ -289,7 +280,6 @@ projection SharedItemProjection on SharedItem
 projection MirrorProjection on Mirror
 {
     id        : "Mirror id",
-    mirrorType: "Mirror mirrorType",
     systemFrom: "Mirror systemFrom",
     systemTo  : "Mirror systemTo",
 }
