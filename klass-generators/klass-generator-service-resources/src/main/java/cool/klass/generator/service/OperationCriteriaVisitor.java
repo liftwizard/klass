@@ -29,6 +29,7 @@ import cool.klass.model.meta.domain.api.criteria.OrCriteria;
 import cool.klass.model.meta.domain.api.operator.Operator;
 import cool.klass.model.meta.domain.api.value.ExpressionValue;
 import cool.klass.model.meta.domain.api.value.MemberReferencePath;
+import cool.klass.model.meta.domain.api.value.literal.NullLiteral;
 
 public class OperationCriteriaVisitor implements CriteriaVisitor {
 
@@ -69,11 +70,18 @@ public class OperationCriteriaVisitor implements CriteriaVisitor {
 
         sourceValue.visit(new OperationExpressionValueVisitor(this.finderName, this.stringBuilder));
 
-        operator.visit(new OperationOperatorVisitor(this.stringBuilder));
-
-        targetValue.visit(new OperationExpressionValueVisitor(this.finderName, this.stringBuilder));
-
-        this.stringBuilder.append(")");
+        if (targetValue instanceof NullLiteral) {
+            String operatorText = operator.getOperatorText();
+            switch (operatorText) {
+                case "==" -> this.stringBuilder.append(".isNull()");
+                case "!=" -> this.stringBuilder.append(".isNotNull()");
+                default -> throw new AssertionError("Unexpected operator with null literal: " + operatorText);
+            }
+        } else {
+            operator.visit(new OperationOperatorVisitor(this.stringBuilder));
+            targetValue.visit(new OperationExpressionValueVisitor(this.finderName, this.stringBuilder));
+            this.stringBuilder.append(")");
+        }
     }
 
     @Override
