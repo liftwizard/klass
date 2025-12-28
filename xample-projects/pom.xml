@@ -32,6 +32,7 @@
         <module>stackoverflow</module>
         <module>coverage-example</module>
         <module>reladomo-to-many-abstract</module>
+        <module>workflowy</module>
     </modules>
 
     <properties>
