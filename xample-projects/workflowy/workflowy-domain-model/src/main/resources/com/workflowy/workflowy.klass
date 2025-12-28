@@ -168,16 +168,14 @@ association SharedWithUser
 }
 
 /*
- * Tag allows organizing items with labels.
- * In Workflowy, tags are typically represented as #hashtags or @mentions
- * within the item name, but we model them as first-class entities.
+ * Tag represents hashtags (#tag) or mentions (@tag) parsed from item text.
+ * Note: Tags may not be first-class entities in Workflowy's API - they might
+ * just be extracted from item name text. This is a modeling assumption.
  */
 class Tag
     systemTemporal
 {
-    name        : String key;
-    description : String?;
-    color       : String?;
+    name: String key;
 }
 
 class ItemTagMapping
@@ -244,11 +242,9 @@ projection ItemVersionProjection on ItemVersion
 
 projection TagProjection on Tag
 {
-    name       : "Tag name",
-    description: "Tag description",
-    color      : "Tag color",
-    systemFrom : "Tag systemFrom",
-    systemTo   : "Tag systemTo",
+    name      : "Tag name",
+    systemFrom: "Tag systemFrom",
+    systemTo  : "Tag systemTo",
 }
 
 projection ItemTagMappingProjection on ItemTagMapping

@@ -62,8 +62,6 @@ projection TagProjection on Tag
     name: "Tag name",
     systemFrom: "Tag systemFrom",
     systemTo: "Tag systemTo",
-    description: "Tag description",
-    color: "Tag color",
 }
 
 projection ItemTagMappingProjection on ItemTagMapping
