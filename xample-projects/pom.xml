@@ -32,6 +32,7 @@
         <module>stackoverflow</module>
         <module>coverage-example</module>
         <module>reladomo-to-many-abstract</module>
+        <module>workflowy</module>
     </modules>
 
     <properties>
@@ -62,6 +63,7 @@
                 <module>reladomo-abstract-implements-interface</module>
                 <module>reladomo-abstract-owned-foreign-key</module>
                 <module>reladomo-to-many-abstract</module>
+                <module>workflowy</module>
             </modules>
         </profile>
     </profiles>

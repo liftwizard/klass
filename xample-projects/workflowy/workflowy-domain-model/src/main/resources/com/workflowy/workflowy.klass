@@ -1,0 +1,729 @@
+/*
+ * Workflowy domain model - A faithful representation of the Workflowy REST API.
+ *
+ * This model covers the Workflowy API endpoints:
+ *
+ * Internal/sync endpoints:
+ * - /accounts/login/
+ * - /get_initialization_data
+ * - /push_and_poll
+ * - /offline_logout
+ *
+ * Public API endpoints:
+ * - /api/get-item/
+ * - /api/list-children/
+ * - /api/create-item/
+ * - /api/edit-item/
+ * - /api/complete-item/
+ * - /api/uncomplete-item/
+ * - /api/delete-item/
+ */
+package com.workflowy
+
+/*
+ * User represents a Workflowy account.
+ * Based on the WorkFlowyAccount class from unofficial API libraries.
+ */
+user User
+    systemTemporal
+    versioned
+{
+    userId                  : String key userId;
+    username                : String?;
+    email                   : String?;
+    registrationDate        : Instant?;
+    itemsCreatedInMonth     : Integer?;
+    monthlyQuota            : Integer?;
+}
+
+/*
+ * Theme enumeration for user preferences.
+ */
+enumeration Theme
+{
+    LIGHT("light"),
+    DARK("dark"),
+    SYSTEM("system"),
+}
+
+/*
+ * UserSettings stores user preferences including theme.
+ */
+class UserSettings
+    systemTemporal
+    versioned
+    audited
+{
+    userId                  : String key private;
+    theme                   : Theme;
+    dateFormat              : String?;
+    showCompletedItems      : Boolean;
+    includeSharedProjects   : Boolean;
+}
+
+association UserHasSettings
+{
+    user                    : User[1..1];
+    settings                : UserSettings[0..1] owned;
+}
+
+/*
+ * Color enumeration for tags and highlights.
+ * Based on Workflowy's color palette.
+ */
+enumeration Color
+{
+    NONE("none"),
+    RED("red"),
+    ORANGE("orange"),
+    YELLOW("yellow"),
+    GREEN("green"),
+    CYAN("cyan"),
+    BLUE("blue"),
+    PURPLE("purple"),
+    PINK("pink"),
+    GRAY("gray"),
+    SKY("sky"),
+    TEAL("teal"),
+}
+
+/*
+ * Item is the core entity in Workflowy - a hierarchical node/bullet.
+ * Each item can have a name (title), note (description), and children.
+ *
+ * Fields based on the Workflowy API and unofficial client libraries:
+ * - projectid/id: UUID identifying the item
+ * - name: The text content/title of the item
+ * - note/description: Extended notes for the item
+ * - completed/isCompleted: Whether the item is checked off
+ * - completed_at/completedAt: When the item was completed
+ * - last_modified/lastModifiedTime: Last modification timestamp
+ * - parent: Reference to parent item (null for root items)
+ * - priority: Position/ordering among siblings (0 = first)
+ * - shared: Information about sharing status
+ */
+class Item
+    read(ItemReadProjection)
+    systemTemporal
+    versioned
+    audited
+{
+    // UUID identifying the item (called projectid in the API)
+    itemId                  : String key;
+
+    // The text content/title of the item
+    name                    : String;
+
+    // Extended notes/description for the item
+    note                    : String?;
+
+    // Whether the item is completed (checked off)
+    completed               : Boolean;
+
+    // When the item was completed (null if not completed)
+    completedAt             : Instant?;
+
+    // Position among siblings (0 = first child, higher = later)
+    priority                : Integer;
+
+    // Foreign key to parent item (null for root-level items)
+    parentItemId            : String? private;
+
+    // Optional highlighting color for the item
+    highlightColor          : Color?;
+}
+
+/*
+ * Self-referencing association for the hierarchical item structure.
+ * An item can have a parent and many children.
+ */
+association ItemHasChildren
+{
+    parent                  : Item[0..1];
+    children                : Item[0..*] owned
+        orderBy: this.priority ascending;
+
+    relationship this.itemId == Item.parentItemId
+}
+
+/*
+ * Tag represents a hashtag that can be applied to items.
+ * Tags in Workflowy are text prefixed with # in item names.
+ * Tag colors are personal and don't apply to shared documents.
+ */
+class Tag
+    systemTemporal
+    versioned
+    audited
+{
+    // The tag name without the # prefix
+    name                    : String key;
+
+    // Personal color for this tag (not shared with collaborators)
+    color                   : Color;
+}
+
+/*
+ * ItemTagMapping represents the many-to-many relationship between items and tags.
+ * When a user types #tagname in an item, this creates a mapping.
+ */
+class ItemTagMapping
+    systemTemporal
+{
+    itemId                  : String key private;
+    tagName                 : String key private;
+
+    // Position of the tag reference within the item's name
+    position                : Integer;
+}
+
+association ItemHasTagMappings
+{
+    item                    : Item[1..1];
+    tags                    : ItemTagMapping[0..*] owned
+        orderBy: this.position ascending;
+}
+
+association TagHasItemMappings
+{
+    tag                     : Tag[1..1];
+    items                   : ItemTagMapping[0..*]
+        orderBy: this.itemId ascending;
+}
+
+/*
+ * DateTag represents a date reference in an item.
+ * Workflowy supports natural language dates that are parsed and stored.
+ * Examples: "today", "tomorrow", "next tuesday", "2024-01-15"
+ */
+class DateTag
+    systemTemporal
+{
+    dateTagId               : Long id key;
+    itemId                  : String private;
+
+    // The actual date this tag refers to
+    date                    : LocalDate;
+
+    // The original text entered (e.g., "next tuesday")
+    originalText            : String;
+
+    // Position of the date tag within the item's name
+    position                : Integer;
+
+    // For date ranges, this is the end date
+    endDate                 : LocalDate?;
+}
+
+association ItemHasDateTags
+{
+    item                    : Item[1..1];
+    dateTags                : DateTag[0..*] owned
+        orderBy: this.position ascending;
+}
+
+/*
+ * Mirror represents Workflowy's mirror feature.
+ * Mirrors allow the same item to appear in multiple places.
+ *
+ * When creating a mirror, you get:
+ * - source mirror: The original item that becomes a source
+ * - virtual mirror: References that point to the source
+ *
+ * Important: Only source mirrors can be placed in shared documents.
+ * Virtual mirrors inside shared documents show permission errors.
+ */
+class Mirror
+    systemTemporal
+    versioned
+{
+    mirrorId                : String key;
+
+    // The source item that this mirror references
+    sourceItemId            : String private;
+
+    // The item that contains this mirror reference (where it appears)
+    containerItemId         : String private;
+
+    // Position within the container
+    priority                : Integer;
+}
+
+association MirrorHasSource
+{
+    sourceItem              : Item[1..1];
+    mirrors                 : Mirror[0..*]
+        orderBy: this.priority ascending;
+
+    relationship this.itemId == Mirror.sourceItemId
+}
+
+association MirrorHasContainer
+{
+    containerItem           : Item[1..1];
+    containedMirrors        : Mirror[0..*] owned
+        orderBy: this.priority ascending;
+
+    relationship this.itemId == Mirror.containerItemId
+}
+
+/*
+ * Permission levels for shared projects.
+ */
+enumeration SharePermission
+{
+    VIEW("view"),
+    EDIT("edit"),
+    FULL("full"),
+}
+
+/*
+ * SharedProject represents a shared Workflowy document/subtree.
+ * When you share an item in Workflowy, it becomes accessible to others.
+ */
+class SharedProject
+    systemTemporal
+    versioned
+    audited
+{
+    shareId                 : String key;
+
+    // The root item that is being shared
+    rootItemId              : String private;
+
+    // Whether the share is active
+    active                  : Boolean;
+
+    // Public share link if sharing is enabled
+    shareLink               : String?;
+
+    // Default permission for users accessing via link
+    defaultPermission       : SharePermission;
+}
+
+association ItemHasShare
+{
+    sharedItem              : Item[1..1];
+    share                   : SharedProject[0..1] owned;
+
+    relationship this.itemId == SharedProject.rootItemId
+}
+
+/*
+ * ShareMember represents a specific user's access to a shared project.
+ */
+class ShareMember
+    systemTemporal
+{
+    shareId                 : String key private;
+    userId                  : String key private;
+    permission              : SharePermission;
+    invitedAt               : Instant;
+    acceptedAt              : Instant?;
+}
+
+association SharedProjectHasMembers
+{
+    share                   : SharedProject[1..1];
+    members                 : ShareMember[0..*] owned
+        orderBy: this.invitedAt ascending;
+}
+
+association UserHasShareMemberships
+{
+    user                    : User[1..1];
+    memberships             : ShareMember[0..*]
+        orderBy: this.invitedAt ascending;
+}
+
+/*
+ * Board represents Workflowy's kanban board view.
+ * An item can be viewed as a board where its children are columns.
+ */
+class Board
+    systemTemporal
+    versioned
+{
+    boardId                 : String key;
+    rootItemId              : String private;
+
+    // Whether the board view is enabled for this item
+    enabled                 : Boolean;
+}
+
+association ItemHasBoard
+{
+    item                    : Item[1..1];
+    board                   : Board[0..1] owned;
+
+    relationship this.itemId == Board.rootItemId
+}
+
+// ============================================================================
+// Projections
+// ============================================================================
+
+projection UserProjection on User
+{
+    userId                  : "User userId",
+    username                : "User username",
+    email                   : "User email",
+    systemFrom              : "User systemFrom",
+    systemTo                : "User systemTo",
+}
+
+projection UserSettingsProjection on UserSettings
+{
+    theme                   : "UserSettings theme",
+    dateFormat              : "UserSettings dateFormat",
+    showCompletedItems      : "UserSettings showCompletedItems",
+    includeSharedProjects   : "UserSettings includeSharedProjects",
+    systemFrom              : "UserSettings systemFrom",
+    systemTo                : "UserSettings systemTo",
+}
+
+projection TagProjection on Tag
+{
+    name                    : "Tag name",
+    color                   : "Tag color",
+    systemFrom              : "Tag systemFrom",
+    systemTo                : "Tag systemTo",
+}
+
+projection ItemTagMappingProjection on ItemTagMapping
+{
+    position                : "ItemTagMapping position",
+    tag                     : TagProjection,
+}
+
+projection DateTagProjection on DateTag
+{
+    date                    : "DateTag date",
+    originalText            : "DateTag originalText",
+    position                : "DateTag position",
+    endDate                 : "DateTag endDate",
+}
+
+projection ItemVersionProjection on ItemVersion
+{
+    systemFrom              : "ItemVersion systemFrom",
+    systemTo                : "ItemVersion systemTo",
+    createdOn               : "ItemVersion createdOn",
+    number                  : "ItemVersion number",
+    createdBy               : UserProjection,
+    lastUpdatedBy           : UserProjection,
+}
+
+projection MirrorProjection on Mirror
+{
+    mirrorId                : "Mirror mirrorId",
+    sourceItemId            : "Mirror sourceItemId",
+    priority                : "Mirror priority",
+    systemFrom              : "Mirror systemFrom",
+    systemTo                : "Mirror systemTo",
+}
+
+projection SharedProjectProjection on SharedProject
+{
+    shareId                 : "SharedProject shareId",
+    active                  : "SharedProject active",
+    shareLink               : "SharedProject shareLink",
+    defaultPermission       : "SharedProject defaultPermission",
+    systemFrom              : "SharedProject systemFrom",
+    systemTo                : "SharedProject systemTo",
+}
+
+projection ShareMemberProjection on ShareMember
+{
+    userId                  : "ShareMember userId",
+    permission              : "ShareMember permission",
+    invitedAt               : "ShareMember invitedAt",
+    acceptedAt              : "ShareMember acceptedAt",
+    user                    : UserProjection,
+}
+
+projection BoardProjection on Board
+{
+    boardId                 : "Board boardId",
+    enabled                 : "Board enabled",
+    systemFrom              : "Board systemFrom",
+    systemTo                : "Board systemTo",
+}
+
+/*
+ * Basic item projection for list operations.
+ */
+projection ItemBasicProjection on Item
+{
+    itemId                  : "Item itemId",
+    name                    : "Item name",
+    note                    : "Item note",
+    completed               : "Item completed",
+    completedAt             : "Item completedAt",
+    priority                : "Item priority",
+    highlightColor          : "Item highlightColor",
+    systemFrom              : "Item systemFrom",
+    systemTo                : "Item systemTo",
+    createdOn               : "Item createdOn",
+}
+
+/*
+ * Full item projection including children, tags, dates, and version info.
+ */
+projection ItemReadProjection on Item
+{
+    itemId                  : "Item itemId",
+    name                    : "Item name",
+    note                    : "Item note",
+    completed               : "Item completed",
+    completedAt             : "Item completedAt",
+    priority                : "Item priority",
+    highlightColor          : "Item highlightColor",
+    systemFrom              : "Item systemFrom",
+    systemTo                : "Item systemTo",
+    createdOn               : "Item createdOn",
+    children                : ItemBasicProjection,
+    tags                    : ItemTagMappingProjection,
+    dateTags                : DateTagProjection,
+    version                 : ItemVersionProjection,
+    createdBy               : UserProjection,
+    lastUpdatedBy           : UserProjection,
+    share                   : SharedProjectProjection,
+    board                   : BoardProjection,
+}
+
+// ============================================================================
+// Services - Based on Workflowy API Endpoints
+// ============================================================================
+
+/*
+ * ItemResource implements the Workflowy API item operations:
+ * - GET /api/get-item/
+ * - GET /api/list-children/
+ * - POST /api/create-item/
+ * - PUT /api/edit-item/
+ * - PUT /api/complete-item/ (via PATCH)
+ * - PUT /api/uncomplete-item/ (via PATCH)
+ * - DELETE /api/delete-item/
+ */
+service ItemResource on Item
+{
+    // GET /api/get-item/{itemId} - Get a single item by ID
+    /api/get-item/{itemId: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.itemId == itemId;
+            projection  : ItemReadProjection;
+        }
+
+    // GET /api/list-children/{itemId} - List children of an item
+    /api/list-children/{itemId: String[1..1]}
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.parentItemId == itemId;
+            projection  : ItemBasicProjection;
+            orderBy     : this.priority ascending;
+        }
+
+    // POST /api/create-item/ - Create a new item
+    /api/create-item
+        POST
+        {
+            multiplicity: one;
+        }
+
+    // PUT /api/edit-item/{itemId} - Edit an item
+    /api/edit-item/{itemId: String[1..1]}
+        PUT
+        {
+            multiplicity: one;
+            criteria    : this.itemId == itemId;
+        }
+        PATCH
+        {
+            multiplicity: one;
+            criteria    : this.itemId == itemId;
+        }
+
+    // DELETE /api/delete-item/{itemId} - Delete an item
+    /api/delete-item/{itemId: String[1..1]}
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.itemId == itemId;
+        }
+
+    // GET /items - List all root-level items
+    /items
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.parentItemId == null;
+            projection  : ItemReadProjection;
+            orderBy     : this.priority ascending;
+        }
+
+    // Search items by name
+    /items/search?{query: String[1..1]}
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.name contains query;
+            projection  : ItemBasicProjection;
+        }
+
+    // Filter items by completion status
+    /items/completed
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.completed == true;
+            projection  : ItemBasicProjection;
+            orderBy     : this.completedAt descending;
+        }
+
+    /items/incomplete
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.completed == false;
+            projection  : ItemBasicProjection;
+            orderBy     : this.priority ascending;
+        }
+}
+
+/*
+ * UserResource for account management.
+ */
+service UserResource on User
+{
+    /user/{userId: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.userId == userId;
+            projection  : UserProjection;
+        }
+
+    /user
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : UserProjection;
+        }
+}
+
+/*
+ * TagResource for managing tags.
+ */
+service TagResource on Tag
+{
+    /tags
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : TagProjection;
+            orderBy     : this.name ascending;
+        }
+        POST
+        {
+            multiplicity: one;
+        }
+
+    /tags/{name: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.name == name;
+            projection  : TagProjection;
+        }
+        PUT
+        {
+            multiplicity: one;
+            criteria    : this.name == name;
+        }
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.name == name;
+        }
+}
+
+/*
+ * SharedProjectResource for managing shared projects.
+ */
+service SharedProjectResource on SharedProject
+{
+    /shares
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : SharedProjectProjection;
+        }
+        POST
+        {
+            multiplicity: one;
+        }
+
+    /shares/{shareId: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.shareId == shareId;
+            projection  : SharedProjectProjection;
+        }
+        PUT
+        {
+            multiplicity: one;
+            criteria    : this.shareId == shareId;
+        }
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.shareId == shareId;
+        }
+}
+
+/*
+ * MirrorResource for managing mirrors.
+ */
+service MirrorResource on Mirror
+{
+    /mirrors
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : MirrorProjection;
+        }
+        POST
+        {
+            multiplicity: one;
+        }
+
+    /mirrors/{mirrorId: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.mirrorId == mirrorId;
+            projection  : MirrorProjection;
+        }
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.mirrorId == mirrorId;
+        }
+
+    /items/{itemId: String[1..1]}/mirrors
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.sourceItemId == itemId;
+            projection  : MirrorProjection;
+        }
+}
