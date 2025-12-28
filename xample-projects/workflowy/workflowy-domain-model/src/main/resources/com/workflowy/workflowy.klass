@@ -1,0 +1,497 @@
+/*
+ * Workflowy domain model - a hierarchical outliner/note-taking application.
+ * This model represents the data from Workflowy's REST API.
+ *
+ * Workflowy's core concept is the "Item" (also called Node, List, or Bullet) which can
+ * have children, creating a hierarchical tree structure. Items can be completed,
+ * have notes attached, and can reference other items via mirrors.
+ *
+ * API Endpoints covered:
+ * - GET  /api/get-item/           - Get a single item by ID
+ * - GET  /api/list-children/      - List children of an item
+ * - POST /api/create-item/        - Create a new item
+ * - POST /api/edit-item/          - Edit an existing item
+ * - POST /api/delete-item/        - Delete an item
+ * - POST /api/complete-item/      - Mark item as complete
+ * - POST /api/uncomplete-item/    - Mark item as incomplete
+ */
+
+package com.workflowy
+
+// 'user' represents logged in Workflowy users
+user User
+    read
+    systemTemporal
+{
+    userId    : String key userId maxLength(256);
+    email     : String? maxLength(320);
+    firstName : String? maxLength(256);
+    lastName  : String? maxLength(256);
+}
+
+/*
+ * Item is the core entity in Workflowy.
+ * Every bullet point in the outline is an Item.
+ * Items form a tree structure where each item can have children.
+ *
+ * Properties based on the Workflowy API:
+ * - id: UUID string (36 characters)
+ * - name: The text content of the item
+ * - note: Optional description/notes attached to the item
+ * - isCompleted: Whether the item has been marked as done
+ * - completedAt: Timestamp when the item was completed
+ * - lastModified: When the item was last changed
+ */
+class Item
+    read(ItemProjection)
+    systemTemporal
+    versioned
+    audited
+{
+    // Workflowy uses UUID strings for item IDs (36 characters)
+    id           : String key minLength(36) maxLength(36);
+
+    // Parent item ID for hierarchical structure (null for root items)
+    parentId     : String? private final minLength(36) maxLength(36);
+
+    // The text content of the item/bullet
+    name         : String maxLength(1_000_000);
+
+    // Optional note/description attached to the item
+    note         : String? maxLength(1_000_000);
+
+    // Whether this item has been marked as completed
+    completed    : Boolean;
+
+    // Timestamp when the item was completed (null if not completed)
+    completedAt  : Instant?;
+
+    // Priority/position within siblings (0 = first)
+    priority     : Integer min(0);
+
+    // Whether this item is collapsed in the UI
+    collapsed    : Boolean;
+
+    // Parameterized property to find children containing specific text
+    childrenWithText(searchText: String[1..1]): Item[0..*]
+        orderBy: this.priority ascending
+    {
+        this.id == Item.parentId
+            && Item.name contains searchText
+    }
+
+    // Parameterized property to find completed children
+    completedChildren(): Item[0..*]
+        orderBy: this.priority ascending
+    {
+        this.id == Item.parentId
+            && Item.completed == true
+    }
+
+    // Parameterized property to find incomplete children
+    incompleteChildren(): Item[0..*]
+        orderBy: this.priority ascending
+    {
+        this.id == Item.parentId
+            && Item.completed == false
+    }
+}
+
+// Self-referential association for parent-child hierarchy
+association ItemHasChildren
+{
+    parent   : Item[0..1] final;
+    children : Item[0..*] owned
+        orderBy: this.priority ascending;
+
+    relationship this.id == Item.parentId
+}
+
+/*
+ * Mirror represents a link between an original item and its mirror copy.
+ * Workflowy allows creating "live copies" of items called mirrors.
+ * When you edit a mirrored item, changes appear everywhere it's mirrored.
+ *
+ * The direction is implicit: sourceItemId → virtualItemId
+ */
+class Mirror
+    systemTemporal
+{
+    id            : String key minLength(36) maxLength(36);
+    sourceItemId  : String private final minLength(36) maxLength(36);
+    virtualItemId : String private final minLength(36) maxLength(36);
+}
+
+association MirrorSourceItem
+{
+    sourceItem : Item[1..1] final;
+    mirrors    : Mirror[0..*];
+
+    relationship this.id == Mirror.sourceItemId
+}
+
+association MirrorVirtualItem
+{
+    virtualItem : Item[1..1] final;
+    asMirror    : Mirror[0..1];
+
+    relationship this.id == Mirror.virtualItemId
+}
+
+/*
+ * SharedItem represents items that have been shared with other users.
+ * Workflowy allows sharing specific items and their subtrees.
+ *
+ * Permission levels determine what the recipient can do.
+ */
+enumeration SharePermission
+{
+    VIEW("view"),
+    EDIT("edit"),
+    FULL("full"),
+}
+
+class SharedItem
+    systemTemporal
+{
+    id         : String key minLength(36) maxLength(36);
+    itemId     : String private final minLength(36) maxLength(36);
+    sharedWith : String private final maxLength(256);
+    permission : SharePermission;
+    shareUrl   : String? maxLength(2048);
+}
+
+association ItemHasShares
+{
+    item   : Item[1..1] final;
+    shares : SharedItem[0..*] owned;
+}
+
+association SharedWithUser
+{
+    sharedItems : SharedItem[0..*];
+    recipient   : User[1..1] final;
+
+    relationship this.sharedWith == User.userId
+}
+
+/*
+ * Tag represents hashtags (#tag) or mentions (@tag) parsed from item text.
+ * Note: Tags may not be first-class entities in Workflowy's API - they might
+ * just be extracted from item name text. This is a modeling assumption.
+ */
+class Tag
+    systemTemporal
+{
+    name : String key maxLength(128);
+    color: String? maxLength(32);
+}
+
+class ItemTagMapping
+    systemTemporal
+{
+    itemId  : String key private final minLength(36) maxLength(36);
+    tagName : String key private final maxLength(128);
+}
+
+association ItemHasTags
+{
+    item : Item[1..1] final;
+    tags : ItemTagMapping[0..*] owned;
+}
+
+association TagHasItems
+{
+    items : ItemTagMapping[0..*];
+    tag   : Tag[1..1] final;
+}
+
+/*
+ * Date represents date metadata attached to items.
+ * Workflowy supports date filtering and date-based views.
+ * Dates are stored as Instants; displayed as dates when at midnight.
+ */
+class ItemDate
+    systemTemporal
+{
+    id       : String key minLength(36) maxLength(36);
+    itemId   : String private final minLength(36) maxLength(36);
+    dateValue: Instant;
+}
+
+association ItemHasDates
+{
+    item  : Item[1..1] final;
+    dates : ItemDate[0..*] owned;
+}
+
+// ============================================================================
+// Projections
+// ============================================================================
+
+projection UserProjection on User
+{
+    userId    : "User userId",
+    email     : "User email",
+    firstName : "User firstName",
+    lastName  : "User lastName",
+    systemFrom: "User systemFrom",
+    systemTo  : "User systemTo",
+}
+
+projection ItemVersionProjection on ItemVersion
+{
+    systemFrom   : "ItemVersion systemFrom",
+    systemTo     : "ItemVersion systemTo",
+    createdOn    : "ItemVersion createdOn",
+    number       : "ItemVersion number",
+    createdBy    : UserProjection,
+    lastUpdatedBy: UserProjection,
+}
+
+projection TagProjection on Tag
+{
+    name      : "Tag name",
+    color     : "Tag color",
+    systemFrom: "Tag systemFrom",
+    systemTo  : "Tag systemTo",
+}
+
+projection ItemTagMappingProjection on ItemTagMapping
+{
+    systemFrom: "ItemTagMapping systemFrom",
+    systemTo  : "ItemTagMapping systemTo",
+    tag       : TagProjection,
+}
+
+projection ItemDateProjection on ItemDate
+{
+    id        : "ItemDate id",
+    dateValue : "ItemDate dateValue",
+    systemFrom: "ItemDate systemFrom",
+    systemTo  : "ItemDate systemTo",
+}
+
+projection SharedItemProjection on SharedItem
+{
+    id        : "SharedItem id",
+    permission: "SharedItem permission",
+    shareUrl  : "SharedItem shareUrl",
+    recipient : UserProjection,
+    systemFrom: "SharedItem systemFrom",
+    systemTo  : "SharedItem systemTo",
+}
+
+projection MirrorProjection on Mirror
+{
+    id        : "Mirror id",
+    systemFrom: "Mirror systemFrom",
+    systemTo  : "Mirror systemTo",
+}
+
+// Lightweight projection for listing children without nested data
+projection ItemSummaryProjection on Item
+{
+    id         : "Item id",
+    name       : "Item name",
+    note       : "Item note",
+    completed  : "Item completed",
+    completedAt: "Item completedAt",
+    priority   : "Item priority",
+    collapsed  : "Item collapsed",
+    systemFrom : "Item systemFrom",
+    systemTo   : "Item systemTo",
+}
+
+// Full projection including children and metadata
+projection ItemProjection on Item
+{
+    id           : "Item id",
+    name         : "Item name",
+    note         : "Item note",
+    completed    : "Item completed",
+    completedAt  : "Item completedAt",
+    priority     : "Item priority",
+    collapsed    : "Item collapsed",
+    systemFrom   : "Item systemFrom",
+    systemTo     : "Item systemTo",
+    createdOn    : "Item createdOn",
+    children     : ItemSummaryProjection,
+    tags         : ItemTagMappingProjection,
+    dates        : ItemDateProjection,
+    shares       : SharedItemProjection,
+    mirrors      : MirrorProjection,
+    version      : ItemVersionProjection,
+    createdBy    : UserProjection,
+    lastUpdatedBy: UserProjection,
+}
+
+// ============================================================================
+// Services - representing the Workflowy REST API endpoints
+// ============================================================================
+
+// Item Resource - covers the main Workflowy API operations
+service ItemResource on Item
+{
+    // GET /api/item/{id} - Get a single item by ID
+    /api/item/{id: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.id == id;
+            projection  : ItemProjection;
+        }
+
+    // GET /api/children/{parentId} - List children of an item
+    /api/children/{parentId: String[1..1]}
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.parentId == parentId;
+            projection  : ItemSummaryProjection;
+            orderBy     : this.priority ascending;
+        }
+
+    // POST /api/item - Create a new item
+    /api/item
+        POST
+        {
+            multiplicity: one;
+        }
+
+    // PUT /api/item/{id}/edit - Edit an existing item
+    /api/item/{id: String[1..1]}/edit
+        PUT
+        {
+            multiplicity: one;
+            criteria    : this.id == id;
+        }
+
+    // DELETE /api/item/{id}/remove - Delete an item
+    /api/item/{id: String[1..1]}/remove
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.id == id;
+            authorize   : this.createdById == user;
+        }
+
+    // PUT /api/item/{id}/complete - Mark item as complete
+    /api/item/{id: String[1..1]}/complete
+        PUT
+        {
+            multiplicity: one;
+            criteria    : this.id == id;
+        }
+
+    // PUT /api/item/{id}/uncomplete - Mark item as incomplete
+    /api/item/{id: String[1..1]}/uncomplete
+        PUT
+        {
+            multiplicity: one;
+            criteria    : this.id == id;
+        }
+
+    // List all items (paginated)
+    /api/items
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : ItemSummaryProjection;
+        }
+
+    // List root items (items with no parent)
+    /api/items/root
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.parentId == null;
+            projection  : ItemProjection;
+            orderBy     : this.priority ascending;
+        }
+
+    // List items by user
+    /api/user/{userId: String[1..1]}/items
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.createdById == userId;
+            projection  : ItemSummaryProjection;
+            orderBy     : this.createdOn descending;
+        }
+
+    // List completed items
+    /api/items/completed
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.completed == true;
+            projection  : ItemSummaryProjection;
+            orderBy     : this.completedAt descending;
+        }
+
+    // Search items by name
+    /api/items/search?{query: String[1..1]}
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.name contains query;
+            projection  : ItemSummaryProjection;
+        }
+}
+
+service UserResource on User
+{
+    /api/user/{userId: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.userId == userId;
+            projection  : UserProjection;
+        }
+        PUT
+        {
+            criteria    : this.userId == userId;
+        }
+
+    /api/users
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : UserProjection;
+        }
+}
+
+service TagResource on Tag
+{
+    /api/tag/{name: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.name == name;
+            projection  : TagProjection;
+        }
+        PUT
+        {
+            criteria    : this.name == name;
+        }
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.name == name;
+        }
+
+    /api/tags
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : TagProjection;
+        }
+        POST
+        {
+            multiplicity: one;
+        }
+}
