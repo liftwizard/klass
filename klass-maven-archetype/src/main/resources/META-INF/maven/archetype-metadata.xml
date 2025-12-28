@@ -253,6 +253,19 @@
         </module>
         <!--endregion-->
 
+        <!--region ${rootArtifactId}-klass-html-->
+        <module
+                id="${rootArtifactId}-klass-html"
+                dir="__rootArtifactId__-klass-html"
+                name="${rootArtifactId}-klass-html">
+            <fileSets>
+                <fileSet filtered="true">
+                    <directory></directory>
+                </fileSet>
+            </fileSets>
+        </module>
+        <!--endregion-->
+
         <!--region ${rootArtifactId}-klass-macros-->
         <module
                 id="${rootArtifactId}-klass-macros"
@@ -349,6 +362,19 @@
                 id="${rootArtifactId}-reladomo-runtime-configuration"
                 dir="__rootArtifactId__-reladomo-runtime-configuration"
                 name="${rootArtifactId}-reladomo-runtime-configuration">
+            <fileSets>
+                <fileSet filtered="true">
+                    <directory></directory>
+                </fileSet>
+            </fileSets>
+        </module>
+        <!--endregion-->
+
+        <!--region ${rootArtifactId}-relational-schema-->
+        <module
+                id="${rootArtifactId}-relational-schema"
+                dir="__rootArtifactId__-relational-schema"
+                name="${rootArtifactId}-relational-schema">
             <fileSets>
                 <fileSet filtered="true">
                     <directory></directory>
