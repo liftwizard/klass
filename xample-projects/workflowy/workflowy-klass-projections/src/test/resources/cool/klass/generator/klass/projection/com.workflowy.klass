@@ -62,6 +62,7 @@ projection TagProjection on Tag
     name: "Tag name",
     systemFrom: "Tag systemFrom",
     systemTo: "Tag systemTo",
+    color: "Tag color",
 }
 
 projection ItemTagMappingProjection on ItemTagMapping
@@ -78,7 +79,6 @@ projection ItemDateProjection on ItemDate
     id: "ItemDate id",
     systemFrom: "ItemDate systemFrom",
     systemTo: "ItemDate systemTo",
-    dateType: "ItemDate dateType",
     dateValue: "ItemDate dateValue",
 }
 

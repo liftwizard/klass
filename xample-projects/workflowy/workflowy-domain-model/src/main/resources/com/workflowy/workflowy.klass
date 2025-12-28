@@ -175,7 +175,8 @@ association SharedWithUser
 class Tag
     systemTemporal
 {
-    name: String key;
+    name : String key;
+    color: String?;
 }
 
 class ItemTagMapping
@@ -200,14 +201,14 @@ association TagHasItems
 /*
  * Date represents date metadata attached to items.
  * Workflowy supports date filtering and date-based views.
+ * Dates are stored as Instants; displayed as dates when at midnight.
  */
 class ItemDate
     systemTemporal
 {
     id       : String key;
     itemId   : String private;
-    dateType : String; // e.g., "due", "scheduled", "reminder"
-    dateValue: LocalDate;
+    dateValue: Instant;
 }
 
 association ItemHasDates
@@ -243,6 +244,7 @@ projection ItemVersionProjection on ItemVersion
 projection TagProjection on Tag
 {
     name      : "Tag name",
+    color     : "Tag color",
     systemFrom: "Tag systemFrom",
     systemTo  : "Tag systemTo",
 }
@@ -256,9 +258,8 @@ projection ItemTagMappingProjection on ItemTagMapping
 
 projection ItemDateProjection on ItemDate
 {
-    id       : "ItemDate id",
-    dateType : "ItemDate dateType",
-    dateValue: "ItemDate dateValue",
+    id        : "ItemDate id",
+    dateValue : "ItemDate dateValue",
     systemFrom: "ItemDate systemFrom",
     systemTo  : "ItemDate systemTo",
 }
