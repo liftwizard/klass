@@ -43,7 +43,7 @@ user User
  * - lastModified: When the item was last changed
  */
 class Item
-    read(ItemReadProjection)
+    read(ItemProjection)
     systemTemporal
     versioned
     audited
@@ -296,7 +296,7 @@ projection ItemSummaryProjection on Item
 }
 
 // Full projection including children and metadata
-projection ItemReadProjection on Item
+projection ItemProjection on Item
 {
     id           : "Item id",
     name         : "Item name",
@@ -318,20 +318,6 @@ projection ItemReadProjection on Item
     lastUpdatedBy: UserProjection,
 }
 
-// Write projection for creating/editing items
-projection ItemWriteProjection on Item
-{
-    id         : "Item id",
-    name       : "Item name",
-    note       : "Item note",
-    isCompleted: "Item isCompleted",
-    priority   : "Item priority",
-    isCollapsed: "Item isCollapsed",
-    children   : ItemSummaryProjection,
-    tags       : ItemTagMappingProjection,
-    dates      : ItemDateProjection,
-}
-
 // ============================================================================
 // Services - representing the Workflowy REST API endpoints
 // ============================================================================
@@ -345,7 +331,7 @@ service ItemResource on Item
         {
             multiplicity: one;
             criteria    : this.id == id;
-            projection  : ItemReadProjection;
+            projection  : ItemProjection;
         }
 
     // GET /api/list-children/ - List children of an item
@@ -413,7 +399,7 @@ service ItemResource on Item
         {
             multiplicity: many;
             criteria    : this.parentId == null;
-            projection  : ItemReadProjection;
+            projection  : ItemProjection;
             orderBy     : this.priority ascending;
         }
 
