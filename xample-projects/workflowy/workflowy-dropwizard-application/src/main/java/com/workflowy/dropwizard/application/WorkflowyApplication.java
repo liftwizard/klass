@@ -16,16 +16,9 @@
 
 package com.workflowy.dropwizard.application;
 
-import java.time.Clock;
-
 import javax.annotation.Nonnull;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.workflowy.service.resource.ItemResourceManual;
-import cool.klass.data.store.DataStore;
 import cool.klass.dropwizard.bundle.graphql.KlassGraphQLBundle;
-import cool.klass.dropwizard.configuration.KlassFactory;
-import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.serialization.jackson.module.meta.model.module.KlassMetaModelJacksonModule;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.migrations.MigrationsBundle;
@@ -79,13 +72,5 @@ public class WorkflowyApplication extends AbstractWorkflowyApplication {
     public void run(@Nonnull WorkflowyConfiguration configuration, @Nonnull Environment environment)
         throws Exception {
         super.run(configuration, environment);
-
-        ObjectMapper objectMapper = environment.getObjectMapper();
-        KlassFactory klassFactory = configuration.getKlassFactory();
-        DataStore dataStore = klassFactory.getDataStoreFactory().createDataStore();
-        DomainModel domainModel = klassFactory.getDomainModelFactory().createDomainModel(objectMapper);
-        Clock clock = configuration.getClockFactory().createClock();
-
-        environment.jersey().register(new ItemResourceManual(domainModel, dataStore, clock));
     }
 }
