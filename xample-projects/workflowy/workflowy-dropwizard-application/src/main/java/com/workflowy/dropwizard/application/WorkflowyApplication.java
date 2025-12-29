@@ -69,8 +69,7 @@ public class WorkflowyApplication extends AbstractWorkflowyApplication {
     }
 
     @Override
-    public void run(@Nonnull WorkflowyConfiguration configuration, @Nonnull Environment environment)
-        throws Exception {
+    public void run(@Nonnull WorkflowyConfiguration configuration, @Nonnull Environment environment) throws Exception {
         super.run(configuration, environment);
     }
 }
