@@ -75,9 +75,7 @@ public class OperationCriteriaVisitor implements CriteriaVisitor {
             switch (operatorText) {
                 case "==" -> this.stringBuilder.append(".isNull()");
                 case "!=" -> this.stringBuilder.append(".isNotNull()");
-                default -> throw new AssertionError(
-                    "Unexpected operator with null literal: " + operatorText
-                );
+                default -> throw new AssertionError("Unexpected operator with null literal: " + operatorText);
             }
         } else {
             operator.visit(new OperationOperatorVisitor(this.stringBuilder));
