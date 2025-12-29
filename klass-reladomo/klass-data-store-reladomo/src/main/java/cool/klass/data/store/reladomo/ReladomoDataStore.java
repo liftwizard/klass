@@ -390,7 +390,7 @@ public class ReladomoDataStore implements DataStore {
         }
 
         if (dataTypeProperty.getType() == PrimitiveType.INSTANT) {
-            return ((Timestamp) result).toInstant();
+            return ((Timestamp) result).toLocalDateTime().toInstant(ZoneOffset.UTC);
         }
 
         if (dataTypeProperty.isTemporalRange()) {
@@ -400,7 +400,7 @@ public class ReladomoDataStore implements DataStore {
             }
             // TODO: Consider handling here the case where validTo == systemTo + 1 day, but really means infinity
             // TODO: Alternately, just enable future dated rows to turn off this optimization
-            return ((Timestamp) result).toInstant();
+            return ((Timestamp) result).toLocalDateTime().toInstant(ZoneOffset.UTC);
         }
 
         if (dataTypeProperty.isTemporalInstant()) {
@@ -410,7 +410,7 @@ public class ReladomoDataStore implements DataStore {
             }
             // TODO: Consider handling here the case where validTo == systemTo + 1 day, but really means infinity
             // TODO: Alternately, just enable future dated rows to turn off this optimization
-            return ((Timestamp) result).toInstant();
+            return ((Timestamp) result).toLocalDateTime().toInstant(ZoneOffset.UTC);
         }
 
         if (dataTypeProperty instanceof EnumerationProperty enumerationProperty) {
@@ -458,7 +458,7 @@ public class ReladomoDataStore implements DataStore {
         }
 
         if (dataTypeProperty.getType() == PrimitiveType.INSTANT) {
-            return ((Timestamp) result).toInstant();
+            return ((Timestamp) result).toLocalDateTime().toInstant(ZoneOffset.UTC);
         }
 
         boolean isTemporal = dataTypeProperty.isTemporal();
@@ -469,7 +469,7 @@ public class ReladomoDataStore implements DataStore {
             }
             // TODO: Consider handling here the case where validTo == systemTo + 1 day, but really means infinity
             // TODO: Alternately, just enable future dated rows to turn off this optimization
-            return ((Timestamp) result).toInstant();
+            return ((Timestamp) result).toLocalDateTime().toInstant(ZoneOffset.UTC);
         }
 
         if (dataTypeProperty instanceof EnumerationProperty enumerationProperty) {
@@ -551,7 +551,7 @@ public class ReladomoDataStore implements DataStore {
             Timestamp timestamp = Timestamp.valueOf(((LocalDate) newValue).atStartOfDay());
             attribute.setValue(persistentInstance, timestamp);
         } else if (dataTypeProperty.getType() == PrimitiveType.INSTANT) {
-            Timestamp timestamp = Timestamp.from((Instant) newValue);
+            Timestamp timestamp = Timestamp.valueOf(LocalDateTime.ofInstant((Instant) newValue, ZoneOffset.UTC));
             attribute.setValue(persistentInstance, timestamp);
         } else {
             attribute.setValue(persistentInstance, newValue);

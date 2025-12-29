@@ -62,7 +62,10 @@ public class ReladomoPrimitiveVisitor implements PrimitiveTypeVisitor {
 
     @Override
     public void visitInstant() {
-        String sourceCode = String.format("Timestamp.from(%s.get().toZonedDateTime().toInstant())", this.parameterName);
+        String sourceCode = String.format(
+            "Timestamp.valueOf(LocalDateTime.ofInstant(%s.get().toZonedDateTime().toInstant(), ZoneOffset.UTC))",
+            this.parameterName
+        );
         this.stringBuilder.append(sourceCode);
     }
 
