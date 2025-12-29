@@ -44,6 +44,8 @@ public final class ReladomoProjectionConverter {
         CaseFormat.LOWER_CAMEL
     );
 
+    public static final int DEFAULT_MAX_DEPTH = 10;
+
     private final MutableOrderedMap<Projection, RootReladomoNode> rootNodesByProjection = OrderedMapAdapter.adapt(
         new LinkedHashMap<>()
     );
@@ -54,10 +56,20 @@ public final class ReladomoProjectionConverter {
         ProjectionElementReladomoNode
     > projectionHoldersByProjectionReference = Maps.mutable.empty();
 
+    private final int maxDepth;
+
+    public ReladomoProjectionConverter() {
+        this(DEFAULT_MAX_DEPTH);
+    }
+
+    public ReladomoProjectionConverter(int maxDepth) {
+        this.maxDepth = maxDepth;
+    }
+
     @Nonnull
     public RootReladomoNode getRootReladomoNode(Classifier classifier, Projection projection) {
         var projectionReladomoNode = new RootReladomoNode("root", classifier, projection);
-        this.projectionChildrenToReladomoTree(projectionReladomoNode, projection);
+        this.projectionChildrenToReladomoTree(projectionReladomoNode, projection, 0);
         this.rootNodesByProjection.put(projection, projectionReladomoNode);
 
         this.projectionHoldersByProjectionReference.toImmutable().forEachKeyValue(
@@ -79,18 +91,23 @@ public final class ReladomoProjectionConverter {
         return projectionReladomoNode;
     }
 
-    public void projectionChildrenToReladomoTree(
+    private void projectionChildrenToReladomoTree(
         ProjectionElementReladomoNode reladomoNode,
-        ProjectionParent projectionParent
+        ProjectionParent projectionParent,
+        int depth
     ) {
+        if (depth >= this.maxDepth) {
+            return;
+        }
         for (ProjectionChild projectionChild : projectionParent.getChildren()) {
-            this.projectionElementToReladomoTree(reladomoNode, projectionChild);
+            this.projectionElementToReladomoTree(reladomoNode, projectionChild, depth);
         }
     }
 
     private void projectionElementToReladomoTree(
         ProjectionElementReladomoNode projectionReladomoNode,
-        ProjectionChild projectionChild
+        ProjectionChild projectionChild,
+        int depth
     ) {
         Property property = projectionChild.getProperty();
         String name = property.getName();
@@ -112,7 +129,7 @@ public final class ReladomoProjectionConverter {
         } else if (projectionChild instanceof ProjectionReferenceProperty projectionReferenceProperty) {
             var childNode = new ProjectionReferencePropertyReladomoNode(name, projectionReferenceProperty);
             reladomoNode = reladomoNode.computeChild(name, childNode);
-            this.projectionChildrenToReladomoTree(reladomoNode, projectionReferenceProperty);
+            this.projectionChildrenToReladomoTree(reladomoNode, projectionReferenceProperty, depth + 1);
         } else if (projectionChild instanceof ProjectionDataTypeProperty projectionDataTypeProperty) {
             var childNode = new ProjectionDataTypePropertyReladomoNode(name, projectionDataTypeProperty);
             reladomoNode = reladomoNode.computeChild(name, childNode);
