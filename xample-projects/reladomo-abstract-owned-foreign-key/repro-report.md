@@ -5,71 +5,57 @@ When I declare a to-many, owned relationship to a sub-type, where the foreign ke
 The generated class `ParentAbstract` has two compiler errors, in `setParentKey()` and `setChildren()`. Both are because `ConcreteChildList` has no method `setParentKey()`.
 
 ```java
-public void setParentKey(String newValue)
-{
-    MithraDataObject d = zSetString(ParentFinder.parentKey(), newValue, true, false );
-    if (d == null) return;
-    ParentData data = (ParentData) d;
-    TransactionalBehavior _behavior = zGetTransactionalBehaviorForWriteWithWaitIfNecessary();
-    if (!_behavior.isPersisted())
-    {
-        ConcreteChildList children =
-        (ConcreteChildList ) data.getChildren();
-        if (children != null)
-        {
-            // Compiler error here
-            children.setParentKey(newValue);
-        }
-    }
+public void setParentKey(String newValue) {
+	MithraDataObject d = zSetString(ParentFinder.parentKey(), newValue, true, false);
+	if (d == null) return;
+	ParentData data = (ParentData) d;
+	TransactionalBehavior _behavior = zGetTransactionalBehaviorForWriteWithWaitIfNecessary();
+	if (!_behavior.isPersisted()) {
+		ConcreteChildList children = (ConcreteChildList) data.getChildren();
+		if (children != null) {
+			// Compiler error here
+			children.setParentKey(newValue);
+		}
+	}
 }
 ```
 
 ```java
-public void setChildren(ConcreteChildList children)
-{
-    ConcreteChildList _children = (ConcreteChildList) children;
-    TransactionalBehavior _behavior = zGetTransactionalBehaviorForWriteWithWaitIfNecessary();
-    ParentData _data = (ParentData) _behavior.getCurrentDataForWrite(this);
-    if (_behavior.isInMemory())
-    {
-        if (_behavior.isDetached() && _children != null)
-        {
-            _children.zMakeDetached(ConcreteChildFinder.parentKey().eq(_data.getParentKey()),
-                _data.getChildren());
-        }
+public void setChildren(ConcreteChildList children) {
+	ConcreteChildList _children = (ConcreteChildList) children;
+	TransactionalBehavior _behavior = zGetTransactionalBehaviorForWriteWithWaitIfNecessary();
+	ParentData _data = (ParentData) _behavior.getCurrentDataForWrite(this);
+	if (_behavior.isInMemory()) {
+		if (_behavior.isDetached() && _children != null) {
+			_children.zMakeDetached(ConcreteChildFinder.parentKey().eq(_data.getParentKey()), _data.getChildren());
+		}
 
-        _data.setChildren(_children);
-        if (_children != null)
-        {
-            // Compiler error here
-            _children.setParentKey(_data.getParentKey());
-            _children.zSetParentContainerparent(this);
-            _children.zSetAddHandler(new ChildrenAddHandlerInMemory());
-        }
-        else if (_behavior.isDetached())
-        {
-            throw new MithraBusinessException("to-many relationships cannot be set to null. Use the clear() method on the list instead.");
-        }
-    }
-    else if (_behavior.isPersisted())
-    {
-        _behavior.clearTempTransaction(this);
-        _children.zSetAddHandler(new ChildrenAddHandlerPersisted());
-        ConcreteChildList childrenToDelete = new ConcreteChildList();
-        childrenToDelete.addAll(this.getChildren());
-        for(int i=0;i < _children.size(); i++)
-        {
-            ConcreteChild item = _children.getConcreteChildAt(i);
-            if (!childrenToDelete.remove(item))
-            {
-                item.setParentKey(_data.getParentKey());
-                item.cascadeInsert();
-            }
-        }
+		_data.setChildren(_children);
+		if (_children != null) {
+			// Compiler error here
+			_children.setParentKey(_data.getParentKey());
+			_children.zSetParentContainerparent(this);
+			_children.zSetAddHandler(new ChildrenAddHandlerInMemory());
+		} else if (_behavior.isDetached()) {
+			throw new MithraBusinessException(
+				"to-many relationships cannot be set to null. Use the clear() method on the list instead."
+			);
+		}
+	} else if (_behavior.isPersisted()) {
+		_behavior.clearTempTransaction(this);
+		_children.zSetAddHandler(new ChildrenAddHandlerPersisted());
+		ConcreteChildList childrenToDelete = new ConcreteChildList();
+		childrenToDelete.addAll(this.getChildren());
+		for (int i = 0; i < _children.size(); i++) {
+			ConcreteChild item = _children.getConcreteChildAt(i);
+			if (!childrenToDelete.remove(item)) {
+				item.setParentKey(_data.getParentKey());
+				item.cascadeInsert();
+			}
+		}
 
-        childrenToDelete.cascadeDeleteAll();
-    }
-    else throw new RuntimeException("not implemented");
+		childrenToDelete.cascadeDeleteAll();
+	} else throw new RuntimeException("not implemented");
 }
 ```
 

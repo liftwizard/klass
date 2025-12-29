@@ -61,8 +61,8 @@
 	// Options: "lf" | "crlf" | "cr" | "auto"
 	endOfLine: "lf",
 
-	// Experimental: Put binary operators at the start of lines when wrapping
-	// This is an experimental feature that may be removed in future versions
-	// Options: "end" (default) | "start"
+	// prettier-plugin-java: Position of binary operators in wrapped lines
+	// Default: "end"
+	// Options: "start" | "end"
 	experimentalOperatorPosition: "start",
 }

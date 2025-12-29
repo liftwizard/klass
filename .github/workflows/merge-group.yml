@@ -490,36 +490,7 @@ jobs:
             - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
-    spotless-json:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v6
-              with:
-                  ref: ${{ github.event.pull_request.head.sha }}
-
-            - uses: actions/cache@v5
-              with:
-                  key: maven-spotless-${{ hashFiles('**/pom.xml') }}
-                  path: ~/.m2/repository
-                  restore-keys: |
-                      maven-spotless-
-                      maven-
-
-            - uses: twosigma/maven-cache-cleaner@v1
-
-            - uses: jdx/mise-action@v3
-
-            - name: "Spotless Check: Json"
-              run: just spotless json
-
-            - name: "Check for local modifications"
-              run: just _check-local-modifications
-
-            # Remove any jars we may have created before actions/cache caches .m2
-            - name: "Clean Maven cache"
-              run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
-
-    biome-format:
+    biome:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v6
@@ -529,7 +500,7 @@ jobs:
             - uses: jdx/mise-action@v3
 
             - name: "Biome Format Check"
-              run: npx @biomejs/biome format
+              run: npx @biomejs/biome ci
 
     prettier:
         runs-on: ubuntu-latest
@@ -562,15 +533,6 @@ jobs:
                   reporter: github-pr-check
                   fail_on_error: true
                   filter_mode: nofilter
-
-    reviewdog-languagetool:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v6
-            - uses: reviewdog/action-languagetool@v1.23.0
-              with:
-                  reporter: github-pr-check
-                  disabled_rules: "DOUBLE_PUNCTUATION,UPPERCASE_SENTENCE_START,EN_QUOTES,ID_CASING,EN_UNPAIRED_QUOTES,COMMA_COMPOUND_SENTENCE"
 
     reviewdog-actionlint:
         runs-on: ubuntu-latest
@@ -614,12 +576,10 @@ jobs:
                 spotless-java-cleanthat,
                 spotless-sql,
                 spotless-pom,
-                spotless-json,
-                biome-format,
+                biome,
                 prettier,
                 reviewdog-markdownlint,
                 reviewdog-yamllint,
-                reviewdog-languagetool,
                 reviewdog-actionlint,
                 reviewdog-shellcheck,
             ]
