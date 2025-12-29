@@ -369,7 +369,7 @@ jobs:
             - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
-    biome-format-fix:
+    biome-fix:
         runs-on: ubuntu-latest
         permissions:
             contents: write
@@ -393,7 +393,7 @@ jobs:
                   npx @biomejs/biome format --write
 
                   if [[ -n $(git status --porcelain) ]]; then
-                    FIX_BRANCH="fix-${{ github.event.pull_request.number }}-biome-format"
+                    FIX_BRANCH="fix-${{ github.event.pull_request.number }}-biome"
                     git switch --create $FIX_BRANCH
 
                     git add --all

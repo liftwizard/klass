@@ -57,12 +57,12 @@ The generated class MyAbstractClassAbstract is missing `implements MyInterface`.
 
 ```java
 /**
-* This file was automatically generated using Mithra 17.0.2. Please do not modify it.
-* Add custom logic to its subclass instead.
-*/
+ * This file was automatically generated using Mithra 17.0.2. Please do not modify it.
+ * Add custom logic to its subclass instead.
+ */
 // Generated from templates/transactional/superclass/Abstract.jsp
-public abstract class MyAbstractClassAbstract extends com.gs.fw.common.mithra.superclassimpl.MithraTransactionalObjectImpl
-{
-    // ...
+public abstract class MyAbstractClassAbstract
+	extends com.gs.fw.common.mithra.superclassimpl.MithraTransactionalObjectImpl {
+	// ...
 }
 ```
