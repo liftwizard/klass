@@ -23,29 +23,29 @@ import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 
 public class ReferencePropertyReladomoTreeNode extends AbstractReladomoTreeNode {
 
-    private final ReferenceProperty referenceProperty;
+	private final ReferenceProperty referenceProperty;
 
-    public ReferencePropertyReladomoTreeNode(String name, ReferenceProperty referenceProperty) {
-        super(name);
-        this.referenceProperty = Objects.requireNonNull(referenceProperty);
-    }
+	public ReferencePropertyReladomoTreeNode(String name, ReferenceProperty referenceProperty) {
+		super(name);
+		this.referenceProperty = Objects.requireNonNull(referenceProperty);
+	}
 
-    @Override
-    public void visit(ReladomoTreeNodeVisitor visitor) {
-        visitor.visitReferenceProperty(this);
-    }
+	@Override
+	public void visit(ReladomoTreeNodeVisitor visitor) {
+		visitor.visitReferenceProperty(this);
+	}
 
-    public ReferenceProperty getReferenceProperty() {
-        return this.referenceProperty;
-    }
+	public ReferenceProperty getReferenceProperty() {
+		return this.referenceProperty;
+	}
 
-    @Override
-    public Classifier getOwningClassifier() {
-        return this.referenceProperty.getOwningClassifier();
-    }
+	@Override
+	public Classifier getOwningClassifier() {
+		return this.referenceProperty.getOwningClassifier();
+	}
 
-    @Override
-    public Classifier getType() {
-        return this.referenceProperty.getType();
-    }
+	@Override
+	public Classifier getType() {
+		return this.referenceProperty.getType();
+	}
 }

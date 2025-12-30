@@ -22,6 +22,6 @@ import cool.klass.model.meta.domain.api.NamedElement;
 import org.antlr.v4.runtime.Token;
 
 public interface NamedElementWithSourceCode extends NamedElement, ElementWithSourceCode {
-    @Nonnull
-    Token getNameToken();
+	@Nonnull
+	Token getNameToken();
 }

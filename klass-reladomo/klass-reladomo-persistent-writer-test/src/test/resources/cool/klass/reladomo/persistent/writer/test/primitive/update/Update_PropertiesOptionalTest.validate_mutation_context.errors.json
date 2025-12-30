@@ -1,7 +1,7 @@
 [
-  "Error at PropertiesOptional.propertiesOptionalId. Mismatched value for url parameter key property 'PropertiesOptional.propertiesOptionalId: Long'. Expected absent value or '1' but value was '2'.",
-  "Error at PropertiesOptional.systemFrom. Mismatched value for temporal property 'PropertiesOptional.systemFrom: TemporalInstant?'. Expected absent value or '1999-12-31T23:59:59.999Z' but value was '2000-01-01T00:00:00Z'.",
-  "Error at PropertiesOptional.createdOn. Mismatched value for created on property 'PropertiesOptional.createdOn: Instant'. Expected absent value or '1999-12-31T23:59:59.999Z' but value was '2000-01-01T00:00:00Z'.",
-  "Error at PropertiesOptional.version.systemFrom. Mismatched value for temporal property 'PropertiesOptionalVersion.systemFrom: TemporalInstant?'. Expected absent value or '1999-12-31T23:59:59.999Z' but value was '2000-01-01T00:00:00Z'.",
-  "Error at PropertiesOptional.version.createdOn. Mismatched value for created on property 'PropertiesOptionalVersion.createdOn: Instant'. Expected absent value or '1999-12-31T23:59:59.999Z' but value was '2000-01-01T00:00:00Z'."
+	"Error at PropertiesOptional.propertiesOptionalId. Mismatched value for url parameter key property 'PropertiesOptional.propertiesOptionalId: Long'. Expected absent value or '1' but value was '2'.",
+	"Error at PropertiesOptional.systemFrom. Mismatched value for temporal property 'PropertiesOptional.systemFrom: TemporalInstant?'. Expected absent value or '1999-12-31T23:59:59.999Z' but value was '2000-01-01T00:00:00Z'.",
+	"Error at PropertiesOptional.createdOn. Mismatched value for created on property 'PropertiesOptional.createdOn: Instant'. Expected absent value or '1999-12-31T23:59:59.999Z' but value was '2000-01-01T00:00:00Z'.",
+	"Error at PropertiesOptional.version.systemFrom. Mismatched value for temporal property 'PropertiesOptionalVersion.systemFrom: TemporalInstant?'. Expected absent value or '1999-12-31T23:59:59.999Z' but value was '2000-01-01T00:00:00Z'.",
+	"Error at PropertiesOptional.version.createdOn. Mismatched value for created on property 'PropertiesOptionalVersion.createdOn: Instant'. Expected absent value or '1999-12-31T23:59:59.999Z' but value was '2000-01-01T00:00:00Z'."
 ]

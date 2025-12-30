@@ -34,75 +34,75 @@ import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertyContext;
 
 // TODO: Super class for reference-type-property?
 public final class ParameterizedPropertyImpl
-    extends ReferencePropertyImpl<KlassImpl>
-    implements ParameterizedPropertyWithSourceCode {
+	extends ReferencePropertyImpl<KlassImpl>
+	implements ParameterizedPropertyWithSourceCode {
 
-    // @Nonnull
-    // private final ImmutableList<ParameterizedPropertyModifier> parameterizedPropertyModifiers;
+	// @Nonnull
+	// private final ImmutableList<ParameterizedPropertyModifier> parameterizedPropertyModifiers;
 
-    private ParameterizedPropertyImpl(
-        @Nonnull ParameterizedPropertyContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        int ordinal,
-        @Nonnull IdentifierContext nameContext,
-        @Nonnull KlassImpl type,
-        @Nonnull KlassImpl owningClass,
-        @Nonnull Multiplicity multiplicity
-    ) {
-        super(elementContext, macroElement, sourceCode, ordinal, nameContext, type, owningClass, multiplicity);
-    }
+	private ParameterizedPropertyImpl(
+		@Nonnull ParameterizedPropertyContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		int ordinal,
+		@Nonnull IdentifierContext nameContext,
+		@Nonnull KlassImpl type,
+		@Nonnull KlassImpl owningClass,
+		@Nonnull Multiplicity multiplicity
+	) {
+		super(elementContext, macroElement, sourceCode, ordinal, nameContext, type, owningClass, multiplicity);
+	}
 
-    @Nonnull
-    @Override
-    public ParameterizedPropertyContext getElementContext() {
-        return (ParameterizedPropertyContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public ParameterizedPropertyContext getElementContext() {
+		return (ParameterizedPropertyContext) super.getElementContext();
+	}
 
-    @Nonnull
-    @Override
-    public Klass getOwningClassifier() {
-        return (Klass) super.getOwningClassifier();
-    }
+	@Nonnull
+	@Override
+	public Klass getOwningClassifier() {
+		return (Klass) super.getOwningClassifier();
+	}
 
-    public static final class ParameterizedPropertyBuilder
-        extends ReferencePropertyBuilder<KlassImpl, KlassBuilder, ParameterizedPropertyImpl> {
+	public static final class ParameterizedPropertyBuilder
+		extends ReferencePropertyBuilder<KlassImpl, KlassBuilder, ParameterizedPropertyImpl> {
 
-        public ParameterizedPropertyBuilder(
-            @Nonnull ParameterizedPropertyContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext,
-            @Nonnull KlassBuilder type,
-            @Nonnull KlassBuilder owningClassBuilder,
-            @Nonnull Multiplicity multiplicity
-        ) {
-            super(
-                elementContext,
-                macroElement,
-                sourceCode,
-                ordinal,
-                nameContext,
-                type,
-                owningClassBuilder,
-                multiplicity
-            );
-        }
+		public ParameterizedPropertyBuilder(
+			@Nonnull ParameterizedPropertyContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			int ordinal,
+			@Nonnull IdentifierContext nameContext,
+			@Nonnull KlassBuilder type,
+			@Nonnull KlassBuilder owningClassBuilder,
+			@Nonnull Multiplicity multiplicity
+		) {
+			super(
+				elementContext,
+				macroElement,
+				sourceCode,
+				ordinal,
+				nameContext,
+				type,
+				owningClassBuilder,
+				multiplicity
+			);
+		}
 
-        @Override
-        @Nonnull
-        protected ParameterizedPropertyImpl buildUnsafe() {
-            return new ParameterizedPropertyImpl(
-                (ParameterizedPropertyContext) this.elementContext,
-                this.macroElement.map(ElementBuilder::getElement),
-                this.sourceCode.build(),
-                this.ordinal,
-                this.getNameContext(),
-                this.typeBuilder.getElement(),
-                (KlassImpl) this.owningClassifierBuilder.getElement(),
-                this.multiplicity
-            );
-        }
-    }
+		@Override
+		@Nonnull
+		protected ParameterizedPropertyImpl buildUnsafe() {
+			return new ParameterizedPropertyImpl(
+				(ParameterizedPropertyContext) this.elementContext,
+				this.macroElement.map(ElementBuilder::getElement),
+				this.sourceCode.build(),
+				this.ordinal,
+				this.getNameContext(),
+				this.typeBuilder.getElement(),
+				(KlassImpl) this.owningClassifierBuilder.getElement(),
+				this.multiplicity
+			);
+		}
+	}
 }

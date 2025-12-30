@@ -36,98 +36,98 @@ import org.antlr.v4.runtime.ParserRuleContext;
 
 public class OrderByPhase extends AbstractCompilerPhase {
 
-    @Nullable
-    private AntlrOrderBy orderBy;
+	@Nullable
+	private AntlrOrderBy orderBy;
 
-    private ServiceOrderByDeclarationContext serviceOrderByDeclarationContext;
+	private ServiceOrderByDeclarationContext serviceOrderByDeclarationContext;
 
-    public OrderByPhase(@Nonnull CompilerState compilerState) {
-        super(compilerState);
-    }
+	public OrderByPhase(@Nonnull CompilerState compilerState) {
+		super(compilerState);
+	}
 
-    @Override
-    public void enterServiceOrderByDeclaration(@Nonnull ServiceOrderByDeclarationContext ctx) {
-        super.enterServiceOrderByDeclaration(ctx);
-        this.serviceOrderByDeclarationContext = ctx;
-    }
+	@Override
+	public void enterServiceOrderByDeclaration(@Nonnull ServiceOrderByDeclarationContext ctx) {
+		super.enterServiceOrderByDeclaration(ctx);
+		this.serviceOrderByDeclarationContext = ctx;
+	}
 
-    @Override
-    public void exitServiceOrderByDeclaration(@Nonnull ServiceOrderByDeclarationContext ctx) {
-        this.serviceOrderByDeclarationContext = null;
-        super.exitServiceOrderByDeclaration(ctx);
-    }
+	@Override
+	public void exitServiceOrderByDeclaration(@Nonnull ServiceOrderByDeclarationContext ctx) {
+		this.serviceOrderByDeclarationContext = null;
+		super.exitServiceOrderByDeclaration(ctx);
+	}
 
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public void enterOrderByDeclaration(@Nonnull OrderByDeclarationContext ctx) {
-        super.enterOrderByDeclaration(ctx);
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void enterOrderByDeclaration(@Nonnull OrderByDeclarationContext ctx) {
+		super.enterOrderByDeclaration(ctx);
 
-        if (this.compilerState.getCompilerWalk().getOrderByOwner() == null) {
-            return;
-        }
+		if (this.compilerState.getCompilerWalk().getOrderByOwner() == null) {
+			return;
+		}
 
-        ParserRuleContext orderByContext = this.serviceOrderByDeclarationContext == null
-            ? ctx
-            : this.serviceOrderByDeclarationContext;
-        this.orderBy = new AntlrOrderBy(
-            orderByContext,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.compilerState.getCompilerWalk().getThisReference(),
-            this.compilerState.getCompilerWalk().getOrderByOwner()
-        );
-        AntlrOrderByOwner orderByOwner = this.compilerState.getCompilerWalk().getOrderByOwner();
-        orderByOwner.enterOrderByDeclaration(this.orderBy);
-    }
+		ParserRuleContext orderByContext = this.serviceOrderByDeclarationContext == null
+			? ctx
+			: this.serviceOrderByDeclarationContext;
+		this.orderBy = new AntlrOrderBy(
+			orderByContext,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.compilerState.getCompilerWalk().getThisReference(),
+			this.compilerState.getCompilerWalk().getOrderByOwner()
+		);
+		AntlrOrderByOwner orderByOwner = this.compilerState.getCompilerWalk().getOrderByOwner();
+		orderByOwner.enterOrderByDeclaration(this.orderBy);
+	}
 
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public void exitOrderByDeclaration(@Nonnull OrderByDeclarationContext ctx) {
-        this.orderBy = null;
-        super.exitOrderByDeclaration(ctx);
-    }
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void exitOrderByDeclaration(@Nonnull OrderByDeclarationContext ctx) {
+		this.orderBy = null;
+		super.exitOrderByDeclaration(ctx);
+	}
 
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public void enterOrderByMemberReferencePath(@Nonnull OrderByMemberReferencePathContext ctx) {
-        super.enterOrderByMemberReferencePath(ctx);
-        if (this.compilerState.getCompilerWalk().getOrderByOwner() == null) {
-            return;
-        }
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void enterOrderByMemberReferencePath(@Nonnull OrderByMemberReferencePathContext ctx) {
+		super.enterOrderByMemberReferencePath(ctx);
+		if (this.compilerState.getCompilerWalk().getOrderByOwner() == null) {
+			return;
+		}
 
-        AntlrOrderByMemberReferencePath orderByMemberReferencePath = this.convertOrderByMemberReferencePath(ctx);
-        this.orderBy.enterOrderByMemberReferencePath(orderByMemberReferencePath);
-    }
+		AntlrOrderByMemberReferencePath orderByMemberReferencePath = this.convertOrderByMemberReferencePath(ctx);
+		this.orderBy.enterOrderByMemberReferencePath(orderByMemberReferencePath);
+	}
 
-    @Nonnull
-    private AntlrOrderByMemberReferencePath convertOrderByMemberReferencePath(
-        @Nonnull OrderByMemberReferencePathContext orderByMemberReferencePathContext
-    ) {
-        AntlrThisMemberReferencePath thisMemberReferencePath = this.getAntlrThisMemberReferencePath(
-            orderByMemberReferencePathContext
-        );
+	@Nonnull
+	private AntlrOrderByMemberReferencePath convertOrderByMemberReferencePath(
+		@Nonnull OrderByMemberReferencePathContext orderByMemberReferencePathContext
+	) {
+		AntlrThisMemberReferencePath thisMemberReferencePath = this.getAntlrThisMemberReferencePath(
+			orderByMemberReferencePathContext
+		);
 
-        return new AntlrOrderByMemberReferencePath(
-            orderByMemberReferencePathContext,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.orderBy,
-            this.orderBy.getNumProperties(),
-            thisMemberReferencePath
-        );
-    }
+		return new AntlrOrderByMemberReferencePath(
+			orderByMemberReferencePathContext,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.orderBy,
+			this.orderBy.getNumProperties(),
+			thisMemberReferencePath
+		);
+	}
 
-    @Nonnull
-    private AntlrThisMemberReferencePath getAntlrThisMemberReferencePath(
-        @Nonnull OrderByMemberReferencePathContext orderByMemberReferencePathContext
-    ) {
-        ExpressionValueVisitor expressionValueVisitor = new ExpressionValueVisitor(
-            this.compilerState,
-            this.compilerState.getCompilerWalk().getThisReference(),
-            this.orderBy
-        );
+	@Nonnull
+	private AntlrThisMemberReferencePath getAntlrThisMemberReferencePath(
+		@Nonnull OrderByMemberReferencePathContext orderByMemberReferencePathContext
+	) {
+		ExpressionValueVisitor expressionValueVisitor = new ExpressionValueVisitor(
+			this.compilerState,
+			this.compilerState.getCompilerWalk().getThisReference(),
+			this.orderBy
+		);
 
-        ThisMemberReferencePathContext thisMemberReferencePathContext =
-            orderByMemberReferencePathContext.thisMemberReferencePath();
+		ThisMemberReferencePathContext thisMemberReferencePathContext =
+			orderByMemberReferencePathContext.thisMemberReferencePath();
 
-        return expressionValueVisitor.visitThisMemberReferencePath(thisMemberReferencePathContext);
-    }
+		return expressionValueVisitor.visitThisMemberReferencePath(thisMemberReferencePathContext);
+	}
 }

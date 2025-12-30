@@ -1,5 +1,5 @@
 {
-  type: "compiler",
-  sourcePackages: ["com.example"],
-  colorScheme: "dark",
+	type: "compiler",
+	sourcePackages: ["com.example"],
+	colorScheme: "dark",
 }

@@ -22,17 +22,17 @@ import com.gs.fw.finder.Operation;
 
 public class PropertiesRequiredList extends PropertiesRequiredListAbstract {
 
-    public PropertiesRequiredList() {}
+	public PropertiesRequiredList() {}
 
-    public PropertiesRequiredList(int initialSize) {
-        super(initialSize);
-    }
+	public PropertiesRequiredList(int initialSize) {
+		super(initialSize);
+	}
 
-    public PropertiesRequiredList(Collection c) {
-        super(c);
-    }
+	public PropertiesRequiredList(Collection c) {
+		super(c);
+	}
 
-    public PropertiesRequiredList(Operation operation) {
-        super(operation);
-    }
+	public PropertiesRequiredList(Operation operation) {
+		super(operation);
+	}
 }

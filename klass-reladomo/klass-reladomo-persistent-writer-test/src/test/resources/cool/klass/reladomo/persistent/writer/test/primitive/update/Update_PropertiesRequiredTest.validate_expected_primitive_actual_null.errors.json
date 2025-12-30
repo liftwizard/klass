@@ -1,14 +1,14 @@
 [
-  "Error at PropertiesRequired.system. Didn't expect to receive value for temporal range property 'PropertiesRequired.system: TemporalRange?' but value was null.",
-  "Error at PropertiesRequired.createdById. Didn't expect to receive value for audit property 'PropertiesRequired.createdById: String' but value was null.",
-  "Error at PropertiesRequired.lastUpdatedById. Didn't expect to receive value for audit property 'PropertiesRequired.lastUpdatedById: String' but value was null.",
-  "Error at PropertiesRequired.requiredString. Expected value for required property 'PropertiesRequired.requiredString: String' but value was null.",
-  "Error at PropertiesRequired.requiredInteger. Expected value for required property 'PropertiesRequired.requiredInteger: Integer' but value was null.",
-  "Error at PropertiesRequired.requiredLong. Expected value for required property 'PropertiesRequired.requiredLong: Long' but value was null.",
-  "Error at PropertiesRequired.requiredDouble. Expected value for required property 'PropertiesRequired.requiredDouble: Double' but value was null.",
-  "Error at PropertiesRequired.requiredFloat. Expected value for required property 'PropertiesRequired.requiredFloat: Float' but value was null.",
-  "Error at PropertiesRequired.requiredBoolean. Expected value for required property 'PropertiesRequired.requiredBoolean: Boolean' but value was null.",
-  "Error at PropertiesRequired.requiredInstant. Expected value for required property 'PropertiesRequired.requiredInstant: Instant' but value was null.",
-  "Error at PropertiesRequired.requiredLocalDate. Expected value for required property 'PropertiesRequired.requiredLocalDate: LocalDate' but value was null.",
-  "Error at PropertiesRequired. Expected value for version property 'PropertiesRequired.version: PropertiesRequiredVersion[1..1]' but value was null."
+	"Error at PropertiesRequired.system. Didn't expect to receive value for temporal range property 'PropertiesRequired.system: TemporalRange?' but value was null.",
+	"Error at PropertiesRequired.createdById. Didn't expect to receive value for audit property 'PropertiesRequired.createdById: String' but value was null.",
+	"Error at PropertiesRequired.lastUpdatedById. Didn't expect to receive value for audit property 'PropertiesRequired.lastUpdatedById: String' but value was null.",
+	"Error at PropertiesRequired.requiredString. Expected value for required property 'PropertiesRequired.requiredString: String' but value was null.",
+	"Error at PropertiesRequired.requiredInteger. Expected value for required property 'PropertiesRequired.requiredInteger: Integer' but value was null.",
+	"Error at PropertiesRequired.requiredLong. Expected value for required property 'PropertiesRequired.requiredLong: Long' but value was null.",
+	"Error at PropertiesRequired.requiredDouble. Expected value for required property 'PropertiesRequired.requiredDouble: Double' but value was null.",
+	"Error at PropertiesRequired.requiredFloat. Expected value for required property 'PropertiesRequired.requiredFloat: Float' but value was null.",
+	"Error at PropertiesRequired.requiredBoolean. Expected value for required property 'PropertiesRequired.requiredBoolean: Boolean' but value was null.",
+	"Error at PropertiesRequired.requiredInstant. Expected value for required property 'PropertiesRequired.requiredInstant: Instant' but value was null.",
+	"Error at PropertiesRequired.requiredLocalDate. Expected value for required property 'PropertiesRequired.requiredLocalDate: LocalDate' but value was null.",
+	"Error at PropertiesRequired. Expected value for version property 'PropertiesRequired.version: PropertiesRequiredVersion[1..1]' but value was null."
 ]

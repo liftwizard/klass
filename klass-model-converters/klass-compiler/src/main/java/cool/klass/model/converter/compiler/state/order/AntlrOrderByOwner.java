@@ -25,13 +25,13 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public interface AntlrOrderByOwner extends IAntlrElement {
-    void enterOrderByDeclaration(@Nonnull AntlrOrderBy orderBy);
+	void enterOrderByDeclaration(@Nonnull AntlrOrderBy orderBy);
 
-    @Nonnull
-    Optional<AntlrOrderBy> getOrderBy();
+	@Nonnull
+	Optional<AntlrOrderBy> getOrderBy();
 
-    @Nonnull
-    default ImmutableList<AntlrOrderBy> getOrderBys() {
-        return this.getOrderBy().map(Lists.immutable::with).orElseGet(Lists.immutable::empty);
-    }
+	@Nonnull
+	default ImmutableList<AntlrOrderBy> getOrderBys() {
+		return this.getOrderBy().map(Lists.immutable::with).orElseGet(Lists.immutable::empty);
+	}
 }

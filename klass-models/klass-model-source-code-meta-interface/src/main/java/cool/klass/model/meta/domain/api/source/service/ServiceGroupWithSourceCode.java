@@ -24,10 +24,10 @@ import cool.klass.model.meta.domain.api.source.TopLevelElementWithSourceCode;
 import cool.klass.model.meta.grammar.KlassParser.ServiceGroupDeclarationContext;
 
 public interface ServiceGroupWithSourceCode extends ServiceGroup, TopLevelElementWithSourceCode {
-    @Override
-    ServiceGroupDeclarationContext getElementContext();
+	@Override
+	ServiceGroupDeclarationContext getElementContext();
 
-    @Nonnull
-    @Override
-    KlassWithSourceCode getKlass();
+	@Nonnull
+	@Override
+	KlassWithSourceCode getKlass();
 }

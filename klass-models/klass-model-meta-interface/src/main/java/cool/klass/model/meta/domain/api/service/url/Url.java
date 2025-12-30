@@ -25,20 +25,20 @@ import cool.klass.model.meta.domain.api.service.ServiceGroup;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public interface Url extends Element {
-    @Nonnull
-    ServiceGroup getServiceGroup();
+	@Nonnull
+	ServiceGroup getServiceGroup();
 
-    ImmutableList<Element> getUrlPathSegments();
+	ImmutableList<Element> getUrlPathSegments();
 
-    ImmutableList<Parameter> getParameters();
+	ImmutableList<Parameter> getParameters();
 
-    ImmutableList<Parameter> getQueryParameters();
+	ImmutableList<Parameter> getQueryParameters();
 
-    ImmutableList<Parameter> getPathParameters();
+	ImmutableList<Parameter> getPathParameters();
 
-    ImmutableList<Service> getServices();
+	ImmutableList<Service> getServices();
 
-    default String getUrlString() {
-        return this.getUrlPathSegments().makeString("/", "/", "");
-    }
+	default String getUrlString() {
+		return this.getUrlPathSegments().makeString("/", "/", "");
+	}
 }

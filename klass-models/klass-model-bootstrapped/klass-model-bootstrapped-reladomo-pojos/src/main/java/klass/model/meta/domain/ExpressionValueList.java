@@ -22,17 +22,17 @@ import com.gs.fw.finder.Operation;
 
 public class ExpressionValueList extends ExpressionValueListAbstract {
 
-    public ExpressionValueList() {}
+	public ExpressionValueList() {}
 
-    public ExpressionValueList(int initialSize) {
-        super(initialSize);
-    }
+	public ExpressionValueList(int initialSize) {
+		super(initialSize);
+	}
 
-    public ExpressionValueList(Collection c) {
-        super(c);
-    }
+	public ExpressionValueList(Collection c) {
+		super(c);
+	}
 
-    public ExpressionValueList(Operation operation) {
-        super(operation);
-    }
+	public ExpressionValueList(Operation operation) {
+		super(operation);
+	}
 }

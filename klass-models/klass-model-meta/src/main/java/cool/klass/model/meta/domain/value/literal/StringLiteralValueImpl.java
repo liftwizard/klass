@@ -30,55 +30,55 @@ import cool.klass.model.meta.grammar.KlassParser.StringLiteralContext;
 
 public final class StringLiteralValueImpl extends AbstractLiteralValue implements StringLiteralValue {
 
-    @Nonnull
-    private final String value;
+	@Nonnull
+	private final String value;
 
-    private StringLiteralValueImpl(
-        @Nonnull StringLiteralContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        @Nonnull String value
-    ) {
-        super(elementContext, macroElement, sourceCode);
-        this.value = Objects.requireNonNull(value);
-    }
+	private StringLiteralValueImpl(
+		@Nonnull StringLiteralContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		@Nonnull String value
+	) {
+		super(elementContext, macroElement, sourceCode);
+		this.value = Objects.requireNonNull(value);
+	}
 
-    @Nonnull
-    @Override
-    public StringLiteralContext getElementContext() {
-        return (StringLiteralContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public StringLiteralContext getElementContext() {
+		return (StringLiteralContext) super.getElementContext();
+	}
 
-    @Override
-    @Nonnull
-    public String getValue() {
-        return this.value;
-    }
+	@Override
+	@Nonnull
+	public String getValue() {
+		return this.value;
+	}
 
-    public static final class StringLiteralValueBuilder extends AbstractLiteralValueBuilder<StringLiteralValueImpl> {
+	public static final class StringLiteralValueBuilder extends AbstractLiteralValueBuilder<StringLiteralValueImpl> {
 
-        @Nonnull
-        private final String value;
+		@Nonnull
+		private final String value;
 
-        public StringLiteralValueBuilder(
-            @Nonnull StringLiteralContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            @Nonnull String value
-        ) {
-            super(elementContext, macroElement, sourceCode);
-            this.value = Objects.requireNonNull(value);
-        }
+		public StringLiteralValueBuilder(
+			@Nonnull StringLiteralContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			@Nonnull String value
+		) {
+			super(elementContext, macroElement, sourceCode);
+			this.value = Objects.requireNonNull(value);
+		}
 
-        @Override
-        @Nonnull
-        protected StringLiteralValueImpl buildUnsafe() {
-            return new StringLiteralValueImpl(
-                (StringLiteralContext) this.elementContext,
-                this.macroElement.map(ElementBuilder::getElement),
-                this.sourceCode.build(),
-                this.value
-            );
-        }
-    }
+		@Override
+		@Nonnull
+		protected StringLiteralValueImpl buildUnsafe() {
+			return new StringLiteralValueImpl(
+				(StringLiteralContext) this.elementContext,
+				this.macroElement.map(ElementBuilder::getElement),
+				this.sourceCode.build(),
+				this.value
+			);
+		}
+	}
 }

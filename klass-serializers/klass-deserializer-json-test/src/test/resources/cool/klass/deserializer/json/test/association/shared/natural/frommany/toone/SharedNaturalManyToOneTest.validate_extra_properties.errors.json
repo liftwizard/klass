@@ -1,4 +1,4 @@
 [
-  "Error at SharedNaturalManyToOneSource.target. No such property 'SharedNaturalManyToOneTarget.sourceKey' but got \"key\". Expected properties: key, value, sources.",
-  "Error at SharedNaturalManyToOneSource.targetKey. Didn't expect to receive value for foreign key property 'SharedNaturalManyToOneSource.targetKey: String' but value was string: \"key\"."
+	"Error at SharedNaturalManyToOneSource.target. No such property 'SharedNaturalManyToOneTarget.sourceKey' but got \"key\". Expected properties: key, value, sources.",
+	"Error at SharedNaturalManyToOneSource.targetKey. Didn't expect to receive value for foreign key property 'SharedNaturalManyToOneSource.targetKey: String' but value was string: \"key\"."
 ]

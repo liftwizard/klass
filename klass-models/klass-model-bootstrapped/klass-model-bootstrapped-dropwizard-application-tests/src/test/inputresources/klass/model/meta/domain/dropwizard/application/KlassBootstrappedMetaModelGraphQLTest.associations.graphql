@@ -1,43 +1,43 @@
 fragment AssociationEndModifierFragment on AssociationEndModifier {
-  keyword
+	keyword
 }
 
 fragment AssociationEndFragment on AssociationEnd {
-  name
-  direction
-  multiplicity
-  resultType {
-    name
-  }
-  associationEndModifiers {
-    ...AssociationEndModifierFragment
-  }
-  orderBys {
-    ...AssociationEndOrderByFragment
-  }
+	name
+	direction
+	multiplicity
+	resultType {
+		name
+	}
+	associationEndModifiers {
+		...AssociationEndModifierFragment
+	}
+	orderBys {
+		...AssociationEndOrderByFragment
+	}
 }
 
 fragment AssociationEndOrderByFragment on AssociationEndOrderBy {
-  orderByDirection
-  thisMemberReferencePath {
-    id
-  }
+	orderByDirection
+	thisMemberReferencePath {
+		id
+	}
 }
 
 fragment AssociationFragment on Association {
-  name
-  packageName
-  associationEnds {
-    ...AssociationEndFragment
-  }
-  criteria {
-    __typename
-    id
-  }
+	name
+	packageName
+	associationEnds {
+		...AssociationEndFragment
+	}
+	criteria {
+		__typename
+		id
+	}
 }
 
 query {
-  associations {
-    ...AssociationFragment
-  }
+	associations {
+		...AssociationFragment
+	}
 }

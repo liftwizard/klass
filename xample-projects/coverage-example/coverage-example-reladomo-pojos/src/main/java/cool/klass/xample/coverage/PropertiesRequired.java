@@ -24,18 +24,18 @@ import com.gs.fw.common.mithra.util.DefaultInfinityTimestamp;
 
 public class PropertiesRequired extends PropertiesRequiredAbstract {
 
-    public PropertiesRequired(Timestamp system) {
-        super(system);
-        // You must not modify this constructor. Mithra calls this internally.
-        // You can call this constructor. You can also add new constructors.
-    }
+	public PropertiesRequired(Timestamp system) {
+		super(system);
+		// You must not modify this constructor. Mithra calls this internally.
+		// You can call this constructor. You can also add new constructors.
+	}
 
-    public PropertiesRequired() {
-        this(DefaultInfinityTimestamp.getDefaultInfinity());
-    }
+	public PropertiesRequired() {
+		this(DefaultInfinityTimestamp.getDefaultInfinity());
+	}
 
-    @Nonnull
-    public String getRequiredDerived() {
-        return "cool.klass.xample.coverage.PropertiesRequired.getRequiredDerived";
-    }
+	@Nonnull
+	public String getRequiredDerived() {
+		return "cool.klass.xample.coverage.PropertiesRequired.getRequiredDerived";
+	}
 }

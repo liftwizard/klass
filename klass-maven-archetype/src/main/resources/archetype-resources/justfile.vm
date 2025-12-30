@@ -27,9 +27,13 @@ mise:
 markdownlint:
     markdownlint --config .markdownlint.jsonc  --fix .
 
+# Format JSON files with Biome
+biome-format:
+    npx @biomejs/biome format --write .
+
 # Run all formatting tools for pre-commit
-precommit: mvn
-    uv tool run pre-commit run
+precommit: mvn biome-format
+    uv tool run pre-commit run --all-files
 
 # Override this with a command called `woof` which notifies you in whatever ways you prefer.
 # My `woof` command uses `echo`, `say`, and sends a Pushover notification.

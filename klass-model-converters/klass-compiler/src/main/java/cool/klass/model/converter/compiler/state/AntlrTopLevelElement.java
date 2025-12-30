@@ -28,53 +28,53 @@ import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.tuple.Tuples;
 
 public interface AntlrTopLevelElement extends IAntlrElement {
-    @Override
-    default Pair<Token, Token> getContextBefore() {
-        return Tuples.pair(this.getElementContext().getStart(), this.getBlockContext().getStart());
-    }
+	@Override
+	default Pair<Token, Token> getContextBefore() {
+		return Tuples.pair(this.getElementContext().getStart(), this.getBlockContext().getStart());
+	}
 
-    @Nonnull
-    @Override
-    default Pair<Token, Token> getContextAfter() {
-        Token token = this.getElementContext().getStop();
-        return Tuples.pair(token, token);
-    }
+	@Nonnull
+	@Override
+	default Pair<Token, Token> getContextAfter() {
+		Token token = this.getElementContext().getStop();
+		return Tuples.pair(token, token);
+	}
 
-    /**
-     * @return a context representing a block, where '{' and '}' are the start and stop tokens.
-     * @throws UnsupportedOperationException unless overridden
-     */
-    default ParserRuleContext getBlockContext() {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".getBodyContext() not implemented yet"
-        );
-    }
+	/**
+	 * @return a context representing a block, where '{' and '}' are the start and stop tokens.
+	 * @throws UnsupportedOperationException unless overridden
+	 */
+	default ParserRuleContext getBlockContext() {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".getBodyContext() not implemented yet"
+		);
+	}
 
-    @Nonnull
-    TopLevelElementBuilder getElementBuilder();
+	@Nonnull
+	TopLevelElementBuilder getElementBuilder();
 
-    @Override
-    @Nonnull
-    default Optional<IAntlrElement> getSurroundingElement() {
-        return Optional.empty();
-    }
+	@Override
+	@Nonnull
+	default Optional<IAntlrElement> getSurroundingElement() {
+		return Optional.empty();
+	}
 
-    @Override
-    default boolean isContext() {
-        return true;
-    }
+	@Override
+	default boolean isContext() {
+		return true;
+	}
 
-    void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder);
+	void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder);
 
-    void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder);
+	void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder);
 
-    default void reportDuplicateTopLevelName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        String message = String.format("Duplicate top level item name: '%s'.", this.getName());
-        compilerAnnotationHolder.add("ERR_DUP_TOP", message, this);
-    }
+	default void reportDuplicateTopLevelName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		String message = String.format("Duplicate top level item name: '%s'.", this.getName());
+		compilerAnnotationHolder.add("ERR_DUP_TOP", message, this);
+	}
 
-    @Nonnull
-    String getName();
+	@Nonnull
+	String getName();
 
-    int getOrdinal();
+	int getOrdinal();
 }

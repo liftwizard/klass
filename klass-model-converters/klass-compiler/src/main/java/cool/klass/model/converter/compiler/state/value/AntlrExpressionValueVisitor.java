@@ -27,23 +27,23 @@ import cool.klass.model.converter.compiler.state.value.literal.AntlrStringLitera
 import cool.klass.model.converter.compiler.state.value.literal.AntlrUserLiteral;
 
 public interface AntlrExpressionValueVisitor {
-    void visitTypeMember(@Nonnull AntlrTypeMemberReferencePath typeMemberExpressionValue);
+	void visitTypeMember(@Nonnull AntlrTypeMemberReferencePath typeMemberExpressionValue);
 
-    void visitThisMember(@Nonnull AntlrThisMemberReferencePath thisMemberExpressionValue);
+	void visitThisMember(@Nonnull AntlrThisMemberReferencePath thisMemberExpressionValue);
 
-    void visitParameterReference(@Nonnull AntlrParameterReference parameterReference);
+	void visitParameterReference(@Nonnull AntlrParameterReference parameterReference);
 
-    void visitBooleanLiteral(@Nonnull AntlrBooleanLiteralValue booleanLiteralValue);
+	void visitBooleanLiteral(@Nonnull AntlrBooleanLiteralValue booleanLiteralValue);
 
-    void visitIntegerLiteral(@Nonnull AntlrIntegerLiteralValue integerLiteralValue);
+	void visitIntegerLiteral(@Nonnull AntlrIntegerLiteralValue integerLiteralValue);
 
-    void visitFloatingPointLiteral(@Nonnull AntlrFloatingPointLiteralValue floatingPointLiteral);
+	void visitFloatingPointLiteral(@Nonnull AntlrFloatingPointLiteralValue floatingPointLiteral);
 
-    void visitStringLiteral(@Nonnull AntlrStringLiteralValue stringLiteralValue);
+	void visitStringLiteral(@Nonnull AntlrStringLiteralValue stringLiteralValue);
 
-    void visitLiteralList(@Nonnull AntlrLiteralListValue literalListValue);
+	void visitLiteralList(@Nonnull AntlrLiteralListValue literalListValue);
 
-    void visitUserLiteral(@Nonnull AntlrUserLiteral userLiteral);
+	void visitUserLiteral(@Nonnull AntlrUserLiteral userLiteral);
 
-    void visitNullLiteral(@Nonnull AntlrNullLiteral nullLiteral);
+	void visitNullLiteral(@Nonnull AntlrNullLiteral nullLiteral);
 }

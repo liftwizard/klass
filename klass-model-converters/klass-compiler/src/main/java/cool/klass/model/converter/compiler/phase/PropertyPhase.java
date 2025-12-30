@@ -57,261 +57,261 @@ import cool.klass.model.meta.grammar.KlassParser.PrimitivePropertyContext;
 
 public class PropertyPhase extends AbstractCompilerPhase {
 
-    @Nullable
-    private AntlrDataTypeProperty<?> dataTypeProperty;
+	@Nullable
+	private AntlrDataTypeProperty<?> dataTypeProperty;
 
-    @Nullable
-    private AntlrAssociationEndSignature associationEndSignature;
+	@Nullable
+	private AntlrAssociationEndSignature associationEndSignature;
 
-    @Nullable
-    private AntlrClassifierReferenceOwner classifierReferenceOwner;
+	@Nullable
+	private AntlrClassifierReferenceOwner classifierReferenceOwner;
 
-    @Nullable
-    private AntlrMultiplicityOwner multiplicityOwner;
+	@Nullable
+	private AntlrMultiplicityOwner multiplicityOwner;
 
-    public PropertyPhase(@Nonnull CompilerState compilerState) {
-        super(compilerState);
-    }
+	public PropertyPhase(@Nonnull CompilerState compilerState) {
+		super(compilerState);
+	}
 
-    @Override
-    public void enterAssociationEndSignature(@Nonnull AssociationEndSignatureContext ctx) {
-        super.enterAssociationEndSignature(ctx);
+	@Override
+	public void enterAssociationEndSignature(@Nonnull AssociationEndSignatureContext ctx) {
+		super.enterAssociationEndSignature(ctx);
 
-        if (this.associationEndSignature != null) {
-            throw new IllegalStateException();
-        }
-        if (this.classifierReferenceOwner != null) {
-            throw new IllegalStateException();
-        }
-        if (this.multiplicityOwner != null) {
-            throw new IllegalStateException();
-        }
+		if (this.associationEndSignature != null) {
+			throw new IllegalStateException();
+		}
+		if (this.classifierReferenceOwner != null) {
+			throw new IllegalStateException();
+		}
+		if (this.multiplicityOwner != null) {
+			throw new IllegalStateException();
+		}
 
-        CompilerWalkState compilerWalk = this.compilerState.getCompilerWalk();
-        this.associationEndSignature = new AntlrAssociationEndSignature(
-            ctx,
-            Optional.of(compilerWalk.getCurrentCompilationUnit()),
-            compilerWalk.getNumClassifierMembers(),
-            ctx.identifier(),
-            this.getClassifier()
-        );
-        this.classifierReferenceOwner = this.associationEndSignature;
-        this.multiplicityOwner = this.associationEndSignature;
-        this.getClassifier().enterAssociationEndSignature(this.associationEndSignature);
-    }
+		CompilerWalkState compilerWalk = this.compilerState.getCompilerWalk();
+		this.associationEndSignature = new AntlrAssociationEndSignature(
+			ctx,
+			Optional.of(compilerWalk.getCurrentCompilationUnit()),
+			compilerWalk.getNumClassifierMembers(),
+			ctx.identifier(),
+			this.getClassifier()
+		);
+		this.classifierReferenceOwner = this.associationEndSignature;
+		this.multiplicityOwner = this.associationEndSignature;
+		this.getClassifier().enterAssociationEndSignature(this.associationEndSignature);
+	}
 
-    @Override
-    public void exitAssociationEndSignature(@Nonnull AssociationEndSignatureContext ctx) {
-        Objects.requireNonNull(this.associationEndSignature);
-        this.associationEndSignature = null;
-        this.classifierReferenceOwner = null;
-        this.multiplicityOwner = null;
-        super.exitAssociationEndSignature(ctx);
-    }
+	@Override
+	public void exitAssociationEndSignature(@Nonnull AssociationEndSignatureContext ctx) {
+		Objects.requireNonNull(this.associationEndSignature);
+		this.associationEndSignature = null;
+		this.classifierReferenceOwner = null;
+		this.multiplicityOwner = null;
+		super.exitAssociationEndSignature(ctx);
+	}
 
-    @Override
-    public void enterPrimitiveProperty(@Nonnull PrimitivePropertyContext ctx) {
-        super.enterPrimitiveProperty(ctx);
+	@Override
+	public void enterPrimitiveProperty(@Nonnull PrimitivePropertyContext ctx) {
+		super.enterPrimitiveProperty(ctx);
 
-        boolean isOptional = ctx.optionalMarker() != null;
-        String primitiveTypeName = ctx.primitiveType().getText();
-        PrimitiveType primitiveType = PrimitiveType.byPrettyName(primitiveTypeName);
-        AntlrPrimitiveType primitiveTypeState = AntlrPrimitiveType.valueOf(primitiveType);
+		boolean isOptional = ctx.optionalMarker() != null;
+		String primitiveTypeName = ctx.primitiveType().getText();
+		PrimitiveType primitiveType = PrimitiveType.byPrettyName(primitiveTypeName);
+		AntlrPrimitiveType primitiveTypeState = AntlrPrimitiveType.valueOf(primitiveType);
 
-        if (this.dataTypeProperty != null) {
-            throw new IllegalStateException();
-        }
+		if (this.dataTypeProperty != null) {
+			throw new IllegalStateException();
+		}
 
-        CompilerWalkState compilerWalk = this.compilerState.getCompilerWalk();
-        this.dataTypeProperty = new AntlrPrimitiveProperty(
-            ctx,
-            Optional.of(compilerWalk.getCurrentCompilationUnit()),
-            compilerWalk.getNumClassifierMembers(),
-            ctx.identifier(),
-            this.getClassifier(),
-            isOptional,
-            primitiveTypeState
-        );
+		CompilerWalkState compilerWalk = this.compilerState.getCompilerWalk();
+		this.dataTypeProperty = new AntlrPrimitiveProperty(
+			ctx,
+			Optional.of(compilerWalk.getCurrentCompilationUnit()),
+			compilerWalk.getNumClassifierMembers(),
+			ctx.identifier(),
+			this.getClassifier(),
+			isOptional,
+			primitiveTypeState
+		);
 
-        this.getClassifier().enterDataTypeProperty(this.dataTypeProperty);
-    }
+		this.getClassifier().enterDataTypeProperty(this.dataTypeProperty);
+	}
 
-    @Override
-    public void exitPrimitiveProperty(@Nonnull PrimitivePropertyContext ctx) {
-        Objects.requireNonNull(this.dataTypeProperty);
-        this.dataTypeProperty = null;
-        super.exitPrimitiveProperty(ctx);
-    }
+	@Override
+	public void exitPrimitiveProperty(@Nonnull PrimitivePropertyContext ctx) {
+		Objects.requireNonNull(this.dataTypeProperty);
+		this.dataTypeProperty = null;
+		super.exitPrimitiveProperty(ctx);
+	}
 
-    @Override
-    public void enterEnumerationProperty(@Nonnull EnumerationPropertyContext ctx) {
-        super.enterEnumerationProperty(ctx);
+	@Override
+	public void enterEnumerationProperty(@Nonnull EnumerationPropertyContext ctx) {
+		super.enterEnumerationProperty(ctx);
 
-        boolean isOptional = ctx.optionalMarker() != null;
-        AntlrDomainModel domainModel = this.compilerState.getDomainModel();
-        String enumerationName = ctx.enumerationReference().getText();
-        AntlrEnumeration enumeration = domainModel.getEnumerationByName(enumerationName);
+		boolean isOptional = ctx.optionalMarker() != null;
+		AntlrDomainModel domainModel = this.compilerState.getDomainModel();
+		String enumerationName = ctx.enumerationReference().getText();
+		AntlrEnumeration enumeration = domainModel.getEnumerationByName(enumerationName);
 
-        if (this.dataTypeProperty != null) {
-            throw new IllegalStateException();
-        }
-        CompilerWalkState compilerWalk = this.compilerState.getCompilerWalk();
-        this.dataTypeProperty = new AntlrEnumerationProperty(
-            ctx,
-            Optional.of(compilerWalk.getCurrentCompilationUnit()),
-            compilerWalk.getNumClassifierMembers(),
-            ctx.identifier(),
-            this.getClassifier(),
-            isOptional,
-            enumeration
-        );
+		if (this.dataTypeProperty != null) {
+			throw new IllegalStateException();
+		}
+		CompilerWalkState compilerWalk = this.compilerState.getCompilerWalk();
+		this.dataTypeProperty = new AntlrEnumerationProperty(
+			ctx,
+			Optional.of(compilerWalk.getCurrentCompilationUnit()),
+			compilerWalk.getNumClassifierMembers(),
+			ctx.identifier(),
+			this.getClassifier(),
+			isOptional,
+			enumeration
+		);
 
-        this.getClassifier().enterDataTypeProperty(this.dataTypeProperty);
-    }
+		this.getClassifier().enterDataTypeProperty(this.dataTypeProperty);
+	}
 
-    @Override
-    public void exitEnumerationProperty(@Nonnull EnumerationPropertyContext ctx) {
-        Objects.requireNonNull(this.dataTypeProperty);
-        this.dataTypeProperty = null;
+	@Override
+	public void exitEnumerationProperty(@Nonnull EnumerationPropertyContext ctx) {
+		Objects.requireNonNull(this.dataTypeProperty);
+		this.dataTypeProperty = null;
 
-        super.exitEnumerationProperty(ctx);
-    }
+		super.exitEnumerationProperty(ctx);
+	}
 
-    @Override
-    public void enterMinLengthValidation(@Nonnull MinLengthValidationContext ctx) {
-        super.enterMinLengthValidation(ctx);
+	@Override
+	public void enterMinLengthValidation(@Nonnull MinLengthValidationContext ctx) {
+		super.enterMinLengthValidation(ctx);
 
-        IntegerLiteralContext integerLiteralContext = ctx.integerValidationParameter().integerLiteral();
-        int length = this.getIntegerFromLiteral(integerLiteralContext);
-        AntlrMinLengthPropertyValidation minLengthValidation = new AntlrMinLengthPropertyValidation(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.dataTypeProperty,
-            length
-        );
-        this.dataTypeProperty.addMinLengthValidation(minLengthValidation);
-    }
+		IntegerLiteralContext integerLiteralContext = ctx.integerValidationParameter().integerLiteral();
+		int length = this.getIntegerFromLiteral(integerLiteralContext);
+		AntlrMinLengthPropertyValidation minLengthValidation = new AntlrMinLengthPropertyValidation(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.dataTypeProperty,
+			length
+		);
+		this.dataTypeProperty.addMinLengthValidation(minLengthValidation);
+	}
 
-    @Override
-    public void enterMaxLengthValidation(@Nonnull MaxLengthValidationContext ctx) {
-        super.enterMaxLengthValidation(ctx);
+	@Override
+	public void enterMaxLengthValidation(@Nonnull MaxLengthValidationContext ctx) {
+		super.enterMaxLengthValidation(ctx);
 
-        IntegerLiteralContext integerLiteralContext = ctx.integerValidationParameter().integerLiteral();
-        int length = this.getIntegerFromLiteral(integerLiteralContext);
-        AntlrMaxLengthPropertyValidation maxLengthValidation = new AntlrMaxLengthPropertyValidation(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.dataTypeProperty,
-            length
-        );
-        this.dataTypeProperty.addMaxLengthValidation(maxLengthValidation);
-    }
+		IntegerLiteralContext integerLiteralContext = ctx.integerValidationParameter().integerLiteral();
+		int length = this.getIntegerFromLiteral(integerLiteralContext);
+		AntlrMaxLengthPropertyValidation maxLengthValidation = new AntlrMaxLengthPropertyValidation(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.dataTypeProperty,
+			length
+		);
+		this.dataTypeProperty.addMaxLengthValidation(maxLengthValidation);
+	}
 
-    @Override
-    public void enterMinValidation(@Nonnull MinValidationContext ctx) {
-        super.enterMinValidation(ctx);
+	@Override
+	public void enterMinValidation(@Nonnull MinValidationContext ctx) {
+		super.enterMinValidation(ctx);
 
-        IntegerLiteralContext integerLiteralContext = ctx.integerValidationParameter().integerLiteral();
-        int minimum = this.getIntegerFromLiteral(integerLiteralContext);
-        AntlrMinPropertyValidation minValidation = new AntlrMinPropertyValidation(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.dataTypeProperty,
-            minimum
-        );
-        this.dataTypeProperty.addMinValidation(minValidation);
-    }
+		IntegerLiteralContext integerLiteralContext = ctx.integerValidationParameter().integerLiteral();
+		int minimum = this.getIntegerFromLiteral(integerLiteralContext);
+		AntlrMinPropertyValidation minValidation = new AntlrMinPropertyValidation(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.dataTypeProperty,
+			minimum
+		);
+		this.dataTypeProperty.addMinValidation(minValidation);
+	}
 
-    @Override
-    public void enterMaxValidation(@Nonnull MaxValidationContext ctx) {
-        super.enterMaxValidation(ctx);
+	@Override
+	public void enterMaxValidation(@Nonnull MaxValidationContext ctx) {
+		super.enterMaxValidation(ctx);
 
-        IntegerLiteralContext integerLiteralContext = ctx.integerValidationParameter().integerLiteral();
-        int maximum = this.getIntegerFromLiteral(integerLiteralContext);
-        AntlrMaxPropertyValidation maxValidation = new AntlrMaxPropertyValidation(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.dataTypeProperty,
-            maximum
-        );
-        this.dataTypeProperty.addMaxValidation(maxValidation);
-    }
+		IntegerLiteralContext integerLiteralContext = ctx.integerValidationParameter().integerLiteral();
+		int maximum = this.getIntegerFromLiteral(integerLiteralContext);
+		AntlrMaxPropertyValidation maxValidation = new AntlrMaxPropertyValidation(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.dataTypeProperty,
+			maximum
+		);
+		this.dataTypeProperty.addMaxValidation(maxValidation);
+	}
 
-    @Override
-    public void enterMultiplicity(@Nonnull MultiplicityContext ctx) {
-        super.enterMultiplicity(ctx);
+	@Override
+	public void enterMultiplicity(@Nonnull MultiplicityContext ctx) {
+		super.enterMultiplicity(ctx);
 
-        if (this.multiplicityOwner == null) {
-            return;
-        }
+		if (this.multiplicityOwner == null) {
+			return;
+		}
 
-        AntlrMultiplicity multiplicity = new AntlrMultiplicity(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.multiplicityOwner
-        );
+		AntlrMultiplicity multiplicity = new AntlrMultiplicity(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.multiplicityOwner
+		);
 
-        this.associationEndSignature.enterMultiplicity(multiplicity);
-    }
+		this.associationEndSignature.enterMultiplicity(multiplicity);
+	}
 
-    @Override
-    public void enterDataTypePropertyModifier(DataTypePropertyModifierContext ctx) {
-        super.enterDataTypePropertyModifier(ctx);
-        AntlrModifier modifier = new AntlrModifier(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.dataTypeProperty.getNumModifiers() + 1,
-            this.dataTypeProperty
-        );
-        this.dataTypeProperty.enterModifier(modifier);
-    }
+	@Override
+	public void enterDataTypePropertyModifier(DataTypePropertyModifierContext ctx) {
+		super.enterDataTypePropertyModifier(ctx);
+		AntlrModifier modifier = new AntlrModifier(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.dataTypeProperty.getNumModifiers() + 1,
+			this.dataTypeProperty
+		);
+		this.dataTypeProperty.enterModifier(modifier);
+	}
 
-    @Override
-    public void enterAssociationEndModifier(@Nonnull AssociationEndModifierContext ctx) {
-        super.enterAssociationEndModifier(ctx);
+	@Override
+	public void enterAssociationEndModifier(@Nonnull AssociationEndModifierContext ctx) {
+		super.enterAssociationEndModifier(ctx);
 
-        if (this.associationEndSignature == null) {
-            return;
-        }
+		if (this.associationEndSignature == null) {
+			return;
+		}
 
-        AntlrModifier antlrAssociationEndModifier = new AntlrModifier(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.associationEndSignature.getNumModifiers() + 1,
-            this.associationEndSignature
-        );
-        this.associationEndSignature.enterModifier(antlrAssociationEndModifier);
-    }
+		AntlrModifier antlrAssociationEndModifier = new AntlrModifier(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.associationEndSignature.getNumModifiers() + 1,
+			this.associationEndSignature
+		);
+		this.associationEndSignature.enterModifier(antlrAssociationEndModifier);
+	}
 
-    @Override
-    public void enterClassifierReference(@Nonnull ClassifierReferenceContext ctx) {
-        super.enterClassifierReference(ctx);
+	@Override
+	public void enterClassifierReference(@Nonnull ClassifierReferenceContext ctx) {
+		super.enterClassifierReference(ctx);
 
-        if (this.classifierReferenceOwner == null) {
-            return;
-        }
+		if (this.classifierReferenceOwner == null) {
+			return;
+		}
 
-        String classifierName = ctx.identifier().getText();
-        AntlrDomainModel domainModel = this.compilerState.getDomainModel();
-        AntlrClassifier classifier = domainModel.getClassifierByName(classifierName);
-        AntlrClassifierReference classifierReference = new AntlrClassifierReference(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.classifierReferenceOwner,
-            classifier
-        );
+		String classifierName = ctx.identifier().getText();
+		AntlrDomainModel domainModel = this.compilerState.getDomainModel();
+		AntlrClassifier classifier = domainModel.getClassifierByName(classifierName);
+		AntlrClassifierReference classifierReference = new AntlrClassifierReference(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.classifierReferenceOwner,
+			classifier
+		);
 
-        this.classifierReferenceOwner.enterClassifierReference(classifierReference);
-    }
+		this.classifierReferenceOwner.enterClassifierReference(classifierReference);
+	}
 
-    private int getIntegerFromLiteral(@Nonnull IntegerLiteralContext integerLiteralContext) {
-        String integerText = integerLiteralContext.getText();
-        String withoutUnderscores = integerText.replaceAll("_", "");
-        return Integer.decode(withoutUnderscores);
-    }
+	private int getIntegerFromLiteral(@Nonnull IntegerLiteralContext integerLiteralContext) {
+		String integerText = integerLiteralContext.getText();
+		String withoutUnderscores = integerText.replaceAll("_", "");
+		return Integer.decode(withoutUnderscores);
+	}
 
-    @Nullable
-    private AntlrClassifier getClassifier() {
-        return this.compilerState.getCompilerWalk().getClassifier();
-    }
+	@Nullable
+	private AntlrClassifier getClassifier() {
+		return this.compilerState.getCompilerWalk().getClassifier();
+	}
 }

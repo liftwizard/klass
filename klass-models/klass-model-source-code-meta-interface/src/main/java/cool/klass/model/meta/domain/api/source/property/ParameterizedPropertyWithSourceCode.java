@@ -23,10 +23,10 @@ import cool.klass.model.meta.domain.api.source.KlassWithSourceCode;
 import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertyContext;
 
 public interface ParameterizedPropertyWithSourceCode extends ParameterizedProperty, ReferencePropertyWithSourceCode {
-    @Nonnull
-    @Override
-    KlassWithSourceCode getType();
+	@Nonnull
+	@Override
+	KlassWithSourceCode getType();
 
-    @Override
-    ParameterizedPropertyContext getElementContext();
+	@Override
+	ParameterizedPropertyContext getElementContext();
 }

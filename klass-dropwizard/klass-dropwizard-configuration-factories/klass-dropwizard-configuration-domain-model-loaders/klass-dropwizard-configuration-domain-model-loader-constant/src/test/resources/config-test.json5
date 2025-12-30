@@ -1,4 +1,4 @@
 {
-  type: "constant",
-  fullyQualifiedClassName: "com.example.MyDomainModel",
+	type: "constant",
+	fullyQualifiedClassName: "com.example.MyDomainModel",
 }

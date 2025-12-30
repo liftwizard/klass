@@ -38,81 +38,81 @@ import org.slf4j.LoggerFactory;
  */
 public final class ColorSchemeProvider {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ColorSchemeProvider.class);
-    private static final String COLOR_SCHEME_PATH = "klass/color-scheme/";
-    private static final Validator VALIDATOR = Validators.newValidator();
+	private static final Logger LOGGER = LoggerFactory.getLogger(ColorSchemeProvider.class);
+	private static final String COLOR_SCHEME_PATH = "klass/color-scheme/";
+	private static final Validator VALIDATOR = Validators.newValidator();
 
-    private ColorSchemeProvider() {
-        throw new AssertionError("Suppress default constructor for noninstantiability");
-    }
+	private ColorSchemeProvider() {
+		throw new AssertionError("Suppress default constructor for noninstantiability");
+	}
 
-    /**
-     * Get a color scheme by name, loading from JSONC if available. Looks in the classpath. If the {@code schemeName} is "dark" then the classpath is searched for a file named "klass/color-scheme/dark.jsonc".
-     *
-     * @param schemeName The name of the color scheme to load, like "dark", "light", or "dark-rgb".
-     */
-    public static AnsiColorScheme getByName(String schemeName) {
-        Objects.requireNonNull(
-            schemeName,
-            () ->
-                "colorScheme is required but was not configured. "
-                + "Add <colorScheme>dark</colorScheme> to the plugin configuration in your pom.xml. "
-                + "Available schemes: dark, light, dark-rgb, light-rgb, dark-cube"
-        );
+	/**
+	 * Get a color scheme by name, loading from JSONC if available. Looks in the classpath. If the {@code schemeName} is "dark" then the classpath is searched for a file named "klass/color-scheme/dark.jsonc".
+	 *
+	 * @param schemeName The name of the color scheme to load, like "dark", "light", or "dark-rgb".
+	 */
+	public static AnsiColorScheme getByName(String schemeName) {
+		Objects.requireNonNull(
+			schemeName,
+			() ->
+				"colorScheme is required but was not configured. "
+				+ "Add <colorScheme>dark</colorScheme> to the plugin configuration in your pom.xml. "
+				+ "Available schemes: dark, light, dark-rgb, light-rgb, dark-cube"
+		);
 
-        String jsonPath = COLOR_SCHEME_PATH + schemeName.toLowerCase(Locale.ROOT) + ".jsonc";
-        return getByClasspath(jsonPath);
-    }
+		String jsonPath = COLOR_SCHEME_PATH + schemeName.toLowerCase(Locale.ROOT) + ".jsonc";
+		return getByClasspath(jsonPath);
+	}
 
-    /**
-     * Checks if a color scheme exists by name without loading it.
-     *
-     * @param schemeName The name of the color scheme to check, like "dark", "light", or "dark-rgb".
-     * @return true if the color scheme file exists, false otherwise
-     */
-    public static boolean existsByName(String schemeName) {
-        if (schemeName == null) {
-            return false;
-        }
+	/**
+	 * Checks if a color scheme exists by name without loading it.
+	 *
+	 * @param schemeName The name of the color scheme to check, like "dark", "light", or "dark-rgb".
+	 * @return true if the color scheme file exists, false otherwise
+	 */
+	public static boolean existsByName(String schemeName) {
+		if (schemeName == null) {
+			return false;
+		}
 
-        String jsonPath = COLOR_SCHEME_PATH + schemeName.toLowerCase(Locale.ROOT) + ".jsonc";
-        try (InputStream inputStream = ColorSchemeProvider.class.getClassLoader().getResourceAsStream(jsonPath)) {
-            return inputStream != null;
-        } catch (IOException e) {
-            LOGGER.warn("Error checking color scheme existence: {}", e.getMessage());
-            return false;
-        }
-    }
+		String jsonPath = COLOR_SCHEME_PATH + schemeName.toLowerCase(Locale.ROOT) + ".jsonc";
+		try (InputStream inputStream = ColorSchemeProvider.class.getClassLoader().getResourceAsStream(jsonPath)) {
+			return inputStream != null;
+		} catch (IOException e) {
+			LOGGER.warn("Error checking color scheme existence: {}", e.getMessage());
+			return false;
+		}
+	}
 
-    /**
-     * Attempt to load a color scheme from a JSON file.
-     */
-    @Nonnull
-    private static AnsiColorScheme getByClasspath(String path) {
-        try (InputStream inputStream = ColorSchemeProvider.class.getClassLoader().getResourceAsStream(path)) {
-            if (inputStream == null) {
-                throw new IllegalArgumentException("No color scheme found for path " + path);
-            }
+	/**
+	 * Attempt to load a color scheme from a JSON file.
+	 */
+	@Nonnull
+	private static AnsiColorScheme getByClasspath(String path) {
+		try (InputStream inputStream = ColorSchemeProvider.class.getClassLoader().getResourceAsStream(path)) {
+			if (inputStream == null) {
+				throw new IllegalArgumentException("No color scheme found for path " + path);
+			}
 
-            ObjectMapper objectMapper = ObjectMapperConfig.configure(new ObjectMapper());
-            var colorSchemeDefinition = objectMapper.readValue(inputStream, ColorSchemeDefinition.class);
+			ObjectMapper objectMapper = ObjectMapperConfig.configure(new ObjectMapper());
+			var colorSchemeDefinition = objectMapper.readValue(inputStream, ColorSchemeDefinition.class);
 
-            Set<ConstraintViolation<ColorSchemeDefinition>> violations = VALIDATOR.validate(colorSchemeDefinition);
-            if (violations.isEmpty()) {
-                return new JsonAnsiColorScheme(colorSchemeDefinition);
-            }
+			Set<ConstraintViolation<ColorSchemeDefinition>> violations = VALIDATOR.validate(colorSchemeDefinition);
+			if (violations.isEmpty()) {
+				return new JsonAnsiColorScheme(colorSchemeDefinition);
+			}
 
-            StringBuilder errorMessage = new StringBuilder("Color scheme validation errors:");
-            for (ConstraintViolation<ColorSchemeDefinition> violation : violations) {
-                errorMessage
-                    .append("\n  - ")
-                    .append(violation.getPropertyPath())
-                    .append(": ")
-                    .append(violation.getMessage());
-            }
-            throw new IllegalArgumentException(errorMessage.toString() + " for path " + path);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load color scheme from " + path, e);
-        }
-    }
+			StringBuilder errorMessage = new StringBuilder("Color scheme validation errors:");
+			for (ConstraintViolation<ColorSchemeDefinition> violation : violations) {
+				errorMessage
+					.append("\n  - ")
+					.append(violation.getPropertyPath())
+					.append(": ")
+					.append(violation.getMessage());
+			}
+			throw new IllegalArgumentException(errorMessage.toString() + " for path " + path);
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to load color scheme from " + path, e);
+		}
+	}
 }

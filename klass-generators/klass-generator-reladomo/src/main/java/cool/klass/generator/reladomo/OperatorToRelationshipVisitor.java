@@ -29,36 +29,36 @@ import cool.klass.model.meta.domain.api.operator.StringOperator;
 
 class OperatorToRelationshipVisitor implements OperatorVisitor {
 
-    @Nonnull
-    private final StringBuilder stringBuilder;
+	@Nonnull
+	private final StringBuilder stringBuilder;
 
-    OperatorToRelationshipVisitor(@Nonnull StringBuilder stringBuilder) {
-        this.stringBuilder = Objects.requireNonNull(stringBuilder);
-    }
+	OperatorToRelationshipVisitor(@Nonnull StringBuilder stringBuilder) {
+		this.stringBuilder = Objects.requireNonNull(stringBuilder);
+	}
 
-    @Override
-    public void visitEquality(@Nonnull EqualityOperator equalityOperator) {
-        this.stringBuilder.append(" = ");
-    }
+	@Override
+	public void visitEquality(@Nonnull EqualityOperator equalityOperator) {
+		this.stringBuilder.append(" = ");
+	}
 
-    @Override
-    public void visitInequality(@Nonnull InequalityOperator inequalityOperator) {
-        this.appendOperatorText(inequalityOperator);
-    }
+	@Override
+	public void visitInequality(@Nonnull InequalityOperator inequalityOperator) {
+		this.appendOperatorText(inequalityOperator);
+	}
 
-    @Override
-    public void visitIn(@Nonnull InOperator inOperator) {
-        this.appendOperatorText(inOperator);
-    }
+	@Override
+	public void visitIn(@Nonnull InOperator inOperator) {
+		this.appendOperatorText(inOperator);
+	}
 
-    @Override
-    public void visitString(@Nonnull StringOperator stringOperator) {
-        this.appendOperatorText(stringOperator);
-    }
+	@Override
+	public void visitString(@Nonnull StringOperator stringOperator) {
+		this.appendOperatorText(stringOperator);
+	}
 
-    private void appendOperatorText(@Nonnull Operator operator) {
-        this.stringBuilder.append(' ');
-        this.stringBuilder.append(operator.getOperatorText());
-        this.stringBuilder.append(' ');
-    }
+	private void appendOperatorText(@Nonnull Operator operator) {
+		this.stringBuilder.append(' ');
+		this.stringBuilder.append(operator.getOperatorText());
+		this.stringBuilder.append(' ');
+	}
 }

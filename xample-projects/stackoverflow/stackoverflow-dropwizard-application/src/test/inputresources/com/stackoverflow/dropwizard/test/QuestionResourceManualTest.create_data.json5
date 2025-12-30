@@ -1,19 +1,19 @@
 {
-  title: "original title",
-  body: "original body",
-  status: "Open",
-  deleted: false,
-  answers: [],
-  tags: [
-    {
-      tag: {
-        name: "test tag 1",
-      },
-    },
-    {
-      tag: {
-        name: "test tag 2",
-      },
-    },
-  ],
+	title: "original title",
+	body: "original body",
+	status: "Open",
+	deleted: false,
+	answers: [],
+	tags: [
+		{
+			tag: {
+				name: "test tag 1",
+			},
+		},
+		{
+			tag: {
+				name: "test tag 2",
+			},
+		},
+	],
 }

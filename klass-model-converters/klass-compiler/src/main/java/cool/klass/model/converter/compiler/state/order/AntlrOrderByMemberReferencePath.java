@@ -33,86 +33,86 @@ import cool.klass.model.meta.grammar.KlassParser.OrderByMemberReferencePathConte
 
 public class AntlrOrderByMemberReferencePath extends AntlrElement {
 
-    @Nonnull
-    private final AntlrOrderBy orderBy;
+	@Nonnull
+	private final AntlrOrderBy orderBy;
 
-    private final int ordinal;
+	private final int ordinal;
 
-    @Nonnull
-    private final AntlrThisMemberReferencePath thisMemberReferencePath;
+	@Nonnull
+	private final AntlrThisMemberReferencePath thisMemberReferencePath;
 
-    @Nullable
-    private AntlrOrderByDirection orderByDirection;
+	@Nullable
+	private AntlrOrderByDirection orderByDirection;
 
-    private OrderByMemberReferencePathBuilder elementBuilder;
+	private OrderByMemberReferencePathBuilder elementBuilder;
 
-    public AntlrOrderByMemberReferencePath(
-        @Nonnull OrderByMemberReferencePathContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        @Nonnull AntlrOrderBy orderBy,
-        int ordinal,
-        @Nonnull AntlrThisMemberReferencePath thisMemberReferencePath
-    ) {
-        super(elementContext, compilationUnit);
-        this.orderBy = Objects.requireNonNull(orderBy);
-        this.ordinal = ordinal;
-        this.thisMemberReferencePath = Objects.requireNonNull(thisMemberReferencePath);
-    }
+	public AntlrOrderByMemberReferencePath(
+		@Nonnull OrderByMemberReferencePathContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		@Nonnull AntlrOrderBy orderBy,
+		int ordinal,
+		@Nonnull AntlrThisMemberReferencePath thisMemberReferencePath
+	) {
+		super(elementContext, compilationUnit);
+		this.orderBy = Objects.requireNonNull(orderBy);
+		this.ordinal = ordinal;
+		this.thisMemberReferencePath = Objects.requireNonNull(thisMemberReferencePath);
+	}
 
-    @Nonnull
-    @Override
-    public Optional<IAntlrElement> getSurroundingElement() {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".getSurroundingContext() not implemented yet"
-        );
-    }
+	@Nonnull
+	@Override
+	public Optional<IAntlrElement> getSurroundingElement() {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".getSurroundingContext() not implemented yet"
+		);
+	}
 
-    public int getOrdinal() {
-        return this.ordinal;
-    }
+	public int getOrdinal() {
+		return this.ordinal;
+	}
 
-    public void enterOrderByDirection(@Nonnull AntlrOrderByDirection orderByDirection) {
-        this.orderByDirection = Objects.requireNonNull(orderByDirection);
-    }
+	public void enterOrderByDirection(@Nonnull AntlrOrderByDirection orderByDirection) {
+		this.orderByDirection = Objects.requireNonNull(orderByDirection);
+	}
 
-    @Nullable
-    public AntlrOrderByDirection getOrderByDirection() {
-        return this.orderByDirection;
-    }
+	@Nullable
+	public AntlrOrderByDirection getOrderByDirection() {
+		return this.orderByDirection;
+	}
 
-    @Nonnull
-    public AntlrThisMemberReferencePath getThisMemberReferencePath() {
-        return this.thisMemberReferencePath;
-    }
+	@Nonnull
+	public AntlrThisMemberReferencePath getThisMemberReferencePath() {
+		return this.thisMemberReferencePath;
+	}
 
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        // TODO: ❗️ Redo context stack for error reporting
-        this.thisMemberReferencePath.reportErrors(compilerAnnotationHolder);
-    }
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		// TODO: ❗️ Redo context stack for error reporting
+		this.thisMemberReferencePath.reportErrors(compilerAnnotationHolder);
+	}
 
-    @Nonnull
-    public OrderByMemberReferencePathBuilder build() {
-        if (this.elementBuilder != null) {
-            throw new IllegalStateException();
-        }
-        ThisMemberReferencePathBuilder thisMemberReferencePathBuilder = this.thisMemberReferencePath.build();
+	@Nonnull
+	public OrderByMemberReferencePathBuilder build() {
+		if (this.elementBuilder != null) {
+			throw new IllegalStateException();
+		}
+		ThisMemberReferencePathBuilder thisMemberReferencePathBuilder = this.thisMemberReferencePath.build();
 
-        this.elementBuilder = new OrderByMemberReferencePathBuilder(
-            (OrderByMemberReferencePathContext) this.elementContext,
-            this.getMacroElementBuilder(),
-            this.getSourceCodeBuilder(),
-            this.orderBy.getElementBuilder(),
-            this.ordinal,
-            thisMemberReferencePathBuilder
-        );
+		this.elementBuilder = new OrderByMemberReferencePathBuilder(
+			(OrderByMemberReferencePathContext) this.elementContext,
+			this.getMacroElementBuilder(),
+			this.getSourceCodeBuilder(),
+			this.orderBy.getElementBuilder(),
+			this.ordinal,
+			thisMemberReferencePathBuilder
+		);
 
-        this.elementBuilder.setOrderByDirectionBuilder(this.orderByDirection.build());
-        return this.elementBuilder;
-    }
+		this.elementBuilder.setOrderByDirectionBuilder(this.orderByDirection.build());
+		return this.elementBuilder;
+	}
 
-    @Override
-    @Nonnull
-    public OrderByMemberReferencePathBuilder getElementBuilder() {
-        return Objects.requireNonNull(this.elementBuilder);
-    }
+	@Override
+	@Nonnull
+	public OrderByMemberReferencePathBuilder getElementBuilder() {
+		return Objects.requireNonNull(this.elementBuilder);
+	}
 }

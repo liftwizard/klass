@@ -31,35 +31,35 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 @ExtendWith(LogMarkerTestExtension.class)
 public class KlassProjectionGeneratorTest {
 
-    public static final String FULLY_QUALIFIED_PACKAGE = "com.stackoverflow";
+	public static final String FULLY_QUALIFIED_PACKAGE = "com.stackoverflow";
 
-    @RegisterExtension
-    final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
+	@RegisterExtension
+	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
-    @Test
-    void smokeTest() {
-        ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
+	@Test
+	void smokeTest() {
+		ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
 
-        var domainModelCompilerLoader = new DomainModelCompilerLoader(
-            klassSourcePackages,
-            Thread.currentThread().getContextClassLoader(),
-            DomainModelCompilerLoader::logCompilerError,
-            ColorSchemeProvider.getByName("dark")
-        );
+		var domainModelCompilerLoader = new DomainModelCompilerLoader(
+			klassSourcePackages,
+			Thread.currentThread().getContextClassLoader(),
+			DomainModelCompilerLoader::logCompilerError,
+			ColorSchemeProvider.getByName("dark")
+		);
 
-        DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
-        ImmutableList<String> packageNames = domainModel
-            .getClassifiers()
-            .asLazy()
-            .collect(PackageableElement::getPackageName)
-            .distinct()
-            .toImmutableList();
-        for (String packageName : packageNames) {
-            String sourceCode = KlassProjectionSourceCodeGenerator.getPackageSourceCode(domainModel, packageName);
+		DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
+		ImmutableList<String> packageNames = domainModel
+			.getClassifiers()
+			.asLazy()
+			.collect(PackageableElement::getPackageName)
+			.distinct()
+			.toImmutableList();
+		for (String packageName : packageNames) {
+			String sourceCode = KlassProjectionSourceCodeGenerator.getPackageSourceCode(domainModel, packageName);
 
-            String resourceClassPathLocation = packageName + ".klass";
+			String resourceClassPathLocation = packageName + ".klass";
 
-            this.fileMatchExtension.assertFileContents(resourceClassPathLocation, sourceCode);
-        }
-    }
+			this.fileMatchExtension.assertFileContents(resourceClassPathLocation, sourceCode);
+		}
+	}
 }

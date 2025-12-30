@@ -27,41 +27,41 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 public class OrderByDirectionInferencePhase extends AbstractCompilerPhase {
 
-    public OrderByDirectionInferencePhase(@Nonnull CompilerState compilerState) {
-        super(compilerState);
-    }
+	public OrderByDirectionInferencePhase(@Nonnull CompilerState compilerState) {
+		super(compilerState);
+	}
 
-    @Nonnull
-    @Override
-    public String getName() {
-        return "OrderBy Direction";
-    }
+	@Nonnull
+	@Override
+	public String getName() {
+		return "OrderBy Direction";
+	}
 
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public void exitOrderByMemberReferencePath(OrderByMemberReferencePathContext inPlaceContext) {
-        this.runCompilerMacro(inPlaceContext);
-        super.exitOrderByMemberReferencePath(inPlaceContext);
-    }
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void exitOrderByMemberReferencePath(OrderByMemberReferencePathContext inPlaceContext) {
+		this.runCompilerMacro(inPlaceContext);
+		super.exitOrderByMemberReferencePath(inPlaceContext);
+	}
 
-    private void runCompilerMacro(OrderByMemberReferencePathContext inPlaceContext) {
-        AntlrOrderByMemberReferencePath orderByMemberReferencePath =
-            this.compilerState.getCompilerWalk().getOrderByMemberReferencePath();
+	private void runCompilerMacro(OrderByMemberReferencePathContext inPlaceContext) {
+		AntlrOrderByMemberReferencePath orderByMemberReferencePath =
+			this.compilerState.getCompilerWalk().getOrderByMemberReferencePath();
 
-        if (orderByMemberReferencePath.getOrderByDirection() != null) {
-            return;
-        }
+		if (orderByMemberReferencePath.getOrderByDirection() != null) {
+			return;
+		}
 
-        String sourceCodeText = "ascending";
-        ParseTreeListener compilerPhase = new OrderByDirectionPhase(this.compilerState);
+		String sourceCodeText = "ascending";
+		ParseTreeListener compilerPhase = new OrderByDirectionPhase(this.compilerState);
 
-        this.compilerState.runInPlaceCompilerMacro(
-            orderByMemberReferencePath,
-            this,
-            sourceCodeText,
-            KlassParser::orderByDirection,
-            inPlaceContext,
-            compilerPhase
-        );
-    }
+		this.compilerState.runInPlaceCompilerMacro(
+			orderByMemberReferencePath,
+			this,
+			sourceCodeText,
+			KlassParser::orderByDirection,
+			inPlaceContext,
+			compilerPhase
+		);
+	}
 }

@@ -21,9 +21,9 @@ import javax.annotation.Nonnull;
 import cool.klass.model.meta.grammar.KlassParser.ParameterDeclarationContext;
 
 public interface AntlrParameterOwner {
-    int getNumParameters();
+	int getNumParameters();
 
-    void enterParameterDeclaration(@Nonnull AntlrParameter parameter);
+	void enterParameterDeclaration(@Nonnull AntlrParameter parameter);
 
-    AntlrParameter getParameterByContext(@Nonnull ParameterDeclarationContext ctx);
+	AntlrParameter getParameterByContext(@Nonnull ParameterDeclarationContext ctx);
 }

@@ -32,31 +32,31 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 @ExtendWith(LogMarkerTestExtension.class)
 public class KlassSourceCodeHtmlGeneratorTest {
 
-    public static final String FULLY_QUALIFIED_PACKAGE = "com.stackoverflow";
+	public static final String FULLY_QUALIFIED_PACKAGE = "com.stackoverflow";
 
-    @RegisterExtension
-    final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
+	@RegisterExtension
+	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
-    @Test
-    void smokeTest() {
-        ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
+	@Test
+	void smokeTest() {
+		ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
 
-        var domainModelCompilerLoader = new DomainModelCompilerLoader(
-            klassSourcePackages,
-            Thread.currentThread().getContextClassLoader(),
-            DomainModelCompilerLoader::logCompilerError,
-            ColorSchemeProvider.getByName("dark")
-        );
+		var domainModelCompilerLoader = new DomainModelCompilerLoader(
+			klassSourcePackages,
+			Thread.currentThread().getContextClassLoader(),
+			DomainModelCompilerLoader::logCompilerError,
+			ColorSchemeProvider.getByName("dark")
+		);
 
-        DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
+		DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
 
-        for (SourceCode sourceCode : domainModel.getSourceCodes()) {
-            String fullPathSourceName = sourceCode.getFullPathSourceName();
+		for (SourceCode sourceCode : domainModel.getSourceCodes()) {
+			String fullPathSourceName = sourceCode.getFullPathSourceName();
 
-            String html = KlassSourceCodeHtmlGenerator.getSourceCode(domainModel, sourceCode);
+			String html = KlassSourceCodeHtmlGenerator.getSourceCode(domainModel, sourceCode);
 
-            String resourceClassPathLocation = fullPathSourceName + ".html";
-            this.fileMatchExtension.assertFileContents(resourceClassPathLocation, html);
-        }
-    }
+			String resourceClassPathLocation = fullPathSourceName + ".html";
+			this.fileMatchExtension.assertFileContents(resourceClassPathLocation, html);
+		}
+	}
 }

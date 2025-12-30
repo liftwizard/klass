@@ -27,18 +27,18 @@ import org.junit.jupiter.api.Test;
 
 class CoverageExampleGraphQLTest extends AbstractCoverageTest {
 
-    @Test
-    void graphqlSmokeTest() {
-        Client client = this.getClient("graphqlSmokeTest");
-        String graphqlQueryName = this.getClass().getSimpleName() + ".graphqlSmokeTest.graphql";
-        String graphqlQuery = FileSlurper.slurp(graphqlQueryName, this.getClass());
+	@Test
+	void graphqlSmokeTest() {
+		Client client = this.getClient("graphqlSmokeTest");
+		String graphqlQueryName = this.getClass().getSimpleName() + ".graphqlSmokeTest.graphql";
+		String graphqlQuery = FileSlurper.slurp(graphqlQueryName, this.getClass());
 
-        Response response = client
-            .target("http://localhost:{port}/graphql")
-            .resolveTemplate("port", this.appExtension.getLocalPort())
-            .request()
-            .post(Entity.json(Maps.mutable.with("query", graphqlQuery)));
+		Response response = client
+			.target("http://localhost:{port}/graphql")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.post(Entity.json(Maps.mutable.with("query", graphqlQuery)));
 
-        this.assertResponse("graphqlSmokeTest", Status.OK, response);
-    }
+		this.assertResponse("graphqlSmokeTest", Status.OK, response);
+	}
 }

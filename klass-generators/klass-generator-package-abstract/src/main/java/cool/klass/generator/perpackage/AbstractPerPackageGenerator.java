@@ -31,59 +31,59 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public abstract class AbstractPerPackageGenerator {
 
-    @Nonnull
-    protected final DomainModel domainModel;
+	@Nonnull
+	protected final DomainModel domainModel;
 
-    protected AbstractPerPackageGenerator(@Nonnull DomainModel domainModel) {
-        this.domainModel = Objects.requireNonNull(domainModel);
-    }
+	protected AbstractPerPackageGenerator(@Nonnull DomainModel domainModel) {
+		this.domainModel = Objects.requireNonNull(domainModel);
+	}
 
-    public void writeFiles(@Nonnull Path outputPath) {
-        ImmutableList<String> packageNames = this.getPackageNames();
-        for (String packageName : packageNames) {
-            this.writeFile(packageName, outputPath);
-        }
-    }
+	public void writeFiles(@Nonnull Path outputPath) {
+		ImmutableList<String> packageNames = this.getPackageNames();
+		for (String packageName : packageNames) {
+			this.writeFile(packageName, outputPath);
+		}
+	}
 
-    protected ImmutableList<String> getPackageNames() {
-        return this.domainModel.getClasses()
-            .asLazy()
-            .collect(PackageableElement::getPackageName)
-            .distinct()
-            .toImmutableList();
-    }
+	protected ImmutableList<String> getPackageNames() {
+		return this.domainModel.getClasses()
+			.asLazy()
+			.collect(PackageableElement::getPackageName)
+			.distinct()
+			.toImmutableList();
+	}
 
-    protected void writeFile(String fullyQualifiedPackage, Path outputPath) {
-        Path klassOutputPath = this.getOutputPath(outputPath, fullyQualifiedPackage);
-        String sourceCode = this.getPackageSourceCode(fullyQualifiedPackage);
+	protected void writeFile(String fullyQualifiedPackage, Path outputPath) {
+		Path klassOutputPath = this.getOutputPath(outputPath, fullyQualifiedPackage);
+		String sourceCode = this.getPackageSourceCode(fullyQualifiedPackage);
 
-        this.printStringToFile(klassOutputPath, sourceCode);
-    }
+		this.printStringToFile(klassOutputPath, sourceCode);
+	}
 
-    @Nonnull
-    private Path getOutputPath(@Nonnull Path outputPath, @Nonnull String fullyQualifiedPackage) {
-        String packageRelativePathString = fullyQualifiedPackage.replaceAll("\\.", "/");
-        Path packageRelativePath = this.getPluginRelativePath(outputPath.resolve(packageRelativePathString));
-        packageRelativePath.toFile().mkdirs();
-        return packageRelativePath.resolve(this.getFileName());
-    }
+	@Nonnull
+	private Path getOutputPath(@Nonnull Path outputPath, @Nonnull String fullyQualifiedPackage) {
+		String packageRelativePathString = fullyQualifiedPackage.replaceAll("\\.", "/");
+		Path packageRelativePath = this.getPluginRelativePath(outputPath.resolve(packageRelativePathString));
+		packageRelativePath.toFile().mkdirs();
+		return packageRelativePath.resolve(this.getFileName());
+	}
 
-    protected void printStringToFile(@Nonnull Path path, String contents) {
-        try (
-            PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
-        ) {
-            printStream.print(contents);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	protected void printStringToFile(@Nonnull Path path, String contents) {
+		try (
+			PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
+		) {
+			printStream.print(contents);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    @Nonnull
-    protected abstract Path getPluginRelativePath(Path path);
+	@Nonnull
+	protected abstract Path getPluginRelativePath(Path path);
 
-    @Nonnull
-    protected abstract String getFileName();
+	@Nonnull
+	protected abstract String getFileName();
 
-    @Nonnull
-    protected abstract String getPackageSourceCode(@Nonnull String fullyQualifiedPackage);
+	@Nonnull
+	protected abstract String getPackageSourceCode(@Nonnull String fullyQualifiedPackage);
 }

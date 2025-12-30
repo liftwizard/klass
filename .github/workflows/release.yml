@@ -4,7 +4,7 @@ on:
     workflow_dispatch:
         inputs:
             next-version:
-                description: 'Next development version (e.g., 2.1.35-SNAPSHOT)'
+                description: "Next development version (e.g., 2.1.35-SNAPSHOT)"
                 required: false
                 type: string
 

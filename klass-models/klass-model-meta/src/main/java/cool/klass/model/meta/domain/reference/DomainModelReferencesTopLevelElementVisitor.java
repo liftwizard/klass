@@ -52,111 +52,111 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public class DomainModelReferencesTopLevelElementVisitor implements TopLevelElementVisitor {
 
-    @Nonnull
-    private final DomainModelReferences domainModelReferences;
+	@Nonnull
+	private final DomainModelReferences domainModelReferences;
 
-    public DomainModelReferencesTopLevelElementVisitor(@Nonnull DomainModelReferences domainModelReferences) {
-        this.domainModelReferences = Objects.requireNonNull(domainModelReferences);
-    }
+	public DomainModelReferencesTopLevelElementVisitor(@Nonnull DomainModelReferences domainModelReferences) {
+		this.domainModelReferences = Objects.requireNonNull(domainModelReferences);
+	}
 
-    @Override
-    public void visitEnumeration(@Nonnull Enumeration enumeration) {
-        // Deliberately empty
-    }
+	@Override
+	public void visitEnumeration(@Nonnull Enumeration enumeration) {
+		// Deliberately empty
+	}
 
-    @Override
-    public void visitInterface(@Nonnull Interface anInterface) {
-        this.visitClassifier(anInterface);
-    }
+	@Override
+	public void visitInterface(@Nonnull Interface anInterface) {
+		this.visitClassifier(anInterface);
+	}
 
-    @Override
-    public void visitKlass(@Nonnull Klass klass) {
-        this.visitClassifier(klass);
-    }
+	@Override
+	public void visitKlass(@Nonnull Klass klass) {
+		this.visitClassifier(klass);
+	}
 
-    private void visitClassifier(@Nonnull Classifier classifier) {
-        ImmutableList<Property> properties = classifier.getDeclaredProperties();
-        for (Property property : properties) {
-            property.visit(new DomainModelReferencesPropertyVisitor(this.domainModelReferences));
-        }
-    }
+	private void visitClassifier(@Nonnull Classifier classifier) {
+		ImmutableList<Property> properties = classifier.getDeclaredProperties();
+		for (Property property : properties) {
+			property.visit(new DomainModelReferencesPropertyVisitor(this.domainModelReferences));
+		}
+	}
 
-    @Override
-    public void visitAssociation(@Nonnull Association association) {
-        // Don't need to visit association ends. We get those on the Classifier.
+	@Override
+	public void visitAssociation(@Nonnull Association association) {
+		// Don't need to visit association ends. We get those on the Classifier.
 
-        Criteria criteria = association.getCriteria();
-        this.visitCriteria(criteria);
-    }
+		Criteria criteria = association.getCriteria();
+		this.visitCriteria(criteria);
+	}
 
-    @Override
-    public void visitProjection(@Nonnull Projection projection) {
-        ProjectionWithSourceCode elementWithSourceCode = (ProjectionWithSourceCode) projection;
-        ProjectionDeclarationContext elementContext = elementWithSourceCode.getElementContext();
-        ClassifierReferenceContext reference = elementContext.classifierReference();
-        ClassifierWithSourceCode classifier = elementWithSourceCode.getClassifier();
+	@Override
+	public void visitProjection(@Nonnull Projection projection) {
+		ProjectionWithSourceCode elementWithSourceCode = (ProjectionWithSourceCode) projection;
+		ProjectionDeclarationContext elementContext = elementWithSourceCode.getElementContext();
+		ClassifierReferenceContext reference = elementContext.classifierReference();
+		ClassifierWithSourceCode classifier = elementWithSourceCode.getClassifier();
 
-        this.domainModelReferences.addClassifierReference(reference, classifier);
+		this.domainModelReferences.addClassifierReference(reference, classifier);
 
-        for (ProjectionChild projectionChild : projection.getChildren()) {
-            projectionChild.visit(new DomainModelReferencesProjectionVisitor(this.domainModelReferences));
-        }
-    }
+		for (ProjectionChild projectionChild : projection.getChildren()) {
+			projectionChild.visit(new DomainModelReferencesProjectionVisitor(this.domainModelReferences));
+		}
+	}
 
-    @Override
-    public void visitServiceGroup(@Nonnull ServiceGroup serviceGroup) {
-        ServiceGroupWithSourceCode elementWithSourceCode = (ServiceGroupWithSourceCode) serviceGroup;
-        ServiceGroupDeclarationContext elementContext = elementWithSourceCode.getElementContext();
-        ClassReferenceContext reference = elementContext.classReference();
-        KlassWithSourceCode klass = elementWithSourceCode.getKlass();
+	@Override
+	public void visitServiceGroup(@Nonnull ServiceGroup serviceGroup) {
+		ServiceGroupWithSourceCode elementWithSourceCode = (ServiceGroupWithSourceCode) serviceGroup;
+		ServiceGroupDeclarationContext elementContext = elementWithSourceCode.getElementContext();
+		ClassReferenceContext reference = elementContext.classReference();
+		KlassWithSourceCode klass = elementWithSourceCode.getKlass();
 
-        this.domainModelReferences.addClassReference(reference, klass);
+		this.domainModelReferences.addClassReference(reference, klass);
 
-        for (Url url : serviceGroup.getUrls()) {
-            this.visitUrl(url);
-        }
-    }
+		for (Url url : serviceGroup.getUrls()) {
+			this.visitUrl(url);
+		}
+	}
 
-    public void visitUrl(@Nonnull Url url) {
-        // TODO: Parameter declarations
+	public void visitUrl(@Nonnull Url url) {
+		// TODO: Parameter declarations
 
-        ImmutableList<Service> services = url.getServices();
-        for (Service service : services) {
-            this.visitService(service);
-        }
-    }
+		ImmutableList<Service> services = url.getServices();
+		for (Service service : services) {
+			this.visitService(service);
+		}
+	}
 
-    public void visitService(@Nonnull Service service) {
-        service.getQueryCriteria().ifPresent(this::visitCriteria);
-        service.getAuthorizeCriteria().ifPresent(this::visitCriteria);
-        service.getValidateCriteria().ifPresent(this::visitCriteria);
-        service.getConflictCriteria().ifPresent(this::visitCriteria);
+	public void visitService(@Nonnull Service service) {
+		service.getQueryCriteria().ifPresent(this::visitCriteria);
+		service.getAuthorizeCriteria().ifPresent(this::visitCriteria);
+		service.getValidateCriteria().ifPresent(this::visitCriteria);
+		service.getConflictCriteria().ifPresent(this::visitCriteria);
 
-        service.getProjectionDispatch().ifPresent(this::visitProjectionDispatch);
+		service.getProjectionDispatch().ifPresent(this::visitProjectionDispatch);
 
-        service.getOrderBy().ifPresent(this::visitOrderBy);
-    }
+		service.getOrderBy().ifPresent(this::visitOrderBy);
+	}
 
-    public void visitCriteria(Criteria criteria) {
-        criteria.visit(new DomainModelReferencesCriteriaVisitor(this.domainModelReferences));
-    }
+	public void visitCriteria(Criteria criteria) {
+		criteria.visit(new DomainModelReferencesCriteriaVisitor(this.domainModelReferences));
+	}
 
-    public void visitProjectionDispatch(ServiceProjectionDispatch serviceProjectionDispatch) {
-        ServiceProjectionDispatchWithSourceCode elementWithSourceCode =
-            (ServiceProjectionDispatchWithSourceCode) serviceProjectionDispatch;
-        ServiceProjectionDispatchContext elementContext = elementWithSourceCode.getElementContext();
-        ProjectionReferenceContext reference = elementContext.projectionReference();
-        ProjectionWithSourceCode projection = elementWithSourceCode.getProjection();
+	public void visitProjectionDispatch(ServiceProjectionDispatch serviceProjectionDispatch) {
+		ServiceProjectionDispatchWithSourceCode elementWithSourceCode =
+			(ServiceProjectionDispatchWithSourceCode) serviceProjectionDispatch;
+		ServiceProjectionDispatchContext elementContext = elementWithSourceCode.getElementContext();
+		ProjectionReferenceContext reference = elementContext.projectionReference();
+		ProjectionWithSourceCode projection = elementWithSourceCode.getProjection();
 
-        this.domainModelReferences.addProjectionReference(reference, projection);
-    }
+		this.domainModelReferences.addProjectionReference(reference, projection);
+	}
 
-    public void visitOrderBy(OrderBy orderBy) {
-        ImmutableList<OrderByMemberReferencePath> orderByMemberReferencePaths =
-            orderBy.getOrderByMemberReferencePaths();
-        for (OrderByMemberReferencePath orderByMemberReferencePath : orderByMemberReferencePaths) {
-            ThisMemberReferencePath thisMemberReferencePath = orderByMemberReferencePath.getThisMemberReferencePath();
-            thisMemberReferencePath.visit(new DomainModelReferencesExpressionValueVisitor(this.domainModelReferences));
-        }
-    }
+	public void visitOrderBy(OrderBy orderBy) {
+		ImmutableList<OrderByMemberReferencePath> orderByMemberReferencePaths =
+			orderBy.getOrderByMemberReferencePaths();
+		for (OrderByMemberReferencePath orderByMemberReferencePath : orderByMemberReferencePaths) {
+			ThisMemberReferencePath thisMemberReferencePath = orderByMemberReferencePath.getThisMemberReferencePath();
+			thisMemberReferencePath.visit(new DomainModelReferencesExpressionValueVisitor(this.domainModelReferences));
+		}
+	}
 }

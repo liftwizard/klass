@@ -33,47 +33,47 @@ import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
 public final class ParameterHolder implements AntlrParameterOwner {
 
-    private final MutableList<AntlrParameter> parameters = Lists.mutable.empty();
-    private final MutableOrderedMap<String, AntlrParameter> parametersByName = OrderedMapAdapter.adapt(
-        new LinkedHashMap<>()
-    );
-    private final MutableOrderedMap<ParserRuleContext, AntlrParameter> parametersByContext = OrderedMapAdapter.adapt(
-        new LinkedHashMap<>()
-    );
+	private final MutableList<AntlrParameter> parameters = Lists.mutable.empty();
+	private final MutableOrderedMap<String, AntlrParameter> parametersByName = OrderedMapAdapter.adapt(
+		new LinkedHashMap<>()
+	);
+	private final MutableOrderedMap<ParserRuleContext, AntlrParameter> parametersByContext = OrderedMapAdapter.adapt(
+		new LinkedHashMap<>()
+	);
 
-    @Override
-    public int getNumParameters() {
-        return this.parameters.size();
-    }
+	@Override
+	public int getNumParameters() {
+		return this.parameters.size();
+	}
 
-    @Override
-    public void enterParameterDeclaration(@Nonnull AntlrParameter parameter) {
-        this.parameters.add(parameter);
-        this.parametersByName.compute(parameter.getName(), (name, builder) ->
-            builder == null ? parameter : AntlrParameter.AMBIGUOUS
-        );
-        AntlrParameter duplicate = this.parametersByContext.put(parameter.getElementContext(), parameter);
-        if (duplicate != null) {
-            throw new AssertionError();
-        }
-    }
+	@Override
+	public void enterParameterDeclaration(@Nonnull AntlrParameter parameter) {
+		this.parameters.add(parameter);
+		this.parametersByName.compute(parameter.getName(), (name, builder) ->
+			builder == null ? parameter : AntlrParameter.AMBIGUOUS
+		);
+		AntlrParameter duplicate = this.parametersByContext.put(parameter.getElementContext(), parameter);
+		if (duplicate != null) {
+			throw new AssertionError();
+		}
+	}
 
-    @Override
-    public AntlrParameter getParameterByContext(@Nonnull ParameterDeclarationContext ctx) {
-        return this.parametersByContext.get(ctx);
-    }
+	@Override
+	public AntlrParameter getParameterByContext(@Nonnull ParameterDeclarationContext ctx) {
+		return this.parametersByContext.get(ctx);
+	}
 
-    public MutableList<AntlrParameter> getParameters() {
-        return this.parameters.asUnmodifiable();
-    }
+	public MutableList<AntlrParameter> getParameters() {
+		return this.parameters.asUnmodifiable();
+	}
 
-    @Nonnull
-    public MutableOrderedMap<String, AntlrParameter> getParametersByName() {
-        // TODO: Override MutableOrderedMap.asUnmodifiable
-        return this.parametersByName;
-    }
+	@Nonnull
+	public MutableOrderedMap<String, AntlrParameter> getParametersByName() {
+		// TODO: Override MutableOrderedMap.asUnmodifiable
+		return this.parametersByName;
+	}
 
-    public void reportNameErrors(CompilerAnnotationHolder compilerAnnotationHolder) {
-        this.parameters.forEachWith(AntlrNamedElement::reportNameErrors, compilerAnnotationHolder);
-    }
+	public void reportNameErrors(CompilerAnnotationHolder compilerAnnotationHolder) {
+		this.parameters.forEachWith(AntlrNamedElement::reportNameErrors, compilerAnnotationHolder);
+	}
 }

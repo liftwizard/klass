@@ -1,34 +1,34 @@
 fragment ExpressionValueFragment on ExpressionValue {
-  __typename
-  id
-  ... on ParameterReference {
-    parameter {
-      __typename
-      id
-    }
-  }
-  ... on MemberReferencePath {
-    klass {
-      name
-    }
-    associationEnds {
-      ...MemberReferencePathAssociationEndMappingFragment
-    }
-    dataTypeProperty {
-      __typename
-      name
-    }
-  }
+	__typename
+	id
+	... on ParameterReference {
+		parameter {
+			__typename
+			id
+		}
+	}
+	... on MemberReferencePath {
+		klass {
+			name
+		}
+		associationEnds {
+			...MemberReferencePathAssociationEndMappingFragment
+		}
+		dataTypeProperty {
+			__typename
+			name
+		}
+	}
 }
 
 fragment MemberReferencePathAssociationEndMappingFragment on MemberReferencePathAssociationEndMapping {
-  associationEnd {
-    name
-  }
+	associationEnd {
+		name
+	}
 }
 
 query {
-  expressionValues {
-    ...ExpressionValueFragment
-  }
+	expressionValues {
+		...ExpressionValueFragment
+	}
 }

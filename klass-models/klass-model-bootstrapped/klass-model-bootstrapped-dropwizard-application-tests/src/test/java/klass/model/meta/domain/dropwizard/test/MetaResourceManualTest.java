@@ -20,33 +20,33 @@ import org.junit.jupiter.api.Test;
 
 class MetaResourceManualTest extends AbstractResourceTestCase {
 
-    @Test
-    void metaEnumeration() {
-        this.assertUrlReturns("metaEnumeration", "/meta/enumeration/PrimitiveType");
-    }
+	@Test
+	void metaEnumeration() {
+		this.assertUrlReturns("metaEnumeration", "/meta/enumeration/PrimitiveType");
+	}
 
-    @Test
-    void metaInterface() {
-        this.assertUrlReturns("metaInterface", "/meta/interface/NamedElement");
-    }
+	@Test
+	void metaInterface() {
+		this.assertUrlReturns("metaInterface", "/meta/interface/NamedElement");
+	}
 
-    @Test
-    void metaClass() {
-        this.assertUrlReturns("metaClass", "/meta/class/Classifier");
-    }
+	@Test
+	void metaClass() {
+		this.assertUrlReturns("metaClass", "/meta/class/Classifier");
+	}
 
-    @Test
-    void metaAssociation() {
-        this.assertUrlReturns("metaAssociation", "/meta/association/DataTypePropertyHasModifiers");
-    }
+	@Test
+	void metaAssociation() {
+		this.assertUrlReturns("metaAssociation", "/meta/association/DataTypePropertyHasModifiers");
+	}
 
-    @Test
-    void metaProjection() {
-        this.assertUrlReturns("metaProjection", "/meta/projection/ProjectionElementProjection");
-    }
+	@Test
+	void metaProjection() {
+		this.assertUrlReturns("metaProjection", "/meta/projection/ProjectionElementProjection");
+	}
 
-    @Test
-    void metaServiceGroup() {
-        this.assertUrlReturns("metaServiceGroup", "/meta/serviceGroup/ServiceGroupResource");
-    }
+	@Test
+	void metaServiceGroup() {
+		this.assertUrlReturns("metaServiceGroup", "/meta/serviceGroup/ServiceGroupResource");
+	}
 }

@@ -34,38 +34,38 @@ import org.eclipse.collections.api.map.OrderedMap;
 
 public abstract class AntlrExpressionValue extends AntlrElement {
 
-    private final IAntlrElement expressionValueOwner;
+	private final IAntlrElement expressionValueOwner;
 
-    protected AntlrExpressionValue(
-        @Nonnull ParserRuleContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        @Nonnull IAntlrElement expressionValueOwner
-    ) {
-        super(elementContext, compilationUnit);
-        this.expressionValueOwner = Objects.requireNonNull(expressionValueOwner);
-    }
+	protected AntlrExpressionValue(
+		@Nonnull ParserRuleContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		@Nonnull IAntlrElement expressionValueOwner
+	) {
+		super(elementContext, compilationUnit);
+		this.expressionValueOwner = Objects.requireNonNull(expressionValueOwner);
+	}
 
-    @Nonnull
-    @Override
-    public Optional<IAntlrElement> getSurroundingElement() {
-        return Optional.of(this.expressionValueOwner);
-    }
+	@Nonnull
+	@Override
+	public Optional<IAntlrElement> getSurroundingElement() {
+		return Optional.of(this.expressionValueOwner);
+	}
 
-    @Nonnull
-    public abstract AbstractExpressionValueBuilder<?> build();
+	@Nonnull
+	public abstract AbstractExpressionValueBuilder<?> build();
 
-    @Override
-    @Nonnull
-    public abstract AbstractExpressionValueBuilder<?> getElementBuilder();
+	@Override
+	@Nonnull
+	public abstract AbstractExpressionValueBuilder<?> getElementBuilder();
 
-    public abstract void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder);
+	public abstract void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder);
 
-    @Nonnull
-    public abstract ImmutableList<AntlrType> getPossibleTypes();
+	@Nonnull
+	public abstract ImmutableList<AntlrType> getPossibleTypes();
 
-    public void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName) {
-        // Intentionally blank
-    }
+	public void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName) {
+		// Intentionally blank
+	}
 
-    public abstract void visit(AntlrExpressionValueVisitor visitor);
+	public abstract void visit(AntlrExpressionValueVisitor visitor);
 }

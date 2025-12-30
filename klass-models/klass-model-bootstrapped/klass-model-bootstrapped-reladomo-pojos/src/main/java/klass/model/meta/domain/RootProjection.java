@@ -18,8 +18,8 @@ package klass.model.meta.domain;
 
 public class RootProjection extends RootProjectionAbstract {
 
-    public RootProjection() {
-        // You must not modify this constructor. Mithra calls this internally.
-        // You can call this constructor. You can also add new constructors.
-    }
+	public RootProjection() {
+		// You must not modify this constructor. Mithra calls this internally.
+		// You can call this constructor. You can also add new constructors.
+	}
 }

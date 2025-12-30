@@ -27,55 +27,55 @@ import org.junit.jupiter.api.Test;
 
 class OwnedNaturalOneToOneTest extends AbstractValidatorTest {
 
-    @Test
-    void validate_good() throws IOException {
-        this.validate("validate_good");
-    }
+	@Test
+	void validate_good() throws IOException {
+		this.validate("validate_good");
+	}
 
-    @Test
-    void validate_backwards_association_end() throws IOException {
-        this.validate("validate_backwards_association_end");
-    }
+	@Test
+	void validate_backwards_association_end() throws IOException {
+		this.validate("validate_backwards_association_end");
+	}
 
-    @Test
-    void validate_extra_properties() throws IOException {
-        this.validate("validate_extra_properties");
-    }
+	@Test
+	void validate_extra_properties() throws IOException {
+		this.validate("validate_extra_properties");
+	}
 
-    @Test
-    void validate_expected_actual_missing() throws IOException {
-        this.validate("validate_expected_actual_missing");
-    }
+	@Test
+	void validate_expected_actual_missing() throws IOException {
+		this.validate("validate_expected_actual_missing");
+	}
 
-    @Test
-    void validate_expected_actual_array() throws IOException {
-        this.validate("validate_expected_actual_array");
-    }
+	@Test
+	void validate_expected_actual_array() throws IOException {
+		this.validate("validate_expected_actual_array");
+	}
 
-    @Test
-    void validate_expected_actual_object() throws IOException {
-        this.validate("validate_expected_actual_object");
-    }
+	@Test
+	void validate_expected_actual_object() throws IOException {
+		this.validate("validate_expected_actual_object");
+	}
 
-    @Test
-    void validate_expected_actual_null() throws IOException {
-        this.validate("validate_expected_actual_null");
-    }
+	@Test
+	void validate_expected_actual_null() throws IOException {
+		this.validate("validate_expected_actual_null");
+	}
 
-    @Test
-    void validate_expected_actual_boolean() throws IOException {
-        this.validate("validate_expected_actual_boolean");
-    }
+	@Test
+	void validate_expected_actual_boolean() throws IOException {
+		this.validate("validate_expected_actual_boolean");
+	}
 
-    @Nonnull
-    @Override
-    protected Klass getKlass() {
-        return this.domainModel.getClassByName("OwnedNaturalOneToOneSource");
-    }
+	@Nonnull
+	@Override
+	protected Klass getKlass() {
+		return this.domainModel.getClassByName("OwnedNaturalOneToOneSource");
+	}
 
-    @Nonnull
-    @Override
-    protected OperationMode getMode() {
-        return OperationMode.CREATE;
-    }
+	@Nonnull
+	@Override
+	protected OperationMode getMode() {
+		return OperationMode.CREATE;
+	}
 }

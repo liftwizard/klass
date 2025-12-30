@@ -1,2501 +1,2501 @@
 {
-  "data": {
-    "criterias": [
-      {
-        "__typename": "OperatorCriteria",
-        "id": 1,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 1,
-          "klass": {
-            "name": "Enumeration"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 2,
-          "klass": {
-            "name": "EnumerationLiteral"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "enumerationName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 2,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 3,
-          "klass": {
-            "name": "Classifier"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 4,
-          "klass": {
-            "name": "ClassifierInterfaceMapping"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 3,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 5,
-          "klass": {
-            "name": "ClassifierInterfaceMapping"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "interfaceName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 6,
-          "klass": {
-            "name": "Interface"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 4,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 7,
-          "klass": {
-            "name": "Classifier"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 8,
-          "klass": {
-            "name": "ClassifierModifier"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 5,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 9,
-          "klass": {
-            "name": "Klass"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "superClassName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 10,
-          "klass": {
-            "name": "Klass"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 6,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 11,
-          "klass": {
-            "name": "EnumerationProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "enumerationName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 12,
-          "klass": {
-            "name": "Enumeration"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 7,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 13,
-          "klass": {
-            "name": "Classifier"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 14,
-          "klass": {
-            "name": "DataTypeProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 8,
-        "left": {
-          "__typename": "OperatorCriteria",
-          "id": 9
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 10
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 9,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 15,
-          "klass": {
-            "name": "DataTypeProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 16,
-          "klass": {
-            "name": "MinLengthPropertyValidation"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 10,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 17,
-          "klass": {
-            "name": "DataTypeProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 18,
-          "klass": {
-            "name": "MinLengthPropertyValidation"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "propertyName"
-          }
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 11,
-        "left": {
-          "__typename": "OperatorCriteria",
-          "id": 12
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 13
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 12,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 19,
-          "klass": {
-            "name": "DataTypeProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 20,
-          "klass": {
-            "name": "MaxLengthPropertyValidation"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 13,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 21,
-          "klass": {
-            "name": "DataTypeProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 22,
-          "klass": {
-            "name": "MaxLengthPropertyValidation"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "propertyName"
-          }
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 14,
-        "left": {
-          "__typename": "OperatorCriteria",
-          "id": 15
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 16
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 15,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 23,
-          "klass": {
-            "name": "PrimitiveProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 24,
-          "klass": {
-            "name": "MinPropertyValidation"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 16,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 25,
-          "klass": {
-            "name": "PrimitiveProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 26,
-          "klass": {
-            "name": "MinPropertyValidation"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "propertyName"
-          }
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 17,
-        "left": {
-          "__typename": "OperatorCriteria",
-          "id": 18
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 19
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 18,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 27,
-          "klass": {
-            "name": "PrimitiveProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 28,
-          "klass": {
-            "name": "MaxPropertyValidation"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 19,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 29,
-          "klass": {
-            "name": "PrimitiveProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 30,
-          "klass": {
-            "name": "MaxPropertyValidation"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "propertyName"
-          }
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 20,
-        "left": {
-          "__typename": "OperatorCriteria",
-          "id": 21
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 22
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 21,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 31,
-          "klass": {
-            "name": "DataTypeProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 32,
-          "klass": {
-            "name": "PropertyModifier"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 22,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 33,
-          "klass": {
-            "name": "DataTypeProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 34,
-          "klass": {
-            "name": "PropertyModifier"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "propertyName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 23,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 35,
-          "klass": {
-            "name": "ParameterReference"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "parameterId"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 36,
-          "klass": {
-            "name": "Parameter"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 24,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 37,
-          "klass": {
-            "name": "Association"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 38,
-          "klass": {
-            "name": "AssociationEnd"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "associationName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 25,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 39,
-          "klass": {
-            "name": "Klass"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 40,
-          "klass": {
-            "name": "AssociationEnd"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "owningClassName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 26,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 41,
-          "klass": {
-            "name": "AssociationEnd"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "resultTypeName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 42,
-          "klass": {
-            "name": "Klass"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 27,
-        "left": {
-          "__typename": "OperatorCriteria",
-          "id": 28
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 29
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 28,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 43,
-          "klass": {
-            "name": "AssociationEnd"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "owningClassName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 44,
-          "klass": {
-            "name": "AssociationEndModifier"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "owningClassName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 29,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 45,
-          "klass": {
-            "name": "AssociationEnd"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 46,
-          "klass": {
-            "name": "AssociationEndModifier"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "associationEndName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 30,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 47,
-          "klass": {
-            "name": "Association"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "criteriaId"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 48,
-          "klass": {
-            "name": "Criteria"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 31,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 49,
-          "klass": {
-            "name": "OperatorCriteria"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "sourceExpressionId"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 50,
-          "klass": {
-            "name": "ExpressionValue"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 32,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 51,
-          "klass": {
-            "name": "OperatorCriteria"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "targetExpressionId"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 52,
-          "klass": {
-            "name": "ExpressionValue"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 33,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 53,
-          "klass": {
-            "name": "EdgePointCriteria"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "memberReferencePathId"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 54,
-          "klass": {
-            "name": "MemberReferencePath"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 34,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 55,
-          "klass": {
-            "name": "EnumerationParameter"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "enumerationName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 56,
-          "klass": {
-            "name": "Enumeration"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 35,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 57,
-          "klass": {
-            "name": "MemberReferencePath"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "className"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 58,
-          "klass": {
-            "name": "Klass"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 36,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 59,
-          "klass": {
-            "name": "MemberReferencePath"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 60,
-          "klass": {
-            "name": "MemberReferencePathAssociationEndMapping"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "memberReferencePathId"
-          }
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 37,
-        "left": {
-          "__typename": "OperatorCriteria",
-          "id": 38
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 39
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 38,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 61,
-          "klass": {
-            "name": "MemberReferencePathAssociationEndMapping"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "associationOwningClassName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 62,
-          "klass": {
-            "name": "AssociationEnd"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "owningClassName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 39,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 63,
-          "klass": {
-            "name": "MemberReferencePathAssociationEndMapping"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "associationEndName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 64,
-          "klass": {
-            "name": "AssociationEnd"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 40,
-        "left": {
-          "__typename": "OperatorCriteria",
-          "id": 41
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 42
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 41,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 65,
-          "klass": {
-            "name": "MemberReferencePath"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "propertyClassName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 66,
-          "klass": {
-            "name": "DataTypeProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 42,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 67,
-          "klass": {
-            "name": "MemberReferencePath"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "propertyName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 68,
-          "klass": {
-            "name": "DataTypeProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 43,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 69,
-          "klass": {
-            "name": "BinaryCriteria"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "leftId"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 70,
-          "klass": {
-            "name": "Criteria"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 44,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 71,
-          "klass": {
-            "name": "BinaryCriteria"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "rightId"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 72,
-          "klass": {
-            "name": "Criteria"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 45,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 73,
-          "klass": {
-            "name": "Klass"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 74,
-          "klass": {
-            "name": "ParameterizedProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "owningClassName"
-          }
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 46,
-        "left": {
-          "__typename": "OperatorCriteria",
-          "id": 47
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 48
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 47,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 75,
-          "klass": {
-            "name": "AssociationEnd"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "owningClassName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 76,
-          "klass": {
-            "name": "AssociationEndOrderBy"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "associationEndClassName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 48,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 77,
-          "klass": {
-            "name": "AssociationEnd"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 78,
-          "klass": {
-            "name": "AssociationEndOrderBy"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "associationEndName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 49,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 79,
-          "klass": {
-            "name": "AssociationEndOrderBy"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "thisMemberReferencePathId"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 80,
-          "klass": {
-            "name": "ThisMemberReferencePath"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 50,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 81,
-          "klass": {
-            "name": "ParameterizedProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "resultTypeName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 82,
-          "klass": {
-            "name": "Klass"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 51,
-        "left": {
-          "__typename": "OperatorCriteria",
-          "id": 52
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 53
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 52,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 83,
-          "klass": {
-            "name": "ParameterizedProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "owningClassName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 84,
-          "klass": {
-            "name": "ParameterizedPropertyOrdering"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "owningClassName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 53,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 85,
-          "klass": {
-            "name": "ParameterizedProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 86,
-          "klass": {
-            "name": "ParameterizedPropertyOrdering"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 54,
-        "left": {
-          "__typename": "OperatorCriteria",
-          "id": 55
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 56
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 55,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 87,
-          "klass": {
-            "name": "ParameterizedProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "owningClassName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 88,
-          "klass": {
-            "name": "ParameterizedPropertyParameter"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 56,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 89,
-          "klass": {
-            "name": "ParameterizedProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 90,
-          "klass": {
-            "name": "ParameterizedPropertyParameter"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "parameterizedPropertyName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 57,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 91,
-          "klass": {
-            "name": "NamedProjection"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "projectionId"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 92,
-          "klass": {
-            "name": "RootProjection"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 58,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 93,
-          "klass": {
-            "name": "ProjectionElement"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 94,
-          "klass": {
-            "name": "ProjectionElement"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "parentId"
-          }
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 59,
-        "left": {
-          "__typename": "OperatorCriteria",
-          "id": 60
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 61
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 60,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 95,
-          "klass": {
-            "name": "ProjectionWithAssociationEnd"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "associationEndClass"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 96,
-          "klass": {
-            "name": "AssociationEnd"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "owningClassName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 61,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 97,
-          "klass": {
-            "name": "ProjectionWithAssociationEnd"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "associationEndName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 98,
-          "klass": {
-            "name": "AssociationEnd"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 62,
-        "left": {
-          "__typename": "OperatorCriteria",
-          "id": 63
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 64
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 63,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 99,
-          "klass": {
-            "name": "ProjectionDataTypeProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "propertyClassifierName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 100,
-          "klass": {
-            "name": "DataTypeProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 64,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 101,
-          "klass": {
-            "name": "ProjectionDataTypeProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "propertyName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 102,
-          "klass": {
-            "name": "DataTypeProperty"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 65,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 103,
-          "klass": {
-            "name": "RootProjection"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 104,
-          "klass": {
-            "name": "Classifier"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 66,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 105,
-          "klass": {
-            "name": "ProjectionProjectionReference"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "projectionName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 106,
-          "klass": {
-            "name": "NamedProjection"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 67,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 107,
-          "klass": {
-            "name": "ServiceGroup"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "className"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 108,
-          "klass": {
-            "name": "Klass"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 68,
-        "left": {
-          "__typename": "OperatorCriteria",
-          "id": 69
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 70
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 69,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 109,
-          "klass": {
-            "name": "Url"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "serviceGroupName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 110,
-          "klass": {
-            "name": "UrlParameter"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "serviceGroupName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 70,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 111,
-          "klass": {
-            "name": "Url"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "url"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 112,
-          "klass": {
-            "name": "UrlParameter"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "urlString"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 71,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 113,
-          "klass": {
-            "name": "UrlParameter"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "parameterId"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 114,
-          "klass": {
-            "name": "Parameter"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 72,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 115,
-          "klass": {
-            "name": "ServiceGroup"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 116,
-          "klass": {
-            "name": "Url"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "serviceGroupName"
-          }
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 73,
-        "left": {
-          "__typename": "OperatorCriteria",
-          "id": 74
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 75
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 74,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 117,
-          "klass": {
-            "name": "Url"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "serviceGroupName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 118,
-          "klass": {
-            "name": "Service"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "serviceGroupName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 75,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 119,
-          "klass": {
-            "name": "Url"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "url"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 120,
-          "klass": {
-            "name": "Service"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "urlString"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 76,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 121,
-          "klass": {
-            "name": "Service"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "projectionName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 122,
-          "klass": {
-            "name": "NamedProjection"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 77,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 123,
-          "klass": {
-            "name": "Service"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "queryCriteriaId"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 124,
-          "klass": {
-            "name": "Criteria"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 78,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 125,
-          "klass": {
-            "name": "Service"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "authorizeCriteriaId"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 126,
-          "klass": {
-            "name": "Criteria"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 79,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 127,
-          "klass": {
-            "name": "Service"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "validateCriteriaId"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 128,
-          "klass": {
-            "name": "Criteria"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 80,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 129,
-          "klass": {
-            "name": "Service"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "conflictCriteriaId"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 130,
-          "klass": {
-            "name": "Criteria"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 81,
-        "left": {
-          "__typename": "AndCriteria",
-          "id": 82
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 85
-        }
-      },
-      {
-        "__typename": "AndCriteria",
-        "id": 82,
-        "left": {
-          "__typename": "OperatorCriteria",
-          "id": 83
-        },
-        "right": {
-          "__typename": "OperatorCriteria",
-          "id": 84
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 83,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 131,
-          "klass": {
-            "name": "Service"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "serviceGroupName"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 132,
-          "klass": {
-            "name": "ServiceOrderBy"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "serviceGroupName"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 84,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 133,
-          "klass": {
-            "name": "Service"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "urlString"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 134,
-          "klass": {
-            "name": "ServiceOrderBy"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "serviceUrlString"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 85,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 135,
-          "klass": {
-            "name": "Service"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "EnumerationProperty",
-            "name": "verb"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 136,
-          "klass": {
-            "name": "ServiceOrderBy"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "EnumerationProperty",
-            "name": "serviceVerb"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 86,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 137,
-          "klass": {
-            "name": "ServiceOrderBy"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "thisMemberReferencePathId"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "TypeMemberReferencePath",
-          "id": 138,
-          "klass": {
-            "name": "ThisMemberReferencePath"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "id"
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 87,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 139,
-          "klass": {
-            "name": "PackageableElement"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "ParameterReference",
-          "id": 140,
-          "parameter": {
-            "__typename": "PrimitiveParameter",
-            "id": 1
-          }
-        }
-      },
-      {
-        "__typename": "AllCriteria",
-        "id": 88
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 89,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 141,
-          "klass": {
-            "name": "Enumeration"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "ParameterReference",
-          "id": 142,
-          "parameter": {
-            "__typename": "PrimitiveParameter",
-            "id": 2
-          }
-        }
-      },
-      {
-        "__typename": "AllCriteria",
-        "id": 90
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 91,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 143,
-          "klass": {
-            "name": "Interface"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "ParameterReference",
-          "id": 144,
-          "parameter": {
-            "__typename": "PrimitiveParameter",
-            "id": 3
-          }
-        }
-      },
-      {
-        "__typename": "AllCriteria",
-        "id": 92
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 93,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 145,
-          "klass": {
-            "name": "Klass"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "ParameterReference",
-          "id": 146,
-          "parameter": {
-            "__typename": "PrimitiveParameter",
-            "id": 4
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 94,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 147,
-          "klass": {
-            "name": "Klass"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "ParameterReference",
-          "id": 148,
-          "parameter": {
-            "__typename": "PrimitiveParameter",
-            "id": 4
-          }
-        }
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 95,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 149,
-          "klass": {
-            "name": "Klass"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "ParameterReference",
-          "id": 150,
-          "parameter": {
-            "__typename": "PrimitiveParameter",
-            "id": 4
-          }
-        }
-      },
-      {
-        "__typename": "AllCriteria",
-        "id": 96
-      },
-      {
-        "__typename": "AllCriteria",
-        "id": 97
-      },
-      {
-        "__typename": "AllCriteria",
-        "id": 98
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 99,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 151,
-          "klass": {
-            "name": "Classifier"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "ParameterReference",
-          "id": 152,
-          "parameter": {
-            "__typename": "PrimitiveParameter",
-            "id": 5
-          }
-        }
-      },
-      {
-        "__typename": "AllCriteria",
-        "id": 100
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 101,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 153,
-          "klass": {
-            "name": "Association"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "ParameterReference",
-          "id": 154,
-          "parameter": {
-            "__typename": "PrimitiveParameter",
-            "id": 6
-          }
-        }
-      },
-      {
-        "__typename": "AllCriteria",
-        "id": 102
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 103,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 155,
-          "klass": {
-            "name": "NamedProjection"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "ParameterReference",
-          "id": 156,
-          "parameter": {
-            "__typename": "PrimitiveParameter",
-            "id": 7
-          }
-        }
-      },
-      {
-        "__typename": "AllCriteria",
-        "id": 104
-      },
-      {
-        "__typename": "OperatorCriteria",
-        "id": 105,
-        "operator": "EQUALS",
-        "sourceExpressionValue": {
-          "__typename": "ThisMemberReferencePath",
-          "id": 157,
-          "klass": {
-            "name": "ServiceGroup"
-          },
-          "associationEnds": [],
-          "dataTypeProperty": {
-            "__typename": "PrimitiveProperty",
-            "name": "name"
-          }
-        },
-        "targetExpressionValue": {
-          "__typename": "ParameterReference",
-          "id": 158,
-          "parameter": {
-            "__typename": "PrimitiveParameter",
-            "id": 8
-          }
-        }
-      },
-      {
-        "__typename": "AllCriteria",
-        "id": 106
-      }
-    ]
-  }
+	"data": {
+		"criterias": [
+			{
+				"__typename": "OperatorCriteria",
+				"id": 1,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 1,
+					"klass": {
+						"name": "Enumeration"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 2,
+					"klass": {
+						"name": "EnumerationLiteral"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "enumerationName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 2,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 3,
+					"klass": {
+						"name": "Classifier"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 4,
+					"klass": {
+						"name": "ClassifierInterfaceMapping"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 3,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 5,
+					"klass": {
+						"name": "ClassifierInterfaceMapping"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "interfaceName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 6,
+					"klass": {
+						"name": "Interface"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 4,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 7,
+					"klass": {
+						"name": "Classifier"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 8,
+					"klass": {
+						"name": "ClassifierModifier"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 5,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 9,
+					"klass": {
+						"name": "Klass"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "superClassName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 10,
+					"klass": {
+						"name": "Klass"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 6,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 11,
+					"klass": {
+						"name": "EnumerationProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "enumerationName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 12,
+					"klass": {
+						"name": "Enumeration"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 7,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 13,
+					"klass": {
+						"name": "Classifier"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 14,
+					"klass": {
+						"name": "DataTypeProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 8,
+				"left": {
+					"__typename": "OperatorCriteria",
+					"id": 9
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 10
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 9,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 15,
+					"klass": {
+						"name": "DataTypeProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 16,
+					"klass": {
+						"name": "MinLengthPropertyValidation"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 10,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 17,
+					"klass": {
+						"name": "DataTypeProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 18,
+					"klass": {
+						"name": "MinLengthPropertyValidation"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "propertyName"
+					}
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 11,
+				"left": {
+					"__typename": "OperatorCriteria",
+					"id": 12
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 13
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 12,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 19,
+					"klass": {
+						"name": "DataTypeProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 20,
+					"klass": {
+						"name": "MaxLengthPropertyValidation"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 13,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 21,
+					"klass": {
+						"name": "DataTypeProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 22,
+					"klass": {
+						"name": "MaxLengthPropertyValidation"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "propertyName"
+					}
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 14,
+				"left": {
+					"__typename": "OperatorCriteria",
+					"id": 15
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 16
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 15,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 23,
+					"klass": {
+						"name": "PrimitiveProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 24,
+					"klass": {
+						"name": "MinPropertyValidation"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 16,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 25,
+					"klass": {
+						"name": "PrimitiveProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 26,
+					"klass": {
+						"name": "MinPropertyValidation"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "propertyName"
+					}
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 17,
+				"left": {
+					"__typename": "OperatorCriteria",
+					"id": 18
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 19
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 18,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 27,
+					"klass": {
+						"name": "PrimitiveProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 28,
+					"klass": {
+						"name": "MaxPropertyValidation"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 19,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 29,
+					"klass": {
+						"name": "PrimitiveProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 30,
+					"klass": {
+						"name": "MaxPropertyValidation"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "propertyName"
+					}
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 20,
+				"left": {
+					"__typename": "OperatorCriteria",
+					"id": 21
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 22
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 21,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 31,
+					"klass": {
+						"name": "DataTypeProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 32,
+					"klass": {
+						"name": "PropertyModifier"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 22,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 33,
+					"klass": {
+						"name": "DataTypeProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 34,
+					"klass": {
+						"name": "PropertyModifier"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "propertyName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 23,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 35,
+					"klass": {
+						"name": "ParameterReference"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "parameterId"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 36,
+					"klass": {
+						"name": "Parameter"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 24,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 37,
+					"klass": {
+						"name": "Association"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 38,
+					"klass": {
+						"name": "AssociationEnd"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "associationName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 25,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 39,
+					"klass": {
+						"name": "Klass"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 40,
+					"klass": {
+						"name": "AssociationEnd"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "owningClassName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 26,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 41,
+					"klass": {
+						"name": "AssociationEnd"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "resultTypeName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 42,
+					"klass": {
+						"name": "Klass"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 27,
+				"left": {
+					"__typename": "OperatorCriteria",
+					"id": 28
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 29
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 28,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 43,
+					"klass": {
+						"name": "AssociationEnd"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "owningClassName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 44,
+					"klass": {
+						"name": "AssociationEndModifier"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "owningClassName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 29,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 45,
+					"klass": {
+						"name": "AssociationEnd"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 46,
+					"klass": {
+						"name": "AssociationEndModifier"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "associationEndName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 30,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 47,
+					"klass": {
+						"name": "Association"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "criteriaId"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 48,
+					"klass": {
+						"name": "Criteria"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 31,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 49,
+					"klass": {
+						"name": "OperatorCriteria"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "sourceExpressionId"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 50,
+					"klass": {
+						"name": "ExpressionValue"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 32,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 51,
+					"klass": {
+						"name": "OperatorCriteria"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "targetExpressionId"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 52,
+					"klass": {
+						"name": "ExpressionValue"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 33,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 53,
+					"klass": {
+						"name": "EdgePointCriteria"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "memberReferencePathId"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 54,
+					"klass": {
+						"name": "MemberReferencePath"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 34,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 55,
+					"klass": {
+						"name": "EnumerationParameter"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "enumerationName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 56,
+					"klass": {
+						"name": "Enumeration"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 35,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 57,
+					"klass": {
+						"name": "MemberReferencePath"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "className"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 58,
+					"klass": {
+						"name": "Klass"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 36,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 59,
+					"klass": {
+						"name": "MemberReferencePath"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 60,
+					"klass": {
+						"name": "MemberReferencePathAssociationEndMapping"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "memberReferencePathId"
+					}
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 37,
+				"left": {
+					"__typename": "OperatorCriteria",
+					"id": 38
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 39
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 38,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 61,
+					"klass": {
+						"name": "MemberReferencePathAssociationEndMapping"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "associationOwningClassName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 62,
+					"klass": {
+						"name": "AssociationEnd"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "owningClassName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 39,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 63,
+					"klass": {
+						"name": "MemberReferencePathAssociationEndMapping"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "associationEndName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 64,
+					"klass": {
+						"name": "AssociationEnd"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 40,
+				"left": {
+					"__typename": "OperatorCriteria",
+					"id": 41
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 42
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 41,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 65,
+					"klass": {
+						"name": "MemberReferencePath"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "propertyClassName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 66,
+					"klass": {
+						"name": "DataTypeProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 42,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 67,
+					"klass": {
+						"name": "MemberReferencePath"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "propertyName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 68,
+					"klass": {
+						"name": "DataTypeProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 43,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 69,
+					"klass": {
+						"name": "BinaryCriteria"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "leftId"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 70,
+					"klass": {
+						"name": "Criteria"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 44,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 71,
+					"klass": {
+						"name": "BinaryCriteria"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "rightId"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 72,
+					"klass": {
+						"name": "Criteria"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 45,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 73,
+					"klass": {
+						"name": "Klass"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 74,
+					"klass": {
+						"name": "ParameterizedProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "owningClassName"
+					}
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 46,
+				"left": {
+					"__typename": "OperatorCriteria",
+					"id": 47
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 48
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 47,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 75,
+					"klass": {
+						"name": "AssociationEnd"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "owningClassName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 76,
+					"klass": {
+						"name": "AssociationEndOrderBy"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "associationEndClassName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 48,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 77,
+					"klass": {
+						"name": "AssociationEnd"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 78,
+					"klass": {
+						"name": "AssociationEndOrderBy"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "associationEndName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 49,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 79,
+					"klass": {
+						"name": "AssociationEndOrderBy"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "thisMemberReferencePathId"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 80,
+					"klass": {
+						"name": "ThisMemberReferencePath"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 50,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 81,
+					"klass": {
+						"name": "ParameterizedProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "resultTypeName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 82,
+					"klass": {
+						"name": "Klass"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 51,
+				"left": {
+					"__typename": "OperatorCriteria",
+					"id": 52
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 53
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 52,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 83,
+					"klass": {
+						"name": "ParameterizedProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "owningClassName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 84,
+					"klass": {
+						"name": "ParameterizedPropertyOrdering"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "owningClassName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 53,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 85,
+					"klass": {
+						"name": "ParameterizedProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 86,
+					"klass": {
+						"name": "ParameterizedPropertyOrdering"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 54,
+				"left": {
+					"__typename": "OperatorCriteria",
+					"id": 55
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 56
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 55,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 87,
+					"klass": {
+						"name": "ParameterizedProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "owningClassName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 88,
+					"klass": {
+						"name": "ParameterizedPropertyParameter"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 56,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 89,
+					"klass": {
+						"name": "ParameterizedProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 90,
+					"klass": {
+						"name": "ParameterizedPropertyParameter"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "parameterizedPropertyName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 57,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 91,
+					"klass": {
+						"name": "NamedProjection"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "projectionId"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 92,
+					"klass": {
+						"name": "RootProjection"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 58,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 93,
+					"klass": {
+						"name": "ProjectionElement"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 94,
+					"klass": {
+						"name": "ProjectionElement"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "parentId"
+					}
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 59,
+				"left": {
+					"__typename": "OperatorCriteria",
+					"id": 60
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 61
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 60,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 95,
+					"klass": {
+						"name": "ProjectionWithAssociationEnd"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "associationEndClass"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 96,
+					"klass": {
+						"name": "AssociationEnd"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "owningClassName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 61,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 97,
+					"klass": {
+						"name": "ProjectionWithAssociationEnd"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "associationEndName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 98,
+					"klass": {
+						"name": "AssociationEnd"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 62,
+				"left": {
+					"__typename": "OperatorCriteria",
+					"id": 63
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 64
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 63,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 99,
+					"klass": {
+						"name": "ProjectionDataTypeProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "propertyClassifierName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 100,
+					"klass": {
+						"name": "DataTypeProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 64,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 101,
+					"klass": {
+						"name": "ProjectionDataTypeProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "propertyName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 102,
+					"klass": {
+						"name": "DataTypeProperty"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 65,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 103,
+					"klass": {
+						"name": "RootProjection"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 104,
+					"klass": {
+						"name": "Classifier"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 66,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 105,
+					"klass": {
+						"name": "ProjectionProjectionReference"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "projectionName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 106,
+					"klass": {
+						"name": "NamedProjection"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 67,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 107,
+					"klass": {
+						"name": "ServiceGroup"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "className"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 108,
+					"klass": {
+						"name": "Klass"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 68,
+				"left": {
+					"__typename": "OperatorCriteria",
+					"id": 69
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 70
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 69,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 109,
+					"klass": {
+						"name": "Url"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "serviceGroupName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 110,
+					"klass": {
+						"name": "UrlParameter"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "serviceGroupName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 70,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 111,
+					"klass": {
+						"name": "Url"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "url"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 112,
+					"klass": {
+						"name": "UrlParameter"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "urlString"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 71,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 113,
+					"klass": {
+						"name": "UrlParameter"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "parameterId"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 114,
+					"klass": {
+						"name": "Parameter"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 72,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 115,
+					"klass": {
+						"name": "ServiceGroup"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 116,
+					"klass": {
+						"name": "Url"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "serviceGroupName"
+					}
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 73,
+				"left": {
+					"__typename": "OperatorCriteria",
+					"id": 74
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 75
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 74,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 117,
+					"klass": {
+						"name": "Url"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "serviceGroupName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 118,
+					"klass": {
+						"name": "Service"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "serviceGroupName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 75,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 119,
+					"klass": {
+						"name": "Url"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "url"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 120,
+					"klass": {
+						"name": "Service"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "urlString"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 76,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 121,
+					"klass": {
+						"name": "Service"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "projectionName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 122,
+					"klass": {
+						"name": "NamedProjection"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 77,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 123,
+					"klass": {
+						"name": "Service"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "queryCriteriaId"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 124,
+					"klass": {
+						"name": "Criteria"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 78,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 125,
+					"klass": {
+						"name": "Service"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "authorizeCriteriaId"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 126,
+					"klass": {
+						"name": "Criteria"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 79,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 127,
+					"klass": {
+						"name": "Service"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "validateCriteriaId"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 128,
+					"klass": {
+						"name": "Criteria"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 80,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 129,
+					"klass": {
+						"name": "Service"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "conflictCriteriaId"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 130,
+					"klass": {
+						"name": "Criteria"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 81,
+				"left": {
+					"__typename": "AndCriteria",
+					"id": 82
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 85
+				}
+			},
+			{
+				"__typename": "AndCriteria",
+				"id": 82,
+				"left": {
+					"__typename": "OperatorCriteria",
+					"id": 83
+				},
+				"right": {
+					"__typename": "OperatorCriteria",
+					"id": 84
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 83,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 131,
+					"klass": {
+						"name": "Service"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "serviceGroupName"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 132,
+					"klass": {
+						"name": "ServiceOrderBy"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "serviceGroupName"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 84,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 133,
+					"klass": {
+						"name": "Service"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "urlString"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 134,
+					"klass": {
+						"name": "ServiceOrderBy"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "serviceUrlString"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 85,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 135,
+					"klass": {
+						"name": "Service"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "EnumerationProperty",
+						"name": "verb"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 136,
+					"klass": {
+						"name": "ServiceOrderBy"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "EnumerationProperty",
+						"name": "serviceVerb"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 86,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 137,
+					"klass": {
+						"name": "ServiceOrderBy"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "thisMemberReferencePathId"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "TypeMemberReferencePath",
+					"id": 138,
+					"klass": {
+						"name": "ThisMemberReferencePath"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "id"
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 87,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 139,
+					"klass": {
+						"name": "PackageableElement"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "ParameterReference",
+					"id": 140,
+					"parameter": {
+						"__typename": "PrimitiveParameter",
+						"id": 1
+					}
+				}
+			},
+			{
+				"__typename": "AllCriteria",
+				"id": 88
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 89,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 141,
+					"klass": {
+						"name": "Enumeration"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "ParameterReference",
+					"id": 142,
+					"parameter": {
+						"__typename": "PrimitiveParameter",
+						"id": 2
+					}
+				}
+			},
+			{
+				"__typename": "AllCriteria",
+				"id": 90
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 91,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 143,
+					"klass": {
+						"name": "Interface"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "ParameterReference",
+					"id": 144,
+					"parameter": {
+						"__typename": "PrimitiveParameter",
+						"id": 3
+					}
+				}
+			},
+			{
+				"__typename": "AllCriteria",
+				"id": 92
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 93,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 145,
+					"klass": {
+						"name": "Klass"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "ParameterReference",
+					"id": 146,
+					"parameter": {
+						"__typename": "PrimitiveParameter",
+						"id": 4
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 94,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 147,
+					"klass": {
+						"name": "Klass"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "ParameterReference",
+					"id": 148,
+					"parameter": {
+						"__typename": "PrimitiveParameter",
+						"id": 4
+					}
+				}
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 95,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 149,
+					"klass": {
+						"name": "Klass"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "ParameterReference",
+					"id": 150,
+					"parameter": {
+						"__typename": "PrimitiveParameter",
+						"id": 4
+					}
+				}
+			},
+			{
+				"__typename": "AllCriteria",
+				"id": 96
+			},
+			{
+				"__typename": "AllCriteria",
+				"id": 97
+			},
+			{
+				"__typename": "AllCriteria",
+				"id": 98
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 99,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 151,
+					"klass": {
+						"name": "Classifier"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "ParameterReference",
+					"id": 152,
+					"parameter": {
+						"__typename": "PrimitiveParameter",
+						"id": 5
+					}
+				}
+			},
+			{
+				"__typename": "AllCriteria",
+				"id": 100
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 101,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 153,
+					"klass": {
+						"name": "Association"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "ParameterReference",
+					"id": 154,
+					"parameter": {
+						"__typename": "PrimitiveParameter",
+						"id": 6
+					}
+				}
+			},
+			{
+				"__typename": "AllCriteria",
+				"id": 102
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 103,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 155,
+					"klass": {
+						"name": "NamedProjection"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "ParameterReference",
+					"id": 156,
+					"parameter": {
+						"__typename": "PrimitiveParameter",
+						"id": 7
+					}
+				}
+			},
+			{
+				"__typename": "AllCriteria",
+				"id": 104
+			},
+			{
+				"__typename": "OperatorCriteria",
+				"id": 105,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 157,
+					"klass": {
+						"name": "ServiceGroup"
+					},
+					"associationEnds": [ ],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "ParameterReference",
+					"id": 158,
+					"parameter": {
+						"__typename": "PrimitiveParameter",
+						"id": 8
+					}
+				}
+			},
+			{
+				"__typename": "AllCriteria",
+				"id": 106
+			}
+		]
+	}
 }

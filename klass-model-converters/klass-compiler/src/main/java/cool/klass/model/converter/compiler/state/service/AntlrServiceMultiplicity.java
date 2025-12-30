@@ -29,28 +29,28 @@ import cool.klass.model.meta.grammar.KlassParser.ServiceMultiplicityContext;
 
 public class AntlrServiceMultiplicity extends AntlrElement {
 
-    @Nonnull
-    private final ServiceMultiplicity serviceMultiplicity;
+	@Nonnull
+	private final ServiceMultiplicity serviceMultiplicity;
 
-    public AntlrServiceMultiplicity(
-        @Nonnull ServiceMultiplicityContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        @Nonnull ServiceMultiplicity serviceMultiplicity
-    ) {
-        super(elementContext, compilationUnit);
-        this.serviceMultiplicity = Objects.requireNonNull(serviceMultiplicity);
-    }
+	public AntlrServiceMultiplicity(
+		@Nonnull ServiceMultiplicityContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		@Nonnull ServiceMultiplicity serviceMultiplicity
+	) {
+		super(elementContext, compilationUnit);
+		this.serviceMultiplicity = Objects.requireNonNull(serviceMultiplicity);
+	}
 
-    @Nonnull
-    @Override
-    public Optional<IAntlrElement> getSurroundingElement() {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".getSurroundingContext() not implemented yet"
-        );
-    }
+	@Nonnull
+	@Override
+	public Optional<IAntlrElement> getSurroundingElement() {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".getSurroundingContext() not implemented yet"
+		);
+	}
 
-    @Nonnull
-    public ServiceMultiplicity getServiceMultiplicity() {
-        return this.serviceMultiplicity;
-    }
+	@Nonnull
+	public ServiceMultiplicity getServiceMultiplicity() {
+		return this.serviceMultiplicity;
+	}
 }

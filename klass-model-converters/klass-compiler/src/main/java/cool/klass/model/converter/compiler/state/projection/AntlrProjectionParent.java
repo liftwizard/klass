@@ -38,64 +38,64 @@ import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
 public abstract class AntlrProjectionParent extends AntlrIdentifierElement {
 
-    @Nonnull
-    protected final AntlrClassifier classifier;
+	@Nonnull
+	protected final AntlrClassifier classifier;
 
-    protected final MutableList<AntlrProjectionChild> children = Lists.mutable.empty();
+	protected final MutableList<AntlrProjectionChild> children = Lists.mutable.empty();
 
-    protected final MutableOrderedMap<String, AntlrProjectionChild> childrenByName = OrderedMapAdapter.adapt(
-        new LinkedHashMap<>()
-    );
+	protected final MutableOrderedMap<String, AntlrProjectionChild> childrenByName = OrderedMapAdapter.adapt(
+		new LinkedHashMap<>()
+	);
 
-    protected AntlrProjectionParent(
-        @Nonnull ParserRuleContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        int ordinal,
-        @Nonnull IdentifierContext nameContext,
-        @Nonnull AntlrClassifier classifier
-    ) {
-        super(elementContext, compilationUnit, ordinal, nameContext);
-        this.classifier = Objects.requireNonNull(classifier);
-    }
+	protected AntlrProjectionParent(
+		@Nonnull ParserRuleContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		int ordinal,
+		@Nonnull IdentifierContext nameContext,
+		@Nonnull AntlrClassifier classifier
+	) {
+		super(elementContext, compilationUnit, ordinal, nameContext);
+		this.classifier = Objects.requireNonNull(classifier);
+	}
 
-    @Override
-    @Nonnull
-    public abstract AbstractProjectionParentBuilder<? extends AbstractProjectionParent> getElementBuilder();
+	@Override
+	@Nonnull
+	public abstract AbstractProjectionParentBuilder<? extends AbstractProjectionParent> getElementBuilder();
 
-    public MutableList<AntlrProjectionChild> getChildren() {
-        return this.children.asUnmodifiable();
-    }
+	public MutableList<AntlrProjectionChild> getChildren() {
+		return this.children.asUnmodifiable();
+	}
 
-    @Nonnull
-    public AntlrClassifier getClassifier() {
-        return this.classifier;
-    }
+	@Nonnull
+	public AntlrClassifier getClassifier() {
+		return this.classifier;
+	}
 
-    public int getNumChildren() {
-        return this.children.size();
-    }
+	public int getNumChildren() {
+		return this.children.size();
+	}
 
-    public void enterAntlrProjectionMember(@Nonnull AntlrProjectionChild child) {
-        this.children.add(child);
-        this.childrenByName.compute(child.getName(), (name, builder) ->
-            builder == null ? child : AntlrProjectionDataTypeProperty.AMBIGUOUS
-        );
-    }
+	public void enterAntlrProjectionMember(@Nonnull AntlrProjectionChild child) {
+		this.children.add(child);
+		this.childrenByName.compute(child.getName(), (name, builder) ->
+			builder == null ? child : AntlrProjectionDataTypeProperty.AMBIGUOUS
+		);
+	}
 
-    protected ImmutableBag<String> getDuplicateMemberNames() {
-        return this.children.collect(AntlrProjectionElement::getName)
-            .toBag()
-            .selectByOccurrences((occurrences) -> occurrences > 1)
-            .toImmutable();
-    }
+	protected ImmutableBag<String> getDuplicateMemberNames() {
+		return this.children.collect(AntlrProjectionElement::getName)
+			.toBag()
+			.selectByOccurrences((occurrences) -> occurrences > 1)
+			.toImmutable();
+	}
 
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        ImmutableBag<String> duplicateMemberNames = this.getDuplicateMemberNames();
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		ImmutableBag<String> duplicateMemberNames = this.getDuplicateMemberNames();
 
-        for (AntlrProjectionElement projectionMember : this.children) {
-            if (duplicateMemberNames.contains(projectionMember.getName())) {
-                projectionMember.reportDuplicateMemberName(compilerAnnotationHolder);
-            }
-        }
-    }
+		for (AntlrProjectionElement projectionMember : this.children) {
+			if (duplicateMemberNames.contains(projectionMember.getName())) {
+				projectionMember.reportDuplicateMemberName(compilerAnnotationHolder);
+			}
+		}
+	}
 }

@@ -1,6 +1,6 @@
 [
-  "Warning at PropertiesOptional.systemFrom. Didn't expect to receive value for temporal property 'PropertiesOptional.systemFrom: TemporalInstant?' but value was string: \"PropertiesOptional optionalString 1 ☝\".",
-  "Warning at PropertiesOptional.systemTo. Didn't expect to receive value for temporal property 'PropertiesOptional.systemTo: TemporalInstant?' but value was string: \"PropertiesOptional optionalString 1 ☝\".",
-  "Warning at PropertiesOptional.createdOn. Didn't expect to receive value for audit property 'PropertiesOptional.createdOn: Instant' but value was string: \"PropertiesOptional optionalString 1 ☝\".",
-  "Warning at PropertiesOptional.optionalDerived. Didn't expect to receive value for derived property 'PropertiesOptional.optionalDerived: String?' but value was string: \"PropertiesOptional optionalString 1 ☝\"."
+	"Warning at PropertiesOptional.systemFrom. Didn't expect to receive value for temporal property 'PropertiesOptional.systemFrom: TemporalInstant?' but value was string: \"PropertiesOptional optionalString 1 ☝\".",
+	"Warning at PropertiesOptional.systemTo. Didn't expect to receive value for temporal property 'PropertiesOptional.systemTo: TemporalInstant?' but value was string: \"PropertiesOptional optionalString 1 ☝\".",
+	"Warning at PropertiesOptional.createdOn. Didn't expect to receive value for audit property 'PropertiesOptional.createdOn: Instant' but value was string: \"PropertiesOptional optionalString 1 ☝\".",
+	"Warning at PropertiesOptional.optionalDerived. Didn't expect to receive value for derived property 'PropertiesOptional.optionalDerived: String?' but value was string: \"PropertiesOptional optionalString 1 ☝\"."
 ]

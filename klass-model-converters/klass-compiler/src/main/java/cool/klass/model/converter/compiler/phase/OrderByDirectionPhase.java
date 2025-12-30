@@ -29,38 +29,38 @@ import cool.klass.model.meta.grammar.KlassParser.OrderByDirectionContext;
 
 public class OrderByDirectionPhase extends AbstractCompilerPhase {
 
-    public OrderByDirectionPhase(@Nonnull CompilerState compilerState) {
-        super(compilerState);
-    }
+	public OrderByDirectionPhase(@Nonnull CompilerState compilerState) {
+		super(compilerState);
+	}
 
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public void enterOrderByDirection(@Nonnull OrderByDirectionContext ctx) {
-        super.enterOrderByDirection(ctx);
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void enterOrderByDirection(@Nonnull OrderByDirectionContext ctx) {
+		super.enterOrderByDirection(ctx);
 
-        AntlrOrderByDirection orderByDirection = new AntlrOrderByDirection(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            OrderByDirectionPhase.getOrderByDirection(ctx)
-        );
+		AntlrOrderByDirection orderByDirection = new AntlrOrderByDirection(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			OrderByDirectionPhase.getOrderByDirection(ctx)
+		);
 
-        AntlrOrderByMemberReferencePath orderByMemberReferencePath =
-            this.compilerState.getCompilerWalk().getOrderByMemberReferencePath();
-        orderByMemberReferencePath.enterOrderByDirection(orderByDirection);
-    }
+		AntlrOrderByMemberReferencePath orderByMemberReferencePath =
+			this.compilerState.getCompilerWalk().getOrderByMemberReferencePath();
+		orderByMemberReferencePath.enterOrderByDirection(orderByDirection);
+	}
 
-    @Nonnull
-    private static OrderByDirection getOrderByDirection(@Nonnull OrderByDirectionContext orderByDirectionContext) {
-        String text = orderByDirectionContext.getText();
+	@Nonnull
+	private static OrderByDirection getOrderByDirection(@Nonnull OrderByDirectionContext orderByDirectionContext) {
+		String text = orderByDirectionContext.getText();
 
-        if ("ascending".equals(text)) {
-            return OrderByDirection.ASCENDING;
-        }
+		if ("ascending".equals(text)) {
+			return OrderByDirection.ASCENDING;
+		}
 
-        if ("descending".equals(text)) {
-            return OrderByDirection.DESCENDING;
-        }
+		if ("descending".equals(text)) {
+			return OrderByDirection.DESCENDING;
+		}
 
-        throw new AssertionError(text);
-    }
+		throw new AssertionError(text);
+	}
 }
