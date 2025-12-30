@@ -28,81 +28,81 @@ import cool.klass.model.meta.grammar.KlassParser.MultiplicityContext;
 
 public class AntlrMultiplicity extends AntlrElement {
 
-    private final String lowerBoundText;
-    private final String upperBoundText;
+	private final String lowerBoundText;
+	private final String upperBoundText;
 
-    @Nullable
-    private final Multiplicity multiplicity;
+	@Nullable
+	private final Multiplicity multiplicity;
 
-    @Nullable
-    private final AntlrMultiplicityOwner multiplicityOwner;
+	@Nullable
+	private final AntlrMultiplicityOwner multiplicityOwner;
 
-    public AntlrMultiplicity(
-        @Nonnull MultiplicityContext context,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        @Nonnull AntlrMultiplicityOwner multiplicityOwner
-    ) {
-        super(context, compilationUnit);
-        this.lowerBoundText = context.multiplicityBody().lowerBound.getText();
-        this.upperBoundText = context.multiplicityBody().upperBound.getText();
+	public AntlrMultiplicity(
+		@Nonnull MultiplicityContext context,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		@Nonnull AntlrMultiplicityOwner multiplicityOwner
+	) {
+		super(context, compilationUnit);
+		this.lowerBoundText = context.multiplicityBody().lowerBound.getText();
+		this.upperBoundText = context.multiplicityBody().upperBound.getText();
 
-        this.multiplicity = this.findMultiplicity();
+		this.multiplicity = this.findMultiplicity();
 
-        this.multiplicityOwner = Objects.requireNonNull(multiplicityOwner);
-    }
+		this.multiplicityOwner = Objects.requireNonNull(multiplicityOwner);
+	}
 
-    @Nullable
-    private Multiplicity findMultiplicity() {
-        if (this.lowerBoundText.equals("0") && this.upperBoundText.equals("1")) {
-            return Multiplicity.ZERO_TO_ONE;
-        }
-        if (this.lowerBoundText.equals("1") && this.upperBoundText.equals("1")) {
-            return Multiplicity.ONE_TO_ONE;
-        }
-        if (this.lowerBoundText.equals("0") && this.upperBoundText.equals("*")) {
-            return Multiplicity.ZERO_TO_MANY;
-        }
-        if (this.lowerBoundText.equals("1") && this.upperBoundText.equals("*")) {
-            return Multiplicity.ONE_TO_MANY;
-        }
-        return null;
-    }
+	@Nullable
+	private Multiplicity findMultiplicity() {
+		if (this.lowerBoundText.equals("0") && this.upperBoundText.equals("1")) {
+			return Multiplicity.ZERO_TO_ONE;
+		}
+		if (this.lowerBoundText.equals("1") && this.upperBoundText.equals("1")) {
+			return Multiplicity.ONE_TO_ONE;
+		}
+		if (this.lowerBoundText.equals("0") && this.upperBoundText.equals("*")) {
+			return Multiplicity.ZERO_TO_MANY;
+		}
+		if (this.lowerBoundText.equals("1") && this.upperBoundText.equals("*")) {
+			return Multiplicity.ONE_TO_MANY;
+		}
+		return null;
+	}
 
-    @Nonnull
-    @Override
-    public Optional<IAntlrElement> getSurroundingElement() {
-        return Optional.ofNullable(this.multiplicityOwner);
-    }
+	@Nonnull
+	@Override
+	public Optional<IAntlrElement> getSurroundingElement() {
+		return Optional.ofNullable(this.multiplicityOwner);
+	}
 
-    @Nonnull
-    @Override
-    public MultiplicityContext getElementContext() {
-        return (MultiplicityContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public MultiplicityContext getElementContext() {
+		return (MultiplicityContext) super.getElementContext();
+	}
 
-    @Nullable
-    public Multiplicity getMultiplicity() {
-        return this.multiplicity;
-    }
+	@Nullable
+	public Multiplicity getMultiplicity() {
+		return this.multiplicity;
+	}
 
-    public String getLowerBoundText() {
-        return this.lowerBoundText;
-    }
+	public String getLowerBoundText() {
+		return this.lowerBoundText;
+	}
 
-    public String getUpperBoundText() {
-        return this.upperBoundText;
-    }
+	public String getUpperBoundText() {
+		return this.upperBoundText;
+	}
 
-    public boolean isToOne() {
-        return this.multiplicity != null && this.multiplicity.isToOne();
-    }
+	public boolean isToOne() {
+		return this.multiplicity != null && this.multiplicity.isToOne();
+	}
 
-    public boolean isToMany() {
-        return this.multiplicity != null && this.multiplicity.isToMany();
-    }
+	public boolean isToMany() {
+		return this.multiplicity != null && this.multiplicity.isToMany();
+	}
 
-    @Override
-    public String toString() {
-        return this.lowerBoundText + ".." + this.upperBoundText;
-    }
+	@Override
+	public String toString() {
+		return this.lowerBoundText + ".." + this.upperBoundText;
+	}
 }

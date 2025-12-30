@@ -27,54 +27,54 @@ import org.eclipse.collections.api.stack.MutableStack;
 
 public class ContextStack {
 
-    @Nonnull
-    private final MutableStack<ContextNode> delegate = Stacks.mutable.empty();
+	@Nonnull
+	private final MutableStack<ContextNode> delegate = Stacks.mutable.empty();
 
-    @Nonnull
-    private final MutableList<String> errors;
+	@Nonnull
+	private final MutableList<String> errors;
 
-    @Nullable
-    private final MutableList<String> warnings;
+	@Nullable
+	private final MutableList<String> warnings;
 
-    public ContextStack(@Nonnull MutableList<String> errors, @Nullable MutableList<String> warnings) {
-        this.errors = Objects.requireNonNull(errors);
-        this.warnings = warnings;
-    }
+	public ContextStack(@Nonnull MutableList<String> errors, @Nullable MutableList<String> warnings) {
+		this.errors = Objects.requireNonNull(errors);
+		this.warnings = warnings;
+	}
 
-    public void push(@Nonnull ContextNode contextNode) {
-        Objects.requireNonNull(contextNode);
-        this.delegate.push(contextNode);
-    }
+	public void push(@Nonnull ContextNode contextNode) {
+		Objects.requireNonNull(contextNode);
+		this.delegate.push(contextNode);
+	}
 
-    public void pop() {
-        this.delegate.pop();
-    }
+	public void pop() {
+		this.delegate.pop();
+	}
 
-    public void runWithContext(@Nonnull ContextNode contextNode, @Nonnull Runnable runnable) {
-        Objects.requireNonNull(contextNode);
-        Objects.requireNonNull(runnable);
+	public void runWithContext(@Nonnull ContextNode contextNode, @Nonnull Runnable runnable) {
+		Objects.requireNonNull(contextNode);
+		Objects.requireNonNull(runnable);
 
-        this.delegate.push(contextNode);
+		this.delegate.push(contextNode);
 
-        try {
-            runnable.run();
-        } finally {
-            this.delegate.pop();
-        }
-    }
+		try {
+			runnable.run();
+		} finally {
+			this.delegate.pop();
+		}
+	}
 
-    public void addError(String message) {
-        String error = String.format("Error at %s. %s", this, message);
-        this.errors.add(error);
-    }
+	public void addError(String message) {
+		String error = String.format("Error at %s. %s", this, message);
+		this.errors.add(error);
+	}
 
-    public void addWarning(String message) {
-        String warning = String.format("Warning at %s. %s", this, message);
-        this.warnings.add(warning);
-    }
+	public void addWarning(String message) {
+		String warning = String.format("Warning at %s. %s", this, message);
+		this.warnings.add(warning);
+	}
 
-    @Override
-    public String toString() {
-        return this.delegate.toList().asReversed().makeString(".");
-    }
+	@Override
+	public String toString() {
+		return this.delegate.toList().asReversed().makeString(".");
+	}
 }

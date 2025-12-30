@@ -39,91 +39,91 @@ import org.eclipse.collections.impl.map.mutable.MapAdapter;
 
 public class BootstrapExpressionValueVisitor1 implements ExpressionValueVisitor {
 
-    private final MutableMap<
-        cool.klass.model.meta.domain.api.value.ExpressionValue,
-        ExpressionValue
-    > expressionValuesByExpressionValue = MapAdapter.adapt(new LinkedHashMap<>());
+	private final MutableMap<
+		cool.klass.model.meta.domain.api.value.ExpressionValue,
+		ExpressionValue
+	> expressionValuesByExpressionValue = MapAdapter.adapt(new LinkedHashMap<>());
 
-    private final ExpressionValueList bootstrappedExpressionValues = new ExpressionValueList();
+	private final ExpressionValueList bootstrappedExpressionValues = new ExpressionValueList();
 
-    public ImmutableMap<
-        cool.klass.model.meta.domain.api.value.ExpressionValue,
-        ExpressionValue
-    > getExpressionValuesByExpressionValue() {
-        return this.expressionValuesByExpressionValue.toImmutable();
-    }
+	public ImmutableMap<
+		cool.klass.model.meta.domain.api.value.ExpressionValue,
+		ExpressionValue
+	> getExpressionValuesByExpressionValue() {
+		return this.expressionValuesByExpressionValue.toImmutable();
+	}
 
-    public ExpressionValueList getBootstrappedExpressionValues() {
-        return this.bootstrappedExpressionValues;
-    }
+	public ExpressionValueList getBootstrappedExpressionValues() {
+		return this.bootstrappedExpressionValues;
+	}
 
-    @Override
-    public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue) {
-        var bootstrappedExpressionValue = new ExpressionValue();
-        this.bootstrappedExpressionValues.add(bootstrappedExpressionValue);
-        this.expressionValuesByExpressionValue.put(typeMemberExpressionValue, bootstrappedExpressionValue);
-    }
+	@Override
+	public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue) {
+		var bootstrappedExpressionValue = new ExpressionValue();
+		this.bootstrappedExpressionValues.add(bootstrappedExpressionValue);
+		this.expressionValuesByExpressionValue.put(typeMemberExpressionValue, bootstrappedExpressionValue);
+	}
 
-    @Override
-    public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue) {
-        var bootstrappedExpressionValue = new ExpressionValue();
-        this.bootstrappedExpressionValues.add(bootstrappedExpressionValue);
-        this.expressionValuesByExpressionValue.put(thisMemberExpressionValue, bootstrappedExpressionValue);
-    }
+	@Override
+	public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue) {
+		var bootstrappedExpressionValue = new ExpressionValue();
+		this.bootstrappedExpressionValues.add(bootstrappedExpressionValue);
+		this.expressionValuesByExpressionValue.put(thisMemberExpressionValue, bootstrappedExpressionValue);
+	}
 
-    @Override
-    public void visitParameterReference(@Nonnull ParameterReference parameterReference) {
-        var bootstrappedExpressionValue = new ExpressionValue();
-        this.bootstrappedExpressionValues.add(bootstrappedExpressionValue);
-        this.expressionValuesByExpressionValue.put(parameterReference, bootstrappedExpressionValue);
-    }
+	@Override
+	public void visitParameterReference(@Nonnull ParameterReference parameterReference) {
+		var bootstrappedExpressionValue = new ExpressionValue();
+		this.bootstrappedExpressionValues.add(bootstrappedExpressionValue);
+		this.expressionValuesByExpressionValue.put(parameterReference, bootstrappedExpressionValue);
+	}
 
-    @Override
-    public void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitBooleanLiteral() not implemented yet"
-        );
-    }
+	@Override
+	public void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitBooleanLiteral() not implemented yet"
+		);
+	}
 
-    @Override
-    public void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitIntegerLiteral() not implemented yet"
-        );
-    }
+	@Override
+	public void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitIntegerLiteral() not implemented yet"
+		);
+	}
 
-    @Override
-    public void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitFloatingPointLiteral() not implemented yet"
-        );
-    }
+	@Override
+	public void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitFloatingPointLiteral() not implemented yet"
+		);
+	}
 
-    @Override
-    public void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitStringLiteral() not implemented yet"
-        );
-    }
+	@Override
+	public void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitStringLiteral() not implemented yet"
+		);
+	}
 
-    @Override
-    public void visitLiteralList(@Nonnull LiteralListValue literalListValue) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitLiteralList() not implemented yet"
-        );
-    }
+	@Override
+	public void visitLiteralList(@Nonnull LiteralListValue literalListValue) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitLiteralList() not implemented yet"
+		);
+	}
 
-    @Override
-    public void visitUserLiteral(@Nonnull UserLiteral userLiteral) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitUserLiteral() not implemented yet"
-        );
-    }
+	@Override
+	public void visitUserLiteral(@Nonnull UserLiteral userLiteral) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitUserLiteral() not implemented yet"
+		);
+	}
 
-    @Override
-    public void visitNullLiteral(@Nonnull NullLiteral nullLiteral) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitNullLiteral() not implemented yet"
-        );
-    }
+	@Override
+	public void visitNullLiteral(@Nonnull NullLiteral nullLiteral) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitNullLiteral() not implemented yet"
+		);
+	}
 }

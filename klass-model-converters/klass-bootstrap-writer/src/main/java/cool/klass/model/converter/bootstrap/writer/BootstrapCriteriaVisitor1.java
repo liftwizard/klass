@@ -34,58 +34,58 @@ import org.eclipse.collections.impl.map.mutable.MapAdapter;
 
 public class BootstrapCriteriaVisitor1 implements CriteriaVisitor {
 
-    private final MutableMap<Criteria, klass.model.meta.domain.Criteria> criteriaByCriteria = MapAdapter.adapt(
-        new LinkedHashMap<>()
-    );
+	private final MutableMap<Criteria, klass.model.meta.domain.Criteria> criteriaByCriteria = MapAdapter.adapt(
+		new LinkedHashMap<>()
+	);
 
-    private final CriteriaList bootstrappedCriteria = new CriteriaList();
+	private final CriteriaList bootstrappedCriteria = new CriteriaList();
 
-    public ImmutableMap<Criteria, klass.model.meta.domain.Criteria> getCriteriaByCriteria() {
-        return this.criteriaByCriteria.toImmutable();
-    }
+	public ImmutableMap<Criteria, klass.model.meta.domain.Criteria> getCriteriaByCriteria() {
+		return this.criteriaByCriteria.toImmutable();
+	}
 
-    public CriteriaList getBootstrappedCriteria() {
-        return this.bootstrappedCriteria;
-    }
+	public CriteriaList getBootstrappedCriteria() {
+		return this.bootstrappedCriteria;
+	}
 
-    @Override
-    public void visitAll(@Nonnull AllCriteria allCriteria) {
-        var bootstrappedCriteria = new klass.model.meta.domain.Criteria();
-        this.criteriaByCriteria.put(allCriteria, bootstrappedCriteria);
-        this.bootstrappedCriteria.add(bootstrappedCriteria);
-    }
+	@Override
+	public void visitAll(@Nonnull AllCriteria allCriteria) {
+		var bootstrappedCriteria = new klass.model.meta.domain.Criteria();
+		this.criteriaByCriteria.put(allCriteria, bootstrappedCriteria);
+		this.bootstrappedCriteria.add(bootstrappedCriteria);
+	}
 
-    @Override
-    public void visitOperator(@Nonnull OperatorCriteria operatorCriteria) {
-        var bootstrappedCriteria = new klass.model.meta.domain.Criteria();
-        this.criteriaByCriteria.put(operatorCriteria, bootstrappedCriteria);
-        this.bootstrappedCriteria.add(bootstrappedCriteria);
-    }
+	@Override
+	public void visitOperator(@Nonnull OperatorCriteria operatorCriteria) {
+		var bootstrappedCriteria = new klass.model.meta.domain.Criteria();
+		this.criteriaByCriteria.put(operatorCriteria, bootstrappedCriteria);
+		this.bootstrappedCriteria.add(bootstrappedCriteria);
+	}
 
-    @Override
-    public void visitEdgePoint(@Nonnull EdgePointCriteria edgePointCriteria) {
-        var bootstrappedCriteria = new klass.model.meta.domain.Criteria();
-        this.criteriaByCriteria.put(edgePointCriteria, bootstrappedCriteria);
-        this.bootstrappedCriteria.add(bootstrappedCriteria);
-    }
+	@Override
+	public void visitEdgePoint(@Nonnull EdgePointCriteria edgePointCriteria) {
+		var bootstrappedCriteria = new klass.model.meta.domain.Criteria();
+		this.criteriaByCriteria.put(edgePointCriteria, bootstrappedCriteria);
+		this.bootstrappedCriteria.add(bootstrappedCriteria);
+	}
 
-    @Override
-    public void visitAnd(@Nonnull AndCriteria andCriteria) {
-        var bootstrappedCriteria = new klass.model.meta.domain.Criteria();
-        this.criteriaByCriteria.put(andCriteria, bootstrappedCriteria);
-        this.bootstrappedCriteria.add(bootstrappedCriteria);
+	@Override
+	public void visitAnd(@Nonnull AndCriteria andCriteria) {
+		var bootstrappedCriteria = new klass.model.meta.domain.Criteria();
+		this.criteriaByCriteria.put(andCriteria, bootstrappedCriteria);
+		this.bootstrappedCriteria.add(bootstrappedCriteria);
 
-        andCriteria.getLeft().visit(this);
-        andCriteria.getRight().visit(this);
-    }
+		andCriteria.getLeft().visit(this);
+		andCriteria.getRight().visit(this);
+	}
 
-    @Override
-    public void visitOr(@Nonnull OrCriteria orCriteria) {
-        var bootstrappedCriteria = new klass.model.meta.domain.Criteria();
-        this.criteriaByCriteria.put(orCriteria, bootstrappedCriteria);
-        this.bootstrappedCriteria.add(bootstrappedCriteria);
+	@Override
+	public void visitOr(@Nonnull OrCriteria orCriteria) {
+		var bootstrappedCriteria = new klass.model.meta.domain.Criteria();
+		this.criteriaByCriteria.put(orCriteria, bootstrappedCriteria);
+		this.bootstrappedCriteria.add(bootstrappedCriteria);
 
-        orCriteria.getLeft().visit(this);
-        orCriteria.getRight().visit(this);
-    }
+		orCriteria.getLeft().visit(this);
+		orCriteria.getRight().visit(this);
+	}
 }

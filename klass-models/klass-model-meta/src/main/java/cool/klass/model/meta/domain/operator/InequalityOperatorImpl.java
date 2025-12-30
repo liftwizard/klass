@@ -29,41 +29,41 @@ import cool.klass.model.meta.grammar.KlassParser.InequalityOperatorContext;
 
 public final class InequalityOperatorImpl extends AbstractOperator implements InequalityOperator {
 
-    private InequalityOperatorImpl(
-        @Nonnull InequalityOperatorContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        @Nonnull String operatorText
-    ) {
-        super(elementContext, macroElement, sourceCode, operatorText);
-    }
+	private InequalityOperatorImpl(
+		@Nonnull InequalityOperatorContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		@Nonnull String operatorText
+	) {
+		super(elementContext, macroElement, sourceCode, operatorText);
+	}
 
-    @Nonnull
-    @Override
-    public InequalityOperatorContext getElementContext() {
-        return (InequalityOperatorContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public InequalityOperatorContext getElementContext() {
+		return (InequalityOperatorContext) super.getElementContext();
+	}
 
-    public static final class InequalityOperatorBuilder extends AbstractOperatorBuilder<InequalityOperatorImpl> {
+	public static final class InequalityOperatorBuilder extends AbstractOperatorBuilder<InequalityOperatorImpl> {
 
-        public InequalityOperatorBuilder(
-            @Nonnull InequalityOperatorContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            @Nonnull String operatorText
-        ) {
-            super(elementContext, macroElement, sourceCode, operatorText);
-        }
+		public InequalityOperatorBuilder(
+			@Nonnull InequalityOperatorContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			@Nonnull String operatorText
+		) {
+			super(elementContext, macroElement, sourceCode, operatorText);
+		}
 
-        @Override
-        @Nonnull
-        protected InequalityOperatorImpl buildUnsafe() {
-            return new InequalityOperatorImpl(
-                (InequalityOperatorContext) this.elementContext,
-                this.macroElement.map(ElementBuilder::getElement),
-                this.sourceCode.build(),
-                this.operatorText
-            );
-        }
-    }
+		@Override
+		@Nonnull
+		protected InequalityOperatorImpl buildUnsafe() {
+			return new InequalityOperatorImpl(
+				(InequalityOperatorContext) this.elementContext,
+				this.macroElement.map(ElementBuilder::getElement),
+				this.sourceCode.build(),
+				this.operatorText
+			);
+		}
+	}
 }

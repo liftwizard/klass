@@ -36,69 +36,69 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public final class OrderByImpl extends AbstractElement implements OrderBy {
 
-    @Nonnull
-    private final AbstractClassifier thisContext;
+	@Nonnull
+	private final AbstractClassifier thisContext;
 
-    private ImmutableList<OrderByMemberReferencePath> orderByMemberReferencePaths;
+	private ImmutableList<OrderByMemberReferencePath> orderByMemberReferencePaths;
 
-    private OrderByImpl(
-        @Nonnull ParserRuleContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        @Nonnull AbstractClassifier thisContext
-    ) {
-        super(elementContext, macroElement, sourceCode);
-        this.thisContext = Objects.requireNonNull(thisContext);
-    }
+	private OrderByImpl(
+		@Nonnull ParserRuleContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		@Nonnull AbstractClassifier thisContext
+	) {
+		super(elementContext, macroElement, sourceCode);
+		this.thisContext = Objects.requireNonNull(thisContext);
+	}
 
-    @Override
-    public ImmutableList<OrderByMemberReferencePath> getOrderByMemberReferencePaths() {
-        return this.orderByMemberReferencePaths;
-    }
+	@Override
+	public ImmutableList<OrderByMemberReferencePath> getOrderByMemberReferencePaths() {
+		return this.orderByMemberReferencePaths;
+	}
 
-    private void setOrderByMemberReferencePaths(ImmutableList<OrderByMemberReferencePath> orderByMemberReferencePaths) {
-        this.orderByMemberReferencePaths = Objects.requireNonNull(orderByMemberReferencePaths);
-    }
+	private void setOrderByMemberReferencePaths(ImmutableList<OrderByMemberReferencePath> orderByMemberReferencePaths) {
+		this.orderByMemberReferencePaths = Objects.requireNonNull(orderByMemberReferencePaths);
+	}
 
-    public static final class OrderByBuilder extends ElementBuilder<OrderByImpl> {
+	public static final class OrderByBuilder extends ElementBuilder<OrderByImpl> {
 
-        @Nonnull
-        private final ClassifierBuilder<?> thisContextBuilder;
+		@Nonnull
+		private final ClassifierBuilder<?> thisContextBuilder;
 
-        private ImmutableList<OrderByMemberReferencePathBuilder> orderByMemberReferencePathBuilders;
+		private ImmutableList<OrderByMemberReferencePathBuilder> orderByMemberReferencePathBuilders;
 
-        public OrderByBuilder(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            @Nonnull ClassifierBuilder<?> thisContextBuilder
-        ) {
-            super(elementContext, macroElement, sourceCode);
-            this.thisContextBuilder = Objects.requireNonNull(thisContextBuilder);
-        }
+		public OrderByBuilder(
+			@Nonnull ParserRuleContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			@Nonnull ClassifierBuilder<?> thisContextBuilder
+		) {
+			super(elementContext, macroElement, sourceCode);
+			this.thisContextBuilder = Objects.requireNonNull(thisContextBuilder);
+		}
 
-        public void setOrderByMemberReferencePathBuilders(
-            ImmutableList<OrderByMemberReferencePathBuilder> orderByMemberReferencePathBuilders
-        ) {
-            this.orderByMemberReferencePathBuilders = Objects.requireNonNull(orderByMemberReferencePathBuilders);
-        }
+		public void setOrderByMemberReferencePathBuilders(
+			ImmutableList<OrderByMemberReferencePathBuilder> orderByMemberReferencePathBuilders
+		) {
+			this.orderByMemberReferencePathBuilders = Objects.requireNonNull(orderByMemberReferencePathBuilders);
+		}
 
-        @Override
-        @Nonnull
-        protected OrderByImpl buildUnsafe() {
-            return new OrderByImpl(
-                this.elementContext,
-                this.macroElement.map(ElementBuilder::getElement),
-                this.sourceCode.build(),
-                this.thisContextBuilder.getElement()
-            );
-        }
+		@Override
+		@Nonnull
+		protected OrderByImpl buildUnsafe() {
+			return new OrderByImpl(
+				this.elementContext,
+				this.macroElement.map(ElementBuilder::getElement),
+				this.sourceCode.build(),
+				this.thisContextBuilder.getElement()
+			);
+		}
 
-        @Override
-        protected void buildChildren() {
-            ImmutableList<OrderByMemberReferencePath> orderByMemberReferencePaths =
-                this.orderByMemberReferencePathBuilders.collect(OrderByMemberReferencePathBuilder::build);
-            this.element.setOrderByMemberReferencePaths(orderByMemberReferencePaths);
-        }
-    }
+		@Override
+		protected void buildChildren() {
+			ImmutableList<OrderByMemberReferencePath> orderByMemberReferencePaths =
+				this.orderByMemberReferencePathBuilders.collect(OrderByMemberReferencePathBuilder::build);
+			this.element.setOrderByMemberReferencePaths(orderByMemberReferencePaths);
+		}
+	}
 }

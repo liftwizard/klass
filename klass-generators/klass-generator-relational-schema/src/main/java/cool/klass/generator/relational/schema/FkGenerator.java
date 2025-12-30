@@ -25,68 +25,68 @@ import org.eclipse.collections.api.map.MutableOrderedMap;
 
 public final class FkGenerator {
 
-    private FkGenerator() {
-        throw new AssertionError("Suppress default constructor for noninstantiability");
-    }
+	private FkGenerator() {
+		throw new AssertionError("Suppress default constructor for noninstantiability");
+	}
 
-    public static Optional<String> getFk(Klass klass) {
-        MutableOrderedMap<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> foreignKeys =
-            klass.getForeignKeys();
-        if (foreignKeys.isEmpty()) {
-            return Optional.empty();
-        }
+	public static Optional<String> getFk(Klass klass) {
+		MutableOrderedMap<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> foreignKeys =
+			klass.getForeignKeys();
+		if (foreignKeys.isEmpty()) {
+			return Optional.empty();
+		}
 
-        if (klass.isTemporal()) {
-            return Optional.empty();
-        }
+		if (klass.isTemporal()) {
+			return Optional.empty();
+		}
 
-        String result = foreignKeys
-            .keyValuesView()
-            .collect((keyValuePair) -> getFk(klass, keyValuePair.getOne(), keyValuePair.getTwo()))
-            .makeString("");
-        return Optional.of(result);
-    }
+		String result = foreignKeys
+			.keyValuesView()
+			.collect((keyValuePair) -> getFk(klass, keyValuePair.getOne(), keyValuePair.getTwo()))
+			.makeString("");
+		return Optional.of(result);
+	}
 
-    private static String getFk(
-        Klass klass,
-        AssociationEnd associationEnd,
-        MutableOrderedMap<DataTypeProperty, DataTypeProperty> dataTypeProperties
-    ) {
-        String tableName = DdlGenerator.TABLE_NAME_CONVERTER.convert(klass.getName());
-        String constraintName =
-            tableName + "_FK_" + DdlGenerator.TABLE_NAME_CONVERTER.convert(associationEnd.getName());
+	private static String getFk(
+		Klass klass,
+		AssociationEnd associationEnd,
+		MutableOrderedMap<DataTypeProperty, DataTypeProperty> dataTypeProperties
+	) {
+		String tableName = DdlGenerator.TABLE_NAME_CONVERTER.convert(klass.getName());
+		String constraintName =
+			tableName + "_FK_" + DdlGenerator.TABLE_NAME_CONVERTER.convert(associationEnd.getName());
 
-        String foreignKeyColumnNames = dataTypeProperties
-            .keysView()
-            .collect(DataTypeProperty::getName)
-            .collect(DdlGenerator.COLUMN_NAME_CONVERTER::convert)
-            .makeString(", ");
+		String foreignKeyColumnNames = dataTypeProperties
+			.keysView()
+			.collect(DataTypeProperty::getName)
+			.collect(DdlGenerator.COLUMN_NAME_CONVERTER::convert)
+			.makeString(", ");
 
-        String referencedTableName = DdlGenerator.TABLE_NAME_CONVERTER.convert(associationEnd.getType().getName());
+		String referencedTableName = DdlGenerator.TABLE_NAME_CONVERTER.convert(associationEnd.getType().getName());
 
-        String referencedKeyColumnNames = dataTypeProperties
-            .valuesView()
-            .collect(DataTypeProperty::getName)
-            .collect(DdlGenerator.COLUMN_NAME_CONVERTER::convert)
-            .makeString(", ");
+		String referencedKeyColumnNames = dataTypeProperties
+			.valuesView()
+			.collect(DataTypeProperty::getName)
+			.collect(DdlGenerator.COLUMN_NAME_CONVERTER::convert)
+			.makeString(", ");
 
-        // language=SQL
-        String format = """
-            alter table %s add constraint %s foreign key (
-                %s
-            )
-            references %s(
-                %s
-            );
+		// language=SQL
+		String format = """
+			alter table %s add constraint %s foreign key (
+			    %s
+			)
+			references %s(
+			    %s
+			);
 
-            """;
+			""";
 
-        return format.formatted(
-            tableName,
-            constraintName,
-            foreignKeyColumnNames,
-            referencedTableName,
-            referencedKeyColumnNames
-        );
-    }
+		return format.formatted(
+			tableName,
+			constraintName,
+			foreignKeyColumnNames,
+			referencedTableName,
+			referencedKeyColumnNames
+		);
+	}
 }

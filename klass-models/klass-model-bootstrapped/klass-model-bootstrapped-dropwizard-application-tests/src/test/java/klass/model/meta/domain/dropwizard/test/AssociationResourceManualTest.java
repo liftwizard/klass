@@ -20,8 +20,8 @@ import org.junit.jupiter.api.Test;
 
 class AssociationResourceManualTest extends AbstractResourceTestCase {
 
-    @Test
-    void getAllMeta() {
-        this.assertUrlReturns("getAllMeta", "/meta/association");
-    }
+	@Test
+	void getAllMeta() {
+		this.assertUrlReturns("getAllMeta", "/meta/association");
+	}
 }

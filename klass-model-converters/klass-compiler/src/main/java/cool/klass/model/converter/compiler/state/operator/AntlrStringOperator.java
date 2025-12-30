@@ -30,48 +30,48 @@ import org.eclipse.collections.api.list.ListIterable;
 
 public class AntlrStringOperator extends AntlrOperator {
 
-    private StringOperatorBuilder elementBuilder;
+	private StringOperatorBuilder elementBuilder;
 
-    public AntlrStringOperator(
-        @Nonnull StringOperatorContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        @Nonnull String operatorText
-    ) {
-        super(elementContext, compilationUnit, operatorText);
-    }
+	public AntlrStringOperator(
+		@Nonnull StringOperatorContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		@Nonnull String operatorText
+	) {
+		super(elementContext, compilationUnit, operatorText);
+	}
 
-    @Nonnull
-    @Override
-    public StringOperatorBuilder build() {
-        if (this.elementBuilder != null) {
-            throw new IllegalStateException();
-        }
-        this.elementBuilder = new StringOperatorBuilder(
-            (StringOperatorContext) this.elementContext,
-            this.getMacroElementBuilder(),
-            this.getSourceCodeBuilder(),
-            this.operatorText
-        );
+	@Nonnull
+	@Override
+	public StringOperatorBuilder build() {
+		if (this.elementBuilder != null) {
+			throw new IllegalStateException();
+		}
+		this.elementBuilder = new StringOperatorBuilder(
+			(StringOperatorContext) this.elementContext,
+			this.getMacroElementBuilder(),
+			this.getSourceCodeBuilder(),
+			this.operatorText
+		);
 
-        return this.elementBuilder;
-    }
+		return this.elementBuilder;
+	}
 
-    @Nonnull
-    @Override
-    public StringOperatorBuilder getElementBuilder() {
-        return Objects.requireNonNull(this.elementBuilder);
-    }
+	@Nonnull
+	@Override
+	public StringOperatorBuilder getElementBuilder() {
+		return Objects.requireNonNull(this.elementBuilder);
+	}
 
-    @Override
-    public void checkTypes(
-        CompilerAnnotationHolder compilerAnnotationHolder,
-        @Nonnull ListIterable<AntlrType> sourceTypes,
-        ListIterable<AntlrType> targetTypes
-    ) {
-        if (sourceTypes.equals(targetTypes)) {
-            return;
-        }
+	@Override
+	public void checkTypes(
+		CompilerAnnotationHolder compilerAnnotationHolder,
+		@Nonnull ListIterable<AntlrType> sourceTypes,
+		ListIterable<AntlrType> targetTypes
+	) {
+		if (sourceTypes.equals(targetTypes)) {
+			return;
+		}
 
-        throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".checkTypes() not implemented yet");
-    }
+		throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".checkTypes() not implemented yet");
+	}
 }

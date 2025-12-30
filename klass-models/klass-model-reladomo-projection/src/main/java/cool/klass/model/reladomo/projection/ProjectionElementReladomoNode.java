@@ -26,89 +26,89 @@ import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.stack.MutableStack;
 
 public interface ProjectionElementReladomoNode {
-    String getName();
+	String getName();
 
-    Classifier getOwningClassifier();
+	Classifier getOwningClassifier();
 
-    Type getType();
+	Type getType();
 
-    RootReladomoNode getRootReladomoNode();
+	RootReladomoNode getRootReladomoNode();
 
-    MutableMap<String, ProjectionElementReladomoNode> getChildren();
+	MutableMap<String, ProjectionElementReladomoNode> getChildren();
 
-    ProjectionElementReladomoNode computeChild(String name, ProjectionElementReladomoNode node);
+	ProjectionElementReladomoNode computeChild(String name, ProjectionElementReladomoNode node);
 
-    void setProjection(RootReladomoNode rootReladomoNode);
+	void setProjection(RootReladomoNode rootReladomoNode);
 
-    default String getShortString() {
-        return '.' + this.getName() + "()";
-    }
+	default String getShortString() {
+		return '.' + this.getName() + "()";
+	}
 
-    default String getNodeString() {
-        String suffix = this.getRootReladomoNode() == null
-            ? ""
-            : " <- " + this.getRootReladomoNode().getProjection().getName();
-        return this.getOwningClassifier().getName() + this.getShortString() + ": " + this.getType().getName() + suffix;
-    }
+	default String getNodeString() {
+		String suffix = this.getRootReladomoNode() == null
+			? ""
+			: " <- " + this.getRootReladomoNode().getProjection().getName();
+		return this.getOwningClassifier().getName() + this.getShortString() + ": " + this.getType().getName() + suffix;
+	}
 
-    default boolean isLeaf() {
-        return this.getChildren().allSatisfy(ProjectionDataTypePropertyReladomoNode.class::isInstance);
-    }
+	default boolean isLeaf() {
+		return this.getChildren().allSatisfy(ProjectionDataTypePropertyReladomoNode.class::isInstance);
+	}
 
-    default ImmutableList<String> getDeepFetchStrings() {
-        if (this.isLeaf()) {
-            return Lists.immutable.empty();
-        }
-        MutableList<String> result = Lists.mutable.empty();
-        MutableStack<String> stack = Stacks.mutable.empty();
-        this.getDeepFetchStrings(result, stack);
-        return result.toImmutable();
-    }
+	default ImmutableList<String> getDeepFetchStrings() {
+		if (this.isLeaf()) {
+			return Lists.immutable.empty();
+		}
+		MutableList<String> result = Lists.mutable.empty();
+		MutableStack<String> stack = Stacks.mutable.empty();
+		this.getDeepFetchStrings(result, stack);
+		return result.toImmutable();
+	}
 
-    private void getDeepFetchStrings(MutableList<String> result, MutableStack<String> stack) {
-        if (this instanceof ProjectionDataTypePropertyReladomoNode) {
-            if (stack.size() > 1) {
-                String string = stack.toList().asReversed().makeString("");
-                result.add(string);
-            }
-            return;
-        }
+	private void getDeepFetchStrings(MutableList<String> result, MutableStack<String> stack) {
+		if (this instanceof ProjectionDataTypePropertyReladomoNode) {
+			if (stack.size() > 1) {
+				String string = stack.toList().asReversed().makeString("");
+				result.add(string);
+			}
+			return;
+		}
 
-        stack.push(this.getShortString());
-        if (this.isLeaf() || this.getRootReladomoNode() != null) {
-            String string = stack.toList().asReversed().makeString("");
-            result.add(string);
-        } else {
-            for (ProjectionElementReladomoNode child : this.getChildren()) {
-                child.getDeepFetchStrings(result, stack);
-            }
-        }
-        stack.pop();
-    }
+		stack.push(this.getShortString());
+		if (this.isLeaf() || this.getRootReladomoNode() != null) {
+			String string = stack.toList().asReversed().makeString("");
+			result.add(string);
+		} else {
+			for (ProjectionElementReladomoNode child : this.getChildren()) {
+				child.getDeepFetchStrings(result, stack);
+			}
+		}
+		stack.pop();
+	}
 
-    default boolean hasPolymorphicChildren() {
-        return this.getChildren().anySatisfy(SubClassReladomoNode.class::isInstance);
-    }
+	default boolean hasPolymorphicChildren() {
+		return this.getChildren().anySatisfy(SubClassReladomoNode.class::isInstance);
+	}
 
-    default String toString(String indent) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(indent);
-        stringBuilder.append(this.getNodeString());
-        stringBuilder.append('\n');
+	default String toString(String indent) {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(indent);
+		stringBuilder.append(this.getNodeString());
+		stringBuilder.append('\n');
 
-        String childIndent = indent + "  ";
-        this.toStringChildren(stringBuilder, childIndent);
+		String childIndent = indent + "  ";
+		this.toStringChildren(stringBuilder, childIndent);
 
-        return stringBuilder.toString();
-    }
+		return stringBuilder.toString();
+	}
 
-    default void toStringChildren(StringBuilder result, String childIndent) {
-        if (this.getRootReladomoNode() != null) {
-            return;
-        }
-        this.getChildren()
-            .valuesView()
-            .collectWith(ProjectionElementReladomoNode::toString, childIndent)
-            .each(result::append);
-    }
+	default void toStringChildren(StringBuilder result, String childIndent) {
+		if (this.getRootReladomoNode() != null) {
+			return;
+		}
+		this.getChildren()
+			.valuesView()
+			.collectWith(ProjectionElementReladomoNode::toString, childIndent)
+			.each(result::append);
+	}
 }

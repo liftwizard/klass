@@ -39,62 +39,62 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public class ReferencedPropertiesExpressionValueVisitor implements AntlrExpressionValueVisitor {
 
-    private final Set<AntlrAssociationEnd> associationEndsReferencedByCriteria = new LinkedHashSet<>();
-    private final Set<AntlrDataTypeProperty<?>> dataTypePropertiesReferencedByCriteria = new LinkedHashSet<>();
-    private final Set<AntlrParameter> parametersReferencedByCriteria = new LinkedHashSet<>();
+	private final Set<AntlrAssociationEnd> associationEndsReferencedByCriteria = new LinkedHashSet<>();
+	private final Set<AntlrDataTypeProperty<?>> dataTypePropertiesReferencedByCriteria = new LinkedHashSet<>();
+	private final Set<AntlrParameter> parametersReferencedByCriteria = new LinkedHashSet<>();
 
-    public Set<AntlrAssociationEnd> getAssociationEndsReferencedByCriteria() {
-        return this.associationEndsReferencedByCriteria;
-    }
+	public Set<AntlrAssociationEnd> getAssociationEndsReferencedByCriteria() {
+		return this.associationEndsReferencedByCriteria;
+	}
 
-    public Set<AntlrDataTypeProperty<?>> getDataTypePropertiesReferencedByCriteria() {
-        return this.dataTypePropertiesReferencedByCriteria;
-    }
+	public Set<AntlrDataTypeProperty<?>> getDataTypePropertiesReferencedByCriteria() {
+		return this.dataTypePropertiesReferencedByCriteria;
+	}
 
-    public Set<AntlrParameter> getParametersReferencedByCriteria() {
-        return this.parametersReferencedByCriteria;
-    }
+	public Set<AntlrParameter> getParametersReferencedByCriteria() {
+		return this.parametersReferencedByCriteria;
+	}
 
-    @Override
-    public void visitTypeMember(@Nonnull AntlrTypeMemberReferencePath typeMemberExpressionValue) {
-        ImmutableList<AntlrAssociationEnd> associationEnds = typeMemberExpressionValue.getAssociationEnds();
-        this.associationEndsReferencedByCriteria.addAll(associationEnds.castToList());
-        AntlrDataTypeProperty<?> dataTypeProperty = typeMemberExpressionValue.getDataTypeProperty();
-        this.dataTypePropertiesReferencedByCriteria.add(dataTypeProperty);
-    }
+	@Override
+	public void visitTypeMember(@Nonnull AntlrTypeMemberReferencePath typeMemberExpressionValue) {
+		ImmutableList<AntlrAssociationEnd> associationEnds = typeMemberExpressionValue.getAssociationEnds();
+		this.associationEndsReferencedByCriteria.addAll(associationEnds.castToList());
+		AntlrDataTypeProperty<?> dataTypeProperty = typeMemberExpressionValue.getDataTypeProperty();
+		this.dataTypePropertiesReferencedByCriteria.add(dataTypeProperty);
+	}
 
-    @Override
-    public void visitThisMember(@Nonnull AntlrThisMemberReferencePath thisMemberExpressionValue) {
-        ImmutableList<AntlrAssociationEnd> associationEnds = thisMemberExpressionValue.getAssociationEnds();
-        this.associationEndsReferencedByCriteria.addAll(associationEnds.castToList());
-        AntlrDataTypeProperty<?> dataTypeProperty = thisMemberExpressionValue.getDataTypeProperty();
-        this.dataTypePropertiesReferencedByCriteria.add(dataTypeProperty);
-    }
+	@Override
+	public void visitThisMember(@Nonnull AntlrThisMemberReferencePath thisMemberExpressionValue) {
+		ImmutableList<AntlrAssociationEnd> associationEnds = thisMemberExpressionValue.getAssociationEnds();
+		this.associationEndsReferencedByCriteria.addAll(associationEnds.castToList());
+		AntlrDataTypeProperty<?> dataTypeProperty = thisMemberExpressionValue.getDataTypeProperty();
+		this.dataTypePropertiesReferencedByCriteria.add(dataTypeProperty);
+	}
 
-    @Override
-    public void visitParameterReference(@Nonnull AntlrParameterReference parameterReference) {
-        AntlrParameter antlrParameter = parameterReference.getAntlrParameter();
-        this.parametersReferencedByCriteria.add(antlrParameter);
-    }
+	@Override
+	public void visitParameterReference(@Nonnull AntlrParameterReference parameterReference) {
+		AntlrParameter antlrParameter = parameterReference.getAntlrParameter();
+		this.parametersReferencedByCriteria.add(antlrParameter);
+	}
 
-    @Override
-    public void visitBooleanLiteral(@Nonnull AntlrBooleanLiteralValue booleanLiteralValue) {}
+	@Override
+	public void visitBooleanLiteral(@Nonnull AntlrBooleanLiteralValue booleanLiteralValue) {}
 
-    @Override
-    public void visitIntegerLiteral(@Nonnull AntlrIntegerLiteralValue integerLiteralValue) {}
+	@Override
+	public void visitIntegerLiteral(@Nonnull AntlrIntegerLiteralValue integerLiteralValue) {}
 
-    @Override
-    public void visitFloatingPointLiteral(@Nonnull AntlrFloatingPointLiteralValue floatingPointLiteral) {}
+	@Override
+	public void visitFloatingPointLiteral(@Nonnull AntlrFloatingPointLiteralValue floatingPointLiteral) {}
 
-    @Override
-    public void visitStringLiteral(@Nonnull AntlrStringLiteralValue stringLiteralValue) {}
+	@Override
+	public void visitStringLiteral(@Nonnull AntlrStringLiteralValue stringLiteralValue) {}
 
-    @Override
-    public void visitLiteralList(@Nonnull AntlrLiteralListValue literalListValue) {}
+	@Override
+	public void visitLiteralList(@Nonnull AntlrLiteralListValue literalListValue) {}
 
-    @Override
-    public void visitUserLiteral(@Nonnull AntlrUserLiteral userLiteral) {}
+	@Override
+	public void visitUserLiteral(@Nonnull AntlrUserLiteral userLiteral) {}
 
-    @Override
-    public void visitNullLiteral(@Nonnull AntlrNullLiteral nullLiteral) {}
+	@Override
+	public void visitNullLiteral(@Nonnull AntlrNullLiteral nullLiteral) {}
 }

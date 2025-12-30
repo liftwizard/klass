@@ -34,86 +34,86 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public final class LiteralListValueImpl extends AbstractLiteralValue implements LiteralListValue {
 
-    @Nonnull
-    private final Type type;
+	@Nonnull
+	private final Type type;
 
-    private ImmutableList<LiteralValue> literalValues;
+	private ImmutableList<LiteralValue> literalValues;
 
-    private LiteralListValueImpl(
-        @Nonnull LiteralListContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        @Nonnull Type type
-    ) {
-        super(elementContext, macroElement, sourceCode);
-        this.type = Objects.requireNonNull(type);
-    }
+	private LiteralListValueImpl(
+		@Nonnull LiteralListContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		@Nonnull Type type
+	) {
+		super(elementContext, macroElement, sourceCode);
+		this.type = Objects.requireNonNull(type);
+	}
 
-    @Nonnull
-    @Override
-    public LiteralListContext getElementContext() {
-        return (LiteralListContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public LiteralListContext getElementContext() {
+		return (LiteralListContext) super.getElementContext();
+	}
 
-    @Override
-    @Nonnull
-    public ImmutableList<LiteralValue> getLiteralValues() {
-        return Objects.requireNonNull(this.literalValues);
-    }
+	@Override
+	@Nonnull
+	public ImmutableList<LiteralValue> getLiteralValues() {
+		return Objects.requireNonNull(this.literalValues);
+	}
 
-    public void setLiteralValues(@Nonnull ImmutableList<LiteralValue> literalValues) {
-        if (this.literalValues != null) {
-            throw new IllegalArgumentException("Literal values already set");
-        }
-        this.literalValues = Objects.requireNonNull(literalValues);
-    }
+	public void setLiteralValues(@Nonnull ImmutableList<LiteralValue> literalValues) {
+		if (this.literalValues != null) {
+			throw new IllegalArgumentException("Literal values already set");
+		}
+		this.literalValues = Objects.requireNonNull(literalValues);
+	}
 
-    @Override
-    @Nonnull
-    public Type getType() {
-        return this.type;
-    }
+	@Override
+	@Nonnull
+	public Type getType() {
+		return this.type;
+	}
 
-    public static final class LiteralListValueBuilder extends AbstractLiteralValueBuilder<LiteralListValueImpl> {
+	public static final class LiteralListValueBuilder extends AbstractLiteralValueBuilder<LiteralListValueImpl> {
 
-        @Nonnull
-        private final TypeGetter typeBuilder;
+		@Nonnull
+		private final TypeGetter typeBuilder;
 
-        private ImmutableList<AbstractLiteralValueBuilder<?>> literalValueBuilders;
+		private ImmutableList<AbstractLiteralValueBuilder<?>> literalValueBuilders;
 
-        public LiteralListValueBuilder(
-            @Nonnull LiteralListContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            @Nonnull TypeGetter typeBuilder
-        ) {
-            super(elementContext, macroElement, sourceCode);
-            this.typeBuilder = Objects.requireNonNull(typeBuilder);
-        }
+		public LiteralListValueBuilder(
+			@Nonnull LiteralListContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			@Nonnull TypeGetter typeBuilder
+		) {
+			super(elementContext, macroElement, sourceCode);
+			this.typeBuilder = Objects.requireNonNull(typeBuilder);
+		}
 
-        public void setLiteralValueBuilders(
-            @Nonnull ImmutableList<AbstractLiteralValueBuilder<?>> literalValueBuilders
-        ) {
-            if (this.literalValueBuilders != null) {
-                throw new IllegalStateException();
-            }
-            this.literalValueBuilders = Objects.requireNonNull(literalValueBuilders);
-        }
+		public void setLiteralValueBuilders(
+			@Nonnull ImmutableList<AbstractLiteralValueBuilder<?>> literalValueBuilders
+		) {
+			if (this.literalValueBuilders != null) {
+				throw new IllegalStateException();
+			}
+			this.literalValueBuilders = Objects.requireNonNull(literalValueBuilders);
+		}
 
-        @Override
-        @Nonnull
-        protected LiteralListValueImpl buildUnsafe() {
-            return new LiteralListValueImpl(
-                (LiteralListContext) this.elementContext,
-                this.macroElement.map(ElementBuilder::getElement),
-                this.sourceCode.build(),
-                this.typeBuilder.getType()
-            );
-        }
+		@Override
+		@Nonnull
+		protected LiteralListValueImpl buildUnsafe() {
+			return new LiteralListValueImpl(
+				(LiteralListContext) this.elementContext,
+				this.macroElement.map(ElementBuilder::getElement),
+				this.sourceCode.build(),
+				this.typeBuilder.getType()
+			);
+		}
 
-        @Override
-        protected void buildChildren() {
-            this.element.setLiteralValues(this.literalValueBuilders.collect(AbstractLiteralValueBuilder::build));
-        }
-    }
+		@Override
+		protected void buildChildren() {
+			this.element.setLiteralValues(this.literalValueBuilders.collect(AbstractLiteralValueBuilder::build));
+		}
+	}
 }

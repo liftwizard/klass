@@ -19,33 +19,33 @@ package cool.klass.model.reladomo.tree;
 import java.util.Optional;
 
 public interface ReladomoTreeNodeToManyAwareListener {
-    Object getStateToAssertInvariants();
+	Object getStateToAssertInvariants();
 
-    void enterListIndex(int index);
+	void enterListIndex(int index);
 
-    void exitListIndex(int index);
+	void exitListIndex(int index);
 
-    Optional<Integer> enterRoot(RootReladomoTreeNode rootReladomoTreeNode);
+	Optional<Integer> enterRoot(RootReladomoTreeNode rootReladomoTreeNode);
 
-    void exitRoot(RootReladomoTreeNode rootReladomoTreeNode);
+	void exitRoot(RootReladomoTreeNode rootReladomoTreeNode);
 
-    void enterDataTypeProperty(DataTypePropertyReladomoTreeNode dataTypePropertyReladomoTreeNode);
+	void enterDataTypeProperty(DataTypePropertyReladomoTreeNode dataTypePropertyReladomoTreeNode);
 
-    void exitDataTypeProperty(DataTypePropertyReladomoTreeNode dataTypePropertyReladomoTreeNode);
+	void exitDataTypeProperty(DataTypePropertyReladomoTreeNode dataTypePropertyReladomoTreeNode);
 
-    void enterSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode);
+	void enterSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode);
 
-    void exitSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode);
+	void exitSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode);
 
-    void enterSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode);
+	void enterSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode);
 
-    void exitSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode);
+	void exitSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode);
 
-    Optional<Integer> enterReferenceProperty(ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode);
+	Optional<Integer> enterReferenceProperty(ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode);
 
-    void exitReferenceProperty(ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode);
+	void exitReferenceProperty(ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode);
 
-    Optional<Integer> enterReference(ReferenceReladomoTreeNode referenceReladomoTreeNode);
+	Optional<Integer> enterReference(ReferenceReladomoTreeNode referenceReladomoTreeNode);
 
-    void exitReference(ReferenceReladomoTreeNode referenceReladomoTreeNode);
+	void exitReference(ReferenceReladomoTreeNode referenceReladomoTreeNode);
 }

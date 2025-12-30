@@ -22,17 +22,17 @@ import com.gs.fw.finder.Operation;
 
 public class ProjectionDataTypePropertyList extends ProjectionDataTypePropertyListAbstract {
 
-    public ProjectionDataTypePropertyList() {}
+	public ProjectionDataTypePropertyList() {}
 
-    public ProjectionDataTypePropertyList(int initialSize) {
-        super(initialSize);
-    }
+	public ProjectionDataTypePropertyList(int initialSize) {
+		super(initialSize);
+	}
 
-    public ProjectionDataTypePropertyList(Collection c) {
-        super(c);
-    }
+	public ProjectionDataTypePropertyList(Collection c) {
+		super(c);
+	}
 
-    public ProjectionDataTypePropertyList(Operation operation) {
-        super(operation);
-    }
+	public ProjectionDataTypePropertyList(Operation operation) {
+		super(operation);
+	}
 }

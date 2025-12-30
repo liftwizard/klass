@@ -21,16 +21,16 @@ import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public interface Association extends TopLevelElement {
-    @Override
-    default void visit(TopLevelElementVisitor visitor) {
-        visitor.visitAssociation(this);
-    }
+	@Override
+	default void visit(TopLevelElementVisitor visitor) {
+		visitor.visitAssociation(this);
+	}
 
-    Criteria getCriteria();
+	Criteria getCriteria();
 
-    ImmutableList<AssociationEnd> getAssociationEnds();
+	ImmutableList<AssociationEnd> getAssociationEnds();
 
-    AssociationEnd getSourceAssociationEnd();
+	AssociationEnd getSourceAssociationEnd();
 
-    AssociationEnd getTargetAssociationEnd();
+	AssociationEnd getTargetAssociationEnd();
 }

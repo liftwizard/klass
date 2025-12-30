@@ -24,11 +24,11 @@ import javax.annotation.Nonnull;
  * All instances of a DataType with the same value are considered to be equal instances.
  */
 public interface DataType extends Type {
-    String getDataTypeName();
+	String getDataTypeName();
 
-    interface DataTypeGetter extends TypeGetter {
-        @Nonnull
-        @Override
-        DataType getType();
-    }
+	interface DataTypeGetter extends TypeGetter {
+		@Nonnull
+		@Override
+		DataType getType();
+	}
 }

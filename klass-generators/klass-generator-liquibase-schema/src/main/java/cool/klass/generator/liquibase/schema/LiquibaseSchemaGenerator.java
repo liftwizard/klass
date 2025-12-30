@@ -26,32 +26,32 @@ import cool.klass.model.meta.domain.api.DomainModel;
 
 public class LiquibaseSchemaGenerator extends AbstractPerPackageGenerator {
 
-    private final String fileName;
+	private final String fileName;
 
-    public LiquibaseSchemaGenerator(DomainModel domainModel) {
-        this(domainModel, "migrations.xml");
-    }
+	public LiquibaseSchemaGenerator(DomainModel domainModel) {
+		this(domainModel, "migrations.xml");
+	}
 
-    public LiquibaseSchemaGenerator(DomainModel domainModel, String fileName) {
-        super(domainModel);
-        this.fileName = Objects.requireNonNull(fileName);
-    }
+	public LiquibaseSchemaGenerator(DomainModel domainModel, String fileName) {
+		super(domainModel);
+		this.fileName = Objects.requireNonNull(fileName);
+	}
 
-    @Nonnull
-    @Override
-    protected Path getPluginRelativePath(Path path) {
-        return path.resolve("liquibase").resolve("schema");
-    }
+	@Nonnull
+	@Override
+	protected Path getPluginRelativePath(Path path) {
+		return path.resolve("liquibase").resolve("schema");
+	}
 
-    @Override
-    @Nonnull
-    protected String getFileName() {
-        return this.fileName;
-    }
+	@Override
+	@Nonnull
+	protected String getFileName() {
+		return this.fileName;
+	}
 
-    @Override
-    @Nonnull
-    protected String getPackageSourceCode(@Nonnull String fullyQualifiedPackage) {
-        return SchemaGenerator.getSourceCode(this.domainModel, fullyQualifiedPackage);
-    }
+	@Override
+	@Nonnull
+	protected String getPackageSourceCode(@Nonnull String fullyQualifiedPackage) {
+		return SchemaGenerator.getSourceCode(this.domainModel, fullyQualifiedPackage);
+	}
 }

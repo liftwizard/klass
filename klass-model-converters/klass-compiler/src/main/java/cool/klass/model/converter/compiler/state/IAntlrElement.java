@@ -33,81 +33,81 @@ import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.tuple.Tuples;
 
 public interface IAntlrElement {
-    @Nonnull
-    ParserRuleContext getElementContext();
+	@Nonnull
+	ParserRuleContext getElementContext();
 
-    @Nonnull
-    Optional<AntlrElement> getMacroElement();
+	@Nonnull
+	Optional<AntlrElement> getMacroElement();
 
-    @Nonnull
-    Optional<IAntlrElement> getSurroundingElement();
+	@Nonnull
+	Optional<IAntlrElement> getSurroundingElement();
 
-    default <T extends IAntlrElement> Optional<T> getSurroundingElement(Class<T> elementClass) {
-        if (elementClass.isInstance(this)) {
-            return Optional.of(elementClass.cast(this));
-        }
+	default <T extends IAntlrElement> Optional<T> getSurroundingElement(Class<T> elementClass) {
+		if (elementClass.isInstance(this)) {
+			return Optional.of(elementClass.cast(this));
+		}
 
-        return this.getSurroundingElement().flatMap((surroundingElement) ->
-            surroundingElement.getSurroundingElement(elementClass)
-        );
-    }
+		return this.getSurroundingElement().flatMap((surroundingElement) ->
+			surroundingElement.getSurroundingElement(elementClass)
+		);
+	}
 
-    @Nonnull
-    default ImmutableList<IAntlrElement> getSurroundingElements() {
-        MutableList<IAntlrElement> result = Lists.mutable.empty();
-        this.gatherSurroundingElements(result);
-        return result.toImmutable();
-    }
+	@Nonnull
+	default ImmutableList<IAntlrElement> getSurroundingElements() {
+		MutableList<IAntlrElement> result = Lists.mutable.empty();
+		this.gatherSurroundingElements(result);
+		return result.toImmutable();
+	}
 
-    default void gatherSurroundingElements(@Nonnull MutableList<IAntlrElement> result) {
-        result.add(this);
-        this.getSurroundingElement().ifPresent((element) -> element.gatherSurroundingElements(result));
-    }
+	default void gatherSurroundingElements(@Nonnull MutableList<IAntlrElement> result) {
+		result.add(this);
+		this.getSurroundingElement().ifPresent((element) -> element.gatherSurroundingElements(result));
+	}
 
-    default boolean isContext() {
-        return false;
-    }
+	default boolean isContext() {
+		return false;
+	}
 
-    @Nonnull
-    Optional<CompilationUnit> getCompilationUnit();
+	@Nonnull
+	Optional<CompilationUnit> getCompilationUnit();
 
-    default Pair<Token, Token> getContextBefore() {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".getContextBefore() not implemented yet"
-        );
-    }
+	default Pair<Token, Token> getContextBefore() {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".getContextBefore() not implemented yet"
+		);
+	}
 
-    default Pair<Token, Token> getContextAfter() {
-        // This makes the default implementation throw, but still not need overrides just to return null
-        this.getContextBefore();
-        return null;
-    }
+	default Pair<Token, Token> getContextAfter() {
+		// This makes the default implementation throw, but still not need overrides just to return null
+		this.getContextBefore();
+		return null;
+	}
 
-    default Pair<Token, Token> getEntireContext() {
-        return Tuples.pair(this.getElementContext().getStart(), this.getElementContext().getStop());
-    }
+	default Pair<Token, Token> getEntireContext() {
+		return Tuples.pair(this.getElementContext().getStart(), this.getElementContext().getStop());
+	}
 
-    default void reportAuditErrors(
-        CompilerAnnotationHolder compilerAnnotationHolder,
-        ListIterable<AntlrModifier> modifiers,
-        IAntlrElement element
-    ) {
-        ImmutableList<AntlrModifier> offendingModifiers = modifiers
-            .select((modifier) -> modifier.isAudit() || modifier.isUser())
-            .toImmutable();
-        if (offendingModifiers.isEmpty()) {
-            return;
-        }
+	default void reportAuditErrors(
+		CompilerAnnotationHolder compilerAnnotationHolder,
+		ListIterable<AntlrModifier> modifiers,
+		IAntlrElement element
+	) {
+		ImmutableList<AntlrModifier> offendingModifiers = modifiers
+			.select((modifier) -> modifier.isAudit() || modifier.isUser())
+			.toImmutable();
+		if (offendingModifiers.isEmpty()) {
+			return;
+		}
 
-        String message = String.format(
-            "Modifiers %s require one 'user' class in the domain model.",
-            offendingModifiers.collect(AntlrModifier::getKeyword)
-        );
-        compilerAnnotationHolder.add(
-            "ERR_ADT_MOD",
-            message,
-            element,
-            offendingModifiers.collect(AntlrElement::getElementContext)
-        );
-    }
+		String message = String.format(
+			"Modifiers %s require one 'user' class in the domain model.",
+			offendingModifiers.collect(AntlrModifier::getKeyword)
+		);
+		compilerAnnotationHolder.add(
+			"ERR_ADT_MOD",
+			message,
+			element,
+			offendingModifiers.collect(AntlrElement::getElementContext)
+		);
+	}
 }

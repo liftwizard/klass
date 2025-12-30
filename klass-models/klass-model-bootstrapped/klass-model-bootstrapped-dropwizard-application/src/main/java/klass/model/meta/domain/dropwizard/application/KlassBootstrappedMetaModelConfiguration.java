@@ -27,36 +27,36 @@ import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactory;
 import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactoryProvider;
 
 public class KlassBootstrappedMetaModelConfiguration
-    extends AbstractKlassConfiguration
-    implements SinglePageRedirectFilterFactoryProvider, GraphQLFactoryProvider {
+	extends AbstractKlassConfiguration
+	implements SinglePageRedirectFilterFactoryProvider, GraphQLFactoryProvider {
 
-    @Nonnull
-    private @Valid SinglePageRedirectFilterFactory singlePageRedirectFilterFactory =
-        new SinglePageRedirectFilterFactory();
+	@Nonnull
+	private @Valid SinglePageRedirectFilterFactory singlePageRedirectFilterFactory =
+		new SinglePageRedirectFilterFactory();
 
-    @Nonnull
-    private @Valid GraphQLFactory graphQLFactory = new GraphQLFactory();
+	@Nonnull
+	private @Valid GraphQLFactory graphQLFactory = new GraphQLFactory();
 
-    @Override
-    @JsonProperty("singlePageRedirectFilter")
-    public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory() {
-        return this.singlePageRedirectFilterFactory;
-    }
+	@Override
+	@JsonProperty("singlePageRedirectFilter")
+	public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory() {
+		return this.singlePageRedirectFilterFactory;
+	}
 
-    @JsonProperty("singlePageRedirectFilter")
-    public void setSinglePageRedirectFilterFactory(SinglePageRedirectFilterFactory singlePageRedirectFilterFactory) {
-        this.singlePageRedirectFilterFactory = singlePageRedirectFilterFactory;
-    }
+	@JsonProperty("singlePageRedirectFilter")
+	public void setSinglePageRedirectFilterFactory(SinglePageRedirectFilterFactory singlePageRedirectFilterFactory) {
+		this.singlePageRedirectFilterFactory = singlePageRedirectFilterFactory;
+	}
 
-    @Override
-    @Nonnull
-    @JsonProperty("graphQL")
-    public GraphQLFactory getGraphQLFactory() {
-        return this.graphQLFactory;
-    }
+	@Override
+	@Nonnull
+	@JsonProperty("graphQL")
+	public GraphQLFactory getGraphQLFactory() {
+		return this.graphQLFactory;
+	}
 
-    @JsonProperty("graphQL")
-    public void setGraphQLFactory(@Nonnull GraphQLFactory factory) {
-        this.graphQLFactory = factory;
-    }
+	@JsonProperty("graphQL")
+	public void setGraphQLFactory(@Nonnull GraphQLFactory factory) {
+		this.graphQLFactory = factory;
+	}
 }

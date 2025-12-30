@@ -27,26 +27,26 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 public class SourceCodeResourceTest extends AbstractCoverageTest {
 
-    @RegisterExtension
-    final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
+	@RegisterExtension
+	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
-    @Test
-    void smoke_test() {
-        Client client = this.getClient("smoke_test");
+	@Test
+	void smoke_test() {
+		Client client = this.getClient("smoke_test");
 
-        Response response = client
-            .target("http://localhost:{port}/api/meta/code/element/{topLevelElementName}")
-            .resolveTemplate("port", this.appExtension.getLocalPort())
-            .resolveTemplate("topLevelElementName", "User")
-            .request(MediaType.TEXT_HTML_TYPE)
-            .header("Authorization", "Impersonation User ID")
-            .get();
+		Response response = client
+			.target("http://localhost:{port}/api/meta/code/element/{topLevelElementName}")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.resolveTemplate("topLevelElementName", "User")
+			.request(MediaType.TEXT_HTML_TYPE)
+			.header("Authorization", "Impersonation User ID")
+			.get();
 
-        this.assertResponseStatus(response, Status.OK);
-        String responseHtml = response.readEntity(String.class);
-        // assertEquals(responseHtml, expected, responseHtml);
+		this.assertResponseStatus(response, Status.OK);
+		String responseHtml = response.readEntity(String.class);
+		// assertEquals(responseHtml, expected, responseHtml);
 
-        String expectedStringClasspathLocation = this.getClass().getCanonicalName() + "#smoke_test.html";
-        this.fileMatchExtension.assertFileContents(expectedStringClasspathLocation, responseHtml);
-    }
+		String expectedStringClasspathLocation = this.getClass().getCanonicalName() + "#smoke_test.html";
+		this.fileMatchExtension.assertFileContents(expectedStringClasspathLocation, responseHtml);
+	}
 }

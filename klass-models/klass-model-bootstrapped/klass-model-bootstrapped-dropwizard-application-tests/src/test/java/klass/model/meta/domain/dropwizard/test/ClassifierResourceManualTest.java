@@ -20,8 +20,8 @@ import org.junit.jupiter.api.Test;
 
 class ClassifierResourceManualTest extends AbstractResourceTestCase {
 
-    @Test
-    void getAllMeta() {
-        this.assertUrlReturns("getAllMeta", "/meta/classifier");
-    }
+	@Test
+	void getAllMeta() {
+		this.assertUrlReturns("getAllMeta", "/meta/classifier");
+	}
 }

@@ -32,52 +32,52 @@ import cool.klass.model.meta.domain.api.projection.Projection;
 // TODO: Refactor out the commonality between the several Generators
 public class JsonViewGenerator {
 
-    @Nonnull
-    private final DomainModel domainModel;
+	@Nonnull
+	private final DomainModel domainModel;
 
-    @Nonnull
-    private final String rootPackageName;
+	@Nonnull
+	private final String rootPackageName;
 
-    @Nonnull
-    private final String applicationName;
+	@Nonnull
+	private final String applicationName;
 
-    public JsonViewGenerator(
-        @Nonnull DomainModel domainModel,
-        @Nonnull String rootPackageName,
-        @Nonnull String applicationName
-    ) {
-        this.domainModel = Objects.requireNonNull(domainModel);
-        this.rootPackageName = Objects.requireNonNull(rootPackageName);
-        this.applicationName = Objects.requireNonNull(applicationName);
-    }
+	public JsonViewGenerator(
+		@Nonnull DomainModel domainModel,
+		@Nonnull String rootPackageName,
+		@Nonnull String applicationName
+	) {
+		this.domainModel = Objects.requireNonNull(domainModel);
+		this.rootPackageName = Objects.requireNonNull(rootPackageName);
+		this.applicationName = Objects.requireNonNull(applicationName);
+	}
 
-    public void writeJsonViews(@Nonnull Path outputPath) throws IOException {
-        for (Projection projection : this.domainModel.getProjections()) {
-            Path jsonViewOutputPath = this.getJsonViewOutputPath(outputPath, projection);
-            this.printStringToFile(jsonViewOutputPath, this.getJsonViewSourceCode(projection));
-        }
-    }
+	public void writeJsonViews(@Nonnull Path outputPath) throws IOException {
+		for (Projection projection : this.domainModel.getProjections()) {
+			Path jsonViewOutputPath = this.getJsonViewOutputPath(outputPath, projection);
+			this.printStringToFile(jsonViewOutputPath, this.getJsonViewSourceCode(projection));
+		}
+	}
 
-    @Nonnull
-    private Path getJsonViewOutputPath(@Nonnull Path outputPath, @Nonnull Projection packageableElement) {
-        String packageRelativePath = packageableElement.getPackageName().replaceAll("\\.", "/");
-        Path outputDirectory = outputPath.resolve(packageRelativePath).resolve("json").resolve("view");
-        outputDirectory.toFile().mkdirs();
-        String fileName = packageableElement.getName() + "_JsonView.java";
-        return outputDirectory.resolve(fileName);
-    }
+	@Nonnull
+	private Path getJsonViewOutputPath(@Nonnull Path outputPath, @Nonnull Projection packageableElement) {
+		String packageRelativePath = packageableElement.getPackageName().replaceAll("\\.", "/");
+		Path outputDirectory = outputPath.resolve(packageRelativePath).resolve("json").resolve("view");
+		outputDirectory.toFile().mkdirs();
+		String fileName = packageableElement.getName() + "_JsonView.java";
+		return outputDirectory.resolve(fileName);
+	}
 
-    private void printStringToFile(@Nonnull Path path, String contents) throws FileNotFoundException {
-        try (
-            PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
-        ) {
-            printStream.print(contents);
-        }
-    }
+	private void printStringToFile(@Nonnull Path path, String contents) throws FileNotFoundException {
+		try (
+			PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
+		) {
+			printStream.print(contents);
+		}
+	}
 
-    @Nonnull
-    private String getJsonViewSourceCode(@Nonnull Projection projection) {
-        // @formatter:off
+	@Nonnull
+	private String getJsonViewSourceCode(@Nonnull Projection projection) {
+		// @formatter:off
         // language=JAVA
         return ""
                 + "package " + projection.getPackageName() + ".json.view;\n"
@@ -96,5 +96,5 @@ public class JsonViewGenerator {
                 + "    }\n"
                 + "}\n";
         // @formatter:on
-    }
+	}
 }

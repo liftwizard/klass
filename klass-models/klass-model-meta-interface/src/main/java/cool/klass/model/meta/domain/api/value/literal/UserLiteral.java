@@ -22,10 +22,10 @@ import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.value.ExpressionValueVisitor;
 
 public interface UserLiteral extends LiteralValue {
-    Klass getUserClass();
+	Klass getUserClass();
 
-    @Override
-    default void visit(@Nonnull ExpressionValueVisitor visitor) {
-        visitor.visitUserLiteral(this);
-    }
+	@Override
+	default void visit(@Nonnull ExpressionValueVisitor visitor) {
+		visitor.visitUserLiteral(this);
+	}
 }

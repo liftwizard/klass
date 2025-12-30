@@ -30,32 +30,32 @@ import cool.klass.model.meta.grammar.KlassParser.ServiceCriteriaKeywordContext;
 
 public class ServiceCriteriaPhase extends AbstractCompilerPhase {
 
-    public ServiceCriteriaPhase(@Nonnull CompilerState compilerState) {
-        super(compilerState);
-    }
+	public ServiceCriteriaPhase(@Nonnull CompilerState compilerState) {
+		super(compilerState);
+	}
 
-    @Override
-    public void enterServiceCriteriaDeclaration(@Nonnull ServiceCriteriaDeclarationContext ctx) {
-        super.enterServiceCriteriaDeclaration(ctx);
+	@Override
+	public void enterServiceCriteriaDeclaration(@Nonnull ServiceCriteriaDeclarationContext ctx) {
+		super.enterServiceCriteriaDeclaration(ctx);
 
-        ServiceCriteriaKeywordContext serviceCriteriaKeywordContext = ctx.serviceCriteriaKeyword();
+		ServiceCriteriaKeywordContext serviceCriteriaKeywordContext = ctx.serviceCriteriaKeyword();
 
-        String serviceCriteriaKeyword = serviceCriteriaKeywordContext.getText();
+		String serviceCriteriaKeyword = serviceCriteriaKeywordContext.getText();
 
-        AntlrServiceCriteria serviceCriteria = new AntlrServiceCriteria(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            serviceCriteriaKeyword,
-            this.compilerState.getCompilerWalk().getService()
-        );
+		AntlrServiceCriteria serviceCriteria = new AntlrServiceCriteria(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			serviceCriteriaKeyword,
+			this.compilerState.getCompilerWalk().getService()
+		);
 
-        CriteriaExpressionContext criteriaExpressionContext = ctx.criteriaExpression();
+		CriteriaExpressionContext criteriaExpressionContext = ctx.criteriaExpression();
 
-        CriteriaVisitor criteriaVisitor = new CriteriaVisitor(this.compilerState, serviceCriteria);
+		CriteriaVisitor criteriaVisitor = new CriteriaVisitor(this.compilerState, serviceCriteria);
 
-        AntlrCriteria antlrCriteria = criteriaVisitor.visit(criteriaExpressionContext);
-        serviceCriteria.setCriteria(antlrCriteria);
+		AntlrCriteria antlrCriteria = criteriaVisitor.visit(criteriaExpressionContext);
+		serviceCriteria.setCriteria(antlrCriteria);
 
-        this.compilerState.getCompilerWalk().getService().enterServiceCriteriaDeclaration(serviceCriteria);
-    }
+		this.compilerState.getCompilerWalk().getService().enterServiceCriteriaDeclaration(serviceCriteria);
+	}
 }

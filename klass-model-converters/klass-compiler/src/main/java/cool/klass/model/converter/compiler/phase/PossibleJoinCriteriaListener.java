@@ -37,101 +37,101 @@ import cool.klass.model.meta.grammar.KlassParser.TypeMemberReferencePathContext;
 
 public class PossibleJoinCriteriaListener extends KlassBaseListener {
 
-    @Nonnull
-    private final AntlrDomainModel domainModel;
+	@Nonnull
+	private final AntlrDomainModel domainModel;
 
-    @Nonnull
-    private final AntlrClass targetType;
+	@Nonnull
+	private final AntlrClass targetType;
 
-    private boolean allEqualityOperators = true;
-    private boolean allOperatorsCrossTypes = true;
-    private boolean allMemberReferencesAreDirect = true;
-    private boolean allTypeMembersMatch = true;
-    private boolean allReferencesResolve = true;
+	private boolean allEqualityOperators = true;
+	private boolean allOperatorsCrossTypes = true;
+	private boolean allMemberReferencesAreDirect = true;
+	private boolean allTypeMembersMatch = true;
+	private boolean allReferencesResolve = true;
 
-    public PossibleJoinCriteriaListener(@Nonnull AntlrDomainModel domainModel, @Nonnull AntlrClass targetType) {
-        this.domainModel = Objects.requireNonNull(domainModel);
-        this.targetType = Objects.requireNonNull(targetType);
-    }
+	public PossibleJoinCriteriaListener(@Nonnull AntlrDomainModel domainModel, @Nonnull AntlrClass targetType) {
+		this.domainModel = Objects.requireNonNull(domainModel);
+		this.targetType = Objects.requireNonNull(targetType);
+	}
 
-    public boolean hasForeignKeys() {
-        return (
-            this.allEqualityOperators
-            && this.allOperatorsCrossTypes
-            && this.allMemberReferencesAreDirect
-            && this.allTypeMembersMatch
-            && this.allReferencesResolve
-        );
-    }
+	public boolean hasForeignKeys() {
+		return (
+			this.allEqualityOperators
+			&& this.allOperatorsCrossTypes
+			&& this.allMemberReferencesAreDirect
+			&& this.allTypeMembersMatch
+			&& this.allReferencesResolve
+		);
+	}
 
-    @Override
-    public void enterCriteriaEdgePoint(@Nonnull CriteriaEdgePointContext ctx) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".enterCriteriaEdgePoint() not implemented yet"
-        );
-    }
+	@Override
+	public void enterCriteriaEdgePoint(@Nonnull CriteriaEdgePointContext ctx) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".enterCriteriaEdgePoint() not implemented yet"
+		);
+	}
 
-    @Override
-    public void enterCriteriaNative(@Nonnull CriteriaNativeContext ctx) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".enterCriteriaNative() not implemented yet"
-        );
-    }
+	@Override
+	public void enterCriteriaNative(@Nonnull CriteriaNativeContext ctx) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".enterCriteriaNative() not implemented yet"
+		);
+	}
 
-    @Override
-    public void enterCriteriaAll(@Nonnull CriteriaAllContext ctx) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".enterCriteriaAll() not implemented yet"
-        );
-    }
+	@Override
+	public void enterCriteriaAll(@Nonnull CriteriaAllContext ctx) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".enterCriteriaAll() not implemented yet"
+		);
+	}
 
-    @Override
-    public void enterCriteriaOperator(@Nonnull CriteriaOperatorContext ctx) {
-        super.enterCriteriaOperator(ctx);
+	@Override
+	public void enterCriteriaOperator(@Nonnull CriteriaOperatorContext ctx) {
+		super.enterCriteriaOperator(ctx);
 
-        if (ctx.operator().equalityOperator() == null) {
-            this.allEqualityOperators = false;
-        }
-        ExpressionValueContext source = ctx.source;
-        ExpressionValueContext target = ctx.target;
-        boolean noThisReference = source.thisMemberReferencePath() == null && target.thisMemberReferencePath() == null;
-        boolean noTypeReference = source.typeMemberReferencePath() == null && target.typeMemberReferencePath() == null;
-        if (noThisReference || noTypeReference) {
-            this.allOperatorsCrossTypes = false;
-        }
-        // TODO: check time ranges against time instants
-    }
+		if (ctx.operator().equalityOperator() == null) {
+			this.allEqualityOperators = false;
+		}
+		ExpressionValueContext source = ctx.source;
+		ExpressionValueContext target = ctx.target;
+		boolean noThisReference = source.thisMemberReferencePath() == null && target.thisMemberReferencePath() == null;
+		boolean noTypeReference = source.typeMemberReferencePath() == null && target.typeMemberReferencePath() == null;
+		if (noThisReference || noTypeReference) {
+			this.allOperatorsCrossTypes = false;
+		}
+		// TODO: check time ranges against time instants
+	}
 
-    @Override
-    public void enterCriteriaExpressionOr(@Nonnull CriteriaExpressionOrContext ctx) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".enterCriteriaExpressionOr() not implemented yet"
-        );
-    }
+	@Override
+	public void enterCriteriaExpressionOr(@Nonnull CriteriaExpressionOrContext ctx) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".enterCriteriaExpressionOr() not implemented yet"
+		);
+	}
 
-    @Override
-    public void enterTypeMemberReferencePath(@Nonnull TypeMemberReferencePathContext ctx) {
-        super.enterTypeMemberReferencePath(ctx);
+	@Override
+	public void enterTypeMemberReferencePath(@Nonnull TypeMemberReferencePathContext ctx) {
+		super.enterTypeMemberReferencePath(ctx);
 
-        ClassReferenceContext classReferenceContext = ctx.classReference();
-        List<AssociationEndReferenceContext> associationEndReferenceContexts = ctx.associationEndReference();
+		ClassReferenceContext classReferenceContext = ctx.classReference();
+		List<AssociationEndReferenceContext> associationEndReferenceContexts = ctx.associationEndReference();
 
-        AntlrClass klass = this.domainModel.getClassByName(classReferenceContext.identifier().getText());
+		AntlrClass klass = this.domainModel.getClassByName(classReferenceContext.identifier().getText());
 
-        if (!associationEndReferenceContexts.isEmpty()) {
-            this.allMemberReferencesAreDirect = false;
-        } else if (klass != this.targetType) {
-            this.allTypeMembersMatch = false;
-        } else if (klass == AntlrClass.NOT_FOUND || klass == AntlrClass.AMBIGUOUS) {
-            this.allReferencesResolve = false;
-        }
-    }
+		if (!associationEndReferenceContexts.isEmpty()) {
+			this.allMemberReferencesAreDirect = false;
+		} else if (klass != this.targetType) {
+			this.allTypeMembersMatch = false;
+		} else if (klass == AntlrClass.NOT_FOUND || klass == AntlrClass.AMBIGUOUS) {
+			this.allReferencesResolve = false;
+		}
+	}
 
-    @Override
-    public void enterLiteral(@Nonnull LiteralContext ctx) {
-        super.enterLiteral(ctx);
-        // TODO: Not sure if this should count. But the example is:
-        // this.key == Comment.blueprintKey
-        //         && Comment.replyToId == null
-    }
+	@Override
+	public void enterLiteral(@Nonnull LiteralContext ctx) {
+		super.enterLiteral(ctx);
+		// TODO: Not sure if this should count. But the example is:
+		// this.key == Comment.blueprintKey
+		//         && Comment.replyToId == null
+	}
 }

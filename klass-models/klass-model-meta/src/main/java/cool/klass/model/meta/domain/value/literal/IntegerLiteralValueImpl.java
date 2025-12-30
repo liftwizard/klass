@@ -29,52 +29,52 @@ import cool.klass.model.meta.grammar.KlassParser.IntegerLiteralContext;
 
 public final class IntegerLiteralValueImpl extends AbstractLiteralValue implements IntegerLiteralValue {
 
-    private final long value;
+	private final long value;
 
-    private IntegerLiteralValueImpl(
-        @Nonnull IntegerLiteralContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        long value
-    ) {
-        super(elementContext, macroElement, sourceCode);
-        this.value = value;
-    }
+	private IntegerLiteralValueImpl(
+		@Nonnull IntegerLiteralContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		long value
+	) {
+		super(elementContext, macroElement, sourceCode);
+		this.value = value;
+	}
 
-    @Nonnull
-    @Override
-    public IntegerLiteralContext getElementContext() {
-        return (IntegerLiteralContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public IntegerLiteralContext getElementContext() {
+		return (IntegerLiteralContext) super.getElementContext();
+	}
 
-    @Override
-    public long getValue() {
-        return this.value;
-    }
+	@Override
+	public long getValue() {
+		return this.value;
+	}
 
-    public static final class IntegerLiteralValueBuilder extends AbstractLiteralValueBuilder<IntegerLiteralValueImpl> {
+	public static final class IntegerLiteralValueBuilder extends AbstractLiteralValueBuilder<IntegerLiteralValueImpl> {
 
-        private final long value;
+		private final long value;
 
-        public IntegerLiteralValueBuilder(
-            @Nonnull IntegerLiteralContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            long value
-        ) {
-            super(elementContext, macroElement, sourceCode);
-            this.value = value;
-        }
+		public IntegerLiteralValueBuilder(
+			@Nonnull IntegerLiteralContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			long value
+		) {
+			super(elementContext, macroElement, sourceCode);
+			this.value = value;
+		}
 
-        @Override
-        @Nonnull
-        protected IntegerLiteralValueImpl buildUnsafe() {
-            return new IntegerLiteralValueImpl(
-                (IntegerLiteralContext) this.elementContext,
-                this.macroElement.map(ElementBuilder::getElement),
-                this.sourceCode.build(),
-                this.value
-            );
-        }
-    }
+		@Override
+		@Nonnull
+		protected IntegerLiteralValueImpl buildUnsafe() {
+			return new IntegerLiteralValueImpl(
+				(IntegerLiteralContext) this.elementContext,
+				this.macroElement.map(ElementBuilder::getElement),
+				this.sourceCode.build(),
+				this.value
+			);
+		}
+	}
 }

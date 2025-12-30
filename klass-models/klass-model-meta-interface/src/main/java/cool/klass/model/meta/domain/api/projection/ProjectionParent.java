@@ -26,46 +26,46 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public interface ProjectionParent extends ProjectionElement {
-    @Nonnull
-    Classifier getClassifier();
+	@Nonnull
+	Classifier getClassifier();
 
-    default void visitChildren(ProjectionListener projectionListener) {
-        for (ProjectionElement projectionElement : this.getChildren()) {
-            projectionElement.visit(projectionListener);
-        }
-    }
+	default void visitChildren(ProjectionListener projectionListener) {
+		for (ProjectionElement projectionElement : this.getChildren()) {
+			projectionElement.visit(projectionListener);
+		}
+	}
 
-    default ImmutableList<ProjectionReferenceProperty> getReferencePropertyChildren() {
-        return this.getChildren().selectInstancesOf(ProjectionReferenceProperty.class);
-    }
+	default ImmutableList<ProjectionReferenceProperty> getReferencePropertyChildren() {
+		return this.getChildren().selectInstancesOf(ProjectionReferenceProperty.class);
+	}
 
-    default ImmutableList<ReferenceProperty> getReferenceProperties() {
-        return this.getReferencePropertyChildren().collect(ProjectionReferenceProperty::getProperty);
-    }
+	default ImmutableList<ReferenceProperty> getReferenceProperties() {
+		return this.getReferencePropertyChildren().collect(ProjectionReferenceProperty::getProperty);
+	}
 
-    default ImmutableList<AssociationEnd> getAssociationEndsOutsideProjection() {
-        ImmutableList<ReferenceProperty> referencePropertiesInProjection = this.getReferenceProperties();
+	default ImmutableList<AssociationEnd> getAssociationEndsOutsideProjection() {
+		ImmutableList<ReferenceProperty> referencePropertiesInProjection = this.getReferenceProperties();
 
-        ImmutableList<AssociationEnd> optionalReturnPath = Lists.immutable
-            .with(this)
-            .selectInstancesOf(ProjectionReferenceProperty.class)
-            .collect(ProjectionReferenceProperty::getProperty)
-            .selectInstancesOf(AssociationEnd.class)
-            .collect(AssociationEnd::getOpposite);
+		ImmutableList<AssociationEnd> optionalReturnPath = Lists.immutable
+			.with(this)
+			.selectInstancesOf(ProjectionReferenceProperty.class)
+			.collect(ProjectionReferenceProperty::getProperty)
+			.selectInstancesOf(AssociationEnd.class)
+			.collect(AssociationEnd::getOpposite);
 
-        if (this.getClassifier() instanceof Klass) {
-            return ((Klass) this.getClassifier()).getAssociationEnds()
-                .reject(referencePropertiesInProjection::contains)
-                .reject(optionalReturnPath::contains);
-        }
+		if (this.getClassifier() instanceof Klass) {
+			return ((Klass) this.getClassifier()).getAssociationEnds()
+				.reject(referencePropertiesInProjection::contains)
+				.reject(optionalReturnPath::contains);
+		}
 
-        throw new AssertionError(this.getClassifier());
-    }
+		throw new AssertionError(this.getClassifier());
+	}
 
-    default boolean hasPolymorphicChildren() {
-        return this.getChildren()
-            .asLazy()
-            .selectInstancesOf(ProjectionChild.class)
-            .anySatisfy(ProjectionChild::isPolymorphic);
-    }
+	default boolean hasPolymorphicChildren() {
+		return this.getChildren()
+			.asLazy()
+			.selectInstancesOf(ProjectionChild.class)
+			.anySatisfy(ProjectionChild::isPolymorphic);
+	}
 }

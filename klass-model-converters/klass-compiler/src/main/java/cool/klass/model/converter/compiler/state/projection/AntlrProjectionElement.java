@@ -25,26 +25,26 @@ import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.meta.domain.projection.AbstractProjectionElement.ProjectionElementBuilder;
 
 public interface AntlrProjectionElement extends IAntlrElement {
-    @Nonnull
-    ProjectionElementBuilder build();
+	@Nonnull
+	ProjectionElementBuilder build();
 
-    void build2();
+	void build2();
 
-    void visit(@Nonnull AntlrProjectionVisitor visitor);
+	void visit(@Nonnull AntlrProjectionVisitor visitor);
 
-    @Nonnull
-    AntlrProjectionParent getParent();
+	@Nonnull
+	AntlrProjectionParent getParent();
 
-    @Nonnull
-    @Override
-    default Optional<IAntlrElement> getSurroundingElement() {
-        return Optional.of(this.getParent());
-    }
+	@Nonnull
+	@Override
+	default Optional<IAntlrElement> getSurroundingElement() {
+		return Optional.of(this.getParent());
+	}
 
-    @Nonnull
-    String getName();
+	@Nonnull
+	String getName();
 
-    void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder);
+	void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder);
 
-    void reportDuplicateMemberName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder);
+	void reportDuplicateMemberName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder);
 }

@@ -21,10 +21,10 @@ import org.junit.jupiter.api.Test;
 
 class ScratchKlassCompilerErrorTest extends AbstractKlassCompilerErrorTestCase {
 
-    @Test
-    @Override
-    public void smokeTest() {
-        // TODO 2025-03-27:
-        this.assertCompilationSucceeds(true);
-    }
+	@Test
+	@Override
+	public void smokeTest() {
+		// TODO 2025-03-27:
+		this.assertCompilationSucceeds(true);
+	}
 }

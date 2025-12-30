@@ -29,33 +29,33 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-    name = "generate-graphql-schema-query",
-    defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
-    threadSafe = true,
-    requiresDependencyResolution = ResolutionScope.RUNTIME
+	name = "generate-graphql-schema-query",
+	defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
+	threadSafe = true,
+	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
 public class GenerateGraphQLSchemaQueryMojo extends AbstractGenerateMojo {
 
-    @Parameter(
-        property = "outputDirectory",
-        defaultValue = "${project.build.directory}/generated-resources/graphql-schema-query"
-    )
-    private File outputDirectory;
+	@Parameter(
+		property = "outputDirectory",
+		defaultValue = "${project.build.directory}/generated-resources/graphql-schema-query"
+	)
+	private File outputDirectory;
 
-    @Override
-    protected InputSource getInputSource() {
-        return InputSource.CLASSPATH;
-    }
+	@Override
+	protected InputSource getInputSource() {
+		return InputSource.CLASSPATH;
+	}
 
-    @Override
-    public void execute() throws MojoExecutionException {
-        DomainModel domainModel = this.getDomainModel();
+	@Override
+	public void execute() throws MojoExecutionException {
+		DomainModel domainModel = this.getDomainModel();
 
-        var generator = new GraphQLSchemaQueryGenerator(domainModel);
-        generator.writeFiles(this.outputDirectory.toPath());
+		var generator = new GraphQLSchemaQueryGenerator(domainModel);
+		generator.writeFiles(this.outputDirectory.toPath());
 
-        Resource resource = new Resource();
-        resource.setDirectory(this.outputDirectory.getAbsolutePath());
-        this.mavenProject.addResource(resource);
-    }
+		Resource resource = new Resource();
+		resource.setDirectory(this.outputDirectory.getAbsolutePath());
+		this.mavenProject.addResource(resource);
+	}
 }

@@ -27,22 +27,22 @@ import org.antlr.v4.runtime.ParserRuleContext;
 
 public abstract class AbstractAntlrNumericPropertyValidation extends AbstractAntlrPropertyValidation {
 
-    protected final int number;
+	protected final int number;
 
-    protected AbstractAntlrNumericPropertyValidation(
-        @Nonnull ParserRuleContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        @Nonnull AntlrDataTypeProperty<?> owningProperty,
-        int number
-    ) {
-        super(elementContext, compilationUnit, owningProperty);
-        this.number = number;
-    }
+	protected AbstractAntlrNumericPropertyValidation(
+		@Nonnull ParserRuleContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		@Nonnull AntlrDataTypeProperty<?> owningProperty,
+		int number
+	) {
+		super(elementContext, compilationUnit, owningProperty);
+		this.number = number;
+	}
 
-    @Override
-    public abstract NumericPropertyValidationBuilder build();
+	@Override
+	public abstract NumericPropertyValidationBuilder build();
 
-    @Nonnull
-    @Override
-    public abstract NumericPropertyValidationBuilder getElementBuilder();
+	@Nonnull
+	@Override
+	public abstract NumericPropertyValidationBuilder getElementBuilder();
 }

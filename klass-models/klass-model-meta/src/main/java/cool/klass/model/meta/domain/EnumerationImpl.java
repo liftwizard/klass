@@ -33,82 +33,82 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public final class EnumerationImpl extends AbstractPackageableElement implements EnumerationWithSourceCode {
 
-    private ImmutableList<EnumerationLiteral> enumerationLiterals;
+	private ImmutableList<EnumerationLiteral> enumerationLiterals;
 
-    private EnumerationImpl(
-        @Nonnull EnumerationDeclarationContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        int ordinal,
-        @Nonnull IdentifierContext nameContext,
-        @Nonnull String packageName
-    ) {
-        super(elementContext, macroElement, sourceCode, ordinal, nameContext, packageName);
-    }
+	private EnumerationImpl(
+		@Nonnull EnumerationDeclarationContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		int ordinal,
+		@Nonnull IdentifierContext nameContext,
+		@Nonnull String packageName
+	) {
+		super(elementContext, macroElement, sourceCode, ordinal, nameContext, packageName);
+	}
 
-    @Nonnull
-    @Override
-    public EnumerationDeclarationContext getElementContext() {
-        return (EnumerationDeclarationContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public EnumerationDeclarationContext getElementContext() {
+		return (EnumerationDeclarationContext) super.getElementContext();
+	}
 
-    @Override
-    public ImmutableList<EnumerationLiteral> getEnumerationLiterals() {
-        return this.enumerationLiterals;
-    }
+	@Override
+	public ImmutableList<EnumerationLiteral> getEnumerationLiterals() {
+		return this.enumerationLiterals;
+	}
 
-    private void setEnumerationLiterals(@Nonnull ImmutableList<EnumerationLiteral> enumerationLiterals) {
-        this.enumerationLiterals = enumerationLiterals;
-    }
+	private void setEnumerationLiterals(@Nonnull ImmutableList<EnumerationLiteral> enumerationLiterals) {
+		this.enumerationLiterals = enumerationLiterals;
+	}
 
-    public static final class EnumerationBuilder
-        extends PackageableElementBuilder<EnumerationImpl>
-        implements DataTypeGetter, TopLevelElementBuilderWithSourceCode {
+	public static final class EnumerationBuilder
+		extends PackageableElementBuilder<EnumerationImpl>
+		implements DataTypeGetter, TopLevelElementBuilderWithSourceCode {
 
-        private ImmutableList<EnumerationLiteralBuilder> enumerationLiteralBuilders;
+		private ImmutableList<EnumerationLiteralBuilder> enumerationLiteralBuilders;
 
-        public EnumerationBuilder(
-            @Nonnull EnumerationDeclarationContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext,
-            @Nonnull String packageName
-        ) {
-            super(elementContext, macroElement, sourceCode, ordinal, nameContext, packageName);
-        }
+		public EnumerationBuilder(
+			@Nonnull EnumerationDeclarationContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			int ordinal,
+			@Nonnull IdentifierContext nameContext,
+			@Nonnull String packageName
+		) {
+			super(elementContext, macroElement, sourceCode, ordinal, nameContext, packageName);
+		}
 
-        public void setEnumerationLiteralBuilders(
-            @Nonnull ImmutableList<EnumerationLiteralBuilder> enumerationLiteralBuilders
-        ) {
-            this.enumerationLiteralBuilders = enumerationLiteralBuilders;
-        }
+		public void setEnumerationLiteralBuilders(
+			@Nonnull ImmutableList<EnumerationLiteralBuilder> enumerationLiteralBuilders
+		) {
+			this.enumerationLiteralBuilders = enumerationLiteralBuilders;
+		}
 
-        @Override
-        @Nonnull
-        protected EnumerationImpl buildUnsafe() {
-            return new EnumerationImpl(
-                (EnumerationDeclarationContext) this.elementContext,
-                this.macroElement.map(ElementBuilder::getElement),
-                this.sourceCode.build(),
-                this.ordinal,
-                this.getNameContext(),
-                this.packageName
-            );
-        }
+		@Override
+		@Nonnull
+		protected EnumerationImpl buildUnsafe() {
+			return new EnumerationImpl(
+				(EnumerationDeclarationContext) this.elementContext,
+				this.macroElement.map(ElementBuilder::getElement),
+				this.sourceCode.build(),
+				this.ordinal,
+				this.getNameContext(),
+				this.packageName
+			);
+		}
 
-        @Override
-        protected void buildChildren() {
-            ImmutableList<EnumerationLiteral> enumerationLiterals = this.enumerationLiteralBuilders.collect(
-                EnumerationLiteralBuilder::build
-            );
-            this.element.setEnumerationLiterals(enumerationLiterals);
-        }
+		@Override
+		protected void buildChildren() {
+			ImmutableList<EnumerationLiteral> enumerationLiterals = this.enumerationLiteralBuilders.collect(
+				EnumerationLiteralBuilder::build
+			);
+			this.element.setEnumerationLiterals(enumerationLiterals);
+		}
 
-        @Override
-        @Nonnull
-        public EnumerationImpl getType() {
-            return this.getElement();
-        }
-    }
+		@Override
+		@Nonnull
+		public EnumerationImpl getType() {
+			return this.getElement();
+		}
+	}
 }

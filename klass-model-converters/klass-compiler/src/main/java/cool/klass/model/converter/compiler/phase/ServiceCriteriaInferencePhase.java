@@ -27,42 +27,42 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 public class ServiceCriteriaInferencePhase extends AbstractCompilerPhase {
 
-    public ServiceCriteriaInferencePhase(@Nonnull CompilerState compilerState) {
-        super(compilerState);
-    }
+	public ServiceCriteriaInferencePhase(@Nonnull CompilerState compilerState) {
+		super(compilerState);
+	}
 
-    @Nonnull
-    @Override
-    public String getName() {
-        return "Service criteria";
-    }
+	@Nonnull
+	@Override
+	public String getName() {
+		return "Service criteria";
+	}
 
-    @Override
-    public void exitServiceBody(ServiceBodyContext ctx) {
-        this.runCompilerMacro(ctx);
-        super.exitServiceBody(ctx);
-    }
+	@Override
+	public void exitServiceBody(ServiceBodyContext ctx) {
+		this.runCompilerMacro(ctx);
+		super.exitServiceBody(ctx);
+	}
 
-    private void runCompilerMacro(ServiceBodyContext inPlaceContext) {
-        AntlrService service = this.compilerState.getCompilerWalk().getService();
-        if (service.getServiceCriterias().notEmpty() || service.getVerb().getVerb() != Verb.GET) {
-            return;
-        }
-        String sourceCodeText = "            criteria    : all;\n";
-        this.runCompilerMacro(inPlaceContext, sourceCodeText);
-    }
+	private void runCompilerMacro(ServiceBodyContext inPlaceContext) {
+		AntlrService service = this.compilerState.getCompilerWalk().getService();
+		if (service.getServiceCriterias().notEmpty() || service.getVerb().getVerb() != Verb.GET) {
+			return;
+		}
+		String sourceCodeText = "            criteria    : all;\n";
+		this.runCompilerMacro(inPlaceContext, sourceCodeText);
+	}
 
-    private void runCompilerMacro(ServiceBodyContext inPlaceContext, @Nonnull String sourceCodeText) {
-        AntlrService service = this.compilerState.getCompilerWalk().getService();
-        ParseTreeListener compilerPhase = new ServiceCriteriaPhase(this.compilerState);
+	private void runCompilerMacro(ServiceBodyContext inPlaceContext, @Nonnull String sourceCodeText) {
+		AntlrService service = this.compilerState.getCompilerWalk().getService();
+		ParseTreeListener compilerPhase = new ServiceCriteriaPhase(this.compilerState);
 
-        this.compilerState.runInPlaceCompilerMacro(
-            service,
-            this,
-            sourceCodeText,
-            KlassParser::serviceCriteriaDeclaration,
-            inPlaceContext,
-            compilerPhase
-        );
-    }
+		this.compilerState.runInPlaceCompilerMacro(
+			service,
+			this,
+			sourceCodeText,
+			KlassParser::serviceCriteriaDeclaration,
+			inPlaceContext,
+			compilerPhase
+		);
+	}
 }
