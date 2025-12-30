@@ -1,29 +1,29 @@
 {
-  title: 1,
-  status: "Invalid Choice",
-  deleted: [],
-  extra: "extra",
-  answers: [
-    {
-      body: 2,
-      nestedExtra: "nestedExtra",
-      nestedExtraNull: null,
-    },
-  ],
-  tags: [
-    {
-      name: [{}],
-      tag: [],
-    },
-    {
-      name: {
-        name: {},
-      },
-      tag: {},
-    },
-    "oops",
-  ],
-  version: {
-    number: 20000000000,
-  },
+	title: 1,
+	status: "Invalid Choice",
+	deleted: [],
+	extra: "extra",
+	answers: [
+		{
+			body: 2,
+			nestedExtra: "nestedExtra",
+			nestedExtraNull: null,
+		},
+	],
+	tags: [
+		{
+			name: [{}],
+			tag: [],
+		},
+		{
+			name: {
+				name: {},
+			},
+			tag: {},
+		},
+		"oops",
+	],
+	version: {
+		number: 20000000000,
+	},
 }

@@ -8,6 +8,8 @@ updates:
           timezone: America/New_York
       open-pull-requests-limit: 99
       target-branch: main
+      ignore:
+          - dependency-name: "com.google.auto.service:auto-service"
     - package-ecosystem: "github-actions"
       directory: "/"
       schedule:

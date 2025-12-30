@@ -8,7 +8,7 @@ concurrency:
     cancel-in-progress: true
 
 env:
-    GROUP_ID: 'cool/klass'
+    GROUP_ID: "cool/klass"
 
 jobs:
     maven-coverage:
@@ -34,13 +34,13 @@ jobs:
                   paths: |
                       ${{ github.workspace }}/**/target/site/jacoco/jacoco.xml
                   token: ${{ secrets.GITHUB_TOKEN }}
-                  title: 'Jacoco Code Coverage'
+                  title: "Jacoco Code Coverage"
                   update-comment: true
                   min-coverage-overall: 0
                   min-coverage-changed-files: 0
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     # Check if the new commits in a Pull Request contain a merge commit. If so, fail and print them out.
@@ -111,7 +111,7 @@ jobs:
                   fi
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     spotless-pom-fix:
@@ -162,7 +162,7 @@ jobs:
                   fi
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     spotless-formats-fix:
@@ -213,7 +213,7 @@ jobs:
                   fi
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     spotless-java-fix:
@@ -264,7 +264,7 @@ jobs:
                   fi
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     spotless-prettier-java-sort-imports-fix:
@@ -315,7 +315,7 @@ jobs:
                   fi
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     spotless-java-cleanthat-fix:
@@ -366,7 +366,7 @@ jobs:
                   fi
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     biome-format-fix:
@@ -425,9 +425,9 @@ jobs:
                   git config --global user.name "GitHub Actions"
                   git config --global user.email "github-actions@github.com"
 
-            - name: Run Prettier Fix
+            - name: Run Prettier Format
               run: |
-                  npx prettier --no-config --tab-width 4 --print-width 120 --end-of-line lf --write "**/*.{yaml,yml,md,html}" '!.github/workflows/**'
+                  npx prettier --write . '!.github/workflows/**'
 
                   if [[ -n $(git status --porcelain) ]]; then
                     FIX_BRANCH="fix-${{ github.event.pull_request.number }}-prettier"
@@ -437,12 +437,11 @@ jobs:
                     git commit --message "Apply Prettier formatting."
                     git push --force origin $FIX_BRANCH
 
-                    echo "Prettier fixes have been pushed to the $FIX_BRANCH branch."
+                    echo "Prettier formatting fixes have been pushed to the $FIX_BRANCH branch."
                     exit 1
                   else
                     echo "No changes needed by Prettier"
                   fi
-
 
     errorprone-fix:
         runs-on: ubuntu-latest
@@ -497,7 +496,7 @@ jobs:
                   fi
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     liftwizard-file-match-rerecord-fix:
@@ -535,8 +534,8 @@ jobs:
               run: |
                   just test
 
-                  # Format JSON files after re-recording tests
-                  just biome-format
+                  npx @biomejs/biome format --write
+                  npx prettier --write . '!.github/workflows/**'
 
                   if [[ -n $(git status --porcelain) ]]; then
                     FIX_BRANCH="fix-${{ github.event.pull_request.number }}-liftwizard-file-match-rerecord"
@@ -553,5 +552,5 @@ jobs:
                   fi
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}

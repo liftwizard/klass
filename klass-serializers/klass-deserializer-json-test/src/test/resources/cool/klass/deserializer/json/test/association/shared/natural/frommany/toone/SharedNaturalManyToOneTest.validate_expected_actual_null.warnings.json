@@ -1,4 +1,4 @@
 [
-  "Warning at SharedNaturalManyToOneSource.key. Didn't expect to receive value for root key property 'SharedNaturalManyToOneSource.key: String' but value was null.",
-  "Warning at SharedNaturalManyToOneSource.target.value. Didn't expect to receive value for outside projection property 'SharedNaturalManyToOneTarget.value: String' but value was null."
+	"Warning at SharedNaturalManyToOneSource.key. Didn't expect to receive value for root key property 'SharedNaturalManyToOneSource.key: String' but value was null.",
+	"Warning at SharedNaturalManyToOneSource.target.value. Didn't expect to receive value for outside projection property 'SharedNaturalManyToOneTarget.value: String' but value was null."
 ]

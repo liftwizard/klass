@@ -26,19 +26,19 @@ import io.liftwizard.dropwizard.configuration.graphql.GraphQLFactoryProvider;
 
 public class StackOverflowConfiguration extends AbstractKlassConfiguration implements GraphQLFactoryProvider {
 
-    @Nonnull
-    private @Valid GraphQLFactory graphQL = new GraphQLFactory();
+	@Nonnull
+	private @Valid GraphQLFactory graphQL = new GraphQLFactory();
 
-    @Override
-    @Nonnull
-    @JsonProperty("graphQL")
-    public GraphQLFactory getGraphQLFactory() {
-        return this.graphQL;
-    }
+	@Override
+	@Nonnull
+	@JsonProperty("graphQL")
+	public GraphQLFactory getGraphQLFactory() {
+		return this.graphQL;
+	}
 
-    @JsonProperty("graphQL")
-    public void setGraphQLFactory(@Nonnull GraphQLFactory factory) {
-        this.graphQL = factory;
-    }
-    // TODO: implement service configuration
+	@JsonProperty("graphQL")
+	public void setGraphQLFactory(@Nonnull GraphQLFactory factory) {
+		this.graphQL = factory;
+	}
+	// TODO: implement service configuration
 }

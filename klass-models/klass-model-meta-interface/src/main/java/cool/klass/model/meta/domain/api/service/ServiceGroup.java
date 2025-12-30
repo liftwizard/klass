@@ -25,14 +25,14 @@ import cool.klass.model.meta.domain.api.service.url.Url;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public interface ServiceGroup extends TopLevelElement {
-    @Override
-    default void visit(TopLevelElementVisitor visitor) {
-        visitor.visitServiceGroup(this);
-    }
+	@Override
+	default void visit(TopLevelElementVisitor visitor) {
+		visitor.visitServiceGroup(this);
+	}
 
-    @Nonnull
-    Klass getKlass();
+	@Nonnull
+	Klass getKlass();
 
-    @Nonnull
-    ImmutableList<Url> getUrls();
+	@Nonnull
+	ImmutableList<Url> getUrls();
 }

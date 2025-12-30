@@ -1,2609 +1,2609 @@
 [
-  {
-    "name": "EnumerationLiteralProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 1,
-      "name": "EnumerationLiteralProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 30,
-          "name": "name",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "NamedElement"
-            },
-            "name": "name"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 31,
-          "name": "prettyName",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "EnumerationLiteral"
-            },
-            "name": "prettyName"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "EnumerationLiteral"
-      }
-    }
-  },
-  {
-    "name": "EnumerationProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 2,
-      "name": "EnumerationProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 32,
-          "name": "name",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "NamedElement"
-            },
-            "name": "name"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 33,
-          "name": "packageName",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "PackageableElement"
-            },
-            "name": "packageName"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 34,
-          "name": "enumerationLiterals",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Enumeration"
-            },
-            "name": "enumerationLiterals"
-          },
-          "projection": {
-            "name": "EnumerationLiteralProjection"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "Enumeration"
-      }
-    }
-  },
-  {
-    "name": "PackageableElementProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 3,
-      "name": "PackageableElementProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 35,
-          "name": "name",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "NamedElement"
-            },
-            "name": "name"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 36,
-          "name": "packageName",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "PackageableElement"
-            },
-            "name": "packageName"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 37,
-          "name": "enumerationLiterals",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Enumeration"
-            },
-            "name": "enumerationLiterals"
-          },
-          "projection": {
-            "name": "EnumerationLiteralProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 38,
-          "name": "superInterfaces",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Classifier"
-            },
-            "name": "superInterfaces"
-          },
-          "projection": {
-            "name": "ClassifierInterfaceMappingProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 39,
-          "name": "classifierModifiers",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Classifier"
-            },
-            "name": "classifierModifiers"
-          },
-          "projection": {
-            "name": "ClassifierModifierProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 40,
-          "name": "dataTypeProperties",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Classifier"
-            },
-            "name": "dataTypeProperties"
-          },
-          "projection": {
-            "name": "DataTypePropertyProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 41,
-          "name": "abstractClass",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "Klass"
-            },
-            "name": "abstractClass"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 42,
-          "name": "superClass",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 43,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Klass"
-            },
-            "name": "superClass"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 44,
-          "name": "parameterizedProperties",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Klass"
-            },
-            "name": "parameterizedProperties"
-          },
-          "projection": {
-            "name": "ParameterizedPropertyProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 45,
-          "name": "associationEnds",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Association"
-            },
-            "name": "associationEnds"
-          },
-          "projection": {
-            "name": "AssociationEndProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 46,
-          "name": "criteria",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 47,
-              "name": "id",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "Criteria"
-                },
-                "name": "id"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Association"
-            },
-            "name": "criteria"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 48,
-          "name": "rootProjection",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 49,
-              "name": "id",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "ProjectionElement"
-                },
-                "name": "id"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "NamedProjection"
-            },
-            "name": "rootProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 50,
-          "name": "owningClass",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 51,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "ServiceGroup"
-            },
-            "name": "owningClass"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 52,
-          "name": "urls",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "ServiceGroup"
-            },
-            "name": "urls"
-          },
-          "projection": {
-            "name": "UrlProjection"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "PackageableElement"
-      }
-    }
-  },
-  {
-    "name": "ClassifierModifierProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 4,
-      "name": "ClassifierModifierProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 53,
-          "name": "keyword",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "ClassifierModifier"
-            },
-            "name": "keyword"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "ClassifierModifier"
-      }
-    }
-  },
-  {
-    "name": "ClassifierInterfaceMappingProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 5,
-      "name": "ClassifierInterfaceMappingProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 54,
-          "name": "superInterface",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 55,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "ClassifierInterfaceMapping"
-            },
-            "name": "superInterface"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "ClassifierInterfaceMapping"
-      }
-    }
-  },
-  {
-    "name": "ParameterizedPropertyProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 6,
-      "name": "ParameterizedPropertyProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 56,
-          "name": "name",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "NamedElement"
-            },
-            "name": "name"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 57,
-          "name": "multiplicity",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "ParameterizedProperty"
-            },
-            "name": "multiplicity"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 58,
-          "name": "resultType",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 59,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "ParameterizedProperty"
-            },
-            "name": "resultType"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 60,
-          "name": "parameterizedPropertyOrderings",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "ParameterizedProperty"
-            },
-            "name": "parameterizedPropertyOrderings"
-          },
-          "projection": {
-            "name": "ParameterizedPropertyOrderingProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 61,
-          "name": "parameters",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 62,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "ParameterizedProperty"
-            },
-            "name": "parameters"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "ParameterizedProperty"
-      }
-    }
-  },
-  {
-    "name": "ParameterizedPropertyOrderingProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 7,
-      "name": "ParameterizedPropertyOrderingProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 63,
-          "name": "ordinal",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "ParameterizedPropertyOrdering"
-            },
-            "name": "ordinal"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "ParameterizedPropertyOrdering"
-      }
-    }
-  },
-  {
-    "name": "ProjectionElementProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 8,
-      "name": "ProjectionElementProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 64,
-          "name": "id",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "ProjectionElement"
-            },
-            "name": "id"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 65,
-          "name": "name",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "ProjectionElement"
-            },
-            "name": "name"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 66,
-          "name": "children",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "ProjectionElement"
-            },
-            "name": "children"
-          },
-          "projection": {
-            "name": "ProjectionElementProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 67,
-          "name": "classifier",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 68,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "RootProjection"
-            },
-            "name": "classifier"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 69,
-          "name": "associationEnd",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-              "id": 70,
-              "name": "owningClass",
-              "children": [
-                {
-                  "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-                  "id": 71,
-                  "name": "name",
-                  "children": [],
-                  "dataTypeProperty": {
-                    "owningClassifier": {
-                      "name": "NamedElement"
-                    },
-                    "name": "name"
-                  }
-                }
-              ],
-              "associationEnd": {
-                "owningClass": {
-                  "name": "AssociationEnd"
-                },
-                "name": "owningClass"
-              }
-            },
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 72,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "ProjectionWithAssociationEnd"
-            },
-            "name": "associationEnd"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 73,
-          "name": "projection",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 74,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "ProjectionProjectionReference"
-            },
-            "name": "projection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 75,
-          "name": "dataTypeProperty",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-              "id": 76,
-              "name": "owningClassifier",
-              "children": [
-                {
-                  "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-                  "id": 77,
-                  "name": "name",
-                  "children": [],
-                  "dataTypeProperty": {
-                    "owningClassifier": {
-                      "name": "NamedElement"
-                    },
-                    "name": "name"
-                  }
-                }
-              ],
-              "associationEnd": {
-                "owningClass": {
-                  "name": "DataTypeProperty"
-                },
-                "name": "owningClassifier"
-              }
-            },
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 78,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "ProjectionDataTypeProperty"
-            },
-            "name": "dataTypeProperty"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "ProjectionElement"
-      }
-    }
-  },
-  {
-    "name": "NamedProjectionProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 9,
-      "name": "NamedProjectionProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 79,
-          "name": "name",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "NamedElement"
-            },
-            "name": "name"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 80,
-          "name": "packageName",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "PackageableElement"
-            },
-            "name": "packageName"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 81,
-          "name": "rootProjection",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "NamedProjection"
-            },
-            "name": "rootProjection"
-          },
-          "projection": {
-            "name": "ProjectionElementProjection"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "NamedProjection"
-      }
-    }
-  },
-  {
-    "name": "ServiceGroupProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 10,
-      "name": "ServiceGroupProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 82,
-          "name": "name",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "NamedElement"
-            },
-            "name": "name"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 83,
-          "name": "packageName",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "PackageableElement"
-            },
-            "name": "packageName"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 84,
-          "name": "owningClass",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 85,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "ServiceGroup"
-            },
-            "name": "owningClass"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 86,
-          "name": "urls",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "ServiceGroup"
-            },
-            "name": "urls"
-          },
-          "projection": {
-            "name": "UrlProjection"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "ServiceGroup"
-      }
-    }
-  },
-  {
-    "name": "UrlProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 11,
-      "name": "UrlProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 87,
-          "name": "url",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "Url"
-            },
-            "name": "url"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 88,
-          "name": "parameters",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Url"
-            },
-            "name": "parameters"
-          },
-          "projection": {
-            "name": "UrlParameterProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 89,
-          "name": "services",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Url"
-            },
-            "name": "services"
-          },
-          "projection": {
-            "name": "ServiceProjection"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "Url"
-      }
-    }
-  },
-  {
-    "name": "ParameterProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 12,
-      "name": "ParameterProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 90,
-          "name": "id",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "Parameter"
-            },
-            "name": "id"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 91,
-          "name": "name",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "Parameter"
-            },
-            "name": "name"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 92,
-          "name": "multiplicity",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "Parameter"
-            },
-            "name": "multiplicity"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 93,
-          "name": "enumeration",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 94,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "EnumerationParameter"
-            },
-            "name": "enumeration"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 95,
-          "name": "primitiveType",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "PrimitiveParameter"
-            },
-            "name": "primitiveType"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "Parameter"
-      }
-    }
-  },
-  {
-    "name": "UrlParameterProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 13,
-      "name": "UrlParameterProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 96,
-          "name": "type",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "UrlParameter"
-            },
-            "name": "type"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 97,
-          "name": "parameter",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "UrlParameter"
-            },
-            "name": "parameter"
-          },
-          "projection": {
-            "name": "ParameterProjection"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "UrlParameter"
-      }
-    }
-  },
-  {
-    "name": "ServiceProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 14,
-      "name": "ServiceProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 98,
-          "name": "verb",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "Service"
-            },
-            "name": "verb"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 99,
-          "name": "serviceMultiplicity",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "Service"
-            },
-            "name": "serviceMultiplicity"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 100,
-          "name": "projection",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 101,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Service"
-            },
-            "name": "projection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 102,
-          "name": "queryCriteria",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Service"
-            },
-            "name": "queryCriteria"
-          },
-          "projection": {
-            "name": "CriteriaProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 103,
-          "name": "authorizeCriteria",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Service"
-            },
-            "name": "authorizeCriteria"
-          },
-          "projection": {
-            "name": "CriteriaProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 104,
-          "name": "validateCriteria",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Service"
-            },
-            "name": "validateCriteria"
-          },
-          "projection": {
-            "name": "CriteriaProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 105,
-          "name": "conflictCriteria",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Service"
-            },
-            "name": "conflictCriteria"
-          },
-          "projection": {
-            "name": "CriteriaProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 106,
-          "name": "orderBys",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Service"
-            },
-            "name": "orderBys"
-          },
-          "projection": {
-            "name": "ServiceOrderByProjection"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "Service"
-      }
-    }
-  },
-  {
-    "name": "ServiceOrderByProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 15,
-      "name": "ServiceOrderByProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 107,
-          "name": "orderByDirection",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "ServiceOrderBy"
-            },
-            "name": "orderByDirection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 108,
-          "name": "thisMemberReferencePath",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 109,
-              "name": "id",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "ExpressionValue"
-                },
-                "name": "id"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "ServiceOrderBy"
-            },
-            "name": "thisMemberReferencePath"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "ServiceOrderBy"
-      }
-    }
-  },
-  {
-    "name": "InterfaceProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 16,
-      "name": "InterfaceProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 110,
-          "name": "name",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "NamedElement"
-            },
-            "name": "name"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 111,
-          "name": "packageName",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "PackageableElement"
-            },
-            "name": "packageName"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 112,
-          "name": "superInterfaces",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Classifier"
-            },
-            "name": "superInterfaces"
-          },
-          "projection": {
-            "name": "ClassifierInterfaceMappingProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 113,
-          "name": "classifierModifiers",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Classifier"
-            },
-            "name": "classifierModifiers"
-          },
-          "projection": {
-            "name": "ClassifierModifierProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 114,
-          "name": "dataTypeProperties",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Classifier"
-            },
-            "name": "dataTypeProperties"
-          },
-          "projection": {
-            "name": "DataTypePropertyProjection"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "Interface"
-      }
-    }
-  },
-  {
-    "name": "NumericPropertyValidationProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 17,
-      "name": "NumericPropertyValidationProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 115,
-          "name": "number",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "NumericPropertyValidation"
-            },
-            "name": "number"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "NumericPropertyValidation"
-      }
-    }
-  },
-  {
-    "name": "DataTypePropertyProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 18,
-      "name": "DataTypePropertyProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 116,
-          "name": "name",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "NamedElement"
-            },
-            "name": "name"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 117,
-          "name": "optional",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "DataTypeProperty"
-            },
-            "name": "optional"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 118,
-          "name": "minLengthValidation",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "DataTypeProperty"
-            },
-            "name": "minLengthValidation"
-          },
-          "projection": {
-            "name": "NumericPropertyValidationProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 119,
-          "name": "maxLengthValidation",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "DataTypeProperty"
-            },
-            "name": "maxLengthValidation"
-          },
-          "projection": {
-            "name": "NumericPropertyValidationProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 120,
-          "name": "propertyModifiers",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 121,
-              "name": "keyword",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "PropertyModifier"
-                },
-                "name": "keyword"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "DataTypeProperty"
-            },
-            "name": "propertyModifiers"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 122,
-          "name": "primitiveType",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "PrimitiveProperty"
-            },
-            "name": "primitiveType"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 123,
-          "name": "minValidation",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "PrimitiveProperty"
-            },
-            "name": "minValidation"
-          },
-          "projection": {
-            "name": "NumericPropertyValidationProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 124,
-          "name": "maxValidation",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "PrimitiveProperty"
-            },
-            "name": "maxValidation"
-          },
-          "projection": {
-            "name": "NumericPropertyValidationProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 125,
-          "name": "enumeration",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 126,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "EnumerationProperty"
-            },
-            "name": "enumeration"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "DataTypeProperty"
-      }
-    }
-  },
-  {
-    "name": "KlassProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 19,
-      "name": "KlassProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 127,
-          "name": "name",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "NamedElement"
-            },
-            "name": "name"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 128,
-          "name": "packageName",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "PackageableElement"
-            },
-            "name": "packageName"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 129,
-          "name": "abstractClass",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "Klass"
-            },
-            "name": "abstractClass"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 130,
-          "name": "superInterfaces",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Classifier"
-            },
-            "name": "superInterfaces"
-          },
-          "projection": {
-            "name": "ClassifierInterfaceMappingProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 131,
-          "name": "classifierModifiers",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Classifier"
-            },
-            "name": "classifierModifiers"
-          },
-          "projection": {
-            "name": "ClassifierModifierProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 132,
-          "name": "dataTypeProperties",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Classifier"
-            },
-            "name": "dataTypeProperties"
-          },
-          "projection": {
-            "name": "DataTypePropertyProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 133,
-          "name": "superClass",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 134,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Klass"
-            },
-            "name": "superClass"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 135,
-          "name": "associationEnds",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 136,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Klass"
-            },
-            "name": "associationEnds"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 137,
-          "name": "parameterizedProperties",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Klass"
-            },
-            "name": "parameterizedProperties"
-          },
-          "projection": {
-            "name": "ParameterizedPropertyProjection"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "Klass"
-      }
-    }
-  },
-  {
-    "name": "ClassifierProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 20,
-      "name": "ClassifierProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 138,
-          "name": "name",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "NamedElement"
-            },
-            "name": "name"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 139,
-          "name": "packageName",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "PackageableElement"
-            },
-            "name": "packageName"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 140,
-          "name": "superInterfaces",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Classifier"
-            },
-            "name": "superInterfaces"
-          },
-          "projection": {
-            "name": "ClassifierInterfaceMappingProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 141,
-          "name": "classifierModifiers",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Classifier"
-            },
-            "name": "classifierModifiers"
-          },
-          "projection": {
-            "name": "ClassifierModifierProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 142,
-          "name": "dataTypeProperties",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Classifier"
-            },
-            "name": "dataTypeProperties"
-          },
-          "projection": {
-            "name": "DataTypePropertyProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 143,
-          "name": "abstractClass",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "Klass"
-            },
-            "name": "abstractClass"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 144,
-          "name": "superClass",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 145,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Klass"
-            },
-            "name": "superClass"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 146,
-          "name": "associationEnds",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 147,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Klass"
-            },
-            "name": "associationEnds"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 148,
-          "name": "parameterizedProperties",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Klass"
-            },
-            "name": "parameterizedProperties"
-          },
-          "projection": {
-            "name": "ParameterizedPropertyProjection"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "Classifier"
-      }
-    }
-  },
-  {
-    "name": "ThisMemberReferencePathProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 21,
-      "name": "ThisMemberReferencePathProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 149,
-          "name": "id",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "ExpressionValue"
-            },
-            "name": "id"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 150,
-          "name": "klass",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 151,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "MemberReferencePath"
-            },
-            "name": "klass"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 152,
-          "name": "associationEnds",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "MemberReferencePath"
-            },
-            "name": "associationEnds"
-          },
-          "projection": {
-            "name": "MemberReferencePathAssociationEndMappingProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 153,
-          "name": "dataTypeProperty",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-              "id": 154,
-              "name": "owningClassifier",
-              "children": [
-                {
-                  "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-                  "id": 155,
-                  "name": "name",
-                  "children": [],
-                  "dataTypeProperty": {
-                    "owningClassifier": {
-                      "name": "NamedElement"
-                    },
-                    "name": "name"
-                  }
-                }
-              ],
-              "associationEnd": {
-                "owningClass": {
-                  "name": "DataTypeProperty"
-                },
-                "name": "owningClassifier"
-              }
-            },
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 156,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "MemberReferencePath"
-            },
-            "name": "dataTypeProperty"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "ThisMemberReferencePath"
-      }
-    }
-  },
-  {
-    "name": "AssociationEndModifierProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 22,
-      "name": "AssociationEndModifierProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 157,
-          "name": "keyword",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "AssociationEndModifier"
-            },
-            "name": "keyword"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "AssociationEndModifier"
-      }
-    }
-  },
-  {
-    "name": "AssociationEndOrderByProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 23,
-      "name": "AssociationEndOrderByProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 158,
-          "name": "orderByDirection",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "AssociationEndOrderBy"
-            },
-            "name": "orderByDirection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 159,
-          "name": "thisMemberReferencePath",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 160,
-              "name": "id",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "ExpressionValue"
-                },
-                "name": "id"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "AssociationEndOrderBy"
-            },
-            "name": "thisMemberReferencePath"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "AssociationEndOrderBy"
-      }
-    }
-  },
-  {
-    "name": "AssociationEndProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 24,
-      "name": "AssociationEndProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 161,
-          "name": "name",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "NamedElement"
-            },
-            "name": "name"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 162,
-          "name": "direction",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "AssociationEnd"
-            },
-            "name": "direction"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 163,
-          "name": "multiplicity",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "AssociationEnd"
-            },
-            "name": "multiplicity"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 164,
-          "name": "resultType",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 165,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "AssociationEnd"
-            },
-            "name": "resultType"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 166,
-          "name": "associationEndModifiers",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "AssociationEnd"
-            },
-            "name": "associationEndModifiers"
-          },
-          "projection": {
-            "name": "AssociationEndModifierProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 167,
-          "name": "orderBys",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "AssociationEnd"
-            },
-            "name": "orderBys"
-          },
-          "projection": {
-            "name": "AssociationEndOrderByProjection"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "AssociationEnd"
-      }
-    }
-  },
-  {
-    "name": "MemberReferencePathAssociationEndMappingProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 25,
-      "name": "MemberReferencePathAssociationEndMappingProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 168,
-          "name": "associationEnd",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-              "id": 169,
-              "name": "owningClass",
-              "children": [
-                {
-                  "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-                  "id": 170,
-                  "name": "name",
-                  "children": [],
-                  "dataTypeProperty": {
-                    "owningClassifier": {
-                      "name": "NamedElement"
-                    },
-                    "name": "name"
-                  }
-                }
-              ],
-              "associationEnd": {
-                "owningClass": {
-                  "name": "AssociationEnd"
-                },
-                "name": "owningClass"
-              }
-            },
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 171,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "MemberReferencePathAssociationEndMapping"
-            },
-            "name": "associationEnd"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "MemberReferencePathAssociationEndMapping"
-      }
-    }
-  },
-  {
-    "name": "ExpressionValueProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 26,
-      "name": "ExpressionValueProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 172,
-          "name": "id",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "ExpressionValue"
-            },
-            "name": "id"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 173,
-          "name": "parameter",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 174,
-              "name": "id",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "Parameter"
-                },
-                "name": "id"
-              }
-            },
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 175,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "Parameter"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "ParameterReference"
-            },
-            "name": "parameter"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 176,
-          "name": "klass",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 177,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "MemberReferencePath"
-            },
-            "name": "klass"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 178,
-          "name": "associationEnds",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "MemberReferencePath"
-            },
-            "name": "associationEnds"
-          },
-          "projection": {
-            "name": "MemberReferencePathAssociationEndMappingProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 179,
-          "name": "dataTypeProperty",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-              "id": 180,
-              "name": "owningClassifier",
-              "children": [
-                {
-                  "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-                  "id": 181,
-                  "name": "name",
-                  "children": [],
-                  "dataTypeProperty": {
-                    "owningClassifier": {
-                      "name": "NamedElement"
-                    },
-                    "name": "name"
-                  }
-                }
-              ],
-              "associationEnd": {
-                "owningClass": {
-                  "name": "DataTypeProperty"
-                },
-                "name": "owningClassifier"
-              }
-            },
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 182,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "MemberReferencePath"
-            },
-            "name": "dataTypeProperty"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "ExpressionValue"
-      }
-    }
-  },
-  {
-    "name": "MemberReferencePathProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 27,
-      "name": "MemberReferencePathProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 183,
-          "name": "id",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "ExpressionValue"
-            },
-            "name": "id"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 184,
-          "name": "klass",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 185,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "MemberReferencePath"
-            },
-            "name": "klass"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 186,
-          "name": "associationEnds",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "MemberReferencePath"
-            },
-            "name": "associationEnds"
-          },
-          "projection": {
-            "name": "MemberReferencePathAssociationEndMappingProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-          "id": 187,
-          "name": "dataTypeProperty",
-          "children": [
-            {
-              "__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
-              "id": 188,
-              "name": "owningClassifier",
-              "children": [
-                {
-                  "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-                  "id": 189,
-                  "name": "name",
-                  "children": [],
-                  "dataTypeProperty": {
-                    "owningClassifier": {
-                      "name": "NamedElement"
-                    },
-                    "name": "name"
-                  }
-                }
-              ],
-              "associationEnd": {
-                "owningClass": {
-                  "name": "DataTypeProperty"
-                },
-                "name": "owningClassifier"
-              }
-            },
-            {
-              "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-              "id": 190,
-              "name": "name",
-              "children": [],
-              "dataTypeProperty": {
-                "owningClassifier": {
-                  "name": "NamedElement"
-                },
-                "name": "name"
-              }
-            }
-          ],
-          "associationEnd": {
-            "owningClass": {
-              "name": "MemberReferencePath"
-            },
-            "name": "dataTypeProperty"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "MemberReferencePath"
-      }
-    }
-  },
-  {
-    "name": "CriteriaProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 28,
-      "name": "CriteriaProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 191,
-          "name": "left",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "BinaryCriteria"
-            },
-            "name": "left"
-          },
-          "projection": {
-            "name": "CriteriaProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 192,
-          "name": "right",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "BinaryCriteria"
-            },
-            "name": "right"
-          },
-          "projection": {
-            "name": "CriteriaProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 193,
-          "name": "operator",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "OperatorCriteria"
-            },
-            "name": "operator"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 194,
-          "name": "sourceExpressionValue",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "OperatorCriteria"
-            },
-            "name": "sourceExpressionValue"
-          },
-          "projection": {
-            "name": "ExpressionValueProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 195,
-          "name": "targetExpressionValue",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "OperatorCriteria"
-            },
-            "name": "targetExpressionValue"
-          },
-          "projection": {
-            "name": "ExpressionValueProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 196,
-          "name": "memberReferencePath",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "EdgePointCriteria"
-            },
-            "name": "memberReferencePath"
-          },
-          "projection": {
-            "name": "MemberReferencePathProjection"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "Criteria"
-      }
-    }
-  },
-  {
-    "name": "AssociationProjection",
-    "packageName": "klass.model.meta.domain",
-    "rootProjection": {
-      "id": 29,
-      "name": "AssociationProjection",
-      "children": [
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 197,
-          "name": "name",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "NamedElement"
-            },
-            "name": "name"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
-          "id": 198,
-          "name": "packageName",
-          "children": [],
-          "dataTypeProperty": {
-            "owningClassifier": {
-              "name": "PackageableElement"
-            },
-            "name": "packageName"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 199,
-          "name": "associationEnds",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Association"
-            },
-            "name": "associationEnds"
-          },
-          "projection": {
-            "name": "AssociationEndProjection"
-          }
-        },
-        {
-          "__typename": "klass.model.meta.domain.ProjectionProjectionReference",
-          "id": 200,
-          "name": "criteria",
-          "children": [],
-          "associationEnd": {
-            "owningClass": {
-              "name": "Association"
-            },
-            "name": "criteria"
-          },
-          "projection": {
-            "name": "CriteriaProjection"
-          }
-        }
-      ],
-      "classifier": {
-        "name": "Association"
-      }
-    }
-  }
+	{
+		"name": "EnumerationLiteralProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 1,
+			"name": "EnumerationLiteralProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 30,
+					"name": "name",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "NamedElement"
+						},
+						"name": "name"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 31,
+					"name": "prettyName",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "EnumerationLiteral"
+						},
+						"name": "prettyName"
+					}
+				}
+			],
+			"classifier": {
+				"name": "EnumerationLiteral"
+			}
+		}
+	},
+	{
+		"name": "EnumerationProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 2,
+			"name": "EnumerationProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 32,
+					"name": "name",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "NamedElement"
+						},
+						"name": "name"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 33,
+					"name": "packageName",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "PackageableElement"
+						},
+						"name": "packageName"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 34,
+					"name": "enumerationLiterals",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Enumeration"
+						},
+						"name": "enumerationLiterals"
+					},
+					"projection": {
+						"name": "EnumerationLiteralProjection"
+					}
+				}
+			],
+			"classifier": {
+				"name": "Enumeration"
+			}
+		}
+	},
+	{
+		"name": "PackageableElementProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 3,
+			"name": "PackageableElementProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 35,
+					"name": "name",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "NamedElement"
+						},
+						"name": "name"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 36,
+					"name": "packageName",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "PackageableElement"
+						},
+						"name": "packageName"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 37,
+					"name": "enumerationLiterals",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Enumeration"
+						},
+						"name": "enumerationLiterals"
+					},
+					"projection": {
+						"name": "EnumerationLiteralProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 38,
+					"name": "superInterfaces",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Classifier"
+						},
+						"name": "superInterfaces"
+					},
+					"projection": {
+						"name": "ClassifierInterfaceMappingProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 39,
+					"name": "classifierModifiers",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Classifier"
+						},
+						"name": "classifierModifiers"
+					},
+					"projection": {
+						"name": "ClassifierModifierProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 40,
+					"name": "dataTypeProperties",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Classifier"
+						},
+						"name": "dataTypeProperties"
+					},
+					"projection": {
+						"name": "DataTypePropertyProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 41,
+					"name": "abstractClass",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "Klass"
+						},
+						"name": "abstractClass"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 42,
+					"name": "superClass",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 43,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Klass"
+						},
+						"name": "superClass"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 44,
+					"name": "parameterizedProperties",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Klass"
+						},
+						"name": "parameterizedProperties"
+					},
+					"projection": {
+						"name": "ParameterizedPropertyProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 45,
+					"name": "associationEnds",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Association"
+						},
+						"name": "associationEnds"
+					},
+					"projection": {
+						"name": "AssociationEndProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 46,
+					"name": "criteria",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 47,
+							"name": "id",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "Criteria"
+								},
+								"name": "id"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Association"
+						},
+						"name": "criteria"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 48,
+					"name": "rootProjection",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 49,
+							"name": "id",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "ProjectionElement"
+								},
+								"name": "id"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "NamedProjection"
+						},
+						"name": "rootProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 50,
+					"name": "owningClass",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 51,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "ServiceGroup"
+						},
+						"name": "owningClass"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 52,
+					"name": "urls",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "ServiceGroup"
+						},
+						"name": "urls"
+					},
+					"projection": {
+						"name": "UrlProjection"
+					}
+				}
+			],
+			"classifier": {
+				"name": "PackageableElement"
+			}
+		}
+	},
+	{
+		"name": "ClassifierModifierProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 4,
+			"name": "ClassifierModifierProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 53,
+					"name": "keyword",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "ClassifierModifier"
+						},
+						"name": "keyword"
+					}
+				}
+			],
+			"classifier": {
+				"name": "ClassifierModifier"
+			}
+		}
+	},
+	{
+		"name": "ClassifierInterfaceMappingProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 5,
+			"name": "ClassifierInterfaceMappingProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 54,
+					"name": "superInterface",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 55,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "ClassifierInterfaceMapping"
+						},
+						"name": "superInterface"
+					}
+				}
+			],
+			"classifier": {
+				"name": "ClassifierInterfaceMapping"
+			}
+		}
+	},
+	{
+		"name": "ParameterizedPropertyProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 6,
+			"name": "ParameterizedPropertyProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 56,
+					"name": "name",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "NamedElement"
+						},
+						"name": "name"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 57,
+					"name": "multiplicity",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "ParameterizedProperty"
+						},
+						"name": "multiplicity"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 58,
+					"name": "resultType",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 59,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "ParameterizedProperty"
+						},
+						"name": "resultType"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 60,
+					"name": "parameterizedPropertyOrderings",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "ParameterizedProperty"
+						},
+						"name": "parameterizedPropertyOrderings"
+					},
+					"projection": {
+						"name": "ParameterizedPropertyOrderingProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 61,
+					"name": "parameters",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 62,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "ParameterizedProperty"
+						},
+						"name": "parameters"
+					}
+				}
+			],
+			"classifier": {
+				"name": "ParameterizedProperty"
+			}
+		}
+	},
+	{
+		"name": "ParameterizedPropertyOrderingProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 7,
+			"name": "ParameterizedPropertyOrderingProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 63,
+					"name": "ordinal",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "ParameterizedPropertyOrdering"
+						},
+						"name": "ordinal"
+					}
+				}
+			],
+			"classifier": {
+				"name": "ParameterizedPropertyOrdering"
+			}
+		}
+	},
+	{
+		"name": "ProjectionElementProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 8,
+			"name": "ProjectionElementProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 64,
+					"name": "id",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "ProjectionElement"
+						},
+						"name": "id"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 65,
+					"name": "name",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "ProjectionElement"
+						},
+						"name": "name"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 66,
+					"name": "children",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "ProjectionElement"
+						},
+						"name": "children"
+					},
+					"projection": {
+						"name": "ProjectionElementProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 67,
+					"name": "classifier",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 68,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "RootProjection"
+						},
+						"name": "classifier"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 69,
+					"name": "associationEnd",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+							"id": 70,
+							"name": "owningClass",
+							"children": [
+								{
+									"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+									"id": 71,
+									"name": "name",
+									"children": [ ],
+									"dataTypeProperty": {
+										"owningClassifier": {
+											"name": "NamedElement"
+										},
+										"name": "name"
+									}
+								}
+							],
+							"associationEnd": {
+								"owningClass": {
+									"name": "AssociationEnd"
+								},
+								"name": "owningClass"
+							}
+						},
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 72,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "ProjectionWithAssociationEnd"
+						},
+						"name": "associationEnd"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 73,
+					"name": "projection",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 74,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "ProjectionProjectionReference"
+						},
+						"name": "projection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 75,
+					"name": "dataTypeProperty",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+							"id": 76,
+							"name": "owningClassifier",
+							"children": [
+								{
+									"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+									"id": 77,
+									"name": "name",
+									"children": [ ],
+									"dataTypeProperty": {
+										"owningClassifier": {
+											"name": "NamedElement"
+										},
+										"name": "name"
+									}
+								}
+							],
+							"associationEnd": {
+								"owningClass": {
+									"name": "DataTypeProperty"
+								},
+								"name": "owningClassifier"
+							}
+						},
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 78,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "ProjectionDataTypeProperty"
+						},
+						"name": "dataTypeProperty"
+					}
+				}
+			],
+			"classifier": {
+				"name": "ProjectionElement"
+			}
+		}
+	},
+	{
+		"name": "NamedProjectionProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 9,
+			"name": "NamedProjectionProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 79,
+					"name": "name",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "NamedElement"
+						},
+						"name": "name"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 80,
+					"name": "packageName",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "PackageableElement"
+						},
+						"name": "packageName"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 81,
+					"name": "rootProjection",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "NamedProjection"
+						},
+						"name": "rootProjection"
+					},
+					"projection": {
+						"name": "ProjectionElementProjection"
+					}
+				}
+			],
+			"classifier": {
+				"name": "NamedProjection"
+			}
+		}
+	},
+	{
+		"name": "ServiceGroupProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 10,
+			"name": "ServiceGroupProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 82,
+					"name": "name",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "NamedElement"
+						},
+						"name": "name"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 83,
+					"name": "packageName",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "PackageableElement"
+						},
+						"name": "packageName"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 84,
+					"name": "owningClass",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 85,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "ServiceGroup"
+						},
+						"name": "owningClass"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 86,
+					"name": "urls",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "ServiceGroup"
+						},
+						"name": "urls"
+					},
+					"projection": {
+						"name": "UrlProjection"
+					}
+				}
+			],
+			"classifier": {
+				"name": "ServiceGroup"
+			}
+		}
+	},
+	{
+		"name": "UrlProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 11,
+			"name": "UrlProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 87,
+					"name": "url",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "Url"
+						},
+						"name": "url"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 88,
+					"name": "parameters",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Url"
+						},
+						"name": "parameters"
+					},
+					"projection": {
+						"name": "UrlParameterProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 89,
+					"name": "services",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Url"
+						},
+						"name": "services"
+					},
+					"projection": {
+						"name": "ServiceProjection"
+					}
+				}
+			],
+			"classifier": {
+				"name": "Url"
+			}
+		}
+	},
+	{
+		"name": "ParameterProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 12,
+			"name": "ParameterProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 90,
+					"name": "id",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "Parameter"
+						},
+						"name": "id"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 91,
+					"name": "name",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "Parameter"
+						},
+						"name": "name"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 92,
+					"name": "multiplicity",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "Parameter"
+						},
+						"name": "multiplicity"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 93,
+					"name": "enumeration",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 94,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "EnumerationParameter"
+						},
+						"name": "enumeration"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 95,
+					"name": "primitiveType",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "PrimitiveParameter"
+						},
+						"name": "primitiveType"
+					}
+				}
+			],
+			"classifier": {
+				"name": "Parameter"
+			}
+		}
+	},
+	{
+		"name": "UrlParameterProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 13,
+			"name": "UrlParameterProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 96,
+					"name": "type",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "UrlParameter"
+						},
+						"name": "type"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 97,
+					"name": "parameter",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "UrlParameter"
+						},
+						"name": "parameter"
+					},
+					"projection": {
+						"name": "ParameterProjection"
+					}
+				}
+			],
+			"classifier": {
+				"name": "UrlParameter"
+			}
+		}
+	},
+	{
+		"name": "ServiceProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 14,
+			"name": "ServiceProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 98,
+					"name": "verb",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "Service"
+						},
+						"name": "verb"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 99,
+					"name": "serviceMultiplicity",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "Service"
+						},
+						"name": "serviceMultiplicity"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 100,
+					"name": "projection",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 101,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Service"
+						},
+						"name": "projection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 102,
+					"name": "queryCriteria",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Service"
+						},
+						"name": "queryCriteria"
+					},
+					"projection": {
+						"name": "CriteriaProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 103,
+					"name": "authorizeCriteria",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Service"
+						},
+						"name": "authorizeCriteria"
+					},
+					"projection": {
+						"name": "CriteriaProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 104,
+					"name": "validateCriteria",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Service"
+						},
+						"name": "validateCriteria"
+					},
+					"projection": {
+						"name": "CriteriaProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 105,
+					"name": "conflictCriteria",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Service"
+						},
+						"name": "conflictCriteria"
+					},
+					"projection": {
+						"name": "CriteriaProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 106,
+					"name": "orderBys",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Service"
+						},
+						"name": "orderBys"
+					},
+					"projection": {
+						"name": "ServiceOrderByProjection"
+					}
+				}
+			],
+			"classifier": {
+				"name": "Service"
+			}
+		}
+	},
+	{
+		"name": "ServiceOrderByProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 15,
+			"name": "ServiceOrderByProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 107,
+					"name": "orderByDirection",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "ServiceOrderBy"
+						},
+						"name": "orderByDirection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 108,
+					"name": "thisMemberReferencePath",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 109,
+							"name": "id",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "ExpressionValue"
+								},
+								"name": "id"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "ServiceOrderBy"
+						},
+						"name": "thisMemberReferencePath"
+					}
+				}
+			],
+			"classifier": {
+				"name": "ServiceOrderBy"
+			}
+		}
+	},
+	{
+		"name": "InterfaceProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 16,
+			"name": "InterfaceProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 110,
+					"name": "name",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "NamedElement"
+						},
+						"name": "name"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 111,
+					"name": "packageName",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "PackageableElement"
+						},
+						"name": "packageName"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 112,
+					"name": "superInterfaces",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Classifier"
+						},
+						"name": "superInterfaces"
+					},
+					"projection": {
+						"name": "ClassifierInterfaceMappingProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 113,
+					"name": "classifierModifiers",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Classifier"
+						},
+						"name": "classifierModifiers"
+					},
+					"projection": {
+						"name": "ClassifierModifierProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 114,
+					"name": "dataTypeProperties",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Classifier"
+						},
+						"name": "dataTypeProperties"
+					},
+					"projection": {
+						"name": "DataTypePropertyProjection"
+					}
+				}
+			],
+			"classifier": {
+				"name": "Interface"
+			}
+		}
+	},
+	{
+		"name": "NumericPropertyValidationProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 17,
+			"name": "NumericPropertyValidationProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 115,
+					"name": "number",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "NumericPropertyValidation"
+						},
+						"name": "number"
+					}
+				}
+			],
+			"classifier": {
+				"name": "NumericPropertyValidation"
+			}
+		}
+	},
+	{
+		"name": "DataTypePropertyProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 18,
+			"name": "DataTypePropertyProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 116,
+					"name": "name",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "NamedElement"
+						},
+						"name": "name"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 117,
+					"name": "optional",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "DataTypeProperty"
+						},
+						"name": "optional"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 118,
+					"name": "minLengthValidation",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "DataTypeProperty"
+						},
+						"name": "minLengthValidation"
+					},
+					"projection": {
+						"name": "NumericPropertyValidationProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 119,
+					"name": "maxLengthValidation",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "DataTypeProperty"
+						},
+						"name": "maxLengthValidation"
+					},
+					"projection": {
+						"name": "NumericPropertyValidationProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 120,
+					"name": "propertyModifiers",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 121,
+							"name": "keyword",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "PropertyModifier"
+								},
+								"name": "keyword"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "DataTypeProperty"
+						},
+						"name": "propertyModifiers"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 122,
+					"name": "primitiveType",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "PrimitiveProperty"
+						},
+						"name": "primitiveType"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 123,
+					"name": "minValidation",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "PrimitiveProperty"
+						},
+						"name": "minValidation"
+					},
+					"projection": {
+						"name": "NumericPropertyValidationProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 124,
+					"name": "maxValidation",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "PrimitiveProperty"
+						},
+						"name": "maxValidation"
+					},
+					"projection": {
+						"name": "NumericPropertyValidationProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 125,
+					"name": "enumeration",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 126,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "EnumerationProperty"
+						},
+						"name": "enumeration"
+					}
+				}
+			],
+			"classifier": {
+				"name": "DataTypeProperty"
+			}
+		}
+	},
+	{
+		"name": "KlassProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 19,
+			"name": "KlassProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 127,
+					"name": "name",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "NamedElement"
+						},
+						"name": "name"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 128,
+					"name": "packageName",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "PackageableElement"
+						},
+						"name": "packageName"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 129,
+					"name": "abstractClass",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "Klass"
+						},
+						"name": "abstractClass"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 130,
+					"name": "superInterfaces",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Classifier"
+						},
+						"name": "superInterfaces"
+					},
+					"projection": {
+						"name": "ClassifierInterfaceMappingProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 131,
+					"name": "classifierModifiers",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Classifier"
+						},
+						"name": "classifierModifiers"
+					},
+					"projection": {
+						"name": "ClassifierModifierProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 132,
+					"name": "dataTypeProperties",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Classifier"
+						},
+						"name": "dataTypeProperties"
+					},
+					"projection": {
+						"name": "DataTypePropertyProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 133,
+					"name": "superClass",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 134,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Klass"
+						},
+						"name": "superClass"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 135,
+					"name": "associationEnds",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 136,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Klass"
+						},
+						"name": "associationEnds"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 137,
+					"name": "parameterizedProperties",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Klass"
+						},
+						"name": "parameterizedProperties"
+					},
+					"projection": {
+						"name": "ParameterizedPropertyProjection"
+					}
+				}
+			],
+			"classifier": {
+				"name": "Klass"
+			}
+		}
+	},
+	{
+		"name": "ClassifierProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 20,
+			"name": "ClassifierProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 138,
+					"name": "name",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "NamedElement"
+						},
+						"name": "name"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 139,
+					"name": "packageName",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "PackageableElement"
+						},
+						"name": "packageName"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 140,
+					"name": "superInterfaces",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Classifier"
+						},
+						"name": "superInterfaces"
+					},
+					"projection": {
+						"name": "ClassifierInterfaceMappingProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 141,
+					"name": "classifierModifiers",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Classifier"
+						},
+						"name": "classifierModifiers"
+					},
+					"projection": {
+						"name": "ClassifierModifierProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 142,
+					"name": "dataTypeProperties",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Classifier"
+						},
+						"name": "dataTypeProperties"
+					},
+					"projection": {
+						"name": "DataTypePropertyProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 143,
+					"name": "abstractClass",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "Klass"
+						},
+						"name": "abstractClass"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 144,
+					"name": "superClass",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 145,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Klass"
+						},
+						"name": "superClass"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 146,
+					"name": "associationEnds",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 147,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Klass"
+						},
+						"name": "associationEnds"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 148,
+					"name": "parameterizedProperties",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Klass"
+						},
+						"name": "parameterizedProperties"
+					},
+					"projection": {
+						"name": "ParameterizedPropertyProjection"
+					}
+				}
+			],
+			"classifier": {
+				"name": "Classifier"
+			}
+		}
+	},
+	{
+		"name": "ThisMemberReferencePathProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 21,
+			"name": "ThisMemberReferencePathProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 149,
+					"name": "id",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "ExpressionValue"
+						},
+						"name": "id"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 150,
+					"name": "klass",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 151,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "MemberReferencePath"
+						},
+						"name": "klass"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 152,
+					"name": "associationEnds",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "MemberReferencePath"
+						},
+						"name": "associationEnds"
+					},
+					"projection": {
+						"name": "MemberReferencePathAssociationEndMappingProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 153,
+					"name": "dataTypeProperty",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+							"id": 154,
+							"name": "owningClassifier",
+							"children": [
+								{
+									"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+									"id": 155,
+									"name": "name",
+									"children": [ ],
+									"dataTypeProperty": {
+										"owningClassifier": {
+											"name": "NamedElement"
+										},
+										"name": "name"
+									}
+								}
+							],
+							"associationEnd": {
+								"owningClass": {
+									"name": "DataTypeProperty"
+								},
+								"name": "owningClassifier"
+							}
+						},
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 156,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "MemberReferencePath"
+						},
+						"name": "dataTypeProperty"
+					}
+				}
+			],
+			"classifier": {
+				"name": "ThisMemberReferencePath"
+			}
+		}
+	},
+	{
+		"name": "AssociationEndModifierProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 22,
+			"name": "AssociationEndModifierProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 157,
+					"name": "keyword",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "AssociationEndModifier"
+						},
+						"name": "keyword"
+					}
+				}
+			],
+			"classifier": {
+				"name": "AssociationEndModifier"
+			}
+		}
+	},
+	{
+		"name": "AssociationEndOrderByProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 23,
+			"name": "AssociationEndOrderByProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 158,
+					"name": "orderByDirection",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "AssociationEndOrderBy"
+						},
+						"name": "orderByDirection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 159,
+					"name": "thisMemberReferencePath",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 160,
+							"name": "id",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "ExpressionValue"
+								},
+								"name": "id"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "AssociationEndOrderBy"
+						},
+						"name": "thisMemberReferencePath"
+					}
+				}
+			],
+			"classifier": {
+				"name": "AssociationEndOrderBy"
+			}
+		}
+	},
+	{
+		"name": "AssociationEndProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 24,
+			"name": "AssociationEndProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 161,
+					"name": "name",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "NamedElement"
+						},
+						"name": "name"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 162,
+					"name": "direction",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "AssociationEnd"
+						},
+						"name": "direction"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 163,
+					"name": "multiplicity",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "AssociationEnd"
+						},
+						"name": "multiplicity"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 164,
+					"name": "resultType",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 165,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "AssociationEnd"
+						},
+						"name": "resultType"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 166,
+					"name": "associationEndModifiers",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "AssociationEnd"
+						},
+						"name": "associationEndModifiers"
+					},
+					"projection": {
+						"name": "AssociationEndModifierProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 167,
+					"name": "orderBys",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "AssociationEnd"
+						},
+						"name": "orderBys"
+					},
+					"projection": {
+						"name": "AssociationEndOrderByProjection"
+					}
+				}
+			],
+			"classifier": {
+				"name": "AssociationEnd"
+			}
+		}
+	},
+	{
+		"name": "MemberReferencePathAssociationEndMappingProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 25,
+			"name": "MemberReferencePathAssociationEndMappingProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 168,
+					"name": "associationEnd",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+							"id": 169,
+							"name": "owningClass",
+							"children": [
+								{
+									"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+									"id": 170,
+									"name": "name",
+									"children": [ ],
+									"dataTypeProperty": {
+										"owningClassifier": {
+											"name": "NamedElement"
+										},
+										"name": "name"
+									}
+								}
+							],
+							"associationEnd": {
+								"owningClass": {
+									"name": "AssociationEnd"
+								},
+								"name": "owningClass"
+							}
+						},
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 171,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "MemberReferencePathAssociationEndMapping"
+						},
+						"name": "associationEnd"
+					}
+				}
+			],
+			"classifier": {
+				"name": "MemberReferencePathAssociationEndMapping"
+			}
+		}
+	},
+	{
+		"name": "ExpressionValueProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 26,
+			"name": "ExpressionValueProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 172,
+					"name": "id",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "ExpressionValue"
+						},
+						"name": "id"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 173,
+					"name": "parameter",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 174,
+							"name": "id",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "Parameter"
+								},
+								"name": "id"
+							}
+						},
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 175,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "Parameter"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "ParameterReference"
+						},
+						"name": "parameter"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 176,
+					"name": "klass",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 177,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "MemberReferencePath"
+						},
+						"name": "klass"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 178,
+					"name": "associationEnds",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "MemberReferencePath"
+						},
+						"name": "associationEnds"
+					},
+					"projection": {
+						"name": "MemberReferencePathAssociationEndMappingProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 179,
+					"name": "dataTypeProperty",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+							"id": 180,
+							"name": "owningClassifier",
+							"children": [
+								{
+									"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+									"id": 181,
+									"name": "name",
+									"children": [ ],
+									"dataTypeProperty": {
+										"owningClassifier": {
+											"name": "NamedElement"
+										},
+										"name": "name"
+									}
+								}
+							],
+							"associationEnd": {
+								"owningClass": {
+									"name": "DataTypeProperty"
+								},
+								"name": "owningClassifier"
+							}
+						},
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 182,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "MemberReferencePath"
+						},
+						"name": "dataTypeProperty"
+					}
+				}
+			],
+			"classifier": {
+				"name": "ExpressionValue"
+			}
+		}
+	},
+	{
+		"name": "MemberReferencePathProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 27,
+			"name": "MemberReferencePathProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 183,
+					"name": "id",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "ExpressionValue"
+						},
+						"name": "id"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 184,
+					"name": "klass",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 185,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "MemberReferencePath"
+						},
+						"name": "klass"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 186,
+					"name": "associationEnds",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "MemberReferencePath"
+						},
+						"name": "associationEnds"
+					},
+					"projection": {
+						"name": "MemberReferencePathAssociationEndMappingProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+					"id": 187,
+					"name": "dataTypeProperty",
+					"children": [
+						{
+							"__typename": "klass.model.meta.domain.ProjectionReferenceProperty",
+							"id": 188,
+							"name": "owningClassifier",
+							"children": [
+								{
+									"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+									"id": 189,
+									"name": "name",
+									"children": [ ],
+									"dataTypeProperty": {
+										"owningClassifier": {
+											"name": "NamedElement"
+										},
+										"name": "name"
+									}
+								}
+							],
+							"associationEnd": {
+								"owningClass": {
+									"name": "DataTypeProperty"
+								},
+								"name": "owningClassifier"
+							}
+						},
+						{
+							"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+							"id": 190,
+							"name": "name",
+							"children": [ ],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						}
+					],
+					"associationEnd": {
+						"owningClass": {
+							"name": "MemberReferencePath"
+						},
+						"name": "dataTypeProperty"
+					}
+				}
+			],
+			"classifier": {
+				"name": "MemberReferencePath"
+			}
+		}
+	},
+	{
+		"name": "CriteriaProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 28,
+			"name": "CriteriaProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 191,
+					"name": "left",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "BinaryCriteria"
+						},
+						"name": "left"
+					},
+					"projection": {
+						"name": "CriteriaProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 192,
+					"name": "right",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "BinaryCriteria"
+						},
+						"name": "right"
+					},
+					"projection": {
+						"name": "CriteriaProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 193,
+					"name": "operator",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "OperatorCriteria"
+						},
+						"name": "operator"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 194,
+					"name": "sourceExpressionValue",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "OperatorCriteria"
+						},
+						"name": "sourceExpressionValue"
+					},
+					"projection": {
+						"name": "ExpressionValueProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 195,
+					"name": "targetExpressionValue",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "OperatorCriteria"
+						},
+						"name": "targetExpressionValue"
+					},
+					"projection": {
+						"name": "ExpressionValueProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 196,
+					"name": "memberReferencePath",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "EdgePointCriteria"
+						},
+						"name": "memberReferencePath"
+					},
+					"projection": {
+						"name": "MemberReferencePathProjection"
+					}
+				}
+			],
+			"classifier": {
+				"name": "Criteria"
+			}
+		}
+	},
+	{
+		"name": "AssociationProjection",
+		"packageName": "klass.model.meta.domain",
+		"rootProjection": {
+			"id": 29,
+			"name": "AssociationProjection",
+			"children": [
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 197,
+					"name": "name",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "NamedElement"
+						},
+						"name": "name"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+					"id": 198,
+					"name": "packageName",
+					"children": [ ],
+					"dataTypeProperty": {
+						"owningClassifier": {
+							"name": "PackageableElement"
+						},
+						"name": "packageName"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 199,
+					"name": "associationEnds",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Association"
+						},
+						"name": "associationEnds"
+					},
+					"projection": {
+						"name": "AssociationEndProjection"
+					}
+				},
+				{
+					"__typename": "klass.model.meta.domain.ProjectionProjectionReference",
+					"id": 200,
+					"name": "criteria",
+					"children": [ ],
+					"associationEnd": {
+						"owningClass": {
+							"name": "Association"
+						},
+						"name": "criteria"
+					},
+					"projection": {
+						"name": "CriteriaProjection"
+					}
+				}
+			],
+			"classifier": {
+				"name": "Association"
+			}
+		}
+	}
 ]

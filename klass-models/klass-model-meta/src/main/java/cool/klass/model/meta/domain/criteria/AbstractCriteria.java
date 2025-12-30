@@ -30,23 +30,23 @@ import org.antlr.v4.runtime.ParserRuleContext;
 
 public abstract class AbstractCriteria extends AbstractElement implements Criteria {
 
-    protected AbstractCriteria(
-        @Nonnull ParserRuleContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode
-    ) {
-        super(elementContext, macroElement, sourceCode);
-    }
+	protected AbstractCriteria(
+		@Nonnull ParserRuleContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode
+	) {
+		super(elementContext, macroElement, sourceCode);
+	}
 
-    public abstract static class AbstractCriteriaBuilder<BuiltElement extends AbstractCriteria>
-        extends ElementBuilder<BuiltElement> {
+	public abstract static class AbstractCriteriaBuilder<BuiltElement extends AbstractCriteria>
+		extends ElementBuilder<BuiltElement> {
 
-        protected AbstractCriteriaBuilder(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode
-        ) {
-            super(elementContext, macroElement, sourceCode);
-        }
-    }
+		protected AbstractCriteriaBuilder(
+			@Nonnull ParserRuleContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode
+		) {
+			super(elementContext, macroElement, sourceCode);
+		}
+	}
 }

@@ -29,41 +29,41 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-    name = "generate-react-prop-types",
-    defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-    threadSafe = true,
-    requiresDependencyResolution = ResolutionScope.RUNTIME
+	name = "generate-react-prop-types",
+	defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+	threadSafe = true,
+	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
 public class GenerateReactPropTypesMojo extends AbstractGenerateMojo {
 
-    @Parameter(
-        property = "outputDirectory",
-        defaultValue = "${project.build.directory}/generated-resources/react-prop-types"
-    )
-    private File outputDirectory;
+	@Parameter(
+		property = "outputDirectory",
+		defaultValue = "${project.build.directory}/generated-resources/react-prop-types"
+	)
+	private File outputDirectory;
 
-    @Override
-    protected InputSource getInputSource() {
-        return InputSource.CLASSPATH;
-    }
+	@Override
+	protected InputSource getInputSource() {
+		return InputSource.CLASSPATH;
+	}
 
-    @Override
-    public void execute() throws MojoExecutionException {
-        boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
-                DomainModel domainModel = this.getDomainModel();
-                ReactPropTypeGenerator propTypeGenerator = new ReactPropTypeGenerator(domainModel);
-                propTypeGenerator.writePropTypes(this.outputDirectory.toPath());
-                return null;
-            });
+	@Override
+	public void execute() throws MojoExecutionException {
+		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
+				DomainModel domainModel = this.getDomainModel();
+				ReactPropTypeGenerator propTypeGenerator = new ReactPropTypeGenerator(domainModel);
+				propTypeGenerator.writePropTypes(this.outputDirectory.toPath());
+				return null;
+			});
 
-        if (wasGenerated) {
-            this.getLog().info("Generated React prop types in: " + this.outputDirectory.getPath());
-        }
+		if (wasGenerated) {
+			this.getLog().info("Generated React prop types in: " + this.outputDirectory.getPath());
+		}
 
-        Resource resource = new Resource();
-        resource.setDirectory(this.outputDirectory.getAbsolutePath());
-        // TODO: Should be based on the output path
-        resource.setTargetPath("react-prop-types");
-        this.mavenProject.addResource(resource);
-    }
+		Resource resource = new Resource();
+		resource.setDirectory(this.outputDirectory.getAbsolutePath());
+		// TODO: Should be based on the output path
+		resource.setTargetPath("react-prop-types");
+		this.mavenProject.addResource(resource);
+	}
 }

@@ -9,7 +9,7 @@ concurrency:
     cancel-in-progress: true
 
 env:
-    GROUP_ID: 'cool/klass'
+    GROUP_ID: "cool/klass"
 
 jobs:
     maven-test:
@@ -31,7 +31,7 @@ jobs:
             - run: just test "mvn" "-Dklass.logGitHubAnnotations=true"
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     maven-spotbugs:
@@ -53,7 +53,7 @@ jobs:
             - run: just spotbugs
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     maven-errorprone:
@@ -78,7 +78,7 @@ jobs:
             - run: just errorprone
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     maven-errorprone-strict:
@@ -103,7 +103,7 @@ jobs:
             - run: just errorprone-strict
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     maven-enforcer:
@@ -126,7 +126,7 @@ jobs:
               run: just enforcer
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     maven-dependency:
@@ -149,7 +149,7 @@ jobs:
               run: just dependency
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     maven-javadoc:
@@ -172,7 +172,7 @@ jobs:
               run: just javadoc
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     checkstyle-semantics:
@@ -195,15 +195,15 @@ jobs:
 
             - uses: jdx/mise-action@v3
 
-            - name: 'Produce Checkstyle XML: Semantics'
+            - name: "Produce Checkstyle XML: Semantics"
               run: just checkstyle-profile checkstyle-semantics false
 
             - uses: motlin/checkstyle-results@v1
               with:
-                  checkstyle_files: '**/checkstyle-result.xml'
+                  checkstyle_files: "**/checkstyle-result.xml"
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     checkstyle-semantics-strict:
@@ -226,15 +226,15 @@ jobs:
 
             - uses: jdx/mise-action@v3
 
-            - name: 'Produce Checkstyle XML: Strict Semantics'
+            - name: "Produce Checkstyle XML: Strict Semantics"
               run: just checkstyle-profile checkstyle-semantics-strict false
 
             - uses: motlin/checkstyle-results@v1
               with:
-                  checkstyle_files: '**/checkstyle-result.xml'
+                  checkstyle_files: "**/checkstyle-result.xml"
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     checkstyle-formatting:
@@ -257,15 +257,15 @@ jobs:
 
             - uses: jdx/mise-action@v3
 
-            - name: 'Produce Checkstyle XML: Formatting'
+            - name: "Produce Checkstyle XML: Formatting"
               run: just checkstyle-profile checkstyle-formatting false
 
             - uses: motlin/checkstyle-results@v1
               with:
-                  checkstyle_files: '**/checkstyle-result.xml'
+                  checkstyle_files: "**/checkstyle-result.xml"
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     maven-rewrite:
@@ -289,7 +289,7 @@ jobs:
               run: just rewrite-dry-run
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     # Check for reproducible builds with artifact:check-buildplan
@@ -313,7 +313,7 @@ jobs:
               run: just reproducible
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     spotless-formats:
@@ -335,14 +335,14 @@ jobs:
 
             - uses: jdx/mise-action@v3
 
-            - name: 'Spotless Check: Formats'
+            - name: "Spotless Check: Formats"
               run: just spotless formats
 
-            - name: 'Check for local modifications'
+            - name: "Check for local modifications"
               run: just _check-local-modifications
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     spotless-java-cleanthat:
@@ -364,14 +364,14 @@ jobs:
 
             - uses: jdx/mise-action@v3
 
-            - name: 'Spotless Check: Java cleanthat'
+            - name: "Spotless Check: Java cleanthat"
               run: just spotless java-cleanthat
 
-            - name: 'Check for local modifications'
+            - name: "Check for local modifications"
               run: just _check-local-modifications
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     spotless-java:
@@ -393,14 +393,14 @@ jobs:
 
             - uses: jdx/mise-action@v3
 
-            - name: 'Spotless Check: Java'
+            - name: "Spotless Check: Java"
               run: just spotless java
 
-            - name: 'Check for local modifications'
+            - name: "Check for local modifications"
               run: just _check-local-modifications
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     spotless-prettier-java-sort-imports:
@@ -422,14 +422,14 @@ jobs:
 
             - uses: jdx/mise-action@v3
 
-            - name: 'Spotless Check: Prettier Java (with sorted imports)'
+            - name: "Spotless Check: Prettier Java (with sorted imports)"
               run: just spotless prettier-java-sort-imports
 
-            - name: 'Check for local modifications'
+            - name: "Check for local modifications"
               run: just _check-local-modifications
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     spotless-sql:
@@ -451,14 +451,14 @@ jobs:
 
             - uses: jdx/mise-action@v3
 
-            - name: 'Spotless Check: Sql'
+            - name: "Spotless Check: Sql"
               run: just spotless sql
 
-            - name: 'Check for local modifications'
+            - name: "Check for local modifications"
               run: just _check-local-modifications
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     spotless-pom:
@@ -480,14 +480,14 @@ jobs:
 
             - uses: jdx/mise-action@v3
 
-            - name: 'Spotless Check: Pom'
+            - name: "Spotless Check: Pom"
               run: just spotless pom
 
-            - name: 'Check for local modifications'
+            - name: "Check for local modifications"
               run: just _check-local-modifications
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     spotless-json:
@@ -509,14 +509,14 @@ jobs:
 
             - uses: jdx/mise-action@v3
 
-            - name: 'Spotless Check: Json'
+            - name: "Spotless Check: Json"
               run: just spotless json
 
-            - name: 'Check for local modifications'
+            - name: "Check for local modifications"
               run: just _check-local-modifications
 
             # Remove any jars we may have created before actions/cache caches .m2
-            - name: 'Clean Maven cache'
+            - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
     biome-format:
@@ -528,8 +528,20 @@ jobs:
 
             - uses: jdx/mise-action@v3
 
-            - name: 'Biome Format Check'
+            - name: "Biome Format Check"
               run: npx @biomejs/biome format
+
+    prettier:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
+
+            - uses: jdx/mise-action@v3
+
+            - name: "Prettier Format Check"
+              run: npx prettier --check .
 
     reviewdog-markdownlint:
         runs-on: ubuntu-latest
@@ -558,7 +570,7 @@ jobs:
             - uses: reviewdog/action-languagetool@v1.23.0
               with:
                   reporter: github-pr-check
-                  disabled_rules: 'DOUBLE_PUNCTUATION,UPPERCASE_SENTENCE_START,EN_QUOTES,ID_CASING,EN_UNPAIRED_QUOTES,COMMA_COMPOUND_SENTENCE'
+                  disabled_rules: "DOUBLE_PUNCTUATION,UPPERCASE_SENTENCE_START,EN_QUOTES,ID_CASING,EN_UNPAIRED_QUOTES,COMMA_COMPOUND_SENTENCE"
 
     reviewdog-actionlint:
         runs-on: ubuntu-latest
@@ -604,6 +616,7 @@ jobs:
                 spotless-pom,
                 spotless-json,
                 biome-format,
+                prettier,
                 reviewdog-markdownlint,
                 reviewdog-yamllint,
                 reviewdog-languagetool,

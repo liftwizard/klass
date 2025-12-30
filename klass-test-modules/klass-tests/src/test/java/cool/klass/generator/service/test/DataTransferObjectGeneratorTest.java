@@ -40,36 +40,36 @@ import static org.assertj.core.api.Assertions.fail;
 @ExtendWith(LogMarkerTestExtension.class)
 public class DataTransferObjectGeneratorTest {
 
-    @RegisterExtension
-    final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
+	@RegisterExtension
+	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
-    @Test
-    void stackOverflow() {
-        String sourceCodeText = FileSlurper.slurp("/com/stackoverflow/stackoverflow.klass", this.getClass());
+	@Test
+	void stackOverflow() {
+		String sourceCodeText = FileSlurper.slurp("/com/stackoverflow/stackoverflow.klass", this.getClass());
 
-        CompilationUnit compilationUnit = CompilationUnit.createFromText(
-            0,
-            Optional.empty(),
-            "example.klass",
-            sourceCodeText
-        );
-        KlassCompiler compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("dark"));
-        CompilationResult compilationResult = compiler.compile();
+		CompilationUnit compilationUnit = CompilationUnit.createFromText(
+			0,
+			Optional.empty(),
+			"example.klass",
+			sourceCodeText
+		);
+		KlassCompiler compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("dark"));
+		CompilationResult compilationResult = compiler.compile();
 
-        if (compilationResult.domainModelWithSourceCode().isEmpty()) {
-            ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
-            String message = compilerAnnotations.makeString("\n");
-            fail(message);
-        } else {
-            DomainModelWithSourceCode domainModel = compilationResult.domainModelWithSourceCode().get();
-            assertThat(domainModel).isNotNull();
+		if (compilationResult.domainModelWithSourceCode().isEmpty()) {
+			ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
+			String message = compilerAnnotations.makeString("\n");
+			fail(message);
+		} else {
+			DomainModelWithSourceCode domainModel = compilationResult.domainModelWithSourceCode().get();
+			assertThat(domainModel).isNotNull();
 
-            DataTransferObjectsGenerator dataTransferObjectsGenerator = new DataTransferObjectsGenerator(domainModel);
+			DataTransferObjectsGenerator dataTransferObjectsGenerator = new DataTransferObjectsGenerator(domainModel);
 
-            Klass klass = domainModel.getClassByName("Question");
-            String klassSourceCode = dataTransferObjectsGenerator.getClassSourceCode(klass);
+			Klass klass = domainModel.getClassByName("Question");
+			String klassSourceCode = dataTransferObjectsGenerator.getClassSourceCode(klass);
 
-            this.fileMatchExtension.assertFileContents(this.getClass().getSimpleName() + ".java", klassSourceCode);
-        }
-    }
+			this.fileMatchExtension.assertFileContents(this.getClass().getSimpleName() + ".java", klassSourceCode);
+		}
+	}
 }

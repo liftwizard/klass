@@ -23,9 +23,9 @@ import cool.klass.model.meta.domain.api.Multiplicity;
 import cool.klass.model.meta.domain.api.NamedElement;
 
 public interface Parameter extends NamedElement {
-    @Nonnull
-    DataType getType();
+	@Nonnull
+	DataType getType();
 
-    @Nonnull
-    Multiplicity getMultiplicity();
+	@Nonnull
+	Multiplicity getMultiplicity();
 }

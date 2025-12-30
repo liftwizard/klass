@@ -17,9 +17,9 @@
 package cool.klass.model.meta.domain.api;
 
 public interface Type {
-    String getName();
+	String getName();
 
-    interface TypeGetter {
-        Type getType();
-    }
+	interface TypeGetter {
+		Type getType();
+	}
 }

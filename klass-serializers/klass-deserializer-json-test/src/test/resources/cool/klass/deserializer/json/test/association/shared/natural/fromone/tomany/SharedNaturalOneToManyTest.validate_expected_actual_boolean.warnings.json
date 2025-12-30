@@ -1,4 +1,4 @@
 [
-  "Warning at SharedNaturalOneToManySource.key. Didn't expect to receive value for root key property 'SharedNaturalOneToManySource.key: String' but value was boolean: true.",
-  "Warning at SharedNaturalOneToManySource.targets[0].value. Didn't expect to receive value for outside projection property 'SharedNaturalOneToManyTarget.value: String' but value was boolean: true."
+	"Warning at SharedNaturalOneToManySource.key. Didn't expect to receive value for root key property 'SharedNaturalOneToManySource.key: String' but value was boolean: true.",
+	"Warning at SharedNaturalOneToManySource.targets[0].value. Didn't expect to receive value for outside projection property 'SharedNaturalOneToManyTarget.value: String' but value was boolean: true."
 ]

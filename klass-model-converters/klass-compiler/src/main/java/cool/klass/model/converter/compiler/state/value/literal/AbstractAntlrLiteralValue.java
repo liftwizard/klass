@@ -31,34 +31,34 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public abstract class AbstractAntlrLiteralValue extends AntlrExpressionValue {
 
-    private AntlrType inferredType;
+	private AntlrType inferredType;
 
-    protected AbstractAntlrLiteralValue(
-        @Nonnull ParserRuleContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        @Nonnull IAntlrElement expressionValueOwner
-    ) {
-        super(elementContext, compilationUnit, expressionValueOwner);
-    }
+	protected AbstractAntlrLiteralValue(
+		@Nonnull ParserRuleContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		@Nonnull IAntlrElement expressionValueOwner
+	) {
+		super(elementContext, compilationUnit, expressionValueOwner);
+	}
 
-    @Override
-    @Nonnull
-    public abstract AbstractLiteralValueBuilder<?> build();
+	@Override
+	@Nonnull
+	public abstract AbstractLiteralValueBuilder<?> build();
 
-    @Override
-    @Nonnull
-    public abstract AbstractLiteralValueBuilder<?> getElementBuilder();
+	@Override
+	@Nonnull
+	public abstract AbstractLiteralValueBuilder<?> getElementBuilder();
 
-    @Nonnull
-    @Override
-    public abstract ImmutableList<AntlrType> getPossibleTypes();
+	@Nonnull
+	@Override
+	public abstract ImmutableList<AntlrType> getPossibleTypes();
 
-    protected AntlrType getInferredType() {
-        return Objects.requireNonNull(this.inferredType);
-    }
+	protected AntlrType getInferredType() {
+		return Objects.requireNonNull(this.inferredType);
+	}
 
-    public void setInferredType(AntlrType inferredType) {
-        // TODO: set inferred type
-        this.inferredType = Objects.requireNonNull(inferredType);
-    }
+	public void setInferredType(AntlrType inferredType) {
+		// TODO: set inferred type
+		this.inferredType = Objects.requireNonNull(inferredType);
+	}
 }

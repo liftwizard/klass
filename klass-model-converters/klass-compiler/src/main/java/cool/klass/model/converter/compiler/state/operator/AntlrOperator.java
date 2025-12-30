@@ -33,38 +33,38 @@ import org.eclipse.collections.api.list.ListIterable;
 
 public abstract class AntlrOperator extends AntlrElement {
 
-    protected final String operatorText;
-    protected OperatorAntlrCriteria owningOperatorAntlrCriteria;
+	protected final String operatorText;
+	protected OperatorAntlrCriteria owningOperatorAntlrCriteria;
 
-    protected AntlrOperator(
-        @Nonnull ParserRuleContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        @Nonnull String operatorText
-    ) {
-        super(elementContext, compilationUnit);
-        this.operatorText = Objects.requireNonNull(operatorText);
-    }
+	protected AntlrOperator(
+		@Nonnull ParserRuleContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		@Nonnull String operatorText
+	) {
+		super(elementContext, compilationUnit);
+		this.operatorText = Objects.requireNonNull(operatorText);
+	}
 
-    public void setOwningOperatorAntlrCriteria(OperatorAntlrCriteria operatorAntlrCriteria) {
-        this.owningOperatorAntlrCriteria = Objects.requireNonNull(operatorAntlrCriteria);
-    }
+	public void setOwningOperatorAntlrCriteria(OperatorAntlrCriteria operatorAntlrCriteria) {
+		this.owningOperatorAntlrCriteria = Objects.requireNonNull(operatorAntlrCriteria);
+	}
 
-    @Nonnull
-    @Override
-    public Optional<IAntlrElement> getSurroundingElement() {
-        return Optional.of(this.owningOperatorAntlrCriteria);
-    }
+	@Nonnull
+	@Override
+	public Optional<IAntlrElement> getSurroundingElement() {
+		return Optional.of(this.owningOperatorAntlrCriteria);
+	}
 
-    @Nonnull
-    public abstract AbstractOperatorBuilder<?> build();
+	@Nonnull
+	public abstract AbstractOperatorBuilder<?> build();
 
-    @Override
-    @Nonnull
-    public abstract AbstractOperatorBuilder<?> getElementBuilder();
+	@Override
+	@Nonnull
+	public abstract AbstractOperatorBuilder<?> getElementBuilder();
 
-    public abstract void checkTypes(
-        CompilerAnnotationHolder compilerAnnotationHolder,
-        ListIterable<AntlrType> sourceTypes,
-        ListIterable<AntlrType> targetTypes
-    );
+	public abstract void checkTypes(
+		CompilerAnnotationHolder compilerAnnotationHolder,
+		ListIterable<AntlrType> sourceTypes,
+		ListIterable<AntlrType> targetTypes
+	);
 }

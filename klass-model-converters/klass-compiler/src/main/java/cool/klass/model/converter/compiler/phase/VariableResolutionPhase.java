@@ -30,24 +30,24 @@ import org.eclipse.collections.api.map.OrderedMap;
 // Phase must run after inferring additional parameters like version, in ServicePhase
 public class VariableResolutionPhase extends AbstractCompilerPhase {
 
-    public VariableResolutionPhase(@Nonnull CompilerState compilerState) {
-        super(compilerState);
-    }
+	public VariableResolutionPhase(@Nonnull CompilerState compilerState) {
+		super(compilerState);
+	}
 
-    @Override
-    public void enterUrlDeclaration(@Nonnull UrlDeclarationContext ctx) {
-        super.enterUrlDeclaration(ctx);
+	@Override
+	public void enterUrlDeclaration(@Nonnull UrlDeclarationContext ctx) {
+		super.enterUrlDeclaration(ctx);
 
-        AntlrUrl url = this.compilerState.getCompilerWalk().getUrl();
+		AntlrUrl url = this.compilerState.getCompilerWalk().getUrl();
 
-        OrderedMap<String, AntlrParameter> formalParametersByName = url.getFormalParametersByName();
-        for (AntlrService service : url.getServices()) {
-            for (AntlrServiceCriteria serviceCriteria : service.getServiceCriterias()) {
-                AntlrCriteria criteria = serviceCriteria.getCriteria();
-                criteria.resolveServiceVariables(formalParametersByName);
-                // TODO: ❓ Type inference here?
-                criteria.resolveTypes();
-            }
-        }
-    }
+		OrderedMap<String, AntlrParameter> formalParametersByName = url.getFormalParametersByName();
+		for (AntlrService service : url.getServices()) {
+			for (AntlrServiceCriteria serviceCriteria : service.getServiceCriterias()) {
+				AntlrCriteria criteria = serviceCriteria.getCriteria();
+				criteria.resolveServiceVariables(formalParametersByName);
+				// TODO: ❓ Type inference here?
+				criteria.resolveTypes();
+			}
+		}
+	}
 }

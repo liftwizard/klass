@@ -1,5 +1,8 @@
 .envrc
 JUSTFILE_BRANCH
+
+# Project-specific
+_book
 spy.log
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,maven,intellij+iml,visualstudiocode

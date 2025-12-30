@@ -1,9 +1,9 @@
 {
-  key: [],
-  targetKey: [],
-  value: [],
-  target: {
-    key: [],
-    value: [],
-  },
+	key: [],
+	targetKey: [],
+	value: [],
+	target: {
+		key: [],
+		value: [],
+	},
 }

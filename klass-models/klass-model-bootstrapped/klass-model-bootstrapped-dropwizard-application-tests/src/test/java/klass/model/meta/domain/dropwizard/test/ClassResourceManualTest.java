@@ -22,13 +22,13 @@ import org.junit.jupiter.api.Test;
 
 class ClassResourceManualTest extends AbstractResourceTestCase {
 
-    @Test
-    void getAllMeta() {
-        Class<?> klass = this.getClass();
-        String clientName = klass.getPackage().getName() + '.' + klass.getSimpleName() + '.' + "getAllMeta";
-        Client client = this.getClient(clientName);
-        String resourceClassPathLocation = klass.getSimpleName() + '.' + "getAllMeta" + ".json";
+	@Test
+	void getAllMeta() {
+		Class<?> klass = this.getClass();
+		String clientName = klass.getPackage().getName() + '.' + klass.getSimpleName() + '.' + "getAllMeta";
+		Client client = this.getClient(clientName);
+		String resourceClassPathLocation = klass.getSimpleName() + '.' + "getAllMeta" + ".json";
 
-        this.assertUrlReturns(client, "/meta/class", resourceClassPathLocation);
-    }
+		this.assertUrlReturns(client, "/meta/class", resourceClassPathLocation);
+	}
 }

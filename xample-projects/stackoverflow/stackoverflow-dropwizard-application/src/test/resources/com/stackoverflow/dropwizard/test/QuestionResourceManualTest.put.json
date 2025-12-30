@@ -1,65 +1,65 @@
 {
-  "_metadata": {
-    "criteria": "Question.id = 1",
-    "multiplicity": "1..1",
-    "projection": "com.stackoverflow.QuestionReadProjection",
-    "transactionTimestamp": "2001-01-01T23:59:59Z"
-  },
-  "_data": {
-    "id": 1,
-    "systemFrom": "2001-01-01T23:59:59Z",
-    "systemTo": null,
-    "createdOn": "1999-12-31T23:59:59.999Z",
-    "title": "edited title 1",
-    "body": "edited body 1",
-    "status": "On hold",
-    "deleted": true,
-    "answers": [],
-    "tags": [
-      {
-        "systemFrom": "1999-12-31T23:59:59.999Z",
-        "systemTo": null,
-        "tag": {
-          "name": "test tag 1",
-          "systemFrom": "1999-12-31T23:59:59.999Z",
-          "systemTo": null
-        }
-      },
-      {
-        "systemFrom": "2001-01-01T23:59:59Z",
-        "systemTo": null,
-        "tag": {
-          "name": "test tag 3",
-          "systemFrom": "1999-12-31T23:59:59.999Z",
-          "systemTo": null
-        }
-      }
-    ],
-    "version": {
-      "systemFrom": "2001-01-01T23:59:59Z",
-      "systemTo": null,
-      "createdOn": "1999-12-31T23:59:59.999Z",
-      "number": 3,
-      "createdBy": {
-        "userId": "test user 1",
-        "systemFrom": "1999-12-31T23:59:59.999Z",
-        "systemTo": null
-      },
-      "lastUpdatedBy": {
-        "userId": "test user 1",
-        "systemFrom": "1999-12-31T23:59:59.999Z",
-        "systemTo": null
-      }
-    },
-    "createdBy": {
-      "userId": "test user 1",
-      "systemFrom": "1999-12-31T23:59:59.999Z",
-      "systemTo": null
-    },
-    "lastUpdatedBy": {
-      "userId": "test user 1",
-      "systemFrom": "1999-12-31T23:59:59.999Z",
-      "systemTo": null
-    }
-  }
+	"_metadata": {
+		"criteria": "Question.id = 1",
+		"multiplicity": "1..1",
+		"projection": "com.stackoverflow.QuestionReadProjection",
+		"transactionTimestamp": "2001-01-01T23:59:59Z"
+	},
+	"_data": {
+		"id": 1,
+		"systemFrom": "2001-01-01T23:59:59Z",
+		"systemTo": null,
+		"createdOn": "1999-12-31T23:59:59.999Z",
+		"title": "edited title 1",
+		"body": "edited body 1",
+		"status": "On hold",
+		"deleted": true,
+		"answers": [ ],
+		"tags": [
+			{
+				"systemFrom": "1999-12-31T23:59:59.999Z",
+				"systemTo": null,
+				"tag": {
+					"name": "test tag 1",
+					"systemFrom": "1999-12-31T23:59:59.999Z",
+					"systemTo": null
+				}
+			},
+			{
+				"systemFrom": "2001-01-01T23:59:59Z",
+				"systemTo": null,
+				"tag": {
+					"name": "test tag 3",
+					"systemFrom": "1999-12-31T23:59:59.999Z",
+					"systemTo": null
+				}
+			}
+		],
+		"version": {
+			"systemFrom": "2001-01-01T23:59:59Z",
+			"systemTo": null,
+			"createdOn": "1999-12-31T23:59:59.999Z",
+			"number": 3,
+			"createdBy": {
+				"userId": "test user 1",
+				"systemFrom": "1999-12-31T23:59:59.999Z",
+				"systemTo": null
+			},
+			"lastUpdatedBy": {
+				"userId": "test user 1",
+				"systemFrom": "1999-12-31T23:59:59.999Z",
+				"systemTo": null
+			}
+		},
+		"createdBy": {
+			"userId": "test user 1",
+			"systemFrom": "1999-12-31T23:59:59.999Z",
+			"systemTo": null
+		},
+		"lastUpdatedBy": {
+			"userId": "test user 1",
+			"systemFrom": "1999-12-31T23:59:59.999Z",
+			"systemTo": null
+		}
+	}
 }

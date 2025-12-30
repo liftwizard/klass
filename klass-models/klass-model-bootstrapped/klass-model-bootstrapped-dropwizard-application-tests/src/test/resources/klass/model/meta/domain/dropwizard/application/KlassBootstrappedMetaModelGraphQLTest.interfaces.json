@@ -1,118 +1,118 @@
 {
-  "data": {
-    "interfaces": [
-      {
-        "name": "Element",
-        "packageName": "klass.model.meta.domain",
-        "superInterfaces": [],
-        "classifierModifiers": [],
-        "dataTypeProperties": []
-      },
-      {
-        "name": "NamedElement",
-        "packageName": "klass.model.meta.domain",
-        "superInterfaces": [
-          {
-            "superInterface": {
-              "name": "Element"
-            }
-          }
-        ],
-        "classifierModifiers": [],
-        "dataTypeProperties": [
-          {
-            "__typename": "PrimitiveProperty",
-            "name": "name",
-            "optional": false,
-            "minLengthValidation": null,
-            "maxLengthValidation": {
-              "number": 256
-            },
-            "propertyModifiers": [
-              {
-                "keyword": "key"
-              }
-            ],
-            "primitiveType": "STRING",
-            "minValidation": null,
-            "maxValidation": null
-          },
-          {
-            "__typename": "PrimitiveProperty",
-            "name": "ordinal",
-            "optional": false,
-            "minLengthValidation": null,
-            "maxLengthValidation": null,
-            "propertyModifiers": [
-              {
-                "keyword": "private"
-              }
-            ],
-            "primitiveType": "INTEGER",
-            "minValidation": null,
-            "maxValidation": null
-          }
-        ]
-      },
-      {
-        "name": "NumericPropertyValidation",
-        "packageName": "klass.model.meta.domain",
-        "superInterfaces": [
-          {
-            "superInterface": {
-              "name": "Element"
-            }
-          }
-        ],
-        "classifierModifiers": [],
-        "dataTypeProperties": [
-          {
-            "__typename": "PrimitiveProperty",
-            "name": "classifierName",
-            "optional": false,
-            "minLengthValidation": null,
-            "maxLengthValidation": {
-              "number": 256
-            },
-            "propertyModifiers": [
-              {
-                "keyword": "key"
-              }
-            ],
-            "primitiveType": "STRING",
-            "minValidation": null,
-            "maxValidation": null
-          },
-          {
-            "__typename": "PrimitiveProperty",
-            "name": "propertyName",
-            "optional": false,
-            "minLengthValidation": null,
-            "maxLengthValidation": {
-              "number": 256
-            },
-            "propertyModifiers": [
-              {
-                "keyword": "key"
-              }
-            ],
-            "primitiveType": "STRING",
-            "minValidation": null,
-            "maxValidation": null
-          },
-          {
-            "__typename": "PrimitiveProperty",
-            "name": "number",
-            "optional": false,
-            "minLengthValidation": null,
-            "maxLengthValidation": null,
-            "propertyModifiers": [],
-            "primitiveType": "INTEGER",
-            "minValidation": null,
-            "maxValidation": null
-          }
-        ]
-      }
-    ]
-  }
+	"data": {
+		"interfaces": [
+			{
+				"name": "Element",
+				"packageName": "klass.model.meta.domain",
+				"superInterfaces": [ ],
+				"classifierModifiers": [ ],
+				"dataTypeProperties": [ ]
+			},
+			{
+				"name": "NamedElement",
+				"packageName": "klass.model.meta.domain",
+				"superInterfaces": [
+					{
+						"superInterface": {
+							"name": "Element"
+						}
+					}
+				],
+				"classifierModifiers": [ ],
+				"dataTypeProperties": [
+					{
+						"__typename": "PrimitiveProperty",
+						"name": "name",
+						"optional": false,
+						"minLengthValidation": null,
+						"maxLengthValidation": {
+							"number": 256
+						},
+						"propertyModifiers": [
+							{
+								"keyword": "key"
+							}
+						],
+						"primitiveType": "STRING",
+						"minValidation": null,
+						"maxValidation": null
+					},
+					{
+						"__typename": "PrimitiveProperty",
+						"name": "ordinal",
+						"optional": false,
+						"minLengthValidation": null,
+						"maxLengthValidation": null,
+						"propertyModifiers": [
+							{
+								"keyword": "private"
+							}
+						],
+						"primitiveType": "INTEGER",
+						"minValidation": null,
+						"maxValidation": null
+					}
+				]
+			},
+			{
+				"name": "NumericPropertyValidation",
+				"packageName": "klass.model.meta.domain",
+				"superInterfaces": [
+					{
+						"superInterface": {
+							"name": "Element"
+						}
+					}
+				],
+				"classifierModifiers": [ ],
+				"dataTypeProperties": [
+					{
+						"__typename": "PrimitiveProperty",
+						"name": "classifierName",
+						"optional": false,
+						"minLengthValidation": null,
+						"maxLengthValidation": {
+							"number": 256
+						},
+						"propertyModifiers": [
+							{
+								"keyword": "key"
+							}
+						],
+						"primitiveType": "STRING",
+						"minValidation": null,
+						"maxValidation": null
+					},
+					{
+						"__typename": "PrimitiveProperty",
+						"name": "propertyName",
+						"optional": false,
+						"minLengthValidation": null,
+						"maxLengthValidation": {
+							"number": 256
+						},
+						"propertyModifiers": [
+							{
+								"keyword": "key"
+							}
+						],
+						"primitiveType": "STRING",
+						"minValidation": null,
+						"maxValidation": null
+					},
+					{
+						"__typename": "PrimitiveProperty",
+						"name": "number",
+						"optional": false,
+						"minLengthValidation": null,
+						"maxLengthValidation": null,
+						"propertyModifiers": [ ],
+						"primitiveType": "INTEGER",
+						"minValidation": null,
+						"maxValidation": null
+					}
+				]
+			}
+		]
+	}
 }

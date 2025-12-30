@@ -30,33 +30,33 @@ import cool.klass.reladomo.persistent.writer.test.AbstractValidatorTest;
 
 public abstract class AbstractUpdateValidatorTest extends AbstractValidatorTest {
 
-    @Override
-    protected final void validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance) {
-        ObjectNodeTypeCheckingValidator.validate(this.actualErrors, incomingInstance, this.getKlass());
+	@Override
+	protected final void validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance) {
+		ObjectNodeTypeCheckingValidator.validate(this.actualErrors, incomingInstance, this.getKlass());
 
-        RequiredPropertiesValidator.validate(
-            this.actualErrors,
-            this.actualWarnings,
-            this.getKlass(),
-            incomingInstance,
-            this.getMode()
-        );
+		RequiredPropertiesValidator.validate(
+			this.actualErrors,
+			this.actualWarnings,
+			this.getKlass(),
+			incomingInstance,
+			this.getMode()
+		);
 
-        MutationContext mutationContext = new MutationContext(
-            Optional.of("test user 1"),
-            Instant.parse("1999-12-31T23:59:59.999Z"),
-            this.getPropertyDataFromUrl()
-        );
+		MutationContext mutationContext = new MutationContext(
+			Optional.of("test user 1"),
+			Instant.parse("1999-12-31T23:59:59.999Z"),
+			this.getPropertyDataFromUrl()
+		);
 
-        IncomingUpdateDataModelValidator.validate(
-            this.reladomoDataStore,
-            this.domainModel.getUserClass().get(),
-            this.getKlass(),
-            mutationContext,
-            persistentInstance,
-            incomingInstance,
-            this.actualErrors,
-            this.actualWarnings
-        );
-    }
+		IncomingUpdateDataModelValidator.validate(
+			this.reladomoDataStore,
+			this.domainModel.getUserClass().get(),
+			this.getKlass(),
+			mutationContext,
+			persistentInstance,
+			incomingInstance,
+			this.actualErrors,
+			this.actualWarnings
+		);
+	}
 }

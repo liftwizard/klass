@@ -33,61 +33,61 @@ import cool.klass.model.meta.domain.api.value.literal.NullLiteral;
 
 public class OperationCriteriaVisitor implements CriteriaVisitor {
 
-    private final String finderName;
-    private final StringBuilder stringBuilder;
+	private final String finderName;
+	private final StringBuilder stringBuilder;
 
-    public OperationCriteriaVisitor(@Nonnull String finderName, @Nonnull StringBuilder stringBuilder) {
-        this.finderName = Objects.requireNonNull(finderName);
-        this.stringBuilder = Objects.requireNonNull(stringBuilder);
-    }
+	public OperationCriteriaVisitor(@Nonnull String finderName, @Nonnull StringBuilder stringBuilder) {
+		this.finderName = Objects.requireNonNull(finderName);
+		this.stringBuilder = Objects.requireNonNull(stringBuilder);
+	}
 
-    @Override
-    public void visitAll(@Nonnull AllCriteria allCriteria) {
-        this.stringBuilder.append(this.finderName).append(".all()");
-    }
+	@Override
+	public void visitAll(@Nonnull AllCriteria allCriteria) {
+		this.stringBuilder.append(this.finderName).append(".all()");
+	}
 
-    @Override
-    public void visitAnd(@Nonnull AndCriteria andCriteria) {
-        andCriteria.getLeft().visit(this);
-        this.stringBuilder.append("\n                .and(");
-        andCriteria.getRight().visit(this);
-        this.stringBuilder.append(")");
-    }
+	@Override
+	public void visitAnd(@Nonnull AndCriteria andCriteria) {
+		andCriteria.getLeft().visit(this);
+		this.stringBuilder.append("\n                .and(");
+		andCriteria.getRight().visit(this);
+		this.stringBuilder.append(")");
+	}
 
-    @Override
-    public void visitOr(@Nonnull OrCriteria orCriteria) {
-        orCriteria.getLeft().visit(this);
-        this.stringBuilder.append("\n                .or(");
-        orCriteria.getRight().visit(this);
-        this.stringBuilder.append(")");
-    }
+	@Override
+	public void visitOr(@Nonnull OrCriteria orCriteria) {
+		orCriteria.getLeft().visit(this);
+		this.stringBuilder.append("\n                .or(");
+		orCriteria.getRight().visit(this);
+		this.stringBuilder.append(")");
+	}
 
-    @Override
-    public void visitOperator(@Nonnull OperatorCriteria operatorCriteria) {
-        ExpressionValue sourceValue = operatorCriteria.getSourceValue();
-        Operator operator = operatorCriteria.getOperator();
-        ExpressionValue targetValue = operatorCriteria.getTargetValue();
+	@Override
+	public void visitOperator(@Nonnull OperatorCriteria operatorCriteria) {
+		ExpressionValue sourceValue = operatorCriteria.getSourceValue();
+		Operator operator = operatorCriteria.getOperator();
+		ExpressionValue targetValue = operatorCriteria.getTargetValue();
 
-        sourceValue.visit(new OperationExpressionValueVisitor(this.finderName, this.stringBuilder));
+		sourceValue.visit(new OperationExpressionValueVisitor(this.finderName, this.stringBuilder));
 
-        if (targetValue instanceof NullLiteral) {
-            String operatorText = operator.getOperatorText();
-            switch (operatorText) {
-                case "==" -> this.stringBuilder.append(".isNull()");
-                case "!=" -> this.stringBuilder.append(".isNotNull()");
-                default -> throw new AssertionError("Unexpected operator with null literal: " + operatorText);
-            }
-        } else {
-            operator.visit(new OperationOperatorVisitor(this.stringBuilder));
-            targetValue.visit(new OperationExpressionValueVisitor(this.finderName, this.stringBuilder));
-            this.stringBuilder.append(")");
-        }
-    }
+		if (targetValue instanceof NullLiteral) {
+			String operatorText = operator.getOperatorText();
+			switch (operatorText) {
+				case "==" -> this.stringBuilder.append(".isNull()");
+				case "!=" -> this.stringBuilder.append(".isNotNull()");
+				default -> throw new AssertionError("Unexpected operator with null literal: " + operatorText);
+			}
+		} else {
+			operator.visit(new OperationOperatorVisitor(this.stringBuilder));
+			targetValue.visit(new OperationExpressionValueVisitor(this.finderName, this.stringBuilder));
+			this.stringBuilder.append(")");
+		}
+	}
 
-    @Override
-    public void visitEdgePoint(@Nonnull EdgePointCriteria edgePointCriteria) {
-        MemberReferencePath memberExpressionValue = edgePointCriteria.getMemberExpressionValue();
-        memberExpressionValue.visit(new OperationExpressionValueVisitor(this.finderName, this.stringBuilder));
-        this.stringBuilder.append(".equalsEdgePoint()");
-    }
+	@Override
+	public void visitEdgePoint(@Nonnull EdgePointCriteria edgePointCriteria) {
+		MemberReferencePath memberExpressionValue = edgePointCriteria.getMemberExpressionValue();
+		memberExpressionValue.visit(new OperationExpressionValueVisitor(this.finderName, this.stringBuilder));
+		this.stringBuilder.append(".equalsEdgePoint()");
+	}
 }

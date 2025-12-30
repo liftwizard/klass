@@ -1,6 +1,6 @@
 [
-  "Warning at SharedNaturalOneToManySource.targets[0].value. Didn't expect to receive value for outside projection property 'SharedNaturalOneToManyTarget.value: String' but value was string: \"value 1\".",
-  "Warning at SharedNaturalOneToManySource.targets[0]. Didn't expect to receive value for opposite association end 'SharedNaturalOneToManyTarget.source: SharedNaturalOneToManySource[1..1]' but value was object: {\"key\":\"key\",\"value\":\"value\"}.",
-  "Warning at SharedNaturalOneToManySource.targets[1].value. Didn't expect to receive value for outside projection property 'SharedNaturalOneToManyTarget.value: String' but value was string: \"value 2\".",
-  "Warning at SharedNaturalOneToManySource.targets[1]. Didn't expect to receive value for opposite association end 'SharedNaturalOneToManyTarget.source: SharedNaturalOneToManySource[1..1]' but value was object: {\"key\":\"key\",\"value\":\"value\"}."
+	"Warning at SharedNaturalOneToManySource.targets[0].value. Didn't expect to receive value for outside projection property 'SharedNaturalOneToManyTarget.value: String' but value was string: \"value 1\".",
+	"Warning at SharedNaturalOneToManySource.targets[0]. Didn't expect to receive value for opposite association end 'SharedNaturalOneToManyTarget.source: SharedNaturalOneToManySource[1..1]' but value was object: {\"key\":\"key\",\"value\":\"value\"}.",
+	"Warning at SharedNaturalOneToManySource.targets[1].value. Didn't expect to receive value for outside projection property 'SharedNaturalOneToManyTarget.value: String' but value was string: \"value 2\".",
+	"Warning at SharedNaturalOneToManySource.targets[1]. Didn't expect to receive value for opposite association end 'SharedNaturalOneToManyTarget.source: SharedNaturalOneToManySource[1..1]' but value was object: {\"key\":\"key\",\"value\":\"value\"}."
 ]

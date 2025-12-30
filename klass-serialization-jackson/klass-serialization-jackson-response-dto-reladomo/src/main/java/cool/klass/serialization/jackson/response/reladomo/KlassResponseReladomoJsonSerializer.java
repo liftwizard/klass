@@ -34,101 +34,101 @@ import cool.klass.serialization.jackson.response.KlassResponseMetadata;
 // TODO: Split into one for non-null lists and one for nullable MithraObjects
 public class KlassResponseReladomoJsonSerializer extends JsonSerializer<KlassResponse> {
 
-    @Nonnull
-    private final DomainModel domainModel;
+	@Nonnull
+	private final DomainModel domainModel;
 
-    @Nonnull
-    private final DataStore dataStore;
+	@Nonnull
+	private final DataStore dataStore;
 
-    public KlassResponseReladomoJsonSerializer(@Nonnull DomainModel domainModel, @Nonnull DataStore dataStore) {
-        this.domainModel = Objects.requireNonNull(domainModel);
-        this.dataStore = Objects.requireNonNull(dataStore);
-    }
+	public KlassResponseReladomoJsonSerializer(@Nonnull DomainModel domainModel, @Nonnull DataStore dataStore) {
+		this.domainModel = Objects.requireNonNull(domainModel);
+		this.dataStore = Objects.requireNonNull(dataStore);
+	}
 
-    @Override
-    public void serialize(
-        @Nonnull KlassResponse klassResponse,
-        @Nonnull JsonGenerator jsonGenerator,
-        @Nonnull SerializerProvider serializerProvider
-    ) throws IOException {
-        Class<?> activeViewClass = serializerProvider.getActiveView();
-        if (activeViewClass != null) {
-            String detailMessage = "Expected no active view while serializing KlassResponse but got %s".formatted(
-                activeViewClass.getCanonicalName()
-            );
-            throw new IllegalStateException(detailMessage);
-        }
+	@Override
+	public void serialize(
+		@Nonnull KlassResponse klassResponse,
+		@Nonnull JsonGenerator jsonGenerator,
+		@Nonnull SerializerProvider serializerProvider
+	) throws IOException {
+		Class<?> activeViewClass = serializerProvider.getActiveView();
+		if (activeViewClass != null) {
+			String detailMessage = "Expected no active view while serializing KlassResponse but got %s".formatted(
+				activeViewClass.getCanonicalName()
+			);
+			throw new IllegalStateException(detailMessage);
+		}
 
-        KlassResponseMetadata metadata = klassResponse.getMetadata();
+		KlassResponseMetadata metadata = klassResponse.getMetadata();
 
-        jsonGenerator.writeStartObject();
-        try {
-            jsonGenerator.writeObjectField("_metadata", metadata);
-            this.serializeData(klassResponse, jsonGenerator, serializerProvider);
-        } finally {
-            jsonGenerator.writeEndObject();
-        }
-    }
+		jsonGenerator.writeStartObject();
+		try {
+			jsonGenerator.writeObjectField("_metadata", metadata);
+			this.serializeData(klassResponse, jsonGenerator, serializerProvider);
+		} finally {
+			jsonGenerator.writeEndObject();
+		}
+	}
 
-    private void serializeData(
-        @Nonnull KlassResponse klassResponse,
-        @Nonnull JsonGenerator jsonGenerator,
-        @Nonnull SerializerProvider serializerProvider
-    ) throws IOException {
-        if (klassResponse.getMetadata().getMultiplicity().isToOne()) {
-            this.serializeDataOne(klassResponse, jsonGenerator, serializerProvider);
-        } else {
-            this.serializeDataMany(klassResponse, jsonGenerator, serializerProvider);
-        }
-    }
+	private void serializeData(
+		@Nonnull KlassResponse klassResponse,
+		@Nonnull JsonGenerator jsonGenerator,
+		@Nonnull SerializerProvider serializerProvider
+	) throws IOException {
+		if (klassResponse.getMetadata().getMultiplicity().isToOne()) {
+			this.serializeDataOne(klassResponse, jsonGenerator, serializerProvider);
+		} else {
+			this.serializeDataMany(klassResponse, jsonGenerator, serializerProvider);
+		}
+	}
 
-    private void serializeDataOne(
-        @Nonnull KlassResponse klassResponse,
-        @Nonnull JsonGenerator jsonGenerator,
-        @Nonnull SerializerProvider serializerProvider
-    ) throws IOException {
-        MithraObject mithraObject = (MithraObject) klassResponse.getData();
+	private void serializeDataOne(
+		@Nonnull KlassResponse klassResponse,
+		@Nonnull JsonGenerator jsonGenerator,
+		@Nonnull SerializerProvider serializerProvider
+	) throws IOException {
+		MithraObject mithraObject = (MithraObject) klassResponse.getData();
 
-        if (mithraObject == null) {
-            jsonGenerator.writeNullField("_data");
-            return;
-        }
+		if (mithraObject == null) {
+			jsonGenerator.writeNullField("_data");
+			return;
+		}
 
-        jsonGenerator.writeFieldName("_data");
-        ReladomoContextJsonSerializer reladomoJsonSerializer = this.getReladomoContextJsonSerializer(klassResponse);
-        reladomoJsonSerializer.serialize(mithraObject, jsonGenerator, serializerProvider);
-    }
+		jsonGenerator.writeFieldName("_data");
+		ReladomoContextJsonSerializer reladomoJsonSerializer = this.getReladomoContextJsonSerializer(klassResponse);
+		reladomoJsonSerializer.serialize(mithraObject, jsonGenerator, serializerProvider);
+	}
 
-    private void serializeDataMany(
-        @Nonnull KlassResponse klassResponse,
-        @Nonnull JsonGenerator jsonGenerator,
-        @Nonnull SerializerProvider serializerProvider
-    ) throws IOException {
-        Object data = klassResponse.getData();
-        if (!(data instanceof List<?>)) {
-            String detailMessage = "%s cannot be cast to %s".formatted(
-                data.getClass().getCanonicalName(),
-                List.class.getCanonicalName()
-            );
-            throw new ClassCastException(detailMessage);
-        }
+	private void serializeDataMany(
+		@Nonnull KlassResponse klassResponse,
+		@Nonnull JsonGenerator jsonGenerator,
+		@Nonnull SerializerProvider serializerProvider
+	) throws IOException {
+		Object data = klassResponse.getData();
+		if (!(data instanceof List<?>)) {
+			String detailMessage = "%s cannot be cast to %s".formatted(
+				data.getClass().getCanonicalName(),
+				List.class.getCanonicalName()
+			);
+			throw new ClassCastException(detailMessage);
+		}
 
-        List<MithraObject> mithraList = (List<MithraObject>) data;
-        jsonGenerator.writeArrayFieldStart("_data");
-        try {
-            ReladomoContextJsonSerializer reladomoJsonSerializer = this.getReladomoContextJsonSerializer(klassResponse);
-            for (MithraObject eachMithraObject : mithraList) {
-                reladomoJsonSerializer.serialize(eachMithraObject, jsonGenerator, serializerProvider);
-            }
-        } finally {
-            jsonGenerator.writeEndArray();
-        }
-    }
+		List<MithraObject> mithraList = (List<MithraObject>) data;
+		jsonGenerator.writeArrayFieldStart("_data");
+		try {
+			ReladomoContextJsonSerializer reladomoJsonSerializer = this.getReladomoContextJsonSerializer(klassResponse);
+			for (MithraObject eachMithraObject : mithraList) {
+				reladomoJsonSerializer.serialize(eachMithraObject, jsonGenerator, serializerProvider);
+			}
+		} finally {
+			jsonGenerator.writeEndArray();
+		}
+	}
 
-    @Nonnull
-    private ReladomoContextJsonSerializer getReladomoContextJsonSerializer(@Nonnull KlassResponse klassResponse) {
-        KlassResponseMetadata metadata = klassResponse.getMetadata();
+	@Nonnull
+	private ReladomoContextJsonSerializer getReladomoContextJsonSerializer(@Nonnull KlassResponse klassResponse) {
+		KlassResponseMetadata metadata = klassResponse.getMetadata();
 
-        return new ReladomoContextJsonSerializer(this.domainModel, this.dataStore, metadata);
-    }
+		return new ReladomoContextJsonSerializer(this.domainModel, this.dataStore, metadata);
+	}
 }

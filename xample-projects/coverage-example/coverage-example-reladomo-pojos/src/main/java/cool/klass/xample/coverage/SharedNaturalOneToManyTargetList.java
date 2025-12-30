@@ -22,17 +22,17 @@ import com.gs.fw.finder.Operation;
 
 public class SharedNaturalOneToManyTargetList extends SharedNaturalOneToManyTargetListAbstract {
 
-    public SharedNaturalOneToManyTargetList() {}
+	public SharedNaturalOneToManyTargetList() {}
 
-    public SharedNaturalOneToManyTargetList(int initialSize) {
-        super(initialSize);
-    }
+	public SharedNaturalOneToManyTargetList(int initialSize) {
+		super(initialSize);
+	}
 
-    public SharedNaturalOneToManyTargetList(Collection c) {
-        super(c);
-    }
+	public SharedNaturalOneToManyTargetList(Collection c) {
+		super(c);
+	}
 
-    public SharedNaturalOneToManyTargetList(Operation operation) {
-        super(operation);
-    }
+	public SharedNaturalOneToManyTargetList(Operation operation) {
+		super(operation);
+	}
 }

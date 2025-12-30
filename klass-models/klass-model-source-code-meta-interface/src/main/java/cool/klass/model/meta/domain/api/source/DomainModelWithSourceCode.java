@@ -37,16 +37,16 @@ import org.eclipse.collections.api.list.ImmutableList;
  * {@link #getServiceGroups()}
  */
 public interface DomainModelWithSourceCode extends DomainModel {
-    @Override
-    TopLevelElementWithSourceCode getTopLevelElementByName(String topLevelElementName);
+	@Override
+	TopLevelElementWithSourceCode getTopLevelElementByName(String topLevelElementName);
 
-    ImmutableList<SourceCode> getSourceCodes();
+	ImmutableList<SourceCode> getSourceCodes();
 
-    Optional<TokenCategory> getTokenCategory(Token token);
+	Optional<TokenCategory> getTokenCategory(Token token);
 
-    @Nonnull
-    Optional<ElementWithSourceCode> getElementByReference(Token token);
+	@Nonnull
+	Optional<ElementWithSourceCode> getElementByReference(Token token);
 
-    @Nonnull
-    Optional<ElementWithSourceCode> getElementByDeclaration(Token token);
+	@Nonnull
+	Optional<ElementWithSourceCode> getElementByDeclaration(Token token);
 }
