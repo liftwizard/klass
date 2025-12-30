@@ -8,8 +8,8 @@ Alice POSTs a new question to `/api/question` on December 31.
 
 ```json
 {
-    "title": "example title",
-    "body": "example body"
+	"title": "example title",
+	"body": "example body"
 }
 ```
 
@@ -19,23 +19,23 @@ She can GET http://.../api/question/1 to get the full body.
 
 ```json
 {
-    "id": 1,
-    "title": "example title",
-    "body": "example body",
-    "systemFrom": "2017-12-31T23:59:59.000Z",
-    "systemTo": null,
-    "createdById": "Alice",
-    "createdOn": "2017-12-31T23:59:59.000Z",
-    "lastUpdatedById": "Alice",
-    "answers": [],
-    "version": {
-        "number": 1,
-        "systemFrom": "2017-12-31T23:59:59.000Z",
-        "systemTo": null,
-        "createdById": "Alice",
-        "createdOn": "2017-12-31T23:59:59.000Z",
-        "lastUpdatedById": "Alice"
-    }
+	"id": 1,
+	"title": "example title",
+	"body": "example body",
+	"systemFrom": "2017-12-31T23:59:59.000Z",
+	"systemTo": null,
+	"createdById": "Alice",
+	"createdOn": "2017-12-31T23:59:59.000Z",
+	"lastUpdatedById": "Alice",
+	"answers": [],
+	"version": {
+		"number": 1,
+		"systemFrom": "2017-12-31T23:59:59.000Z",
+		"systemTo": null,
+		"createdById": "Alice",
+		"createdOn": "2017-12-31T23:59:59.000Z",
+		"lastUpdatedById": "Alice"
+	}
 }
 ```
 
@@ -51,11 +51,11 @@ Bob PUTs a new version to `/api/question/1` the next day, on January 1.
 
 ```json
 {
-    "title": "edited title",
-    "body": "edited body",
-    "version": {
-        "number": 1
-    }
+	"title": "edited title",
+	"body": "edited body",
+	"version": {
+		"number": 1
+	}
 }
 ```
 
@@ -65,23 +65,23 @@ He can GET http://.../api/question/1 to get the full body.
 
 ```json
 {
-    "id": 1,
-    "title": "edited title",
-    "body": "edited body",
-    "systemFrom": "2018-01-01T23:59:59.000Z",
-    "systemTo": null,
-    "createdById": "Alice",
-    "createdOn": "2017-12-31T23:59:59.000Z",
-    "lastUpdatedById": "Bob",
-    "answers": [],
-    "version": {
-        "number": 2,
-        "systemFrom": "2018-01-01T23:59:59.000Z",
-        "systemTo": null,
-        "createdById": "Alice",
-        "createdOn": "2017-12-31T23:59:59.000Z",
-        "lastUpdatedById": "Bob"
-    }
+	"id": 1,
+	"title": "edited title",
+	"body": "edited body",
+	"systemFrom": "2018-01-01T23:59:59.000Z",
+	"systemTo": null,
+	"createdById": "Alice",
+	"createdOn": "2017-12-31T23:59:59.000Z",
+	"lastUpdatedById": "Bob",
+	"answers": [],
+	"version": {
+		"number": 2,
+		"systemFrom": "2018-01-01T23:59:59.000Z",
+		"systemTo": null,
+		"createdById": "Alice",
+		"createdOn": "2017-12-31T23:59:59.000Z",
+		"lastUpdatedById": "Bob"
+	}
 }
 ```
 
@@ -113,23 +113,23 @@ Leaving off the version query parameter would give the latest version. But now w
 
 ```json
 {
-    "id": 1,
-    "title": "example title",
-    "body": "example body",
-    "systemFrom": "2017-12-31T23:59:59.000Z",
-    "systemTo": "2018-01-01T23:59:59.000Z",
-    "createdById": "Alice",
-    "createdOn": "2017-12-31T23:59:59.000Z",
-    "lastUpdatedById": "Alice",
-    "answers": [],
-    "version": {
-        "number": 1,
-        "systemFrom": "2017-12-31T23:59:59.000Z",
-        "systemTo": "2018-01-01T23:59:59.000Z",
-        "createdById": "Alice",
-        "createdOn": "2017-12-31T23:59:59.000Z",
-        "lastUpdatedById": "Alice"
-    }
+	"id": 1,
+	"title": "example title",
+	"body": "example body",
+	"systemFrom": "2017-12-31T23:59:59.000Z",
+	"systemTo": "2018-01-01T23:59:59.000Z",
+	"createdById": "Alice",
+	"createdOn": "2017-12-31T23:59:59.000Z",
+	"lastUpdatedById": "Alice",
+	"answers": [],
+	"version": {
+		"number": 1,
+		"systemFrom": "2017-12-31T23:59:59.000Z",
+		"systemTo": "2018-01-01T23:59:59.000Z",
+		"createdById": "Alice",
+		"createdOn": "2017-12-31T23:59:59.000Z",
+		"lastUpdatedById": "Alice"
+	}
 }
 ```
 

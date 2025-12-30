@@ -25,37 +25,37 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 
 public enum OrderByDirection {
-    ASCENDING("ascending"),
-    DESCENDING("descending");
+	ASCENDING("ascending"),
+	DESCENDING("descending");
 
-    public static final ImmutableList<OrderByDirection> ORDER_BY_DIRECTIONS = Lists.immutable.with(
-        ASCENDING,
-        DESCENDING
-    );
+	public static final ImmutableList<OrderByDirection> ORDER_BY_DIRECTIONS = Lists.immutable.with(
+		ASCENDING,
+		DESCENDING
+	);
 
-    private static final ImmutableMap<String, OrderByDirection> BY_PRETTY_NAME = ORDER_BY_DIRECTIONS.groupByUniqueKey(
-        OrderByDirection::getPrettyName
-    );
+	private static final ImmutableMap<String, OrderByDirection> BY_PRETTY_NAME = ORDER_BY_DIRECTIONS.groupByUniqueKey(
+		OrderByDirection::getPrettyName
+	);
 
-    @Nonnull
-    private final String prettyName;
+	@Nonnull
+	private final String prettyName;
 
-    OrderByDirection(@Nonnull String prettyName) {
-        this.prettyName = prettyName;
-    }
+	OrderByDirection(@Nonnull String prettyName) {
+		this.prettyName = prettyName;
+	}
 
-    public static OrderByDirection byPrettyName(String name) {
-        return Objects.requireNonNull(BY_PRETTY_NAME.get(name));
-    }
+	public static OrderByDirection byPrettyName(String name) {
+		return Objects.requireNonNull(BY_PRETTY_NAME.get(name));
+	}
 
-    @Nonnull
-    public String getPrettyName() {
-        return this.prettyName;
-    }
+	@Nonnull
+	public String getPrettyName() {
+		return this.prettyName;
+	}
 
-    @Nonnull
-    @Override
-    public String toString() {
-        return this.getPrettyName();
-    }
+	@Nonnull
+	@Override
+	public String toString() {
+		return this.getPrettyName();
+	}
 }

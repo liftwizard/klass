@@ -30,62 +30,62 @@ import cool.klass.model.meta.grammar.KlassParser.UrlConstantContext;
 
 public final class UrlConstantImpl extends AbstractOrdinalElement {
 
-    @Nonnull
-    private final String name;
+	@Nonnull
+	private final String name;
 
-    private UrlConstantImpl(
-        @Nonnull UrlConstantContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        int ordinal,
-        @Nonnull String name
-    ) {
-        super(elementContext, macroElement, sourceCode, ordinal);
-        this.name = Objects.requireNonNull(name);
-    }
+	private UrlConstantImpl(
+		@Nonnull UrlConstantContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		int ordinal,
+		@Nonnull String name
+	) {
+		super(elementContext, macroElement, sourceCode, ordinal);
+		this.name = Objects.requireNonNull(name);
+	}
 
-    @Nonnull
-    @Override
-    public UrlConstantContext getElementContext() {
-        return (UrlConstantContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public UrlConstantContext getElementContext() {
+		return (UrlConstantContext) super.getElementContext();
+	}
 
-    @Nonnull
-    public String getName() {
-        return this.name;
-    }
+	@Nonnull
+	public String getName() {
+		return this.name;
+	}
 
-    @Override
-    public String toString() {
-        return this.name;
-    }
+	@Override
+	public String toString() {
+		return this.name;
+	}
 
-    public static final class UrlConstantBuilder extends OrdinalElementBuilder<UrlConstantImpl> {
+	public static final class UrlConstantBuilder extends OrdinalElementBuilder<UrlConstantImpl> {
 
-        @Nonnull
-        private final String name;
+		@Nonnull
+		private final String name;
 
-        public UrlConstantBuilder(
-            @Nonnull UrlConstantContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            int ordinal,
-            @Nonnull String name
-        ) {
-            super(elementContext, macroElement, sourceCode, ordinal);
-            this.name = Objects.requireNonNull(name);
-        }
+		public UrlConstantBuilder(
+			@Nonnull UrlConstantContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			int ordinal,
+			@Nonnull String name
+		) {
+			super(elementContext, macroElement, sourceCode, ordinal);
+			this.name = Objects.requireNonNull(name);
+		}
 
-        @Override
-        @Nonnull
-        protected UrlConstantImpl buildUnsafe() {
-            return new UrlConstantImpl(
-                (UrlConstantContext) this.elementContext,
-                this.macroElement.map(ElementBuilder::getElement),
-                this.sourceCode.build(),
-                this.ordinal,
-                this.name
-            );
-        }
-    }
+		@Override
+		@Nonnull
+		protected UrlConstantImpl buildUnsafe() {
+			return new UrlConstantImpl(
+				(UrlConstantContext) this.elementContext,
+				this.macroElement.map(ElementBuilder::getElement),
+				this.sourceCode.build(),
+				this.ordinal,
+				this.name
+			);
+		}
+	}
 }

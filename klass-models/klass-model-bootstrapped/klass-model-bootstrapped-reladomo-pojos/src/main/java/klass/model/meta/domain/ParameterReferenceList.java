@@ -22,17 +22,17 @@ import com.gs.fw.finder.Operation;
 
 public class ParameterReferenceList extends ParameterReferenceListAbstract {
 
-    public ParameterReferenceList() {}
+	public ParameterReferenceList() {}
 
-    public ParameterReferenceList(int initialSize) {
-        super(initialSize);
-    }
+	public ParameterReferenceList(int initialSize) {
+		super(initialSize);
+	}
 
-    public ParameterReferenceList(Collection c) {
-        super(c);
-    }
+	public ParameterReferenceList(Collection c) {
+		super(c);
+	}
 
-    public ParameterReferenceList(Operation operation) {
-        super(operation);
-    }
+	public ParameterReferenceList(Operation operation) {
+		super(operation);
+	}
 }

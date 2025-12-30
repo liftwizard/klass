@@ -21,15 +21,15 @@ import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 
 public abstract class ProjectionWithReferencePropertyReladomoNode extends AbstractProjectionElementReladomoNode {
 
-    protected ProjectionWithReferencePropertyReladomoNode(String name) {
-        super(name);
-    }
+	protected ProjectionWithReferencePropertyReladomoNode(String name) {
+		super(name);
+	}
 
-    @Override
-    public abstract Classifier getOwningClassifier();
+	@Override
+	public abstract Classifier getOwningClassifier();
 
-    @Override
-    public abstract Classifier getType();
+	@Override
+	public abstract Classifier getType();
 
-    public abstract ReferenceProperty getReferenceProperty();
+	public abstract ReferenceProperty getReferenceProperty();
 }

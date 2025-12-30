@@ -36,48 +36,48 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(LogMarkerTestExtension.class)
 class KlassCompilerTest {
 
-    @Test
-    void stackOverflow() {
-        this.assertNoCompilerErrors("/com/stackoverflow/stackoverflow.klass");
-    }
+	@Test
+	void stackOverflow() {
+		this.assertNoCompilerErrors("/com/stackoverflow/stackoverflow.klass");
+	}
 
-    @Test
-    void factorioPrints() {
-        this.assertNoCompilerErrors("factorio-prints.klass");
-    }
+	@Test
+	void factorioPrints() {
+		this.assertNoCompilerErrors("factorio-prints.klass");
+	}
 
-    @Test
-    void emoji() {
-        this.assertNoCompilerErrors("emoji.klass");
-    }
+	@Test
+	void emoji() {
+		this.assertNoCompilerErrors("emoji.klass");
+	}
 
-    @Test
-    void projectionOnInterface() {
-        this.assertNoCompilerErrors("projectionOnInterface.klass");
-    }
+	@Test
+	void projectionOnInterface() {
+		this.assertNoCompilerErrors("projectionOnInterface.klass");
+	}
 
-    @Test
-    void coverageExample() {
-        this.assertNoCompilerErrors("/cool/klass/xample/coverage/coverage-example.klass");
-    }
+	@Test
+	void coverageExample() {
+		this.assertNoCompilerErrors("/cool/klass/xample/coverage/coverage-example.klass");
+	}
 
-    private void assertNoCompilerErrors(@Nonnull String sourceCodeName) {
-        String sourceCodeText = FileSlurper.slurp(sourceCodeName, this.getClass());
-        CompilationUnit compilationUnit = CompilationUnit.createFromText(
-            0,
-            Optional.empty(),
-            sourceCodeName,
-            sourceCodeText
-        );
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
-        KlassCompiler compiler = new KlassCompiler(compilationUnit, colorScheme);
-        CompilationResult compilationResult = compiler.compile();
-        ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult
-            .compilerAnnotations()
-            .select(AbstractCompilerAnnotation::isError);
+	private void assertNoCompilerErrors(@Nonnull String sourceCodeName) {
+		String sourceCodeText = FileSlurper.slurp(sourceCodeName, this.getClass());
+		CompilationUnit compilationUnit = CompilationUnit.createFromText(
+			0,
+			Optional.empty(),
+			sourceCodeName,
+			sourceCodeText
+		);
+		AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
+		KlassCompiler compiler = new KlassCompiler(compilationUnit, colorScheme);
+		CompilationResult compilationResult = compiler.compile();
+		ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult
+			.compilerAnnotations()
+			.select(AbstractCompilerAnnotation::isError);
 
-        assertThat(compilerAnnotations).as(compilerAnnotations.makeString("\n")).isEqualTo(Lists.immutable.empty());
+		assertThat(compilerAnnotations).as(compilerAnnotations.makeString("\n")).isEqualTo(Lists.immutable.empty());
 
-        assertThat(compilationResult.domainModelWithSourceCode()).isPresent();
-    }
+		assertThat(compilationResult.domainModelWithSourceCode()).isPresent();
+	}
 }

@@ -22,8 +22,8 @@ import cool.klass.model.meta.domain.api.Element;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public interface ElementWithSourceCode extends Element {
-    @Nonnull
-    SourceCode getSourceCodeObject();
+	@Nonnull
+	SourceCode getSourceCodeObject();
 
-    ParserRuleContext getElementContext();
+	ParserRuleContext getElementContext();
 }

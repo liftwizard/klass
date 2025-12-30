@@ -27,12 +27,12 @@ import cool.klass.model.meta.domain.api.Multiplicity;
 
 public class MultiplicitySerializer extends JsonSerializer<Multiplicity> {
 
-    @Override
-    public void serialize(
-        @Nonnull Multiplicity multiplicity,
-        @Nonnull JsonGenerator jsonGenerator,
-        SerializerProvider serializerProvider
-    ) throws IOException {
-        jsonGenerator.writeString(multiplicity.getPrettyName());
-    }
+	@Override
+	public void serialize(
+		@Nonnull Multiplicity multiplicity,
+		@Nonnull JsonGenerator jsonGenerator,
+		SerializerProvider serializerProvider
+	) throws IOException {
+		jsonGenerator.writeString(multiplicity.getPrettyName());
+	}
 }

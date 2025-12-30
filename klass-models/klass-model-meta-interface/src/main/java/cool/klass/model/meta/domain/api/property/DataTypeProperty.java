@@ -32,152 +32,152 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.OrderedMap;
 
 public interface DataTypeProperty extends Property {
-    void visit(@Nonnull DataTypePropertyVisitor visitor);
+	void visit(@Nonnull DataTypePropertyVisitor visitor);
 
-    @Nonnull
-    @Override
-    DataType getType();
+	@Nonnull
+	@Override
+	DataType getType();
 
-    @Nonnull
-    ImmutableList<Modifier> getModifiers();
+	@Nonnull
+	ImmutableList<Modifier> getModifiers();
 
-    Optional<MinLengthPropertyValidation> getMinLengthPropertyValidation();
+	Optional<MinLengthPropertyValidation> getMinLengthPropertyValidation();
 
-    Optional<MaxLengthPropertyValidation> getMaxLengthPropertyValidation();
+	Optional<MaxLengthPropertyValidation> getMaxLengthPropertyValidation();
 
-    Optional<MinPropertyValidation> getMinPropertyValidation();
+	Optional<MinPropertyValidation> getMinPropertyValidation();
 
-    Optional<MaxPropertyValidation> getMaxPropertyValidation();
+	Optional<MaxPropertyValidation> getMaxPropertyValidation();
 
-    OrderedMap<AssociationEnd, DataTypeProperty> getKeysMatchingThisForeignKey();
+	OrderedMap<AssociationEnd, DataTypeProperty> getKeysMatchingThisForeignKey();
 
-    OrderedMap<AssociationEnd, DataTypeProperty> getForeignKeysMatchingThisKey();
+	OrderedMap<AssociationEnd, DataTypeProperty> getForeignKeysMatchingThisKey();
 
-    default boolean isKey() {
-        return this.getModifiers().anySatisfy(Modifier::isKey);
-    }
+	default boolean isKey() {
+		return this.getModifiers().anySatisfy(Modifier::isKey);
+	}
 
-    boolean isID();
+	boolean isID();
 
-    default boolean isAudit() {
-        return this.getModifiers().anySatisfy(Modifier::isAudit);
-    }
+	default boolean isAudit() {
+		return this.getModifiers().anySatisfy(Modifier::isAudit);
+	}
 
-    default boolean isCreatedBy() {
-        return this.getModifiers().anySatisfy(Modifier::isCreatedBy);
-    }
+	default boolean isCreatedBy() {
+		return this.getModifiers().anySatisfy(Modifier::isCreatedBy);
+	}
 
-    default boolean isCreatedOn() {
-        return this.getModifiers().anySatisfy(Modifier::isCreatedOn);
-    }
+	default boolean isCreatedOn() {
+		return this.getModifiers().anySatisfy(Modifier::isCreatedOn);
+	}
 
-    default boolean isLastUpdatedBy() {
-        return this.getModifiers().anySatisfy(Modifier::isLastUpdatedBy);
-    }
+	default boolean isLastUpdatedBy() {
+		return this.getModifiers().anySatisfy(Modifier::isLastUpdatedBy);
+	}
 
-    default boolean isValid() {
-        return this.getModifiers().anySatisfy(Modifier::isValid);
-    }
+	default boolean isValid() {
+		return this.getModifiers().anySatisfy(Modifier::isValid);
+	}
 
-    default boolean isValidFrom() {
-        return this.isValid() && this.isFrom();
-    }
+	default boolean isValidFrom() {
+		return this.isValid() && this.isFrom();
+	}
 
-    default boolean isValidTo() {
-        return this.isValid() && this.isTo();
-    }
+	default boolean isValidTo() {
+		return this.isValid() && this.isTo();
+	}
 
-    default boolean isValidRange() {
-        return this.isValid() && this.isTemporalRange();
-    }
+	default boolean isValidRange() {
+		return this.isValid() && this.isTemporalRange();
+	}
 
-    default boolean isSystem() {
-        return this.getModifiers().anySatisfy(Modifier::isSystem);
-    }
+	default boolean isSystem() {
+		return this.getModifiers().anySatisfy(Modifier::isSystem);
+	}
 
-    default boolean isSystemFrom() {
-        return this.isSystem() && this.isFrom();
-    }
+	default boolean isSystemFrom() {
+		return this.isSystem() && this.isFrom();
+	}
 
-    default boolean isSystemTo() {
-        return this.isSystem() && this.isTo();
-    }
+	default boolean isSystemTo() {
+		return this.isSystem() && this.isTo();
+	}
 
-    default boolean isSystemRange() {
-        return this.isSystem() && this.isTemporalRange();
-    }
+	default boolean isSystemRange() {
+		return this.isSystem() && this.isTemporalRange();
+	}
 
-    default boolean isFrom() {
-        return this.getModifiers().anySatisfy(Modifier::isFrom);
-    }
+	default boolean isFrom() {
+		return this.getModifiers().anySatisfy(Modifier::isFrom);
+	}
 
-    default boolean isTo() {
-        return this.getModifiers().anySatisfy(Modifier::isTo);
-    }
+	default boolean isTo() {
+		return this.getModifiers().anySatisfy(Modifier::isTo);
+	}
 
-    default boolean isFinal() {
-        return this.getModifiers().anySatisfy(Modifier::isFinal);
-    }
+	default boolean isFinal() {
+		return this.getModifiers().anySatisfy(Modifier::isFinal);
+	}
 
-    @Override
-    default boolean isPrivate() {
-        return this.getModifiers().anySatisfy(Modifier::isPrivate);
-    }
+	@Override
+	default boolean isPrivate() {
+		return this.getModifiers().anySatisfy(Modifier::isPrivate);
+	}
 
-    default boolean isValidTemporal() {
-        return this.isValid() && this.isTemporalRange();
-    }
+	default boolean isValidTemporal() {
+		return this.isValid() && this.isTemporalRange();
+	}
 
-    default boolean isSystemTemporal() {
-        return this.isSystem() && this.isTemporalRange();
-    }
+	default boolean isSystemTemporal() {
+		return this.isSystem() && this.isTemporalRange();
+	}
 
-    boolean isOptional();
+	boolean isOptional();
 
-    @Override
-    default boolean isRequired() {
-        return !this.isOptional();
-    }
+	@Override
+	default boolean isRequired() {
+		return !this.isOptional();
+	}
 
-    boolean isTemporalRange();
+	boolean isTemporalRange();
 
-    boolean isTemporalInstant();
+	boolean isTemporalInstant();
 
-    boolean isTemporal();
+	boolean isTemporal();
 
-    boolean isForeignKey();
+	boolean isForeignKey();
 
-    boolean isForeignKeyToSelf();
+	boolean isForeignKeyToSelf();
 
-    boolean isVersion();
+	boolean isVersion();
 
-    @Override
-    default boolean isDerived() {
-        return this.getModifiers().anySatisfy(Modifier::isDerived);
-    }
+	@Override
+	default boolean isDerived() {
+		return this.getModifiers().anySatisfy(Modifier::isDerived);
+	}
 
-    default boolean isUserId() {
-        return this.getModifiers().anySatisfy(Modifier::isUserId);
-    }
+	default boolean isUserId() {
+		return this.getModifiers().anySatisfy(Modifier::isUserId);
+	}
 
-    default boolean isForeignKeyWithOpposite() {
-        OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey = this.getKeysMatchingThisForeignKey();
-        ImmutableList<DataTypeProperty> dataTypeProperties = keysMatchingThisForeignKey
-            .valuesView()
-            .toList()
-            .toImmutable();
-        return dataTypeProperties.anySatisfyWith(
-            (dataTypeProperty, keyProperty1) -> keyProperty1.isOppositeKey(dataTypeProperty),
-            this
-        );
-    }
+	default boolean isForeignKeyWithOpposite() {
+		OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey = this.getKeysMatchingThisForeignKey();
+		ImmutableList<DataTypeProperty> dataTypeProperties = keysMatchingThisForeignKey
+			.valuesView()
+			.toList()
+			.toImmutable();
+		return dataTypeProperties.anySatisfyWith(
+			(dataTypeProperty, keyProperty1) -> keyProperty1.isOppositeKey(dataTypeProperty),
+			this
+		);
+	}
 
-    default boolean isOppositeKey(@Nonnull DataTypeProperty dataTypeProperty) {
-        return dataTypeProperty.getForeignKeysMatchingThisKey().containsValue(Lists.immutable.with(this));
-    }
+	default boolean isOppositeKey(@Nonnull DataTypeProperty dataTypeProperty) {
+		return dataTypeProperty.getForeignKeysMatchingThisKey().containsValue(Lists.immutable.with(this));
+	}
 
-    default boolean isForeignKeyMatchingKeyOnPath(AssociationEnd pathHere) {
-        var opposite = pathHere.getOpposite();
-        return this.getKeysMatchingThisForeignKey().containsKey(opposite);
-    }
+	default boolean isForeignKeyMatchingKeyOnPath(AssociationEnd pathHere) {
+		var opposite = pathHere.getOpposite();
+		return this.getKeysMatchingThisForeignKey().containsKey(opposite);
+	}
 }

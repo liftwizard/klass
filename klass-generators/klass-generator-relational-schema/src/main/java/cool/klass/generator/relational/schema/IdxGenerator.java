@@ -27,81 +27,81 @@ import org.eclipse.collections.api.map.MutableOrderedMap;
 
 public final class IdxGenerator {
 
-    private IdxGenerator() {
-        throw new AssertionError("Suppress default constructor for noninstantiability");
-    }
+	private IdxGenerator() {
+		throw new AssertionError("Suppress default constructor for noninstantiability");
+	}
 
-    public static String getIdx(Klass klass) {
-        String tableName = DdlGenerator.getTableName(klass);
-        String constraintName = tableName + "_PK";
+	public static String getIdx(Klass klass) {
+		String tableName = DdlGenerator.getTableName(klass);
+		String constraintName = tableName + "_PK";
 
-        String primaryKeyColumnNames = getPrimaryKeyColumnNames(klass);
+		String primaryKeyColumnNames = getPrimaryKeyColumnNames(klass);
 
-        String primaryKeyIndex = "alter table %s add constraint %s primary key (%s);%n".formatted(
-            tableName,
-            constraintName,
-            primaryKeyColumnNames
-        );
+		String primaryKeyIndex = "alter table %s add constraint %s primary key (%s);%n".formatted(
+			tableName,
+			constraintName,
+			primaryKeyColumnNames
+		);
 
-        MutableOrderedMap<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> foreignKeyConstraints =
-            klass.getForeignKeys();
-        String foreignKeyIndexes = foreignKeyConstraints
-            .keyValuesView()
-            .collect((keyValuePair) ->
-                getForeignKeyIndex(keyValuePair.getOne(), keyValuePair.getTwo(), klass, tableName)
-            )
-            .makeString("");
+		MutableOrderedMap<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> foreignKeyConstraints =
+			klass.getForeignKeys();
+		String foreignKeyIndexes = foreignKeyConstraints
+			.keyValuesView()
+			.collect((keyValuePair) ->
+				getForeignKeyIndex(keyValuePair.getOne(), keyValuePair.getTwo(), klass, tableName)
+			)
+			.makeString("");
 
-        return primaryKeyIndex + foreignKeyIndexes;
-    }
+		return primaryKeyIndex + foreignKeyIndexes;
+	}
 
-    private static String getForeignKeyIndex(
-        AssociationEnd associationEnd,
-        MutableOrderedMap<DataTypeProperty, DataTypeProperty> dataTypeProperties,
-        Klass klass,
-        String tableName
-    ) {
-        String constraintName =
-            tableName + "_IDX_" + DdlGenerator.TABLE_NAME_CONVERTER.convert(associationEnd.getName());
+	private static String getForeignKeyIndex(
+		AssociationEnd associationEnd,
+		MutableOrderedMap<DataTypeProperty, DataTypeProperty> dataTypeProperties,
+		Klass klass,
+		String tableName
+	) {
+		String constraintName =
+			tableName + "_IDX_" + DdlGenerator.TABLE_NAME_CONVERTER.convert(associationEnd.getName());
 
-        ImmutableList<DataTypeProperty> toProperties = klass.getDataTypeProperties().select(DataTypeProperty::isTo);
+		ImmutableList<DataTypeProperty> toProperties = klass.getDataTypeProperties().select(DataTypeProperty::isTo);
 
-        ImmutableList<DataTypeProperty> allKeyProperties = dataTypeProperties
-            .keysView()
-            .asLazy()
-            .concatenate(toProperties)
-            .toImmutableList();
+		ImmutableList<DataTypeProperty> allKeyProperties = dataTypeProperties
+			.keysView()
+			.asLazy()
+			.concatenate(toProperties)
+			.toImmutableList();
 
-        if (isPrefixList(allKeyProperties, getAllKeyProperties(klass))) {
-            return "";
-        }
+		if (isPrefixList(allKeyProperties, getAllKeyProperties(klass))) {
+			return "";
+		}
 
-        String foreignKeyColumnNames = allKeyProperties
-            .collect(DataTypeProperty::getName)
-            .collect(DdlGenerator.COLUMN_NAME_CONVERTER::convert)
-            .makeString(", ");
+		String foreignKeyColumnNames = allKeyProperties
+			.collect(DataTypeProperty::getName)
+			.collect(DdlGenerator.COLUMN_NAME_CONVERTER::convert)
+			.makeString(", ");
 
-        return "create index %s on %s(%s);%n".formatted(constraintName, tableName, foreignKeyColumnNames);
-    }
+		return "create index %s on %s(%s);%n".formatted(constraintName, tableName, foreignKeyColumnNames);
+	}
 
-    private static boolean isPrefixList(ImmutableList<DataTypeProperty> list1, ImmutableList<DataTypeProperty> list2) {
-        if (list1.size() > list2.size()) {
-            return false;
-        }
+	private static boolean isPrefixList(ImmutableList<DataTypeProperty> list1, ImmutableList<DataTypeProperty> list2) {
+		if (list1.size() > list2.size()) {
+			return false;
+		}
 
-        return list1.equals(list2.subList(0, list1.size()));
-    }
+		return list1.equals(list2.subList(0, list1.size()));
+	}
 
-    @Nonnull
-    private static String getPrimaryKeyColumnNames(Klass klass) {
-        return getAllKeyProperties(klass)
-            .collect(NamedElement::getName)
-            .collect(DdlGenerator.COLUMN_NAME_CONVERTER::convert)
-            .makeString(", ");
-    }
+	@Nonnull
+	private static String getPrimaryKeyColumnNames(Klass klass) {
+		return getAllKeyProperties(klass)
+			.collect(NamedElement::getName)
+			.collect(DdlGenerator.COLUMN_NAME_CONVERTER::convert)
+			.makeString(", ");
+	}
 
-    private static ImmutableList<DataTypeProperty> getAllKeyProperties(Klass klass) {
-        ImmutableList<DataTypeProperty> toProperties = klass.getDataTypeProperties().select(DataTypeProperty::isTo);
-        return klass.getKeyProperties().newWithAll(toProperties);
-    }
+	private static ImmutableList<DataTypeProperty> getAllKeyProperties(Klass klass) {
+		ImmutableList<DataTypeProperty> toProperties = klass.getDataTypeProperties().select(DataTypeProperty::isTo);
+		return klass.getKeyProperties().newWithAll(toProperties);
+	}
 }

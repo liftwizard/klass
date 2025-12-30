@@ -35,41 +35,41 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 @ExtendWith(LogMarkerTestExtension.class)
 public class RelationalSchemaGeneratorTest {
 
-    public static final String FULLY_QUALIFIED_PACKAGE = "cool.klass.generator.relational.schema";
+	public static final String FULLY_QUALIFIED_PACKAGE = "cool.klass.generator.relational.schema";
 
-    private static final Converter<String, String> CONVERTER = CaseFormat.UPPER_CAMEL.converterTo(
-        CaseFormat.UPPER_UNDERSCORE
-    );
+	private static final Converter<String, String> CONVERTER = CaseFormat.UPPER_CAMEL.converterTo(
+		CaseFormat.UPPER_UNDERSCORE
+	);
 
-    @RegisterExtension
-    final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
+	@RegisterExtension
+	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
-    @Test
-    void smokeTest() {
-        ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
+	@Test
+	void smokeTest() {
+		ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
 
-        var domainModelCompilerLoader = new DomainModelCompilerLoader(
-            klassSourcePackages,
-            Thread.currentThread().getContextClassLoader(),
-            DomainModelCompilerLoader::logCompilerError,
-            ColorSchemeProvider.getByName("dark")
-        );
+		var domainModelCompilerLoader = new DomainModelCompilerLoader(
+			klassSourcePackages,
+			Thread.currentThread().getContextClassLoader(),
+			DomainModelCompilerLoader::logCompilerError,
+			ColorSchemeProvider.getByName("dark")
+		);
 
-        DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
+		DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
 
-        for (Klass klass : domainModel.getClasses()) {
-            String tableName = CONVERTER.convert(klass.getName());
+		for (Klass klass : domainModel.getClasses()) {
+			String tableName = CONVERTER.convert(klass.getName());
 
-            String ddlSourceCode = DdlGenerator.getDdl(klass);
-            this.fileMatchExtension.assertFileContents(tableName + ".ddl", ddlSourceCode);
+			String ddlSourceCode = DdlGenerator.getDdl(klass);
+			this.fileMatchExtension.assertFileContents(tableName + ".ddl", ddlSourceCode);
 
-            String idxSourceCode = IdxGenerator.getIdx(klass);
-            this.fileMatchExtension.assertFileContents(tableName + ".idx", idxSourceCode);
+			String idxSourceCode = IdxGenerator.getIdx(klass);
+			this.fileMatchExtension.assertFileContents(tableName + ".idx", idxSourceCode);
 
-            Optional<String> maybeFkSourceCode = FkGenerator.getFk(klass);
-            maybeFkSourceCode.ifPresent((fkSourceCode) ->
-                this.fileMatchExtension.assertFileContents(tableName + ".fk", fkSourceCode)
-            );
-        }
-    }
+			Optional<String> maybeFkSourceCode = FkGenerator.getFk(klass);
+			maybeFkSourceCode.ifPresent((fkSourceCode) ->
+				this.fileMatchExtension.assertFileContents(tableName + ".fk", fkSourceCode)
+			);
+		}
+	}
 }

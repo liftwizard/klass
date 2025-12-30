@@ -27,12 +27,12 @@ import cool.klass.model.meta.domain.api.projection.Projection;
 
 public class ProjectionSerializer extends JsonSerializer<Projection> {
 
-    @Override
-    public void serialize(
-        @Nonnull Projection projection,
-        @Nonnull JsonGenerator jsonGenerator,
-        SerializerProvider serializerProvider
-    ) throws IOException {
-        jsonGenerator.writeString(projection.getFullyQualifiedName());
-    }
+	@Override
+	public void serialize(
+		@Nonnull Projection projection,
+		@Nonnull JsonGenerator jsonGenerator,
+		SerializerProvider serializerProvider
+	) throws IOException {
+		jsonGenerator.writeString(projection.getFullyQualifiedName());
+	}
 }

@@ -1,0 +1,44 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.3.10/schema.json",
+	"files": {
+		"includes": ["**/*.json", "**/*.jsonc"],
+		"ignoreUnknown": true,
+	},
+	"formatter": {
+		"enabled": true,
+		"formatWithErrors": false,
+		"indentStyle": "tab",
+		"indentWidth": 4,
+		"lineWidth": 120,
+		"lineEnding": "lf",
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+		},
+	},
+	"json": {
+		"formatter": {
+			"bracketSpacing": false,
+		},
+	},
+	"overrides": [
+		{
+			"includes": ["**/*.json"],
+			"json": {
+				"formatter": {
+					"trailingCommas": "none",
+				},
+			},
+		},
+		{
+			"includes": ["**/*.jsonc"],
+			"json": {
+				"formatter": {
+					"trailingCommas": "all",
+				},
+			},
+		},
+	],
+}

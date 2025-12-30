@@ -42,56 +42,56 @@ import org.slf4j.LoggerFactory;
 
 public class ReladomoOperationDataFetcher<T> implements DataFetcher<List<T>> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReladomoOperationDataFetcher.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ReladomoOperationDataFetcher.class);
 
-    private final DomainModel domainModel;
-    private final ReladomoDataStore dataStore;
-    private final Klass klass;
-    private final RelatedFinder<?> finder;
+	private final DomainModel domainModel;
+	private final ReladomoDataStore dataStore;
+	private final Klass klass;
+	private final RelatedFinder<?> finder;
 
-    public ReladomoOperationDataFetcher(
-        DomainModel domainModel,
-        ReladomoDataStore dataStore,
-        String className,
-        RelatedFinder<?> relatedFinder
-    ) {
-        this.domainModel = Objects.requireNonNull(domainModel);
-        this.dataStore = Objects.requireNonNull(dataStore);
-        this.klass = this.domainModel.getClassByName(className);
-        this.finder = Objects.requireNonNull(relatedFinder);
-    }
+	public ReladomoOperationDataFetcher(
+		DomainModel domainModel,
+		ReladomoDataStore dataStore,
+		String className,
+		RelatedFinder<?> relatedFinder
+	) {
+		this.domainModel = Objects.requireNonNull(domainModel);
+		this.dataStore = Objects.requireNonNull(dataStore);
+		this.klass = this.domainModel.getClassByName(className);
+		this.finder = Objects.requireNonNull(relatedFinder);
+	}
 
-    @Timed
-    @Metered
-    @ExceptionMetered
-    @Override
-    public List<T> get(DataFetchingEnvironment environment) {
-        Map<String, Object> arguments = environment.getArguments();
-        String inputOperation = (String) arguments.get("operation");
-        Operation operation = this.compileOperation(this.finder, inputOperation);
+	@Timed
+	@Metered
+	@ExceptionMetered
+	@Override
+	public List<T> get(DataFetchingEnvironment environment) {
+		Map<String, Object> arguments = environment.getArguments();
+		String inputOperation = (String) arguments.get("operation");
+		Operation operation = this.compileOperation(this.finder, inputOperation);
 
-        LOGGER.debug("Executing operation: {}", operation);
+		LOGGER.debug("Executing operation: {}", operation);
 
-        DomainList<T> result = (DomainList<T>) this.finder.findMany(operation);
-        var treeGraphqlConverter = new ReladomoTreeGraphqlConverter(this.domainModel);
+		DomainList<T> result = (DomainList<T>) this.finder.findMany(operation);
+		var treeGraphqlConverter = new ReladomoTreeGraphqlConverter(this.domainModel);
 
-        var deepFetcher = new ReladomoTreeNodeDeepFetcherListener(this.dataStore, (DomainList) result, this.klass);
-        RootReladomoTreeNode rootReladomoTreeNode = treeGraphqlConverter.convert(
-            this.klass,
-            environment.getSelectionSet()
-        );
+		var deepFetcher = new ReladomoTreeNodeDeepFetcherListener(this.dataStore, (DomainList) result, this.klass);
+		RootReladomoTreeNode rootReladomoTreeNode = treeGraphqlConverter.convert(
+			this.klass,
+			environment.getSelectionSet()
+		);
 
-        deepFetcher.enterRoot(rootReladomoTreeNode);
+		deepFetcher.enterRoot(rootReladomoTreeNode);
 
-        return result;
-    }
+		return result;
+	}
 
-    private Operation compileOperation(RelatedFinder<?> relatedFinder, String inputOperation) {
-        try {
-            var compiler = new ReladomoOperationCompiler();
-            return compiler.compile(relatedFinder, inputOperation);
-        } catch (RuntimeException e) {
-            throw new LiftwizardGraphQLException(e.getMessage(), Lists.immutable.with(inputOperation), e);
-        }
-    }
+	private Operation compileOperation(RelatedFinder<?> relatedFinder, String inputOperation) {
+		try {
+			var compiler = new ReladomoOperationCompiler();
+			return compiler.compile(relatedFinder, inputOperation);
+		} catch (RuntimeException e) {
+			throw new LiftwizardGraphQLException(e.getMessage(), Lists.immutable.with(inputOperation), e);
+		}
+	}
 }

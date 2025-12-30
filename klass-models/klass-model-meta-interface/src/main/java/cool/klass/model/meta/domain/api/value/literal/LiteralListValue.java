@@ -24,14 +24,14 @@ import cool.klass.model.meta.domain.api.value.ExpressionValueVisitor;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public interface LiteralListValue extends ExpressionValue {
-    @Override
-    default void visit(@Nonnull ExpressionValueVisitor visitor) {
-        visitor.visitLiteralList(this);
-    }
+	@Override
+	default void visit(@Nonnull ExpressionValueVisitor visitor) {
+		visitor.visitLiteralList(this);
+	}
 
-    @Nonnull
-    ImmutableList<LiteralValue> getLiteralValues();
+	@Nonnull
+	ImmutableList<LiteralValue> getLiteralValues();
 
-    @Nonnull
-    Type getType();
+	@Nonnull
+	Type getType();
 }

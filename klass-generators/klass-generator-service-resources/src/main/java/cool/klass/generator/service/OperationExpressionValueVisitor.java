@@ -45,128 +45,128 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public class OperationExpressionValueVisitor implements ExpressionValueVisitor {
 
-    private final String finderName;
-    private final StringBuilder stringBuilder;
+	private final String finderName;
+	private final StringBuilder stringBuilder;
 
-    public OperationExpressionValueVisitor(@Nonnull String finderName, @Nonnull StringBuilder stringBuilder) {
-        this.finderName = Objects.requireNonNull(finderName);
-        this.stringBuilder = Objects.requireNonNull(stringBuilder);
-    }
+	public OperationExpressionValueVisitor(@Nonnull String finderName, @Nonnull StringBuilder stringBuilder) {
+		this.finderName = Objects.requireNonNull(finderName);
+		this.stringBuilder = Objects.requireNonNull(stringBuilder);
+	}
 
-    @Override
-    public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue) {
-        ImmutableList<AssociationEnd> associationEnds = typeMemberExpressionValue.getAssociationEnds();
+	@Override
+	public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue) {
+		ImmutableList<AssociationEnd> associationEnds = typeMemberExpressionValue.getAssociationEnds();
 
-        String associationEndsString = associationEnds.isEmpty()
-            ? ""
-            : "."
-            + associationEnds
-                .collect(NamedElement::getName)
-                .collect((string) -> string + "()")
-                .makeString(".");
+		String associationEndsString = associationEnds.isEmpty()
+			? ""
+			: "."
+			+ associationEnds
+				.collect(NamedElement::getName)
+				.collect((string) -> string + "()")
+				.makeString(".");
 
-        String attribute = String.format(
-            "%sFinder%s.%s()",
-            typeMemberExpressionValue.getKlass().getName(),
-            associationEndsString,
-            typeMemberExpressionValue.getProperty().getName()
-        );
-        this.stringBuilder.append(attribute);
-    }
+		String attribute = String.format(
+			"%sFinder%s.%s()",
+			typeMemberExpressionValue.getKlass().getName(),
+			associationEndsString,
+			typeMemberExpressionValue.getProperty().getName()
+		);
+		this.stringBuilder.append(attribute);
+	}
 
-    @Override
-    public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue) {
-        ImmutableList<AssociationEnd> associationEnds = thisMemberExpressionValue.getAssociationEnds();
+	@Override
+	public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue) {
+		ImmutableList<AssociationEnd> associationEnds = thisMemberExpressionValue.getAssociationEnds();
 
-        String associationEndsString = associationEnds.isEmpty()
-            ? ""
-            : "."
-            + associationEnds
-                .collect(NamedElement::getName)
-                .collect((string) -> string + "()")
-                .makeString(".");
+		String associationEndsString = associationEnds.isEmpty()
+			? ""
+			: "."
+			+ associationEnds
+				.collect(NamedElement::getName)
+				.collect((string) -> string + "()")
+				.makeString(".");
 
-        String attribute = String.format(
-            "%s%s.%s()",
-            this.finderName,
-            associationEndsString,
-            thisMemberExpressionValue.getProperty().getName()
-        );
-        this.stringBuilder.append(attribute);
-    }
+		String attribute = String.format(
+			"%s%s.%s()",
+			this.finderName,
+			associationEndsString,
+			thisMemberExpressionValue.getProperty().getName()
+		);
+		this.stringBuilder.append(attribute);
+	}
 
-    @Override
-    public void visitParameterReference(@Nonnull ParameterReference parameterReference) {
-        Parameter parameter = parameterReference.getParameter();
-        DataType dataType = parameter.getType();
-        Multiplicity multiplicity = parameter.getMultiplicity();
+	@Override
+	public void visitParameterReference(@Nonnull ParameterReference parameterReference) {
+		Parameter parameter = parameterReference.getParameter();
+		DataType dataType = parameter.getType();
+		Multiplicity multiplicity = parameter.getMultiplicity();
 
-        if (dataType instanceof Enumeration) {
-            this.stringBuilder.append(parameter.getName());
-            return;
-        }
+		if (dataType instanceof Enumeration) {
+			this.stringBuilder.append(parameter.getName());
+			return;
+		}
 
-        PrimitiveType primitiveType = (PrimitiveType) dataType;
-        if (multiplicity.isToOne()) {
-            primitiveType.visit(new ReladomoPrimitiveVisitor(this.stringBuilder, parameter.getName()));
-            return;
-        }
+		PrimitiveType primitiveType = (PrimitiveType) dataType;
+		if (multiplicity.isToOne()) {
+			primitiveType.visit(new ReladomoPrimitiveVisitor(this.stringBuilder, parameter.getName()));
+			return;
+		}
 
-        primitiveType.visit(new PrimitiveSetVisitor(this.stringBuilder, parameter.getName()));
-    }
+		primitiveType.visit(new PrimitiveSetVisitor(this.stringBuilder, parameter.getName()));
+	}
 
-    @Override
-    public void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue) {
-        this.stringBuilder.append(booleanLiteralValue.getValue());
-    }
+	@Override
+	public void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue) {
+		this.stringBuilder.append(booleanLiteralValue.getValue());
+	}
 
-    @Override
-    public void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue) {
-        this.stringBuilder.append(integerLiteralValue.getValue());
-    }
+	@Override
+	public void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue) {
+		this.stringBuilder.append(integerLiteralValue.getValue());
+	}
 
-    @Override
-    public void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue) {
-        this.stringBuilder.append(floatingPointLiteralValue.getValue());
-    }
+	@Override
+	public void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue) {
+		this.stringBuilder.append(floatingPointLiteralValue.getValue());
+	}
 
-    @Override
-    public void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue) {
-        this.stringBuilder.append('"');
-        this.stringBuilder.append(stringLiteralValue.getValue());
-        this.stringBuilder.append('"');
-    }
+	@Override
+	public void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue) {
+		this.stringBuilder.append('"');
+		this.stringBuilder.append(stringLiteralValue.getValue());
+		this.stringBuilder.append('"');
+	}
 
-    @Override
-    public void visitLiteralList(@Nonnull LiteralListValue literalListValue) {
-        Type type = literalListValue.getType();
-        this.stringBuilder.append(this.getType(type));
-        this.stringBuilder.append("Sets.immutable.with(");
-        this.stringBuilder.append(literalListValue.getLiteralValues().collect(this::getLiteralString).makeString());
-        this.stringBuilder.append(")");
-    }
+	@Override
+	public void visitLiteralList(@Nonnull LiteralListValue literalListValue) {
+		Type type = literalListValue.getType();
+		this.stringBuilder.append(this.getType(type));
+		this.stringBuilder.append("Sets.immutable.with(");
+		this.stringBuilder.append(literalListValue.getLiteralValues().collect(this::getLiteralString).makeString());
+		this.stringBuilder.append(")");
+	}
 
-    private String getType(Type type) {
-        if (type instanceof PrimitiveType primitiveType) {
-            return PrimitiveToJavaTypeVisitor.getJavaType(primitiveType);
-        }
-        throw new AssertionError();
-    }
+	private String getType(Type type) {
+		if (type instanceof PrimitiveType primitiveType) {
+			return PrimitiveToJavaTypeVisitor.getJavaType(primitiveType);
+		}
+		throw new AssertionError();
+	}
 
-    @Override
-    public void visitUserLiteral(@Nonnull UserLiteral userLiteral) {
-        this.stringBuilder.append("userPrincipalName");
-    }
+	@Override
+	public void visitUserLiteral(@Nonnull UserLiteral userLiteral) {
+		this.stringBuilder.append("userPrincipalName");
+	}
 
-    @Override
-    public void visitNullLiteral(@Nonnull NullLiteral nullLiteral) {
-        this.stringBuilder.append("null");
-    }
+	@Override
+	public void visitNullLiteral(@Nonnull NullLiteral nullLiteral) {
+		this.stringBuilder.append("null");
+	}
 
-    @Nonnull
-    private String getLiteralString(@Nonnull LiteralValue literalValue) {
-        StringBuilder stringBuilder = new StringBuilder();
-        literalValue.visit(new OperationExpressionValueVisitor(this.finderName, stringBuilder));
-        return stringBuilder.toString();
-    }
+	@Nonnull
+	private String getLiteralString(@Nonnull LiteralValue literalValue) {
+		StringBuilder stringBuilder = new StringBuilder();
+		literalValue.visit(new OperationExpressionValueVisitor(this.finderName, stringBuilder));
+		return stringBuilder.toString();
+	}
 }

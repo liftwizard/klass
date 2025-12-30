@@ -1,14 +1,14 @@
 {
-  propertiesOptionalId: 1,
-  optionalString: "PropertiesOptional optionalString 2 ✌",
-  optionalInteger: 2,
-  optionalLong: 200000000000,
-  optionalDouble: 2.0123456789,
-  optionalFloat: 2.0123456,
-  optionalBoolean: false,
-  optionalInstant: "2000-01-01T00:00:00Z",
-  optionalLocalDate: "2000-01-01",
-  version: {
-    number: 1,
-  },
+	propertiesOptionalId: 1,
+	optionalString: "PropertiesOptional optionalString 2 ✌",
+	optionalInteger: 2,
+	optionalLong: 200000000000,
+	optionalDouble: 2.0123456789,
+	optionalFloat: 2.0123456,
+	optionalBoolean: false,
+	optionalInstant: "2000-01-01T00:00:00Z",
+	optionalLocalDate: "2000-01-01",
+	version: {
+		number: 1,
+	},
 }
