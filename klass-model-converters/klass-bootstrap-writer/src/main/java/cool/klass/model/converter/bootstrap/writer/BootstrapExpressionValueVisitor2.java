@@ -41,136 +41,136 @@ import org.eclipse.collections.api.map.ImmutableMap;
 
 public class BootstrapExpressionValueVisitor2 implements ExpressionValueVisitor {
 
-    private final ImmutableMap<
-        ExpressionValue,
-        klass.model.meta.domain.ExpressionValue
-    > expressionValuesByExpressionValue;
+	private final ImmutableMap<
+		ExpressionValue,
+		klass.model.meta.domain.ExpressionValue
+	> expressionValuesByExpressionValue;
 
-    private final MutableList<MemberReferencePath> bootstrappedMemberReferencePaths = Lists.mutable.empty();
-    private final MutableList<klass.model.meta.domain.TypeMemberReferencePath> bootstrappedTypeMemberReferencePaths =
-        Lists.mutable.empty();
-    private final MutableList<klass.model.meta.domain.ThisMemberReferencePath> bootstrappedThisMemberReferencePaths =
-        Lists.mutable.empty();
+	private final MutableList<MemberReferencePath> bootstrappedMemberReferencePaths = Lists.mutable.empty();
+	private final MutableList<klass.model.meta.domain.TypeMemberReferencePath> bootstrappedTypeMemberReferencePaths =
+		Lists.mutable.empty();
+	private final MutableList<klass.model.meta.domain.ThisMemberReferencePath> bootstrappedThisMemberReferencePaths =
+		Lists.mutable.empty();
 
-    public BootstrapExpressionValueVisitor2(
-        ImmutableMap<ExpressionValue, klass.model.meta.domain.ExpressionValue> expressionValuesByExpressionValue
-    ) {
-        this.expressionValuesByExpressionValue = Objects.requireNonNull(expressionValuesByExpressionValue);
-    }
+	public BootstrapExpressionValueVisitor2(
+		ImmutableMap<ExpressionValue, klass.model.meta.domain.ExpressionValue> expressionValuesByExpressionValue
+	) {
+		this.expressionValuesByExpressionValue = Objects.requireNonNull(expressionValuesByExpressionValue);
+	}
 
-    public MutableList<MemberReferencePath> getBootstrappedMemberReferencePaths() {
-        return this.bootstrappedMemberReferencePaths;
-    }
+	public MutableList<MemberReferencePath> getBootstrappedMemberReferencePaths() {
+		return this.bootstrappedMemberReferencePaths;
+	}
 
-    public MutableList<klass.model.meta.domain.TypeMemberReferencePath> getBootstrappedTypeMemberReferencePaths() {
-        return this.bootstrappedTypeMemberReferencePaths;
-    }
+	public MutableList<klass.model.meta.domain.TypeMemberReferencePath> getBootstrappedTypeMemberReferencePaths() {
+		return this.bootstrappedTypeMemberReferencePaths;
+	}
 
-    public MutableList<klass.model.meta.domain.ThisMemberReferencePath> getBootstrappedThisMemberReferencePaths() {
-        return this.bootstrappedThisMemberReferencePaths;
-    }
+	public MutableList<klass.model.meta.domain.ThisMemberReferencePath> getBootstrappedThisMemberReferencePaths() {
+		return this.bootstrappedThisMemberReferencePaths;
+	}
 
-    @Override
-    public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue) {
-        var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(typeMemberExpressionValue);
+	@Override
+	public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue) {
+		var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(typeMemberExpressionValue);
 
-        Klass klass = typeMemberExpressionValue.getKlass();
-        DataTypeProperty property = typeMemberExpressionValue.getProperty();
+		Klass klass = typeMemberExpressionValue.getKlass();
+		DataTypeProperty property = typeMemberExpressionValue.getProperty();
 
-        var bootstrappedMemberReferencePath = new MemberReferencePath();
-        this.bootstrappedMemberReferencePaths.add(bootstrappedMemberReferencePath);
-        bootstrappedMemberReferencePath.setId(bootstrappedExpressionValue.getId());
-        bootstrappedMemberReferencePath.setClassName(klass.getName());
-        bootstrappedMemberReferencePath.setPropertyClassName(property.getOwningClassifier().getName());
-        bootstrappedMemberReferencePath.setPropertyName(property.getName());
+		var bootstrappedMemberReferencePath = new MemberReferencePath();
+		this.bootstrappedMemberReferencePaths.add(bootstrappedMemberReferencePath);
+		bootstrappedMemberReferencePath.setId(bootstrappedExpressionValue.getId());
+		bootstrappedMemberReferencePath.setClassName(klass.getName());
+		bootstrappedMemberReferencePath.setPropertyClassName(property.getOwningClassifier().getName());
+		bootstrappedMemberReferencePath.setPropertyName(property.getName());
 
-        var bootstrappedTypeMemberReferencePath = new klass.model.meta.domain.TypeMemberReferencePath();
-        this.bootstrappedTypeMemberReferencePaths.add(bootstrappedTypeMemberReferencePath);
-        bootstrappedTypeMemberReferencePath.setId(bootstrappedExpressionValue.getId());
+		var bootstrappedTypeMemberReferencePath = new klass.model.meta.domain.TypeMemberReferencePath();
+		this.bootstrappedTypeMemberReferencePaths.add(bootstrappedTypeMemberReferencePath);
+		bootstrappedTypeMemberReferencePath.setId(bootstrappedExpressionValue.getId());
 
-        if (typeMemberExpressionValue.getAssociationEnds().notEmpty()) {
-            throw new AssertionError("TODO");
-        }
-    }
+		if (typeMemberExpressionValue.getAssociationEnds().notEmpty()) {
+			throw new AssertionError("TODO");
+		}
+	}
 
-    @Override
-    public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue) {
-        var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(thisMemberExpressionValue);
+	@Override
+	public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue) {
+		var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(thisMemberExpressionValue);
 
-        Klass klass = thisMemberExpressionValue.getKlass();
-        DataTypeProperty property = thisMemberExpressionValue.getProperty();
+		Klass klass = thisMemberExpressionValue.getKlass();
+		DataTypeProperty property = thisMemberExpressionValue.getProperty();
 
-        var bootstrappedMemberReferencePath = new MemberReferencePath();
-        this.bootstrappedMemberReferencePaths.add(bootstrappedMemberReferencePath);
-        bootstrappedMemberReferencePath.setId(bootstrappedExpressionValue.getId());
-        bootstrappedMemberReferencePath.setClassName(klass.getName());
-        bootstrappedMemberReferencePath.setPropertyClassName(property.getOwningClassifier().getName());
-        bootstrappedMemberReferencePath.setPropertyName(property.getName());
+		var bootstrappedMemberReferencePath = new MemberReferencePath();
+		this.bootstrappedMemberReferencePaths.add(bootstrappedMemberReferencePath);
+		bootstrappedMemberReferencePath.setId(bootstrappedExpressionValue.getId());
+		bootstrappedMemberReferencePath.setClassName(klass.getName());
+		bootstrappedMemberReferencePath.setPropertyClassName(property.getOwningClassifier().getName());
+		bootstrappedMemberReferencePath.setPropertyName(property.getName());
 
-        var bootstrappedThisMemberReferencePath = new klass.model.meta.domain.ThisMemberReferencePath();
-        this.bootstrappedThisMemberReferencePaths.add(bootstrappedThisMemberReferencePath);
-        bootstrappedThisMemberReferencePath.setId(bootstrappedExpressionValue.getId());
+		var bootstrappedThisMemberReferencePath = new klass.model.meta.domain.ThisMemberReferencePath();
+		this.bootstrappedThisMemberReferencePaths.add(bootstrappedThisMemberReferencePath);
+		bootstrappedThisMemberReferencePath.setId(bootstrappedExpressionValue.getId());
 
-        if (thisMemberExpressionValue.getAssociationEnds().notEmpty()) {
-            throw new AssertionError("TODO");
-        }
-    }
+		if (thisMemberExpressionValue.getAssociationEnds().notEmpty()) {
+			throw new AssertionError("TODO");
+		}
+	}
 
-    @Override
-    public void visitParameterReference(@Nonnull ParameterReference parameterReference) {
-        var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(parameterReference);
+	@Override
+	public void visitParameterReference(@Nonnull ParameterReference parameterReference) {
+		var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(parameterReference);
 
-        var bootstrappedParameterReference = new klass.model.meta.domain.ParameterReference();
-        bootstrappedParameterReference.setId(bootstrappedExpressionValue.getId());
-        // bootstrappedParameterReference.setParameterId(parameterId);
-    }
+		var bootstrappedParameterReference = new klass.model.meta.domain.ParameterReference();
+		bootstrappedParameterReference.setId(bootstrappedExpressionValue.getId());
+		// bootstrappedParameterReference.setParameterId(parameterId);
+	}
 
-    @Override
-    public void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitBooleanLiteral() not implemented yet"
-        );
-    }
+	@Override
+	public void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitBooleanLiteral() not implemented yet"
+		);
+	}
 
-    @Override
-    public void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitIntegerLiteral() not implemented yet"
-        );
-    }
+	@Override
+	public void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitIntegerLiteral() not implemented yet"
+		);
+	}
 
-    @Override
-    public void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitFloatingPointLiteral() not implemented yet"
-        );
-    }
+	@Override
+	public void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitFloatingPointLiteral() not implemented yet"
+		);
+	}
 
-    @Override
-    public void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitStringLiteral() not implemented yet"
-        );
-    }
+	@Override
+	public void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitStringLiteral() not implemented yet"
+		);
+	}
 
-    @Override
-    public void visitLiteralList(@Nonnull LiteralListValue literalListValue) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitLiteralList() not implemented yet"
-        );
-    }
+	@Override
+	public void visitLiteralList(@Nonnull LiteralListValue literalListValue) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitLiteralList() not implemented yet"
+		);
+	}
 
-    @Override
-    public void visitUserLiteral(@Nonnull UserLiteral userLiteral) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitUserLiteral() not implemented yet"
-        );
-    }
+	@Override
+	public void visitUserLiteral(@Nonnull UserLiteral userLiteral) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitUserLiteral() not implemented yet"
+		);
+	}
 
-    @Override
-    public void visitNullLiteral(@Nonnull NullLiteral nullLiteral) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitNullLiteral() not implemented yet"
-        );
-    }
+	@Override
+	public void visitNullLiteral(@Nonnull NullLiteral nullLiteral) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitNullLiteral() not implemented yet"
+		);
+	}
 }

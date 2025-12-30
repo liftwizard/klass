@@ -23,10 +23,10 @@ import cool.klass.model.meta.domain.api.source.EnumerationWithSourceCode;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationPropertyContext;
 
 public interface EnumerationPropertyWithSourceCode extends EnumerationProperty, DataTypePropertyWithSourceCode {
-    @Override
-    EnumerationPropertyContext getElementContext();
+	@Override
+	EnumerationPropertyContext getElementContext();
 
-    @Nonnull
-    @Override
-    EnumerationWithSourceCode getType();
+	@Nonnull
+	@Override
+	EnumerationWithSourceCode getType();
 }

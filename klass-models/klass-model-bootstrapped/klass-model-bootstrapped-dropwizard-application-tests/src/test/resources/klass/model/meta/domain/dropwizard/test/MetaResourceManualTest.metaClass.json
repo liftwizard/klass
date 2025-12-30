@@ -1,26 +1,26 @@
 {
-  "name": "Classifier",
-  "packageName": "klass.model.meta.domain",
-  "superInterfaces": [],
-  "classifierModifiers": [],
-  "dataTypeProperties": [],
-  "abstractClass": true,
-  "superClass": {
-    "name": "PackageableElement"
-  },
-  "associationEnds": [
-    {
-      "name": "superInterfaces"
-    },
-    {
-      "name": "classifierModifiers"
-    },
-    {
-      "name": "dataTypeProperties"
-    },
-    {
-      "name": "projections"
-    }
-  ],
-  "parameterizedProperties": []
+	"name": "Classifier",
+	"packageName": "klass.model.meta.domain",
+	"superInterfaces": [],
+	"classifierModifiers": [],
+	"dataTypeProperties": [],
+	"abstractClass": true,
+	"superClass": {
+		"name": "PackageableElement"
+	},
+	"associationEnds": [
+		{
+			"name": "superInterfaces"
+		},
+		{
+			"name": "classifierModifiers"
+		},
+		{
+			"name": "dataTypeProperties"
+		},
+		{
+			"name": "projections"
+		}
+	],
+	"parameterizedProperties": []
 }

@@ -1,4 +1,4 @@
 [
-  "Warning at SharedNaturalOneToOneSource.key. Didn't expect to receive value for root key property 'SharedNaturalOneToOneSource.key: String' but value was array: [].",
-  "Warning at SharedNaturalOneToOneSource.target.value. Didn't expect to receive value for outside projection property 'SharedNaturalOneToOneTarget.value: String' but value was array: []."
+	"Warning at SharedNaturalOneToOneSource.key. Didn't expect to receive value for root key property 'SharedNaturalOneToOneSource.key: String' but value was array: [].",
+	"Warning at SharedNaturalOneToOneSource.target.value. Didn't expect to receive value for outside projection property 'SharedNaturalOneToOneTarget.value: String' but value was array: []."
 ]

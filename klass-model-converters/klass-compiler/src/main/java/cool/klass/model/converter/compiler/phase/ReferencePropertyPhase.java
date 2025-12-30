@@ -33,46 +33,46 @@ import cool.klass.model.meta.grammar.KlassParser.MultiplicityContext;
 
 public class ReferencePropertyPhase extends AbstractCompilerPhase {
 
-    @Nullable
-    protected AntlrClassReferenceOwner classReferenceOwner;
+	@Nullable
+	protected AntlrClassReferenceOwner classReferenceOwner;
 
-    @Nullable
-    protected AntlrMultiplicityOwner multiplicityOwner;
+	@Nullable
+	protected AntlrMultiplicityOwner multiplicityOwner;
 
-    public ReferencePropertyPhase(CompilerState compilerState) {
-        super(compilerState);
-    }
+	public ReferencePropertyPhase(CompilerState compilerState) {
+		super(compilerState);
+	}
 
-    public void handleClassReference(@Nonnull ClassReferenceContext ctx) {
-        if (this.classReferenceOwner == null) {
-            return;
-        }
+	public void handleClassReference(@Nonnull ClassReferenceContext ctx) {
+		if (this.classReferenceOwner == null) {
+			return;
+		}
 
-        String className = ctx.identifier().getText();
-        AntlrDomainModel domainModel = this.compilerState.getDomainModel();
-        AntlrClass klass = domainModel.getClassByName(className);
+		String className = ctx.identifier().getText();
+		AntlrDomainModel domainModel = this.compilerState.getDomainModel();
+		AntlrClass klass = domainModel.getClassByName(className);
 
-        AntlrClassReference classReference = new AntlrClassReference(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.classReferenceOwner,
-            klass
-        );
+		AntlrClassReference classReference = new AntlrClassReference(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.classReferenceOwner,
+			klass
+		);
 
-        this.classReferenceOwner.enterClassReference(classReference);
-    }
+		this.classReferenceOwner.enterClassReference(classReference);
+	}
 
-    public void handleMultiplicity(@Nonnull MultiplicityContext ctx) {
-        if (this.multiplicityOwner == null) {
-            return;
-        }
+	public void handleMultiplicity(@Nonnull MultiplicityContext ctx) {
+		if (this.multiplicityOwner == null) {
+			return;
+		}
 
-        AntlrMultiplicity multiplicity = new AntlrMultiplicity(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.multiplicityOwner
-        );
+		AntlrMultiplicity multiplicity = new AntlrMultiplicity(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.multiplicityOwner
+		);
 
-        this.multiplicityOwner.enterMultiplicity(multiplicity);
-    }
+		this.multiplicityOwner.enterMultiplicity(multiplicity);
+	}
 }

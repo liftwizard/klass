@@ -1,209 +1,209 @@
 {
-  "data": {
-    "namedProjections": [
-      {
-        "name": "EnumerationLiteralProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 1
-        }
-      },
-      {
-        "name": "EnumerationProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 2
-        }
-      },
-      {
-        "name": "PackageableElementProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 3
-        }
-      },
-      {
-        "name": "ClassifierModifierProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 4
-        }
-      },
-      {
-        "name": "ClassifierInterfaceMappingProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 5
-        }
-      },
-      {
-        "name": "ParameterizedPropertyProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 6
-        }
-      },
-      {
-        "name": "ParameterizedPropertyOrderingProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 7
-        }
-      },
-      {
-        "name": "ProjectionElementProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 8
-        }
-      },
-      {
-        "name": "NamedProjectionProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 9
-        }
-      },
-      {
-        "name": "ServiceGroupProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 10
-        }
-      },
-      {
-        "name": "UrlProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 11
-        }
-      },
-      {
-        "name": "ParameterProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 12
-        }
-      },
-      {
-        "name": "UrlParameterProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 13
-        }
-      },
-      {
-        "name": "ServiceProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 14
-        }
-      },
-      {
-        "name": "ServiceOrderByProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 15
-        }
-      },
-      {
-        "name": "InterfaceProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 16
-        }
-      },
-      {
-        "name": "NumericPropertyValidationProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 17
-        }
-      },
-      {
-        "name": "DataTypePropertyProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 18
-        }
-      },
-      {
-        "name": "KlassProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 19
-        }
-      },
-      {
-        "name": "ClassifierProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 20
-        }
-      },
-      {
-        "name": "ThisMemberReferencePathProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 21
-        }
-      },
-      {
-        "name": "AssociationEndModifierProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 22
-        }
-      },
-      {
-        "name": "AssociationEndOrderByProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 23
-        }
-      },
-      {
-        "name": "AssociationEndProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 24
-        }
-      },
-      {
-        "name": "MemberReferencePathAssociationEndMappingProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 25
-        }
-      },
-      {
-        "name": "ExpressionValueProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 26
-        }
-      },
-      {
-        "name": "MemberReferencePathProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 27
-        }
-      },
-      {
-        "name": "CriteriaProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 28
-        }
-      },
-      {
-        "name": "AssociationProjection",
-        "packageName": "klass.model.meta.domain",
-        "rootProjection": {
-          "id": 29
-        }
-      }
-    ]
-  }
+	"data": {
+		"namedProjections": [
+			{
+				"name": "EnumerationLiteralProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 1
+				}
+			},
+			{
+				"name": "EnumerationProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 2
+				}
+			},
+			{
+				"name": "PackageableElementProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 3
+				}
+			},
+			{
+				"name": "ClassifierModifierProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 4
+				}
+			},
+			{
+				"name": "ClassifierInterfaceMappingProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 5
+				}
+			},
+			{
+				"name": "ParameterizedPropertyProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 6
+				}
+			},
+			{
+				"name": "ParameterizedPropertyOrderingProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 7
+				}
+			},
+			{
+				"name": "ProjectionElementProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 8
+				}
+			},
+			{
+				"name": "NamedProjectionProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 9
+				}
+			},
+			{
+				"name": "ServiceGroupProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 10
+				}
+			},
+			{
+				"name": "UrlProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 11
+				}
+			},
+			{
+				"name": "ParameterProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 12
+				}
+			},
+			{
+				"name": "UrlParameterProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 13
+				}
+			},
+			{
+				"name": "ServiceProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 14
+				}
+			},
+			{
+				"name": "ServiceOrderByProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 15
+				}
+			},
+			{
+				"name": "InterfaceProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 16
+				}
+			},
+			{
+				"name": "NumericPropertyValidationProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 17
+				}
+			},
+			{
+				"name": "DataTypePropertyProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 18
+				}
+			},
+			{
+				"name": "KlassProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 19
+				}
+			},
+			{
+				"name": "ClassifierProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 20
+				}
+			},
+			{
+				"name": "ThisMemberReferencePathProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 21
+				}
+			},
+			{
+				"name": "AssociationEndModifierProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 22
+				}
+			},
+			{
+				"name": "AssociationEndOrderByProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 23
+				}
+			},
+			{
+				"name": "AssociationEndProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 24
+				}
+			},
+			{
+				"name": "MemberReferencePathAssociationEndMappingProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 25
+				}
+			},
+			{
+				"name": "ExpressionValueProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 26
+				}
+			},
+			{
+				"name": "MemberReferencePathProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 27
+				}
+			},
+			{
+				"name": "CriteriaProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 28
+				}
+			},
+			{
+				"name": "AssociationProjection",
+				"packageName": "klass.model.meta.domain",
+				"rootProjection": {
+					"id": 29
+				}
+			}
+		]
+	}
 }

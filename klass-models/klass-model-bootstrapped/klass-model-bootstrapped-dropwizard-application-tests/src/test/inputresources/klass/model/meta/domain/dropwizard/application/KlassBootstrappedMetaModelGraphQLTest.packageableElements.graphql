@@ -1,216 +1,216 @@
 fragment PackageableElementFragment on PackageableElement {
-  __typename
-  name
-  packageName
-  ... on Enumeration {
-    enumerationLiterals {
-      ...EnumerationLiteralFragment
-    }
-  }
-  ... on Classifier {
-    superInterfaces {
-      ...ClassifierInterfaceMappingFragment
-    }
-    classifierModifiers {
-      keyword
-    }
-    dataTypeProperties {
-      ...DataTypePropertyFragment
-    }
-  }
-  ... on Klass {
-    abstractClass
-    superClass {
-      name
-    }
-    parameterizedProperties {
-      ...ParameterizedPropertyFragment
-    }
-  }
-  ... on Association {
-    associationEnds {
-      ...AssociationEndFragment
-    }
-    criteria {
-      __typename
-      id
-    }
-  }
-  ... on NamedProjection {
-    rootProjection {
-      id
-    }
-  }
-  ... on ServiceGroup {
-    owningClass {
-      name
-    }
-    urls {
-      ...UrlFragment
-    }
-  }
+	__typename
+	name
+	packageName
+	... on Enumeration {
+		enumerationLiterals {
+			...EnumerationLiteralFragment
+		}
+	}
+	... on Classifier {
+		superInterfaces {
+			...ClassifierInterfaceMappingFragment
+		}
+		classifierModifiers {
+			keyword
+		}
+		dataTypeProperties {
+			...DataTypePropertyFragment
+		}
+	}
+	... on Klass {
+		abstractClass
+		superClass {
+			name
+		}
+		parameterizedProperties {
+			...ParameterizedPropertyFragment
+		}
+	}
+	... on Association {
+		associationEnds {
+			...AssociationEndFragment
+		}
+		criteria {
+			__typename
+			id
+		}
+	}
+	... on NamedProjection {
+		rootProjection {
+			id
+		}
+	}
+	... on ServiceGroup {
+		owningClass {
+			name
+		}
+		urls {
+			...UrlFragment
+		}
+	}
 }
 
 fragment EnumerationLiteralFragment on EnumerationLiteral {
-  name
-  prettyName
+	name
+	prettyName
 }
 
 fragment ClassifierInterfaceMappingFragment on ClassifierInterfaceMapping {
-  superInterface {
-    name
-  }
+	superInterface {
+		name
+	}
 }
 
 fragment DataTypePropertyFragment on DataTypeProperty {
-  __typename
-  name
-  optional
-  minLengthValidation {
-    ...MinLengthPropertyValidationFragment
-  }
-  maxLengthValidation {
-    ...MaxLengthPropertyValidationFragment
-  }
-  propertyModifiers {
-    keyword
-  }
-  ... on PrimitiveProperty {
-    primitiveType
-    minValidation {
-      ...MinPropertyValidationFragment
-    }
-    maxValidation {
-      ...MaxPropertyValidationFragment
-    }
-  }
-  ... on EnumerationProperty {
-    enumeration {
-      name
-    }
-  }
+	__typename
+	name
+	optional
+	minLengthValidation {
+		...MinLengthPropertyValidationFragment
+	}
+	maxLengthValidation {
+		...MaxLengthPropertyValidationFragment
+	}
+	propertyModifiers {
+		keyword
+	}
+	... on PrimitiveProperty {
+		primitiveType
+		minValidation {
+			...MinPropertyValidationFragment
+		}
+		maxValidation {
+			...MaxPropertyValidationFragment
+		}
+	}
+	... on EnumerationProperty {
+		enumeration {
+			name
+		}
+	}
 }
 
 fragment MinLengthPropertyValidationFragment on MinLengthPropertyValidation {
-  number
+	number
 }
 
 fragment MaxLengthPropertyValidationFragment on MaxLengthPropertyValidation {
-  number
+	number
 }
 
 fragment MinPropertyValidationFragment on MinPropertyValidation {
-  number
+	number
 }
 
 fragment MaxPropertyValidationFragment on MaxPropertyValidation {
-  number
+	number
 }
 
 fragment AssociationEndFragment on AssociationEnd {
-  name
-  direction
-  multiplicity
-  resultType {
-    name
-  }
-  associationEndModifiers {
-    ...AssociationEndModifierFragment
-  }
-  orderBys {
-    ...AssociationEndOrderByFragment
-  }
+	name
+	direction
+	multiplicity
+	resultType {
+		name
+	}
+	associationEndModifiers {
+		...AssociationEndModifierFragment
+	}
+	orderBys {
+		...AssociationEndOrderByFragment
+	}
 }
 
 fragment AssociationEndOrderByFragment on AssociationEndOrderBy {
-  orderByDirection
-  thisMemberReferencePath {
-    id
-  }
+	orderByDirection
+	thisMemberReferencePath {
+		id
+	}
 }
 
 fragment AssociationEndModifierFragment on AssociationEndModifier {
-  keyword
+	keyword
 }
 
 fragment ParameterizedPropertyFragment on ParameterizedProperty {
-  name
-  multiplicity
-  resultType {
-    name
-  }
-  parameterizedPropertyOrderings {
-    ordinal
-  }
-  parameters {
-    name
-  }
+	name
+	multiplicity
+	resultType {
+		name
+	}
+	parameterizedPropertyOrderings {
+		ordinal
+	}
+	parameters {
+		name
+	}
 }
 
 fragment UrlFragment on Url {
-  url
-  parameters {
-    ...UrlParameterFragment
-  }
-  services {
-    ...ServiceFragment
-  }
+	url
+	parameters {
+		...UrlParameterFragment
+	}
+	services {
+		...ServiceFragment
+	}
 }
 
 fragment UrlParameterFragment on UrlParameter {
-  type
-  parameter {
-    ...ParameterFragment
-  }
+	type
+	parameter {
+		...ParameterFragment
+	}
 }
 
 fragment ParameterFragment on Parameter {
-  __typename
-  id
-  name
-  multiplicity
-  ... on EnumerationParameter {
-    enumeration {
-      name
-    }
-  }
-  ... on PrimitiveParameter {
-    primitiveType
-  }
+	__typename
+	id
+	name
+	multiplicity
+	... on EnumerationParameter {
+		enumeration {
+			name
+		}
+	}
+	... on PrimitiveParameter {
+		primitiveType
+	}
 }
 
 fragment ServiceFragment on Service {
-  verb
-  serviceMultiplicity
-  projection {
-    name
-  }
-  queryCriteria {
-    id
-  }
-  authorizeCriteria {
-    id
-  }
-  validateCriteria {
-    id
-  }
-  conflictCriteria {
-    id
-  }
-  orderBys {
-    ...ServiceOrderByFragment
-  }
+	verb
+	serviceMultiplicity
+	projection {
+		name
+	}
+	queryCriteria {
+		id
+	}
+	authorizeCriteria {
+		id
+	}
+	validateCriteria {
+		id
+	}
+	conflictCriteria {
+		id
+	}
+	orderBys {
+		...ServiceOrderByFragment
+	}
 }
 
 fragment ServiceOrderByFragment on ServiceOrderBy {
-  orderByDirection
-  thisMemberReferencePath {
-    id
-  }
+	orderByDirection
+	thisMemberReferencePath {
+		id
+	}
 }
 
 query {
-  packageableElements {
-    ...PackageableElementFragment
-  }
+	packageableElements {
+		...PackageableElementFragment
+	}
 }

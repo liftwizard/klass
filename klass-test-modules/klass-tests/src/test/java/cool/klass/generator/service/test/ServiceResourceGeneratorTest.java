@@ -38,42 +38,42 @@ import static org.assertj.core.api.Assertions.fail;
 @ExtendWith(LogMarkerTestExtension.class)
 public class ServiceResourceGeneratorTest {
 
-    @RegisterExtension
-    final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
+	@RegisterExtension
+	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
-    @Test
-    void stackOverflow() {
-        String sourceCodeText = FileSlurper.slurp("/com/stackoverflow/stackoverflow.klass", this.getClass());
+	@Test
+	void stackOverflow() {
+		String sourceCodeText = FileSlurper.slurp("/com/stackoverflow/stackoverflow.klass", this.getClass());
 
-        CompilationUnit compilationUnit = CompilationUnit.createFromText(
-            0,
-            Optional.empty(),
-            "example.klass",
-            sourceCodeText
-        );
-        KlassCompiler compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("dark"));
-        CompilationResult compilationResult = compiler.compile();
+		CompilationUnit compilationUnit = CompilationUnit.createFromText(
+			0,
+			Optional.empty(),
+			"example.klass",
+			sourceCodeText
+		);
+		KlassCompiler compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("dark"));
+		CompilationResult compilationResult = compiler.compile();
 
-        if (compilationResult.domainModelWithSourceCode().isEmpty()) {
-            String message = compilationResult.compilerAnnotations().makeString("\n");
-            fail(message);
-        } else {
-            DomainModelWithSourceCode domainModel = compilationResult.domainModelWithSourceCode().get();
-            assertThat(domainModel).isNotNull();
+		if (compilationResult.domainModelWithSourceCode().isEmpty()) {
+			String message = compilationResult.compilerAnnotations().makeString("\n");
+			fail(message);
+		} else {
+			DomainModelWithSourceCode domainModel = compilationResult.domainModelWithSourceCode().get();
+			assertThat(domainModel).isNotNull();
 
-            ServiceResourceGenerator serviceResourceGenerator = new ServiceResourceGenerator(
-                domainModel,
-                "StackOverflow",
-                "com.stackoverflow"
-            );
+			ServiceResourceGenerator serviceResourceGenerator = new ServiceResourceGenerator(
+				domainModel,
+				"StackOverflow",
+				"com.stackoverflow"
+			);
 
-            ServiceGroup serviceGroup = domainModel.getServiceGroups().getOnly();
-            String serviceGroupSourceCode = serviceResourceGenerator.getServiceGroupSourceCode(serviceGroup);
+			ServiceGroup serviceGroup = domainModel.getServiceGroups().getOnly();
+			String serviceGroupSourceCode = serviceResourceGenerator.getServiceGroupSourceCode(serviceGroup);
 
-            this.fileMatchExtension.assertFileContents(
-                this.getClass().getSimpleName() + ".java",
-                serviceGroupSourceCode
-            );
-        }
-    }
+			this.fileMatchExtension.assertFileContents(
+				this.getClass().getSimpleName() + ".java",
+				serviceGroupSourceCode
+			);
+		}
+	}
 }

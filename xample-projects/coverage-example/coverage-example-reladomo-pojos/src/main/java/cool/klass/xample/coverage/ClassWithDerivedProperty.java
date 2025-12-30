@@ -22,72 +22,72 @@ import java.time.ZoneId;
 
 public class ClassWithDerivedProperty extends ClassWithDerivedPropertyAbstract {
 
-    public ClassWithDerivedProperty() {
-        // You must not modify this constructor. Mithra calls this internally.
-        // You can call this constructor. You can also add new constructors.
-    }
+	public ClassWithDerivedProperty() {
+		// You must not modify this constructor. Mithra calls this internally.
+		// You can call this constructor. You can also add new constructors.
+	}
 
-    public String getDerivedRequiredString() {
-        return "derivedRequiredString";
-    }
+	public String getDerivedRequiredString() {
+		return "derivedRequiredString";
+	}
 
-    public Integer getDerivedRequiredInteger() {
-        return 1;
-    }
+	public Integer getDerivedRequiredInteger() {
+		return 1;
+	}
 
-    public Long getDerivedRequiredLong() {
-        return 1L;
-    }
+	public Long getDerivedRequiredLong() {
+		return 1L;
+	}
 
-    public Double getDerivedRequiredDouble() {
-        return 1.0;
-    }
+	public Double getDerivedRequiredDouble() {
+		return 1.0;
+	}
 
-    public Float getDerivedRequiredFloat() {
-        return 1.0f;
-    }
+	public Float getDerivedRequiredFloat() {
+		return 1.0f;
+	}
 
-    public Boolean isDerivedRequiredBoolean() {
-        return true;
-    }
+	public Boolean isDerivedRequiredBoolean() {
+		return true;
+	}
 
-    public Instant getDerivedRequiredInstant() {
-        return Instant.now();
-    }
+	public Instant getDerivedRequiredInstant() {
+		return Instant.now();
+	}
 
-    public LocalDate getDerivedRequiredLocalDate() {
-        return LocalDate.now(ZoneId.of("UTC"));
-    }
+	public LocalDate getDerivedRequiredLocalDate() {
+		return LocalDate.now(ZoneId.of("UTC"));
+	}
 
-    public String getDerivedOptionalString() {
-        return "derivedOptionalString";
-    }
+	public String getDerivedOptionalString() {
+		return "derivedOptionalString";
+	}
 
-    public Integer getDerivedOptionalInteger() {
-        return 1;
-    }
+	public Integer getDerivedOptionalInteger() {
+		return 1;
+	}
 
-    public Long getDerivedOptionalLong() {
-        return 1L;
-    }
+	public Long getDerivedOptionalLong() {
+		return 1L;
+	}
 
-    public Double getDerivedOptionalDouble() {
-        return 1.0;
-    }
+	public Double getDerivedOptionalDouble() {
+		return 1.0;
+	}
 
-    public Float getDerivedOptionalFloat() {
-        return 1.0f;
-    }
+	public Float getDerivedOptionalFloat() {
+		return 1.0f;
+	}
 
-    public Boolean isDerivedOptionalBoolean() {
-        return true;
-    }
+	public Boolean isDerivedOptionalBoolean() {
+		return true;
+	}
 
-    public Instant getDerivedOptionalInstant() {
-        return Instant.now();
-    }
+	public Instant getDerivedOptionalInstant() {
+		return Instant.now();
+	}
 
-    public LocalDate getDerivedOptionalLocalDate() {
-        return LocalDate.now(ZoneId.of("UTC"));
-    }
+	public LocalDate getDerivedOptionalLocalDate() {
+		return LocalDate.now(ZoneId.of("UTC"));
+	}
 }

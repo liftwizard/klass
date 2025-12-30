@@ -30,49 +30,49 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-    name = "generate-meta-model-constants",
-    defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-    threadSafe = true,
-    requiresDependencyResolution = ResolutionScope.RUNTIME
+	name = "generate-meta-model-constants",
+	defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+	threadSafe = true,
+	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
 public class GenerateJavaConstantsMetaModelMojo extends AbstractGenerateMojo {
 
-    @Parameter(
-        property = "outputDirectory",
-        defaultValue = "${project.build.directory}/generated-sources/meta-model-constants"
-    )
-    private File outputDirectory;
+	@Parameter(
+		property = "outputDirectory",
+		defaultValue = "${project.build.directory}/generated-sources/meta-model-constants"
+	)
+	private File outputDirectory;
 
-    @Parameter(property = "applicationName", required = true)
-    private String applicationName;
+	@Parameter(property = "applicationName", required = true)
+	private String applicationName;
 
-    @Parameter(property = "rootPackageName", required = true)
-    private String rootPackageName;
+	@Parameter(property = "rootPackageName", required = true)
+	private String rootPackageName;
 
-    @Override
-    protected InputSource getInputSource() {
-        return InputSource.CLASSPATH;
-    }
+	@Override
+	protected InputSource getInputSource() {
+		return InputSource.CLASSPATH;
+	}
 
-    @Override
-    public void execute() throws MojoExecutionException {
-        boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
-                DomainModel domainModel = this.getDomainModel();
-                Path outputPath = this.outputDirectory.toPath();
-                try {
-                    JavaConstantsMetaModelGenerator javaConstantsMetaModelGenerator =
-                        new JavaConstantsMetaModelGenerator(domainModel, this.applicationName, this.rootPackageName);
-                    javaConstantsMetaModelGenerator.writeJavaConstantsMetaModelFiles(outputPath);
-                } catch (IOException e) {
-                    throw new MojoExecutionException(e.getMessage(), e);
-                }
-                return null;
-            });
+	@Override
+	public void execute() throws MojoExecutionException {
+		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
+				DomainModel domainModel = this.getDomainModel();
+				Path outputPath = this.outputDirectory.toPath();
+				try {
+					JavaConstantsMetaModelGenerator javaConstantsMetaModelGenerator =
+						new JavaConstantsMetaModelGenerator(domainModel, this.applicationName, this.rootPackageName);
+					javaConstantsMetaModelGenerator.writeJavaConstantsMetaModelFiles(outputPath);
+				} catch (IOException e) {
+					throw new MojoExecutionException(e.getMessage(), e);
+				}
+				return null;
+			});
 
-        if (wasGenerated) {
-            this.getLog().info("Generated meta model constants in: " + this.outputDirectory.getPath());
-        }
+		if (wasGenerated) {
+			this.getLog().info("Generated meta model constants in: " + this.outputDirectory.getPath());
+		}
 
-        this.mavenProject.addCompileSourceRoot(this.outputDirectory.getPath());
-    }
+		this.mavenProject.addCompileSourceRoot(this.outputDirectory.getPath());
+	}
 }

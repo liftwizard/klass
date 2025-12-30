@@ -1,24 +1,24 @@
 :root {
-    color-scheme: light;
-    --color-foreground: Black;
-    --color-background: White;
+	color-scheme: light;
+	--color-foreground: Black;
+	--color-background: White;
 
-    --klass-color-comment: #8C8C8C;
-    --klass-color-keyword: #0033B3;
-    --klass-color-identifier: color var(--color-foreground);
-    --klass-color-package-name: #AA0000;
-    --klass-color-top-level-element-name: #AA0000;
-    --klass-color-interface-name: #00AAAA;
-    --klass-color-enumeration-literal-name: #871094;
-    --klass-color-parameter-name: #FF8800;
-    --klass-color-property-name: #871094;
-    --klass-color-literal: #1750EB;
-    --klass-color-string-literal: #067D17;
-    --klass-color-url-constant: #00AA00;
+	--klass-color-comment: #8c8c8c;
+	--klass-color-keyword: #0033b3;
+	--klass-color-identifier: color var(--color-foreground);
+	--klass-color-package-name: #aa0000;
+	--klass-color-top-level-element-name: #aa0000;
+	--klass-color-interface-name: #00aaaa;
+	--klass-color-enumeration-literal-name: #871094;
+	--klass-color-parameter-name: #ff8800;
+	--klass-color-property-name: #871094;
+	--klass-color-literal: #1750eb;
+	--klass-color-string-literal: #067d17;
+	--klass-color-url-constant: #00aa00;
 
-    --klass-color-semicolon: #CCCCCC;
+	--klass-color-semicolon: #cccccc;
 
-    --klass-color-declaration: #EDEBFC;
-    --klass-color-reference: #EDEBFC;
-    --klass-color-highlight: #FFE959;
+	--klass-color-declaration: #edebfc;
+	--klass-color-reference: #edebfc;
+	--klass-color-highlight: #ffe959;
 }

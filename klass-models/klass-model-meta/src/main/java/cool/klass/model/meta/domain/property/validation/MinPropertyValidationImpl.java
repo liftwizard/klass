@@ -31,45 +31,45 @@ import cool.klass.model.meta.grammar.KlassParser.MinValidationContext;
 
 public class MinPropertyValidationImpl extends AbstractNumericPropertyValidation implements MinPropertyValidation {
 
-    public MinPropertyValidationImpl(
-        @Nonnull MinValidationContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        @Nonnull AbstractDataTypeProperty<?> owningProperty,
-        int number
-    ) {
-        super(elementContext, macroElement, sourceCode, owningProperty, number);
-    }
+	public MinPropertyValidationImpl(
+		@Nonnull MinValidationContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		@Nonnull AbstractDataTypeProperty<?> owningProperty,
+		int number
+	) {
+		super(elementContext, macroElement, sourceCode, owningProperty, number);
+	}
 
-    @Nonnull
-    @Override
-    public MinValidationContext getElementContext() {
-        return (MinValidationContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public MinValidationContext getElementContext() {
+		return (MinValidationContext) super.getElementContext();
+	}
 
-    public static class MinPropertyValidationBuilder
-        extends NumericPropertyValidationBuilder<MinPropertyValidationImpl> {
+	public static class MinPropertyValidationBuilder
+		extends NumericPropertyValidationBuilder<MinPropertyValidationImpl> {
 
-        public MinPropertyValidationBuilder(
-            @Nonnull MinValidationContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            @Nonnull DataTypePropertyBuilder<?, ?, ?> owningPropertyBuilder,
-            int number
-        ) {
-            super(elementContext, macroElement, sourceCode, owningPropertyBuilder, number);
-        }
+		public MinPropertyValidationBuilder(
+			@Nonnull MinValidationContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			@Nonnull DataTypePropertyBuilder<?, ?, ?> owningPropertyBuilder,
+			int number
+		) {
+			super(elementContext, macroElement, sourceCode, owningPropertyBuilder, number);
+		}
 
-        @Nonnull
-        @Override
-        protected MinPropertyValidationImpl buildUnsafe() {
-            return new MinPropertyValidationImpl(
-                (MinValidationContext) this.elementContext,
-                this.macroElement.map(ElementBuilder::getElement),
-                this.sourceCode.build(),
-                this.owningPropertyBuilder.getElement(),
-                this.number
-            );
-        }
-    }
+		@Nonnull
+		@Override
+		protected MinPropertyValidationImpl buildUnsafe() {
+			return new MinPropertyValidationImpl(
+				(MinValidationContext) this.elementContext,
+				this.macroElement.map(ElementBuilder::getElement),
+				this.sourceCode.build(),
+				this.owningPropertyBuilder.getElement(),
+				this.number
+			);
+		}
+	}
 }

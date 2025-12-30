@@ -1,7 +1,7 @@
 [
-  "Error at PropertiesRequired.system. Didn't expect to receive value for temporal range property 'PropertiesRequired.system: TemporalRange?' but value was string: \"1999-12-31T23:59:59.999Z\".",
-  "Error at PropertiesRequired.createdById. Didn't expect to receive value for audit property 'PropertiesRequired.createdById: String' but value was string: \"test user 1\".",
-  "Error at PropertiesRequired.lastUpdatedById. Didn't expect to receive value for audit property 'PropertiesRequired.lastUpdatedById: String' but value was string: \"test user 1\".",
-  "Error at PropertiesRequired.createdBy.system. Didn't expect to receive value for temporal range property 'User.system: TemporalRange?' but value was string: \"1999-12-31T23:59:59.999Z\".",
-  "Error at PropertiesRequired.lastUpdatedBy.system. Didn't expect to receive value for temporal range property 'User.system: TemporalRange?' but value was string: \"1999-12-31T23:59:59.999Z\"."
+	"Error at PropertiesRequired.system. Didn't expect to receive value for temporal range property 'PropertiesRequired.system: TemporalRange?' but value was string: \"1999-12-31T23:59:59.999Z\".",
+	"Error at PropertiesRequired.createdById. Didn't expect to receive value for audit property 'PropertiesRequired.createdById: String' but value was string: \"test user 1\".",
+	"Error at PropertiesRequired.lastUpdatedById. Didn't expect to receive value for audit property 'PropertiesRequired.lastUpdatedById: String' but value was string: \"test user 1\".",
+	"Error at PropertiesRequired.createdBy.system. Didn't expect to receive value for temporal range property 'User.system: TemporalRange?' but value was string: \"1999-12-31T23:59:59.999Z\".",
+	"Error at PropertiesRequired.lastUpdatedBy.system. Didn't expect to receive value for temporal range property 'User.system: TemporalRange?' but value was string: \"1999-12-31T23:59:59.999Z\"."
 ]

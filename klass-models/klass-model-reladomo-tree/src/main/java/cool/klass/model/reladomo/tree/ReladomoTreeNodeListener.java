@@ -17,29 +17,29 @@
 package cool.klass.model.reladomo.tree;
 
 public interface ReladomoTreeNodeListener {
-    default void assertInvariants() {}
+	default void assertInvariants() {}
 
-    void enterRoot(RootReladomoTreeNode rootReladomoTreeNode);
+	void enterRoot(RootReladomoTreeNode rootReladomoTreeNode);
 
-    void exitRoot(RootReladomoTreeNode rootReladomoTreeNode);
+	void exitRoot(RootReladomoTreeNode rootReladomoTreeNode);
 
-    void enterDataTypeProperty(DataTypePropertyReladomoTreeNode dataTypePropertyReladomoTreeNode);
+	void enterDataTypeProperty(DataTypePropertyReladomoTreeNode dataTypePropertyReladomoTreeNode);
 
-    void exitDataTypeProperty(DataTypePropertyReladomoTreeNode dataTypePropertyReladomoTreeNode);
+	void exitDataTypeProperty(DataTypePropertyReladomoTreeNode dataTypePropertyReladomoTreeNode);
 
-    void enterSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode);
+	void enterSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode);
 
-    void exitSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode);
+	void exitSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode);
 
-    void enterSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode);
+	void enterSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode);
 
-    void exitSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode);
+	void exitSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode);
 
-    void enterReferenceProperty(ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode);
+	void enterReferenceProperty(ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode);
 
-    void exitReferenceProperty(ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode);
+	void exitReferenceProperty(ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode);
 
-    void enterReference(ReferenceReladomoTreeNode referenceReladomoTreeNode);
+	void enterReference(ReferenceReladomoTreeNode referenceReladomoTreeNode);
 
-    void exitReference(ReferenceReladomoTreeNode referenceReladomoTreeNode);
+	void exitReference(ReferenceReladomoTreeNode referenceReladomoTreeNode);
 }

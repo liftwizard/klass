@@ -1,35 +1,35 @@
 fragment ProjectionElementFragment on ProjectionElement {
-  __typename
-  id
-  name
-  parent {
-    id
-  }
-  ... on RootProjection {
-    classifier {
-      name
-    }
-  }
-  ... on ProjectionWithAssociationEnd {
-    associationEnd {
-      owningClass {
-        name
-      }
-      name
-    }
-  }
-  ... on ProjectionDataTypeProperty {
-    dataTypeProperty {
-      owningClassifier {
-        name
-      }
-      name
-    }
-  }
+	__typename
+	id
+	name
+	parent {
+		id
+	}
+	... on RootProjection {
+		classifier {
+			name
+		}
+	}
+	... on ProjectionWithAssociationEnd {
+		associationEnd {
+			owningClass {
+				name
+			}
+			name
+		}
+	}
+	... on ProjectionDataTypeProperty {
+		dataTypeProperty {
+			owningClassifier {
+				name
+			}
+			name
+		}
+	}
 }
 
 query {
-  projectionElements {
-    ...ProjectionElementFragment
-  }
+	projectionElements {
+		...ProjectionElementFragment
+	}
 }
