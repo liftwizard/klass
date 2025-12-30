@@ -52,163 +52,163 @@ import static org.assertj.core.api.Assertions.fail;
 @ExtendWith(LogMarkerTestExtension.class)
 public abstract class AbstractKlassCompilerErrorTestCase {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractKlassCompilerErrorTestCase.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractKlassCompilerErrorTestCase.class);
 
-    @RegisterExtension
-    final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
+	@RegisterExtension
+	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
-    @Test
-    public void smokeTest() {
-        this.assertCompilationSucceeds(false);
-    }
+	@Test
+	public void smokeTest() {
+		this.assertCompilationSucceeds(false);
+	}
 
-    @Nonnull
-    private String getTestName() {
-        return this.getClass().getSimpleName();
-    }
+	@Nonnull
+	private String getTestName() {
+		return this.getClass().getSimpleName();
+	}
 
-    @Nonnull
-    private String getSourceName() {
-        return this.getTestName() + ".klass";
-    }
+	@Nonnull
+	private String getSourceName() {
+		return this.getTestName() + ".klass";
+	}
 
-    private ImmutableList<String> assertCompilerAnnotationsExist(CompilationResult compilationResult, String testName) {
-        ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
-        MutableList<String> expectedLogFileNames = Lists.mutable.empty();
+	private ImmutableList<String> assertCompilerAnnotationsExist(CompilationResult compilationResult, String testName) {
+		ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
+		MutableList<String> expectedLogFileNames = Lists.mutable.empty();
 
-        for (RootCompilerAnnotation compilerAnnotation : compilerAnnotations) {
-            String annotationSourceName = "%s-%s-%d-%s.log".formatted(
-                testName,
-                compilerAnnotation.getLines().toReversed().makeString("_"),
-                compilerAnnotation.getCharPositionInLine(),
-                compilerAnnotation.getAnnotationCode()
-            );
+		for (RootCompilerAnnotation compilerAnnotation : compilerAnnotations) {
+			String annotationSourceName = "%s-%s-%d-%s.log".formatted(
+				testName,
+				compilerAnnotation.getLines().toReversed().makeString("_"),
+				compilerAnnotation.getCharPositionInLine(),
+				compilerAnnotation.getAnnotationCode()
+			);
 
-            expectedLogFileNames.add(annotationSourceName);
+			expectedLogFileNames.add(annotationSourceName);
 
-            this.fileMatchExtension.assertFileContents(annotationSourceName, compilerAnnotation.toString());
-        }
+			this.fileMatchExtension.assertFileContents(annotationSourceName, compilerAnnotation.toString());
+		}
 
-        ImmutableListMultimap<Object, RootCompilerAnnotation> annotationsByKey = compilerAnnotations.groupBy(
-            this::getAnnotationKey
-        );
-        annotationsByKey.forEachKeyMultiValues((key, compilerAnnotationsForKey) -> {
-            if (compilerAnnotationsForKey.size() > 1) {
-                for (RootCompilerAnnotation compilerAnnotation : compilerAnnotationsForKey) {
-                    LOGGER.warn("Found compiler annotation:\n{}", compilerAnnotation);
-                }
-                fail("Found multiple compiler annotations for key: " + key);
-            }
-        });
+		ImmutableListMultimap<Object, RootCompilerAnnotation> annotationsByKey = compilerAnnotations.groupBy(
+			this::getAnnotationKey
+		);
+		annotationsByKey.forEachKeyMultiValues((key, compilerAnnotationsForKey) -> {
+			if (compilerAnnotationsForKey.size() > 1) {
+				for (RootCompilerAnnotation compilerAnnotation : compilerAnnotationsForKey) {
+					LOGGER.warn("Found compiler annotation:\n{}", compilerAnnotation);
+				}
+				fail("Found multiple compiler annotations for key: " + key);
+			}
+		});
 
-        return expectedLogFileNames.toImmutable();
-    }
+		return expectedLogFileNames.toImmutable();
+	}
 
-    private ImmutableList<Object> getAnnotationKey(RootCompilerAnnotation rootCompilerAnnotation) {
-        String filenameWithoutDirectory = rootCompilerAnnotation.getFilenameWithoutDirectory();
-        int line = rootCompilerAnnotation.getLine();
-        int charPositionInLine = rootCompilerAnnotation.getCharPositionInLine();
-        String annotationCode = rootCompilerAnnotation.getAnnotationCode();
-        return Lists.immutable.with(filenameWithoutDirectory, line, charPositionInLine, annotationCode);
-    }
+	private ImmutableList<Object> getAnnotationKey(RootCompilerAnnotation rootCompilerAnnotation) {
+		String filenameWithoutDirectory = rootCompilerAnnotation.getFilenameWithoutDirectory();
+		int line = rootCompilerAnnotation.getLine();
+		int charPositionInLine = rootCompilerAnnotation.getCharPositionInLine();
+		String annotationCode = rootCompilerAnnotation.getAnnotationCode();
+		return Lists.immutable.with(filenameWithoutDirectory, line, charPositionInLine, annotationCode);
+	}
 
-    private ImmutableList<String> findCompilerAnnotationFiles() {
-        String packagePath = this.getClass().getPackage().getName().replace('.', '/');
-        File resourcesDir = new File("src/test/resources/" + packagePath);
+	private ImmutableList<String> findCompilerAnnotationFiles() {
+		String packagePath = this.getClass().getPackage().getName().replace('.', '/');
+		File resourcesDir = new File("src/test/resources/" + packagePath);
 
-        if (!resourcesDir.exists() || !resourcesDir.isDirectory()) {
-            return Lists.immutable.empty();
-        }
+		if (!resourcesDir.exists() || !resourcesDir.isDirectory()) {
+			return Lists.immutable.empty();
+		}
 
-        String annotationFilePattern = "-\\d+(_\\d+)*-\\d+-([A-Z]{3})(_[A-Z]{3}){2}\\.log";
-        FilenameFilter annotationFileFilter = (dir, name) -> name.matches(this.getTestName() + annotationFilePattern);
-        File[] annotationFiles = resourcesDir.listFiles(annotationFileFilter);
+		String annotationFilePattern = "-\\d+(_\\d+)*-\\d+-([A-Z]{3})(_[A-Z]{3}){2}\\.log";
+		FilenameFilter annotationFileFilter = (dir, name) -> name.matches(this.getTestName() + annotationFilePattern);
+		File[] annotationFiles = resourcesDir.listFiles(annotationFileFilter);
 
-        return Lists.immutable.with(annotationFiles).collect(File::getName);
-    }
+		return Lists.immutable.with(annotationFiles).collect(File::getName);
+	}
 
-    private void assertNoExtraAnnotationFilesExist(ImmutableList<String> expectedFileNames) {
-        ImmutableList<String> actualFileNames = this.findCompilerAnnotationFiles();
+	private void assertNoExtraAnnotationFilesExist(ImmutableList<String> expectedFileNames) {
+		ImmutableList<String> actualFileNames = this.findCompilerAnnotationFiles();
 
-        assertThat(actualFileNames.toSortedListBy(CompilerAnnotationKey::parseAnnotationFilename))
-            .as(
-                "Extra or missing annotation log files found in src/test/resources/%s",
-                this.getClass().getPackage().getName().replace('.', '/')
-            )
-            .isEqualTo(expectedFileNames.toSortedListBy(CompilerAnnotationKey::parseAnnotationFilename));
-    }
+		assertThat(actualFileNames.toSortedListBy(CompilerAnnotationKey::parseAnnotationFilename))
+			.as(
+				"Extra or missing annotation log files found in src/test/resources/%s",
+				this.getClass().getPackage().getName().replace('.', '/')
+			)
+			.isEqualTo(expectedFileNames.toSortedListBy(CompilerAnnotationKey::parseAnnotationFilename));
+	}
 
-    protected void assertCompilationSucceeds(boolean expectDomainModel) {
-        String sourceCodeText = FileSlurper.slurp(this.getSourceName(), this.getClass());
-        String sourceName = this.getSourceName();
-        CompilationUnit compilationUnit = CompilationUnit.createFromText(
-            0,
-            Optional.empty(),
-            sourceName,
-            sourceCodeText
-        );
-        AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
-        var compiler = new KlassCompiler(compilationUnit, colorScheme);
-        CompilationResult compilationResult = compiler.compile();
+	protected void assertCompilationSucceeds(boolean expectDomainModel) {
+		String sourceCodeText = FileSlurper.slurp(this.getSourceName(), this.getClass());
+		String sourceName = this.getSourceName();
+		CompilationUnit compilationUnit = CompilationUnit.createFromText(
+			0,
+			Optional.empty(),
+			sourceName,
+			sourceCodeText
+		);
+		AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
+		var compiler = new KlassCompiler(compilationUnit, colorScheme);
+		CompilationResult compilationResult = compiler.compile();
 
-        ImmutableList<String> expectedLogFileNames = this.assertCompilerAnnotationsExist(
-            compilationResult,
-            this.getTestName()
-        );
-        this.assertNoExtraAnnotationFilesExist(expectedLogFileNames);
+		ImmutableList<String> expectedLogFileNames = this.assertCompilerAnnotationsExist(
+			compilationResult,
+			this.getTestName()
+		);
+		this.assertNoExtraAnnotationFilesExist(expectedLogFileNames);
 
-        if (expectDomainModel) {
-            Optional<DomainModelWithSourceCode> domainModelWithSourceCode =
-                compilationResult.domainModelWithSourceCode();
-            assertThat(domainModelWithSourceCode).isPresent();
-        } else if (compilationResult.domainModelWithSourceCode().isPresent()) {
-            fail("Expected a compile error but found:\n" + sourceCodeText);
-        }
-    }
+		if (expectDomainModel) {
+			Optional<DomainModelWithSourceCode> domainModelWithSourceCode =
+				compilationResult.domainModelWithSourceCode();
+			assertThat(domainModelWithSourceCode).isPresent();
+		} else if (compilationResult.domainModelWithSourceCode().isPresent()) {
+			fail("Expected a compile error but found:\n" + sourceCodeText);
+		}
+	}
 
-    private record CompilerAnnotationKey(
-        ImmutableList<Integer> lineNumbers,
-        int columnNumber,
-        String errorCode,
-        String filename
-    ) implements Comparable<CompilerAnnotationKey> {
-        private static final Comparator<Iterable<Integer>> LEXICOGRAPHICAL = Comparators.lexicographical(
-            Comparator.<Integer>naturalOrder()
-        );
-        private static final Comparator<CompilerAnnotationKey> COMPARATOR = Comparator.comparing(
-            CompilerAnnotationKey::lineNumbers,
-            LEXICOGRAPHICAL
-        )
-            .thenComparingInt(CompilerAnnotationKey::columnNumber)
-            .thenComparing(CompilerAnnotationKey::errorCode);
+	private record CompilerAnnotationKey(
+		ImmutableList<Integer> lineNumbers,
+		int columnNumber,
+		String errorCode,
+		String filename
+	) implements Comparable<CompilerAnnotationKey> {
+		private static final Comparator<Iterable<Integer>> LEXICOGRAPHICAL = Comparators.lexicographical(
+			Comparator.<Integer>naturalOrder()
+		);
+		private static final Comparator<CompilerAnnotationKey> COMPARATOR = Comparator.comparing(
+			CompilerAnnotationKey::lineNumbers,
+			LEXICOGRAPHICAL
+		)
+			.thenComparingInt(CompilerAnnotationKey::columnNumber)
+			.thenComparing(CompilerAnnotationKey::errorCode);
 
-        public static CompilerAnnotationKey parseAnnotationFilename(String annotationFilename) {
-            // TestName-LineNumbers-ColumnNumber-ErrorCode.log
-            // Where LineNumbers can be a single number or multiple numbers joined by underscores
-            String regex = ".*?-(\\d+(?:_\\d+)*?)-(\\d+)-([A-Z]{3}_[A-Z]{3}_[A-Z]{3})\\.log";
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(annotationFilename);
+		public static CompilerAnnotationKey parseAnnotationFilename(String annotationFilename) {
+			// TestName-LineNumbers-ColumnNumber-ErrorCode.log
+			// Where LineNumbers can be a single number or multiple numbers joined by underscores
+			String regex = ".*?-(\\d+(?:_\\d+)*?)-(\\d+)-([A-Z]{3}_[A-Z]{3}_[A-Z]{3})\\.log";
+			Pattern pattern = Pattern.compile(regex);
+			Matcher matcher = pattern.matcher(annotationFilename);
 
-            if (!matcher.matches()) {
-                throw new AssertionError("Filename does not match expected pattern: " + annotationFilename);
-            }
+			if (!matcher.matches()) {
+				throw new AssertionError("Filename does not match expected pattern: " + annotationFilename);
+			}
 
-            String lineNumbersStr = matcher.group(1);
-            int columnNumber = Integer.parseInt(matcher.group(2));
-            String errorCode = matcher.group(3);
+			String lineNumbersStr = matcher.group(1);
+			int columnNumber = Integer.parseInt(matcher.group(2));
+			String errorCode = matcher.group(3);
 
-            Iterable<String> lineNumbersArray = Splitter.on('_').split(lineNumbersStr);
-            MutableList<Integer> lineNumbers = Lists.mutable.empty();
-            for (String lineNumber : lineNumbersArray) {
-                lineNumbers.add(Integer.parseInt(lineNumber));
-            }
+			Iterable<String> lineNumbersArray = Splitter.on('_').split(lineNumbersStr);
+			MutableList<Integer> lineNumbers = Lists.mutable.empty();
+			for (String lineNumber : lineNumbersArray) {
+				lineNumbers.add(Integer.parseInt(lineNumber));
+			}
 
-            return new CompilerAnnotationKey(lineNumbers.toImmutable(), columnNumber, errorCode, annotationFilename);
-        }
+			return new CompilerAnnotationKey(lineNumbers.toImmutable(), columnNumber, errorCode, annotationFilename);
+		}
 
-        @Override
-        public int compareTo(CompilerAnnotationKey other) {
-            return COMPARATOR.compare(this, other);
-        }
-    }
+		@Override
+		public int compareTo(CompilerAnnotationKey other) {
+			return COMPARATOR.compare(this, other);
+		}
+	}
 }

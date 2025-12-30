@@ -1,10 +1,10 @@
 {
-  key: null,
-  targetKey: null,
-  value: null,
-  target: {
     key: null,
-    sourceKey: null,
+    targetKey: null,
     value: null,
-  },
+    target: {
+        key: null,
+        sourceKey: null,
+        value: null,
+    },
 }

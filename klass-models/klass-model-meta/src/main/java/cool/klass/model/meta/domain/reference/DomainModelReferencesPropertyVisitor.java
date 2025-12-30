@@ -47,73 +47,73 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public class DomainModelReferencesPropertyVisitor implements PropertyVisitor {
 
-    @Nonnull
-    private final DomainModelReferences domainModelReferences;
+	@Nonnull
+	private final DomainModelReferences domainModelReferences;
 
-    public DomainModelReferencesPropertyVisitor(@Nonnull DomainModelReferences domainModelReferences) {
-        this.domainModelReferences = Objects.requireNonNull(domainModelReferences);
-    }
+	public DomainModelReferencesPropertyVisitor(@Nonnull DomainModelReferences domainModelReferences) {
+		this.domainModelReferences = Objects.requireNonNull(domainModelReferences);
+	}
 
-    @Override
-    public void visitPrimitiveProperty(PrimitiveProperty primitiveProperty) {
-        // Deliberately empty
-    }
+	@Override
+	public void visitPrimitiveProperty(PrimitiveProperty primitiveProperty) {
+		// Deliberately empty
+	}
 
-    @Override
-    public void visitEnumerationProperty(EnumerationProperty enumerationProperty) {
-        EnumerationPropertyWithSourceCode elementWithSourceCode =
-            (EnumerationPropertyWithSourceCode) enumerationProperty;
-        EnumerationPropertyContext elementContext = elementWithSourceCode.getElementContext();
-        EnumerationReferenceContext reference = elementContext.enumerationReference();
-        EnumerationWithSourceCode enumeration = elementWithSourceCode.getType();
+	@Override
+	public void visitEnumerationProperty(EnumerationProperty enumerationProperty) {
+		EnumerationPropertyWithSourceCode elementWithSourceCode =
+			(EnumerationPropertyWithSourceCode) enumerationProperty;
+		EnumerationPropertyContext elementContext = elementWithSourceCode.getElementContext();
+		EnumerationReferenceContext reference = elementContext.enumerationReference();
+		EnumerationWithSourceCode enumeration = elementWithSourceCode.getType();
 
-        this.domainModelReferences.addEnumerationReference(reference, enumeration);
-    }
+		this.domainModelReferences.addEnumerationReference(reference, enumeration);
+	}
 
-    @Override
-    public void visitAssociationEnd(AssociationEnd associationEnd) {
-        AssociationEndWithSourceCode elementWithSourceCode = (AssociationEndWithSourceCode) associationEnd;
-        AssociationEndContext elementContext = elementWithSourceCode.getElementContext();
-        ClassReferenceContext reference = elementContext.classReference();
-        KlassWithSourceCode klass = elementWithSourceCode.getType();
+	@Override
+	public void visitAssociationEnd(AssociationEnd associationEnd) {
+		AssociationEndWithSourceCode elementWithSourceCode = (AssociationEndWithSourceCode) associationEnd;
+		AssociationEndContext elementContext = elementWithSourceCode.getElementContext();
+		ClassReferenceContext reference = elementContext.classReference();
+		KlassWithSourceCode klass = elementWithSourceCode.getType();
 
-        this.domainModelReferences.addClassReference(reference, klass);
+		this.domainModelReferences.addClassReference(reference, klass);
 
-        associationEnd.getOrderBy().ifPresent(this::visitOrderBy);
-    }
+		associationEnd.getOrderBy().ifPresent(this::visitOrderBy);
+	}
 
-    @Override
-    public void visitAssociationEndSignature(AssociationEndSignature associationEndSignature) {
-        AssociationEndSignatureWithSourceCode elementWithSourceCode =
-            (AssociationEndSignatureWithSourceCode) associationEndSignature;
-        AssociationEndSignatureContext elementContext = elementWithSourceCode.getElementContext();
-        ClassifierReferenceContext reference = elementContext.classifierReference();
-        ClassifierWithSourceCode classifier = elementWithSourceCode.getType();
+	@Override
+	public void visitAssociationEndSignature(AssociationEndSignature associationEndSignature) {
+		AssociationEndSignatureWithSourceCode elementWithSourceCode =
+			(AssociationEndSignatureWithSourceCode) associationEndSignature;
+		AssociationEndSignatureContext elementContext = elementWithSourceCode.getElementContext();
+		ClassifierReferenceContext reference = elementContext.classifierReference();
+		ClassifierWithSourceCode classifier = elementWithSourceCode.getType();
 
-        this.domainModelReferences.addClassifierReference(reference, classifier);
+		this.domainModelReferences.addClassifierReference(reference, classifier);
 
-        associationEndSignature.getOrderBy().ifPresent(this::visitOrderBy);
-    }
+		associationEndSignature.getOrderBy().ifPresent(this::visitOrderBy);
+	}
 
-    @Override
-    public void visitParameterizedProperty(ParameterizedProperty parameterizedProperty) {
-        ParameterizedPropertyWithSourceCode elementWithSourceCode =
-            (ParameterizedPropertyWithSourceCode) parameterizedProperty;
-        ParameterizedPropertyContext elementContext = elementWithSourceCode.getElementContext();
-        ClassReferenceContext reference = elementContext.classReference();
-        KlassWithSourceCode klass = elementWithSourceCode.getType();
+	@Override
+	public void visitParameterizedProperty(ParameterizedProperty parameterizedProperty) {
+		ParameterizedPropertyWithSourceCode elementWithSourceCode =
+			(ParameterizedPropertyWithSourceCode) parameterizedProperty;
+		ParameterizedPropertyContext elementContext = elementWithSourceCode.getElementContext();
+		ClassReferenceContext reference = elementContext.classReference();
+		KlassWithSourceCode klass = elementWithSourceCode.getType();
 
-        this.domainModelReferences.addClassReference(reference, klass);
+		this.domainModelReferences.addClassReference(reference, klass);
 
-        parameterizedProperty.getOrderBy().ifPresent(this::visitOrderBy);
-    }
+		parameterizedProperty.getOrderBy().ifPresent(this::visitOrderBy);
+	}
 
-    public void visitOrderBy(OrderBy orderBy) {
-        ImmutableList<OrderByMemberReferencePath> orderByMemberReferencePaths =
-            orderBy.getOrderByMemberReferencePaths();
-        for (OrderByMemberReferencePath orderByMemberReferencePath : orderByMemberReferencePaths) {
-            ThisMemberReferencePath thisMemberReferencePath = orderByMemberReferencePath.getThisMemberReferencePath();
-            thisMemberReferencePath.visit(new DomainModelReferencesExpressionValueVisitor(this.domainModelReferences));
-        }
-    }
+	public void visitOrderBy(OrderBy orderBy) {
+		ImmutableList<OrderByMemberReferencePath> orderByMemberReferencePaths =
+			orderBy.getOrderByMemberReferencePaths();
+		for (OrderByMemberReferencePath orderByMemberReferencePath : orderByMemberReferencePaths) {
+			ThisMemberReferencePath thisMemberReferencePath = orderByMemberReferencePath.getThisMemberReferencePath();
+			thisMemberReferencePath.visit(new DomainModelReferencesExpressionValueVisitor(this.domainModelReferences));
+		}
+	}
 }

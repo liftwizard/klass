@@ -38,146 +38,146 @@ import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertyContext;
 
 public class AntlrParameterizedProperty extends AntlrClassReferenceProperty implements AntlrParameterOwner {
 
-    public static final AntlrParameterizedProperty AMBIGUOUS = new AntlrParameterizedProperty(
-        new ParameterizedPropertyContext(AMBIGUOUS_PARENT, -1),
-        Optional.empty(),
-        -1,
-        AMBIGUOUS_IDENTIFIER_CONTEXT,
-        AntlrClass.AMBIGUOUS
-    );
+	public static final AntlrParameterizedProperty AMBIGUOUS = new AntlrParameterizedProperty(
+		new ParameterizedPropertyContext(AMBIGUOUS_PARENT, -1),
+		Optional.empty(),
+		-1,
+		AMBIGUOUS_IDENTIFIER_CONTEXT,
+		AntlrClass.AMBIGUOUS
+	);
 
-    public static final AntlrParameterizedProperty NOT_FOUND = new AntlrParameterizedProperty(
-        new ParameterizedPropertyContext(NOT_FOUND_PARENT, -1),
-        Optional.empty(),
-        -1,
-        NOT_FOUND_IDENTIFIER_CONTEXT,
-        AntlrClass.AMBIGUOUS
-    );
+	public static final AntlrParameterizedProperty NOT_FOUND = new AntlrParameterizedProperty(
+		new ParameterizedPropertyContext(NOT_FOUND_PARENT, -1),
+		Optional.empty(),
+		-1,
+		NOT_FOUND_IDENTIFIER_CONTEXT,
+		AntlrClass.AMBIGUOUS
+	);
 
-    // @Nonnull
-    // private final ImmutableList<AntlrParameterizedPropertyModifier> parameterizedPropertyModifiers;
-    @Nonnull
-    private final AntlrClass owningClass;
+	// @Nonnull
+	// private final ImmutableList<AntlrParameterizedPropertyModifier> parameterizedPropertyModifiers;
+	@Nonnull
+	private final AntlrClass owningClass;
 
-    private final ParameterHolder parameterHolder = new ParameterHolder();
+	private final ParameterHolder parameterHolder = new ParameterHolder();
 
-    @Nullable
-    private ParameterizedPropertyBuilder parameterizedPropertyBuilder;
+	@Nullable
+	private ParameterizedPropertyBuilder parameterizedPropertyBuilder;
 
-    private AntlrCriteria criteria;
+	private AntlrCriteria criteria;
 
-    public AntlrParameterizedProperty(
-        @Nonnull ParameterizedPropertyContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        int ordinal,
-        @Nonnull IdentifierContext nameContext,
-        @Nonnull AntlrClass owningClass
-    ) {
-        super(elementContext, compilationUnit, ordinal, nameContext);
-        this.owningClass = Objects.requireNonNull(owningClass);
-    }
+	public AntlrParameterizedProperty(
+		@Nonnull ParameterizedPropertyContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		int ordinal,
+		@Nonnull IdentifierContext nameContext,
+		@Nonnull AntlrClass owningClass
+	) {
+		super(elementContext, compilationUnit, ordinal, nameContext);
+		this.owningClass = Objects.requireNonNull(owningClass);
+	}
 
-    @Nonnull
-    @Override
-    public ParameterizedPropertyContext getElementContext() {
-        return (ParameterizedPropertyContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public ParameterizedPropertyContext getElementContext() {
+		return (ParameterizedPropertyContext) super.getElementContext();
+	}
 
-    @Nonnull
-    @Override
-    public Optional<IAntlrElement> getSurroundingElement() {
-        return Optional.of(this.owningClass);
-    }
+	@Nonnull
+	@Override
+	public Optional<IAntlrElement> getSurroundingElement() {
+		return Optional.of(this.owningClass);
+	}
 
-    @Override
-    public int getNumParameters() {
-        return this.parameterHolder.getNumParameters();
-    }
+	@Override
+	public int getNumParameters() {
+		return this.parameterHolder.getNumParameters();
+	}
 
-    @Override
-    public void enterParameterDeclaration(@Nonnull AntlrParameter parameter) {
-        this.parameterHolder.enterParameterDeclaration(parameter);
-    }
+	@Override
+	public void enterParameterDeclaration(@Nonnull AntlrParameter parameter) {
+		this.parameterHolder.enterParameterDeclaration(parameter);
+	}
 
-    @Override
-    public AntlrParameter getParameterByContext(@Nonnull ParameterDeclarationContext ctx) {
-        return this.parameterHolder.getParameterByContext(ctx);
-    }
+	@Override
+	public AntlrParameter getParameterByContext(@Nonnull ParameterDeclarationContext ctx) {
+		return this.parameterHolder.getParameterByContext(ctx);
+	}
 
-    @Nonnull
-    public AntlrCriteria getCriteria() {
-        return Objects.requireNonNull(this.criteria);
-    }
+	@Nonnull
+	public AntlrCriteria getCriteria() {
+		return Objects.requireNonNull(this.criteria);
+	}
 
-    public void setCriteria(@Nonnull AntlrCriteria criteria) {
-        if (this.criteria != null) {
-            throw new IllegalStateException();
-        }
-        this.criteria = Objects.requireNonNull(criteria);
-    }
+	public void setCriteria(@Nonnull AntlrCriteria criteria) {
+		if (this.criteria != null) {
+			throw new IllegalStateException();
+		}
+		this.criteria = Objects.requireNonNull(criteria);
+	}
 
-    @Nonnull
-    @Override
-    public ParameterizedPropertyBuilder build() {
-        if (this.parameterizedPropertyBuilder != null) {
-            throw new IllegalStateException();
-        }
+	@Nonnull
+	@Override
+	public ParameterizedPropertyBuilder build() {
+		if (this.parameterizedPropertyBuilder != null) {
+			throw new IllegalStateException();
+		}
 
-        /*
+		/*
         ImmutableList<ParameterizedPropertyModifierBuilder> parameterizedPropertyModifierBuilders =
                 this.parameterizedPropertyModifiers.collect(AntlrParameterizedPropertyModifier::build);
         */
 
-        this.parameterizedPropertyBuilder = new ParameterizedPropertyBuilder(
-            (ParameterizedPropertyContext) this.elementContext,
-            this.getMacroElementBuilder(),
-            this.getSourceCodeBuilder(),
-            this.ordinal,
-            this.getNameContext(),
-            this.getType().getElementBuilder(),
-            this.owningClass.getElementBuilder(),
-            this.multiplicity.getMultiplicity()
-        );
+		this.parameterizedPropertyBuilder = new ParameterizedPropertyBuilder(
+			(ParameterizedPropertyContext) this.elementContext,
+			this.getMacroElementBuilder(),
+			this.getSourceCodeBuilder(),
+			this.ordinal,
+			this.getNameContext(),
+			this.getType().getElementBuilder(),
+			this.owningClass.getElementBuilder(),
+			this.multiplicity.getMultiplicity()
+		);
 
-        Optional<OrderByBuilder> orderByBuilder = this.orderBy.map(AntlrOrderBy::build);
-        this.parameterizedPropertyBuilder.setOrderBy(orderByBuilder);
+		Optional<OrderByBuilder> orderByBuilder = this.orderBy.map(AntlrOrderBy::build);
+		this.parameterizedPropertyBuilder.setOrderBy(orderByBuilder);
 
-        return this.parameterizedPropertyBuilder;
-    }
+		return this.parameterizedPropertyBuilder;
+	}
 
-    @Nonnull
-    @Override
-    public ParameterizedPropertyBuilder getElementBuilder() {
-        return Objects.requireNonNull(this.parameterizedPropertyBuilder);
-    }
+	@Nonnull
+	@Override
+	public ParameterizedPropertyBuilder getElementBuilder() {
+		return Objects.requireNonNull(this.parameterizedPropertyBuilder);
+	}
 
-    @Override
-    protected IdentifierContext getTypeIdentifier() {
-        return this.getElementContext().classReference().identifier();
-    }
+	@Override
+	protected IdentifierContext getTypeIdentifier() {
+		return this.getElementContext().classReference().identifier();
+	}
 
-    @Nonnull
-    @Override
-    public AntlrClass getOwningClassifier() {
-        return Objects.requireNonNull(this.owningClass);
-    }
+	@Nonnull
+	@Override
+	public AntlrClass getOwningClassifier() {
+		return Objects.requireNonNull(this.owningClass);
+	}
 
-    // <editor-fold desc="Report Compiler Errors">
-    @Override
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        super.reportErrors(compilerAnnotationHolder);
+	// <editor-fold desc="Report Compiler Errors">
+	@Override
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		super.reportErrors(compilerAnnotationHolder);
 
-        if (this.orderBy != null) {
-            this.orderBy.ifPresent((o) -> o.reportErrors(compilerAnnotationHolder));
-        }
+		if (this.orderBy != null) {
+			this.orderBy.ifPresent((o) -> o.reportErrors(compilerAnnotationHolder));
+		}
 
-        this.reportTypeNotFound(compilerAnnotationHolder);
-    }
+		this.reportTypeNotFound(compilerAnnotationHolder);
+	}
 
-    @Override
-    public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        super.reportNameErrors(compilerAnnotationHolder);
-        this.parameterHolder.reportNameErrors(compilerAnnotationHolder);
-    }
-    // </editor-fold>
+	@Override
+	public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		super.reportNameErrors(compilerAnnotationHolder);
+		this.parameterHolder.reportNameErrors(compilerAnnotationHolder);
+	}
+	// </editor-fold>
 }

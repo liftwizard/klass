@@ -27,23 +27,23 @@ import cool.klass.model.meta.grammar.KlassListener;
 @SuppressWarnings("AbstractClassExtendsConcreteClass")
 public abstract class AbstractCompilerPhase extends DelegatingKlassListener {
 
-    @Nonnull
-    protected final CompilerState compilerState;
+	@Nonnull
+	protected final CompilerState compilerState;
 
-    private final KlassListener delegate;
+	private final KlassListener delegate;
 
-    protected AbstractCompilerPhase(@Nonnull CompilerState compilerState) {
-        this.compilerState = Objects.requireNonNull(compilerState);
-        this.delegate = compilerState.asListener();
-    }
+	protected AbstractCompilerPhase(@Nonnull CompilerState compilerState) {
+		this.compilerState = Objects.requireNonNull(compilerState);
+		this.delegate = compilerState.asListener();
+	}
 
-    @Override
-    protected KlassListener getDelegate() {
-        return this.delegate;
-    }
+	@Override
+	protected KlassListener getDelegate() {
+		return this.delegate;
+	}
 
-    @Nonnull
-    public String getName() {
-        throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".getName() not implemented yet");
-    }
+	@Nonnull
+	public String getName() {
+		throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".getName() not implemented yet");
+	}
 }

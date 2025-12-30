@@ -1,46 +1,46 @@
 {
-  "name": "PrimitiveType",
-  "packageName": "klass.model.meta.domain",
-  "enumerationLiterals": [
-    {
-      "name": "INTEGER",
-      "prettyName": "Integer"
-    },
-    {
-      "name": "LONG",
-      "prettyName": "Long"
-    },
-    {
-      "name": "DOUBLE",
-      "prettyName": "Double"
-    },
-    {
-      "name": "FLOAT",
-      "prettyName": "Float"
-    },
-    {
-      "name": "BOOLEAN",
-      "prettyName": "Boolean"
-    },
-    {
-      "name": "STRING",
-      "prettyName": "String"
-    },
-    {
-      "name": "INSTANT",
-      "prettyName": "Instant"
-    },
-    {
-      "name": "LOCAL_DATE",
-      "prettyName": "LocalDate"
-    },
-    {
-      "name": "TEMPORAL_INSTANT",
-      "prettyName": "TemporalInstant"
-    },
-    {
-      "name": "TEMPORAL_RANGE",
-      "prettyName": "TemporalRange"
-    }
-  ]
+	"name": "PrimitiveType",
+	"packageName": "klass.model.meta.domain",
+	"enumerationLiterals": [
+		{
+			"name": "INTEGER",
+			"prettyName": "Integer"
+		},
+		{
+			"name": "LONG",
+			"prettyName": "Long"
+		},
+		{
+			"name": "DOUBLE",
+			"prettyName": "Double"
+		},
+		{
+			"name": "FLOAT",
+			"prettyName": "Float"
+		},
+		{
+			"name": "BOOLEAN",
+			"prettyName": "Boolean"
+		},
+		{
+			"name": "STRING",
+			"prettyName": "String"
+		},
+		{
+			"name": "INSTANT",
+			"prettyName": "Instant"
+		},
+		{
+			"name": "LOCAL_DATE",
+			"prettyName": "LocalDate"
+		},
+		{
+			"name": "TEMPORAL_INSTANT",
+			"prettyName": "TemporalInstant"
+		},
+		{
+			"name": "TEMPORAL_RANGE",
+			"prettyName": "TemporalRange"
+		}
+	]
 }

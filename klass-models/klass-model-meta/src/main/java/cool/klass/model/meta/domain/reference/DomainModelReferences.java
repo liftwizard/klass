@@ -43,78 +43,78 @@ import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
 public class DomainModelReferences {
 
-    private final MutableMapIterable<Token, ElementWithSourceCode> elementsByReference = OrderedMapAdapter.adapt(
-        new LinkedHashMap<>()
-    );
+	private final MutableMapIterable<Token, ElementWithSourceCode> elementsByReference = OrderedMapAdapter.adapt(
+		new LinkedHashMap<>()
+	);
 
-    public Optional<ElementWithSourceCode> getElementByReference(@Nonnull Token token) {
-        Objects.requireNonNull(token);
-        return Optional.ofNullable(this.elementsByReference.get(token));
-    }
+	public Optional<ElementWithSourceCode> getElementByReference(@Nonnull Token token) {
+		Objects.requireNonNull(token);
+		return Optional.ofNullable(this.elementsByReference.get(token));
+	}
 
-    public void addEnumerationReference(
-        @Nonnull EnumerationReferenceContext reference,
-        @Nonnull EnumerationWithSourceCode element
-    ) {
-        Objects.requireNonNull(element);
-        Token token = reference.identifier().getStart();
-        this.elementsByReference.put(token, element);
-    }
+	public void addEnumerationReference(
+		@Nonnull EnumerationReferenceContext reference,
+		@Nonnull EnumerationWithSourceCode element
+	) {
+		Objects.requireNonNull(element);
+		Token token = reference.identifier().getStart();
+		this.elementsByReference.put(token, element);
+	}
 
-    public void addClassReference(@Nonnull ClassReferenceContext reference, @Nonnull KlassWithSourceCode element) {
-        Objects.requireNonNull(element);
-        Token token = reference.identifier().getStart();
-        this.elementsByReference.put(token, element);
-    }
+	public void addClassReference(@Nonnull ClassReferenceContext reference, @Nonnull KlassWithSourceCode element) {
+		Objects.requireNonNull(element);
+		Token token = reference.identifier().getStart();
+		this.elementsByReference.put(token, element);
+	}
 
-    public void addClassifierReference(
-        @Nonnull ClassifierReferenceContext reference,
-        @Nonnull ClassifierWithSourceCode element
-    ) {
-        Objects.requireNonNull(element);
-        Token token = reference.identifier().getStart();
-        this.elementsByReference.put(token, element);
-    }
+	public void addClassifierReference(
+		@Nonnull ClassifierReferenceContext reference,
+		@Nonnull ClassifierWithSourceCode element
+	) {
+		Objects.requireNonNull(element);
+		Token token = reference.identifier().getStart();
+		this.elementsByReference.put(token, element);
+	}
 
-    public void addReferencePropertyReference(
-        @Nonnull IdentifierContext reference,
-        @Nonnull ReferencePropertyWithSourceCode element
-    ) {
-        Objects.requireNonNull(element);
-        Token token = reference.getStart();
-        this.elementsByReference.put(token, element);
-    }
+	public void addReferencePropertyReference(
+		@Nonnull IdentifierContext reference,
+		@Nonnull ReferencePropertyWithSourceCode element
+	) {
+		Objects.requireNonNull(element);
+		Token token = reference.getStart();
+		this.elementsByReference.put(token, element);
+	}
 
-    public void addProjectionReference(
-        @Nonnull ProjectionReferenceContext reference,
-        @Nonnull ProjectionWithSourceCode element
-    ) {
-        Objects.requireNonNull(element);
-        Token token = reference.getStart();
-        this.elementsByReference.put(token, element);
-    }
+	public void addProjectionReference(
+		@Nonnull ProjectionReferenceContext reference,
+		@Nonnull ProjectionWithSourceCode element
+	) {
+		Objects.requireNonNull(element);
+		Token token = reference.getStart();
+		this.elementsByReference.put(token, element);
+	}
 
-    public void addDataTypePropertyReference(
-        @Nonnull IdentifierContext reference,
-        @Nonnull DataTypePropertyWithSourceCode element
-    ) {
-        Objects.requireNonNull(element);
-        Token token = reference.getStart();
-        this.elementsByReference.put(token, element);
-    }
+	public void addDataTypePropertyReference(
+		@Nonnull IdentifierContext reference,
+		@Nonnull DataTypePropertyWithSourceCode element
+	) {
+		Objects.requireNonNull(element);
+		Token token = reference.getStart();
+		this.elementsByReference.put(token, element);
+	}
 
-    public void addAssociationEndReference(
-        @Nonnull AssociationEndReferenceContext reference,
-        @Nonnull AssociationEndWithSourceCode element
-    ) {
-        Objects.requireNonNull(element);
-        Token token = reference.getStart();
-        this.elementsByReference.put(token, element);
-    }
+	public void addAssociationEndReference(
+		@Nonnull AssociationEndReferenceContext reference,
+		@Nonnull AssociationEndWithSourceCode element
+	) {
+		Objects.requireNonNull(element);
+		Token token = reference.getStart();
+		this.elementsByReference.put(token, element);
+	}
 
-    public void addUserReference(ParserRuleContext reference, KlassWithSourceCode element) {
-        Objects.requireNonNull(element);
-        Token token = reference.getStart();
-        this.elementsByReference.put(token, element);
-    }
+	public void addUserReference(ParserRuleContext reference, KlassWithSourceCode element) {
+		Objects.requireNonNull(element);
+		Token token = reference.getStart();
+		this.elementsByReference.put(token, element);
+	}
 }

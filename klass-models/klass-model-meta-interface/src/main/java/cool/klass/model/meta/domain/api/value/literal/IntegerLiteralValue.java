@@ -21,10 +21,10 @@ import javax.annotation.Nonnull;
 import cool.klass.model.meta.domain.api.value.ExpressionValueVisitor;
 
 public interface IntegerLiteralValue extends LiteralValue {
-    long getValue();
+	long getValue();
 
-    @Override
-    default void visit(@Nonnull ExpressionValueVisitor visitor) {
-        visitor.visitIntegerLiteral(this);
-    }
+	@Override
+	default void visit(@Nonnull ExpressionValueVisitor visitor) {
+		visitor.visitIntegerLiteral(this);
+	}
 }

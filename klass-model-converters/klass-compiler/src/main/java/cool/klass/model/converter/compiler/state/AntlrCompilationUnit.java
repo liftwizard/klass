@@ -31,65 +31,65 @@ import org.eclipse.collections.impl.tuple.Tuples;
 
 public class AntlrCompilationUnit extends AntlrElement {
 
-    public static final AntlrCompilationUnit AMBIGUOUS = new AntlrCompilationUnit(
-        new CompilationUnitContext(AMBIGUOUS_PARENT, -1),
-        Optional.empty()
-    );
+	public static final AntlrCompilationUnit AMBIGUOUS = new AntlrCompilationUnit(
+		new CompilationUnitContext(AMBIGUOUS_PARENT, -1),
+		Optional.empty()
+	);
 
-    public static final AntlrCompilationUnit NOT_FOUND = new AntlrCompilationUnit(
-        new CompilationUnitContext(NOT_FOUND_PARENT, -1),
-        Optional.empty()
-    );
+	public static final AntlrCompilationUnit NOT_FOUND = new AntlrCompilationUnit(
+		new CompilationUnitContext(NOT_FOUND_PARENT, -1),
+		Optional.empty()
+	);
 
-    private AntlrPackage pkg;
+	private AntlrPackage pkg;
 
-    public AntlrCompilationUnit(
-        @Nonnull CompilationUnitContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit
-    ) {
-        super(elementContext, compilationUnit);
-    }
+	public AntlrCompilationUnit(
+		@Nonnull CompilationUnitContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit
+	) {
+		super(elementContext, compilationUnit);
+	}
 
-    @Nonnull
-    @Override
-    public CompilationUnitContext getElementContext() {
-        return (CompilationUnitContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public CompilationUnitContext getElementContext() {
+		return (CompilationUnitContext) super.getElementContext();
+	}
 
-    @Nonnull
-    @Override
-    public Optional<IAntlrElement> getSurroundingElement() {
-        return Optional.empty();
-    }
+	@Nonnull
+	@Override
+	public Optional<IAntlrElement> getSurroundingElement() {
+		return Optional.empty();
+	}
 
-    @Override
-    public boolean isContext() {
-        return true;
-    }
+	@Override
+	public boolean isContext() {
+		return true;
+	}
 
-    @Override
-    public Pair<Token, Token> getContextBefore() {
-        PackageDeclarationContext context = this.getElementContext().packageDeclaration();
-        return Tuples.pair(context.getStart(), context.getStop());
-    }
+	@Override
+	public Pair<Token, Token> getContextBefore() {
+		PackageDeclarationContext context = this.getElementContext().packageDeclaration();
+		return Tuples.pair(context.getStart(), context.getStop());
+	}
 
-    public void enterPackageDeclaration(AntlrPackage pkg) {
-        if (this.pkg != null) {
-            throw new IllegalStateException();
-        }
-        this.pkg = Objects.requireNonNull(pkg);
-    }
+	public void enterPackageDeclaration(AntlrPackage pkg) {
+		if (this.pkg != null) {
+			throw new IllegalStateException();
+		}
+		this.pkg = Objects.requireNonNull(pkg);
+	}
 
-    public AntlrPackage getPackage() {
-        return this.pkg;
-    }
+	public AntlrPackage getPackage() {
+		return this.pkg;
+	}
 
-    public void reportNameErrors(CompilerAnnotationHolder compilerAnnotationHolder) {
-        this.pkg.reportNameErrors(compilerAnnotationHolder);
-    }
+	public void reportNameErrors(CompilerAnnotationHolder compilerAnnotationHolder) {
+		this.pkg.reportNameErrors(compilerAnnotationHolder);
+	}
 
-    @Override
-    public String toString() {
-        return this.pkg.toString();
-    }
+	@Override
+	public String toString() {
+		return this.pkg.toString();
+	}
 }

@@ -41,130 +41,130 @@ import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionProjectionReferenceContext;
 
 public final class ProjectionProjectionReferenceImpl
-    extends AbstractIdentifierElement
-    implements ProjectionProjectionReferenceWithSourceCode {
+	extends AbstractIdentifierElement
+	implements ProjectionProjectionReferenceWithSourceCode {
 
-    @Nonnull
-    private final ProjectionParent parent;
+	@Nonnull
+	private final ProjectionParent parent;
 
-    @Nonnull
-    private final AbstractClassifier classifier;
+	@Nonnull
+	private final AbstractClassifier classifier;
 
-    @Nonnull
-    private final ReferencePropertyWithSourceCode referenceProperty;
+	@Nonnull
+	private final ReferencePropertyWithSourceCode referenceProperty;
 
-    private ProjectionImpl referencedProjection;
+	private ProjectionImpl referencedProjection;
 
-    private ProjectionProjectionReferenceImpl(
-        @Nonnull ProjectionProjectionReferenceContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        int ordinal,
-        @Nonnull IdentifierContext nameContext,
-        @Nonnull ProjectionParent parent,
-        @Nonnull AbstractClassifier classifier,
-        @Nonnull ReferencePropertyWithSourceCode referenceProperty
-    ) {
-        super(elementContext, macroElement, sourceCode, ordinal, nameContext);
-        this.parent = Objects.requireNonNull(parent);
-        this.classifier = Objects.requireNonNull(classifier);
-        this.referenceProperty = Objects.requireNonNull(referenceProperty);
-    }
+	private ProjectionProjectionReferenceImpl(
+		@Nonnull ProjectionProjectionReferenceContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		int ordinal,
+		@Nonnull IdentifierContext nameContext,
+		@Nonnull ProjectionParent parent,
+		@Nonnull AbstractClassifier classifier,
+		@Nonnull ReferencePropertyWithSourceCode referenceProperty
+	) {
+		super(elementContext, macroElement, sourceCode, ordinal, nameContext);
+		this.parent = Objects.requireNonNull(parent);
+		this.classifier = Objects.requireNonNull(classifier);
+		this.referenceProperty = Objects.requireNonNull(referenceProperty);
+	}
 
-    @Nonnull
-    @Override
-    public ProjectionProjectionReferenceContext getElementContext() {
-        return (ProjectionProjectionReferenceContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public ProjectionProjectionReferenceContext getElementContext() {
+		return (ProjectionProjectionReferenceContext) super.getElementContext();
+	}
 
-    @Override
-    public ProjectionWithSourceCode getProjection() {
-        return this.referencedProjection;
-    }
+	@Override
+	public ProjectionWithSourceCode getProjection() {
+		return this.referencedProjection;
+	}
 
-    @Override
-    @Nonnull
-    public Optional<ProjectionParent> getParent() {
-        return Optional.of(this.parent);
-    }
+	@Override
+	@Nonnull
+	public Optional<ProjectionParent> getParent() {
+		return Optional.of(this.parent);
+	}
 
-    @Nonnull
-    @Override
-    public Classifier getDeclaredClassifier() {
-        return this.classifier;
-    }
+	@Nonnull
+	@Override
+	public Classifier getDeclaredClassifier() {
+		return this.classifier;
+	}
 
-    @Override
-    @Nonnull
-    public ReferencePropertyWithSourceCode getProperty() {
-        return this.referenceProperty;
-    }
+	@Override
+	@Nonnull
+	public ReferencePropertyWithSourceCode getProperty() {
+		return this.referenceProperty;
+	}
 
-    private void setReferencedProjection(ProjectionImpl referencedProjection) {
-        if (this.referencedProjection != null) {
-            throw new IllegalStateException();
-        }
-        this.referencedProjection = Objects.requireNonNull(referencedProjection);
-    }
+	private void setReferencedProjection(ProjectionImpl referencedProjection) {
+		if (this.referencedProjection != null) {
+			throw new IllegalStateException();
+		}
+		this.referencedProjection = Objects.requireNonNull(referencedProjection);
+	}
 
-    public static final class ProjectionProjectionReferenceBuilder
-        extends IdentifierElementBuilder<ProjectionProjectionReferenceImpl>
-        implements ProjectionChildBuilder {
+	public static final class ProjectionProjectionReferenceBuilder
+		extends IdentifierElementBuilder<ProjectionProjectionReferenceImpl>
+		implements ProjectionChildBuilder {
 
-        @Nonnull
-        private final AbstractProjectionParentBuilder<?> parentBuilder;
+		@Nonnull
+		private final AbstractProjectionParentBuilder<?> parentBuilder;
 
-        @Nonnull
-        private final ClassifierBuilder<?> classifierBuilder;
+		@Nonnull
+		private final ClassifierBuilder<?> classifierBuilder;
 
-        @Nonnull
-        private final ReferencePropertyBuilder<?, ?, ?> referencePropertyBuilder;
+		@Nonnull
+		private final ReferencePropertyBuilder<?, ?, ?> referencePropertyBuilder;
 
-        private ProjectionBuilder referencedProjectionBuilder;
+		private ProjectionBuilder referencedProjectionBuilder;
 
-        public ProjectionProjectionReferenceBuilder(
-            @Nonnull ProjectionProjectionReferenceContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext,
-            @Nonnull AbstractProjectionParentBuilder<?> parentBuilder,
-            @Nonnull ClassifierBuilder<?> classifierBuilder,
-            @Nonnull ReferencePropertyBuilder<?, ?, ?> referencePropertyBuilder
-        ) {
-            super(elementContext, macroElement, sourceCode, ordinal, nameContext);
-            this.parentBuilder = Objects.requireNonNull(parentBuilder);
-            this.classifierBuilder = Objects.requireNonNull(classifierBuilder);
-            this.referencePropertyBuilder = Objects.requireNonNull(referencePropertyBuilder);
-        }
+		public ProjectionProjectionReferenceBuilder(
+			@Nonnull ProjectionProjectionReferenceContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			int ordinal,
+			@Nonnull IdentifierContext nameContext,
+			@Nonnull AbstractProjectionParentBuilder<?> parentBuilder,
+			@Nonnull ClassifierBuilder<?> classifierBuilder,
+			@Nonnull ReferencePropertyBuilder<?, ?, ?> referencePropertyBuilder
+		) {
+			super(elementContext, macroElement, sourceCode, ordinal, nameContext);
+			this.parentBuilder = Objects.requireNonNull(parentBuilder);
+			this.classifierBuilder = Objects.requireNonNull(classifierBuilder);
+			this.referencePropertyBuilder = Objects.requireNonNull(referencePropertyBuilder);
+		}
 
-        public void setReferencedProjectionBuilder(ProjectionBuilder referencedProjectionBuilder) {
-            if (this.referencedProjectionBuilder != null) {
-                throw new IllegalStateException();
-            }
+		public void setReferencedProjectionBuilder(ProjectionBuilder referencedProjectionBuilder) {
+			if (this.referencedProjectionBuilder != null) {
+				throw new IllegalStateException();
+			}
 
-            this.referencedProjectionBuilder = Objects.requireNonNull(referencedProjectionBuilder);
-        }
+			this.referencedProjectionBuilder = Objects.requireNonNull(referencedProjectionBuilder);
+		}
 
-        @Override
-        @Nonnull
-        protected ProjectionProjectionReferenceImpl buildUnsafe() {
-            return new ProjectionProjectionReferenceImpl(
-                (ProjectionProjectionReferenceContext) this.elementContext,
-                this.macroElement.map(ElementBuilder::getElement),
-                this.sourceCode.build(),
-                this.ordinal,
-                this.getNameContext(),
-                this.parentBuilder.getElement(),
-                this.classifierBuilder.getElement(),
-                this.referencePropertyBuilder.getElement()
-            );
-        }
+		@Override
+		@Nonnull
+		protected ProjectionProjectionReferenceImpl buildUnsafe() {
+			return new ProjectionProjectionReferenceImpl(
+				(ProjectionProjectionReferenceContext) this.elementContext,
+				this.macroElement.map(ElementBuilder::getElement),
+				this.sourceCode.build(),
+				this.ordinal,
+				this.getNameContext(),
+				this.parentBuilder.getElement(),
+				this.classifierBuilder.getElement(),
+				this.referencePropertyBuilder.getElement()
+			);
+		}
 
-        @Override
-        public void build2() {
-            ProjectionImpl projection = this.referencedProjectionBuilder.getElement();
-            this.getElement().setReferencedProjection(projection);
-        }
-    }
+		@Override
+		public void build2() {
+			ProjectionImpl projection = this.referencedProjectionBuilder.getElement();
+			this.getElement().setReferencedProjection(projection);
+		}
+	}
 }

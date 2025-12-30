@@ -1,4 +1,4 @@
 [
-  "Error at OwnedNaturalOneToManySource.targets[0].sourceKey. Didn't expect to receive value for foreign key property 'OwnedNaturalOneToManyTarget.sourceKey: String' but value was string: \"key\".",
-  "Error at OwnedNaturalOneToManySource.targets[1].sourceKey. Didn't expect to receive value for foreign key property 'OwnedNaturalOneToManyTarget.sourceKey: String' but value was string: \"key\"."
+	"Error at OwnedNaturalOneToManySource.targets[0].sourceKey. Didn't expect to receive value for foreign key property 'OwnedNaturalOneToManyTarget.sourceKey: String' but value was string: \"key\".",
+	"Error at OwnedNaturalOneToManySource.targets[1].sourceKey. Didn't expect to receive value for foreign key property 'OwnedNaturalOneToManyTarget.sourceKey: String' but value was string: \"key\"."
 ]

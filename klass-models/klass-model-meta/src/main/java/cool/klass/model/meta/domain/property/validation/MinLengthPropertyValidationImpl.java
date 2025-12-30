@@ -30,48 +30,48 @@ import cool.klass.model.meta.domain.property.AbstractDataTypeProperty.DataTypePr
 import cool.klass.model.meta.grammar.KlassParser.MinLengthValidationContext;
 
 public class MinLengthPropertyValidationImpl
-    extends AbstractNumericPropertyValidation
-    implements MinLengthPropertyValidation {
+	extends AbstractNumericPropertyValidation
+	implements MinLengthPropertyValidation {
 
-    public MinLengthPropertyValidationImpl(
-        @Nonnull MinLengthValidationContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        @Nonnull AbstractDataTypeProperty<?> owningProperty,
-        int number
-    ) {
-        super(elementContext, macroElement, sourceCode, owningProperty, number);
-    }
+	public MinLengthPropertyValidationImpl(
+		@Nonnull MinLengthValidationContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		@Nonnull AbstractDataTypeProperty<?> owningProperty,
+		int number
+	) {
+		super(elementContext, macroElement, sourceCode, owningProperty, number);
+	}
 
-    @Nonnull
-    @Override
-    public MinLengthValidationContext getElementContext() {
-        return (MinLengthValidationContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public MinLengthValidationContext getElementContext() {
+		return (MinLengthValidationContext) super.getElementContext();
+	}
 
-    public static class MinLengthPropertyValidationBuilder
-        extends NumericPropertyValidationBuilder<MinLengthPropertyValidationImpl> {
+	public static class MinLengthPropertyValidationBuilder
+		extends NumericPropertyValidationBuilder<MinLengthPropertyValidationImpl> {
 
-        public MinLengthPropertyValidationBuilder(
-            @Nonnull MinLengthValidationContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            @Nonnull DataTypePropertyBuilder<?, ?, ?> owningPropertyBuilder,
-            int number
-        ) {
-            super(elementContext, macroElement, sourceCode, owningPropertyBuilder, number);
-        }
+		public MinLengthPropertyValidationBuilder(
+			@Nonnull MinLengthValidationContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			@Nonnull DataTypePropertyBuilder<?, ?, ?> owningPropertyBuilder,
+			int number
+		) {
+			super(elementContext, macroElement, sourceCode, owningPropertyBuilder, number);
+		}
 
-        @Nonnull
-        @Override
-        protected MinLengthPropertyValidationImpl buildUnsafe() {
-            return new MinLengthPropertyValidationImpl(
-                (MinLengthValidationContext) this.elementContext,
-                this.macroElement.map(ElementBuilder::getElement),
-                this.sourceCode.build(),
-                this.owningPropertyBuilder.getElement(),
-                this.number
-            );
-        }
-    }
+		@Nonnull
+		@Override
+		protected MinLengthPropertyValidationImpl buildUnsafe() {
+			return new MinLengthPropertyValidationImpl(
+				(MinLengthValidationContext) this.elementContext,
+				this.macroElement.map(ElementBuilder::getElement),
+				this.sourceCode.build(),
+				this.owningPropertyBuilder.getElement(),
+				this.number
+			);
+		}
+	}
 }

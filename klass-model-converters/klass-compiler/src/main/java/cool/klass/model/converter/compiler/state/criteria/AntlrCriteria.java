@@ -32,42 +32,42 @@ import org.eclipse.collections.api.map.OrderedMap;
 
 public abstract class AntlrCriteria extends AntlrElement {
 
-    @Nonnull
-    private final IAntlrElement criteriaOwner;
+	@Nonnull
+	private final IAntlrElement criteriaOwner;
 
-    protected AntlrCriteria(
-        @Nonnull ParserRuleContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        @Nonnull IAntlrElement criteriaOwner
-    ) {
-        super(elementContext, compilationUnit);
-        this.criteriaOwner = Objects.requireNonNull(criteriaOwner);
-    }
+	protected AntlrCriteria(
+		@Nonnull ParserRuleContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		@Nonnull IAntlrElement criteriaOwner
+	) {
+		super(elementContext, compilationUnit);
+		this.criteriaOwner = Objects.requireNonNull(criteriaOwner);
+	}
 
-    @Nonnull
-    @Override
-    public Optional<IAntlrElement> getSurroundingElement() {
-        return Optional.of(this.criteriaOwner);
-    }
+	@Nonnull
+	@Override
+	public Optional<IAntlrElement> getSurroundingElement() {
+		return Optional.of(this.criteriaOwner);
+	}
 
-    @Nonnull
-    public abstract AbstractCriteriaBuilder<?> build();
+	@Nonnull
+	public abstract AbstractCriteriaBuilder<?> build();
 
-    @Nonnull
-    @Override
-    public abstract AbstractCriteriaBuilder<?> getElementBuilder();
+	@Nonnull
+	@Override
+	public abstract AbstractCriteriaBuilder<?> getElementBuilder();
 
-    public abstract void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder);
+	public abstract void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder);
 
-    public abstract void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName);
+	public abstract void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName);
 
-    public abstract void resolveTypes();
+	public abstract void resolveTypes();
 
-    public void addForeignKeys() {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".addForeignKeys() not implemented yet"
-        );
-    }
+	public void addForeignKeys() {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".addForeignKeys() not implemented yet"
+		);
+	}
 
-    public abstract void visit(AntlrCriteriaVisitor visitor);
+	public abstract void visit(AntlrCriteriaVisitor visitor);
 }

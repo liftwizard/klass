@@ -425,9 +425,9 @@ jobs:
                   git config --global user.name "GitHub Actions"
                   git config --global user.email "github-actions@github.com"
 
-            - name: Run Prettier Fix
+            - name: Run Prettier Format
               run: |
-                  npx prettier --no-config --tab-width 4 --print-width 120 --end-of-line lf --write "**/*.{yaml,yml,md,html}" '!.github/workflows/**'
+                  npx prettier --write . '!.github/workflows/**'
 
                   if [[ -n $(git status --porcelain) ]]; then
                     FIX_BRANCH="fix-${{ github.event.pull_request.number }}-prettier"
@@ -437,7 +437,7 @@ jobs:
                     git commit --message "Apply Prettier formatting."
                     git push --force origin $FIX_BRANCH
 
-                    echo "Prettier fixes have been pushed to the $FIX_BRANCH branch."
+                    echo "Prettier formatting fixes have been pushed to the $FIX_BRANCH branch."
                     exit 1
                   else
                     echo "No changes needed by Prettier"
@@ -535,8 +535,8 @@ jobs:
               run: |
                   just test
 
-                  # Format JSON files after re-recording tests
-                  just biome-format
+                  npx @biomejs/biome format --write
+                  npx prettier --write . '!.github/workflows/**'
 
                   if [[ -n $(git status --porcelain) ]]; then
                     FIX_BRANCH="fix-${{ github.event.pull_request.number }}-liftwizard-file-match-rerecord"

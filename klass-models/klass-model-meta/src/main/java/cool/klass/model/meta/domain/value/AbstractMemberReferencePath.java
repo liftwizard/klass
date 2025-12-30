@@ -37,71 +37,71 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public abstract class AbstractMemberReferencePath extends AbstractExpressionValue implements MemberReferencePath {
 
-    @Nonnull
-    private final KlassImpl klass;
+	@Nonnull
+	private final KlassImpl klass;
 
-    @Nonnull
-    private final ImmutableList<AssociationEnd> associationEnds;
+	@Nonnull
+	private final ImmutableList<AssociationEnd> associationEnds;
 
-    @Nonnull
-    private final AbstractDataTypeProperty<?> property;
+	@Nonnull
+	private final AbstractDataTypeProperty<?> property;
 
-    protected AbstractMemberReferencePath(
-        @Nonnull ParserRuleContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        @Nonnull KlassImpl klass,
-        @Nonnull ImmutableList<AssociationEnd> associationEnds,
-        @Nonnull AbstractDataTypeProperty<?> property
-    ) {
-        super(elementContext, macroElement, sourceCode);
-        this.klass = Objects.requireNonNull(klass);
-        this.associationEnds = Objects.requireNonNull(associationEnds);
-        this.property = Objects.requireNonNull(property);
-    }
+	protected AbstractMemberReferencePath(
+		@Nonnull ParserRuleContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		@Nonnull KlassImpl klass,
+		@Nonnull ImmutableList<AssociationEnd> associationEnds,
+		@Nonnull AbstractDataTypeProperty<?> property
+	) {
+		super(elementContext, macroElement, sourceCode);
+		this.klass = Objects.requireNonNull(klass);
+		this.associationEnds = Objects.requireNonNull(associationEnds);
+		this.property = Objects.requireNonNull(property);
+	}
 
-    @Override
-    @Nonnull
-    public KlassImpl getKlass() {
-        return this.klass;
-    }
+	@Override
+	@Nonnull
+	public KlassImpl getKlass() {
+		return this.klass;
+	}
 
-    @Override
-    @Nonnull
-    public ImmutableList<AssociationEnd> getAssociationEnds() {
-        return this.associationEnds;
-    }
+	@Override
+	@Nonnull
+	public ImmutableList<AssociationEnd> getAssociationEnds() {
+		return this.associationEnds;
+	}
 
-    @Override
-    @Nonnull
-    public AbstractDataTypeProperty<?> getProperty() {
-        return this.property;
-    }
+	@Override
+	@Nonnull
+	public AbstractDataTypeProperty<?> getProperty() {
+		return this.property;
+	}
 
-    public abstract static class AbstractMemberReferencePathBuilder<BuiltElement extends AbstractMemberReferencePath>
-        extends AbstractExpressionValueBuilder<BuiltElement> {
+	public abstract static class AbstractMemberReferencePathBuilder<BuiltElement extends AbstractMemberReferencePath>
+		extends AbstractExpressionValueBuilder<BuiltElement> {
 
-        @Nonnull
-        protected final KlassBuilder klassBuilder;
+		@Nonnull
+		protected final KlassBuilder klassBuilder;
 
-        @Nonnull
-        protected final ImmutableList<AssociationEndBuilder> associationEndBuilders;
+		@Nonnull
+		protected final ImmutableList<AssociationEndBuilder> associationEndBuilders;
 
-        @Nonnull
-        protected final DataTypePropertyBuilder<?, ?, ?> propertyBuilder;
+		@Nonnull
+		protected final DataTypePropertyBuilder<?, ?, ?> propertyBuilder;
 
-        protected AbstractMemberReferencePathBuilder(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            @Nonnull KlassBuilder klassBuilder,
-            @Nonnull ImmutableList<AssociationEndBuilder> associationEndBuilders,
-            @Nonnull DataTypePropertyBuilder<?, ?, ?> propertyBuilder
-        ) {
-            super(elementContext, macroElement, sourceCode);
-            this.klassBuilder = Objects.requireNonNull(klassBuilder);
-            this.associationEndBuilders = Objects.requireNonNull(associationEndBuilders);
-            this.propertyBuilder = Objects.requireNonNull(propertyBuilder);
-        }
-    }
+		protected AbstractMemberReferencePathBuilder(
+			@Nonnull ParserRuleContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			@Nonnull KlassBuilder klassBuilder,
+			@Nonnull ImmutableList<AssociationEndBuilder> associationEndBuilders,
+			@Nonnull DataTypePropertyBuilder<?, ?, ?> propertyBuilder
+		) {
+			super(elementContext, macroElement, sourceCode);
+			this.klassBuilder = Objects.requireNonNull(klassBuilder);
+			this.associationEndBuilders = Objects.requireNonNull(associationEndBuilders);
+			this.propertyBuilder = Objects.requireNonNull(propertyBuilder);
+		}
+	}
 }

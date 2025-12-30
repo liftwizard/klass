@@ -35,51 +35,51 @@ import cool.klass.model.meta.grammar.KlassParser.TypeMemberReferencePathContext;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public final class TypeMemberReferencePathImpl
-    extends AbstractMemberReferencePath
-    implements TypeMemberReferencePathWithSourceCode {
+	extends AbstractMemberReferencePath
+	implements TypeMemberReferencePathWithSourceCode {
 
-    private TypeMemberReferencePathImpl(
-        @Nonnull TypeMemberReferencePathContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        @Nonnull KlassImpl klass,
-        @Nonnull ImmutableList<AssociationEnd> associationEnds,
-        @Nonnull AbstractDataTypeProperty<?> property
-    ) {
-        super(elementContext, macroElement, sourceCode, klass, associationEnds, property);
-    }
+	private TypeMemberReferencePathImpl(
+		@Nonnull TypeMemberReferencePathContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		@Nonnull KlassImpl klass,
+		@Nonnull ImmutableList<AssociationEnd> associationEnds,
+		@Nonnull AbstractDataTypeProperty<?> property
+	) {
+		super(elementContext, macroElement, sourceCode, klass, associationEnds, property);
+	}
 
-    @Nonnull
-    @Override
-    public TypeMemberReferencePathContext getElementContext() {
-        return (TypeMemberReferencePathContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public TypeMemberReferencePathContext getElementContext() {
+		return (TypeMemberReferencePathContext) super.getElementContext();
+	}
 
-    public static final class TypeMemberReferencePathBuilder
-        extends AbstractMemberReferencePathBuilder<TypeMemberReferencePathImpl> {
+	public static final class TypeMemberReferencePathBuilder
+		extends AbstractMemberReferencePathBuilder<TypeMemberReferencePathImpl> {
 
-        public TypeMemberReferencePathBuilder(
-            @Nonnull TypeMemberReferencePathContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            @Nonnull KlassBuilder klassBuilder,
-            @Nonnull ImmutableList<AssociationEndBuilder> associationEndBuilders,
-            @Nonnull DataTypePropertyBuilder<?, ?, ?> propertyBuilder
-        ) {
-            super(elementContext, macroElement, sourceCode, klassBuilder, associationEndBuilders, propertyBuilder);
-        }
+		public TypeMemberReferencePathBuilder(
+			@Nonnull TypeMemberReferencePathContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			@Nonnull KlassBuilder klassBuilder,
+			@Nonnull ImmutableList<AssociationEndBuilder> associationEndBuilders,
+			@Nonnull DataTypePropertyBuilder<?, ?, ?> propertyBuilder
+		) {
+			super(elementContext, macroElement, sourceCode, klassBuilder, associationEndBuilders, propertyBuilder);
+		}
 
-        @Override
-        @Nonnull
-        protected TypeMemberReferencePathImpl buildUnsafe() {
-            return new TypeMemberReferencePathImpl(
-                (TypeMemberReferencePathContext) this.elementContext,
-                this.macroElement.map(ElementBuilder::getElement),
-                this.sourceCode.build(),
-                this.klassBuilder.getElement(),
-                this.associationEndBuilders.collect(AssociationEndBuilder::getElement),
-                this.propertyBuilder.getElement()
-            );
-        }
-    }
+		@Override
+		@Nonnull
+		protected TypeMemberReferencePathImpl buildUnsafe() {
+			return new TypeMemberReferencePathImpl(
+				(TypeMemberReferencePathContext) this.elementContext,
+				this.macroElement.map(ElementBuilder::getElement),
+				this.sourceCode.build(),
+				this.klassBuilder.getElement(),
+				this.associationEndBuilders.collect(AssociationEndBuilder::getElement),
+				this.propertyBuilder.getElement()
+			);
+		}
+	}
 }

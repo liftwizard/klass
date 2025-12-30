@@ -33,43 +33,43 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 
 // TODO: GENERATE_RESOURCES default phase?
 @Mojo(
-    name = "generate-reladomo-object-files",
-    defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-    threadSafe = true,
-    requiresDependencyResolution = ResolutionScope.RUNTIME
+	name = "generate-reladomo-object-files",
+	defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+	threadSafe = true,
+	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
 public class GenerateReladomoObjectFilesMojo extends AbstractGenerateMojo {
 
-    @Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}/generated-resources/reladomo")
-    private File outputDirectory;
+	@Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}/generated-resources/reladomo")
+	private File outputDirectory;
 
-    @Override
-    protected InputSource getInputSource() {
-        return InputSource.CLASSPATH;
-    }
+	@Override
+	protected InputSource getInputSource() {
+		return InputSource.CLASSPATH;
+	}
 
-    @Override
-    public void execute() throws MojoExecutionException {
-        if (!this.outputDirectory.exists()) {
-            this.outputDirectory.mkdirs();
-        }
+	@Override
+	public void execute() throws MojoExecutionException {
+		if (!this.outputDirectory.exists()) {
+			this.outputDirectory.mkdirs();
+		}
 
-        Path outputPath = this.outputDirectory.toPath();
-        DomainModel domainModel = this.getDomainModel();
+		Path outputPath = this.outputDirectory.toPath();
+		DomainModel domainModel = this.getDomainModel();
 
-        ReladomoObjectFileGenerator reladomoObjectFileGenerator = new ReladomoObjectFileGenerator(domainModel);
-        ReladomoInterfaceFileGenerator reladomoInterfaceFileGenerator = new ReladomoInterfaceFileGenerator(domainModel);
-        try {
-            reladomoObjectFileGenerator.writeObjectFiles(outputPath);
-            reladomoInterfaceFileGenerator.writeObjectFiles(outputPath);
-        } catch (IOException e) {
-            throw new MojoExecutionException(e.getMessage(), e);
-        }
+		ReladomoObjectFileGenerator reladomoObjectFileGenerator = new ReladomoObjectFileGenerator(domainModel);
+		ReladomoInterfaceFileGenerator reladomoInterfaceFileGenerator = new ReladomoInterfaceFileGenerator(domainModel);
+		try {
+			reladomoObjectFileGenerator.writeObjectFiles(outputPath);
+			reladomoInterfaceFileGenerator.writeObjectFiles(outputPath);
+		} catch (IOException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		}
 
-        Resource resource = new Resource();
-        resource.setDirectory(this.outputDirectory.getAbsolutePath());
-        // TODO: Should be based on the output path
-        resource.setTargetPath("reladomo");
-        this.mavenProject.addResource(resource);
-    }
+		Resource resource = new Resource();
+		resource.setDirectory(this.outputDirectory.getAbsolutePath());
+		// TODO: Should be based on the output path
+		resource.setTargetPath("reladomo");
+		this.mavenProject.addResource(resource);
+	}
 }
