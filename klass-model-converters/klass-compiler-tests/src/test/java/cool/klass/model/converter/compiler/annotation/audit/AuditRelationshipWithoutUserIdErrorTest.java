@@ -21,9 +21,9 @@ import org.junit.jupiter.api.Test;
 
 class AuditRelationshipWithoutUserIdErrorTest extends AbstractKlassCompilerErrorTestCase {
 
-    @Test
-    @Override
-    public void smokeTest() {
-        this.assertCompilationSucceeds(true);
-    }
+	@Test
+	@Override
+	public void smokeTest() {
+		this.assertCompilationSucceeds(true);
+	}
 }

@@ -1,8 +1,8 @@
 [
-  "Error at OwnedNaturalOneToManySource.key. Expected property with type 'OwnedNaturalOneToManySource.key: String' but got '{}' with type 'object'.",
-  "Error at OwnedNaturalOneToManySource.value. Expected property with type 'OwnedNaturalOneToManySource.value: String' but got '{}' with type 'object'.",
-  "Error at OwnedNaturalOneToManySource.targets[0].key. Expected property with type 'OwnedNaturalOneToManyTarget.key: String' but got '{}' with type 'object'.",
-  "Error at OwnedNaturalOneToManySource.targets[0].sourceKey. Expected property with type 'OwnedNaturalOneToManyTarget.sourceKey: String' but got '{}' with type 'object'.",
-  "Error at OwnedNaturalOneToManySource.targets[0].value. Expected property with type 'OwnedNaturalOneToManyTarget.value: String' but got '{}' with type 'object'.",
-  "Error at OwnedNaturalOneToManySource.targets[0].sourceKey. Didn't expect to receive value for foreign key property 'OwnedNaturalOneToManyTarget.sourceKey: String' but value was object: {}."
+	"Error at OwnedNaturalOneToManySource.key. Expected property with type 'OwnedNaturalOneToManySource.key: String' but got '{}' with type 'object'.",
+	"Error at OwnedNaturalOneToManySource.value. Expected property with type 'OwnedNaturalOneToManySource.value: String' but got '{}' with type 'object'.",
+	"Error at OwnedNaturalOneToManySource.targets[0].key. Expected property with type 'OwnedNaturalOneToManyTarget.key: String' but got '{}' with type 'object'.",
+	"Error at OwnedNaturalOneToManySource.targets[0].sourceKey. Expected property with type 'OwnedNaturalOneToManyTarget.sourceKey: String' but got '{}' with type 'object'.",
+	"Error at OwnedNaturalOneToManySource.targets[0].value. Expected property with type 'OwnedNaturalOneToManyTarget.value: String' but got '{}' with type 'object'.",
+	"Error at OwnedNaturalOneToManySource.targets[0].sourceKey. Didn't expect to receive value for foreign key property 'OwnedNaturalOneToManyTarget.sourceKey: String' but value was object: {}."
 ]

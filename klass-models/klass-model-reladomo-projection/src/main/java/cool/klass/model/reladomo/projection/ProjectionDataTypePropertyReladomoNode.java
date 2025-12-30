@@ -25,24 +25,24 @@ import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 
 public class ProjectionDataTypePropertyReladomoNode extends AbstractProjectionElementReladomoNode {
 
-    private final ProjectionDataTypeProperty projectionDataTypeProperty;
+	private final ProjectionDataTypeProperty projectionDataTypeProperty;
 
-    public ProjectionDataTypePropertyReladomoNode(String name, ProjectionDataTypeProperty projectionDataTypeProperty) {
-        super(name);
-        this.projectionDataTypeProperty = Objects.requireNonNull(projectionDataTypeProperty);
-    }
+	public ProjectionDataTypePropertyReladomoNode(String name, ProjectionDataTypeProperty projectionDataTypeProperty) {
+		super(name);
+		this.projectionDataTypeProperty = Objects.requireNonNull(projectionDataTypeProperty);
+	}
 
-    @Override
-    public Classifier getOwningClassifier() {
-        return this.projectionDataTypeProperty.getProperty().getOwningClassifier();
-    }
+	@Override
+	public Classifier getOwningClassifier() {
+		return this.projectionDataTypeProperty.getProperty().getOwningClassifier();
+	}
 
-    @Override
-    public DataType getType() {
-        return this.projectionDataTypeProperty.getProperty().getType();
-    }
+	@Override
+	public DataType getType() {
+		return this.projectionDataTypeProperty.getProperty().getType();
+	}
 
-    public DataTypeProperty getProperty() {
-        return this.projectionDataTypeProperty.getProperty();
-    }
+	public DataTypeProperty getProperty() {
+		return this.projectionDataTypeProperty.getProperty();
+	}
 }

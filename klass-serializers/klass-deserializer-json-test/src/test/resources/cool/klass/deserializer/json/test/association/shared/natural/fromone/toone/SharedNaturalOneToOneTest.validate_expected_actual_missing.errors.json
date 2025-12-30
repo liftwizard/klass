@@ -1,4 +1,4 @@
 [
-  "Error at SharedNaturalOneToOneSource.target. Expected json object but value was array: [{}].",
-  "Error at SharedNaturalOneToOneSource.value. Expected value for required property 'SharedNaturalOneToOneSource.value: String' but value was missing."
+	"Error at SharedNaturalOneToOneSource.target. Expected json object but value was array: [{}].",
+	"Error at SharedNaturalOneToOneSource.value. Expected value for required property 'SharedNaturalOneToOneSource.value: String' but value was missing."
 ]

@@ -15,9 +15,9 @@ jobs:
     maven-test:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -37,9 +37,9 @@ jobs:
     maven-spotbugs:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -59,9 +59,9 @@ jobs:
     maven-errorprone:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -84,9 +84,9 @@ jobs:
     maven-errorprone-strict:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -109,9 +109,9 @@ jobs:
     maven-enforcer:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -132,9 +132,9 @@ jobs:
     maven-dependency:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -155,9 +155,9 @@ jobs:
     maven-javadoc:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -179,11 +179,11 @@ jobs:
         name: checkstyle xml (semantics)
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-checkstyle-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -210,11 +210,11 @@ jobs:
         name: checkstyle xml (semantics strict)
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-checkstyle-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -241,11 +241,11 @@ jobs:
         name: checkstyle xml (formatting)
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-checkstyle-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -271,9 +271,9 @@ jobs:
     maven-rewrite:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-rewrite-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -296,9 +296,9 @@ jobs:
     maven-reproducible:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -319,11 +319,11 @@ jobs:
     spotless-formats:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-spotless-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -348,11 +348,11 @@ jobs:
     spotless-java-cleanthat:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-spotless-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -377,11 +377,11 @@ jobs:
     spotless-java:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-spotless-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -406,11 +406,11 @@ jobs:
     spotless-prettier-java-sort-imports:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-spotless-prettier-java-sort-imports-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -435,11 +435,11 @@ jobs:
     spotless-pom:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-spotless-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -464,11 +464,11 @@ jobs:
     spotless-json:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
               with:
                   ref: ${{ github.event.pull_request.head.sha }}
 
-            - uses: actions/cache@v4
+            - uses: actions/cache@v5
               with:
                   key: maven-spotless-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -493,7 +493,7 @@ jobs:
     reviewdog-markdownlint:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
             - uses: reviewdog/action-markdownlint@v0.26.0
               with:
                   reporter: github-pr-check
@@ -503,7 +503,7 @@ jobs:
     reviewdog-yamllint:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
             - uses: reviewdog/action-yamllint@v1.21.0
               with:
                   reporter: github-pr-check
@@ -513,7 +513,7 @@ jobs:
     reviewdog-languagetool:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
             - uses: reviewdog/action-languagetool@v1.22.0
               with:
                   reporter: github-pr-check
@@ -521,7 +521,7 @@ jobs:
     reviewdog-actionlint:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v5
+            - uses: actions/checkout@v6
             - uses: reviewdog/action-actionlint@v1.65.2
               with:
                   reporter: github-pr-check

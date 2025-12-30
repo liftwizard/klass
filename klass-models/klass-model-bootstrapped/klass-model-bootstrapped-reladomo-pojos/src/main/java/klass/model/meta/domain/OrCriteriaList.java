@@ -22,17 +22,17 @@ import com.gs.fw.finder.Operation;
 
 public class OrCriteriaList extends OrCriteriaListAbstract {
 
-    public OrCriteriaList() {}
+	public OrCriteriaList() {}
 
-    public OrCriteriaList(int initialSize) {
-        super(initialSize);
-    }
+	public OrCriteriaList(int initialSize) {
+		super(initialSize);
+	}
 
-    public OrCriteriaList(Collection c) {
-        super(c);
-    }
+	public OrCriteriaList(Collection c) {
+		super(c);
+	}
 
-    public OrCriteriaList(Operation operation) {
-        super(operation);
-    }
+	public OrCriteriaList(Operation operation) {
+		super(operation);
+	}
 }

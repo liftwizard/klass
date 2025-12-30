@@ -33,42 +33,42 @@ import org.antlr.v4.runtime.ParserRuleContext;
 // TODO: Property validations should have ordinal
 public abstract class AbstractAntlrPropertyValidation extends AntlrElement {
 
-    @Nonnull
-    protected final AntlrDataTypeProperty<?> owningProperty;
+	@Nonnull
+	protected final AntlrDataTypeProperty<?> owningProperty;
 
-    protected AbstractAntlrPropertyValidation(
-        @Nonnull ParserRuleContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        @Nonnull AntlrDataTypeProperty<?> owningProperty
-    ) {
-        super(elementContext, compilationUnit);
-        this.owningProperty = Objects.requireNonNull(owningProperty);
-    }
+	protected AbstractAntlrPropertyValidation(
+		@Nonnull ParserRuleContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		@Nonnull AntlrDataTypeProperty<?> owningProperty
+	) {
+		super(elementContext, compilationUnit);
+		this.owningProperty = Objects.requireNonNull(owningProperty);
+	}
 
-    @Nonnull
-    @Override
-    public Optional<IAntlrElement> getSurroundingElement() {
-        return Optional.of(this.owningProperty);
-    }
+	@Nonnull
+	@Override
+	public Optional<IAntlrElement> getSurroundingElement() {
+		return Optional.of(this.owningProperty);
+	}
 
-    public abstract PropertyValidationBuilder<?> build();
+	public abstract PropertyValidationBuilder<?> build();
 
-    @Override
-    @Nonnull
-    public abstract PropertyValidationBuilder<?> getElementBuilder();
+	@Override
+	@Nonnull
+	public abstract PropertyValidationBuilder<?> getElementBuilder();
 
-    public void reportInvalidType(
-        @Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
-        @Nonnull PrimitiveType primitiveType
-    ) {
-        ParserRuleContext offendingToken = this.getKeywordToken();
-        String message = String.format(
-            "Invalid validation '%s' for type %s.",
-            offendingToken.getText(),
-            primitiveType.getPrettyName()
-        );
-        compilerAnnotationHolder.add("ERR_VLD_TYP", message, this, offendingToken);
-    }
+	public void reportInvalidType(
+		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
+		@Nonnull PrimitiveType primitiveType
+	) {
+		ParserRuleContext offendingToken = this.getKeywordToken();
+		String message = String.format(
+			"Invalid validation '%s' for type %s.",
+			offendingToken.getText(),
+			primitiveType.getPrettyName()
+		);
+		compilerAnnotationHolder.add("ERR_VLD_TYP", message, this, offendingToken);
+	}
 
-    public abstract ParserRuleContext getKeywordToken();
+	public abstract ParserRuleContext getKeywordToken();
 }

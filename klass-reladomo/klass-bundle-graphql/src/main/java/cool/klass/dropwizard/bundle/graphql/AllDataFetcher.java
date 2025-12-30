@@ -33,42 +33,42 @@ import org.eclipse.collections.api.list.MutableList;
 
 public class AllDataFetcher implements DataFetcher<Object> {
 
-    private final Klass klass;
-    private final ReladomoDataStore dataStore;
-    private final ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter;
+	private final Klass klass;
+	private final ReladomoDataStore dataStore;
+	private final ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter;
 
-    public AllDataFetcher(
-        Klass klass,
-        ReladomoDataStore dataStore,
-        ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
-    ) {
-        this.klass = Objects.requireNonNull(klass);
-        this.dataStore = Objects.requireNonNull(dataStore);
-        this.reladomoTreeGraphqlConverter = Objects.requireNonNull(reladomoTreeGraphqlConverter);
-    }
+	public AllDataFetcher(
+		Klass klass,
+		ReladomoDataStore dataStore,
+		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
+	) {
+		this.klass = Objects.requireNonNull(klass);
+		this.dataStore = Objects.requireNonNull(dataStore);
+		this.reladomoTreeGraphqlConverter = Objects.requireNonNull(reladomoTreeGraphqlConverter);
+	}
 
-    @Override
-    public Object get(DataFetchingEnvironment environment) throws Exception {
-        List<Object> data = this.dataStore.findAll(this.klass);
+	@Override
+	public Object get(DataFetchingEnvironment environment) throws Exception {
+		List<Object> data = this.dataStore.findAll(this.klass);
 
-        DataFetchingFieldSelectionSet selectionSet = environment.getSelectionSet();
-        RootReladomoTreeNode rootReladomoTreeNode = this.reladomoTreeGraphqlConverter.convert(this.klass, selectionSet);
+		DataFetchingFieldSelectionSet selectionSet = environment.getSelectionSet();
+		RootReladomoTreeNode rootReladomoTreeNode = this.reladomoTreeGraphqlConverter.convert(this.klass, selectionSet);
 
-        var deepFetcherListener = new ReladomoTreeNodeDeepFetcherListener(
-            this.dataStore,
-            (DomainList) data,
-            this.klass
-        );
-        rootReladomoTreeNode.walk(deepFetcherListener);
+		var deepFetcherListener = new ReladomoTreeNodeDeepFetcherListener(
+			this.dataStore,
+			(DomainList) data,
+			this.klass
+		);
+		rootReladomoTreeNode.walk(deepFetcherListener);
 
-        var serializerVisitor = new ReladomoTreeObjectToDTOSerializerListener(
-            this.dataStore,
-            (DomainList) data,
-            this.klass
-        );
-        rootReladomoTreeNode.toManyAwareWalk(serializerVisitor);
+		var serializerVisitor = new ReladomoTreeObjectToDTOSerializerListener(
+			this.dataStore,
+			(DomainList) data,
+			this.klass
+		);
+		rootReladomoTreeNode.toManyAwareWalk(serializerVisitor);
 
-        MutableList<Object> result = serializerVisitor.getResult();
-        return result;
-    }
+		MutableList<Object> result = serializerVisitor.getResult();
+		return result;
+	}
 }

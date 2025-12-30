@@ -22,17 +22,17 @@ import com.gs.fw.finder.Operation;
 
 public class EnumerationPropertyList extends EnumerationPropertyListAbstract {
 
-    public EnumerationPropertyList() {}
+	public EnumerationPropertyList() {}
 
-    public EnumerationPropertyList(int initialSize) {
-        super(initialSize);
-    }
+	public EnumerationPropertyList(int initialSize) {
+		super(initialSize);
+	}
 
-    public EnumerationPropertyList(Collection<?> c) {
-        super(c);
-    }
+	public EnumerationPropertyList(Collection<?> c) {
+		super(c);
+	}
 
-    public EnumerationPropertyList(Operation operation) {
-        super(operation);
-    }
+	public EnumerationPropertyList(Operation operation) {
+		super(operation);
+	}
 }

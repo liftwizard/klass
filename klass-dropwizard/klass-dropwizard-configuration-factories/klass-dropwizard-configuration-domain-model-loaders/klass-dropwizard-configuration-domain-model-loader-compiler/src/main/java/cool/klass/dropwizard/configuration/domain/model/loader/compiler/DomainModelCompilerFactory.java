@@ -44,68 +44,68 @@ import org.slf4j.LoggerFactory;
 @AutoService(DomainModelFactory.class)
 public class DomainModelCompilerFactory implements DomainModelFactory {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DomainModelCompilerFactory.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DomainModelCompilerFactory.class);
 
-    @NotEmpty
-    private @Valid @NotNull List<String> sourcePackages = Arrays.asList("klass.model.meta.domain");
+	@NotEmpty
+	private @Valid @NotNull List<String> sourcePackages = Arrays.asList("klass.model.meta.domain");
 
-    @NotEmpty
-    private @NotNull String colorScheme;
+	@NotEmpty
+	private @NotNull String colorScheme;
 
-    private DomainModelWithSourceCode domainModel;
+	private DomainModelWithSourceCode domainModel;
 
-    @Nonnull
-    @Override
-    public DomainModelWithSourceCode createDomainModel(ObjectMapper objectMapper) {
-        if (this.domainModel != null) {
-            return this.domainModel;
-        }
-        ImmutableList<String> klassSourcePackagesImmutable = Lists.immutable.withAll(this.sourcePackages);
+	@Nonnull
+	@Override
+	public DomainModelWithSourceCode createDomainModel(ObjectMapper objectMapper) {
+		if (this.domainModel != null) {
+			return this.domainModel;
+		}
+		ImmutableList<String> klassSourcePackagesImmutable = Lists.immutable.withAll(this.sourcePackages);
 
-        AnsiColorScheme ansiColorScheme = ColorSchemeProvider.getByName(this.colorScheme);
+		AnsiColorScheme ansiColorScheme = ColorSchemeProvider.getByName(this.colorScheme);
 
-        // TODO: We should use an abstract DomainModelFactory here, not necessarily the compiler.
-        var domainModelLoader = new DomainModelCompilerLoader(
-            klassSourcePackagesImmutable,
-            Thread.currentThread().getContextClassLoader(),
-            DomainModelCompilerLoader::logCompilerAnnotation,
-            ansiColorScheme
-        );
-        this.domainModel = domainModelLoader.load();
-        return this.domainModel;
-    }
+		// TODO: We should use an abstract DomainModelFactory here, not necessarily the compiler.
+		var domainModelLoader = new DomainModelCompilerLoader(
+			klassSourcePackagesImmutable,
+			Thread.currentThread().getContextClassLoader(),
+			DomainModelCompilerLoader::logCompilerAnnotation,
+			ansiColorScheme
+		);
+		this.domainModel = domainModelLoader.load();
+		return this.domainModel;
+	}
 
-    @JsonProperty
-    public List<String> getSourcePackages() {
-        return Lists.mutable.withAll(this.sourcePackages);
-    }
+	@JsonProperty
+	public List<String> getSourcePackages() {
+		return Lists.mutable.withAll(this.sourcePackages);
+	}
 
-    @JsonProperty
-    public void setSourcePackages(List<String> sourcePackages) {
-        this.sourcePackages = sourcePackages;
-    }
+	@JsonProperty
+	public void setSourcePackages(List<String> sourcePackages) {
+		this.sourcePackages = sourcePackages;
+	}
 
-    @JsonProperty
-    public String getColorScheme() {
-        return this.colorScheme;
-    }
+	@JsonProperty
+	public String getColorScheme() {
+		return this.colorScheme;
+	}
 
-    @JsonProperty
-    public void setColorScheme(String colorScheme) {
-        this.colorScheme = colorScheme;
-    }
+	@JsonProperty
+	public void setColorScheme(String colorScheme) {
+		this.colorScheme = colorScheme;
+	}
 
-    @ValidationMethod(message = "Invalid color scheme. Valid options include 'dark', 'light', 'dark-cube', 'dark-rgb'.")
-    @JsonIgnore
-    public boolean isColorSchemeValid() {
-        if (this.colorScheme == null) {
-            return false;
-        }
+	@ValidationMethod(message = "Invalid color scheme. Valid options include 'dark', 'light', 'dark-cube', 'dark-rgb'.")
+	@JsonIgnore
+	public boolean isColorSchemeValid() {
+		if (this.colorScheme == null) {
+			return false;
+		}
 
-        boolean exists = ColorSchemeProvider.existsByName(this.colorScheme);
-        if (!exists) {
-            LOGGER.warn("Invalid color scheme '{}': color scheme not found", this.colorScheme);
-        }
-        return exists;
-    }
+		boolean exists = ColorSchemeProvider.existsByName(this.colorScheme);
+		if (!exists) {
+			LOGGER.warn("Invalid color scheme '{}': color scheme not found", this.colorScheme);
+		}
+		return exists;
+	}
 }

@@ -22,17 +22,17 @@ import cool.klass.model.meta.domain.api.operator.Operator;
 import cool.klass.model.meta.domain.api.value.ExpressionValue;
 
 public interface OperatorCriteria extends Criteria {
-    @Nonnull
-    Operator getOperator();
+	@Nonnull
+	Operator getOperator();
 
-    @Nonnull
-    ExpressionValue getSourceValue();
+	@Nonnull
+	ExpressionValue getSourceValue();
 
-    @Nonnull
-    ExpressionValue getTargetValue();
+	@Nonnull
+	ExpressionValue getTargetValue();
 
-    @Override
-    default void visit(@Nonnull CriteriaVisitor visitor) {
-        visitor.visitOperator(this);
-    }
+	@Override
+	default void visit(@Nonnull CriteriaVisitor visitor) {
+		visitor.visitOperator(this);
+	}
 }

@@ -29,45 +29,45 @@ import org.fusesource.jansi.Ansi;
 
 public final class AnsiTokenColorizer {
 
-    @Nonnull
-    private final AnsiColorScheme colorScheme;
+	@Nonnull
+	private final AnsiColorScheme colorScheme;
 
-    @Nonnull
-    private final MapIterable<Token, TokenCategory> tokenCategoriesFromParser;
+	@Nonnull
+	private final MapIterable<Token, TokenCategory> tokenCategoriesFromParser;
 
-    @Nonnull
-    private final MapIterable<Token, TokenCategory> tokenCategoriesFromLexer;
+	@Nonnull
+	private final MapIterable<Token, TokenCategory> tokenCategoriesFromLexer;
 
-    public AnsiTokenColorizer(
-        @Nonnull AnsiColorScheme colorScheme,
-        @Nonnull MapIterable<Token, TokenCategory> tokenCategoriesFromParser,
-        @Nonnull MapIterable<Token, TokenCategory> tokenCategoriesFromLexer
-    ) {
-        this.colorScheme = Objects.requireNonNull(colorScheme);
-        this.tokenCategoriesFromParser = Objects.requireNonNull(tokenCategoriesFromParser);
-        this.tokenCategoriesFromLexer = Objects.requireNonNull(tokenCategoriesFromLexer);
-    }
+	public AnsiTokenColorizer(
+		@Nonnull AnsiColorScheme colorScheme,
+		@Nonnull MapIterable<Token, TokenCategory> tokenCategoriesFromParser,
+		@Nonnull MapIterable<Token, TokenCategory> tokenCategoriesFromLexer
+	) {
+		this.colorScheme = Objects.requireNonNull(colorScheme);
+		this.tokenCategoriesFromParser = Objects.requireNonNull(tokenCategoriesFromParser);
+		this.tokenCategoriesFromLexer = Objects.requireNonNull(tokenCategoriesFromLexer);
+	}
 
-    public void colorizeText(Ansi ansi, Token token) {
-        Optional<TokenCategory> tokenCategory = this.getTokenCategory(token);
-        tokenCategory.ifPresent((justTokenCategory) ->
-            TokenCategoryToAnsiColor.applyColor(justTokenCategory, ansi, this.colorScheme)
-        );
-        ansi.a(token.getText());
-    }
+	public void colorizeText(Ansi ansi, Token token) {
+		Optional<TokenCategory> tokenCategory = this.getTokenCategory(token);
+		tokenCategory.ifPresent((justTokenCategory) ->
+			TokenCategoryToAnsiColor.applyColor(justTokenCategory, ansi, this.colorScheme)
+		);
+		ansi.a(token.getText());
+	}
 
-    private Optional<TokenCategory> getTokenCategory(Token token) {
-        TokenCategory lexerCategory = this.tokenCategoriesFromLexer.get(token);
-        TokenCategory parserCategory = this.tokenCategoriesFromParser.get(token);
-        if (lexerCategory != null && parserCategory != null) {
-            throw new AssertionError(token);
-        }
-        if (lexerCategory != null) {
-            return Optional.of(lexerCategory);
-        }
-        if (parserCategory != null) {
-            return Optional.of(parserCategory);
-        }
-        throw new AssertionError("Expected token category for " + token.getText());
-    }
+	private Optional<TokenCategory> getTokenCategory(Token token) {
+		TokenCategory lexerCategory = this.tokenCategoriesFromLexer.get(token);
+		TokenCategory parserCategory = this.tokenCategoriesFromParser.get(token);
+		if (lexerCategory != null && parserCategory != null) {
+			throw new AssertionError(token);
+		}
+		if (lexerCategory != null) {
+			return Optional.of(lexerCategory);
+		}
+		if (parserCategory != null) {
+			return Optional.of(parserCategory);
+		}
+		throw new AssertionError("Expected token category for " + token.getText());
+	}
 }

@@ -22,17 +22,17 @@ import com.gs.fw.finder.Operation;
 
 public class AnswerList extends AnswerListAbstract {
 
-    public AnswerList() {}
+	public AnswerList() {}
 
-    public AnswerList(int initialSize) {
-        super(initialSize);
-    }
+	public AnswerList(int initialSize) {
+		super(initialSize);
+	}
 
-    public AnswerList(Collection<?> collection) {
-        super(collection);
-    }
+	public AnswerList(Collection<?> collection) {
+		super(collection);
+	}
 
-    public AnswerList(Operation operation) {
-        super(operation);
-    }
+	public AnswerList(Operation operation) {
+		super(operation);
+	}
 }

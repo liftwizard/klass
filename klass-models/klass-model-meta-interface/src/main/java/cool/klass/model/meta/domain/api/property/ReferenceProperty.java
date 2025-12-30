@@ -27,61 +27,61 @@ import cool.klass.model.meta.domain.api.order.OrderBy;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public interface ReferenceProperty extends Property {
-    @Nonnull
-    Multiplicity getMultiplicity();
+	@Nonnull
+	Multiplicity getMultiplicity();
 
-    @Override
-    default boolean isRequired() {
-        return this.getMultiplicity().isRequired();
-    }
+	@Override
+	default boolean isRequired() {
+		return this.getMultiplicity().isRequired();
+	}
 
-    @Override
-    default boolean isDerived() {
-        // TODO: derived ReferenceProperties
-        return false;
-    }
+	@Override
+	default boolean isDerived() {
+		// TODO: derived ReferenceProperties
+		return false;
+	}
 
-    @Nonnull
-    Optional<OrderBy> getOrderBy();
+	@Nonnull
+	Optional<OrderBy> getOrderBy();
 
-    @Override
-    @Nonnull
-    Classifier getType();
+	@Override
+	@Nonnull
+	Classifier getType();
 
-    @Nonnull
-    ImmutableList<Modifier> getModifiers();
+	@Nonnull
+	ImmutableList<Modifier> getModifiers();
 
-    // TODO: Delete overrides
-    default boolean isOwned() {
-        return this.getModifiers().anySatisfy((modifier) -> modifier.is("owned"));
-    }
+	// TODO: Delete overrides
+	default boolean isOwned() {
+		return this.getModifiers().anySatisfy((modifier) -> modifier.is("owned"));
+	}
 
-    default boolean isVersion() {
-        return this.getModifiers().anySatisfy(Modifier::isVersion);
-    }
+	default boolean isVersion() {
+		return this.getModifiers().anySatisfy(Modifier::isVersion);
+	}
 
-    default boolean isAudit() {
-        return this.isCreatedBy() || this.isLastUpdatedBy();
-    }
+	default boolean isAudit() {
+		return this.isCreatedBy() || this.isLastUpdatedBy();
+	}
 
-    default boolean isCreatedBy() {
-        return this.getModifiers().anySatisfy(Modifier::isCreatedBy);
-    }
+	default boolean isCreatedBy() {
+		return this.getModifiers().anySatisfy(Modifier::isCreatedBy);
+	}
 
-    default boolean isLastUpdatedBy() {
-        return this.getModifiers().anySatisfy(Modifier::isLastUpdatedBy);
-    }
+	default boolean isLastUpdatedBy() {
+		return this.getModifiers().anySatisfy(Modifier::isLastUpdatedBy);
+	}
 
-    default boolean isFinal() {
-        return this.getModifiers().anySatisfy(Modifier::isFinal);
-    }
+	default boolean isFinal() {
+		return this.getModifiers().anySatisfy(Modifier::isFinal);
+	}
 
-    @Override
-    default boolean isPrivate() {
-        return this.getModifiers().anySatisfy(Modifier::isPrivate);
-    }
+	@Override
+	default boolean isPrivate() {
+		return this.getModifiers().anySatisfy(Modifier::isPrivate);
+	}
 
-    default boolean isToSelf() {
-        return this.getOwningClassifier().equals(this.getType());
-    }
+	default boolean isToSelf() {
+		return this.getOwningClassifier().equals(this.getType());
+	}
 }

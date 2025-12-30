@@ -25,18 +25,18 @@ import org.antlr.v4.runtime.ParserRuleContext;
 
 public abstract class AntlrOrdinalElement extends AntlrElement {
 
-    protected final int ordinal;
+	protected final int ordinal;
 
-    protected AntlrOrdinalElement(
-        @Nonnull ParserRuleContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        int ordinal
-    ) {
-        super(elementContext, compilationUnit);
-        this.ordinal = ordinal;
-    }
+	protected AntlrOrdinalElement(
+		@Nonnull ParserRuleContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		int ordinal
+	) {
+		super(elementContext, compilationUnit);
+		this.ordinal = ordinal;
+	}
 
-    public int getOrdinal() {
-        return this.ordinal;
-    }
+	public int getOrdinal() {
+		return this.ordinal;
+	}
 }

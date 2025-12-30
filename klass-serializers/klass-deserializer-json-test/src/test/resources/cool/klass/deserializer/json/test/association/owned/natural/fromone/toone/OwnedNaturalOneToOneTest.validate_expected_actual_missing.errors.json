@@ -1,5 +1,5 @@
 [
-  "Error at OwnedNaturalOneToOneSource.value. Expected value for required property 'OwnedNaturalOneToOneSource.value: String' but value was missing.",
-  "Error at OwnedNaturalOneToOneSource.target.key. Expected value for key property 'OwnedNaturalOneToOneTarget.key: String' but value was missing.",
-  "Error at OwnedNaturalOneToOneSource.target.value. Expected value for required property 'OwnedNaturalOneToOneTarget.value: String' but value was missing."
+	"Error at OwnedNaturalOneToOneSource.value. Expected value for required property 'OwnedNaturalOneToOneSource.value: String' but value was missing.",
+	"Error at OwnedNaturalOneToOneSource.target.key. Expected value for key property 'OwnedNaturalOneToOneTarget.key: String' but value was missing.",
+	"Error at OwnedNaturalOneToOneSource.target.value. Expected value for required property 'OwnedNaturalOneToOneTarget.value: String' but value was missing."
 ]

@@ -39,43 +39,43 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 @ExtendWith(LogMarkerTestExtension.class)
 public class ReladomoTestResourceWriterTest {
 
-    @Order(1)
-    @RegisterExtension
-    final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
+	@Order(1)
+	@RegisterExtension
+	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
-    @Order(2)
-    @RegisterExtension
-    private final LiquibaseTestExtension liquibaseTestExtension = new LiquibaseTestExtension(
-        "cool/klass/xample/coverage/migrations.xml"
-    );
+	@Order(2)
+	@RegisterExtension
+	private final LiquibaseTestExtension liquibaseTestExtension = new LiquibaseTestExtension(
+		"cool/klass/xample/coverage/migrations.xml"
+	);
 
-    @Order(3)
-    @RegisterExtension
-    private final ReladomoInitializeExtension initializeTestExtension = new ReladomoInitializeExtension(
-        "reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml"
-    );
+	@Order(3)
+	@RegisterExtension
+	private final ReladomoInitializeExtension initializeTestExtension = new ReladomoInitializeExtension(
+		"reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml"
+	);
 
-    @Order(4)
-    @RegisterExtension
-    private final ReladomoLoadDataExtension loadDataTestExtension = new ReladomoLoadDataExtension();
+	@Order(4)
+	@RegisterExtension
+	private final ReladomoLoadDataExtension loadDataTestExtension = new ReladomoLoadDataExtension();
 
-    private final ObjectMapper objectMapper = ObjectMapperConfig.configure(new ObjectMapper());
-    private final DomainModel domainModel = getDomainModel(this.objectMapper);
+	private final ObjectMapper objectMapper = ObjectMapperConfig.configure(new ObjectMapper());
+	private final DomainModel domainModel = getDomainModel(this.objectMapper);
 
-    @Test
-    @ReladomoTestFile("test-data/ReladomoTestResourceWriterTest.txt")
-    void reladomoTestResourceWriter() {
-        ImmutableList<String> classNames = this.domainModel.getClasses().collect(NamedElement::getName);
-        String actual = ReladomoTestResourceWriter.generate(classNames);
+	@Test
+	@ReladomoTestFile("test-data/ReladomoTestResourceWriterTest.txt")
+	void reladomoTestResourceWriter() {
+		ImmutableList<String> classNames = this.domainModel.getClasses().collect(NamedElement::getName);
+		String actual = ReladomoTestResourceWriter.generate(classNames);
 
-        String resourceClassPathLocation = this.getClass().getSimpleName() + ".reladomoTestResourceWriter.txt";
-        this.fileMatchExtension.assertFileContents(resourceClassPathLocation, actual);
-    }
+		String resourceClassPathLocation = this.getClass().getSimpleName() + ".reladomoTestResourceWriter.txt";
+		this.fileMatchExtension.assertFileContents(resourceClassPathLocation, actual);
+	}
 
-    private static DomainModel getDomainModel(ObjectMapper objectMapper) {
-        DomainModelCompilerFactory domainModelCompilerFactory = new DomainModelCompilerFactory();
-        domainModelCompilerFactory.setSourcePackages(List.of("cool.klass.xample.coverage"));
-        domainModelCompilerFactory.setColorScheme("dark");
-        return domainModelCompilerFactory.createDomainModel(objectMapper);
-    }
+	private static DomainModel getDomainModel(ObjectMapper objectMapper) {
+		DomainModelCompilerFactory domainModelCompilerFactory = new DomainModelCompilerFactory();
+		domainModelCompilerFactory.setSourcePackages(List.of("cool.klass.xample.coverage"));
+		domainModelCompilerFactory.setColorScheme("dark");
+		return domainModelCompilerFactory.createDomainModel(objectMapper);
+	}
 }

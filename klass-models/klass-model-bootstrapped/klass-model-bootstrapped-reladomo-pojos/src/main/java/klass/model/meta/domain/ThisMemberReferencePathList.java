@@ -22,17 +22,17 @@ import com.gs.fw.finder.Operation;
 
 public class ThisMemberReferencePathList extends ThisMemberReferencePathListAbstract {
 
-    public ThisMemberReferencePathList() {}
+	public ThisMemberReferencePathList() {}
 
-    public ThisMemberReferencePathList(int initialSize) {
-        super(initialSize);
-    }
+	public ThisMemberReferencePathList(int initialSize) {
+		super(initialSize);
+	}
 
-    public ThisMemberReferencePathList(Collection c) {
-        super(c);
-    }
+	public ThisMemberReferencePathList(Collection c) {
+		super(c);
+	}
 
-    public ThisMemberReferencePathList(Operation operation) {
-        super(operation);
-    }
+	public ThisMemberReferencePathList(Operation operation) {
+		super(operation);
+	}
 }

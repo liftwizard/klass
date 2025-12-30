@@ -37,36 +37,36 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(LogMarkerTestExtension.class)
 class DomainModelConstantFactoryTest {
 
-    private final ObjectMapper objectMapper = getObjectMapper();
-    private final Validator validator = Validators.newValidator();
+	private final ObjectMapper objectMapper = getObjectMapper();
+	private final Validator validator = Validators.newValidator();
 
-    private final JsonConfigurationFactory<DomainModelFactory> factory = new JsonConfigurationFactory<>(
-        DomainModelFactory.class,
-        this.validator,
-        this.objectMapper,
-        "dw"
-    );
+	private final JsonConfigurationFactory<DomainModelFactory> factory = new JsonConfigurationFactory<>(
+		DomainModelFactory.class,
+		this.validator,
+		this.objectMapper,
+		"dw"
+	);
 
-    @Test
-    void isDiscoverable() {
-        // Make sure the types we specified in META-INF gets picked up
-        var discoverableSubtypeResolver = new DiscoverableSubtypeResolver();
-        List<Class<?>> discoveredSubtypes = discoverableSubtypeResolver.getDiscoveredSubtypes();
-        assertThat(discoveredSubtypes).contains(DomainModelConstantFactory.class);
-    }
+	@Test
+	void isDiscoverable() {
+		// Make sure the types we specified in META-INF gets picked up
+		var discoverableSubtypeResolver = new DiscoverableSubtypeResolver();
+		List<Class<?>> discoveredSubtypes = discoverableSubtypeResolver.getDiscoveredSubtypes();
+		assertThat(discoveredSubtypes).contains(DomainModelConstantFactory.class);
+	}
 
-    @Test
-    void domainModelConstant() throws Exception {
-        DomainModelFactory domainModelFactory = this.factory.build(
-            new ResourceConfigurationSourceProvider(),
-            "config-test.json5"
-        );
-        assertThat(domainModelFactory).isInstanceOf(DomainModelConstantFactory.class);
-    }
+	@Test
+	void domainModelConstant() throws Exception {
+		DomainModelFactory domainModelFactory = this.factory.build(
+			new ResourceConfigurationSourceProvider(),
+			"config-test.json5"
+		);
+		assertThat(domainModelFactory).isInstanceOf(DomainModelConstantFactory.class);
+	}
 
-    private static ObjectMapper getObjectMapper() {
-        ObjectMapper objectMapper = Jackson.newObjectMapper();
-        ObjectMapperConfig.configure(objectMapper);
-        return objectMapper;
-    }
+	private static ObjectMapper getObjectMapper() {
+		ObjectMapper objectMapper = Jackson.newObjectMapper();
+		ObjectMapperConfig.configure(objectMapper);
+		return objectMapper;
+	}
 }

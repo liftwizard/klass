@@ -29,33 +29,33 @@ import cool.klass.model.meta.grammar.KlassParser.ServiceMultiplicityDeclarationC
 
 public class ServiceMultiplicityPhase extends AbstractCompilerPhase {
 
-    public ServiceMultiplicityPhase(@Nonnull CompilerState compilerState) {
-        super(compilerState);
-    }
+	public ServiceMultiplicityPhase(@Nonnull CompilerState compilerState) {
+		super(compilerState);
+	}
 
-    @Override
-    public void enterServiceMultiplicityDeclaration(ServiceMultiplicityDeclarationContext ctx) {
-        super.enterServiceMultiplicityDeclaration(ctx);
-        ServiceMultiplicityContext multiplicityContext = ctx.serviceMultiplicity();
+	@Override
+	public void enterServiceMultiplicityDeclaration(ServiceMultiplicityDeclarationContext ctx) {
+		super.enterServiceMultiplicityDeclaration(ctx);
+		ServiceMultiplicityContext multiplicityContext = ctx.serviceMultiplicity();
 
-        AntlrServiceMultiplicity serviceMultiplicity = new AntlrServiceMultiplicity(
-            multiplicityContext,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.getServiceMultiplicity(multiplicityContext)
-        );
+		AntlrServiceMultiplicity serviceMultiplicity = new AntlrServiceMultiplicity(
+			multiplicityContext,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.getServiceMultiplicity(multiplicityContext)
+		);
 
-        AntlrService service = this.compilerState.getCompilerWalk().getService();
-        service.enterServiceMultiplicityDeclaration(serviceMultiplicity);
-    }
+		AntlrService service = this.compilerState.getCompilerWalk().getService();
+		service.enterServiceMultiplicityDeclaration(serviceMultiplicity);
+	}
 
-    @Nonnull
-    private ServiceMultiplicity getServiceMultiplicity(@Nonnull ServiceMultiplicityContext serviceMultiplicityContext) {
-        if (serviceMultiplicityContext.one != null) {
-            return ServiceMultiplicity.ONE;
-        }
-        if (serviceMultiplicityContext.many != null) {
-            return ServiceMultiplicity.MANY;
-        }
-        throw new AssertionError();
-    }
+	@Nonnull
+	private ServiceMultiplicity getServiceMultiplicity(@Nonnull ServiceMultiplicityContext serviceMultiplicityContext) {
+		if (serviceMultiplicityContext.one != null) {
+			return ServiceMultiplicity.ONE;
+		}
+		if (serviceMultiplicityContext.many != null) {
+			return ServiceMultiplicity.MANY;
+		}
+		throw new AssertionError();
+	}
 }

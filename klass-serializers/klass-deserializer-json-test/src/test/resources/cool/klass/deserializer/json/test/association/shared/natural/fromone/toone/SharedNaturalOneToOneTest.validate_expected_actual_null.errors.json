@@ -1,6 +1,6 @@
 [
-  "Error at SharedNaturalOneToOneSource. No such property 'SharedNaturalOneToOneSource.targetKey' but got null. Expected properties: key, value, target.",
-  "Error at SharedNaturalOneToOneSource.value. Expected value for required property 'SharedNaturalOneToOneSource.value: String' but value was null.",
-  "Error at SharedNaturalOneToOneSource.target.key. Expected value for key property 'SharedNaturalOneToOneTarget.key: String' but value was null.",
-  "Error at SharedNaturalOneToOneSource.target.sourceKey. Didn't expect to receive value for foreign key property 'SharedNaturalOneToOneTarget.sourceKey: String' but value was null."
+	"Error at SharedNaturalOneToOneSource. No such property 'SharedNaturalOneToOneSource.targetKey' but got null. Expected properties: key, value, target.",
+	"Error at SharedNaturalOneToOneSource.value. Expected value for required property 'SharedNaturalOneToOneSource.value: String' but value was null.",
+	"Error at SharedNaturalOneToOneSource.target.key. Expected value for key property 'SharedNaturalOneToOneTarget.key: String' but value was null.",
+	"Error at SharedNaturalOneToOneSource.target.sourceKey. Didn't expect to receive value for foreign key property 'SharedNaturalOneToOneTarget.sourceKey: String' but value was null."
 ]

@@ -112,7 +112,7 @@
             <includes>
                 <include>.markdownlint.jsonc</include>
                 <include>.pre-commit-config.yaml</include>
-                <include>.prettierrc.yaml</include>
+                <include>.prettierrc.json5</include>
                 <include>.tool-versions</include>
                 <include>.yamllint.yaml</include>
                 <include>checkstyle-suppressions.xml</include>
@@ -127,8 +127,12 @@
         <fileSet filtered="true">
             <directory></directory>
             <includes>
+                <include>biome.jsonc.vm</include>
                 <include>justfile.vm</include>
             </includes>
+            <excludes>
+                <exclude>biome.template.jsonc</exclude>
+            </excludes>
         </fileSet>
     </fileSets>
 

@@ -32,41 +32,41 @@ import cool.klass.model.converter.compiler.state.value.AntlrMemberReferencePath;
 
 public class ReferencedPropertiesCriteriaVisitor implements AntlrCriteriaVisitor {
 
-    private final ReferencedPropertiesExpressionValueVisitor expressionValueVisitor =
-        new ReferencedPropertiesExpressionValueVisitor();
+	private final ReferencedPropertiesExpressionValueVisitor expressionValueVisitor =
+		new ReferencedPropertiesExpressionValueVisitor();
 
-    public Set<AntlrAssociationEnd> getAssociationEndsReferencedByCriteria() {
-        return this.expressionValueVisitor.getAssociationEndsReferencedByCriteria();
-    }
+	public Set<AntlrAssociationEnd> getAssociationEndsReferencedByCriteria() {
+		return this.expressionValueVisitor.getAssociationEndsReferencedByCriteria();
+	}
 
-    public Set<AntlrDataTypeProperty<?>> getDataTypePropertiesReferencedByCriteria() {
-        return this.expressionValueVisitor.getDataTypePropertiesReferencedByCriteria();
-    }
+	public Set<AntlrDataTypeProperty<?>> getDataTypePropertiesReferencedByCriteria() {
+		return this.expressionValueVisitor.getDataTypePropertiesReferencedByCriteria();
+	}
 
-    public Set<AntlrParameter> getParametersReferencedByCriteria() {
-        return this.expressionValueVisitor.getParametersReferencedByCriteria();
-    }
+	public Set<AntlrParameter> getParametersReferencedByCriteria() {
+		return this.expressionValueVisitor.getParametersReferencedByCriteria();
+	}
 
-    @Override
-    public void visitEdgePoint(EdgePointAntlrCriteria edgePointCriteria) {
-        AntlrMemberReferencePath memberExpressionValue = edgePointCriteria.getMemberExpressionValue();
-        memberExpressionValue.visit(this.expressionValueVisitor);
-    }
+	@Override
+	public void visitEdgePoint(EdgePointAntlrCriteria edgePointCriteria) {
+		AntlrMemberReferencePath memberExpressionValue = edgePointCriteria.getMemberExpressionValue();
+		memberExpressionValue.visit(this.expressionValueVisitor);
+	}
 
-    @Override
-    public void visitOperator(OperatorAntlrCriteria operatorCriteria) {
-        AntlrExpressionValue sourceValue = operatorCriteria.getSourceValue();
-        AntlrExpressionValue targetValue = operatorCriteria.getTargetValue();
-        sourceValue.visit(this.expressionValueVisitor);
-        targetValue.visit(this.expressionValueVisitor);
-    }
+	@Override
+	public void visitOperator(OperatorAntlrCriteria operatorCriteria) {
+		AntlrExpressionValue sourceValue = operatorCriteria.getSourceValue();
+		AntlrExpressionValue targetValue = operatorCriteria.getTargetValue();
+		sourceValue.visit(this.expressionValueVisitor);
+		targetValue.visit(this.expressionValueVisitor);
+	}
 
-    @Override
-    public void visitAll(AllAntlrCriteria allCriteria) {}
+	@Override
+	public void visitAll(AllAntlrCriteria allCriteria) {}
 
-    @Override
-    public void visitAnd(AntlrAndCriteria andCriteria) {}
+	@Override
+	public void visitAnd(AntlrAndCriteria andCriteria) {}
 
-    @Override
-    public void visitOr(AntlrOrCriteria orCriteria) {}
+	@Override
+	public void visitOr(AntlrOrCriteria orCriteria) {}
 }

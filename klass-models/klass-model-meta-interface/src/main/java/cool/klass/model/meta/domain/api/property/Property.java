@@ -23,14 +23,14 @@ import cool.klass.model.meta.domain.api.TypedElement;
 import cool.klass.model.meta.domain.api.modifier.ModifierOwner;
 
 public interface Property extends TypedElement, ModifierOwner {
-    @Nonnull
-    Classifier getOwningClassifier();
+	@Nonnull
+	Classifier getOwningClassifier();
 
-    boolean isRequired();
+	boolean isRequired();
 
-    boolean isDerived();
+	boolean isDerived();
 
-    boolean isPrivate();
+	boolean isPrivate();
 
-    void visit(PropertyVisitor visitor);
+	void visit(PropertyVisitor visitor);
 }

@@ -26,57 +26,57 @@ import org.junit.jupiter.api.Test;
 
 class PropertiesRequiredTest extends AbstractCoverageTest {
 
-    @Test
-    void getFirst() {
-        Client client = this.getClient("getFirst");
+	@Test
+	void getFirst() {
+		Client client = this.getClient("getFirst");
 
-        Response response = client
-            .target("http://localhost:{port}/api/propertiesRequired/{id}")
-            .resolveTemplate("port", this.appExtension.getLocalPort())
-            .resolveTemplate("id", 1)
-            .request()
-            .get();
+		Response response = client
+			.target("http://localhost:{port}/api/propertiesRequired/{id}")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.resolveTemplate("id", 1)
+			.request()
+			.get();
 
-        this.assertResponse("getFirst", Status.OK, response);
-    }
+		this.assertResponse("getFirst", Status.OK, response);
+	}
 
-    @Test
-    void getSecond() {
-        Client client = this.getClient("getSecond");
+	@Test
+	void getSecond() {
+		Client client = this.getClient("getSecond");
 
-        Response response = client
-            .target("http://localhost:{port}/api/propertiesRequired/{id}")
-            .resolveTemplate("port", this.appExtension.getLocalPort())
-            .resolveTemplate("id", 2)
-            .request()
-            .get();
+		Response response = client
+			.target("http://localhost:{port}/api/propertiesRequired/{id}")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.resolveTemplate("id", 2)
+			.request()
+			.get();
 
-        this.assertResponse("getSecond", Status.OK, response);
-    }
+		this.assertResponse("getSecond", Status.OK, response);
+	}
 
-    @Test
-    void putFirst() {
-        Client client = this.getClient("putFirst");
-        String jsonName = this.getClass().getSimpleName() + ".putFirst.json5";
-        String json = FileSlurper.slurp(jsonName, this.getClass());
+	@Test
+	void putFirst() {
+		Client client = this.getClient("putFirst");
+		String jsonName = this.getClass().getSimpleName() + ".putFirst.json5";
+		String json = FileSlurper.slurp(jsonName, this.getClass());
 
-        Response putResponse = client
-            .target("http://localhost:{port}/api/propertiesRequired/{id}")
-            .resolveTemplate("port", this.appExtension.getLocalPort())
-            .resolveTemplate("id", 1)
-            .request()
-            .header("Authorization", "Impersonation User userId 1")
-            .put(Entity.json(json));
+		Response putResponse = client
+			.target("http://localhost:{port}/api/propertiesRequired/{id}")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.resolveTemplate("id", 1)
+			.request()
+			.header("Authorization", "Impersonation User userId 1")
+			.put(Entity.json(json));
 
-        this.assertEmptyResponse(Status.NO_CONTENT, putResponse);
+		this.assertEmptyResponse(Status.NO_CONTENT, putResponse);
 
-        Response getResponse = client
-            .target("http://localhost:{port}/api/propertiesRequired/{id}")
-            .resolveTemplate("port", this.appExtension.getLocalPort())
-            .resolveTemplate("id", 1)
-            .request()
-            .get();
+		Response getResponse = client
+			.target("http://localhost:{port}/api/propertiesRequired/{id}")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.resolveTemplate("id", 1)
+			.request()
+			.get();
 
-        this.assertResponse("putFirst2", Status.OK, getResponse);
-    }
+		this.assertResponse("putFirst2", Status.OK, getResponse);
+	}
 }

@@ -27,71 +27,71 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public record StyleSettings(Object foreground, Object background) {
-    private static final Logger LOGGER = LoggerFactory.getLogger(StyleSettings.class);
-    private static final Pattern HEX_COLOR_PATTERN = Pattern.compile("#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?");
+	private static final Logger LOGGER = LoggerFactory.getLogger(StyleSettings.class);
+	private static final Pattern HEX_COLOR_PATTERN = Pattern.compile("#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?");
 
-    @ValidationMethod(message = "Invalid foreground color value")
-    @JsonIgnore
-    public boolean isValidForegroundColor() {
-        return this.foreground == null || this.validateColorValue(this.foreground, "foreground");
-    }
+	@ValidationMethod(message = "Invalid foreground color value")
+	@JsonIgnore
+	public boolean isValidForegroundColor() {
+		return this.foreground == null || this.validateColorValue(this.foreground, "foreground");
+	}
 
-    @ValidationMethod(message = "Invalid background color value")
-    @JsonIgnore
-    public boolean isValidBackgroundColor() {
-        return this.background == null || this.validateColorValue(this.background, "background");
-    }
+	@ValidationMethod(message = "Invalid background color value")
+	@JsonIgnore
+	public boolean isValidBackgroundColor() {
+		return this.background == null || this.validateColorValue(this.background, "background");
+	}
 
-    private boolean validateColorValue(Object colorValue, String propertyName) {
-        if (colorValue instanceof String stringValue) {
-            return this.validateStringColor(stringValue, propertyName);
-        }
+	private boolean validateColorValue(Object colorValue, String propertyName) {
+		if (colorValue instanceof String stringValue) {
+			return this.validateStringColor(stringValue, propertyName);
+		}
 
-        if (colorValue instanceof Number numberValue) {
-            int value = numberValue.intValue();
-            if (value < 0 || value > 255) {
-                LOGGER.warn("Invalid {} color code: {}. Must be between 0 and 255.", propertyName, value);
-                return false;
-            }
-            return true;
-        }
+		if (colorValue instanceof Number numberValue) {
+			int value = numberValue.intValue();
+			if (value < 0 || value > 255) {
+				LOGGER.warn("Invalid {} color code: {}. Must be between 0 and 255.", propertyName, value);
+				return false;
+			}
+			return true;
+		}
 
-        String colorType = colorValue == null ? "null" : colorValue.getClass().getName();
-        LOGGER.warn("Unsupported {} color value type: {}", propertyName, colorType);
-        return false;
-    }
+		String colorType = colorValue == null ? "null" : colorValue.getClass().getName();
+		LOGGER.warn("Unsupported {} color value type: {}", propertyName, colorType);
+		return false;
+	}
 
-    private boolean validateStringColor(String colorValue, String propertyName) {
-        if (colorValue.startsWith("#")) {
-            if (!HEX_COLOR_PATTERN.matcher(colorValue).matches()) {
-                LOGGER.warn(
-                    "Invalid {} hex color format: '{}'. Must be in format #RRGGBB or #RRGGBBAA.",
-                    propertyName,
-                    colorValue
-                );
-                return false;
-            }
+	private boolean validateStringColor(String colorValue, String propertyName) {
+		if (colorValue.startsWith("#")) {
+			if (!HEX_COLOR_PATTERN.matcher(colorValue).matches()) {
+				LOGGER.warn(
+					"Invalid {} hex color format: '{}'. Must be in format #RRGGBB or #RRGGBBAA.",
+					propertyName,
+					colorValue
+				);
+				return false;
+			}
 
-            try {
-                Color.decode(colorValue);
-                return true;
-            } catch (NumberFormatException e) {
-                LOGGER.warn("Invalid {} hex color value: '{}'. Error: {}", propertyName, colorValue, e.getMessage());
-                return false;
-            }
-        }
+			try {
+				Color.decode(colorValue);
+				return true;
+			} catch (NumberFormatException e) {
+				LOGGER.warn("Invalid {} hex color value: '{}'. Error: {}", propertyName, colorValue, e.getMessage());
+				return false;
+			}
+		}
 
-        try {
-            Ansi.Color.valueOf(colorValue);
-            return true;
-        } catch (IllegalArgumentException e) {
-            LOGGER.warn(
-                "Invalid {} color name: '{}'. Valid names are: {}",
-                propertyName,
-                colorValue,
-                Arrays.toString(Ansi.Color.values())
-            );
-            return false;
-        }
-    }
+		try {
+			Ansi.Color.valueOf(colorValue);
+			return true;
+		} catch (IllegalArgumentException e) {
+			LOGGER.warn(
+				"Invalid {} color name: '{}'. Valid names are: {}",
+				propertyName,
+				colorValue,
+				Arrays.toString(Ansi.Color.values())
+			);
+			return false;
+		}
+	}
 }

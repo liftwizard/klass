@@ -32,55 +32,55 @@ import cool.klass.model.meta.grammar.KlassParser.ParameterReferenceContext;
 
 public final class ParameterReferenceImpl extends AbstractExpressionValue implements ParameterReference {
 
-    @Nonnull
-    private final ParameterImpl parameter;
+	@Nonnull
+	private final ParameterImpl parameter;
 
-    private ParameterReferenceImpl(
-        @Nonnull ParameterReferenceContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        @Nonnull ParameterImpl parameter
-    ) {
-        super(elementContext, macroElement, sourceCode);
-        this.parameter = Objects.requireNonNull(parameter);
-    }
+	private ParameterReferenceImpl(
+		@Nonnull ParameterReferenceContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		@Nonnull ParameterImpl parameter
+	) {
+		super(elementContext, macroElement, sourceCode);
+		this.parameter = Objects.requireNonNull(parameter);
+	}
 
-    @Nonnull
-    @Override
-    public ParameterReferenceContext getElementContext() {
-        return (ParameterReferenceContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public ParameterReferenceContext getElementContext() {
+		return (ParameterReferenceContext) super.getElementContext();
+	}
 
-    @Override
-    @Nonnull
-    public ParameterImpl getParameter() {
-        return this.parameter;
-    }
+	@Override
+	@Nonnull
+	public ParameterImpl getParameter() {
+		return this.parameter;
+	}
 
-    public static final class ParameterReferenceBuilder extends AbstractExpressionValueBuilder<ParameterReferenceImpl> {
+	public static final class ParameterReferenceBuilder extends AbstractExpressionValueBuilder<ParameterReferenceImpl> {
 
-        @Nonnull
-        private final ParameterBuilder parameterBuilder;
+		@Nonnull
+		private final ParameterBuilder parameterBuilder;
 
-        public ParameterReferenceBuilder(
-            @Nonnull ParameterReferenceContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            @Nonnull ParameterBuilder parameterBuilder
-        ) {
-            super(elementContext, macroElement, sourceCode);
-            this.parameterBuilder = Objects.requireNonNull(parameterBuilder);
-        }
+		public ParameterReferenceBuilder(
+			@Nonnull ParameterReferenceContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			@Nonnull ParameterBuilder parameterBuilder
+		) {
+			super(elementContext, macroElement, sourceCode);
+			this.parameterBuilder = Objects.requireNonNull(parameterBuilder);
+		}
 
-        @Override
-        @Nonnull
-        protected ParameterReferenceImpl buildUnsafe() {
-            return new ParameterReferenceImpl(
-                (ParameterReferenceContext) this.elementContext,
-                this.macroElement.map(ElementBuilder::getElement),
-                this.sourceCode.build(),
-                this.parameterBuilder.getElement()
-            );
-        }
-    }
+		@Override
+		@Nonnull
+		protected ParameterReferenceImpl buildUnsafe() {
+			return new ParameterReferenceImpl(
+				(ParameterReferenceContext) this.elementContext,
+				this.macroElement.map(ElementBuilder::getElement),
+				this.sourceCode.build(),
+				this.parameterBuilder.getElement()
+			);
+		}
+	}
 }

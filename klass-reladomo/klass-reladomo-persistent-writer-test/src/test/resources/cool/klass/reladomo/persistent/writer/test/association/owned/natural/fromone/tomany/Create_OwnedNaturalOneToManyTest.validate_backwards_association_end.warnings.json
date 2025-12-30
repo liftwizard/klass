@@ -1,4 +1,4 @@
 [
-  "Warning at OwnedNaturalOneToManySource.targets[0]. Didn't expect to receive value for opposite association end 'OwnedNaturalOneToManyTarget.source: OwnedNaturalOneToManySource[1..1]' but value was object: {\"key\":\"key\",\"value\":\"value\"}.",
-  "Warning at OwnedNaturalOneToManySource.targets[1]. Didn't expect to receive value for opposite association end 'OwnedNaturalOneToManyTarget.source: OwnedNaturalOneToManySource[1..1]' but value was object: {\"key\":\"key\",\"value\":\"value\"}."
+	"Warning at OwnedNaturalOneToManySource.targets[0]. Didn't expect to receive value for opposite association end 'OwnedNaturalOneToManyTarget.source: OwnedNaturalOneToManySource[1..1]' but value was object: {\"key\":\"key\",\"value\":\"value\"}.",
+	"Warning at OwnedNaturalOneToManySource.targets[1]. Didn't expect to receive value for opposite association end 'OwnedNaturalOneToManyTarget.source: OwnedNaturalOneToManySource[1..1]' but value was object: {\"key\":\"key\",\"value\":\"value\"}."
 ]

@@ -55,217 +55,217 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 
 public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
-    @Nonnull
-    private final CompilerState compilerState;
+	@Nonnull
+	private final CompilerState compilerState;
 
-    @Nonnull
-    private final IAntlrElement criteriaOwner;
+	@Nonnull
+	private final IAntlrElement criteriaOwner;
 
-    public CriteriaVisitor(@Nonnull CompilerState compilerState, @Nonnull IAntlrElement criteriaOwner) {
-        this.compilerState = Objects.requireNonNull(compilerState);
-        this.criteriaOwner = Objects.requireNonNull(criteriaOwner);
-    }
+	public CriteriaVisitor(@Nonnull CompilerState compilerState, @Nonnull IAntlrElement criteriaOwner) {
+		this.compilerState = Objects.requireNonNull(compilerState);
+		this.criteriaOwner = Objects.requireNonNull(criteriaOwner);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrCriteria visitCriteriaEdgePoint(@Nonnull CriteriaEdgePointContext ctx) {
-        EdgePointAntlrCriteria edgePointAntlrCriteria = new EdgePointAntlrCriteria(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.criteriaOwner
-        );
+	@Nonnull
+	@Override
+	public AntlrCriteria visitCriteriaEdgePoint(@Nonnull CriteriaEdgePointContext ctx) {
+		EdgePointAntlrCriteria edgePointAntlrCriteria = new EdgePointAntlrCriteria(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.criteriaOwner
+		);
 
-        KlassVisitor<AntlrExpressionValue> expressionValueVisitor = this.getExpressionValueVisitor(
-            edgePointAntlrCriteria
-        );
-        AntlrMemberReferencePath memberExpressionValue =
-            (AntlrMemberReferencePath) expressionValueVisitor.visitExpressionMemberReference(
-                ctx.expressionMemberReference()
-            );
-        edgePointAntlrCriteria.setMemberExpressionValue(memberExpressionValue);
-        return edgePointAntlrCriteria;
-    }
+		KlassVisitor<AntlrExpressionValue> expressionValueVisitor = this.getExpressionValueVisitor(
+			edgePointAntlrCriteria
+		);
+		AntlrMemberReferencePath memberExpressionValue =
+			(AntlrMemberReferencePath) expressionValueVisitor.visitExpressionMemberReference(
+				ctx.expressionMemberReference()
+			);
+		edgePointAntlrCriteria.setMemberExpressionValue(memberExpressionValue);
+		return edgePointAntlrCriteria;
+	}
 
-    @Nonnull
-    @Override
-    public AntlrCriteria visitCriteriaExpressionAnd(@Nonnull CriteriaExpressionAndContext ctx) {
-        AntlrAndCriteria andCriteria = new AntlrAndCriteria(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.criteriaOwner
-        );
+	@Nonnull
+	@Override
+	public AntlrCriteria visitCriteriaExpressionAnd(@Nonnull CriteriaExpressionAndContext ctx) {
+		AntlrAndCriteria andCriteria = new AntlrAndCriteria(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.criteriaOwner
+		);
 
-        KlassVisitor<AntlrCriteria> criteriaVisitor = new CriteriaVisitor(this.compilerState, andCriteria);
+		KlassVisitor<AntlrCriteria> criteriaVisitor = new CriteriaVisitor(this.compilerState, andCriteria);
 
-        AntlrCriteria left = criteriaVisitor.visit(ctx.left);
-        AntlrCriteria right = criteriaVisitor.visit(ctx.right);
+		AntlrCriteria left = criteriaVisitor.visit(ctx.left);
+		AntlrCriteria right = criteriaVisitor.visit(ctx.right);
 
-        andCriteria.setLeft(left);
-        andCriteria.setRight(right);
+		andCriteria.setLeft(left);
+		andCriteria.setRight(right);
 
-        return andCriteria;
-    }
+		return andCriteria;
+	}
 
-    @Nonnull
-    @Override
-    public AntlrCriteria visitCriteriaNative(CriteriaNativeContext ctx) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitCriteriaNative() not implemented yet"
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrCriteria visitCriteriaNative(CriteriaNativeContext ctx) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitCriteriaNative() not implemented yet"
+		);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrCriteria visitCriteriaExpressionGroup(@Nonnull CriteriaExpressionGroupContext ctx) {
-        CriteriaExpressionContext childContext = ctx.criteriaExpression();
-        return childContext.accept(this);
-    }
+	@Nonnull
+	@Override
+	public AntlrCriteria visitCriteriaExpressionGroup(@Nonnull CriteriaExpressionGroupContext ctx) {
+		CriteriaExpressionContext childContext = ctx.criteriaExpression();
+		return childContext.accept(this);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrCriteria visitCriteriaAll(@Nonnull CriteriaAllContext ctx) {
-        return new AllAntlrCriteria(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.criteriaOwner
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrCriteria visitCriteriaAll(@Nonnull CriteriaAllContext ctx) {
+		return new AllAntlrCriteria(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.criteriaOwner
+		);
+	}
 
-    @Nonnull
-    @Override
-    public OperatorAntlrCriteria visitCriteriaOperator(@Nonnull CriteriaOperatorContext ctx) {
-        KlassVisitor<AntlrOperator> operatorVisitor = new OperatorVisitor(this.compilerState);
-        AntlrOperator operator = operatorVisitor.visitOperator(ctx.operator());
+	@Nonnull
+	@Override
+	public OperatorAntlrCriteria visitCriteriaOperator(@Nonnull CriteriaOperatorContext ctx) {
+		KlassVisitor<AntlrOperator> operatorVisitor = new OperatorVisitor(this.compilerState);
+		AntlrOperator operator = operatorVisitor.visitOperator(ctx.operator());
 
-        OperatorAntlrCriteria operatorAntlrCriteria = new OperatorAntlrCriteria(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.criteriaOwner,
-            operator
-        );
+		OperatorAntlrCriteria operatorAntlrCriteria = new OperatorAntlrCriteria(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.criteriaOwner,
+			operator
+		);
 
-        // TODO: This is probably backwards
-        operator.setOwningOperatorAntlrCriteria(operatorAntlrCriteria);
+		// TODO: This is probably backwards
+		operator.setOwningOperatorAntlrCriteria(operatorAntlrCriteria);
 
-        KlassVisitor<AntlrExpressionValue> expressionValueVisitor = this.getExpressionValueVisitor(
-            operatorAntlrCriteria
-        );
+		KlassVisitor<AntlrExpressionValue> expressionValueVisitor = this.getExpressionValueVisitor(
+			operatorAntlrCriteria
+		);
 
-        AntlrExpressionValue sourceValue = expressionValueVisitor.visitExpressionValue(ctx.source);
-        AntlrExpressionValue targetValue = expressionValueVisitor.visitExpressionValue(ctx.target);
+		AntlrExpressionValue sourceValue = expressionValueVisitor.visitExpressionValue(ctx.source);
+		AntlrExpressionValue targetValue = expressionValueVisitor.visitExpressionValue(ctx.target);
 
-        operatorAntlrCriteria.setSourceValue(sourceValue);
-        operatorAntlrCriteria.setTargetValue(targetValue);
+		operatorAntlrCriteria.setSourceValue(sourceValue);
+		operatorAntlrCriteria.setTargetValue(targetValue);
 
-        return operatorAntlrCriteria;
-    }
+		return operatorAntlrCriteria;
+	}
 
-    @Nonnull
-    @Override
-    public AntlrCriteria visitCriteriaExpressionOr(@Nonnull CriteriaExpressionOrContext ctx) {
-        AntlrOrCriteria orCriteria = new AntlrOrCriteria(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.criteriaOwner
-        );
+	@Nonnull
+	@Override
+	public AntlrCriteria visitCriteriaExpressionOr(@Nonnull CriteriaExpressionOrContext ctx) {
+		AntlrOrCriteria orCriteria = new AntlrOrCriteria(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.criteriaOwner
+		);
 
-        KlassVisitor<AntlrCriteria> criteriaVisitor = new CriteriaVisitor(this.compilerState, orCriteria);
+		KlassVisitor<AntlrCriteria> criteriaVisitor = new CriteriaVisitor(this.compilerState, orCriteria);
 
-        AntlrCriteria left = criteriaVisitor.visit(ctx.left);
-        AntlrCriteria right = criteriaVisitor.visit(ctx.right);
+		AntlrCriteria left = criteriaVisitor.visit(ctx.left);
+		AntlrCriteria right = criteriaVisitor.visit(ctx.right);
 
-        orCriteria.setLeft(left);
-        orCriteria.setRight(right);
+		orCriteria.setLeft(left);
+		orCriteria.setRight(right);
 
-        return orCriteria;
-    }
+		return orCriteria;
+	}
 
-    @Nonnull
-    @Override
-    public AntlrCriteria visitLiteralList(LiteralListContext ctx) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitLiteralList() not implemented yet"
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrCriteria visitLiteralList(LiteralListContext ctx) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitLiteralList() not implemented yet"
+		);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrCriteria visitNativeLiteral(NativeLiteralContext ctx) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitNativeLiteral() not implemented yet"
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrCriteria visitNativeLiteral(NativeLiteralContext ctx) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitNativeLiteral() not implemented yet"
+		);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrCriteria visitEqualityOperator(EqualityOperatorContext ctx) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitEqualityOperator() not implemented yet"
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrCriteria visitEqualityOperator(EqualityOperatorContext ctx) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitEqualityOperator() not implemented yet"
+		);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrCriteria visitInequalityOperator(InequalityOperatorContext ctx) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitInequalityOperator() not implemented yet"
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrCriteria visitInequalityOperator(InequalityOperatorContext ctx) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitInequalityOperator() not implemented yet"
+		);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrCriteria visitInOperator(InOperatorContext ctx) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitInOperator() not implemented yet"
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrCriteria visitInOperator(InOperatorContext ctx) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitInOperator() not implemented yet"
+		);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrCriteria visitStringOperator(StringOperatorContext ctx) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitStringOperator() not implemented yet"
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrCriteria visitStringOperator(StringOperatorContext ctx) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitStringOperator() not implemented yet"
+		);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrCriteria visitParameterReference(ParameterReferenceContext ctx) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitParameterReference() not implemented yet"
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrCriteria visitParameterReference(ParameterReferenceContext ctx) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitParameterReference() not implemented yet"
+		);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrCriteria visitTypeMemberReferencePath(TypeMemberReferencePathContext ctx) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitTypeMemberReferencePath() not implemented yet"
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrCriteria visitTypeMemberReferencePath(TypeMemberReferencePathContext ctx) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitTypeMemberReferencePath() not implemented yet"
+		);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrCriteria visitLiteral(LiteralContext ctx) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitLiteral() not implemented yet"
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrCriteria visitLiteral(LiteralContext ctx) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitLiteral() not implemented yet"
+		);
+	}
 
-    @Nonnull
-    private ExpressionValueVisitor getExpressionValueVisitor(IAntlrElement expressionValueOwner) {
-        return new ExpressionValueVisitor(
-            this.compilerState,
-            this.compilerState.getCompilerWalk().getThisReference(),
-            expressionValueOwner
-        );
-    }
+	@Nonnull
+	private ExpressionValueVisitor getExpressionValueVisitor(IAntlrElement expressionValueOwner) {
+		return new ExpressionValueVisitor(
+			this.compilerState,
+			this.compilerState.getCompilerWalk().getThisReference(),
+			expressionValueOwner
+		);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrCriteria visitTerminal(TerminalNode node) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitTerminal() not implemented yet"
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrCriteria visitTerminal(TerminalNode node) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitTerminal() not implemented yet"
+		);
+	}
 }

@@ -24,12 +24,12 @@ import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public interface MemberReferencePath extends ExpressionValue {
-    @Nonnull
-    Klass getKlass();
+	@Nonnull
+	Klass getKlass();
 
-    @Nonnull
-    ImmutableList<AssociationEnd> getAssociationEnds();
+	@Nonnull
+	ImmutableList<AssociationEnd> getAssociationEnds();
 
-    @Nonnull
-    DataTypeProperty getProperty();
+	@Nonnull
+	DataTypeProperty getProperty();
 }

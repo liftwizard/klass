@@ -34,73 +34,73 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public class AntlrLiteralListValue extends AbstractAntlrLiteralValue {
 
-    private ImmutableList<AbstractAntlrLiteralValue> literals;
-    private LiteralListValueBuilder elementBuilder;
+	private ImmutableList<AbstractAntlrLiteralValue> literals;
+	private LiteralListValueBuilder elementBuilder;
 
-    public AntlrLiteralListValue(
-        @Nonnull LiteralListContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        @Nonnull IAntlrElement expressionValueOwner
-    ) {
-        super(elementContext, compilationUnit, expressionValueOwner);
-    }
+	public AntlrLiteralListValue(
+		@Nonnull LiteralListContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		@Nonnull IAntlrElement expressionValueOwner
+	) {
+		super(elementContext, compilationUnit, expressionValueOwner);
+	}
 
-    public void setLiterals(ImmutableList<AbstractAntlrLiteralValue> literals) {
-        if (this.literals != null) {
-            throw new IllegalStateException();
-        }
-        this.literals = Objects.requireNonNull(literals);
-    }
+	public void setLiterals(ImmutableList<AbstractAntlrLiteralValue> literals) {
+		if (this.literals != null) {
+			throw new IllegalStateException();
+		}
+		this.literals = Objects.requireNonNull(literals);
+	}
 
-    @Nonnull
-    @Override
-    public LiteralListValueBuilder build() {
-        if (this.elementBuilder != null) {
-            throw new IllegalStateException();
-        }
-        this.elementBuilder = new LiteralListValueBuilder(
-            (LiteralListContext) this.elementContext,
-            this.getMacroElementBuilder(),
-            this.getSourceCodeBuilder(),
-            this.getInferredType().getTypeGetter()
-        );
+	@Nonnull
+	@Override
+	public LiteralListValueBuilder build() {
+		if (this.elementBuilder != null) {
+			throw new IllegalStateException();
+		}
+		this.elementBuilder = new LiteralListValueBuilder(
+			(LiteralListContext) this.elementContext,
+			this.getMacroElementBuilder(),
+			this.getSourceCodeBuilder(),
+			this.getInferredType().getTypeGetter()
+		);
 
-        ImmutableList<AbstractLiteralValueBuilder<?>> literalValueBuilders = this.literals.<
-            AbstractLiteralValueBuilder<?>
-        >collect(AbstractAntlrLiteralValue::build).toImmutable();
-        this.elementBuilder.setLiteralValueBuilders(literalValueBuilders);
+		ImmutableList<AbstractLiteralValueBuilder<?>> literalValueBuilders = this.literals.<
+			AbstractLiteralValueBuilder<?>
+		>collect(AbstractAntlrLiteralValue::build).toImmutable();
+		this.elementBuilder.setLiteralValueBuilders(literalValueBuilders);
 
-        return this.elementBuilder;
-    }
+		return this.elementBuilder;
+	}
 
-    @Nonnull
-    @Override
-    public LiteralListValueBuilder getElementBuilder() {
-        return Objects.requireNonNull(this.elementBuilder);
-    }
+	@Nonnull
+	@Override
+	public LiteralListValueBuilder getElementBuilder() {
+		return Objects.requireNonNull(this.elementBuilder);
+	}
 
-    @Override
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        if (this.getPossibleTypes().isEmpty()) {
-            // TODO: Cover this with a test
+	@Override
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		if (this.getPossibleTypes().isEmpty()) {
+			// TODO: Cover this with a test
 
-            compilerAnnotationHolder.add("ERR_LIT_LST", "Literal list with heterogeneous values.", this);
-        }
-    }
+			compilerAnnotationHolder.add("ERR_LIT_LST", "Literal list with heterogeneous values.", this);
+		}
+	}
 
-    @Nonnull
-    @Override
-    public ImmutableList<AntlrType> getPossibleTypes() {
-        return this.literals.flatCollect(AntlrExpressionValue::getPossibleTypes)
-            .toBag()
-            .selectByOccurrences((occurrences) -> occurrences == this.literals.size())
-            .toList()
-            .distinct()
-            .toImmutable();
-    }
+	@Nonnull
+	@Override
+	public ImmutableList<AntlrType> getPossibleTypes() {
+		return this.literals.flatCollect(AntlrExpressionValue::getPossibleTypes)
+			.toBag()
+			.selectByOccurrences((occurrences) -> occurrences == this.literals.size())
+			.toList()
+			.distinct()
+			.toImmutable();
+	}
 
-    @Override
-    public void visit(AntlrExpressionValueVisitor visitor) {
-        visitor.visitLiteralList(this);
-    }
+	@Override
+	public void visit(AntlrExpressionValueVisitor visitor) {
+		visitor.visitLiteralList(this);
+	}
 }

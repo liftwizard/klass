@@ -25,43 +25,43 @@ import cool.klass.model.meta.domain.api.service.ServiceGroup;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public interface DomainModel {
-    Optional<Klass> getUserClass();
+	Optional<Klass> getUserClass();
 
-    @Nonnull
-    ImmutableList<TopLevelElement> getTopLevelElements();
+	@Nonnull
+	ImmutableList<TopLevelElement> getTopLevelElements();
 
-    @Nonnull
-    ImmutableList<Enumeration> getEnumerations();
+	@Nonnull
+	ImmutableList<Enumeration> getEnumerations();
 
-    @Nonnull
-    ImmutableList<Classifier> getClassifiers();
+	@Nonnull
+	ImmutableList<Classifier> getClassifiers();
 
-    @Nonnull
-    ImmutableList<Interface> getInterfaces();
+	@Nonnull
+	ImmutableList<Interface> getInterfaces();
 
-    @Nonnull
-    ImmutableList<Klass> getClasses();
+	@Nonnull
+	ImmutableList<Klass> getClasses();
 
-    @Nonnull
-    ImmutableList<Association> getAssociations();
+	@Nonnull
+	ImmutableList<Association> getAssociations();
 
-    @Nonnull
-    ImmutableList<Projection> getProjections();
+	@Nonnull
+	ImmutableList<Projection> getProjections();
 
-    @Nonnull
-    ImmutableList<ServiceGroup> getServiceGroups();
+	@Nonnull
+	ImmutableList<ServiceGroup> getServiceGroups();
 
-    TopLevelElement getTopLevelElementByName(String topLevelElementName);
+	TopLevelElement getTopLevelElementByName(String topLevelElementName);
 
-    Enumeration getEnumerationByName(String name);
+	Enumeration getEnumerationByName(String name);
 
-    Classifier getClassifierByName(String name);
+	Classifier getClassifierByName(String name);
 
-    Interface getInterfaceByName(String name);
+	Interface getInterfaceByName(String name);
 
-    Klass getClassByName(String name);
+	Klass getClassByName(String name);
 
-    Association getAssociationByName(String name);
+	Association getAssociationByName(String name);
 
-    Projection getProjectionByName(String name);
+	Projection getProjectionByName(String name);
 }

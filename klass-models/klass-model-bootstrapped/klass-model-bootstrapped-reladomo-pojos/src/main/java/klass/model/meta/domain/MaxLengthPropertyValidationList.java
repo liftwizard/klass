@@ -22,17 +22,17 @@ import com.gs.fw.finder.Operation;
 
 public class MaxLengthPropertyValidationList extends MaxLengthPropertyValidationListAbstract {
 
-    public MaxLengthPropertyValidationList() {}
+	public MaxLengthPropertyValidationList() {}
 
-    public MaxLengthPropertyValidationList(int initialSize) {
-        super(initialSize);
-    }
+	public MaxLengthPropertyValidationList(int initialSize) {
+		super(initialSize);
+	}
 
-    public MaxLengthPropertyValidationList(Collection c) {
-        super(c);
-    }
+	public MaxLengthPropertyValidationList(Collection c) {
+		super(c);
+	}
 
-    public MaxLengthPropertyValidationList(Operation operation) {
-        super(operation);
-    }
+	public MaxLengthPropertyValidationList(Operation operation) {
+		super(operation);
+	}
 }

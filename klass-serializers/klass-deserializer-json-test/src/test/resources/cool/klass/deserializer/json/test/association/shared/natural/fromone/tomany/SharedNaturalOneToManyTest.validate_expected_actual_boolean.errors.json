@@ -1,8 +1,8 @@
 [
-  "Error at SharedNaturalOneToManySource.key. Expected property with type 'SharedNaturalOneToManySource.key: String' but got 'true' with type 'boolean'.",
-  "Error at SharedNaturalOneToManySource.value. Expected property with type 'SharedNaturalOneToManySource.value: String' but got 'true' with type 'boolean'.",
-  "Error at SharedNaturalOneToManySource.targets[0].key. Expected property with type 'SharedNaturalOneToManyTarget.key: String' but got 'true' with type 'boolean'.",
-  "Error at SharedNaturalOneToManySource.targets[0].sourceKey. Expected property with type 'SharedNaturalOneToManyTarget.sourceKey: String' but got 'true' with type 'boolean'.",
-  "Error at SharedNaturalOneToManySource.targets[0].value. Expected property with type 'SharedNaturalOneToManyTarget.value: String' but got 'true' with type 'boolean'.",
-  "Error at SharedNaturalOneToManySource.targets[0].sourceKey. Didn't expect to receive value for foreign key property 'SharedNaturalOneToManyTarget.sourceKey: String' but value was boolean: true."
+	"Error at SharedNaturalOneToManySource.key. Expected property with type 'SharedNaturalOneToManySource.key: String' but got 'true' with type 'boolean'.",
+	"Error at SharedNaturalOneToManySource.value. Expected property with type 'SharedNaturalOneToManySource.value: String' but got 'true' with type 'boolean'.",
+	"Error at SharedNaturalOneToManySource.targets[0].key. Expected property with type 'SharedNaturalOneToManyTarget.key: String' but got 'true' with type 'boolean'.",
+	"Error at SharedNaturalOneToManySource.targets[0].sourceKey. Expected property with type 'SharedNaturalOneToManyTarget.sourceKey: String' but got 'true' with type 'boolean'.",
+	"Error at SharedNaturalOneToManySource.targets[0].value. Expected property with type 'SharedNaturalOneToManyTarget.value: String' but got 'true' with type 'boolean'.",
+	"Error at SharedNaturalOneToManySource.targets[0].sourceKey. Didn't expect to receive value for foreign key property 'SharedNaturalOneToManyTarget.sourceKey: String' but value was boolean: true."
 ]

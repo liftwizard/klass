@@ -36,41 +36,41 @@ import io.liftwizard.dropwizard.configuration.uuid.seed.SeedUUIDSupplierFactory;
 @AutoService(DataStoreFactory.class)
 public class ReladomoDataStoreFactory implements DataStoreFactory {
 
-    private @NotNull @Valid UUIDSupplierFactory uuidFactory = new SeedUUIDSupplierFactory();
-    private int retryCount = 1;
+	private @NotNull @Valid UUIDSupplierFactory uuidFactory = new SeedUUIDSupplierFactory();
+	private int retryCount = 1;
 
-    private DataStore dataStore;
+	private DataStore dataStore;
 
-    @Nonnull
-    @Override
-    @JsonProperty("uuid")
-    public UUIDSupplierFactory getUuidFactory() {
-        return this.uuidFactory;
-    }
+	@Nonnull
+	@Override
+	@JsonProperty("uuid")
+	public UUIDSupplierFactory getUuidFactory() {
+		return this.uuidFactory;
+	}
 
-    @JsonProperty("uuid")
-    public void setUuid(@Nonnull UUIDSupplierFactory uuidFactory) {
-        this.uuidFactory = uuidFactory;
-    }
+	@JsonProperty("uuid")
+	public void setUuid(@Nonnull UUIDSupplierFactory uuidFactory) {
+		this.uuidFactory = uuidFactory;
+	}
 
-    @JsonProperty
-    public int getRetryCount() {
-        return this.retryCount;
-    }
+	@JsonProperty
+	public int getRetryCount() {
+		return this.retryCount;
+	}
 
-    @JsonProperty
-    public void setRetryCount(int retryCount) {
-        this.retryCount = retryCount;
-    }
+	@JsonProperty
+	public void setRetryCount(int retryCount) {
+		this.retryCount = retryCount;
+	}
 
-    @Override
-    public DataStore createDataStore() {
-        if (this.dataStore != null) {
-            return this.dataStore;
-        }
+	@Override
+	public DataStore createDataStore() {
+		if (this.dataStore != null) {
+			return this.dataStore;
+		}
 
-        Supplier<UUID> uuidSupplier = this.uuidFactory.createUUIDSupplier();
-        this.dataStore = new ReladomoDataStore(uuidSupplier, this.retryCount);
-        return this.dataStore;
-    }
+		Supplier<UUID> uuidSupplier = this.uuidFactory.createUUIDSupplier();
+		this.dataStore = new ReladomoDataStore(uuidSupplier, this.retryCount);
+		return this.dataStore;
+	}
 }

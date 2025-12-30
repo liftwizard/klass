@@ -44,243 +44,243 @@ import org.eclipse.collections.api.map.OrderedMap;
 
 public class OperatorAntlrCriteria extends AntlrCriteria {
 
-    @Nonnull
-    private final AntlrOperator operator;
+	@Nonnull
+	private final AntlrOperator operator;
 
-    private AntlrExpressionValue sourceValue;
-    private AntlrExpressionValue targetValue;
-    private OperatorCriteriaBuilder elementBuilder;
+	private AntlrExpressionValue sourceValue;
+	private AntlrExpressionValue targetValue;
+	private OperatorCriteriaBuilder elementBuilder;
 
-    public OperatorAntlrCriteria(
-        @Nonnull CriteriaOperatorContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        @Nonnull IAntlrElement criteriaOwner,
-        @Nonnull AntlrOperator operator
-    ) {
-        super(elementContext, compilationUnit, criteriaOwner);
-        this.operator = Objects.requireNonNull(operator);
-    }
+	public OperatorAntlrCriteria(
+		@Nonnull CriteriaOperatorContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		@Nonnull IAntlrElement criteriaOwner,
+		@Nonnull AntlrOperator operator
+	) {
+		super(elementContext, compilationUnit, criteriaOwner);
+		this.operator = Objects.requireNonNull(operator);
+	}
 
-    @Nonnull
-    @Override
-    public CriteriaOperatorContext getElementContext() {
-        return (CriteriaOperatorContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public CriteriaOperatorContext getElementContext() {
+		return (CriteriaOperatorContext) super.getElementContext();
+	}
 
-    @Nullable
-    public AntlrExpressionValue getSourceValue() {
-        return Objects.requireNonNull(this.sourceValue);
-    }
+	@Nullable
+	public AntlrExpressionValue getSourceValue() {
+		return Objects.requireNonNull(this.sourceValue);
+	}
 
-    public void setSourceValue(@Nonnull AntlrExpressionValue sourceValue) {
-        if (this.sourceValue != null) {
-            throw new IllegalArgumentException(this.sourceValue.toString());
-        }
-        this.sourceValue = Objects.requireNonNull(sourceValue);
-    }
+	public void setSourceValue(@Nonnull AntlrExpressionValue sourceValue) {
+		if (this.sourceValue != null) {
+			throw new IllegalArgumentException(this.sourceValue.toString());
+		}
+		this.sourceValue = Objects.requireNonNull(sourceValue);
+	}
 
-    @Nullable
-    public AntlrExpressionValue getTargetValue() {
-        return Objects.requireNonNull(this.targetValue);
-    }
+	@Nullable
+	public AntlrExpressionValue getTargetValue() {
+		return Objects.requireNonNull(this.targetValue);
+	}
 
-    public void setTargetValue(@Nonnull AntlrExpressionValue targetValue) {
-        if (this.targetValue != null) {
-            throw new IllegalArgumentException(this.targetValue.toString());
-        }
-        this.targetValue = Objects.requireNonNull(targetValue);
-    }
+	public void setTargetValue(@Nonnull AntlrExpressionValue targetValue) {
+		if (this.targetValue != null) {
+			throw new IllegalArgumentException(this.targetValue.toString());
+		}
+		this.targetValue = Objects.requireNonNull(targetValue);
+	}
 
-    @Nonnull
-    @Override
-    public OperatorCriteriaBuilder build() {
-        if (this.elementBuilder != null) {
-            throw new IllegalStateException("Element builder already set: " + this.elementBuilder);
-        }
-        // TODO: Refactor to build the parent before the children
-        this.elementBuilder = new OperatorCriteriaBuilder(
-            (CriteriaOperatorContext) this.elementContext,
-            this.getMacroElementBuilder(),
-            this.getSourceCodeBuilder(),
-            this.operator.build(),
-            this.sourceValue.build(),
-            this.targetValue.build()
-        );
-        return this.elementBuilder;
-    }
+	@Nonnull
+	@Override
+	public OperatorCriteriaBuilder build() {
+		if (this.elementBuilder != null) {
+			throw new IllegalStateException("Element builder already set: " + this.elementBuilder);
+		}
+		// TODO: Refactor to build the parent before the children
+		this.elementBuilder = new OperatorCriteriaBuilder(
+			(CriteriaOperatorContext) this.elementContext,
+			this.getMacroElementBuilder(),
+			this.getSourceCodeBuilder(),
+			this.operator.build(),
+			this.sourceValue.build(),
+			this.targetValue.build()
+		);
+		return this.elementBuilder;
+	}
 
-    @Nonnull
-    @Override
-    public OperatorCriteriaBuilder getElementBuilder() {
-        return Objects.requireNonNull(this.elementBuilder);
-    }
+	@Nonnull
+	@Override
+	public OperatorCriteriaBuilder getElementBuilder() {
+		return Objects.requireNonNull(this.elementBuilder);
+	}
 
-    @Override
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        this.sourceValue.reportErrors(compilerAnnotationHolder);
-        this.targetValue.reportErrors(compilerAnnotationHolder);
-        ListIterable<AntlrType> sourceTypes = this.sourceValue.getPossibleTypes();
-        ListIterable<AntlrType> targetTypes = this.targetValue.getPossibleTypes();
-        this.operator.checkTypes(compilerAnnotationHolder, sourceTypes, targetTypes);
-    }
+	@Override
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		this.sourceValue.reportErrors(compilerAnnotationHolder);
+		this.targetValue.reportErrors(compilerAnnotationHolder);
+		ListIterable<AntlrType> sourceTypes = this.sourceValue.getPossibleTypes();
+		ListIterable<AntlrType> targetTypes = this.targetValue.getPossibleTypes();
+		this.operator.checkTypes(compilerAnnotationHolder, sourceTypes, targetTypes);
+	}
 
-    @Override
-    public void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName) {
-        this.sourceValue.resolveServiceVariables(formalParametersByName);
-        this.targetValue.resolveServiceVariables(formalParametersByName);
-    }
+	@Override
+	public void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName) {
+		this.sourceValue.resolveServiceVariables(formalParametersByName);
+		this.targetValue.resolveServiceVariables(formalParametersByName);
+	}
 
-    @Override
-    public void resolveTypes() {
-        ImmutableList<AntlrType> sourcePossibleTypes = this.sourceValue.getPossibleTypes();
-        ImmutableList<AntlrType> targetPossibleTypes = this.targetValue.getPossibleTypes();
+	@Override
+	public void resolveTypes() {
+		ImmutableList<AntlrType> sourcePossibleTypes = this.sourceValue.getPossibleTypes();
+		ImmutableList<AntlrType> targetPossibleTypes = this.targetValue.getPossibleTypes();
 
-        if (this.sourceValue instanceof AbstractAntlrLiteralValue literalValue) {
-            if (targetPossibleTypes.size() != 1) {
-                return;
-            }
-            literalValue.setInferredType(targetPossibleTypes.getOnly());
-        }
-        if (this.targetValue instanceof AbstractAntlrLiteralValue literalValue) {
-            if (sourcePossibleTypes.size() != 1) {
-                return;
-            }
-            literalValue.setInferredType(sourcePossibleTypes.getOnly());
-        }
-    }
+		if (this.sourceValue instanceof AbstractAntlrLiteralValue literalValue) {
+			if (targetPossibleTypes.size() != 1) {
+				return;
+			}
+			literalValue.setInferredType(targetPossibleTypes.getOnly());
+		}
+		if (this.targetValue instanceof AbstractAntlrLiteralValue literalValue) {
+			if (sourcePossibleTypes.size() != 1) {
+				return;
+			}
+			literalValue.setInferredType(sourcePossibleTypes.getOnly());
+		}
+	}
 
-    @Override
-    public void addForeignKeys() {
-        AntlrAssociation association = this.getSurroundingElement(AntlrAssociation.class).get();
+	@Override
+	public void addForeignKeys() {
+		AntlrAssociation association = this.getSurroundingElement(AntlrAssociation.class).get();
 
-        AntlrAssociationEnd sourceEnd = association.getSourceEnd();
-        AntlrAssociationEnd targetEnd = association.getTargetEnd();
+		AntlrAssociationEnd sourceEnd = association.getSourceEnd();
+		AntlrAssociationEnd targetEnd = association.getTargetEnd();
 
-        AntlrThisMemberReferencePath thisMemberReferencePath = this.getThisMemberReferencePath();
-        AntlrTypeMemberReferencePath typeMemberReferencePath = this.getTypeMemberReferencePath();
+		AntlrThisMemberReferencePath thisMemberReferencePath = this.getThisMemberReferencePath();
+		AntlrTypeMemberReferencePath typeMemberReferencePath = this.getTypeMemberReferencePath();
 
-        AntlrDataTypeProperty<?> thisDataTypeProperty = thisMemberReferencePath.getDataTypeProperty();
-        AntlrDataTypeProperty<?> typeDataTypeProperty = typeMemberReferencePath.getDataTypeProperty();
+		AntlrDataTypeProperty<?> thisDataTypeProperty = thisMemberReferencePath.getDataTypeProperty();
+		AntlrDataTypeProperty<?> typeDataTypeProperty = typeMemberReferencePath.getDataTypeProperty();
 
-        if (sourceEnd.isToMany() && targetEnd.isToMany()) {
-            throw new AssertionError("TODO: Support many-to-many associations");
-        }
+		if (sourceEnd.isToMany() && targetEnd.isToMany()) {
+			throw new AssertionError("TODO: Support many-to-many associations");
+		}
 
-        AntlrAssociationEnd endWithForeignKeys = this.getEndWithForeignKeys(
-            association,
-            thisDataTypeProperty,
-            typeDataTypeProperty
-        );
+		AntlrAssociationEnd endWithForeignKeys = this.getEndWithForeignKeys(
+			association,
+			thisDataTypeProperty,
+			typeDataTypeProperty
+		);
 
-        if (endWithForeignKeys == null) {
-            return;
-        }
+		if (endWithForeignKeys == null) {
+			return;
+		}
 
-        AntlrClass typeWithForeignKeys = endWithForeignKeys.getOwningClassifier();
-        if (typeWithForeignKeys == AntlrClass.NOT_FOUND || typeWithForeignKeys == AntlrClass.AMBIGUOUS) {
-            return;
-        }
+		AntlrClass typeWithForeignKeys = endWithForeignKeys.getOwningClassifier();
+		if (typeWithForeignKeys == AntlrClass.NOT_FOUND || typeWithForeignKeys == AntlrClass.AMBIGUOUS) {
+			return;
+		}
 
-        if (!endWithForeignKeys.isToOne()) {
-            throw new AssertionError();
-        }
+		if (!endWithForeignKeys.isToOne()) {
+			throw new AssertionError();
+		}
 
-        boolean isTargetEnd = endWithForeignKeys.isTargetEnd();
+		boolean isTargetEnd = endWithForeignKeys.isTargetEnd();
 
-        AntlrDataTypeProperty<?> foreignKeyProperty = isTargetEnd ? thisDataTypeProperty : typeDataTypeProperty;
-        AntlrDataTypeProperty<?> keyProperty = isTargetEnd ? typeDataTypeProperty : thisDataTypeProperty;
-        if (foreignKeyProperty.isKey() && !keyProperty.isKey()) {
-            // This can happen for non-key but unique properties
-            // TODO: Implement unique properties, and assert that the property is EITHER key or unique
-            // throw new AssertionError(foreignKeyProperty);
-        }
+		AntlrDataTypeProperty<?> foreignKeyProperty = isTargetEnd ? thisDataTypeProperty : typeDataTypeProperty;
+		AntlrDataTypeProperty<?> keyProperty = isTargetEnd ? typeDataTypeProperty : thisDataTypeProperty;
+		if (foreignKeyProperty.isKey() && !keyProperty.isKey()) {
+			// This can happen for non-key but unique properties
+			// TODO: Implement unique properties, and assert that the property is EITHER key or unique
+			// throw new AssertionError(foreignKeyProperty);
+		}
 
-        endWithForeignKeys.addForeignKeyPropertyMatchingProperty(foreignKeyProperty, keyProperty);
-    }
+		endWithForeignKeys.addForeignKeyPropertyMatchingProperty(foreignKeyProperty, keyProperty);
+	}
 
-    @Override
-    public void visit(AntlrCriteriaVisitor visitor) {
-        visitor.visitOperator(this);
-    }
+	@Override
+	public void visit(AntlrCriteriaVisitor visitor) {
+		visitor.visitOperator(this);
+	}
 
-    @Nullable
-    private AntlrAssociationEnd getEndWithForeignKeys(
-        @Nonnull AntlrAssociation association,
-        @Nonnull AntlrDataTypeProperty<?> thisDataTypeProperty,
-        @Nonnull AntlrDataTypeProperty<?> typeDataTypeProperty
-    ) {
-        AntlrAssociationEnd sourceEnd = association.getSourceEnd();
-        AntlrAssociationEnd targetEnd = association.getTargetEnd();
+	@Nullable
+	private AntlrAssociationEnd getEndWithForeignKeys(
+		@Nonnull AntlrAssociation association,
+		@Nonnull AntlrDataTypeProperty<?> thisDataTypeProperty,
+		@Nonnull AntlrDataTypeProperty<?> typeDataTypeProperty
+	) {
+		AntlrAssociationEnd sourceEnd = association.getSourceEnd();
+		AntlrAssociationEnd targetEnd = association.getTargetEnd();
 
-        if (targetEnd.isToMany()) {
-            return sourceEnd;
-        }
+		if (targetEnd.isToMany()) {
+			return sourceEnd;
+		}
 
-        if (sourceEnd.isToMany()) {
-            return targetEnd;
-        }
+		if (sourceEnd.isToMany()) {
+			return targetEnd;
+		}
 
-        if (sourceEnd.isToOneRequired() && targetEnd.isToOneOptional()) {
-            return sourceEnd;
-        }
+		if (sourceEnd.isToOneRequired() && targetEnd.isToOneOptional()) {
+			return sourceEnd;
+		}
 
-        if (targetEnd.isToOneRequired() && sourceEnd.isToOneOptional()) {
-            return targetEnd;
-        }
+		if (targetEnd.isToOneRequired() && sourceEnd.isToOneOptional()) {
+			return targetEnd;
+		}
 
-        // These happen for associations where the owned type has a generated id key.
-        // association ServiceHasQueryCriteria
-        // {
-        //     queryService                  : Service[0..1];
-        //     queryCriteria                 : Criteria[0..1] owned;
-        //     relationship this.queryCriteriaId == Criteria.id
-        // }
+		// These happen for associations where the owned type has a generated id key.
+		// association ServiceHasQueryCriteria
+		// {
+		//     queryService                  : Service[0..1];
+		//     queryCriteria                 : Criteria[0..1] owned;
+		//     relationship this.queryCriteriaId == Criteria.id
+		// }
 
-        // TODO: These two conditions don't make sense here, because we're only considering one pair of joined properties among several &&-clauses
-        if (thisDataTypeProperty.isKey() && !typeDataTypeProperty.isKey()) {
-            return sourceEnd;
-        }
+		// TODO: These two conditions don't make sense here, because we're only considering one pair of joined properties among several &&-clauses
+		if (thisDataTypeProperty.isKey() && !typeDataTypeProperty.isKey()) {
+			return sourceEnd;
+		}
 
-        // TODO: These two conditions don't make sense here, because we're only considering one pair of joined properties among several &&-clauses
-        if (typeDataTypeProperty.isKey() && !thisDataTypeProperty.isKey()) {
-            return targetEnd;
-        }
+		// TODO: These two conditions don't make sense here, because we're only considering one pair of joined properties among several &&-clauses
+		if (typeDataTypeProperty.isKey() && !thisDataTypeProperty.isKey()) {
+			return targetEnd;
+		}
 
-        if (sourceEnd.isToOne() && targetEnd.isToOne()) {
-            if (sourceEnd.isOwned() && !targetEnd.isOwned()) {
-                return targetEnd;
-            }
-            if (!sourceEnd.isOwned() && targetEnd.isOwned()) {
-                return sourceEnd;
-            }
-        }
+		if (sourceEnd.isToOne() && targetEnd.isToOne()) {
+			if (sourceEnd.isOwned() && !targetEnd.isOwned()) {
+				return targetEnd;
+			}
+			if (!sourceEnd.isOwned() && targetEnd.isOwned()) {
+				return sourceEnd;
+			}
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    @Nonnull
-    private AntlrThisMemberReferencePath getThisMemberReferencePath() {
-        if (this.sourceValue instanceof AntlrThisMemberReferencePath memberReferencePath) {
-            return memberReferencePath;
-        }
+	@Nonnull
+	private AntlrThisMemberReferencePath getThisMemberReferencePath() {
+		if (this.sourceValue instanceof AntlrThisMemberReferencePath memberReferencePath) {
+			return memberReferencePath;
+		}
 
-        if (this.targetValue instanceof AntlrThisMemberReferencePath memberReferencePath) {
-            return memberReferencePath;
-        }
+		if (this.targetValue instanceof AntlrThisMemberReferencePath memberReferencePath) {
+			return memberReferencePath;
+		}
 
-        throw new AssertionError();
-    }
+		throw new AssertionError();
+	}
 
-    @Nonnull
-    private AntlrTypeMemberReferencePath getTypeMemberReferencePath() {
-        if (this.sourceValue instanceof AntlrTypeMemberReferencePath memberReferencePath) {
-            return memberReferencePath;
-        }
+	@Nonnull
+	private AntlrTypeMemberReferencePath getTypeMemberReferencePath() {
+		if (this.sourceValue instanceof AntlrTypeMemberReferencePath memberReferencePath) {
+			return memberReferencePath;
+		}
 
-        if (this.targetValue instanceof AntlrTypeMemberReferencePath memberReferencePath) {
-            return memberReferencePath;
-        }
+		if (this.targetValue instanceof AntlrTypeMemberReferencePath memberReferencePath) {
+			return memberReferencePath;
+		}
 
-        throw new AssertionError();
-    }
+		throw new AssertionError();
+	}
 }

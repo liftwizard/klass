@@ -27,23 +27,23 @@ import cool.klass.model.meta.domain.api.value.literal.StringLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.UserLiteral;
 
 public interface ExpressionValueVisitor {
-    void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue);
+	void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue);
 
-    void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue);
+	void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue);
 
-    void visitParameterReference(@Nonnull ParameterReference parameterReference);
+	void visitParameterReference(@Nonnull ParameterReference parameterReference);
 
-    void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue);
+	void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue);
 
-    void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue);
+	void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue);
 
-    void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue);
+	void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue);
 
-    void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue);
+	void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue);
 
-    void visitLiteralList(@Nonnull LiteralListValue literalListValue);
+	void visitLiteralList(@Nonnull LiteralListValue literalListValue);
 
-    void visitUserLiteral(@Nonnull UserLiteral userLiteral);
+	void visitUserLiteral(@Nonnull UserLiteral userLiteral);
 
-    void visitNullLiteral(@Nonnull NullLiteral nullLiteral);
+	void visitNullLiteral(@Nonnull NullLiteral nullLiteral);
 }

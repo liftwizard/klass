@@ -25,20 +25,20 @@ import cool.klass.model.meta.domain.api.source.property.ReferencePropertyWithSou
 import cool.klass.model.meta.grammar.KlassParser.ProjectionProjectionReferenceContext;
 
 public interface ProjectionProjectionReferenceWithSourceCode
-    extends ProjectionProjectionReference, NamedElementWithSourceCode {
-    @Override
-    ProjectionProjectionReferenceContext getElementContext();
+	extends ProjectionProjectionReference, NamedElementWithSourceCode {
+	@Override
+	ProjectionProjectionReferenceContext getElementContext();
 
-    @Override
-    ProjectionWithSourceCode getProjection();
+	@Override
+	ProjectionWithSourceCode getProjection();
 
-    @Nonnull
-    @Override
-    default ClassifierWithSourceCode getClassifier() {
-        return this.getProjection().getClassifier();
-    }
+	@Nonnull
+	@Override
+	default ClassifierWithSourceCode getClassifier() {
+		return this.getProjection().getClassifier();
+	}
 
-    @Nonnull
-    @Override
-    ReferencePropertyWithSourceCode getProperty();
+	@Nonnull
+	@Override
+	ReferencePropertyWithSourceCode getProperty();
 }

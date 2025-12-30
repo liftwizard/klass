@@ -23,30 +23,30 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public interface Interface extends Classifier {
-    @Override
-    default void visit(TopLevelElementVisitor visitor) {
-        visitor.visitInterface(this);
-    }
+	@Override
+	default void visit(TopLevelElementVisitor visitor) {
+		visitor.visitInterface(this);
+	}
 
-    @Override
-    default boolean isAbstract() {
-        return true;
-    }
+	@Override
+	default boolean isAbstract() {
+		return true;
+	}
 
-    // TODO: Replace with an implementation that preserves order
-    @Override
-    @Nonnull
-    default ImmutableList<Property> getProperties() {
-        return Lists.immutable.<Property>empty().newWithAll(this.getDataTypeProperties());
-    }
+	// TODO: Replace with an implementation that preserves order
+	@Override
+	@Nonnull
+	default ImmutableList<Property> getProperties() {
+		return Lists.immutable.<Property>empty().newWithAll(this.getDataTypeProperties());
+	}
 
-    @Override
-    default ImmutableList<Property> getDeclaredProperties() {
-        return Lists.immutable.<Property>empty().newWithAll(this.getDeclaredDataTypeProperties());
-    }
+	@Override
+	default ImmutableList<Property> getDeclaredProperties() {
+		return Lists.immutable.<Property>empty().newWithAll(this.getDeclaredDataTypeProperties());
+	}
 
-    @Override
-    default boolean isUniquelyOwned() {
-        return false;
-    }
+	@Override
+	default boolean isUniquelyOwned() {
+		return false;
+	}
 }

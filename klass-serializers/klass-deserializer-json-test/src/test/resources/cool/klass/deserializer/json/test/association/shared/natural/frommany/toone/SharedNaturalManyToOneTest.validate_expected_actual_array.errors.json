@@ -1,8 +1,8 @@
 [
-  "Error at SharedNaturalManyToOneSource.key. Expected property with type 'SharedNaturalManyToOneSource.key: String' but got '[]' with type 'array'.",
-  "Error at SharedNaturalManyToOneSource.targetKey. Expected property with type 'SharedNaturalManyToOneSource.targetKey: String' but got '[]' with type 'array'.",
-  "Error at SharedNaturalManyToOneSource.value. Expected property with type 'SharedNaturalManyToOneSource.value: String' but got '[]' with type 'array'.",
-  "Error at SharedNaturalManyToOneSource.target.key. Expected property with type 'SharedNaturalManyToOneTarget.key: String' but got '[]' with type 'array'.",
-  "Error at SharedNaturalManyToOneSource.target.value. Expected property with type 'SharedNaturalManyToOneTarget.value: String' but got '[]' with type 'array'.",
-  "Error at SharedNaturalManyToOneSource.targetKey. Didn't expect to receive value for foreign key property 'SharedNaturalManyToOneSource.targetKey: String' but value was array: []."
+	"Error at SharedNaturalManyToOneSource.key. Expected property with type 'SharedNaturalManyToOneSource.key: String' but got '[]' with type 'array'.",
+	"Error at SharedNaturalManyToOneSource.targetKey. Expected property with type 'SharedNaturalManyToOneSource.targetKey: String' but got '[]' with type 'array'.",
+	"Error at SharedNaturalManyToOneSource.value. Expected property with type 'SharedNaturalManyToOneSource.value: String' but got '[]' with type 'array'.",
+	"Error at SharedNaturalManyToOneSource.target.key. Expected property with type 'SharedNaturalManyToOneTarget.key: String' but got '[]' with type 'array'.",
+	"Error at SharedNaturalManyToOneSource.target.value. Expected property with type 'SharedNaturalManyToOneTarget.value: String' but got '[]' with type 'array'.",
+	"Error at SharedNaturalManyToOneSource.targetKey. Didn't expect to receive value for foreign key property 'SharedNaturalManyToOneSource.targetKey: String' but value was array: []."
 ]

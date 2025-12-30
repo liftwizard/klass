@@ -31,79 +31,79 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-    name = "generate-reladomo-runtime-configuration",
-    defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
-    threadSafe = true,
-    requiresDependencyResolution = ResolutionScope.RUNTIME
+	name = "generate-reladomo-runtime-configuration",
+	defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
+	threadSafe = true,
+	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
 public class GenerateReladomoRuntimeConfigurationMojo extends AbstractGenerateMojo {
 
-    @Parameter(
-        property = "outputDirectory",
-        defaultValue = "${project.build.directory}/generated-test-resources/reladomo-runtime-configuration"
-    )
-    private File outputDirectory;
+	@Parameter(
+		property = "outputDirectory",
+		defaultValue = "${project.build.directory}/generated-test-resources/reladomo-runtime-configuration"
+	)
+	private File outputDirectory;
 
-    @Parameter(property = "outputFilename", required = true, defaultValue = "TestReladomoRuntimeConfiguration.xml")
-    private String outputFilename;
+	@Parameter(property = "outputFilename", required = true, defaultValue = "TestReladomoRuntimeConfiguration.xml")
+	private String outputFilename;
 
-    @Parameter(
-        property = "connectionManagerClassName",
-        required = true,
-        defaultValue = "io.liftwizard.reladomo.connection.manager.holder.ConnectionManagerHolder"
-    )
-    private String connectionManagerClassName;
+	@Parameter(
+		property = "connectionManagerClassName",
+		required = true,
+		defaultValue = "io.liftwizard.reladomo.connection.manager.holder.ConnectionManagerHolder"
+	)
+	private String connectionManagerClassName;
 
-    @Parameter(property = "connectionManagerName")
-    private String connectionManagerName;
+	@Parameter(property = "connectionManagerName")
+	private String connectionManagerName;
 
-    @SuppressWarnings("FieldMayBeFinal")
-    @Parameter(property = "isTest", required = true, defaultValue = "true")
-    private boolean isTest = true;
+	@SuppressWarnings("FieldMayBeFinal")
+	@Parameter(property = "isTest", required = true, defaultValue = "true")
+	private boolean isTest = true;
 
-    @Parameter(property = "rootPackageName", required = true)
-    private String rootPackageName;
+	@Parameter(property = "rootPackageName", required = true)
+	private String rootPackageName;
 
-    @Parameter(property = "cacheType", required = true, defaultValue = "partial")
-    private String cacheType;
+	@Parameter(property = "cacheType", required = true, defaultValue = "partial")
+	private String cacheType;
 
-    @Override
-    protected InputSource getInputSource() {
-        return InputSource.CLASSPATH;
-    }
+	@Override
+	protected InputSource getInputSource() {
+		return InputSource.CLASSPATH;
+	}
 
-    @Override
-    public void execute() throws MojoExecutionException {
-        if (!this.outputDirectory.exists()) {
-            this.outputDirectory.mkdirs();
-        }
+	@Override
+	public void execute() throws MojoExecutionException {
+		if (!this.outputDirectory.exists()) {
+			this.outputDirectory.mkdirs();
+		}
 
-        DomainModel domainModel = this.getDomainModel();
+		DomainModel domainModel = this.getDomainModel();
 
-        Path outputPath = this.outputDirectory.toPath();
-        Path path = outputPath.resolve(this.outputFilename);
-        try {
-            ReladomoRuntimeConfigurationGenerator reladomoRuntimeConfigurationGenerator =
-                new ReladomoRuntimeConfigurationGenerator(
-                    domainModel,
-                    this.connectionManagerClassName,
-                    this.connectionManagerName,
-                    this.rootPackageName,
-                    this.cacheType
-                );
-            reladomoRuntimeConfigurationGenerator.writeRuntimeConfigFile(path);
-        } catch (IOException e) {
-            throw new MojoExecutionException(e.getMessage(), e);
-        }
+		Path outputPath = this.outputDirectory.toPath();
+		Path path = outputPath.resolve(this.outputFilename);
+		try {
+			ReladomoRuntimeConfigurationGenerator reladomoRuntimeConfigurationGenerator =
+				new ReladomoRuntimeConfigurationGenerator(
+					domainModel,
+					this.connectionManagerClassName,
+					this.connectionManagerName,
+					this.rootPackageName,
+					this.cacheType
+				);
+			reladomoRuntimeConfigurationGenerator.writeRuntimeConfigFile(path);
+		} catch (IOException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		}
 
-        Resource resource = new Resource();
-        resource.setDirectory(this.outputDirectory.getAbsolutePath());
-        // TODO: Should be based on the output path
-        resource.setTargetPath("reladomo-runtime-configuration");
-        if (this.isTest) {
-            this.mavenProject.addTestResource(resource);
-        } else {
-            this.mavenProject.addResource(resource);
-        }
-    }
+		Resource resource = new Resource();
+		resource.setDirectory(this.outputDirectory.getAbsolutePath());
+		// TODO: Should be based on the output path
+		resource.setTargetPath("reladomo-runtime-configuration");
+		if (this.isTest) {
+			this.mavenProject.addTestResource(resource);
+		} else {
+			this.mavenProject.addResource(resource);
+		}
+	}
 }

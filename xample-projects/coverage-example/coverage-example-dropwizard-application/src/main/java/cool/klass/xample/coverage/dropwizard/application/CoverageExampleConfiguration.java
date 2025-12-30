@@ -27,34 +27,34 @@ import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactory;
 import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactoryProvider;
 
 public class CoverageExampleConfiguration
-    extends AbstractKlassConfiguration
-    implements GraphQLFactoryProvider, SinglePageRedirectFilterFactoryProvider {
+	extends AbstractKlassConfiguration
+	implements GraphQLFactoryProvider, SinglePageRedirectFilterFactoryProvider {
 
-    @Nonnull
-    private @Valid GraphQLFactory graphQL = new GraphQLFactory();
+	@Nonnull
+	private @Valid GraphQLFactory graphQL = new GraphQLFactory();
 
-    private SinglePageRedirectFilterFactory singlePageRedirectFilterFactory = new SinglePageRedirectFilterFactory();
+	private SinglePageRedirectFilterFactory singlePageRedirectFilterFactory = new SinglePageRedirectFilterFactory();
 
-    @Override
-    @Nonnull
-    @JsonProperty("graphQL")
-    public GraphQLFactory getGraphQLFactory() {
-        return this.graphQL;
-    }
+	@Override
+	@Nonnull
+	@JsonProperty("graphQL")
+	public GraphQLFactory getGraphQLFactory() {
+		return this.graphQL;
+	}
 
-    @JsonProperty("graphQL")
-    public void setGraphQLFactory(@Nonnull GraphQLFactory factory) {
-        this.graphQL = factory;
-    }
+	@JsonProperty("graphQL")
+	public void setGraphQLFactory(@Nonnull GraphQLFactory factory) {
+		this.graphQL = factory;
+	}
 
-    @Override
-    @JsonProperty("singlePageRedirectFilter")
-    public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory() {
-        return this.singlePageRedirectFilterFactory;
-    }
+	@Override
+	@JsonProperty("singlePageRedirectFilter")
+	public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory() {
+		return this.singlePageRedirectFilterFactory;
+	}
 
-    @JsonProperty("singlePageRedirectFilter")
-    public void setSinglePageRedirectFilterFactory(SinglePageRedirectFilterFactory singlePageRedirectFilterFactory) {
-        this.singlePageRedirectFilterFactory = singlePageRedirectFilterFactory;
-    }
+	@JsonProperty("singlePageRedirectFilter")
+	public void setSinglePageRedirectFilterFactory(SinglePageRedirectFilterFactory singlePageRedirectFilterFactory) {
+		this.singlePageRedirectFilterFactory = singlePageRedirectFilterFactory;
+	}
 }

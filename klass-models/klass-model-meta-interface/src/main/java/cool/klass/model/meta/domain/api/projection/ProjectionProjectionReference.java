@@ -22,31 +22,31 @@ import cool.klass.model.meta.domain.api.Classifier;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public interface ProjectionProjectionReference extends ProjectionWithReferenceProperty {
-    Projection getProjection();
+	Projection getProjection();
 
-    @Nonnull
-    @Override
-    default Classifier getClassifier() {
-        return this.getProjection().getClassifier();
-    }
+	@Nonnull
+	@Override
+	default Classifier getClassifier() {
+		return this.getProjection().getClassifier();
+	}
 
-    @Override
-    default ImmutableList<? extends ProjectionChild> getChildren() {
-        return this.getProjection().getChildren();
-    }
+	@Override
+	default ImmutableList<? extends ProjectionChild> getChildren() {
+		return this.getProjection().getChildren();
+	}
 
-    @Override
-    default void visit(@Nonnull ProjectionVisitor visitor) {
-        visitor.visitProjectionProjectionReference(this);
-    }
+	@Override
+	default void visit(@Nonnull ProjectionVisitor visitor) {
+		visitor.visitProjectionProjectionReference(this);
+	}
 
-    @Override
-    default void enter(@Nonnull ProjectionListener listener) {
-        listener.enterProjectionProjectionReference(this);
-    }
+	@Override
+	default void enter(@Nonnull ProjectionListener listener) {
+		listener.enterProjectionProjectionReference(this);
+	}
 
-    @Override
-    default void exit(@Nonnull ProjectionListener listener) {
-        listener.exitProjectionProjectionReference(this);
-    }
+	@Override
+	default void exit(@Nonnull ProjectionListener listener) {
+		listener.exitProjectionProjectionReference(this);
+	}
 }

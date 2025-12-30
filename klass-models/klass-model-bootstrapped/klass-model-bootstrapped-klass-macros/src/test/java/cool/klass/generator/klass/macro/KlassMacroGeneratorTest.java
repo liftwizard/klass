@@ -36,45 +36,45 @@ import static org.junit.jupiter.api.Assertions.fail;
 @ExtendWith(LogMarkerTestExtension.class)
 public class KlassMacroGeneratorTest {
 
-    public static final String FULLY_QUALIFIED_PACKAGE = "klass.model.meta.domain";
+	public static final String FULLY_QUALIFIED_PACKAGE = "klass.model.meta.domain";
 
-    @RegisterExtension
-    final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
+	@RegisterExtension
+	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
-    @Test
-    void smokeTest() {
-        ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
+	@Test
+	void smokeTest() {
+		ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
 
-        var domainModelCompilerLoader = new DomainModelCompilerLoader(
-            klassSourcePackages,
-            Thread.currentThread().getContextClassLoader(),
-            DomainModelCompilerLoader::logCompilerError,
-            ColorSchemeProvider.getByName("dark")
-        );
+		var domainModelCompilerLoader = new DomainModelCompilerLoader(
+			klassSourcePackages,
+			Thread.currentThread().getContextClassLoader(),
+			DomainModelCompilerLoader::logCompilerError,
+			ColorSchemeProvider.getByName("dark")
+		);
 
-        DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
-        ImmutableList<SourceCode> sourceCodesFromMacros = domainModel
-            .getSourceCodes()
-            .select((each) -> each.getMacroSourceCode().isPresent());
-        ImmutableListMultimap<String, SourceCode> sourceCodesByFullPath = sourceCodesFromMacros.groupBy(
-            SourceCode::getFullPathSourceName
-        );
-        sourceCodesByFullPath.forEachKeyMultiValues((fullPath, sourceCodes) -> {
-            if (sourceCodes.size() > 1) {
-                fail("Multiple source codes for " + fullPath);
-            }
-        });
+		DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
+		ImmutableList<SourceCode> sourceCodesFromMacros = domainModel
+			.getSourceCodes()
+			.select((each) -> each.getMacroSourceCode().isPresent());
+		ImmutableListMultimap<String, SourceCode> sourceCodesByFullPath = sourceCodesFromMacros.groupBy(
+			SourceCode::getFullPathSourceName
+		);
+		sourceCodesByFullPath.forEachKeyMultiValues((fullPath, sourceCodes) -> {
+			if (sourceCodes.size() > 1) {
+				fail("Multiple source codes for " + fullPath);
+			}
+		});
 
-        for (SourceCode sourceCode : domainModel.getSourceCodes()) {
-            Optional<SourceCode> macroSourceCode = sourceCode.getMacroSourceCode();
-            if (macroSourceCode.isPresent()) {
-                String fullPathSourceName = sourceCode.getFullPathSourceName();
-                String sourceCodeText = sourceCode.getSourceCodeText();
+		for (SourceCode sourceCode : domainModel.getSourceCodes()) {
+			Optional<SourceCode> macroSourceCode = sourceCode.getMacroSourceCode();
+			if (macroSourceCode.isPresent()) {
+				String fullPathSourceName = sourceCode.getFullPathSourceName();
+				String sourceCodeText = sourceCode.getSourceCodeText();
 
-                String resourceClassPathLocation = fullPathSourceName + ".klass";
+				String resourceClassPathLocation = fullPathSourceName + ".klass";
 
-                this.fileMatchExtension.assertFileContents(resourceClassPathLocation, sourceCodeText);
-            }
-        }
-    }
+				this.fileMatchExtension.assertFileContents(resourceClassPathLocation, sourceCodeText);
+			}
+		}
+	}
 }

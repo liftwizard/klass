@@ -46,41 +46,41 @@ import org.eclipse.collections.api.set.MutableSet;
 
 public class AntlrInterface extends AntlrClassifier {
 
-    // <editor-fold desc="AMBIGUOUS">
-    public static final AntlrInterface AMBIGUOUS = new AntlrInterface(
-        new InterfaceDeclarationContext(AMBIGUOUS_PARENT, -1),
-        AntlrCompilationUnit.AMBIGUOUS,
-        -1,
-        AMBIGUOUS_IDENTIFIER_CONTEXT
-    ) {
-        @Override
-        public void enterDataTypeProperty(@Nonnull AntlrDataTypeProperty<?> antlrDataTypeProperty) {
-            throw new UnsupportedOperationException(
-                this.getClass().getSimpleName() + ".enterDataTypeProperty() not implemented yet"
-            );
-        }
-    };
-    // </editor-fold>
+	// <editor-fold desc="AMBIGUOUS">
+	public static final AntlrInterface AMBIGUOUS = new AntlrInterface(
+		new InterfaceDeclarationContext(AMBIGUOUS_PARENT, -1),
+		AntlrCompilationUnit.AMBIGUOUS,
+		-1,
+		AMBIGUOUS_IDENTIFIER_CONTEXT
+	) {
+		@Override
+		public void enterDataTypeProperty(@Nonnull AntlrDataTypeProperty<?> antlrDataTypeProperty) {
+			throw new UnsupportedOperationException(
+				this.getClass().getSimpleName() + ".enterDataTypeProperty() not implemented yet"
+			);
+		}
+	};
+	// </editor-fold>
 
-    // <editor-fold desc="NOT_FOUND">
-    public static final AntlrInterface NOT_FOUND = new AntlrInterface(
-        new InterfaceDeclarationContext(NOT_FOUND_PARENT, -1),
-        AntlrCompilationUnit.NOT_FOUND,
-        -1,
-        NOT_FOUND_IDENTIFIER_CONTEXT
-    ) {
-        @Override
-        public void enterDataTypeProperty(@Nonnull AntlrDataTypeProperty<?> antlrDataTypeProperty) {
-            throw new UnsupportedOperationException(
-                this.getClass().getSimpleName() + ".enterDataTypeProperty() not implemented yet"
-            );
-        }
-    };
-    // </editor-fold>
+	// <editor-fold desc="NOT_FOUND">
+	public static final AntlrInterface NOT_FOUND = new AntlrInterface(
+		new InterfaceDeclarationContext(NOT_FOUND_PARENT, -1),
+		AntlrCompilationUnit.NOT_FOUND,
+		-1,
+		NOT_FOUND_IDENTIFIER_CONTEXT
+	) {
+		@Override
+		public void enterDataTypeProperty(@Nonnull AntlrDataTypeProperty<?> antlrDataTypeProperty) {
+			throw new UnsupportedOperationException(
+				this.getClass().getSimpleName() + ".enterDataTypeProperty() not implemented yet"
+			);
+		}
+	};
+	// </editor-fold>
 
-    // TODO: Unified list of all members
+	// TODO: Unified list of all members
 
-    /*
+	/*
     private final MutableList<AntlrAssociationEnd>               associationEnds  = Lists.mutable.empty();
     private final MutableOrderedMap<String, AntlrAssociationEnd> associationEndsByName =
             OrderedMapAdapter.adapt(new LinkedHashMap<>());
@@ -92,114 +92,114 @@ public class AntlrInterface extends AntlrClassifier {
             OrderedMapAdapter.adapt(new LinkedHashMap<>());
     */
 
-    private InterfaceBuilder interfaceBuilder;
+	private InterfaceBuilder interfaceBuilder;
 
-    public AntlrInterface(
-        @Nonnull InterfaceDeclarationContext elementContext,
-        @Nonnull AntlrCompilationUnit compilationUnitState,
-        int ordinal,
-        @Nonnull IdentifierContext nameContext
-    ) {
-        super(elementContext, compilationUnitState, ordinal, nameContext);
-    }
+	public AntlrInterface(
+		@Nonnull InterfaceDeclarationContext elementContext,
+		@Nonnull AntlrCompilationUnit compilationUnitState,
+		int ordinal,
+		@Nonnull IdentifierContext nameContext
+	) {
+		super(elementContext, compilationUnitState, ordinal, nameContext);
+	}
 
-    public InterfaceBuilder build1() {
-        if (this.interfaceBuilder != null) {
-            throw new IllegalStateException();
-        }
+	public InterfaceBuilder build1() {
+		if (this.interfaceBuilder != null) {
+			throw new IllegalStateException();
+		}
 
-        this.interfaceBuilder = new InterfaceBuilder(
-            (InterfaceDeclarationContext) this.elementContext,
-            this.getMacroElementBuilder(),
-            this.getSourceCodeBuilder(),
-            this.ordinal,
-            this.getNameContext(),
-            this.getPackageName()
-        );
+		this.interfaceBuilder = new InterfaceBuilder(
+			(InterfaceDeclarationContext) this.elementContext,
+			this.getMacroElementBuilder(),
+			this.getSourceCodeBuilder(),
+			this.ordinal,
+			this.getNameContext(),
+			this.getPackageName()
+		);
 
-        ImmutableList<ModifierBuilder> declaredModifiers = this.declaredModifiers.collect(
-            AntlrModifier::build
-        ).toImmutable();
-        this.interfaceBuilder.setDeclaredModifiers(declaredModifiers);
+		ImmutableList<ModifierBuilder> declaredModifiers = this.declaredModifiers.collect(
+			AntlrModifier::build
+		).toImmutable();
+		this.interfaceBuilder.setDeclaredModifiers(declaredModifiers);
 
-        ImmutableList<DataTypePropertyBuilder<?, ?, ?>> declaredDataTypeProperties = this.declaredDataTypeProperties.<
-            DataTypePropertyBuilder<?, ?, ?>
-        >collect(AntlrDataTypeProperty::build).toImmutable();
+		ImmutableList<DataTypePropertyBuilder<?, ?, ?>> declaredDataTypeProperties = this.declaredDataTypeProperties.<
+			DataTypePropertyBuilder<?, ?, ?>
+		>collect(AntlrDataTypeProperty::build).toImmutable();
 
-        this.interfaceBuilder.setDeclaredDataTypeProperties(declaredDataTypeProperties);
-        return this.interfaceBuilder;
-    }
+		this.interfaceBuilder.setDeclaredDataTypeProperties(declaredDataTypeProperties);
+		return this.interfaceBuilder;
+	}
 
-    @Nonnull
-    @Override
-    public InterfaceBuilder getElementBuilder() {
-        return Objects.requireNonNull(this.interfaceBuilder);
-    }
+	@Nonnull
+	@Override
+	public InterfaceBuilder getElementBuilder() {
+		return Objects.requireNonNull(this.interfaceBuilder);
+	}
 
-    @Override
-    public AntlrReferenceProperty<?> getReferencePropertyByName(@Nonnull String name) {
-        AntlrReferenceProperty<?> declaredProperty = this.declaredReferencePropertiesByName.get(name);
-        if (declaredProperty != null) {
-            return declaredProperty;
-        }
+	@Override
+	public AntlrReferenceProperty<?> getReferencePropertyByName(@Nonnull String name) {
+		AntlrReferenceProperty<?> declaredProperty = this.declaredReferencePropertiesByName.get(name);
+		if (declaredProperty != null) {
+			return declaredProperty;
+		}
 
-        return this.declaredInterfaces.asLazy()
-            .collectWith(AntlrInterface::getReferencePropertyByName, name)
-            .detectIfNone(Objects::nonNull, () -> AntlrReferenceProperty.NOT_FOUND);
-    }
+		return this.declaredInterfaces.asLazy()
+			.collectWith(AntlrInterface::getReferencePropertyByName, name)
+			.detectIfNone(Objects::nonNull, () -> AntlrReferenceProperty.NOT_FOUND);
+	}
 
-    public void build2() {
-        if (this.interfaceBuilder == null) {
-            throw new IllegalStateException();
-        }
+	public void build2() {
+		if (this.interfaceBuilder == null) {
+			throw new IllegalStateException();
+		}
 
-        this.declaredDataTypeProperties.each(AntlrDataTypeProperty::build2);
+		this.declaredDataTypeProperties.each(AntlrDataTypeProperty::build2);
 
-        ImmutableList<AssociationEndSignatureBuilder> declaredAssociationEndSignatures =
-            this.declaredAssociationEndSignatures.collect(AntlrAssociationEndSignature::build).toImmutable();
-        this.interfaceBuilder.setDeclaredAssociationEndSignatures(declaredAssociationEndSignatures);
+		ImmutableList<AssociationEndSignatureBuilder> declaredAssociationEndSignatures =
+			this.declaredAssociationEndSignatures.collect(AntlrAssociationEndSignature::build).toImmutable();
+		this.interfaceBuilder.setDeclaredAssociationEndSignatures(declaredAssociationEndSignatures);
 
-        ImmutableList<ReferencePropertyBuilder<?, ?, ?>> declaredReferenceProperties =
-            this.declaredReferenceProperties.<ReferencePropertyBuilder<?, ?, ?>>collect(
-                AntlrReferenceProperty::getElementBuilder
-            ).toImmutable();
-        this.interfaceBuilder.setDeclaredReferenceProperties(declaredReferenceProperties);
+		ImmutableList<ReferencePropertyBuilder<?, ?, ?>> declaredReferenceProperties =
+			this.declaredReferenceProperties.<ReferencePropertyBuilder<?, ?, ?>>collect(
+				AntlrReferenceProperty::getElementBuilder
+			).toImmutable();
+		this.interfaceBuilder.setDeclaredReferenceProperties(declaredReferenceProperties);
 
-        ImmutableList<PropertyBuilder<?, ?, ?>> declaredProperties = this.declaredProperties.<
-            PropertyBuilder<?, ?, ?>
-        >collect(AntlrProperty::getElementBuilder).toImmutable();
-        this.interfaceBuilder.setDeclaredProperties(declaredProperties);
+		ImmutableList<PropertyBuilder<?, ?, ?>> declaredProperties = this.declaredProperties.<
+			PropertyBuilder<?, ?, ?>
+		>collect(AntlrProperty::getElementBuilder).toImmutable();
+		this.interfaceBuilder.setDeclaredProperties(declaredProperties);
 
-        ImmutableList<InterfaceBuilder> declaredInterfaces = this.declaredInterfaces.collect(
-            AntlrInterface::getElementBuilder
-        ).toImmutable();
-        this.interfaceBuilder.setDeclaredInterfaces(declaredInterfaces);
-    }
+		ImmutableList<InterfaceBuilder> declaredInterfaces = this.declaredInterfaces.collect(
+			AntlrInterface::getElementBuilder
+		).toImmutable();
+		this.interfaceBuilder.setDeclaredInterfaces(declaredInterfaces);
+	}
 
-    // <editor-fold desc="Report Compiler Errors">
-    @Override
-    public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        super.reportNameErrors(compilerAnnotationHolder);
-        this.reportKeywordCollision(compilerAnnotationHolder);
+	// <editor-fold desc="Report Compiler Errors">
+	@Override
+	public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		super.reportNameErrors(compilerAnnotationHolder);
+		this.reportKeywordCollision(compilerAnnotationHolder);
 
-        if (RELADOMO_TYPES.contains(this.getName())) {
-            String message = String.format("'%s' is a Reladomo type.", this.getName());
-            compilerAnnotationHolder.add("ERR_REL_NME", message, this);
-        }
+		if (RELADOMO_TYPES.contains(this.getName())) {
+			String message = String.format("'%s' is a Reladomo type.", this.getName());
+			compilerAnnotationHolder.add("ERR_REL_NME", message, this);
+		}
 
-        this.declaredDataTypeProperties.forEachWith(AntlrNamedElement::reportNameErrors, compilerAnnotationHolder);
-    }
+		this.declaredDataTypeProperties.forEachWith(AntlrNamedElement::reportNameErrors, compilerAnnotationHolder);
+	}
 
-    @Override
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        super.reportErrors(compilerAnnotationHolder);
+	@Override
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		super.reportErrors(compilerAnnotationHolder);
 
-        this.reportTransientModifier(compilerAnnotationHolder);
-        // this.reportDuplicateParameterizedPropertyNames(compilerAnnotationHolder);
-        // this.reportDuplicateAssociationEndNames(compilerAnnotationHolder);
-    }
+		this.reportTransientModifier(compilerAnnotationHolder);
+		// this.reportDuplicateParameterizedPropertyNames(compilerAnnotationHolder);
+		// this.reportDuplicateAssociationEndNames(compilerAnnotationHolder);
+	}
 
-    /*
+	/*
     private void reportDuplicateParameterizedPropertyNames(@Nonnull CompilerErrorState compilerAnnotationHolder)
     {
         ImmutableBag<String> duplicateMemberNames = this.getDuplicateMemberNames();
@@ -229,111 +229,111 @@ public class AntlrInterface extends AntlrClassifier {
     }
     */
 
-    private void reportTransientModifier(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        // Only need to check declared modifiers
-        Optional<AntlrModifier> maybeTransientModifier = this.declaredModifiers.detectOptional(
-            AntlrModifier::isTransient
-        );
+	private void reportTransientModifier(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		// Only need to check declared modifiers
+		Optional<AntlrModifier> maybeTransientModifier = this.declaredModifiers.detectOptional(
+			AntlrModifier::isTransient
+		);
 
-        if (maybeTransientModifier.isEmpty()) {
-            return;
-        }
+		if (maybeTransientModifier.isEmpty()) {
+			return;
+		}
 
-        AntlrModifier transientModifier = maybeTransientModifier.get();
-        String message = String.format("'%s' keyword not applicable to interfaces.", transientModifier.getKeyword());
-        compilerAnnotationHolder.add("ERR_INT_TRN", message, transientModifier);
-    }
+		AntlrModifier transientModifier = maybeTransientModifier.get();
+		String message = String.format("'%s' keyword not applicable to interfaces.", transientModifier.getKeyword());
+		compilerAnnotationHolder.add("ERR_INT_TRN", message, transientModifier);
+	}
 
-    @Override
-    protected void reportCircularInheritance(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        boolean noCircularInheritance = true;
-        for (int i = 0; i < this.declaredInterfaces.size(); i++) {
-            AntlrInterface iface = this.declaredInterfaces.get(i);
-            if (!iface.extendsInterface(this, Sets.mutable.empty())) {
-                continue;
-            }
-            InterfaceReferenceContext offendingToken = this.getOffendingInterfaceReference(i);
-            String message = String.format("Circular inheritance '%s'.", offendingToken.getText());
-            compilerAnnotationHolder.add("ERR_IMP_SLF", message, this, offendingToken);
-            noCircularInheritance = false;
-        }
+	@Override
+	protected void reportCircularInheritance(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		boolean noCircularInheritance = true;
+		for (int i = 0; i < this.declaredInterfaces.size(); i++) {
+			AntlrInterface iface = this.declaredInterfaces.get(i);
+			if (!iface.extendsInterface(this, Sets.mutable.empty())) {
+				continue;
+			}
+			InterfaceReferenceContext offendingToken = this.getOffendingInterfaceReference(i);
+			String message = String.format("Circular inheritance '%s'.", offendingToken.getText());
+			compilerAnnotationHolder.add("ERR_IMP_SLF", message, this, offendingToken);
+			noCircularInheritance = false;
+		}
 
-        if (noCircularInheritance) {
-            this.reportForwardReference(compilerAnnotationHolder);
-        }
-    }
+		if (noCircularInheritance) {
+			this.reportForwardReference(compilerAnnotationHolder);
+		}
+	}
 
-    // </editor-fold>
+	// </editor-fold>
 
-    private boolean extendsInterface(AntlrInterface iface, @Nonnull MutableSet<AntlrInterface> visitedInterfaces) {
-        if (this.declaredInterfaces.contains(iface)) {
-            return true;
-        }
+	private boolean extendsInterface(AntlrInterface iface, @Nonnull MutableSet<AntlrInterface> visitedInterfaces) {
+		if (this.declaredInterfaces.contains(iface)) {
+			return true;
+		}
 
-        if (visitedInterfaces.contains(this)) {
-            return false;
-        }
+		if (visitedInterfaces.contains(this)) {
+			return false;
+		}
 
-        visitedInterfaces.add(this);
-        return this.declaredInterfaces.anySatisfy((eachSuperInterface) ->
-            eachSuperInterface.extendsInterface(iface, visitedInterfaces)
-        );
-    }
+		visitedInterfaces.add(this);
+		return this.declaredInterfaces.anySatisfy((eachSuperInterface) ->
+			eachSuperInterface.extendsInterface(iface, visitedInterfaces)
+		);
+	}
 
-    @Override
-    protected InterfaceReferenceContext getOffendingInterfaceReference(int index) {
-        return this.getElementContext().interfaceHeader().implementsDeclaration().interfaceReference().get(index);
-    }
+	@Override
+	protected InterfaceReferenceContext getOffendingInterfaceReference(int index) {
+		return this.getElementContext().interfaceHeader().implementsDeclaration().interfaceReference().get(index);
+	}
 
-    @Override
-    protected boolean isInterfaceRedundant(int index, @Nonnull AntlrInterface iface) {
-        return this.interfaceNotAtIndexImplements(index, iface);
-    }
+	@Override
+	protected boolean isInterfaceRedundant(int index, @Nonnull AntlrInterface iface) {
+		return this.interfaceNotAtIndexImplements(index, iface);
+	}
 
-    @Override
-    public ImmutableBag<String> getDuplicateMemberNames() {
-        return this.getDeclaredMemberNames()
-            .toBag()
-            .selectByOccurrences((occurrences) -> occurrences > 1)
-            .toImmutable();
-    }
+	@Override
+	public ImmutableBag<String> getDuplicateMemberNames() {
+		return this.getDeclaredMemberNames()
+			.toBag()
+			.selectByOccurrences((occurrences) -> occurrences > 1)
+			.toImmutable();
+	}
 
-    private ImmutableList<String> getDeclaredMemberNames() {
-        MutableList<String> topLevelNames = Lists.mutable.empty();
-        this.declaredDataTypeProperties.collect(AntlrProperty::getName, topLevelNames);
-        this.declaredAssociationEndSignatures.collect(AntlrProperty::getName, topLevelNames);
-        return topLevelNames.toImmutable();
-    }
+	private ImmutableList<String> getDeclaredMemberNames() {
+		MutableList<String> topLevelNames = Lists.mutable.empty();
+		this.declaredDataTypeProperties.collect(AntlrProperty::getName, topLevelNames);
+		this.declaredAssociationEndSignatures.collect(AntlrProperty::getName, topLevelNames);
+		return topLevelNames.toImmutable();
+	}
 
-    @Nonnull
-    @Override
-    public InterfaceDeclarationContext getElementContext() {
-        return (InterfaceDeclarationContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public InterfaceDeclarationContext getElementContext() {
+		return (InterfaceDeclarationContext) super.getElementContext();
+	}
 
-    @Override
-    public InterfaceBlockContext getBlockContext() {
-        return this.getElementContext().interfaceBlock();
-    }
+	@Override
+	public InterfaceBlockContext getBlockContext() {
+		return this.getElementContext().interfaceBlock();
+	}
 
-    @Nonnull
-    @Override
-    public InterfaceBuilder getTypeGetter() {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".getTypeBuilder() not implemented yet"
-        );
-    }
+	@Nonnull
+	@Override
+	public InterfaceBuilder getTypeGetter() {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".getTypeBuilder() not implemented yet"
+		);
+	}
 
-    @Override
-    public AntlrDataTypeProperty<?> getDataTypePropertyByName(String name) {
-        return this.declaredDataTypePropertiesByName.containsKey(name)
-            ? this.declaredDataTypePropertiesByName.get(name)
-            : this.getInterfaceDataTypePropertyByName(name);
-    }
+	@Override
+	public AntlrDataTypeProperty<?> getDataTypePropertyByName(String name) {
+		return this.declaredDataTypePropertiesByName.containsKey(name)
+			? this.declaredDataTypePropertiesByName.get(name)
+			: this.getInterfaceDataTypePropertyByName(name);
+	}
 
-    public AntlrModifier getModifierByName(String name) {
-        return this.declaredModifiersByName.containsKey(name)
-            ? this.declaredModifiersByName.get(name)
-            : this.getInterfaceClassifierModifierByName(name);
-    }
+	public AntlrModifier getModifierByName(String name) {
+		return this.declaredModifiersByName.containsKey(name)
+			? this.declaredModifiersByName.get(name)
+			: this.getInterfaceClassifierModifierByName(name);
+	}
 }

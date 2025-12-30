@@ -39,39 +39,39 @@ import static org.assertj.core.api.Assertions.fail;
 @ExtendWith(LogMarkerTestExtension.class)
 public class ReladomoReadableInterfaceGeneratorTest {
 
-    @RegisterExtension
-    final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
+	@RegisterExtension
+	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
-    @Test
-    void smokeTest() {
-        String klassSourceCodeName = this.getClass().getSimpleName() + ".smokeTest.klass";
+	@Test
+	void smokeTest() {
+		String klassSourceCodeName = this.getClass().getSimpleName() + ".smokeTest.klass";
 
-        String klassSourceCode = FileSlurper.slurp(klassSourceCodeName, this.getClass());
+		String klassSourceCode = FileSlurper.slurp(klassSourceCodeName, this.getClass());
 
-        CompilationUnit compilationUnit = CompilationUnit.createFromText(
-            0,
-            Optional.empty(),
-            "example.klass",
-            klassSourceCode
-        );
-        KlassCompiler compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("dark"));
-        CompilationResult compilationResult = compiler.compile();
+		CompilationUnit compilationUnit = CompilationUnit.createFromText(
+			0,
+			Optional.empty(),
+			"example.klass",
+			klassSourceCode
+		);
+		KlassCompiler compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("dark"));
+		CompilationResult compilationResult = compiler.compile();
 
-        if (compilationResult.domainModelWithSourceCode().isEmpty()) {
-            ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
-            String message = compilerAnnotations.makeString("\n");
-            fail(message);
-        } else {
-            DomainModelWithSourceCode domainModel = compilationResult.domainModelWithSourceCode().get();
-            assertThat(domainModel).isNotNull();
+		if (compilationResult.domainModelWithSourceCode().isEmpty()) {
+			ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
+			String message = compilerAnnotations.makeString("\n");
+			fail(message);
+		} else {
+			DomainModelWithSourceCode domainModel = compilationResult.domainModelWithSourceCode().get();
+			assertThat(domainModel).isNotNull();
 
-            ReladomoReadableInterfaceGenerator generator = new ReladomoReadableInterfaceGenerator(domainModel);
+			ReladomoReadableInterfaceGenerator generator = new ReladomoReadableInterfaceGenerator(domainModel);
 
-            Klass klass = domainModel.getClassByName("ClassWithDerivedProperty");
-            String javaSourceCode = generator.getSourceCode(klass);
+			Klass klass = domainModel.getClassByName("ClassWithDerivedProperty");
+			String javaSourceCode = generator.getSourceCode(klass);
 
-            String resourceClassPathLocation = this.getClass().getSimpleName() + ".smokeTest.java";
-            this.fileMatchExtension.assertFileContents(resourceClassPathLocation, javaSourceCode);
-        }
-    }
+			String resourceClassPathLocation = this.getClass().getSimpleName() + ".smokeTest.java";
+			this.fileMatchExtension.assertFileContents(resourceClassPathLocation, javaSourceCode);
+		}
+	}
 }

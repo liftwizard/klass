@@ -29,39 +29,39 @@ import org.antlr.v4.runtime.ParserRuleContext;
 
 public abstract class AbstractIdentifierElement extends AbstractNamedElement {
 
-    protected AbstractIdentifierElement(
-        @Nonnull ParserRuleContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        int ordinal,
-        @Nonnull IdentifierContext nameContext
-    ) {
-        super(elementContext, macroElement, sourceCode, ordinal, nameContext);
-    }
+	protected AbstractIdentifierElement(
+		@Nonnull ParserRuleContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		int ordinal,
+		@Nonnull IdentifierContext nameContext
+	) {
+		super(elementContext, macroElement, sourceCode, ordinal, nameContext);
+	}
 
-    @Nonnull
-    @Override
-    public IdentifierContext getNameContext() {
-        return (IdentifierContext) super.getNameContext();
-    }
+	@Nonnull
+	@Override
+	public IdentifierContext getNameContext() {
+		return (IdentifierContext) super.getNameContext();
+	}
 
-    public abstract static class IdentifierElementBuilder<BuiltElement extends AbstractIdentifierElement>
-        extends NamedElementBuilder<BuiltElement> {
+	public abstract static class IdentifierElementBuilder<BuiltElement extends AbstractIdentifierElement>
+		extends NamedElementBuilder<BuiltElement> {
 
-        protected IdentifierElementBuilder(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            int ordinal,
-            @Nonnull IdentifierContext nameContext
-        ) {
-            super(elementContext, macroElement, sourceCode, ordinal, nameContext);
-        }
+		protected IdentifierElementBuilder(
+			@Nonnull ParserRuleContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			int ordinal,
+			@Nonnull IdentifierContext nameContext
+		) {
+			super(elementContext, macroElement, sourceCode, ordinal, nameContext);
+		}
 
-        @Nonnull
-        @Override
-        public IdentifierContext getNameContext() {
-            return (IdentifierContext) super.getNameContext();
-        }
-    }
+		@Nonnull
+		@Override
+		public IdentifierContext getNameContext() {
+			return (IdentifierContext) super.getNameContext();
+		}
+	}
 }

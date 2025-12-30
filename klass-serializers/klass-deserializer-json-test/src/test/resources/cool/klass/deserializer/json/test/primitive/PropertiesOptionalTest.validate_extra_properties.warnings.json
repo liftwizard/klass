@@ -1,10 +1,10 @@
 [
-  "Warning at PropertiesOptional.systemFrom. Didn't expect to receive value for temporal property 'PropertiesOptional.systemFrom: TemporalInstant?' but value was string: \"1999-12-31T23:59:59.999Z\".",
-  "Warning at PropertiesOptional.systemTo. Didn't expect to receive value for temporal property 'PropertiesOptional.systemTo: TemporalInstant?' but value was null.",
-  "Warning at PropertiesOptional.createdOn. Didn't expect to receive value for audit property 'PropertiesOptional.createdOn: Instant' but value was string: \"1999-12-31T23:59:59.999Z\".",
-  "Warning at PropertiesOptional.optionalDerived. Didn't expect to receive value for derived property 'PropertiesOptional.optionalDerived: String?' but value was string: \"PropertiesOptional optionalDerived 1 ☝\".",
-  "Warning at PropertiesOptional.version.propertiesOptionalId. Didn't expect to receive value for foreign key matching key on path property 'PropertiesOptionalVersion.propertiesOptionalId: Long' but value was number: 1.",
-  "Warning at PropertiesOptional.version.systemFrom. Didn't expect to receive value for temporal property 'PropertiesOptionalVersion.systemFrom: TemporalInstant?' but value was string: \"1999-12-31T23:59:59.999Z\".",
-  "Warning at PropertiesOptional.version.systemTo. Didn't expect to receive value for temporal property 'PropertiesOptionalVersion.systemTo: TemporalInstant?' but value was null.",
-  "Warning at PropertiesOptional.version.createdOn. Didn't expect to receive value for audit property 'PropertiesOptionalVersion.createdOn: Instant' but value was string: \"1999-12-31T23:59:59.999Z\"."
+	"Warning at PropertiesOptional.systemFrom. Didn't expect to receive value for temporal property 'PropertiesOptional.systemFrom: TemporalInstant?' but value was string: \"1999-12-31T23:59:59.999Z\".",
+	"Warning at PropertiesOptional.systemTo. Didn't expect to receive value for temporal property 'PropertiesOptional.systemTo: TemporalInstant?' but value was null.",
+	"Warning at PropertiesOptional.createdOn. Didn't expect to receive value for audit property 'PropertiesOptional.createdOn: Instant' but value was string: \"1999-12-31T23:59:59.999Z\".",
+	"Warning at PropertiesOptional.optionalDerived. Didn't expect to receive value for derived property 'PropertiesOptional.optionalDerived: String?' but value was string: \"PropertiesOptional optionalDerived 1 ☝\".",
+	"Warning at PropertiesOptional.version.propertiesOptionalId. Didn't expect to receive value for foreign key matching key on path property 'PropertiesOptionalVersion.propertiesOptionalId: Long' but value was number: 1.",
+	"Warning at PropertiesOptional.version.systemFrom. Didn't expect to receive value for temporal property 'PropertiesOptionalVersion.systemFrom: TemporalInstant?' but value was string: \"1999-12-31T23:59:59.999Z\".",
+	"Warning at PropertiesOptional.version.systemTo. Didn't expect to receive value for temporal property 'PropertiesOptionalVersion.systemTo: TemporalInstant?' but value was null.",
+	"Warning at PropertiesOptional.version.createdOn. Didn't expect to receive value for audit property 'PropertiesOptionalVersion.createdOn: Instant' but value was string: \"1999-12-31T23:59:59.999Z\"."
 ]
