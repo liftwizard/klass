@@ -1,71 +1,71 @@
 {
-  // Number of spaces per indentation level
-  // Default: 2
-  tabWidth: 4,
+    // Number of spaces per indentation level
+    // Default: 2
+    tabWidth: 4,
 
-  // Indent with tabs instead of spaces
-  // Default: false
-  useTabs: false,
+    // Indent with tabs instead of spaces
+    // Default: false
+    useTabs: true,
 
-  // Add semicolons at the end of statements
-  // Default: true
-  semi: true,
+    // Add semicolons at the end of statements
+    // Default: true
+    semi: true,
 
-  // Use single quotes instead of double quotes
-  // Default: false
-  singleQuote: true,
+    // Use single quotes instead of double quotes
+    // Default: false
+    singleQuote: false,
 
-  // Print trailing commas wherever possible in multi-line comma-separated structures
-  // Default: "es5"
-  // Options: "none" | "es5" | "all"
-  trailingComma: "all",
+    // Print trailing commas wherever possible in multi-line comma-separated structures
+    // Default: "es5"
+    // Options: "none" | "es5" | "all"
+    trailingComma: "all",
 
-  // Print spaces between brackets in object literals
-  // Default: true
-  bracketSpacing: false,
+    // Print spaces between brackets in object literals
+    // Default: true
+    bracketSpacing: false,
 
-  // Include parentheses around a sole arrow function parameter
-  // Default: "always"
-  // Options: "avoid" | "always"
-  arrowParens: "always",
+    // Include parentheses around a sole arrow function parameter
+    // Default: "always"
+    // Options: "avoid" | "always"
+    arrowParens: "always",
 
-  // Line length where Prettier will try to wrap
-  // Default: 80
-  printWidth: 120,
+    // Line length where Prettier will try to wrap
+    // Default: 80
+    printWidth: 120,
 
-  // Change when properties in objects are quoted
-  // Default: "as-needed"
-  // Options: "as-needed" | "consistent" | "preserve"
-  quoteProps: "as-needed",
+    // Change when properties in objects are quoted
+    // Default: "as-needed"
+    // Options: "as-needed" | "consistent" | "preserve"
+    quoteProps: "as-needed",
 
-  // Use single quotes in JSX
-  // Default: false
-  jsxSingleQuote: false,
+    // Use single quotes in JSX
+    // Default: false
+    jsxSingleQuote: false,
 
-  // Put the > of a multi-line JSX element at the end of the last line
-  // Default: false
-  bracketSameLine: false,
+    // Put the > of a multi-line JSX element at the end of the last line
+    // Default: false
+    bracketSameLine: false,
 
-  // How to wrap prose in markdown
-  // Default: "preserve"
-  // Options: "always" | "never" | "preserve"
-  proseWrap: "preserve",
+    // How to wrap prose in markdown
+    // Default: "preserve"
+    // Options: "always" | "never" | "preserve"
+    proseWrap: "preserve",
 
-  // How to handle whitespace in HTML
-  // Default: "css"
-  // Options: "css" | "strict" | "ignore"
-  htmlWhitespaceSensitivity: "css",
+    // How to handle whitespace in HTML
+    // Default: "css"
+    // Options: "css" | "strict" | "ignore"
+    htmlWhitespaceSensitivity: "css",
 
-  // Line ending style
-  // Default: "lf"
-  // Options: "lf" | "crlf" | "cr" | "auto"
-  endOfLine: "lf",
+    // Line ending style
+    // Default: "lf"
+    // Options: "lf" | "crlf" | "cr" | "auto"
+    endOfLine: "lf",
 
-  // Experimental: Put binary operators at the start of lines when wrapping
-  // This is an experimental feature that may be removed in future versions
-  // Options: "end" (default) | "start"
-  experimentalOperatorPosition: "start",
+    // Experimental: Put binary operators at the start of lines when wrapping
+    // This is an experimental feature that may be removed in future versions
+    // Options: "end" (default) | "start"
+    experimentalOperatorPosition: "start",
 
-  // Plugins for language support
-  plugins: ["prettier-plugin-java"],
+    // Plugins for language support
+    plugins: ["prettier-plugin-java"],
 }

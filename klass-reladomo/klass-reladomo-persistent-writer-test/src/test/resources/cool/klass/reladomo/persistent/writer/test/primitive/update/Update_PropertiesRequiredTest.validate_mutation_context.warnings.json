@@ -1,7 +1,7 @@
 [
-  "Warning at PropertiesRequired.requiredDerived. Didn't expect to receive value for derived property 'PropertiesRequired.requiredDerived: String' but value was string: \"PropertiesRequired requiredDerived 1 ☝\".",
-  "Warning at PropertiesRequired.version.createdBy.userId. Expected audit property 'userId' to match current user 'test user 1' but got 'different user'.",
-  "Warning at PropertiesRequired.version.lastUpdatedBy.userId. Expected audit property 'userId' to match current user 'test user 1' but got 'different user'.",
-  "Warning at PropertiesRequired.createdBy.userId. Expected audit property 'userId' to match current user 'test user 1' but got 'different user'.",
-  "Warning at PropertiesRequired.lastUpdatedBy.userId. Expected audit property 'userId' to match current user 'test user 1' but got 'different user'."
+	"Warning at PropertiesRequired.requiredDerived. Didn't expect to receive value for derived property 'PropertiesRequired.requiredDerived: String' but value was string: \"PropertiesRequired requiredDerived 1 ☝\".",
+	"Warning at PropertiesRequired.version.createdBy.userId. Expected audit property 'userId' to match current user 'test user 1' but got 'different user'.",
+	"Warning at PropertiesRequired.version.lastUpdatedBy.userId. Expected audit property 'userId' to match current user 'test user 1' but got 'different user'.",
+	"Warning at PropertiesRequired.createdBy.userId. Expected audit property 'userId' to match current user 'test user 1' but got 'different user'.",
+	"Warning at PropertiesRequired.lastUpdatedBy.userId. Expected audit property 'userId' to match current user 'test user 1' but got 'different user'."
 ]

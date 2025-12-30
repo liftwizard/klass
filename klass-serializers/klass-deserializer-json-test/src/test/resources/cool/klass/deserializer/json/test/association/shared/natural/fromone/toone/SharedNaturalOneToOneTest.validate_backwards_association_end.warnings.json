@@ -1,4 +1,4 @@
 [
-  "Warning at SharedNaturalOneToOneSource.target.value. Didn't expect to receive value for outside projection property 'SharedNaturalOneToOneTarget.value: String' but value was string: \"value\".",
-  "Warning at SharedNaturalOneToOneSource.target. Didn't expect to receive value for opposite association end 'SharedNaturalOneToOneTarget.source: SharedNaturalOneToOneSource[1..1]' but value was array: [{\"key\":\"key\",\"value\":\"value\"}]."
+	"Warning at SharedNaturalOneToOneSource.target.value. Didn't expect to receive value for outside projection property 'SharedNaturalOneToOneTarget.value: String' but value was string: \"value\".",
+	"Warning at SharedNaturalOneToOneSource.target. Didn't expect to receive value for opposite association end 'SharedNaturalOneToOneTarget.source: SharedNaturalOneToOneSource[1..1]' but value was array: [{\"key\":\"key\",\"value\":\"value\"}]."
 ]

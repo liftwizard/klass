@@ -1,90 +1,90 @@
 {
-  "name": "light",
-  "description": "Light color scheme",
-  "rules": [
-    {
-      "name": "foreground",
-      "style": {
-        "foreground": "BLACK"
-      }
-    },
-    {
-      "name": "background",
-      "style": {
-        "background": "WHITE"
-      }
-    },
-    {
-      "name": "whitespace",
-      "style": {}
-    },
-    {
-      "name": "newline",
-      "style": {}
-    },
-    {
-      "name": "endOfFile",
-      "style": {}
-    },
-    {
-      "name": "blockComment",
-      "style": {
-        "foreground": "BLACK"
-      }
-    },
-    {
-      "name": "keyword",
-      "style": {
-        "foreground": "MAGENTA"
-      }
-    },
-    {
-      "name": "verb",
-      "style": {
-        "foreground": "GREEN"
-      }
-    },
-    {
-      "name": "modifier",
-      "style": {
-        "foreground": "GREEN"
-      }
-    },
-    {
-      "name": "identifier",
-      "style": {
-        "foreground": "DEFAULT"
-      }
-    },
-    {
-      "name": "literal",
-      "style": {
-        "foreground": "BLUE"
-      }
-    },
-    {
-      "name": "literalThis",
-      "style": {
-        "foreground": "GREEN"
-      }
-    },
-    {
-      "name": "literalNative",
-      "style": {
-        "foreground": "GREEN"
-      }
-    },
-    {
-      "name": "punctuation",
-      "style": {
-        "foreground": "CYAN"
-      }
-    },
-    {
-      "name": "operator",
-      "style": {
-        "foreground": "MAGENTA"
-      }
-    }
-  ]
+	"name": "light",
+	"description": "Light color scheme",
+	"rules": [
+		{
+			"name": "foreground",
+			"style": {
+				"foreground": "BLACK",
+			},
+		},
+		{
+			"name": "background",
+			"style": {
+				"background": "WHITE",
+			},
+		},
+		{
+			"name": "whitespace",
+			"style": {},
+		},
+		{
+			"name": "newline",
+			"style": {},
+		},
+		{
+			"name": "endOfFile",
+			"style": {},
+		},
+		{
+			"name": "blockComment",
+			"style": {
+				"foreground": "BLACK",
+			},
+		},
+		{
+			"name": "keyword",
+			"style": {
+				"foreground": "MAGENTA",
+			},
+		},
+		{
+			"name": "verb",
+			"style": {
+				"foreground": "GREEN",
+			},
+		},
+		{
+			"name": "modifier",
+			"style": {
+				"foreground": "GREEN",
+			},
+		},
+		{
+			"name": "identifier",
+			"style": {
+				"foreground": "DEFAULT",
+			},
+		},
+		{
+			"name": "literal",
+			"style": {
+				"foreground": "BLUE",
+			},
+		},
+		{
+			"name": "literalThis",
+			"style": {
+				"foreground": "GREEN",
+			},
+		},
+		{
+			"name": "literalNative",
+			"style": {
+				"foreground": "GREEN",
+			},
+		},
+		{
+			"name": "punctuation",
+			"style": {
+				"foreground": "CYAN",
+			},
+		},
+		{
+			"name": "operator",
+			"style": {
+				"foreground": "MAGENTA",
+			},
+		},
+	],
 }

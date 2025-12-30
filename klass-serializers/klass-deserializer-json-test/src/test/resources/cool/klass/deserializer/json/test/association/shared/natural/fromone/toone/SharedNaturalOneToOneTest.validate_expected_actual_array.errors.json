@@ -1,9 +1,9 @@
 [
-  "Error at SharedNaturalOneToOneSource.key. Expected property with type 'SharedNaturalOneToOneSource.key: String' but got '[]' with type 'array'.",
-  "Error at SharedNaturalOneToOneSource. No such property 'SharedNaturalOneToOneSource.targetKey' but got []. Expected properties: key, value, target.",
-  "Error at SharedNaturalOneToOneSource.value. Expected property with type 'SharedNaturalOneToOneSource.value: String' but got '[]' with type 'array'.",
-  "Error at SharedNaturalOneToOneSource.target.key. Expected property with type 'SharedNaturalOneToOneTarget.key: String' but got '[]' with type 'array'.",
-  "Error at SharedNaturalOneToOneSource.target.sourceKey. Expected property with type 'SharedNaturalOneToOneTarget.sourceKey: String' but got '[]' with type 'array'.",
-  "Error at SharedNaturalOneToOneSource.target.value. Expected property with type 'SharedNaturalOneToOneTarget.value: String' but got '[]' with type 'array'.",
-  "Error at SharedNaturalOneToOneSource.target.sourceKey. Didn't expect to receive value for foreign key property 'SharedNaturalOneToOneTarget.sourceKey: String' but value was array: []."
+	"Error at SharedNaturalOneToOneSource.key. Expected property with type 'SharedNaturalOneToOneSource.key: String' but got '[]' with type 'array'.",
+	"Error at SharedNaturalOneToOneSource. No such property 'SharedNaturalOneToOneSource.targetKey' but got []. Expected properties: key, value, target.",
+	"Error at SharedNaturalOneToOneSource.value. Expected property with type 'SharedNaturalOneToOneSource.value: String' but got '[]' with type 'array'.",
+	"Error at SharedNaturalOneToOneSource.target.key. Expected property with type 'SharedNaturalOneToOneTarget.key: String' but got '[]' with type 'array'.",
+	"Error at SharedNaturalOneToOneSource.target.sourceKey. Expected property with type 'SharedNaturalOneToOneTarget.sourceKey: String' but got '[]' with type 'array'.",
+	"Error at SharedNaturalOneToOneSource.target.value. Expected property with type 'SharedNaturalOneToOneTarget.value: String' but got '[]' with type 'array'.",
+	"Error at SharedNaturalOneToOneSource.target.sourceKey. Didn't expect to receive value for foreign key property 'SharedNaturalOneToOneTarget.sourceKey: String' but value was array: []."
 ]

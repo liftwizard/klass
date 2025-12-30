@@ -1,6 +1,6 @@
 {
-  value: "value",
-  target: {
-    key: "key",
-  },
+    value: "value",
+    target: {
+        key: "key",
+    },
 }

@@ -1,4 +1,4 @@
 [
-  "Error at SharedNaturalOneToManySource.targets[0].sourceKey. Didn't expect to receive value for foreign key property 'SharedNaturalOneToManyTarget.sourceKey: String' but value was string: \"key\".",
-  "Error at SharedNaturalOneToManySource.targets[1].sourceKey. Didn't expect to receive value for foreign key property 'SharedNaturalOneToManyTarget.sourceKey: String' but value was string: \"key\"."
+	"Error at SharedNaturalOneToManySource.targets[0].sourceKey. Didn't expect to receive value for foreign key property 'SharedNaturalOneToManyTarget.sourceKey: String' but value was string: \"key\".",
+	"Error at SharedNaturalOneToManySource.targets[1].sourceKey. Didn't expect to receive value for foreign key property 'SharedNaturalOneToManyTarget.sourceKey: String' but value was string: \"key\"."
 ]

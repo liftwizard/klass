@@ -1,662 +1,662 @@
 {
-  "name": "darkcube",
-  "description": "Dark scheme with more precise color control",
-  "rules": [
-    {
-      "name": "foreground",
-      "style": {
-        "foreground": 255
-      }
-    },
-    {
-      "name": "background",
-      "style": {
-        "background": "BLACK"
-      }
-    },
-    {
-      "name": "blockComment",
-      "style": {
-        "foreground": 246
-      }
-    },
-    {
-      "name": "lineComment",
-      "style": {
-        "foreground": 242
-      }
-    },
+	"name": "darkcube",
+	"description": "Dark scheme with more precise color control",
+	"rules": [
+		{
+			"name": "foreground",
+			"style": {
+				"foreground": 255,
+			},
+		},
+		{
+			"name": "background",
+			"style": {
+				"background": "BLACK",
+			},
+		},
+		{
+			"name": "blockComment",
+			"style": {
+				"foreground": 246,
+			},
+		},
+		{
+			"name": "lineComment",
+			"style": {
+				"foreground": 242,
+			},
+		},
 
-    /* Keywords */
-    {
-      "name": "keyword",
-      "style": {
-        "foreground": 166
-      }
-    },
-    {
-      "name": "packageKeyword",
-      "style": {
-        "foreground": 173
-      }
-    },
-    {
-      "name": "keywordEnumeration",
-      "style": {
-        "foreground": 214,
-        "background": 52
-      }
-    },
-    {
-      "name": "keywordInterface",
-      "style": {
-        "foreground": 177,
-        "background": 53
-      }
-    },
-    {
-      "name": "keywordUser",
-      "style": {
-        "foreground": 227,
-        "background": 53
-      }
-    },
-    {
-      "name": "keywordClass",
-      "style": {
-        "foreground": 208,
-        "background": 52
-      }
-    },
-    {
-      "name": "keywordProjection",
-      "style": {
-        "foreground": 215,
-        "background": 54
-      }
-    },
-    {
-      "name": "keywordService",
-      "style": {
-        "foreground": 209,
-        "background": 54
-      }
-    },
-    {
-      "name": "keywordAbstract",
-      "style": {
-        "foreground": 167
-      }
-    },
-    {
-      "name": "keywordExtends",
-      "style": {
-        "foreground": 168
-      }
-    },
-    {
-      "name": "keywordImplements",
-      "style": {
-        "foreground": 169
-      }
-    },
-    {
-      "name": "keywordInheritanceType",
-      "style": {
-        "foreground": 174
-      }
-    },
-    {
-      "name": "keywordAssociation",
-      "style": {
-        "foreground": 175,
-        "background": 53
-      }
-    },
-    {
-      "name": "keywordRelationship",
-      "style": {
-        "foreground": 176
-      }
-    },
-    {
-      "name": "keywordOrderBy",
-      "style": {
-        "foreground": 172
-      }
-    },
-    {
-      "name": "keywordOrderByDirection",
-      "style": {
-        "foreground": 178
-      }
-    },
-    {
-      "name": "keywordOn",
-      "style": {
-        "foreground": 179
-      }
-    },
-    {
-      "name": "keywordMultiplicity",
-      "style": {
-        "foreground": 180
-      }
-    },
-    {
-      "name": "keywordMultiplicityChoice",
-      "style": {
-        "foreground": 181
-      }
-    },
-    {
-      "name": "keywordServiceCriteria",
-      "style": {
-        "foreground": 210,
-        "background": 55
-      }
-    },
-    {
-      "name": "primitiveType",
-      "style": {
-        "foreground": 172
-      }
-    },
+		/* Keywords */
+		{
+			"name": "keyword",
+			"style": {
+				"foreground": 166,
+			},
+		},
+		{
+			"name": "packageKeyword",
+			"style": {
+				"foreground": 173,
+			},
+		},
+		{
+			"name": "keywordEnumeration",
+			"style": {
+				"foreground": 214,
+				"background": 52,
+			},
+		},
+		{
+			"name": "keywordInterface",
+			"style": {
+				"foreground": 177,
+				"background": 53,
+			},
+		},
+		{
+			"name": "keywordUser",
+			"style": {
+				"foreground": 227,
+				"background": 53,
+			},
+		},
+		{
+			"name": "keywordClass",
+			"style": {
+				"foreground": 208,
+				"background": 52,
+			},
+		},
+		{
+			"name": "keywordProjection",
+			"style": {
+				"foreground": 215,
+				"background": 54,
+			},
+		},
+		{
+			"name": "keywordService",
+			"style": {
+				"foreground": 209,
+				"background": 54,
+			},
+		},
+		{
+			"name": "keywordAbstract",
+			"style": {
+				"foreground": 167,
+			},
+		},
+		{
+			"name": "keywordExtends",
+			"style": {
+				"foreground": 168,
+			},
+		},
+		{
+			"name": "keywordImplements",
+			"style": {
+				"foreground": 169,
+			},
+		},
+		{
+			"name": "keywordInheritanceType",
+			"style": {
+				"foreground": 174,
+			},
+		},
+		{
+			"name": "keywordAssociation",
+			"style": {
+				"foreground": 175,
+				"background": 53,
+			},
+		},
+		{
+			"name": "keywordRelationship",
+			"style": {
+				"foreground": 176,
+			},
+		},
+		{
+			"name": "keywordOrderBy",
+			"style": {
+				"foreground": 172,
+			},
+		},
+		{
+			"name": "keywordOrderByDirection",
+			"style": {
+				"foreground": 178,
+			},
+		},
+		{
+			"name": "keywordOn",
+			"style": {
+				"foreground": 179,
+			},
+		},
+		{
+			"name": "keywordMultiplicity",
+			"style": {
+				"foreground": 180,
+			},
+		},
+		{
+			"name": "keywordMultiplicityChoice",
+			"style": {
+				"foreground": 181,
+			},
+		},
+		{
+			"name": "keywordServiceCriteria",
+			"style": {
+				"foreground": 210,
+				"background": 55,
+			},
+		},
+		{
+			"name": "primitiveType",
+			"style": {
+				"foreground": 172,
+			},
+		},
 
-    /* Verbs */
-    {
-      "name": "verb",
-      "style": {
-        "foreground": 106
-      }
-    },
-    {
-      "name": "verbGet",
-      "style": {
-        "foreground": 35,
-        "background": 22
-      }
-    },
-    {
-      "name": "verbPost",
-      "style": {
-        "foreground": 83,
-        "background": 22
-      }
-    },
-    {
-      "name": "verbPut",
-      "style": {
-        "foreground": 47,
-        "background": 22
-      }
-    },
-    {
-      "name": "verbPatch",
-      "style": {
-        "foreground": 154,
-        "background": 22
-      }
-    },
-    {
-      "name": "verbDelete",
-      "style": {
-        "foreground": 196,
-        "background": 52
-      }
-    },
+		/* Verbs */
+		{
+			"name": "verb",
+			"style": {
+				"foreground": 106,
+			},
+		},
+		{
+			"name": "verbGet",
+			"style": {
+				"foreground": 35,
+				"background": 22,
+			},
+		},
+		{
+			"name": "verbPost",
+			"style": {
+				"foreground": 83,
+				"background": 22,
+			},
+		},
+		{
+			"name": "verbPut",
+			"style": {
+				"foreground": 47,
+				"background": 22,
+			},
+		},
+		{
+			"name": "verbPatch",
+			"style": {
+				"foreground": 154,
+				"background": 22,
+			},
+		},
+		{
+			"name": "verbDelete",
+			"style": {
+				"foreground": 196,
+				"background": 52,
+			},
+		},
 
-    /* Modifiers */
-    {
-      "name": "modifier",
-      "style": {
-        "foreground": 108
-      }
-    },
-    {
-      "name": "classifierModifier",
-      "style": {
-        "foreground": 114
-      }
-    },
-    {
-      "name": "dataTypePropertyModifier",
-      "style": {
-        "foreground": 115
-      }
-    },
-    {
-      "name": "associationEndModifier",
-      "style": {
-        "foreground": 78
-      }
-    },
-    {
-      "name": "parameterizedPropertyModifier",
-      "style": {
-        "foreground": 79
-      }
-    },
-    {
-      "name": "parameterModifier",
-      "style": {
-        "foreground": 73
-      }
-    },
-    {
-      "name": "validationModifier",
-      "style": {
-        "foreground": 107
-      }
-    },
-    {
-      "name": "serviceCategoryModifier",
-      "style": {
-        "foreground": 72
-      }
-    },
+		/* Modifiers */
+		{
+			"name": "modifier",
+			"style": {
+				"foreground": 108,
+			},
+		},
+		{
+			"name": "classifierModifier",
+			"style": {
+				"foreground": 114,
+			},
+		},
+		{
+			"name": "dataTypePropertyModifier",
+			"style": {
+				"foreground": 115,
+			},
+		},
+		{
+			"name": "associationEndModifier",
+			"style": {
+				"foreground": 78,
+			},
+		},
+		{
+			"name": "parameterizedPropertyModifier",
+			"style": {
+				"foreground": 79,
+			},
+		},
+		{
+			"name": "parameterModifier",
+			"style": {
+				"foreground": 73,
+			},
+		},
+		{
+			"name": "validationModifier",
+			"style": {
+				"foreground": 107,
+			},
+		},
+		{
+			"name": "serviceCategoryModifier",
+			"style": {
+				"foreground": 72,
+			},
+		},
 
-    /* Identifiers */
-    {
-      "name": "identifier",
-      "style": {
-        "foreground": 162
-      }
-    },
-    {
-      "name": "packageName",
-      "style": {
-        "foreground": 141
-      }
-    },
-    {
-      "name": "topLevelElementName",
-      "style": {
-        "foreground": 163
-      }
-    },
-    {
-      "name": "enumerationLiteralName",
-      "style": {
-        "foreground": 219
-      }
-    },
-    {
-      "name": "parameterName",
-      "style": {
-        "foreground": 183
-      }
-    },
-    {
-      "name": "propertyName",
-      "style": {
-        "foreground": 134
-      }
-    },
-    {
-      "name": "urlConstant",
-      "style": {
-        "foreground": 75
-      }
-    },
-    {
-      "name": "enumerationName",
-      "style": {
-        "foreground": 169
-      }
-    },
-    {
-      "name": "classifierName",
-      "style": {
-        "foreground": 170
-      }
-    },
-    {
-      "name": "associationName",
-      "style": {
-        "foreground": 217
-      }
-    },
-    {
-      "name": "projectionName",
-      "style": {
-        "foreground": 218
-      }
-    },
-    {
-      "name": "serviceName",
-      "style": {
-        "foreground": 213
-      }
-    },
-    {
-      "name": "className",
-      "style": {
-        "foreground": 205
-      }
-    },
-    {
-      "name": "interfaceName",
-      "style": {
-        "foreground": 176
-      }
-    },
-    {
-      "name": "dataTypePropertyName",
-      "style": {
-        "foreground": 142
-      }
-    },
-    {
-      "name": "referencePropertyName",
-      "style": {
-        "foreground": 143
-      }
-    },
-    {
-      "name": "primitivePropertyName",
-      "style": {
-        "foreground": 148
-      }
-    },
-    {
-      "name": "enumerationPropertyName",
-      "style": {
-        "foreground": 149
-      }
-    },
-    {
-      "name": "parameterizedPropertyName",
-      "style": {
-        "foreground": 144
-      }
-    },
-    {
-      "name": "associationEndName",
-      "style": {
-        "foreground": 150
-      }
-    },
+		/* Identifiers */
+		{
+			"name": "identifier",
+			"style": {
+				"foreground": 162,
+			},
+		},
+		{
+			"name": "packageName",
+			"style": {
+				"foreground": 141,
+			},
+		},
+		{
+			"name": "topLevelElementName",
+			"style": {
+				"foreground": 163,
+			},
+		},
+		{
+			"name": "enumerationLiteralName",
+			"style": {
+				"foreground": 219,
+			},
+		},
+		{
+			"name": "parameterName",
+			"style": {
+				"foreground": 183,
+			},
+		},
+		{
+			"name": "propertyName",
+			"style": {
+				"foreground": 134,
+			},
+		},
+		{
+			"name": "urlConstant",
+			"style": {
+				"foreground": 75,
+			},
+		},
+		{
+			"name": "enumerationName",
+			"style": {
+				"foreground": 169,
+			},
+		},
+		{
+			"name": "classifierName",
+			"style": {
+				"foreground": 170,
+			},
+		},
+		{
+			"name": "associationName",
+			"style": {
+				"foreground": 217,
+			},
+		},
+		{
+			"name": "projectionName",
+			"style": {
+				"foreground": 218,
+			},
+		},
+		{
+			"name": "serviceName",
+			"style": {
+				"foreground": 213,
+			},
+		},
+		{
+			"name": "className",
+			"style": {
+				"foreground": 205,
+			},
+		},
+		{
+			"name": "interfaceName",
+			"style": {
+				"foreground": 176,
+			},
+		},
+		{
+			"name": "dataTypePropertyName",
+			"style": {
+				"foreground": 142,
+			},
+		},
+		{
+			"name": "referencePropertyName",
+			"style": {
+				"foreground": 143,
+			},
+		},
+		{
+			"name": "primitivePropertyName",
+			"style": {
+				"foreground": 148,
+			},
+		},
+		{
+			"name": "enumerationPropertyName",
+			"style": {
+				"foreground": 149,
+			},
+		},
+		{
+			"name": "parameterizedPropertyName",
+			"style": {
+				"foreground": 144,
+			},
+		},
+		{
+			"name": "associationEndName",
+			"style": {
+				"foreground": 150,
+			},
+		},
 
-    /* References */
-    {
-      "name": "enumerationReference",
-      "style": {
-        "foreground": 175
-      }
-    },
-    {
-      "name": "classifierReference",
-      "style": {
-        "foreground": 206
-      }
-    },
-    {
-      "name": "interfaceReference",
-      "style": {
-        "foreground": 177
-      }
-    },
-    {
-      "name": "classReference",
-      "style": {
-        "foreground": 212
-      }
-    },
-    {
-      "name": "projectionReference",
-      "style": {
-        "foreground": 214
-      }
-    },
-    {
-      "name": "dataTypePropertyReference",
-      "style": {
-        "foreground": 135
-      }
-    },
-    {
-      "name": "associationEndReference",
-      "style": {
-        "foreground": 156
-      }
-    },
-    {
-      "name": "parameterizedPropertyReference",
-      "style": {
-        "foreground": 137
-      }
-    },
-    {
-      "name": "propertyReference",
-      "style": {
-        "foreground": 140
-      }
-    },
-    {
-      "name": "parameterReference",
-      "style": {
-        "foreground": 189
-      }
-    },
+		/* References */
+		{
+			"name": "enumerationReference",
+			"style": {
+				"foreground": 175,
+			},
+		},
+		{
+			"name": "classifierReference",
+			"style": {
+				"foreground": 206,
+			},
+		},
+		{
+			"name": "interfaceReference",
+			"style": {
+				"foreground": 177,
+			},
+		},
+		{
+			"name": "classReference",
+			"style": {
+				"foreground": 212,
+			},
+		},
+		{
+			"name": "projectionReference",
+			"style": {
+				"foreground": 214,
+			},
+		},
+		{
+			"name": "dataTypePropertyReference",
+			"style": {
+				"foreground": 135,
+			},
+		},
+		{
+			"name": "associationEndReference",
+			"style": {
+				"foreground": 156,
+			},
+		},
+		{
+			"name": "parameterizedPropertyReference",
+			"style": {
+				"foreground": 137,
+			},
+		},
+		{
+			"name": "propertyReference",
+			"style": {
+				"foreground": 140,
+			},
+		},
+		{
+			"name": "parameterReference",
+			"style": {
+				"foreground": 189,
+			},
+		},
 
-    /* Literals */
-    {
-      "name": "literal",
-      "style": {
-        "foreground": 74
-      }
-    },
-    {
-      "name": "stringLiteral",
-      "style": {
-        "foreground": 68
-      }
-    },
-    {
-      "name": "integerLiteral",
-      "style": {
-        "foreground": 44
-      }
-    },
-    {
-      "name": "booleanLiteral",
-      "style": {
-        "foreground": 38
-      }
-    },
-    {
-      "name": "characterLiteral",
-      "style": {
-        "foreground": 37
-      }
-    },
-    {
-      "name": "floatingPointLiteral",
-      "style": {
-        "foreground": 43
-      }
-    },
-    {
-      "name": "literalThis",
-      "style": {
-        "foreground": 50
-      }
-    },
-    {
-      "name": "literalNative",
-      "style": {
-        "foreground": 80
-      }
-    },
+		/* Literals */
+		{
+			"name": "literal",
+			"style": {
+				"foreground": 74,
+			},
+		},
+		{
+			"name": "stringLiteral",
+			"style": {
+				"foreground": 68,
+			},
+		},
+		{
+			"name": "integerLiteral",
+			"style": {
+				"foreground": 44,
+			},
+		},
+		{
+			"name": "booleanLiteral",
+			"style": {
+				"foreground": 38,
+			},
+		},
+		{
+			"name": "characterLiteral",
+			"style": {
+				"foreground": 37,
+			},
+		},
+		{
+			"name": "floatingPointLiteral",
+			"style": {
+				"foreground": 43,
+			},
+		},
+		{
+			"name": "literalThis",
+			"style": {
+				"foreground": 50,
+			},
+		},
+		{
+			"name": "literalNative",
+			"style": {
+				"foreground": 80,
+			},
+		},
 
-    /* Punctuation */
-    {
-      "name": "punctuation",
-      "style": {
-        "foreground": 251
-      }
-    },
-    {
-      "name": "whitespace",
-      "style": {
-        "foreground": 238
-      }
-    },
-    {
-      "name": "newline",
-      "style": {
-        "foreground": 240
-      }
-    },
-    {
-      "name": "colon",
-      "style": {
-        "foreground": 255
-      }
-    },
-    {
-      "name": "slash",
-      "style": {
-        "foreground": 249
-      }
-    },
-    {
-      "name": "question",
-      "style": {
-        "foreground": 250
-      }
-    },
-    {
-      "name": "ampersand",
-      "style": {
-        "foreground": 247
-      }
-    },
-    {
-      "name": "pairedPunctuation",
-      "style": {
-        "foreground": 248
-      }
-    },
-    {
-      "name": "parentheses",
-      "style": {
-        "foreground": 253,
-        "background": 233
-      }
-    },
-    {
-      "name": "curlyBraces",
-      "style": {
-        "foreground": 252,
-        "background": 234
-      }
-    },
-    {
-      "name": "squareBrackets",
-      "style": {
-        "foreground": 254,
-        "background": 235
-      }
-    },
-    {
-      "name": "comma",
-      "style": {
-        "foreground": 253
-      }
-    },
-    {
-      "name": "dot",
-      "style": {
-        "foreground": 252
-      }
-    },
-    {
-      "name": "dotDot",
-      "style": {
-        "foreground": 248
-      }
-    },
-    {
-      "name": "semi",
-      "style": {
-        "foreground": 254
-      }
-    },
+		/* Punctuation */
+		{
+			"name": "punctuation",
+			"style": {
+				"foreground": 251,
+			},
+		},
+		{
+			"name": "whitespace",
+			"style": {
+				"foreground": 238,
+			},
+		},
+		{
+			"name": "newline",
+			"style": {
+				"foreground": 240,
+			},
+		},
+		{
+			"name": "colon",
+			"style": {
+				"foreground": 255,
+			},
+		},
+		{
+			"name": "slash",
+			"style": {
+				"foreground": 249,
+			},
+		},
+		{
+			"name": "question",
+			"style": {
+				"foreground": 250,
+			},
+		},
+		{
+			"name": "ampersand",
+			"style": {
+				"foreground": 247,
+			},
+		},
+		{
+			"name": "pairedPunctuation",
+			"style": {
+				"foreground": 248,
+			},
+		},
+		{
+			"name": "parentheses",
+			"style": {
+				"foreground": 253,
+				"background": 233,
+			},
+		},
+		{
+			"name": "curlyBraces",
+			"style": {
+				"foreground": 252,
+				"background": 234,
+			},
+		},
+		{
+			"name": "squareBrackets",
+			"style": {
+				"foreground": 254,
+				"background": 235,
+			},
+		},
+		{
+			"name": "comma",
+			"style": {
+				"foreground": 253,
+			},
+		},
+		{
+			"name": "dot",
+			"style": {
+				"foreground": 252,
+			},
+		},
+		{
+			"name": "dotDot",
+			"style": {
+				"foreground": 248,
+			},
+		},
+		{
+			"name": "semi",
+			"style": {
+				"foreground": 254,
+			},
+		},
 
-    /* Operators */
-    {
-      "name": "operator",
-      "style": {
-        "foreground": 201
-      }
-    },
-    {
-      "name": "wordOperator",
-      "style": {
-        "foreground": 203
-      }
-    },
-    {
-      "name": "operatorIn",
-      "style": {
-        "foreground": 202
-      }
-    },
-    {
-      "name": "operatorString",
-      "style": {
-        "foreground": 204
-      }
-    },
-    {
-      "name": "operatorEquals",
-      "style": {
-        "foreground": 197
-      }
-    },
-    {
-      "name": "operatorNotEquals",
-      "style": {
-        "foreground": 198
-      }
-    },
-    {
-      "name": "operatorLessThan",
-      "style": {
-        "foreground": 199
-      }
-    },
-    {
-      "name": "operatorGreaterThan",
-      "style": {
-        "foreground": 200
-      }
-    },
-    {
-      "name": "operatorLessThanOrEqual",
-      "style": {
-        "foreground": 205
-      }
-    },
-    {
-      "name": "operatorGreaterThanOrEqual",
-      "style": {
-        "foreground": 206
-      }
-    },
-    {
-      "name": "operatorAnd",
-      "style": {
-        "foreground": 207
-      }
-    },
-    {
-      "name": "operatorOr",
-      "style": {
-        "foreground": 208
-      }
-    }
-  ]
+		/* Operators */
+		{
+			"name": "operator",
+			"style": {
+				"foreground": 201,
+			},
+		},
+		{
+			"name": "wordOperator",
+			"style": {
+				"foreground": 203,
+			},
+		},
+		{
+			"name": "operatorIn",
+			"style": {
+				"foreground": 202,
+			},
+		},
+		{
+			"name": "operatorString",
+			"style": {
+				"foreground": 204,
+			},
+		},
+		{
+			"name": "operatorEquals",
+			"style": {
+				"foreground": 197,
+			},
+		},
+		{
+			"name": "operatorNotEquals",
+			"style": {
+				"foreground": 198,
+			},
+		},
+		{
+			"name": "operatorLessThan",
+			"style": {
+				"foreground": 199,
+			},
+		},
+		{
+			"name": "operatorGreaterThan",
+			"style": {
+				"foreground": 200,
+			},
+		},
+		{
+			"name": "operatorLessThanOrEqual",
+			"style": {
+				"foreground": 205,
+			},
+		},
+		{
+			"name": "operatorGreaterThanOrEqual",
+			"style": {
+				"foreground": 206,
+			},
+		},
+		{
+			"name": "operatorAnd",
+			"style": {
+				"foreground": 207,
+			},
+		},
+		{
+			"name": "operatorOr",
+			"style": {
+				"foreground": 208,
+			},
+		},
+	],
 }

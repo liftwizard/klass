@@ -1,9 +1,9 @@
 {
-  key: null,
-  value: null,
-  target: {
     key: null,
-    sourceKey: null,
     value: null,
-  },
+    target: {
+        key: null,
+        sourceKey: null,
+        value: null,
+    },
 }
