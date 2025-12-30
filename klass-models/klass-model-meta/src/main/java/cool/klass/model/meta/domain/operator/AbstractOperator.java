@@ -31,39 +31,39 @@ import org.antlr.v4.runtime.ParserRuleContext;
 
 public abstract class AbstractOperator extends AbstractElement implements Operator {
 
-    @Nonnull
-    private final String operatorText;
+	@Nonnull
+	private final String operatorText;
 
-    protected AbstractOperator(
-        @Nonnull ParserRuleContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        @Nonnull String operatorText
-    ) {
-        super(elementContext, macroElement, sourceCode);
-        this.operatorText = Objects.requireNonNull(operatorText);
-    }
+	protected AbstractOperator(
+		@Nonnull ParserRuleContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		@Nonnull String operatorText
+	) {
+		super(elementContext, macroElement, sourceCode);
+		this.operatorText = Objects.requireNonNull(operatorText);
+	}
 
-    @Override
-    @Nonnull
-    public String getOperatorText() {
-        return this.operatorText;
-    }
+	@Override
+	@Nonnull
+	public String getOperatorText() {
+		return this.operatorText;
+	}
 
-    public abstract static class AbstractOperatorBuilder<BuiltElement extends AbstractOperator>
-        extends ElementBuilder<BuiltElement> {
+	public abstract static class AbstractOperatorBuilder<BuiltElement extends AbstractOperator>
+		extends ElementBuilder<BuiltElement> {
 
-        @Nonnull
-        protected final String operatorText;
+		@Nonnull
+		protected final String operatorText;
 
-        protected AbstractOperatorBuilder(
-            @Nonnull ParserRuleContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            @Nonnull String operatorText
-        ) {
-            super(elementContext, macroElement, sourceCode);
-            this.operatorText = Objects.requireNonNull(operatorText);
-        }
-    }
+		protected AbstractOperatorBuilder(
+			@Nonnull ParserRuleContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			@Nonnull String operatorText
+		) {
+			super(elementContext, macroElement, sourceCode);
+			this.operatorText = Objects.requireNonNull(operatorText);
+		}
+	}
 }

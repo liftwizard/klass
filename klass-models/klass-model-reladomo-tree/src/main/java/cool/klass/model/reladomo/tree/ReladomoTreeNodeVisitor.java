@@ -17,15 +17,15 @@
 package cool.klass.model.reladomo.tree;
 
 public interface ReladomoTreeNodeVisitor {
-    void visitRoot(RootReladomoTreeNode node);
+	void visitRoot(RootReladomoTreeNode node);
 
-    void visitDataTypeProperty(DataTypePropertyReladomoTreeNode node);
+	void visitDataTypeProperty(DataTypePropertyReladomoTreeNode node);
 
-    void visitSuperClass(SuperClassReladomoTreeNode node);
+	void visitSuperClass(SuperClassReladomoTreeNode node);
 
-    void visitSubClass(SubClassReladomoTreeNode node);
+	void visitSubClass(SubClassReladomoTreeNode node);
 
-    void visitReferenceProperty(ReferencePropertyReladomoTreeNode node);
+	void visitReferenceProperty(ReferencePropertyReladomoTreeNode node);
 
-    void visit(ReferenceReladomoTreeNode node);
+	void visit(ReferenceReladomoTreeNode node);
 }

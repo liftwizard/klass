@@ -32,170 +32,170 @@ import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
 
 public class JsonTypeCheckingPrimitiveTypeVisitor implements PrimitiveTypeVisitor {
 
-    @Nonnull
-    private final ContextStack contextStack;
+	@Nonnull
+	private final ContextStack contextStack;
 
-    @Nonnull
-    private final PrimitiveProperty primitiveProperty;
+	@Nonnull
+	private final PrimitiveProperty primitiveProperty;
 
-    @Nonnull
-    private final JsonNode jsonDataTypeValue;
+	@Nonnull
+	private final JsonNode jsonDataTypeValue;
 
-    public JsonTypeCheckingPrimitiveTypeVisitor(
-        ContextStack contextStack,
-        PrimitiveProperty primitiveProperty,
-        JsonNode jsonDataTypeValue
-    ) {
-        this.contextStack = Objects.requireNonNull(contextStack);
+	public JsonTypeCheckingPrimitiveTypeVisitor(
+		ContextStack contextStack,
+		PrimitiveProperty primitiveProperty,
+		JsonNode jsonDataTypeValue
+	) {
+		this.contextStack = Objects.requireNonNull(contextStack);
 
-        this.primitiveProperty = Objects.requireNonNull(primitiveProperty);
-        this.jsonDataTypeValue = Objects.requireNonNull(jsonDataTypeValue);
-    }
+		this.primitiveProperty = Objects.requireNonNull(primitiveProperty);
+		this.jsonDataTypeValue = Objects.requireNonNull(jsonDataTypeValue);
+	}
 
-    private void emitTypeError() {
-        String error = String.format(
-            "Expected property with type '%s.%s: %s%s' but got '%s' with type '%s'.",
-            this.primitiveProperty.getOwningClassifier().getName(),
-            this.primitiveProperty.getName(),
-            this.primitiveProperty.getType().getPrettyName(),
-            this.primitiveProperty.isOptional() ? "?" : "",
-            this.jsonDataTypeValue,
-            this.jsonDataTypeValue.getNodeType().toString().toLowerCase(Locale.ROOT)
-        );
-        this.contextStack.addError(error);
-    }
+	private void emitTypeError() {
+		String error = String.format(
+			"Expected property with type '%s.%s: %s%s' but got '%s' with type '%s'.",
+			this.primitiveProperty.getOwningClassifier().getName(),
+			this.primitiveProperty.getName(),
+			this.primitiveProperty.getType().getPrettyName(),
+			this.primitiveProperty.isOptional() ? "?" : "",
+			this.jsonDataTypeValue,
+			this.jsonDataTypeValue.getNodeType().toString().toLowerCase(Locale.ROOT)
+		);
+		this.contextStack.addError(error);
+	}
 
-    // TODO: Test nullable primitives
+	// TODO: Test nullable primitives
 
-    @Override
-    public void visitString() {
-        if (!this.jsonDataTypeValue.isTextual()) {
-            this.emitTypeError();
-        }
-    }
+	@Override
+	public void visitString() {
+		if (!this.jsonDataTypeValue.isTextual()) {
+			this.emitTypeError();
+		}
+	}
 
-    @Override
-    public void visitInteger() {
-        if (!this.jsonDataTypeValue.isIntegralNumber() || !this.jsonDataTypeValue.canConvertToInt()) {
-            this.emitTypeError();
-        }
-    }
+	@Override
+	public void visitInteger() {
+		if (!this.jsonDataTypeValue.isIntegralNumber() || !this.jsonDataTypeValue.canConvertToInt()) {
+			this.emitTypeError();
+		}
+	}
 
-    @Override
-    public void visitLong() {
-        if (!this.jsonDataTypeValue.isIntegralNumber() || !this.jsonDataTypeValue.canConvertToLong()) {
-            this.emitTypeError();
-        }
-    }
+	@Override
+	public void visitLong() {
+		if (!this.jsonDataTypeValue.isIntegralNumber() || !this.jsonDataTypeValue.canConvertToLong()) {
+			this.emitTypeError();
+		}
+	}
 
-    @Override
-    public void visitDouble() {
-        if (
-            !this.jsonDataTypeValue.isDouble()
-            && !this.jsonDataTypeValue.isFloat()
-            && !this.jsonDataTypeValue.isInt()
-            && !this.jsonDataTypeValue.isLong()
-        ) {
-            this.emitTypeError();
-        }
-    }
+	@Override
+	public void visitDouble() {
+		if (
+			!this.jsonDataTypeValue.isDouble()
+			&& !this.jsonDataTypeValue.isFloat()
+			&& !this.jsonDataTypeValue.isInt()
+			&& !this.jsonDataTypeValue.isLong()
+		) {
+			this.emitTypeError();
+		}
+	}
 
-    @Override
-    public void visitFloat() {
-        if (
-            (!this.jsonDataTypeValue.isDouble()
-                && !this.jsonDataTypeValue.isFloat()
-                && !this.jsonDataTypeValue.isInt()
-                && !this.jsonDataTypeValue.isLong())
-            || !this.hasValidFloatString()
-        ) {
-            this.emitTypeError();
-        }
-    }
+	@Override
+	public void visitFloat() {
+		if (
+			(!this.jsonDataTypeValue.isDouble()
+				&& !this.jsonDataTypeValue.isFloat()
+				&& !this.jsonDataTypeValue.isInt()
+				&& !this.jsonDataTypeValue.isLong())
+			|| !this.hasValidFloatString()
+		) {
+			this.emitTypeError();
+		}
+	}
 
-    private boolean hasValidFloatString() {
-        double doubleValue = this.jsonDataTypeValue.doubleValue();
-        float floatValue = this.jsonDataTypeValue.floatValue();
-        String doubleString = Double.toString(doubleValue);
-        String floatString = Float.toString(floatValue);
-        return doubleString.equals(floatString);
-    }
+	private boolean hasValidFloatString() {
+		double doubleValue = this.jsonDataTypeValue.doubleValue();
+		float floatValue = this.jsonDataTypeValue.floatValue();
+		String doubleString = Double.toString(doubleValue);
+		String floatString = Float.toString(floatValue);
+		return doubleString.equals(floatString);
+	}
 
-    @Override
-    public void visitBoolean() {
-        if (!this.jsonDataTypeValue.isBoolean()) {
-            this.emitTypeError();
-        }
-    }
+	@Override
+	public void visitBoolean() {
+		if (!this.jsonDataTypeValue.isBoolean()) {
+			this.emitTypeError();
+		}
+	}
 
-    @Override
-    public void visitInstant() {
-        this.visitTemporal();
-    }
+	@Override
+	public void visitInstant() {
+		this.visitTemporal();
+	}
 
-    @Override
-    public void visitLocalDate() {
-        if (!this.jsonDataTypeValue.isTextual()) {
-            this.emitTypeError();
-            return;
-        }
+	@Override
+	public void visitLocalDate() {
+		if (!this.jsonDataTypeValue.isTextual()) {
+			this.emitTypeError();
+			return;
+		}
 
-        String text = this.jsonDataTypeValue.textValue();
-        if (text.equals("now") || text.equals("infinity")) {
-            return;
-        }
+		String text = this.jsonDataTypeValue.textValue();
+		if (text.equals("now") || text.equals("infinity")) {
+			return;
+		}
 
-        try {
-            LocalDate.parse(text);
-        } catch (DateTimeParseException e) {
-            String error = String.format(
-                "Expected property with type '%s' but got '%s' which could not be parsed by LocalDate.parse() which expects a String like '1999-12-31.",
-                this.primitiveProperty,
-                this.jsonDataTypeValue
-            );
-            this.contextStack.addError(error);
-        }
-    }
+		try {
+			LocalDate.parse(text);
+		} catch (DateTimeParseException e) {
+			String error = String.format(
+				"Expected property with type '%s' but got '%s' which could not be parsed by LocalDate.parse() which expects a String like '1999-12-31.",
+				this.primitiveProperty,
+				this.jsonDataTypeValue
+			);
+			this.contextStack.addError(error);
+		}
+	}
 
-    @Override
-    public void visitTemporalInstant() {
-        this.visitTemporal();
-    }
+	@Override
+	public void visitTemporalInstant() {
+		this.visitTemporal();
+	}
 
-    @Override
-    public void visitTemporalRange() {
-        this.visitTemporal();
-    }
+	@Override
+	public void visitTemporalRange() {
+		this.visitTemporal();
+	}
 
-    private void visitTemporal() {
-        if (
-            this.jsonDataTypeValue.isNull()
-            && this.primitiveProperty.isTemporalInstant()
-            && this.primitiveProperty.getModifiers().anySatisfy(Modifier::isTo)
-        ) {
-            // TODO: Other validations might make this one unreachable
-            return;
-        }
+	private void visitTemporal() {
+		if (
+			this.jsonDataTypeValue.isNull()
+			&& this.primitiveProperty.isTemporalInstant()
+			&& this.primitiveProperty.getModifiers().anySatisfy(Modifier::isTo)
+		) {
+			// TODO: Other validations might make this one unreachable
+			return;
+		}
 
-        if (!this.jsonDataTypeValue.isTextual()) {
-            this.emitTypeError();
-            return;
-        }
+		if (!this.jsonDataTypeValue.isTextual()) {
+			this.emitTypeError();
+			return;
+		}
 
-        String text = this.jsonDataTypeValue.textValue();
-        if (text.equals("now") || text.equals("infinity")) {
-            return;
-        }
+		String text = this.jsonDataTypeValue.textValue();
+		if (text.equals("now") || text.equals("infinity")) {
+			return;
+		}
 
-        try {
-            Instant.parse(text);
-        } catch (DateTimeParseException e) {
-            String error = String.format(
-                "Expected property with type '%s' but got '%s' which could not be parsed by java.time.format.DateTimeFormatter.ISO_INSTANT which expects a String like '1999-12-31T23:59:59Z'",
-                this.primitiveProperty,
-                this.jsonDataTypeValue
-            );
-            this.contextStack.addError(error);
-        }
-    }
+		try {
+			Instant.parse(text);
+		} catch (DateTimeParseException e) {
+			String error = String.format(
+				"Expected property with type '%s' but got '%s' which could not be parsed by java.time.format.DateTimeFormatter.ISO_INSTANT which expects a String like '1999-12-31T23:59:59Z'",
+				this.primitiveProperty,
+				this.jsonDataTypeValue
+			);
+			this.contextStack.addError(error);
+		}
+	}
 }

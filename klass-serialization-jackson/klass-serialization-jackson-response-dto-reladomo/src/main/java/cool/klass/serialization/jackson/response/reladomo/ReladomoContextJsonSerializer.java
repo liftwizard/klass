@@ -49,176 +49,176 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public class ReladomoContextJsonSerializer extends JsonSerializer<MithraObject> {
 
-    @Nonnull
-    private final DomainModel domainModel;
+	@Nonnull
+	private final DomainModel domainModel;
 
-    @Nonnull
-    private final DataStore dataStore;
+	@Nonnull
+	private final DataStore dataStore;
 
-    @Nonnull
-    private final KlassResponseMetadata metadata;
+	@Nonnull
+	private final KlassResponseMetadata metadata;
 
-    public ReladomoContextJsonSerializer(
-        @Nonnull DomainModel domainModel,
-        @Nonnull DataStore dataStore,
-        @Nonnull KlassResponseMetadata metadata
-    ) {
-        this.domainModel = Objects.requireNonNull(domainModel);
-        this.dataStore = Objects.requireNonNull(dataStore);
-        this.metadata = Objects.requireNonNull(metadata);
-    }
+	public ReladomoContextJsonSerializer(
+		@Nonnull DomainModel domainModel,
+		@Nonnull DataStore dataStore,
+		@Nonnull KlassResponseMetadata metadata
+	) {
+		this.domainModel = Objects.requireNonNull(domainModel);
+		this.dataStore = Objects.requireNonNull(dataStore);
+		this.metadata = Objects.requireNonNull(metadata);
+	}
 
-    @Override
-    public void serialize(
-        @Nonnull MithraObject mithraObject,
-        @Nonnull JsonGenerator jsonGenerator,
-        @Nonnull SerializerProvider serializers
-    ) throws IOException {
-        Class<?> activeViewClass = serializers.getActiveView();
-        if (activeViewClass != null) {
-            throw new IllegalStateException(activeViewClass.getCanonicalName());
-        }
+	@Override
+	public void serialize(
+		@Nonnull MithraObject mithraObject,
+		@Nonnull JsonGenerator jsonGenerator,
+		@Nonnull SerializerProvider serializers
+	) throws IOException {
+		Class<?> activeViewClass = serializers.getActiveView();
+		if (activeViewClass != null) {
+			throw new IllegalStateException(activeViewClass.getCanonicalName());
+		}
 
-        Projection projection = this.metadata.getProjection();
+		Projection projection = this.metadata.getProjection();
 
-        // This would work if we consistently used the same DomainModel everywhere (instead of sometimes compiled and sometimes code generated).
-        // Projection projection = this.domainModel.getProjections().selectInstancesOf(activeView).getOnly();
-        this.serialize(mithraObject, jsonGenerator, projection);
-    }
+		// This would work if we consistently used the same DomainModel everywhere (instead of sometimes compiled and sometimes code generated).
+		// Projection projection = this.domainModel.getProjections().selectInstancesOf(activeView).getOnly();
+		this.serialize(mithraObject, jsonGenerator, projection);
+	}
 
-    private void serialize(
-        @Nonnull MithraObject mithraObject,
-        @Nonnull JsonGenerator jsonGenerator,
-        @Nonnull ProjectionParent projectionParent
-    ) throws IOException {
-        jsonGenerator.writeStartObject();
-        try {
-            if (projectionParent.hasPolymorphicChildren()) {
-                jsonGenerator.writeStringField("__typename", mithraObject.getClass().getCanonicalName());
-            }
+	private void serialize(
+		@Nonnull MithraObject mithraObject,
+		@Nonnull JsonGenerator jsonGenerator,
+		@Nonnull ProjectionParent projectionParent
+	) throws IOException {
+		jsonGenerator.writeStartObject();
+		try {
+			if (projectionParent.hasPolymorphicChildren()) {
+				jsonGenerator.writeStringField("__typename", mithraObject.getClass().getCanonicalName());
+			}
 
-            this.handleObjectMembers(mithraObject, jsonGenerator, projectionParent);
-        } finally {
-            jsonGenerator.writeEndObject();
-        }
-    }
+			this.handleObjectMembers(mithraObject, jsonGenerator, projectionParent);
+		} finally {
+			jsonGenerator.writeEndObject();
+		}
+	}
 
-    private void handleObjectMembers(
-        @Nonnull MithraObject mithraObject,
-        @Nonnull JsonGenerator jsonGenerator,
-        @Nonnull ProjectionParent projectionParent
-    ) throws IOException {
-        Objects.requireNonNull(mithraObject);
-        // TODO: Use listener?
-        ImmutableList<? extends ProjectionChild> children = projectionParent.getChildren();
-        for (ProjectionElement projectionElement : children) {
-            if (projectionElement instanceof ProjectionDataTypeProperty dataTypeProperty) {
-                this.handleProjectionPrimitiveMember(jsonGenerator, mithraObject, dataTypeProperty);
-            } else if (projectionElement instanceof ProjectionWithReferenceProperty referenceProperty) {
-                this.handleProjectionWithReferenceProperty(jsonGenerator, mithraObject, referenceProperty);
-            } else {
-                throw new AssertionError(projectionElement.getClass().getSimpleName());
-            }
-        }
-    }
+	private void handleObjectMembers(
+		@Nonnull MithraObject mithraObject,
+		@Nonnull JsonGenerator jsonGenerator,
+		@Nonnull ProjectionParent projectionParent
+	) throws IOException {
+		Objects.requireNonNull(mithraObject);
+		// TODO: Use listener?
+		ImmutableList<? extends ProjectionChild> children = projectionParent.getChildren();
+		for (ProjectionElement projectionElement : children) {
+			if (projectionElement instanceof ProjectionDataTypeProperty dataTypeProperty) {
+				this.handleProjectionPrimitiveMember(jsonGenerator, mithraObject, dataTypeProperty);
+			} else if (projectionElement instanceof ProjectionWithReferenceProperty referenceProperty) {
+				this.handleProjectionWithReferenceProperty(jsonGenerator, mithraObject, referenceProperty);
+			} else {
+				throw new AssertionError(projectionElement.getClass().getSimpleName());
+			}
+		}
+	}
 
-    private void handleProjectionPrimitiveMember(
-        @Nonnull JsonGenerator jsonGenerator,
-        MithraObject mithraObject,
-        @Nonnull ProjectionDataTypeProperty projectionPrimitiveMember
-    ) throws IOException {
-        Objects.requireNonNull(mithraObject);
+	private void handleProjectionPrimitiveMember(
+		@Nonnull JsonGenerator jsonGenerator,
+		MithraObject mithraObject,
+		@Nonnull ProjectionDataTypeProperty projectionPrimitiveMember
+	) throws IOException {
+		Objects.requireNonNull(mithraObject);
 
-        if (projectionPrimitiveMember.isPolymorphic()) {
-            Classifier classifier = projectionPrimitiveMember.getProperty().getOwningClassifier();
-            if (!this.dataStore.isInstanceOf(mithraObject, classifier)) {
-                return;
-            }
-        }
+		if (projectionPrimitiveMember.isPolymorphic()) {
+			Classifier classifier = projectionPrimitiveMember.getProperty().getOwningClassifier();
+			if (!this.dataStore.isInstanceOf(mithraObject, classifier)) {
+				return;
+			}
+		}
 
-        DataTypeProperty property = projectionPrimitiveMember.getProperty();
-        String propertyName = property.getName();
-        DataType dataType = property.getType();
+		DataTypeProperty property = projectionPrimitiveMember.getProperty();
+		String propertyName = property.getName();
+		DataType dataType = property.getType();
 
-        Object dataTypeValue = this.dataStore.getDataTypeProperty(mithraObject, property);
-        if (dataTypeValue == null) {
-            // TODO: Make this configurable
-            jsonGenerator.writeNullField(propertyName);
-            return;
-        }
+		Object dataTypeValue = this.dataStore.getDataTypeProperty(mithraObject, property);
+		if (dataTypeValue == null) {
+			// TODO: Make this configurable
+			jsonGenerator.writeNullField(propertyName);
+			return;
+		}
 
-        if (dataType instanceof Enumeration) {
-            EnumerationLiteral enumerationLiteral = (EnumerationLiteral) dataTypeValue;
-            jsonGenerator.writeStringField(propertyName, enumerationLiteral.getPrettyName());
-            return;
-        }
+		if (dataType instanceof Enumeration) {
+			EnumerationLiteral enumerationLiteral = (EnumerationLiteral) dataTypeValue;
+			jsonGenerator.writeStringField(propertyName, enumerationLiteral.getPrettyName());
+			return;
+		}
 
-        if (dataType instanceof PrimitiveType primitiveType) {
-            PrimitiveTypeVisitor visitor = new SerializeValueToJsonFieldPrimitiveTypeVisitor(
-                jsonGenerator,
-                propertyName,
-                dataTypeValue
-            );
-            primitiveType.visit(visitor);
-            return;
-        }
+		if (dataType instanceof PrimitiveType primitiveType) {
+			PrimitiveTypeVisitor visitor = new SerializeValueToJsonFieldPrimitiveTypeVisitor(
+				jsonGenerator,
+				propertyName,
+				dataTypeValue
+			);
+			primitiveType.visit(visitor);
+			return;
+		}
 
-        throw new AssertionError("Unhandled data type: " + dataType.getClass().getCanonicalName());
-    }
+		throw new AssertionError("Unhandled data type: " + dataType.getClass().getCanonicalName());
+	}
 
-    public void handleProjectionWithReferenceProperty(
-        @Nonnull JsonGenerator jsonGenerator,
-        MithraObject mithraObject,
-        @Nonnull ProjectionWithReferenceProperty projectionWithAssociationEnd
-    ) throws IOException {
-        if (projectionWithAssociationEnd.isPolymorphic()) {
-            Classifier classifier = projectionWithAssociationEnd.getProperty().getOwningClassifier();
-            if (!this.dataStore.isInstanceOf(mithraObject, classifier)) {
-                return;
-            }
-        }
+	public void handleProjectionWithReferenceProperty(
+		@Nonnull JsonGenerator jsonGenerator,
+		MithraObject mithraObject,
+		@Nonnull ProjectionWithReferenceProperty projectionWithAssociationEnd
+	) throws IOException {
+		if (projectionWithAssociationEnd.isPolymorphic()) {
+			Classifier classifier = projectionWithAssociationEnd.getProperty().getOwningClassifier();
+			if (!this.dataStore.isInstanceOf(mithraObject, classifier)) {
+				return;
+			}
+		}
 
-        ReferenceProperty referenceProperty = projectionWithAssociationEnd.getProperty();
-        Multiplicity multiplicity = referenceProperty.getMultiplicity();
-        String associationEndName = referenceProperty.getName();
+		ReferenceProperty referenceProperty = projectionWithAssociationEnd.getProperty();
+		Multiplicity multiplicity = referenceProperty.getMultiplicity();
+		String associationEndName = referenceProperty.getName();
 
-        if (multiplicity.isToMany()) {
-            Object value = this.dataStore.getToMany(mithraObject, referenceProperty);
-            MithraList<MithraObject> mithraList = (MithraList<MithraObject>) Objects.requireNonNull(value);
+		if (multiplicity.isToMany()) {
+			Object value = this.dataStore.getToMany(mithraObject, referenceProperty);
+			MithraList<MithraObject> mithraList = (MithraList<MithraObject>) Objects.requireNonNull(value);
 
-            // TODO: Add configuration to disable serialization of empty lists
-            jsonGenerator.writeArrayFieldStart(associationEndName);
-            try {
-                mithraList.forEachWithCursor((eachChildValue) ->
-                    this.recurse((MithraObject) eachChildValue, jsonGenerator, projectionWithAssociationEnd)
-                );
-            } finally {
-                jsonGenerator.writeEndArray();
-            }
-        } else {
-            Object value = this.dataStore.getToOne(mithraObject, referenceProperty);
-            // TODO: Add configuration to disable serialization of null values
-            if (value == null) {
-                // Should only happen for to-one optional relationships
-                jsonGenerator.writeNullField(associationEndName);
-                return;
-            }
+			// TODO: Add configuration to disable serialization of empty lists
+			jsonGenerator.writeArrayFieldStart(associationEndName);
+			try {
+				mithraList.forEachWithCursor((eachChildValue) ->
+					this.recurse((MithraObject) eachChildValue, jsonGenerator, projectionWithAssociationEnd)
+				);
+			} finally {
+				jsonGenerator.writeEndArray();
+			}
+		} else {
+			Object value = this.dataStore.getToOne(mithraObject, referenceProperty);
+			// TODO: Add configuration to disable serialization of null values
+			if (value == null) {
+				// Should only happen for to-one optional relationships
+				jsonGenerator.writeNullField(associationEndName);
+				return;
+			}
 
-            jsonGenerator.writeFieldName(associationEndName);
-            this.recurse((MithraObject) value, jsonGenerator, projectionWithAssociationEnd);
-        }
-    }
+			jsonGenerator.writeFieldName(associationEndName);
+			this.recurse((MithraObject) value, jsonGenerator, projectionWithAssociationEnd);
+		}
+	}
 
-    public boolean recurse(
-        @Nonnull MithraObject eachChildValue,
-        @Nonnull JsonGenerator jsonGenerator,
-        @Nonnull ProjectionParent projectionParent
-    ) {
-        try {
-            this.serialize(eachChildValue, jsonGenerator, projectionParent);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return true;
-    }
+	public boolean recurse(
+		@Nonnull MithraObject eachChildValue,
+		@Nonnull JsonGenerator jsonGenerator,
+		@Nonnull ProjectionParent projectionParent
+	) {
+		try {
+			this.serialize(eachChildValue, jsonGenerator, projectionParent);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		return true;
+	}
 }

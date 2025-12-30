@@ -33,78 +33,78 @@ import org.eclipse.collections.api.stack.MutableStack;
 
 public class AssertValuesMatchPropertyVisitor implements PropertyVisitor {
 
-    @Nonnull
-    private final JsonNode jsonDataTypeValue;
+	@Nonnull
+	private final JsonNode jsonDataTypeValue;
 
-    private final Object value;
+	private final Object value;
 
-    @Nonnull
-    private final String propertyKind;
+	@Nonnull
+	private final String propertyKind;
 
-    @Nonnull
-    private final MutableStack<String> contextStack;
+	@Nonnull
+	private final MutableStack<String> contextStack;
 
-    @Nonnull
-    private final String severity;
+	@Nonnull
+	private final String severity;
 
-    @Nonnull
-    private final MutableList<String> annotations;
+	@Nonnull
+	private final MutableList<String> annotations;
 
-    public AssertValuesMatchPropertyVisitor(
-        @Nonnull JsonNode jsonDataTypeValue,
-        Object value,
-        @Nonnull String propertyKind,
-        @Nonnull MutableStack<String> contextStack,
-        @Nonnull String severity,
-        @Nonnull MutableList<String> annotations
-    ) {
-        this.jsonDataTypeValue = Objects.requireNonNull(jsonDataTypeValue);
-        this.value = value;
-        this.propertyKind = Objects.requireNonNull(propertyKind);
-        this.contextStack = Objects.requireNonNull(contextStack);
-        this.severity = Objects.requireNonNull(severity);
-        this.annotations = Objects.requireNonNull(annotations);
-    }
+	public AssertValuesMatchPropertyVisitor(
+		@Nonnull JsonNode jsonDataTypeValue,
+		Object value,
+		@Nonnull String propertyKind,
+		@Nonnull MutableStack<String> contextStack,
+		@Nonnull String severity,
+		@Nonnull MutableList<String> annotations
+	) {
+		this.jsonDataTypeValue = Objects.requireNonNull(jsonDataTypeValue);
+		this.value = value;
+		this.propertyKind = Objects.requireNonNull(propertyKind);
+		this.contextStack = Objects.requireNonNull(contextStack);
+		this.severity = Objects.requireNonNull(severity);
+		this.annotations = Objects.requireNonNull(annotations);
+	}
 
-    @Override
-    public void visitPrimitiveProperty(@Nonnull PrimitiveProperty primitiveProperty) {
-        PrimitiveTypeVisitor visitor = new AssertValuesMatchPrimitiveTypeVisitor(
-            primitiveProperty,
-            this.jsonDataTypeValue,
-            this.value,
-            this.propertyKind,
-            this.contextStack,
-            this.severity,
-            this.annotations
-        );
-        primitiveProperty.getType().visit(visitor);
-    }
+	@Override
+	public void visitPrimitiveProperty(@Nonnull PrimitiveProperty primitiveProperty) {
+		PrimitiveTypeVisitor visitor = new AssertValuesMatchPrimitiveTypeVisitor(
+			primitiveProperty,
+			this.jsonDataTypeValue,
+			this.value,
+			this.propertyKind,
+			this.contextStack,
+			this.severity,
+			this.annotations
+		);
+		primitiveProperty.getType().visit(visitor);
+	}
 
-    @Override
-    public void visitEnumerationProperty(@Nonnull EnumerationProperty enumerationProperty) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitEnumerationProperty() not implemented yet"
-        );
-    }
+	@Override
+	public void visitEnumerationProperty(@Nonnull EnumerationProperty enumerationProperty) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitEnumerationProperty() not implemented yet"
+		);
+	}
 
-    @Override
-    public void visitAssociationEndSignature(AssociationEndSignature associationEndSignature) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitAssociationEndSignature() not implemented yet"
-        );
-    }
+	@Override
+	public void visitAssociationEndSignature(AssociationEndSignature associationEndSignature) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitAssociationEndSignature() not implemented yet"
+		);
+	}
 
-    @Override
-    public void visitAssociationEnd(@Nonnull AssociationEnd associationEnd) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitAssociationEnd() not implemented yet"
-        );
-    }
+	@Override
+	public void visitAssociationEnd(@Nonnull AssociationEnd associationEnd) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitAssociationEnd() not implemented yet"
+		);
+	}
 
-    @Override
-    public void visitParameterizedProperty(@Nonnull ParameterizedProperty parameterizedProperty) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitParameterizedProperty() not implemented yet"
-        );
-    }
+	@Override
+	public void visitParameterizedProperty(@Nonnull ParameterizedProperty parameterizedProperty) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitParameterizedProperty() not implemented yet"
+		);
+	}
 }

@@ -34,56 +34,56 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public class AntlrNullLiteral extends AbstractAntlrLiteralValue {
 
-    private NullLiteralBuilder elementBuilder;
+	private NullLiteralBuilder elementBuilder;
 
-    public AntlrNullLiteral(
-        @Nonnull NullLiteralContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        @Nonnull IAntlrElement expressionValueOwner
-    ) {
-        super(elementContext, compilationUnit, expressionValueOwner);
-    }
+	public AntlrNullLiteral(
+		@Nonnull NullLiteralContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		@Nonnull IAntlrElement expressionValueOwner
+	) {
+		super(elementContext, compilationUnit, expressionValueOwner);
+	}
 
-    @Override
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {}
+	@Override
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {}
 
-    @Nonnull
-    @Override
-    public NullLiteralBuilder build() {
-        if (this.elementBuilder != null) {
-            throw new IllegalStateException();
-        }
-        this.elementBuilder = new NullLiteralBuilder(
-            (NullLiteralContext) this.elementContext,
-            this.getMacroElementBuilder(),
-            this.getSourceCodeBuilder()
-        );
-        return this.elementBuilder;
-    }
+	@Nonnull
+	@Override
+	public NullLiteralBuilder build() {
+		if (this.elementBuilder != null) {
+			throw new IllegalStateException();
+		}
+		this.elementBuilder = new NullLiteralBuilder(
+			(NullLiteralContext) this.elementContext,
+			this.getMacroElementBuilder(),
+			this.getSourceCodeBuilder()
+		);
+		return this.elementBuilder;
+	}
 
-    @Nonnull
-    @Override
-    public NullLiteralBuilder getElementBuilder() {
-        return Objects.requireNonNull(this.elementBuilder);
-    }
+	@Nonnull
+	@Override
+	public NullLiteralBuilder getElementBuilder() {
+		return Objects.requireNonNull(this.elementBuilder);
+	}
 
-    @Nonnull
-    @Override
-    public ImmutableList<AntlrType> getPossibleTypes() {
-        return Lists.immutable.with(
-            AntlrPrimitiveType.STRING,
-            AntlrPrimitiveType.INTEGER,
-            AntlrPrimitiveType.LONG,
-            AntlrPrimitiveType.DOUBLE,
-            AntlrPrimitiveType.FLOAT,
-            AntlrPrimitiveType.BOOLEAN,
-            AntlrPrimitiveType.INSTANT,
-            AntlrPrimitiveType.LOCAL_DATE
-        );
-    }
+	@Nonnull
+	@Override
+	public ImmutableList<AntlrType> getPossibleTypes() {
+		return Lists.immutable.with(
+			AntlrPrimitiveType.STRING,
+			AntlrPrimitiveType.INTEGER,
+			AntlrPrimitiveType.LONG,
+			AntlrPrimitiveType.DOUBLE,
+			AntlrPrimitiveType.FLOAT,
+			AntlrPrimitiveType.BOOLEAN,
+			AntlrPrimitiveType.INSTANT,
+			AntlrPrimitiveType.LOCAL_DATE
+		);
+	}
 
-    @Override
-    public void visit(AntlrExpressionValueVisitor visitor) {
-        visitor.visitNullLiteral(this);
-    }
+	@Override
+	public void visit(AntlrExpressionValueVisitor visitor) {
+		visitor.visitNullLiteral(this);
+	}
 }

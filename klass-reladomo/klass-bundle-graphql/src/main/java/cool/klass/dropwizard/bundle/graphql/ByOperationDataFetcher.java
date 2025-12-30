@@ -37,49 +37,49 @@ import org.eclipse.collections.api.factory.Lists;
 
 public class ByOperationDataFetcher implements DataFetcher<Object> {
 
-    private final Klass klass;
-    private final ReladomoDataStore dataStore;
-    private final ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter;
+	private final Klass klass;
+	private final ReladomoDataStore dataStore;
+	private final ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter;
 
-    private final RelatedFinder<?> finder;
+	private final RelatedFinder<?> finder;
 
-    public ByOperationDataFetcher(
-        Klass klass,
-        ReladomoDataStore dataStore,
-        ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
-    ) {
-        this.klass = Objects.requireNonNull(klass);
-        this.dataStore = Objects.requireNonNull(dataStore);
-        this.reladomoTreeGraphqlConverter = Objects.requireNonNull(reladomoTreeGraphqlConverter);
+	public ByOperationDataFetcher(
+		Klass klass,
+		ReladomoDataStore dataStore,
+		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
+	) {
+		this.klass = Objects.requireNonNull(klass);
+		this.dataStore = Objects.requireNonNull(dataStore);
+		this.reladomoTreeGraphqlConverter = Objects.requireNonNull(reladomoTreeGraphqlConverter);
 
-        this.finder = this.dataStore.getRelatedFinder(klass);
-    }
+		this.finder = this.dataStore.getRelatedFinder(klass);
+	}
 
-    @Override
-    public Object get(DataFetchingEnvironment environment) throws Exception {
-        Map<String, Object> arguments = environment.getArguments();
-        String inputOperation = (String) arguments.get("operation");
-        Operation operation = this.compileOperation(this.finder, inputOperation);
-        MithraList<?> result = this.finder.findMany(operation);
+	@Override
+	public Object get(DataFetchingEnvironment environment) throws Exception {
+		Map<String, Object> arguments = environment.getArguments();
+		String inputOperation = (String) arguments.get("operation");
+		Operation operation = this.compileOperation(this.finder, inputOperation);
+		MithraList<?> result = this.finder.findMany(operation);
 
-        DataFetchingFieldSelectionSet selectionSet = environment.getSelectionSet();
-        RootReladomoTreeNode rootReladomoTreeNode = this.reladomoTreeGraphqlConverter.convert(this.klass, selectionSet);
+		DataFetchingFieldSelectionSet selectionSet = environment.getSelectionSet();
+		RootReladomoTreeNode rootReladomoTreeNode = this.reladomoTreeGraphqlConverter.convert(this.klass, selectionSet);
 
-        var deepFetcherListener = new ReladomoTreeNodeDeepFetcherListener(this.dataStore, result, this.klass);
-        rootReladomoTreeNode.walk(deepFetcherListener);
+		var deepFetcherListener = new ReladomoTreeNodeDeepFetcherListener(this.dataStore, result, this.klass);
+		rootReladomoTreeNode.walk(deepFetcherListener);
 
-        var serializerVisitor = new ReladomoTreeObjectToDTOSerializerListener(this.dataStore, result, this.klass);
-        rootReladomoTreeNode.toManyAwareWalk(serializerVisitor);
+		var serializerVisitor = new ReladomoTreeObjectToDTOSerializerListener(this.dataStore, result, this.klass);
+		rootReladomoTreeNode.toManyAwareWalk(serializerVisitor);
 
-        return serializerVisitor.getResult();
-    }
+		return serializerVisitor.getResult();
+	}
 
-    private Operation compileOperation(RelatedFinder<?> relatedFinder, String inputOperation) {
-        try {
-            var compiler = new ReladomoOperationCompiler();
-            return compiler.compile(relatedFinder, inputOperation);
-        } catch (RuntimeException e) {
-            throw new LiftwizardGraphQLException(e.getMessage(), Lists.immutable.with(inputOperation), e);
-        }
-    }
+	private Operation compileOperation(RelatedFinder<?> relatedFinder, String inputOperation) {
+		try {
+			var compiler = new ReladomoOperationCompiler();
+			return compiler.compile(relatedFinder, inputOperation);
+		} catch (RuntimeException e) {
+			throw new LiftwizardGraphQLException(e.getMessage(), Lists.immutable.with(inputOperation), e);
+		}
+	}
 }

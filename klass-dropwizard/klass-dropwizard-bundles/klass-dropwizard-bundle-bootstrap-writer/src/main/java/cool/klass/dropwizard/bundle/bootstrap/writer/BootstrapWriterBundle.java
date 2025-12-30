@@ -33,35 +33,35 @@ import org.slf4j.LoggerFactory;
 @AutoService(PrioritizedBundle.class)
 public class BootstrapWriterBundle implements PrioritizedBundle {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BootstrapWriterBundle.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BootstrapWriterBundle.class);
 
-    @Override
-    public int getPriority() {
-        return -2;
-    }
+	@Override
+	public int getPriority() {
+		return -2;
+	}
 
-    @Override
-    public void runWithMdc(@Nonnull Object configuration, @Nonnull Environment environment) {
-        AbstractKlassConfiguration klassConfiguration = this.safeCastConfiguration(
-            AbstractKlassConfiguration.class,
-            configuration
-        );
-        boolean enabled = klassConfiguration.getBootstrapFactory().isEnabled();
-        if (!enabled) {
-            LOGGER.info("{} disabled.", this.getClass().getSimpleName());
-            return;
-        }
+	@Override
+	public void runWithMdc(@Nonnull Object configuration, @Nonnull Environment environment) {
+		AbstractKlassConfiguration klassConfiguration = this.safeCastConfiguration(
+			AbstractKlassConfiguration.class,
+			configuration
+		);
+		boolean enabled = klassConfiguration.getBootstrapFactory().isEnabled();
+		if (!enabled) {
+			LOGGER.info("{} disabled.", this.getClass().getSimpleName());
+			return;
+		}
 
-        LOGGER.info("Running {}.", this.getClass().getSimpleName());
+		LOGGER.info("Running {}.", this.getClass().getSimpleName());
 
-        ObjectMapper objectMapper = environment.getObjectMapper();
-        KlassFactory klassFactory = klassConfiguration.getKlassFactory();
-        DataStore dataStore = klassFactory.getDataStoreFactory().createDataStore();
-        DomainModel domainModel = klassFactory.getDomainModelFactory().createDomainModel(objectMapper);
+		ObjectMapper objectMapper = environment.getObjectMapper();
+		KlassFactory klassFactory = klassConfiguration.getKlassFactory();
+		DataStore dataStore = klassFactory.getDataStoreFactory().createDataStore();
+		DomainModel domainModel = klassFactory.getDomainModelFactory().createDomainModel(objectMapper);
 
-        KlassBootstrapWriter klassBootstrapWriter = new KlassBootstrapWriter(domainModel, dataStore);
-        klassBootstrapWriter.bootstrapMetaModel();
+		KlassBootstrapWriter klassBootstrapWriter = new KlassBootstrapWriter(domainModel, dataStore);
+		klassBootstrapWriter.bootstrapMetaModel();
 
-        LOGGER.info("Completing {}.", this.getClass().getSimpleName());
-    }
+		LOGGER.info("Completing {}.", this.getClass().getSimpleName());
+	}
 }

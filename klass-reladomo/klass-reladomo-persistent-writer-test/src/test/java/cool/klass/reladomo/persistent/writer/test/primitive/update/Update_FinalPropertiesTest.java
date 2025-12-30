@@ -32,43 +32,43 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 public class Update_FinalPropertiesTest extends AbstractUpdateValidatorTest {
 
-    @RegisterExtension
-    public final ReladomoExtensionBuilder reladomoTestExtension = new ReladomoExtensionBuilder()
-        .setRuntimeConfigurationPath("reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml")
-        .setTestDataFileNames("test-data/User.txt", "test-data/Update_FinalPropertiesTest.txt");
+	@RegisterExtension
+	public final ReladomoExtensionBuilder reladomoTestExtension = new ReladomoExtensionBuilder()
+		.setRuntimeConfigurationPath("reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml")
+		.setTestDataFileNames("test-data/User.txt", "test-data/Update_FinalPropertiesTest.txt");
 
-    private Object persistentInstance;
+	private Object persistentInstance;
 
-    @BeforeEach
-    void setUp() {
-        Klass klass = this.getKlass();
-        DataTypeProperty keyProperty = (DataTypeProperty) klass.getPropertyByName("id").get();
+	@BeforeEach
+	void setUp() {
+		Klass klass = this.getKlass();
+		DataTypeProperty keyProperty = (DataTypeProperty) klass.getPropertyByName("id").get();
 
-        ImmutableMap<DataTypeProperty, Object> keys = Maps.immutable.with(keyProperty, 1L);
+		ImmutableMap<DataTypeProperty, Object> keys = Maps.immutable.with(keyProperty, 1L);
 
-        this.persistentInstance = this.reladomoDataStore.findByKey(klass, keys);
-    }
+		this.persistentInstance = this.reladomoDataStore.findByKey(klass, keys);
+	}
 
-    @Test
-    void validate_mutate_final() throws IOException {
-        this.validate("validate_mutate_final", this.persistentInstance);
-    }
+	@Test
+	void validate_mutate_final() throws IOException {
+		this.validate("validate_mutate_final", this.persistentInstance);
+	}
 
-    @Nonnull
-    @Override
-    protected Klass getKlass() {
-        return this.domainModel.getClassByName("FinalProperties");
-    }
+	@Nonnull
+	@Override
+	protected Klass getKlass() {
+		return this.domainModel.getClassByName("FinalProperties");
+	}
 
-    @Nonnull
-    @Override
-    protected OperationMode getMode() {
-        return OperationMode.REPLACE;
-    }
+	@Nonnull
+	@Override
+	protected OperationMode getMode() {
+		return OperationMode.REPLACE;
+	}
 
-    @Override
-    protected ImmutableMap<DataTypeProperty, Object> getPropertyDataFromUrl() {
-        DataTypeProperty dataTypeProperty = this.getKlass().getDataTypePropertyByName("id");
-        return Maps.immutable.with(dataTypeProperty, 1L);
-    }
+	@Override
+	protected ImmutableMap<DataTypeProperty, Object> getPropertyDataFromUrl() {
+		DataTypeProperty dataTypeProperty = this.getKlass().getDataTypePropertyByName("id");
+		return Maps.immutable.with(dataTypeProperty, 1L);
+	}
 }

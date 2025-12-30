@@ -36,56 +36,56 @@ import io.liftwizard.servlet.logging.mdc.StructuredArgumentsMDCLogger;
 
 public class StackOverflowApplication extends AbstractStackOverflowApplication {
 
-    public static void main(String[] args) throws Exception {
-        new StackOverflowApplication().run(args);
-    }
+	public static void main(String[] args) throws Exception {
+		new StackOverflowApplication().run(args);
+	}
 
-    @Override
-    public void initialize(@Nonnull Bootstrap<StackOverflowConfiguration> bootstrap) {
-        super.initialize(bootstrap);
-    }
+	@Override
+	public void initialize(@Nonnull Bootstrap<StackOverflowConfiguration> bootstrap) {
+		super.initialize(bootstrap);
+	}
 
-    @Override
-    protected void initializeCommands(@Nonnull Bootstrap<StackOverflowConfiguration> bootstrap) {
-        super.initializeCommands(bootstrap);
-    }
+	@Override
+	protected void initializeCommands(@Nonnull Bootstrap<StackOverflowConfiguration> bootstrap) {
+		super.initializeCommands(bootstrap);
+	}
 
-    @Override
-    protected void initializeBundles(@Nonnull Bootstrap<StackOverflowConfiguration> bootstrap) {
-        super.initializeBundles(bootstrap);
+	@Override
+	protected void initializeBundles(@Nonnull Bootstrap<StackOverflowConfiguration> bootstrap) {
+		super.initializeBundles(bootstrap);
 
-        var structuredLogger = new StructuredArgumentsMDCLogger(bootstrap.getObjectMapper());
-        bootstrap.addBundle(new JerseyHttpLoggingBundle(structuredLogger));
-        bootstrap.addBundle(new KlassGraphQLBundle<>());
+		var structuredLogger = new StructuredArgumentsMDCLogger(bootstrap.getObjectMapper());
+		bootstrap.addBundle(new JerseyHttpLoggingBundle(structuredLogger));
+		bootstrap.addBundle(new KlassGraphQLBundle<>());
 
-        bootstrap.addBundle(
-            new MigrationsBundle<>() {
-                @Override
-                public DataSourceFactory getDataSourceFactory(StackOverflowConfiguration configuration) {
-                    return configuration.getNamedDataSourcesFactory().getNamedDataSourceFactoryByName("h2-tcp");
-                }
-            }
-        );
-    }
+		bootstrap.addBundle(
+			new MigrationsBundle<>() {
+				@Override
+				public DataSourceFactory getDataSourceFactory(StackOverflowConfiguration configuration) {
+					return configuration.getNamedDataSourcesFactory().getNamedDataSourceFactoryByName("h2-tcp");
+				}
+			}
+		);
+	}
 
-    @Override
-    protected void registerJacksonModules(@Nonnull Environment environment) {
-        super.registerJacksonModules(environment);
+	@Override
+	protected void registerJacksonModules(@Nonnull Environment environment) {
+		super.registerJacksonModules(environment);
 
-        environment.getObjectMapper().registerModule(new KlassMetaModelJacksonModule());
-    }
+		environment.getObjectMapper().registerModule(new KlassMetaModelJacksonModule());
+	}
 
-    @Override
-    public void run(@Nonnull StackOverflowConfiguration configuration, @Nonnull Environment environment)
-        throws Exception {
-        super.run(configuration, environment);
+	@Override
+	public void run(@Nonnull StackOverflowConfiguration configuration, @Nonnull Environment environment)
+		throws Exception {
+		super.run(configuration, environment);
 
-        ObjectMapper objectMapper = environment.getObjectMapper();
-        KlassFactory klassFactory = configuration.getKlassFactory();
-        DataStore dataStore = klassFactory.getDataStoreFactory().createDataStore();
-        DomainModel domainModel = klassFactory.getDomainModelFactory().createDomainModel(objectMapper);
-        Clock clock = configuration.getClockFactory().createClock();
+		ObjectMapper objectMapper = environment.getObjectMapper();
+		KlassFactory klassFactory = configuration.getKlassFactory();
+		DataStore dataStore = klassFactory.getDataStoreFactory().createDataStore();
+		DomainModel domainModel = klassFactory.getDomainModelFactory().createDomainModel(objectMapper);
+		Clock clock = configuration.getClockFactory().createClock();
 
-        environment.jersey().register(new QuestionResourceManual(domainModel, dataStore, clock));
-    }
+		environment.jersey().register(new QuestionResourceManual(domainModel, dataStore, clock));
+	}
 }

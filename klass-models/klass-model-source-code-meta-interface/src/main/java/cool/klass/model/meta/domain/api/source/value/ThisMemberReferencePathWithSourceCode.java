@@ -24,10 +24,10 @@ import cool.klass.model.meta.domain.api.value.ThisMemberReferencePath;
 import cool.klass.model.meta.grammar.KlassParser.ThisMemberReferencePathContext;
 
 public interface ThisMemberReferencePathWithSourceCode extends ThisMemberReferencePath, ElementWithSourceCode {
-    @Override
-    ThisMemberReferencePathContext getElementContext();
+	@Override
+	ThisMemberReferencePathContext getElementContext();
 
-    @Nonnull
-    @Override
-    DataTypePropertyWithSourceCode getProperty();
+	@Nonnull
+	@Override
+	DataTypePropertyWithSourceCode getProperty();
 }

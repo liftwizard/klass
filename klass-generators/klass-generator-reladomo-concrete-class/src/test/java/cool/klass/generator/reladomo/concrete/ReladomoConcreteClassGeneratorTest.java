@@ -31,29 +31,29 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 @ExtendWith(LogMarkerTestExtension.class)
 public class ReladomoConcreteClassGeneratorTest {
 
-    public static final String FULLY_QUALIFIED_PACKAGE = "cool.klass.generator.reladomo.concrete";
+	public static final String FULLY_QUALIFIED_PACKAGE = "cool.klass.generator.reladomo.concrete";
 
-    @RegisterExtension
-    final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
+	@RegisterExtension
+	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
-    @Test
-    void smokeTest() {
-        ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
+	@Test
+	void smokeTest() {
+		ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
 
-        var domainModelCompilerLoader = new DomainModelCompilerLoader(
-            klassSourcePackages,
-            Thread.currentThread().getContextClassLoader(),
-            DomainModelCompilerLoader::logCompilerError,
-            ColorSchemeProvider.getByName("dark")
-        );
+		var domainModelCompilerLoader = new DomainModelCompilerLoader(
+			klassSourcePackages,
+			Thread.currentThread().getContextClassLoader(),
+			DomainModelCompilerLoader::logCompilerError,
+			ColorSchemeProvider.getByName("dark")
+		);
 
-        DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
+		DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
 
-        var generator = new ReladomoConcreteClassGenerator(domainModel);
+		var generator = new ReladomoConcreteClassGenerator(domainModel);
 
-        Klass klass = domainModel.getClassByName("ClassWithDerivedProperty");
-        String javaSourceCode = generator.getSourceCode(klass);
-        String resourceClassPathLocation = this.getClass().getSimpleName() + ".smokeTest.java";
-        this.fileMatchExtension.assertFileContents(resourceClassPathLocation, javaSourceCode);
-    }
+		Klass klass = domainModel.getClassByName("ClassWithDerivedProperty");
+		String javaSourceCode = generator.getSourceCode(klass);
+		String resourceClassPathLocation = this.getClass().getSimpleName() + ".smokeTest.java";
+		this.fileMatchExtension.assertFileContents(resourceClassPathLocation, javaSourceCode);
+	}
 }

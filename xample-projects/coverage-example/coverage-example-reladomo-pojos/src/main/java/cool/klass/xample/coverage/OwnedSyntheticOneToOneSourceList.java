@@ -22,17 +22,17 @@ import com.gs.fw.finder.Operation;
 
 public class OwnedSyntheticOneToOneSourceList extends OwnedSyntheticOneToOneSourceListAbstract {
 
-    public OwnedSyntheticOneToOneSourceList() {}
+	public OwnedSyntheticOneToOneSourceList() {}
 
-    public OwnedSyntheticOneToOneSourceList(int initialSize) {
-        super(initialSize);
-    }
+	public OwnedSyntheticOneToOneSourceList(int initialSize) {
+		super(initialSize);
+	}
 
-    public OwnedSyntheticOneToOneSourceList(Collection c) {
-        super(c);
-    }
+	public OwnedSyntheticOneToOneSourceList(Collection c) {
+		super(c);
+	}
 
-    public OwnedSyntheticOneToOneSourceList(Operation operation) {
-        super(operation);
-    }
+	public OwnedSyntheticOneToOneSourceList(Operation operation) {
+		super(operation);
+	}
 }

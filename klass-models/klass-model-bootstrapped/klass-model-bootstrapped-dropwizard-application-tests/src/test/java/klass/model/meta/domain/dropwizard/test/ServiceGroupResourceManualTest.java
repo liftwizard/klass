@@ -20,8 +20,8 @@ import org.junit.jupiter.api.Test;
 
 class ServiceGroupResourceManualTest extends AbstractResourceTestCase {
 
-    @Test
-    void getAllMeta() {
-        this.assertUrlReturns("getAllMeta", "/meta/serviceGroup");
-    }
+	@Test
+	void getAllMeta() {
+		this.assertUrlReturns("getAllMeta", "/meta/serviceGroup");
+	}
 }
