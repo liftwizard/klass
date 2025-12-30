@@ -1,70 +1,70 @@
 fragment MinLengthPropertyValidationFragment on MinLengthPropertyValidation {
-  number
+	number
 }
 
 fragment MaxLengthPropertyValidationFragment on MaxLengthPropertyValidation {
-  number
+	number
 }
 
 fragment MinPropertyValidationFragment on MinPropertyValidation {
-  number
+	number
 }
 
 fragment MaxPropertyValidationFragment on MaxPropertyValidation {
-  number
+	number
 }
 
 fragment DataTypePropertyFragment on DataTypeProperty {
-  __typename
-  name
-  optional
-  minLengthValidation {
-    ...MinLengthPropertyValidationFragment
-  }
-  maxLengthValidation {
-    ...MaxLengthPropertyValidationFragment
-  }
-  propertyModifiers {
-    keyword
-  }
-  ... on PrimitiveProperty {
-    primitiveType
-    minValidation {
-      ...MinPropertyValidationFragment
-    }
-    maxValidation {
-      ...MaxPropertyValidationFragment
-    }
-  }
-  ... on EnumerationProperty {
-    enumeration {
-      name
-    }
-  }
+	__typename
+	name
+	optional
+	minLengthValidation {
+		...MinLengthPropertyValidationFragment
+	}
+	maxLengthValidation {
+		...MaxLengthPropertyValidationFragment
+	}
+	propertyModifiers {
+		keyword
+	}
+	... on PrimitiveProperty {
+		primitiveType
+		minValidation {
+			...MinPropertyValidationFragment
+		}
+		maxValidation {
+			...MaxPropertyValidationFragment
+		}
+	}
+	... on EnumerationProperty {
+		enumeration {
+			name
+		}
+	}
 }
 
 fragment ClassifierInterfaceMappingFragment on ClassifierInterfaceMapping {
-  superInterface {
-    name
-  }
+	superInterface {
+		name
+	}
 }
 
 fragment InterfaceFragment on Interface {
-  name
-  packageName
-  superInterfaces {
-    ...ClassifierInterfaceMappingFragment
-  }
-  classifierModifiers {
-    keyword
-  }
-  dataTypeProperties {
-    ...DataTypePropertyFragment
-  }
+	name
+	packageName
+	superInterfaces {
+		...ClassifierInterfaceMappingFragment
+	}
+	classifierModifiers {
+		keyword
+	}
+	dataTypeProperties {
+		...DataTypePropertyFragment
+	}
 }
 
 query {
-  interfaces {
-    ...InterfaceFragment
-  }
+	interfaces {
+		...InterfaceFragment
+	}
 }
