@@ -1,50 +1,50 @@
 query {
-    everyTypeKeyProperties {
-        keyString
-        keyInteger
-        keyLong
-        keyDouble
-        keyFloat
-        keyBoolean
-        keyInstant
-        keyLocalDate
-        everyTypeForeignKeyProperties {
-            id
-            foreignKeyString
-            foreignKeyInteger
-            foreignKeyLong
-            foreignKeyDouble
-            foreignKeyFloat
-            foreignKeyBoolean
-            foreignKeyInstant
-            foreignKeyLocalDate
-            data
-        }
-        version {
-            number
-        }
-    }
-    propertiesOptionals {
-        propertiesOptionalId
-        optionalLong
-        optionalInteger
-        optionalDouble
-        optionalFloat
-        optionalString
-        optionalBoolean
-        systemFrom
-        systemTo
-        lastUpdatedBy {
-            userId
-            email
-        }
-        createdOn
-        createdBy {
-            userId
-            email
-        }
-        version {
-            number
-        }
-    }
+	everyTypeKeyProperties {
+		keyString
+		keyInteger
+		keyLong
+		keyDouble
+		keyFloat
+		keyBoolean
+		keyInstant
+		keyLocalDate
+		everyTypeForeignKeyProperties {
+			id
+			foreignKeyString
+			foreignKeyInteger
+			foreignKeyLong
+			foreignKeyDouble
+			foreignKeyFloat
+			foreignKeyBoolean
+			foreignKeyInstant
+			foreignKeyLocalDate
+			data
+		}
+		version {
+			number
+		}
+	}
+	propertiesOptionals {
+		propertiesOptionalId
+		optionalLong
+		optionalInteger
+		optionalDouble
+		optionalFloat
+		optionalString
+		optionalBoolean
+		systemFrom
+		systemTo
+		lastUpdatedBy {
+			userId
+			email
+		}
+		createdOn
+		createdBy {
+			userId
+			email
+		}
+		version {
+			number
+		}
+	}
 }

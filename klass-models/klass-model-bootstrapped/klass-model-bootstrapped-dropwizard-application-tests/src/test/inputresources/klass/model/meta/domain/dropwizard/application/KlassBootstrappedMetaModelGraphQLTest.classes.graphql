@@ -1,91 +1,91 @@
 fragment ClassifierInterfaceMappingFragment on ClassifierInterfaceMapping {
-  superInterface {
-    name
-  }
+	superInterface {
+		name
+	}
 }
 
 fragment DataTypePropertyFragment on DataTypeProperty {
-  __typename
-  name
-  optional
-  minLengthValidation {
-    ...MinLengthPropertyValidationFragment
-  }
-  maxLengthValidation {
-    ...MaxLengthPropertyValidationFragment
-  }
-  propertyModifiers {
-    keyword
-  }
-  ... on PrimitiveProperty {
-    primitiveType
-    minValidation {
-      ...MinPropertyValidationFragment
-    }
-    maxValidation {
-      ...MaxPropertyValidationFragment
-    }
-  }
-  ... on EnumerationProperty {
-    enumeration {
-      name
-    }
-  }
+	__typename
+	name
+	optional
+	minLengthValidation {
+		...MinLengthPropertyValidationFragment
+	}
+	maxLengthValidation {
+		...MaxLengthPropertyValidationFragment
+	}
+	propertyModifiers {
+		keyword
+	}
+	... on PrimitiveProperty {
+		primitiveType
+		minValidation {
+			...MinPropertyValidationFragment
+		}
+		maxValidation {
+			...MaxPropertyValidationFragment
+		}
+	}
+	... on EnumerationProperty {
+		enumeration {
+			name
+		}
+	}
 }
 
 fragment MinLengthPropertyValidationFragment on MinLengthPropertyValidation {
-  number
+	number
 }
 
 fragment MaxLengthPropertyValidationFragment on MaxLengthPropertyValidation {
-  number
+	number
 }
 
 fragment MinPropertyValidationFragment on MinPropertyValidation {
-  number
+	number
 }
 
 fragment MaxPropertyValidationFragment on MaxPropertyValidation {
-  number
+	number
 }
 
 fragment KlassFragment on Klass {
-  name
-  packageName
-  abstractClass
-  superInterfaces {
-    ...ClassifierInterfaceMappingFragment
-  }
-  classifierModifiers {
-    keyword
-  }
-  dataTypeProperties {
-    ...DataTypePropertyFragment
-  }
-  superClass {
-    name
-  }
-  parameterizedProperties {
-    ...ParameterizedPropertyFragment
-  }
+	name
+	packageName
+	abstractClass
+	superInterfaces {
+		...ClassifierInterfaceMappingFragment
+	}
+	classifierModifiers {
+		keyword
+	}
+	dataTypeProperties {
+		...DataTypePropertyFragment
+	}
+	superClass {
+		name
+	}
+	parameterizedProperties {
+		...ParameterizedPropertyFragment
+	}
 }
 
 fragment ParameterizedPropertyFragment on ParameterizedProperty {
-  name
-  multiplicity
-  resultType {
-    name
-  }
-  parameterizedPropertyOrderings {
-    ordinal
-  }
-  parameters {
-    name
-  }
+	name
+	multiplicity
+	resultType {
+		name
+	}
+	parameterizedPropertyOrderings {
+		ordinal
+	}
+	parameters {
+		name
+	}
 }
 
 query {
-  klasses {
-    ...KlassFragment
-  }
+	klasses {
+		...KlassFragment
+	}
 }
