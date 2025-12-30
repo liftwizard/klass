@@ -28,51 +28,51 @@ import org.eclipse.collections.api.map.ImmutableMap;
 
 public abstract class AbstractKlassDataGenerator {
 
-    @Nonnull
-    protected final DataStore dataStore;
+	@Nonnull
+	protected final DataStore dataStore;
 
-    protected AbstractKlassDataGenerator(@Nonnull DataStore dataStore) {
-        this.dataStore = Objects.requireNonNull(dataStore);
-    }
+	protected AbstractKlassDataGenerator(@Nonnull DataStore dataStore) {
+		this.dataStore = Objects.requireNonNull(dataStore);
+	}
 
-    protected abstract Object getNonNullValue(@Nonnull DataTypeProperty dataTypeProperty);
+	protected abstract Object getNonNullValue(@Nonnull DataTypeProperty dataTypeProperty);
 
-    protected abstract void generateIfRequired(Object persistentInstance, @Nonnull DataTypeProperty dataTypeProperty);
+	protected abstract void generateIfRequired(Object persistentInstance, @Nonnull DataTypeProperty dataTypeProperty);
 
-    public void generateIfRequired(@Nonnull Klass klass) {
-        Object persistentInstance = this.instantiate(klass);
+	public void generateIfRequired(@Nonnull Klass klass) {
+		Object persistentInstance = this.instantiate(klass);
 
-        klass
-            .getDataTypeProperties()
-            .reject(DataTypeProperty::isKey)
-            .reject(DataTypeProperty::isSystem)
-            .reject(DataTypeProperty::isDerived)
-            .each((dataTypeProperty) -> this.generateIfRequired(persistentInstance, dataTypeProperty));
+		klass
+			.getDataTypeProperties()
+			.reject(DataTypeProperty::isKey)
+			.reject(DataTypeProperty::isSystem)
+			.reject(DataTypeProperty::isDerived)
+			.each((dataTypeProperty) -> this.generateIfRequired(persistentInstance, dataTypeProperty));
 
-        this.dataStore.insert(persistentInstance);
-    }
+		this.dataStore.insert(persistentInstance);
+	}
 
-    @Nonnull
-    private Object instantiate(@Nonnull Klass klass) {
-        ImmutableList<DataTypeProperty> keyProperties = klass.getKeyProperties().reject(DataTypeProperty::isID);
-        ImmutableMap<DataTypeProperty, Object> keyValues = keyProperties.toImmutableMap(
-            (keyProperty) -> keyProperty,
-            this::getNonNullValue
-        );
+	@Nonnull
+	private Object instantiate(@Nonnull Klass klass) {
+		ImmutableList<DataTypeProperty> keyProperties = klass.getKeyProperties().reject(DataTypeProperty::isID);
+		ImmutableMap<DataTypeProperty, Object> keyValues = keyProperties.toImmutableMap(
+			(keyProperty) -> keyProperty,
+			this::getNonNullValue
+		);
 
-        if (klass.isValidTemporal()) {
-            throw new AssertionError();
-        }
-        return this.dataStore.instantiate(klass, keyValues);
-    }
+		if (klass.isValidTemporal()) {
+			throw new AssertionError();
+		}
+		return this.dataStore.instantiate(klass, keyValues);
+	}
 
-    protected final void generate(Object persistentInstance, @Nonnull DataTypeProperty dataTypeProperty) {
-        if (dataTypeProperty.isVersion()) {
-            this.dataStore.setDataTypeProperty(persistentInstance, dataTypeProperty, 1);
-            return;
-        }
+	protected final void generate(Object persistentInstance, @Nonnull DataTypeProperty dataTypeProperty) {
+		if (dataTypeProperty.isVersion()) {
+			this.dataStore.setDataTypeProperty(persistentInstance, dataTypeProperty, 1);
+			return;
+		}
 
-        Object value = this.getNonNullValue(dataTypeProperty);
-        this.dataStore.setDataTypeProperty(persistentInstance, dataTypeProperty, value);
-    }
+		Object value = this.getNonNullValue(dataTypeProperty);
+		this.dataStore.setDataTypeProperty(persistentInstance, dataTypeProperty, value);
+	}
 }

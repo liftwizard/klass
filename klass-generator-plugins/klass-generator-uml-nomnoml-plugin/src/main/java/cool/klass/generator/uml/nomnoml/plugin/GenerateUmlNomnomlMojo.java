@@ -30,52 +30,52 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-    name = "generate-uml-diagram-nomnoml",
-    defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
-    threadSafe = true,
-    requiresDependencyResolution = ResolutionScope.RUNTIME
+	name = "generate-uml-diagram-nomnoml",
+	defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
+	threadSafe = true,
+	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
 public class GenerateUmlNomnomlMojo extends AbstractGenerateMojo {
 
-    @Parameter(
-        property = "outputDirectory",
-        defaultValue = "${project.build.directory}/generated-resources/uml-diagram-nomnoml"
-    )
-    private File outputDirectory;
+	@Parameter(
+		property = "outputDirectory",
+		defaultValue = "${project.build.directory}/generated-resources/uml-diagram-nomnoml"
+	)
+	private File outputDirectory;
 
-    @Parameter(property = "applicationName", required = true)
-    private String applicationName;
+	@Parameter(property = "applicationName", required = true)
+	private String applicationName;
 
-    @Parameter(property = "rootPackageName", required = true)
-    private String rootPackageName;
+	@Parameter(property = "rootPackageName", required = true)
+	private String rootPackageName;
 
-    @Override
-    protected InputSource getInputSource() {
-        return InputSource.CLASSPATH;
-    }
+	@Override
+	protected InputSource getInputSource() {
+		return InputSource.CLASSPATH;
+	}
 
-    @Override
-    public void execute() throws MojoExecutionException {
-        boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
-                DomainModel domainModel = this.getDomainModel();
-                Path outputPath = this.outputDirectory.toPath();
+	@Override
+	public void execute() throws MojoExecutionException {
+		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
+				DomainModel domainModel = this.getDomainModel();
+				Path outputPath = this.outputDirectory.toPath();
 
-                UmlNomnomlGenerator generator = new UmlNomnomlGenerator(
-                    domainModel,
-                    this.rootPackageName,
-                    this.applicationName
-                );
-                generator.writeUmlDiagram(outputPath);
-                return null;
-            });
+				UmlNomnomlGenerator generator = new UmlNomnomlGenerator(
+					domainModel,
+					this.rootPackageName,
+					this.applicationName
+				);
+				generator.writeUmlDiagram(outputPath);
+				return null;
+			});
 
-        if (wasGenerated) {
-            this.getLog().info("Generated UML diagram in: " + this.outputDirectory.getPath());
-        }
+		if (wasGenerated) {
+			this.getLog().info("Generated UML diagram in: " + this.outputDirectory.getPath());
+		}
 
-        Resource resource = new Resource();
-        resource.setDirectory(this.outputDirectory.getAbsolutePath());
-        // TODO: Should be based on the output path
-        this.mavenProject.addResource(resource);
-    }
+		Resource resource = new Resource();
+		resource.setDirectory(this.outputDirectory.getAbsolutePath());
+		// TODO: Should be based on the output path
+		this.mavenProject.addResource(resource);
+	}
 }

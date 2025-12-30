@@ -39,81 +39,81 @@ import cool.klass.model.meta.grammar.KlassParser.StringLiteralContext;
 
 public class LiteralValueVisitor extends KlassBaseVisitor<AbstractAntlrLiteralValue> {
 
-    @Nonnull
-    private final CompilerState compilerState;
+	@Nonnull
+	private final CompilerState compilerState;
 
-    @Nonnull
-    private final IAntlrElement expressionValueOwner;
+	@Nonnull
+	private final IAntlrElement expressionValueOwner;
 
-    public LiteralValueVisitor(@Nonnull CompilerState compilerState, @Nonnull IAntlrElement expressionValueOwner) {
-        this.compilerState = Objects.requireNonNull(compilerState);
-        this.expressionValueOwner = Objects.requireNonNull(expressionValueOwner);
-    }
+	public LiteralValueVisitor(@Nonnull CompilerState compilerState, @Nonnull IAntlrElement expressionValueOwner) {
+		this.compilerState = Objects.requireNonNull(compilerState);
+		this.expressionValueOwner = Objects.requireNonNull(expressionValueOwner);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrIntegerLiteralValue visitIntegerLiteral(@Nonnull IntegerLiteralContext ctx) {
-        long value = Long.parseLong(ctx.getText());
-        return new AntlrIntegerLiteralValue(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            value,
-            this.expressionValueOwner
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrIntegerLiteralValue visitIntegerLiteral(@Nonnull IntegerLiteralContext ctx) {
+		long value = Long.parseLong(ctx.getText());
+		return new AntlrIntegerLiteralValue(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			value,
+			this.expressionValueOwner
+		);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrFloatingPointLiteralValue visitFloatingPointLiteral(FloatingPointLiteralContext ctx) {
-        double value = Double.parseDouble(ctx.getText());
-        return new AntlrFloatingPointLiteralValue(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            value,
-            this.expressionValueOwner
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrFloatingPointLiteralValue visitFloatingPointLiteral(FloatingPointLiteralContext ctx) {
+		double value = Double.parseDouble(ctx.getText());
+		return new AntlrFloatingPointLiteralValue(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			value,
+			this.expressionValueOwner
+		);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrBooleanLiteralValue visitBooleanLiteral(BooleanLiteralContext ctx) {
-        boolean value = Boolean.parseBoolean(ctx.getText());
-        return new AntlrBooleanLiteralValue(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            value,
-            this.expressionValueOwner
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrBooleanLiteralValue visitBooleanLiteral(BooleanLiteralContext ctx) {
+		boolean value = Boolean.parseBoolean(ctx.getText());
+		return new AntlrBooleanLiteralValue(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			value,
+			this.expressionValueOwner
+		);
+	}
 
-    @Nonnull
-    @Override
-    public AbstractAntlrLiteralValue visitCharacterLiteral(CharacterLiteralContext ctx) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitCharacterLiteral() not implemented yet"
-        );
-    }
+	@Nonnull
+	@Override
+	public AbstractAntlrLiteralValue visitCharacterLiteral(CharacterLiteralContext ctx) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitCharacterLiteral() not implemented yet"
+		);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrStringLiteralValue visitStringLiteral(@Nonnull StringLiteralContext ctx) {
-        String quotedText = ctx.getText();
-        String text = quotedText.substring(1, quotedText.length() - 1);
-        return new AntlrStringLiteralValue(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            text,
-            this.expressionValueOwner
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrStringLiteralValue visitStringLiteral(@Nonnull StringLiteralContext ctx) {
+		String quotedText = ctx.getText();
+		String text = quotedText.substring(1, quotedText.length() - 1);
+		return new AntlrStringLiteralValue(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			text,
+			this.expressionValueOwner
+		);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrNullLiteral visitNullLiteral(@Nonnull NullLiteralContext ctx) {
-        return new AntlrNullLiteral(
-            ctx,
-            Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-            this.expressionValueOwner
-        );
-    }
+	@Nonnull
+	@Override
+	public AntlrNullLiteral visitNullLiteral(@Nonnull NullLiteralContext ctx) {
+		return new AntlrNullLiteral(
+			ctx,
+			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
+			this.expressionValueOwner
+		);
+	}
 }

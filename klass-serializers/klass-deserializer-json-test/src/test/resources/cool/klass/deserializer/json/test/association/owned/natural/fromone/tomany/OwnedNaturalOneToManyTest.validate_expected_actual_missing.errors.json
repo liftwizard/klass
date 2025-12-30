@@ -1,5 +1,5 @@
 [
-  "Error at OwnedNaturalOneToManySource.value. Expected value for required property 'OwnedNaturalOneToManySource.value: String' but value was missing.",
-  "Error at OwnedNaturalOneToManySource.targets[0].key. Expected value for key property 'OwnedNaturalOneToManyTarget.key: String' but value was missing.",
-  "Error at OwnedNaturalOneToManySource.targets[0].value. Expected value for required property 'OwnedNaturalOneToManyTarget.value: String' but value was missing."
+	"Error at OwnedNaturalOneToManySource.value. Expected value for required property 'OwnedNaturalOneToManySource.value: String' but value was missing.",
+	"Error at OwnedNaturalOneToManySource.targets[0].key. Expected value for key property 'OwnedNaturalOneToManyTarget.key: String' but value was missing.",
+	"Error at OwnedNaturalOneToManySource.targets[0].value. Expected value for required property 'OwnedNaturalOneToManyTarget.value: String' but value was missing."
 ]

@@ -29,32 +29,32 @@ import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public abstract class AntlrClassReferenceProperty
-    extends AntlrReferenceProperty<AntlrClass>
-    implements AntlrClassReferenceOwner {
+	extends AntlrReferenceProperty<AntlrClass>
+	implements AntlrClassReferenceOwner {
 
-    protected AntlrClassReference classReference;
+	protected AntlrClassReference classReference;
 
-    protected AntlrClassReferenceProperty(
-        @Nonnull ParserRuleContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        int ordinal,
-        @Nonnull IdentifierContext nameContext
-    ) {
-        super(elementContext, compilationUnit, ordinal, nameContext);
-    }
+	protected AntlrClassReferenceProperty(
+		@Nonnull ParserRuleContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		int ordinal,
+		@Nonnull IdentifierContext nameContext
+	) {
+		super(elementContext, compilationUnit, ordinal, nameContext);
+	}
 
-    @Override
-    public void enterClassReference(@Nonnull AntlrClassReference classReference) {
-        if (this.classReference != null) {
-            throw new AssertionError();
-        }
+	@Override
+	public void enterClassReference(@Nonnull AntlrClassReference classReference) {
+		if (this.classReference != null) {
+			throw new AssertionError();
+		}
 
-        this.classReference = Objects.requireNonNull(classReference);
-    }
+		this.classReference = Objects.requireNonNull(classReference);
+	}
 
-    @Nonnull
-    @Override
-    public AntlrClass getType() {
-        return this.classReference.getKlass();
-    }
+	@Nonnull
+	@Override
+	public AntlrClass getType() {
+		return this.classReference.getKlass();
+	}
 }

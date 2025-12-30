@@ -22,25 +22,25 @@ import cool.klass.model.meta.domain.api.NamedElement;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public interface ProjectionElement extends NamedElement {
-    Optional<ProjectionParent> getParent();
+	Optional<ProjectionParent> getParent();
 
-    ImmutableList<? extends ProjectionChild> getChildren();
+	ImmutableList<? extends ProjectionChild> getChildren();
 
-    default int getDepth() {
-        return 1 + this.getParent().map(ProjectionElement::getDepth).orElse(0);
-    }
+	default int getDepth() {
+		return 1 + this.getParent().map(ProjectionElement::getDepth).orElse(0);
+	}
 
-    void enter(ProjectionListener listener);
+	void enter(ProjectionListener listener);
 
-    void exit(ProjectionListener listener);
+	void exit(ProjectionListener listener);
 
-    void visit(ProjectionVisitor visitor);
+	void visit(ProjectionVisitor visitor);
 
-    default void visit(ProjectionListener listener) {
-        try {
-            this.enter(listener);
-        } finally {
-            this.exit(listener);
-        }
-    }
+	default void visit(ProjectionListener listener) {
+		try {
+			this.enter(listener);
+		} finally {
+			this.exit(listener);
+		}
+	}
 }

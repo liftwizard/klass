@@ -30,49 +30,49 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-    name = "generate-liquibase-schema",
-    defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
-    threadSafe = true,
-    requiresDependencyResolution = ResolutionScope.RUNTIME
+	name = "generate-liquibase-schema",
+	defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
+	threadSafe = true,
+	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
 public class GenerateLiquibaseSchemaMojo extends AbstractGenerateMojo {
 
-    @Parameter(
-        property = "outputDirectory",
-        defaultValue = "${project.build.directory}/generated-resources/liquibase-schema"
-    )
-    private File outputDirectory;
+	@Parameter(
+		property = "outputDirectory",
+		defaultValue = "${project.build.directory}/generated-resources/liquibase-schema"
+	)
+	private File outputDirectory;
 
-    @Parameter(property = "fileName")
-    private final String fileName = "migrations-initial-schema.xml";
+	@Parameter(property = "fileName")
+	private final String fileName = "migrations-initial-schema.xml";
 
-    @Override
-    protected InputSource getInputSource() {
-        return InputSource.CLASSPATH;
-    }
+	@Override
+	protected InputSource getInputSource() {
+		return InputSource.CLASSPATH;
+	}
 
-    @Override
-    public void execute() throws MojoExecutionException {
-        boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
-                DomainModel domainModel = this.getDomainModel();
-                Path outputPath = this.outputDirectory.toPath();
+	@Override
+	public void execute() throws MojoExecutionException {
+		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
+				DomainModel domainModel = this.getDomainModel();
+				Path outputPath = this.outputDirectory.toPath();
 
-                LiquibaseSchemaGenerator generator = new LiquibaseSchemaGenerator(domainModel, this.fileName);
-                try {
-                    generator.writeFiles(outputPath);
-                } catch (RuntimeException e) {
-                    throw new MojoExecutionException(e.getMessage(), e);
-                }
-                return null;
-            });
+				LiquibaseSchemaGenerator generator = new LiquibaseSchemaGenerator(domainModel, this.fileName);
+				try {
+					generator.writeFiles(outputPath);
+				} catch (RuntimeException e) {
+					throw new MojoExecutionException(e.getMessage(), e);
+				}
+				return null;
+			});
 
-        if (wasGenerated) {
-            this.getLog().info("Generated Liquibase schema in: " + this.outputDirectory.getPath());
-        }
+		if (wasGenerated) {
+			this.getLog().info("Generated Liquibase schema in: " + this.outputDirectory.getPath());
+		}
 
-        Resource resource = new Resource();
-        resource.setDirectory(this.outputDirectory.getAbsolutePath());
-        // TODO: Should be based on the output path
-        this.mavenProject.addResource(resource);
-    }
+		Resource resource = new Resource();
+		resource.setDirectory(this.outputDirectory.getAbsolutePath());
+		// TODO: Should be based on the output path
+		this.mavenProject.addResource(resource);
+	}
 }

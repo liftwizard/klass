@@ -28,45 +28,45 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-    name = "generate-json-views",
-    defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-    threadSafe = true,
-    requiresDependencyResolution = ResolutionScope.RUNTIME
+	name = "generate-json-views",
+	defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+	threadSafe = true,
+	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
 public class GenerateJsonViewsMojo extends AbstractGenerateMojo {
 
-    @Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}/generated-sources/json-views")
-    private File outputDirectory;
+	@Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}/generated-sources/json-views")
+	private File outputDirectory;
 
-    @Parameter(property = "applicationName", required = true)
-    private String applicationName;
+	@Parameter(property = "applicationName", required = true)
+	private String applicationName;
 
-    @Parameter(property = "rootPackageName", required = true)
-    private String rootPackageName;
+	@Parameter(property = "rootPackageName", required = true)
+	private String rootPackageName;
 
-    @Override
-    protected InputSource getInputSource() {
-        return InputSource.CLASSPATH;
-    }
+	@Override
+	protected InputSource getInputSource() {
+		return InputSource.CLASSPATH;
+	}
 
-    @Override
-    public void execute() throws MojoExecutionException {
-        boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
-                DomainModel domainModel = this.getDomainModel();
-                JsonViewGenerator jsonViewGenerator = new JsonViewGenerator(
-                    domainModel,
-                    this.rootPackageName,
-                    this.applicationName
-                );
-                jsonViewGenerator.writeJsonViews(this.outputDirectory.toPath());
-                return null;
-            });
+	@Override
+	public void execute() throws MojoExecutionException {
+		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
+				DomainModel domainModel = this.getDomainModel();
+				JsonViewGenerator jsonViewGenerator = new JsonViewGenerator(
+					domainModel,
+					this.rootPackageName,
+					this.applicationName
+				);
+				jsonViewGenerator.writeJsonViews(this.outputDirectory.toPath());
+				return null;
+			});
 
-        if (wasGenerated) {
-            this.getLog().info("Generated JSON views in: " + this.outputDirectory.getPath());
-        }
+		if (wasGenerated) {
+			this.getLog().info("Generated JSON views in: " + this.outputDirectory.getPath());
+		}
 
-        String outputDirectoryPath = this.outputDirectory.getPath();
-        this.mavenProject.addCompileSourceRoot(outputDirectoryPath);
-    }
+		String outputDirectoryPath = this.outputDirectory.getPath();
+		this.mavenProject.addCompileSourceRoot(outputDirectoryPath);
+	}
 }

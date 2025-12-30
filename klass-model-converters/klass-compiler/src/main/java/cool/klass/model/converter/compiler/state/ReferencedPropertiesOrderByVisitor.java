@@ -30,35 +30,35 @@ import cool.klass.model.converter.compiler.state.value.AntlrThisMemberReferenceP
 
 public class ReferencedPropertiesOrderByVisitor implements AntlrOrderByVisitor {
 
-    private final Set<AntlrAssociationEnd> associationEndsReferencedByOrderBy = new LinkedHashSet<>();
-    private final Set<AntlrDataTypeProperty<?>> dataTypePropertiesReferencedByOrderBy = new LinkedHashSet<>();
-    private final ReferencedPropertiesExpressionValueVisitor expressionValueVisitor =
-        new ReferencedPropertiesExpressionValueVisitor();
+	private final Set<AntlrAssociationEnd> associationEndsReferencedByOrderBy = new LinkedHashSet<>();
+	private final Set<AntlrDataTypeProperty<?>> dataTypePropertiesReferencedByOrderBy = new LinkedHashSet<>();
+	private final ReferencedPropertiesExpressionValueVisitor expressionValueVisitor =
+		new ReferencedPropertiesExpressionValueVisitor();
 
-    public Set<AntlrAssociationEnd> getAssociationEndsReferencedByOrderBy() {
-        return this.associationEndsReferencedByOrderBy;
-    }
+	public Set<AntlrAssociationEnd> getAssociationEndsReferencedByOrderBy() {
+		return this.associationEndsReferencedByOrderBy;
+	}
 
-    public Set<AntlrDataTypeProperty<?>> getDataTypePropertiesReferencedByOrderBy() {
-        return this.dataTypePropertiesReferencedByOrderBy;
-    }
+	public Set<AntlrDataTypeProperty<?>> getDataTypePropertiesReferencedByOrderBy() {
+		return this.dataTypePropertiesReferencedByOrderBy;
+	}
 
-    @Override
-    public void visit(@Nonnull AntlrOrderBy orderBy) {
-        for (AntlrOrderByMemberReferencePath memberReferencePath : orderBy.getOrderByMemberReferencePaths()) {
-            this.visit(memberReferencePath);
-        }
-    }
+	@Override
+	public void visit(@Nonnull AntlrOrderBy orderBy) {
+		for (AntlrOrderByMemberReferencePath memberReferencePath : orderBy.getOrderByMemberReferencePaths()) {
+			this.visit(memberReferencePath);
+		}
+	}
 
-    private void visit(@Nonnull AntlrOrderByMemberReferencePath memberReferencePath) {
-        AntlrThisMemberReferencePath thisMemberReferencePath = memberReferencePath.getThisMemberReferencePath();
-        thisMemberReferencePath.visit(this.expressionValueVisitor);
+	private void visit(@Nonnull AntlrOrderByMemberReferencePath memberReferencePath) {
+		AntlrThisMemberReferencePath thisMemberReferencePath = memberReferencePath.getThisMemberReferencePath();
+		thisMemberReferencePath.visit(this.expressionValueVisitor);
 
-        this.associationEndsReferencedByOrderBy.addAll(
-            this.expressionValueVisitor.getAssociationEndsReferencedByCriteria()
-        );
-        this.dataTypePropertiesReferencedByOrderBy.addAll(
-            this.expressionValueVisitor.getDataTypePropertiesReferencedByCriteria()
-        );
-    }
+		this.associationEndsReferencedByOrderBy.addAll(
+			this.expressionValueVisitor.getAssociationEndsReferencedByCriteria()
+		);
+		this.dataTypePropertiesReferencedByOrderBy.addAll(
+			this.expressionValueVisitor.getDataTypePropertiesReferencedByCriteria()
+		);
+	}
 }

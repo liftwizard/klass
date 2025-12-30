@@ -1,10 +1,10 @@
 {
-  keyString: "EveryTypeKeyProperty keyString 1 ☝",
-  keyInteger: 1,
-  keyLong: 100000000000,
-  keyDouble: 1.0123456789,
-  keyFloat: 1.0123457,
-  keyBoolean: true,
-  keyInstant: "1999-12-31T23:59:00Z",
-  keyLocalDate: "1999-12-31",
+    keyString: "EveryTypeKeyProperty keyString 1 ☝",
+    keyInteger: 1,
+    keyLong: 100000000000,
+    keyDouble: 1.0123456789,
+    keyFloat: 1.0123457,
+    keyBoolean: true,
+    keyInstant: "1999-12-31T23:59:00Z",
+    keyLocalDate: "1999-12-31",
 }

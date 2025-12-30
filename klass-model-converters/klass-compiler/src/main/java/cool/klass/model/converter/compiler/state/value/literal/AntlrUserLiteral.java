@@ -36,66 +36,66 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public class AntlrUserLiteral extends AbstractAntlrLiteralValue {
 
-    @Nonnull
-    private final Optional<AntlrClass> userClass;
+	@Nonnull
+	private final Optional<AntlrClass> userClass;
 
-    private UserLiteralBuilder elementBuilder;
+	private UserLiteralBuilder elementBuilder;
 
-    public AntlrUserLiteral(
-        @Nonnull NativeLiteralContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        @Nonnull IAntlrElement expressionValueOwner,
-        @Nonnull Optional<AntlrClass> userClass
-    ) {
-        super(elementContext, compilationUnit, expressionValueOwner);
-        this.userClass = Objects.requireNonNull(userClass);
-    }
+	public AntlrUserLiteral(
+		@Nonnull NativeLiteralContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		@Nonnull IAntlrElement expressionValueOwner,
+		@Nonnull Optional<AntlrClass> userClass
+	) {
+		super(elementContext, compilationUnit, expressionValueOwner);
+		this.userClass = Objects.requireNonNull(userClass);
+	}
 
-    @Override
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        if (this.userClass.isPresent()) {
-            return;
-        }
+	@Override
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		if (this.userClass.isPresent()) {
+			return;
+		}
 
-        String message = "'user' literal requires one 'user' class in the domain model.";
-        compilerAnnotationHolder.add("ERR_USR_LIT", message, this);
-    }
+		String message = "'user' literal requires one 'user' class in the domain model.";
+		compilerAnnotationHolder.add("ERR_USR_LIT", message, this);
+	}
 
-    @Nonnull
-    @Override
-    public UserLiteralBuilder build() {
-        if (this.elementBuilder != null) {
-            throw new IllegalStateException();
-        }
+	@Nonnull
+	@Override
+	public UserLiteralBuilder build() {
+		if (this.elementBuilder != null) {
+			throw new IllegalStateException();
+		}
 
-        Optional<KlassBuilder> userElementBuilder = this.userClass.map(AntlrClass::getElementBuilder);
-        if (userElementBuilder.isEmpty()) {
-            throw new IllegalStateException();
-        }
+		Optional<KlassBuilder> userElementBuilder = this.userClass.map(AntlrClass::getElementBuilder);
+		if (userElementBuilder.isEmpty()) {
+			throw new IllegalStateException();
+		}
 
-        this.elementBuilder = new UserLiteralBuilder(
-            (NativeLiteralContext) this.elementContext,
-            this.getMacroElementBuilder(),
-            this.getSourceCodeBuilder(),
-            userElementBuilder.get()
-        );
-        return this.elementBuilder;
-    }
+		this.elementBuilder = new UserLiteralBuilder(
+			(NativeLiteralContext) this.elementContext,
+			this.getMacroElementBuilder(),
+			this.getSourceCodeBuilder(),
+			userElementBuilder.get()
+		);
+		return this.elementBuilder;
+	}
 
-    @Nonnull
-    @Override
-    public UserLiteralBuilder getElementBuilder() {
-        return Objects.requireNonNull(this.elementBuilder);
-    }
+	@Nonnull
+	@Override
+	public UserLiteralBuilder getElementBuilder() {
+		return Objects.requireNonNull(this.elementBuilder);
+	}
 
-    @Nonnull
-    @Override
-    public ImmutableList<AntlrType> getPossibleTypes() {
-        return Lists.immutable.with(AntlrPrimitiveType.STRING);
-    }
+	@Nonnull
+	@Override
+	public ImmutableList<AntlrType> getPossibleTypes() {
+		return Lists.immutable.with(AntlrPrimitiveType.STRING);
+	}
 
-    @Override
-    public void visit(AntlrExpressionValueVisitor visitor) {
-        visitor.visitUserLiteral(this);
-    }
+	@Override
+	public void visit(AntlrExpressionValueVisitor visitor) {
+		visitor.visitUserLiteral(this);
+	}
 }

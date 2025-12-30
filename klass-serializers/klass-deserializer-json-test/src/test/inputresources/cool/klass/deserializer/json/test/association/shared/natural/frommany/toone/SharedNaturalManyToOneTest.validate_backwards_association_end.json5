@@ -1,13 +1,13 @@
 {
-  value: "value",
-  target: {
-    key: "key",
     value: "value",
-    sources: [
-      {
+    target: {
         key: "key",
         value: "value",
-      },
-    ],
-  },
+        sources: [
+            {
+                key: "key",
+                value: "value",
+            },
+        ],
+    },
 }

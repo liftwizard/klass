@@ -69,256 +69,256 @@ import org.slf4j.MDC.MDCCloseable;
  * @see <a href="https://liftwizard.io/docs/graphql/bundle#liftwizardgraphqlbundle">https://liftwizard.io/docs/graphql/bundle#liftwizardgraphqlbundle</a>
  */
 public class KlassGraphQLBundle<
-    T extends Configuration & GraphQLFactoryProvider & DomainModelFactoryProvider & DataStoreFactoryProvider
+	T extends Configuration & GraphQLFactoryProvider & DomainModelFactoryProvider & DataStoreFactoryProvider
 >
-    extends GraphQLBundle<T> {
+	extends GraphQLBundle<T> {
 
-    private MetricRegistry metricRegistry;
-    private Environment environment;
+	private MetricRegistry metricRegistry;
+	private Environment environment;
 
-    @Override
-    public void initialize(@Nonnull Bootstrap<?> bootstrap) {
-        try (MDCCloseable mdc = MDC.putCloseable("liftwizard.bundle", this.getClass().getSimpleName())) {
-            this.initializeWithMdc(bootstrap);
-        }
-    }
+	@Override
+	public void initialize(@Nonnull Bootstrap<?> bootstrap) {
+		try (MDCCloseable mdc = MDC.putCloseable("liftwizard.bundle", this.getClass().getSimpleName())) {
+			this.initializeWithMdc(bootstrap);
+		}
+	}
 
-    private void initializeWithMdc(@Nonnull Bootstrap<?> bootstrap) {
-        this.metricRegistry = bootstrap.getMetricRegistry();
+	private void initializeWithMdc(@Nonnull Bootstrap<?> bootstrap) {
+		this.metricRegistry = bootstrap.getMetricRegistry();
 
-        bootstrap.addBundle(new AssetsBundle("/graphiql", "/graphiql", "index.htm", "graphiql"));
+		bootstrap.addBundle(new AssetsBundle("/graphiql", "/graphiql", "index.htm", "graphiql"));
 
-        bootstrap.addBundle(new AssetsBundle("/assets", "/graphql-playground", "index.htm", "graphql-playground"));
-    }
+		bootstrap.addBundle(new AssetsBundle("/assets", "/graphql-playground", "index.htm", "graphql-playground"));
+	}
 
-    @Override
-    public void run(T configuration, Environment environment) throws Exception {
-        this.environment = environment;
+	@Override
+	public void run(T configuration, Environment environment) throws Exception {
+		this.environment = environment;
 
-        GraphQLFactory factory = this.getGraphQLFactory(configuration);
+		GraphQLFactory factory = this.getGraphQLFactory(configuration);
 
-        PreparsedDocumentProvider provider = new CachingPreparsedDocumentProvider(
-            factory.getQueryCache(),
-            environment.metrics()
-        );
+		PreparsedDocumentProvider provider = new CachingPreparsedDocumentProvider(
+			factory.getQueryCache(),
+			environment.metrics()
+		);
 
-        GraphQLSchema schema = factory.build();
+		GraphQLSchema schema = factory.build();
 
-        GraphQLQueryInvoker queryInvoker = GraphQLQueryInvoker.newBuilder()
-            .withPreparsedDocumentProvider(provider)
-            .withInstrumentation(factory.getInstrumentations())
-            .build();
+		GraphQLQueryInvoker queryInvoker = GraphQLQueryInvoker.newBuilder()
+			.withPreparsedDocumentProvider(provider)
+			.withInstrumentation(factory.getInstrumentations())
+			.build();
 
-        GraphQLObjectMapper graphQLObjectMapper = GraphQLObjectMapper.newBuilder()
-            .withGraphQLErrorHandler(new KlassGraphQLErrorHandler())
-            .build();
+		GraphQLObjectMapper graphQLObjectMapper = GraphQLObjectMapper.newBuilder()
+			.withGraphQLErrorHandler(new KlassGraphQLErrorHandler())
+			.build();
 
-        GraphQLConfiguration config = GraphQLConfiguration.with(schema)
-            .with(queryInvoker)
-            .with(graphQLObjectMapper)
-            .build();
+		GraphQLConfiguration config = GraphQLConfiguration.with(schema)
+			.with(queryInvoker)
+			.with(graphQLObjectMapper)
+			.build();
 
-        GraphQLHttpServlet servlet = new ConfiguredGraphQLHttpServlet(config);
+		GraphQLHttpServlet servlet = new ConfiguredGraphQLHttpServlet(config);
 
-        Dynamic servletRegistration = environment.servlets().addServlet("graphql", servlet);
-        servletRegistration.setAsyncSupported(false);
-        servletRegistration.addMapping("/graphql", "/schema.json");
-    }
+		Dynamic servletRegistration = environment.servlets().addServlet("graphql", servlet);
+		servletRegistration.setAsyncSupported(false);
+		servletRegistration.addMapping("/graphql", "/schema.json");
+	}
 
-    @Nonnull
-    @Override
-    public GraphQLFactory getGraphQLFactory(@Nonnull T configuration) {
-        // the RuntimeWiring must be configured prior to the run()
-        // methods being called so the schema is connected properly.
-        GraphQLFactory factory = configuration.getGraphQLFactory();
+	@Nonnull
+	@Override
+	public GraphQLFactory getGraphQLFactory(@Nonnull T configuration) {
+		// the RuntimeWiring must be configured prior to the run()
+		// methods being called so the schema is connected properly.
+		GraphQLFactory factory = configuration.getGraphQLFactory();
 
-        // TODO: Move the Clock to Configuration
-        Clock clock = Clock.systemUTC();
+		// TODO: Move the Clock to Configuration
+		Clock clock = Clock.systemUTC();
 
-        var metricsInstrumentation = new LiftwizardGraphQLMetricsInstrumentation(this.metricRegistry, clock);
-        var loggingInstrumentation = new LiftwizardGraphQLLoggingInstrumentation();
+		var metricsInstrumentation = new LiftwizardGraphQLMetricsInstrumentation(this.metricRegistry, clock);
+		var loggingInstrumentation = new LiftwizardGraphQLLoggingInstrumentation();
 
-        List<Instrumentation> instrumentations = List.of(metricsInstrumentation, loggingInstrumentation);
-        factory.setInstrumentations(instrumentations);
+		List<Instrumentation> instrumentations = List.of(metricsInstrumentation, loggingInstrumentation);
+		factory.setInstrumentations(instrumentations);
 
-        ObjectMapper objectMapper = this.environment.getObjectMapper();
-        DomainModel domainModel = configuration.getDomainModelFactory().createDomainModel(objectMapper);
-        ReladomoDataStore dataStore = (ReladomoDataStore) configuration.getDataStoreFactory().createDataStore();
+		ObjectMapper objectMapper = this.environment.getObjectMapper();
+		DomainModel domainModel = configuration.getDomainModelFactory().createDomainModel(objectMapper);
+		ReladomoDataStore dataStore = (ReladomoDataStore) configuration.getDataStoreFactory().createDataStore();
 
-        RuntimeWiring.Builder builder = RuntimeWiring.newRuntimeWiring();
-        builder
-            .scalar(GraphQLTemporalScalar.INSTANT_INSTANCE)
-            .scalar(GraphQLTemporalScalar.TEMPORAL_INSTANT_INSTANCE)
-            .scalar(GraphQLTemporalScalar.TEMPORAL_RANGE_INSTANCE)
-            .scalar(JavaPrimitives.GraphQLLong)
-            .scalar(GraphQLLocalDateScalar.INSTANCE);
+		RuntimeWiring.Builder builder = RuntimeWiring.newRuntimeWiring();
+		builder
+			.scalar(GraphQLTemporalScalar.INSTANT_INSTANCE)
+			.scalar(GraphQLTemporalScalar.TEMPORAL_INSTANT_INSTANCE)
+			.scalar(GraphQLTemporalScalar.TEMPORAL_RANGE_INSTANCE)
+			.scalar(JavaPrimitives.GraphQLLong)
+			.scalar(GraphQLLocalDateScalar.INSTANCE);
 
-        TypeRuntimeWiring.Builder queryTypeBuilder = this.getQueryTypeBuilder(
-            domainModel,
-            dataStore,
-            new ReladomoTreeGraphqlConverter(domainModel)
-        );
-        builder.type(queryTypeBuilder);
+		TypeRuntimeWiring.Builder queryTypeBuilder = this.getQueryTypeBuilder(
+			domainModel,
+			dataStore,
+			new ReladomoTreeGraphqlConverter(domainModel)
+		);
+		builder.type(queryTypeBuilder);
 
-        domainModel.getClasses().select(Classifier::isAbstract).collect(this::getTypeResolver).each(builder::type);
+		domainModel.getClasses().select(Classifier::isAbstract).collect(this::getTypeResolver).each(builder::type);
 
-        RuntimeWiring runtimeWiring = builder.build();
-        factory.setRuntimeWiring(runtimeWiring);
-        return factory;
-    }
+		RuntimeWiring runtimeWiring = builder.build();
+		factory.setRuntimeWiring(runtimeWiring);
+		return factory;
+	}
 
-    @Nonnull
-    private TypeRuntimeWiring.Builder getQueryTypeBuilder(
-        DomainModel domainModel,
-        ReladomoDataStore dataStore,
-        ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
-    ) {
-        TypeRuntimeWiring.Builder queryTypeBuilder = new TypeRuntimeWiring.Builder();
-        queryTypeBuilder.typeName("Query");
+	@Nonnull
+	private TypeRuntimeWiring.Builder getQueryTypeBuilder(
+		DomainModel domainModel,
+		ReladomoDataStore dataStore,
+		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
+	) {
+		TypeRuntimeWiring.Builder queryTypeBuilder = new TypeRuntimeWiring.Builder();
+		queryTypeBuilder.typeName("Query");
 
-        this.handleQueryAll(queryTypeBuilder, domainModel, dataStore, reladomoTreeGraphqlConverter);
-        this.handleQueryByKey(queryTypeBuilder, domainModel, dataStore, reladomoTreeGraphqlConverter);
-        this.handleQueryByOperation(queryTypeBuilder, domainModel, dataStore, reladomoTreeGraphqlConverter);
-        this.handleQueryByFinder(queryTypeBuilder, domainModel, dataStore, reladomoTreeGraphqlConverter);
+		this.handleQueryAll(queryTypeBuilder, domainModel, dataStore, reladomoTreeGraphqlConverter);
+		this.handleQueryByKey(queryTypeBuilder, domainModel, dataStore, reladomoTreeGraphqlConverter);
+		this.handleQueryByOperation(queryTypeBuilder, domainModel, dataStore, reladomoTreeGraphqlConverter);
+		this.handleQueryByFinder(queryTypeBuilder, domainModel, dataStore, reladomoTreeGraphqlConverter);
 
-        return queryTypeBuilder;
-    }
+		return queryTypeBuilder;
+	}
 
-    private void handleQueryAll(
-        TypeRuntimeWiring.Builder queryTypeBuilder,
-        DomainModel domainModel,
-        ReladomoDataStore dataStore,
-        ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
-    ) {
-        domainModel
-            .getClasses()
-            .each((eachKlass) ->
-                this.handleQueryAll(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
-            );
-    }
+	private void handleQueryAll(
+		TypeRuntimeWiring.Builder queryTypeBuilder,
+		DomainModel domainModel,
+		ReladomoDataStore dataStore,
+		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
+	) {
+		domainModel
+			.getClasses()
+			.each((eachKlass) ->
+				this.handleQueryAll(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
+			);
+	}
 
-    private void handleQueryAll(
-        TypeRuntimeWiring.Builder queryTypeBuilder,
-        ReladomoDataStore dataStore,
-        ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter,
-        Klass klass
-    ) {
-        String propertyName = this.getPropertyName(klass);
-        AllDataFetcher allDataFetcher = new AllDataFetcher(klass, dataStore, reladomoTreeGraphqlConverter);
-        queryTypeBuilder.dataFetcher(propertyName, allDataFetcher);
-    }
+	private void handleQueryAll(
+		TypeRuntimeWiring.Builder queryTypeBuilder,
+		ReladomoDataStore dataStore,
+		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter,
+		Klass klass
+	) {
+		String propertyName = this.getPropertyName(klass);
+		AllDataFetcher allDataFetcher = new AllDataFetcher(klass, dataStore, reladomoTreeGraphqlConverter);
+		queryTypeBuilder.dataFetcher(propertyName, allDataFetcher);
+	}
 
-    private String getPropertyName(Classifier classifier) {
-        String classifierName = classifier.getName();
+	private String getPropertyName(Classifier classifier) {
+		String classifierName = classifier.getName();
 
-        String lowerUnderscore = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, classifierName);
-        MutableList<String> splits = ArrayAdapter.adapt(lowerUnderscore.split("_"));
+		String lowerUnderscore = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, classifierName);
+		MutableList<String> splits = ArrayAdapter.adapt(lowerUnderscore.split("_"));
 
-        return splits
-            .collectWithIndex((eachSplit, index) -> this.capitalizeSplit(eachSplit, index, splits.size()))
-            .makeString("");
-    }
+		return splits
+			.collectWithIndex((eachSplit, index) -> this.capitalizeSplit(eachSplit, index, splits.size()))
+			.makeString("");
+	}
 
-    private String capitalizeSplit(String eachSplit, int index, int splitsSize) {
-        return this.getCapitalized(index, this.getPluralized(index, splitsSize, eachSplit));
-    }
+	private String capitalizeSplit(String eachSplit, int index, int splitsSize) {
+		return this.getCapitalized(index, this.getPluralized(index, splitsSize, eachSplit));
+	}
 
-    private String getPluralized(int index, int splitsSize, String eachSplit) {
-        return index == splitsSize - 1 ? English.plural(eachSplit) : eachSplit;
-    }
+	private String getPluralized(int index, int splitsSize, String eachSplit) {
+		return index == splitsSize - 1 ? English.plural(eachSplit) : eachSplit;
+	}
 
-    private String getCapitalized(int index, String eachSplit) {
-        return index != 0 ? CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, eachSplit) : eachSplit;
-    }
+	private String getCapitalized(int index, String eachSplit) {
+		return index != 0 ? CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, eachSplit) : eachSplit;
+	}
 
-    private void handleQueryByKey(
-        TypeRuntimeWiring.Builder queryTypeBuilder,
-        DomainModel domainModel,
-        ReladomoDataStore dataStore,
-        ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
-    ) {
-        domainModel
-            .getClasses()
-            .each((eachKlass) ->
-                this.handleQueryByKey(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
-            );
-    }
+	private void handleQueryByKey(
+		TypeRuntimeWiring.Builder queryTypeBuilder,
+		DomainModel domainModel,
+		ReladomoDataStore dataStore,
+		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
+	) {
+		domainModel
+			.getClasses()
+			.each((eachKlass) ->
+				this.handleQueryByKey(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
+			);
+	}
 
-    private void handleQueryByKey(
-        TypeRuntimeWiring.Builder queryTypeBuilder,
-        ReladomoDataStore dataStore,
-        ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter,
-        Klass klass
-    ) {
-        String propertyName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName());
+	private void handleQueryByKey(
+		TypeRuntimeWiring.Builder queryTypeBuilder,
+		ReladomoDataStore dataStore,
+		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter,
+		Klass klass
+	) {
+		String propertyName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName());
 
-        ByKeyDataFetcher byKeyDataFetcher = new ByKeyDataFetcher(klass, dataStore, reladomoTreeGraphqlConverter);
-        queryTypeBuilder.dataFetcher(propertyName, byKeyDataFetcher);
-    }
+		ByKeyDataFetcher byKeyDataFetcher = new ByKeyDataFetcher(klass, dataStore, reladomoTreeGraphqlConverter);
+		queryTypeBuilder.dataFetcher(propertyName, byKeyDataFetcher);
+	}
 
-    private void handleQueryByOperation(
-        TypeRuntimeWiring.Builder queryTypeBuilder,
-        DomainModel domainModel,
-        ReladomoDataStore dataStore,
-        ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
-    ) {
-        domainModel
-            .getClasses()
-            .each((eachKlass) ->
-                this.handleQueryByOperation(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
-            );
-    }
+	private void handleQueryByOperation(
+		TypeRuntimeWiring.Builder queryTypeBuilder,
+		DomainModel domainModel,
+		ReladomoDataStore dataStore,
+		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
+	) {
+		domainModel
+			.getClasses()
+			.each((eachKlass) ->
+				this.handleQueryByOperation(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
+			);
+	}
 
-    private void handleQueryByOperation(
-        TypeRuntimeWiring.Builder queryTypeBuilder,
-        ReladomoDataStore dataStore,
-        ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter,
-        Klass klass
-    ) {
-        String propertyName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "ByOperation";
+	private void handleQueryByOperation(
+		TypeRuntimeWiring.Builder queryTypeBuilder,
+		ReladomoDataStore dataStore,
+		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter,
+		Klass klass
+	) {
+		String propertyName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "ByOperation";
 
-        ByOperationDataFetcher byOperationDataFetcher = new ByOperationDataFetcher(
-            klass,
-            dataStore,
-            reladomoTreeGraphqlConverter
-        );
-        queryTypeBuilder.dataFetcher(propertyName, byOperationDataFetcher);
-    }
+		ByOperationDataFetcher byOperationDataFetcher = new ByOperationDataFetcher(
+			klass,
+			dataStore,
+			reladomoTreeGraphqlConverter
+		);
+		queryTypeBuilder.dataFetcher(propertyName, byOperationDataFetcher);
+	}
 
-    private void handleQueryByFinder(
-        TypeRuntimeWiring.Builder queryTypeBuilder,
-        DomainModel domainModel,
-        ReladomoDataStore dataStore,
-        ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
-    ) {
-        domainModel
-            .getClasses()
-            .each((eachKlass) ->
-                this.handleQueryByFinder(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
-            );
-    }
+	private void handleQueryByFinder(
+		TypeRuntimeWiring.Builder queryTypeBuilder,
+		DomainModel domainModel,
+		ReladomoDataStore dataStore,
+		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
+	) {
+		domainModel
+			.getClasses()
+			.each((eachKlass) ->
+				this.handleQueryByFinder(queryTypeBuilder, dataStore, reladomoTreeGraphqlConverter, eachKlass)
+			);
+	}
 
-    private void handleQueryByFinder(
-        TypeRuntimeWiring.Builder queryTypeBuilder,
-        ReladomoDataStore dataStore,
-        ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter,
-        Klass klass
-    ) {
-        String propertyName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "ByFinder";
+	private void handleQueryByFinder(
+		TypeRuntimeWiring.Builder queryTypeBuilder,
+		ReladomoDataStore dataStore,
+		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter,
+		Klass klass
+	) {
+		String propertyName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "ByFinder";
 
-        ByFinderDataFetcher byFinderDataFetcher = new ByFinderDataFetcher(
-            klass,
-            dataStore,
-            reladomoTreeGraphqlConverter
-        );
-        queryTypeBuilder.dataFetcher(propertyName, byFinderDataFetcher);
-    }
+		ByFinderDataFetcher byFinderDataFetcher = new ByFinderDataFetcher(
+			klass,
+			dataStore,
+			reladomoTreeGraphqlConverter
+		);
+		queryTypeBuilder.dataFetcher(propertyName, byFinderDataFetcher);
+	}
 
-    private TypeRuntimeWiring.Builder getTypeResolver(Klass klass) {
-        TypeRuntimeWiring.Builder typeBuilder = new TypeRuntimeWiring.Builder();
-        typeBuilder.typeName(klass.getName());
+	private TypeRuntimeWiring.Builder getTypeResolver(Klass klass) {
+		TypeRuntimeWiring.Builder typeBuilder = new TypeRuntimeWiring.Builder();
+		typeBuilder.typeName(klass.getName());
 
-        typeBuilder.typeResolver(new KlassTypeResolver(klass));
-        return typeBuilder;
-    }
+		typeBuilder.typeResolver(new KlassTypeResolver(klass));
+		return typeBuilder;
+	}
 }

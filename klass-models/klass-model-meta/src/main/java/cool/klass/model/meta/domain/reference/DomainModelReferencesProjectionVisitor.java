@@ -40,59 +40,59 @@ import cool.klass.model.meta.grammar.KlassParser.ProjectionReferencePropertyCont
 
 public class DomainModelReferencesProjectionVisitor implements ProjectionVisitor {
 
-    @Nonnull
-    private final DomainModelReferences domainModelReferences;
+	@Nonnull
+	private final DomainModelReferences domainModelReferences;
 
-    public DomainModelReferencesProjectionVisitor(@Nonnull DomainModelReferences domainModelReferences) {
-        this.domainModelReferences = Objects.requireNonNull(domainModelReferences);
-    }
+	public DomainModelReferencesProjectionVisitor(@Nonnull DomainModelReferences domainModelReferences) {
+		this.domainModelReferences = Objects.requireNonNull(domainModelReferences);
+	}
 
-    @Override
-    public void visitProjection(Projection projection) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitProjection() not implemented yet"
-        );
-    }
+	@Override
+	public void visitProjection(Projection projection) {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".visitProjection() not implemented yet"
+		);
+	}
 
-    @Override
-    public void visitProjectionReferenceProperty(ProjectionReferenceProperty projectionReferenceProperty) {
-        ProjectionReferencePropertyWithSourceCode elementWithSourceCode =
-            (ProjectionReferencePropertyWithSourceCode) projectionReferenceProperty;
-        ProjectionReferencePropertyContext elementContext = elementWithSourceCode.getElementContext();
-        IdentifierContext reference = elementContext.identifier();
-        ReferencePropertyWithSourceCode element = elementWithSourceCode.getProperty();
+	@Override
+	public void visitProjectionReferenceProperty(ProjectionReferenceProperty projectionReferenceProperty) {
+		ProjectionReferencePropertyWithSourceCode elementWithSourceCode =
+			(ProjectionReferencePropertyWithSourceCode) projectionReferenceProperty;
+		ProjectionReferencePropertyContext elementContext = elementWithSourceCode.getElementContext();
+		IdentifierContext reference = elementContext.identifier();
+		ReferencePropertyWithSourceCode element = elementWithSourceCode.getProperty();
 
-        this.domainModelReferences.addReferencePropertyReference(reference, element);
+		this.domainModelReferences.addReferencePropertyReference(reference, element);
 
-        for (ProjectionChild projectionChild : projectionReferenceProperty.getChildren()) {
-            projectionChild.visit(this);
-        }
-    }
+		for (ProjectionChild projectionChild : projectionReferenceProperty.getChildren()) {
+			projectionChild.visit(this);
+		}
+	}
 
-    @Override
-    public void visitProjectionProjectionReference(ProjectionProjectionReference projectionProjectionReference) {
-        ProjectionProjectionReferenceWithSourceCode elementWithSourceCode =
-            (ProjectionProjectionReferenceWithSourceCode) projectionProjectionReference;
-        ProjectionProjectionReferenceContext elementContext = elementWithSourceCode.getElementContext();
-        IdentifierContext reference = elementContext.identifier();
-        ReferencePropertyWithSourceCode element = elementWithSourceCode.getProperty();
+	@Override
+	public void visitProjectionProjectionReference(ProjectionProjectionReference projectionProjectionReference) {
+		ProjectionProjectionReferenceWithSourceCode elementWithSourceCode =
+			(ProjectionProjectionReferenceWithSourceCode) projectionProjectionReference;
+		ProjectionProjectionReferenceContext elementContext = elementWithSourceCode.getElementContext();
+		IdentifierContext reference = elementContext.identifier();
+		ReferencePropertyWithSourceCode element = elementWithSourceCode.getProperty();
 
-        this.domainModelReferences.addReferencePropertyReference(reference, element);
+		this.domainModelReferences.addReferencePropertyReference(reference, element);
 
-        ProjectionReferenceContext projectionReference = elementContext.projectionReference();
-        ProjectionWithSourceCode projection = elementWithSourceCode.getProjection();
+		ProjectionReferenceContext projectionReference = elementContext.projectionReference();
+		ProjectionWithSourceCode projection = elementWithSourceCode.getProjection();
 
-        this.domainModelReferences.addProjectionReference(projectionReference, projection);
-    }
+		this.domainModelReferences.addProjectionReference(projectionReference, projection);
+	}
 
-    @Override
-    public void visitProjectionDataTypeProperty(ProjectionDataTypeProperty projectionDataTypeProperty) {
-        ProjectionDataTypePropertyWithSourceCode elementWithSourceCode =
-            (ProjectionDataTypePropertyWithSourceCode) projectionDataTypeProperty;
-        ProjectionPrimitiveMemberContext elementContext = elementWithSourceCode.getElementContext();
-        IdentifierContext reference = elementContext.identifier();
-        DataTypePropertyWithSourceCode element = elementWithSourceCode.getProperty();
+	@Override
+	public void visitProjectionDataTypeProperty(ProjectionDataTypeProperty projectionDataTypeProperty) {
+		ProjectionDataTypePropertyWithSourceCode elementWithSourceCode =
+			(ProjectionDataTypePropertyWithSourceCode) projectionDataTypeProperty;
+		ProjectionPrimitiveMemberContext elementContext = elementWithSourceCode.getElementContext();
+		IdentifierContext reference = elementContext.identifier();
+		DataTypePropertyWithSourceCode element = elementWithSourceCode.getProperty();
 
-        this.domainModelReferences.addDataTypePropertyReference(reference, element);
-    }
+		this.domainModelReferences.addDataTypePropertyReference(reference, element);
+	}
 }

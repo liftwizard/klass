@@ -29,56 +29,56 @@ import cool.klass.model.meta.grammar.KlassParser.CriteriaExpressionOrContext;
 
 public class AntlrOrCriteria extends AntlrBinaryCriteria {
 
-    private OrCriteriaBuilder elementBuilder;
+	private OrCriteriaBuilder elementBuilder;
 
-    public AntlrOrCriteria(
-        @Nonnull CriteriaExpressionOrContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        @Nonnull IAntlrElement criteriaOwner
-    ) {
-        super(elementContext, compilationUnit, criteriaOwner);
-    }
+	public AntlrOrCriteria(
+		@Nonnull CriteriaExpressionOrContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		@Nonnull IAntlrElement criteriaOwner
+	) {
+		super(elementContext, compilationUnit, criteriaOwner);
+	}
 
-    @Nonnull
-    @Override
-    public CriteriaExpressionOrContext getElementContext() {
-        return (CriteriaExpressionOrContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public CriteriaExpressionOrContext getElementContext() {
+		return (CriteriaExpressionOrContext) super.getElementContext();
+	}
 
-    @Nonnull
-    @Override
-    public OrCriteriaBuilder build() {
-        if (this.elementBuilder != null) {
-            throw new IllegalStateException();
-        }
-        this.elementBuilder = new OrCriteriaBuilder(
-            (CriteriaExpressionOrContext) this.elementContext,
-            this.getMacroElementBuilder(),
-            this.getSourceCodeBuilder(),
-            this.left.build(),
-            this.right.build()
-        );
-        return this.elementBuilder;
-    }
+	@Nonnull
+	@Override
+	public OrCriteriaBuilder build() {
+		if (this.elementBuilder != null) {
+			throw new IllegalStateException();
+		}
+		this.elementBuilder = new OrCriteriaBuilder(
+			(CriteriaExpressionOrContext) this.elementContext,
+			this.getMacroElementBuilder(),
+			this.getSourceCodeBuilder(),
+			this.left.build(),
+			this.right.build()
+		);
+		return this.elementBuilder;
+	}
 
-    @Nonnull
-    @Override
-    public OrCriteriaBuilder getElementBuilder() {
-        return Objects.requireNonNull(this.elementBuilder);
-    }
+	@Nonnull
+	@Override
+	public OrCriteriaBuilder getElementBuilder() {
+		return Objects.requireNonNull(this.elementBuilder);
+	}
 
-    @Override
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        // TODO: Error if both clauses are identical, or if any left true subclause is a subclause of the right
-        // Java | Probable bugs | Constant conditions & exceptions
+	@Override
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		// TODO: Error if both clauses are identical, or if any left true subclause is a subclause of the right
+		// Java | Probable bugs | Constant conditions & exceptions
 
-        super.reportErrors(compilerAnnotationHolder);
-    }
+		super.reportErrors(compilerAnnotationHolder);
+	}
 
-    @Override
-    public void visit(AntlrCriteriaVisitor visitor) {
-        visitor.visitOr(this);
-        this.left.visit(visitor);
-        this.right.visit(visitor);
-    }
+	@Override
+	public void visit(AntlrCriteriaVisitor visitor) {
+		visitor.visitOr(this);
+		this.left.visit(visitor);
+		this.right.visit(visitor);
+	}
 }

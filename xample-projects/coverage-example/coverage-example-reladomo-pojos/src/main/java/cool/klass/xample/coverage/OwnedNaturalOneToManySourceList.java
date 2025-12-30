@@ -22,17 +22,17 @@ import com.gs.fw.finder.Operation;
 
 public class OwnedNaturalOneToManySourceList extends OwnedNaturalOneToManySourceListAbstract {
 
-    public OwnedNaturalOneToManySourceList() {}
+	public OwnedNaturalOneToManySourceList() {}
 
-    public OwnedNaturalOneToManySourceList(int initialSize) {
-        super(initialSize);
-    }
+	public OwnedNaturalOneToManySourceList(int initialSize) {
+		super(initialSize);
+	}
 
-    public OwnedNaturalOneToManySourceList(Collection c) {
-        super(c);
-    }
+	public OwnedNaturalOneToManySourceList(Collection c) {
+		super(c);
+	}
 
-    public OwnedNaturalOneToManySourceList(Operation operation) {
-        super(operation);
-    }
+	public OwnedNaturalOneToManySourceList(Operation operation) {
+		super(operation);
+	}
 }

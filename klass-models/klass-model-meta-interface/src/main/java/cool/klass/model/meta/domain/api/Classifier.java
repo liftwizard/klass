@@ -36,145 +36,145 @@ import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
 public interface Classifier extends Type, ModifierOwner, TopLevelElement {
-    boolean isAbstract();
+	boolean isAbstract();
 
-    @Nonnull
-    ImmutableList<Interface> getInterfaces();
+	@Nonnull
+	ImmutableList<Interface> getInterfaces();
 
-    @Nonnull
-    default ImmutableList<Modifier> getModifiers() {
-        Objects.requireNonNull(this.getDeclaredModifiers());
+	@Nonnull
+	default ImmutableList<Modifier> getModifiers() {
+		Objects.requireNonNull(this.getDeclaredModifiers());
 
-        MutableSet<String> propertyNames = this.getDeclaredModifiers().collect(Modifier::getKeyword).toSet();
+		MutableSet<String> propertyNames = this.getDeclaredModifiers().collect(Modifier::getKeyword).toSet();
 
-        ImmutableList<Modifier> inheritedProperties = this.getInheritedModifiers().reject((inheritedProperty) ->
-            propertyNames.contains(inheritedProperty.getKeyword())
-        );
+		ImmutableList<Modifier> inheritedProperties = this.getInheritedModifiers().reject((inheritedProperty) ->
+			propertyNames.contains(inheritedProperty.getKeyword())
+		);
 
-        return this.getDeclaredModifiers().newWithAll(inheritedProperties);
-    }
+		return this.getDeclaredModifiers().newWithAll(inheritedProperties);
+	}
 
-    default ImmutableList<Modifier> getInheritedModifiers() {
-        return this.getInterfaces()
-            .flatCollect(Classifier::getModifiers)
-            .distinctBy(Modifier::getKeyword)
-            .toImmutable();
-    }
+	default ImmutableList<Modifier> getInheritedModifiers() {
+		return this.getInterfaces()
+			.flatCollect(Classifier::getModifiers)
+			.distinctBy(Modifier::getKeyword)
+			.toImmutable();
+	}
 
-    @Nonnull
-    ImmutableList<Modifier> getDeclaredModifiers();
+	@Nonnull
+	ImmutableList<Modifier> getDeclaredModifiers();
 
-    @Nonnull
-    ImmutableList<Property> getProperties();
+	@Nonnull
+	ImmutableList<Property> getProperties();
 
-    ImmutableList<Property> getDeclaredProperties();
+	ImmutableList<Property> getDeclaredProperties();
 
-    ImmutableList<DataTypeProperty> getKeyProperties();
+	ImmutableList<DataTypeProperty> getKeyProperties();
 
-    @Nonnull
-    ImmutableList<DataTypeProperty> getDataTypeProperties();
+	@Nonnull
+	ImmutableList<DataTypeProperty> getDataTypeProperties();
 
-    @Nonnull
-    ImmutableList<DataTypeProperty> getDeclaredDataTypeProperties();
+	@Nonnull
+	ImmutableList<DataTypeProperty> getDeclaredDataTypeProperties();
 
-    DataTypeProperty getDataTypePropertyByName(String name);
+	DataTypeProperty getDataTypePropertyByName(String name);
 
-    ImmutableList<ReferenceProperty> getDeclaredReferenceProperties();
+	ImmutableList<ReferenceProperty> getDeclaredReferenceProperties();
 
-    ImmutableList<ReferenceProperty> getReferenceProperties();
+	ImmutableList<ReferenceProperty> getReferenceProperties();
 
-    boolean isUniquelyOwned();
+	boolean isUniquelyOwned();
 
-    default boolean isTemporal() {
-        return this.isSystemTemporal() || this.isValidTemporal();
-    }
+	default boolean isTemporal() {
+		return this.isSystemTemporal() || this.isValidTemporal();
+	}
 
-    default boolean isBitemporal() {
-        return this.isSystemTemporal() && this.isValidTemporal();
-    }
+	default boolean isBitemporal() {
+		return this.isSystemTemporal() && this.isValidTemporal();
+	}
 
-    default boolean isSystemTemporal() {
-        return this.getDataTypeProperties().anySatisfy(DataTypeProperty::isSystemTemporal);
-    }
+	default boolean isSystemTemporal() {
+		return this.getDataTypeProperties().anySatisfy(DataTypeProperty::isSystemTemporal);
+	}
 
-    default boolean isValidTemporal() {
-        return this.getDataTypeProperties().anySatisfy(DataTypeProperty::isValidTemporal);
-    }
+	default boolean isValidTemporal() {
+		return this.getDataTypeProperties().anySatisfy(DataTypeProperty::isValidTemporal);
+	}
 
-    default boolean isStrictSuperTypeOf(@Nonnull Classifier classifier) {
-        if (this == classifier) {
-            return false;
-        }
+	default boolean isStrictSuperTypeOf(@Nonnull Classifier classifier) {
+		if (this == classifier) {
+			return false;
+		}
 
-        ImmutableList<Interface> superInterfaces = classifier.getInterfaces();
-        if (superInterfaces.contains(this)) {
-            return true;
-        }
+		ImmutableList<Interface> superInterfaces = classifier.getInterfaces();
+		if (superInterfaces.contains(this)) {
+			return true;
+		}
 
-        return superInterfaces.anySatisfy(this::isStrictSuperTypeOf);
-    }
+		return superInterfaces.anySatisfy(this::isStrictSuperTypeOf);
+	}
 
-    default boolean isSubTypeOf(Classifier classifier) {
-        if (this == classifier) {
-            return true;
-        }
+	default boolean isSubTypeOf(Classifier classifier) {
+		if (this == classifier) {
+			return true;
+		}
 
-        return this.isStrictSubTypeOf(classifier);
-    }
+		return this.isStrictSubTypeOf(classifier);
+	}
 
-    default boolean isStrictSubTypeOf(Classifier classifier) {
-        if (this == classifier) {
-            return false;
-        }
+	default boolean isStrictSubTypeOf(Classifier classifier) {
+		if (this == classifier) {
+			return false;
+		}
 
-        if (classifier instanceof Klass) {
-            return false;
-        }
+		if (classifier instanceof Klass) {
+			return false;
+		}
 
-        ImmutableList<Interface> superInterfaces = this.getInterfaces();
-        if (superInterfaces.contains(classifier)) {
-            return true;
-        }
+		ImmutableList<Interface> superInterfaces = this.getInterfaces();
+		if (superInterfaces.contains(classifier)) {
+			return true;
+		}
 
-        return superInterfaces.anySatisfyWith(Interface::isStrictSubTypeOf, classifier);
-    }
+		return superInterfaces.anySatisfyWith(Interface::isStrictSubTypeOf, classifier);
+	}
 
-    @Nonnull
-    default MutableOrderedMap<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> getForeignKeys() {
-        MutableOrderedMap<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> foreignKeyConstraints =
-            OrderedMapAdapter.adapt(new LinkedHashMap<>());
+	@Nonnull
+	default MutableOrderedMap<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> getForeignKeys() {
+		MutableOrderedMap<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> foreignKeyConstraints =
+			OrderedMapAdapter.adapt(new LinkedHashMap<>());
 
-        for (DataTypeProperty foreignKey : this.getDeclaredDataTypeProperties()) {
-            OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey =
-                foreignKey.getKeysMatchingThisForeignKey();
+		for (DataTypeProperty foreignKey : this.getDeclaredDataTypeProperties()) {
+			OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey =
+				foreignKey.getKeysMatchingThisForeignKey();
 
-            keysMatchingThisForeignKey.forEachKeyValue((associationEnd, key) -> {
-                MutableOrderedMap<DataTypeProperty, DataTypeProperty> dataTypeProperties =
-                    foreignKeyConstraints.computeIfAbsent(associationEnd, (ignored) ->
-                        OrderedMapAdapter.adapt(new LinkedHashMap<>())
-                    );
-                dataTypeProperties.put(foreignKey, key);
-            });
-        }
+			keysMatchingThisForeignKey.forEachKeyValue((associationEnd, key) -> {
+				MutableOrderedMap<DataTypeProperty, DataTypeProperty> dataTypeProperties =
+					foreignKeyConstraints.computeIfAbsent(associationEnd, (ignored) ->
+						OrderedMapAdapter.adapt(new LinkedHashMap<>())
+					);
+				dataTypeProperties.put(foreignKey, key);
+			});
+		}
 
-        return foreignKeyConstraints;
-    }
+		return foreignKeyConstraints;
+	}
 
-    Optional<PrimitiveProperty> getSystemProperty();
+	Optional<PrimitiveProperty> getSystemProperty();
 
-    Optional<PrimitiveProperty> getSystemFromProperty();
+	Optional<PrimitiveProperty> getSystemFromProperty();
 
-    Optional<PrimitiveProperty> getSystemToProperty();
+	Optional<PrimitiveProperty> getSystemToProperty();
 
-    Optional<PrimitiveProperty> getValidProperty();
+	Optional<PrimitiveProperty> getValidProperty();
 
-    Optional<PrimitiveProperty> getValidFromProperty();
+	Optional<PrimitiveProperty> getValidFromProperty();
 
-    Optional<PrimitiveProperty> getValidToProperty();
+	Optional<PrimitiveProperty> getValidToProperty();
 
-    Optional<PrimitiveProperty> getCreatedByProperty();
+	Optional<PrimitiveProperty> getCreatedByProperty();
 
-    Optional<PrimitiveProperty> getCreatedOnProperty();
+	Optional<PrimitiveProperty> getCreatedOnProperty();
 
-    Optional<PrimitiveProperty> getLastUpdatedByProperty();
+	Optional<PrimitiveProperty> getLastUpdatedByProperty();
 }

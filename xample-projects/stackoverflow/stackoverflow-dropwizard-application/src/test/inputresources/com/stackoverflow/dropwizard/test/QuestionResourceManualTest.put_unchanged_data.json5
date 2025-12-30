@@ -1,57 +1,57 @@
 {
-  id: 1,
-  systemFrom: "1999-12-31T23:59:59.999Z",
-  systemTo: null,
-  createdOn: "1999-12-31T23:59:59.999Z",
-  title: "test title 1",
-  body: "test body 1",
-  status: "Open",
-  deleted: false,
-  answers: [],
-  tags: [
-    {
-      systemFrom: "1999-12-31T23:59:59.999Z",
-      systemTo: null,
-      tag: {
-        name: "test tag 1",
-        systemFrom: "1999-12-31T23:59:59.999Z",
-        systemTo: null,
-      },
-    },
-    {
-      systemFrom: "1999-12-31T23:59:59.999Z",
-      systemTo: null,
-      tag: {
-        name: "test tag 2",
-        systemFrom: "1999-12-31T23:59:59.999Z",
-        systemTo: null,
-      },
-    },
-  ],
-  version: {
+    id: 1,
     systemFrom: "1999-12-31T23:59:59.999Z",
     systemTo: null,
     createdOn: "1999-12-31T23:59:59.999Z",
-    number: 2,
+    title: "test title 1",
+    body: "test body 1",
+    status: "Open",
+    deleted: false,
+    answers: [],
+    tags: [
+        {
+            systemFrom: "1999-12-31T23:59:59.999Z",
+            systemTo: null,
+            tag: {
+                name: "test tag 1",
+                systemFrom: "1999-12-31T23:59:59.999Z",
+                systemTo: null,
+            },
+        },
+        {
+            systemFrom: "1999-12-31T23:59:59.999Z",
+            systemTo: null,
+            tag: {
+                name: "test tag 2",
+                systemFrom: "1999-12-31T23:59:59.999Z",
+                systemTo: null,
+            },
+        },
+    ],
+    version: {
+        systemFrom: "1999-12-31T23:59:59.999Z",
+        systemTo: null,
+        createdOn: "1999-12-31T23:59:59.999Z",
+        number: 2,
+        createdBy: {
+            userId: "test user 1",
+            systemFrom: "1999-12-31T23:59:59.999Z",
+            systemTo: null,
+        },
+        lastUpdatedBy: {
+            userId: "test user 1",
+            systemFrom: "1999-12-31T23:59:59.999Z",
+            systemTo: null,
+        },
+    },
     createdBy: {
-      userId: "test user 1",
-      systemFrom: "1999-12-31T23:59:59.999Z",
-      systemTo: null,
+        userId: "test user 1",
+        systemFrom: "1999-12-31T23:59:59.999Z",
+        systemTo: null,
     },
     lastUpdatedBy: {
-      userId: "test user 1",
-      systemFrom: "1999-12-31T23:59:59.999Z",
-      systemTo: null,
+        userId: "test user 1",
+        systemFrom: "1999-12-31T23:59:59.999Z",
+        systemTo: null,
     },
-  },
-  createdBy: {
-    userId: "test user 1",
-    systemFrom: "1999-12-31T23:59:59.999Z",
-    systemTo: null,
-  },
-  lastUpdatedBy: {
-    userId: "test user 1",
-    systemFrom: "1999-12-31T23:59:59.999Z",
-    systemTo: null,
-  },
 }
