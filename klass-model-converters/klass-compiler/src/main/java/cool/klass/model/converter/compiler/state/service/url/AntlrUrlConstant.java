@@ -30,52 +30,52 @@ import cool.klass.model.meta.grammar.KlassParser.UrlConstantContext;
 
 public class AntlrUrlConstant extends AntlrOrdinalElement {
 
-    private UrlConstantBuilder elementBuilder;
+	private UrlConstantBuilder elementBuilder;
 
-    public AntlrUrlConstant(
-        @Nonnull UrlConstantContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        int ordinal
-    ) {
-        super(elementContext, compilationUnit, ordinal);
-    }
+	public AntlrUrlConstant(
+		@Nonnull UrlConstantContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		int ordinal
+	) {
+		super(elementContext, compilationUnit, ordinal);
+	}
 
-    @Nonnull
-    @Override
-    public Optional<IAntlrElement> getSurroundingElement() {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".getSurroundingContext() not implemented yet"
-        );
-    }
+	@Nonnull
+	@Override
+	public Optional<IAntlrElement> getSurroundingElement() {
+		throw new UnsupportedOperationException(
+			this.getClass().getSimpleName() + ".getSurroundingContext() not implemented yet"
+		);
+	}
 
-    @Nonnull
-    public UrlConstantBuilder build() {
-        if (this.elementBuilder != null) {
-            throw new IllegalStateException();
-        }
+	@Nonnull
+	public UrlConstantBuilder build() {
+		if (this.elementBuilder != null) {
+			throw new IllegalStateException();
+		}
 
-        this.elementBuilder = new UrlConstantBuilder(
-            (UrlConstantContext) this.elementContext,
-            this.getMacroElementBuilder(),
-            this.getSourceCodeBuilder(),
-            this.ordinal,
-            this.getName()
-        );
-        return this.elementBuilder;
-    }
+		this.elementBuilder = new UrlConstantBuilder(
+			(UrlConstantContext) this.elementContext,
+			this.getMacroElementBuilder(),
+			this.getSourceCodeBuilder(),
+			this.ordinal,
+			this.getName()
+		);
+		return this.elementBuilder;
+	}
 
-    @Override
-    @Nonnull
-    public UrlConstantBuilder getElementBuilder() {
-        return Objects.requireNonNull(this.elementBuilder);
-    }
+	@Override
+	@Nonnull
+	public UrlConstantBuilder getElementBuilder() {
+		return Objects.requireNonNull(this.elementBuilder);
+	}
 
-    public String getName() {
-        return this.elementContext.getText();
-    }
+	public String getName() {
+		return this.elementContext.getText();
+	}
 
-    public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-        // URLs can contain almost anything. The parser is already more strict than any error checking that needs to happen here.
-        // https://stackoverflow.com/questions/7109143/what-characters-are-valid-in-a-url
-    }
+	public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		// URLs can contain almost anything. The parser is already more strict than any error checking that needs to happen here.
+		// https://stackoverflow.com/questions/7109143/what-characters-are-valid-in-a-url
+	}
 }

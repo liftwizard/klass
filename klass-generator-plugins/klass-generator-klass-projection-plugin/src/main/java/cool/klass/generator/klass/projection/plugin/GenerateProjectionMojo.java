@@ -28,25 +28,25 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-    name = "generate-klass-projection",
-    defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-    threadSafe = true,
-    requiresDependencyResolution = ResolutionScope.RUNTIME
+	name = "generate-klass-projection",
+	defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+	threadSafe = true,
+	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
 public class GenerateProjectionMojo extends AbstractGenerateMojo {
 
-    @Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}/generated-sources/projection")
-    private File outputDirectory;
+	@Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}/generated-sources/projection")
+	private File outputDirectory;
 
-    @Override
-    protected InputSource getInputSource() {
-        return InputSource.CLASSPATH;
-    }
+	@Override
+	protected InputSource getInputSource() {
+		return InputSource.CLASSPATH;
+	}
 
-    @Override
-    public void execute() throws MojoExecutionException {
-        DomainModel domainModel = this.getDomainModel();
-        var generator = new KlassProjectionGenerator(domainModel);
-        generator.writeFiles(this.outputDirectory.toPath());
-    }
+	@Override
+	public void execute() throws MojoExecutionException {
+		DomainModel domainModel = this.getDomainModel();
+		var generator = new KlassProjectionGenerator(domainModel);
+		generator.writeFiles(this.outputDirectory.toPath());
+	}
 }

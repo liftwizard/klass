@@ -27,6 +27,6 @@ import io.dropwizard.jackson.Discoverable;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @AutoService(Discoverable.class)
 public interface DomainModelFactory extends Discoverable {
-    @Nonnull
-    DomainModel createDomainModel(ObjectMapper objectMapper);
+	@Nonnull
+	DomainModel createDomainModel(ObjectMapper objectMapper);
 }

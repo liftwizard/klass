@@ -25,17 +25,17 @@ import cool.klass.model.meta.domain.api.Klass;
 
 public class PersistentDeleter {
 
-    @Nonnull
-    private final MutationContext mutationContext;
+	@Nonnull
+	private final MutationContext mutationContext;
 
-    private final DataStore dataStore;
+	private final DataStore dataStore;
 
-    public PersistentDeleter(@Nonnull MutationContext mutationContext, @Nonnull DataStore dataStore) {
-        this.mutationContext = Objects.requireNonNull(mutationContext);
-        this.dataStore = Objects.requireNonNull(dataStore);
-    }
+	public PersistentDeleter(@Nonnull MutationContext mutationContext, @Nonnull DataStore dataStore) {
+		this.mutationContext = Objects.requireNonNull(mutationContext);
+		this.dataStore = Objects.requireNonNull(dataStore);
+	}
 
-    public void deleteOrTerminate(Klass klass, @Nonnull Object persistentInstance) {
-        this.dataStore.deleteOrTerminate(persistentInstance);
-    }
+	public void deleteOrTerminate(Klass klass, @Nonnull Object persistentInstance) {
+		this.dataStore.deleteOrTerminate(persistentInstance);
+	}
 }

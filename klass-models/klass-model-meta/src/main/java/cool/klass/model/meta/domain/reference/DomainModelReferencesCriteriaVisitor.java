@@ -29,40 +29,40 @@ import cool.klass.model.meta.domain.api.value.MemberReferencePath;
 
 public class DomainModelReferencesCriteriaVisitor implements CriteriaVisitor {
 
-    private final DomainModelReferences domainModelReferences;
+	private final DomainModelReferences domainModelReferences;
 
-    public DomainModelReferencesCriteriaVisitor(DomainModelReferences domainModelReferences) {
-        this.domainModelReferences = domainModelReferences;
-    }
+	public DomainModelReferencesCriteriaVisitor(DomainModelReferences domainModelReferences) {
+		this.domainModelReferences = domainModelReferences;
+	}
 
-    @Override
-    public void visitAll(@Nonnull AllCriteria allCriteria) {
-        // Deliberately empty
-    }
+	@Override
+	public void visitAll(@Nonnull AllCriteria allCriteria) {
+		// Deliberately empty
+	}
 
-    @Override
-    public void visitAnd(@Nonnull AndCriteria andCriteria) {
-        andCriteria.getLeft().visit(this);
-        andCriteria.getRight().visit(this);
-    }
+	@Override
+	public void visitAnd(@Nonnull AndCriteria andCriteria) {
+		andCriteria.getLeft().visit(this);
+		andCriteria.getRight().visit(this);
+	}
 
-    @Override
-    public void visitOr(@Nonnull OrCriteria orCriteria) {
-        orCriteria.getLeft().visit(this);
-        orCriteria.getRight().visit(this);
-    }
+	@Override
+	public void visitOr(@Nonnull OrCriteria orCriteria) {
+		orCriteria.getLeft().visit(this);
+		orCriteria.getRight().visit(this);
+	}
 
-    @Override
-    public void visitOperator(@Nonnull OperatorCriteria operatorCriteria) {
-        ExpressionValue sourceValue = operatorCriteria.getSourceValue();
-        ExpressionValue targetValue = operatorCriteria.getTargetValue();
-        sourceValue.visit(new DomainModelReferencesExpressionValueVisitor(this.domainModelReferences));
-        targetValue.visit(new DomainModelReferencesExpressionValueVisitor(this.domainModelReferences));
-    }
+	@Override
+	public void visitOperator(@Nonnull OperatorCriteria operatorCriteria) {
+		ExpressionValue sourceValue = operatorCriteria.getSourceValue();
+		ExpressionValue targetValue = operatorCriteria.getTargetValue();
+		sourceValue.visit(new DomainModelReferencesExpressionValueVisitor(this.domainModelReferences));
+		targetValue.visit(new DomainModelReferencesExpressionValueVisitor(this.domainModelReferences));
+	}
 
-    @Override
-    public void visitEdgePoint(@Nonnull EdgePointCriteria edgePointCriteria) {
-        MemberReferencePath memberExpressionValue = edgePointCriteria.getMemberExpressionValue();
-        memberExpressionValue.visit(new DomainModelReferencesExpressionValueVisitor(this.domainModelReferences));
-    }
+	@Override
+	public void visitEdgePoint(@Nonnull EdgePointCriteria edgePointCriteria) {
+		MemberReferencePath memberExpressionValue = edgePointCriteria.getMemberExpressionValue();
+		memberExpressionValue.visit(new DomainModelReferencesExpressionValueVisitor(this.domainModelReferences));
+	}
 }

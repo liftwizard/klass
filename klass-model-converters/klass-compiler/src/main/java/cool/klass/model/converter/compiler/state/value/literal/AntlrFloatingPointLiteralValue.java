@@ -34,51 +34,51 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public final class AntlrFloatingPointLiteralValue extends AbstractAntlrLiteralValue {
 
-    private final double value;
-    private FloatingPointLiteralValueBuilder elementBuilder;
+	private final double value;
+	private FloatingPointLiteralValueBuilder elementBuilder;
 
-    public AntlrFloatingPointLiteralValue(
-        @Nonnull FloatingPointLiteralContext elementContext,
-        @Nonnull Optional<CompilationUnit> compilationUnit,
-        double value,
-        @Nonnull IAntlrElement expressionValueOwner
-    ) {
-        super(elementContext, compilationUnit, expressionValueOwner);
-        this.value = value;
-    }
+	public AntlrFloatingPointLiteralValue(
+		@Nonnull FloatingPointLiteralContext elementContext,
+		@Nonnull Optional<CompilationUnit> compilationUnit,
+		double value,
+		@Nonnull IAntlrElement expressionValueOwner
+	) {
+		super(elementContext, compilationUnit, expressionValueOwner);
+		this.value = value;
+	}
 
-    @Override
-    public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {}
+	@Override
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {}
 
-    @Nonnull
-    @Override
-    public FloatingPointLiteralValueBuilder build() {
-        if (this.elementBuilder != null) {
-            throw new IllegalStateException();
-        }
-        this.elementBuilder = new FloatingPointLiteralValueBuilder(
-            (FloatingPointLiteralContext) this.elementContext,
-            this.getMacroElementBuilder(),
-            this.getSourceCodeBuilder(),
-            this.value
-        );
-        return this.elementBuilder;
-    }
+	@Nonnull
+	@Override
+	public FloatingPointLiteralValueBuilder build() {
+		if (this.elementBuilder != null) {
+			throw new IllegalStateException();
+		}
+		this.elementBuilder = new FloatingPointLiteralValueBuilder(
+			(FloatingPointLiteralContext) this.elementContext,
+			this.getMacroElementBuilder(),
+			this.getSourceCodeBuilder(),
+			this.value
+		);
+		return this.elementBuilder;
+	}
 
-    @Nonnull
-    @Override
-    public FloatingPointLiteralValueBuilder getElementBuilder() {
-        return Objects.requireNonNull(this.elementBuilder);
-    }
+	@Nonnull
+	@Override
+	public FloatingPointLiteralValueBuilder getElementBuilder() {
+		return Objects.requireNonNull(this.elementBuilder);
+	}
 
-    @Nonnull
-    @Override
-    public ImmutableList<AntlrType> getPossibleTypes() {
-        return Lists.immutable.with(AntlrPrimitiveType.FLOAT, AntlrPrimitiveType.DOUBLE);
-    }
+	@Nonnull
+	@Override
+	public ImmutableList<AntlrType> getPossibleTypes() {
+		return Lists.immutable.with(AntlrPrimitiveType.FLOAT, AntlrPrimitiveType.DOUBLE);
+	}
 
-    @Override
-    public void visit(AntlrExpressionValueVisitor visitor) {
-        visitor.visitFloatingPointLiteral(this);
-    }
+	@Override
+	public void visit(AntlrExpressionValueVisitor visitor) {
+		visitor.visitFloatingPointLiteral(this);
+	}
 }

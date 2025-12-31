@@ -36,154 +36,154 @@ import org.eclipse.collections.api.list.ImmutableList;
 // TODO: Only put audit properties onto version types
 public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
 
-    public AuditAssociationInferencePhase(@Nonnull CompilerState compilerState) {
-        super(compilerState);
-    }
+	public AuditAssociationInferencePhase(@Nonnull CompilerState compilerState) {
+		super(compilerState);
+	}
 
-    @Nonnull
-    @Override
-    public String getName() {
-        return "Audit association";
-    }
+	@Nonnull
+	@Override
+	public String getName() {
+		return "Audit association";
+	}
 
-    @Override
-    public void enterClassifierModifier(@Nonnull ClassifierModifierContext ctx) {
-        super.enterClassifierModifier(ctx);
+	@Override
+	public void enterClassifierModifier(@Nonnull ClassifierModifierContext ctx) {
+		super.enterClassifierModifier(ctx);
 
-        String modifierText = ctx.getText();
-        if ("audited".equals(modifierText)) {
-            this.addAuditProperties();
-        }
-    }
+		String modifierText = ctx.getText();
+		if ("audited".equals(modifierText)) {
+			this.addAuditProperties();
+		}
+	}
 
-    private boolean hasAuditReferenceProperty(Predicate<AntlrReferenceProperty> predicate) {
-        return this.compilerState.getCompilerWalk()
-            .getKlass()
-            .getAllProperties()
-            .selectInstancesOf(AntlrReferenceProperty.class)
-            .asLazy()
-            .anySatisfy(predicate);
-    }
+	private boolean hasAuditReferenceProperty(Predicate<AntlrReferenceProperty> predicate) {
+		return this.compilerState.getCompilerWalk()
+			.getKlass()
+			.getAllProperties()
+			.selectInstancesOf(AntlrReferenceProperty.class)
+			.asLazy()
+			.anySatisfy(predicate);
+	}
 
-    private boolean hasAuditDataTypeProperty(Predicate<AntlrDataTypeProperty> predicate) {
-        return this.compilerState.getCompilerWalk().getKlass().getAllDataTypeProperties().count(predicate) == 1;
-    }
+	private boolean hasAuditDataTypeProperty(Predicate<AntlrDataTypeProperty> predicate) {
+		return this.compilerState.getCompilerWalk().getKlass().getAllDataTypeProperties().count(predicate) == 1;
+	}
 
-    private void addAuditProperties() {
-        Optional<AntlrClass> maybeUserClass = this.compilerState.getDomainModel().getUserClass();
-        if (maybeUserClass.isEmpty()) {
-            return;
-        }
-        AntlrClass userClass = maybeUserClass.get();
-        int userIdProperties = userClass.getAllDataTypeProperties().count(AntlrDataTypeProperty::isUserId);
-        if (userIdProperties != 1) {
-            return;
-        }
+	private void addAuditProperties() {
+		Optional<AntlrClass> maybeUserClass = this.compilerState.getDomainModel().getUserClass();
+		if (maybeUserClass.isEmpty()) {
+			return;
+		}
+		AntlrClass userClass = maybeUserClass.get();
+		int userIdProperties = userClass.getAllDataTypeProperties().count(AntlrDataTypeProperty::isUserId);
+		if (userIdProperties != 1) {
+			return;
+		}
 
-        boolean needsCreatedBy =
-            !this.hasAuditReferenceProperty(AntlrReferenceProperty::isCreatedBy)
-            && this.hasAuditDataTypeProperty(AntlrDataTypeProperty::isCreatedBy);
-        boolean needsLastUpdatedBy =
-            !this.hasAuditReferenceProperty(AntlrReferenceProperty::isLastUpdatedBy)
-            && this.hasAuditDataTypeProperty(AntlrDataTypeProperty::isLastUpdatedBy);
+		boolean needsCreatedBy =
+			!this.hasAuditReferenceProperty(AntlrReferenceProperty::isCreatedBy)
+			&& this.hasAuditDataTypeProperty(AntlrDataTypeProperty::isCreatedBy);
+		boolean needsLastUpdatedBy =
+			!this.hasAuditReferenceProperty(AntlrReferenceProperty::isLastUpdatedBy)
+			&& this.hasAuditDataTypeProperty(AntlrDataTypeProperty::isLastUpdatedBy);
 
-        if (!needsCreatedBy && !needsLastUpdatedBy) {
-            return;
-        }
+		if (!needsCreatedBy && !needsLastUpdatedBy) {
+			return;
+		}
 
-        StringBuilder stringBuilder = new StringBuilder();
-        AntlrClass klass = this.compilerState.getCompilerWalk().getKlass();
-        stringBuilder.append("package ").append(klass.getPackageName()).append("\n");
+		StringBuilder stringBuilder = new StringBuilder();
+		AntlrClass klass = this.compilerState.getCompilerWalk().getKlass();
+		stringBuilder.append("package ").append(klass.getPackageName()).append("\n");
 
-        if (needsCreatedBy) {
-            String sourceCode = this.getSourceCode(userClass, "createdBy", AntlrDataTypeProperty::isCreatedBy, true);
-            stringBuilder.append(sourceCode);
-        }
-        if (needsLastUpdatedBy) {
-            String sourceCode = this.getSourceCode(
-                userClass,
-                "lastUpdatedBy",
-                AntlrDataTypeProperty::isLastUpdatedBy,
-                false
-            );
-            stringBuilder.append(sourceCode);
-        }
+		if (needsCreatedBy) {
+			String sourceCode = this.getSourceCode(userClass, "createdBy", AntlrDataTypeProperty::isCreatedBy, true);
+			stringBuilder.append(sourceCode);
+		}
+		if (needsLastUpdatedBy) {
+			String sourceCode = this.getSourceCode(
+				userClass,
+				"lastUpdatedBy",
+				AntlrDataTypeProperty::isLastUpdatedBy,
+				false
+			);
+			stringBuilder.append(sourceCode);
+		}
 
-        this.runCompilerMacro(stringBuilder.toString());
-    }
+		this.runCompilerMacro(stringBuilder.toString());
+	}
 
-    private void runCompilerMacro(String sourceCode) {
-        AntlrModifier classifierModifierState = this.compilerState.getCompilerWalk().getClassifierModifier();
+	private void runCompilerMacro(String sourceCode) {
+		AntlrModifier classifierModifierState = this.compilerState.getCompilerWalk().getClassifierModifier();
 
-        ImmutableList<ParseTreeListener> compilerPhases = Lists.immutable.with(
-            new CompilationUnitPhase(this.compilerState),
-            new TopLevelElementsPhase(this.compilerState),
-            new AssociationPhase(this.compilerState)
-        );
+		ImmutableList<ParseTreeListener> compilerPhases = Lists.immutable.with(
+			new CompilationUnitPhase(this.compilerState),
+			new TopLevelElementsPhase(this.compilerState),
+			new AssociationPhase(this.compilerState)
+		);
 
-        this.compilerState.runRootCompilerMacro(
-            classifierModifierState,
-            this,
-            sourceCode,
-            KlassParser::compilationUnit,
-            compilerPhases
-        );
-    }
+		this.compilerState.runRootCompilerMacro(
+			classifierModifierState,
+			this,
+			sourceCode,
+			KlassParser::compilationUnit,
+			compilerPhases
+		);
+	}
 
-    @Nonnull
-    private String getSourceCode(
-        AntlrClass userClass,
-        String modifier,
-        Predicate<AntlrDataTypeProperty> predicate,
-        boolean isFinal
-    ) {
-        String suffix = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, modifier);
+	@Nonnull
+	private String getSourceCode(
+		AntlrClass userClass,
+		String modifier,
+		Predicate<AntlrDataTypeProperty> predicate,
+		boolean isFinal
+	) {
+		String suffix = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, modifier);
 
-        AntlrClass klass = this.compilerState.getCompilerWalk().getKlass();
-        String className = klass.getName();
-        String associationEndName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, className);
+		AntlrClass klass = this.compilerState.getCompilerWalk().getKlass();
+		String className = klass.getName();
+		String associationEndName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, className);
 
-        String userIdPropertyName = userClass
-            .getAllDataTypeProperties()
-            .detect(AntlrDataTypeProperty::isUserId)
-            .getName();
+		String userIdPropertyName = userClass
+			.getAllDataTypeProperties()
+			.detect(AntlrDataTypeProperty::isUserId)
+			.getName();
 
-        String finalModifier = isFinal ? " final" : "";
+		String finalModifier = isFinal ? " final" : "";
 
-        AntlrDataTypeProperty<?> auditProperty = klass.getAllDataTypeProperties().detect(predicate);
+		AntlrDataTypeProperty<?> auditProperty = klass.getAllDataTypeProperties().detect(predicate);
 
-        // language=Klass
-        return (
-            "\n"
-            + "association "
-            + className
-            + "Has"
-            + suffix
-            + "\n"
-            + "{\n"
-            + "    "
-            + associationEndName
-            + suffix
-            + ": "
-            + className
-            + "[0..*];\n"
-            + "    "
-            + modifier
-            + ": "
-            + userClass.getName()
-            + "[1..1] "
-            + modifier
-            + finalModifier
-            + ";\n"
-            + "\n"
-            + "    relationship this."
-            + auditProperty.getName()
-            + " == "
-            + userClass.getName()
-            + "."
-            + userIdPropertyName
-            + "\n"
-            + "}\n"
-        );
-    }
+		// language=Klass
+		return (
+			"\n"
+			+ "association "
+			+ className
+			+ "Has"
+			+ suffix
+			+ "\n"
+			+ "{\n"
+			+ "    "
+			+ associationEndName
+			+ suffix
+			+ ": "
+			+ className
+			+ "[0..*];\n"
+			+ "    "
+			+ modifier
+			+ ": "
+			+ userClass.getName()
+			+ "[1..1] "
+			+ modifier
+			+ finalModifier
+			+ ";\n"
+			+ "\n"
+			+ "    relationship this."
+			+ auditProperty.getName()
+			+ " == "
+			+ userClass.getName()
+			+ "."
+			+ userIdPropertyName
+			+ "\n"
+			+ "}\n"
+		);
+	}
 }

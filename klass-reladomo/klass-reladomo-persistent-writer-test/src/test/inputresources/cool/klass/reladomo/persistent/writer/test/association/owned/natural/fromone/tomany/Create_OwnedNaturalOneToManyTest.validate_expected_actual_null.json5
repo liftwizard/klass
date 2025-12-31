@@ -1,11 +1,11 @@
 {
-  key: null,
-  value: null,
-  targets: [
-    {
-      key: null,
-      sourceKey: null,
-      value: null,
-    },
-  ],
+	key: null,
+	value: null,
+	targets: [
+		{
+			key: null,
+			sourceKey: null,
+			value: null,
+		},
+	],
 }

@@ -26,67 +26,67 @@ import org.eclipse.collections.api.map.MapIterable;
 import org.eclipse.collections.api.stack.MutableStack;
 
 public interface ReladomoTreeNode {
-    void visit(ReladomoTreeNodeVisitor visitor);
+	void visit(ReladomoTreeNodeVisitor visitor);
 
-    default void walk(ReladomoTreeNodeListener listener) {
-        this.visit(new ReladomoTreeNodeWalkerVisitor(listener));
-    }
+	default void walk(ReladomoTreeNodeListener listener) {
+		this.visit(new ReladomoTreeNodeWalkerVisitor(listener));
+	}
 
-    default void toManyAwareWalk(ReladomoTreeNodeToManyAwareListener listener) {
-        this.visit(new ReladomoTreeNodeToManyAwareWalkerVisitor(listener));
-    }
+	default void toManyAwareWalk(ReladomoTreeNodeToManyAwareListener listener) {
+		this.visit(new ReladomoTreeNodeToManyAwareWalkerVisitor(listener));
+	}
 
-    String getName();
+	String getName();
 
-    Classifier getOwningClassifier();
+	Classifier getOwningClassifier();
 
-    Type getType();
+	Type getType();
 
-    MapIterable<String, ReladomoTreeNode> getChildren();
+	MapIterable<String, ReladomoTreeNode> getChildren();
 
-    ReladomoTreeNode computeChild(String childName, ReladomoTreeNode childNode);
+	ReladomoTreeNode computeChild(String childName, ReladomoTreeNode childNode);
 
-    default String getShortString() {
-        return '.' + this.getName();
-    }
+	default String getShortString() {
+		return '.' + this.getName();
+	}
 
-    default String getNodeString(String indent) {
-        return (
-            indent
-            + this.getOwningClassifier().getName()
-            + this.getShortString()
-            + ": "
-            + this.getType().getName()
-            + "\n"
-        );
-    }
+	default String getNodeString(String indent) {
+		return (
+			indent
+			+ this.getOwningClassifier().getName()
+			+ this.getShortString()
+			+ ": "
+			+ this.getType().getName()
+			+ "\n"
+		);
+	}
 
-    default boolean isLeaf() {
-        return this.getChildren().isEmpty();
-    }
+	default boolean isLeaf() {
+		return this.getChildren().isEmpty();
+	}
 
-    default ImmutableList<String> getDeepFetchStrings() {
-        if (this.isLeaf()) {
-            return Lists.immutable.empty();
-        }
-        MutableList<String> result = Lists.mutable.empty();
-        MutableStack<String> stack = Stacks.mutable.empty();
-        this.getDeepFetchStrings(result, stack);
-        return result.toImmutable();
-    }
+	default ImmutableList<String> getDeepFetchStrings() {
+		if (this.isLeaf()) {
+			return Lists.immutable.empty();
+		}
+		MutableList<String> result = Lists.mutable.empty();
+		MutableStack<String> stack = Stacks.mutable.empty();
+		this.getDeepFetchStrings(result, stack);
+		return result.toImmutable();
+	}
 
-    private void getDeepFetchStrings(MutableList<String> result, MutableStack<String> stack) {
-        stack.push(this.getShortString());
-        if (this.isLeaf()) {
-            String string = stack.toList().asReversed().makeString("");
-            result.add(string);
-        } else {
-            for (ReladomoTreeNode child : this.getChildren()) {
-                child.getDeepFetchStrings(result, stack);
-            }
-        }
-        stack.pop();
-    }
+	private void getDeepFetchStrings(MutableList<String> result, MutableStack<String> stack) {
+		stack.push(this.getShortString());
+		if (this.isLeaf()) {
+			String string = stack.toList().asReversed().makeString("");
+			result.add(string);
+		} else {
+			for (ReladomoTreeNode child : this.getChildren()) {
+				child.getDeepFetchStrings(result, stack);
+			}
+		}
+		stack.pop();
+	}
 
-    String toString(String indent);
+	String toString(String indent);
 }

@@ -23,7 +23,7 @@ import cool.klass.model.meta.domain.api.source.ClassifierWithSourceCode;
 import cool.klass.model.meta.domain.api.source.NamedElementWithSourceCode;
 
 public interface ReferencePropertyWithSourceCode extends ReferenceProperty, NamedElementWithSourceCode {
-    @Nonnull
-    @Override
-    ClassifierWithSourceCode getType();
+	@Nonnull
+	@Override
+	ClassifierWithSourceCode getType();
 }

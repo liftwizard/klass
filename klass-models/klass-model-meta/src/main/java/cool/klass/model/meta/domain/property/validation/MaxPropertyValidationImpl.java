@@ -31,45 +31,45 @@ import cool.klass.model.meta.grammar.KlassParser.MaxValidationContext;
 
 public class MaxPropertyValidationImpl extends AbstractNumericPropertyValidation implements MaxPropertyValidation {
 
-    public MaxPropertyValidationImpl(
-        @Nonnull MaxValidationContext elementContext,
-        @Nonnull Optional<Element> macroElement,
-        @Nullable SourceCode sourceCode,
-        @Nonnull AbstractDataTypeProperty<?> owningProperty,
-        int number
-    ) {
-        super(elementContext, macroElement, sourceCode, owningProperty, number);
-    }
+	public MaxPropertyValidationImpl(
+		@Nonnull MaxValidationContext elementContext,
+		@Nonnull Optional<Element> macroElement,
+		@Nullable SourceCode sourceCode,
+		@Nonnull AbstractDataTypeProperty<?> owningProperty,
+		int number
+	) {
+		super(elementContext, macroElement, sourceCode, owningProperty, number);
+	}
 
-    @Nonnull
-    @Override
-    public MaxValidationContext getElementContext() {
-        return (MaxValidationContext) super.getElementContext();
-    }
+	@Nonnull
+	@Override
+	public MaxValidationContext getElementContext() {
+		return (MaxValidationContext) super.getElementContext();
+	}
 
-    public static class MaxPropertyValidationBuilder
-        extends NumericPropertyValidationBuilder<MaxPropertyValidationImpl> {
+	public static class MaxPropertyValidationBuilder
+		extends NumericPropertyValidationBuilder<MaxPropertyValidationImpl> {
 
-        public MaxPropertyValidationBuilder(
-            @Nonnull MaxValidationContext elementContext,
-            @Nonnull Optional<ElementBuilder<?>> macroElement,
-            @Nullable SourceCodeBuilder sourceCode,
-            @Nonnull DataTypePropertyBuilder<?, ?, ?> owningPropertyBuilder,
-            int number
-        ) {
-            super(elementContext, macroElement, sourceCode, owningPropertyBuilder, number);
-        }
+		public MaxPropertyValidationBuilder(
+			@Nonnull MaxValidationContext elementContext,
+			@Nonnull Optional<ElementBuilder<?>> macroElement,
+			@Nullable SourceCodeBuilder sourceCode,
+			@Nonnull DataTypePropertyBuilder<?, ?, ?> owningPropertyBuilder,
+			int number
+		) {
+			super(elementContext, macroElement, sourceCode, owningPropertyBuilder, number);
+		}
 
-        @Nonnull
-        @Override
-        protected MaxPropertyValidationImpl buildUnsafe() {
-            return new MaxPropertyValidationImpl(
-                (MaxValidationContext) this.elementContext,
-                this.macroElement.map(ElementBuilder::getElement),
-                this.sourceCode.build(),
-                this.owningPropertyBuilder.getElement(),
-                this.number
-            );
-        }
-    }
+		@Nonnull
+		@Override
+		protected MaxPropertyValidationImpl buildUnsafe() {
+			return new MaxPropertyValidationImpl(
+				(MaxValidationContext) this.elementContext,
+				this.macroElement.map(ElementBuilder::getElement),
+				this.sourceCode.build(),
+				this.owningPropertyBuilder.getElement(),
+				this.number
+			);
+		}
+	}
 }

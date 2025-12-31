@@ -30,46 +30,46 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-    name = "generate-relational-schema",
-    defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
-    threadSafe = true,
-    requiresDependencyResolution = ResolutionScope.RUNTIME
+	name = "generate-relational-schema",
+	defaultPhase = LifecyclePhase.GENERATE_RESOURCES,
+	threadSafe = true,
+	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
 public class GenerateRelationalSchemaMojo extends AbstractGenerateMojo {
 
-    @Parameter(
-        property = "outputDirectory",
-        defaultValue = "${project.build.directory}/generated-resources/relational-schema"
-    )
-    private File outputDirectory;
+	@Parameter(
+		property = "outputDirectory",
+		defaultValue = "${project.build.directory}/generated-resources/relational-schema"
+	)
+	private File outputDirectory;
 
-    @Override
-    protected InputSource getInputSource() {
-        return InputSource.CLASSPATH;
-    }
+	@Override
+	protected InputSource getInputSource() {
+		return InputSource.CLASSPATH;
+	}
 
-    @Override
-    public void execute() throws MojoExecutionException {
-        boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
-                DomainModel domainModel = this.getDomainModel();
-                Path outputPath = this.outputDirectory.toPath();
+	@Override
+	public void execute() throws MojoExecutionException {
+		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
+				DomainModel domainModel = this.getDomainModel();
+				Path outputPath = this.outputDirectory.toPath();
 
-                RelationalSchemaGenerator generator = new RelationalSchemaGenerator(domainModel);
-                try {
-                    generator.writeRelationalSchema(outputPath);
-                } catch (RuntimeException e) {
-                    throw new MojoExecutionException(e.getMessage(), e);
-                }
-                return null;
-            });
+				RelationalSchemaGenerator generator = new RelationalSchemaGenerator(domainModel);
+				try {
+					generator.writeRelationalSchema(outputPath);
+				} catch (RuntimeException e) {
+					throw new MojoExecutionException(e.getMessage(), e);
+				}
+				return null;
+			});
 
-        if (wasGenerated) {
-            this.getLog().info("Generated relational schema in: " + this.outputDirectory.getPath());
-        }
+		if (wasGenerated) {
+			this.getLog().info("Generated relational schema in: " + this.outputDirectory.getPath());
+		}
 
-        Resource resource = new Resource();
-        resource.setDirectory(this.outputDirectory.getAbsolutePath());
-        // TODO: Should be based on the output path
-        this.mavenProject.addResource(resource);
-    }
+		Resource resource = new Resource();
+		resource.setDirectory(this.outputDirectory.getAbsolutePath());
+		// TODO: Should be based on the output path
+		this.mavenProject.addResource(resource);
+	}
 }

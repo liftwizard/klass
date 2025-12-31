@@ -1,18 +1,18 @@
 fragment EnumerationLiteralFragment on EnumerationLiteral {
-  name
-  prettyName
+	name
+	prettyName
 }
 
 fragment EnumerationFragment on Enumeration {
-  name
-  packageName
-  enumerationLiterals {
-    ...EnumerationLiteralFragment
-  }
+	name
+	packageName
+	enumerationLiterals {
+		...EnumerationLiteralFragment
+	}
 }
 
 query {
-  enumerations {
-    ...EnumerationFragment
-  }
+	enumerations {
+		...EnumerationFragment
+	}
 }

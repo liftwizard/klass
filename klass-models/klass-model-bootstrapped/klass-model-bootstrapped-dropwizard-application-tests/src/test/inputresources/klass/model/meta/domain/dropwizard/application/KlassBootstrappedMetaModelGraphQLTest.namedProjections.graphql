@@ -1,13 +1,13 @@
 fragment NamedProjectionFragment on NamedProjection {
-  name
-  packageName
-  rootProjection {
-    id
-  }
+	name
+	packageName
+	rootProjection {
+		id
+	}
 }
 
 query {
-  namedProjections {
-    ...NamedProjectionFragment
-  }
+	namedProjections {
+		...NamedProjectionFragment
+	}
 }

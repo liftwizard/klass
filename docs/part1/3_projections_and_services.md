@@ -50,19 +50,19 @@ Since the service definition includes `format: json`, the response body will mat
 
 ```json
 {
-    "id": 1,
-    "title": "Question title 1",
-    "body": "Question body 1",
-    "answers": [
-        {
-            "id": 1,
-            "body": "Answer body 1"
-        },
-        {
-            "id": 2,
-            "body": "Answer body 2"
-        }
-    ]
+	"id": 1,
+	"title": "Question title 1",
+	"body": "Question body 1",
+	"answers": [
+		{
+			"id": 1,
+			"body": "Answer body 1"
+		},
+		{
+			"id": 2,
+			"body": "Answer body 2"
+		}
+	]
 }
 ```
 

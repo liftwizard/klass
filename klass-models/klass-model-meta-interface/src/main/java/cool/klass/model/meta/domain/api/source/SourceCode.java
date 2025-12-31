@@ -24,25 +24,25 @@ import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public interface SourceCode {
-    @Nonnull
-    String getSourceName();
+	@Nonnull
+	String getSourceName();
 
-    @Nonnull
-    String getFullPathSourceName();
+	@Nonnull
+	String getFullPathSourceName();
 
-    @Nonnull
-    String getSourceCodeText();
+	@Nonnull
+	String getSourceCodeText();
 
-    @Nonnull
-    BufferedTokenStream getTokenStream();
+	@Nonnull
+	BufferedTokenStream getTokenStream();
 
-    @Nonnull
-    ParserRuleContext getParserContext();
+	@Nonnull
+	ParserRuleContext getParserContext();
 
-    @Nonnull
-    Optional<SourceCode> getMacroSourceCode();
+	@Nonnull
+	Optional<SourceCode> getMacroSourceCode();
 
-    interface SourceCodeBuilder {
-        SourceCode build();
-    }
+	interface SourceCodeBuilder {
+		SourceCode build();
+	}
 }

@@ -20,8 +20,8 @@ import org.junit.jupiter.api.Test;
 
 class ProjectionResourceManualTest extends AbstractResourceTestCase {
 
-    @Test
-    void getAllMeta() {
-        this.assertUrlReturns("getAllMeta", "/meta/projection");
-    }
+	@Test
+	void getAllMeta() {
+		this.assertUrlReturns("getAllMeta", "/meta/projection");
+	}
 }

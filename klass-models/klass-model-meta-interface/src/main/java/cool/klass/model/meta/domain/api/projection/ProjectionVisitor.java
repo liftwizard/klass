@@ -17,11 +17,11 @@
 package cool.klass.model.meta.domain.api.projection;
 
 public interface ProjectionVisitor {
-    void visitProjection(Projection projection);
+	void visitProjection(Projection projection);
 
-    void visitProjectionReferenceProperty(ProjectionReferenceProperty projectionReferenceProperty);
+	void visitProjectionReferenceProperty(ProjectionReferenceProperty projectionReferenceProperty);
 
-    void visitProjectionProjectionReference(ProjectionProjectionReference projectionProjectionReference);
+	void visitProjectionProjectionReference(ProjectionProjectionReference projectionProjectionReference);
 
-    void visitProjectionDataTypeProperty(ProjectionDataTypeProperty projectionDataTypeProperty);
+	void visitProjectionDataTypeProperty(ProjectionDataTypeProperty projectionDataTypeProperty);
 }

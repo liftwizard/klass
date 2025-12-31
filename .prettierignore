@@ -1,1 +1,6 @@
-.github/workflows
+*.graphqls
+**/*.jsonc
+**/*.json
+**/*.just
+**/pom.xml
+.prettierignore

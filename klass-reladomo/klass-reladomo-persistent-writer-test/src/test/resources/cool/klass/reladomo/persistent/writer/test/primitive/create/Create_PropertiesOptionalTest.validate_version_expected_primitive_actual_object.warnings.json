@@ -1,10 +1,10 @@
 [
-  "Warning at PropertiesOptional.systemFrom. Didn't expect to receive value for temporal property 'PropertiesOptional.systemFrom: TemporalInstant?' but value was object: {}.",
-  "Warning at PropertiesOptional.systemTo. Didn't expect to receive value for temporal property 'PropertiesOptional.systemTo: TemporalInstant?' but value was object: {}.",
-  "Warning at PropertiesOptional.createdOn. Didn't expect to receive value for audit property 'PropertiesOptional.createdOn: Instant' but value was object: {}.",
-  "Warning at PropertiesOptional.optionalDerived. Didn't expect to receive value for derived property 'PropertiesOptional.optionalDerived: String?' but value was object: {}.",
-  "Warning at PropertiesOptional.version.propertiesOptionalId. Didn't expect to receive value for foreign key matching key on path property 'PropertiesOptionalVersion.propertiesOptionalId: Long' but value was object: {}.",
-  "Warning at PropertiesOptional.version.systemFrom. Didn't expect to receive value for temporal property 'PropertiesOptionalVersion.systemFrom: TemporalInstant?' but value was object: {}.",
-  "Warning at PropertiesOptional.version.systemTo. Didn't expect to receive value for temporal property 'PropertiesOptionalVersion.systemTo: TemporalInstant?' but value was object: {}.",
-  "Warning at PropertiesOptional.version.createdOn. Didn't expect to receive value for audit property 'PropertiesOptionalVersion.createdOn: Instant' but value was object: {}."
+	"Warning at PropertiesOptional.systemFrom. Didn't expect to receive value for temporal property 'PropertiesOptional.systemFrom: TemporalInstant?' but value was object: {}.",
+	"Warning at PropertiesOptional.systemTo. Didn't expect to receive value for temporal property 'PropertiesOptional.systemTo: TemporalInstant?' but value was object: {}.",
+	"Warning at PropertiesOptional.createdOn. Didn't expect to receive value for audit property 'PropertiesOptional.createdOn: Instant' but value was object: {}.",
+	"Warning at PropertiesOptional.optionalDerived. Didn't expect to receive value for derived property 'PropertiesOptional.optionalDerived: String?' but value was object: {}.",
+	"Warning at PropertiesOptional.version.propertiesOptionalId. Didn't expect to receive value for foreign key matching key on path property 'PropertiesOptionalVersion.propertiesOptionalId: Long' but value was object: {}.",
+	"Warning at PropertiesOptional.version.systemFrom. Didn't expect to receive value for temporal property 'PropertiesOptionalVersion.systemFrom: TemporalInstant?' but value was object: {}.",
+	"Warning at PropertiesOptional.version.systemTo. Didn't expect to receive value for temporal property 'PropertiesOptionalVersion.systemTo: TemporalInstant?' but value was object: {}.",
+	"Warning at PropertiesOptional.version.createdOn. Didn't expect to receive value for audit property 'PropertiesOptionalVersion.createdOn: Instant' but value was object: {}."
 ]

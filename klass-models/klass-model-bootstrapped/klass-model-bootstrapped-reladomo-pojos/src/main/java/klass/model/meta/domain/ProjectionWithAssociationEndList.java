@@ -22,17 +22,17 @@ import com.gs.fw.finder.Operation;
 
 public class ProjectionWithAssociationEndList extends ProjectionWithAssociationEndListAbstract {
 
-    public ProjectionWithAssociationEndList() {}
+	public ProjectionWithAssociationEndList() {}
 
-    public ProjectionWithAssociationEndList(int initialSize) {
-        super(initialSize);
-    }
+	public ProjectionWithAssociationEndList(int initialSize) {
+		super(initialSize);
+	}
 
-    public ProjectionWithAssociationEndList(Collection c) {
-        super(c);
-    }
+	public ProjectionWithAssociationEndList(Collection c) {
+		super(c);
+	}
 
-    public ProjectionWithAssociationEndList(Operation operation) {
-        super(operation);
-    }
+	public ProjectionWithAssociationEndList(Operation operation) {
+		super(operation);
+	}
 }

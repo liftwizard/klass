@@ -34,6 +34,8 @@
     <suppress files=".*" checks="VariableDeclarationUsageDistance" />
     <suppress files=".*" checks="VisibilityModifier" />
     <suppress files=".*" id="checkASCII" />
+    <!-- TODO: Remove GenericWhitespace suppression when upgrading to liftwizard 2.1.39 -->
+    <suppress files=".*" checks="GenericWhitespace" />
     <suppress files="[\\/]AssociationEnd.java" checks="UnusedLocalVariable" />
 
 </suppressions>

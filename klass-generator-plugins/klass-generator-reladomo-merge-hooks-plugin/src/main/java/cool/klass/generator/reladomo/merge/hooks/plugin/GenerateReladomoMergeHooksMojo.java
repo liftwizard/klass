@@ -28,36 +28,36 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 
 @Mojo(
-    name = "generate-reladomo-merge-hooks",
-    defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-    threadSafe = true,
-    requiresDependencyResolution = ResolutionScope.RUNTIME
+	name = "generate-reladomo-merge-hooks",
+	defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+	threadSafe = true,
+	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
 public class GenerateReladomoMergeHooksMojo extends AbstractGenerateMojo {
 
-    @Parameter(
-        property = "outputDirectory",
-        defaultValue = "${project.build.directory}/generated-sources/reladomo-merge-hooks"
-    )
-    private File outputDirectory;
+	@Parameter(
+		property = "outputDirectory",
+		defaultValue = "${project.build.directory}/generated-sources/reladomo-merge-hooks"
+	)
+	private File outputDirectory;
 
-    @Override
-    protected InputSource getInputSource() {
-        return InputSource.CLASSPATH;
-    }
+	@Override
+	protected InputSource getInputSource() {
+		return InputSource.CLASSPATH;
+	}
 
-    @Override
-    public void execute() throws MojoExecutionException {
-        if (!this.outputDirectory.exists()) {
-            this.outputDirectory.mkdirs();
-        }
+	@Override
+	public void execute() throws MojoExecutionException {
+		if (!this.outputDirectory.exists()) {
+			this.outputDirectory.mkdirs();
+		}
 
-        DomainModel domainModel = this.getDomainModel();
+		DomainModel domainModel = this.getDomainModel();
 
-        ReladomoMergeHookGenerator generator = new ReladomoMergeHookGenerator(domainModel);
+		ReladomoMergeHookGenerator generator = new ReladomoMergeHookGenerator(domainModel);
 
-        generator.writeMergeHookFiles(this.outputDirectory.toPath());
+		generator.writeMergeHookFiles(this.outputDirectory.toPath());
 
-        this.mavenProject.addCompileSourceRoot(this.outputDirectory.getAbsolutePath());
-    }
+		this.mavenProject.addCompileSourceRoot(this.outputDirectory.getAbsolutePath());
+	}
 }

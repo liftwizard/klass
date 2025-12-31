@@ -24,8 +24,8 @@ import cool.klass.serialization.jackson.module.meta.model.domain.ProjectionSeria
 
 public class KlassMetaModelJacksonModule extends SimpleModule {
 
-    public KlassMetaModelJacksonModule() {
-        this.addSerializer(Multiplicity.class, new MultiplicitySerializer());
-        this.addSerializer(Projection.class, new ProjectionSerializer());
-    }
+	public KlassMetaModelJacksonModule() {
+		this.addSerializer(Multiplicity.class, new MultiplicitySerializer());
+		this.addSerializer(Projection.class, new ProjectionSerializer());
+	}
 }
