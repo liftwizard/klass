@@ -162,9 +162,7 @@ public class BootstrapExpressionValueVisitor2 implements ExpressionValueVisitor 
 
     @Override
     public void visitUserLiteral(@Nonnull UserLiteral userLiteral) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitUserLiteral() not implemented yet"
-        );
+        // No additional member reference paths for user literal
     }
 
     @Override

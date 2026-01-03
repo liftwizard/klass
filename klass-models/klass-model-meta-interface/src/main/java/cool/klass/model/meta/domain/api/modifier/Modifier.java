@@ -89,4 +89,8 @@ public interface Modifier extends OrdinalElement {
     default boolean isDerived() {
         return this.is("derived");
     }
+
+    default boolean isUserId() {
+        return this.is("userId");
+    }
 }

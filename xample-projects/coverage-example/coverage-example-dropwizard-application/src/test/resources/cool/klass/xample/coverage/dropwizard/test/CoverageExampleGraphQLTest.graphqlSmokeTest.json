@@ -68,12 +68,12 @@
         "systemFrom": "1999-12-31T23:59:00Z",
         "systemTo": null,
         "lastUpdatedBy": {
-          "userId": "User userId 1 ☝",
+          "userId": "User userId 1",
           "email": "User email 1 ☝"
         },
         "createdOn": "1999-12-31T23:59:00Z",
         "createdBy": {
-          "userId": "User userId 1 ☝",
+          "userId": "User userId 1",
           "email": "User email 1 ☝"
         },
         "version": {
@@ -91,12 +91,12 @@
         "systemFrom": "1999-12-31T23:59:00Z",
         "systemTo": null,
         "lastUpdatedBy": {
-          "userId": "User userId 2 ✌",
+          "userId": "User userId 2",
           "email": null
         },
         "createdOn": "2000-01-01T00:00:00Z",
         "createdBy": {
-          "userId": "User userId 2 ✌",
+          "userId": "User userId 2",
           "email": null
         },
         "version": {
