@@ -108,9 +108,11 @@ public class BootstrapExpressionValueVisitor3 implements ExpressionValueVisitor 
 
     @Override
     public void visitUserLiteral(@Nonnull UserLiteral userLiteral) {
-        throw new UnsupportedOperationException(
-            this.getClass().getSimpleName() + ".visitUserLiteral() not implemented yet"
-        );
+        var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(userLiteral);
+
+        var bootstrappedUserLiteral = new klass.model.meta.domain.UserLiteral();
+        bootstrappedUserLiteral.setId(bootstrappedExpressionValue.getId());
+        bootstrappedUserLiteral.insert();
     }
 
     @Override

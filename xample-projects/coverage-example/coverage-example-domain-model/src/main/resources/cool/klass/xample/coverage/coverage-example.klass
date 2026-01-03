@@ -113,16 +113,19 @@ service PropertiesRequiredResource on PropertiesRequired
         {
             multiplicity: one;
             criteria    : this.propertiesRequiredId == propertiesRequiredId;
+            authorize   : this.createdById == user;
         }
         PATCH
         {
             multiplicity: one;
             criteria    : this.propertiesRequiredId == propertiesRequiredId;
+            authorize   : this.createdById == user;
         }
         DELETE
         {
             multiplicity: one;
             criteria    : this.propertiesRequiredId == propertiesRequiredId;
+            authorize   : this.createdById == user;
         }
     /properties-required
         GET

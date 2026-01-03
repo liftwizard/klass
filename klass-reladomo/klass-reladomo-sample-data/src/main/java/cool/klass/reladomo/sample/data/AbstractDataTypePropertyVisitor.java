@@ -75,20 +75,25 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 
             AssociationEnd associationEnd = pair.getOne();
             DataTypeProperty keyProperty = pair.getTwo();
+            // HTTP headers are ASCII-only per RFC 7230, so skip emoji for userId properties
+            // that will be used in Authorization headers
+            String emoji = keyProperty.isUserId() ? "" : " " + this.getEmoji();
             this.result = String.format(
-                "%s %s %d %s",
+                "%s %s %d%s",
                 associationEnd.getType().getName(),
                 keyProperty.getName(),
                 this.getIndex(),
-                this.getEmoji()
+                emoji
             );
         } else {
+            // HTTP headers are ASCII-only per RFC 7230, so skip emoji for userId properties
+            String emoji = primitiveProperty.isUserId() ? "" : " " + this.getEmoji();
             this.result = String.format(
-                "%s %s %d %s",
+                "%s %s %d%s",
                 primitiveProperty.getOwningClassifier().getName(),
                 primitiveProperty.getName(),
                 this.getNumber(primitiveProperty),
-                this.getEmoji()
+                emoji
             );
         }
     }

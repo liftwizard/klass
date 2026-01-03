@@ -12,7 +12,8 @@ repos:
           - id: end-of-file-fixer
             exclude: "^\\.idea/"
           - id: trailing-whitespace
-            exclude: "^\\.idea/"
+            # TODO: Remove exclusion after upgrading to Liftwizard 2.1.38+ (fixes trailing whitespace in ReladomoTestResourceWriter)
+            exclude: "^\\.idea/|ReladomoTestResourceWriterTest\\.reladomoTestResourceWriter\\.txt$"
           - id: check-added-large-files
             args: ["--maxkb=1000"]
           - id: check-case-conflict

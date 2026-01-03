@@ -156,6 +156,10 @@ public interface DataTypeProperty extends Property {
         return this.getModifiers().anySatisfy(Modifier::isDerived);
     }
 
+    default boolean isUserId() {
+        return this.getModifiers().anySatisfy(Modifier::isUserId);
+    }
+
     default boolean isForeignKeyWithOpposite() {
         OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey = this.getKeysMatchingThisForeignKey();
         ImmutableList<DataTypeProperty> dataTypeProperties = keysMatchingThisForeignKey
