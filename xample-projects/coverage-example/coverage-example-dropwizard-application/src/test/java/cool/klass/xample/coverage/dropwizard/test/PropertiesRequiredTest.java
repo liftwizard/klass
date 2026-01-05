@@ -65,6 +65,7 @@ class PropertiesRequiredTest extends AbstractCoverageTest {
             .resolveTemplate("port", this.appExtension.getLocalPort())
             .resolveTemplate("id", 1)
             .request()
+            .header("Authorization", "Impersonation User userId 1 ☝")
             .put(Entity.json(json));
 
         this.assertEmptyResponse(Status.NO_CONTENT, putResponse);

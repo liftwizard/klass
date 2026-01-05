@@ -131,6 +131,7 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
                 )
                 .resolveTemplate("port", this.appExtension.getLocalPort())
                 .request()
+                .header("Authorization", "Impersonation User userId 1 ☝")
                 .put(Entity.json(json));
 
             this.assertEmptyResponse(Status.NO_CONTENT, response);

@@ -330,11 +330,11 @@ public class ServiceResourceGenerator {
             .newWithAll(queryParameters)
             .collectWith(this::getParameterSourceCode, parameterIndent);
         ImmutableList<String> parameterStrings = hasAuthorizeCriteria
-            ? parameterStrings1.newWith(parameterIndent + "@Context SecurityContext securityContext")
+            ? parameterStrings1.newWith(parameterIndent + "@Nonnull @Auth Principal principal")
             : parameterStrings1;
 
         String userPrincipalNameLocalVariable = hasAuthorizeCriteria
-            ? "        String    userPrincipalName  = securityContext.getUserPrincipal().getName();\n"
+            ? "        String    userPrincipalName  = principal.getName();\n"
             : "";
 
         String parametersSourceCode = parameterStrings.makeString(",\n");
@@ -847,8 +847,13 @@ public class ServiceResourceGenerator {
             : queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
 
         boolean hasAuthorizeCriteria = service.isAuthorizeClauseRequired();
+        Klass klass = serviceGroup.getKlass();
+        boolean needsSecurityContext = hasAuthorizeCriteria || klass.isAudited();
 
         int numParameters = service.getNumParameters();
+        if (needsSecurityContext) {
+            numParameters++;
+        }
         boolean lineWrapParameters = numParameters > 1;
 
         String parameterPrefix = lineWrapParameters ? "\n" : "";
@@ -860,12 +865,12 @@ public class ServiceResourceGenerator {
 
         MutableList<String> parameterStrings = urlParameterStrings.toList();
 
-        if (hasAuthorizeCriteria) {
-            parameterStrings.add(parameterIndent + "@Context SecurityContext securityContext");
+        if (needsSecurityContext) {
+            parameterStrings.add(parameterIndent + "@Nonnull @Auth Principal principal");
         }
 
-        String userPrincipalNameLocalVariable = hasAuthorizeCriteria
-            ? "        String    userPrincipalName  = securityContext.getUserPrincipal().getName();\n"
+        String userPrincipalNameLocalVariable = needsSecurityContext
+            ? "        String    userPrincipalName  = principal.getName();\n"
             : "";
 
         String parametersSourceCode = parameterStrings.makeString(",\n");
@@ -952,9 +957,8 @@ public class ServiceResourceGenerator {
                 + "\n"
                 + "        Object persistentInstance = result.get(0);\n"
                 + "\n"
-                + "        // TODO: Create a mutation context with now and the principal\n"
                 + "        Instant           transactionInstant = Instant.now(this.clock);\n"
-                + "        MutationContext   mutationContext    = new MutationContext(Optional.empty(), transactionInstant, Maps.immutable.empty());\n"
+                + "        MutationContext   mutationContext    = new MutationContext(" + (needsSecurityContext ? "Optional.of(userPrincipalName)" : "Optional.empty()") + ", transactionInstant, Maps.immutable.empty());\n"
                 + "        PersistentDeleter deleter            = new PersistentDeleter(mutationContext, this.dataStore);\n"
                 + "        deleter.deleteOrTerminate(klass, persistentInstance);\n"
                 + "    }\n";
@@ -979,9 +983,11 @@ public class ServiceResourceGenerator {
             : queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
 
         boolean hasAuthorizeCriteria = service.isAuthorizeClauseRequired();
+        Klass klass = serviceGroup.getKlass();
+        boolean needsSecurityContext = hasAuthorizeCriteria || klass.isAudited();
 
         int numParameters = service.getNumParameters() + 1;
-        if (hasAuthorizeCriteria) {
+        if (needsSecurityContext) {
             numParameters++;
         }
 
@@ -994,8 +1000,8 @@ public class ServiceResourceGenerator {
 
         MutableList<String> parameterStrings = urlParameterStrings.toList();
 
-        if (hasAuthorizeCriteria) {
-            parameterStrings.add(parameterIndent + "@Context SecurityContext securityContext");
+        if (needsSecurityContext) {
+            parameterStrings.add(parameterIndent + "@Nonnull @Auth Principal principal");
         }
 
         ServiceMultiplicity serviceMultiplicity = service.getServiceMultiplicity();
@@ -1012,8 +1018,8 @@ public class ServiceResourceGenerator {
         );
         parameterStrings.add(incomingInstanceSourceCode);
 
-        String userPrincipalNameLocalVariable = hasAuthorizeCriteria
-            ? "        String    userPrincipalName  = securityContext.getUserPrincipal().getName();\n"
+        String userPrincipalNameLocalVariable = needsSecurityContext
+            ? "        String    userPrincipalName  = principal.getName();\n"
             : "";
 
         String parametersSourceCode = parameterStrings.makeString(",\n");
@@ -1129,7 +1135,7 @@ public class ServiceResourceGenerator {
                 + "        Object persistentInstance = result.get(0);\n"
                 + "\n"
                 + "        Instant            transactionInstant = Instant.now(this.clock);\n"
-                + "        MutationContext    mutationContext    = new MutationContext(Optional.empty(), transactionInstant, Maps.immutable.empty());\n"
+                + "        MutationContext    mutationContext    = new MutationContext(" + (needsSecurityContext ? "Optional.of(userPrincipalName)" : "Optional.empty()") + ", transactionInstant, Maps.immutable.empty());\n"
                 + "        Klass              userKlass          = this.domainModel.getUserClass().get();\n"
                 + "        IncomingUpdateDataModelValidator.validate(\n"
                 + "                this.dataStore,\n"
@@ -1271,7 +1277,7 @@ public class ServiceResourceGenerator {
     private String checkPredicate(String criteriaName, String flagName, String exceptionName) {
         // @formatter:off
         return ""
-                + "        boolean " + flagName + " = !result.asEcList().allSatisfy(" + criteriaName + "Operation::matches);\n"
+                + "        boolean " + flagName + " = result.asEcList().allSatisfy(" + criteriaName + "Operation::matches);\n"
                 + "        if (!" + flagName + ")\n"
                 + "        {\n"
                 + "            throw new " + exceptionName + ";\n"

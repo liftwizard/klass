@@ -100,6 +100,7 @@ public class QuestionResource
     @Produces(MediaType.APPLICATION_JSON)
     public void method1(
             @PathParam("id") Long id,
+            @Nonnull @Auth Principal principal,
             @Nonnull @NotNull ObjectNode incomingInstance)
     {
         Klass klass = this.domainModel.getClassByName("Question");
@@ -132,6 +133,7 @@ public class QuestionResource
             throw new BadRequestException("Incoming data failed validation.", response);
         }
 
+        String    userPrincipalName  = principal.getName();
         Operation queryOperation     = QuestionFinder.id().eq(id);
 
         QuestionList result = QuestionFinder.findMany(queryOperation);
@@ -151,7 +153,7 @@ public class QuestionResource
         Object persistentInstance = result.get(0);
 
         Instant            transactionInstant = Instant.now(this.clock);
-        MutationContext    mutationContext    = new MutationContext(Optional.empty(), transactionInstant, Maps.immutable.empty());
+        MutationContext    mutationContext    = new MutationContext(Optional.of(userPrincipalName), transactionInstant, Maps.immutable.empty());
         Klass              userKlass          = this.domainModel.getUserClass().get();
         IncomingUpdateDataModelValidator.validate(
                 this.dataStore,
@@ -190,10 +192,10 @@ public class QuestionResource
     @Produces(MediaType.APPLICATION_JSON)
     public void method2(
             @PathParam("id") Long id,
-            @Context SecurityContext securityContext)
+            @Nonnull @Auth Principal principal)
     {
         Klass klass = this.domainModel.getClassByName("Question");
-        String    userPrincipalName  = securityContext.getUserPrincipal().getName();
+        String    userPrincipalName  = principal.getName();
         Operation queryOperation     = QuestionFinder.id().eq(id);
         Operation authorizeOperation = QuestionFinder.createdById().eq(userPrincipalName);
 
@@ -206,7 +208,7 @@ public class QuestionResource
             throw new ClientErrorException("Url valid, data not found.", Status.GONE);
         }
 
-        boolean isAuthorized = !result.asEcList().allSatisfy(authorizeOperation::matches);
+        boolean isAuthorized = result.asEcList().allSatisfy(authorizeOperation::matches);
         if (!isAuthorized)
         {
             throw new ForbiddenException();
@@ -219,9 +221,8 @@ public class QuestionResource
 
         Object persistentInstance = result.get(0);
 
-        // TODO: Create a mutation context with now and the principal
         Instant           transactionInstant = Instant.now(this.clock);
-        MutationContext   mutationContext    = new MutationContext(Optional.empty(), transactionInstant, Maps.immutable.empty());
+        MutationContext   mutationContext    = new MutationContext(Optional.of(userPrincipalName), transactionInstant, Maps.immutable.empty());
         PersistentDeleter deleter            = new PersistentDeleter(mutationContext, this.dataStore);
         deleter.deleteOrTerminate(klass, persistentInstance);
     }
