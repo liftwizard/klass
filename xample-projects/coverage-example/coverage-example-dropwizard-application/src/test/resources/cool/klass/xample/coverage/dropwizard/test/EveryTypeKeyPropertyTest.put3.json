@@ -1,39 +1,39 @@
 {
-  "keyString": "EveryTypeKeyProperty keyString 1 ☝",
-  "keyInteger": 1,
-  "keyLong": 1,
-  "keyDouble": 1.0123456789,
-  "keyFloat": 1.0123457,
-  "keyBoolean": true,
-  "keyInstant": "1999-12-31T23:59:00Z",
-  "keyLocalDate": "1999-12-31",
-  "everyTypeForeignKeyProperties": [
-    {
-      "id": 1,
-      "foreignKeyString": "EveryTypeKeyProperty keyString 1 ☝",
-      "foreignKeyInteger": 1,
-      "foreignKeyLong": 1,
-      "foreignKeyDouble": 1.0123456789,
-      "foreignKeyFloat": 1.0123457,
-      "foreignKeyBoolean": true,
-      "foreignKeyInstant": "1999-12-31T23:59:00Z",
-      "foreignKeyLocalDate": "1999-12-31",
-      "data": "edited"
-    },
-    {
-      "id": 3,
-      "foreignKeyString": "EveryTypeKeyProperty keyString 1 ☝",
-      "foreignKeyInteger": 1,
-      "foreignKeyLong": 1,
-      "foreignKeyDouble": 1.0123456789,
-      "foreignKeyFloat": 1.0123457,
-      "foreignKeyBoolean": true,
-      "foreignKeyInstant": "1999-12-31T23:59:00Z",
-      "foreignKeyLocalDate": "1999-12-31",
-      "data": "new"
-    }
-  ],
-  "version": {
-    "number": 2
-  }
+	"keyString": "EveryTypeKeyProperty keyString 1 ☝",
+	"keyInteger": 1,
+	"keyLong": 1,
+	"keyDouble": 1.0123456789,
+	"keyFloat": 1.0123457,
+	"keyBoolean": true,
+	"keyInstant": "1999-12-31T23:59:00Z",
+	"keyLocalDate": "1999-12-31",
+	"everyTypeForeignKeyProperties": [
+		{
+			"id": 1,
+			"foreignKeyString": "EveryTypeKeyProperty keyString 1 ☝",
+			"foreignKeyInteger": 1,
+			"foreignKeyLong": 1,
+			"foreignKeyDouble": 1.0123456789,
+			"foreignKeyFloat": 1.0123457,
+			"foreignKeyBoolean": true,
+			"foreignKeyInstant": "1999-12-31T23:59:00Z",
+			"foreignKeyLocalDate": "1999-12-31",
+			"data": "edited"
+		},
+		{
+			"id": 3,
+			"foreignKeyString": "EveryTypeKeyProperty keyString 1 ☝",
+			"foreignKeyInteger": 1,
+			"foreignKeyLong": 1,
+			"foreignKeyDouble": 1.0123456789,
+			"foreignKeyFloat": 1.0123457,
+			"foreignKeyBoolean": true,
+			"foreignKeyInstant": "1999-12-31T23:59:00Z",
+			"foreignKeyLocalDate": "1999-12-31",
+			"data": "new"
+		}
+	],
+	"version": {
+		"number": 2
+	}
 }
