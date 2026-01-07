@@ -6,7 +6,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.821027389315">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.821071956123">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.11.0">
@@ -33,12 +33,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=3.11.0.821027389315" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.11.0.821071956123" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.11.0.821027389315" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.11.0.821071956123" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.11.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.11.0.821027389315" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.11.0.821027389315" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.11.0.821071956123" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.11.0.821071956123" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -170,12 +170,12 @@
 <p>Say we wanted to query for all questions that start with the words &quot;Why do&quot;. We could POST <code v-pre>/api/meta/query/json</code>:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
-    &quot;className&quot;: &quot;Question&quot;,
-    &quot;multiplicity&quot;: &quot;many&quot;,
-    &quot;criteria&quot;: &quot;this.title startsWith \&quot;Why do\&quot;&quot;,
-    &quot;projection&quot;: {
-        &quot;title&quot;: &quot;Question title&quot;
-    }
+	&quot;className&quot;: &quot;Question&quot;,
+	&quot;multiplicity&quot;: &quot;many&quot;,
+	&quot;criteria&quot;: &quot;this.title startsWith \&quot;Why do\&quot;&quot;,
+	&quot;projection&quot;: {
+		&quot;title&quot;: &quot;Question title&quot;
+	}
 }</code></pre>
 </doc-codeblock></div>
 <p>There&#x27;s also a form that uses GET, to allow easier experimentation from the browser. The same query can be encoded as query parameters.</p>
@@ -183,9 +183,9 @@
 <p>If there&#x27;s an existing projection that you want to reuse, you can just refer to it by name.</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-json"><code v-pre class="language-json">{
-    &quot;multiplicity&quot;: &quot;many&quot;,
-    &quot;criteria&quot;: &quot;this.title startsWith \&quot;Why do\&quot;&quot;,
-    &quot;projection&quot;: &quot;QuestionReadProjection&quot;
+	&quot;multiplicity&quot;: &quot;many&quot;,
+	&quot;criteria&quot;: &quot;this.title startsWith \&quot;Why do\&quot;&quot;,
+	&quot;projection&quot;: &quot;QuestionReadProjection&quot;
 }</code></pre>
 </doc-codeblock></div>
 
