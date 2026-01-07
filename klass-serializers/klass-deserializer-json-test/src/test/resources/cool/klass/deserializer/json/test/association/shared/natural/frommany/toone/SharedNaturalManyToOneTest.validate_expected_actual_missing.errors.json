@@ -1,4 +1,4 @@
 [
-  "Error at SharedNaturalManyToOneSource.value. Expected value for required property 'SharedNaturalManyToOneSource.value: String' but value was missing.",
-  "Error at SharedNaturalManyToOneSource.target.key. Expected value for key property 'SharedNaturalManyToOneTarget.key: String' but value was missing."
+	"Error at SharedNaturalManyToOneSource.value. Expected value for required property 'SharedNaturalManyToOneSource.value: String' but value was missing.",
+	"Error at SharedNaturalManyToOneSource.target.key. Expected value for key property 'SharedNaturalManyToOneTarget.key: String' but value was missing."
 ]

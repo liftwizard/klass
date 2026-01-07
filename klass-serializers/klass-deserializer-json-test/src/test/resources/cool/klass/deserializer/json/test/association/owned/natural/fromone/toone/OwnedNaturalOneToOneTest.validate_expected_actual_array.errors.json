@@ -1,8 +1,8 @@
 [
-  "Error at OwnedNaturalOneToOneSource.key. Expected property with type 'OwnedNaturalOneToOneSource.key: String' but got '[]' with type 'array'.",
-  "Error at OwnedNaturalOneToOneSource.value. Expected property with type 'OwnedNaturalOneToOneSource.value: String' but got '[]' with type 'array'.",
-  "Error at OwnedNaturalOneToOneSource.target.key. Expected property with type 'OwnedNaturalOneToOneTarget.key: String' but got '[]' with type 'array'.",
-  "Error at OwnedNaturalOneToOneSource.target.sourceKey. Expected property with type 'OwnedNaturalOneToOneTarget.sourceKey: String' but got '[]' with type 'array'.",
-  "Error at OwnedNaturalOneToOneSource.target.value. Expected property with type 'OwnedNaturalOneToOneTarget.value: String' but got '[]' with type 'array'.",
-  "Error at OwnedNaturalOneToOneSource.target.sourceKey. Didn't expect to receive value for foreign key property 'OwnedNaturalOneToOneTarget.sourceKey: String' but value was array: []."
+	"Error at OwnedNaturalOneToOneSource.key. Expected property with type 'OwnedNaturalOneToOneSource.key: String' but got '[]' with type 'array'.",
+	"Error at OwnedNaturalOneToOneSource.value. Expected property with type 'OwnedNaturalOneToOneSource.value: String' but got '[]' with type 'array'.",
+	"Error at OwnedNaturalOneToOneSource.target.key. Expected property with type 'OwnedNaturalOneToOneTarget.key: String' but got '[]' with type 'array'.",
+	"Error at OwnedNaturalOneToOneSource.target.sourceKey. Expected property with type 'OwnedNaturalOneToOneTarget.sourceKey: String' but got '[]' with type 'array'.",
+	"Error at OwnedNaturalOneToOneSource.target.value. Expected property with type 'OwnedNaturalOneToOneTarget.value: String' but got '[]' with type 'array'.",
+	"Error at OwnedNaturalOneToOneSource.target.sourceKey. Didn't expect to receive value for foreign key property 'OwnedNaturalOneToOneTarget.sourceKey: String' but value was array: []."
 ]
