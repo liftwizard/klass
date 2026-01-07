@@ -137,12 +137,13 @@ public class ServiceResourceGenerator {
 			|| verbs.contains(Verb.PATCH)
 			|| verbs.contains(Verb.DELETE);
 
-		ImmutableList<Service> postServices = serviceGroup
+		ImmutableList<Service> allServices = serviceGroup
 			.getUrls()
 			.asLazy()
 			.flatCollect(Url::getServices)
-			.select((service) -> service.getVerb() == Verb.POST)
 			.toImmutableList();
+
+		ImmutableList<Service> postServices = allServices.select((service) -> service.getVerb() == Verb.POST);
 
 		boolean hasPostWithProjection = postServices.anySatisfy((service) ->
 			service.getProjectionDispatch().isPresent()
@@ -152,11 +153,11 @@ public class ServiceResourceGenerator {
 			(service) -> service.getServiceMultiplicity() == ServiceMultiplicity.MANY
 		);
 
-		boolean hasPostNeedingAuth = postServices.anySatisfy(
+		boolean hasServiceNeedingAuth = allServices.anySatisfy(
 			(service) -> service.isAuthorizeClauseRequired() || klass.isAudited()
 		);
 
-		String authImport = hasPostNeedingAuth ? "import io.dropwizard.auth.Auth;\n" : "";
+		String authImport = hasServiceNeedingAuth ? "import io.dropwizard.auth.Auth;\n" : "";
 
 		String arrayNodeImport = hasPostWithMany ? "import com.fasterxml.jackson.databind.node.ArrayNode;\n" : "";
 
