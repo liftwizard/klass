@@ -47,9 +47,9 @@ public class ApplicationSuperClassGenerator {
 	private final String relativePath;
 
 	public ApplicationSuperClassGenerator(
-			@Nonnull DomainModel domainModel,
-			@Nonnull String rootPackageName,
-			@Nonnull String applicationName
+		@Nonnull DomainModel domainModel,
+		@Nonnull String rootPackageName,
+		@Nonnull String applicationName
 	) {
 		this.domainModel = Objects.requireNonNull(domainModel);
 		this.rootPackageName = Objects.requireNonNull(rootPackageName);
@@ -137,14 +137,14 @@ public class ApplicationSuperClassGenerator {
 
 	private String getRegisterResourceSourceCode(@Nonnull ServiceGroup serviceGroup) {
 		return String.format(
-				"        environment.jersey().register(new %s(domainModel, dataStore, clock));%n",
-				serviceGroup.getName()
+			"        environment.jersey().register(new %s(domainModel, dataStore, clock));%n",
+			serviceGroup.getName()
 		);
 	}
 
 	private void printStringToFile(@Nonnull Path path, String contents) throws FileNotFoundException {
 		try (
-				PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
+			PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
 		) {
 			printStream.print(contents);
 		}

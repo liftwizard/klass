@@ -54,7 +54,7 @@ public abstract class AbstractCompilerAnnotation {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractCompilerAnnotation.class);
 
 	private static final Comparator<Token> TOKEN_COMPARATOR = Comparator.comparing(Token::getLine).thenComparing(
-			Token::getCharPositionInLine
+		Token::getCharPositionInLine
 	);
 
 	@Nonnull
@@ -77,12 +77,12 @@ public abstract class AbstractCompilerAnnotation {
 	private final AnsiTokenColorizer ansiTokenColorizer;
 
 	protected AbstractCompilerAnnotation(
-			@Nonnull CompilationUnit compilationUnit,
-			@Nonnull Optional<CauseCompilerAnnotation> macroCause,
-			@Nonnull ImmutableList<ParserRuleContext> offendingContexts,
-			@Nonnull ImmutableList<IAntlrElement> sourceContexts,
-			@Nonnull AnsiTokenColorizer ansiTokenColorizer,
-			@Nonnull AnnotationSeverity severity
+		@Nonnull CompilationUnit compilationUnit,
+		@Nonnull Optional<CauseCompilerAnnotation> macroCause,
+		@Nonnull ImmutableList<ParserRuleContext> offendingContexts,
+		@Nonnull ImmutableList<IAntlrElement> sourceContexts,
+		@Nonnull AnsiTokenColorizer ansiTokenColorizer,
+		@Nonnull AnnotationSeverity severity
 	) {
 		this.macroCause = Objects.requireNonNull(macroCause);
 		this.compilationUnit = Objects.requireNonNull(compilationUnit);
@@ -127,8 +127,8 @@ public abstract class AbstractCompilerAnnotation {
 		int lineNumberWidth = maxLineString.length();
 
 		String entireContext = contextStrings
-				.collect((contextString) -> contextString.toString(lineNumberWidth))
-				.makeString("", "\n", "\n");
+			.collect((contextString) -> contextString.toString(lineNumberWidth))
+			.makeString("", "\n", "\n");
 		return Ansi.ansi().a(entireContext).reset().toString();
 	}
 
@@ -136,7 +136,7 @@ public abstract class AbstractCompilerAnnotation {
 	protected String getFilenameWithoutDirectory() {
 		String sourceName = this.compilationUnit.getSourceName();
 		return this.macroCause.map((ignore) -> sourceName).orElseGet(() ->
-				sourceName.substring(sourceName.lastIndexOf('/') + 1)
+			sourceName.substring(sourceName.lastIndexOf('/') + 1)
 		);
 	}
 
@@ -150,10 +150,10 @@ public abstract class AbstractCompilerAnnotation {
 
 	private String getLocationWithLine() {
 		return String.format(
-				"(%s:%d)",
-				// TODO: This should be part of the source information
-				this.getFilenameWithoutDirectory(),
-				this.getLine()
+			"(%s:%d)",
+			// TODO: This should be part of the source information
+			this.getFilenameWithoutDirectory(),
+			this.getLine()
 		);
 	}
 
@@ -161,25 +161,25 @@ public abstract class AbstractCompilerAnnotation {
 		SetIterable<Token> contextTokens = this.getContextTokens();
 
 		MutableSet<Token> underlinedTokens = this.offendingContexts.asLazy()
-				.flatCollect(this::getUnderlinedTokenRange)
-				.into(SetAdapter.adapt(new LinkedHashSet<>()));
+			.flatCollect(this::getUnderlinedTokenRange)
+			.into(SetAdapter.adapt(new LinkedHashSet<>()));
 
 		MutableSet<Integer> contextLines = contextTokens
-				.asLazy()
-				.collect(Token::getLine)
-				.into(SetAdapter.adapt(new LinkedHashSet<>()));
+			.asLazy()
+			.collect(Token::getLine)
+			.into(SetAdapter.adapt(new LinkedHashSet<>()));
 
 		MutableSet<Integer> underlinedLines = underlinedTokens
-				.asLazy()
-				.collect(Token::getLine)
-				.into(SetAdapter.adapt(new LinkedHashSet<>()));
+			.asLazy()
+			.collect(Token::getLine)
+			.into(SetAdapter.adapt(new LinkedHashSet<>()));
 
 		if (!contextTokens.containsAll(underlinedTokens)) {
 			String message = this.offendingContexts.asLazy()
-					.flatCollect(this::getUnderlinedTokenRange)
-					.collect(Token::getText)
-					.toList()
-					.makeString("");
+				.flatCollect(this::getUnderlinedTokenRange)
+				.collect(Token::getText)
+				.toList()
+				.makeString("");
 			LOGGER.warn("Not all underlined tokens are in the context: {}", message);
 		}
 
@@ -220,15 +220,15 @@ public abstract class AbstractCompilerAnnotation {
 		MutableSet<Token> contextTokens = SetAdapter.adapt(new LinkedHashSet<>());
 
 		this.sourceContexts.asReversed()
-				.collect(IAntlrElement::getContextBefore)
-				.flatCollect(this::getTokenRange)
-				.into(contextTokens);
+			.collect(IAntlrElement::getContextBefore)
+			.flatCollect(this::getTokenRange)
+			.into(contextTokens);
 
 		this.sourceContexts.asLazy()
-				.collect(IAntlrElement::getContextAfter)
-				.reject(Objects::isNull)
-				.flatCollect(this::getTokenRange)
-				.into(contextTokens);
+			.collect(IAntlrElement::getContextAfter)
+			.reject(Objects::isNull)
+			.flatCollect(this::getTokenRange)
+			.into(contextTokens);
 		return contextTokens;
 	}
 
@@ -243,8 +243,8 @@ public abstract class AbstractCompilerAnnotation {
 				this.startLine(currentLine, nextToken);
 				currentToken = nextToken;
 			} else if (
-					currentToken.getTokenSource() == nextToken.getTokenSource()
-							&& currentToken.getLine() == nextToken.getLine()
+				currentToken.getTokenSource() == nextToken.getTokenSource()
+				&& currentToken.getLine() == nextToken.getLine()
 			) {
 				this.endLine(currentLine, nextToken);
 				currentToken = nextToken;
@@ -298,10 +298,10 @@ public abstract class AbstractCompilerAnnotation {
 
 	private String getUnderline(TokenLine tokenLine, MutableSet<Token> underlinedTokens) {
 		String uncoloredString = tokenLine
-				.getTokens()
-				.collectWith(this::getSpaceOrUnderline, underlinedTokens)
-				.makeString("")
-				.stripTrailing();
+			.getTokens()
+			.collectWith(this::getSpaceOrUnderline, underlinedTokens)
+			.makeString("")
+			.stripTrailing();
 
 		Color caretColor = this.getCaretColor();
 
