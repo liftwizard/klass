@@ -143,8 +143,7 @@ public class ServiceResourceGenerator {
 			.flatCollect(Url::getServices)
 			.toImmutableList();
 
-		ImmutableList<Service> postServices = allServices
-			.select((service) -> service.getVerb() == Verb.POST);
+		ImmutableList<Service> postServices = allServices.select((service) -> service.getVerb() == Verb.POST);
 
 		boolean hasPostWithProjection = postServices.anySatisfy((service) ->
 			service.getProjectionDispatch().isPresent()
