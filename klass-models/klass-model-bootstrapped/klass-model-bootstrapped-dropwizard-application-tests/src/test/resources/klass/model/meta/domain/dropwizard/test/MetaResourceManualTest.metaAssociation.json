@@ -9,8 +9,8 @@
 			"resultType": {
 				"name": "DataTypeProperty"
 			},
-			"associationEndModifiers": [ ],
-			"orderBys": [ ]
+			"associationEndModifiers": [],
+			"orderBys": []
 		},
 		{
 			"name": "propertyModifiers",
@@ -19,7 +19,7 @@
 			"resultType": {
 				"name": "PropertyModifier"
 			},
-			"associationEndModifiers": [ ],
+			"associationEndModifiers": [],
 			"orderBys": [
 				{
 					"orderByDirection": "ascending",
@@ -41,7 +41,7 @@
 				"klass": {
 					"name": "DataTypeProperty"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "DataTypeProperty"
@@ -55,7 +55,7 @@
 				"klass": {
 					"name": "PropertyModifier"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "PropertyModifier"
@@ -73,7 +73,7 @@
 				"klass": {
 					"name": "DataTypeProperty"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "NamedElement"
@@ -87,7 +87,7 @@
 				"klass": {
 					"name": "PropertyModifier"
 				},
-				"associationEnds": [ ],
+				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
 						"name": "PropertyModifier"
