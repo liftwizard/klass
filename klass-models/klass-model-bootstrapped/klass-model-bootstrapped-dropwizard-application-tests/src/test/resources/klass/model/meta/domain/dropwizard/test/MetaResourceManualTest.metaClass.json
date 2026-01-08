@@ -1,9 +1,9 @@
 {
 	"name": "Classifier",
 	"packageName": "klass.model.meta.domain",
-	"superInterfaces": [ ],
-	"classifierModifiers": [ ],
-	"dataTypeProperties": [ ],
+	"superInterfaces": [],
+	"classifierModifiers": [],
+	"dataTypeProperties": [],
 	"abstractClass": true,
 	"superClass": {
 		"name": "PackageableElement"
@@ -22,5 +22,5 @@
 			"name": "projections"
 		}
 	],
-	"parameterizedProperties": [ ]
+	"parameterizedProperties": []
 }

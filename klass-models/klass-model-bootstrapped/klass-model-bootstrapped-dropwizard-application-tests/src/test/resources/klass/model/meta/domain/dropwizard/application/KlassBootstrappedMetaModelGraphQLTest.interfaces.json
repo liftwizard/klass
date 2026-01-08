@@ -4,9 +4,9 @@
 			{
 				"name": "Element",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ]
+				"superInterfaces": [],
+				"classifierModifiers": [],
+				"dataTypeProperties": []
 			},
 			{
 				"name": "NamedElement",
@@ -18,7 +18,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -64,7 +64,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -106,7 +106,7 @@
 						"optional": false,
 						"minLengthValidation": null,
 						"maxLengthValidation": null,
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"primitiveType": "INTEGER",
 						"minValidation": null,
 						"maxValidation": null

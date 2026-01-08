@@ -14,7 +14,7 @@
 		"body": "test body 1",
 		"status": "Open",
 		"deleted": false,
-		"answers": [ ],
+		"answers": [],
 		"tags": [
 			{
 				"systemFrom": "1999-12-31T23:59:59.999Z",
