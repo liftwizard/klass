@@ -8,7 +8,7 @@
 			}
 		}
 	],
-	"classifierModifiers": [ ],
+	"classifierModifiers": [],
 	"dataTypeProperties": [
 		{
 			"__typename": "klass.model.meta.domain.PrimitiveProperty",

@@ -209,9 +209,9 @@
 				"__typename": "Interface",
 				"name": "Element",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ]
+				"superInterfaces": [],
+				"classifierModifiers": [],
+				"dataTypeProperties": []
 			},
 			{
 				"__typename": "Interface",
@@ -224,7 +224,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -271,7 +271,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -281,7 +281,7 @@
 						"maxLengthValidation": {
 							"number": 100000
 						},
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"primitiveType": "STRING",
 						"minValidation": null,
 						"maxValidation": null
@@ -289,20 +289,20 @@
 				],
 				"abstractClass": true,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "Enumeration",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
+				"dataTypeProperties": [],
 				"abstractClass": false,
 				"superClass": {
 					"name": "PackageableElement"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -315,7 +315,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -342,7 +342,7 @@
 						"maxLengthValidation": {
 							"number": 256
 						},
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"primitiveType": "STRING",
 						"minValidation": null,
 						"maxValidation": null
@@ -350,40 +350,40 @@
 				],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "Classifier",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
+				"dataTypeProperties": [],
 				"abstractClass": true,
 				"superClass": {
 					"name": "PackageableElement"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "Interface",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
+				"dataTypeProperties": [],
 				"abstractClass": false,
 				"superClass": {
 					"name": "Classifier"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "ClassifierInterfaceMapping",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -443,7 +443,7 @@
 				],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -456,7 +456,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -510,14 +510,14 @@
 				],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "Klass",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -542,7 +542,7 @@
 						"optional": false,
 						"minLengthValidation": null,
 						"maxLengthValidation": null,
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"primitiveType": "BOOLEAN",
 						"minValidation": null,
 						"maxValidation": null
@@ -552,7 +552,7 @@
 				"superClass": {
 					"name": "Classifier"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -565,7 +565,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -590,7 +590,7 @@
 						"optional": false,
 						"minLengthValidation": null,
 						"maxLengthValidation": null,
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"primitiveType": "BOOLEAN",
 						"minValidation": null,
 						"maxValidation": null
@@ -598,14 +598,14 @@
 				],
 				"abstractClass": true,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "PrimitiveProperty",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "EnumerationProperty",
@@ -615,7 +615,7 @@
 						"maxLengthValidation": {
 							"number": 256
 						},
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"enumeration": {
 							"name": "PrimitiveType"
 						}
@@ -625,14 +625,14 @@
 				"superClass": {
 					"name": "DataTypeProperty"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "EnumerationProperty",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -656,7 +656,7 @@
 				"superClass": {
 					"name": "DataTypeProperty"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Interface",
@@ -669,7 +669,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -711,7 +711,7 @@
 						"optional": false,
 						"minLengthValidation": null,
 						"maxLengthValidation": null,
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"primitiveType": "INTEGER",
 						"minValidation": null,
 						"maxValidation": null
@@ -729,11 +729,11 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ],
+				"classifierModifiers": [],
+				"dataTypeProperties": [],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -746,11 +746,11 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ],
+				"classifierModifiers": [],
+				"dataTypeProperties": [],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -763,11 +763,11 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ],
+				"classifierModifiers": [],
+				"dataTypeProperties": [],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -780,11 +780,11 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ],
+				"classifierModifiers": [],
+				"dataTypeProperties": [],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -797,7 +797,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -868,7 +868,7 @@
 				],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -881,7 +881,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -909,7 +909,7 @@
 						"maxLengthValidation": {
 							"number": 256
 						},
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"primitiveType": "STRING",
 						"minValidation": null,
 						"maxValidation": null
@@ -922,7 +922,7 @@
 						"maxLengthValidation": {
 							"number": 256
 						},
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"enumeration": {
 							"name": "Multiplicity"
 						}
@@ -930,14 +930,14 @@
 				],
 				"abstractClass": true,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "EnumerationParameter",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -961,14 +961,14 @@
 				"superClass": {
 					"name": "Parameter"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "PrimitiveParameter",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "EnumerationProperty",
@@ -978,7 +978,7 @@
 						"maxLengthValidation": {
 							"number": 256
 						},
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"enumeration": {
 							"name": "PrimitiveType"
 						}
@@ -988,14 +988,14 @@
 				"superClass": {
 					"name": "Parameter"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "ExpressionValue",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -1018,40 +1018,40 @@
 				],
 				"abstractClass": true,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "UserLiteral",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
+				"dataTypeProperties": [],
 				"abstractClass": false,
 				"superClass": {
 					"name": "ExpressionValue"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "NullLiteral",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
+				"dataTypeProperties": [],
 				"abstractClass": false,
 				"superClass": {
 					"name": "ExpressionValue"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "ParameterReference",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -1073,14 +1073,14 @@
 				"superClass": {
 					"name": "ExpressionValue"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "MemberReferencePath",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -1138,7 +1138,7 @@
 				"superClass": {
 					"name": "ExpressionValue"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -1151,7 +1151,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -1174,27 +1174,27 @@
 				],
 				"abstractClass": true,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "AllCriteria",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
+				"dataTypeProperties": [],
 				"abstractClass": false,
 				"superClass": {
 					"name": "Criteria"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "BinaryCriteria",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -1231,40 +1231,40 @@
 				"superClass": {
 					"name": "Criteria"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "AndCriteria",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
+				"dataTypeProperties": [],
 				"abstractClass": false,
 				"superClass": {
 					"name": "BinaryCriteria"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "OrCriteria",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
+				"dataTypeProperties": [],
 				"abstractClass": false,
 				"superClass": {
 					"name": "BinaryCriteria"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "OperatorCriteria",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -1304,7 +1304,7 @@
 						"maxLengthValidation": {
 							"number": 256
 						},
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"enumeration": {
 							"name": "Operator"
 						}
@@ -1314,14 +1314,14 @@
 				"superClass": {
 					"name": "Criteria"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "EdgePointCriteria",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -1343,14 +1343,14 @@
 				"superClass": {
 					"name": "Criteria"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "Association",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -1372,7 +1372,7 @@
 				"superClass": {
 					"name": "PackageableElement"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -1385,7 +1385,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -1415,7 +1415,7 @@
 						"maxLengthValidation": {
 							"number": 256
 						},
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"primitiveType": "STRING",
 						"minValidation": null,
 						"maxValidation": null
@@ -1445,7 +1445,7 @@
 						"maxLengthValidation": {
 							"number": 256
 						},
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"enumeration": {
 							"name": "AssociationEndDirection"
 						}
@@ -1458,7 +1458,7 @@
 						"maxLengthValidation": {
 							"number": 256
 						},
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"enumeration": {
 							"name": "Multiplicity"
 						}
@@ -1466,7 +1466,7 @@
 				],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -1479,7 +1479,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -1550,14 +1550,14 @@
 				],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "MemberReferencePathAssociationEndMapping",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -1635,33 +1635,33 @@
 				],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "ThisMemberReferencePath",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
+				"dataTypeProperties": [],
 				"abstractClass": false,
 				"superClass": {
 					"name": "MemberReferencePath"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "TypeMemberReferencePath",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
+				"dataTypeProperties": [],
 				"abstractClass": false,
 				"superClass": {
 					"name": "MemberReferencePath"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -1674,7 +1674,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -1721,7 +1721,7 @@
 						"maxLengthValidation": {
 							"number": 256
 						},
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"enumeration": {
 							"name": "Multiplicity"
 						}
@@ -1729,14 +1729,14 @@
 				],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "AssociationEndOrderBy",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -1804,7 +1804,7 @@
 						"maxLengthValidation": {
 							"number": 256
 						},
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"enumeration": {
 							"name": "OrderByDirection"
 						}
@@ -1827,14 +1827,14 @@
 				],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "ParameterizedPropertyOrdering",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -1879,7 +1879,7 @@
 						"optional": false,
 						"minLengthValidation": null,
 						"maxLengthValidation": null,
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"primitiveType": "INTEGER",
 						"minValidation": null,
 						"maxValidation": null
@@ -1887,7 +1887,7 @@
 				],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -1900,7 +1900,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -1957,7 +1957,7 @@
 				],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -1970,7 +1970,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -2013,7 +2013,7 @@
 						"maxLengthValidation": {
 							"number": 256
 						},
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"primitiveType": "STRING",
 						"minValidation": null,
 						"maxValidation": null
@@ -2021,14 +2021,14 @@
 				],
 				"abstractClass": true,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "RootProjection",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -2052,14 +2052,14 @@
 				"superClass": {
 					"name": "ProjectionElement"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "NamedProjection",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -2081,14 +2081,14 @@
 				"superClass": {
 					"name": "PackageableElement"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "ProjectionWithAssociationEnd",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -2129,27 +2129,27 @@
 				"superClass": {
 					"name": "ProjectionElement"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "ProjectionReferenceProperty",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
-				"dataTypeProperties": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
+				"dataTypeProperties": [],
 				"abstractClass": false,
 				"superClass": {
 					"name": "ProjectionWithAssociationEnd"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "ProjectionProjectionReference",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -2173,14 +2173,14 @@
 				"superClass": {
 					"name": "ProjectionWithAssociationEnd"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "ProjectionDataTypeProperty",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -2221,14 +2221,14 @@
 				"superClass": {
 					"name": "ProjectionElement"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "ServiceGroup",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -2252,7 +2252,7 @@
 				"superClass": {
 					"name": "PackageableElement"
 				},
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -2265,7 +2265,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -2319,7 +2319,7 @@
 				],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -2332,7 +2332,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -2398,7 +2398,7 @@
 						"optional": false,
 						"minLengthValidation": null,
 						"maxLengthValidation": null,
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"enumeration": {
 							"name": "UrlParameterType"
 						}
@@ -2421,7 +2421,7 @@
 				],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
@@ -2434,7 +2434,7 @@
 						}
 					}
 				],
-				"classifierModifiers": [ ],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -2572,7 +2572,7 @@
 						"maxLengthValidation": {
 							"number": 256
 						},
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"enumeration": {
 							"name": "ServiceMultiplicity"
 						}
@@ -2595,14 +2595,14 @@
 				],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Klass",
 				"name": "ServiceOrderBy",
 				"packageName": "klass.model.meta.domain",
-				"superInterfaces": [ ],
-				"classifierModifiers": [ ],
+				"superInterfaces": [],
+				"classifierModifiers": [],
 				"dataTypeProperties": [
 					{
 						"__typename": "PrimitiveProperty",
@@ -2686,7 +2686,7 @@
 						"optional": false,
 						"minLengthValidation": null,
 						"maxLengthValidation": null,
-						"propertyModifiers": [ ],
+						"propertyModifiers": [],
 						"enumeration": {
 							"name": "OrderByDirection"
 						}
@@ -2709,7 +2709,7 @@
 				],
 				"abstractClass": false,
 				"superClass": null,
-				"parameterizedProperties": [ ]
+				"parameterizedProperties": []
 			},
 			{
 				"__typename": "Association",
@@ -2723,8 +2723,8 @@
 						"resultType": {
 							"name": "Enumeration"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "enumerationLiterals",
@@ -2765,8 +2765,8 @@
 						"resultType": {
 							"name": "Classifier"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "superInterfaces",
@@ -2807,8 +2807,8 @@
 						"resultType": {
 							"name": "ClassifierInterfaceMapping"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "superInterface",
@@ -2817,8 +2817,8 @@
 						"resultType": {
 							"name": "Interface"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -2838,8 +2838,8 @@
 						"resultType": {
 							"name": "Classifier"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "classifierModifiers",
@@ -2880,8 +2880,8 @@
 						"resultType": {
 							"name": "Klass"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "superClass",
@@ -2890,8 +2890,8 @@
 						"resultType": {
 							"name": "Klass"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -2911,8 +2911,8 @@
 						"resultType": {
 							"name": "EnumerationProperty"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "enumeration",
@@ -2921,8 +2921,8 @@
 						"resultType": {
 							"name": "Enumeration"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -2942,8 +2942,8 @@
 						"resultType": {
 							"name": "Classifier"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "dataTypeProperties",
@@ -2984,8 +2984,8 @@
 						"resultType": {
 							"name": "DataTypeProperty"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "minLengthValidation",
@@ -2999,7 +2999,7 @@
 								"keyword": "owned"
 							}
 						],
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3019,8 +3019,8 @@
 						"resultType": {
 							"name": "DataTypeProperty"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "maxLengthValidation",
@@ -3034,7 +3034,7 @@
 								"keyword": "owned"
 							}
 						],
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3054,8 +3054,8 @@
 						"resultType": {
 							"name": "PrimitiveProperty"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "minValidation",
@@ -3069,7 +3069,7 @@
 								"keyword": "owned"
 							}
 						],
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3089,8 +3089,8 @@
 						"resultType": {
 							"name": "PrimitiveProperty"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "maxValidation",
@@ -3104,7 +3104,7 @@
 								"keyword": "owned"
 							}
 						],
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3124,8 +3124,8 @@
 						"resultType": {
 							"name": "DataTypeProperty"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "propertyModifiers",
@@ -3134,7 +3134,7 @@
 						"resultType": {
 							"name": "PropertyModifier"
 						},
-						"associationEndModifiers": [ ],
+						"associationEndModifiers": [],
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
@@ -3162,8 +3162,8 @@
 						"resultType": {
 							"name": "ParameterReference"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "parameter",
@@ -3172,8 +3172,8 @@
 						"resultType": {
 							"name": "Parameter"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3193,8 +3193,8 @@
 						"resultType": {
 							"name": "Association"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "associationEnds",
@@ -3235,8 +3235,8 @@
 						"resultType": {
 							"name": "Klass"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "associationEnds",
@@ -3245,8 +3245,8 @@
 						"resultType": {
 							"name": "AssociationEnd"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3266,8 +3266,8 @@
 						"resultType": {
 							"name": "AssociationEnd"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "resultType",
@@ -3276,8 +3276,8 @@
 						"resultType": {
 							"name": "Klass"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3297,8 +3297,8 @@
 						"resultType": {
 							"name": "AssociationEnd"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "associationEndModifiers",
@@ -3339,8 +3339,8 @@
 						"resultType": {
 							"name": "Association"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "criteria",
@@ -3354,7 +3354,7 @@
 								"keyword": "owned"
 							}
 						],
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3374,8 +3374,8 @@
 						"resultType": {
 							"name": "OperatorCriteria"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "sourceExpressionValue",
@@ -3389,7 +3389,7 @@
 								"keyword": "owned"
 							}
 						],
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3409,8 +3409,8 @@
 						"resultType": {
 							"name": "OperatorCriteria"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "targetExpressionValue",
@@ -3424,7 +3424,7 @@
 								"keyword": "owned"
 							}
 						],
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3444,8 +3444,8 @@
 						"resultType": {
 							"name": "EdgePointCriteria"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "memberReferencePath",
@@ -3454,8 +3454,8 @@
 						"resultType": {
 							"name": "MemberReferencePath"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3475,8 +3475,8 @@
 						"resultType": {
 							"name": "EnumerationParameter"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "enumeration",
@@ -3485,8 +3485,8 @@
 						"resultType": {
 							"name": "Enumeration"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3506,8 +3506,8 @@
 						"resultType": {
 							"name": "MemberReferencePath"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "klass",
@@ -3516,8 +3516,8 @@
 						"resultType": {
 							"name": "Klass"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3537,8 +3537,8 @@
 						"resultType": {
 							"name": "MemberReferencePath"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "associationEnds",
@@ -3579,8 +3579,8 @@
 						"resultType": {
 							"name": "MemberReferencePathAssociationEndMapping"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "associationEnd",
@@ -3589,8 +3589,8 @@
 						"resultType": {
 							"name": "AssociationEnd"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3610,8 +3610,8 @@
 						"resultType": {
 							"name": "MemberReferencePath"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "dataTypeProperty",
@@ -3620,8 +3620,8 @@
 						"resultType": {
 							"name": "DataTypeProperty"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3641,8 +3641,8 @@
 						"resultType": {
 							"name": "BinaryCriteria"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "left",
@@ -3651,8 +3651,8 @@
 						"resultType": {
 							"name": "Criteria"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3672,8 +3672,8 @@
 						"resultType": {
 							"name": "BinaryCriteria"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "right",
@@ -3682,8 +3682,8 @@
 						"resultType": {
 							"name": "Criteria"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3703,8 +3703,8 @@
 						"resultType": {
 							"name": "Klass"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "parameterizedProperties",
@@ -3745,8 +3745,8 @@
 						"resultType": {
 							"name": "AssociationEnd"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "orderBys",
@@ -3787,8 +3787,8 @@
 						"resultType": {
 							"name": "AssociationEndOrderBy"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "thisMemberReferencePath",
@@ -3797,8 +3797,8 @@
 						"resultType": {
 							"name": "ThisMemberReferencePath"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3818,8 +3818,8 @@
 						"resultType": {
 							"name": "ParameterizedProperty"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "resultType",
@@ -3828,8 +3828,8 @@
 						"resultType": {
 							"name": "Klass"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3849,8 +3849,8 @@
 						"resultType": {
 							"name": "ParameterizedProperty"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "parameterizedPropertyOrderings",
@@ -3891,8 +3891,8 @@
 						"resultType": {
 							"name": "ParameterizedProperty"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "parameters",
@@ -3901,7 +3901,7 @@
 						"resultType": {
 							"name": "ParameterizedPropertyParameter"
 						},
-						"associationEndModifiers": [ ],
+						"associationEndModifiers": [],
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
@@ -3929,8 +3929,8 @@
 						"resultType": {
 							"name": "NamedProjection"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "rootProjection",
@@ -3939,8 +3939,8 @@
 						"resultType": {
 							"name": "RootProjection"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -3960,8 +3960,8 @@
 						"resultType": {
 							"name": "ProjectionElement"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "children",
@@ -3970,7 +3970,7 @@
 						"resultType": {
 							"name": "ProjectionElement"
 						},
-						"associationEndModifiers": [ ],
+						"associationEndModifiers": [],
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
@@ -3998,8 +3998,8 @@
 						"resultType": {
 							"name": "ProjectionWithAssociationEnd"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "associationEnd",
@@ -4008,8 +4008,8 @@
 						"resultType": {
 							"name": "AssociationEnd"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -4029,8 +4029,8 @@
 						"resultType": {
 							"name": "ProjectionDataTypeProperty"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "dataTypeProperty",
@@ -4039,8 +4039,8 @@
 						"resultType": {
 							"name": "DataTypeProperty"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -4060,8 +4060,8 @@
 						"resultType": {
 							"name": "RootProjection"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "classifier",
@@ -4070,8 +4070,8 @@
 						"resultType": {
 							"name": "Classifier"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -4091,8 +4091,8 @@
 						"resultType": {
 							"name": "ProjectionProjectionReference"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "projection",
@@ -4101,8 +4101,8 @@
 						"resultType": {
 							"name": "NamedProjection"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -4122,8 +4122,8 @@
 						"resultType": {
 							"name": "ServiceGroup"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "owningClass",
@@ -4132,8 +4132,8 @@
 						"resultType": {
 							"name": "Klass"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -4153,8 +4153,8 @@
 						"resultType": {
 							"name": "Url"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "parameters",
@@ -4195,8 +4195,8 @@
 						"resultType": {
 							"name": "UrlParameter"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "parameter",
@@ -4205,8 +4205,8 @@
 						"resultType": {
 							"name": "Parameter"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -4226,8 +4226,8 @@
 						"resultType": {
 							"name": "ServiceGroup"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "urls",
@@ -4268,8 +4268,8 @@
 						"resultType": {
 							"name": "Url"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "services",
@@ -4310,8 +4310,8 @@
 						"resultType": {
 							"name": "Service"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "projection",
@@ -4320,8 +4320,8 @@
 						"resultType": {
 							"name": "NamedProjection"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -4341,8 +4341,8 @@
 						"resultType": {
 							"name": "Service"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "queryCriteria",
@@ -4356,7 +4356,7 @@
 								"keyword": "owned"
 							}
 						],
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -4376,8 +4376,8 @@
 						"resultType": {
 							"name": "Service"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "authorizeCriteria",
@@ -4391,7 +4391,7 @@
 								"keyword": "owned"
 							}
 						],
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -4411,8 +4411,8 @@
 						"resultType": {
 							"name": "Service"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "validateCriteria",
@@ -4426,7 +4426,7 @@
 								"keyword": "owned"
 							}
 						],
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -4446,8 +4446,8 @@
 						"resultType": {
 							"name": "Service"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "conflictCriteria",
@@ -4461,7 +4461,7 @@
 								"keyword": "owned"
 							}
 						],
-						"orderBys": [ ]
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -4481,8 +4481,8 @@
 						"resultType": {
 							"name": "Service"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "orderBys",
@@ -4523,8 +4523,8 @@
 						"resultType": {
 							"name": "ServiceOrderBy"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					},
 					{
 						"name": "thisMemberReferencePath",
@@ -4533,8 +4533,8 @@
 						"resultType": {
 							"name": "ThisMemberReferencePath"
 						},
-						"associationEndModifiers": [ ],
-						"orderBys": [ ]
+						"associationEndModifiers": [],
+						"orderBys": []
 					}
 				],
 				"criteria": {
@@ -4809,13 +4809,13 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							}
 						]
 					},
 					{
 						"url": "/meta/packageableElement",
-						"parameters": [ ],
+						"parameters": [],
 						"services": [
 							{
 								"verb": "GET",
@@ -4829,7 +4829,7 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							}
 						]
 					}
@@ -4870,13 +4870,13 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							}
 						]
 					},
 					{
 						"url": "/meta/enumeration",
-						"parameters": [ ],
+						"parameters": [],
 						"services": [
 							{
 								"verb": "GET",
@@ -4890,7 +4890,7 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							}
 						]
 					}
@@ -4931,13 +4931,13 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							}
 						]
 					},
 					{
 						"url": "/meta/interface",
-						"parameters": [ ],
+						"parameters": [],
 						"services": [
 							{
 								"verb": "GET",
@@ -4951,7 +4951,7 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							}
 						]
 					}
@@ -4992,7 +4992,7 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							},
 							{
 								"verb": "PUT",
@@ -5004,7 +5004,7 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							},
 							{
 								"verb": "DELETE",
@@ -5016,13 +5016,13 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							}
 						]
 					},
 					{
 						"url": "/meta/class",
-						"parameters": [ ],
+						"parameters": [],
 						"services": [
 							{
 								"verb": "GET",
@@ -5036,7 +5036,7 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							},
 							{
 								"verb": "PUT",
@@ -5048,7 +5048,7 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							},
 							{
 								"verb": "DELETE",
@@ -5060,7 +5060,7 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							}
 						]
 					}
@@ -5101,13 +5101,13 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							}
 						]
 					},
 					{
 						"url": "/meta/classifier",
-						"parameters": [ ],
+						"parameters": [],
 						"services": [
 							{
 								"verb": "GET",
@@ -5121,7 +5121,7 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							}
 						]
 					}
@@ -5162,13 +5162,13 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							}
 						]
 					},
 					{
 						"url": "/meta/association",
-						"parameters": [ ],
+						"parameters": [],
 						"services": [
 							{
 								"verb": "GET",
@@ -5182,7 +5182,7 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							}
 						]
 					}
@@ -5223,13 +5223,13 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							}
 						]
 					},
 					{
 						"url": "/meta/projection",
-						"parameters": [ ],
+						"parameters": [],
 						"services": [
 							{
 								"verb": "GET",
@@ -5243,7 +5243,7 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							}
 						]
 					}
@@ -5284,13 +5284,13 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							}
 						]
 					},
 					{
 						"url": "/meta/serviceGroup",
-						"parameters": [ ],
+						"parameters": [],
 						"services": [
 							{
 								"verb": "GET",
@@ -5304,7 +5304,7 @@
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
-								"orderBys": [ ]
+								"orderBys": []
 							}
 						]
 					}
