@@ -75,6 +75,14 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 
 			AssociationEnd associationEnd = pair.getOne();
 			DataTypeProperty keyProperty = pair.getTwo();
+
+			// Self-referential associations (like parent -> child in a tree) should be null
+			// to avoid creating self-loops where a node is its own parent
+			if (associationEnd.getType().equals(primitiveProperty.getOwningClassifier())) {
+				this.result = null;
+				return;
+			}
+
 			// HTTP headers are ASCII-only per RFC 7230, so skip emoji for userId properties
 			// that will be used in Authorization headers
 			String emoji = keyProperty.isUserId() ? "" : " " + this.getEmoji();
@@ -100,12 +108,22 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 
 	@Override
 	public void visitInteger(@Nonnull PrimitiveProperty primitiveProperty) {
+		// Self-referential associations should be null to avoid self-loops
+		if (primitiveProperty.isForeignKey() && this.isSelfReferentialForeignKey(primitiveProperty)) {
+			this.result = null;
+			return;
+		}
 		this.result = this.getAdjustment(primitiveProperty);
 	}
 
 	@Override
 	public void visitLong(@Nonnull PrimitiveProperty primitiveProperty) {
 		if (primitiveProperty.isForeignKey()) {
+			// Self-referential associations should be null to avoid self-loops
+			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
+				this.result = null;
+				return;
+			}
 			this.result = (long) this.getIndex();
 		} else if (primitiveProperty.isKey()) {
 			this.result = (long) this.getNumber(primitiveProperty);
@@ -162,6 +180,22 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 
 	@Nonnull
 	protected abstract LocalDateTime getLocalDateTime();
+
+	/**
+	 * Checks if this property is a foreign key to a self-referential association
+	 * (e.g., a parent pointer in a tree structure where Node.parentId -> Node.id).
+	 */
+	private boolean isSelfReferentialForeignKey(@Nonnull PrimitiveProperty primitiveProperty) {
+		if (primitiveProperty.getKeysMatchingThisForeignKey().size() != 1) {
+			return false;
+		}
+		Pair<AssociationEnd, DataTypeProperty> pair = primitiveProperty
+			.getKeysMatchingThisForeignKey()
+			.keyValuesView()
+			.getOnly();
+		AssociationEnd associationEnd = pair.getOne();
+		return associationEnd.getType().equals(primitiveProperty.getOwningClassifier());
+	}
 
 	private int getAdjustment(@Nonnull PrimitiveProperty primitiveProperty) {
 		return primitiveProperty.isForeignKey() ? this.getIndex() : this.getNumber(primitiveProperty);
