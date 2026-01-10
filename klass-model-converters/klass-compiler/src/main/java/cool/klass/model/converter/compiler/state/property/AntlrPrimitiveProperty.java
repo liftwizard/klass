@@ -22,6 +22,7 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
+import cool.klass.model.converter.compiler.annotation.AnnotationSeverity;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrClass;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
@@ -128,6 +129,7 @@ public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType>
 		this.reportInvalidTemporalVisibility(compilerAnnotationHolder);
 		this.reportInvalidStringValidations(compilerAnnotationHolder);
 		this.reportInvalidNumericValidations(compilerAnnotationHolder);
+		this.reportBooleanPropertyWithIsPrefix(compilerAnnotationHolder);
 	}
 
 	@Override
@@ -256,6 +258,31 @@ public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType>
 
 		this.minValidations.each((each) -> each.reportInvalidType(compilerAnnotationHolder, primitiveType));
 		this.maxValidations.each((each) -> each.reportInvalidType(compilerAnnotationHolder, primitiveType));
+	}
+
+	private void reportBooleanPropertyWithIsPrefix(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		PrimitiveType primitiveType = this.antlrPrimitiveType.getPrimitiveType();
+		if (primitiveType != PrimitiveType.BOOLEAN) {
+			return;
+		}
+
+		String propertyName = this.getName();
+		if (!propertyName.startsWith("is") || propertyName.length() <= 2) {
+			return;
+		}
+
+		char thirdChar = propertyName.charAt(2);
+		if (!Character.isUpperCase(thirdChar)) {
+			return;
+		}
+
+		String suggestedName = Character.toLowerCase(thirdChar) + propertyName.substring(3);
+		String message = String.format(
+			"Boolean property '%s' should not have prefix \"is\". Consider renaming to '%s'.",
+			propertyName,
+			suggestedName
+		);
+		compilerAnnotationHolder.add("WRN_BOL_PFX", message, this, this.getNameContext(), AnnotationSeverity.WARNING);
 	}
 	// </editor-fold>
 }
