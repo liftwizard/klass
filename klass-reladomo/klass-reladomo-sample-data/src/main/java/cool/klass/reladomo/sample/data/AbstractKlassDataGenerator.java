@@ -73,6 +73,10 @@ public abstract class AbstractKlassDataGenerator {
 		}
 
 		Object value = this.getNonNullValue(dataTypeProperty);
+		// Skip setting null values (e.g., for self-referential FKs to avoid self-loops)
+		if (value == null) {
+			return;
+		}
 		this.dataStore.setDataTypeProperty(persistentInstance, dataTypeProperty, value);
 	}
 }
