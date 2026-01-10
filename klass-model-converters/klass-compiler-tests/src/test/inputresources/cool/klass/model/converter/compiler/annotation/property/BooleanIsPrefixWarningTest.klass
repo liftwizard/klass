@@ -1,0 +1,21 @@
+package cool.klass.model.converter.compiler.annotation.property
+
+class ClassWithBooleanIsPrefix
+{
+    key: String key;
+    isEnabled: Boolean;
+}
+
+class ClassWithValidBooleanNames
+{
+    key: String key;
+    enabled: Boolean;
+    root: Boolean;
+    active: Boolean;
+}
+
+class ClassWithNonBooleanIsPrefix
+{
+    key: String key;
+    isEnabled: String;
+}
