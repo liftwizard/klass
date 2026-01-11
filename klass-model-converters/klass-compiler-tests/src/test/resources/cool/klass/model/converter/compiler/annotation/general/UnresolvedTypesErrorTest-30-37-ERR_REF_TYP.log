@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_REF_TYP[m ════════════════════════════════════════
 [31mError: Cannot find class 'UnresolvedClass'.[m
 
-At (UnresolvedTypesErrorTest.klass:30)
+At (UnresolvedTypesErrorTest.klass:30:38)
 
 [39m 1║ [35mpackage [39mdummy
 [39m27║ [35massociation [39mAssociationWithUnresolved2
@@ -10,7 +10,7 @@ At (UnresolvedTypesErrorTest.klass:30)
 [39m  ║ [31m                                     ^^^^^^^^^^^^^^^
 [39m33║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:30[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:30:38[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
 [36mLine:      [m30[m
 [36mCharacter: [m38

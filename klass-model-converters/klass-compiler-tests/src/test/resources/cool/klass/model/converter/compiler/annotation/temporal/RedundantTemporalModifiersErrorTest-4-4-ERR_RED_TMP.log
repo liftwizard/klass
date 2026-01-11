@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_RED_TMP[m ════════════════════════════════════════
 [31mError: Class 'ClassWithRedundantTemporalModifiers' has redundant temporal modifiers. The 'bitemporal' modifier is redundant with 'systemTemporal' and 'validTemporal'.[m
 
-At (RedundantTemporalModifiersErrorTest.klass:4)
+At (RedundantTemporalModifiersErrorTest.klass:4:5)
 
 [39m1║ [35mpackage [39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mtemporal
 [39m3║ [35mclass [39mClassWithRedundantTemporalModifiers
@@ -14,7 +14,7 @@ At (RedundantTemporalModifiersErrorTest.klass:4)
 [39m7║ [36m{
 [39m9║ [36m}
 [m
-[36mLocation:  [mRedundantTemporalModifiersErrorTest.klass:4[m
+[36mLocation:  [mRedundantTemporalModifiersErrorTest.klass:4:5[m
 [36mFile:      [mRedundantTemporalModifiersErrorTest.klass[m
 [36mLine:      [m4[m
 [36mCharacter: [m5

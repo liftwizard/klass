@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PRP_IDP[m ════════════════════════════════════════
 [31mError: Primitive properties with type LocalDate may not be auto-generated ids. Only types [Integer, Long, String] may be id properties.[m
 
-At (InvalidIdPropertyTypeErrorTest.klass:40)
+At (InvalidIdPropertyTypeErrorTest.klass:40:28)
 
 [39m 1║ [35mpackage [39mexample
 [39m38║ [35mclass [39mLocalDateId
@@ -10,7 +10,7 @@ At (InvalidIdPropertyTypeErrorTest.klass:40)
 [39m  ║ [31m                           ^^
 [39m41║ [36m}
 [m
-[36mLocation:  [mInvalidIdPropertyTypeErrorTest.klass:40[m
+[36mLocation:  [mInvalidIdPropertyTypeErrorTest.klass:40:28[m
 [36mFile:      [mInvalidIdPropertyTypeErrorTest.klass[m
 [36mLine:      [m40[m
 [36mCharacter: [m28

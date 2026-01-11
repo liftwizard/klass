@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mWRN_LUB_NAM[m ════════════════════════════════════════
 [33mWarning: Expected lastUpdatedBy property 'DummyClass.lastUpdatedById1: String lastUpdatedBy userId private maximumLength(256)' to be named 'lastUpdatedById'.[m
 
-At (DuplicateAuditDataPropertiesErrorTest.klass:23)
+At (DuplicateAuditDataPropertiesErrorTest.klass:23:5)
 
 [39m 1║ [35mpackage [39mcom[36m.[39merrors
 [39m10║ [35mclass [39mDummyClass
@@ -12,7 +12,7 @@ At (DuplicateAuditDataPropertiesErrorTest.klass:23)
 [39m  ║ [33m    ^^^^^^^^^^^^^^^^         ^^^^^^^^^^^^^
 [39m25║ [36m}
 [m
-[36mLocation:  [mDuplicateAuditDataPropertiesErrorTest.klass:23[m
+[36mLocation:  [mDuplicateAuditDataPropertiesErrorTest.klass:23:5[m
 [36mFile:      [mDuplicateAuditDataPropertiesErrorTest.klass[m
 [36mLine:      [m23[m
 [36mCharacter: [m5

@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PRP_MOD[m ════════════════════════════════════════
 [31mError: Multiple properties on 'DummyClassVersion' with modifiers [lastUpdatedBy].[m
 
-At (DuplicateAuditAssociationEndErrorTest.klass:51)
+At (DuplicateAuditAssociationEndErrorTest.klass:51:37)
 
 [39m 1║ [35mpackage [39mcom[36m.[39merrors
 [39m48║ [35massociation [39mVersionCreatedBy
@@ -10,7 +10,7 @@ At (DuplicateAuditAssociationEndErrorTest.klass:51)
 [39m  ║ [31m                                    ^^^^^^^^^^^^^
 [39m54║ [36m}
 [m
-[36mLocation:  [mDuplicateAuditAssociationEndErrorTest.klass:51[m
+[36mLocation:  [mDuplicateAuditAssociationEndErrorTest.klass:51:37[m
 [36mFile:      [mDuplicateAuditAssociationEndErrorTest.klass[m
 [36mLine:      [m51[m
 [36mCharacter: [m37

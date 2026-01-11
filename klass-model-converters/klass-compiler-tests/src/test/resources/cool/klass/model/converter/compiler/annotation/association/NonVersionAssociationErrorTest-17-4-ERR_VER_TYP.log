@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_VER_TYP[m ════════════════════════════════════════
 [31mError: Association end 'ExampleClass.target' has version type ExampleVersion, but is missing the version modifier.[m
 
-At (NonVersionAssociationErrorTest.klass:17)
+At (NonVersionAssociationErrorTest.klass:17:5)
 
 [39m 1║ [35mpackage [39mdummy
 [39m14║ [35massociation [39mNonVersionAssociation
@@ -10,7 +10,7 @@ At (NonVersionAssociationErrorTest.klass:17)
 [39m  ║ [31m    ^^^^^^  ^^^^^^^^^^^^^^
 [39m20║ [36m}
 [m
-[36mLocation:  [mNonVersionAssociationErrorTest.klass:17[m
+[36mLocation:  [mNonVersionAssociationErrorTest.klass:17:5[m
 [36mFile:      [mNonVersionAssociationErrorTest.klass[m
 [36mLine:      [m17[m
 [36mCharacter: [m5

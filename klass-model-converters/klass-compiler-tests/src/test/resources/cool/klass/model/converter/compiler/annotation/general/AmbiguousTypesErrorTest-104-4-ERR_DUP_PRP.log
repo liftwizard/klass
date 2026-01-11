@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_DUP_PRP[m ════════════════════════════════════════
 [31mError: Duplicate member: 'GoodClass.ambiguousAssociationEnd'.[m
 
-At (AmbiguousTypesErrorTest.klass:104)
+At (AmbiguousTypesErrorTest.klass:104:5)
 
 [39m  1║ [35mpackage [39mdummy
 [39m101║ [35massociation [39mIrrelevantGoodAssociation1
@@ -10,7 +10,7 @@ At (AmbiguousTypesErrorTest.klass:104)
 [39m   ║ [31m    ^^^^^^^^^^^^^^^^^^^^^^^
 [39m107║ [36m}
 [m
-[36mLocation:  [mAmbiguousTypesErrorTest.klass:104[m
+[36mLocation:  [mAmbiguousTypesErrorTest.klass:104:5[m
 [36mFile:      [mAmbiguousTypesErrorTest.klass[m
 [36mLine:      [m104[m
 [36mCharacter: [m5

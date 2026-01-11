@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_AUD_END[m ════════════════════════════════════════
 [31mError: Expected createdBy association end 'DummyClassVersion.createdBy' to have user type, but was NotUserClass.[m
 
-At (AuditAssociationTypeErrorTest.klass:34)
+At (AuditAssociationTypeErrorTest.klass:34:16)
 
 [39m 1║ [35mpackage [39mcom[36m.[39merrors
 [39m31║ [35massociation [39mVersionCreatedBy
@@ -10,7 +10,7 @@ At (AuditAssociationTypeErrorTest.klass:34)
 [39m  ║ [31m               ^^^^^^^^^^^^       ^^^^^^^^^
 [39m37║ [36m}
 [m
-[36mLocation:  [mAuditAssociationTypeErrorTest.klass:34[m
+[36mLocation:  [mAuditAssociationTypeErrorTest.klass:34:16[m
 [36mFile:      [mAuditAssociationTypeErrorTest.klass[m
 [36mLine:      [m34[m
 [36mCharacter: [m16

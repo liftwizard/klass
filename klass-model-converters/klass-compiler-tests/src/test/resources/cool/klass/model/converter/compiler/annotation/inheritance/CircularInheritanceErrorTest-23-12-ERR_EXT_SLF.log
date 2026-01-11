@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_EXT_SLF[m ════════════════════════════════════════
 [31mError: Circular inheritance 'ClassExtendsSelf'.[m
 
-At (CircularInheritanceErrorTest.klass:23)
+At (CircularInheritanceErrorTest.klass:23:13)
 
 [39m 1║ [35mpackage [39mexample
 [39m21║ [35mclass [39mClassExtendsSelf
@@ -11,7 +11,7 @@ At (CircularInheritanceErrorTest.klass:23)
 [39m24║ [36m{
 [39m26║ [36m}
 [m
-[36mLocation:  [mCircularInheritanceErrorTest.klass:23[m
+[36mLocation:  [mCircularInheritanceErrorTest.klass:23:13[m
 [36mFile:      [mCircularInheritanceErrorTest.klass[m
 [36mLine:      [m23[m
 [36mCharacter: [m13

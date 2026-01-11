@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_IMP_INT[m ════════════════════════════════════════
 [31mError: Cannot find interface 'UnresolvedInterface1'.[m
 
-At (UnresolvedTypesErrorTest.klass:3)
+At (UnresolvedTypesErrorTest.klass:3:46)
 
 [39m1║ [35mpackage [39mdummy
 [39m3║ [35minterface [39mInterfaceWithUnresolved [35mimplements [39mUnresolvedInterface1[36m, [39mUnresolvedInterface2
@@ -9,7 +9,7 @@ At (UnresolvedTypesErrorTest.klass:3)
 [39m4║ [36m{
 [39m6║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:3[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:3:46[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
 [36mLine:      [m3[m
 [36mCharacter: [m46

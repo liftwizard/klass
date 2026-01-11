@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PPR_NFD[m ════════════════════════════════════════
 [31mError: Not found: 'ChildProjection'.[m
 
-At (UnresolvedTypesErrorTest.klass:142)
+At (UnresolvedTypesErrorTest.klass:142:15)
 
 [39m  1║ [35mpackage [39mdummy
 [39m140║ [35mprojection [39mParentProjection2 [35mon [39mParent
@@ -10,7 +10,7 @@ At (UnresolvedTypesErrorTest.klass:142)
 [39m   ║ [31m              ^^^^^^^^^^^^^^^
 [39m143║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:142[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:142:15[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
 [36mLine:      [m142[m
 [36mCharacter: [m15

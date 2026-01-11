@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_TYP_MEM[m ════════════════════════════════════════
 [31mError: Cannot find member 'Child.unresolvedMember'.[m
 
-At (UnresolvedTypesErrorTest.klass:91)
+At (UnresolvedTypesErrorTest.klass:91:49)
 
 [39m 1║ [35mpackage [39mdummy
 [39m86║ [35massociation [39mBadRelationship2
@@ -10,7 +10,7 @@ At (UnresolvedTypesErrorTest.klass:91)
 [39m  ║ [31m                                                ^^^^^^^^^^^^^^^^
 [39m92║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:91[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:91:49[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
 [36mLine:      [m91[m
 [36mCharacter: [m49

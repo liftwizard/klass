@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_DRV_PRI[m ════════════════════════════════════════
 [31mError: Derived property 'ClassWithPrivateDerived.value: String derived private' may not be private. Remove the 'private' modifier.[m
 
-At (PrivateDerivedPropertyErrorTest.klass:6)
+At (PrivateDerivedPropertyErrorTest.klass:6:19)
 
 [39m1║ [35mpackage [39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mproperty
 [39m3║ [35mclass [39mClassWithPrivateDerived
@@ -10,7 +10,7 @@ At (PrivateDerivedPropertyErrorTest.klass:6)
 [39m ║ [31m                  ^^^^^^^ ^^^^^^^
 [39m7║ [36m}
 [m
-[36mLocation:  [mPrivateDerivedPropertyErrorTest.klass:6[m
+[36mLocation:  [mPrivateDerivedPropertyErrorTest.klass:6:19[m
 [36mFile:      [mPrivateDerivedPropertyErrorTest.klass[m
 [36mLine:      [m6[m
 [36mCharacter: [m19

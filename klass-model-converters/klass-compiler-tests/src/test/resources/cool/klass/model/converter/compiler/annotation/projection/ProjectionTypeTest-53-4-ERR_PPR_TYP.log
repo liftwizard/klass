@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PPR_TYP[m ════════════════════════════════════════
 [31mError: Projection reference 'ChildProjection' requires a reference property with type 'Child', but found a data type property 'Parent.key' with type 'String'.[m
 
-At (ProjectionTypeTest.klass:53)
+At (ProjectionTypeTest.klass:53:5)
 
 [39m 1║ [35mpackage [39mdummy
 [39m49║ [35mprojection [39mProjection2 [35mon [39mParent
@@ -10,7 +10,7 @@ At (ProjectionTypeTest.klass:53)
 [39m  ║ [31m    ^^^
 [39m54║ [36m}
 [m
-[36mLocation:  [mProjectionTypeTest.klass:53[m
+[36mLocation:  [mProjectionTypeTest.klass:53:5[m
 [36mFile:      [mProjectionTypeTest.klass[m
 [36mLine:      [m53[m
 [36mCharacter: [m5

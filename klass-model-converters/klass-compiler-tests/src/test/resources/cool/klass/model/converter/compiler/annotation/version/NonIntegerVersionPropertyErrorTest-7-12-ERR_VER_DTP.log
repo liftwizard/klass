@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_VER_DTP[m ════════════════════════════════════════
 [31mError: Expected types [Integer, Long] but was 'String' for 'version' property 'ExampleVersion.number: String version'.[m
 
-At (NonIntegerVersionPropertyErrorTest.klass:7)
+At (NonIntegerVersionPropertyErrorTest.klass:7:13)
 
 [39m1║ [35mpackage [39mcom[36m.[39merrors
 [39m3║ [35mclass [39mExampleVersion [32msystemTemporal
@@ -10,7 +10,7 @@ At (NonIntegerVersionPropertyErrorTest.klass:7)
 [39m ║ [31m            ^^^^^^ ^^^^^^^
 [39m8║ [36m}
 [m
-[36mLocation:  [mNonIntegerVersionPropertyErrorTest.klass:7[m
+[36mLocation:  [mNonIntegerVersionPropertyErrorTest.klass:7:13[m
 [36mFile:      [mNonIntegerVersionPropertyErrorTest.klass[m
 [36mLine:      [m7[m
 [36mCharacter: [m13

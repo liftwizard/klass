@@ -4,7 +4,7 @@ keys and foreign keys:     [ownerId].
 keys:                      [id].
 [m
 
-At (ForeignKeyPropertyOrderErrorTest.klass:8)
+At (ForeignKeyPropertyOrderErrorTest.klass:8:7)
 
 [39m 1║ [35mpackage [39mdummy
 [39m 8║ [35mclass [39mDummyOwned
@@ -12,7 +12,7 @@ At (ForeignKeyPropertyOrderErrorTest.klass:8)
 [39m 9║ [36m{
 [39m12║ [36m}
 [m
-[36mLocation:  [mForeignKeyPropertyOrderErrorTest.klass:8[m
+[36mLocation:  [mForeignKeyPropertyOrderErrorTest.klass:8:7[m
 [36mFile:      [mForeignKeyPropertyOrderErrorTest.klass[m
 [36mLine:      [m8[m
 [36mCharacter: [m7

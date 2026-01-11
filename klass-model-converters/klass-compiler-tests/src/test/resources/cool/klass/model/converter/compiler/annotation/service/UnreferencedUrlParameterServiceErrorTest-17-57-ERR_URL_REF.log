@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_URL_REF[m ════════════════════════════════════════
 [31mError: URL parameter 'unreferencedQueryParam2' is not referenced in any criteria or order by.[m
 
-At (UnreferencedUrlParameterServiceErrorTest.klass:17)
+At (UnreferencedUrlParameterServiceErrorTest.klass:17:58)
 
 [39m 1║ [35mpackage [39mdummy
 [39m15║ [35mservice [39mExampleService [35mon [39mExampleClass
@@ -10,7 +10,7 @@ At (UnreferencedUrlParameterServiceErrorTest.klass:17)
 [39m  ║ [31m                                                         ^^^^^^^^^^^^^^^^^^^^^^^
 [39m31║ [36m}
 [m
-[36mLocation:  [mUnreferencedUrlParameterServiceErrorTest.klass:17[m
+[36mLocation:  [mUnreferencedUrlParameterServiceErrorTest.klass:17:58[m
 [36mFile:      [mUnreferencedUrlParameterServiceErrorTest.klass[m
 [36mLine:      [m17[m
 [36mCharacter: [m58

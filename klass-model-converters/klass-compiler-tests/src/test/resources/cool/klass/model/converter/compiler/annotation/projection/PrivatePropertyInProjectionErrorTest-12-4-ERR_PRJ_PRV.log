@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PRJ_PRV[m ════════════════════════════════════════
 [31mError: Projection includes private property 'ClassWithPrivateProperty.privateString'.[m
 
-At (PrivatePropertyInProjectionErrorTest.klass:12)
+At (PrivatePropertyInProjectionErrorTest.klass:12:5)
 
 [39m 1║ [35mpackage [39mdummy
 [39m 9║ [35mprojection [39mProjectionOnPrivateProperty [35mon [39mClassWithPrivateProperty
@@ -10,7 +10,7 @@ At (PrivatePropertyInProjectionErrorTest.klass:12)
 [39m  ║ [31m    ^^^^^^^^^^^^^
 [39m13║ [36m}
 [m
-[36mLocation:  [mPrivatePropertyInProjectionErrorTest.klass:12[m
+[36mLocation:  [mPrivatePropertyInProjectionErrorTest.klass:12:5[m
 [36mFile:      [mPrivatePropertyInProjectionErrorTest.klass[m
 [36mLine:      [m12[m
 [36mCharacter: [m5

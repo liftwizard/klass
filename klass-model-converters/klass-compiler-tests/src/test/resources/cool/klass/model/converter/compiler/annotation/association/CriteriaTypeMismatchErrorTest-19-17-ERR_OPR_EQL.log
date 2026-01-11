@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_OPR_EQL[m ════════════════════════════════════════
 [31mError: Incompatible types: 'Long' and 'String'.[m
 
-At (CriteriaTypeMismatchErrorTest.klass:19)
+At (CriteriaTypeMismatchErrorTest.klass:19:18)
 
 [39m 1║ [35mpackage [39mdummy
 [39m14║ [35massociation [39mDoubleOwnedAssociation
@@ -10,7 +10,7 @@ At (CriteriaTypeMismatchErrorTest.klass:19)
 [39m  ║ [31m                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 [39m20║ [36m}
 [m
-[36mLocation:  [mCriteriaTypeMismatchErrorTest.klass:19[m
+[36mLocation:  [mCriteriaTypeMismatchErrorTest.klass:19:18[m
 [36mFile:      [mCriteriaTypeMismatchErrorTest.klass[m
 [36mLine:      [m19[m
 [36mCharacter: [m18

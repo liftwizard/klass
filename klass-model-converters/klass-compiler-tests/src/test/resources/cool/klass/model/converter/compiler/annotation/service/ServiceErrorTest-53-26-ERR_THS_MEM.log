@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_THS_MEM[m ════════════════════════════════════════
 [31mError: Cannot find member 'DummyClass.invalidMember'.[m
 
-At (ServiceErrorTest.klass:53)
+At (ServiceErrorTest.klass:53:27)
 
 [39m 1║ [35mpackage [39mdummy
 [39m24║ [35mservice [39mDummyClassResource [35mon [39mDummyClass
@@ -14,7 +14,7 @@ At (ServiceErrorTest.klass:53)
 [39m54║         [36m}
 [39m55║ [36m}
 [m
-[36mLocation:  [mServiceErrorTest.klass:53[m
+[36mLocation:  [mServiceErrorTest.klass:53:27[m
 [36mFile:      [mServiceErrorTest.klass[m
 [36mLine:      [m53[m
 [36mCharacter: [m27

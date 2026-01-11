@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_OWN_ONE[m ════════════════════════════════════════
 [31mError: Association end 'ExampleType2.parent' is owned, but is on the to-one end of a many-to-one association.[m
 
-At (ManyOwnsOneAssociationErrorTest.klass:26)
+At (ManyOwnsOneAssociationErrorTest.klass:26:32)
 
 [39m 1║ [35mpackage [39mdummy
 [39m23║ [35massociation [39mAssociation2
@@ -10,7 +10,7 @@ At (ManyOwnsOneAssociationErrorTest.klass:26)
 [39m  ║ [31m                        ^^^^^^ ^^^^^
 [39m29║ [36m}
 [m
-[36mLocation:  [mManyOwnsOneAssociationErrorTest.klass:26[m
+[36mLocation:  [mManyOwnsOneAssociationErrorTest.klass:26:32[m
 [36mFile:      [mManyOwnsOneAssociationErrorTest.klass[m
 [36mLine:      [m26[m
 [36mCharacter: [m32

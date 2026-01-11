@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_NKY_IDP[m ════════════════════════════════════════
 [31mError: Properties with the 'id' modifier must also have the 'key' modifier.[m
 
-At (IdWithoutKeyPropertyErrorTest.klass:15)
+At (IdWithoutKeyPropertyErrorTest.klass:15:18)
 
 [39m 1║ [35mpackage [39mexample
 [39m13║ [35mclass [39mLongId
@@ -10,7 +10,7 @@ At (IdWithoutKeyPropertyErrorTest.klass:15)
 [39m  ║ [31m                 ^^
 [39m16║ [36m}
 [m
-[36mLocation:  [mIdWithoutKeyPropertyErrorTest.klass:15[m
+[36mLocation:  [mIdWithoutKeyPropertyErrorTest.klass:15:18[m
 [36mFile:      [mIdWithoutKeyPropertyErrorTest.klass[m
 [36mLine:      [m15[m
 [36mCharacter: [m18

@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_ASO_ORD[m ════════════════════════════════════════
 [31mError: Association end 'ClassWithEnumerationProperty.parent' is declared on line 5 and has a forward reference to type 'ClassWithEnumerationProperty' which is declared later in the source file 'ForwardReferenceErrorTest.klass' on line 27.[m
 
-At (ForwardReferenceErrorTest.klass:5)
+At (ForwardReferenceErrorTest.klass:5:13)
 
 [39m1║ [35mpackage [39mdummy
 [39m3║ [35massociation [39mAssociationWithForwardReferences
@@ -10,7 +10,7 @@ At (ForwardReferenceErrorTest.klass:5)
 [39m ║ [31m            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 [39m9║ [36m}
 [m
-[36mLocation:  [mForwardReferenceErrorTest.klass:5[m
+[36mLocation:  [mForwardReferenceErrorTest.klass:5:13[m
 [36mFile:      [mForwardReferenceErrorTest.klass[m
 [36mLine:      [m5[m
 [36mCharacter: [m13

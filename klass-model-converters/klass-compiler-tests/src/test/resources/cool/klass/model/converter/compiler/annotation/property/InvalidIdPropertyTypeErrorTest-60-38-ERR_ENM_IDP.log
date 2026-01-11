@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_ENM_IDP[m ════════════════════════════════════════
 [31mError: Enumeration properties may not be auto-generated ids.[m
 
-At (InvalidIdPropertyTypeErrorTest.klass:60)
+At (InvalidIdPropertyTypeErrorTest.klass:60:39)
 
 [39m 1║ [35mpackage [39mexample
 [39m58║ [35mclass [39mEnumerationId
@@ -10,7 +10,7 @@ At (InvalidIdPropertyTypeErrorTest.klass:60)
 [39m  ║ [31m                                      ^^
 [39m61║ [36m}
 [m
-[36mLocation:  [mInvalidIdPropertyTypeErrorTest.klass:60[m
+[36mLocation:  [mInvalidIdPropertyTypeErrorTest.klass:60:39[m
 [36mFile:      [mInvalidIdPropertyTypeErrorTest.klass[m
 [36mLine:      [m60[m
 [36mCharacter: [m39

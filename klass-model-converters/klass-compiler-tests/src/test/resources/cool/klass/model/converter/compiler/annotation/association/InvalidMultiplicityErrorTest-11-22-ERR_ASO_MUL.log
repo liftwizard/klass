@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_ASO_MUL[m ════════════════════════════════════════
 [31mError: Reference property 'target: DummyClass[4..5]' has invalid multiplicity. Expected one of [0..1], [1..1], [0..*], [1..*].[m
 
-At (InvalidMultiplicityErrorTest.klass:11)
+At (InvalidMultiplicityErrorTest.klass:11:23)
 
 [39m 1║ [35mpackage [39mdummy
 [39m 8║ [35massociation [39mDummyAssociation
@@ -10,7 +10,7 @@ At (InvalidMultiplicityErrorTest.klass:11)
 [39m  ║ [31m                      ^^^^^^
 [39m14║ [36m}
 [m
-[36mLocation:  [mInvalidMultiplicityErrorTest.klass:11[m
+[36mLocation:  [mInvalidMultiplicityErrorTest.klass:11:23[m
 [36mFile:      [mInvalidMultiplicityErrorTest.klass[m
 [36mLine:      [m11[m
 [36mCharacter: [m23

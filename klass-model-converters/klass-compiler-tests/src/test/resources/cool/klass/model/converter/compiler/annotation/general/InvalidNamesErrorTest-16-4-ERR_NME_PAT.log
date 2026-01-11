@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_NME_PAT[m ════════════════════════════════════════
 [31mError: Name must match pattern ^[a-z][a-zA-Z0-9]*$ but was 'BadPrimitiveProperty'.[m
 
-At (InvalidNamesErrorTest.klass:16)
+At (InvalidNamesErrorTest.klass:16:5)
 
 [39m 1║ [35mpackage [39mBADPACKAGE
 [39m14║ [35mclass [39mbadClass
@@ -10,7 +10,7 @@ At (InvalidNamesErrorTest.klass:16)
 [39m  ║ [31m    ^^^^^^^^^^^^^^^^^^^^
 [39m33║ [36m}
 [m
-[36mLocation:  [mInvalidNamesErrorTest.klass:16[m
+[36mLocation:  [mInvalidNamesErrorTest.klass:16:5[m
 [36mFile:      [mInvalidNamesErrorTest.klass[m
 [36mLine:      [m16[m
 [36mCharacter: [m5

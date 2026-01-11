@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_ADT_MOD[m ════════════════════════════════════════
 [31mError: Modifiers [audited] require one 'user' class in the domain model.[m
 
-At (AuditInferenceWithoutUserClassErrorTest.klass:3)
+At (AuditInferenceWithoutUserClassErrorTest.klass:3:43)
 
 [39m1║ [35mpackage [39mcom[36m.[39merrors
 [39m3║ [35mclass [39mDummyClass [32msystemTemporal [32mversioned [32maudited
@@ -9,7 +9,7 @@ At (AuditInferenceWithoutUserClassErrorTest.klass:3)
 [39m4║ [36m{
 [39m6║ [36m}
 [m
-[36mLocation:  [mAuditInferenceWithoutUserClassErrorTest.klass:3[m
+[36mLocation:  [mAuditInferenceWithoutUserClassErrorTest.klass:3:43[m
 [36mFile:      [mAuditInferenceWithoutUserClassErrorTest.klass[m
 [36mLine:      [m3[m
 [36mCharacter: [m43

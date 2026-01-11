@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_VAR_REF[m ════════════════════════════════════════
 [31mError: Cannot find parameter 'unresolvedDeclaration'.[m
 
-At (UnresolvedTypesErrorTest.klass:151)
+At (UnresolvedTypesErrorTest.klass:151:65)
 
 [39m  1║ [35mpackage [39mdummy
 [39m145║ [35mservice [39mClassWithUnresolvedResource [35mon [39mClassWithUnresolved
@@ -14,7 +14,7 @@ At (UnresolvedTypesErrorTest.klass:151)
 [39m154║         [36m}
 [39m163║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:151[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:151:65[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
 [36mLine:      [m151[m
 [36mCharacter: [m65
