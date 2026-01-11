@@ -509,6 +509,7 @@ jobs:
               with:
                   ref: ${{ github.event.pull_request.head.ref }}
                   repository: ${{ github.event.pull_request.head.repo.full_name }}
+                  fetch-depth: 0
                   token: ${{ secrets.GITHUB_TOKEN }}
 
             - uses: actions/cache@v5
