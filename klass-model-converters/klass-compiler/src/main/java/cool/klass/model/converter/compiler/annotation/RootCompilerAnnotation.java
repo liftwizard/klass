@@ -55,9 +55,10 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
 		@Nonnull String annotationCode,
 		@Nonnull String message,
 		@Nonnull AnsiTokenColorizer ansiTokenColorizer,
-		@Nonnull AnnotationSeverity severity
+		@Nonnull AnnotationSeverity severity,
+		boolean enableIdeLinks
 	) {
-		super(compilationUnit, macroCause, offendingContexts, sourceContexts, ansiTokenColorizer, severity);
+		super(compilationUnit, macroCause, offendingContexts, sourceContexts, ansiTokenColorizer, severity, enableIdeLinks);
 		this.annotationCode = Objects.requireNonNull(annotationCode);
 		this.message = Objects.requireNonNull(message);
 	}
@@ -78,6 +79,7 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
 		String contextString = this.getContextString();
 		String locationMessage = this.getOptionalLocationMessage();
 		String causeString = this.getCauseString();
+		String ideUrlMessage = this.getIdeUrlMessage();
 		String severityColor = this.severity == AnnotationSeverity.ERROR ? "red" : "yellow";
 		String severityName = this.severity == AnnotationSeverity.ERROR ? "Error" : "Warning";
 
@@ -87,7 +89,7 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
 
 			At %s
 
-			%s%s%s
+			%s%s%s%s
 			═════════════════════════════════════════════════════════════════════════════════════════════
 			""";
 
@@ -100,7 +102,8 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
 			this.getShortLocationString(),
 			contextString,
 			locationMessage,
-			causeString
+			causeString,
+			ideUrlMessage
 		);
 
 		return Ansi.ansi().render(ansi).toString();

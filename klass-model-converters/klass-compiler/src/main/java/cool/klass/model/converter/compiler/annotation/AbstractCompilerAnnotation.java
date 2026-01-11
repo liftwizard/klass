@@ -76,13 +76,16 @@ public abstract class AbstractCompilerAnnotation {
 	@Nonnull
 	private final AnsiTokenColorizer ansiTokenColorizer;
 
+	private final boolean enableIdeLinks;
+
 	protected AbstractCompilerAnnotation(
 		@Nonnull CompilationUnit compilationUnit,
 		@Nonnull Optional<CauseCompilerAnnotation> macroCause,
 		@Nonnull ImmutableList<ParserRuleContext> offendingContexts,
 		@Nonnull ImmutableList<IAntlrElement> sourceContexts,
 		@Nonnull AnsiTokenColorizer ansiTokenColorizer,
-		@Nonnull AnnotationSeverity severity
+		@Nonnull AnnotationSeverity severity,
+		boolean enableIdeLinks
 	) {
 		this.macroCause = Objects.requireNonNull(macroCause);
 		this.compilationUnit = Objects.requireNonNull(compilationUnit);
@@ -90,6 +93,7 @@ public abstract class AbstractCompilerAnnotation {
 		this.sourceContexts = Objects.requireNonNull(sourceContexts).select(IAntlrElement::isContext);
 		this.ansiTokenColorizer = Objects.requireNonNull(ansiTokenColorizer);
 		this.severity = Objects.requireNonNull(severity);
+		this.enableIdeLinks = enableIdeLinks;
 
 		if (offendingContexts.isEmpty()) {
 			throw new AssertionError();
@@ -369,6 +373,32 @@ public abstract class AbstractCompilerAnnotation {
 				.fg(Color.CYAN).a("File:      ").reset().a(this.compilationUnit).reset().a("\n")
 				.fg(Color.CYAN).a("Line:      ").reset().a(this.getLine()).reset().a("\n")
 				.fg(Color.CYAN).a("Character: ").reset().a(this.getCharPositionInLine() + 1)
+				.toString();
+		// @formatter:on
+	}
+
+	@Nonnull
+	protected String getIdeUrlMessage() {
+		if (!this.enableIdeLinks) {
+			return "";
+		}
+
+		String absolutePath = this.compilationUnit.getSourceName();
+		int line = this.getLine();
+		int column = this.getCharPositionInLine() + 1;
+
+		String vscodeUrl = String.format("vscode://file/%s:%d:%d", absolutePath, line, column);
+		String jetbrainsUrl = String.format(
+			"jetbrains://idea/navigate/reference?project=&file=%s&line=%d&column=%d",
+			absolutePath,
+			line,
+			column
+		);
+
+		// @formatter:off
+		return Ansi.ansi().a("\n")
+				.fg(Color.CYAN).a("VS Code:   ").reset().a(vscodeUrl).a("\n")
+				.fg(Color.CYAN).a("JetBrains: ").reset().a(jetbrainsUrl)
 				.toString();
 		// @formatter:on
 	}

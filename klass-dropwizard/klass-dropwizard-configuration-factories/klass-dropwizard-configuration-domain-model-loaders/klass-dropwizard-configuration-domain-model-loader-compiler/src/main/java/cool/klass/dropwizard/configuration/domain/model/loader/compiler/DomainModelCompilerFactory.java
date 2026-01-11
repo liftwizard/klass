@@ -34,6 +34,7 @@ import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorS
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import cool.klass.model.meta.loader.compiler.DomainModelCompilerLoader;
 import io.dropwizard.validation.ValidationMethod;
+import io.liftwizard.dropwizard.configuration.enabled.EnabledFactory;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -52,6 +53,8 @@ public class DomainModelCompilerFactory implements DomainModelFactory {
 	@NotEmpty
 	private @NotNull String colorScheme;
 
+	private @Valid @NotNull EnabledFactory ideLinksFactory = new EnabledFactory();
+
 	private DomainModelWithSourceCode domainModel;
 
 	@Nonnull
@@ -69,7 +72,8 @@ public class DomainModelCompilerFactory implements DomainModelFactory {
 			klassSourcePackagesImmutable,
 			Thread.currentThread().getContextClassLoader(),
 			DomainModelCompilerLoader::logCompilerAnnotation,
-			ansiColorScheme
+			ansiColorScheme,
+			this.ideLinksFactory.isEnabled()
 		);
 		this.domainModel = domainModelLoader.load();
 		return this.domainModel;
@@ -93,6 +97,16 @@ public class DomainModelCompilerFactory implements DomainModelFactory {
 	@JsonProperty
 	public void setColorScheme(String colorScheme) {
 		this.colorScheme = colorScheme;
+	}
+
+	@JsonProperty("ideLinks")
+	public EnabledFactory getIdeLinksFactory() {
+		return this.ideLinksFactory;
+	}
+
+	@JsonProperty("ideLinks")
+	public void setIdeLinksFactory(EnabledFactory ideLinksFactory) {
+		this.ideLinksFactory = ideLinksFactory;
 	}
 
 	@ValidationMethod(message = "Invalid color scheme. Valid options include 'dark', 'light', 'dark-cube', 'dark-rgb'.")

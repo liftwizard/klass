@@ -35,6 +35,7 @@ public class CompilerAnnotationHolder {
 	private final MutableList<RootCompilerAnnotation> compilerAnnotations = Lists.mutable.empty();
 
 	private AnsiTokenColorizer ansiTokenColorizer;
+	private boolean enableIdeLinks;
 
 	public void add(@Nonnull String annotationCode, @Nonnull String message, @Nonnull IAntlrElement element) {
 		this.add(annotationCode, message, element, AnnotationSeverity.ERROR);
@@ -141,7 +142,8 @@ public class CompilerAnnotationHolder {
 			annotationCode,
 			message,
 			this.ansiTokenColorizer,
-			severity
+			severity,
+			this.enableIdeLinks
 		);
 	}
 
@@ -161,7 +163,8 @@ public class CompilerAnnotationHolder {
 			offendingContexts,
 			surroundingElements,
 			this.ansiTokenColorizer,
-			severity
+			severity,
+			this.enableIdeLinks
 		);
 	}
 
@@ -191,5 +194,9 @@ public class CompilerAnnotationHolder {
 
 	public void setAnsiTokenColorizer(@Nonnull AnsiTokenColorizer ansiTokenColorizer) {
 		this.ansiTokenColorizer = Objects.requireNonNull(ansiTokenColorizer);
+	}
+
+	public void setEnableIdeLinks(boolean enableIdeLinks) {
+		this.enableIdeLinks = enableIdeLinks;
 	}
 }
