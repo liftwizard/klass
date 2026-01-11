@@ -61,16 +61,20 @@ public class DomainModelCompilerLoader implements DomainModelLoader {
 	@Nonnull
 	private final AnsiColorScheme colorScheme;
 
+	private final boolean enableIdeLinks;
+
 	public DomainModelCompilerLoader(
 		@Nonnull ImmutableList<String> klassSourcePackages,
 		@Nonnull ClassLoader classLoader,
 		@Nonnull Consumer<RootCompilerAnnotation> compilerAnnotationHandler,
-		AnsiColorScheme colorScheme
+		AnsiColorScheme colorScheme,
+		boolean enableIdeLinks
 	) {
 		this.klassSourcePackages = Objects.requireNonNull(klassSourcePackages);
 		this.classLoader = Objects.requireNonNull(classLoader);
 		this.compilerAnnotationHandler = Objects.requireNonNull(compilerAnnotationHandler);
 		this.colorScheme = Objects.requireNonNull(colorScheme);
+		this.enableIdeLinks = enableIdeLinks;
 	}
 
 	public static void logCompilerError(RootCompilerAnnotation compilerAnnotation) {
@@ -95,7 +99,7 @@ public class DomainModelCompilerLoader implements DomainModelLoader {
 
 		ImmutableList<CompilationUnit> compilationUnits = this.getCompilationUnits();
 
-		KlassCompiler klassCompiler = new KlassCompiler(compilationUnits, this.colorScheme);
+		KlassCompiler klassCompiler = new KlassCompiler(compilationUnits, this.colorScheme, this.enableIdeLinks);
 		CompilationResult compilationResult = klassCompiler.compile();
 		DomainModelWithSourceCode domainModel = this.handleResult(compilationResult);
 

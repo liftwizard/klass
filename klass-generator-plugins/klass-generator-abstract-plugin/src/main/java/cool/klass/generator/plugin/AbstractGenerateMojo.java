@@ -123,7 +123,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 			this.getLog().info("No color scheme configured, using default");
 		}
 		// TODO: We should use an abstract DomainModelFactory here, not necessarily the compiler.
-		KlassCompiler klassCompiler = new KlassCompiler(compilationUnits, ansiColorScheme);
+		KlassCompiler klassCompiler = new KlassCompiler(compilationUnits, ansiColorScheme, false);
 		return klassCompiler.compile();
 	}
 
@@ -146,7 +146,8 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 			Lists.immutable.withAll(this.klassSourcePackages),
 			this.getClassLoader(),
 			this::logCompilerAnnotation,
-			ansiColorScheme
+			ansiColorScheme,
+			false
 		);
 		return loader.load();
 	}
