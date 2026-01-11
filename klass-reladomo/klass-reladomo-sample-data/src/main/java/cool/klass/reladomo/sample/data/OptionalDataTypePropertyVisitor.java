@@ -24,6 +24,12 @@ public class OptionalDataTypePropertyVisitor extends AbstractDataTypePropertyVis
 
 	private static final LocalDateTime LOCAL_DATE_TIME = LocalDateTime.of(2000, 1, 1, 0, 0);
 
+	/**
+	 * The LocalDateTime used by RequiredDataTypePropertyVisitor (the parent record in tree structures).
+	 * Used for self-referential FK Instant/LocalDate values to reference the parent record.
+	 */
+	private static final LocalDateTime PARENT_LOCAL_DATE_TIME = LocalDateTime.of(1999, 12, 31, 23, 59);
+
 	@Nonnull
 	@Override
 	protected String getEmoji() {
@@ -33,6 +39,18 @@ public class OptionalDataTypePropertyVisitor extends AbstractDataTypePropertyVis
 	@Override
 	protected int getIndex() {
 		return 2;
+	}
+
+	@Override
+	protected Integer getSelfReferentialParentIndex() {
+		// Child node references the first (root) record
+		return 1;
+	}
+
+	@Override
+	protected LocalDateTime getSelfReferentialParentLocalDateTime() {
+		// Return the parent record's LocalDateTime (from RequiredDataTypePropertyVisitor)
+		return PARENT_LOCAL_DATE_TIME;
 	}
 
 	@Override

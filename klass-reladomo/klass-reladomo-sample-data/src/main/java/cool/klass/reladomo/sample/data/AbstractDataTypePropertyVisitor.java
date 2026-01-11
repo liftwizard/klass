@@ -76,10 +76,22 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 			AssociationEnd associationEnd = pair.getOne();
 			DataTypeProperty keyProperty = pair.getTwo();
 
-			// Self-referential associations (like parent -> child in a tree) should be null
-			// to avoid creating self-loops where a node is its own parent
+			// Self-referential associations (like parent -> child in a tree)
+			// First record should be null (root node), subsequent records can reference earlier records
 			if (associationEnd.getType().equals(primitiveProperty.getOwningClassifier())) {
-				this.result = null;
+				Integer parentIndex = this.getSelfReferentialParentIndex();
+				if (parentIndex == null) {
+					this.result = null;
+				} else {
+					String emoji = keyProperty.isUserId() ? "" : " " + this.getEmoji();
+					this.result = String.format(
+						"%s %s %d%s",
+						associationEnd.getType().getName(),
+						keyProperty.getName(),
+						parentIndex,
+						emoji
+					);
+				}
 				return;
 			}
 
@@ -109,9 +121,9 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 	@Override
 	public void visitInteger(@Nonnull PrimitiveProperty primitiveProperty) {
 		if (primitiveProperty.isForeignKey()) {
-			// Self-referential associations should be null to avoid self-loops
+			// Self-referential associations: first record is root (null), subsequent records reference earlier records
 			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
-				this.result = null;
+				this.result = this.getSelfReferentialParentIndex();
 				return;
 			}
 			this.result = this.getIndex();
@@ -123,9 +135,10 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 	@Override
 	public void visitLong(@Nonnull PrimitiveProperty primitiveProperty) {
 		if (primitiveProperty.isForeignKey()) {
-			// Self-referential associations should be null to avoid self-loops
+			// Self-referential associations: first record is root (null), subsequent records reference earlier records
 			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
-				this.result = null;
+				Integer parentIndex = this.getSelfReferentialParentIndex();
+				this.result = parentIndex == null ? null : (long) parentIndex;
 				return;
 			}
 			this.result = (long) this.getIndex();
@@ -139,9 +152,10 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 	@Override
 	public void visitDouble(@Nonnull PrimitiveProperty primitiveProperty) {
 		if (primitiveProperty.isForeignKey()) {
-			// Self-referential associations should be null to avoid self-loops
+			// Self-referential associations: first record is root (null), subsequent records reference earlier records
 			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
-				this.result = null;
+				Integer parentIndex = this.getSelfReferentialParentIndex();
+				this.result = parentIndex == null ? null : (double) parentIndex + 0.0123456789;
 				return;
 			}
 			this.result = (double) this.getIndex() + 0.0123456789;
@@ -153,9 +167,10 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 	@Override
 	public void visitFloat(@Nonnull PrimitiveProperty primitiveProperty) {
 		if (primitiveProperty.isForeignKey()) {
-			// Self-referential associations should be null to avoid self-loops
+			// Self-referential associations: first record is root (null), subsequent records reference earlier records
 			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
-				this.result = null;
+				Integer parentIndex = this.getSelfReferentialParentIndex();
+				this.result = parentIndex == null ? null : (float) parentIndex + 0.01234567f;
 				return;
 			}
 			this.result = (float) this.getIndex() + 0.01234567f;
@@ -172,9 +187,10 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 	@Override
 	public void visitInstant(@Nonnull PrimitiveProperty primitiveProperty) {
 		if (primitiveProperty.isForeignKey()) {
-			// Self-referential associations should be null to avoid self-loops
+			// Self-referential associations: first record is root (null), subsequent records reference earlier records
 			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
-				this.result = null;
+				LocalDateTime parentDateTime = this.getSelfReferentialParentLocalDateTime();
+				this.result = parentDateTime == null ? null : parentDateTime.toInstant(ZoneOffset.UTC);
 				return;
 			}
 		}
@@ -184,9 +200,10 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 	@Override
 	public void visitLocalDate(@Nonnull PrimitiveProperty primitiveProperty) {
 		if (primitiveProperty.isForeignKey()) {
-			// Self-referential associations should be null to avoid self-loops
+			// Self-referential associations: first record is root (null), subsequent records reference earlier records
 			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
-				this.result = null;
+				LocalDateTime parentDateTime = this.getSelfReferentialParentLocalDateTime();
+				this.result = parentDateTime == null ? null : parentDateTime.toLocalDate();
 				return;
 			}
 		}
@@ -213,6 +230,24 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 	protected abstract String getEmoji();
 
 	protected abstract int getIndex();
+
+	/**
+	 * Returns the parent index for self-referential FK values.
+	 * Return null to create a root node (no parent), or return
+	 * an index to create a child node referencing that index's record.
+	 *
+	 * <p>This enables generating tree structures where the first record
+	 * is a root (null parent) and subsequent records can reference
+	 * earlier records as parents.
+	 */
+	protected abstract Integer getSelfReferentialParentIndex();
+
+	/**
+	 * Returns the LocalDateTime to use for self-referential FK Instant/LocalDate values.
+	 * This should return the parent record's LocalDateTime when creating a child node.
+	 * Return null if this visitor creates root nodes (no parent).
+	 */
+	protected abstract LocalDateTime getSelfReferentialParentLocalDateTime();
 
 	@Nonnull
 	protected abstract LocalDateTime getLocalDateTime();
