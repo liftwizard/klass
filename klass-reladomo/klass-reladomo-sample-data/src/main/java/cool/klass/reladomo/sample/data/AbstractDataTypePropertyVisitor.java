@@ -108,12 +108,16 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 
 	@Override
 	public void visitInteger(@Nonnull PrimitiveProperty primitiveProperty) {
-		// Self-referential associations should be null to avoid self-loops
-		if (primitiveProperty.isForeignKey() && this.isSelfReferentialForeignKey(primitiveProperty)) {
-			this.result = null;
-			return;
+		if (primitiveProperty.isForeignKey()) {
+			// Self-referential associations should be null to avoid self-loops
+			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
+				this.result = null;
+				return;
+			}
+			this.result = this.getIndex();
+		} else {
+			this.result = this.getNumber(primitiveProperty);
 		}
-		this.result = this.getAdjustment(primitiveProperty);
 	}
 
 	@Override
@@ -134,12 +138,30 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 
 	@Override
 	public void visitDouble(@Nonnull PrimitiveProperty primitiveProperty) {
-		this.result = this.getAdjustment(primitiveProperty) + 0.0123456789;
+		if (primitiveProperty.isForeignKey()) {
+			// Self-referential associations should be null to avoid self-loops
+			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
+				this.result = null;
+				return;
+			}
+			this.result = (double) this.getIndex() + 0.0123456789;
+		} else {
+			this.result = (double) this.getNumber(primitiveProperty) + 0.0123456789;
+		}
 	}
 
 	@Override
 	public void visitFloat(@Nonnull PrimitiveProperty primitiveProperty) {
-		this.result = this.getAdjustment(primitiveProperty) + 0.01234567f;
+		if (primitiveProperty.isForeignKey()) {
+			// Self-referential associations should be null to avoid self-loops
+			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
+				this.result = null;
+				return;
+			}
+			this.result = (float) this.getIndex() + 0.01234567f;
+		} else {
+			this.result = (float) this.getNumber(primitiveProperty) + 0.01234567f;
+		}
 	}
 
 	@Override
@@ -149,11 +171,25 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 
 	@Override
 	public void visitInstant(@Nonnull PrimitiveProperty primitiveProperty) {
+		if (primitiveProperty.isForeignKey()) {
+			// Self-referential associations should be null to avoid self-loops
+			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
+				this.result = null;
+				return;
+			}
+		}
 		this.result = this.getUniqueLocalDateTime(primitiveProperty).toInstant(ZoneOffset.UTC);
 	}
 
 	@Override
 	public void visitLocalDate(@Nonnull PrimitiveProperty primitiveProperty) {
+		if (primitiveProperty.isForeignKey()) {
+			// Self-referential associations should be null to avoid self-loops
+			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
+				this.result = null;
+				return;
+			}
+		}
 		this.result = this.getUniqueLocalDateTime(primitiveProperty).toLocalDate();
 	}
 
@@ -195,10 +231,6 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 			.getOnly();
 		AssociationEnd associationEnd = pair.getOne();
 		return associationEnd.getType().equals(primitiveProperty.getOwningClassifier());
-	}
-
-	private int getAdjustment(@Nonnull PrimitiveProperty primitiveProperty) {
-		return primitiveProperty.isForeignKey() ? this.getIndex() : this.getNumber(primitiveProperty);
 	}
 
 	private LocalDateTime getUniqueLocalDateTime(@Nonnull PrimitiveProperty primitiveProperty) {
