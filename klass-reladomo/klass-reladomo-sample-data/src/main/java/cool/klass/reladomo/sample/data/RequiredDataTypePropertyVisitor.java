@@ -36,6 +36,18 @@ public class RequiredDataTypePropertyVisitor extends AbstractDataTypePropertyVis
 	}
 
 	@Override
+	protected Integer getSelfReferentialParentIndex() {
+		// Root node has no parent
+		return null;
+	}
+
+	@Override
+	protected LocalDateTime getSelfReferentialParentLocalDateTime() {
+		// Root node has no parent
+		return null;
+	}
+
+	@Override
 	protected boolean getBoolean() {
 		return true;
 	}
