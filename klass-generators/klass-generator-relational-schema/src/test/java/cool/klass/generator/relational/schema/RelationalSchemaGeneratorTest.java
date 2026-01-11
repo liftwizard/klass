@@ -52,7 +52,8 @@ public class RelationalSchemaGeneratorTest {
 			klassSourcePackages,
 			Thread.currentThread().getContextClassLoader(),
 			DomainModelCompilerLoader::logCompilerError,
-			ColorSchemeProvider.getByName("dark")
+			ColorSchemeProvider.getByName("dark"),
+			false
 		);
 
 		DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
