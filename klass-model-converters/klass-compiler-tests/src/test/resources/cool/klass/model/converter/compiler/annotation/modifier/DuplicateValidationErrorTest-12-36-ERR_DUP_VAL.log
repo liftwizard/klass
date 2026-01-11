@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_DUP_VAL[m ════════════════════════════════════════
 [31mError: Duplicate validation 'minLength(1)'.[m
 
-At (DuplicateValidationErrorTest.klass:12)
+At (DuplicateValidationErrorTest.klass:12:37)
 
 [39m 1║ [35mpackage [39mdummy
 [39m 8║ [35mclass [39mDummyClass
@@ -10,7 +10,7 @@ At (DuplicateValidationErrorTest.klass:12)
 [39m  ║ [31m                                    ^^^^^^^^^
 [39m14║ [36m}
 [m
-[36mLocation:  [mDuplicateValidationErrorTest.klass:12[m
+[36mLocation:  [mDuplicateValidationErrorTest.klass:12:37[m
 [36mFile:      [mDuplicateValidationErrorTest.klass[m
 [36mLine:      [m12[m
 [36mCharacter: [m37

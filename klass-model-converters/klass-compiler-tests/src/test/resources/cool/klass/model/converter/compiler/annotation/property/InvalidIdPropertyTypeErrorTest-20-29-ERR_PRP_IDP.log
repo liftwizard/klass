@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PRP_IDP[m ════════════════════════════════════════
 [31mError: Primitive properties with type Double may not be auto-generated ids. Only types [Integer, Long, String] may be id properties.[m
 
-At (InvalidIdPropertyTypeErrorTest.klass:20)
+At (InvalidIdPropertyTypeErrorTest.klass:20:30)
 
 [39m 1║ [35mpackage [39mexample
 [39m18║ [35mclass [39mDoubleId
@@ -10,7 +10,7 @@ At (InvalidIdPropertyTypeErrorTest.klass:20)
 [39m  ║ [31m                             ^^
 [39m21║ [36m}
 [m
-[36mLocation:  [mInvalidIdPropertyTypeErrorTest.klass:20[m
+[36mLocation:  [mInvalidIdPropertyTypeErrorTest.klass:20:30[m
 [36mFile:      [mInvalidIdPropertyTypeErrorTest.klass[m
 [36mLine:      [m20[m
 [36mCharacter: [m30

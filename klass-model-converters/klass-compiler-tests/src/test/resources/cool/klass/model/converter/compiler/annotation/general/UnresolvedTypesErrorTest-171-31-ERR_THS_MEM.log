@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_THS_MEM[m ════════════════════════════════════════
 [31mError: Cannot find member '.irrelevantProperty'.[m
 
-At (UnresolvedTypesErrorTest.klass:171)
+At (UnresolvedTypesErrorTest.klass:171:32)
 
 [39m  1║ [35mpackage [39mdummy
 [39m165║ [35mservice [39mUnresolvedClassResource [35mon [39mUnresolvedClass
@@ -14,7 +14,7 @@ At (UnresolvedTypesErrorTest.klass:171)
 [39m174║         [36m}
 [39m175║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:171[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:171:32[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
 [36mLine:      [m171[m
 [36mCharacter: [m32

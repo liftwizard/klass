@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_RED_INT[m ════════════════════════════════════════
 [31mError: Redundant interface 'RedundantLeftInterface'.[m
 
-At (RedundantImplementsErrorTest.klass:53)
+At (RedundantImplementsErrorTest.klass:53:39)
 
 [39m 1║ [35mpackage [39mexample
 [39m51║ [35mclass [39mConcreteSubClass
@@ -11,7 +11,7 @@ At (RedundantImplementsErrorTest.klass:53)
 [39m54║ [36m{
 [39m56║ [36m}
 [m
-[36mLocation:  [mRedundantImplementsErrorTest.klass:53[m
+[36mLocation:  [mRedundantImplementsErrorTest.klass:53:39[m
 [36mFile:      [mRedundantImplementsErrorTest.klass[m
 [36mLine:      [m53[m
 [36mCharacter: [m39

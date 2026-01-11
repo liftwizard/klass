@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_AUD_UID[m ════════════════════════════════════════
 [31mError: Expected property 'DummyClass2.lastUpdatedById: String lastUpdatedBy final' with modifier 'lastUpdatedBy' to also have the userId modifier.[m
 
-At (AuditDataPropertyTypeErrorTest.klass:29)
+At (AuditDataPropertyTypeErrorTest.klass:29:29)
 
 [39m 1║ [35mpackage [39mcom[36m.[39merrors
 [39m24║ [35mclass [39mDummyClass2
@@ -10,7 +10,7 @@ At (AuditDataPropertyTypeErrorTest.klass:29)
 [39m  ║ [31m                            ^^^^^^^^^^^^^
 [39m33║ [36m}
 [m
-[36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:29[m
+[36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:29:29[m
 [36mFile:      [mAuditDataPropertyTypeErrorTest.klass[m
 [36mLine:      [m29[m
 [36mCharacter: [m29

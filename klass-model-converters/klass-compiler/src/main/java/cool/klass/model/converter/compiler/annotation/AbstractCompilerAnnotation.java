@@ -150,10 +150,11 @@ public abstract class AbstractCompilerAnnotation {
 
 	private String getLocationWithLine() {
 		return String.format(
-			"(%s:%d)",
+			"(%s:%d:%d)",
 			// TODO: This should be part of the source information
 			this.getFilenameWithoutDirectory(),
-			this.getLine()
+			this.getLine(),
+			this.getCharPositionInLine() + 1
 		);
 	}
 
@@ -364,7 +365,7 @@ public abstract class AbstractCompilerAnnotation {
 	private String getLocationMessage() {
 		// @formatter:off
 		return Ansi.ansi().a("\n")
-				.fg(Color.CYAN).a("Location:  ").reset().a(this.getFilenameWithoutDirectory()).a(":").a(this.getLine()).reset().a("\n")
+				.fg(Color.CYAN).a("Location:  ").reset().a(this.getFilenameWithoutDirectory()).a(":").a(this.getLine()).a(":").a(this.getCharPositionInLine() + 1).reset().a("\n")
 				.fg(Color.CYAN).a("File:      ").reset().a(this.compilationUnit).reset().a("\n")
 				.fg(Color.CYAN).a("Line:      ").reset().a(this.getLine()).reset().a("\n")
 				.fg(Color.CYAN).a("Character: ").reset().a(this.getCharPositionInLine() + 1)

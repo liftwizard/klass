@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_EXT_CCT[m ════════════════════════════════════════
 [31mError: Superclass must be abstract 'ConcreteSuperclass'.[m
 
-At (ExtendsFromConcreteClassErrorTest.klass:8)
+At (ExtendsFromConcreteClassErrorTest.klass:8:32)
 
 [39m 1║ [35mpackage [39mexample
 [39m 8║ [35mclass [39mConcreteSubclass [35mextends [39mConcreteSuperclass
@@ -9,7 +9,7 @@ At (ExtendsFromConcreteClassErrorTest.klass:8)
 [39m 9║ [36m{
 [39m11║ [36m}
 [m
-[36mLocation:  [mExtendsFromConcreteClassErrorTest.klass:8[m
+[36mLocation:  [mExtendsFromConcreteClassErrorTest.klass:8:32[m
 [36mFile:      [mExtendsFromConcreteClassErrorTest.klass[m
 [36mLine:      [m8[m
 [36mCharacter: [m32

@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_CBY_LBY[m ════════════════════════════════════════
 [31mError: Property may not have both 'createdBy' and lastUpdatedBy' modifiers.[m
 
-At (DuplicateAuditModifierErrorTest.klass:26)
+At (DuplicateAuditModifierErrorTest.klass:26:29)
 
 [39m 1║ [35mpackage [39mcom[36m.[39merrors
 [39m23║ [35mclass [39mDummyClass2 [32msystemTemporal [32mversioned [32maudited
@@ -10,7 +10,7 @@ At (DuplicateAuditModifierErrorTest.klass:26)
 [39m  ║ [31m                            ^^^^^^^^^ ^^^^^^^^^^^^^
 [39m27║ [36m}
 [m
-[36mLocation:  [mDuplicateAuditModifierErrorTest.klass:26[m
+[36mLocation:  [mDuplicateAuditModifierErrorTest.klass:26:29[m
 [36mFile:      [mDuplicateAuditModifierErrorTest.klass[m
 [36mLine:      [m26[m
 [36mCharacter: [m29

@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_DUP_END[m ════════════════════════════════════════
 [31mError: Multiple version association ends point at 'ExampleClassVersion'.[m
 
-At (DuplicateVersionAssociationErrorTest.klass:17)
+At (DuplicateVersionAssociationErrorTest.klass:17:58)
 
 [39m 1║ [35mpackage [39mcom[36m.[39merrors
 [39m14║ [35massociation [39mExampleClass2HasVersion
@@ -10,7 +10,7 @@ At (DuplicateVersionAssociationErrorTest.klass:17)
 [39m  ║ [31m                                                         ^^^^^^^
 [39m20║ [36m}
 [m
-[36mLocation:  [mDuplicateVersionAssociationErrorTest.klass:17[m
+[36mLocation:  [mDuplicateVersionAssociationErrorTest.klass:17:58[m
 [36mFile:      [mDuplicateVersionAssociationErrorTest.klass[m
 [36mLine:      [m17[m
 [36mCharacter: [m58

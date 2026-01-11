@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_DUP_PAR[m ════════════════════════════════════════
 [31mError: Duplicate parameter: 'ambiguousParameter'.[m
 
-At (AmbiguousTypesErrorTest.klass:186)
+At (AmbiguousTypesErrorTest.klass:186:12)
 
 [39m  1║ [35mpackage [39mdummy
 [39m177║ [35mservice [39mGoodClassResource [35mon [39mGoodClass
@@ -10,7 +10,7 @@ At (AmbiguousTypesErrorTest.klass:186)
 [39m   ║ [31m           ^^^^^^^^^^^^^^^^^^
 [39m200║ [36m}
 [m
-[36mLocation:  [mAmbiguousTypesErrorTest.klass:186[m
+[36mLocation:  [mAmbiguousTypesErrorTest.klass:186:12[m
 [36mFile:      [mAmbiguousTypesErrorTest.klass[m
 [36mLine:      [m186[m
 [36mCharacter: [m12

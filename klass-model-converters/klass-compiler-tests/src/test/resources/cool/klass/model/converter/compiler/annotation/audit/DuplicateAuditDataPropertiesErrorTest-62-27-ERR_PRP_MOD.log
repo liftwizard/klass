@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PRP_MOD[m ════════════════════════════════════════
 [31mError: Multiple properties on 'DummyClassVersion' with modifiers [createdBy].[m
 
-At (DuplicateAuditDataPropertiesErrorTest.klass:62)
+At (DuplicateAuditDataPropertiesErrorTest.klass:62:28)
 
 [39m 1║ [35mpackage [39mcom[36m.[39merrors
 [39m59║ [35massociation [39mDummyClassVersionHasCreatedBy1
@@ -10,7 +10,7 @@ At (DuplicateAuditDataPropertiesErrorTest.klass:62)
 [39m  ║ [31m                           ^^^^^^^^^
 [39m65║ [36m}
 [m
-[36mLocation:  [mDuplicateAuditDataPropertiesErrorTest.klass:62[m
+[36mLocation:  [mDuplicateAuditDataPropertiesErrorTest.klass:62:28[m
 [36mFile:      [mDuplicateAuditDataPropertiesErrorTest.klass[m
 [36mLine:      [m62[m
 [36mCharacter: [m28

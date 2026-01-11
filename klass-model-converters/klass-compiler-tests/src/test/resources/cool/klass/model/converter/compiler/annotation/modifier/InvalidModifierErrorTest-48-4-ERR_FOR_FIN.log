@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_FOR_FIN[m ════════════════════════════════════════
 [31mError: Association end 'Answer2.question' is not final [1..1] but foreign key 'Answer2.question2Id' is final. The two properties must match.[m
 
-At (InvalidModifierErrorTest.klass:48)
+At (InvalidModifierErrorTest.klass:48:5)
 
 [39m 1║ [35mpackage [39mtest
 [39m46║ [35massociation [39mQuestionHasAnswer2
@@ -10,7 +10,7 @@ At (InvalidModifierErrorTest.klass:48)
 [39m  ║ [31m    ^^^^^^^^
 [39m51║ [36m}
 [m
-[36mLocation:  [mInvalidModifierErrorTest.klass:48[m
+[36mLocation:  [mInvalidModifierErrorTest.klass:48:5[m
 [36mFile:      [mInvalidModifierErrorTest.klass[m
 [36mLine:      [m48[m
 [36mCharacter: [m5

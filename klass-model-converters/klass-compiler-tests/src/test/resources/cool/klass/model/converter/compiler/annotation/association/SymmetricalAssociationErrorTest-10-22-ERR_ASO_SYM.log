@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_ASO_SYM[m ════════════════════════════════════════
 [31mError: Association 'DummyAssociation' is perfectly symmetrical, so foreign keys cannot be inferred. To break the symmetry, make one end owned, or make one end required and the other end optional.[m
 
-At (SymmetricalAssociationErrorTest.klass:10)
+At (SymmetricalAssociationErrorTest.klass:10:23)
 
 [39m 1║ [35mpackage [39mdummy
 [39m 8║ [35massociation [39mDummyAssociation
@@ -12,7 +12,7 @@ At (SymmetricalAssociationErrorTest.klass:10)
 [39m  ║ [31m                      ^^^^^^
 [39m14║ [36m}
 [m
-[36mLocation:  [mSymmetricalAssociationErrorTest.klass:10[m
+[36mLocation:  [mSymmetricalAssociationErrorTest.klass:10:23[m
 [36mFile:      [mSymmetricalAssociationErrorTest.klass[m
 [36mLine:      [m10[m
 [36mCharacter: [m23

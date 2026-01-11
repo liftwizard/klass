@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_IMP_SLF[m ════════════════════════════════════════
 [31mError: Circular inheritance 'InterfaceImplementsSelf'.[m
 
-At (CircularInheritanceErrorTest.klass:4)
+At (CircularInheritanceErrorTest.klass:4:16)
 
 [39m1║ [35mpackage [39mexample
 [39m3║ [35minterface [39mInterfaceImplementsSelf
@@ -10,7 +10,7 @@ At (CircularInheritanceErrorTest.klass:4)
 [39m5║ [36m{
 [39m7║ [36m}
 [m
-[36mLocation:  [mCircularInheritanceErrorTest.klass:4[m
+[36mLocation:  [mCircularInheritanceErrorTest.klass:4:16[m
 [36mFile:      [mCircularInheritanceErrorTest.klass[m
 [36mLine:      [m4[m
 [36mCharacter: [m16

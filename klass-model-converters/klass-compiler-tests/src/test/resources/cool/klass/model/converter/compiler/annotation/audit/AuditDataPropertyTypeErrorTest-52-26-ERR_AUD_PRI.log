@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_AUD_PRI[m ════════════════════════════════════════
 [31mError: Expected property 'DummyClass5.id: String key userId lastUpdatedBy maximumLength(256)' with modifier 'lastUpdatedBy' to also have the private modifier.[m
 
-At (AuditDataPropertyTypeErrorTest.klass:52)
+At (AuditDataPropertyTypeErrorTest.klass:52:27)
 
 [39m 1║ [35mpackage [39mcom[36m.[39merrors
 [39m50║ [35mclass [39mDummyClass5
@@ -10,7 +10,7 @@ At (AuditDataPropertyTypeErrorTest.klass:52)
 [39m  ║ [31m                          ^^^^^^^^^^^^^
 [39m53║ [36m}
 [m
-[36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:52[m
+[36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:52:27[m
 [36mFile:      [mAuditDataPropertyTypeErrorTest.klass[m
 [36mLine:      [m52[m
 [36mCharacter: [m27

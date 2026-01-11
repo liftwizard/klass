@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PRJ_DTP[m ════════════════════════════════════════
 [31mError: Cannot find member 'GoodClass.goodParameterizedProperty3'.[m
 
-At (AmbiguousTypesErrorTest.klass:144)
+At (AmbiguousTypesErrorTest.klass:144:5)
 
 [39m  1║ [35mpackage [39mdummy
 [39m138║ [35mprojection [39mProjectionWithGoodClass [35mon [39mGoodClass
@@ -10,7 +10,7 @@ At (AmbiguousTypesErrorTest.klass:144)
 [39m   ║ [31m    ^^^^^^^^^^^^^^^^^^^^^^^^^^
 [39m170║ [36m}
 [m
-[36mLocation:  [mAmbiguousTypesErrorTest.klass:144[m
+[36mLocation:  [mAmbiguousTypesErrorTest.klass:144:5[m
 [36mFile:      [mAmbiguousTypesErrorTest.klass[m
 [36mLine:      [m144[m
 [36mCharacter: [m5

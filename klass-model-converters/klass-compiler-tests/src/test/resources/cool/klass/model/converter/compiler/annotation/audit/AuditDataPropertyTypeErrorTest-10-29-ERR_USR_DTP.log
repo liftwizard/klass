@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_USR_DTP[m ════════════════════════════════════════
 [31mError: Expected type 'String' but was 'DummyEnumeration' for 'userId' property 'User.id: DummyEnumeration key userId maximumLength(256)'.[m
 
-At (AuditDataPropertyTypeErrorTest.klass:10)
+At (AuditDataPropertyTypeErrorTest.klass:10:30)
 
 [39m 1║ [35mpackage [39mcom[36m.[39merrors
 [39m 8║ [35muser [39mUser [32msystemTemporal [32mversioned
@@ -10,7 +10,7 @@ At (AuditDataPropertyTypeErrorTest.klass:10)
 [39m  ║ [31m        ^^^^^^^^^^^^^^^^     ^^^^^^
 [39m11║ [36m}
 [m
-[36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:10[m
+[36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:10:30[m
 [36mFile:      [mAuditDataPropertyTypeErrorTest.klass[m
 [36mLine:      [m10[m
 [36mCharacter: [m30

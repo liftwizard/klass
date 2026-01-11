@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PRP_TYP[m ════════════════════════════════════════
 [31mError: Nested projection nodes require a reference property, but found a data type property 'Parent.enumProperty' with type 'ExampleEnumeration'.[m
 
-At (ProjectionTypeTest.klass:30)
+At (ProjectionTypeTest.klass:30:5)
 
 [39m 1║ [35mpackage [39mdummy
 [39m28║ [35mprojection [39mProjection1 [35mon [39mParent
@@ -11,7 +11,7 @@ At (ProjectionTypeTest.klass:30)
 [39m32║     [36m}[36m,
 [39m40║ [36m}
 [m
-[36mLocation:  [mProjectionTypeTest.klass:30[m
+[36mLocation:  [mProjectionTypeTest.klass:30:5[m
 [36mFile:      [mProjectionTypeTest.klass[m
 [36mLine:      [m30[m
 [36mCharacter: [m5

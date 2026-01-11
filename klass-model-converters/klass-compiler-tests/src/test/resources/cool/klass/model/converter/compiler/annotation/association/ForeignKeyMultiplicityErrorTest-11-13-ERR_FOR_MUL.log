@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_FOR_MUL[m ════════════════════════════════════════
 [31mError: Association end 'DummyOwned.ownerDummy' has multiplicity [1..1] so foreign key 'DummyOwned.ownerId' ought to be required.[m
 
-At (ForeignKeyMultiplicityErrorTest.klass:11)
+At (ForeignKeyMultiplicityErrorTest.klass:11:14)
 
 [39m 1║ [35mpackage [39mdummy
 [39m 8║ [35mclass [39mDummyOwned
@@ -10,7 +10,7 @@ At (ForeignKeyMultiplicityErrorTest.klass:11)
 [39m  ║ [31m             ^^^^
 [39m12║ [36m}
 [m
-[36mLocation:  [mForeignKeyMultiplicityErrorTest.klass:11[m
+[36mLocation:  [mForeignKeyMultiplicityErrorTest.klass:11:14[m
 [36mFile:      [mForeignKeyMultiplicityErrorTest.klass[m
 [36mLine:      [m11[m
 [36mCharacter: [m14

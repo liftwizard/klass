@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_AUD_DTP[m ════════════════════════════════════════
 [31mError: Expected type 'String' but was 'DummyEnumeration' for 'createdBy' property 'DummyClass.createdById: DummyEnumeration createdBy userId final maximumLength(256)'.[m
 
-At (AuditDataPropertyTypeErrorTest.klass:19)
+At (AuditDataPropertyTypeErrorTest.klass:19:39)
 
 [39m 1║ [35mpackage [39mcom[36m.[39merrors
 [39m13║ [35mclass [39mDummyClass [32msystemTemporal [32mversioned [32maudited
@@ -10,7 +10,7 @@ At (AuditDataPropertyTypeErrorTest.klass:19)
 [39m  ║ [31m                     ^^^^^^^^^^^^^^^^ ^^^^^^^^^
 [39m22║ [36m}
 [m
-[36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:19[m
+[36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:19:39[m
 [36mFile:      [mAuditDataPropertyTypeErrorTest.klass[m
 [36mLine:      [m19[m
 [36mCharacter: [m39

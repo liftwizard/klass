@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PRP_NFD[m ════════════════════════════════════════
 [31mError: Cannot find member 'ClassWithUnresolved.unresolvedParameterizedProperty'.[m
 
-At (UnresolvedTypesErrorTest.klass:39)
+At (UnresolvedTypesErrorTest.klass:39:5)
 
 [39m 1║ [35mpackage [39mdummy
 [39m35║ [35mprojection [39mProjectionWithUnresolved [35mon [39mClassWithUnresolved
@@ -11,7 +11,7 @@ At (UnresolvedTypesErrorTest.klass:39)
 [39m41║     [36m}[36m,
 [39m47║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:39[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:39:5[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
 [36mLine:      [m39[m
 [36mCharacter: [m5

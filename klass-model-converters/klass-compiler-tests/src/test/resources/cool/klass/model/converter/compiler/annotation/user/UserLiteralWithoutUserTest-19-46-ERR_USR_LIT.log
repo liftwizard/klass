@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_USR_LIT[m ════════════════════════════════════════
 [31mError: 'user' literal requires one 'user' class in the domain model.[m
 
-At (UserLiteralWithoutUserTest.klass:19)
+At (UserLiteralWithoutUserTest.klass:19:47)
 
 [39m 1║ [35mpackage [39mcom[36m.[39mstackoverflow
 [39m12║ [35mservice [39mQuestionResource [35mon [39mQuestion
@@ -14,7 +14,7 @@ At (UserLiteralWithoutUserTest.klass:19)
 [39m20║         [36m}
 [39m21║ [36m}
 [m
-[36mLocation:  [mUserLiteralWithoutUserTest.klass:19[m
+[36mLocation:  [mUserLiteralWithoutUserTest.klass:19:47[m
 [36mFile:      [mUserLiteralWithoutUserTest.klass[m
 [36mLine:      [m19[m
 [36mCharacter: [m47

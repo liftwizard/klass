@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_ADT_MOD[m ════════════════════════════════════════
 [31mError: Modifiers [userId] require one 'user' class in the domain model.[m
 
-At (UserIdWithoutUserClassErrorTest.klass:5)
+At (UserIdWithoutUserClassErrorTest.klass:5:24)
 
 [39m1║ [35mpackage [39mcom[36m.[39merrors
 [39m3║ [35mclass [39mUser
@@ -10,7 +10,7 @@ At (UserIdWithoutUserClassErrorTest.klass:5)
 [39m ║ [31m                       ^^^^^^
 [39m6║ [36m}
 [m
-[36mLocation:  [mUserIdWithoutUserClassErrorTest.klass:5[m
+[36mLocation:  [mUserIdWithoutUserClassErrorTest.klass:5:24[m
 [36mFile:      [mUserIdWithoutUserClassErrorTest.klass[m
 [36mLine:      [m5[m
 [36mCharacter: [m24

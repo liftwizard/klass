@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_ASO_OWN[m ════════════════════════════════════════
 [31mError: Both association ends are owned in 'DoubleVersionAssociation'. At most one end may be owned.[m
 
-At (DoubleVersionAssociationErrorTest.klass:19)
+At (DoubleVersionAssociationErrorTest.klass:19:41)
 
 [39m 1║ [35mpackage [39mdummy
 [39m17║ [35massociation [39mDoubleVersionAssociation
@@ -12,7 +12,7 @@ At (DoubleVersionAssociationErrorTest.klass:19)
 [39m  ║ [31m                                        ^^^^^
 [39m23║ [36m}
 [m
-[36mLocation:  [mDoubleVersionAssociationErrorTest.klass:19[m
+[36mLocation:  [mDoubleVersionAssociationErrorTest.klass:19:41[m
 [36mFile:      [mDoubleVersionAssociationErrorTest.klass[m
 [36mLine:      [m19[m
 [36mCharacter: [m41
