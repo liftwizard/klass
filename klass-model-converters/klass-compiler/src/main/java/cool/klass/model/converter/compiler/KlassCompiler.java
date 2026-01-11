@@ -106,14 +106,16 @@ public class KlassCompiler {
 
 	private final CompilerState compilerState;
 	private final AnsiColorScheme colorScheme;
+	private final boolean enableIdeLinks;
 
 	public KlassCompiler(CompilationUnit compilationUnit, AnsiColorScheme colorScheme) {
-		this(Lists.immutable.with(compilationUnit), colorScheme);
+		this(Lists.immutable.with(compilationUnit), colorScheme, false);
 	}
 
-	public KlassCompiler(ImmutableList<CompilationUnit> compilationUnits, AnsiColorScheme colorScheme) {
+	public KlassCompiler(ImmutableList<CompilationUnit> compilationUnits, AnsiColorScheme colorScheme, boolean enableIdeLinks) {
 		this.compilerState = new CompilerState(compilationUnits);
 		this.colorScheme = Objects.requireNonNull(colorScheme);
+		this.enableIdeLinks = enableIdeLinks;
 	}
 
 	private void executeCompilerPhase(KlassListener compilerPhase) {
@@ -175,6 +177,7 @@ public class KlassCompiler {
 			tokenCategoriesFromLexer
 		);
 		compilerAnnotationHolder.setAnsiTokenColorizer(ansiTokenColorizer);
+		compilerAnnotationHolder.setEnableIdeLinks(this.enableIdeLinks);
 
 		this.compilerState.reportErrors();
 		ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilerAnnotationHolder.getCompilerAnnotations();

@@ -35,9 +35,10 @@ public class CauseCompilerAnnotation extends AbstractCompilerAnnotation {
 		@Nonnull ImmutableList<ParserRuleContext> offendingContexts,
 		@Nonnull ImmutableList<IAntlrElement> sourceContexts,
 		@Nonnull AnsiTokenColorizer ansiTokenColorizer,
-		@Nonnull AnnotationSeverity severity
+		@Nonnull AnnotationSeverity severity,
+		boolean enableIdeLinks
 	) {
-		super(compilationUnit, macroCause, offendingContexts, sourceContexts, ansiTokenColorizer, severity);
+		super(compilationUnit, macroCause, offendingContexts, sourceContexts, ansiTokenColorizer, severity, enableIdeLinks);
 	}
 
 	@Nonnull
