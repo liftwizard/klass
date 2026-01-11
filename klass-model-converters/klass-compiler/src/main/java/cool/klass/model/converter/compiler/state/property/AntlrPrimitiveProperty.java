@@ -282,13 +282,7 @@ public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType>
 			propertyName,
 			suggestedName
 		);
-		compilerAnnotationHolder.add(
-			"WRN_BOL_PFX",
-			message,
-			this,
-			this.getNameContext(),
-			AnnotationSeverity.WARNING
-		);
+		compilerAnnotationHolder.add("WRN_BOL_PFX", message, this, this.getNameContext(), AnnotationSeverity.WARNING);
 	}
 	// </editor-fold>
 }
