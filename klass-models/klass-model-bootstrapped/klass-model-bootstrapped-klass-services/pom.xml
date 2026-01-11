@@ -20,7 +20,7 @@
     <parent>
         <groupId>cool.klass</groupId>
         <artifactId>klass-model-bootstrapped</artifactId>
-        <version>0.6.0-SNAPSHOT</version>
+        <version>0.6.0</version>
     </parent>
 
     <artifactId>klass-model-bootstrapped-klass-services</artifactId>
