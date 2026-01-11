@@ -26,7 +26,7 @@
 
     <groupId>cool.klass</groupId>
     <artifactId>klass</artifactId>
-    <version>0.6.0</version>
+    <version>0.7.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Klass (Root Module Group)</name>
@@ -76,7 +76,7 @@
     <scm>
         <connection>scm:git:https://github.com/motlin/klass.git</connection>
         <developerConnection>scm:git:https@github.com:motlin/klass.git</developerConnection>
-        <tag>0.6.0</tag>
+        <tag>HEAD</tag>
         <url>https://github.com/motlin/klass</url>
     </scm>
 
@@ -94,7 +94,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <project.build.outputTimestamp>2026-01-11T21:23:26Z</project.build.outputTimestamp>
+        <project.build.outputTimestamp>2026-01-11T21:25:12Z</project.build.outputTimestamp>
 
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

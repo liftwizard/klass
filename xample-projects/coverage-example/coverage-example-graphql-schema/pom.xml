@@ -19,7 +19,7 @@
     <parent>
         <groupId>cool.klass.xample.coverage</groupId>
         <artifactId>coverage-example</artifactId>
-        <version>0.6.0</version>
+        <version>0.7.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>coverage-example-graphql-schema</artifactId>
@@ -33,7 +33,7 @@
             <plugin>
                 <groupId>cool.klass</groupId>
                 <artifactId>klass-generator-graphql-schema-plugin</artifactId>
-                <version>0.6.0</version>
+                <version>0.7.0-SNAPSHOT</version>
 
                 <configuration>
                     <klassSourcePackages>
