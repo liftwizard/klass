@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_THS_MEM[m ════════════════════════════════════════
 [31mError: Cannot find member 'ClassWithUnresolved.unresolvedMember'.[m
 
-At (UnresolvedTypesErrorTest.klass:161)
+At (UnresolvedTypesErrorTest.klass:161:32)
 
 [39m  1║ [35mpackage [39mdummy
 [39m145║ [35mservice [39mClassWithUnresolvedResource [35mon [39mClassWithUnresolved
@@ -14,7 +14,7 @@ At (UnresolvedTypesErrorTest.klass:161)
 [39m162║         [36m}
 [39m163║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:161[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:161:32[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
 [36mLine:      [m161[m
 [36mCharacter: [m32

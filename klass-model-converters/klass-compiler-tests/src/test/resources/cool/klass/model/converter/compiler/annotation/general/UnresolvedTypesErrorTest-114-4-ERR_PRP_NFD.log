@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PRP_NFD[m ════════════════════════════════════════
 [31mError: Cannot find member 'Parent.unresolvedProjectionAssociationEnd'.[m
 
-At (UnresolvedTypesErrorTest.klass:114)
+At (UnresolvedTypesErrorTest.klass:114:5)
 
 [39m  1║ [35mpackage [39mdummy
 [39m110║ [35mprojection [39mParentProjection [35mon [39mParent
@@ -11,7 +11,7 @@ At (UnresolvedTypesErrorTest.klass:114)
 [39m116║     [36m}[36m,
 [39m138║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:114[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:114:5[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
 [36mLine:      [m114[m
 [36mCharacter: [m5

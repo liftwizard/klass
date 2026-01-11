@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_ASO_OWN[m ════════════════════════════════════════
 [31mError: Both association ends are owned in 'DoubleOwnedAssociation'. At most one end may be owned.[m
 
-At (DoubleOwnedAssociationErrorTest.klass:15)
+At (DoubleOwnedAssociationErrorTest.klass:15:33)
 
 [39m 1║ [35mpackage [39mdummy
 [39m13║ [35massociation [39mDoubleOwnedAssociation
@@ -12,7 +12,7 @@ At (DoubleOwnedAssociationErrorTest.klass:15)
 [39m  ║ [31m                                ^^^^^
 [39m19║ [36m}
 [m
-[36mLocation:  [mDoubleOwnedAssociationErrorTest.klass:15[m
+[36mLocation:  [mDoubleOwnedAssociationErrorTest.klass:15:33[m
 [36mFile:      [mDoubleOwnedAssociationErrorTest.klass[m
 [36mLine:      [m15[m
 [36mCharacter: [m33

@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PRP_REF[m ════════════════════════════════════════
 [31mError: Audit property 'DummyClass.lastUpdatedById' is not referenced in any criteria.[m
 
-At (AuditPropertyWithoutUserClassErrorTest.klass:11)
+At (AuditPropertyWithoutUserClassErrorTest.klass:11:5)
 
 [39m 1║ [35mpackage [39mcom[36m.[39merrors
 [39m 3║ [35mclass [39mDummyClass [32msystemTemporal [32mversioned [32maudited
@@ -10,7 +10,7 @@ At (AuditPropertyWithoutUserClassErrorTest.klass:11)
 [39m  ║ [31m    ^^^^^^^^^^^^^^^
 [39m12║ [36m}
 [m
-[36mLocation:  [mAuditPropertyWithoutUserClassErrorTest.klass:11[m
+[36mLocation:  [mAuditPropertyWithoutUserClassErrorTest.klass:11:5[m
 [36mFile:      [mAuditPropertyWithoutUserClassErrorTest.klass[m
 [36mLine:      [m11[m
 [36mCharacter: [m5

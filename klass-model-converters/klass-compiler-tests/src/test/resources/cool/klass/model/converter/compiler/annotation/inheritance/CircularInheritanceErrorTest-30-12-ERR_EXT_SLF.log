@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_EXT_SLF[m ════════════════════════════════════════
 [31mError: Circular inheritance 'AbstractClass2'.[m
 
-At (CircularInheritanceErrorTest.klass:30)
+At (CircularInheritanceErrorTest.klass:30:13)
 
 [39m 1║ [35mpackage [39mexample
 [39m28║ [35mclass [39mAbstractClass1
@@ -11,7 +11,7 @@ At (CircularInheritanceErrorTest.klass:30)
 [39m31║ [36m{
 [39m33║ [36m}
 [m
-[36mLocation:  [mCircularInheritanceErrorTest.klass:30[m
+[36mLocation:  [mCircularInheritanceErrorTest.klass:30:13[m
 [36mFile:      [mCircularInheritanceErrorTest.klass[m
 [36mLine:      [m30[m
 [36mCharacter: [m13

@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_AUD_DTP[m ════════════════════════════════════════
 [31mError: Expected type 'Instant' but was 'DummyEnumeration' for 'createdOn' property 'DummyClass.createdOn: DummyEnumeration createdOn final'.[m
 
-At (AuditDataPropertyTypeErrorTest.klass:20)
+At (AuditDataPropertyTypeErrorTest.klass:20:39)
 
 [39m 1║ [35mpackage [39mcom[36m.[39merrors
 [39m13║ [35mclass [39mDummyClass [32msystemTemporal [32mversioned [32maudited
@@ -10,7 +10,7 @@ At (AuditDataPropertyTypeErrorTest.klass:20)
 [39m  ║ [31m                     ^^^^^^^^^^^^^^^^ ^^^^^^^^^
 [39m22║ [36m}
 [m
-[36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:20[m
+[36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:20:39[m
 [36mFile:      [mAuditDataPropertyTypeErrorTest.klass[m
 [36mLine:      [m20[m
 [36mCharacter: [m39

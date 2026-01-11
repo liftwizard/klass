@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_OVR_IDP[m ════════════════════════════════════════
 [31mError: 'id' properties may not be overridden. The property 'key' in class 'ConcreteSubClass' overrides the 'id' property in class 'AbstractSuperClass'.[m
 
-At (TransientClassWtihIdPropertyErrorTest.klass:14)
+At (TransientClassWtihIdPropertyErrorTest.klass:14:19)
 
 [39m 1║ [35mpackage [39mexample
 [39m10║ [35mclass [39mConcreteSubClass
@@ -12,7 +12,7 @@ At (TransientClassWtihIdPropertyErrorTest.klass:14)
 [39m  ║ [31m                  ^^
 [39m15║ [36m}
 [m
-[36mLocation:  [mTransientClassWtihIdPropertyErrorTest.klass:14[m
+[36mLocation:  [mTransientClassWtihIdPropertyErrorTest.klass:14:19[m
 [36mFile:      [mTransientClassWtihIdPropertyErrorTest.klass[m
 [36mLine:      [m14[m
 [36mCharacter: [m19

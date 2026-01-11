@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PRP_REF[m ════════════════════════════════════════
 [33mWarning: Private property 'ClassWithPrivateProperty.privateString' is not referenced in any criteria.[m
 
-At (PrivatePropertyInProjectionErrorTest.klass:6)
+At (PrivatePropertyInProjectionErrorTest.klass:6:5)
 
 [39m1║ [35mpackage [39mdummy
 [39m3║ [35mclass [39mClassWithPrivateProperty
@@ -10,7 +10,7 @@ At (PrivatePropertyInProjectionErrorTest.klass:6)
 [39m ║ [33m    ^^^^^^^^^^^^^
 [39m7║ [36m}
 [m
-[36mLocation:  [mPrivatePropertyInProjectionErrorTest.klass:6[m
+[36mLocation:  [mPrivatePropertyInProjectionErrorTest.klass:6:5[m
 [36mFile:      [mPrivatePropertyInProjectionErrorTest.klass[m
 [36mLine:      [m6[m
 [36mCharacter: [m5

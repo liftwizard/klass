@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_FWD_REF[m ════════════════════════════════════════
 [31mError: Projection property 'enumerationProperty' is declared on line 24 and has a forward reference to property 'ClassWithEnumerationProperty.enumerationProperty: ExampleEnumeration key' which is declared later in the source file 'ForwardReferenceErrorTest.klass' on line 29.[m
 
-At (ForwardReferenceErrorTest.klass:24)
+At (ForwardReferenceErrorTest.klass:24:5)
 
 [39m 1║ [35mpackage [39mdummy
 [39m22║ [35mprojection [39mProjectionWithForwardReferences [35mon [39mClassWithEnumerationProperty
@@ -10,7 +10,7 @@ At (ForwardReferenceErrorTest.klass:24)
 [39m  ║ [31m    ^^^^^^^^^^^^^^^^^^^
 [39m25║ [36m}
 [m
-[36mLocation:  [mForwardReferenceErrorTest.klass:24[m
+[36mLocation:  [mForwardReferenceErrorTest.klass:24:5[m
 [36mFile:      [mForwardReferenceErrorTest.klass[m
 [36mLine:      [m24[m
 [36mCharacter: [m5

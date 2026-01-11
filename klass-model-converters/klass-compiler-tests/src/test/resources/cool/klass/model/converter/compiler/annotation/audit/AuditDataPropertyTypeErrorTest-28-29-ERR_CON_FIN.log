@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_CON_FIN[m ════════════════════════════════════════
 [31mError: Expected createdOn property 'DummyClass2.createdOn: Instant createdOn' to be final.[m
 
-At (AuditDataPropertyTypeErrorTest.klass:28)
+At (AuditDataPropertyTypeErrorTest.klass:28:30)
 
 [39m 1║ [35mpackage [39mcom[36m.[39merrors
 [39m24║ [35mclass [39mDummyClass2
@@ -10,7 +10,7 @@ At (AuditDataPropertyTypeErrorTest.klass:28)
 [39m  ║ [31m                             ^^^^^^^^^
 [39m33║ [36m}
 [m
-[36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:28[m
+[36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:28:30[m
 [36mFile:      [mAuditDataPropertyTypeErrorTest.klass[m
 [36mLine:      [m28[m
 [36mCharacter: [m30

@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PRP_IDP[m ════════════════════════════════════════
 [31mError: Primitive properties with type TemporalRange may not be auto-generated ids. Only types [Integer, Long, String] may be id properties.[m
 
-At (InvalidIdPropertyTypeErrorTest.klass:50)
+At (InvalidIdPropertyTypeErrorTest.klass:50:37)
 
 [39m 1║ [35mpackage [39mexample
 [39m48║ [35mclass [39mTemporalRangeId
@@ -10,7 +10,7 @@ At (InvalidIdPropertyTypeErrorTest.klass:50)
 [39m  ║ [31m                                    ^^
 [39m51║ [36m}
 [m
-[36mLocation:  [mInvalidIdPropertyTypeErrorTest.klass:50[m
+[36mLocation:  [mInvalidIdPropertyTypeErrorTest.klass:50:37[m
 [36mFile:      [mInvalidIdPropertyTypeErrorTest.klass[m
 [36mLine:      [m50[m
 [36mCharacter: [m37

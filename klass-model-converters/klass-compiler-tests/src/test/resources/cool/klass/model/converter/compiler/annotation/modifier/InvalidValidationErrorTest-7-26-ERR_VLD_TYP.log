@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_VLD_TYP[m ════════════════════════════════════════
 [31mError: Invalid validation 'max' for type String.[m
 
-At (InvalidValidationErrorTest.klass:7)
+At (InvalidValidationErrorTest.klass:7:27)
 
 [39m1║ [35mpackage [39mdummy
 [39m3║ [35mclass [39mDummy
@@ -10,7 +10,7 @@ At (InvalidValidationErrorTest.klass:7)
 [39m ║ [31m                          ^^^
 [39m8║ [36m}
 [m
-[36mLocation:  [mInvalidValidationErrorTest.klass:7[m
+[36mLocation:  [mInvalidValidationErrorTest.klass:7:27[m
 [36mFile:      [mInvalidValidationErrorTest.klass[m
 [36mLine:      [m7[m
 [36mCharacter: [m27

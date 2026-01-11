@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_FOR_MUL[m ════════════════════════════════════════
 [33mWarning: Association end 'Child.parent' has multiplicity [0..1] so foreign key 'Child.parentKey' ought to be optional.[m
 
-At (UnresolvedTypesErrorTest.klass:76)
+At (UnresolvedTypesErrorTest.klass:76:16)
 
 [39m 1║ [35mpackage [39mdummy
 [39m73║ [35mclass [39mChild
@@ -10,7 +10,7 @@ At (UnresolvedTypesErrorTest.klass:76)
 [39m  ║ [33m               ^^^^^^
 [39m77║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:76[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:76:16[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
 [36mLine:      [m76[m
 [36mCharacter: [m16

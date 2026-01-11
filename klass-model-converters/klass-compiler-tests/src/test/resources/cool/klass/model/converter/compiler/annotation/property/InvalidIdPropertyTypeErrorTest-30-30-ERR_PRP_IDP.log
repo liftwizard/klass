@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PRP_IDP[m ════════════════════════════════════════
 [31mError: Primitive properties with type Boolean may not be auto-generated ids. Only types [Integer, Long, String] may be id properties.[m
 
-At (InvalidIdPropertyTypeErrorTest.klass:30)
+At (InvalidIdPropertyTypeErrorTest.klass:30:31)
 
 [39m 1║ [35mpackage [39mexample
 [39m28║ [35mclass [39mBooleanId
@@ -10,7 +10,7 @@ At (InvalidIdPropertyTypeErrorTest.klass:30)
 [39m  ║ [31m                              ^^
 [39m31║ [36m}
 [m
-[36mLocation:  [mInvalidIdPropertyTypeErrorTest.klass:30[m
+[36mLocation:  [mInvalidIdPropertyTypeErrorTest.klass:30:31[m
 [36mFile:      [mInvalidIdPropertyTypeErrorTest.klass[m
 [36mLine:      [m30[m
 [36mCharacter: [m31

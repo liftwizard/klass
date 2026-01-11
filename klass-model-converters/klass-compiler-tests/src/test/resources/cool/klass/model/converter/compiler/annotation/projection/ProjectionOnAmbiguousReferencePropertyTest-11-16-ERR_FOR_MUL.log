@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_FOR_MUL[m ════════════════════════════════════════
 [33mWarning: Association end 'Child.parent' has multiplicity [0..1] so foreign key 'Child.parentKey1' ought to be optional.[m
 
-At (ProjectionOnAmbiguousReferencePropertyTest.klass:11)
+At (ProjectionOnAmbiguousReferencePropertyTest.klass:11:17)
 
 [39m 1║ [35mpackage [39mdummy
 [39m 8║ [35mclass [39mChild
@@ -10,7 +10,7 @@ At (ProjectionOnAmbiguousReferencePropertyTest.klass:11)
 [39m  ║ [33m                ^^^^^^
 [39m13║ [36m}
 [m
-[36mLocation:  [mProjectionOnAmbiguousReferencePropertyTest.klass:11[m
+[36mLocation:  [mProjectionOnAmbiguousReferencePropertyTest.klass:11:17[m
 [36mFile:      [mProjectionOnAmbiguousReferencePropertyTest.klass[m
 [36mLine:      [m11[m
 [36mCharacter: [m17

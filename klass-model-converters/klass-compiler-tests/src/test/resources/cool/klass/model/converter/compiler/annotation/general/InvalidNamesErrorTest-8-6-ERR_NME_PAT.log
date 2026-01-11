@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_NME_PAT[m ════════════════════════════════════════
 [31mError: Name must match pattern ^[A-Z][a-zA-Z0-9]*$ but was 'badInterface'.[m
 
-At (InvalidNamesErrorTest.klass:8)
+At (InvalidNamesErrorTest.klass:8:7)
 
 [39m 1║ [35mpackage [39mBADPACKAGE
 [39m 8║ [35mclass [39mbadInterface
@@ -9,7 +9,7 @@ At (InvalidNamesErrorTest.klass:8)
 [39m 9║ [36m{
 [39m12║ [36m}
 [m
-[36mLocation:  [mInvalidNamesErrorTest.klass:8[m
+[36mLocation:  [mInvalidNamesErrorTest.klass:8:7[m
 [36mFile:      [mInvalidNamesErrorTest.klass[m
 [36mLine:      [m8[m
 [36mCharacter: [m7

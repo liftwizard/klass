@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_DUP_LIT[m ════════════════════════════════════════
 [31mError: Duplicate enumeration pretty name: 'Duplicate pretty name'.[m
 
-At (DuplicateNamesErrorTest.klass:6)
+At (DuplicateNamesErrorTest.klass:6:28)
 
 [39m1║ [35mpackage [39mdummy
 [39m3║ [35menumeration [39mDuplicateTopLevelElement
@@ -10,7 +10,7 @@ At (DuplicateNamesErrorTest.klass:6)
 [39m ║ [31m                           ^^^^^^^^^^^^^^^^^^^^^^^
 [39m7║ [36m}
 [m
-[36mLocation:  [mDuplicateNamesErrorTest.klass:6[m
+[36mLocation:  [mDuplicateNamesErrorTest.klass:6:28[m
 [36mFile:      [mDuplicateNamesErrorTest.klass[m
 [36mLine:      [m6[m
 [36mCharacter: [m28

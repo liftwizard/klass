@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PRJ_TYP[m ════════════════════════════════════════
 [31mError: Leaf projection nodes require a data type property, but found a reference property 'Parent.children' with type 'Child'[m
 
-At (ProjectionTypeTest.klass:39)
+At (ProjectionTypeTest.klass:39:5)
 
 [39m 1║ [35mpackage [39mdummy
 [39m28║ [35mprojection [39mProjection1 [35mon [39mParent
@@ -10,7 +10,7 @@ At (ProjectionTypeTest.klass:39)
 [39m  ║ [31m    ^^^^^^^^
 [39m40║ [36m}
 [m
-[36mLocation:  [mProjectionTypeTest.klass:39[m
+[36mLocation:  [mProjectionTypeTest.klass:39:5[m
 [36mFile:      [mProjectionTypeTest.klass[m
 [36mLine:      [m39[m
 [36mCharacter: [m5

@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_DUP_PRP[m ════════════════════════════════════════
 [31mError: Duplicate member: 'ExampleClass.version'.[m
 
-At (DuplicateVersionClassErrorTest.klass:22)
+At (DuplicateVersionClassErrorTest.klass:22:5)
 
 [39m 1║ [35mpackage [39mcom[36m.[39merrors
 [39m19║ [35massociation [39mExampleClassHasVersion
@@ -10,7 +10,7 @@ At (DuplicateVersionClassErrorTest.klass:22)
 [39m  ║ [31m    ^^^^^^^
 [39m25║ [36m}
 [m
-[36mLocation:  [mDuplicateVersionClassErrorTest.klass:22[m
+[36mLocation:  [mDuplicateVersionClassErrorTest.klass:22:5[m
 [36mFile:      [mDuplicateVersionClassErrorTest.klass[m
 [36mLine:      [m22[m
 [36mCharacter: [m5

@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PPR_NFD[m ════════════════════════════════════════
 [31mError: Cannot find member 'Parent.unresolvedProjectionMember3'.[m
 
-At (UnresolvedTypesErrorTest.klass:117)
+At (UnresolvedTypesErrorTest.klass:117:5)
 
 [39m  1║ [35mpackage [39mdummy
 [39m110║ [35mprojection [39mParentProjection [35mon [39mParent
@@ -10,7 +10,7 @@ At (UnresolvedTypesErrorTest.klass:117)
 [39m   ║ [31m    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 [39m138║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:117[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:117:5[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
 [36mLine:      [m117[m
 [36mCharacter: [m5

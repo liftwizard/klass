@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PRJ_TYP[m ════════════════════════════════════════
 [31mError: Leaf projection nodes require a data type property, but found a reference property 'ClassWithUnresolved.associationEndToUnresolvedClass' with type 'UnresolvedClass'[m
 
-At (UnresolvedTypesErrorTest.klass:45)
+At (UnresolvedTypesErrorTest.klass:45:5)
 
 [39m 1║ [35mpackage [39mdummy
 [39m35║ [35mprojection [39mProjectionWithUnresolved [35mon [39mClassWithUnresolved
@@ -10,7 +10,7 @@ At (UnresolvedTypesErrorTest.klass:45)
 [39m  ║ [31m    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 [39m47║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:45[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:45:5[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
 [36mLine:      [m45[m
 [36mCharacter: [m5

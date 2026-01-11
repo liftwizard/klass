@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_ASS_PLU[m ════════════════════════════════════════
 [31mError: Expected to-many association end 'Parent.child' to have a plural name, but name exactly matched type association end type 'Child'.[m
 
-At (PluralAssociationTest.klass:17)
+At (PluralAssociationTest.klass:17:5)
 
 [39m 1║ [35mpackage [39mdummy
 [39m14║ [35massociation [39mParentHasChildren
@@ -10,7 +10,7 @@ At (PluralAssociationTest.klass:17)
 [39m  ║ [31m    ^^^^^
 [39m18║ [36m}
 [m
-[36mLocation:  [mPluralAssociationTest.klass:17[m
+[36mLocation:  [mPluralAssociationTest.klass:17:5[m
 [36mFile:      [mPluralAssociationTest.klass[m
 [36mLine:      [m17[m
 [36mCharacter: [m5

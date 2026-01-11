@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_FOR_MUL[m ════════════════════════════════════════
 [33mWarning: Association end 'GoodClass.parent3' has multiplicity [0..1] so foreign key 'GoodClass.goodProperty' ought to be optional.[m
 
-At (AmbiguousTypesErrorTest.klass:22)
+At (AmbiguousTypesErrorTest.klass:22:19)
 
 [39m 1║ [35mpackage [39mdummy
 [39m19║ [35mclass [39mGoodClass
@@ -10,7 +10,7 @@ At (AmbiguousTypesErrorTest.klass:22)
 [39m  ║ [33m                  ^^^^^^^^^^^^^^^^^^^^
 [39m39║ [36m}
 [m
-[36mLocation:  [mAmbiguousTypesErrorTest.klass:22[m
+[36mLocation:  [mAmbiguousTypesErrorTest.klass:22:19[m
 [36mFile:      [mAmbiguousTypesErrorTest.klass[m
 [36mLine:      [m22[m
 [36mCharacter: [m19

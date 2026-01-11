@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PUT_PRJ[m ════════════════════════════════════════
 [31mError: PUT services must not have a projection.[m
 
-At (ServiceErrorTest.klass:73)
+At (ServiceErrorTest.klass:73:13)
 
 [39m 1║ [35mpackage [39mdummy
 [39m67║ [35mservice [39mStringKeyClassResource [35mon [39mStringKeyClass
@@ -14,7 +14,7 @@ At (ServiceErrorTest.klass:73)
 [39m74║         [36m}
 [39m75║ [36m}
 [m
-[36mLocation:  [mServiceErrorTest.klass:73[m
+[36mLocation:  [mServiceErrorTest.klass:73:13[m
 [36mFile:      [mServiceErrorTest.klass[m
 [36mLine:      [m73[m
 [36mCharacter: [m13

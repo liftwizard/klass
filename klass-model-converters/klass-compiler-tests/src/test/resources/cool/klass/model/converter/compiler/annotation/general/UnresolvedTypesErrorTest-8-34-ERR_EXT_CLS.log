@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_EXT_CLS[m ════════════════════════════════════════
 [31mError: Cannot find class 'UnresolvedClass'.[m
 
-At (UnresolvedTypesErrorTest.klass:8)
+At (UnresolvedTypesErrorTest.klass:8:35)
 
 [39m 1║ [35mpackage [39mdummy
 [39m 8║ [35mclass [39mClassWithUnresolved [35mextends [39mUnresolvedClass [35mimplements [39mUnresolvedInterface1[36m, [39mUnresolvedInterface2
@@ -9,7 +9,7 @@ At (UnresolvedTypesErrorTest.klass:8)
 [39m 9║ [36m{
 [39m16║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:8[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:8:35[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
 [36mLine:      [m8[m
 [36mCharacter: [m35

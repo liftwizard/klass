@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_AUD_KEY[m ════════════════════════════════════════
 [31mError: Expected property 'DummyClass4.lastUpdatedById: String userId' with modifier 'userId' to be a key, createdBy, or lastUpdatedBy.[m
 
-At (AuditDataPropertyTypeErrorTest.klass:47)
+At (AuditDataPropertyTypeErrorTest.klass:47:29)
 
 [39m 1║ [35mpackage [39mcom[36m.[39merrors
 [39m43║ [35mclass [39mDummyClass4
@@ -10,7 +10,7 @@ At (AuditDataPropertyTypeErrorTest.klass:47)
 [39m  ║ [31m                            ^^^^^^
 [39m48║ [36m}
 [m
-[36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:47[m
+[36mLocation:  [mAuditDataPropertyTypeErrorTest.klass:47:29[m
 [36mFile:      [mAuditDataPropertyTypeErrorTest.klass[m
 [36mLine:      [m47[m
 [36mCharacter: [m29

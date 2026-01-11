@@ -1,13 +1,13 @@
 ════════════════════════════════════════ [35mERR_DUP_TOP[m ════════════════════════════════════════
 [31mError: Duplicate top level item name: 'AmbiguousProjection'.[m
 
-At (AmbiguousTypesErrorTest.klass:42)
+At (AmbiguousTypesErrorTest.klass:42:12)
 
 [39m 1║ [35mpackage [39mdummy
 [39m42║ [35mprojection [39mAmbiguousProjection [35mon [39mGoodClass [36m{[36m}
 [39m  ║ [31m           ^^^^^^^^^^^^^^^^^^^
 [m
-[36mLocation:  [mAmbiguousTypesErrorTest.klass:42[m
+[36mLocation:  [mAmbiguousTypesErrorTest.klass:42:12[m
 [36mFile:      [mAmbiguousTypesErrorTest.klass[m
 [36mLine:      [m42[m
 [36mCharacter: [m12

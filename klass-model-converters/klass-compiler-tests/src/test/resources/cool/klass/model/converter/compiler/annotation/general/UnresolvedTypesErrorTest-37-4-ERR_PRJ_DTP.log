@@ -1,7 +1,7 @@
 ════════════════════════════════════════ [35mERR_PRJ_DTP[m ════════════════════════════════════════
 [31mError: Cannot find member 'ClassWithUnresolved.unresolvedDataProperty'.[m
 
-At (UnresolvedTypesErrorTest.klass:37)
+At (UnresolvedTypesErrorTest.klass:37:5)
 
 [39m 1║ [35mpackage [39mdummy
 [39m35║ [35mprojection [39mProjectionWithUnresolved [35mon [39mClassWithUnresolved
@@ -10,7 +10,7 @@ At (UnresolvedTypesErrorTest.klass:37)
 [39m  ║ [31m    ^^^^^^^^^^^^^^^^^^^^^^
 [39m47║ [36m}
 [m
-[36mLocation:  [mUnresolvedTypesErrorTest.klass:37[m
+[36mLocation:  [mUnresolvedTypesErrorTest.klass:37:5[m
 [36mFile:      [mUnresolvedTypesErrorTest.klass[m
 [36mLine:      [m37[m
 [36mCharacter: [m5
