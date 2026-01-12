@@ -30,6 +30,7 @@
         <maven.deploy.skip>true</maven.deploy.skip>
         <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
         <skipPublishing>true</skipPublishing>
+        <skipBundling>true</skipBundling>
     </properties>
 
     <build>
