@@ -166,6 +166,16 @@
                 </configuration>
             </plugin>
             <!--endregion Phase 7: compile-->
+
+            <!--region Phase 23: deploy-->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <configuration>
+                    <waitUntil>uploaded</waitUntil>
+                </configuration>
+            </plugin>
+            <!--endregion Phase 23: deploy-->
         </plugins>
     </build>
 
