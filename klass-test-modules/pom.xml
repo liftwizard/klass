@@ -34,5 +34,6 @@
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
         <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+        <skipPublishing>true</skipPublishing>
     </properties>
 </project>
