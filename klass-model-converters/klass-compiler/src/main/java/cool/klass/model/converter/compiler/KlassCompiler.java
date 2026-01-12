@@ -112,7 +112,11 @@ public class KlassCompiler {
 		this(Lists.immutable.with(compilationUnit), colorScheme, false);
 	}
 
-	public KlassCompiler(ImmutableList<CompilationUnit> compilationUnits, AnsiColorScheme colorScheme, boolean enableIdeLinks) {
+	public KlassCompiler(
+		ImmutableList<CompilationUnit> compilationUnits,
+		AnsiColorScheme colorScheme,
+		boolean enableIdeLinks
+	) {
 		this.compilerState = new CompilerState(compilationUnits);
 		this.colorScheme = Objects.requireNonNull(colorScheme);
 		this.enableIdeLinks = enableIdeLinks;

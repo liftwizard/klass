@@ -38,7 +38,15 @@ public class CauseCompilerAnnotation extends AbstractCompilerAnnotation {
 		@Nonnull AnnotationSeverity severity,
 		boolean enableIdeLinks
 	) {
-		super(compilationUnit, macroCause, offendingContexts, sourceContexts, ansiTokenColorizer, severity, enableIdeLinks);
+		super(
+			compilationUnit,
+			macroCause,
+			offendingContexts,
+			sourceContexts,
+			ansiTokenColorizer,
+			severity,
+			enableIdeLinks
+		);
 	}
 
 	@Nonnull

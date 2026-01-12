@@ -58,7 +58,15 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
 		@Nonnull AnnotationSeverity severity,
 		boolean enableIdeLinks
 	) {
-		super(compilationUnit, macroCause, offendingContexts, sourceContexts, ansiTokenColorizer, severity, enableIdeLinks);
+		super(
+			compilationUnit,
+			macroCause,
+			offendingContexts,
+			sourceContexts,
+			ansiTokenColorizer,
+			severity,
+			enableIdeLinks
+		);
 		this.annotationCode = Objects.requireNonNull(annotationCode);
 		this.message = Objects.requireNonNull(message);
 	}
