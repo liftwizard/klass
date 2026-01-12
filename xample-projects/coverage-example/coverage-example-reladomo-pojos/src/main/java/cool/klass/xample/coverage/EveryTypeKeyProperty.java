@@ -22,13 +22,13 @@ import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
 
 public class EveryTypeKeyProperty extends EveryTypeKeyPropertyAbstract {
 
-    public EveryTypeKeyProperty(Timestamp system) {
-        super(system);
-        // You must not modify this constructor. Mithra calls this internally.
-        // You can call this constructor. You can also add new constructors.
-    }
+	public EveryTypeKeyProperty(Timestamp system) {
+		super(system);
+		// You must not modify this constructor. Mithra calls this internally.
+		// You can call this constructor. You can also add new constructors.
+	}
 
-    public EveryTypeKeyProperty() {
-        this(UtcInfinityTimestamp.getDefaultInfinity());
-    }
+	public EveryTypeKeyProperty() {
+		this(UtcInfinityTimestamp.getDefaultInfinity());
+	}
 }
