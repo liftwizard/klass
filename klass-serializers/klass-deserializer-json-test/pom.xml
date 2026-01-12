@@ -170,6 +170,7 @@
         </testResources>
 
         <plugins>
+            <!-- Disable publishing to Maven Central for test-only module -->
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
