@@ -56,6 +56,7 @@
 
     <build>
         <plugins>
+            <!-- Disable publishing to Maven Central for example projects -->
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>

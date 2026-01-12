@@ -39,6 +39,7 @@
 
     <build>
         <plugins>
+            <!-- Disable publishing to Maven Central for test-only modules -->
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
