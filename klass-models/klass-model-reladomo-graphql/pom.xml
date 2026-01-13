@@ -24,6 +24,8 @@
 
     <artifactId>klass-model-reladomo-graphql</artifactId>
 
+    <name>Klass Model: Reladomo GraphQL</name>
+
     <dependencies>
 
         <dependency>

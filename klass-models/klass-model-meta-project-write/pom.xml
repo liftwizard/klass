@@ -24,6 +24,8 @@
 
     <artifactId>klass-model-meta-project-write</artifactId>
 
+    <name>Klass Model: Meta Project Write</name>
+
     <dependencies>
 
         <dependency>
