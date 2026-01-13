@@ -19,7 +19,7 @@
     <parent>
         <groupId>com.stackoverflow</groupId>
         <artifactId>stackoverflow</artifactId>
-        <version>0.6.0</version>
+        <version>0.7.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>stackoverflow-services</artifactId>
@@ -43,37 +43,37 @@
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-deserializer-json</artifactId>
-            <version>0.6.0</version>
+            <version>0.7.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-model-meta-interface</artifactId>
-            <version>0.6.0</version>
+            <version>0.7.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-reladomo-persistent-writer</artifactId>
-            <version>0.6.0</version>
+            <version>0.7.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-data-store</artifactId>
-            <version>0.6.0</version>
+            <version>0.7.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-data-store-reladomo</artifactId>
-            <version>0.6.0</version>
+            <version>0.7.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-serialization-jackson-response-dto</artifactId>
-            <version>0.6.0</version>
+            <version>0.7.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -139,7 +139,7 @@
             <plugin>
                 <groupId>cool.klass</groupId>
                 <artifactId>klass-generator-service-resources-plugin</artifactId>
-                <version>0.6.0</version>
+                <version>0.7.0-SNAPSHOT</version>
                 <configuration>
                     <rootPackageName>${app.rootPackageName}</rootPackageName>
                     <applicationName>${app.name}</applicationName>

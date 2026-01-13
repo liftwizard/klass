@@ -19,7 +19,7 @@
     <parent>
         <groupId>cool.klass</groupId>
         <artifactId>klass-reladomo</artifactId>
-        <version>0.6.0</version>
+        <version>0.7.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>klass-reladomo-persistent-writer-test</artifactId>

@@ -19,7 +19,7 @@
     <parent>
         <groupId>cool.klass</groupId>
         <artifactId>klass-syntax</artifactId>
-        <version>0.6.0</version>
+        <version>0.7.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>klass-syntax-css-class</artifactId>
@@ -31,7 +31,7 @@
             <plugin>
                 <groupId>cool.klass</groupId>
                 <artifactId>klass-syntax-css-maven-plugin</artifactId>
-                <version>0.6.0</version>
+                <version>0.7.0-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <id>generate-css</id>
