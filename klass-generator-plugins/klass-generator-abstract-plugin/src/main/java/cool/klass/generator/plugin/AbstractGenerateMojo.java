@@ -18,13 +18,13 @@ package cool.klass.generator.plugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.security.MessageDigest;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -58,6 +58,11 @@ import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 import org.eclipse.collections.impl.list.mutable.ListAdapter;
 import org.eclipse.collections.impl.utility.ArrayIterate;
 import org.fusesource.jansi.AnsiConsole;
+import org.reflections.Reflections;
+import org.reflections.scanners.ResourcesScanner;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
+import org.reflections.util.FilterBuilder;
 import org.sonatype.plexus.build.incremental.BuildContext;
 
 public abstract class AbstractGenerateMojo extends AbstractMojo {
@@ -76,6 +81,9 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 	@Parameter(property = "colorScheme")
 	protected String colorScheme;
 
+	@Parameter(property = "cachingEnabled", defaultValue = "true")
+	protected boolean cachingEnabled;
+
 	@Parameter(defaultValue = "${project}", required = true, readonly = true)
 	protected MavenProject mavenProject;
 
@@ -83,7 +91,6 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 	protected BuildContext buildContext;
 
 	private ImmutableList<File> cachedInputFiles;
-	private ImmutableList<URL> cachedClasspathResources;
 	private ImmutableMap<String, String> cachedFileContents = Maps.immutable.empty();
 
 	public enum InputSource {
@@ -328,6 +335,11 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 	}
 
 	private boolean shouldSkipClasspathGeneration(File outputDirectory) {
+		if (!this.cachingEnabled) {
+			this.getLog().info("Caching disabled, regenerating");
+			return false;
+		}
+
 		try {
 			String currentInputHash = this.calculateClasspathHash();
 			String previousInputHash = this.loadPreviousInputHash(outputDirectory);
@@ -345,52 +357,36 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 		}
 	}
 
-	private ImmutableList<URL> loadClasspathResources() throws MojoExecutionException, IOException {
-		if (this.cachedClasspathResources != null) {
-			return this.cachedClasspathResources;
-		}
-
-		ClassLoader classLoader = this.getClassLoader();
-		MutableList<URL> resources = Lists.mutable.empty();
-
-		for (String klassSourcePackage : this.klassSourcePackages) {
-			String resourcePath = klassSourcePackage.replaceAll("\\.", "/");
-			Enumeration<URL> packageResources = classLoader.getResources(resourcePath);
-
-			while (packageResources.hasMoreElements()) {
-				resources.add(packageResources.nextElement());
-			}
-		}
-
-		this.cachedClasspathResources = resources.toImmutable();
-		return this.cachedClasspathResources;
-	}
-
 	private String calculateClasspathHash() throws MojoExecutionException {
 		try {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-			ImmutableList<URL> resources = this.loadClasspathResources();
-			MutableList<String> sortedUrlStrings = Lists.mutable.empty();
+			ClassLoader classLoader = this.getClassLoader();
 
-			for (URL resource : resources) {
-				String urlString = resource.toString();
+			ImmutableList<URL> urls = Lists.immutable
+				.withAll(this.klassSourcePackages)
+				.flatCollectWith(ClasspathHelper::forPackage, classLoader);
 
-				try {
-					URLConnection connection = resource.openConnection();
-					connection.setUseCaches(false);
-					long lastModified = connection.getLastModified();
-					urlString += ":" + lastModified;
-				} catch (Exception e) {
-					// If we can't get last modified, just use the URL
+			FilterBuilder filterBuilder = new FilterBuilder();
+			this.klassSourcePackages.forEach(filterBuilder::includePackage);
+
+			ConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
+				.setScanners(new ResourcesScanner())
+				.setUrls(urls.castToList())
+				.filterInputsBy(filterBuilder);
+
+			Reflections reflections = new Reflections(configurationBuilder);
+
+			MutableList<String> klassFiles = Lists.mutable.withAll(reflections.getResources(KLASS_FILE_EXTENSION));
+			klassFiles.sortThis();
+
+			// Hash the content of each file
+			for (String klassFile : klassFiles) {
+				try (InputStream is = classLoader.getResourceAsStream(klassFile)) {
+					if (is != null) {
+						digest.update(klassFile.getBytes(StandardCharsets.UTF_8));
+						digest.update(is.readAllBytes());
+					}
 				}
-
-				sortedUrlStrings.add(urlString);
-			}
-
-			sortedUrlStrings.sortThis();
-
-			for (String urlString : sortedUrlStrings) {
-				digest.update(urlString.getBytes("UTF-8"));
 			}
 
 			byte[] hashBytes = digest.digest();
@@ -402,15 +398,17 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 				}
 				hexString.append(hex);
 			}
-
-			String finalHash = hexString.toString();
-			return finalHash;
+			return hexString.toString();
 		} catch (Exception e) {
 			throw new MojoExecutionException("Failed to calculate classpath hash", e);
 		}
 	}
 
 	private String loadPreviousInputHash(File outputDirectory) {
+		if (!this.cachingEnabled) {
+			return "";
+		}
+
 		File hashFile = new File(outputDirectory, ".input-hash");
 		if (!hashFile.exists()) {
 			return "";
@@ -425,6 +423,10 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 	}
 
 	private void saveCurrentInputHash(File outputDirectory, String hash) {
+		if (!this.cachingEnabled) {
+			return;
+		}
+
 		File hashFile = new File(outputDirectory, ".input-hash");
 		try {
 			Files.writeString(hashFile.toPath(), hash);

@@ -106,9 +106,19 @@
         </dependency>
 
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.sonatype.plexus</groupId>
             <artifactId>plexus-build-api</artifactId>
             <version>0.0.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
         </dependency>
 
     </dependencies>
