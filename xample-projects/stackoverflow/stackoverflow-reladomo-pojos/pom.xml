@@ -37,6 +37,12 @@
         <!--region Klass compile dependencies -->
         <dependency>
             <groupId>cool.klass</groupId>
+            <artifactId>klass-model-data-store-adapter-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
             <artifactId>klass-reladomo-utc-infinity-timestamp</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -70,9 +76,71 @@
 
             <!--region Phase 3: generate-sources-->
             <plugin>
+                <groupId>cool.klass</groupId>
+                <artifactId>klass-generator-reladomo-concrete-class-plugin</artifactId>
+                <version>${project.version}</version>
+                <configuration>
+                    <klassSourcePackages>
+                        <klassSourcePackage>klass.model.meta.domain</klassSourcePackage>
+                        <klassSourcePackage>${app.rootPackageName}</klassSourcePackage>
+                    </klassSourcePackages>
+                    <colorScheme>dark</colorScheme>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>${project.groupId}</groupId>
+                        <artifactId>${app.artifactId}-domain-model</artifactId>
+                        <version>${project.version}</version>
+                        <scope>runtime</scope>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate-reladomo-concrete-classes</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>cool.klass</groupId>
+                <artifactId>klass-generator-reladomo-class-adapter-plugin</artifactId>
+                <version>${project.version}</version>
+                <configuration>
+                    <klassSourcePackages>
+                        <klassSourcePackage>klass.model.meta.domain</klassSourcePackage>
+                        <klassSourcePackage>${app.rootPackageName}</klassSourcePackage>
+                    </klassSourcePackages>
+                    <applicationName>${app.name}</applicationName>
+                    <colorScheme>dark</colorScheme>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>${project.groupId}</groupId>
+                        <artifactId>${app.artifactId}-domain-model</artifactId>
+                        <version>${project.version}</version>
+                        <scope>runtime</scope>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate-reladomo-class-adapters</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <groupId>io.liftwizard</groupId>
                 <artifactId>liftwizard-generator-reladomo-code-plugin</artifactId>
                 <version>${liftwizard.version}</version>
+                <configuration>
+                    <generateConcreteClasses>false</generateConcreteClasses>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>${project.groupId}</groupId>
@@ -88,6 +156,9 @@
                             <goal>generate-reladomo-pojos</goal>
                         </goals>
                         <phase>generate-sources</phase>
+                        <configuration>
+                            <generateConcreteClasses>false</generateConcreteClasses>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

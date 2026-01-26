@@ -69,12 +69,12 @@ public class ValueToJavaSourceCodePrimitiveTypeVisitor implements PrimitiveTypeV
 
 	@Override
 	public void visitInstant() {
-		this.result = "Instant.parse(\"" + ((Instant) this.value) + "\")";
+		this.result = "Timestamp.from(Instant.parse(\"" + ((Instant) this.value) + "\"))";
 	}
 
 	@Override
 	public void visitLocalDate() {
-		this.result = "LocalDate.parse(\"" + ((LocalDate) this.value) + "\")";
+		this.result = "Date.valueOf(LocalDate.parse(\"" + ((LocalDate) this.value) + "\"))";
 	}
 
 	@Override
