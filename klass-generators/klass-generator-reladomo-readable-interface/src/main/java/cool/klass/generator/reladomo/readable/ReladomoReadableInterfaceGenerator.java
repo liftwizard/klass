@@ -115,10 +115,24 @@ public class ReladomoReadableInterfaceGenerator {
 		String nonNull = property.isRequired() ? "    @Nonnull\n" : "";
 		String propertyName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, property.getName());
 		PrimitiveType primitiveType = property.getType();
-		String javaReturnType = PrimitiveToReladomoTypeVisitor.getJavaType(primitiveType);
+		// Derived properties use Java 8 types (Instant, LocalDate) since they bypass Reladomo
+		// Non-derived properties use Reladomo types (Timestamp, Date) to match generated abstract classes
+		String javaReturnType = property.isDerived()
+			? this.getJavaTypeForDerived(primitiveType)
+			: PrimitiveToReladomoTypeVisitor.getJavaType(primitiveType);
 		String prefix = primitiveType == PrimitiveType.BOOLEAN ? "is" : "get";
 
 		return String.format("%s%s    %s %s%s();%n", comment, nonNull, javaReturnType, prefix, propertyName);
+	}
+
+	private String getJavaTypeForDerived(PrimitiveType primitiveType) {
+		// For derived properties, use Java 8 types for temporals but keep primitives for numerics
+		// (to match Reladomo's convention of using primitive types)
+		return switch (primitiveType) {
+			case INSTANT -> "Instant";
+			case LOCAL_DATE -> "LocalDate";
+			default -> PrimitiveToReladomoTypeVisitor.getJavaType(primitiveType);
+		};
 	}
 
 	private void printStringToFile(@Nonnull Path path, String contents) {
