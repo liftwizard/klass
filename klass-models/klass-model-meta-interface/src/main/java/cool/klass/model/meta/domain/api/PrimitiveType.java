@@ -33,7 +33,7 @@ import org.eclipse.collections.api.map.ImmutableMap;
  * Predefined native types.
  */
 public enum PrimitiveType implements Element, DataType, DataTypeGetter {
-	INTEGER("Integer", true, Integer.class) {
+	INTEGER("Integer", true, Integer.class, int.class) {
 		@Override
 		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
 			try {
@@ -45,7 +45,7 @@ public enum PrimitiveType implements Element, DataType, DataTypeGetter {
 			}
 		}
 	},
-	LONG("Long", true, Long.class) {
+	LONG("Long", true, Long.class, long.class) {
 		@Override
 		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
 			try {
@@ -57,7 +57,7 @@ public enum PrimitiveType implements Element, DataType, DataTypeGetter {
 			}
 		}
 	},
-	DOUBLE("Double", true, Double.class) {
+	DOUBLE("Double", true, Double.class, double.class) {
 		@Override
 		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
 			try {
@@ -69,7 +69,7 @@ public enum PrimitiveType implements Element, DataType, DataTypeGetter {
 			}
 		}
 	},
-	FLOAT("Float", true, Float.class) {
+	FLOAT("Float", true, Float.class, float.class) {
 		@Override
 		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
 			try {
@@ -81,7 +81,7 @@ public enum PrimitiveType implements Element, DataType, DataTypeGetter {
 			}
 		}
 	},
-	BOOLEAN("Boolean", false, Boolean.class) {
+	BOOLEAN("Boolean", false, Boolean.class, boolean.class) {
 		@Override
 		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
 			try {
@@ -93,7 +93,7 @@ public enum PrimitiveType implements Element, DataType, DataTypeGetter {
 			}
 		}
 	},
-	STRING("String", false, String.class) {
+	STRING("String", false, String.class, String.class) {
 		@Override
 		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
 			try {
@@ -105,7 +105,7 @@ public enum PrimitiveType implements Element, DataType, DataTypeGetter {
 			}
 		}
 	},
-	INSTANT("Instant", false, Instant.class) {
+	INSTANT("Instant", false, Instant.class, Instant.class) {
 		@Override
 		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
 			try {
@@ -118,7 +118,7 @@ public enum PrimitiveType implements Element, DataType, DataTypeGetter {
 		}
 	},
 	// TODO: OffsetDateTime
-	LOCAL_DATE("LocalDate", false, LocalDate.class) {
+	LOCAL_DATE("LocalDate", false, LocalDate.class, LocalDate.class) {
 		@Override
 		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
 			try {
@@ -130,7 +130,7 @@ public enum PrimitiveType implements Element, DataType, DataTypeGetter {
 			}
 		}
 	},
-	TEMPORAL_INSTANT("TemporalInstant", false, Instant.class) {
+	TEMPORAL_INSTANT("TemporalInstant", false, Instant.class, Instant.class) {
 		@Override
 		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
 			try {
@@ -142,7 +142,7 @@ public enum PrimitiveType implements Element, DataType, DataTypeGetter {
 			}
 		}
 	},
-	TEMPORAL_RANGE("TemporalRange", false, Instant.class) {
+	TEMPORAL_RANGE("TemporalRange", false, Instant.class, Instant.class) {
 		@Override
 		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
 			try {
@@ -182,10 +182,19 @@ public enum PrimitiveType implements Element, DataType, DataTypeGetter {
 	@Nonnull
 	private final Class<?> javaClass;
 
-	PrimitiveType(@Nonnull String prettyName, boolean isNumeric, @Nonnull Class<?> javaClass) {
+	@Nonnull
+	private final Class<?> primitiveJavaClass;
+
+	PrimitiveType(
+		@Nonnull String prettyName,
+		boolean isNumeric,
+		@Nonnull Class<?> javaClass,
+		@Nonnull Class<?> primitiveJavaClass
+	) {
 		this.prettyName = Objects.requireNonNull(prettyName);
 		this.isNumeric = isNumeric;
 		this.javaClass = Objects.requireNonNull(javaClass);
+		this.primitiveJavaClass = Objects.requireNonNull(primitiveJavaClass);
 	}
 
 	public static PrimitiveType byPrettyName(String name) {
@@ -232,6 +241,10 @@ public enum PrimitiveType implements Element, DataType, DataTypeGetter {
 
 	public Class<?> getJavaClass() {
 		return this.javaClass;
+	}
+
+	public Class<?> getPrimitiveJavaClass() {
+		return this.primitiveJavaClass;
 	}
 
 	@Nonnull

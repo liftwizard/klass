@@ -55,9 +55,40 @@
 
             <!--region Phase 3: generate-sources-->
             <plugin>
+                <groupId>cool.klass</groupId>
+                <artifactId>klass-generator-reladomo-concrete-class-plugin</artifactId>
+                <version>${project.version}</version>
+                <configuration>
+                    <klassSourcePackages>
+                        <klassSourcePackage>${app.rootPackageName}</klassSourcePackage>
+                    </klassSourcePackages>
+                    <colorScheme>dark</colorScheme>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>${project.groupId}</groupId>
+                        <artifactId>${app.artifactId}-domain-model</artifactId>
+                        <version>${project.version}</version>
+                        <scope>runtime</scope>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate-reladomo-concrete-classes</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <groupId>io.liftwizard</groupId>
                 <artifactId>liftwizard-generator-reladomo-code-plugin</artifactId>
                 <version>${liftwizard.version}</version>
+                <configuration>
+                    <generateConcreteClasses>false</generateConcreteClasses>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>${project.groupId}</groupId>
