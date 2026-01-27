@@ -96,9 +96,9 @@
 
         <project.build.outputTimestamp>2026-01-13T13:03:03Z</project.build.outputTimestamp>
 
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <maven.compiler.release>17</maven.compiler.release>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
         <maven.compiler.parameters>true</maven.compiler.parameters>
 
         <checkstyle.configuration>${maven.multiModuleProjectDirectory}/checkstyle-configuration.xml</checkstyle.configuration>
@@ -218,7 +218,7 @@
                         <configuration>
                             <rules combine.children="append">
                                 <enforceBytecodeVersion>
-                                    <maxJdkVersion>17</maxJdkVersion>
+                                    <maxJdkVersion>21</maxJdkVersion>
                                 </enforceBytecodeVersion>
                                 <bannedDependencies>
                                     <excludes>
