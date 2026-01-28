@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import cool.klass.deserializer.json.OperationMode;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
-import io.liftwizard.reladomo.csv.test.extension.CsvTestDataExtension;
+import cool.klass.reladomo.csv.test.extension.CsvTestDataExtension;
 import io.liftwizard.reladomo.test.extension.ReladomoExtensionBuilder;
 import org.eclipse.collections.api.factory.Maps;
 import org.eclipse.collections.api.map.ImmutableMap;
