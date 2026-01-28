@@ -285,6 +285,15 @@
                                 <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-reladomo</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-connection-manager-h2-memory</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-liquibase-simulated-sequence</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-graphql-schema</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-graphql-schema-query</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-graphql-reladomo-finder</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-dtos</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-graphql-reladomo-meta</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-graphql-query-schema</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-logging-p6spy</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-reladomo-simulated-sequence</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass:klass-reladomo-csv-test-extension</ignoredUnusedDeclaredDependency>
                             </ignoredUnusedDeclaredDependencies>
                         </configuration>
                     </plugin>
