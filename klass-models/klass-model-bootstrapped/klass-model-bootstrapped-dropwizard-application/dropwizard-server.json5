@@ -151,7 +151,7 @@
 	},
 	singlePageRedirectFilter: {
 		enabled: true,
-		redirectSPAPage: "/index.html",
+		redirectPage: "/index.html",
 		cacheControlHeader: "public, max-age=86400",
 		wellKnownPathPrefixes: [
 			"/api/",
