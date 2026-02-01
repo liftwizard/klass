@@ -83,7 +83,7 @@ public class ReladomoConcreteClassGenerator {
 			.select(Property::isDerived);
 
 		String derivedPropertiesSourceCode = this.getDerivedPropertiesSourceCode(derivedProperties);
-		String additionalImports = this.getAdditionalImports(derivedProperties, klass.isTemporal());
+		String additionalImports = this.getAdditionalImports(klass, derivedProperties, klass.isTemporal());
 		String constructors = this.getConstructors(klass);
 
 		// language=JAVA
@@ -104,6 +104,9 @@ public class ReladomoConcreteClassGenerator {
 			+ "        extends "
 			+ className
 			+ "Abstract\n"
+			+ "        implements ReladomoReadable"
+			+ className
+			+ "\n"
 			+ "{\n"
 			+ constructors
 			+ derivedPropertiesSourceCode
@@ -150,25 +153,23 @@ public class ReladomoConcreteClassGenerator {
 		}
 	}
 
-	private String getAdditionalImports(ImmutableList<PrimitiveProperty> derivedProperties, boolean isTemporal) {
+	private String getAdditionalImports(
+		@Nonnull Klass klass,
+		ImmutableList<PrimitiveProperty> derivedProperties,
+		boolean isTemporal
+	) {
 		StringBuilder imports = new StringBuilder();
 
 		boolean hasLocalDate = derivedProperties.anySatisfy((p) -> p.getType() == PrimitiveType.LOCAL_DATE);
 		boolean hasInstant = derivedProperties.anySatisfy((p) -> p.getType() == PrimitiveType.INSTANT);
 
-		// java.sql imports - Timestamp needed for temporal classes OR Instant derived properties
-		boolean needsTimestamp = isTemporal || hasInstant;
-		if (hasLocalDate || needsTimestamp) {
+		// java.sql imports - Timestamp only needed for temporal class constructors (not derived properties)
+		if (isTemporal) {
 			imports.append("\n");
-		}
-		if (hasLocalDate) {
-			imports.append("import java.sql.Date;\n");
-		}
-		if (needsTimestamp) {
 			imports.append("import java.sql.Timestamp;\n");
 		}
 
-		// java.time imports
+		// java.time imports - for derived temporal properties
 		if (hasInstant || hasLocalDate) {
 			imports.append("\n");
 		}
@@ -185,6 +186,13 @@ public class ReladomoConcreteClassGenerator {
 			imports.append("import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;\n");
 		}
 
+		// readable interface import
+		imports.append("import ");
+		imports.append(klass.getPackageName());
+		imports.append(".reladomo.readable.ReladomoReadable");
+		imports.append(klass.getName());
+		imports.append(";\n");
+
 		imports.append("\n");
 
 		return imports.toString();
@@ -197,7 +205,8 @@ public class ReladomoConcreteClassGenerator {
 	private String getDerivedPropertySourceCode(PrimitiveProperty derivedProperty) {
 		String propertyName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, derivedProperty.getName());
 		PrimitiveType primitiveType = derivedProperty.getType();
-		String javaReturnType = PrimitiveToReladomoTypeVisitor.getJavaType(primitiveType);
+		// Derived properties use Java 8 types for temporals since they bypass Reladomo
+		String javaReturnType = this.getJavaTypeForDerived(primitiveType);
 
 		RequiredDataTypePropertyVisitor visitor = new RequiredDataTypePropertyVisitor();
 		derivedProperty.visit(visitor);
@@ -214,6 +223,7 @@ public class ReladomoConcreteClassGenerator {
 		return (
 			""
 			+ "\n"
+			+ "    @Override\n"
 			+ "    public "
 			+ javaReturnType
 			+ " get"
@@ -228,6 +238,15 @@ public class ReladomoConcreteClassGenerator {
 			+ ";\n"
 			+ "    }\n"
 		);
+	}
+
+	private String getJavaTypeForDerived(PrimitiveType primitiveType) {
+		// For derived properties, use Java 8 types for temporals but keep primitives for numerics
+		return switch (primitiveType) {
+			case INSTANT -> "Instant";
+			case LOCAL_DATE -> "LocalDate";
+			default -> PrimitiveToReladomoTypeVisitor.getJavaType(primitiveType);
+		};
 	}
 
 	private void printStringToFile(@Nonnull Path path, String contents) {
