@@ -2,11 +2,11 @@
 type: specs.openrewrite.org/v1beta/recipe
 name: cool.klass.UpdateCopyrightYear
 displayName: Update copyright year to current year
-description: Updates existing copyright year to 2025 in all files
+description: Updates existing copyright year to 2026 in all files
 recipeList:
     - org.openrewrite.text.FindAndReplace:
           find: "Copyright \\d{4} Craig Motlin"
-          replace: "Copyright 2025 Craig Motlin"
+          replace: "Copyright 2026 Craig Motlin"
           regex: true
 ---
 type: specs.openrewrite.org/v1beta/recipe
