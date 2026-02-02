@@ -1,0 +1,1103 @@
+/*
+ * Copyright 2026 Craig Motlin
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package cool.klass.generator.reladomo.adapter;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Objects;
+
+import javax.annotation.Nonnull;
+import org.eclipse.collections.api.factory.Lists;
+import com.google.common.base.CaseFormat;
+import cool.klass.model.meta.domain.api.DomainModel;
+import cool.klass.model.meta.domain.api.Klass;
+import cool.klass.model.meta.domain.api.PrimitiveType;
+import cool.klass.model.meta.domain.api.property.AssociationEnd;
+import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import cool.klass.model.meta.domain.api.property.EnumerationProperty;
+import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
+import cool.klass.model.meta.domain.api.property.Property;
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.list.MutableList;
+
+/**
+ * Generates Reladomo ClassAdapter implementations for each Klass in the domain model.
+ *
+ * <p>For each Klass, generates:
+ * <ul>
+ *     <li>A ClassAdapter implementation with typed accessor fields</li>
+ *     <li>Inner classes for each property accessor (unified get/set/getProperty)</li>
+ *     <li>Type conversion handling for temporal types (Timestamp ↔ Instant, Date ↔ LocalDate)</li>
+ *     <li>Inheritance handling via recursive delegation to superclass adapter</li>
+ * </ul>
+ */
+public class ReladomoClassAdapterGenerator {
+
+	private final DomainModel domainModel;
+	private final String applicationName;
+
+	public ReladomoClassAdapterGenerator(DomainModel domainModel, String applicationName) {
+		this.domainModel = Objects.requireNonNull(domainModel);
+		this.applicationName = Objects.requireNonNull(applicationName);
+	}
+
+	public void writeClassAdapters(@Nonnull Path path) {
+		for (Klass klass : this.domainModel.getClasses()) {
+			if (klass.isAbstract()) {
+				// Skip abstract classes for now; they don't have concrete Reladomo objects
+				// TODO: Consider generating adapters for abstract classes with delegation
+				continue;
+			}
+
+			String packageName = klass.getPackageName() + ".adapter.reladomo";
+			String relativePath = packageName.replaceAll("\\.", "/");
+			Path parentPath = path.resolve(relativePath);
+			createDirectories(parentPath);
+
+			String fileName = "Reladomo" + klass.getName() + "ClassAdapter.java";
+			Path outputPath = parentPath.resolve(fileName);
+
+			String sourceCode = this.getClassAdapterSourceCode(klass);
+			this.printStringToFile(outputPath, sourceCode);
+		}
+
+		// Also generate the factory class that wires everything together
+		this.writeAdapterFactory(path);
+	}
+
+	private void writeAdapterFactory(@Nonnull Path path) {
+		ImmutableList<Klass> concreteClasses = this.domainModel.getClasses().reject(Klass::isAbstract);
+		if (concreteClasses.isEmpty()) {
+			return;
+		}
+
+		// Use the first class's package as the factory package
+		String packageName = concreteClasses.getFirst().getPackageName() + ".adapter.reladomo";
+		String relativePath = packageName.replaceAll("\\.", "/");
+		Path parentPath = path.resolve(relativePath);
+		createDirectories(parentPath);
+
+		String fileName = "ReladomoClassAdapterFactory.java";
+		Path outputPath = parentPath.resolve(fileName);
+
+		String sourceCode = this.getFactorySourceCode(concreteClasses, packageName);
+		this.printStringToFile(outputPath, sourceCode);
+	}
+
+	private static void createDirectories(Path dir) {
+		try {
+			Files.createDirectories(dir);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public String getClassAdapterSourceCode(@Nonnull Klass klass) {
+		Objects.requireNonNull(klass);
+
+		String packageName = klass.getPackageName() + ".adapter.reladomo";
+		String className = klass.getName();
+		String adapterClassName = "Reladomo" + className + "ClassAdapter";
+
+		StringBuilder sb = new StringBuilder();
+
+		// Package declaration
+		sb.append("package ").append(packageName).append(";\n\n");
+
+		// Imports
+		sb.append(this.getImports(klass));
+
+		// Class javadoc
+		sb.append("/**\n");
+		sb.append(" * Auto-generated Reladomo ClassAdapter for {@link ").append(className).append("}.\n");
+		sb.append(" *\n");
+		sb.append(" * <p>Generated by {@link ").append(this.getClass().getCanonicalName()).append("}\n");
+		sb.append(" */\n");
+
+		// Class declaration
+		sb.append("public class ").append(adapterClassName).append("\n");
+		sb.append("        implements ClassAdapter<").append(className).append(">\n");
+		sb.append("{\n");
+
+		// Fields
+		sb.append(this.getFields(klass));
+
+		// Constructor
+		sb.append(this.getConstructor(klass, adapterClassName));
+
+		// ClassAdapter methods
+		sb.append(this.getClassAdapterMethods(klass));
+
+		// Inner accessor classes
+		sb.append(this.getInnerAccessorClasses(klass));
+
+		sb.append("}\n");
+
+		return sb.toString();
+	}
+
+	private String getImports(@Nonnull Klass klass) {
+		StringBuilder imports = new StringBuilder();
+
+		ImmutableList<PrimitiveProperty> primitiveProperties = klass
+			.getDataTypeProperties()
+			.selectInstancesOf(PrimitiveProperty.class)
+			.reject(Property::isDerived)
+			.reject((p) -> p.getType().isTemporalRange());
+
+		ImmutableList<EnumerationProperty> enumerationProperties = klass
+			.getDataTypeProperties()
+			.selectInstancesOf(EnumerationProperty.class)
+			.reject(Property::isDerived);
+
+		ImmutableList<AssociationEnd> associationEnds = klass.getDeclaredAssociationEnds();
+
+		boolean hasInstant = primitiveProperties.anySatisfy(
+			(p) -> p.getType() == PrimitiveType.INSTANT || p.getType() == PrimitiveType.TEMPORAL_INSTANT
+		);
+		boolean hasLocalDate = primitiveProperties.anySatisfy((p) -> p.getType() == PrimitiveType.LOCAL_DATE);
+		boolean hasTimestamp = hasInstant; // Reladomo uses Timestamp for Instant/TemporalInstant
+		boolean hasDate = hasLocalDate; // Reladomo uses Date for LocalDate
+		boolean hasToMany = associationEnds.anySatisfy((ae) -> ae.getMultiplicity().isToMany());
+
+		// java.sql imports
+		if (hasTimestamp || hasDate) {
+			imports.append("import java.sql.Timestamp;\n");
+			if (hasDate) {
+				imports.append("import java.sql.Date;\n");
+			}
+			imports.append("\n");
+		}
+
+		// java.time imports
+		if (hasInstant || hasLocalDate) {
+			if (hasInstant) {
+				imports.append("import java.time.Instant;\n");
+			}
+			if (hasLocalDate) {
+				imports.append("import java.time.LocalDate;\n");
+			}
+			imports.append("\n");
+		}
+
+		// javax.annotation imports
+		imports.append("import javax.annotation.Nonnull;\n");
+		imports.append("import javax.annotation.Nullable;\n");
+		imports.append("\n");
+
+		// cool.klass.model.adapter imports
+		imports.append("import cool.klass.model.adapter.AssociationEndAccessor;\n");
+		imports.append("import cool.klass.model.adapter.ClassAdapter;\n");
+		imports.append("import cool.klass.model.adapter.DataTypePropertyAccessor;\n");
+		imports.append("import cool.klass.model.adapter.EnumerationPropertyAccessor;\n");
+		imports.append("import cool.klass.model.adapter.PrimitivePropertyAccessor;\n");
+		imports.append("import cool.klass.model.adapter.PropertyAccessor;\n");
+		imports.append("import cool.klass.model.adapter.ReferencePropertyAccessor;\n");
+
+		// Type-specific accessor imports
+		for (PrimitiveProperty property : primitiveProperties) {
+			String accessorType = this.getAccessorInterfaceImport(property.getType());
+			if (accessorType != null && !imports.toString().contains(accessorType)) {
+				imports.append("import cool.klass.model.adapter.").append(accessorType).append(";\n");
+			}
+		}
+
+		if (associationEnds.notEmpty()) {
+			imports.append("import cool.klass.model.adapter.ToOneAssociationEndAccessor;\n");
+			if (hasToMany) {
+				imports.append("import cool.klass.model.adapter.ToManyAssociationEndAccessor;\n");
+			}
+		}
+		imports.append("\n");
+
+		// Domain model imports - using fully qualified names to avoid conflicts with domain classes
+		// that have the same names (e.g., klass.model.meta.domain.Klass vs cool.klass...api.Klass)
+		if (enumerationProperties.notEmpty()) {
+			imports.append("import cool.klass.model.meta.domain.api.EnumerationLiteral;\n");
+		}
+		imports.append("\n");
+
+		// Eclipse Collections imports
+		imports.append("import org.eclipse.collections.api.list.ImmutableList;\n");
+		imports.append("import org.eclipse.collections.api.map.ImmutableMap;\n");
+		imports.append("import org.eclipse.collections.impl.factory.Lists;\n");
+		imports.append("import org.eclipse.collections.impl.factory.Maps;\n");
+		imports.append("\n");
+
+		// Domain class import
+		imports.append("import ").append(klass.getPackageName()).append(".").append(klass.getName()).append(";\n");
+
+		// Association end target type imports (avoid duplicates)
+		for (AssociationEnd associationEnd : associationEnds) {
+			Klass targetType = associationEnd.getType();
+			String targetImport = "import " + targetType.getPackageName() + "." + targetType.getName() + ";\n";
+			if (!imports.toString().contains(targetImport)) {
+				imports.append(targetImport);
+			}
+		}
+		imports.append("\n");
+
+		return imports.toString();
+	}
+
+	private String getAccessorInterfaceImport(@Nonnull PrimitiveType type) {
+		return switch (type) {
+			case INTEGER -> "IntegerPropertyAccessor";
+			case LONG -> "LongPropertyAccessor";
+			case DOUBLE -> "DoublePropertyAccessor";
+			case FLOAT -> "FloatPropertyAccessor";
+			case BOOLEAN -> "BooleanPropertyAccessor";
+			case STRING -> "StringPropertyAccessor";
+			case INSTANT, TEMPORAL_INSTANT -> "InstantPropertyAccessor";
+			case LOCAL_DATE -> "LocalDatePropertyAccessor";
+			case TEMPORAL_RANGE -> null; // Should be filtered out
+			default -> null;
+		};
+	}
+
+	private String getFields(@Nonnull Klass klass) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("    private final cool.klass.model.meta.domain.api.Klass klass;\n");
+		sb.append("\n");
+
+		// Public typed accessor fields
+		for (DataTypeProperty property : klass
+			.getDeclaredDataTypeProperties()
+			.reject(Property::isDerived)
+			.reject(this::isTemporalRange)) {
+			String accessorType = this.getAccessorFieldType(klass, property);
+			String fieldName = property.getName();
+			sb.append("    public final ").append(accessorType).append(" ").append(fieldName).append(";\n");
+		}
+
+		for (AssociationEnd associationEnd : klass.getDeclaredAssociationEnds()) {
+			String accessorType = this.getAssociationAccessorFieldType(associationEnd, klass);
+			String fieldName = associationEnd.getName();
+			sb.append("    public final ").append(accessorType).append(" ").append(fieldName).append(";\n");
+		}
+
+		sb.append("\n");
+		sb
+			.append("    private final ImmutableList<PropertyAccessor<")
+			.append(klass.getName())
+			.append(", ?>> allAccessors;\n");
+		sb
+			.append(
+				"    private final ImmutableMap<cool.klass.model.meta.domain.api.property.Property, PropertyAccessor<"
+			)
+			.append(klass.getName())
+			.append(", ?>> accessorsByProperty;\n");
+		sb.append("\n");
+
+		return sb.toString();
+	}
+
+	private String getAccessorFieldType(@Nonnull Klass klass, @Nonnull DataTypeProperty property) {
+		if (property instanceof PrimitiveProperty primitiveProperty) {
+			return this.getPrimitiveAccessorType(primitiveProperty.getType());
+		} else if (property instanceof EnumerationProperty) {
+			return "EnumerationPropertyAccessor<" + klass.getName() + ">";
+		}
+		throw new IllegalStateException("Unknown property type: " + property.getClass());
+	}
+
+	private String getPrimitiveAccessorType(@Nonnull PrimitiveType type) {
+		return switch (type) {
+			case INTEGER -> "IntegerPropertyAccessor";
+			case LONG -> "LongPropertyAccessor";
+			case DOUBLE -> "DoublePropertyAccessor";
+			case FLOAT -> "FloatPropertyAccessor";
+			case BOOLEAN -> "BooleanPropertyAccessor";
+			case STRING -> "StringPropertyAccessor";
+			case INSTANT, TEMPORAL_INSTANT -> "InstantPropertyAccessor";
+			case LOCAL_DATE -> "LocalDatePropertyAccessor";
+			case TEMPORAL_RANGE -> throw new IllegalStateException(
+				"TEMPORAL_RANGE properties should be filtered out before accessor generation"
+			);
+			default -> "PrimitivePropertyAccessor";
+		};
+	}
+
+	private String getAssociationAccessorFieldType(@Nonnull AssociationEnd associationEnd, @Nonnull Klass ownerKlass) {
+		String ownerType = ownerKlass.getName();
+		String targetType = associationEnd.getType().getName();
+
+		if (associationEnd.getMultiplicity().isToMany()) {
+			return "ToManyAssociationEndAccessor<" + ownerType + ", " + targetType + ">";
+		}
+		return "ToOneAssociationEndAccessor<" + ownerType + ", " + targetType + ">";
+	}
+
+	private String getConstructor(@Nonnull Klass klass, String adapterClassName) {
+		StringBuilder sb = new StringBuilder();
+
+		sb
+			.append("    public ")
+			.append(adapterClassName)
+			.append("(@Nonnull cool.klass.model.meta.domain.api.Klass klass)\n");
+		sb.append("    {\n");
+		sb.append("        this.klass = klass;\n");
+		sb.append("\n");
+
+		// Initialize accessor fields
+		for (DataTypeProperty property : klass
+			.getDeclaredDataTypeProperties()
+			.reject(Property::isDerived)
+			.reject(this::isTemporalRange)) {
+			String fieldName = property.getName();
+			String accessorClass = this.getAccessorClassName(klass, property);
+			String propertyLookup = this.getPropertyLookup(property);
+			sb
+				.append("        this.")
+				.append(fieldName)
+				.append(" = new ")
+				.append(accessorClass)
+				.append("(")
+				.append(propertyLookup)
+				.append(");\n");
+		}
+
+		for (AssociationEnd associationEnd : klass.getDeclaredAssociationEnds()) {
+			String fieldName = associationEnd.getName();
+			String accessorClass = this.getAssociationAccessorClassName(klass, associationEnd);
+			sb
+				.append("        this.")
+				.append(fieldName)
+				.append(" = new ")
+				.append(accessorClass)
+				.append("(klass.getAssociationEndByName(\"")
+				.append(fieldName)
+				.append("\"));\n");
+		}
+
+		sb.append("\n");
+
+		// Initialize allAccessors list
+		sb.append("        this.allAccessors = Lists.immutable.with(\n");
+		MutableList<String> accessorNames = Lists.mutable.empty();
+		for (DataTypeProperty property : klass
+			.getDeclaredDataTypeProperties()
+			.reject(Property::isDerived)
+			.reject(this::isTemporalRange)) {
+			accessorNames.add("this." + property.getName());
+		}
+		for (AssociationEnd associationEnd : klass.getDeclaredAssociationEnds()) {
+			accessorNames.add("this." + associationEnd.getName());
+		}
+		sb.append("                ").append(accessorNames.makeString(", ")).append(");\n");
+
+		// Initialize accessorsByProperty map
+		sb.append("\n");
+		sb
+			.append(
+				"        this.accessorsByProperty = Maps.immutable.<cool.klass.model.meta.domain.api.property.Property, PropertyAccessor<"
+			)
+			.append(klass.getName())
+			.append(", ?>>empty()\n");
+		for (DataTypeProperty property : klass
+			.getDeclaredDataTypeProperties()
+			.reject(Property::isDerived)
+			.reject(this::isTemporalRange)) {
+			sb
+				.append("                .newWithKeyValue(this.")
+				.append(property.getName())
+				.append(".getProperty(), this.")
+				.append(property.getName())
+				.append(")\n");
+		}
+		for (AssociationEnd associationEnd : klass.getDeclaredAssociationEnds()) {
+			sb
+				.append("                .newWithKeyValue(this.")
+				.append(associationEnd.getName())
+				.append(".getProperty(), this.")
+				.append(associationEnd.getName())
+				.append(")\n");
+		}
+		// Remove trailing newline and add semicolon
+		sb.setLength(sb.length() - 1);
+		sb.append(";\n");
+
+		sb.append("    }\n");
+		sb.append("\n");
+
+		return sb.toString();
+	}
+
+	private String getPropertyLookup(@Nonnull DataTypeProperty property) {
+		if (property instanceof PrimitiveProperty) {
+			return (
+				"(cool.klass.model.meta.domain.api.property.PrimitiveProperty) klass.getPropertyByName(\""
+				+ property.getName()
+				+ "\").orElseThrow()"
+			);
+		} else if (property instanceof EnumerationProperty) {
+			return (
+				"(cool.klass.model.meta.domain.api.property.EnumerationProperty) klass.getPropertyByName(\""
+				+ property.getName()
+				+ "\").orElseThrow()"
+			);
+		}
+		throw new IllegalStateException("Unknown property type: " + property.getClass());
+	}
+
+	private String getAccessorClassName(@Nonnull Klass klass, @Nonnull DataTypeProperty property) {
+		String className = klass.getName();
+		String propName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, property.getName());
+		return className + propName + "Accessor";
+	}
+
+	private String getAssociationAccessorClassName(@Nonnull Klass klass, @Nonnull AssociationEnd associationEnd) {
+		String className = klass.getName();
+		String propName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, associationEnd.getName());
+		return className + propName + "Accessor";
+	}
+
+	private String getClassAdapterMethods(@Nonnull Klass klass) {
+		StringBuilder sb = new StringBuilder();
+		String className = klass.getName();
+
+		// getKlass()
+		sb.append("    @Override\n");
+		sb.append("    @Nonnull\n");
+		sb.append("    public cool.klass.model.meta.domain.api.Klass getKlass()\n");
+		sb.append("    {\n");
+		sb.append("        return this.klass;\n");
+		sb.append("    }\n");
+		sb.append("\n");
+
+		// getPropertyAccessors()
+		sb.append("    @Override\n");
+		sb.append("    @Nonnull\n");
+		sb
+			.append("    public ImmutableList<PropertyAccessor<")
+			.append(className)
+			.append(", ?>> getPropertyAccessors()\n");
+		sb.append("    {\n");
+		sb.append("        return this.allAccessors;\n");
+		sb.append("    }\n");
+		sb.append("\n");
+
+		// getAccessorByProperty(Property)
+		sb.append("    @Override\n");
+		sb.append("    @Nullable\n");
+		sb
+			.append("    public PropertyAccessor<")
+			.append(className)
+			.append(
+				", ?> getAccessorByProperty(@Nonnull cool.klass.model.meta.domain.api.property.Property property)\n"
+			);
+		sb.append("    {\n");
+		sb.append("        return this.accessorsByProperty.get(property);\n");
+		sb.append("    }\n");
+		sb.append("\n");
+
+		// Type-specific overloads
+		this.addTypedOverload(
+			sb,
+			className,
+			"DataTypePropertyAccessor",
+			"cool.klass.model.meta.domain.api.property.DataTypeProperty"
+		);
+		this.addTypedOverload(
+			sb,
+			className,
+			"PrimitivePropertyAccessor",
+			"cool.klass.model.meta.domain.api.property.PrimitiveProperty"
+		);
+		this.addEnumerationOverload(sb, className);
+		this.addTypedOverload(
+			sb,
+			className,
+			"ReferencePropertyAccessor",
+			"cool.klass.model.meta.domain.api.property.ReferenceProperty"
+		);
+		this.addTypedOverload(
+			sb,
+			className,
+			"AssociationEndAccessor",
+			"cool.klass.model.meta.domain.api.property.AssociationEnd"
+		);
+
+		// getAccessorsByProperty()
+		sb.append("    @Override\n");
+		sb.append("    @Nonnull\n");
+		sb
+			.append("    public ImmutableMap<cool.klass.model.meta.domain.api.property.Property, PropertyAccessor<")
+			.append(className)
+			.append(", ?>> getAccessorsByProperty()\n");
+		sb.append("    {\n");
+		sb.append("        return this.accessorsByProperty;\n");
+		sb.append("    }\n");
+		sb.append("\n");
+
+		return sb.toString();
+	}
+
+	private void addTypedOverload(
+		StringBuilder sb,
+		String className,
+		String returnAccessorType,
+		String paramPropertyType
+	) {
+		String importPrefix = returnAccessorType.contains("Association") || returnAccessorType.contains("Reference")
+			? "cool.klass.model.meta.domain.api.property."
+			: "cool.klass.model.meta.domain.api.property.";
+
+		sb.append("    @Override\n");
+		sb.append("    @Nullable\n");
+		sb
+			.append("    public ")
+			.append(returnAccessorType)
+			.append("<")
+			.append(className)
+			.append(", ?> getAccessorByProperty(@Nonnull ")
+			.append(paramPropertyType)
+			.append(" property)\n");
+		sb.append("    {\n");
+		sb
+			.append("        return (")
+			.append(returnAccessorType)
+			.append("<")
+			.append(className)
+			.append(", ?>) this.accessorsByProperty.get(property);\n");
+		sb.append("    }\n");
+		sb.append("\n");
+	}
+
+	private void addEnumerationOverload(StringBuilder sb, String className) {
+		sb.append("    @Override\n");
+		sb.append("    @Nullable\n");
+		sb
+			.append("    public EnumerationPropertyAccessor<")
+			.append(className)
+			.append(
+				"> getAccessorByProperty(@Nonnull cool.klass.model.meta.domain.api.property.EnumerationProperty property)\n"
+			);
+		sb.append("    {\n");
+		sb
+			.append("        return (EnumerationPropertyAccessor<")
+			.append(className)
+			.append(">) this.accessorsByProperty.get(property);\n");
+		sb.append("    }\n");
+		sb.append("\n");
+	}
+
+	private String getInnerAccessorClasses(@Nonnull Klass klass) {
+		StringBuilder sb = new StringBuilder();
+
+		for (DataTypeProperty property : klass
+			.getDeclaredDataTypeProperties()
+			.reject(Property::isDerived)
+			.reject(this::isTemporalRange)) {
+			if (property instanceof PrimitiveProperty primitiveProperty) {
+				sb.append(this.getPrimitiveAccessorClass(klass, primitiveProperty));
+			} else if (property instanceof EnumerationProperty enumerationProperty) {
+				sb.append(this.getEnumerationAccessorClass(klass, enumerationProperty));
+			}
+		}
+
+		for (AssociationEnd associationEnd : klass.getDeclaredAssociationEnds()) {
+			sb.append(this.getAssociationAccessorClass(klass, associationEnd));
+		}
+
+		return sb.toString();
+	}
+
+	private String getPrimitiveAccessorClass(@Nonnull Klass klass, @Nonnull PrimitiveProperty property) {
+		StringBuilder sb = new StringBuilder();
+
+		String className = klass.getName();
+		String propName = property.getName();
+		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propName);
+		String accessorClass = className + propNameUpper + "Accessor";
+		String interfaceType = this.getPrimitiveAccessorType(property.getType()) + "<" + className + ">";
+		String javaType = this.getJavaType(property.getType());
+		boolean isBoolean = property.getType() == PrimitiveType.BOOLEAN;
+		String getterName = (isBoolean ? "is" : "get") + propNameUpper;
+		String setterName = "set" + propNameUpper;
+		boolean needsConversion = this.needsTypeConversion(property.getType());
+
+		sb.append("    private static class ").append(accessorClass).append("\n");
+		sb.append("            implements ").append(interfaceType).append("\n");
+		sb.append("    {\n");
+		sb.append("        private final cool.klass.model.meta.domain.api.property.PrimitiveProperty property;\n");
+		sb.append("\n");
+		sb
+			.append("        ")
+			.append(accessorClass)
+			.append("(cool.klass.model.meta.domain.api.property.PrimitiveProperty property)\n");
+		sb.append("        {\n");
+		sb.append("            this.property = property;\n");
+		sb.append("        }\n");
+		sb.append("\n");
+
+		// get() method
+		sb.append("        @Override\n");
+		sb.append("        @Nullable\n");
+		sb
+			.append("        public ")
+			.append(javaType)
+			.append(" get(@Nonnull ")
+			.append(className)
+			.append(" domainObject)\n");
+		sb.append("        {\n");
+		if (needsConversion) {
+			sb.append(this.getConversionGetterBody(property, getterName));
+		} else {
+			sb.append("            return domainObject.").append(getterName).append("();\n");
+		}
+		sb.append("        }\n");
+		sb.append("\n");
+
+		// set() method
+		sb.append("        @Override\n");
+		sb
+			.append("        public void set(@Nonnull ")
+			.append(className)
+			.append(" domainObject, @Nullable ")
+			.append(javaType)
+			.append(" value)\n");
+		sb.append("        {\n");
+		if (needsConversion) {
+			sb.append(this.getConversionSetterBody(property, setterName));
+		} else {
+			sb.append("            domainObject.").append(setterName).append("(value);\n");
+		}
+		sb.append("        }\n");
+
+		// Unboxed methods for numeric types
+		if (this.hasUnboxedMethods(property.getType())) {
+			sb.append(this.getUnboxedMethods(klass, property));
+		}
+
+		sb.append("\n");
+		sb.append("        @Override\n");
+		sb.append("        @Nonnull\n");
+		sb.append("        public cool.klass.model.meta.domain.api.property.PrimitiveProperty getProperty()\n");
+		sb.append("        {\n");
+		sb.append("            return this.property;\n");
+		sb.append("        }\n");
+		sb.append("    }\n");
+		sb.append("\n");
+
+		return sb.toString();
+	}
+
+	private String getJavaType(@Nonnull PrimitiveType type) {
+		return switch (type) {
+			case INTEGER -> "Integer";
+			case LONG -> "Long";
+			case DOUBLE -> "Double";
+			case FLOAT -> "Float";
+			case BOOLEAN -> "Boolean";
+			case STRING -> "String";
+			case INSTANT, TEMPORAL_INSTANT -> "Instant";
+			case LOCAL_DATE -> "LocalDate";
+			case TEMPORAL_RANGE -> throw new IllegalStateException(
+				"TEMPORAL_RANGE properties should be filtered out before accessor generation"
+			);
+			default -> "Object";
+		};
+	}
+
+	private boolean isTemporalRange(@Nonnull DataTypeProperty property) {
+		if (property instanceof PrimitiveProperty primitiveProperty) {
+			return primitiveProperty.getType().isTemporalRange();
+		}
+		return false;
+	}
+
+	private boolean needsTypeConversion(@Nonnull PrimitiveType type) {
+		return (
+			type == PrimitiveType.INSTANT || type == PrimitiveType.TEMPORAL_INSTANT || type == PrimitiveType.LOCAL_DATE
+		);
+	}
+
+	private String getConversionGetterBody(@Nonnull PrimitiveProperty property, String getterName) {
+		PrimitiveType type = property.getType();
+		if (type == PrimitiveType.INSTANT || type == PrimitiveType.TEMPORAL_INSTANT) {
+			return (
+				"            Timestamp ts = domainObject."
+				+ getterName
+				+ "();\n"
+				+ "            return ts == null ? null : ts.toInstant();\n"
+			);
+		} else if (type == PrimitiveType.LOCAL_DATE) {
+			// Reladomo declares return type as java.util.Date but stores java.sql.Date
+			return (
+				"            java.util.Date date = domainObject."
+				+ getterName
+				+ "();\n"
+				+ "            return date == null ? null : ((java.sql.Date) date).toLocalDate();\n"
+			);
+		}
+		throw new IllegalStateException("Unexpected type needing conversion: " + type);
+	}
+
+	private String getConversionSetterBody(@Nonnull PrimitiveProperty property, String setterName) {
+		PrimitiveType type = property.getType();
+		if (type == PrimitiveType.INSTANT || type == PrimitiveType.TEMPORAL_INSTANT) {
+			return "            domainObject." + setterName + "(value == null ? null : Timestamp.from(value));\n";
+		} else if (type == PrimitiveType.LOCAL_DATE) {
+			return "            domainObject." + setterName + "(value == null ? null : Date.valueOf(value));\n";
+		}
+		throw new IllegalStateException("Unexpected type needing conversion: " + type);
+	}
+
+	private boolean hasUnboxedMethods(@Nonnull PrimitiveType type) {
+		return switch (type) {
+			case INTEGER, LONG, DOUBLE, FLOAT, BOOLEAN -> true;
+			default -> false;
+		};
+	}
+
+	private String getUnboxedMethods(@Nonnull Klass klass, @Nonnull PrimitiveProperty property) {
+		StringBuilder sb = new StringBuilder();
+
+		String className = klass.getName();
+		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, property.getName());
+		boolean isBoolean = property.getType() == PrimitiveType.BOOLEAN;
+		String getterName = (isBoolean ? "is" : "get") + propNameUpper;
+		String setterName = "set" + propNameUpper;
+		String primitiveType = this.getPrimitiveTypeName(property.getType());
+		String methodSuffix = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, primitiveType);
+
+		sb.append("\n");
+		sb.append("        @Override\n");
+		sb
+			.append("        public ")
+			.append(primitiveType)
+			.append(" get")
+			.append(methodSuffix)
+			.append("(@Nonnull ")
+			.append(className)
+			.append(" domainObject)\n");
+		sb.append("        {\n");
+		sb.append("            return domainObject.").append(getterName).append("();\n");
+		sb.append("        }\n");
+		sb.append("\n");
+		sb.append("        @Override\n");
+		sb
+			.append("        public void set")
+			.append(methodSuffix)
+			.append("(@Nonnull ")
+			.append(className)
+			.append(" domainObject, ")
+			.append(primitiveType)
+			.append(" value)\n");
+		sb.append("        {\n");
+		sb.append("            domainObject.").append(setterName).append("(value);\n");
+		sb.append("        }\n");
+
+		return sb.toString();
+	}
+
+	private String getPrimitiveTypeName(@Nonnull PrimitiveType type) {
+		return switch (type) {
+			case INTEGER -> "int";
+			case LONG -> "long";
+			case DOUBLE -> "double";
+			case FLOAT -> "float";
+			case BOOLEAN -> "boolean";
+			default -> throw new IllegalStateException("Not a primitive type: " + type);
+		};
+	}
+
+	private String getEnumerationAccessorClass(@Nonnull Klass klass, @Nonnull EnumerationProperty property) {
+		StringBuilder sb = new StringBuilder();
+
+		String className = klass.getName();
+		String propName = property.getName();
+		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propName);
+		String accessorClass = className + propNameUpper + "Accessor";
+		String enumTypeName = property.getType().getName();
+
+		sb.append("    private static class ").append(accessorClass).append("\n");
+		sb.append("            implements EnumerationPropertyAccessor<").append(className).append(">\n");
+		sb.append("    {\n");
+		sb.append("        private final cool.klass.model.meta.domain.api.property.EnumerationProperty property;\n");
+		sb.append("\n");
+		sb
+			.append("        ")
+			.append(accessorClass)
+			.append("(cool.klass.model.meta.domain.api.property.EnumerationProperty property)\n");
+		sb.append("        {\n");
+		sb.append("            this.property = property;\n");
+		sb.append("        }\n");
+		sb.append("\n");
+
+		// get() method - returns EnumerationLiteral
+		sb.append("        @Override\n");
+		sb.append("        @Nullable\n");
+		sb.append("        public EnumerationLiteral get(@Nonnull ").append(className).append(" domainObject)\n");
+		sb.append("        {\n");
+		sb.append("            String prettyName = domainObject.get").append(propNameUpper).append("();\n");
+		sb.append("            if (prettyName == null)\n");
+		sb.append("            {\n");
+		sb.append("                return null;\n");
+		sb.append("            }\n");
+		sb.append("            return this.property.getType().getEnumerationLiterals()\n");
+		sb.append("                    .detect(el -> el.getPrettyName().equals(prettyName));\n");
+		sb.append("        }\n");
+		sb.append("\n");
+
+		// set() method - takes EnumerationLiteral
+		sb.append("        @Override\n");
+		sb
+			.append("        public void set(@Nonnull ")
+			.append(className)
+			.append(" domainObject, @Nullable EnumerationLiteral value)\n");
+		sb.append("        {\n");
+		sb
+			.append("            domainObject.set")
+			.append(propNameUpper)
+			.append("(value == null ? null : value.getPrettyName());\n");
+		sb.append("        }\n");
+		sb.append("\n");
+
+		sb.append("        @Override\n");
+		sb.append("        @Nonnull\n");
+		sb.append("        public cool.klass.model.meta.domain.api.property.EnumerationProperty getProperty()\n");
+		sb.append("        {\n");
+		sb.append("            return this.property;\n");
+		sb.append("        }\n");
+		sb.append("    }\n");
+		sb.append("\n");
+
+		return sb.toString();
+	}
+
+	private String getAssociationAccessorClass(@Nonnull Klass klass, @Nonnull AssociationEnd associationEnd) {
+		StringBuilder sb = new StringBuilder();
+
+		String className = klass.getName();
+		String propName = associationEnd.getName();
+		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propName);
+		String accessorClass = className + propNameUpper + "Accessor";
+		String targetType = associationEnd.getType().getName();
+		boolean isToMany = associationEnd.getMultiplicity().isToMany();
+
+		String interfaceType = isToMany
+			? "ToManyAssociationEndAccessor<" + className + ", " + targetType + ">"
+			: "ToOneAssociationEndAccessor<" + className + ", " + targetType + ">";
+
+		String returnType = isToMany ? "ImmutableList<" + targetType + ">" : targetType;
+
+		sb.append("    private static class ").append(accessorClass).append("\n");
+		sb.append("            implements ").append(interfaceType).append("\n");
+		sb.append("    {\n");
+		sb.append("        private final cool.klass.model.meta.domain.api.property.AssociationEnd property;\n");
+		sb.append("\n");
+		sb
+			.append("        ")
+			.append(accessorClass)
+			.append("(cool.klass.model.meta.domain.api.property.AssociationEnd property)\n");
+		sb.append("        {\n");
+		sb.append("            this.property = property;\n");
+		sb.append("        }\n");
+		sb.append("\n");
+
+		// get() method
+		sb.append("        @Override\n");
+		sb.append("        @Nullable\n");
+		sb
+			.append("        public ")
+			.append(returnType)
+			.append(" get(@Nonnull ")
+			.append(className)
+			.append(" domainObject)\n");
+		sb.append("        {\n");
+		if (isToMany) {
+			sb
+				.append("            return Lists.immutable.withAll(domainObject.get")
+				.append(propNameUpper)
+				.append("());\n");
+		} else {
+			sb.append("            return domainObject.get").append(propNameUpper).append("();\n");
+		}
+		sb.append("        }\n");
+		sb.append("\n");
+
+		// set() method
+		sb.append("        @Override\n");
+		sb
+			.append("        public void set(@Nonnull ")
+			.append(className)
+			.append(" domainObject, @Nullable ")
+			.append(returnType)
+			.append(" value)\n");
+		sb.append("        {\n");
+		if (isToMany) {
+			sb.append("            domainObject.get").append(propNameUpper).append("().clear();\n");
+			sb.append("            if (value != null)\n");
+			sb.append("            {\n");
+			sb
+				.append("                domainObject.get")
+				.append(propNameUpper)
+				.append("().addAll(value.castToList());\n");
+			sb.append("            }\n");
+		} else {
+			sb.append("            domainObject.set").append(propNameUpper).append("(value);\n");
+		}
+		sb.append("        }\n");
+		sb.append("\n");
+
+		sb.append("        @Override\n");
+		sb.append("        @Nonnull\n");
+		sb.append("        public cool.klass.model.meta.domain.api.property.AssociationEnd getProperty()\n");
+		sb.append("        {\n");
+		sb.append("            return this.property;\n");
+		sb.append("        }\n");
+		sb.append("    }\n");
+		sb.append("\n");
+
+		return sb.toString();
+	}
+
+	private String getFactorySourceCode(@Nonnull ImmutableList<Klass> concreteClasses, String packageName) {
+		StringBuilder sb = new StringBuilder();
+
+		// Package declaration
+		sb.append("package ").append(packageName).append(";\n\n");
+
+		// Imports
+		sb.append("import javax.annotation.Nonnull;\n");
+		sb.append("\n");
+		sb.append("import cool.klass.model.adapter.ClassAdapter;\n");
+		sb.append("import cool.klass.model.meta.domain.api.DomainModel;\n");
+		sb.append("import cool.klass.model.meta.domain.api.Klass;\n");
+		sb.append("\n");
+		sb.append("import org.eclipse.collections.api.map.ImmutableMap;\n");
+		sb.append("import org.eclipse.collections.impl.factory.Maps;\n");
+		sb.append("\n");
+
+		// Class javadoc
+		sb.append("/**\n");
+		sb.append(" * Auto-generated factory that creates and wires together all Reladomo ClassAdapters.\n");
+		sb.append(" *\n");
+		sb.append(" * <p>Generated by {@link ").append(this.getClass().getCanonicalName()).append("}\n");
+		sb.append(" */\n");
+
+		// Class declaration
+		sb.append("public class ReladomoClassAdapterFactory\n");
+		sb.append("{\n");
+
+		// Fields for each adapter
+		for (Klass klass : concreteClasses) {
+			String fieldName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "Adapter";
+			sb
+				.append("    private final Reladomo")
+				.append(klass.getName())
+				.append("ClassAdapter ")
+				.append(fieldName)
+				.append(";\n");
+		}
+
+		sb.append("\n");
+		sb.append("    private final ImmutableMap<Klass, ClassAdapter<?>> adaptersByKlass;\n");
+		sb.append("\n");
+
+		// Constructor
+		sb.append("    public ReladomoClassAdapterFactory(@Nonnull DomainModel domainModel)\n");
+		sb.append("    {\n");
+		for (Klass klass : concreteClasses) {
+			String fieldName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "Adapter";
+			sb
+				.append("        this.")
+				.append(fieldName)
+				.append(" = new Reladomo")
+				.append(klass.getName())
+				.append("ClassAdapter(domainModel.getClassByName(\"")
+				.append(klass.getName())
+				.append("\"));\n");
+		}
+
+		sb.append("\n");
+		sb.append("        this.adaptersByKlass = Maps.immutable.<Klass, ClassAdapter<?>>empty()\n");
+		for (Klass klass : concreteClasses) {
+			String fieldName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "Adapter";
+			sb
+				.append("                .newWithKeyValue(this.")
+				.append(fieldName)
+				.append(".getKlass(), this.")
+				.append(fieldName)
+				.append(")\n");
+		}
+		sb.setLength(sb.length() - 1);
+		sb.append(";\n");
+		sb.append("    }\n");
+		sb.append("\n");
+
+		// Getter methods for each adapter
+		for (Klass klass : concreteClasses) {
+			String fieldName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "Adapter";
+			sb.append("    @Nonnull\n");
+			sb
+				.append("    public Reladomo")
+				.append(klass.getName())
+				.append("ClassAdapter get")
+				.append(klass.getName())
+				.append("Adapter()\n");
+			sb.append("    {\n");
+			sb.append("        return this.").append(fieldName).append(";\n");
+			sb.append("    }\n");
+			sb.append("\n");
+		}
+
+		// Generic getter by Klass
+		sb.append("    @Nonnull\n");
+		sb.append("    public ClassAdapter<?> getAdapterByKlass(@Nonnull Klass klass)\n");
+		sb.append("    {\n");
+		sb.append("        ClassAdapter<?> adapter = this.adaptersByKlass.get(klass);\n");
+		sb.append("        if (adapter == null)\n");
+		sb.append("        {\n");
+		sb.append(
+			"            throw new IllegalArgumentException(\"No adapter found for Klass: \" + klass.getName());\n"
+		);
+		sb.append("        }\n");
+		sb.append("        return adapter;\n");
+		sb.append("    }\n");
+		sb.append("\n");
+
+		// Get all adapters
+		sb.append("    @Nonnull\n");
+		sb.append("    public ImmutableMap<Klass, ClassAdapter<?>> getAdaptersByKlass()\n");
+		sb.append("    {\n");
+		sb.append("        return this.adaptersByKlass;\n");
+		sb.append("    }\n");
+
+		sb.append("}\n");
+
+		return sb.toString();
+	}
+
+	private void printStringToFile(@Nonnull Path path, String contents) {
+		try (
+			PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
+		) {
+			printStream.print(contents);
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+}

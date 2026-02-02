@@ -30,6 +30,7 @@
 
     <modules>
         <module>klass-model-bootstrapped</module>
+        <module>klass-model-data-store-adapter-api</module>
         <module>klass-model-loader-compiler</module>
         <module>klass-model-loader</module>
         <module>klass-model-meta-interface</module>
