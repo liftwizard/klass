@@ -198,6 +198,9 @@
                                 <activeRecipes combine.children="append">
                                     <recipe>cool.klass.UpdateCopyrightYear</recipe>
                                 </activeRecipes>
+                                <activeStyles combine.children="append">
+                                    <style>cool.klass.SpacesStyle</style>
+                                </activeStyles>
                             </configuration>
                         </plugin>
                     </plugins>
