@@ -1,4 +1,17 @@
 ---
+type: specs.openrewrite.org/v1beta/style
+name: cool.klass.SpacesStyle
+styleConfigs:
+    - org.openrewrite.java.style.SpacesStyle:
+          other:
+              beforeComma: false
+              afterComma: true
+              beforeForSemicolon: false
+              afterForSemicolon: true
+              afterTypeCast: true
+              beforeColonInForEach: true
+              insideOneLineEnumBraces: false
+---
 type: specs.openrewrite.org/v1beta/recipe
 name: cool.klass.UpdateCopyrightYear
 displayName: Update copyright year to current year
