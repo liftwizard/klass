@@ -1,0 +1,125 @@
+{
+	server: {
+		detailedJsonProcessingExceptionMapper: true,
+		applicationConnectors: [
+			{
+				type: "http",
+				port: 8080,
+			},
+		],
+		adminConnectors: [
+			{
+				type: "http",
+				port: 8081,
+			},
+		],
+		rootPath: "/api/*",
+	},
+	logging: {
+		level: "INFO",
+		loggers: {
+			"cool.klass.xample.coverage": "DEBUG",
+			"io.liftwizard": "DEBUG",
+		},
+		appenders: [
+			{
+				type: "console",
+			},
+		],
+	},
+	clock: {
+		type: "system",
+	},
+	klass: {
+		domainModel: {
+			type: "compiler",
+			sourcePackages: ["cool.klass.xample.coverage"],
+			colorScheme: "dark",
+		},
+		dataStore: {
+			type: "reladomo",
+			uuid: {
+				type: "system",
+			},
+		},
+	},
+	configLogging: {
+		enabled: true,
+	},
+	authFilters: [
+		{
+			type: "header",
+			header: "Authorization",
+			prefix: "Impersonation",
+		},
+	],
+	h2: {
+		enabled: true,
+		webPort: 8078,
+		tcpPort: 9078,
+	},
+	cors: {
+		enabled: true,
+	},
+	dataSources: [
+		{
+			name: "h2-tcp",
+			driverClass: "com.p6spy.engine.spy.P6SpyDriver",
+			readOnlyByDefault: false,
+			user: "sa",
+			password: "",
+			url: "jdbc:p6spy:h2:tcp://localhost:9078/coverage-example-h2;NON_KEYWORDS=USER",
+			properties: {
+				charSet: "UTF-8",
+			},
+			logValidationErrors: true,
+			maxWaitForConnection: "1 second",
+		},
+	],
+	ddlExecutors: [],
+	sampleData: {
+		enabled: true,
+	},
+	reladomo: {
+		runtimeConfigurationPaths: ["reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml"],
+	},
+	connectionManagers: [
+		{
+			connectionManagerName: "h2-tcp",
+			dataSourceName: "h2-tcp",
+			databaseType: "H2",
+			schemaName: "coverage-example-h2",
+		},
+	],
+	jerseyHttpLogging: {
+		enabled: true,
+		maxEntitySize: "1 kilobyte",
+	},
+	liquibase: {
+		enabled: true,
+		dropEntireSchemaOnStartupAndShutdown: true,
+		dataSourceMigrations: [
+			{
+				dataSourceName: "h2-tcp",
+				migrationFileName: "migrations.xml",
+				migrationFileLocation: "classpath",
+				contexts: [],
+			},
+		],
+		dryRun: false,
+	},
+	bootstrap: {
+		enabled: true,
+	},
+	graphQL: {
+		enableTracing: false,
+		queryCache: "maximumSize=10000",
+		schemaFiles: [
+			"io/liftwizard/graphql/schema/query/QuerySchema.graphqls",
+			"io/liftwizard/graphql/schema/attribute/ReladomoAttribute.graphqls",
+			"cool/klass/xample/coverage/graphql/schema/query/GraphQLQuerySchema.graphqls",
+			"cool/klass/xample/coverage/graphql/schema/finder/GraphQLFinders.graphqls",
+			"cool/klass/xample/coverage/graphql/schema/GraphQLSchema.graphqls",
+		],
+	},
+}
