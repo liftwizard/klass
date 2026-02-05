@@ -259,6 +259,12 @@
             <artifactId>liftwizard-config-clock-incrementing</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <dependency>
+            <groupId>io.liftwizard</groupId>
+            <artifactId>liftwizard-config-auth-filter-header</artifactId>
+            <scope>runtime</scope>
+        </dependency>
         <!--endregion-->
 
         <dependency>
@@ -487,12 +493,6 @@
         <!--endregion-->
 
         <!--region Test dependencies -->
-        <dependency>
-            <groupId>io.liftwizard</groupId>
-            <artifactId>liftwizard-config-auth-filter-header</artifactId>
-            <scope>test</scope>
-        </dependency>
-
         <dependency>
             <groupId>io.liftwizard</groupId>
             <artifactId>liftwizard-config-logging-buffered</artifactId>
