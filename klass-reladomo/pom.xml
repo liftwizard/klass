@@ -33,6 +33,7 @@
         <module>klass-data-store-reladomo</module>
         <module>klass-dropwizard-bundle-reladomo-jsonview</module>
         <module>klass-dropwizard-bundle-reladomo-response</module>
+        <module>klass-reladomo-csv-test-extension</module>
         <module>klass-reladomo-graphql-deep-fetcher</module>
         <module>klass-reladomo-persistent-writer-test</module>
         <module>klass-reladomo-persistent-writer</module>
