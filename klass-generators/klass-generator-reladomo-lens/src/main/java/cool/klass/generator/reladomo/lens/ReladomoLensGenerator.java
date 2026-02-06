@@ -24,6 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
@@ -59,6 +60,82 @@ public class ReladomoLensGenerator {
 	public ReladomoLensGenerator(DomainModel domainModel, String applicationName) {
 		this.domainModel = Objects.requireNonNull(domainModel);
 		this.applicationName = Objects.requireNonNull(applicationName);
+	}
+
+	/**
+	 * Pairs an inherited property with its ancestor class and the Reladomo navigation expression
+	 * needed to reach that ancestor from the concrete subclass.
+	 *
+	 * <p>For example, if {@code Klass} extends {@code Classifier}, and {@code Classifier} declares
+	 * the {@code classifierModifiers} association end, the navigation would be
+	 * {@code "domainObject.getClassifierSuperClass()"} since Reladomo uses table-per-class inheritance
+	 * and requires explicit navigation through the superclass relationship.
+	 */
+	private record InheritedProperty<T>(T property, Klass ancestor, String navigation) {}
+
+	/**
+	 * Collects inherited data type properties from the superclass chain, paired with their
+	 * navigation expressions. Walks up the class hierarchy recursively.
+	 */
+	private ImmutableList<InheritedProperty<DataTypeProperty>> getInheritedDataTypeProperties(@Nonnull Klass klass) {
+		MutableList<InheritedProperty<DataTypeProperty>> result = Lists.mutable.empty();
+		this.collectInheritedDataTypeProperties(klass, klass, "domainObject", result);
+		return result.toImmutable();
+	}
+
+	private void collectInheritedDataTypeProperties(
+		@Nonnull Klass originalKlass,
+		@Nonnull Klass currentKlass,
+		String currentNavigation,
+		MutableList<InheritedProperty<DataTypeProperty>> result
+	) {
+		Optional<Klass> optionalSuperClass = currentKlass.getSuperClass();
+		if (optionalSuperClass.isEmpty()) {
+			return;
+		}
+
+		Klass superClass = optionalSuperClass.get();
+		String navigation = currentNavigation + ".get" + superClass.getName() + "SuperClass()";
+
+		for (DataTypeProperty property : superClass
+			.getDeclaredDataTypeProperties()
+			.reject(Property::isDerived)
+			.reject(this::isTemporalRange)) {
+			result.add(new InheritedProperty<>(property, superClass, navigation));
+		}
+
+		this.collectInheritedDataTypeProperties(originalKlass, superClass, navigation, result);
+	}
+
+	/**
+	 * Collects inherited association ends from the superclass chain, paired with their
+	 * navigation expressions.
+	 */
+	private ImmutableList<InheritedProperty<AssociationEnd>> getInheritedAssociationEnds(@Nonnull Klass klass) {
+		MutableList<InheritedProperty<AssociationEnd>> result = Lists.mutable.empty();
+		this.collectInheritedAssociationEnds(klass, klass, "domainObject", result);
+		return result.toImmutable();
+	}
+
+	private void collectInheritedAssociationEnds(
+		@Nonnull Klass originalKlass,
+		@Nonnull Klass currentKlass,
+		String currentNavigation,
+		MutableList<InheritedProperty<AssociationEnd>> result
+	) {
+		Optional<Klass> optionalSuperClass = currentKlass.getSuperClass();
+		if (optionalSuperClass.isEmpty()) {
+			return;
+		}
+
+		Klass superClass = optionalSuperClass.get();
+		String navigation = currentNavigation + ".get" + superClass.getName() + "SuperClass()";
+
+		for (AssociationEnd associationEnd : superClass.getDeclaredAssociationEnds()) {
+			result.add(new InheritedProperty<>(associationEnd, superClass, navigation));
+		}
+
+		this.collectInheritedAssociationEnds(originalKlass, superClass, navigation, result);
 	}
 
 	public void writeClassLenses(@Nonnull Path path) {
@@ -170,7 +247,10 @@ public class ReladomoLensGenerator {
 			.selectInstancesOf(EnumerationProperty.class)
 			.reject(Property::isDerived);
 
-		ImmutableList<AssociationEnd> associationEnds = klass.getDeclaredAssociationEnds();
+		ImmutableList<AssociationEnd> declaredAssociationEnds = klass.getDeclaredAssociationEnds();
+		ImmutableList<InheritedProperty<AssociationEnd>> inheritedAssociationEnds = this.getInheritedAssociationEnds(
+			klass
+		);
 
 		boolean hasInstant = primitiveProperties.anySatisfy(
 			(p) -> p.getType() == PrimitiveType.INSTANT || p.getType() == PrimitiveType.TEMPORAL_INSTANT
@@ -178,7 +258,10 @@ public class ReladomoLensGenerator {
 		boolean hasLocalDate = primitiveProperties.anySatisfy((p) -> p.getType() == PrimitiveType.LOCAL_DATE);
 		boolean hasTimestamp = hasInstant; // Reladomo uses Timestamp for Instant/TemporalInstant
 		boolean hasDate = hasLocalDate; // Reladomo uses Date for LocalDate
-		boolean hasToMany = associationEnds.anySatisfy((ae) -> ae.getMultiplicity().isToMany());
+		boolean hasToMany =
+			declaredAssociationEnds.anySatisfy((ae) -> ae.getMultiplicity().isToMany())
+			|| inheritedAssociationEnds.anySatisfy((ip) -> ip.property().getMultiplicity().isToMany());
+		boolean hasAnyAssociationEnd = declaredAssociationEnds.notEmpty() || inheritedAssociationEnds.notEmpty();
 
 		// java.sql imports
 		if (hasTimestamp || hasDate) {
@@ -222,7 +305,7 @@ public class ReladomoLensGenerator {
 			}
 		}
 
-		if (associationEnds.notEmpty()) {
+		if (hasAnyAssociationEnd) {
 			imports.append("import cool.klass.model.lens.ToOneLens;\n");
 			if (hasToMany) {
 				imports.append("import cool.klass.model.lens.ToManyLens;\n");
@@ -247,9 +330,26 @@ public class ReladomoLensGenerator {
 		// Domain class import
 		imports.append("import ").append(klass.getPackageName()).append(".").append(klass.getName()).append(";\n");
 
-		// Association end target type imports (avoid duplicates)
-		for (AssociationEnd associationEnd : associationEnds) {
+		// Superclass type imports for navigation (e.g., import klass.model.meta.domain.Classifier;)
+		for (Klass ancestor : klass.getSuperClassChain()) {
+			String ancestorImport = "import " + ancestor.getPackageName() + "." + ancestor.getName() + ";\n";
+			if (!imports.toString().contains(ancestorImport)) {
+				imports.append(ancestorImport);
+			}
+		}
+
+		// Association end target type imports (avoid duplicates) - declared
+		for (AssociationEnd associationEnd : declaredAssociationEnds) {
 			Klass targetType = associationEnd.getType();
+			String targetImport = "import " + targetType.getPackageName() + "." + targetType.getName() + ";\n";
+			if (!imports.toString().contains(targetImport)) {
+				imports.append(targetImport);
+			}
+		}
+
+		// Association end target type imports - inherited
+		for (InheritedProperty<AssociationEnd> inherited : inheritedAssociationEnds) {
+			Klass targetType = inherited.property().getType();
 			String targetImport = "import " + targetType.getPackageName() + "." + targetType.getName() + ";\n";
 			if (!imports.toString().contains(targetImport)) {
 				imports.append(targetImport);
@@ -278,10 +378,16 @@ public class ReladomoLensGenerator {
 	private String getFields(@Nonnull Klass klass) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("    private final cool.klass.model.meta.domain.api.Klass klass;\n");
+		ImmutableList<InheritedProperty<DataTypeProperty>> inheritedDataTypeProperties =
+			this.getInheritedDataTypeProperties(klass);
+		ImmutableList<InheritedProperty<AssociationEnd>> inheritedAssociationEnds = this.getInheritedAssociationEnds(
+			klass
+		);
+
+		sb.append("    private final cool.klass.model.meta.domain.api.Klass metaKlass;\n");
 		sb.append("\n");
 
-		// Public typed lens fields
+		// Public typed lens fields - declared data type properties
 		for (DataTypeProperty property : klass
 			.getDeclaredDataTypeProperties()
 			.reject(Property::isDerived)
@@ -291,9 +397,24 @@ public class ReladomoLensGenerator {
 			sb.append("    public final ").append(lensType).append(" ").append(fieldName).append(";\n");
 		}
 
+		// Public typed lens fields - declared association ends
 		for (AssociationEnd associationEnd : klass.getDeclaredAssociationEnds()) {
 			String lensType = this.getAssociationLensFieldType(associationEnd, klass);
 			String fieldName = associationEnd.getName();
+			sb.append("    public final ").append(lensType).append(" ").append(fieldName).append(";\n");
+		}
+
+		// Public typed lens fields - inherited data type properties
+		for (InheritedProperty<DataTypeProperty> inherited : inheritedDataTypeProperties) {
+			String lensType = this.getLensFieldType(klass, inherited.property());
+			String fieldName = inherited.property().getName();
+			sb.append("    public final ").append(lensType).append(" ").append(fieldName).append(";\n");
+		}
+
+		// Public typed lens fields - inherited association ends
+		for (InheritedProperty<AssociationEnd> inherited : inheritedAssociationEnds) {
+			String lensType = this.getAssociationLensFieldType(inherited.property(), klass);
+			String fieldName = inherited.property().getName();
 			sb.append("    public final ").append(lensType).append(" ").append(fieldName).append(";\n");
 		}
 
@@ -347,15 +468,21 @@ public class ReladomoLensGenerator {
 	private String getConstructor(@Nonnull Klass klass, String lensClassName) {
 		StringBuilder sb = new StringBuilder();
 
+		ImmutableList<InheritedProperty<DataTypeProperty>> inheritedDataTypeProperties =
+			this.getInheritedDataTypeProperties(klass);
+		ImmutableList<InheritedProperty<AssociationEnd>> inheritedAssociationEnds = this.getInheritedAssociationEnds(
+			klass
+		);
+
 		sb
 			.append("    public ")
 			.append(lensClassName)
 			.append("(@Nonnull cool.klass.model.meta.domain.api.Klass klass)\n");
 		sb.append("    {\n");
-		sb.append("        this.klass = klass;\n");
+		sb.append("        this.metaKlass = klass;\n");
 		sb.append("\n");
 
-		// Initialize lens fields
+		// Initialize lens fields - declared data type properties
 		for (DataTypeProperty property : klass
 			.getDeclaredDataTypeProperties()
 			.reject(Property::isDerived)
@@ -373,9 +500,39 @@ public class ReladomoLensGenerator {
 				.append(");\n");
 		}
 
+		// Initialize lens fields - declared association ends
 		for (AssociationEnd associationEnd : klass.getDeclaredAssociationEnds()) {
 			String fieldName = associationEnd.getName();
 			String lensClass = this.getAssociationLensClassName(klass, associationEnd);
+			sb
+				.append("        this.")
+				.append(fieldName)
+				.append(" = new ")
+				.append(lensClass)
+				.append("(klass.getAssociationEndByName(\"")
+				.append(fieldName)
+				.append("\"));\n");
+		}
+
+		// Initialize lens fields - inherited data type properties
+		for (InheritedProperty<DataTypeProperty> inherited : inheritedDataTypeProperties) {
+			String fieldName = inherited.property().getName();
+			String lensClass = this.getLensClassName(klass, inherited.property());
+			String propertyLookup = this.getPropertyLookup(inherited.property());
+			sb
+				.append("        this.")
+				.append(fieldName)
+				.append(" = new ")
+				.append(lensClass)
+				.append("(")
+				.append(propertyLookup)
+				.append(");\n");
+		}
+
+		// Initialize lens fields - inherited association ends
+		for (InheritedProperty<AssociationEnd> inherited : inheritedAssociationEnds) {
+			String fieldName = inherited.property().getName();
+			String lensClass = this.getAssociationLensClassName(klass, inherited.property());
 			sb
 				.append("        this.")
 				.append(fieldName)
@@ -399,6 +556,12 @@ public class ReladomoLensGenerator {
 		}
 		for (AssociationEnd associationEnd : klass.getDeclaredAssociationEnds()) {
 			lensNames.add("this." + associationEnd.getName());
+		}
+		for (InheritedProperty<DataTypeProperty> inherited : inheritedDataTypeProperties) {
+			lensNames.add("this." + inherited.property().getName());
+		}
+		for (InheritedProperty<AssociationEnd> inherited : inheritedAssociationEnds) {
+			lensNames.add("this." + inherited.property().getName());
 		}
 		sb.append("                ").append(lensNames.makeString(", ")).append(");\n");
 
@@ -427,6 +590,22 @@ public class ReladomoLensGenerator {
 				.append(associationEnd.getName())
 				.append(".getProperty(), this.")
 				.append(associationEnd.getName())
+				.append(")\n");
+		}
+		for (InheritedProperty<DataTypeProperty> inherited : inheritedDataTypeProperties) {
+			sb
+				.append("                .newWithKeyValue(this.")
+				.append(inherited.property().getName())
+				.append(".getProperty(), this.")
+				.append(inherited.property().getName())
+				.append(")\n");
+		}
+		for (InheritedProperty<AssociationEnd> inherited : inheritedAssociationEnds) {
+			sb
+				.append("                .newWithKeyValue(this.")
+				.append(inherited.property().getName())
+				.append(".getProperty(), this.")
+				.append(inherited.property().getName())
 				.append(")\n");
 		}
 		// Remove trailing newline and add semicolon
@@ -477,7 +656,7 @@ public class ReladomoLensGenerator {
 		sb.append("    @Nonnull\n");
 		sb.append("    public cool.klass.model.meta.domain.api.Klass getKlass()\n");
 		sb.append("    {\n");
-		sb.append("        return this.klass;\n");
+		sb.append("        return this.metaKlass;\n");
 		sb.append("    }\n");
 		sb.append("\n");
 
@@ -587,6 +766,7 @@ public class ReladomoLensGenerator {
 	private String getInnerLensClasses(@Nonnull Klass klass) {
 		StringBuilder sb = new StringBuilder();
 
+		// Inner classes for declared data type properties
 		for (DataTypeProperty property : klass
 			.getDeclaredDataTypeProperties()
 			.reject(Property::isDerived)
@@ -598,8 +778,44 @@ public class ReladomoLensGenerator {
 			}
 		}
 
+		// Inner classes for declared association ends
 		for (AssociationEnd associationEnd : klass.getDeclaredAssociationEnds()) {
 			sb.append(this.getAssociationLensClass(klass, associationEnd));
+		}
+
+		// Inner classes for inherited data type properties (with navigation)
+		for (InheritedProperty<DataTypeProperty> inherited : this.getInheritedDataTypeProperties(klass)) {
+			if (inherited.property() instanceof PrimitiveProperty primitiveProperty) {
+				sb.append(
+					this.getInheritedPrimitiveLensClass(
+						klass,
+						primitiveProperty,
+						inherited.ancestor(),
+						inherited.navigation()
+					)
+				);
+			} else if (inherited.property() instanceof EnumerationProperty enumerationProperty) {
+				sb.append(
+					this.getInheritedEnumerationLensClass(
+						klass,
+						enumerationProperty,
+						inherited.ancestor(),
+						inherited.navigation()
+					)
+				);
+			}
+		}
+
+		// Inner classes for inherited association ends (with navigation)
+		for (InheritedProperty<AssociationEnd> inherited : this.getInheritedAssociationEnds(klass)) {
+			sb.append(
+				this.getInheritedAssociationLensClass(
+					klass,
+					inherited.property(),
+					inherited.ancestor(),
+					inherited.navigation()
+				)
+			);
 		}
 
 		return sb.toString();
@@ -943,6 +1159,363 @@ public class ReladomoLensGenerator {
 			sb.append("            }\n");
 		} else {
 			sb.append("            domainObject.set").append(propNameUpper).append("(value);\n");
+		}
+		sb.append("        }\n");
+		sb.append("\n");
+
+		sb.append("        @Override\n");
+		sb.append("        @Nonnull\n");
+		sb.append("        public cool.klass.model.meta.domain.api.property.AssociationEnd getProperty()\n");
+		sb.append("        {\n");
+		sb.append("            return this.property;\n");
+		sb.append("        }\n");
+		sb.append("    }\n");
+		sb.append("\n");
+
+		return sb.toString();
+	}
+
+	private String getInheritedPrimitiveLensClass(
+		@Nonnull Klass klass,
+		@Nonnull PrimitiveProperty property,
+		@Nonnull Klass ancestor,
+		@Nonnull String navigation
+	) {
+		StringBuilder sb = new StringBuilder();
+
+		String className = klass.getName();
+		String ancestorName = ancestor.getName();
+		String propName = property.getName();
+		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propName);
+		String lensClass = className + propNameUpper + "Lens";
+		String interfaceType = this.getPrimitiveLensType(property.getType()) + "<" + className + ">";
+		String javaType = this.getJavaType(property.getType());
+		boolean isBoolean = property.getType() == PrimitiveType.BOOLEAN;
+		String getterName = (isBoolean ? "is" : "get") + propNameUpper;
+		String setterName = "set" + propNameUpper;
+		boolean needsConversion = this.needsTypeConversion(property.getType());
+
+		sb.append("    // Inherited from ").append(ancestorName).append("\n");
+		sb.append("    private static class ").append(lensClass).append("\n");
+		sb.append("            implements ").append(interfaceType).append("\n");
+		sb.append("    {\n");
+		sb.append("        private final cool.klass.model.meta.domain.api.property.PrimitiveProperty property;\n");
+		sb.append("\n");
+		sb
+			.append("        ")
+			.append(lensClass)
+			.append("(cool.klass.model.meta.domain.api.property.PrimitiveProperty property)\n");
+		sb.append("        {\n");
+		sb.append("            this.property = property;\n");
+		sb.append("        }\n");
+		sb.append("\n");
+
+		// get() method - navigates through superclass
+		sb.append("        @Override\n");
+		sb.append("        @Nullable\n");
+		sb
+			.append("        public ")
+			.append(javaType)
+			.append(" get(@Nonnull ")
+			.append(className)
+			.append(" domainObject)\n");
+		sb.append("        {\n");
+		sb.append("            ").append(ancestorName).append(" ancestor = ").append(navigation).append(";\n");
+		sb.append("            if (ancestor == null)\n");
+		sb.append("            {\n");
+		sb.append("                return null;\n");
+		sb.append("            }\n");
+		if (needsConversion) {
+			sb.append(this.getInheritedConversionGetterBody(property, getterName));
+		} else {
+			sb.append("            return ancestor.").append(getterName).append("();\n");
+		}
+		sb.append("        }\n");
+		sb.append("\n");
+
+		// set() method - navigates through superclass
+		sb.append("        @Override\n");
+		sb
+			.append("        public void set(@Nonnull ")
+			.append(className)
+			.append(" domainObject, @Nullable ")
+			.append(javaType)
+			.append(" value)\n");
+		sb.append("        {\n");
+		sb.append("            ").append(ancestorName).append(" ancestor = ").append(navigation).append(";\n");
+		sb.append("            if (ancestor == null)\n");
+		sb.append("            {\n");
+		sb.append("                return;\n");
+		sb.append("            }\n");
+		if (needsConversion) {
+			sb.append(this.getInheritedConversionSetterBody(property, setterName));
+		} else {
+			sb.append("            ancestor.").append(setterName).append("(value);\n");
+		}
+		sb.append("        }\n");
+
+		// Unboxed methods for numeric types
+		if (this.hasUnboxedMethods(property.getType())) {
+			sb.append(this.getInheritedUnboxedMethods(klass, property, ancestor, navigation));
+		}
+
+		sb.append("\n");
+		sb.append("        @Override\n");
+		sb.append("        @Nonnull\n");
+		sb.append("        public cool.klass.model.meta.domain.api.property.PrimitiveProperty getProperty()\n");
+		sb.append("        {\n");
+		sb.append("            return this.property;\n");
+		sb.append("        }\n");
+		sb.append("    }\n");
+		sb.append("\n");
+
+		return sb.toString();
+	}
+
+	private String getInheritedConversionGetterBody(@Nonnull PrimitiveProperty property, String getterName) {
+		PrimitiveType type = property.getType();
+		if (type == PrimitiveType.INSTANT || type == PrimitiveType.TEMPORAL_INSTANT) {
+			return (
+				"            Timestamp ts = ancestor."
+				+ getterName
+				+ "();\n"
+				+ "            return ts == null ? null : ts.toInstant();\n"
+			);
+		} else if (type == PrimitiveType.LOCAL_DATE) {
+			return (
+				"            java.util.Date date = ancestor."
+				+ getterName
+				+ "();\n"
+				+ "            return date == null ? null : ((java.sql.Date) date).toLocalDate();\n"
+			);
+		}
+		throw new IllegalStateException("Unexpected type needing conversion: " + type);
+	}
+
+	private String getInheritedConversionSetterBody(@Nonnull PrimitiveProperty property, String setterName) {
+		PrimitiveType type = property.getType();
+		if (type == PrimitiveType.INSTANT || type == PrimitiveType.TEMPORAL_INSTANT) {
+			return "            ancestor." + setterName + "(value == null ? null : Timestamp.from(value));\n";
+		} else if (type == PrimitiveType.LOCAL_DATE) {
+			return "            ancestor." + setterName + "(value == null ? null : Date.valueOf(value));\n";
+		}
+		throw new IllegalStateException("Unexpected type needing conversion: " + type);
+	}
+
+	private String getInheritedUnboxedMethods(
+		@Nonnull Klass klass,
+		@Nonnull PrimitiveProperty property,
+		@Nonnull Klass ancestor,
+		@Nonnull String navigation
+	) {
+		StringBuilder sb = new StringBuilder();
+
+		String className = klass.getName();
+		String ancestorName = ancestor.getName();
+		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, property.getName());
+		boolean isBoolean = property.getType() == PrimitiveType.BOOLEAN;
+		String getterName = (isBoolean ? "is" : "get") + propNameUpper;
+		String setterName = "set" + propNameUpper;
+		String primitiveType = this.getPrimitiveTypeName(property.getType());
+		String methodSuffix = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, primitiveType);
+
+		sb.append("\n");
+		sb.append("        @Override\n");
+		sb
+			.append("        public ")
+			.append(primitiveType)
+			.append(" get")
+			.append(methodSuffix)
+			.append("(@Nonnull ")
+			.append(className)
+			.append(" domainObject)\n");
+		sb.append("        {\n");
+		sb.append("            ").append(ancestorName).append(" ancestor = ").append(navigation).append(";\n");
+		sb.append("            return ancestor.").append(getterName).append("();\n");
+		sb.append("        }\n");
+		sb.append("\n");
+		sb.append("        @Override\n");
+		sb
+			.append("        public void set")
+			.append(methodSuffix)
+			.append("(@Nonnull ")
+			.append(className)
+			.append(" domainObject, ")
+			.append(primitiveType)
+			.append(" value)\n");
+		sb.append("        {\n");
+		sb.append("            ").append(ancestorName).append(" ancestor = ").append(navigation).append(";\n");
+		sb.append("            ancestor.").append(setterName).append("(value);\n");
+		sb.append("        }\n");
+
+		return sb.toString();
+	}
+
+	private String getInheritedEnumerationLensClass(
+		@Nonnull Klass klass,
+		@Nonnull EnumerationProperty property,
+		@Nonnull Klass ancestor,
+		@Nonnull String navigation
+	) {
+		StringBuilder sb = new StringBuilder();
+
+		String className = klass.getName();
+		String ancestorName = ancestor.getName();
+		String propName = property.getName();
+		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propName);
+		String lensClass = className + propNameUpper + "Lens";
+
+		sb.append("    // Inherited from ").append(ancestorName).append("\n");
+		sb.append("    private static class ").append(lensClass).append("\n");
+		sb.append("            implements EnumerationLens<").append(className).append(">\n");
+		sb.append("    {\n");
+		sb.append("        private final cool.klass.model.meta.domain.api.property.EnumerationProperty property;\n");
+		sb.append("\n");
+		sb
+			.append("        ")
+			.append(lensClass)
+			.append("(cool.klass.model.meta.domain.api.property.EnumerationProperty property)\n");
+		sb.append("        {\n");
+		sb.append("            this.property = property;\n");
+		sb.append("        }\n");
+		sb.append("\n");
+
+		// get() method - navigates through superclass
+		sb.append("        @Override\n");
+		sb.append("        @Nullable\n");
+		sb.append("        public EnumerationLiteral get(@Nonnull ").append(className).append(" domainObject)\n");
+		sb.append("        {\n");
+		sb.append("            ").append(ancestorName).append(" ancestor = ").append(navigation).append(";\n");
+		sb.append("            if (ancestor == null)\n");
+		sb.append("            {\n");
+		sb.append("                return null;\n");
+		sb.append("            }\n");
+		sb.append("            String prettyName = ancestor.get").append(propNameUpper).append("();\n");
+		sb.append("            if (prettyName == null)\n");
+		sb.append("            {\n");
+		sb.append("                return null;\n");
+		sb.append("            }\n");
+		sb.append("            return this.property.getType().getEnumerationLiterals()\n");
+		sb.append("                    .detect(el -> el.getPrettyName().equals(prettyName));\n");
+		sb.append("        }\n");
+		sb.append("\n");
+
+		// set() method - navigates through superclass
+		sb.append("        @Override\n");
+		sb
+			.append("        public void set(@Nonnull ")
+			.append(className)
+			.append(" domainObject, @Nullable EnumerationLiteral value)\n");
+		sb.append("        {\n");
+		sb.append("            ").append(ancestorName).append(" ancestor = ").append(navigation).append(";\n");
+		sb.append("            if (ancestor == null)\n");
+		sb.append("            {\n");
+		sb.append("                return;\n");
+		sb.append("            }\n");
+		sb
+			.append("            ancestor.set")
+			.append(propNameUpper)
+			.append("(value == null ? null : value.getPrettyName());\n");
+		sb.append("        }\n");
+		sb.append("\n");
+
+		sb.append("        @Override\n");
+		sb.append("        @Nonnull\n");
+		sb.append("        public cool.klass.model.meta.domain.api.property.EnumerationProperty getProperty()\n");
+		sb.append("        {\n");
+		sb.append("            return this.property;\n");
+		sb.append("        }\n");
+		sb.append("    }\n");
+		sb.append("\n");
+
+		return sb.toString();
+	}
+
+	private String getInheritedAssociationLensClass(
+		@Nonnull Klass klass,
+		@Nonnull AssociationEnd associationEnd,
+		@Nonnull Klass ancestor,
+		@Nonnull String navigation
+	) {
+		StringBuilder sb = new StringBuilder();
+
+		String className = klass.getName();
+		String ancestorName = ancestor.getName();
+		String propName = associationEnd.getName();
+		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propName);
+		String lensClass = className + propNameUpper + "Lens";
+		String targetType = associationEnd.getType().getName();
+		boolean isToMany = associationEnd.getMultiplicity().isToMany();
+
+		String interfaceType = isToMany
+			? "ToManyLens<" + className + ", " + targetType + ">"
+			: "ToOneLens<" + className + ", " + targetType + ">";
+
+		String returnType = isToMany ? "ImmutableList<" + targetType + ">" : targetType;
+
+		sb.append("    // Inherited from ").append(ancestorName).append("\n");
+		sb.append("    private static class ").append(lensClass).append("\n");
+		sb.append("            implements ").append(interfaceType).append("\n");
+		sb.append("    {\n");
+		sb.append("        private final cool.klass.model.meta.domain.api.property.AssociationEnd property;\n");
+		sb.append("\n");
+		sb
+			.append("        ")
+			.append(lensClass)
+			.append("(cool.klass.model.meta.domain.api.property.AssociationEnd property)\n");
+		sb.append("        {\n");
+		sb.append("            this.property = property;\n");
+		sb.append("        }\n");
+		sb.append("\n");
+
+		// get() method - navigates through superclass
+		sb.append("        @Override\n");
+		sb.append("        @Nullable\n");
+		sb
+			.append("        public ")
+			.append(returnType)
+			.append(" get(@Nonnull ")
+			.append(className)
+			.append(" domainObject)\n");
+		sb.append("        {\n");
+		sb.append("            ").append(ancestorName).append(" ancestor = ").append(navigation).append(";\n");
+		sb.append("            if (ancestor == null)\n");
+		sb.append("            {\n");
+		sb.append("                return null;\n");
+		sb.append("            }\n");
+		if (isToMany) {
+			sb.append("            return Lists.immutable.withAll(ancestor.get").append(propNameUpper).append("());\n");
+		} else {
+			sb.append("            return ancestor.get").append(propNameUpper).append("();\n");
+		}
+		sb.append("        }\n");
+		sb.append("\n");
+
+		// set() method - navigates through superclass
+		sb.append("        @Override\n");
+		sb
+			.append("        public void set(@Nonnull ")
+			.append(className)
+			.append(" domainObject, @Nullable ")
+			.append(returnType)
+			.append(" value)\n");
+		sb.append("        {\n");
+		sb.append("            ").append(ancestorName).append(" ancestor = ").append(navigation).append(";\n");
+		sb.append("            if (ancestor == null)\n");
+		sb.append("            {\n");
+		sb.append("                return;\n");
+		sb.append("            }\n");
+		if (isToMany) {
+			sb.append("            if (value == null)\n");
+			sb.append("            {\n");
+			sb.append("                ancestor.get").append(propNameUpper).append("().clear();\n");
+			sb.append("            }\n");
+			sb.append("            else\n");
+			sb.append("            {\n");
+			sb.append("                ancestor.get").append(propNameUpper).append("().merge(value.castToList());\n");
+			sb.append("            }\n");
+		} else {
+			sb.append("            ancestor.set").append(propNameUpper).append("(value);\n");
 		}
 		sb.append("        }\n");
 		sb.append("\n");
