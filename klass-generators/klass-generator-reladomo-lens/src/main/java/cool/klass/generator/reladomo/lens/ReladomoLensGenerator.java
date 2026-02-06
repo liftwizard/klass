@@ -283,6 +283,10 @@ public class ReladomoLensGenerator {
 			imports.append("\n");
 		}
 
+		// java.util imports
+		imports.append("import java.util.Objects;\n");
+		imports.append("\n");
+
 		// javax.annotation imports
 		imports.append("import javax.annotation.Nonnull;\n");
 		imports.append("import javax.annotation.Nullable;\n");
@@ -497,7 +501,7 @@ public class ReladomoLensGenerator {
 			.append(lensClassName)
 			.append("(@Nonnull cool.klass.model.meta.domain.api.Klass klass)\n");
 		sb.append("    {\n");
-		sb.append("        this.metaKlass = klass;\n");
+		sb.append("        this.metaKlass = Objects.requireNonNull(klass);\n");
 		sb.append("\n");
 
 		// Initialize lens fields - declared data type properties
@@ -965,7 +969,7 @@ public class ReladomoLensGenerator {
 			.append(lensClass)
 			.append("(cool.klass.model.meta.domain.api.property.PrimitiveProperty property)\n");
 		sb.append("        {\n");
-		sb.append("            this.property = property;\n");
+		sb.append("            this.property = Objects.requireNonNull(property);\n");
 		sb.append("        }\n");
 		sb.append("\n");
 
@@ -1160,7 +1164,7 @@ public class ReladomoLensGenerator {
 			.append(lensClass)
 			.append("(cool.klass.model.meta.domain.api.property.EnumerationProperty property)\n");
 		sb.append("        {\n");
-		sb.append("            this.property = property;\n");
+		sb.append("            this.property = Objects.requireNonNull(property);\n");
 		sb.append("        }\n");
 		sb.append("\n");
 
@@ -1231,7 +1235,7 @@ public class ReladomoLensGenerator {
 			.append(lensClass)
 			.append("(cool.klass.model.meta.domain.api.property.AssociationEnd property)\n");
 		sb.append("        {\n");
-		sb.append("            this.property = property;\n");
+		sb.append("            this.property = Objects.requireNonNull(property);\n");
 		sb.append("        }\n");
 		sb.append("\n");
 
@@ -1326,7 +1330,7 @@ public class ReladomoLensGenerator {
 			.append(lensClass)
 			.append("(cool.klass.model.meta.domain.api.property.PrimitiveProperty property)\n");
 		sb.append("        {\n");
-		sb.append("            this.property = property;\n");
+		sb.append("            this.property = Objects.requireNonNull(property);\n");
 		sb.append("        }\n");
 		sb.append("\n");
 
@@ -1496,7 +1500,7 @@ public class ReladomoLensGenerator {
 			.append(lensClass)
 			.append("(cool.klass.model.meta.domain.api.property.EnumerationProperty property)\n");
 		sb.append("        {\n");
-		sb.append("            this.property = property;\n");
+		sb.append("            this.property = Objects.requireNonNull(property);\n");
 		sb.append("        }\n");
 		sb.append("\n");
 
@@ -1584,7 +1588,7 @@ public class ReladomoLensGenerator {
 			.append(lensClass)
 			.append("(cool.klass.model.meta.domain.api.property.AssociationEnd property)\n");
 		sb.append("        {\n");
-		sb.append("            this.property = property;\n");
+		sb.append("            this.property = Objects.requireNonNull(property);\n");
 		sb.append("        }\n");
 		sb.append("\n");
 
