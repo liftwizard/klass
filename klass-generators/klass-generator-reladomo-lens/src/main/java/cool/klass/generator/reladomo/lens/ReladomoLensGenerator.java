@@ -421,9 +421,27 @@ public class ReladomoLensGenerator {
 		sb.append("\n");
 		sb.append("    private final ImmutableList<PropertyLens<").append(klass.getName()).append(", ?>> allLenses;\n");
 		sb
+			.append(
+				"    private final ImmutableMap<cool.klass.model.meta.domain.api.property.PrimitiveProperty, PrimitiveLens<"
+			)
+			.append(klass.getName())
+			.append(", ?>> primitiveLenses;\n");
+		sb
+			.append(
+				"    private final ImmutableMap<cool.klass.model.meta.domain.api.property.EnumerationProperty, EnumerationLens<"
+			)
+			.append(klass.getName())
+			.append(">> enumerationLenses;\n");
+		sb
+			.append(
+				"    private final ImmutableMap<cool.klass.model.meta.domain.api.property.AssociationEnd, AssociationLens<"
+			)
+			.append(klass.getName())
+			.append(", ?>> associationLenses;\n");
+		sb
 			.append("    private final ImmutableMap<cool.klass.model.meta.domain.api.property.Property, PropertyLens<")
 			.append(klass.getName())
-			.append(", ?>> lensesByProperty;\n");
+			.append(", ?>> allLensesByProperty;\n");
 		sb.append("\n");
 
 		return sb.toString();
@@ -565,11 +583,72 @@ public class ReladomoLensGenerator {
 		}
 		sb.append("                ").append(lensNames.makeString(", ")).append(");\n");
 
-		// Initialize lensesByProperty map
+		// Initialize primitiveLenses map
 		sb.append("\n");
+		this.appendTypedMapInit(
+			sb,
+			"primitiveLenses",
+			"cool.klass.model.meta.domain.api.property.PrimitiveProperty",
+			"PrimitiveLens<" + klass.getName() + ", ?>"
+		);
+		ImmutableList<PrimitiveProperty> declaredPrimitives = klass
+			.getDeclaredDataTypeProperties()
+			.selectInstancesOf(PrimitiveProperty.class)
+			.reject(Property::isDerived)
+			.reject((p) -> p.getType().isTemporalRange());
+		for (PrimitiveProperty property : declaredPrimitives) {
+			this.appendMapEntry(sb, property.getName());
+		}
+		for (InheritedProperty<DataTypeProperty> inherited : inheritedDataTypeProperties) {
+			if (inherited.property() instanceof PrimitiveProperty) {
+				this.appendMapEntry(sb, inherited.property().getName());
+			}
+		}
+		this.finishMapInit(sb);
+		sb.append("\n");
+
+		// Initialize enumerationLenses map
+		this.appendTypedMapInit(
+			sb,
+			"enumerationLenses",
+			"cool.klass.model.meta.domain.api.property.EnumerationProperty",
+			"EnumerationLens<" + klass.getName() + ">"
+		);
+		ImmutableList<EnumerationProperty> declaredEnumerations = klass
+			.getDeclaredDataTypeProperties()
+			.selectInstancesOf(EnumerationProperty.class)
+			.reject(Property::isDerived);
+		for (EnumerationProperty property : declaredEnumerations) {
+			this.appendMapEntry(sb, property.getName());
+		}
+		for (InheritedProperty<DataTypeProperty> inherited : inheritedDataTypeProperties) {
+			if (inherited.property() instanceof EnumerationProperty) {
+				this.appendMapEntry(sb, inherited.property().getName());
+			}
+		}
+		this.finishMapInit(sb);
+		sb.append("\n");
+
+		// Initialize associationLenses map
+		this.appendTypedMapInit(
+			sb,
+			"associationLenses",
+			"cool.klass.model.meta.domain.api.property.AssociationEnd",
+			"AssociationLens<" + klass.getName() + ", ?>"
+		);
+		for (AssociationEnd associationEnd : klass.getDeclaredAssociationEnds()) {
+			this.appendMapEntry(sb, associationEnd.getName());
+		}
+		for (InheritedProperty<AssociationEnd> inherited : inheritedAssociationEnds) {
+			this.appendMapEntry(sb, inherited.property().getName());
+		}
+		this.finishMapInit(sb);
+		sb.append("\n");
+
+		// Initialize allLensesByProperty map (combined)
 		sb
 			.append(
-				"        this.lensesByProperty = Maps.immutable.<cool.klass.model.meta.domain.api.property.Property, PropertyLens<"
+				"        this.allLensesByProperty = Maps.immutable.<cool.klass.model.meta.domain.api.property.Property, PropertyLens<"
 			)
 			.append(klass.getName())
 			.append(", ?>>empty()\n");
@@ -577,45 +656,49 @@ public class ReladomoLensGenerator {
 			.getDeclaredDataTypeProperties()
 			.reject(Property::isDerived)
 			.reject(this::isTemporalRange)) {
-			sb
-				.append("                .newWithKeyValue(this.")
-				.append(property.getName())
-				.append(".getProperty(), this.")
-				.append(property.getName())
-				.append(")\n");
+			this.appendMapEntry(sb, property.getName());
 		}
 		for (AssociationEnd associationEnd : klass.getDeclaredAssociationEnds()) {
-			sb
-				.append("                .newWithKeyValue(this.")
-				.append(associationEnd.getName())
-				.append(".getProperty(), this.")
-				.append(associationEnd.getName())
-				.append(")\n");
+			this.appendMapEntry(sb, associationEnd.getName());
 		}
 		for (InheritedProperty<DataTypeProperty> inherited : inheritedDataTypeProperties) {
-			sb
-				.append("                .newWithKeyValue(this.")
-				.append(inherited.property().getName())
-				.append(".getProperty(), this.")
-				.append(inherited.property().getName())
-				.append(")\n");
+			this.appendMapEntry(sb, inherited.property().getName());
 		}
 		for (InheritedProperty<AssociationEnd> inherited : inheritedAssociationEnds) {
-			sb
-				.append("                .newWithKeyValue(this.")
-				.append(inherited.property().getName())
-				.append(".getProperty(), this.")
-				.append(inherited.property().getName())
-				.append(")\n");
+			this.appendMapEntry(sb, inherited.property().getName());
 		}
-		// Remove trailing newline and add semicolon
-		sb.setLength(sb.length() - 1);
-		sb.append(";\n");
+		this.finishMapInit(sb);
 
 		sb.append("    }\n");
 		sb.append("\n");
 
 		return sb.toString();
+	}
+
+	private void appendTypedMapInit(StringBuilder sb, String fieldName, String keyType, String valueType) {
+		sb
+			.append("        this.")
+			.append(fieldName)
+			.append(" = Maps.immutable.<")
+			.append(keyType)
+			.append(", ")
+			.append(valueType)
+			.append(">empty()\n");
+	}
+
+	private void appendMapEntry(StringBuilder sb, String propertyName) {
+		sb
+			.append("                .newWithKeyValue(this.")
+			.append(propertyName)
+			.append(".getProperty(), this.")
+			.append(propertyName)
+			.append(")\n");
+	}
+
+	private void finishMapInit(StringBuilder sb) {
+		// Remove trailing newline and add semicolon + newline
+		sb.setLength(sb.length() - 1);
+		sb.append(";\n");
 	}
 
 	private String getPropertyLookup(@Nonnull DataTypeProperty property) {
@@ -677,35 +760,47 @@ public class ReladomoLensGenerator {
 			.append(className)
 			.append(", ?> getLensByProperty(@Nonnull cool.klass.model.meta.domain.api.property.Property property)\n");
 		sb.append("    {\n");
-		sb.append("        return this.lensesByProperty.get(property);\n");
+		sb.append("        return this.allLensesByProperty.get(property);\n");
 		sb.append("    }\n");
 		sb.append("\n");
 
-		// Type-specific overloads
-		this.addTypedOverload(
+		// Type-specific overloads - cast-based for supertypes
+		this.addCastOverload(
 			sb,
 			className,
 			"DataTypeLens",
-			"cool.klass.model.meta.domain.api.property.DataTypeProperty"
+			"cool.klass.model.meta.domain.api.property.DataTypeProperty",
+			"allLensesByProperty"
 		);
-		this.addTypedOverload(
+
+		// Type-specific overloads - direct typed map lookups (no casts needed)
+		this.addDirectOverload(
 			sb,
 			className,
-			"PrimitiveLens",
-			"cool.klass.model.meta.domain.api.property.PrimitiveProperty"
+			"PrimitiveLens<" + className + ", ?>",
+			"cool.klass.model.meta.domain.api.property.PrimitiveProperty",
+			"primitiveLenses"
 		);
-		this.addEnumerationOverload(sb, className);
-		this.addTypedOverload(
+		this.addDirectOverload(
+			sb,
+			className,
+			"EnumerationLens<" + className + ">",
+			"cool.klass.model.meta.domain.api.property.EnumerationProperty",
+			"enumerationLenses"
+		);
+		this.addCastOverload(
 			sb,
 			className,
 			"ReferenceLens",
-			"cool.klass.model.meta.domain.api.property.ReferenceProperty"
+			"cool.klass.model.meta.domain.api.property.ReferenceProperty",
+			"allLensesByProperty"
 		);
-		this.addTypedOverload(
+		this.addDirectOverload(
 			sb,
 			className,
-			"AssociationLens",
-			"cool.klass.model.meta.domain.api.property.AssociationEnd"
+			"AssociationLens<" + className + ", ?>",
+			"cool.klass.model.meta.domain.api.property.AssociationEnd",
+			"associationLenses"
 		);
 
 		// getLensesByProperty()
@@ -716,14 +811,20 @@ public class ReladomoLensGenerator {
 			.append(className)
 			.append(", ?>> getLensesByProperty()\n");
 		sb.append("    {\n");
-		sb.append("        return this.lensesByProperty;\n");
+		sb.append("        return this.allLensesByProperty;\n");
 		sb.append("    }\n");
 		sb.append("\n");
 
 		return sb.toString();
 	}
 
-	private void addTypedOverload(StringBuilder sb, String className, String returnLensType, String paramPropertyType) {
+	private void addCastOverload(
+		StringBuilder sb,
+		String className,
+		String returnLensType,
+		String paramPropertyType,
+		String mapName
+	) {
 		sb.append("    @Override\n");
 		sb.append("    @Nullable\n");
 		sb
@@ -740,25 +841,30 @@ public class ReladomoLensGenerator {
 			.append(returnLensType)
 			.append("<")
 			.append(className)
-			.append(", ?>) this.lensesByProperty.get(property);\n");
+			.append(", ?>) this.")
+			.append(mapName)
+			.append(".get(property);\n");
 		sb.append("    }\n");
 		sb.append("\n");
 	}
 
-	private void addEnumerationOverload(StringBuilder sb, String className) {
+	private void addDirectOverload(
+		StringBuilder sb,
+		String className,
+		String returnType,
+		String paramPropertyType,
+		String mapName
+	) {
 		sb.append("    @Override\n");
 		sb.append("    @Nullable\n");
 		sb
-			.append("    public EnumerationLens<")
-			.append(className)
-			.append(
-				"> getLensByProperty(@Nonnull cool.klass.model.meta.domain.api.property.EnumerationProperty property)\n"
-			);
+			.append("    public ")
+			.append(returnType)
+			.append(" getLensByProperty(@Nonnull ")
+			.append(paramPropertyType)
+			.append(" property)\n");
 		sb.append("    {\n");
-		sb
-			.append("        return (EnumerationLens<")
-			.append(className)
-			.append(">) this.lensesByProperty.get(property);\n");
+		sb.append("        return this.").append(mapName).append(".get(property);\n");
 		sb.append("    }\n");
 		sb.append("\n");
 	}
