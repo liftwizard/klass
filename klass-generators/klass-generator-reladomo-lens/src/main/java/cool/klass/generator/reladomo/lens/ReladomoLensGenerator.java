@@ -31,12 +31,22 @@ import javax.annotation.Nonnull;
 import com.google.common.base.CaseFormat;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
+import cool.klass.model.meta.domain.api.Multiplicity;
 import cool.klass.model.meta.domain.api.PrimitiveType;
+import cool.klass.model.meta.domain.api.modifier.Modifier;
+import cool.klass.model.meta.domain.api.order.OrderBy;
+import cool.klass.model.meta.domain.api.order.OrderByDirectionDeclaration;
+import cool.klass.model.meta.domain.api.order.OrderByMemberReferencePath;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.property.Property;
+import cool.klass.model.meta.domain.api.property.validation.MaxLengthPropertyValidation;
+import cool.klass.model.meta.domain.api.property.validation.MaxPropertyValidation;
+import cool.klass.model.meta.domain.api.property.validation.MinLengthPropertyValidation;
+import cool.klass.model.meta.domain.api.property.validation.MinPropertyValidation;
+import cool.klass.model.meta.domain.api.value.MemberReferencePath;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.factory.Lists;
@@ -398,6 +408,7 @@ public class ReladomoLensGenerator {
 			.reject(this::isTemporalRange)) {
 			String lensType = this.getLensFieldType(klass, property);
 			String fieldName = property.getName();
+			sb.append("    // ").append(this.getDataTypePropertySourceComment(property)).append("\n");
 			sb.append("    public final ").append(lensType).append(" ").append(fieldName).append(";\n");
 		}
 
@@ -405,20 +416,44 @@ public class ReladomoLensGenerator {
 		for (AssociationEnd associationEnd : klass.getDeclaredAssociationEnds()) {
 			String lensType = this.getAssociationLensFieldType(associationEnd, klass);
 			String fieldName = associationEnd.getName();
+			sb.append("    // ").append(this.getAssociationEndSourceComment(associationEnd)).append("\n");
+			sb.append("    // ").append(this.getAssociationContextComment(associationEnd)).append("\n");
 			sb.append("    public final ").append(lensType).append(" ").append(fieldName).append(";\n");
 		}
 
 		// Public typed lens fields - inherited data type properties
+		if (inheritedDataTypeProperties.notEmpty()) {
+			sb.append("\n");
+			sb
+				.append("    // Inherited from ")
+				.append(inheritedDataTypeProperties.getFirst().ancestor().getName())
+				.append("\n");
+		}
+		Klass previousAncestor = null;
 		for (InheritedProperty<DataTypeProperty> inherited : inheritedDataTypeProperties) {
+			if (previousAncestor != null && !inherited.ancestor().equals(previousAncestor)) {
+				sb.append("\n");
+				sb.append("    // Inherited from ").append(inherited.ancestor().getName()).append("\n");
+			}
+			previousAncestor = inherited.ancestor();
 			String lensType = this.getLensFieldType(klass, inherited.property());
 			String fieldName = inherited.property().getName();
+			sb.append("    // ").append(this.getDataTypePropertySourceComment(inherited.property())).append("\n");
 			sb.append("    public final ").append(lensType).append(" ").append(fieldName).append(";\n");
 		}
 
 		// Public typed lens fields - inherited association ends
+		Klass previousAssocAncestor = null;
 		for (InheritedProperty<AssociationEnd> inherited : inheritedAssociationEnds) {
+			if (previousAssocAncestor == null || !inherited.ancestor().equals(previousAssocAncestor)) {
+				sb.append("\n");
+				sb.append("    // Inherited from ").append(inherited.ancestor().getName()).append("\n");
+			}
+			previousAssocAncestor = inherited.ancestor();
 			String lensType = this.getAssociationLensFieldType(inherited.property(), klass);
 			String fieldName = inherited.property().getName();
+			sb.append("    // ").append(this.getAssociationEndSourceComment(inherited.property())).append("\n");
+			sb.append("    // ").append(this.getAssociationContextComment(inherited.property())).append("\n");
 			sb.append("    public final ").append(lensType).append(" ").append(fieldName).append(";\n");
 		}
 
@@ -959,6 +994,7 @@ public class ReladomoLensGenerator {
 		String setterName = "set" + propNameUpper;
 		boolean needsConversion = this.needsTypeConversion(property.getType());
 
+		sb.append("    // ").append(this.getDataTypePropertySourceComment(property)).append("\n");
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements ").append(interfaceType).append("\n");
 		sb.append("    {\n");
@@ -1158,6 +1194,7 @@ public class ReladomoLensGenerator {
 		String lensClass = className + propNameUpper + "Lens";
 		String enumTypeName = property.getType().getName();
 
+		sb.append("    // ").append(this.getDataTypePropertySourceComment(property)).append("\n");
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements EnumerationLens<").append(className).append(">\n");
 		sb.append("    {\n");
@@ -1233,6 +1270,8 @@ public class ReladomoLensGenerator {
 
 		String returnType = isToMany ? "ImmutableList<" + targetType + ">" : targetType;
 
+		sb.append("    // ").append(this.getAssociationEndSourceComment(associationEnd)).append("\n");
+		sb.append("    // ").append(this.getAssociationContextComment(associationEnd)).append("\n");
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements ").append(interfaceType).append("\n");
 		sb.append("    {\n");
@@ -1328,6 +1367,7 @@ public class ReladomoLensGenerator {
 		boolean needsConversion = this.needsTypeConversion(property.getType());
 
 		sb.append("    // Inherited from ").append(ancestorName).append("\n");
+		sb.append("    // ").append(this.getDataTypePropertySourceComment(property)).append("\n");
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements ").append(interfaceType).append("\n");
 		sb.append("    {\n");
@@ -1502,6 +1542,7 @@ public class ReladomoLensGenerator {
 		String lensClass = className + propNameUpper + "Lens";
 
 		sb.append("    // Inherited from ").append(ancestorName).append("\n");
+		sb.append("    // ").append(this.getDataTypePropertySourceComment(property)).append("\n");
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements EnumerationLens<").append(className).append(">\n");
 		sb.append("    {\n");
@@ -1594,6 +1635,8 @@ public class ReladomoLensGenerator {
 		String returnType = isToMany ? "ImmutableList<" + targetType + ">" : targetType;
 
 		sb.append("    // Inherited from ").append(ancestorName).append("\n");
+		sb.append("    // ").append(this.getAssociationEndSourceComment(associationEnd)).append("\n");
+		sb.append("    // ").append(this.getAssociationContextComment(associationEnd)).append("\n");
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements ").append(interfaceType).append("\n");
 		sb.append("    {\n");
@@ -1785,6 +1828,117 @@ public class ReladomoLensGenerator {
 		sb.append("}\n");
 
 		return sb.toString();
+	}
+
+	/**
+	 * Generates a source-code-like representation of a {@link DataTypeProperty} in Klass syntax.
+	 *
+	 * <p>For example: {@code superClassName: String? private maximumLength(256);}
+	 */
+	private String getDataTypePropertySourceComment(@Nonnull DataTypeProperty property) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(property.getName());
+		sb.append(": ");
+
+		// Type name
+		sb.append(property.getType().getDataTypeName());
+
+		// Optionality
+		if (property.isOptional()) {
+			sb.append("?");
+		}
+
+		// Modifiers
+		for (Modifier modifier : property.getModifiers()) {
+			sb.append(" ").append(modifier.getKeyword());
+		}
+
+		// Validations
+		Optional<MinLengthPropertyValidation> minLength = property.getMinLengthPropertyValidation();
+		minLength.ifPresent((v) -> sb.append(" minimumLength(").append(v.getNumber()).append(")"));
+
+		Optional<MaxLengthPropertyValidation> maxLength = property.getMaxLengthPropertyValidation();
+		maxLength.ifPresent((v) -> sb.append(" maximumLength(").append(v.getNumber()).append(")"));
+
+		Optional<MinPropertyValidation> min = property.getMinPropertyValidation();
+		min.ifPresent((v) -> sb.append(" minimum(").append(v.getNumber()).append(")"));
+
+		Optional<MaxPropertyValidation> max = property.getMaxPropertyValidation();
+		max.ifPresent((v) -> sb.append(" maximum(").append(v.getNumber()).append(")"));
+
+		sb.append(";");
+
+		return sb.toString();
+	}
+
+	/**
+	 * Generates a source-code-like representation of an {@link AssociationEnd} in Klass syntax.
+	 *
+	 * <p>For example: {@code superClass: Klass[0..1];}
+	 * <p>Also includes the association name and relationship: {@code (from association ClassHasSuperClass: subClasses <-> superClass)}
+	 */
+	private String getAssociationEndSourceComment(@Nonnull AssociationEnd associationEnd) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(associationEnd.getName());
+		sb.append(": ");
+		sb.append(associationEnd.getType().getName());
+
+		// Multiplicity
+		Multiplicity multiplicity = associationEnd.getMultiplicity();
+		sb.append("[").append(multiplicity.getPrettyName()).append("]");
+
+		// Modifiers
+		for (Modifier modifier : associationEnd.getModifiers()) {
+			sb.append(" ").append(modifier.getKeyword());
+		}
+
+		// OrderBy
+		Optional<OrderBy> optionalOrderBy = associationEnd.getOrderBy();
+		if (optionalOrderBy.isPresent()) {
+			OrderBy orderBy = optionalOrderBy.get();
+			ImmutableList<OrderByMemberReferencePath> paths = orderBy.getOrderByMemberReferencePaths();
+			sb.append(" orderBy: ");
+			for (int i = 0; i < paths.size(); i++) {
+				if (i > 0) {
+					sb.append(", ");
+				}
+				OrderByMemberReferencePath path = paths.get(i);
+				MemberReferencePath memberPath = path.getThisMemberReferencePath();
+				ImmutableList<AssociationEnd> assocEnds = memberPath.getAssociationEnds();
+				sb.append("this.");
+				for (AssociationEnd ae : assocEnds) {
+					sb.append(ae.getName()).append(".");
+				}
+				sb.append(memberPath.getProperty().getName());
+				OrderByDirectionDeclaration directionDecl = path.getOrderByDirectionDeclaration();
+				sb.append(" ").append(directionDecl.getOrderByDirection().getPrettyName());
+			}
+		}
+
+		sb.append(";");
+
+		return sb.toString();
+	}
+
+	/**
+	 * Generates the association context line for an {@link AssociationEnd}.
+	 *
+	 * <p>For example: {@code (from association ClassHasSuperClass: subClasses <-> superClass)}
+	 */
+	private String getAssociationContextComment(@Nonnull AssociationEnd associationEnd) {
+		var association = associationEnd.getOwningAssociation();
+		var opposite = associationEnd.getOpposite();
+		return (
+			"(from association "
+			+ association.getName()
+			+ ": "
+			+ opposite.getName()
+			+ " <-> "
+			+ associationEnd.getName()
+			+ ")"
+		);
 	}
 
 	private void printStringToFile(@Nonnull Path path, String contents) {
