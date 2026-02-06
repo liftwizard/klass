@@ -19,10 +19,13 @@ package cool.klass.model.meta.domain.api;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import cool.klass.model.meta.domain.api.modifier.Modifier;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import cool.klass.model.meta.domain.api.property.EnumerationProperty;
+import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.property.Property;
 import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import org.eclipse.collections.api.factory.Lists;
@@ -103,6 +106,24 @@ public interface Klass extends Classifier {
 		}
 
 		return Optional.empty();
+	}
+
+	@Nullable
+	default PrimitiveProperty getPrimitivePropertyByName(String name) {
+		DataTypeProperty property = this.getDataTypePropertyByName(name);
+		if (property instanceof PrimitiveProperty primitiveProperty) {
+			return primitiveProperty;
+		}
+		return null;
+	}
+
+	@Nullable
+	default EnumerationProperty getEnumerationPropertyByName(String name) {
+		DataTypeProperty property = this.getDataTypePropertyByName(name);
+		if (property instanceof EnumerationProperty enumerationProperty) {
+			return enumerationProperty;
+		}
+		return null;
 	}
 
 	@Nonnull
