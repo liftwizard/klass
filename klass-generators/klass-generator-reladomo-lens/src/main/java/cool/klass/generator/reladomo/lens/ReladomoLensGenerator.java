@@ -25,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 
@@ -64,12 +65,44 @@ import org.eclipse.collections.impl.factory.Lists;
  */
 public class ReladomoLensGenerator {
 
+	/**
+	 * Simple names of API types that appear in generated lens code. If any domain model class
+	 * shares one of these names, fully qualified names must be used to avoid ambiguity.
+	 */
+	private static final Set<String> API_TYPE_SIMPLE_NAMES = Set.of(
+		"Klass",
+		"Property",
+		"PrimitiveProperty",
+		"EnumerationProperty",
+		"AssociationEnd",
+		"DataTypeProperty",
+		"ReferenceProperty"
+	);
+
 	private final DomainModel domainModel;
 	private final String applicationName;
+	private final boolean useFullyQualifiedNames;
 
 	public ReladomoLensGenerator(DomainModel domainModel, String applicationName) {
 		this.domainModel = Objects.requireNonNull(domainModel);
 		this.applicationName = Objects.requireNonNull(applicationName);
+		this.useFullyQualifiedNames = this.detectNameConflicts();
+	}
+
+	private boolean detectNameConflicts() {
+		return this.domainModel.getClasses().anySatisfy((klass) -> API_TYPE_SIMPLE_NAMES.contains(klass.getName()));
+	}
+
+	/**
+	 * Returns the fully qualified name or simple name for an API type, depending on
+	 * whether any domain model class has a conflicting simple name.
+	 */
+	private String apiTypeName(String fullyQualifiedName) {
+		if (this.useFullyQualifiedNames) {
+			return fullyQualifiedName;
+		}
+		int lastDot = fullyQualifiedName.lastIndexOf('.');
+		return fullyQualifiedName.substring(lastDot + 1);
 	}
 
 	/**
@@ -327,10 +360,20 @@ public class ReladomoLensGenerator {
 		}
 		imports.append("\n");
 
-		// Domain model imports - using fully qualified names to avoid conflicts with domain classes
-		// that have the same names (e.g., klass.model.meta.domain.Klass vs cool.klass...api.Klass)
+		// Domain model API imports - only added as simple imports when no naming conflicts exist.
+		// When domain classes have the same names as API types (e.g., klass.model.meta.domain.Klass
+		// vs cool.klass.model.meta.domain.api.Klass), fully qualified names are used inline instead.
 		if (enumerationProperties.notEmpty()) {
 			imports.append("import cool.klass.model.meta.domain.api.EnumerationLiteral;\n");
+		}
+		if (!this.useFullyQualifiedNames) {
+			imports.append("import cool.klass.model.meta.domain.api.Klass;\n");
+			imports.append("import cool.klass.model.meta.domain.api.property.AssociationEnd;\n");
+			imports.append("import cool.klass.model.meta.domain.api.property.DataTypeProperty;\n");
+			imports.append("import cool.klass.model.meta.domain.api.property.EnumerationProperty;\n");
+			imports.append("import cool.klass.model.meta.domain.api.property.PrimitiveProperty;\n");
+			imports.append("import cool.klass.model.meta.domain.api.property.Property;\n");
+			imports.append("import cool.klass.model.meta.domain.api.property.ReferenceProperty;\n");
 		}
 		imports.append("\n");
 
@@ -398,7 +441,10 @@ public class ReladomoLensGenerator {
 			klass
 		);
 
-		sb.append("    private final cool.klass.model.meta.domain.api.Klass metaKlass;\n");
+		sb
+			.append("    private final ")
+			.append(this.apiTypeName("cool.klass.model.meta.domain.api.Klass"))
+			.append(" metaKlass;\n");
 		sb.append("\n");
 
 		// Public typed lens fields - declared data type properties
@@ -458,27 +504,36 @@ public class ReladomoLensGenerator {
 		}
 
 		sb.append("\n");
+		String primitivePropertyType = this.apiTypeName("cool.klass.model.meta.domain.api.property.PrimitiveProperty");
+		String enumerationPropertyType = this.apiTypeName(
+			"cool.klass.model.meta.domain.api.property.EnumerationProperty"
+		);
+		String associationEndType = this.apiTypeName("cool.klass.model.meta.domain.api.property.AssociationEnd");
+		String propertyType = this.apiTypeName("cool.klass.model.meta.domain.api.property.Property");
+
 		sb.append("    private final ImmutableList<PropertyLens<").append(klass.getName()).append(", ?>> allLenses;\n");
 		sb
-			.append(
-				"    private final ImmutableMap<cool.klass.model.meta.domain.api.property.PrimitiveProperty, PrimitiveLens<"
-			)
+			.append("    private final ImmutableMap<")
+			.append(primitivePropertyType)
+			.append(", PrimitiveLens<")
 			.append(klass.getName())
 			.append(", ?>> primitiveLenses;\n");
 		sb
-			.append(
-				"    private final ImmutableMap<cool.klass.model.meta.domain.api.property.EnumerationProperty, EnumerationLens<"
-			)
+			.append("    private final ImmutableMap<")
+			.append(enumerationPropertyType)
+			.append(", EnumerationLens<")
 			.append(klass.getName())
 			.append(">> enumerationLenses;\n");
 		sb
-			.append(
-				"    private final ImmutableMap<cool.klass.model.meta.domain.api.property.AssociationEnd, AssociationLens<"
-			)
+			.append("    private final ImmutableMap<")
+			.append(associationEndType)
+			.append(", AssociationLens<")
 			.append(klass.getName())
 			.append(", ?>> associationLenses;\n");
 		sb
-			.append("    private final ImmutableMap<cool.klass.model.meta.domain.api.property.Property, PropertyLens<")
+			.append("    private final ImmutableMap<")
+			.append(propertyType)
+			.append(", PropertyLens<")
 			.append(klass.getName())
 			.append(", ?>> allLensesByProperty;\n");
 		sb.append("\n");
@@ -534,7 +589,9 @@ public class ReladomoLensGenerator {
 		sb
 			.append("    public ")
 			.append(lensClassName)
-			.append("(@Nonnull cool.klass.model.meta.domain.api.Klass klass)\n");
+			.append("(@Nonnull ")
+			.append(this.apiTypeName("cool.klass.model.meta.domain.api.Klass"))
+			.append(" klass)\n");
 		sb.append("    {\n");
 		sb.append("        this.metaKlass = Objects.requireNonNull(klass);\n");
 		sb.append("\n");
@@ -627,7 +684,7 @@ public class ReladomoLensGenerator {
 		this.appendTypedMapInit(
 			sb,
 			"primitiveLenses",
-			"cool.klass.model.meta.domain.api.property.PrimitiveProperty",
+			this.apiTypeName("cool.klass.model.meta.domain.api.property.PrimitiveProperty"),
 			"PrimitiveLens<" + klass.getName() + ", ?>"
 		);
 		ImmutableList<PrimitiveProperty> declaredPrimitives = klass
@@ -650,7 +707,7 @@ public class ReladomoLensGenerator {
 		this.appendTypedMapInit(
 			sb,
 			"enumerationLenses",
-			"cool.klass.model.meta.domain.api.property.EnumerationProperty",
+			this.apiTypeName("cool.klass.model.meta.domain.api.property.EnumerationProperty"),
 			"EnumerationLens<" + klass.getName() + ">"
 		);
 		ImmutableList<EnumerationProperty> declaredEnumerations = klass
@@ -672,7 +729,7 @@ public class ReladomoLensGenerator {
 		this.appendTypedMapInit(
 			sb,
 			"associationLenses",
-			"cool.klass.model.meta.domain.api.property.AssociationEnd",
+			this.apiTypeName("cool.klass.model.meta.domain.api.property.AssociationEnd"),
 			"AssociationLens<" + klass.getName() + ", ?>"
 		);
 		for (AssociationEnd associationEnd : klass.getDeclaredAssociationEnds()) {
@@ -686,9 +743,9 @@ public class ReladomoLensGenerator {
 
 		// Initialize allLensesByProperty map (combined)
 		sb
-			.append(
-				"        this.allLensesByProperty = Maps.immutable.<cool.klass.model.meta.domain.api.property.Property, PropertyLens<"
-			)
+			.append("        this.allLensesByProperty = Maps.immutable.<")
+			.append(this.apiTypeName("cool.klass.model.meta.domain.api.property.Property"))
+			.append(", PropertyLens<")
 			.append(klass.getName())
 			.append(", ?>>empty()\n");
 		for (DataTypeProperty property : klass
@@ -768,7 +825,10 @@ public class ReladomoLensGenerator {
 		// getKlass()
 		sb.append("    @Override\n");
 		sb.append("    @Nonnull\n");
-		sb.append("    public cool.klass.model.meta.domain.api.Klass getKlass()\n");
+		sb
+			.append("    public ")
+			.append(this.apiTypeName("cool.klass.model.meta.domain.api.Klass"))
+			.append(" getKlass()\n");
 		sb.append("    {\n");
 		sb.append("        return this.metaKlass;\n");
 		sb.append("    }\n");
@@ -789,7 +849,9 @@ public class ReladomoLensGenerator {
 		sb
 			.append("    public PropertyLens<")
 			.append(className)
-			.append(", ?> getLensByProperty(@Nonnull cool.klass.model.meta.domain.api.property.Property property)\n");
+			.append(", ?> getLensByProperty(@Nonnull ")
+			.append(this.apiTypeName("cool.klass.model.meta.domain.api.property.Property"))
+			.append(" property)\n");
 		sb.append("    {\n");
 		sb
 			.append("        PropertyLens<")
@@ -810,7 +872,7 @@ public class ReladomoLensGenerator {
 			sb,
 			className,
 			"DataTypeLens",
-			"cool.klass.model.meta.domain.api.property.DataTypeProperty",
+			this.apiTypeName("cool.klass.model.meta.domain.api.property.DataTypeProperty"),
 			"allLensesByProperty"
 		);
 
@@ -819,28 +881,28 @@ public class ReladomoLensGenerator {
 			sb,
 			className,
 			"PrimitiveLens<" + className + ", ?>",
-			"cool.klass.model.meta.domain.api.property.PrimitiveProperty",
+			this.apiTypeName("cool.klass.model.meta.domain.api.property.PrimitiveProperty"),
 			"primitiveLenses"
 		);
 		this.addDirectOverload(
 			sb,
 			className,
 			"EnumerationLens<" + className + ">",
-			"cool.klass.model.meta.domain.api.property.EnumerationProperty",
+			this.apiTypeName("cool.klass.model.meta.domain.api.property.EnumerationProperty"),
 			"enumerationLenses"
 		);
 		this.addCastOverload(
 			sb,
 			className,
 			"ReferenceLens",
-			"cool.klass.model.meta.domain.api.property.ReferenceProperty",
+			this.apiTypeName("cool.klass.model.meta.domain.api.property.ReferenceProperty"),
 			"allLensesByProperty"
 		);
 		this.addDirectOverload(
 			sb,
 			className,
 			"AssociationLens<" + className + ", ?>",
-			"cool.klass.model.meta.domain.api.property.AssociationEnd",
+			this.apiTypeName("cool.klass.model.meta.domain.api.property.AssociationEnd"),
 			"associationLenses"
 		);
 
@@ -848,7 +910,9 @@ public class ReladomoLensGenerator {
 		sb.append("    @Override\n");
 		sb.append("    @Nonnull\n");
 		sb
-			.append("    public ImmutableMap<cool.klass.model.meta.domain.api.property.Property, PropertyLens<")
+			.append("    public ImmutableMap<")
+			.append(this.apiTypeName("cool.klass.model.meta.domain.api.property.Property"))
+			.append(", PropertyLens<")
 			.append(className)
 			.append(", ?>> getLensesByProperty()\n");
 		sb.append("    {\n");
@@ -998,14 +1062,15 @@ public class ReladomoLensGenerator {
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements ").append(interfaceType).append("\n");
 		sb.append("    {\n");
-		sb.append(
-			"        private final cool.klass.model.meta.domain.api.property.PrimitiveProperty primitiveProperty;\n"
-		);
+		String primitivePropertyType = this.apiTypeName("cool.klass.model.meta.domain.api.property.PrimitiveProperty");
+		sb.append("        private final ").append(primitivePropertyType).append(" primitiveProperty;\n");
 		sb.append("\n");
 		sb
 			.append("        ")
 			.append(lensClass)
-			.append("(cool.klass.model.meta.domain.api.property.PrimitiveProperty primitiveProperty)\n");
+			.append("(")
+			.append(primitivePropertyType)
+			.append(" primitiveProperty)\n");
 		sb.append("        {\n");
 		sb.append("            this.primitiveProperty = Objects.requireNonNull(primitiveProperty);\n");
 		sb.append("        }\n");
@@ -1053,9 +1118,7 @@ public class ReladomoLensGenerator {
 		sb.append("\n");
 		sb.append("        @Override\n");
 		sb.append("        @Nonnull\n");
-		sb.append(
-			"        public cool.klass.model.meta.domain.api.property.PrimitiveProperty getPrimitiveProperty()\n"
-		);
+		sb.append("        public ").append(primitivePropertyType).append(" getPrimitiveProperty()\n");
 		sb.append("        {\n");
 		sb.append("            return this.primitiveProperty;\n");
 		sb.append("        }\n");
@@ -1194,18 +1257,22 @@ public class ReladomoLensGenerator {
 		String lensClass = className + propNameUpper + "Lens";
 		String enumTypeName = property.getType().getName();
 
+		String enumerationPropertyType = this.apiTypeName(
+			"cool.klass.model.meta.domain.api.property.EnumerationProperty"
+		);
+
 		sb.append("    // ").append(this.getDataTypePropertySourceComment(property)).append("\n");
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements EnumerationLens<").append(className).append(">\n");
 		sb.append("    {\n");
-		sb.append(
-			"        private final cool.klass.model.meta.domain.api.property.EnumerationProperty enumerationProperty;\n"
-		);
+		sb.append("        private final ").append(enumerationPropertyType).append(" enumerationProperty;\n");
 		sb.append("\n");
 		sb
 			.append("        ")
 			.append(lensClass)
-			.append("(cool.klass.model.meta.domain.api.property.EnumerationProperty enumerationProperty)\n");
+			.append("(")
+			.append(enumerationPropertyType)
+			.append(" enumerationProperty)\n");
 		sb.append("        {\n");
 		sb.append("            this.enumerationProperty = Objects.requireNonNull(enumerationProperty);\n");
 		sb.append("        }\n");
@@ -1242,9 +1309,7 @@ public class ReladomoLensGenerator {
 
 		sb.append("        @Override\n");
 		sb.append("        @Nonnull\n");
-		sb.append(
-			"        public cool.klass.model.meta.domain.api.property.EnumerationProperty getEnumerationProperty()\n"
-		);
+		sb.append("        public ").append(enumerationPropertyType).append(" getEnumerationProperty()\n");
 		sb.append("        {\n");
 		sb.append("            return this.enumerationProperty;\n");
 		sb.append("        }\n");
@@ -1275,12 +1340,11 @@ public class ReladomoLensGenerator {
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements ").append(interfaceType).append("\n");
 		sb.append("    {\n");
-		sb.append("        private final cool.klass.model.meta.domain.api.property.AssociationEnd associationEnd;\n");
+		String associationEndType = this.apiTypeName("cool.klass.model.meta.domain.api.property.AssociationEnd");
+
+		sb.append("        private final ").append(associationEndType).append(" associationEnd;\n");
 		sb.append("\n");
-		sb
-			.append("        ")
-			.append(lensClass)
-			.append("(cool.klass.model.meta.domain.api.property.AssociationEnd associationEnd)\n");
+		sb.append("        ").append(lensClass).append("(").append(associationEndType).append(" associationEnd)\n");
 		sb.append("        {\n");
 		sb.append("            this.associationEnd = Objects.requireNonNull(associationEnd);\n");
 		sb.append("        }\n");
@@ -1336,7 +1400,7 @@ public class ReladomoLensGenerator {
 
 		sb.append("        @Override\n");
 		sb.append("        @Nonnull\n");
-		sb.append("        public cool.klass.model.meta.domain.api.property.AssociationEnd getAssociationEnd()\n");
+		sb.append("        public ").append(associationEndType).append(" getAssociationEnd()\n");
 		sb.append("        {\n");
 		sb.append("            return this.associationEnd;\n");
 		sb.append("        }\n");
@@ -1366,19 +1430,21 @@ public class ReladomoLensGenerator {
 		String setterName = "set" + propNameUpper;
 		boolean needsConversion = this.needsTypeConversion(property.getType());
 
+		String primitivePropertyType = this.apiTypeName("cool.klass.model.meta.domain.api.property.PrimitiveProperty");
+
 		sb.append("    // Inherited from ").append(ancestorName).append("\n");
 		sb.append("    // ").append(this.getDataTypePropertySourceComment(property)).append("\n");
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements ").append(interfaceType).append("\n");
 		sb.append("    {\n");
-		sb.append(
-			"        private final cool.klass.model.meta.domain.api.property.PrimitiveProperty primitiveProperty;\n"
-		);
+		sb.append("        private final ").append(primitivePropertyType).append(" primitiveProperty;\n");
 		sb.append("\n");
 		sb
 			.append("        ")
 			.append(lensClass)
-			.append("(cool.klass.model.meta.domain.api.property.PrimitiveProperty primitiveProperty)\n");
+			.append("(")
+			.append(primitivePropertyType)
+			.append(" primitiveProperty)\n");
 		sb.append("        {\n");
 		sb.append("            this.primitiveProperty = Objects.requireNonNull(primitiveProperty);\n");
 		sb.append("        }\n");
@@ -1436,9 +1502,7 @@ public class ReladomoLensGenerator {
 		sb.append("\n");
 		sb.append("        @Override\n");
 		sb.append("        @Nonnull\n");
-		sb.append(
-			"        public cool.klass.model.meta.domain.api.property.PrimitiveProperty getPrimitiveProperty()\n"
-		);
+		sb.append("        public ").append(primitivePropertyType).append(" getPrimitiveProperty()\n");
 		sb.append("        {\n");
 		sb.append("            return this.primitiveProperty;\n");
 		sb.append("        }\n");
@@ -1541,19 +1605,23 @@ public class ReladomoLensGenerator {
 		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propName);
 		String lensClass = className + propNameUpper + "Lens";
 
+		String enumerationPropertyType = this.apiTypeName(
+			"cool.klass.model.meta.domain.api.property.EnumerationProperty"
+		);
+
 		sb.append("    // Inherited from ").append(ancestorName).append("\n");
 		sb.append("    // ").append(this.getDataTypePropertySourceComment(property)).append("\n");
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements EnumerationLens<").append(className).append(">\n");
 		sb.append("    {\n");
-		sb.append(
-			"        private final cool.klass.model.meta.domain.api.property.EnumerationProperty enumerationProperty;\n"
-		);
+		sb.append("        private final ").append(enumerationPropertyType).append(" enumerationProperty;\n");
 		sb.append("\n");
 		sb
 			.append("        ")
 			.append(lensClass)
-			.append("(cool.klass.model.meta.domain.api.property.EnumerationProperty enumerationProperty)\n");
+			.append("(")
+			.append(enumerationPropertyType)
+			.append(" enumerationProperty)\n");
 		sb.append("        {\n");
 		sb.append("            this.enumerationProperty = Objects.requireNonNull(enumerationProperty);\n");
 		sb.append("        }\n");
@@ -1600,9 +1668,7 @@ public class ReladomoLensGenerator {
 
 		sb.append("        @Override\n");
 		sb.append("        @Nonnull\n");
-		sb.append(
-			"        public cool.klass.model.meta.domain.api.property.EnumerationProperty getEnumerationProperty()\n"
-		);
+		sb.append("        public ").append(enumerationPropertyType).append(" getEnumerationProperty()\n");
 		sb.append("        {\n");
 		sb.append("            return this.enumerationProperty;\n");
 		sb.append("        }\n");
@@ -1634,18 +1700,17 @@ public class ReladomoLensGenerator {
 
 		String returnType = isToMany ? "ImmutableList<" + targetType + ">" : targetType;
 
+		String associationEndType = this.apiTypeName("cool.klass.model.meta.domain.api.property.AssociationEnd");
+
 		sb.append("    // Inherited from ").append(ancestorName).append("\n");
 		sb.append("    // ").append(this.getAssociationEndSourceComment(associationEnd)).append("\n");
 		sb.append("    // ").append(this.getAssociationContextComment(associationEnd)).append("\n");
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements ").append(interfaceType).append("\n");
 		sb.append("    {\n");
-		sb.append("        private final cool.klass.model.meta.domain.api.property.AssociationEnd associationEnd;\n");
+		sb.append("        private final ").append(associationEndType).append(" associationEnd;\n");
 		sb.append("\n");
-		sb
-			.append("        ")
-			.append(lensClass)
-			.append("(cool.klass.model.meta.domain.api.property.AssociationEnd associationEnd)\n");
+		sb.append("        ").append(lensClass).append("(").append(associationEndType).append(" associationEnd)\n");
 		sb.append("        {\n");
 		sb.append("            this.associationEnd = Objects.requireNonNull(associationEnd);\n");
 		sb.append("        }\n");
@@ -1705,7 +1770,7 @@ public class ReladomoLensGenerator {
 
 		sb.append("        @Override\n");
 		sb.append("        @Nonnull\n");
-		sb.append("        public cool.klass.model.meta.domain.api.property.AssociationEnd getAssociationEnd()\n");
+		sb.append("        public ").append(associationEndType).append(" getAssociationEnd()\n");
 		sb.append("        {\n");
 		sb.append("            return this.associationEnd;\n");
 		sb.append("        }\n");
