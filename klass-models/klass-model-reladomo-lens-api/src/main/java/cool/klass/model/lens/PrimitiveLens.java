@@ -27,7 +27,17 @@ import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
  * @param <V> the value type
  */
 public interface PrimitiveLens<T, V> extends DataTypeLens<T, V> {
+	/**
+	 * Returns the PrimitiveProperty from the domain model that this lens corresponds to.
+	 *
+	 * @return the domain model PrimitiveProperty
+	 */
+	@Nonnull
+	PrimitiveProperty getPrimitiveProperty();
+
 	@Override
 	@Nonnull
-	PrimitiveProperty getProperty();
+	default PrimitiveProperty getProperty() {
+		return this.getPrimitiveProperty();
+	}
 }

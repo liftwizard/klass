@@ -962,14 +962,16 @@ public class ReladomoLensGenerator {
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements ").append(interfaceType).append("\n");
 		sb.append("    {\n");
-		sb.append("        private final cool.klass.model.meta.domain.api.property.PrimitiveProperty property;\n");
+		sb.append(
+			"        private final cool.klass.model.meta.domain.api.property.PrimitiveProperty primitiveProperty;\n"
+		);
 		sb.append("\n");
 		sb
 			.append("        ")
 			.append(lensClass)
-			.append("(cool.klass.model.meta.domain.api.property.PrimitiveProperty property)\n");
+			.append("(cool.klass.model.meta.domain.api.property.PrimitiveProperty primitiveProperty)\n");
 		sb.append("        {\n");
-		sb.append("            this.property = Objects.requireNonNull(property);\n");
+		sb.append("            this.primitiveProperty = Objects.requireNonNull(primitiveProperty);\n");
 		sb.append("        }\n");
 		sb.append("\n");
 
@@ -1015,9 +1017,11 @@ public class ReladomoLensGenerator {
 		sb.append("\n");
 		sb.append("        @Override\n");
 		sb.append("        @Nonnull\n");
-		sb.append("        public cool.klass.model.meta.domain.api.property.PrimitiveProperty getProperty()\n");
+		sb.append(
+			"        public cool.klass.model.meta.domain.api.property.PrimitiveProperty getPrimitiveProperty()\n"
+		);
 		sb.append("        {\n");
-		sb.append("            return this.property;\n");
+		sb.append("            return this.primitiveProperty;\n");
 		sb.append("        }\n");
 		sb.append("    }\n");
 		sb.append("\n");
@@ -1157,14 +1161,16 @@ public class ReladomoLensGenerator {
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements EnumerationLens<").append(className).append(">\n");
 		sb.append("    {\n");
-		sb.append("        private final cool.klass.model.meta.domain.api.property.EnumerationProperty property;\n");
+		sb.append(
+			"        private final cool.klass.model.meta.domain.api.property.EnumerationProperty enumerationProperty;\n"
+		);
 		sb.append("\n");
 		sb
 			.append("        ")
 			.append(lensClass)
-			.append("(cool.klass.model.meta.domain.api.property.EnumerationProperty property)\n");
+			.append("(cool.klass.model.meta.domain.api.property.EnumerationProperty enumerationProperty)\n");
 		sb.append("        {\n");
-		sb.append("            this.property = Objects.requireNonNull(property);\n");
+		sb.append("            this.enumerationProperty = Objects.requireNonNull(enumerationProperty);\n");
 		sb.append("        }\n");
 		sb.append("\n");
 
@@ -1178,7 +1184,7 @@ public class ReladomoLensGenerator {
 		sb.append("            {\n");
 		sb.append("                return null;\n");
 		sb.append("            }\n");
-		sb.append("            return this.property.getType().getEnumerationLiterals()\n");
+		sb.append("            return this.enumerationProperty.getType().getEnumerationLiterals()\n");
 		sb.append("                    .detect(el -> el.getPrettyName().equals(prettyName));\n");
 		sb.append("        }\n");
 		sb.append("\n");
@@ -1199,9 +1205,11 @@ public class ReladomoLensGenerator {
 
 		sb.append("        @Override\n");
 		sb.append("        @Nonnull\n");
-		sb.append("        public cool.klass.model.meta.domain.api.property.EnumerationProperty getProperty()\n");
+		sb.append(
+			"        public cool.klass.model.meta.domain.api.property.EnumerationProperty getEnumerationProperty()\n"
+		);
 		sb.append("        {\n");
-		sb.append("            return this.property;\n");
+		sb.append("            return this.enumerationProperty;\n");
 		sb.append("        }\n");
 		sb.append("    }\n");
 		sb.append("\n");
@@ -1228,14 +1236,14 @@ public class ReladomoLensGenerator {
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements ").append(interfaceType).append("\n");
 		sb.append("    {\n");
-		sb.append("        private final cool.klass.model.meta.domain.api.property.AssociationEnd property;\n");
+		sb.append("        private final cool.klass.model.meta.domain.api.property.AssociationEnd associationEnd;\n");
 		sb.append("\n");
 		sb
 			.append("        ")
 			.append(lensClass)
-			.append("(cool.klass.model.meta.domain.api.property.AssociationEnd property)\n");
+			.append("(cool.klass.model.meta.domain.api.property.AssociationEnd associationEnd)\n");
 		sb.append("        {\n");
-		sb.append("            this.property = Objects.requireNonNull(property);\n");
+		sb.append("            this.associationEnd = Objects.requireNonNull(associationEnd);\n");
 		sb.append("        }\n");
 		sb.append("\n");
 
@@ -1289,9 +1297,9 @@ public class ReladomoLensGenerator {
 
 		sb.append("        @Override\n");
 		sb.append("        @Nonnull\n");
-		sb.append("        public cool.klass.model.meta.domain.api.property.AssociationEnd getProperty()\n");
+		sb.append("        public cool.klass.model.meta.domain.api.property.AssociationEnd getAssociationEnd()\n");
 		sb.append("        {\n");
-		sb.append("            return this.property;\n");
+		sb.append("            return this.associationEnd;\n");
 		sb.append("        }\n");
 		sb.append("    }\n");
 		sb.append("\n");
@@ -1323,14 +1331,16 @@ public class ReladomoLensGenerator {
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements ").append(interfaceType).append("\n");
 		sb.append("    {\n");
-		sb.append("        private final cool.klass.model.meta.domain.api.property.PrimitiveProperty property;\n");
+		sb.append(
+			"        private final cool.klass.model.meta.domain.api.property.PrimitiveProperty primitiveProperty;\n"
+		);
 		sb.append("\n");
 		sb
 			.append("        ")
 			.append(lensClass)
-			.append("(cool.klass.model.meta.domain.api.property.PrimitiveProperty property)\n");
+			.append("(cool.klass.model.meta.domain.api.property.PrimitiveProperty primitiveProperty)\n");
 		sb.append("        {\n");
-		sb.append("            this.property = Objects.requireNonNull(property);\n");
+		sb.append("            this.primitiveProperty = Objects.requireNonNull(primitiveProperty);\n");
 		sb.append("        }\n");
 		sb.append("\n");
 
@@ -1386,9 +1396,11 @@ public class ReladomoLensGenerator {
 		sb.append("\n");
 		sb.append("        @Override\n");
 		sb.append("        @Nonnull\n");
-		sb.append("        public cool.klass.model.meta.domain.api.property.PrimitiveProperty getProperty()\n");
+		sb.append(
+			"        public cool.klass.model.meta.domain.api.property.PrimitiveProperty getPrimitiveProperty()\n"
+		);
 		sb.append("        {\n");
-		sb.append("            return this.property;\n");
+		sb.append("            return this.primitiveProperty;\n");
 		sb.append("        }\n");
 		sb.append("    }\n");
 		sb.append("\n");
@@ -1493,14 +1505,16 @@ public class ReladomoLensGenerator {
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements EnumerationLens<").append(className).append(">\n");
 		sb.append("    {\n");
-		sb.append("        private final cool.klass.model.meta.domain.api.property.EnumerationProperty property;\n");
+		sb.append(
+			"        private final cool.klass.model.meta.domain.api.property.EnumerationProperty enumerationProperty;\n"
+		);
 		sb.append("\n");
 		sb
 			.append("        ")
 			.append(lensClass)
-			.append("(cool.klass.model.meta.domain.api.property.EnumerationProperty property)\n");
+			.append("(cool.klass.model.meta.domain.api.property.EnumerationProperty enumerationProperty)\n");
 		sb.append("        {\n");
-		sb.append("            this.property = Objects.requireNonNull(property);\n");
+		sb.append("            this.enumerationProperty = Objects.requireNonNull(enumerationProperty);\n");
 		sb.append("        }\n");
 		sb.append("\n");
 
@@ -1519,7 +1533,7 @@ public class ReladomoLensGenerator {
 		sb.append("            {\n");
 		sb.append("                return null;\n");
 		sb.append("            }\n");
-		sb.append("            return this.property.getType().getEnumerationLiterals()\n");
+		sb.append("            return this.enumerationProperty.getType().getEnumerationLiterals()\n");
 		sb.append("                    .detect(el -> el.getPrettyName().equals(prettyName));\n");
 		sb.append("        }\n");
 		sb.append("\n");
@@ -1545,9 +1559,11 @@ public class ReladomoLensGenerator {
 
 		sb.append("        @Override\n");
 		sb.append("        @Nonnull\n");
-		sb.append("        public cool.klass.model.meta.domain.api.property.EnumerationProperty getProperty()\n");
+		sb.append(
+			"        public cool.klass.model.meta.domain.api.property.EnumerationProperty getEnumerationProperty()\n"
+		);
 		sb.append("        {\n");
-		sb.append("            return this.property;\n");
+		sb.append("            return this.enumerationProperty;\n");
 		sb.append("        }\n");
 		sb.append("    }\n");
 		sb.append("\n");
@@ -1581,14 +1597,14 @@ public class ReladomoLensGenerator {
 		sb.append("    private static class ").append(lensClass).append("\n");
 		sb.append("            implements ").append(interfaceType).append("\n");
 		sb.append("    {\n");
-		sb.append("        private final cool.klass.model.meta.domain.api.property.AssociationEnd property;\n");
+		sb.append("        private final cool.klass.model.meta.domain.api.property.AssociationEnd associationEnd;\n");
 		sb.append("\n");
 		sb
 			.append("        ")
 			.append(lensClass)
-			.append("(cool.klass.model.meta.domain.api.property.AssociationEnd property)\n");
+			.append("(cool.klass.model.meta.domain.api.property.AssociationEnd associationEnd)\n");
 		sb.append("        {\n");
-		sb.append("            this.property = Objects.requireNonNull(property);\n");
+		sb.append("            this.associationEnd = Objects.requireNonNull(associationEnd);\n");
 		sb.append("        }\n");
 		sb.append("\n");
 
@@ -1646,9 +1662,9 @@ public class ReladomoLensGenerator {
 
 		sb.append("        @Override\n");
 		sb.append("        @Nonnull\n");
-		sb.append("        public cool.klass.model.meta.domain.api.property.AssociationEnd getProperty()\n");
+		sb.append("        public cool.klass.model.meta.domain.api.property.AssociationEnd getAssociationEnd()\n");
 		sb.append("        {\n");
-		sb.append("            return this.property;\n");
+		sb.append("            return this.associationEnd;\n");
 		sb.append("        }\n");
 		sb.append("    }\n");
 		sb.append("\n");
