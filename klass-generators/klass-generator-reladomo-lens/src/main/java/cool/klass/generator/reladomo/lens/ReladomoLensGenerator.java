@@ -703,17 +703,9 @@ public class ReladomoLensGenerator {
 
 	private String getPropertyLookup(@Nonnull DataTypeProperty property) {
 		if (property instanceof PrimitiveProperty) {
-			return (
-				"(cool.klass.model.meta.domain.api.property.PrimitiveProperty) klass.getPropertyByName(\""
-				+ property.getName()
-				+ "\").orElseThrow()"
-			);
+			return ("klass.findPrimitivePropertyByName(\"" + property.getName() + "\").orElseThrow()");
 		} else if (property instanceof EnumerationProperty) {
-			return (
-				"(cool.klass.model.meta.domain.api.property.EnumerationProperty) klass.getPropertyByName(\""
-				+ property.getName()
-				+ "\").orElseThrow()"
-			);
+			return ("klass.findEnumerationPropertyByName(\"" + property.getName() + "\").orElseThrow()");
 		}
 		throw new IllegalStateException("Unknown property type: " + property.getClass());
 	}

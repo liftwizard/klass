@@ -19,7 +19,6 @@ package cool.klass.model.meta.domain.api;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import cool.klass.model.meta.domain.api.modifier.Modifier;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
@@ -51,11 +50,33 @@ public interface Klass extends Classifier {
 
 	ImmutableList<AssociationEnd> getDeclaredAssociationEnds();
 
-	AssociationEnd getDeclaredAssociationEndByName(String name);
+	@Nonnull
+	default Optional<AssociationEnd> findDeclaredAssociationEndByName(String name) {
+		return this.getDeclaredAssociationEnds().detectOptional((associationEnd) ->
+			associationEnd.getName().equals(name)
+		);
+	}
+
+	@Nonnull
+	default AssociationEnd getDeclaredAssociationEndByName(String name) {
+		return this.findDeclaredAssociationEndByName(name).orElseThrow(() ->
+			new AssertionError("No declared AssociationEnd named '" + name + "' on " + this.getName())
+		);
+	}
 
 	ImmutableList<AssociationEnd> getAssociationEnds();
 
-	AssociationEnd getAssociationEndByName(String name);
+	@Nonnull
+	default Optional<AssociationEnd> findAssociationEndByName(String name) {
+		return this.getAssociationEnds().detectOptional((associationEnd) -> associationEnd.getName().equals(name));
+	}
+
+	@Nonnull
+	default AssociationEnd getAssociationEndByName(String name) {
+		return this.findAssociationEndByName(name).orElseThrow(() ->
+			new AssertionError("No AssociationEnd named '" + name + "' on " + this.getName())
+		);
+	}
 
 	// TODO: Replace with an implementation that preserves order
 	@Nonnull
@@ -88,42 +109,41 @@ public interface Klass extends Classifier {
 	}
 
 	@Nonnull
-	default Optional<Property> getPropertyByName(String name) {
-		DataTypeProperty dataTypeProperty = this.getDataTypePropertyByName(name);
-		AssociationEnd associationEnd = this.getAssociationEndByName(name);
+	default Optional<Property> findPropertyByName(String name) {
+		Optional<DataTypeProperty> maybeDataTypeProperty = this.findDataTypePropertyByName(name);
+		Optional<AssociationEnd> maybeAssociationEnd = this.findAssociationEndByName(name);
 
-		if (dataTypeProperty != null && associationEnd != null) {
+		if (maybeDataTypeProperty.isPresent() && maybeAssociationEnd.isPresent()) {
 			String detailMessage = "Property " + name + " is both a data type property and an association end.";
 			throw new AssertionError(detailMessage);
 		}
 
-		if (dataTypeProperty != null) {
-			return Optional.of(dataTypeProperty);
+		if (maybeDataTypeProperty.isPresent()) {
+			return Optional.of(maybeDataTypeProperty.get());
 		}
 
-		if (associationEnd != null) {
-			return Optional.of(associationEnd);
-		}
-
-		return Optional.empty();
+		return maybeAssociationEnd.map((associationEnd) -> associationEnd);
 	}
 
-	@Nullable
-	default PrimitiveProperty getPrimitivePropertyByName(String name) {
-		DataTypeProperty property = this.getDataTypePropertyByName(name);
-		if (property instanceof PrimitiveProperty primitiveProperty) {
-			return primitiveProperty;
-		}
-		return null;
+	@Nonnull
+	default Property getPropertyByName(String name) {
+		return this.findPropertyByName(name).orElseThrow(() ->
+			new AssertionError("No Property named '" + name + "' on " + this.getName())
+		);
 	}
 
-	@Nullable
-	default EnumerationProperty getEnumerationPropertyByName(String name) {
-		DataTypeProperty property = this.getDataTypePropertyByName(name);
-		if (property instanceof EnumerationProperty enumerationProperty) {
-			return enumerationProperty;
-		}
-		return null;
+	@Nonnull
+	default Optional<PrimitiveProperty> findPrimitivePropertyByName(String name) {
+		return this.findDataTypePropertyByName(name)
+			.filter(PrimitiveProperty.class::isInstance)
+			.map(PrimitiveProperty.class::cast);
+	}
+
+	@Nonnull
+	default Optional<EnumerationProperty> findEnumerationPropertyByName(String name) {
+		return this.findDataTypePropertyByName(name)
+			.filter(EnumerationProperty.class::isInstance)
+			.map(EnumerationProperty.class::cast);
 	}
 
 	@Nonnull
