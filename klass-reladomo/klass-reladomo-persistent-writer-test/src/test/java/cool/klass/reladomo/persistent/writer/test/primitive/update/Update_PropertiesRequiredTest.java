@@ -52,7 +52,7 @@ public class Update_PropertiesRequiredTest extends AbstractUpdateValidatorTest i
 	@BeforeEach
 	void setUp() {
 		Klass klass = this.getKlass();
-		DataTypeProperty keyProperty = (DataTypeProperty) klass.getPropertyByName("propertiesRequiredId").get();
+		DataTypeProperty keyProperty = klass.getDataTypePropertyByName("propertiesRequiredId");
 
 		ImmutableMap<DataTypeProperty, Object> keys = Maps.immutable.with(keyProperty, 1L);
 

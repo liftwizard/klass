@@ -52,7 +52,7 @@ public class Update_PropertiesOptionalTest extends AbstractUpdateValidatorTest i
 	@BeforeEach
 	void setUp() {
 		Klass klass = this.getKlass();
-		DataTypeProperty keyProperty = (DataTypeProperty) klass.getPropertyByName("propertiesOptionalId").get();
+		DataTypeProperty keyProperty = klass.getDataTypePropertyByName("propertiesOptionalId");
 
 		ImmutableMap<DataTypeProperty, Object> keys = Maps.immutable.with(keyProperty, 1L);
 

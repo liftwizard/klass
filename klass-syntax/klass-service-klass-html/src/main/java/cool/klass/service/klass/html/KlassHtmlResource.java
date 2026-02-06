@@ -121,7 +121,7 @@ public class KlassHtmlResource {
 		}
 
 		if (topLevelElement instanceof KlassWithSourceCode klass) {
-			Optional<Property> property = klass.getPropertyByName(memberName);
+			Optional<Property> property = klass.findPropertyByName(memberName);
 			if (property.isEmpty()) {
 				return Optional.empty();
 			}
