@@ -43,6 +43,7 @@
         <module>klass-generator-package-abstract</module>
         <module>klass-generator-react-prop-type</module>
         <module>klass-generator-reladomo-concrete-class</module>
+        <module>klass-generator-reladomo-lens</module>
         <module>klass-generator-reladomo-readable-interface</module>
         <module>klass-generator-reladomo</module>
         <module>klass-generator-relational-schema</module>
