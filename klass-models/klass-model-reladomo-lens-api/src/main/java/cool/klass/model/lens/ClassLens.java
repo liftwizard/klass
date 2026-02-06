@@ -17,7 +17,6 @@
 package cool.klass.model.lens;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
@@ -68,54 +67,60 @@ public interface ClassLens<T> {
 	 * Lookup lens by Property (polymorphic - works for any Property subtype).
 	 *
 	 * @param property the property to look up
-	 * @return the lens for the property, or null if not found
+	 * @return the lens for the property
+	 * @throws IllegalArgumentException if no lens exists for the property
 	 */
-	@Nullable
+	@Nonnull
 	PropertyLens<T, ?> getLensByProperty(@Nonnull Property property);
 
 	/**
 	 * Type-specific overload returning narrowed type for DataTypeProperty.
 	 *
 	 * @param property the data type property to look up
-	 * @return the lens for the property, or null if not found
+	 * @return the lens for the property
+	 * @throws IllegalArgumentException if no lens exists for the property
 	 */
-	@Nullable
+	@Nonnull
 	DataTypeLens<T, ?> getLensByProperty(@Nonnull DataTypeProperty property);
 
 	/**
 	 * Type-specific overload returning narrowed type for PrimitiveProperty.
 	 *
 	 * @param property the primitive property to look up
-	 * @return the lens for the property, or null if not found
+	 * @return the lens for the property
+	 * @throws IllegalArgumentException if no lens exists for the property
 	 */
-	@Nullable
+	@Nonnull
 	PrimitiveLens<T, ?> getLensByProperty(@Nonnull PrimitiveProperty property);
 
 	/**
 	 * Type-specific overload returning narrowed type for EnumerationProperty.
 	 *
 	 * @param property the enumeration property to look up
-	 * @return the lens for the property, or null if not found
+	 * @return the lens for the property
+	 * @throws IllegalArgumentException if no lens exists for the property
 	 */
-	@Nullable
+	@Nonnull
 	EnumerationLens<T> getLensByProperty(@Nonnull EnumerationProperty property);
 
 	/**
 	 * Type-specific overload returning narrowed type for ReferenceProperty.
 	 *
 	 * @param property the reference property to look up
-	 * @return the lens for the property, or null if not found
+	 * @return the lens for the property
+	 * @throws IllegalArgumentException if no lens exists for the property
 	 */
-	@Nullable
+	@Nonnull
 	ReferenceLens<T, ?> getLensByProperty(@Nonnull ReferenceProperty property);
 
 	/**
 	 * Type-specific overload returning narrowed type for AssociationEnd.
 	 *
 	 * @param property the association end to look up
-	 * @return the lens for the property, or null if not found
+	 * @return the lens for the property
+	 * @throws IllegalArgumentException if no lens exists for the property
 	 */
-	@Nullable
+	@Nonnull
 	AssociationLens<T, ?> getLensByProperty(@Nonnull AssociationEnd property);
 
 	/**

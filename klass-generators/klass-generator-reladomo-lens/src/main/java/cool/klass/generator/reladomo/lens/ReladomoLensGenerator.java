@@ -746,13 +746,23 @@ public class ReladomoLensGenerator {
 
 		// getLensByProperty(Property)
 		sb.append("    @Override\n");
-		sb.append("    @Nullable\n");
+		sb.append("    @Nonnull\n");
 		sb
 			.append("    public PropertyLens<")
 			.append(className)
 			.append(", ?> getLensByProperty(@Nonnull cool.klass.model.meta.domain.api.property.Property property)\n");
 		sb.append("    {\n");
-		sb.append("        return this.allLensesByProperty.get(property);\n");
+		sb
+			.append("        PropertyLens<")
+			.append(className)
+			.append(", ?> lens = this.allLensesByProperty.get(property);\n");
+		sb.append("        if (lens == null)\n");
+		sb.append("        {\n");
+		sb.append(
+			"            throw new IllegalArgumentException(\"No lens found for property: \" + property.getName());\n"
+		);
+		sb.append("        }\n");
+		sb.append("        return lens;\n");
 		sb.append("    }\n");
 		sb.append("\n");
 
@@ -818,7 +828,7 @@ public class ReladomoLensGenerator {
 		String mapName
 	) {
 		sb.append("    @Override\n");
-		sb.append("    @Nullable\n");
+		sb.append("    @Nonnull\n");
 		sb
 			.append("    public ")
 			.append(returnLensType)
@@ -829,13 +839,18 @@ public class ReladomoLensGenerator {
 			.append(" property)\n");
 		sb.append("    {\n");
 		sb
-			.append("        return (")
-			.append(returnLensType)
-			.append("<")
+			.append("        PropertyLens<")
 			.append(className)
-			.append(", ?>) this.")
+			.append(", ?> lens = this.")
 			.append(mapName)
 			.append(".get(property);\n");
+		sb.append("        if (lens == null)\n");
+		sb.append("        {\n");
+		sb.append(
+			"            throw new IllegalArgumentException(\"No lens found for property: \" + property.getName());\n"
+		);
+		sb.append("        }\n");
+		sb.append("        return (").append(returnLensType).append("<").append(className).append(", ?>) lens;\n");
 		sb.append("    }\n");
 		sb.append("\n");
 	}
@@ -848,7 +863,7 @@ public class ReladomoLensGenerator {
 		String mapName
 	) {
 		sb.append("    @Override\n");
-		sb.append("    @Nullable\n");
+		sb.append("    @Nonnull\n");
 		sb
 			.append("    public ")
 			.append(returnType)
@@ -856,7 +871,14 @@ public class ReladomoLensGenerator {
 			.append(paramPropertyType)
 			.append(" property)\n");
 		sb.append("    {\n");
-		sb.append("        return this.").append(mapName).append(".get(property);\n");
+		sb.append("        ").append(returnType).append(" lens = this.").append(mapName).append(".get(property);\n");
+		sb.append("        if (lens == null)\n");
+		sb.append("        {\n");
+		sb.append(
+			"            throw new IllegalArgumentException(\"No lens found for property: \" + property.getName());\n"
+		);
+		sb.append("        }\n");
+		sb.append("        return lens;\n");
 		sb.append("    }\n");
 		sb.append("\n");
 	}
