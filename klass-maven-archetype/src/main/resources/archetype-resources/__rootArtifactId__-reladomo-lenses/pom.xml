@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>${groupId}</groupId>
+        <artifactId>${rootArtifactId}</artifactId>
+        <version>${version}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>${artifactId}</artifactId>
+
+    <name>${app.name} Reladomo Lenses</name>
+
+    <dependencies>
+
+        <!--region Project compile dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>${app.artifactId}-reladomo-pojos</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--endregion-->
+
+        <!--region Klass compile dependencies -->
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-model-reladomo-lens-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-model-meta-interface</artifactId>
+        </dependency>
+        <!--endregion-->
+
+        <dependency>
+            <groupId>org.eclipse.collections</groupId>
+            <artifactId>eclipse-collections-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.collections</groupId>
+            <artifactId>eclipse-collections</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <!--region Phase 3: generate-sources-->
+            <plugin>
+                <groupId>cool.klass</groupId>
+                <artifactId>klass-generator-reladomo-lens-plugin</artifactId>
+                <version>${klass.version}</version>
+                <configuration>
+                    <applicationName>${app.name}</applicationName>
+                    <klassSourcePackages>
+                        <klassSourcePackage>klass.model.meta.domain</klassSourcePackage>
+                        <klassSourcePackage>${app.rootPackageName}</klassSourcePackage>
+                    </klassSourcePackages>
+                    <colorScheme>dark</colorScheme>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>${project.groupId}</groupId>
+                        <artifactId>${app.artifactId}-domain-model</artifactId>
+                        <version>${project.version}</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>generate-reladomo-lenses</id>
+                        <goals>
+                            <goal>generate-reladomo-lenses</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--endregion-->
+        </plugins>
+    </build>
+
+    <profiles>
+        <!--region Phase 17: package-->
+        <profile>
+            <id>maven-javadoc-plugin</id>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <configuration>
+                            <additionalDependencies>
+                                <additionalDependency>
+                                    <groupId>cool.klass</groupId>
+                                    <artifactId>klass-generator-reladomo-lens</artifactId>
+                                    <version>${klass.version}</version>
+                                </additionalDependency>
+                            </additionalDependencies>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <!--endregion-->
+    </profiles>
+</project>

@@ -361,6 +361,19 @@
         </module>
         <!--endregion-->
 
+        <!--region ${rootArtifactId}-reladomo-lenses-->
+        <module
+                id="${rootArtifactId}-reladomo-lenses"
+                dir="__rootArtifactId__-reladomo-lenses"
+                name="${rootArtifactId}-reladomo-lenses">
+            <fileSets>
+                <fileSet filtered="true">
+                    <directory></directory>
+                </fileSet>
+            </fileSets>
+        </module>
+        <!--endregion-->
+
         <!--region ${rootArtifactId}-reladomo-runtime-configuration-->
         <module
                 id="${rootArtifactId}-reladomo-runtime-configuration"
