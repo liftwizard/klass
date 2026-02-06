@@ -930,13 +930,16 @@ public class ReladomoLensGenerator {
 			.append(" value)\n");
 		sb.append("        {\n");
 		if (isToMany) {
-			sb.append("            domainObject.get").append(propNameUpper).append("().clear();\n");
-			sb.append("            if (value != null)\n");
+			sb.append("            if (value == null)\n");
+			sb.append("            {\n");
+			sb.append("                domainObject.get").append(propNameUpper).append("().clear();\n");
+			sb.append("            }\n");
+			sb.append("            else\n");
 			sb.append("            {\n");
 			sb
 				.append("                domainObject.get")
 				.append(propNameUpper)
-				.append("().addAll(value.castToList());\n");
+				.append("().merge(value.castToList());\n");
 			sb.append("            }\n");
 		} else {
 			sb.append("            domainObject.set").append(propNameUpper).append("(value);\n");
