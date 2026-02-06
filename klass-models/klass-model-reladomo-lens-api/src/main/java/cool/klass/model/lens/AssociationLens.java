@@ -27,7 +27,17 @@ import cool.klass.model.meta.domain.api.property.AssociationEnd;
  * @param <V> the associated type (single object for to-one, collection for to-many)
  */
 public interface AssociationLens<T, V> extends ReferenceLens<T, V> {
+	/**
+	 * Returns the AssociationEnd from the domain model that this lens corresponds to.
+	 *
+	 * @return the domain model AssociationEnd
+	 */
+	@Nonnull
+	AssociationEnd getAssociationEnd();
+
 	@Override
 	@Nonnull
-	AssociationEnd getProperty();
+	default AssociationEnd getProperty() {
+		return this.getAssociationEnd();
+	}
 }

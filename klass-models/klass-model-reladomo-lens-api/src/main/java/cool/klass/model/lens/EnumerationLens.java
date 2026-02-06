@@ -30,7 +30,17 @@ import cool.klass.model.meta.domain.api.property.EnumerationProperty;
  * @param <T> the domain object type
  */
 public interface EnumerationLens<T> extends DataTypeLens<T, EnumerationLiteral> {
+	/**
+	 * Returns the EnumerationProperty from the domain model that this lens corresponds to.
+	 *
+	 * @return the domain model EnumerationProperty
+	 */
+	@Nonnull
+	EnumerationProperty getEnumerationProperty();
+
 	@Override
 	@Nonnull
-	EnumerationProperty getProperty();
+	default EnumerationProperty getProperty() {
+		return this.getEnumerationProperty();
+	}
 }
