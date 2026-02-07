@@ -26,7 +26,7 @@ import java.nio.file.Path;
 import java.util.Objects;
 
 import javax.annotation.Nonnull;
-import org.eclipse.collections.api.factory.Lists;
+
 import com.google.common.base.CaseFormat;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
@@ -36,6 +36,7 @@ import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.property.Property;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 
