@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Craig Motlin
+ * Copyright 2026 Craig Motlin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import java.nio.file.Path;
 import java.util.Objects;
 
 import javax.annotation.Nonnull;
-
+import org.eclipse.collections.api.factory.Lists;
 import com.google.common.base.CaseFormat;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
@@ -38,7 +38,6 @@ import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.property.Property;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.impl.factory.Lists;
 
 /**
  * Generates Reladomo ClassAdapter implementations for each Klass in the domain model.
