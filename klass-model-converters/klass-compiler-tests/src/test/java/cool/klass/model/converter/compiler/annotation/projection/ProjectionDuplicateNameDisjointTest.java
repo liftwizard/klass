@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package cool.klass.model.converter.compiler.state.projection;
+package cool.klass.model.converter.compiler.annotation.projection;
 
-import javax.annotation.Nonnull;
+import cool.klass.model.converter.compiler.annotation.AbstractKlassCompilerErrorTestCase;
+import org.junit.jupiter.api.Test;
 
-import cool.klass.model.converter.compiler.state.AntlrClassifier;
-import cool.klass.model.meta.domain.projection.AbstractProjectionElement.ProjectionChildBuilder;
+public class ProjectionDuplicateNameDisjointTest extends AbstractKlassCompilerErrorTestCase {
 
-public interface AntlrProjectionChild extends AntlrProjectionElement {
-	@Nonnull
 	@Override
-	ProjectionChildBuilder build();
-
-	@Nonnull
-	AntlrClassifier getDeclaringClassifier();
+	@Test
+	public void smokeTest() {
+		this.assertCompilationSucceeds(true);
+	}
 }

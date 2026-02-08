@@ -29,7 +29,6 @@ import cool.klass.model.converter.compiler.state.AntlrClassifier;
 import cool.klass.model.converter.compiler.state.AntlrIdentifierElement;
 import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
 import cool.klass.model.converter.compiler.state.property.AntlrEnumerationProperty;
-import cool.klass.model.converter.compiler.state.property.AntlrPrimitiveProperty;
 import cool.klass.model.converter.compiler.state.property.AntlrReferenceProperty;
 import cool.klass.model.meta.domain.projection.ProjectionDataTypePropertyImpl.ProjectionDataTypePropertyBuilder;
 import cool.klass.model.meta.grammar.KlassParser.HeaderContext;
@@ -39,18 +38,6 @@ import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.tuple.Pair;
 
 public class AntlrProjectionDataTypeProperty extends AntlrIdentifierElement implements AntlrProjectionChild {
-
-	public static final AntlrProjectionDataTypeProperty AMBIGUOUS = new AntlrProjectionDataTypeProperty(
-		new ProjectionPrimitiveMemberContext(AMBIGUOUS_PARENT, -1),
-		Optional.empty(),
-		-1,
-		AMBIGUOUS_IDENTIFIER_CONTEXT,
-		new HeaderContext(AMBIGUOUS_PARENT, -1),
-		"ambiguous header",
-		AntlrProjection.AMBIGUOUS,
-		AntlrClassifier.AMBIGUOUS,
-		AntlrPrimitiveProperty.AMBIGUOUS
-	);
 
 	@Nonnull
 	private final HeaderContext headerContext;
@@ -91,6 +78,12 @@ public class AntlrProjectionDataTypeProperty extends AntlrIdentifierElement impl
 	@Nonnull
 	public AntlrDataTypeProperty<?> getProperty() {
 		return this.dataTypeProperty;
+	}
+
+	@Nonnull
+	@Override
+	public AntlrClassifier getDeclaringClassifier() {
+		return this.classifier;
 	}
 
 	@Nonnull

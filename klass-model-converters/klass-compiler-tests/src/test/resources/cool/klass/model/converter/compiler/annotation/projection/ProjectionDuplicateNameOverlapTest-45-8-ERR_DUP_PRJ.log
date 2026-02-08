@@ -1,0 +1,19 @@
+════════════════════════════════════════ [35mERR_DUP_PRJ[m ════════════════════════════════════════
+[31mError: Duplicate member: 'children'.[m
+
+At (ProjectionDuplicateNameOverlapTest.klass:45:9)
+
+[39m 1║ [35mpackage [39mdummy
+[39m38║ [35mprojection [39mBaseProjection [35mon [39mBase
+[39m39║ [36m{
+[39m45║     [39mSub[36m.[39mchildren[36m:
+[39m  ║ [31m        ^^^^^^^^
+[39m46║     [36m{
+[39m48║     [36m}[36m,
+[39m49║ [36m}
+[m
+[36mLocation:  [mProjectionDuplicateNameOverlapTest.klass:45:9[m
+[36mFile:      [mProjectionDuplicateNameOverlapTest.klass[m
+[36mLine:      [m45[m
+[36mCharacter: [m9
+═════════════════════════════════════════════════════════════════════════════════════════════
