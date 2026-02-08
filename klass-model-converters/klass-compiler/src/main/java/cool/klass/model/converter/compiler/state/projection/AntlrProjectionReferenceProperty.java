@@ -76,6 +76,12 @@ public class AntlrProjectionReferenceProperty extends AntlrProjectionParent impl
 		return this.referenceProperty;
 	}
 
+	@Nonnull
+	@Override
+	public AntlrClassifier getDeclaringClassifier() {
+		return this.classifierState;
+	}
+
 	@Override
 	public boolean isContext() {
 		return true;

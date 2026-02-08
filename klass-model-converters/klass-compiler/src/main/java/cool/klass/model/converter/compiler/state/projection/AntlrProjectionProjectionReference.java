@@ -78,6 +78,12 @@ public class AntlrProjectionProjectionReference extends AntlrIdentifierElement i
 
 	@Nonnull
 	@Override
+	public AntlrClassifier getDeclaringClassifier() {
+		return this.classifierState;
+	}
+
+	@Nonnull
+	@Override
 	public ProjectionProjectionReferenceContext getElementContext() {
 		return (ProjectionProjectionReferenceContext) super.getElementContext();
 	}

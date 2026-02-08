@@ -932,12 +932,9 @@ projection PackageableElementProjection on PackageableElement
     Klass.superClass: {
         NamedElement.name: "NamedElement name",
     },
-    /*
-    TODO: Support duplicate property names with different class names inside projections
     Klass.associationEnds: {
         NamedElement.name: "NamedElement name",
     },
-    */
     Klass.parameterizedProperties: ParameterizedPropertyProjection,
     Association.associationEnds: AssociationEndProjection,
     Association.criteria: {
