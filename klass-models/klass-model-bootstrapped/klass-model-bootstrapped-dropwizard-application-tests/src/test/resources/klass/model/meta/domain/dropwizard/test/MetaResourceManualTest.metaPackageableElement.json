@@ -25,5 +25,13 @@
 	"superClass": {
 		"name": "PackageableElement"
 	},
+	"associationEnds": [
+		{
+			"name": "associationEnds"
+		},
+		{
+			"name": "criteria"
+		}
+	],
 	"parameterizedProperties": []
 }

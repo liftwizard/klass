@@ -16,7 +16,6 @@
 
 package cool.klass.model.converter.compiler.state.projection;
 
-import java.util.LinkedHashMap;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -24,17 +23,20 @@ import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
+import cool.klass.model.converter.compiler.state.AntlrClass;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
 import cool.klass.model.converter.compiler.state.AntlrIdentifierElement;
+import cool.klass.model.converter.compiler.state.AntlrInterface;
 import cool.klass.model.meta.domain.projection.AbstractProjectionParent;
 import cool.klass.model.meta.domain.projection.AbstractProjectionParent.AbstractProjectionParentBuilder;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.eclipse.collections.api.bag.ImmutableBag;
 import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.factory.Sets;
 import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.api.map.MutableOrderedMap;
-import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
+import org.eclipse.collections.api.multimap.list.MutableListMultimap;
+import org.eclipse.collections.api.set.ImmutableSet;
+import org.eclipse.collections.api.set.MutableSet;
 
 public abstract class AntlrProjectionParent extends AntlrIdentifierElement {
 
@@ -42,10 +44,6 @@ public abstract class AntlrProjectionParent extends AntlrIdentifierElement {
 	protected final AntlrClassifier classifier;
 
 	protected final MutableList<AntlrProjectionChild> children = Lists.mutable.empty();
-
-	protected final MutableOrderedMap<String, AntlrProjectionChild> childrenByName = OrderedMapAdapter.adapt(
-		new LinkedHashMap<>()
-	);
 
 	protected AntlrProjectionParent(
 		@Nonnull ParserRuleContext elementContext,
@@ -77,23 +75,48 @@ public abstract class AntlrProjectionParent extends AntlrIdentifierElement {
 
 	public void enterAntlrProjectionMember(@Nonnull AntlrProjectionChild child) {
 		this.children.add(child);
-		this.childrenByName.compute(child.getName(), (name, builder) ->
-			builder == null ? child : AntlrProjectionDataTypeProperty.AMBIGUOUS
-		);
 	}
 
-	protected ImmutableBag<String> getDuplicateMemberNames() {
-		return this.children.collect(AntlrProjectionElement::getName)
-			.toBag()
-			.selectByOccurrences((occurrences) -> occurrences > 1)
-			.toImmutable();
+	protected ImmutableSet<AntlrProjectionChild> getDuplicateMembers() {
+		MutableSet<AntlrProjectionChild> duplicates = Sets.mutable.empty();
+		MutableListMultimap<String, AntlrProjectionChild> byName = this.children.groupBy(
+			AntlrProjectionElement::getName
+		);
+
+		byName.forEachKeyMultiValues((name, members) -> {
+			MutableList<AntlrProjectionChild> list = Lists.mutable.withAll(members);
+			if (list.size() < 2) {
+				return;
+			}
+			for (int i = 0; i < list.size(); i++) {
+				for (int j = i + 1; j < list.size(); j++) {
+					AntlrClassifier classA = list.get(i).getDeclaringClassifier();
+					AntlrClassifier classB = list.get(j).getDeclaringClassifier();
+					if (areOverlappingClassifiers(classA, classB)) {
+						duplicates.add(list.get(i));
+						duplicates.add(list.get(j));
+					}
+				}
+			}
+		});
+		return duplicates.toImmutable();
+	}
+
+	private static boolean areOverlappingClassifiers(AntlrClassifier a, AntlrClassifier b) {
+		if (
+			!(a instanceof AntlrClass || a instanceof AntlrInterface)
+			|| !(b instanceof AntlrClass || b instanceof AntlrInterface)
+		) {
+			return true;
+		}
+		return a.isSubTypeOf(b) || b.isSubTypeOf(a);
 	}
 
 	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		ImmutableBag<String> duplicateMemberNames = this.getDuplicateMemberNames();
+		ImmutableSet<AntlrProjectionChild> duplicateMembers = this.getDuplicateMembers();
 
-		for (AntlrProjectionElement projectionMember : this.children) {
-			if (duplicateMemberNames.contains(projectionMember.getName())) {
+		for (AntlrProjectionChild projectionMember : this.children) {
+			if (duplicateMembers.contains(projectionMember)) {
 				projectionMember.reportDuplicateMemberName(compilerAnnotationHolder);
 			}
 		}
