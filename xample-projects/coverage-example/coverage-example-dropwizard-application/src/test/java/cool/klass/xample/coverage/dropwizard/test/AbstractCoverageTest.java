@@ -17,6 +17,9 @@
 package cool.klass.xample.coverage.dropwizard.test;
 
 import javax.annotation.Nonnull;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import cool.klass.xample.coverage.dropwizard.application.CoverageExampleApplication;
 import io.dropwizard.testing.ResourceHelpers;
@@ -32,5 +35,15 @@ public abstract class AbstractCoverageTest extends AbstractDropwizardAppTest {
 			CoverageExampleApplication.class,
 			ResourceHelpers.resourceFilePath("config-test.json5")
 		);
+	}
+
+	protected void assertUrlReturns(@Nonnull String testName, @Nonnull String url) {
+		Client client = this.getClient(testName);
+		Response response = client
+			.target("http://localhost:{port}/api/" + url)
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.get();
+		this.assertResponse(testName, Status.OK, response);
 	}
 }
