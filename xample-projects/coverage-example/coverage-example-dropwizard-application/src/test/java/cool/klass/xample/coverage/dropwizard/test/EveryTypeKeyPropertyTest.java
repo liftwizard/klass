@@ -28,15 +28,7 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
 
 	@Test
 	void get() {
-		Client client = this.getClient("get");
-
-		Response response = client
-			.target("http://localhost:{port}/api/everyTypeKeyProperty")
-			.resolveTemplate("port", this.appExtension.getLocalPort())
-			.request()
-			.get();
-
-		this.assertResponse("get", Status.OK, response);
+		this.assertUrlReturns("get", "everyTypeKeyProperty");
 	}
 
 	@Test

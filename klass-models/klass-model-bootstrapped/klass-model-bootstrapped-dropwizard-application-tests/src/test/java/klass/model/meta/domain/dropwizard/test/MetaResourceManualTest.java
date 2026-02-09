@@ -49,4 +49,14 @@ class MetaResourceManualTest extends AbstractResourceTestCase {
 	void metaServiceGroup() {
 		this.assertUrlReturns("metaServiceGroup", "/meta/serviceGroup/ServiceGroupResource");
 	}
+
+	@Test
+	void metaPackageableElement() {
+		this.assertUrlReturns("metaPackageableElement", "/meta/packageableElement/Association");
+	}
+
+	@Test
+	void metaClassifier() {
+		this.assertUrlReturns("metaClassifier", "/meta/classifier/Klass");
+	}
 }

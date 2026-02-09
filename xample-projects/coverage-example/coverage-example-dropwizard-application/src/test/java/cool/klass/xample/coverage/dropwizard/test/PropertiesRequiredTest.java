@@ -28,30 +28,12 @@ class PropertiesRequiredTest extends AbstractCoverageTest {
 
 	@Test
 	void getFirst() {
-		Client client = this.getClient("getFirst");
-
-		Response response = client
-			.target("http://localhost:{port}/api/propertiesRequired/{id}")
-			.resolveTemplate("port", this.appExtension.getLocalPort())
-			.resolveTemplate("id", 1)
-			.request()
-			.get();
-
-		this.assertResponse("getFirst", Status.OK, response);
+		this.assertUrlReturns("getFirst", "propertiesRequired/1");
 	}
 
 	@Test
 	void getSecond() {
-		Client client = this.getClient("getSecond");
-
-		Response response = client
-			.target("http://localhost:{port}/api/propertiesRequired/{id}")
-			.resolveTemplate("port", this.appExtension.getLocalPort())
-			.resolveTemplate("id", 2)
-			.request()
-			.get();
-
-		this.assertResponse("getSecond", Status.OK, response);
+		this.assertUrlReturns("getSecond", "propertiesRequired/2");
 	}
 
 	@Test
