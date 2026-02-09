@@ -181,21 +181,7 @@
 		],
 	},
 	singlePageRedirectFilter: {
-		enabled: true,
-		redirectPage: "/index.html",
-		cacheControlHeader: "public, max-age=86400",
-		wellKnownPathPrefixes: [
-			"/api/",
-			"/meta/",
-			"/tasks/",
-			"/static/",
-			"/icons/",
-			"/admin/",
-			"/h2-console/",
-			"/graphql/",
-			"/graphiql/",
-			"/graphql-playground/",
-		],
+		enabled: false,
 	},
 	timeZone: "UTC",
 }
