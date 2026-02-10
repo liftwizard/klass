@@ -75,7 +75,7 @@ public class SwaggerSpecGenerator {
 		swagger.addProduces("application/json");
 
 		// Visit all top-level elements and populate the Swagger model
-		var visitor = new ServiceGroupToSwaggerSpecVisitor(swagger, this.domainModel);
+		var visitor = new ServiceGroupToSwaggerSpecVisitor(swagger);
 		this.domainModel.getTopLevelElements().forEach((element) -> element.visit(visitor));
 
 		try {
