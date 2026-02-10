@@ -66,8 +66,7 @@ public class GenerateAbstractApplicationMojo extends AbstractGenerateMojo {
 			ApplicationSuperClassGenerator abstractApplicationGenerator = new ApplicationSuperClassGenerator(
 				domainModel,
 				this.rootPackageName,
-				this.applicationName,
-				this.klassSourcePackages
+				this.applicationName
 			);
 			abstractApplicationGenerator.writeAbstractApplicationFile(outputPath);
 		} catch (IOException e) {
