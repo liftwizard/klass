@@ -18,6 +18,8 @@ package cool.klass.generator.swagger.plugin;
 
 import java.io.File;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import cool.klass.generator.plugin.AbstractGenerateMojo;
 import cool.klass.generator.swagger.SwaggerSpecGenerator;
 import cool.klass.model.meta.domain.api.DomainModel;
@@ -51,8 +53,9 @@ public class GenerateSwaggerSpecMojo extends AbstractGenerateMojo {
 	public void execute() throws MojoExecutionException {
 		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
 				DomainModel domainModel = this.getDomainModel();
+				ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
-				var generator = new SwaggerSpecGenerator(domainModel, this.applicationName);
+				var generator = new SwaggerSpecGenerator(objectMapper, domainModel, this.applicationName);
 				generator.writeFiles(this.outputDirectory.toPath());
 				return null;
 			});

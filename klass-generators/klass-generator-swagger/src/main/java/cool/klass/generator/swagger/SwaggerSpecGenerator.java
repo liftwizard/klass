@@ -25,8 +25,8 @@ import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import cool.klass.model.meta.domain.api.DomainModel;
 import io.swagger.models.Info;
 import io.swagger.models.Swagger;
@@ -37,7 +37,8 @@ import io.swagger.models.Swagger;
  */
 public class SwaggerSpecGenerator {
 
-	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+	@Nonnull
+	private final ObjectMapper objectMapper;
 
 	@Nonnull
 	private final DomainModel domainModel;
@@ -45,7 +46,12 @@ public class SwaggerSpecGenerator {
 	@Nonnull
 	private final String applicationName;
 
-	public SwaggerSpecGenerator(@Nonnull DomainModel domainModel, @Nonnull String applicationName) {
+	public SwaggerSpecGenerator(
+		@Nonnull ObjectMapper objectMapper,
+		@Nonnull DomainModel domainModel,
+		@Nonnull String applicationName
+	) {
+		this.objectMapper = Objects.requireNonNull(objectMapper);
 		this.domainModel = Objects.requireNonNull(domainModel);
 		this.applicationName = Objects.requireNonNull(applicationName);
 	}
@@ -79,9 +85,9 @@ public class SwaggerSpecGenerator {
 		this.domainModel.getTopLevelElements().forEach((element) -> element.visit(visitor));
 
 		try {
-			return OBJECT_MAPPER.writeValueAsString(swagger);
-		} catch (Exception e) {
-			throw new RuntimeException("Failed to serialize Swagger specification", e);
+			return this.objectMapper.writeValueAsString(swagger);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
