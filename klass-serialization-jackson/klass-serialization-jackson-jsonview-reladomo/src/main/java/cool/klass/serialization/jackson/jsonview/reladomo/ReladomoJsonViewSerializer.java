@@ -84,9 +84,27 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
 		KlassJsonView klassJsonView = this.instantiate(activeViewClass);
 		String projectionName = klassJsonView.getProjectionName();
 		Projection projection = this.domainModel.getProjectionByName(projectionName);
-		Objects.requireNonNull(projection);
+		Objects.requireNonNull(projection, () ->
+			String.format(
+				"Could not find projection '%s' in the DomainModel at runtime. "
+				+ "Code generation used @JsonView(%s) which references this projection. "
+				+ "Ensure the runtime DomainModel's sourcePackages include all packages used during code generation.",
+				projectionName,
+				activeViewClass.getCanonicalName()
+			)
+		);
 
-		Klass klass = this.domainModel.getClassByName(mithraObject.getClass().getSimpleName());
+		String className = mithraObject.getClass().getSimpleName();
+		Klass klass = this.domainModel.getClassByName(className);
+		Objects.requireNonNull(klass, () ->
+			String.format(
+				"Could not find class '%s' in the DomainModel at runtime. "
+				+ "Code generation produced a MithraObject of type %s but the runtime DomainModel does not contain this class. "
+				+ "Ensure the runtime DomainModel's sourcePackages include all packages used during code generation.",
+				className,
+				mithraObject.getClass().getCanonicalName()
+			)
+		);
 
 		var reladomoProjectionConverter = new ReladomoProjectionConverter();
 		RootReladomoNode projectionReladomoNode = reladomoProjectionConverter.getRootReladomoNode(klass, projection);
