@@ -19,17 +19,17 @@ package cool.klass.generator.swagger;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
 import cool.klass.model.meta.domain.api.Association;
-import cool.klass.model.meta.domain.api.Classifier;
 import cool.klass.model.meta.domain.api.DataType;
-import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.Enumeration;
 import cool.klass.model.meta.domain.api.Interface;
 import cool.klass.model.meta.domain.api.Klass;
+import cool.klass.model.meta.domain.api.NamedElement;
 import cool.klass.model.meta.domain.api.PrimitiveType;
 import cool.klass.model.meta.domain.api.TopLevelElementVisitor;
 import cool.klass.model.meta.domain.api.parameter.Parameter;
@@ -53,6 +53,7 @@ import io.swagger.models.Path;
 import io.swagger.models.RefModel;
 import io.swagger.models.Response;
 import io.swagger.models.Swagger;
+import io.swagger.models.parameters.AbstractSerializableParameter;
 import io.swagger.models.parameters.BodyParameter;
 import io.swagger.models.parameters.PathParameter;
 import io.swagger.models.parameters.QueryParameter;
@@ -73,23 +74,16 @@ import org.eclipse.collections.api.list.MutableList;
 public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor {
 
 	private final Swagger swagger;
-	private final DomainModel domainModel;
 
-	public ServiceGroupToSwaggerSpecVisitor(@Nonnull Swagger swagger, @Nonnull DomainModel domainModel) {
-		this.swagger = swagger;
-		this.domainModel = domainModel;
+	public ServiceGroupToSwaggerSpecVisitor(@Nonnull Swagger swagger) {
+		this.swagger = Objects.requireNonNull(swagger);
 	}
 
 	@Override
 	public void visitEnumeration(Enumeration enumeration) {
 		Model enumModel = new ModelImpl()
 			.type("string")
-			._enum(
-				enumeration
-					.getEnumerationLiterals()
-					.collect((literal) -> literal.getName())
-					.castToList()
-			);
+			._enum(enumeration.getEnumerationLiterals().collect(NamedElement::getName).castToList());
 		this.swagger.addDefinition(enumeration.getName(), enumModel);
 	}
 
@@ -135,7 +129,6 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 		Operation operation = new Operation();
 
 		Klass klass = service.getUrl().getServiceGroup().getKlass();
-		String verbName = service.getVerb().name();
 		String klassName = klass.getName();
 
 		operation.summary(this.generateOperationSummary(service));
@@ -143,21 +136,11 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 		operation.operationId(this.generateOperationId(service));
 
 		for (Parameter parameter : service.getUrl().getPathParameters()) {
-			PathParameter pathParam = new PathParameter();
-			pathParam.setName(parameter.getName());
-			pathParam.setRequired(parameter.getMultiplicity().isRequired());
-			pathParam.setType(this.getSwaggerType(parameter.getType()));
-			pathParam.setFormat(this.getSwaggerFormat(parameter.getType()));
-			operation.addParameter(pathParam);
+			operation.addParameter(this.toSerializableParameter(new PathParameter(), parameter));
 		}
 
 		for (Parameter parameter : service.getUrl().getQueryParameters()) {
-			QueryParameter queryParam = new QueryParameter();
-			queryParam.setName(parameter.getName());
-			queryParam.setRequired(parameter.getMultiplicity().isRequired());
-			queryParam.setType(this.getSwaggerType(parameter.getType()));
-			queryParam.setFormat(this.getSwaggerFormat(parameter.getType()));
-			operation.addParameter(queryParam);
+			operation.addParameter(this.toSerializableParameter(new QueryParameter(), parameter));
 		}
 
 		if (service.getVerb() == Verb.POST || service.getVerb() == Verb.PUT || service.getVerb() == Verb.PATCH) {
@@ -174,6 +157,17 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 
 		HttpMethod httpMethod = this.convertVerbToHttpMethod(service.getVerb());
 		path.set(httpMethod.name().toLowerCase(Locale.ROOT), operation);
+	}
+
+	private <T extends AbstractSerializableParameter<T>> T toSerializableParameter(
+		T swaggerParameter,
+		Parameter parameter
+	) {
+		swaggerParameter.setName(parameter.getName());
+		swaggerParameter.setRequired(parameter.getMultiplicity().isRequired());
+		swaggerParameter.setType(this.getSwaggerType(parameter.getType()));
+		swaggerParameter.setFormat(this.getSwaggerFormat(parameter.getType()));
+		return swaggerParameter;
 	}
 
 	private String generateOperationSummary(Service service) {
@@ -305,24 +299,22 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 				DataTypeProperty property = dataTypeProperty.getProperty();
 				Property swaggerProperty = this.createPropertyFromDataType(property.getType());
 
-				if (swaggerProperty != null) {
-					properties.put(property.getName(), swaggerProperty);
+				properties.put(property.getName(), swaggerProperty);
 
-					if (property.isRequired()) {
-						requiredPropertyNames.add(property.getName());
-					}
+				if (property.isRequired()) {
+					requiredPropertyNames.add(property.getName());
 				}
 			} else if (child instanceof ProjectionProjectionReference projectionRef) {
 				String projectionName = projectionRef.getProjection().getName();
 				Property refProperty = new RefProperty(projectionName);
 				properties.put(child.getName(), refProperty);
 			} else if (child instanceof ProjectionReferenceProperty referenceProperty) {
-				ObjectProperty objectProperty = new ObjectProperty();
 				Map<String, Property> nestedProperties = new LinkedHashMap<>();
 				MutableList<String> nestedRequired = Lists.mutable.empty();
 
 				this.processProjectionChildren(referenceProperty.getChildren(), nestedProperties, nestedRequired);
 
+				ObjectProperty objectProperty = new ObjectProperty();
 				objectProperty.setProperties(nestedProperties);
 				properties.put(child.getName(), objectProperty);
 			}
@@ -339,12 +331,10 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 		for (DataTypeProperty property : klass.getDataTypeProperties()) {
 			Property swaggerProperty = this.createPropertyFromDataType(property.getType());
 
-			if (swaggerProperty != null) {
-				properties.put(property.getName(), swaggerProperty);
+			properties.put(property.getName(), swaggerProperty);
 
-				if (property.isRequired()) {
-					requiredPropertyNames.add(property.getName());
-				}
+			if (property.isRequired()) {
+				requiredPropertyNames.add(property.getName());
 			}
 		}
 
@@ -364,22 +354,18 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 				case STRING -> new StringProperty();
 				case INSTANT, TEMPORAL_INSTANT -> new DateTimeProperty();
 				case LOCAL_DATE -> new DateProperty();
-				case TEMPORAL_RANGE -> new StringProperty(); // Temporal range as string for now
+				// Temporal range as string for now
+				case TEMPORAL_RANGE -> new StringProperty();
 			};
-		} else if (dataType instanceof Enumeration enumeration) {
-			StringProperty stringProperty = new StringProperty();
-			stringProperty._enum(
-				enumeration
-					.getEnumerationLiterals()
-					.collect((literal) -> literal.getName())
-					.castToList()
-			);
-			return stringProperty;
-		} else if (dataType instanceof Classifier classifier) {
-			return new RefProperty(classifier.getName());
 		}
 
-		return new StringProperty(); // Default fallback
+		if (dataType instanceof Enumeration enumeration) {
+			StringProperty stringProperty = new StringProperty();
+			stringProperty._enum(enumeration.getEnumerationLiterals().collect(NamedElement::getName).castToList());
+			return stringProperty;
+		}
+
+		throw new UnsupportedOperationException("Unsupported data type: " + dataType.getClass().getSimpleName());
 	}
 
 	private String getSwaggerType(DataType dataType) {
