@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.Nonnull;
@@ -42,9 +41,6 @@ public class ApplicationSuperClassGenerator {
 	private final String applicationName;
 
 	@Nonnull
-	private final List<String> klassSourcePackages;
-
-	@Nonnull
 	private final String packageName;
 
 	@Nonnull
@@ -53,13 +49,11 @@ public class ApplicationSuperClassGenerator {
 	public ApplicationSuperClassGenerator(
 		@Nonnull DomainModel domainModel,
 		@Nonnull String rootPackageName,
-		@Nonnull String applicationName,
-		@Nonnull List<String> klassSourcePackages
+		@Nonnull String applicationName
 	) {
 		this.domainModel = Objects.requireNonNull(domainModel);
 		this.rootPackageName = Objects.requireNonNull(rootPackageName);
 		this.applicationName = Objects.requireNonNull(applicationName);
-		this.klassSourcePackages = Objects.requireNonNull(klassSourcePackages);
 		this.packageName = rootPackageName + ".dropwizard.application";
 		this.relativePath = this.packageName.replaceAll("\\.", "/");
 	}
@@ -122,7 +116,6 @@ public class ApplicationSuperClassGenerator {
 				+ "            environment.jersey().register(new KlassHtmlResource(domainModelWithSourceCode));\n"
 				+ "        }\n"
 				+ "\n"
-				+ "        // Register Swagger specification resource\n"
 				+ "        environment.jersey().register(new SwaggerSpecResource());\n"
 				+ "\n"
 				+ this.getRegisterResourcesSourceCode()
