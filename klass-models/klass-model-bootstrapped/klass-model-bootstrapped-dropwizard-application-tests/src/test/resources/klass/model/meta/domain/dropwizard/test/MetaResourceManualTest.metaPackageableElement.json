@@ -1,0 +1,29 @@
+{
+	"__typename": "klass.model.meta.domain.Klass",
+	"name": "Association",
+	"packageName": "klass.model.meta.domain",
+	"superInterfaces": [],
+	"classifierModifiers": [],
+	"dataTypeProperties": [
+		{
+			"__typename": "klass.model.meta.domain.PrimitiveProperty",
+			"name": "criteriaId",
+			"optional": false,
+			"minLengthValidation": null,
+			"maxLengthValidation": null,
+			"propertyModifiers": [
+				{
+					"keyword": "private"
+				}
+			],
+			"primitiveType": "Long",
+			"minValidation": null,
+			"maxValidation": null
+		}
+	],
+	"abstractClass": false,
+	"superClass": {
+		"name": "PackageableElement"
+	},
+	"parameterizedProperties": []
+}
