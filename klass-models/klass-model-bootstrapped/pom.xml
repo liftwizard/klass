@@ -45,6 +45,7 @@
         <module>klass-model-bootstrapped-liquibase-schema</module>
         <module>klass-model-bootstrapped-reladomo-definitions</module>
         <module>klass-model-bootstrapped-reladomo-pojos</module>
+        <module>klass-model-bootstrapped-reladomo-lenses</module>
         <module>klass-model-bootstrapped-reladomo-runtime-configuration</module>
         <module>klass-model-bootstrapped-relational-schema</module>
         <module>klass-model-bootstrapped-services</module>
