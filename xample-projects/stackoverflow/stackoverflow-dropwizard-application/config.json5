@@ -55,7 +55,10 @@
 			colorScheme: "dark",
 		},
 		dataStore: {
-			type: "reladomo",
+			type: "reladomoLens",
+			lensRegistry: {
+				type: "com.stackoverflow",
+			},
 			uuid: {
 				type: "system",
 			},

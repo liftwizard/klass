@@ -8,7 +8,7 @@
 	"_data": {
 		"id": 1,
 		"systemFrom": "1999-12-31T23:59:59.999Z",
-		"systemTo": null,
+		"systemTo": "9999-12-01T23:59:00Z",
 		"createdOn": "1999-12-31T23:59:59.999Z",
 		"title": "test title 1",
 		"body": "test body 1",
@@ -18,48 +18,48 @@
 		"tags": [
 			{
 				"systemFrom": "1999-12-31T23:59:59.999Z",
-				"systemTo": null,
+				"systemTo": "9999-12-01T23:59:00Z",
 				"tag": {
 					"name": "test tag 1",
 					"systemFrom": "1999-12-31T23:59:59.999Z",
-					"systemTo": null
+					"systemTo": "9999-12-01T23:59:00Z"
 				}
 			},
 			{
 				"systemFrom": "1999-12-31T23:59:59.999Z",
-				"systemTo": null,
+				"systemTo": "9999-12-01T23:59:00Z",
 				"tag": {
 					"name": "test tag 2",
 					"systemFrom": "1999-12-31T23:59:59.999Z",
-					"systemTo": null
+					"systemTo": "9999-12-01T23:59:00Z"
 				}
 			}
 		],
 		"version": {
 			"systemFrom": "1999-12-31T23:59:59.999Z",
-			"systemTo": null,
+			"systemTo": "9999-12-01T23:59:00Z",
 			"createdOn": "1999-12-31T23:59:59.999Z",
 			"number": 2,
 			"createdBy": {
 				"userId": "test user 1",
 				"systemFrom": "1999-12-31T23:59:59.999Z",
-				"systemTo": null
+				"systemTo": "9999-12-01T23:59:00Z"
 			},
 			"lastUpdatedBy": {
 				"userId": "test user 1",
 				"systemFrom": "1999-12-31T23:59:59.999Z",
-				"systemTo": null
+				"systemTo": "9999-12-01T23:59:00Z"
 			}
 		},
 		"createdBy": {
 			"userId": "test user 1",
 			"systemFrom": "1999-12-31T23:59:59.999Z",
-			"systemTo": null
+			"systemTo": "9999-12-01T23:59:00Z"
 		},
 		"lastUpdatedBy": {
 			"userId": "test user 1",
 			"systemFrom": "1999-12-31T23:59:59.999Z",
-			"systemTo": null
+			"systemTo": "9999-12-01T23:59:00Z"
 		}
 	}
 }

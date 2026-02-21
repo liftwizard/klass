@@ -293,12 +293,6 @@
 
         <dependency>
             <groupId>cool.klass</groupId>
-            <artifactId>klass-dropwizard-configuration-data-store</artifactId>
-            <version>0.7.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cool.klass</groupId>
             <artifactId>klass-dropwizard-configuration</artifactId>
             <version>0.7.0-SNAPSHOT</version>
         </dependency>
@@ -312,6 +306,12 @@
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-model-source-code-meta-interface</artifactId>
+            <version>0.7.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-dropwizard-configuration-data-store</artifactId>
             <version>0.7.0-SNAPSHOT</version>
         </dependency>
 
@@ -349,6 +349,13 @@
         <!--region Klass runtime dependencies -->
         <dependency>
             <groupId>cool.klass</groupId>
+            <artifactId>klass-data-store-reladomo-lens</artifactId>
+            <version>0.7.0-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
             <artifactId>klass-dropwizard-bundle-sample-data</artifactId>
             <version>0.7.0-SNAPSHOT</version>
             <scope>runtime</scope>
@@ -371,6 +378,13 @@
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-dropwizard-configuration-data-store-reladomo</artifactId>
+            <version>0.7.0-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-dropwizard-configuration-data-store-reladomo-lens</artifactId>
             <version>0.7.0-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>

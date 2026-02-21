@@ -28,7 +28,9 @@ import com.google.common.base.CaseFormat;
 import com.smoketurner.dropwizard.graphql.CachingPreparsedDocumentProvider;
 import com.smoketurner.dropwizard.graphql.GraphQLBundle;
 import com.smoketurner.dropwizard.graphql.GraphQLFactory;
+import cool.klass.data.store.DataStore;
 import cool.klass.data.store.reladomo.ReladomoDataStore;
+import cool.klass.data.store.reladomo.lens.ReladomoLensDataStore;
 import cool.klass.dropwizard.configuration.data.store.DataStoreFactoryProvider;
 import cool.klass.dropwizard.configuration.domain.model.loader.DomainModelFactoryProvider;
 import cool.klass.model.meta.domain.api.Classifier;
@@ -143,9 +145,10 @@ public class KlassGraphQLBundle<
 
 		ObjectMapper objectMapper = this.environment.getObjectMapper();
 		DomainModel domainModel = configuration.getDomainModelFactory().createDomainModel(objectMapper);
-		ReladomoDataStore dataStore = (ReladomoDataStore) configuration
-			.getDataStoreFactory()
-			.createDataStore(domainModel);
+		DataStore rawDataStore = configuration.getDataStoreFactory().createDataStore(domainModel);
+		ReladomoDataStore dataStore = rawDataStore instanceof ReladomoLensDataStore lensDataStore
+			? lensDataStore.getDelegate()
+			: (ReladomoDataStore) rawDataStore;
 
 		RuntimeWiring.Builder builder = RuntimeWiring.newRuntimeWiring();
 		builder

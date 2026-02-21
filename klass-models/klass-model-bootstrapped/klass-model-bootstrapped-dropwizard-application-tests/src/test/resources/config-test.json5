@@ -60,7 +60,8 @@
 			colorScheme: "dark",
 		},
 		dataStore: {
-			type: "reladomo",
+			type: "reladomoLens",
+			lensRegistry: { type: "klass.model.meta.domain" },
 			uuid: {
 				type: "seed",
 				seed: "test seed",

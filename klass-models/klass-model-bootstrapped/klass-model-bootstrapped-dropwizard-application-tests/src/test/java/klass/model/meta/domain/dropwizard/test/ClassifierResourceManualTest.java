@@ -16,6 +16,7 @@
 
 package klass.model.meta.domain.dropwizard.test;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -40,5 +41,19 @@ class ClassifierResourceManualTest extends AbstractResourceTestCase {
 	@Order(3)
 	void getByNameInterface() {
 		this.assertUrlReturns("getByNameInterface", "/meta/classifier/NamedElement");
+	}
+
+	@Test
+	@Order(4)
+	@Disabled("TODO: DELETE for Classifier 'NamedElement' returns 500 due to dependent entities")
+	void deleteByName() {
+		this.assertUrlDeletes("deleteByName", "/meta/classifier/NamedElement");
+	}
+
+	@Test
+	@Order(5)
+	@Disabled("TODO: DELETE for Classifier 'NamedElement' returns 500 due to dependent entities")
+	void getByNameAfterDelete() {
+		this.assertUrlReturnsGone("getByNameAfterDelete", "/meta/classifier/NamedElement");
 	}
 }

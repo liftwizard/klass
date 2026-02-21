@@ -22,6 +22,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import io.liftwizard.junit.extension.match.FileSlurper;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class EveryTypeKeyPropertyTest extends AbstractCoverageTest {

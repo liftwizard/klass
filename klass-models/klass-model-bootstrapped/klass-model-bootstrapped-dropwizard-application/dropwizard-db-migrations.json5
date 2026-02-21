@@ -34,7 +34,10 @@
 			colorScheme: "dark",
 		},
 		dataStore: {
-			type: "reladomo",
+			type: "reladomoLens",
+			lensRegistry: {
+				type: "klass.model.meta.domain",
+			},
 			uuid: {
 				type: "system",
 			},
