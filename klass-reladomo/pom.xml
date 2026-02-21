@@ -31,6 +31,7 @@
     <modules>
         <module>klass-bundle-graphql</module>
         <module>klass-data-store-reladomo</module>
+        <module>klass-data-store-reladomo-lens</module>
         <module>klass-dropwizard-bundle-reladomo-jsonview</module>
         <module>klass-dropwizard-bundle-reladomo-response</module>
         <module>klass-reladomo-graphql-deep-fetcher</module>

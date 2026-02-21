@@ -232,7 +232,7 @@ public class ReladomoDataStore implements DataStore {
 	}
 
 	@Nonnull
-	private Object instantiateNewInstance(@Nonnull Klass klass) {
+	protected Object instantiateNewInstance(@Nonnull Klass klass) {
 		try {
 			Class<?> aClass = Class.forName(klass.getFullyQualifiedName());
 			Class<?>[] parameterTypes = klass.isSystemTemporal()
