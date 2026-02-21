@@ -81,7 +81,11 @@ public interface Classifier extends Type, ModifierOwner, TopLevelElement {
 	Optional<DataTypeProperty> findDataTypePropertyByName(String name);
 
 	@Nonnull
-	DataTypeProperty getDataTypePropertyByName(String name);
+	default DataTypeProperty getDataTypePropertyByName(String name) {
+		return this.findDataTypePropertyByName(name).orElseThrow(() ->
+			new IllegalStateException("No DataTypeProperty named '" + name + "' on " + this.getName())
+		);
+	}
 
 	ImmutableList<ReferenceProperty> getDeclaredReferenceProperties();
 

@@ -54,7 +54,11 @@ public interface Klass extends Classifier {
 	Optional<AssociationEnd> findDeclaredAssociationEndByName(String name);
 
 	@Nonnull
-	AssociationEnd getDeclaredAssociationEndByName(String name);
+	default AssociationEnd getDeclaredAssociationEndByName(String name) {
+		return this.findDeclaredAssociationEndByName(name).orElseThrow(() ->
+			new IllegalStateException("No declared AssociationEnd named '" + name + "' on " + this.getName())
+		);
+	}
 
 	ImmutableList<AssociationEnd> getAssociationEnds();
 
@@ -62,7 +66,11 @@ public interface Klass extends Classifier {
 	Optional<AssociationEnd> findAssociationEndByName(String name);
 
 	@Nonnull
-	AssociationEnd getAssociationEndByName(String name);
+	default AssociationEnd getAssociationEndByName(String name) {
+		return this.findAssociationEndByName(name).orElseThrow(() ->
+			new IllegalStateException("No AssociationEnd named '" + name + "' on " + this.getName())
+		);
+	}
 
 	// TODO: Replace with an implementation that preserves order
 	@Nonnull
@@ -95,22 +103,57 @@ public interface Klass extends Classifier {
 	}
 
 	@Nonnull
-	Optional<Property> findPropertyByName(String name);
+	default Optional<Property> findPropertyByName(String name) {
+		Optional<DataTypeProperty> dataTypeProperty = this.findDataTypePropertyByName(name);
+		Optional<AssociationEnd> associationEnd = this.findAssociationEndByName(name);
+
+		if (dataTypeProperty.isPresent() && associationEnd.isPresent()) {
+			throw new IllegalStateException(
+				"Property " + name + " is both a data type property and an association end on " + this.getName()
+			);
+		}
+
+		if (dataTypeProperty.isPresent()) {
+			return dataTypeProperty.map(Property.class::cast);
+		}
+
+		return associationEnd.map(Property.class::cast);
+	}
 
 	@Nonnull
-	Property getPropertyByName(String name);
+	default Property getPropertyByName(String name) {
+		return this.findPropertyByName(name).orElseThrow(() ->
+			new IllegalStateException("No Property named '" + name + "' on " + this.getName())
+		);
+	}
 
 	@Nonnull
-	Optional<PrimitiveProperty> findPrimitivePropertyByName(String name);
+	default Optional<PrimitiveProperty> findPrimitivePropertyByName(String name) {
+		return this.findDataTypePropertyByName(name)
+			.filter(PrimitiveProperty.class::isInstance)
+			.map(PrimitiveProperty.class::cast);
+	}
 
 	@Nonnull
-	PrimitiveProperty getPrimitivePropertyByName(String name);
+	default PrimitiveProperty getPrimitivePropertyByName(String name) {
+		return this.findPrimitivePropertyByName(name).orElseThrow(() ->
+			new IllegalStateException("No PrimitiveProperty named '" + name + "' on " + this.getName())
+		);
+	}
 
 	@Nonnull
-	Optional<EnumerationProperty> findEnumerationPropertyByName(String name);
+	default Optional<EnumerationProperty> findEnumerationPropertyByName(String name) {
+		return this.findDataTypePropertyByName(name)
+			.filter(EnumerationProperty.class::isInstance)
+			.map(EnumerationProperty.class::cast);
+	}
 
 	@Nonnull
-	EnumerationProperty getEnumerationPropertyByName(String name);
+	default EnumerationProperty getEnumerationPropertyByName(String name) {
+		return this.findEnumerationPropertyByName(name).orElseThrow(() ->
+			new IllegalStateException("No EnumerationProperty named '" + name + "' on " + this.getName())
+		);
+	}
 
 	@Nonnull
 	Optional<AssociationEnd> getVersionProperty();
@@ -123,7 +166,7 @@ public interface Klass extends Classifier {
 			DataTypeProperty::isVersion
 		);
 		if (versionProperties.size() > 1) {
-			throw new AssertionError();
+			throw new IllegalStateException();
 		}
 		if (versionProperties.isEmpty()) {
 			return Optional.empty();
