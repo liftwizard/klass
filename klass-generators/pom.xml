@@ -45,6 +45,7 @@
         <module>klass-generator-reladomo-concrete-class</module>
         <module>klass-generator-reladomo-readable-interface</module>
         <module>klass-generator-reladomo</module>
+        <module>klass-generator-reladomo-lens</module>
         <module>klass-generator-relational-schema</module>
         <module>klass-generator-service-resources</module>
         <module>klass-generator-swagger</module>
