@@ -16,27 +16,47 @@
 
 package klass.model.meta.domain.dropwizard.test;
 
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
+@TestMethodOrder(OrderAnnotation.class)
 class EnumerationResourceManualTest extends AbstractResourceTestCase {
 
 	@Test
+	@Order(1)
 	void getAllMeta() {
 		this.assertUrlReturns("getAllMeta", "/meta/enumeration");
 	}
 
 	@Test
+	@Order(2)
 	void getByName() {
 		this.assertUrlReturns("getByName", "/meta/enumeration/PrimitiveType");
 	}
 
 	@Test
+	@Order(3)
 	void getByNameVerb() {
 		this.assertUrlReturns("getByNameVerb", "/meta/enumeration/Verb");
 	}
 
 	@Test
+	@Order(4)
 	void getByNameMultiplicity() {
 		this.assertUrlReturns("getByNameMultiplicity", "/meta/enumeration/Multiplicity");
+	}
+
+	@Test
+	@Order(5)
+	void deleteByName() {
+		this.assertUrlDeletes("deleteByName", "/meta/enumeration/Verb");
+	}
+
+	@Test
+	@Order(6)
+	void getByNameAfterDelete() {
+		this.assertUrlReturnsGone("getByNameAfterDelete", "/meta/enumeration/Verb");
 	}
 }

@@ -16,21 +16,28 @@
 
 package klass.model.meta.domain.dropwizard.test;
 
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
+@TestMethodOrder(OrderAnnotation.class)
 class ClassifierResourceManualTest extends AbstractResourceTestCase {
 
 	@Test
+	@Order(1)
 	void getAllMeta() {
 		this.assertUrlReturns("getAllMeta", "/meta/classifier");
 	}
 
 	@Test
+	@Order(2)
 	void getByName() {
 		this.assertUrlReturns("getByName", "/meta/classifier/Klass");
 	}
 
 	@Test
+	@Order(3)
 	void getByNameInterface() {
 		this.assertUrlReturns("getByNameInterface", "/meta/classifier/NamedElement");
 	}
