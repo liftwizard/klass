@@ -2758,7 +2758,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 161
+									"id": 187
 								}
 							}
 						]
@@ -2800,7 +2800,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 162
+									"id": 188
 								}
 							}
 						]
@@ -2873,7 +2873,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 163
+									"id": 189
 								}
 							}
 						]
@@ -2977,7 +2977,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 164
+									"id": 190
 								}
 							}
 						]
@@ -3159,7 +3159,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 165
+									"id": 191
 								}
 							}
 						]
@@ -3232,7 +3232,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 166
+									"id": 192
 								}
 							}
 						]
@@ -3336,7 +3336,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 167
+									"id": 193
 								}
 							}
 						]
@@ -3576,7 +3576,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 168
+									"id": 194
 								}
 							}
 						]
@@ -3750,7 +3750,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 169
+									"id": 195
 								}
 							}
 						]
@@ -3792,7 +3792,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 170
+									"id": 196
 								}
 							}
 						]
@@ -3896,7 +3896,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 171
+									"id": 197
 								}
 							}
 						]
@@ -3938,7 +3938,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 172
+									"id": 198
 								}
 							}
 						]
@@ -4015,7 +4015,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 173
+									"id": 199
 								}
 							}
 						]
@@ -4212,7 +4212,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 174
+									"id": 200
 								}
 							}
 						]
@@ -4289,7 +4289,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 175
+									"id": 201
 								}
 							}
 						]
@@ -4331,7 +4331,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 176
+									"id": 202
 								}
 							}
 						]
@@ -4544,7 +4544,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 177
+									"id": 203
 								}
 							}
 						]
@@ -4854,6 +4854,30 @@
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 88
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 89
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
 							}
 						]
 					},
@@ -4868,7 +4892,31 @@
 									"name": "PackageableElementProjection"
 								},
 								"queryCriteria": {
-									"id": 88
+									"id": 90
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 91
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 92
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -4909,7 +4957,31 @@
 									"name": "EnumerationProjection"
 								},
 								"queryCriteria": {
-									"id": 89
+									"id": 93
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 94
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 95
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -4929,7 +5001,31 @@
 									"name": "EnumerationProjection"
 								},
 								"queryCriteria": {
-									"id": 90
+									"id": 96
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 97
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 98
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -4970,7 +5066,31 @@
 									"name": "InterfaceProjection"
 								},
 								"queryCriteria": {
-									"id": 91
+									"id": 99
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 100
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 101
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -4990,7 +5110,31 @@
 									"name": "InterfaceProjection"
 								},
 								"queryCriteria": {
-									"id": 92
+									"id": 102
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 103
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 104
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5031,7 +5175,7 @@
 									"name": "KlassProjection"
 								},
 								"queryCriteria": {
-									"id": 93
+									"id": 105
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5043,7 +5187,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 94
+									"id": 106
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5055,7 +5199,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 95
+									"id": 107
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5075,7 +5219,7 @@
 									"name": "KlassProjection"
 								},
 								"queryCriteria": {
-									"id": 96
+									"id": 108
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5087,7 +5231,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 97
+									"id": 109
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5099,7 +5243,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 98
+									"id": 110
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5140,7 +5284,31 @@
 									"name": "ClassifierProjection"
 								},
 								"queryCriteria": {
-									"id": 99
+									"id": 111
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 112
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 113
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5160,7 +5328,31 @@
 									"name": "ClassifierProjection"
 								},
 								"queryCriteria": {
-									"id": 100
+									"id": 114
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 115
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 116
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5201,7 +5393,31 @@
 									"name": "AssociationProjection"
 								},
 								"queryCriteria": {
-									"id": 101
+									"id": 117
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 118
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 119
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5221,7 +5437,31 @@
 									"name": "AssociationProjection"
 								},
 								"queryCriteria": {
-									"id": 102
+									"id": 120
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 121
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 122
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5262,7 +5502,31 @@
 									"name": "NamedProjectionProjection"
 								},
 								"queryCriteria": {
-									"id": 103
+									"id": 123
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 124
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 125
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5282,7 +5546,31 @@
 									"name": "NamedProjectionProjection"
 								},
 								"queryCriteria": {
-									"id": 104
+									"id": 126
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 127
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 128
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5323,7 +5611,19 @@
 									"name": "ServiceGroupProjection"
 								},
 								"queryCriteria": {
-									"id": 105
+									"id": 129
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 130
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5335,7 +5635,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 106
+									"id": 131
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5355,7 +5655,31 @@
 									"name": "ServiceGroupProjection"
 								},
 								"queryCriteria": {
-									"id": 107
+									"id": 132
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 133
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 134
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
