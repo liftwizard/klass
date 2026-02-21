@@ -28,6 +28,19 @@
 
     <dependencies>
 
+        <!--region Klass compile dependencies -->
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-data-store</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-model-meta-interface</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-dropwizard-configuration-data-store</artifactId>
@@ -51,7 +64,9 @@
             <artifactId>klass-dropwizard-configuration-data-store-reladomo</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!--endregion-->
 
+        <!--region Liftwizard compile dependencies -->
         <dependency>
             <groupId>io.liftwizard</groupId>
             <artifactId>liftwizard-config-abstract</artifactId>
@@ -96,7 +111,9 @@
             <groupId>io.liftwizard</groupId>
             <artifactId>liftwizard-config-liquibase-migration</artifactId>
         </dependency>
+        <!--endregion-->
 
+        <!--region Compile dependencies -->
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
@@ -108,9 +125,15 @@
         </dependency>
 
         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
         </dependency>
+        <!--endregion-->
 
     </dependencies>
 

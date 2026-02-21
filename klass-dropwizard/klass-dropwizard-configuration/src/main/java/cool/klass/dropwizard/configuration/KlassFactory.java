@@ -20,15 +20,20 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import cool.klass.data.store.DataStore;
 import cool.klass.dropwizard.configuration.data.store.DataStoreFactory;
 import cool.klass.dropwizard.configuration.data.store.reladomo.ReladomoDataStoreFactory;
 import cool.klass.dropwizard.configuration.domain.model.loader.DomainModelFactory;
+import cool.klass.model.meta.domain.api.DomainModel;
 
 public class KlassFactory {
 
 	private @NotNull @Valid DomainModelFactory domainModelFactory;
 	private @NotNull @Valid DataStoreFactory dataStoreFactory = new ReladomoDataStoreFactory();
 	private String colorScheme;
+
+	private DomainModel cachedDomainModel;
+	private DataStore cachedDataStore;
 
 	@JsonProperty("domainModel")
 	public DomainModelFactory getDomainModelFactory() {
@@ -58,5 +63,21 @@ public class KlassFactory {
 	@JsonProperty("colorScheme")
 	public void setColorScheme(String colorScheme) {
 		this.colorScheme = colorScheme;
+	}
+
+	public DomainModel createDomainModel() {
+		if (this.cachedDomainModel != null) {
+			return this.cachedDomainModel;
+		}
+		this.cachedDomainModel = this.domainModelFactory.createDomainModel(null);
+		return this.cachedDomainModel;
+	}
+
+	public DataStore createDataStore() {
+		if (this.cachedDataStore != null) {
+			return this.cachedDataStore;
+		}
+		this.cachedDataStore = this.dataStoreFactory.createDataStore(this.createDomainModel());
+		return this.cachedDataStore;
 	}
 }

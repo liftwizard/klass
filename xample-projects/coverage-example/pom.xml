@@ -118,6 +118,8 @@
                                 <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-liquibase-schema</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-reladomo-runtime-configuration</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-relational-schema</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-configuration-data-store</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-configuration-domain-model-loader</ignoredUnusedDeclaredDependency>
                             </ignoredUnusedDeclaredDependencies>
                         </configuration>
                     </plugin>

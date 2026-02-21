@@ -87,6 +87,8 @@
                                 <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-liquibase-schema</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-reladomo-runtime-configuration</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-relational-schema</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-configuration-data-store</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-configuration-domain-model-loader</ignoredUnusedDeclaredDependency>
                             </ignoredUnusedDeclaredDependencies>
                         </configuration>
                     </plugin>
