@@ -64,7 +64,6 @@ public class JsonViewDynamicFeature implements DynamicFeature {
 		KlassJsonView klassJsonView = this.instantiate(jsonViewClass);
 		String projectionName = klassJsonView.getProjectionName();
 		Projection projection = this.domainModel.getProjectionByName(projectionName);
-		Objects.requireNonNull(projection, projectionName);
 		context.register(new JsonViewFilter(projection));
 	}
 

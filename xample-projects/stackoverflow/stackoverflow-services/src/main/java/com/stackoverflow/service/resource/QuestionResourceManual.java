@@ -197,7 +197,7 @@ public class QuestionResourceManual {
 		Optional<String> userId = Optional.of(userPrincipalName);
 		Instant transactionInstant = Instant.now(this.clock);
 
-		DataTypeProperty idProperty = (DataTypeProperty) klass.getPropertyByName("id").get();
+		DataTypeProperty idProperty = klass.getDataTypePropertyByName("id");
 		ImmutableMap<DataTypeProperty, Object> propertyDataFromUrl = Maps.immutable.with(idProperty, id);
 
 		MutationContext mutationContext = new MutationContext(userId, transactionInstant, propertyDataFromUrl);

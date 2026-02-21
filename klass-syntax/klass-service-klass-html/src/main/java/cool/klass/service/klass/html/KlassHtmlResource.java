@@ -58,15 +58,16 @@ public class KlassHtmlResource {
 	@Path("/meta/code/element/{topLevelElementName}")
 	@Produces(MediaType.TEXT_HTML)
 	public String topLevelElementNameSourceCode(@PathParam("topLevelElementName") String topLevelElementName) {
-		TopLevelElementWithSourceCode topLevelElement = this.domainModel.getTopLevelElementByName(topLevelElementName);
-
-		if (topLevelElement == null) {
-			String message = this.domainModel.getTopLevelElements()
-				.selectInstancesOf(NamedElementWithSourceCode.class)
-				.collect(NamedElementWithSourceCode::getName)
-				.toString();
-			throw new NotFoundException(message);
-		}
+		TopLevelElementWithSourceCode topLevelElement =
+			(TopLevelElementWithSourceCode) this.domainModel.findTopLevelElementByName(topLevelElementName).orElseThrow(
+					() -> {
+						String message = this.domainModel.getTopLevelElements()
+							.selectInstancesOf(NamedElementWithSourceCode.class)
+							.collect(NamedElementWithSourceCode::getName)
+							.toString();
+						return new NotFoundException(message);
+					}
+				);
 
 		Optional<SourceCode> sourceCode = getSourceCodeObject(topLevelElement, null);
 		if (sourceCode.isEmpty()) {
@@ -89,15 +90,16 @@ public class KlassHtmlResource {
 		@PathParam("topLevelElementName") String topLevelElementName,
 		@PathParam("memberName") String memberName
 	) {
-		TopLevelElementWithSourceCode topLevelElement = this.domainModel.getTopLevelElementByName(topLevelElementName);
-
-		if (topLevelElement == null) {
-			String message = this.domainModel.getTopLevelElements()
-				.selectInstancesOf(NamedElementWithSourceCode.class)
-				.collect(NamedElementWithSourceCode::getName)
-				.toString();
-			throw new NotFoundException(message);
-		}
+		TopLevelElementWithSourceCode topLevelElement =
+			(TopLevelElementWithSourceCode) this.domainModel.findTopLevelElementByName(topLevelElementName).orElseThrow(
+					() -> {
+						String message = this.domainModel.getTopLevelElements()
+							.selectInstancesOf(NamedElementWithSourceCode.class)
+							.collect(NamedElementWithSourceCode::getName)
+							.toString();
+						return new NotFoundException(message);
+					}
+				);
 
 		Optional<SourceCode> sourceCode = getSourceCodeObject(topLevelElement, memberName);
 		if (sourceCode.isEmpty()) {
@@ -121,7 +123,7 @@ public class KlassHtmlResource {
 		}
 
 		if (topLevelElement instanceof KlassWithSourceCode klass) {
-			Optional<Property> property = klass.getPropertyByName(memberName);
+			Optional<Property> property = klass.findPropertyByName(memberName);
 			if (property.isEmpty()) {
 				return Optional.empty();
 			}

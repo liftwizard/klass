@@ -252,39 +252,102 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 		return this.serviceGroups;
 	}
 
+	@Nonnull
+	@Override
+	public Optional<TopLevelElement> findTopLevelElementByName(String name) {
+		return Optional.ofNullable(this.topLevelElementsByName.get(name));
+	}
+
+	@Nonnull
 	@Override
 	public TopLevelElementWithSourceCode getTopLevelElementByName(String name) {
-		return (TopLevelElementWithSourceCode) this.topLevelElementsByName.get(name);
+		return (TopLevelElementWithSourceCode) this.topLevelElementsByName.getIfAbsent(name, () -> {
+				throw new IllegalStateException("No TopLevelElement named '" + name + "'");
+			});
 	}
 
+	@Nonnull
+	@Override
+	public Optional<Enumeration> findEnumerationByName(String name) {
+		return Optional.ofNullable(this.enumerationsByName.get(name));
+	}
+
+	@Nonnull
 	@Override
 	public Enumeration getEnumerationByName(String name) {
-		return this.enumerationsByName.get(name);
+		return this.enumerationsByName.getIfAbsent(name, () -> {
+				throw new IllegalStateException("No Enumeration named '" + name + "'");
+			});
 	}
 
+	@Nonnull
+	@Override
+	public Optional<Classifier> findClassifierByName(String name) {
+		return Optional.ofNullable(this.classifiersByName.get(name));
+	}
+
+	@Nonnull
 	@Override
 	public Classifier getClassifierByName(String name) {
-		return this.classifiersByName.get(name);
+		return this.classifiersByName.getIfAbsent(name, () -> {
+				throw new IllegalStateException("No Classifier named '" + name + "'");
+			});
 	}
 
+	@Nonnull
+	@Override
+	public Optional<Interface> findInterfaceByName(String name) {
+		return Optional.ofNullable(this.interfacesByName.get(name));
+	}
+
+	@Nonnull
 	@Override
 	public Interface getInterfaceByName(String name) {
-		return this.interfacesByName.get(name);
+		return this.interfacesByName.getIfAbsent(name, () -> {
+				throw new IllegalStateException("No Interface named '" + name + "'");
+			});
 	}
 
+	@Nonnull
+	@Override
+	public Optional<Klass> findClassByName(String name) {
+		return Optional.ofNullable(this.classesByName.get(name));
+	}
+
+	@Nonnull
 	@Override
 	public Klass getClassByName(String name) {
-		return this.classesByName.get(name);
+		return this.classesByName.getIfAbsent(name, () -> {
+				throw new IllegalStateException("No Class named '" + name + "'");
+			});
 	}
 
+	@Nonnull
+	@Override
+	public Optional<Association> findAssociationByName(String name) {
+		return Optional.ofNullable(this.associationsByName.get(name));
+	}
+
+	@Nonnull
 	@Override
 	public Association getAssociationByName(String name) {
-		return this.associationsByName.get(name);
+		return this.associationsByName.getIfAbsent(name, () -> {
+				throw new IllegalStateException("No Association named '" + name + "'");
+			});
 	}
 
+	@Nonnull
+	@Override
+	public Optional<Projection> findProjectionByName(String name) {
+		return Optional.ofNullable(this.projectionsByName.get(name));
+	}
+
+	@Nonnull
 	@Override
 	public Projection getProjectionByName(String name) {
-		return this.projectionsByName.get(name);
+		return this.projectionsByName.getIfAbsent(name, () -> {
+				throw new IllegalStateException("No Projection named '" + name + "'");
+			});
 	}
 
 	public static final class DomainModelBuilder {
