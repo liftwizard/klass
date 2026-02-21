@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import cool.klass.data.store.DataStore;
 import cool.klass.deserializer.json.JsonDataTypeValueVisitor;
 import cool.klass.deserializer.json.OperationMode;
+import cool.klass.model.meta.domain.api.Classifier;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.Multiplicity;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
@@ -186,7 +187,9 @@ public abstract class PersistentSynchronizer {
 		Object persistentInstance,
 		@Nonnull ObjectNode incomingJson
 	) {
-		ImmutableList<DataTypeProperty> dataTypeProperties = klass.getDataTypeProperties();
+		ImmutableList<DataTypeProperty> dataTypeProperties = klass
+			.getDataTypeProperties()
+			.reject(DataTypeProperty::isPrivate);
 		ImmutableList<DataTypeProperty> simpleDataTypeProperties = dataTypeProperties.rejectWith(
 			this::shouldSkipDataTypeProperty,
 			klass
@@ -222,13 +225,25 @@ public abstract class PersistentSynchronizer {
 	private boolean shouldSkipDataTypeProperty(@Nonnull DataTypeProperty dataTypeProperty, @Nonnull Klass klass) {
 		return (
 			dataTypeProperty.isForeignKey()
+			|| dataTypeProperty.isPrivate()
 			|| dataTypeProperty.isAudit()
 			|| dataTypeProperty.isTemporal()
 			|| dataTypeProperty.isDerived()
+			|| this.isInheritedProperty(dataTypeProperty, klass)
 			|| this.hasReferencePropertyDependentOnDataTypeProperty(klass, dataTypeProperty)
 			|| (dataTypeProperty.isKey() && !this.shouldWriteKey())
 			|| (dataTypeProperty.isID() && !this.shouldWriteId())
 		);
+	}
+
+	private boolean isInheritedProperty(@Nonnull DataTypeProperty dataTypeProperty, @Nonnull Klass klass) {
+		Classifier owningClassifier = dataTypeProperty.getOwningClassifier();
+		if (owningClassifier.equals(klass)) {
+			return false;
+		}
+		// Only skip properties inherited from a superclass (table-per-class hierarchy).
+		// Interface-inherited properties must be handled by the implementing class.
+		return owningClassifier instanceof Klass;
 	}
 
 	// endregion
@@ -289,11 +304,13 @@ public abstract class PersistentSynchronizer {
 		Object persistentParentInstance,
 		@Nonnull JsonNode incomingChildInstance
 	) {
+		if (incomingChildInstance.isMissingNode()) {
+			return false;
+		}
+
 		Object persistentChildInstance = this.dataStore.getToOne(persistentParentInstance, associationEnd);
 
-		if (
-			persistentChildInstance == null && !incomingChildInstance.isMissingNode() && !incomingChildInstance.isNull()
-		) {
+		if (persistentChildInstance == null && !incomingChildInstance.isNull()) {
 			MapIterable<DataTypeProperty, Object> keys = this.getKeysFromJsonNode(
 				incomingChildInstance,
 				associationEnd,
@@ -303,18 +320,11 @@ public abstract class PersistentSynchronizer {
 			return true;
 		}
 
-		if (
-			(persistentChildInstance != null && incomingChildInstance.isMissingNode()) || incomingChildInstance.isNull()
-		) {
-			if (incomingChildInstance.isMissingNode()) {
-				return this.handleMissingToOne(associationEnd.getType(), persistentChildInstance);
-			}
-			if (incomingChildInstance.isNull()) {
-				return this.handleNullToOne(associationEnd.getType(), persistentChildInstance);
-			}
+		if (persistentChildInstance != null && incomingChildInstance.isNull()) {
+			return this.handleNullToOne(associationEnd.getType(), persistentChildInstance);
 		}
 
-		if (persistentChildInstance != null && incomingChildInstance != null) {
+		if (persistentChildInstance != null) {
 			PersistentSynchronizer synchronizer = this.determineNextMode(OperationMode.REPLACE);
 			return synchronizer.synchronizeInTransaction(
 				associationEnd.getType(),
@@ -391,6 +401,10 @@ public abstract class PersistentSynchronizer {
 		Object persistentParentInstance,
 		@Nonnull JsonNode incomingChildInstances
 	) {
+		if (incomingChildInstances.isMissingNode()) {
+			return false;
+		}
+
 		boolean mutationOccurred = false;
 		// TODO: Test null where an array goes
 
