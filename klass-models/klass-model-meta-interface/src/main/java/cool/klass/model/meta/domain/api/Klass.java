@@ -23,6 +23,8 @@ import javax.annotation.Nonnull;
 import cool.klass.model.meta.domain.api.modifier.Modifier;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import cool.klass.model.meta.domain.api.property.EnumerationProperty;
+import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.property.Property;
 import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import org.eclipse.collections.api.factory.Lists;
@@ -48,10 +50,18 @@ public interface Klass extends Classifier {
 
 	ImmutableList<AssociationEnd> getDeclaredAssociationEnds();
 
+	@Nonnull
+	Optional<AssociationEnd> findDeclaredAssociationEndByName(String name);
+
+	@Nonnull
 	AssociationEnd getDeclaredAssociationEndByName(String name);
 
 	ImmutableList<AssociationEnd> getAssociationEnds();
 
+	@Nonnull
+	Optional<AssociationEnd> findAssociationEndByName(String name);
+
+	@Nonnull
 	AssociationEnd getAssociationEndByName(String name);
 
 	// TODO: Replace with an implementation that preserves order
@@ -85,25 +95,22 @@ public interface Klass extends Classifier {
 	}
 
 	@Nonnull
-	default Optional<Property> getPropertyByName(String name) {
-		DataTypeProperty dataTypeProperty = this.getDataTypePropertyByName(name);
-		AssociationEnd associationEnd = this.getAssociationEndByName(name);
+	Optional<Property> findPropertyByName(String name);
 
-		if (dataTypeProperty != null && associationEnd != null) {
-			String detailMessage = "Property " + name + " is both a data type property and an association end.";
-			throw new AssertionError(detailMessage);
-		}
+	@Nonnull
+	Property getPropertyByName(String name);
 
-		if (dataTypeProperty != null) {
-			return Optional.of(dataTypeProperty);
-		}
+	@Nonnull
+	Optional<PrimitiveProperty> findPrimitivePropertyByName(String name);
 
-		if (associationEnd != null) {
-			return Optional.of(associationEnd);
-		}
+	@Nonnull
+	PrimitiveProperty getPrimitivePropertyByName(String name);
 
-		return Optional.empty();
-	}
+	@Nonnull
+	Optional<EnumerationProperty> findEnumerationPropertyByName(String name);
+
+	@Nonnull
+	EnumerationProperty getEnumerationPropertyByName(String name);
 
 	@Nonnull
 	Optional<AssociationEnd> getVersionProperty();

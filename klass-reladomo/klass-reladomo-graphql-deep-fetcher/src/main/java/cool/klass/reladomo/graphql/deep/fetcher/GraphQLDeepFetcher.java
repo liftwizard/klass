@@ -17,6 +17,7 @@
 package cool.klass.reladomo.graphql.deep.fetcher;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Converter;
@@ -78,15 +79,18 @@ public final class GraphQLDeepFetcher {
 		RelatedFinder<T> currentFinder = finderInstance;
 		Klass currentClass = klass;
 		for (String navigationName : navigationNames) {
-			AssociationEnd associationEnd = currentClass.getDeclaredAssociationEndByName(navigationName);
-			while (associationEnd == null) {
+			Optional<AssociationEnd> maybeAssociationEnd = currentClass.findDeclaredAssociationEndByName(
+				navigationName
+			);
+			while (maybeAssociationEnd.isEmpty()) {
 				Klass superClass = currentClass.getSuperClass().get();
 				String superClassNavigationName = UPPER_TO_LOWER_CAMEL.convert(superClass.getName()) + "SuperClass";
 				currentClass = superClass;
 				currentFinder = (RelatedFinder<T>) currentFinder.getRelationshipFinderByName(superClassNavigationName);
 				Objects.requireNonNull(currentFinder);
-				associationEnd = currentClass.getDeclaredAssociationEndByName(navigationName);
+				maybeAssociationEnd = currentClass.findDeclaredAssociationEndByName(navigationName);
 			}
+			AssociationEnd associationEnd = maybeAssociationEnd.get();
 
 			currentClass = associationEnd.getType();
 			currentFinder = currentFinder.getRelationshipFinderByName(navigationName);

@@ -51,17 +51,45 @@ public interface DomainModel {
 	@Nonnull
 	ImmutableList<ServiceGroup> getServiceGroups();
 
-	TopLevelElement getTopLevelElementByName(String topLevelElementName);
+	@Nonnull
+	Optional<TopLevelElement> findTopLevelElementByName(String name);
 
+	@Nonnull
+	TopLevelElement getTopLevelElementByName(String name);
+
+	@Nonnull
+	Optional<Enumeration> findEnumerationByName(String name);
+
+	@Nonnull
 	Enumeration getEnumerationByName(String name);
 
+	@Nonnull
+	Optional<Classifier> findClassifierByName(String name);
+
+	@Nonnull
 	Classifier getClassifierByName(String name);
 
+	@Nonnull
+	Optional<Interface> findInterfaceByName(String name);
+
+	@Nonnull
 	Interface getInterfaceByName(String name);
 
+	@Nonnull
+	Optional<Klass> findClassByName(String name);
+
+	@Nonnull
 	Klass getClassByName(String name);
 
+	@Nonnull
+	Optional<Association> findAssociationByName(String name);
+
+	@Nonnull
 	Association getAssociationByName(String name);
 
+	@Nonnull
+	Optional<Projection> findProjectionByName(String name);
+
+	@Nonnull
 	Projection getProjectionByName(String name);
 }

@@ -77,6 +77,10 @@ public interface Classifier extends Type, ModifierOwner, TopLevelElement {
 	@Nonnull
 	ImmutableList<DataTypeProperty> getDeclaredDataTypeProperties();
 
+	@Nonnull
+	Optional<DataTypeProperty> findDataTypePropertyByName(String name);
+
+	@Nonnull
 	DataTypeProperty getDataTypePropertyByName(String name);
 
 	ImmutableList<ReferenceProperty> getDeclaredReferenceProperties();

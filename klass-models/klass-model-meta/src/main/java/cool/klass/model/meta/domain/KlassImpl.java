@@ -28,6 +28,9 @@ import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.NamedElement;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import cool.klass.model.meta.domain.api.property.EnumerationProperty;
+import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
+import cool.klass.model.meta.domain.api.property.Property;
 import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import cool.klass.model.meta.domain.api.source.KlassWithSourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode;
@@ -122,9 +125,18 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
 		return Objects.requireNonNull(this.declaredAssociationEnds);
 	}
 
+	@Nonnull
+	@Override
+	public Optional<AssociationEnd> findDeclaredAssociationEndByName(String name) {
+		return Optional.ofNullable(this.declaredAssociationEndsByName.get(name));
+	}
+
+	@Nonnull
 	@Override
 	public AssociationEnd getDeclaredAssociationEndByName(String name) {
-		return this.declaredAssociationEndsByName.get(name);
+		return this.declaredAssociationEndsByName.getIfAbsent(name, () -> {
+				throw new IllegalStateException("No declared AssociationEnd named '" + name + "' on " + this.getName());
+			});
 	}
 
 	private void setAssociationEnds(ImmutableList<AssociationEnd> associationEnds) {
@@ -143,9 +155,108 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
 		return Objects.requireNonNull(this.associationEnds);
 	}
 
+	@Nonnull
+	@Override
+	public Optional<AssociationEnd> findAssociationEndByName(String name) {
+		return Optional.ofNullable(this.associationEndsByName.get(name));
+	}
+
+	@Nonnull
 	@Override
 	public AssociationEnd getAssociationEndByName(String name) {
-		return this.associationEndsByName.get(name);
+		return this.associationEndsByName.getIfAbsent(name, () -> {
+				throw new IllegalStateException("No AssociationEnd named '" + name + "' on " + this.getName());
+			});
+	}
+
+	@Nonnull
+	@Override
+	public Optional<Property> findPropertyByName(String name) {
+		DataTypeProperty dataTypeProperty = this.dataTypePropertiesByName.get(name);
+		AssociationEnd associationEnd = this.associationEndsByName.get(name);
+
+		if (dataTypeProperty != null && associationEnd != null) {
+			throw new IllegalStateException(
+				"Property " + name + " is both a data type property and an association end on " + this.getName()
+			);
+		}
+
+		if (dataTypeProperty != null) {
+			return Optional.of(dataTypeProperty);
+		}
+
+		if (associationEnd != null) {
+			return Optional.of(associationEnd);
+		}
+
+		return Optional.empty();
+	}
+
+	@Nonnull
+	@Override
+	public Property getPropertyByName(String name) {
+		DataTypeProperty dataTypeProperty = this.dataTypePropertiesByName.get(name);
+		AssociationEnd associationEnd = this.associationEndsByName.get(name);
+
+		if (dataTypeProperty != null && associationEnd != null) {
+			throw new IllegalStateException(
+				"Property " + name + " is both a data type property and an association end on " + this.getName()
+			);
+		}
+
+		if (dataTypeProperty != null) {
+			return dataTypeProperty;
+		}
+
+		if (associationEnd != null) {
+			return associationEnd;
+		}
+
+		throw new IllegalStateException("No Property named '" + name + "' on " + this.getName());
+	}
+
+	@Nonnull
+	@Override
+	public Optional<PrimitiveProperty> findPrimitivePropertyByName(String name) {
+		DataTypeProperty dataTypeProperty = this.dataTypePropertiesByName.get(name);
+		if (dataTypeProperty instanceof PrimitiveProperty primitiveProperty) {
+			return Optional.of(primitiveProperty);
+		}
+		return Optional.empty();
+	}
+
+	@Nonnull
+	@Override
+	public PrimitiveProperty getPrimitivePropertyByName(String name) {
+		DataTypeProperty dataTypeProperty = this.dataTypePropertiesByName.getIfAbsent(name, () -> {
+				throw new IllegalStateException("No PrimitiveProperty named '" + name + "' on " + this.getName());
+			});
+		if (dataTypeProperty instanceof PrimitiveProperty primitiveProperty) {
+			return primitiveProperty;
+		}
+		throw new IllegalStateException("No PrimitiveProperty named '" + name + "' on " + this.getName());
+	}
+
+	@Nonnull
+	@Override
+	public Optional<EnumerationProperty> findEnumerationPropertyByName(String name) {
+		DataTypeProperty dataTypeProperty = this.dataTypePropertiesByName.get(name);
+		if (dataTypeProperty instanceof EnumerationProperty enumerationProperty) {
+			return Optional.of(enumerationProperty);
+		}
+		return Optional.empty();
+	}
+
+	@Nonnull
+	@Override
+	public EnumerationProperty getEnumerationPropertyByName(String name) {
+		DataTypeProperty dataTypeProperty = this.dataTypePropertiesByName.getIfAbsent(name, () -> {
+				throw new IllegalStateException("No EnumerationProperty named '" + name + "' on " + this.getName());
+			});
+		if (dataTypeProperty instanceof EnumerationProperty enumerationProperty) {
+			return enumerationProperty;
+		}
+		throw new IllegalStateException("No EnumerationProperty named '" + name + "' on " + this.getName());
 	}
 
 	@Override

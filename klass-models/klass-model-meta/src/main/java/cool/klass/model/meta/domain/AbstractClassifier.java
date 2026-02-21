@@ -49,25 +49,25 @@ import org.eclipse.collections.api.map.ImmutableMap;
 
 public abstract class AbstractClassifier extends AbstractPackageableElement implements ClassifierWithSourceCode {
 
-	private ImmutableList<Interface> interfaces;
-	private ImmutableList<Modifier> modifiers;
-	private ImmutableList<Property> declaredProperties;
-	private ImmutableList<DataTypeProperty> declaredDataTypeProperties;
-	private ImmutableList<DataTypeProperty> dataTypeProperties;
-	private ImmutableMap<String, DataTypeProperty> dataTypePropertiesByName;
-	private ImmutableList<DataTypeProperty> keyProperties;
-	private ImmutableList<AssociationEndSignature> declaredAssociationEndSignatures;
-	private ImmutableList<ReferenceProperty> declaredReferenceProperties;
-	private ImmutableList<ReferenceProperty> referenceProperties;
-	private Optional<PrimitiveProperty> systemProperty;
-	private Optional<PrimitiveProperty> systemFromProperty;
-	private Optional<PrimitiveProperty> systemToProperty;
-	private Optional<PrimitiveProperty> validProperty;
-	private Optional<PrimitiveProperty> validFromProperty;
-	private Optional<PrimitiveProperty> validToProperty;
-	private Optional<PrimitiveProperty> createdByProperty;
-	private Optional<PrimitiveProperty> createdOnProperty;
-	private Optional<PrimitiveProperty> lastUpdatedByProperty;
+	protected ImmutableList<Interface> interfaces;
+	protected ImmutableList<Modifier> modifiers;
+	protected ImmutableList<Property> declaredProperties;
+	protected ImmutableList<DataTypeProperty> declaredDataTypeProperties;
+	protected ImmutableList<DataTypeProperty> dataTypeProperties;
+	protected ImmutableMap<String, DataTypeProperty> dataTypePropertiesByName;
+	protected ImmutableList<DataTypeProperty> keyProperties;
+	protected ImmutableList<AssociationEndSignature> declaredAssociationEndSignatures;
+	protected ImmutableList<ReferenceProperty> declaredReferenceProperties;
+	protected ImmutableList<ReferenceProperty> referenceProperties;
+	protected Optional<PrimitiveProperty> systemProperty;
+	protected Optional<PrimitiveProperty> systemFromProperty;
+	protected Optional<PrimitiveProperty> systemToProperty;
+	protected Optional<PrimitiveProperty> validProperty;
+	protected Optional<PrimitiveProperty> validFromProperty;
+	protected Optional<PrimitiveProperty> validToProperty;
+	protected Optional<PrimitiveProperty> createdByProperty;
+	protected Optional<PrimitiveProperty> createdOnProperty;
+	protected Optional<PrimitiveProperty> lastUpdatedByProperty;
 
 	protected AbstractClassifier(
 		@Nonnull ParserRuleContext elementContext,
@@ -146,9 +146,18 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 		this.dataTypePropertiesByName = dataTypeProperties.groupByUniqueKey(DataTypeProperty::getName);
 	}
 
+	@Nonnull
+	@Override
+	public Optional<DataTypeProperty> findDataTypePropertyByName(String name) {
+		return Optional.ofNullable(this.dataTypePropertiesByName.get(name));
+	}
+
+	@Nonnull
 	@Override
 	public DataTypeProperty getDataTypePropertyByName(String name) {
-		return this.dataTypePropertiesByName.get(name);
+		return this.dataTypePropertiesByName.getIfAbsent(name, () -> {
+				throw new IllegalStateException("No DataTypeProperty named '" + name + "' on " + this.getName());
+			});
 	}
 
 	@Override

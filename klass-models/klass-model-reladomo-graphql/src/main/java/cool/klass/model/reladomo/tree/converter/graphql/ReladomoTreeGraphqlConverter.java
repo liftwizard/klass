@@ -79,10 +79,6 @@ public final class ReladomoTreeGraphqlConverter {
 				return;
 			}
 			DataTypeProperty dataTypeProperty = eachClass.getDataTypePropertyByName(name);
-			if (dataTypeProperty == null) {
-				String detailMessage = "Expected " + name + " to be a DataTypeProperty on " + eachClass.getName();
-				throw new AssertionError(detailMessage);
-			}
 
 			while (dataTypeProperty.getOwningClassifier() != eachClass && eachClass.getSuperClass().isPresent()) {
 				Klass superClass = eachClass.getSuperClass().get();
@@ -100,10 +96,6 @@ public final class ReladomoTreeGraphqlConverter {
 		}
 
 		AssociationEnd associationEnd = eachClass.getAssociationEndByName(name);
-		if (associationEnd == null) {
-			String detailMessage = "Expected " + name + " to be an AssociationEnd on " + eachClass.getName();
-			throw new AssertionError(detailMessage);
-		}
 
 		while (associationEnd.getOwningClassifier() != eachClass && eachClass.getSuperClass().isPresent()) {
 			Klass superClass = eachClass.getSuperClass().get();
