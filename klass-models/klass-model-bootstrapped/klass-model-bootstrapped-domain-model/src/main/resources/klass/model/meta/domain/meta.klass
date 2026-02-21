@@ -1082,6 +1082,14 @@ service PackageableElementResource on PackageableElement
             criteria    : this.name == name;
             projection  : PackageableElementProjection;
         }
+        PUT
+        {
+            criteria    : this.name == name;
+        }
+        DELETE
+        {
+            criteria    : this.name == name;
+        }
     /meta/packageableElement
         GET
         {
@@ -1089,6 +1097,14 @@ service PackageableElementResource on PackageableElement
             criteria    : all;
             projection  : PackageableElementProjection;
             orderBy     : this.ordinal ascending;
+        }
+        PUT
+        {
+            criteria    : all;
+        }
+        DELETE
+        {
+            criteria    : all;
         }
 }
 
@@ -1101,6 +1117,14 @@ service EnumerationResource on Enumeration
             criteria    : this.name == name;
             projection  : EnumerationProjection;
         }
+        PUT
+        {
+            criteria    : this.name == name;
+        }
+        DELETE
+        {
+            criteria    : this.name == name;
+        }
     /meta/enumeration
         GET
         {
@@ -1108,6 +1132,14 @@ service EnumerationResource on Enumeration
             criteria    : all;
             projection  : EnumerationProjection;
             orderBy     : this.ordinal ascending;
+        }
+        PUT
+        {
+            criteria    : all;
+        }
+        DELETE
+        {
+            criteria    : all;
         }
 }
 
@@ -1129,6 +1161,14 @@ service InterfaceResource on Interface
             criteria    : this.name == name;
             projection  : InterfaceProjection;
         }
+        PUT
+        {
+            criteria    : this.name == name;
+        }
+        DELETE
+        {
+            criteria    : this.name == name;
+        }
     /meta/interface
         GET
         {
@@ -1136,6 +1176,14 @@ service InterfaceResource on Interface
             criteria    : all;
             projection  : InterfaceProjection;
             orderBy     : this.ordinal ascending;
+        }
+        PUT
+        {
+            criteria    : all;
+        }
+        DELETE
+        {
+            criteria    : all;
         }
 }
 
@@ -1239,6 +1287,14 @@ service ClassifierResource on Classifier
             criteria    : this.name == name;
             projection  : ClassifierProjection;
         }
+        PUT
+        {
+            criteria    : this.name == name;
+        }
+        DELETE
+        {
+            criteria    : this.name == name;
+        }
     /meta/classifier
         GET
         {
@@ -1246,6 +1302,14 @@ service ClassifierResource on Classifier
             criteria    : all;
             projection  : ClassifierProjection;
             orderBy     : this.ordinal ascending;
+        }
+        PUT
+        {
+            criteria    : all;
+        }
+        DELETE
+        {
+            criteria    : all;
         }
 }
 
@@ -1366,6 +1430,14 @@ service AssociationResource on Association
             criteria    : this.name == name;
             projection  : AssociationProjection;
         }
+        PUT
+        {
+            criteria    : this.name == name;
+        }
+        DELETE
+        {
+            criteria    : this.name == name;
+        }
     /meta/association
         GET
         {
@@ -1373,6 +1445,14 @@ service AssociationResource on Association
             criteria    : all;
             projection  : AssociationProjection;
             orderBy     : this.ordinal ascending;
+        }
+        PUT
+        {
+            criteria    : all;
+        }
+        DELETE
+        {
+            criteria    : all;
         }
 }
 
@@ -1385,6 +1465,14 @@ service NamedProjectionResource on NamedProjection
             criteria    : this.name == name;
             projection  : NamedProjectionProjection;
         }
+        PUT
+        {
+            criteria    : this.name == name;
+        }
+        DELETE
+        {
+            criteria    : this.name == name;
+        }
     /meta/projection
         GET
         {
@@ -1392,6 +1480,14 @@ service NamedProjectionResource on NamedProjection
             criteria    : all;
             projection  : NamedProjectionProjection;
             orderBy     : this.ordinal ascending;
+        }
+        PUT
+        {
+            criteria    : all;
+        }
+        DELETE
+        {
+            criteria    : all;
         }
 }
 
@@ -1404,6 +1500,10 @@ service ServiceGroupResource on ServiceGroup
             criteria    : this.name == name;
             projection  : ServiceGroupProjection;
         }
+        PUT
+        {
+            criteria    : this.name == name;
+        }
         DELETE
         {
             criteria    : this.name == name;
@@ -1415,5 +1515,13 @@ service ServiceGroupResource on ServiceGroup
             criteria    : all;
             projection  : ServiceGroupProjection;
             orderBy     : this.ordinal ascending;
+        }
+        PUT
+        {
+            criteria    : all;
+        }
+        DELETE
+        {
+            criteria    : all;
         }
 }
