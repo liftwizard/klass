@@ -254,21 +254,17 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 	}
 
 	private String convertUrlToSwaggerPath(Url url) {
-		StringBuilder pathBuilder = new StringBuilder();
-
-		for (Element segment : url.getUrlPathSegments()) {
-			pathBuilder.append("/");
-
-			String segmentString = segment.toString();
-			if (segmentString.contains(":")) {
-				String paramName = segmentString.substring(1, segmentString.indexOf(':')).trim();
-				pathBuilder.append("{").append(paramName).append("}");
-			} else {
-				pathBuilder.append(segmentString);
-			}
-		}
-
-		return pathBuilder.toString();
+		return url
+			.getUrlPathSegments()
+			.collect((segment) -> {
+				String segmentString = segment.toString();
+				if (segmentString.contains(":")) {
+					String paramName = segmentString.substring(1, segmentString.indexOf(':')).trim();
+					return "/{" + paramName + "}";
+				}
+				return "/" + segmentString;
+			})
+			.makeString("");
 	}
 
 	private HttpMethod convertVerbToHttpMethod(Verb verb) {
