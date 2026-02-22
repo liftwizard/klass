@@ -78,7 +78,6 @@ import org.slf4j.MDC;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
-// TODO: Refactor this whole thing to use generated getters/setters instead of Reladomo Attribute
 public class ReladomoDataStore implements DataStore {
 
 	private static final Marker MARKER = MarkerFactory.getMarker("reladomo transaction stats");
@@ -177,17 +176,6 @@ public class ReladomoDataStore implements DataStore {
 
 	@Nonnull
 	private Operation getFindByKeyOperation(@Nonnull Klass klass, @Nonnull MapIterable<DataTypeProperty, Object> keys) {
-		keys.forEachKeyValue((keyProperty, keyValue) -> {
-			if (keyProperty.getOwningClassifier() != klass) {
-				String message =
-					"Expected key property '%s' to be owned by the given class: '%s' but got '%s'.".formatted(
-						keyProperty,
-						klass,
-						keyProperty.getOwningClassifier()
-					);
-				throw new AssertionError(message);
-			}
-		});
 		ImmutableList<DataTypeProperty> keyProperties = klass.getKeyProperties();
 		if (keyProperties.size() != keys.size()) {
 			String error = String.format(
@@ -344,36 +332,20 @@ public class ReladomoDataStore implements DataStore {
 	@Override
 	public Object getDataTypeProperty(@Nonnull Object persistentInstance, @Nonnull DataTypeProperty dataTypeProperty) {
 		Objects.requireNonNull(persistentInstance);
-
 		if (!(persistentInstance instanceof MithraObject)) {
 			String detailMessage = "Expected MithraObject but got " + persistentInstance.getClass().getCanonicalName();
 			throw new AssertionError(detailMessage);
 		}
 
-		// TODO: Code generate accessors to avoid reflection
 		if (dataTypeProperty.isDerived()) {
 			return this.getPropertyReflectively(persistentInstance, dataTypeProperty);
 		}
 
-		Classifier owningClassifier = dataTypeProperty.getOwningClassifier();
-		if (
-			owningClassifier instanceof Klass
-			&& !Objects.equals(owningClassifier.getName(), persistentInstance.getClass().getSimpleName())
-		) {
-			String detailMessage = "Expected %s but got %s".formatted(
-				owningClassifier.getName(),
-				persistentInstance.getClass().getSimpleName()
-			);
-			throw new AssertionError(detailMessage);
-		}
-
-		RelatedFinder<?> finder = this.getRelatedFinder((MithraObject) persistentInstance);
-		String attributeName = dataTypeProperty.getName();
-		Attribute attribute = finder.getAttributeByName(attributeName);
+		Attribute attribute = this.findAttribute((MithraObject) persistentInstance, dataTypeProperty);
 		if (attribute == null) {
 			String detailMessage =
 				"Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find attribute: "
-				+ attributeName;
+				+ dataTypeProperty.getName();
 			throw new AssertionError(detailMessage);
 		}
 
@@ -441,8 +413,7 @@ public class ReladomoDataStore implements DataStore {
 			return this.getPropertyReflectively(persistentInstance, dataTypeProperty);
 		}
 
-		RelatedFinder<?> finder = this.getRelatedFinder((MithraObject) persistentInstance);
-		Attribute attribute = finder.getAttributeByName(dataTypeProperty.getName());
+		Attribute attribute = this.findAttribute((MithraObject) persistentInstance, dataTypeProperty);
 		if (attribute == null) {
 			String detailMessage =
 				"Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find: "
@@ -529,14 +500,12 @@ public class ReladomoDataStore implements DataStore {
 			String detailMessage = "May not set derived property: " + dataTypeProperty;
 			throw new AssertionError(detailMessage);
 		}
-
 		Object oldValue = this.getDataTypePropertyLenient(persistentInstance, dataTypeProperty);
 		if (Objects.equals(oldValue, newValue)) {
 			return false;
 		}
 
-		RelatedFinder<?> finder = this.getRelatedFinder((MithraObject) persistentInstance);
-		Attribute attribute = finder.getAttributeByName(dataTypeProperty.getName());
+		Attribute attribute = this.findAttribute((MithraObject) persistentInstance, dataTypeProperty);
 
 		if (newValue == null) {
 			if (dataTypeProperty.isRequired()) {
@@ -579,7 +548,8 @@ public class ReladomoDataStore implements DataStore {
 	}
 
 	public Object get(Object persistentSourceInstance, @Nonnull ReferenceProperty referenceProperty) {
-		RelatedFinder<?> finder = this.getRelatedFinder(referenceProperty.getOwningClassifier());
+		Classifier owningClassifier = referenceProperty.getOwningClassifier();
+		RelatedFinder<?> finder = this.getRelatedFinder(owningClassifier);
 		String referencePropertyName = referenceProperty.getName();
 		AbstractRelatedFinder relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
 			referencePropertyName
@@ -592,7 +562,52 @@ public class ReladomoDataStore implements DataStore {
 			throw new AssertionError(detailMessage);
 		}
 
-		return relationshipFinder.valueOf(persistentSourceInstance);
+		// In table-per-class hierarchy, the relationship finder expects
+		// an instance of the owning classifier's type. Navigate to the
+		// correct hierarchy level when the persistent instance type differs.
+		Object effectiveInstance = persistentSourceInstance;
+		if (
+			persistentSourceInstance instanceof MithraObject
+			&& !this.isInstanceOf(persistentSourceInstance, owningClassifier)
+		) {
+			effectiveInstance = this.navigateToClassifierInstance(persistentSourceInstance, owningClassifier);
+			if (effectiveInstance == null) {
+				return null;
+			}
+		}
+
+		return relationshipFinder.valueOf(effectiveInstance);
+	}
+
+	private Object navigateToClassifierInstance(Object persistentInstance, Classifier targetClassifier) {
+		RelatedFinder<?> concreteFinder = this.getRelatedFinder((MithraObject) persistentInstance);
+
+		// Try navigating UP to a superclass
+		String superClassRelationshipName = UPPER_TO_LOWER_CAMEL.convert(targetClassifier.getName()) + "SuperClass";
+		AbstractRelatedFinder superClassRelationship =
+			(AbstractRelatedFinder) concreteFinder.getRelationshipFinderByName(superClassRelationshipName);
+
+		if (superClassRelationship != null) {
+			return superClassRelationship.valueOf(persistentInstance);
+		}
+
+		// Try navigating DOWN to a subclass
+		String subClassRelationshipName = UPPER_TO_LOWER_CAMEL.convert(targetClassifier.getName()) + "SubClass";
+		AbstractRelatedFinder subClassRelationship = (AbstractRelatedFinder) concreteFinder.getRelationshipFinderByName(
+			subClassRelationshipName
+		);
+
+		if (subClassRelationship != null) {
+			Object result = subClassRelationship.valueOf(persistentInstance);
+			return result;
+		}
+
+		throw new AssertionError(
+			"Could not navigate to "
+			+ targetClassifier.getName()
+			+ " from "
+			+ persistentInstance.getClass().getCanonicalName()
+		);
 	}
 
 	@Nonnull
@@ -604,6 +619,9 @@ public class ReladomoDataStore implements DataStore {
 		}
 
 		Object result = this.get(persistentSourceInstance, referenceProperty);
+		if (result == null) {
+			return List.of();
+		}
 		if (!(result instanceof List)) {
 			String detailMessage = "Expected list but got " + result.getClass().getCanonicalName();
 			throw new AssertionError(detailMessage);
@@ -616,10 +634,8 @@ public class ReladomoDataStore implements DataStore {
 	public boolean setToOne(
 		@Nonnull Object persistentSourceInstance,
 		@Nonnull AssociationEnd associationEnd,
-		@Nonnull Object persistentTargetInstance
+		@Nullable Object persistentTargetInstance
 	) {
-		Objects.requireNonNull(persistentTargetInstance);
-
 		boolean mutationOccurred = false;
 
 		// A Reladomo bug prevents just calling a method like setQuestion here. Instead we have to call foreign key setters like setQuestionId
@@ -638,7 +654,9 @@ public class ReladomoDataStore implements DataStore {
 
 			DataTypeProperty foreignKey = targetDataTypeProperty;
 
-			Object keyValue = this.getDataTypeProperty(persistentTargetInstance, keyInRelatedObject);
+			Object keyValue = persistentTargetInstance == null
+				? null
+				: this.getDataTypeProperty(persistentTargetInstance, keyInRelatedObject);
 
 			mutationOccurred |= this.setDataTypeProperty(persistentSourceInstance, foreignKey, keyValue);
 		}
@@ -822,6 +840,30 @@ public class ReladomoDataStore implements DataStore {
                         persistentInstance));
         */
 		return result;
+	}
+
+	/**
+	 * Finds a Reladomo Attribute for the given property on the given instance.
+	 * In table-per-class inheritance, the concrete instance's finder may not have
+	 * attributes inherited from a superclass. This method falls back to the
+	 * owning classifier's finder when the concrete finder doesn't have the attribute.
+	 */
+	@Nullable
+	private Attribute findAttribute(@Nonnull MithraObject mithraObject, @Nonnull DataTypeProperty dataTypeProperty) {
+		RelatedFinder<?> concreteFinder = this.getRelatedFinder(mithraObject);
+		Attribute attribute = concreteFinder.getAttributeByName(dataTypeProperty.getName());
+		if (attribute != null) {
+			return attribute;
+		}
+
+		// In table-per-class hierarchy, inherited attributes live on the owning classifier's finder
+		Classifier owningClassifier = dataTypeProperty.getOwningClassifier();
+		if (owningClassifier instanceof Klass) {
+			AbstractRelatedFinder ownerFinder = this.getRelatedFinder(owningClassifier);
+			return ownerFinder.getAttributeByName(dataTypeProperty.getName());
+		}
+
+		return null;
 	}
 
 	private RelatedFinder<?> getRelatedFinder(@Nonnull MithraObject mithraObject) {
