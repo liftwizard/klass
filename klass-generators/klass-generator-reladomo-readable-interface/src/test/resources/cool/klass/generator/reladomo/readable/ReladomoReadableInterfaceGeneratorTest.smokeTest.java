@@ -39,11 +39,11 @@ public interface ReladomoReadableClassWithDerivedProperty
 
     // derived
     @Nonnull
-    Timestamp getDerivedRequiredInstant();
+    Instant getDerivedRequiredInstant();
 
     // derived
     @Nonnull
-    Date getDerivedRequiredLocalDate();
+    LocalDate getDerivedRequiredLocalDate();
 
     // derived
     String getDerivedOptionalString();
@@ -64,8 +64,8 @@ public interface ReladomoReadableClassWithDerivedProperty
     boolean isDerivedOptionalBoolean();
 
     // derived
-    Timestamp getDerivedOptionalInstant();
+    Instant getDerivedOptionalInstant();
 
     // derived
-    Date getDerivedOptionalLocalDate();
+    LocalDate getDerivedOptionalLocalDate();
 }
