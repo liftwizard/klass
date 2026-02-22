@@ -122,9 +122,10 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
 		return Objects.requireNonNull(this.declaredAssociationEnds);
 	}
 
+	@Nonnull
 	@Override
-	public AssociationEnd getDeclaredAssociationEndByName(String name) {
-		return this.declaredAssociationEndsByName.get(name);
+	public Optional<AssociationEnd> findDeclaredAssociationEndByName(String name) {
+		return Optional.ofNullable(this.declaredAssociationEndsByName.get(name));
 	}
 
 	private void setAssociationEnds(ImmutableList<AssociationEnd> associationEnds) {
@@ -143,9 +144,10 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
 		return Objects.requireNonNull(this.associationEnds);
 	}
 
+	@Nonnull
 	@Override
-	public AssociationEnd getAssociationEndByName(String name) {
-		return this.associationEndsByName.get(name);
+	public Optional<AssociationEnd> findAssociationEndByName(String name) {
+		return Optional.ofNullable(this.associationEndsByName.get(name));
 	}
 
 	@Override

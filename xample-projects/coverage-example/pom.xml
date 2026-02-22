@@ -48,6 +48,7 @@
         <module>coverage-example-reladomo-definitions</module>
         <module>coverage-example-reladomo-merge-hooks</module>
         <module>coverage-example-reladomo-pojos</module>
+        <module>coverage-example-reladomo-lenses</module>
         <module>coverage-example-reladomo-readable-interfaces</module>
         <module>coverage-example-reladomo-runtime-configuration</module>
         <module>coverage-example-relational-schema</module>

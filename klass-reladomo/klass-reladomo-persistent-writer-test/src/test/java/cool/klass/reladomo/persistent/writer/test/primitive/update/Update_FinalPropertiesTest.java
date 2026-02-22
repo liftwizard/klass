@@ -50,7 +50,7 @@ public class Update_FinalPropertiesTest extends AbstractUpdateValidatorTest {
 	@BeforeEach
 	void setUp() {
 		Klass klass = this.getKlass();
-		DataTypeProperty keyProperty = (DataTypeProperty) klass.getPropertyByName("id").get();
+		DataTypeProperty keyProperty = klass.getDataTypePropertyByName("id");
 
 		ImmutableMap<DataTypeProperty, Object> keys = Maps.immutable.with(keyProperty, 1L);
 

@@ -81,7 +81,7 @@ public final class ObjectNodeTypeCheckingValidator {
 			.forEachRemaining((entry) -> {
 				String childFieldName = entry.getKey();
 				JsonNode childJsonNode = entry.getValue();
-				Optional<Property> optionalProperty = this.klass.getPropertyByName(childFieldName);
+				Optional<Property> optionalProperty = this.klass.findPropertyByName(childFieldName);
 
 				if (optionalProperty.isEmpty()) {
 					this.handleMissingProperty(childFieldName, childJsonNode);
