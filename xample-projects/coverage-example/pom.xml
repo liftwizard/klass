@@ -39,6 +39,7 @@
         <module>coverage-example-graphql-reladomo-finder</module>
         <module>coverage-example-graphql-schema-query</module>
         <module>coverage-example-graphql-schema</module>
+        <module>coverage-example-java-constants</module>
         <module>coverage-example-json-views</module>
         <module>coverage-example-klass-html</module>
         <module>coverage-example-klass-macros</module>
