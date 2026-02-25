@@ -118,6 +118,12 @@ public class JavaConstantsMetaModelGenerator {
 			String projectionSourceCode = this.getProjectionSourceCode(projection);
 			this.printStringToFile(path, projectionSourceCode);
 		}
+
+		for (ServiceGroup serviceGroup : this.domainModel.getServiceGroups()) {
+			Path path = this.getOutputPath(outputPath, serviceGroup);
+			String serviceGroupSourceCode = this.getServiceGroupSourceCode(serviceGroup);
+			this.printStringToFile(path, serviceGroupSourceCode);
+		}
 	}
 
 	@Nonnull
@@ -134,6 +140,8 @@ public class JavaConstantsMetaModelGenerator {
 		return ""
 				+ "package " + this.rootPackageName + ".meta.constants;\n"
 				+ "\n"
+				+ "import java.util.Optional;\n"
+				+ "\n"
 				+ "import javax.annotation.*;\n"
 				+ "\n"
 				+ "import cool.klass.model.meta.domain.api.*;\n"
@@ -143,6 +151,7 @@ public class JavaConstantsMetaModelGenerator {
 				+ "import cool.klass.model.meta.domain.api.service.*;\n"
 				+ "import org.eclipse.collections.api.list.*;\n"
 				+ "import org.eclipse.collections.api.multimap.list.*;\n"
+				+ "import org.eclipse.collections.impl.factory.*;\n"
 				+ "\n"
 				+ imports
 				+ "/**\n"
@@ -154,98 +163,104 @@ public class JavaConstantsMetaModelGenerator {
 				+ "\n"
 				+ this.getTopLevelElementsSourceCode()
 				+ "\n"
+				+ this.getUserClassSourceCode()
+				+ "\n"
 				+ "    @Nonnull\n"
 				+ "    @Override\n"
 				+ "    public ImmutableList<TopLevelElement> getTopLevelElements()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName() + \".getTopLevelElements() not implemented yet\");\n"
+				+ "        return Lists.immutable.with(" + this.getConstantNames(this.domainModel.getTopLevelElements()) + ");\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Nonnull\n"
 				+ "    @Override\n"
 				+ "    public ImmutableList<Enumeration> getEnumerations()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName() + \".getEnumerations() not implemented yet\");\n"
+				+ "        return Lists.immutable.with(" + this.getConstantNames(this.domainModel.getEnumerations()) + ");\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Nonnull\n"
 				+ "    @Override\n"
 				+ "    public ImmutableList<Classifier> getClassifiers()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getClassifiers() not implemented yet\");\n"
+				+ "        return Lists.immutable.with(" + this.getConstantNames(this.domainModel.getClassifiers()) + ");\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Nonnull\n"
 				+ "    @Override\n"
 				+ "    public ImmutableList<Interface> getInterfaces()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName() + \".getInterfaces() not implemented yet\");\n"
+				+ "        return Lists.immutable.with(" + this.getConstantNames(this.domainModel.getInterfaces()) + ");\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Nonnull\n"
 				+ "    @Override\n"
 				+ "    public ImmutableList<Klass> getClasses()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName() + \".getClasses() not implemented yet\");\n"
+				+ "        return Lists.immutable.with(" + this.getConstantNames(this.domainModel.getClasses()) + ");\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Nonnull\n"
 				+ "    @Override\n"
 				+ "    public ImmutableList<Association> getAssociations()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName() + \".getAssociations() not implemented yet\");\n"
+				+ "        return Lists.immutable.with(" + this.getConstantNames(this.domainModel.getAssociations()) + ");\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Nonnull\n"
 				+ "    @Override\n"
 				+ "    public ImmutableList<Projection> getProjections()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName() + \".getProjections() not implemented yet\");\n"
+				+ "        return Lists.immutable.with(" + this.getConstantNames(this.domainModel.getProjections()) + ");\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Nonnull\n"
 				+ "    @Override\n"
 				+ "    public ImmutableList<ServiceGroup> getServiceGroups()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName() + \".getServiceGroups() not implemented yet\");\n"
+				+ "        return Lists.immutable.with(" + this.getConstantNames(this.domainModel.getServiceGroups()) + ");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public TopLevelElement getTopLevelElementByName(String name)\n"
+				+ "    {\n"
+				+ this.getSwitchCasesSourceCode(this.domainModel.getTopLevelElements())
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
 				+ "    public Enumeration getEnumerationByName(String name)\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName() + \".getEnumerationByName() not implemented yet\");\n"
+				+ this.getSwitchCasesSourceCode(this.domainModel.getEnumerations())
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
 				+ "    public Classifier getClassifierByName(String name)\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getClassifierByName() not implemented yet\");\n"
+				+ this.getSwitchCasesSourceCode(this.domainModel.getClassifiers())
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
 				+ "    public Interface getInterfaceByName(String name)\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName() + \".getInterfaceByName() not implemented yet\");\n"
+				+ this.getSwitchCasesSourceCode(this.domainModel.getInterfaces())
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
 				+ "    public Klass getClassByName(String name)\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName() + \".getClassByName() not implemented yet\");\n"
+				+ this.getSwitchCasesSourceCode(this.domainModel.getClasses())
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
 				+ "    public Association getAssociationByName(String name)\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName() + \".getAssociationByName() not implemented yet\");\n"
+				+ this.getSwitchCasesSourceCode(this.domainModel.getAssociations())
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
 				+ "    public Projection getProjectionByName(String name)\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName() + \".getProjectionByName() not implemented yet\");\n"
+				+ this.getSwitchCasesSourceCode(this.domainModel.getProjections())
 				+ "    }\n"
 				+ "}\n";
 		// @formatter:on
@@ -258,10 +273,6 @@ public class JavaConstantsMetaModelGenerator {
 
 	@Nonnull
 	private String getTopLevelElementSourceCode(TopLevelElement topLevelElement) {
-		if (topLevelElement instanceof ServiceGroup) {
-			// TODO: ServiceGroup code generation
-			return "";
-		}
 		return MessageFormat.format(
 			"    public static final {1}_{0} {1} = {1}_{0}.INSTANCE;\n",
 			this.getTypeName(topLevelElement),
@@ -608,14 +619,20 @@ public class JavaConstantsMetaModelGenerator {
 				+ "        return Lists.immutable.with(" + eachInterface.getDeclaredDataTypeProperties().collect(NamedElement::getName).makeString() + ");\n"
 				+ "    }\n"
 				+ "\n"
+				+ "    @Override\n"
+				+ "    public boolean isAbstract()\n"
+				+ "    {\n"
+				+ "        return " + eachInterface.isAbstract() + ";\n"
+				+ "    }\n"
+				+ "\n"
 				+ "    @Nonnull\n"
 				+ "    @Override\n"
 				+ "    public ImmutableList<Modifier> getDeclaredModifiers()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getDeclaredModifiers() not implemented yet\");\n"
+				+ this.getClassifierDeclaredModifiersSourceCode(eachInterface)
 				+ "    }\n"
 				+ "\n"
+				+ this.getClassifierAbstractMethodsSourceCode(eachInterface)
 				+ "    @Override\n"
 				+ "    public String toString()\n"
 				+ "    {\n"
@@ -730,14 +747,41 @@ public class JavaConstantsMetaModelGenerator {
 				+ "        return Lists.immutable.with(" + klass.getDeclaredAssociationEnds().collect(NamedElement::getName).makeString() + ");\n"
 				+ "    }\n"
 				+ "\n"
+				+ "    @Override\n"
+				+ "    public AssociationEnd getDeclaredAssociationEndByName(String name)\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getDeclaredAssociationEndByName() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public ImmutableList<AssociationEnd> getAssociationEnds()\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getAssociationEnds() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public AssociationEnd getAssociationEndByName(String name)\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getAssociationEndByName() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public boolean isAbstract()\n"
+				+ "    {\n"
+				+ "        return " + klass.isAbstract() + ";\n"
+				+ "    }\n"
+				+ "\n"
 				+ "    @Nonnull\n"
 				+ "    @Override\n"
 				+ "    public ImmutableList<Modifier> getDeclaredModifiers()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getDeclaredModifiers() not implemented yet\");\n"
+				+ this.getClassifierDeclaredModifiersSourceCode(klass)
 				+ "    }\n"
 				+ "\n"
+				+ this.getClassifierAbstractMethodsSourceCode(klass)
 				+ "    @Override\n"
 				+ "    public boolean isUser()\n"
 				+ "    {\n"
@@ -748,6 +792,12 @@ public class JavaConstantsMetaModelGenerator {
 				+ "    public boolean isTransient()\n"
 				+ "    {\n"
 				+ "        return " + klass.isTransient() + ";\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public ImmutableList<Klass> getSubClasses()\n"
+				+ "    {\n"
+				+ "        return Lists.immutable.with(" + klass.getSubClasses().collect(this::getDomainModelConstant).makeString() + ");\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
@@ -910,17 +960,25 @@ public class JavaConstantsMetaModelGenerator {
 			+ "        }\n"
 			+ "\n"
 			+ "        @Override\n"
-			+ "        public OrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> getKeysMatchingThisForeignKey()\n"
+			+ "        public boolean isForeignKeyToSelf()\n"
 			+ "        {\n"
-			+ "            MutableOrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());\n"
+			+ "            return "
+			+ primitiveProperty.isForeignKeyToSelf()
+			+ ";\n"
+			+ "        }\n"
+			+ "\n"
+			+ "        @Override\n"
+			+ "        public OrderedMap<AssociationEnd, DataTypeProperty> getKeysMatchingThisForeignKey()\n"
+			+ "        {\n"
+			+ "            MutableOrderedMap<AssociationEnd, DataTypeProperty> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());\n"
 			+ this.getKeysMatchingThisForeignKey(primitiveProperty)
 			+ "            return result.asUnmodifiable();\n"
 			+ "        }\n"
 			+ "\n"
 			+ "        @Override\n"
-			+ "        public OrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> getForeignKeysMatchingThisKey()\n"
+			+ "        public OrderedMap<AssociationEnd, DataTypeProperty> getForeignKeysMatchingThisKey()\n"
 			+ "        {\n"
-			+ "            MutableOrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());\n"
+			+ "            MutableOrderedMap<AssociationEnd, DataTypeProperty> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());\n"
 			+ this.getForeignKeysMatchingThisKey(primitiveProperty)
 			+ "            return result.asUnmodifiable();\n"
 			+ "        }\n"
@@ -946,7 +1004,7 @@ public class JavaConstantsMetaModelGenerator {
 
 	private String getForeignKeySourceCode(@Nonnull Pair<AssociationEnd, DataTypeProperty> each) {
 		return String.format(
-			"            result.put(%s, Lists.immutable.with(%s));%n",
+			"            result.put(%s, %s);%n",
 			this.getForeignKeySourceCode(each.getOne()),
 			this.getForeignKeySourceCode(each.getTwo())
 		);
@@ -967,6 +1025,70 @@ public class JavaConstantsMetaModelGenerator {
 			.keyValuesView()
 			.collect(this::getForeignKeySourceCode)
 			.makeString("");
+	}
+
+	@Nonnull
+	private String getClassifierDeclaredModifiersSourceCode(@Nonnull Classifier classifier) {
+		ImmutableList<Modifier> modifiers = classifier.getDeclaredModifiers();
+		if (modifiers.isEmpty()) {
+			return "        return Lists.immutable.empty();\n";
+		}
+
+		String variablesSourceCode = modifiers.collect(modifier -> this.getClassifierModifierSourceCode(modifier, classifier)).makeString("\n");
+
+		ImmutableList<String> variableNames = modifiers
+			.collect(Modifier::getKeyword)
+			.collect((each) -> each + "_" + Modifier.class.getSimpleName());
+
+		return (
+			variablesSourceCode
+			+ "\n"
+			+ "        return Lists.immutable.with("
+			+ variableNames.makeString()
+			+ ");\n"
+		);
+	}
+
+	@Nonnull
+	private String getClassifierModifierSourceCode(@Nonnull Modifier modifier, @Nonnull Classifier classifier) {
+		String className = Modifier.class.getSimpleName();
+
+		// @formatter:off
+		// language=JAVA
+		return ""
+				+ "        " + className + " " + modifier.getKeyword() + "_" + className + " = new " + className + "()\n"
+				+ "        {\n"
+				+ "            @Override\n"
+				+ "            public Classifier getModifierOwner()\n"
+				+ "            {\n"
+				+ "                return " + this.getDomainModelConstant(classifier) + ";\n"
+				+ "            }\n"
+				+ "\n"
+				+ "            @Override\n"
+				+ "            public String getKeyword()\n"
+				+ "            {\n"
+				+ "                return \"" + StringEscapeUtils.escapeJava(modifier.getKeyword()) + "\";\n"
+				+ "            }\n"
+				+ "\n"
+				+ "            @Override\n"
+				+ "            public int getOrdinal()\n"
+				+ "            {\n"
+				+ "                return " + modifier.getOrdinal() + ";\n"
+				+ "            }\n"
+				+ "\n"
+				+ "            @Override\n"
+				+ "            public Optional<Element> getMacroElement()\n"
+				+ "            {\n"
+				+ "                return Optional.empty();\n"
+				+ "            }\n"
+				+ "\n"
+				+ "            @Override\n"
+				+ "            public String toString()\n"
+				+ "            {\n"
+				+ "                return \"" + StringEscapeUtils.escapeJava(modifier.toString()) + "\";\n"
+				+ "            }\n"
+				+ "        };\n";
+		// @formatter:on
 	}
 
 	@Nonnull
@@ -1005,9 +1127,8 @@ public class JavaConstantsMetaModelGenerator {
 				+ "                    return " + this.getUppercaseName(modifierOwner) + "_" + this.getTypeName(modifierOwner) + ".INSTANCE;\n"
 				+ "                }\n"
 				+ "\n"
-				+ "                @Nonnull\n"
 				+ "                @Override\n"
-				+ "                public String getName()\n"
+				+ "                public String getKeyword()\n"
 				+ "                {\n"
 				+ "                    return \"" + StringEscapeUtils.escapeJava(modifier.getKeyword()) + "\";\n"
 				+ "                }\n"
@@ -1122,15 +1243,21 @@ public class JavaConstantsMetaModelGenerator {
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public OrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> getKeysMatchingThisForeignKey()\n"
+				+ "        public boolean isForeignKeyToSelf()\n"
 				+ "        {\n"
-				+ "            MutableOrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());\n"
+				+ "            return " + enumerationProperty.isForeignKeyToSelf() + ";\n"
+				+ "        }\n"
+				+ "\n"
+				+ "        @Override\n"
+				+ "        public OrderedMap<AssociationEnd, DataTypeProperty> getKeysMatchingThisForeignKey()\n"
+				+ "        {\n"
+				+ "            MutableOrderedMap<AssociationEnd, DataTypeProperty> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());\n"
 				+ this.getKeysMatchingThisForeignKey(enumerationProperty)
 				+ "            return result.asUnmodifiable();\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public OrderedMap<AssociationEnd, ImmutableList<DataTypeProperty>> getForeignKeysMatchingThisKey()\n"
+				+ "        public OrderedMap<AssociationEnd, DataTypeProperty> getForeignKeysMatchingThisKey()\n"
 				+ "        {\n"
 				+ "            throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
 				+ "                    + \".getForeignKeysMatchingThisKey() not implemented yet\");\n"
@@ -1186,6 +1313,8 @@ public class JavaConstantsMetaModelGenerator {
 				+ "import cool.klass.model.meta.domain.api.property.*;\n"
 				+ "import cool.klass.model.meta.domain.api.projection.*;\n"
 				+ "import cool.klass.model.meta.domain.api.source.*;\n"
+				+ "\n"
+				+ "import " + this.rootPackageName + ".meta.constants." + this.applicationName + "DomainModel;\n"
 				+ "\n"
 				+ "import org.eclipse.collections.api.list.*;\n"
 				+ "import org.eclipse.collections.api.multimap.list.*;\n"
@@ -1362,9 +1491,8 @@ public class JavaConstantsMetaModelGenerator {
 				+ "                return INSTANCE;\n"
 				+ "            }\n"
 				+ "\n"
-				+ "            @Nonnull\n"
 				+ "            @Override\n"
-				+ "            public String getName()\n"
+				+ "            public String getKeyword()\n"
 				+ "            {\n"
 				+ "                return \"" + modifier.getKeyword() + "\";\n"
 				+ "            }\n"
@@ -1445,6 +1573,8 @@ public class JavaConstantsMetaModelGenerator {
 				+ "import cool.klass.model.meta.domain.api.projection.*;\n"
 				+ "import cool.klass.model.meta.domain.api.source.*;\n"
 				+ "\n"
+				+ "import " + this.rootPackageName + ".meta.constants." + this.applicationName + "DomainModel;\n"
+				+ "\n"
 				+ "import org.eclipse.collections.api.list.*;\n"
 				+ "import org.eclipse.collections.api.multimap.list.*;\n"
 				+ "import org.eclipse.collections.impl.factory.*;\n"
@@ -1500,7 +1630,7 @@ public class JavaConstantsMetaModelGenerator {
 				+ "    @Override\n"
 				+ "    public ImmutableList<? extends ProjectionChild> getChildren()\n"
 				+ "    {\n"
-				+ "        return Lists.immutable.with(" + projection.getChildren().collect(ProjectionElement::getName).makeString() + ");\n"
+				+ "        return Lists.immutable.with(" + projection.getChildren().collect(this::getProjectionChildFieldName).makeString() + ");\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
@@ -1521,15 +1651,26 @@ public class JavaConstantsMetaModelGenerator {
 	@Nonnull
 	private String getProjectionChildConstantSourceCode(@Nonnull ProjectionElement projectionElement) {
 		String name = projectionElement.getName();
-		String uppercaseName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, name) + projectionElement.getDepth();
+		int depth = projectionElement.getDepth();
+		String uppercaseName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, name) + depth;
 		String type = this.getTypeName(projectionElement);
+		String fieldName = this.getProjectionChildFieldName(projectionElement);
 
 		return MessageFormat.format(
 			"    public static final {0}_{1} {2} = {0}_{1}.INSTANCE;\n",
 			uppercaseName,
 			type,
-			name
+			fieldName
 		);
+	}
+
+	@Nonnull
+	private String getProjectionChildFieldName(@Nonnull ProjectionElement projectionElement) {
+		String name = projectionElement.getName();
+		int depth = projectionElement.getDepth();
+		String type = this.getTypeName(projectionElement);
+		String shortType = type.replace("Projection", "");
+		return name + shortType + depth;
 	}
 
 	@Nonnull
@@ -1606,6 +1747,13 @@ public class JavaConstantsMetaModelGenerator {
 				+ "\n"
 				+ "    @Nonnull\n"
 				+ "    @Override\n"
+				+ "    public Classifier getDeclaredClassifier()\n"
+				+ "    {\n"
+				+ "        return " + this.applicationName + "DomainModel." + projectionDataTypeProperty.getDeclaredClassifier().getName() + ";\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Nonnull\n"
+				+ "    @Override\n"
 				+ "    public DataTypeProperty getProperty()\n"
 				+ "    {\n"
 				+ "        return " + this.applicationName + "DomainModel." + dataTypeProperty.getOwningClassifier().getName() + "." + dataTypeProperty.getName() + ";\n"
@@ -1665,6 +1813,13 @@ public class JavaConstantsMetaModelGenerator {
 				+ "        return Optional.empty();\n"
 				+ "    }\n"
 				+ "\n"
+				+ "    @Nonnull\n"
+				+ "    @Override\n"
+				+ "    public Classifier getDeclaredClassifier()\n"
+				+ "    {\n"
+				+ "        return " + this.applicationName + "DomainModel." + projectionReferenceProperty.getDeclaredClassifier().getName() + ";\n"
+				+ "    }\n"
+				+ "\n"
 				+ "    @Override\n"
 				+ "    public Optional<ProjectionParent> getParent()\n"
 				+ "    {\n"
@@ -1674,7 +1829,7 @@ public class JavaConstantsMetaModelGenerator {
 				+ "    @Override\n"
 				+ "    public ImmutableList<? extends ProjectionChild> getChildren()\n"
 				+ "    {\n"
-				+ "        return Lists.immutable.with(" + projectionReferenceProperty.getChildren().collect(ProjectionElement::getName).makeString() + ");\n"
+				+ "        return Lists.immutable.with(" + projectionReferenceProperty.getChildren().collect(this::getProjectionChildFieldName).makeString() + ");\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Nonnull\n"
@@ -1731,6 +1886,13 @@ public class JavaConstantsMetaModelGenerator {
 				+ "        return Optional.empty();\n"
 				+ "    }\n"
 				+ "\n"
+				+ "    @Nonnull\n"
+				+ "    @Override\n"
+				+ "    public Classifier getDeclaredClassifier()\n"
+				+ "    {\n"
+				+ "        return " + this.applicationName + "DomainModel." + projectionProjectionReference.getDeclaredClassifier().getName() + ";\n"
+				+ "    }\n"
+				+ "\n"
 				+ "    @Override\n"
 				+ "    public Projection getProjection()\n"
 				+ "    {\n"
@@ -1761,5 +1923,224 @@ public class JavaConstantsMetaModelGenerator {
 
 	private String getUppercaseName(NamedElement namedElement) {
 		return CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, namedElement.getName());
+	}
+
+	@Nonnull
+	private String getClassifierAbstractMethodsSourceCode(@Nonnull Classifier classifier) {
+		// @formatter:off
+		return ""
+				+ "    @Override\n"
+				+ "    public ImmutableList<DataTypeProperty> getKeyProperties()\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getKeyProperties() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Nonnull\n"
+				+ "    @Override\n"
+				+ "    public ImmutableList<DataTypeProperty> getDataTypeProperties()\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getDataTypeProperties() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public DataTypeProperty getDataTypePropertyByName(String name)\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getDataTypePropertyByName() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public ImmutableList<ReferenceProperty> getDeclaredReferenceProperties()\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getDeclaredReferenceProperties() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public ImmutableList<ReferenceProperty> getReferenceProperties()\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getReferenceProperties() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public Optional<PrimitiveProperty> getSystemProperty()\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getSystemProperty() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public Optional<PrimitiveProperty> getSystemFromProperty()\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getSystemFromProperty() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public Optional<PrimitiveProperty> getSystemToProperty()\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getSystemToProperty() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public Optional<PrimitiveProperty> getValidProperty()\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getValidProperty() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public Optional<PrimitiveProperty> getValidFromProperty()\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getValidFromProperty() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public Optional<PrimitiveProperty> getValidToProperty()\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getValidToProperty() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public Optional<PrimitiveProperty> getCreatedByProperty()\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getCreatedByProperty() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public Optional<PrimitiveProperty> getCreatedOnProperty()\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getCreatedOnProperty() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public Optional<PrimitiveProperty> getLastUpdatedByProperty()\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
+				+ "                + \".getLastUpdatedByProperty() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n";
+		// @formatter:on
+	}
+
+	@Nonnull
+	private String getUserClassSourceCode() {
+		Optional<Klass> userClass = this.domainModel.getUserClass();
+		String returnExpression = userClass
+			.map((klass) -> "Optional.of(" + klass.getName() + ")")
+			.orElse("Optional.empty()");
+
+		return ""
+			+ "    @Nonnull\n"
+			+ "    @Override\n"
+			+ "    public Optional<Klass> getUserClass()\n"
+			+ "    {\n"
+			+ "        return " + returnExpression + ";\n"
+			+ "    }\n";
+	}
+
+	@Nonnull
+	private String getConstantNames(ImmutableList<? extends NamedElement> elements) {
+		return elements.collect(NamedElement::getName).makeString();
+	}
+
+	@Nonnull
+	private String getSwitchCasesSourceCode(ImmutableList<? extends NamedElement> elements) {
+		if (elements.isEmpty()) {
+			return "        return null;\n";
+		}
+
+		String cases = elements
+			.collect((element) -> "            case \"" + StringEscapeUtils.escapeJava(element.getName()) + "\" -> " + element.getName() + ";\n")
+			.makeString("");
+
+		return ""
+			+ "        return switch (name)\n"
+			+ "        {\n"
+			+ cases
+			+ "            default -> null;\n"
+			+ "        };\n";
+	}
+
+	@Nonnull
+	private String getServiceGroupSourceCode(@Nonnull ServiceGroup serviceGroup) {
+		// @formatter:off
+		// language=JAVA
+		return ""
+				+ "package " + serviceGroup.getPackageName() + ".meta.constants;\n"
+				+ "\n"
+				+ "import java.util.Optional;\n"
+				+ "\n"
+				+ "import javax.annotation.*;\n"
+				+ "\n"
+				+ "import cool.klass.model.meta.domain.api.*;\n"
+				+ "import cool.klass.model.meta.domain.api.service.*;\n"
+				+ "import cool.klass.model.meta.domain.api.service.url.*;\n"
+				+ "\n"
+				+ "import " + this.rootPackageName + ".meta.constants." + this.applicationName + "DomainModel;\n"
+				+ "\n"
+				+ "import org.eclipse.collections.api.list.*;\n"
+				+ "\n"
+				+ "/**\n"
+				+ " * Auto-generated by {@link " + this.getClass().getCanonicalName() + "}\n"
+				+ " */\n"
+				+ "public enum " + serviceGroup.getName() + "_ServiceGroup implements ServiceGroup\n"
+				+ "{\n"
+				+ "    INSTANCE;\n"
+				+ "\n"
+				+ "    @Nonnull\n"
+				+ "    @Override\n"
+				+ "    public String getPackageName()\n"
+				+ "    {\n"
+				+ "        return \"" + StringEscapeUtils.escapeJava(serviceGroup.getPackageName()) + "\";\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Nonnull\n"
+				+ "    @Override\n"
+				+ "    public String getName()\n"
+				+ "    {\n"
+				+ "        return \"" + StringEscapeUtils.escapeJava(serviceGroup.getName()) + "\";\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public int getOrdinal()\n"
+				+ "    {\n"
+				+ "        return " + serviceGroup.getOrdinal() + ";\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public Optional<Element> getMacroElement()\n"
+				+ "    {\n"
+				+ "        return Optional.empty();\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Nonnull\n"
+				+ "    @Override\n"
+				+ "    public Klass getKlass()\n"
+				+ "    {\n"
+				+ "        return " + this.applicationName + "DomainModel." + serviceGroup.getKlass().getName() + ";\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public ImmutableList<Url> getUrls()\n"
+				+ "    {\n"
+				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName() + \".getUrls() not implemented yet\");\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    public String toString()\n"
+				+ "    {\n"
+				+ "        return \"" + StringEscapeUtils.escapeJava(serviceGroup.toString()) + "\";\n"
+				+ "    }\n"
+				+ "}\n";
+		// @formatter:on
 	}
 }
