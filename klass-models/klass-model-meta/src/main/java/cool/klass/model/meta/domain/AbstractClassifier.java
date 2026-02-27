@@ -146,9 +146,10 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 		this.dataTypePropertiesByName = dataTypeProperties.groupByUniqueKey(DataTypeProperty::getName);
 	}
 
+	@Nonnull
 	@Override
-	public DataTypeProperty getDataTypePropertyByName(String name) {
-		return this.dataTypePropertiesByName.get(name);
+	public Optional<DataTypeProperty> findDataTypePropertyByName(String name) {
+		return Optional.ofNullable(this.dataTypePropertiesByName.get(name));
 	}
 
 	@Override

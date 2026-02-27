@@ -36,6 +36,7 @@
         <module>klass-model-meta-project-write</module>
         <module>klass-model-meta</module>
         <module>klass-model-reladomo-graphql</module>
+        <module>klass-model-reladomo-lens-api</module>
         <module>klass-model-reladomo-projection</module>
         <module>klass-model-reladomo-tree</module>
         <module>klass-model-source-code-meta-interface</module>
