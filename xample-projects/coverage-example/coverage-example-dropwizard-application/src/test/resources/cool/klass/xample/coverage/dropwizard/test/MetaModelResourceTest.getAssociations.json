@@ -25,14 +25,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 349
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -94,14 +87,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 350
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -221,14 +207,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 351
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -406,14 +385,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 352
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -859,14 +831,7 @@
 					"name": "PropertyModifier"
 				},
 				"associationEndModifiers": [],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 353
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -1021,14 +986,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 354
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -1206,14 +1164,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 355
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -1670,14 +1621,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 356
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -2041,14 +1985,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 357
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -2110,14 +2047,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 358
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -2330,14 +2260,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 359
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -2430,14 +2353,7 @@
 					"name": "ParameterizedPropertyParameter"
 				},
 				"associationEndModifiers": [],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 360
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -2588,14 +2504,7 @@
 					"name": "ProjectionElement"
 				},
 				"associationEndModifiers": [],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 361
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -3017,14 +2926,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 362
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -3179,14 +3081,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 363
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -3248,14 +3143,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 364
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -3658,14 +3546,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 365
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {
@@ -4940,104 +4821,7 @@
 						"keyword": "owned"
 					}
 				],
-				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 366
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 367
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 368
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 369
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 370
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 371
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 372
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 373
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 374
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 375
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 376
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 377
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 378
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 379
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 380
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath": {
-							"id": 381
-						}
-					}
-				]
+				"orderBys": []
 			}
 		],
 		"criteria": {

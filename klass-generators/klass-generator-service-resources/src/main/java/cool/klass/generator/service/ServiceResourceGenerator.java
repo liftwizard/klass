@@ -949,18 +949,20 @@ public class ServiceResourceGenerator {
 				+ authorizePredicateSourceCode
 				+ validatePredicateSourceCode
 				+ "\n"
-				+ "        if (result.size() > 1)\n"
-				+ "        {\n"
-				+ "            throw new InternalServerErrorException(\"TODO\");\n"
-				+ "        }\n"
 				+ conflictPredicateSourceCode
-				+ "\n"
-				+ "        Object persistentInstance = result.get(0);\n"
 				+ "\n"
 				+ "        Instant           transactionInstant = Instant.now(this.clock);\n"
 				+ "        MutationContext   mutationContext    = new MutationContext(" + (needsSecurityContext ? "Optional.of(userPrincipalName)" : "Optional.empty()") + ", transactionInstant, Maps.immutable.empty());\n"
 				+ "        PersistentDeleter deleter            = new PersistentDeleter(mutationContext, this.dataStore);\n"
-				+ "        deleter.deleteOrTerminate(klass, persistentInstance);\n"
+				+ "\n"
+				+ "        this.dataStore.runInTransaction(() ->\n"
+				+ "        {\n"
+				+ "            for (int i = result.size() - 1; i >= 0; i--)\n"
+				+ "            {\n"
+				+ "                Object persistentInstance = result.get(i);\n"
+				+ "                deleter.deleteOrTerminate(klass, persistentInstance);\n"
+				+ "            }\n"
+				+ "        });\n"
 				+ "    }\n";
 		// @formatter:on
 	}

@@ -15,9 +15,7 @@
 			"name": "name",
 			"optional": false,
 			"minLengthValidation": null,
-			"maxLengthValidation": {
-				"number": 256
-			},
+			"maxLengthValidation": null,
 			"propertyModifiers": [
 				{
 					"keyword": "key"

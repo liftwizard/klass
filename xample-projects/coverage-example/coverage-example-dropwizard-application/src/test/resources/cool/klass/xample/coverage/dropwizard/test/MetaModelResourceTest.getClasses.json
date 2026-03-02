@@ -16,9 +16,7 @@
 				"name": "packageName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 100000
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [],
 				"primitiveType": "String",
 				"minValidation": null,
@@ -70,9 +68,7 @@
 				"name": "enumerationName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -87,9 +83,7 @@
 				"name": "prettyName",
 				"optional": true,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [],
 				"primitiveType": "String",
 				"minValidation": null,
@@ -159,9 +153,7 @@
 				"name": "classifierName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -179,9 +171,7 @@
 				"name": "interfaceName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -239,9 +229,7 @@
 				"name": "classifierName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -256,9 +244,7 @@
 				"name": "keyword",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -304,9 +290,7 @@
 				"name": "superClassName",
 				"optional": true,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -377,9 +361,7 @@
 				"name": "classifierName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -436,9 +418,7 @@
 				"name": "primitiveType",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [],
 				"enumeration": {
 					"name": "PrimitiveType"
@@ -470,9 +450,7 @@
 				"name": "enumerationName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -595,9 +573,7 @@
 				"name": "classifierName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -612,9 +588,7 @@
 				"name": "propertyName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -629,9 +603,7 @@
 				"name": "keyword",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -701,9 +673,7 @@
 				"name": "name",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [],
 				"primitiveType": "String",
 				"minValidation": null,
@@ -714,9 +684,7 @@
 				"name": "multiplicity",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [],
 				"enumeration": {
 					"name": "Multiplicity"
@@ -746,9 +714,7 @@
 				"name": "enumerationName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -781,9 +747,7 @@
 				"name": "primitiveType",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [],
 				"enumeration": {
 					"name": "PrimitiveType"
@@ -904,9 +868,7 @@
 				"name": "className",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -921,9 +883,7 @@
 				"name": "propertyClassName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -938,9 +898,7 @@
 				"name": "propertyName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -1160,9 +1118,7 @@
 				"name": "operator",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [],
 				"enumeration": {
 					"name": "Operator"
@@ -1269,9 +1225,7 @@
 				"name": "owningClassName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -1289,9 +1243,7 @@
 				"name": "associationName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [],
 				"primitiveType": "String",
 				"minValidation": null,
@@ -1302,9 +1254,7 @@
 				"name": "resultTypeName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -1319,9 +1269,7 @@
 				"name": "direction",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [],
 				"enumeration": {
 					"name": "AssociationEndDirection"
@@ -1332,9 +1280,7 @@
 				"name": "multiplicity",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [],
 				"enumeration": {
 					"name": "Multiplicity"
@@ -1385,9 +1331,7 @@
 				"name": "owningClassName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -1402,9 +1346,7 @@
 				"name": "associationEndName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -1419,9 +1361,7 @@
 				"name": "keyword",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -1485,9 +1425,7 @@
 				"name": "associationOwningClassName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -1505,9 +1443,7 @@
 				"name": "associationEndName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -1598,9 +1534,7 @@
 				"name": "owningClassName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -1618,9 +1552,7 @@
 				"name": "resultTypeName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -1635,9 +1567,7 @@
 				"name": "multiplicity",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [],
 				"enumeration": {
 					"name": "Multiplicity"
@@ -1673,9 +1603,7 @@
 				"name": "associationEndClassName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -1693,9 +1621,7 @@
 				"name": "associationEndName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -1731,9 +1657,7 @@
 				"name": "orderByDirection",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [],
 				"enumeration": {
 					"name": "OrderByDirection"
@@ -1778,9 +1702,7 @@
 				"name": "owningClassName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -1798,9 +1720,7 @@
 				"name": "name",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -1848,9 +1768,7 @@
 				"name": "classifierName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -1868,9 +1786,7 @@
 				"name": "parameterizedPropertyName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -1955,9 +1871,7 @@
 				"name": "name",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [],
 				"primitiveType": "String",
 				"minValidation": null,
@@ -1987,9 +1901,7 @@
 				"name": "classifierName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -2064,9 +1976,7 @@
 				"name": "associationEndClass",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -2081,9 +1991,7 @@
 				"name": "associationEndName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -2129,9 +2037,7 @@
 				"name": "projectionName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -2164,9 +2070,7 @@
 				"name": "propertyClassifierName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -2181,9 +2085,7 @@
 				"name": "propertyName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -2216,9 +2118,7 @@
 				"name": "className",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -2260,9 +2160,7 @@
 				"name": "serviceGroupName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -2277,9 +2175,7 @@
 				"name": "url",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 8192
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -2337,9 +2233,7 @@
 				"name": "serviceGroupName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -2357,9 +2251,7 @@
 				"name": "urlString",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 8192
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -2446,9 +2338,7 @@
 				"name": "serviceGroupName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -2463,9 +2353,7 @@
 				"name": "urlString",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 8192
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -2480,9 +2368,7 @@
 				"name": "verb",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -2497,9 +2383,7 @@
 				"name": "projectionName",
 				"optional": true,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "private"
@@ -2574,9 +2458,7 @@
 				"name": "serviceMultiplicity",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [],
 				"enumeration": {
 					"name": "ServiceMultiplicity"
@@ -2636,9 +2518,7 @@
 				"name": "serviceGroupName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -2656,9 +2536,7 @@
 				"name": "serviceUrlString",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 8192
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
