@@ -659,7 +659,7 @@ public class ReladomoDataStore implements DataStore {
 		if (persistentInstance instanceof MithraDatedTransactionalObject transactionalObject) {
 			transactionalObject.terminate();
 		} else if (persistentInstance instanceof MithraTransactionalObject transactionalObject) {
-			transactionalObject.delete();
+			transactionalObject.cascadeDelete();
 		} else {
 			String detailMessage =
 				"Unexpected persistent instance type: " + persistentInstance.getClass().getCanonicalName();
