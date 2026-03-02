@@ -6,6 +6,50 @@
 	},
 	"urls": [
 		{
+			"url": "/meta/serviceGroup",
+			"parameters": [],
+			"services": [
+				{
+					"verb": "DELETE",
+					"serviceMultiplicity": "one",
+					"projection": null,
+					"queryCriteria": {
+						"__typename": "klass.model.meta.domain.AllCriteria"
+					},
+					"authorizeCriteria": null,
+					"validateCriteria": null,
+					"conflictCriteria": null,
+					"orderBys": []
+				},
+				{
+					"verb": "GET",
+					"serviceMultiplicity": "many",
+					"projection": {
+						"name": "ServiceGroupProjection"
+					},
+					"queryCriteria": {
+						"__typename": "klass.model.meta.domain.AllCriteria"
+					},
+					"authorizeCriteria": null,
+					"validateCriteria": null,
+					"conflictCriteria": null,
+					"orderBys": []
+				},
+				{
+					"verb": "PUT",
+					"serviceMultiplicity": "one",
+					"projection": null,
+					"queryCriteria": {
+						"__typename": "klass.model.meta.domain.AllCriteria"
+					},
+					"authorizeCriteria": null,
+					"validateCriteria": null,
+					"conflictCriteria": null,
+					"orderBys": []
+				}
+			]
+		},
+		{
 			"url": "/meta/serviceGroup/{name}",
 			"parameters": [
 				{
@@ -20,6 +64,41 @@
 				}
 			],
 			"services": [
+				{
+					"verb": "DELETE",
+					"serviceMultiplicity": "one",
+					"projection": null,
+					"queryCriteria": {
+						"__typename": "klass.model.meta.domain.OperatorCriteria",
+						"operator": "==",
+						"sourceExpressionValue": {
+							"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+							"id": 185,
+							"klass": {
+								"name": "ServiceGroup"
+							},
+							"associationEnds": [],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						},
+						"targetExpressionValue": {
+							"__typename": "klass.model.meta.domain.ParameterReference",
+							"id": 186,
+							"parameter": {
+								"id": 8,
+								"name": "name"
+							}
+						}
+					},
+					"authorizeCriteria": null,
+					"validateCriteria": null,
+					"conflictCriteria": null,
+					"orderBys": []
+				},
 				{
 					"verb": "GET",
 					"serviceMultiplicity": "one",
@@ -86,85 +165,6 @@
 								"name": "name"
 							}
 						}
-					},
-					"authorizeCriteria": null,
-					"validateCriteria": null,
-					"conflictCriteria": null,
-					"orderBys": []
-				},
-				{
-					"verb": "DELETE",
-					"serviceMultiplicity": "one",
-					"projection": null,
-					"queryCriteria": {
-						"__typename": "klass.model.meta.domain.OperatorCriteria",
-						"operator": "==",
-						"sourceExpressionValue": {
-							"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-							"id": 185,
-							"klass": {
-								"name": "ServiceGroup"
-							},
-							"associationEnds": [],
-							"dataTypeProperty": {
-								"owningClassifier": {
-									"name": "NamedElement"
-								},
-								"name": "name"
-							}
-						},
-						"targetExpressionValue": {
-							"__typename": "klass.model.meta.domain.ParameterReference",
-							"id": 186,
-							"parameter": {
-								"id": 8,
-								"name": "name"
-							}
-						}
-					},
-					"authorizeCriteria": null,
-					"validateCriteria": null,
-					"conflictCriteria": null,
-					"orderBys": []
-				}
-			]
-		},
-		{
-			"url": "/meta/serviceGroup",
-			"parameters": [],
-			"services": [
-				{
-					"verb": "GET",
-					"serviceMultiplicity": "many",
-					"projection": {
-						"name": "ServiceGroupProjection"
-					},
-					"queryCriteria": {
-						"__typename": "klass.model.meta.domain.AllCriteria"
-					},
-					"authorizeCriteria": null,
-					"validateCriteria": null,
-					"conflictCriteria": null,
-					"orderBys": []
-				},
-				{
-					"verb": "PUT",
-					"serviceMultiplicity": "one",
-					"projection": null,
-					"queryCriteria": {
-						"__typename": "klass.model.meta.domain.AllCriteria"
-					},
-					"authorizeCriteria": null,
-					"validateCriteria": null,
-					"conflictCriteria": null,
-					"orderBys": []
-				},
-				{
-					"verb": "DELETE",
-					"serviceMultiplicity": "one",
-					"projection": null,
-					"queryCriteria": {
-						"__typename": "klass.model.meta.domain.AllCriteria"
 					},
 					"authorizeCriteria": null,
 					"validateCriteria": null,
