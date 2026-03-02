@@ -6,6 +6,26 @@
 	},
 	"urls": [
 		{
+			"url": "/meta/serviceGroup",
+			"parameters": [],
+			"services": [
+				{
+					"verb": "GET",
+					"serviceMultiplicity": "many",
+					"projection": {
+						"name": "ServiceGroupProjection"
+					},
+					"queryCriteria": {
+						"__typename": "klass.model.meta.domain.AllCriteria"
+					},
+					"authorizeCriteria": null,
+					"validateCriteria": null,
+					"conflictCriteria": null,
+					"orderBys": []
+				}
+			]
+		},
+		{
 			"url": "/meta/serviceGroup/{name}",
 			"parameters": [
 				{
@@ -20,43 +40,6 @@
 				}
 			],
 			"services": [
-				{
-					"verb": "GET",
-					"serviceMultiplicity": "one",
-					"projection": {
-						"name": "ServiceGroupProjection"
-					},
-					"queryCriteria": {
-						"__typename": "klass.model.meta.domain.OperatorCriteria",
-						"operator": "==",
-						"sourceExpressionValue": {
-							"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-							"id": 157,
-							"klass": {
-								"name": "ServiceGroup"
-							},
-							"associationEnds": [],
-							"dataTypeProperty": {
-								"owningClassifier": {
-									"name": "NamedElement"
-								},
-								"name": "name"
-							}
-						},
-						"targetExpressionValue": {
-							"__typename": "klass.model.meta.domain.ParameterReference",
-							"id": 158,
-							"parameter": {
-								"id": 8,
-								"name": "name"
-							}
-						}
-					},
-					"authorizeCriteria": null,
-					"validateCriteria": null,
-					"conflictCriteria": null,
-					"orderBys": []
-				},
 				{
 					"verb": "DELETE",
 					"serviceMultiplicity": "one",
@@ -91,21 +74,38 @@
 					"validateCriteria": null,
 					"conflictCriteria": null,
 					"orderBys": []
-				}
-			]
-		},
-		{
-			"url": "/meta/serviceGroup",
-			"parameters": [],
-			"services": [
+				},
 				{
 					"verb": "GET",
-					"serviceMultiplicity": "many",
+					"serviceMultiplicity": "one",
 					"projection": {
 						"name": "ServiceGroupProjection"
 					},
 					"queryCriteria": {
-						"__typename": "klass.model.meta.domain.AllCriteria"
+						"__typename": "klass.model.meta.domain.OperatorCriteria",
+						"operator": "==",
+						"sourceExpressionValue": {
+							"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+							"id": 157,
+							"klass": {
+								"name": "ServiceGroup"
+							},
+							"associationEnds": [],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						},
+						"targetExpressionValue": {
+							"__typename": "klass.model.meta.domain.ParameterReference",
+							"id": 158,
+							"parameter": {
+								"id": 8,
+								"name": "name"
+							}
+						}
 					},
 					"authorizeCriteria": null,
 					"validateCriteria": null,
