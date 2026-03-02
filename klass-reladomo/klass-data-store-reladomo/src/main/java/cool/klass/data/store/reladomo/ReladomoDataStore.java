@@ -671,6 +671,19 @@ public class ReladomoDataStore implements DataStore {
 	}
 
 	@Override
+	public void delete(@Nonnull Object persistentInstance) {
+		if (persistentInstance instanceof MithraDatedTransactionalObject transactionalObject) {
+			transactionalObject.terminate();
+		} else if (persistentInstance instanceof MithraTransactionalObject transactionalObject) {
+			transactionalObject.delete();
+		} else {
+			String detailMessage =
+				"Unexpected persistent instance type: " + persistentInstance.getClass().getCanonicalName();
+			throw new AssertionError(detailMessage);
+		}
+	}
+
+	@Override
 	public void purgeAll(@Nonnull Klass klass) {
 		if (klass.isAbstract()) {
 			return;
