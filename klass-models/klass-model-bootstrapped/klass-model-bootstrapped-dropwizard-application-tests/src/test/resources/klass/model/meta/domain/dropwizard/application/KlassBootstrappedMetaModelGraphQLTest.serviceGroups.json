@@ -384,6 +384,18 @@
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 102
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
 							}
 						]
 					},
@@ -398,7 +410,19 @@
 									"name": "AssociationProjection"
 								},
 								"queryCriteria": {
-									"id": 102
+									"id": 103
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 104
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -438,7 +462,19 @@
 									"name": "NamedProjectionProjection"
 								},
 								"queryCriteria": {
-									"id": 103
+									"id": 105
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 106
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -458,7 +494,19 @@
 									"name": "NamedProjectionProjection"
 								},
 								"queryCriteria": {
-									"id": 104
+									"id": 107
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 108
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -498,7 +546,7 @@
 									"name": "ServiceGroupProjection"
 								},
 								"queryCriteria": {
-									"id": 105
+									"id": 109
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -510,7 +558,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 106
+									"id": 110
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -530,7 +578,19 @@
 									"name": "ServiceGroupProjection"
 								},
 								"queryCriteria": {
-									"id": 107
+									"id": 111
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 112
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
