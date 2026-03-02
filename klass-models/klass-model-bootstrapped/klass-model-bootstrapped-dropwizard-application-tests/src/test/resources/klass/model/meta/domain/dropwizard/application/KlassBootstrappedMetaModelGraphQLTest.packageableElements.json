@@ -4827,64 +4827,21 @@
 				},
 				"urls": [
 					{
-						"url": "/meta/packageableElement/{name}",
-						"parameters": [
-							{
-								"type": "PATH",
-								"parameter": {
-									"__typename": "PrimitiveParameter",
-									"id": 1,
-									"name": "name",
-									"multiplicity": "ONE_TO_ONE",
-									"primitiveType": "STRING"
-								}
-							}
-						],
+						"url": "/meta/packageableElement",
+						"parameters": [],
 						"services": [
-							{
-								"verb": "GET",
-								"serviceMultiplicity": "ONE",
-								"projection": {
-									"name": "PackageableElementProjection"
-								},
-								"queryCriteria": {
-									"id": 87
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
-							{
-								"verb": "PUT",
-								"serviceMultiplicity": "ONE",
-								"projection": null,
-								"queryCriteria": {
-									"id": 88
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
 							{
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 89
+									"id": 92
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
-							}
-						]
-					},
-					{
-						"url": "/meta/packageableElement",
-						"parameters": [],
-						"services": [
+							},
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
@@ -4910,13 +4867,56 @@
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
-							},
+							}
+						]
+					},
+					{
+						"url": "/meta/packageableElement/{name}",
+						"parameters": [
+							{
+								"type": "PATH",
+								"parameter": {
+									"__typename": "PrimitiveParameter",
+									"id": 1,
+									"name": "name",
+									"multiplicity": "ONE_TO_ONE",
+									"primitiveType": "STRING"
+								}
+							}
+						],
+						"services": [
 							{
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 92
+									"id": 89
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "GET",
+								"serviceMultiplicity": "ONE",
+								"projection": {
+									"name": "PackageableElementProjection"
+								},
+								"queryCriteria": {
+									"id": 87
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 88
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -4936,64 +4936,21 @@
 				},
 				"urls": [
 					{
-						"url": "/meta/enumeration/{name}",
-						"parameters": [
-							{
-								"type": "PATH",
-								"parameter": {
-									"__typename": "PrimitiveParameter",
-									"id": 2,
-									"name": "name",
-									"multiplicity": "ONE_TO_ONE",
-									"primitiveType": "STRING"
-								}
-							}
-						],
+						"url": "/meta/enumeration",
+						"parameters": [],
 						"services": [
-							{
-								"verb": "GET",
-								"serviceMultiplicity": "ONE",
-								"projection": {
-									"name": "EnumerationProjection"
-								},
-								"queryCriteria": {
-									"id": 93
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
-							{
-								"verb": "PUT",
-								"serviceMultiplicity": "ONE",
-								"projection": null,
-								"queryCriteria": {
-									"id": 94
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
 							{
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 95
+									"id": 98
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
-							}
-						]
-					},
-					{
-						"url": "/meta/enumeration",
-						"parameters": [],
-						"services": [
+							},
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
@@ -5019,13 +4976,56 @@
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
-							},
+							}
+						]
+					},
+					{
+						"url": "/meta/enumeration/{name}",
+						"parameters": [
+							{
+								"type": "PATH",
+								"parameter": {
+									"__typename": "PrimitiveParameter",
+									"id": 2,
+									"name": "name",
+									"multiplicity": "ONE_TO_ONE",
+									"primitiveType": "STRING"
+								}
+							}
+						],
+						"services": [
 							{
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 98
+									"id": 95
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "GET",
+								"serviceMultiplicity": "ONE",
+								"projection": {
+									"name": "EnumerationProjection"
+								},
+								"queryCriteria": {
+									"id": 93
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 94
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5045,64 +5045,21 @@
 				},
 				"urls": [
 					{
-						"url": "/meta/interface/{name}",
-						"parameters": [
-							{
-								"type": "PATH",
-								"parameter": {
-									"__typename": "PrimitiveParameter",
-									"id": 3,
-									"name": "name",
-									"multiplicity": "ONE_TO_ONE",
-									"primitiveType": "STRING"
-								}
-							}
-						],
+						"url": "/meta/interface",
+						"parameters": [],
 						"services": [
-							{
-								"verb": "GET",
-								"serviceMultiplicity": "ONE",
-								"projection": {
-									"name": "InterfaceProjection"
-								},
-								"queryCriteria": {
-									"id": 99
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
-							{
-								"verb": "PUT",
-								"serviceMultiplicity": "ONE",
-								"projection": null,
-								"queryCriteria": {
-									"id": 100
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
 							{
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 101
+									"id": 104
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
-							}
-						]
-					},
-					{
-						"url": "/meta/interface",
-						"parameters": [],
-						"services": [
+							},
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
@@ -5128,13 +5085,56 @@
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
-							},
+							}
+						]
+					},
+					{
+						"url": "/meta/interface/{name}",
+						"parameters": [
+							{
+								"type": "PATH",
+								"parameter": {
+									"__typename": "PrimitiveParameter",
+									"id": 3,
+									"name": "name",
+									"multiplicity": "ONE_TO_ONE",
+									"primitiveType": "STRING"
+								}
+							}
+						],
+						"services": [
 							{
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 104
+									"id": 101
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "GET",
+								"serviceMultiplicity": "ONE",
+								"projection": {
+									"name": "InterfaceProjection"
+								},
+								"queryCriteria": {
+									"id": 99
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 100
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5154,64 +5154,21 @@
 				},
 				"urls": [
 					{
-						"url": "/meta/class/{name}",
-						"parameters": [
-							{
-								"type": "PATH",
-								"parameter": {
-									"__typename": "PrimitiveParameter",
-									"id": 4,
-									"name": "name",
-									"multiplicity": "ONE_TO_ONE",
-									"primitiveType": "STRING"
-								}
-							}
-						],
+						"url": "/meta/class",
+						"parameters": [],
 						"services": [
-							{
-								"verb": "GET",
-								"serviceMultiplicity": "ONE",
-								"projection": {
-									"name": "KlassProjection"
-								},
-								"queryCriteria": {
-									"id": 105
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
-							{
-								"verb": "PUT",
-								"serviceMultiplicity": "ONE",
-								"projection": null,
-								"queryCriteria": {
-									"id": 106
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
 							{
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 107
+									"id": 110
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
-							}
-						]
-					},
-					{
-						"url": "/meta/class",
-						"parameters": [],
-						"services": [
+							},
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
@@ -5237,13 +5194,56 @@
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
-							},
+							}
+						]
+					},
+					{
+						"url": "/meta/class/{name}",
+						"parameters": [
+							{
+								"type": "PATH",
+								"parameter": {
+									"__typename": "PrimitiveParameter",
+									"id": 4,
+									"name": "name",
+									"multiplicity": "ONE_TO_ONE",
+									"primitiveType": "STRING"
+								}
+							}
+						],
+						"services": [
 							{
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 110
+									"id": 107
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "GET",
+								"serviceMultiplicity": "ONE",
+								"projection": {
+									"name": "KlassProjection"
+								},
+								"queryCriteria": {
+									"id": 105
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 106
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5263,64 +5263,21 @@
 				},
 				"urls": [
 					{
-						"url": "/meta/classifier/{name}",
-						"parameters": [
-							{
-								"type": "PATH",
-								"parameter": {
-									"__typename": "PrimitiveParameter",
-									"id": 5,
-									"name": "name",
-									"multiplicity": "ONE_TO_ONE",
-									"primitiveType": "STRING"
-								}
-							}
-						],
+						"url": "/meta/classifier",
+						"parameters": [],
 						"services": [
-							{
-								"verb": "GET",
-								"serviceMultiplicity": "ONE",
-								"projection": {
-									"name": "ClassifierProjection"
-								},
-								"queryCriteria": {
-									"id": 111
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
-							{
-								"verb": "PUT",
-								"serviceMultiplicity": "ONE",
-								"projection": null,
-								"queryCriteria": {
-									"id": 112
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
 							{
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 113
+									"id": 116
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
-							}
-						]
-					},
-					{
-						"url": "/meta/classifier",
-						"parameters": [],
-						"services": [
+							},
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
@@ -5346,13 +5303,56 @@
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
-							},
+							}
+						]
+					},
+					{
+						"url": "/meta/classifier/{name}",
+						"parameters": [
+							{
+								"type": "PATH",
+								"parameter": {
+									"__typename": "PrimitiveParameter",
+									"id": 5,
+									"name": "name",
+									"multiplicity": "ONE_TO_ONE",
+									"primitiveType": "STRING"
+								}
+							}
+						],
+						"services": [
 							{
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 116
+									"id": 113
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "GET",
+								"serviceMultiplicity": "ONE",
+								"projection": {
+									"name": "ClassifierProjection"
+								},
+								"queryCriteria": {
+									"id": 111
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 112
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5372,64 +5372,21 @@
 				},
 				"urls": [
 					{
-						"url": "/meta/association/{name}",
-						"parameters": [
-							{
-								"type": "PATH",
-								"parameter": {
-									"__typename": "PrimitiveParameter",
-									"id": 6,
-									"name": "name",
-									"multiplicity": "ONE_TO_ONE",
-									"primitiveType": "STRING"
-								}
-							}
-						],
+						"url": "/meta/association",
+						"parameters": [],
 						"services": [
-							{
-								"verb": "GET",
-								"serviceMultiplicity": "ONE",
-								"projection": {
-									"name": "AssociationProjection"
-								},
-								"queryCriteria": {
-									"id": 117
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
-							{
-								"verb": "PUT",
-								"serviceMultiplicity": "ONE",
-								"projection": null,
-								"queryCriteria": {
-									"id": 118
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
 							{
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 119
+									"id": 122
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
-							}
-						]
-					},
-					{
-						"url": "/meta/association",
-						"parameters": [],
-						"services": [
+							},
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
@@ -5455,13 +5412,56 @@
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
-							},
+							}
+						]
+					},
+					{
+						"url": "/meta/association/{name}",
+						"parameters": [
+							{
+								"type": "PATH",
+								"parameter": {
+									"__typename": "PrimitiveParameter",
+									"id": 6,
+									"name": "name",
+									"multiplicity": "ONE_TO_ONE",
+									"primitiveType": "STRING"
+								}
+							}
+						],
+						"services": [
 							{
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 122
+									"id": 119
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "GET",
+								"serviceMultiplicity": "ONE",
+								"projection": {
+									"name": "AssociationProjection"
+								},
+								"queryCriteria": {
+									"id": 117
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 118
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5481,64 +5481,21 @@
 				},
 				"urls": [
 					{
-						"url": "/meta/projection/{name}",
-						"parameters": [
-							{
-								"type": "PATH",
-								"parameter": {
-									"__typename": "PrimitiveParameter",
-									"id": 7,
-									"name": "name",
-									"multiplicity": "ONE_TO_ONE",
-									"primitiveType": "STRING"
-								}
-							}
-						],
+						"url": "/meta/projection",
+						"parameters": [],
 						"services": [
-							{
-								"verb": "GET",
-								"serviceMultiplicity": "ONE",
-								"projection": {
-									"name": "NamedProjectionProjection"
-								},
-								"queryCriteria": {
-									"id": 123
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
-							{
-								"verb": "PUT",
-								"serviceMultiplicity": "ONE",
-								"projection": null,
-								"queryCriteria": {
-									"id": 124
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
 							{
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 125
+									"id": 128
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
-							}
-						]
-					},
-					{
-						"url": "/meta/projection",
-						"parameters": [],
-						"services": [
+							},
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
@@ -5564,13 +5521,56 @@
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
-							},
+							}
+						]
+					},
+					{
+						"url": "/meta/projection/{name}",
+						"parameters": [
+							{
+								"type": "PATH",
+								"parameter": {
+									"__typename": "PrimitiveParameter",
+									"id": 7,
+									"name": "name",
+									"multiplicity": "ONE_TO_ONE",
+									"primitiveType": "STRING"
+								}
+							}
+						],
+						"services": [
 							{
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 128
+									"id": 125
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "GET",
+								"serviceMultiplicity": "ONE",
+								"projection": {
+									"name": "NamedProjectionProjection"
+								},
+								"queryCriteria": {
+									"id": 123
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 124
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5590,64 +5590,21 @@
 				},
 				"urls": [
 					{
-						"url": "/meta/serviceGroup/{name}",
-						"parameters": [
-							{
-								"type": "PATH",
-								"parameter": {
-									"__typename": "PrimitiveParameter",
-									"id": 8,
-									"name": "name",
-									"multiplicity": "ONE_TO_ONE",
-									"primitiveType": "STRING"
-								}
-							}
-						],
+						"url": "/meta/serviceGroup",
+						"parameters": [],
 						"services": [
-							{
-								"verb": "GET",
-								"serviceMultiplicity": "ONE",
-								"projection": {
-									"name": "ServiceGroupProjection"
-								},
-								"queryCriteria": {
-									"id": 129
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
-							{
-								"verb": "PUT",
-								"serviceMultiplicity": "ONE",
-								"projection": null,
-								"queryCriteria": {
-									"id": 130
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
 							{
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 131
+									"id": 134
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
-							}
-						]
-					},
-					{
-						"url": "/meta/serviceGroup",
-						"parameters": [],
-						"services": [
+							},
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
@@ -5673,13 +5630,56 @@
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
-							},
+							}
+						]
+					},
+					{
+						"url": "/meta/serviceGroup/{name}",
+						"parameters": [
+							{
+								"type": "PATH",
+								"parameter": {
+									"__typename": "PrimitiveParameter",
+									"id": 8,
+									"name": "name",
+									"multiplicity": "ONE_TO_ONE",
+									"primitiveType": "STRING"
+								}
+							}
+						],
+						"services": [
 							{
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 134
+									"id": 131
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "GET",
+								"serviceMultiplicity": "ONE",
+								"projection": {
+									"name": "ServiceGroupProjection"
+								},
+								"queryCriteria": {
+									"id": 129
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 130
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,

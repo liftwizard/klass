@@ -6,6 +6,26 @@
 	},
 	"urls": [
 		{
+			"url": "/user",
+			"parameters": [],
+			"services": [
+				{
+					"verb": "GET",
+					"serviceMultiplicity": "many",
+					"projection": {
+						"name": "UserReadProjection"
+					},
+					"queryCriteria": {
+						"__typename": "klass.model.meta.domain.AllCriteria"
+					},
+					"authorizeCriteria": null,
+					"validateCriteria": null,
+					"conflictCriteria": null,
+					"orderBys": []
+				}
+			]
+		},
+		{
 			"url": "/user/{userId}",
 			"parameters": [
 				{
@@ -51,26 +71,6 @@
 								"name": "userId"
 							}
 						}
-					},
-					"authorizeCriteria": null,
-					"validateCriteria": null,
-					"conflictCriteria": null,
-					"orderBys": []
-				}
-			]
-		},
-		{
-			"url": "/user",
-			"parameters": [],
-			"services": [
-				{
-					"verb": "GET",
-					"serviceMultiplicity": "many",
-					"projection": {
-						"name": "UserReadProjection"
-					},
-					"queryCriteria": {
-						"__typename": "klass.model.meta.domain.AllCriteria"
 					},
 					"authorizeCriteria": null,
 					"validateCriteria": null,
