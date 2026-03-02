@@ -28,13 +28,29 @@ import io.liftwizard.junit.extension.app.LiftwizardAppExtension;
 
 public abstract class AbstractCoverageTest extends AbstractDropwizardAppTest {
 
+	protected String getConfigResourceName() {
+		return "config-test.json5";
+	}
+
+	protected String getGoldenFilePrefix() {
+		return this.getClass().getSimpleName();
+	}
+
 	@Nonnull
 	@Override
 	protected LiftwizardAppExtension<?> getDropwizardAppExtension() {
 		return new LiftwizardAppExtension<>(
 			CoverageExampleApplication.class,
-			ResourceHelpers.resourceFilePath("config-test.json5")
+			ResourceHelpers.resourceFilePath(this.getConfigResourceName())
 		);
+	}
+
+	@Override
+	protected void assertResponse(String testName, Status expectedStatus, Response actualResponse) {
+		this.assertResponseStatus(actualResponse, expectedStatus);
+		String actualJsonResponse = actualResponse.readEntity(String.class);
+		String expectedResponseClassPathLocation = this.getGoldenFilePrefix() + "." + testName + ".json";
+		this.jsonMatchExtension.assertFileContents(expectedResponseClassPathLocation, actualJsonResponse);
 	}
 
 	protected void assertUrlReturns(@Nonnull String testName, @Nonnull String url) {
