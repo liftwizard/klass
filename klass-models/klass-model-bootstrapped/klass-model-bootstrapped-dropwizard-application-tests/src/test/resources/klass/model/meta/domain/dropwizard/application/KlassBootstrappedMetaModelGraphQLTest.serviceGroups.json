@@ -9,6 +9,50 @@
 				},
 				"urls": [
 					{
+						"url": "/meta/packageableElement",
+						"parameters": [],
+						"services": [
+							{
+								"verb": "GET",
+								"serviceMultiplicity": "MANY",
+								"projection": {
+									"name": "PackageableElementProjection"
+								},
+								"queryCriteria": {
+									"id": 90
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "PUT",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 91
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 92
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							}
+						]
+					},
+					{
 						"url": "/meta/packageableElement/{name}",
 						"parameters": [
 							{
@@ -62,19 +106,28 @@
 								"orderBys": []
 							}
 						]
-					},
+					}
+				]
+			},
+			{
+				"name": "EnumerationResource",
+				"packageName": "klass.model.meta.domain",
+				"owningClass": {
+					"name": "Enumeration"
+				},
+				"urls": [
 					{
-						"url": "/meta/packageableElement",
+						"url": "/meta/enumeration",
 						"parameters": [],
 						"services": [
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
 								"projection": {
-									"name": "PackageableElementProjection"
+									"name": "EnumerationProjection"
 								},
 								"queryCriteria": {
-									"id": 90
+									"id": 96
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -86,7 +139,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 91
+									"id": 97
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -98,7 +151,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 92
+									"id": 98
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -106,16 +159,7 @@
 								"orderBys": []
 							}
 						]
-					}
-				]
-			},
-			{
-				"name": "EnumerationResource",
-				"packageName": "klass.model.meta.domain",
-				"owningClass": {
-					"name": "Enumeration"
-				},
-				"urls": [
+					},
 					{
 						"url": "/meta/enumeration/{name}",
 						"parameters": [
@@ -170,19 +214,28 @@
 								"orderBys": []
 							}
 						]
-					},
+					}
+				]
+			},
+			{
+				"name": "InterfaceResource",
+				"packageName": "klass.model.meta.domain",
+				"owningClass": {
+					"name": "Interface"
+				},
+				"urls": [
 					{
-						"url": "/meta/enumeration",
+						"url": "/meta/interface",
 						"parameters": [],
 						"services": [
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
 								"projection": {
-									"name": "EnumerationProjection"
+									"name": "InterfaceProjection"
 								},
 								"queryCriteria": {
-									"id": 96
+									"id": 102
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -194,7 +247,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 97
+									"id": 103
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -206,7 +259,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 98
+									"id": 104
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -214,16 +267,7 @@
 								"orderBys": []
 							}
 						]
-					}
-				]
-			},
-			{
-				"name": "InterfaceResource",
-				"packageName": "klass.model.meta.domain",
-				"owningClass": {
-					"name": "Interface"
-				},
-				"urls": [
+					},
 					{
 						"url": "/meta/interface/{name}",
 						"parameters": [
@@ -278,19 +322,28 @@
 								"orderBys": []
 							}
 						]
-					},
+					}
+				]
+			},
+			{
+				"name": "KlassResource",
+				"packageName": "klass.model.meta.domain",
+				"owningClass": {
+					"name": "Klass"
+				},
+				"urls": [
 					{
-						"url": "/meta/interface",
+						"url": "/meta/class",
 						"parameters": [],
 						"services": [
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
 								"projection": {
-									"name": "InterfaceProjection"
+									"name": "KlassProjection"
 								},
 								"queryCriteria": {
-									"id": 102
+									"id": 108
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -302,7 +355,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 103
+									"id": 109
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -314,7 +367,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 104
+									"id": 110
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -322,16 +375,7 @@
 								"orderBys": []
 							}
 						]
-					}
-				]
-			},
-			{
-				"name": "KlassResource",
-				"packageName": "klass.model.meta.domain",
-				"owningClass": {
-					"name": "Klass"
-				},
-				"urls": [
+					},
 					{
 						"url": "/meta/class/{name}",
 						"parameters": [
@@ -386,19 +430,28 @@
 								"orderBys": []
 							}
 						]
-					},
+					}
+				]
+			},
+			{
+				"name": "ClassifierResource",
+				"packageName": "klass.model.meta.domain",
+				"owningClass": {
+					"name": "Classifier"
+				},
+				"urls": [
 					{
-						"url": "/meta/class",
+						"url": "/meta/classifier",
 						"parameters": [],
 						"services": [
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
 								"projection": {
-									"name": "KlassProjection"
+									"name": "ClassifierProjection"
 								},
 								"queryCriteria": {
-									"id": 108
+									"id": 114
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -410,7 +463,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 109
+									"id": 115
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -422,7 +475,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 110
+									"id": 116
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -430,16 +483,7 @@
 								"orderBys": []
 							}
 						]
-					}
-				]
-			},
-			{
-				"name": "ClassifierResource",
-				"packageName": "klass.model.meta.domain",
-				"owningClass": {
-					"name": "Classifier"
-				},
-				"urls": [
+					},
 					{
 						"url": "/meta/classifier/{name}",
 						"parameters": [
@@ -494,19 +538,28 @@
 								"orderBys": []
 							}
 						]
-					},
+					}
+				]
+			},
+			{
+				"name": "AssociationResource",
+				"packageName": "klass.model.meta.domain",
+				"owningClass": {
+					"name": "Association"
+				},
+				"urls": [
 					{
-						"url": "/meta/classifier",
+						"url": "/meta/association",
 						"parameters": [],
 						"services": [
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
 								"projection": {
-									"name": "ClassifierProjection"
+									"name": "AssociationProjection"
 								},
 								"queryCriteria": {
-									"id": 114
+									"id": 120
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -518,7 +571,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 115
+									"id": 121
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -530,7 +583,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 116
+									"id": 122
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -538,16 +591,7 @@
 								"orderBys": []
 							}
 						]
-					}
-				]
-			},
-			{
-				"name": "AssociationResource",
-				"packageName": "klass.model.meta.domain",
-				"owningClass": {
-					"name": "Association"
-				},
-				"urls": [
+					},
 					{
 						"url": "/meta/association/{name}",
 						"parameters": [
@@ -602,19 +646,28 @@
 								"orderBys": []
 							}
 						]
-					},
+					}
+				]
+			},
+			{
+				"name": "NamedProjectionResource",
+				"packageName": "klass.model.meta.domain",
+				"owningClass": {
+					"name": "NamedProjection"
+				},
+				"urls": [
 					{
-						"url": "/meta/association",
+						"url": "/meta/projection",
 						"parameters": [],
 						"services": [
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
 								"projection": {
-									"name": "AssociationProjection"
+									"name": "NamedProjectionProjection"
 								},
 								"queryCriteria": {
-									"id": 120
+									"id": 126
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -626,7 +679,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 121
+									"id": 127
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -638,7 +691,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 122
+									"id": 128
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -646,16 +699,7 @@
 								"orderBys": []
 							}
 						]
-					}
-				]
-			},
-			{
-				"name": "NamedProjectionResource",
-				"packageName": "klass.model.meta.domain",
-				"owningClass": {
-					"name": "NamedProjection"
-				},
-				"urls": [
+					},
 					{
 						"url": "/meta/projection/{name}",
 						"parameters": [
@@ -710,19 +754,28 @@
 								"orderBys": []
 							}
 						]
-					},
+					}
+				]
+			},
+			{
+				"name": "ServiceGroupResource",
+				"packageName": "klass.model.meta.domain",
+				"owningClass": {
+					"name": "ServiceGroup"
+				},
+				"urls": [
 					{
-						"url": "/meta/projection",
+						"url": "/meta/serviceGroup",
 						"parameters": [],
 						"services": [
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
 								"projection": {
-									"name": "NamedProjectionProjection"
+									"name": "ServiceGroupProjection"
 								},
 								"queryCriteria": {
-									"id": 126
+									"id": 132
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -734,7 +787,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 127
+									"id": 133
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -746,7 +799,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 128
+									"id": 134
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -754,16 +807,7 @@
 								"orderBys": []
 							}
 						]
-					}
-				]
-			},
-			{
-				"name": "ServiceGroupResource",
-				"packageName": "klass.model.meta.domain",
-				"owningClass": {
-					"name": "ServiceGroup"
-				},
-				"urls": [
+					},
 					{
 						"url": "/meta/serviceGroup/{name}",
 						"parameters": [
@@ -811,50 +855,6 @@
 								"projection": null,
 								"queryCriteria": {
 									"id": 131
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							}
-						]
-					},
-					{
-						"url": "/meta/serviceGroup",
-						"parameters": [],
-						"services": [
-							{
-								"verb": "GET",
-								"serviceMultiplicity": "MANY",
-								"projection": {
-									"name": "ServiceGroupProjection"
-								},
-								"queryCriteria": {
-									"id": 132
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
-							{
-								"verb": "PUT",
-								"serviceMultiplicity": "ONE",
-								"projection": null,
-								"queryCriteria": {
-									"id": 133
-								},
-								"authorizeCriteria": null,
-								"validateCriteria": null,
-								"conflictCriteria": null,
-								"orderBys": []
-							},
-							{
-								"verb": "DELETE",
-								"serviceMultiplicity": "ONE",
-								"projection": null,
-								"queryCriteria": {
-									"id": 134
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
