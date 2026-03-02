@@ -14,21 +14,12 @@
  * limitations under the License.
  */
 
-package klass.model.meta.domain.dropwizard.test;
+package cool.klass.xample.coverage.dropwizard.test;
 
-import javax.ws.rs.client.Client;
+class CoverageExampleGraphQLConstantTest extends AbstractCoverageExampleGraphQLTest {
 
-import org.junit.jupiter.api.Test;
-
-class ClassResourceManualTest extends AbstractResourceTestCase {
-
-	@Test
-	void getAllMeta() {
-		Class<?> klass = this.getClass();
-		String clientName = klass.getPackage().getName() + '.' + klass.getSimpleName() + '.' + "getAllMeta";
-		Client client = this.getClient(clientName);
-		String resourceClassPathLocation = klass.getSimpleName() + '.' + "getAllMeta" + ".json";
-
-		this.assertUrlReturns(client, "/meta/class", resourceClassPathLocation);
+	@Override
+	protected String getConfigResourceName() {
+		return "config-test-constant.json5";
 	}
 }

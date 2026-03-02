@@ -32,7 +32,6 @@
         <module>klass-model-bootstrapped-domain-model</module>
         <module>klass-model-bootstrapped-dropwizard-application</module>
         <module>klass-model-bootstrapped-dropwizard-application-tests</module>
-        <module>klass-model-bootstrapped-dropwizard-application-tests-java-constants</module>
         <module>klass-model-bootstrapped-dtos</module>
         <module>klass-model-bootstrapped-java-constants</module>
         <module>klass-model-bootstrapped-graphql-fragment</module>

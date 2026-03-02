@@ -1,4 +1,3 @@
-// klass-models/klass-model-bootstrapped/klass-model-bootstrapped-dropwizard-application-tests-java-constants/src/test/resources/config-test.json5
 {
 	server: {
 		detailedJsonProcessingExceptionMapper: true,
@@ -19,17 +18,53 @@
 			appenders: [
 				{
 					type: "console",
+					filterFactories: [
+						{
+							type: "url",
+							onMatch: "DENY",
+							urls: [
+								"/icons/",
+								"/static/",
+								"/manifest.json",
+								"/assets-manifest.json",
+								"/favicon.ico",
+								"/service-worker.js",
+								"/bootstrap.min.css",
+							],
+						},
+					],
+				},
+				{
+					type: "file-access-logstash",
+					currentLogFilename: "./logs/logstash-access.jsonl",
+					archivedLogFilenamePattern: "./logs/logstash-access-%d.jsonl",
+					includeCallerData: true,
+					filterFactories: [
+						{
+							type: "url",
+							onMatch: "DENY",
+							urls: [
+								"/icons/",
+								"/static/",
+								"/manifest.json",
+								"/assets-manifest.json",
+								"/favicon.ico",
+								"/service-worker.js",
+								"/bootstrap.min.css",
+							],
+						},
+					],
 				},
 			],
 		},
 	},
 	logging: {
-		level: "DEBUG",
+		level: "INFO",
 		loggers: {
+			"cool.klass.xample.coverage": "DEBUG",
 			"com.gs.fw.common.mithra.batch.sqllogs": "INFO",
 			"com.gs.fw.common.mithra.connectionmanager": "INFO",
 			"com.gs.fw.common.mithra.sqllogs": "DEBUG",
-			"graphql.execution.ExecutionStrategy": "INFO",
 			"io.liftwizard": "DEBUG",
 			"klass.model.meta.domain": "DEBUG",
 			"liquibase.resource": "INFO",
@@ -47,16 +82,32 @@
 				logFormat: "%highlight(%-5level) %cyan(%date{HH:mm:ss.SSS, %dwTimeZone}) %gray(\\(%file:%line\\)) [%white(%thread)] %blue(%marker) {%magenta(%mdc)} %green(%logger): %message%n%rootException",
 				includeCallerData: true,
 			},
+			{
+				type: "file-logstash",
+				currentLogFilename: "./logs/logstash.jsonl",
+				archivedLogFilenamePattern: "./logs/logstash-%d.jsonl",
+				includeCallerData: true,
+				encoder: {
+					includeContext: true,
+					includeMdc: true,
+					includeStructuredArguments: true,
+					includedNonStructuredArguments: true,
+					includeTags: true,
+					prettyPrint: false,
+					serializationInclusion: "NON_ABSENT",
+				},
+			},
 		],
 	},
 	clock: {
-		type: "fixed",
+		type: "incrementing",
 		instant: "2000-12-31T23:59:59Z",
+		incrementAmount: "1 day",
 	},
 	klass: {
 		domainModel: {
 			type: "constant",
-			fullyQualifiedClassName: "klass.model.meta.domain.meta.constants.KlassBootstrappedMetaModelDomainModel",
+			fullyQualifiedClassName: "cool.klass.xample.coverage.meta.constants.CoverageExampleDomainModel",
 		},
 		dataStore: {
 			type: "reladomo",
@@ -78,8 +129,8 @@
 	],
 	h2: {
 		enabled: true,
-		webPort: 28073,
-		tcpPort: 29073,
+		webPort: 8079,
+		tcpPort: 9079,
 	},
 	cors: {
 		enabled: false,
@@ -104,7 +155,7 @@
 			readOnlyByDefault: false,
 			user: "sa",
 			password: "",
-			url: "jdbc:p6spy:h2:tcp://localhost:29073/klass-bootstrapped-h2;NON_KEYWORDS=USER",
+			url: "jdbc:p6spy:h2:tcp://localhost:9079/coverage-example-h2;NON_KEYWORDS=USER",
 			properties: {
 				charSet: "UTF-8",
 			},
@@ -117,7 +168,7 @@
 			readOnlyByDefault: false,
 			user: "sa",
 			password: "",
-			url: "jdbc:p6spy:h2:file:./target/h2db/klass-bootstrapped-h2;NON_KEYWORDS=USER",
+			url: "jdbc:p6spy:h2:file:./target/h2db/coverage-example-h2;NON_KEYWORDS=USER",
 			properties: {
 				charSet: "UTF-8",
 			},
@@ -127,7 +178,7 @@
 	],
 	ddlExecutors: [],
 	sampleData: {
-		enabled: false,
+		enabled: true,
 	},
 	reladomo: {
 		runtimeConfigurationPaths: ["reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml"],
@@ -137,19 +188,19 @@
 			connectionManagerName: "h2-mem",
 			dataSourceName: "h2-mem",
 			databaseType: "H2",
-			schemaName: "klass-bootstrapped-h2",
+			schemaName: "coverage-example-h2",
 		},
 		{
 			connectionManagerName: "h2-tcp",
 			dataSourceName: "h2-tcp",
 			databaseType: "H2",
-			schemaName: "klass-bootstrapped-h2",
+			schemaName: "coverage-example-h2",
 		},
 		{
 			connectionManagerName: "h2-file",
 			dataSourceName: "h2-file",
 			databaseType: "H2",
-			schemaName: "klass-bootstrapped-h2",
+			schemaName: "coverage-example-h2",
 		},
 	],
 	jerseyHttpLogging: {
@@ -170,7 +221,7 @@
 		dryRun: false,
 	},
 	bootstrap: {
-		enabled: false,
+		enabled: true,
 	},
 	graphQL: {
 		enableTracing: false,
@@ -178,9 +229,9 @@
 		schemaFiles: [
 			"io/liftwizard/graphql/schema/query/QuerySchema.graphqls",
 			"io/liftwizard/graphql/schema/attribute/ReladomoAttribute.graphqls",
-			"klass/model/meta/domain/graphql/schema/query/GraphQLQuerySchema.graphqls",
-			"klass/model/meta/domain/graphql/schema/finder/GraphQLFinders.graphqls",
-			"klass/model/meta/domain/graphql/schema/GraphQLSchema.graphqls",
+			"cool/klass/xample/coverage/graphql/schema/query/GraphQLQuerySchema.graphqls",
+			"cool/klass/xample/coverage/graphql/schema/finder/GraphQLFinders.graphqls",
+			"cool/klass/xample/coverage/graphql/schema/GraphQLSchema.graphqls",
 		],
 	},
 }

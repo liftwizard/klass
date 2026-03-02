@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package klass.model.meta.domain.dropwizard.test;
+package cool.klass.xample.coverage.dropwizard.test;
 
-import org.junit.jupiter.api.Test;
+class PropertiesOptionalConstantTest extends AbstractPropertiesOptionalTest {
 
-class ClassifierResourceManualTest extends AbstractResourceTestCase {
-
-	@Test
-	void getAllMeta() {
-		this.assertUrlReturns("getAllMeta", "/meta/classifier");
+	@Override
+	protected String getConfigResourceName() {
+		return "config-test-constant.json5";
 	}
 }

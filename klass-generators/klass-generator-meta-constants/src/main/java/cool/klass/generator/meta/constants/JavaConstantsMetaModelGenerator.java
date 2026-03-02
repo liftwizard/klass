@@ -41,8 +41,20 @@ import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.NamedElement;
 import cool.klass.model.meta.domain.api.PackageableElement;
 import cool.klass.model.meta.domain.api.TopLevelElement;
+import cool.klass.model.meta.domain.api.criteria.AllCriteria;
+import cool.klass.model.meta.domain.api.criteria.AndCriteria;
+import cool.klass.model.meta.domain.api.criteria.BinaryCriteria;
+import cool.klass.model.meta.domain.api.criteria.Criteria;
+import cool.klass.model.meta.domain.api.criteria.EdgePointCriteria;
+import cool.klass.model.meta.domain.api.criteria.OperatorCriteria;
+import cool.klass.model.meta.domain.api.criteria.OrCriteria;
 import cool.klass.model.meta.domain.api.modifier.Modifier;
 import cool.klass.model.meta.domain.api.modifier.ModifierOwner;
+import cool.klass.model.meta.domain.api.operator.EqualityOperator;
+import cool.klass.model.meta.domain.api.operator.InequalityOperator;
+import cool.klass.model.meta.domain.api.operator.InOperator;
+import cool.klass.model.meta.domain.api.operator.Operator;
+import cool.klass.model.meta.domain.api.operator.StringOperator;
 import cool.klass.model.meta.domain.api.projection.Projection;
 import cool.klass.model.meta.domain.api.projection.ProjectionDataTypeProperty;
 import cool.klass.model.meta.domain.api.projection.ProjectionElement;
@@ -56,6 +68,10 @@ import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.property.Property;
 import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import cool.klass.model.meta.domain.api.service.ServiceGroup;
+import cool.klass.model.meta.domain.api.value.ExpressionValue;
+import cool.klass.model.meta.domain.api.value.MemberReferencePath;
+import cool.klass.model.meta.domain.api.value.ThisMemberReferencePath;
+import cool.klass.model.meta.domain.api.value.TypeMemberReferencePath;
 import org.apache.commons.text.StringEscapeUtils;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.tuple.Pair;
@@ -822,22 +838,19 @@ public class JavaConstantsMetaModelGenerator {
 				+ "    @Override\n"
 				+ "    public AssociationEnd getDeclaredAssociationEndByName(String name)\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getDeclaredAssociationEndByName() not implemented yet\");\n"
+				+ this.getAssociationEndByNameSwitchCases(klass, klass.getDeclaredAssociationEnds())
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
 				+ "    public ImmutableList<AssociationEnd> getAssociationEnds()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getAssociationEnds() not implemented yet\");\n"
+				+ "        return Lists.immutable.with(" + this.getAssociationEndReferences(klass, klass.getAssociationEnds()) + ");\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
 				+ "    public AssociationEnd getAssociationEndByName(String name)\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getAssociationEndByName() not implemented yet\");\n"
+				+ this.getAssociationEndByNameSwitchCases(klass, klass.getAssociationEnds())
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
@@ -1191,18 +1204,16 @@ public class JavaConstantsMetaModelGenerator {
 			return "        return Lists.immutable.empty();\n";
 		}
 
-		String variablesSourceCode = modifiers.collect(modifier -> this.getClassifierModifierSourceCode(modifier, classifier)).makeString("\n");
+		String variablesSourceCode = modifiers
+			.collect((modifier) -> this.getClassifierModifierSourceCode(modifier, classifier))
+			.makeString("\n");
 
 		ImmutableList<String> variableNames = modifiers
 			.collect(Modifier::getKeyword)
 			.collect((each) -> each + "_" + Modifier.class.getSimpleName());
 
 		return (
-			variablesSourceCode
-			+ "\n"
-			+ "        return Lists.immutable.with("
-			+ variableNames.makeString()
-			+ ");\n"
+			variablesSourceCode + "\n" + "        return Lists.immutable.with(" + variableNames.makeString() + ");\n"
 		);
 	}
 
@@ -1466,10 +1477,12 @@ public class JavaConstantsMetaModelGenerator {
 				+ "import cool.klass.model.meta.domain.api.*;\n"
 				+ "import cool.klass.model.meta.domain.api.criteria.*;\n"
 				+ "import cool.klass.model.meta.domain.api.modifier.*;\n"
+				+ "import cool.klass.model.meta.domain.api.operator.*;\n"
 				+ "import cool.klass.model.meta.domain.api.order.*;\n"
 				+ "import cool.klass.model.meta.domain.api.property.*;\n"
 				+ "import cool.klass.model.meta.domain.api.projection.*;\n"
 				+ "import cool.klass.model.meta.domain.api.source.*;\n"
+				+ "import cool.klass.model.meta.domain.api.value.*;\n"
 				+ "\n"
 				+ "import " + this.rootPackageName + ".meta.constants." + this.applicationName + "DomainModel;\n"
 				+ "\n"
@@ -1512,10 +1525,12 @@ public class JavaConstantsMetaModelGenerator {
 				+ "        return Optional.empty();\n"
 				+ "    }\n"
 				+ "\n"
+				+ "    private static final Criteria CRITERIA = " + this.getCriteriaSourceCode(association.getCriteria(), "        ") + ";\n"
+				+ "\n"
 				+ "    @Override\n"
 				+ "    public Criteria getCriteria()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName() + \".getCriteria() not implemented yet\");\n"
+				+ "        return CRITERIA;\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
@@ -1609,8 +1624,7 @@ public class JavaConstantsMetaModelGenerator {
 				+ "        @Override\n"
 				+ "        public Optional<OrderBy> getOrderBy()\n"
 				+ "        {\n"
-				+ "            throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                    + \".getOrderBy() not implemented yet\");\n"
+				+ "            return Optional.empty();\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Nonnull\n"
@@ -1710,6 +1724,228 @@ public class JavaConstantsMetaModelGenerator {
 			name
 		);
 	}
+
+	// region Criteria source code generation
+	@Nonnull
+	private String getCriteriaSourceCode(@Nonnull Criteria criteria, @Nonnull String indent) {
+		if (criteria instanceof AllCriteria) {
+			return this.getAllCriteriaSourceCode(indent);
+		}
+		if (criteria instanceof OperatorCriteria) {
+			return this.getOperatorCriteriaSourceCode((OperatorCriteria) criteria, indent);
+		}
+		if (criteria instanceof AndCriteria) {
+			return this.getBinaryCriteriaSourceCode((BinaryCriteria) criteria, "AndCriteria", indent);
+		}
+		if (criteria instanceof OrCriteria) {
+			return this.getBinaryCriteriaSourceCode((BinaryCriteria) criteria, "OrCriteria", indent);
+		}
+		if (criteria instanceof EdgePointCriteria) {
+			return this.getEdgePointCriteriaSourceCode((EdgePointCriteria) criteria, indent);
+		}
+		throw new UnsupportedOperationException("Unknown Criteria type: " + criteria.getClass().getSimpleName());
+	}
+
+	@Nonnull
+	private String getAllCriteriaSourceCode(@Nonnull String indent) {
+		return "new AllCriteria()\n"
+			+ indent + "{\n"
+			+ indent + "    @Override\n"
+			+ indent + "    public Optional<Element> getMacroElement()\n"
+			+ indent + "    {\n"
+			+ indent + "        return Optional.empty();\n"
+			+ indent + "    }\n"
+			+ indent + "}";
+	}
+
+	@Nonnull
+	private String getOperatorCriteriaSourceCode(@Nonnull OperatorCriteria criteria, @Nonnull String indent) {
+		return "new OperatorCriteria()\n"
+			+ indent + "{\n"
+			+ indent + "    private final Operator operator = " + this.getOperatorSourceCode(criteria.getOperator(), indent + "        ") + ";\n"
+			+ indent + "    private final ExpressionValue sourceValue = " + this.getExpressionValueSourceCode(criteria.getSourceValue(), indent + "        ") + ";\n"
+			+ indent + "    private final ExpressionValue targetValue = " + this.getExpressionValueSourceCode(criteria.getTargetValue(), indent + "        ") + ";\n"
+			+ "\n"
+			+ indent + "    @Override\n"
+			+ indent + "    public Optional<Element> getMacroElement()\n"
+			+ indent + "    {\n"
+			+ indent + "        return Optional.empty();\n"
+			+ indent + "    }\n"
+			+ "\n"
+			+ indent + "    @Nonnull\n"
+			+ indent + "    @Override\n"
+			+ indent + "    public Operator getOperator()\n"
+			+ indent + "    {\n"
+			+ indent + "        return this.operator;\n"
+			+ indent + "    }\n"
+			+ "\n"
+			+ indent + "    @Nonnull\n"
+			+ indent + "    @Override\n"
+			+ indent + "    public ExpressionValue getSourceValue()\n"
+			+ indent + "    {\n"
+			+ indent + "        return this.sourceValue;\n"
+			+ indent + "    }\n"
+			+ "\n"
+			+ indent + "    @Nonnull\n"
+			+ indent + "    @Override\n"
+			+ indent + "    public ExpressionValue getTargetValue()\n"
+			+ indent + "    {\n"
+			+ indent + "        return this.targetValue;\n"
+			+ indent + "    }\n"
+			+ indent + "}";
+	}
+
+	@Nonnull
+	private String getBinaryCriteriaSourceCode(
+		@Nonnull BinaryCriteria criteria,
+		@Nonnull String interfaceName,
+		@Nonnull String indent
+	) {
+		return "new " + interfaceName + "()\n"
+			+ indent + "{\n"
+			+ indent + "    private final Criteria left = " + this.getCriteriaSourceCode(criteria.getLeft(), indent + "        ") + ";\n"
+			+ indent + "    private final Criteria right = " + this.getCriteriaSourceCode(criteria.getRight(), indent + "        ") + ";\n"
+			+ "\n"
+			+ indent + "    @Override\n"
+			+ indent + "    public Optional<Element> getMacroElement()\n"
+			+ indent + "    {\n"
+			+ indent + "        return Optional.empty();\n"
+			+ indent + "    }\n"
+			+ "\n"
+			+ indent + "    @Nonnull\n"
+			+ indent + "    @Override\n"
+			+ indent + "    public Criteria getLeft()\n"
+			+ indent + "    {\n"
+			+ indent + "        return this.left;\n"
+			+ indent + "    }\n"
+			+ "\n"
+			+ indent + "    @Nonnull\n"
+			+ indent + "    @Override\n"
+			+ indent + "    public Criteria getRight()\n"
+			+ indent + "    {\n"
+			+ indent + "        return this.right;\n"
+			+ indent + "    }\n"
+			+ indent + "}";
+	}
+
+	@Nonnull
+	private String getEdgePointCriteriaSourceCode(@Nonnull EdgePointCriteria criteria, @Nonnull String indent) {
+		MemberReferencePath memberPath = criteria.getMemberExpressionValue();
+		return "new EdgePointCriteria()\n"
+			+ indent + "{\n"
+			+ indent + "    private final MemberReferencePath memberExpressionValue = " + this.getMemberReferencePathSourceCode(memberPath, indent + "        ") + ";\n"
+			+ "\n"
+			+ indent + "    @Override\n"
+			+ indent + "    public Optional<Element> getMacroElement()\n"
+			+ indent + "    {\n"
+			+ indent + "        return Optional.empty();\n"
+			+ indent + "    }\n"
+			+ "\n"
+			+ indent + "    @Nonnull\n"
+			+ indent + "    @Override\n"
+			+ indent + "    public MemberReferencePath getMemberExpressionValue()\n"
+			+ indent + "    {\n"
+			+ indent + "        return this.memberExpressionValue;\n"
+			+ indent + "    }\n"
+			+ indent + "}";
+	}
+
+	@Nonnull
+	private String getOperatorSourceCode(@Nonnull Operator operator, @Nonnull String indent) {
+		String interfaceName;
+		if (operator instanceof EqualityOperator) {
+			interfaceName = "EqualityOperator";
+		} else if (operator instanceof InequalityOperator) {
+			interfaceName = "InequalityOperator";
+		} else if (operator instanceof InOperator) {
+			interfaceName = "InOperator";
+		} else if (operator instanceof StringOperator) {
+			interfaceName = "StringOperator";
+		} else {
+			throw new UnsupportedOperationException("Unknown Operator type: " + operator.getClass().getSimpleName());
+		}
+
+		return "new " + interfaceName + "()\n"
+			+ indent + "{\n"
+			+ indent + "    @Override\n"
+			+ indent + "    public Optional<Element> getMacroElement()\n"
+			+ indent + "    {\n"
+			+ indent + "        return Optional.empty();\n"
+			+ indent + "    }\n"
+			+ "\n"
+			+ indent + "    @Nonnull\n"
+			+ indent + "    @Override\n"
+			+ indent + "    public String getOperatorText()\n"
+			+ indent + "    {\n"
+			+ indent + "        return \"" + StringEscapeUtils.escapeJava(operator.getOperatorText()) + "\";\n"
+			+ indent + "    }\n"
+			+ indent + "}";
+	}
+
+	@Nonnull
+	private String getExpressionValueSourceCode(@Nonnull ExpressionValue value, @Nonnull String indent) {
+		if (value instanceof ThisMemberReferencePath) {
+			return this.getMemberReferencePathSourceCode((MemberReferencePath) value, indent);
+		}
+		if (value instanceof TypeMemberReferencePath) {
+			return this.getMemberReferencePathSourceCode((MemberReferencePath) value, indent);
+		}
+		throw new UnsupportedOperationException("Unknown ExpressionValue type: " + value.getClass().getSimpleName());
+	}
+
+	@Nonnull
+	private String getMemberReferencePathSourceCode(@Nonnull MemberReferencePath path, @Nonnull String indent) {
+		String interfaceName = path instanceof ThisMemberReferencePath
+			? "ThisMemberReferencePath"
+			: "TypeMemberReferencePath";
+
+		String klassRef = this.applicationName + "DomainModel." + path.getKlass().getName();
+		String propertyRef = this.applicationName + "DomainModel."
+			+ path.getProperty().getOwningClassifier().getName()
+			+ "." + path.getProperty().getName();
+
+		String associationEndsCode;
+		if (path.getAssociationEnds().isEmpty()) {
+			associationEndsCode = "Lists.immutable.empty()";
+		} else {
+			String endRefs = path.getAssociationEnds()
+				.collect(end -> this.applicationName + "DomainModel."
+					+ end.getOwningClassifier().getName() + "." + end.getName())
+				.makeString(", ");
+			associationEndsCode = "Lists.immutable.with(" + endRefs + ")";
+		}
+
+		return "new " + interfaceName + "()\n"
+			+ indent + "{\n"
+			+ indent + "    @Override\n"
+			+ indent + "    public Optional<Element> getMacroElement()\n"
+			+ indent + "    {\n"
+			+ indent + "        return Optional.empty();\n"
+			+ indent + "    }\n"
+			+ "\n"
+			+ indent + "    @Nonnull\n"
+			+ indent + "    @Override\n"
+			+ indent + "    public Klass getKlass()\n"
+			+ indent + "    {\n"
+			+ indent + "        return " + klassRef + ";\n"
+			+ indent + "    }\n"
+			+ "\n"
+			+ indent + "    @Nonnull\n"
+			+ indent + "    @Override\n"
+			+ indent + "    public ImmutableList<AssociationEnd> getAssociationEnds()\n"
+			+ indent + "    {\n"
+			+ indent + "        return " + associationEndsCode + ";\n"
+			+ indent + "    }\n"
+			+ "\n"
+			+ indent + "    @Nonnull\n"
+			+ indent + "    @Override\n"
+			+ indent + "    public DataTypeProperty getProperty()\n"
+			+ indent + "    {\n"
+			+ indent + "        return " + propertyRef + ";\n"
+			+ indent + "    }\n"
+			+ indent + "}";
+	}
+	// endregion
 
 	@Nonnull
 	private String getProjectionSourceCode(@Nonnull Projection projection) {
@@ -2084,108 +2320,267 @@ public class JavaConstantsMetaModelGenerator {
 
 	@Nonnull
 	private String getClassifierAbstractMethodsSourceCode(@Nonnull Classifier classifier) {
+		String keyPropertyRefs = this.getPropertyReferences(classifier, classifier.getKeyProperties());
+		String allDataTypePropertyRefs = this.getPropertyReferences(classifier, classifier.getDataTypeProperties());
+		String dataTypePropertyByNameCases = this.getDataTypePropertyByNameSwitchCases(classifier);
+		String declaredRefPropertyRefs = this.getReferencePropertyReferences(classifier, classifier.getDeclaredReferenceProperties());
+		String allRefPropertyRefs = this.getReferencePropertyReferences(classifier, classifier.getReferenceProperties());
+
 		// @formatter:off
 		return ""
 				+ "    @Override\n"
 				+ "    public ImmutableList<DataTypeProperty> getKeyProperties()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getKeyProperties() not implemented yet\");\n"
+				+ "        return Lists.immutable.with(" + keyPropertyRefs + ");\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Nonnull\n"
 				+ "    @Override\n"
 				+ "    public ImmutableList<DataTypeProperty> getDataTypeProperties()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getDataTypeProperties() not implemented yet\");\n"
+				+ "        return Lists.immutable.with(" + allDataTypePropertyRefs + ");\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
 				+ "    public DataTypeProperty getDataTypePropertyByName(String name)\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getDataTypePropertyByName() not implemented yet\");\n"
+				+ dataTypePropertyByNameCases
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
 				+ "    public ImmutableList<ReferenceProperty> getDeclaredReferenceProperties()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getDeclaredReferenceProperties() not implemented yet\");\n"
+				+ "        return Lists.immutable.with(" + declaredRefPropertyRefs + ");\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
 				+ "    public ImmutableList<ReferenceProperty> getReferenceProperties()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getReferenceProperties() not implemented yet\");\n"
+				+ "        return Lists.immutable.with(" + allRefPropertyRefs + ");\n"
 				+ "    }\n"
 				+ "\n"
-				+ "    @Override\n"
-				+ "    public Optional<PrimitiveProperty> getSystemProperty()\n"
-				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getSystemProperty() not implemented yet\");\n"
-				+ "    }\n"
-				+ "\n"
-				+ "    @Override\n"
-				+ "    public Optional<PrimitiveProperty> getSystemFromProperty()\n"
-				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getSystemFromProperty() not implemented yet\");\n"
-				+ "    }\n"
-				+ "\n"
-				+ "    @Override\n"
-				+ "    public Optional<PrimitiveProperty> getSystemToProperty()\n"
-				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getSystemToProperty() not implemented yet\");\n"
-				+ "    }\n"
-				+ "\n"
-				+ "    @Override\n"
-				+ "    public Optional<PrimitiveProperty> getValidProperty()\n"
-				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getValidProperty() not implemented yet\");\n"
-				+ "    }\n"
-				+ "\n"
-				+ "    @Override\n"
-				+ "    public Optional<PrimitiveProperty> getValidFromProperty()\n"
-				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getValidFromProperty() not implemented yet\");\n"
-				+ "    }\n"
-				+ "\n"
-				+ "    @Override\n"
-				+ "    public Optional<PrimitiveProperty> getValidToProperty()\n"
-				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getValidToProperty() not implemented yet\");\n"
-				+ "    }\n"
-				+ "\n"
-				+ "    @Override\n"
-				+ "    public Optional<PrimitiveProperty> getCreatedByProperty()\n"
-				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getCreatedByProperty() not implemented yet\");\n"
-				+ "    }\n"
-				+ "\n"
-				+ "    @Override\n"
-				+ "    public Optional<PrimitiveProperty> getCreatedOnProperty()\n"
-				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getCreatedOnProperty() not implemented yet\");\n"
-				+ "    }\n"
-				+ "\n"
-				+ "    @Override\n"
-				+ "    public Optional<PrimitiveProperty> getLastUpdatedByProperty()\n"
-				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName()\n"
-				+ "                + \".getLastUpdatedByProperty() not implemented yet\");\n"
-				+ "    }\n"
-				+ "\n";
+				+ this.getOptionalPrimitivePropertySourceCode(classifier, "getSystemProperty", this.findSystemProperty(classifier))
+				+ this.getOptionalPrimitivePropertySourceCode(classifier, "getSystemFromProperty", this.findSystemFromProperty(classifier))
+				+ this.getOptionalPrimitivePropertySourceCode(classifier, "getSystemToProperty", this.findSystemToProperty(classifier))
+				+ this.getOptionalPrimitivePropertySourceCode(classifier, "getValidProperty", this.findValidProperty(classifier))
+				+ this.getOptionalPrimitivePropertySourceCode(classifier, "getValidFromProperty", this.findValidFromProperty(classifier))
+				+ this.getOptionalPrimitivePropertySourceCode(classifier, "getValidToProperty", this.findValidToProperty(classifier))
+				+ this.getOptionalPrimitivePropertySourceCode(classifier, "getCreatedByProperty", this.findCreatedByProperty(classifier))
+				+ this.getOptionalPrimitivePropertySourceCode(classifier, "getCreatedOnProperty", this.findCreatedOnProperty(classifier))
+				+ this.getOptionalPrimitivePropertySourceCode(classifier, "getLastUpdatedByProperty", this.findLastUpdatedByProperty(classifier));
 		// @formatter:on
+	}
+
+	@Nonnull
+	private String getPropertyReferences(
+		@Nonnull Classifier owningClassifier,
+		@Nonnull ImmutableList<DataTypeProperty> properties
+	) {
+		return properties.collect(property -> this.getDataTypePropertyReference(owningClassifier, property)).makeString();
+	}
+
+	@Nonnull
+	private String getDataTypePropertyReference(
+		@Nonnull Classifier owningClassifier,
+		@Nonnull DataTypeProperty property
+	) {
+		if (property.getOwningClassifier() == owningClassifier) {
+			return "this." + property.getName();
+		}
+		return this.applicationName + "DomainModel." + property.getOwningClassifier().getName() + "." + property.getName();
+	}
+
+	@Nonnull
+	private String getReferencePropertyReferences(
+		@Nonnull Classifier owningClassifier,
+		@Nonnull ImmutableList<ReferenceProperty> properties
+	) {
+		return properties.collect(property -> this.getReferencePropertyReference(owningClassifier, property)).makeString();
+	}
+
+	@Nonnull
+	private String getReferencePropertyReference(
+		@Nonnull Classifier owningClassifier,
+		@Nonnull ReferenceProperty property
+	) {
+		if (property.getOwningClassifier() == owningClassifier) {
+			return "this." + property.getName();
+		}
+		return this.applicationName + "DomainModel." + property.getOwningClassifier().getName() + "." + property.getName();
+	}
+
+	@Nonnull
+	private String getDataTypePropertyByNameSwitchCases(@Nonnull Classifier classifier) {
+		ImmutableList<DataTypeProperty> properties = classifier.getDataTypeProperties();
+		if (properties.isEmpty()) {
+			return "        return null;\n";
+		}
+
+		String cases = properties
+			.collect(
+				property ->
+					"            case \""
+					+ StringEscapeUtils.escapeJava(property.getName())
+					+ "\" -> "
+					+ this.getDataTypePropertyReference(classifier, property)
+					+ ";\n"
+			)
+			.makeString("");
+
+		return (
+			""
+			+ "        return switch (name)\n"
+			+ "        {\n"
+			+ cases
+			+ "            default -> null;\n"
+			+ "        };\n"
+		);
+	}
+
+	@Nonnull
+	private String getAssociationEndReferences(
+		@Nonnull Klass owningKlass,
+		@Nonnull ImmutableList<AssociationEnd> associationEnds
+	) {
+		return associationEnds.collect(end -> this.getAssociationEndReference(owningKlass, end)).makeString();
+	}
+
+	@Nonnull
+	private String getAssociationEndReference(
+		@Nonnull Klass owningKlass,
+		@Nonnull AssociationEnd associationEnd
+	) {
+		if (associationEnd.getOwningClassifier() == owningKlass) {
+			return "this." + associationEnd.getName();
+		}
+		return this.applicationName + "DomainModel." + associationEnd.getOwningClassifier().getName() + "." + associationEnd.getName();
+	}
+
+	@Nonnull
+	private String getAssociationEndByNameSwitchCases(
+		@Nonnull Klass owningKlass,
+		@Nonnull ImmutableList<AssociationEnd> associationEnds
+	) {
+		if (associationEnds.isEmpty()) {
+			return "        return null;\n";
+		}
+
+		String cases = associationEnds
+			.collect(
+				end ->
+					"            case \""
+					+ StringEscapeUtils.escapeJava(end.getName())
+					+ "\" -> "
+					+ this.getAssociationEndReference(owningKlass, end)
+					+ ";\n"
+			)
+			.makeString("");
+
+		return (
+			""
+			+ "        return switch (name)\n"
+			+ "        {\n"
+			+ cases
+			+ "            default -> null;\n"
+			+ "        };\n"
+		);
+	}
+
+	@Nonnull
+	private String getOptionalPrimitivePropertySourceCode(
+		@Nonnull Classifier classifier,
+		@Nonnull String methodName,
+		@Nonnull Optional<PrimitiveProperty> property
+	) {
+		String returnExpression = property
+			.map(prop -> "Optional.of(" + this.getDataTypePropertyReference(classifier, prop) + ")")
+			.orElse("Optional.empty()");
+
+		return (
+			""
+			+ "    @Override\n"
+			+ "    public Optional<PrimitiveProperty> "
+			+ methodName
+			+ "()\n"
+			+ "    {\n"
+			+ "        return "
+			+ returnExpression
+			+ ";\n"
+			+ "    }\n"
+			+ "\n"
+		);
+	}
+
+	@Nonnull
+	private Optional<PrimitiveProperty> findSystemProperty(@Nonnull Classifier classifier) {
+		return classifier.getDataTypeProperties()
+			.detectOptional(DataTypeProperty::isSystem)
+			.filter(PrimitiveProperty.class::isInstance)
+			.map(PrimitiveProperty.class::cast);
+	}
+
+	@Nonnull
+	private Optional<PrimitiveProperty> findSystemFromProperty(@Nonnull Classifier classifier) {
+		return classifier.getDataTypeProperties()
+			.detectOptional(DataTypeProperty::isSystemFrom)
+			.filter(PrimitiveProperty.class::isInstance)
+			.map(PrimitiveProperty.class::cast);
+	}
+
+	@Nonnull
+	private Optional<PrimitiveProperty> findSystemToProperty(@Nonnull Classifier classifier) {
+		return classifier.getDataTypeProperties()
+			.detectOptional(DataTypeProperty::isSystemTo)
+			.filter(PrimitiveProperty.class::isInstance)
+			.map(PrimitiveProperty.class::cast);
+	}
+
+	@Nonnull
+	private Optional<PrimitiveProperty> findValidProperty(@Nonnull Classifier classifier) {
+		return classifier.getDataTypeProperties()
+			.detectOptional(DataTypeProperty::isValid)
+			.filter(PrimitiveProperty.class::isInstance)
+			.map(PrimitiveProperty.class::cast);
+	}
+
+	@Nonnull
+	private Optional<PrimitiveProperty> findValidFromProperty(@Nonnull Classifier classifier) {
+		return classifier.getDataTypeProperties()
+			.detectOptional(DataTypeProperty::isValidFrom)
+			.filter(PrimitiveProperty.class::isInstance)
+			.map(PrimitiveProperty.class::cast);
+	}
+
+	@Nonnull
+	private Optional<PrimitiveProperty> findValidToProperty(@Nonnull Classifier classifier) {
+		return classifier.getDataTypeProperties()
+			.detectOptional(DataTypeProperty::isValidTo)
+			.filter(PrimitiveProperty.class::isInstance)
+			.map(PrimitiveProperty.class::cast);
+	}
+
+	@Nonnull
+	private Optional<PrimitiveProperty> findCreatedByProperty(@Nonnull Classifier classifier) {
+		return classifier.getDataTypeProperties()
+			.detectOptional(DataTypeProperty::isCreatedBy)
+			.filter(PrimitiveProperty.class::isInstance)
+			.map(PrimitiveProperty.class::cast);
+	}
+
+	@Nonnull
+	private Optional<PrimitiveProperty> findCreatedOnProperty(@Nonnull Classifier classifier) {
+		return classifier.getDataTypeProperties()
+			.detectOptional(DataTypeProperty::isCreatedOn)
+			.filter(PrimitiveProperty.class::isInstance)
+			.map(PrimitiveProperty.class::cast);
+	}
+
+	@Nonnull
+	private Optional<PrimitiveProperty> findLastUpdatedByProperty(@Nonnull Classifier classifier) {
+		return classifier.getDataTypeProperties()
+			.detectOptional(DataTypeProperty::isLastUpdatedBy)
+			.filter(PrimitiveProperty.class::isInstance)
+			.map(PrimitiveProperty.class::cast);
 	}
 
 	@Nonnull
@@ -2195,13 +2590,17 @@ public class JavaConstantsMetaModelGenerator {
 			.map((klass) -> "Optional.of(" + klass.getName() + ")")
 			.orElse("Optional.empty()");
 
-		return ""
+		return (
+			""
 			+ "    @Nonnull\n"
 			+ "    @Override\n"
 			+ "    public Optional<Klass> getUserClass()\n"
 			+ "    {\n"
-			+ "        return " + returnExpression + ";\n"
-			+ "    }\n";
+			+ "        return "
+			+ returnExpression
+			+ ";\n"
+			+ "    }\n"
+		);
 	}
 
 	@Nonnull
@@ -2216,15 +2615,24 @@ public class JavaConstantsMetaModelGenerator {
 		}
 
 		String cases = elements
-			.collect((element) -> "            case \"" + StringEscapeUtils.escapeJava(element.getName()) + "\" -> " + element.getName() + ";\n")
+			.collect(
+				(element) ->
+					"            case \""
+					+ StringEscapeUtils.escapeJava(element.getName())
+					+ "\" -> "
+					+ element.getName()
+					+ ";\n"
+			)
 			.makeString("");
 
-		return ""
+		return (
+			""
 			+ "        return switch (name)\n"
 			+ "        {\n"
 			+ cases
 			+ "            default -> null;\n"
-			+ "        };\n";
+			+ "        };\n"
+		);
 	}
 
 	@Nonnull
@@ -2245,6 +2653,7 @@ public class JavaConstantsMetaModelGenerator {
 				+ "import " + this.rootPackageName + ".meta.constants." + this.applicationName + "DomainModel;\n"
 				+ "\n"
 				+ "import org.eclipse.collections.api.list.*;\n"
+				+ "import org.eclipse.collections.impl.factory.*;\n"
 				+ "\n"
 				+ "/**\n"
 				+ " * Auto-generated by {@link " + this.getClass().getCanonicalName() + "}\n"
@@ -2289,7 +2698,7 @@ public class JavaConstantsMetaModelGenerator {
 				+ "    @Override\n"
 				+ "    public ImmutableList<Url> getUrls()\n"
 				+ "    {\n"
-				+ "        throw new UnsupportedOperationException(this.getClass().getSimpleName() + \".getUrls() not implemented yet\");\n"
+				+ "        return Lists.immutable.empty();\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
