@@ -817,56 +817,6 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-foreign-key-3-ENUMERATION_LITERAL_FK_ENUMERATION">
-        <addForeignKeyConstraint
-                constraintName="ENUMERATION_LITERAL_FK_ENUMERATION"
-                baseTableName="ENUMERATION_LITERAL"
-                baseColumnNames="ENUMERATION_NAME"
-                referencedTableName="ENUMERATION"
-                referencedColumnNames="NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-6-CLASSIFIER_INTERFACE_MAPPING_FK_SUB_CLASSIFIER">
-        <addForeignKeyConstraint
-                constraintName="CLASSIFIER_INTERFACE_MAPPING_FK_SUB_CLASSIFIER"
-                baseTableName="CLASSIFIER_INTERFACE_MAPPING"
-                baseColumnNames="CLASSIFIER_NAME"
-                referencedTableName="CLASSIFIER"
-                referencedColumnNames="NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-6-CLASSIFIER_INTERFACE_MAPPING_FK_SUPER_INTERFACE">
-        <addForeignKeyConstraint
-                constraintName="CLASSIFIER_INTERFACE_MAPPING_FK_SUPER_INTERFACE"
-                baseTableName="CLASSIFIER_INTERFACE_MAPPING"
-                baseColumnNames="INTERFACE_NAME"
-                referencedTableName="INTERFACE"
-                referencedColumnNames="NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-7-CLASSIFIER_MODIFIER_FK_OWNING_CLASSIFIER">
-        <addForeignKeyConstraint
-                constraintName="CLASSIFIER_MODIFIER_FK_OWNING_CLASSIFIER"
-                baseTableName="CLASSIFIER_MODIFIER"
-                baseColumnNames="CLASSIFIER_NAME"
-                referencedTableName="CLASSIFIER"
-                referencedColumnNames="NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-9-DATA_TYPE_PROPERTY_FK_OWNING_CLASSIFIER">
-        <addForeignKeyConstraint
-                constraintName="DATA_TYPE_PROPERTY_FK_OWNING_CLASSIFIER"
-                baseTableName="DATA_TYPE_PROPERTY"
-                baseColumnNames="CLASSIFIER_NAME"
-                referencedTableName="CLASSIFIER"
-                referencedColumnNames="NAME"
-        />
-    </changeSet>
-
     <changeSet author="Klass" id="initial-foreign-key-11-ENUMERATION_PROPERTY_FK_ENUMERATION">
         <addForeignKeyConstraint
                 constraintName="ENUMERATION_PROPERTY_FK_ENUMERATION"
@@ -874,16 +824,6 @@
                 baseColumnNames="ENUMERATION_NAME"
                 referencedTableName="ENUMERATION"
                 referencedColumnNames="NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-16-PROPERTY_MODIFIER_FK_DATA_TYPE_PROPERTY">
-        <addForeignKeyConstraint
-                constraintName="PROPERTY_MODIFIER_FK_DATA_TYPE_PROPERTY"
-                baseTableName="PROPERTY_MODIFIER"
-                baseColumnNames="CLASSIFIER_NAME, PROPERTY_NAME"
-                referencedTableName="DATA_TYPE_PROPERTY"
-                referencedColumnNames="CLASSIFIER_NAME, NAME"
         />
     </changeSet>
 
@@ -897,16 +837,6 @@
         />
     </changeSet>
 
-    <changeSet author="Klass" id="initial-foreign-key-23-PARAMETER_REFERENCE_FK_PARAMETER">
-        <addForeignKeyConstraint
-                constraintName="PARAMETER_REFERENCE_FK_PARAMETER"
-                baseTableName="PARAMETER_REFERENCE"
-                baseColumnNames="PARAMETER_ID"
-                referencedTableName="PARAMETER"
-                referencedColumnNames="ID"
-        />
-    </changeSet>
-
     <changeSet author="Klass" id="initial-foreign-key-24-MEMBER_REFERENCE_PATH_FK_KLASS">
         <addForeignKeyConstraint
                 constraintName="MEMBER_REFERENCE_PATH_FK_KLASS"
@@ -914,36 +844,6 @@
                 baseColumnNames="CLASS_NAME"
                 referencedTableName="KLASS"
                 referencedColumnNames="NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-24-MEMBER_REFERENCE_PATH_FK_DATA_TYPE_PROPERTY">
-        <addForeignKeyConstraint
-                constraintName="MEMBER_REFERENCE_PATH_FK_DATA_TYPE_PROPERTY"
-                baseTableName="MEMBER_REFERENCE_PATH"
-                baseColumnNames="PROPERTY_CLASS_NAME, PROPERTY_NAME"
-                referencedTableName="DATA_TYPE_PROPERTY"
-                referencedColumnNames="CLASSIFIER_NAME, NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-27-BINARY_CRITERIA_FK_LEFT">
-        <addForeignKeyConstraint
-                constraintName="BINARY_CRITERIA_FK_LEFT"
-                baseTableName="BINARY_CRITERIA"
-                baseColumnNames="LEFT_ID"
-                referencedTableName="CRITERIA"
-                referencedColumnNames="ID"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-27-BINARY_CRITERIA_FK_RIGHT">
-        <addForeignKeyConstraint
-                constraintName="BINARY_CRITERIA_FK_RIGHT"
-                baseTableName="BINARY_CRITERIA"
-                baseColumnNames="RIGHT_ID"
-                referencedTableName="CRITERIA"
-                referencedColumnNames="ID"
         />
     </changeSet>
 
@@ -963,16 +863,6 @@
                 baseTableName="OPERATOR_CRITERIA"
                 baseColumnNames="TARGET_EXPRESSION_ID"
                 referencedTableName="EXPRESSION_VALUE"
-                referencedColumnNames="ID"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-31-EDGE_POINT_CRITERIA_FK_MEMBER_REFERENCE_PATH">
-        <addForeignKeyConstraint
-                constraintName="EDGE_POINT_CRITERIA_FK_MEMBER_REFERENCE_PATH"
-                baseTableName="EDGE_POINT_CRITERIA"
-                baseColumnNames="MEMBER_REFERENCE_PATH_ID"
-                referencedTableName="MEMBER_REFERENCE_PATH"
                 referencedColumnNames="ID"
         />
     </changeSet>
@@ -997,16 +887,6 @@
         />
     </changeSet>
 
-    <changeSet author="Klass" id="initial-foreign-key-33-ASSOCIATION_END_FK_OWNING_ASSOCIATION">
-        <addForeignKeyConstraint
-                constraintName="ASSOCIATION_END_FK_OWNING_ASSOCIATION"
-                baseTableName="ASSOCIATION_END"
-                baseColumnNames="ASSOCIATION_NAME"
-                referencedTableName="ASSOCIATION"
-                referencedColumnNames="NAME"
-        />
-    </changeSet>
-
     <changeSet author="Klass" id="initial-foreign-key-33-ASSOCIATION_END_FK_RESULT_TYPE">
         <addForeignKeyConstraint
                 constraintName="ASSOCIATION_END_FK_RESULT_TYPE"
@@ -1014,96 +894,6 @@
                 baseColumnNames="RESULT_TYPE_NAME"
                 referencedTableName="KLASS"
                 referencedColumnNames="NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-34-ASSOCIATION_END_MODIFIER_FK_ASSOCIATION_END">
-        <addForeignKeyConstraint
-                constraintName="ASSOCIATION_END_MODIFIER_FK_ASSOCIATION_END"
-                baseTableName="ASSOCIATION_END_MODIFIER"
-                baseColumnNames="OWNING_CLASS_NAME, ASSOCIATION_END_NAME"
-                referencedTableName="ASSOCIATION_END"
-                referencedColumnNames="OWNING_CLASS_NAME, NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-35-MEMBER_REFERENCE_PATH_ASSOCIATION_END_MAPPING_FK_MEMBER_REFERENCE_PATH">
-        <addForeignKeyConstraint
-                constraintName="MEMBER_REFERENCE_PATH_ASSOCIATION_END_MAPPING_FK_MEMBER_REFERENCE_PATH"
-                baseTableName="MEMBER_REFERENCE_PATH_ASSOCIATION_END_MAPPING"
-                baseColumnNames="MEMBER_REFERENCE_PATH_ID"
-                referencedTableName="MEMBER_REFERENCE_PATH"
-                referencedColumnNames="ID"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-35-MEMBER_REFERENCE_PATH_ASSOCIATION_END_MAPPING_FK_ASSOCIATION_END">
-        <addForeignKeyConstraint
-                constraintName="MEMBER_REFERENCE_PATH_ASSOCIATION_END_MAPPING_FK_ASSOCIATION_END"
-                baseTableName="MEMBER_REFERENCE_PATH_ASSOCIATION_END_MAPPING"
-                baseColumnNames="ASSOCIATION_OWNING_CLASS_NAME, ASSOCIATION_END_NAME"
-                referencedTableName="ASSOCIATION_END"
-                referencedColumnNames="OWNING_CLASS_NAME, NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-38-PARAMETERIZED_PROPERTY_FK_OWNING_CLASS">
-        <addForeignKeyConstraint
-                constraintName="PARAMETERIZED_PROPERTY_FK_OWNING_CLASS"
-                baseTableName="PARAMETERIZED_PROPERTY"
-                baseColumnNames="OWNING_CLASS_NAME"
-                referencedTableName="KLASS"
-                referencedColumnNames="NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-38-PARAMETERIZED_PROPERTY_FK_RESULT_TYPE">
-        <addForeignKeyConstraint
-                constraintName="PARAMETERIZED_PROPERTY_FK_RESULT_TYPE"
-                baseTableName="PARAMETERIZED_PROPERTY"
-                baseColumnNames="RESULT_TYPE_NAME"
-                referencedTableName="KLASS"
-                referencedColumnNames="NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-39-ASSOCIATION_END_ORDER_BY_FK_ASSOCIATION_END">
-        <addForeignKeyConstraint
-                constraintName="ASSOCIATION_END_ORDER_BY_FK_ASSOCIATION_END"
-                baseTableName="ASSOCIATION_END_ORDER_BY"
-                baseColumnNames="ASSOCIATION_END_CLASS_NAME, ASSOCIATION_END_NAME"
-                referencedTableName="ASSOCIATION_END"
-                referencedColumnNames="OWNING_CLASS_NAME, NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-39-ASSOCIATION_END_ORDER_BY_FK_THIS_MEMBER_REFERENCE_PATH">
-        <addForeignKeyConstraint
-                constraintName="ASSOCIATION_END_ORDER_BY_FK_THIS_MEMBER_REFERENCE_PATH"
-                baseTableName="ASSOCIATION_END_ORDER_BY"
-                baseColumnNames="THIS_MEMBER_REFERENCE_PATH_ID"
-                referencedTableName="THIS_MEMBER_REFERENCE_PATH"
-                referencedColumnNames="ID"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-40-PARAMETERIZED_PROPERTY_ORDERING_FK_PARAMETERIZED_PROPERTY">
-        <addForeignKeyConstraint
-                constraintName="PARAMETERIZED_PROPERTY_ORDERING_FK_PARAMETERIZED_PROPERTY"
-                baseTableName="PARAMETERIZED_PROPERTY_ORDERING"
-                baseColumnNames="OWNING_CLASS_NAME, NAME"
-                referencedTableName="PARAMETERIZED_PROPERTY"
-                referencedColumnNames="OWNING_CLASS_NAME, NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-41-PARAMETERIZED_PROPERTY_PARAMETER_FK_PARAMETERIZED_PROPERTY">
-        <addForeignKeyConstraint
-                constraintName="PARAMETERIZED_PROPERTY_PARAMETER_FK_PARAMETERIZED_PROPERTY"
-                baseTableName="PARAMETERIZED_PROPERTY_PARAMETER"
-                baseColumnNames="CLASSIFIER_NAME, PARAMETERIZED_PROPERTY_NAME"
-                referencedTableName="PARAMETERIZED_PROPERTY"
-                referencedColumnNames="OWNING_CLASS_NAME, NAME"
         />
     </changeSet>
 
@@ -1117,46 +907,6 @@
         />
     </changeSet>
 
-    <changeSet author="Klass" id="initial-foreign-key-44-NAMED_PROJECTION_FK_ROOT_PROJECTION">
-        <addForeignKeyConstraint
-                constraintName="NAMED_PROJECTION_FK_ROOT_PROJECTION"
-                baseTableName="NAMED_PROJECTION"
-                baseColumnNames="PROJECTION_ID"
-                referencedTableName="ROOT_PROJECTION"
-                referencedColumnNames="ID"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-45-PROJECTION_WITH_ASSOCIATION_END_FK_ASSOCIATION_END">
-        <addForeignKeyConstraint
-                constraintName="PROJECTION_WITH_ASSOCIATION_END_FK_ASSOCIATION_END"
-                baseTableName="PROJECTION_WITH_ASSOCIATION_END"
-                baseColumnNames="ASSOCIATION_END_CLASS, ASSOCIATION_END_NAME"
-                referencedTableName="ASSOCIATION_END"
-                referencedColumnNames="OWNING_CLASS_NAME, NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-47-PROJECTION_PROJECTION_REFERENCE_FK_PROJECTION">
-        <addForeignKeyConstraint
-                constraintName="PROJECTION_PROJECTION_REFERENCE_FK_PROJECTION"
-                baseTableName="PROJECTION_PROJECTION_REFERENCE"
-                baseColumnNames="PROJECTION_NAME"
-                referencedTableName="NAMED_PROJECTION"
-                referencedColumnNames="NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-48-PROJECTION_DATA_TYPE_PROPERTY_FK_DATA_TYPE_PROPERTY">
-        <addForeignKeyConstraint
-                constraintName="PROJECTION_DATA_TYPE_PROPERTY_FK_DATA_TYPE_PROPERTY"
-                baseTableName="PROJECTION_DATA_TYPE_PROPERTY"
-                baseColumnNames="PROPERTY_CLASSIFIER_NAME, PROPERTY_NAME"
-                referencedTableName="DATA_TYPE_PROPERTY"
-                referencedColumnNames="CLASSIFIER_NAME, NAME"
-        />
-    </changeSet>
-
     <changeSet author="Klass" id="initial-foreign-key-49-SERVICE_GROUP_FK_OWNING_CLASS">
         <addForeignKeyConstraint
                 constraintName="SERVICE_GROUP_FK_OWNING_CLASS"
@@ -1164,26 +914,6 @@
                 baseColumnNames="CLASS_NAME"
                 referencedTableName="KLASS"
                 referencedColumnNames="NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-50-URL_FK_SERVICE_GROUP">
-        <addForeignKeyConstraint
-                constraintName="URL_FK_SERVICE_GROUP"
-                baseTableName="URL"
-                baseColumnNames="SERVICE_GROUP_NAME"
-                referencedTableName="SERVICE_GROUP"
-                referencedColumnNames="NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-51-URL_PARAMETER_FK_URL">
-        <addForeignKeyConstraint
-                constraintName="URL_PARAMETER_FK_URL"
-                baseTableName="URL_PARAMETER"
-                baseColumnNames="SERVICE_GROUP_NAME, URL_STRING"
-                referencedTableName="URL"
-                referencedColumnNames="SERVICE_GROUP_NAME, URL"
         />
     </changeSet>
 
@@ -1197,16 +927,6 @@
         />
     </changeSet>
 
-    <changeSet author="Klass" id="initial-foreign-key-52-SERVICE_FK_URL">
-        <addForeignKeyConstraint
-                constraintName="SERVICE_FK_URL"
-                baseTableName="SERVICE"
-                baseColumnNames="SERVICE_GROUP_NAME, URL_STRING"
-                referencedTableName="URL"
-                referencedColumnNames="SERVICE_GROUP_NAME, URL"
-        />
-    </changeSet>
-
     <changeSet author="Klass" id="initial-foreign-key-52-SERVICE_FK_PROJECTION">
         <addForeignKeyConstraint
                 constraintName="SERVICE_FK_PROJECTION"
@@ -1214,66 +934,6 @@
                 baseColumnNames="PROJECTION_NAME"
                 referencedTableName="NAMED_PROJECTION"
                 referencedColumnNames="NAME"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-52-SERVICE_FK_QUERY_CRITERIA">
-        <addForeignKeyConstraint
-                constraintName="SERVICE_FK_QUERY_CRITERIA"
-                baseTableName="SERVICE"
-                baseColumnNames="QUERY_CRITERIA_ID"
-                referencedTableName="CRITERIA"
-                referencedColumnNames="ID"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-52-SERVICE_FK_AUTHORIZE_CRITERIA">
-        <addForeignKeyConstraint
-                constraintName="SERVICE_FK_AUTHORIZE_CRITERIA"
-                baseTableName="SERVICE"
-                baseColumnNames="AUTHORIZE_CRITERIA_ID"
-                referencedTableName="CRITERIA"
-                referencedColumnNames="ID"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-52-SERVICE_FK_VALIDATE_CRITERIA">
-        <addForeignKeyConstraint
-                constraintName="SERVICE_FK_VALIDATE_CRITERIA"
-                baseTableName="SERVICE"
-                baseColumnNames="VALIDATE_CRITERIA_ID"
-                referencedTableName="CRITERIA"
-                referencedColumnNames="ID"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-52-SERVICE_FK_CONFLICT_CRITERIA">
-        <addForeignKeyConstraint
-                constraintName="SERVICE_FK_CONFLICT_CRITERIA"
-                baseTableName="SERVICE"
-                baseColumnNames="CONFLICT_CRITERIA_ID"
-                referencedTableName="CRITERIA"
-                referencedColumnNames="ID"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-53-SERVICE_ORDER_BY_FK_SERVICE">
-        <addForeignKeyConstraint
-                constraintName="SERVICE_ORDER_BY_FK_SERVICE"
-                baseTableName="SERVICE_ORDER_BY"
-                baseColumnNames="SERVICE_GROUP_NAME, SERVICE_URL_STRING, SERVICE_VERB"
-                referencedTableName="SERVICE"
-                referencedColumnNames="SERVICE_GROUP_NAME, URL_STRING, VERB"
-        />
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-foreign-key-53-SERVICE_ORDER_BY_FK_THIS_MEMBER_REFERENCE_PATH">
-        <addForeignKeyConstraint
-                constraintName="SERVICE_ORDER_BY_FK_THIS_MEMBER_REFERENCE_PATH"
-                baseTableName="SERVICE_ORDER_BY"
-                baseColumnNames="THIS_MEMBER_REFERENCE_PATH_ID"
-                referencedTableName="THIS_MEMBER_REFERENCE_PATH"
-                referencedColumnNames="ID"
         />
     </changeSet>
 
