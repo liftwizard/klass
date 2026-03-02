@@ -25,10 +25,10 @@ import io.liftwizard.junit.extension.match.file.FileMatchExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class SourceCodeResourceTest extends AbstractCoverageTest {
+class SourceCodeResourceTest extends AbstractCoverageTest {
 
 	@RegisterExtension
-	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
+	final FileMatchExtension fileMatchExtension = new FileMatchExtension(SourceCodeResourceTest.class);
 
 	@Test
 	void smoke_test() {
@@ -44,9 +44,8 @@ public class SourceCodeResourceTest extends AbstractCoverageTest {
 
 		this.assertResponseStatus(response, Status.OK);
 		String responseHtml = response.readEntity(String.class);
-		// assertEquals(responseHtml, expected, responseHtml);
 
-		String expectedStringClasspathLocation = this.getClass().getCanonicalName() + "#smoke_test.html";
+		String expectedStringClasspathLocation = SourceCodeResourceTest.class.getCanonicalName() + "#smoke_test.html";
 		this.fileMatchExtension.assertFileContents(expectedStringClasspathLocation, responseHtml);
 	}
 }

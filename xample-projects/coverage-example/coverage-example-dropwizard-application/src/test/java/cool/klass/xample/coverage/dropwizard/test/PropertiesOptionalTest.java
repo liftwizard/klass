@@ -16,49 +16,5 @@
 
 package cool.klass.xample.coverage.dropwizard.test;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-
-import io.liftwizard.junit.extension.match.FileSlurper;
-import org.junit.jupiter.api.Test;
-
-class PropertiesOptionalTest extends AbstractCoverageTest {
-
-	@Test
-	void getFirst() {
-		this.assertUrlReturns("getFirst", "propertiesOptional/1");
-	}
-
-	@Test
-	void getSecond() {
-		this.assertUrlReturns("getSecond", "propertiesOptional/2");
-	}
-
-	@Test
-	void putFirst() {
-		Client client = this.getClient("putFirst");
-		String jsonName = this.getClass().getSimpleName() + ".putFirst.json5";
-		String json = FileSlurper.slurp(jsonName, this.getClass());
-
-		Response putResponse = client
-			.target("http://localhost:{port}/api/propertiesOptional/{id}")
-			.resolveTemplate("port", this.appExtension.getLocalPort())
-			.resolveTemplate("id", 1)
-			.request()
-			.header("Authorization", "Impersonation User userId 1")
-			.put(Entity.json(json));
-
-		this.assertEmptyResponse(Status.NO_CONTENT, putResponse);
-
-		Response getResponse = client
-			.target("http://localhost:{port}/api/propertiesOptional/{id}")
-			.resolveTemplate("port", this.appExtension.getLocalPort())
-			.resolveTemplate("id", 1)
-			.request()
-			.get();
-
-		this.assertResponse("putFirst2", Status.OK, getResponse);
-	}
+class PropertiesOptionalTest extends AbstractPropertiesOptionalTest {
 }
