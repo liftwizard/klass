@@ -214,17 +214,19 @@ public class QuestionResource
             throw new ForbiddenException();
         }
 
-        if (result.size() > 1)
-        {
-            throw new InternalServerErrorException("TODO");
-        }
-
-        Object persistentInstance = result.get(0);
 
         Instant           transactionInstant = Instant.now(this.clock);
         MutationContext   mutationContext    = new MutationContext(Optional.of(userPrincipalName), transactionInstant, Maps.immutable.empty());
         PersistentDeleter deleter            = new PersistentDeleter(mutationContext, this.dataStore);
-        deleter.deleteOrTerminate(klass, persistentInstance);
+
+        this.dataStore.runInTransaction(() ->
+        {
+            for (int i = result.size() - 1; i >= 0; i--)
+            {
+                Object persistentInstance = result.get(i);
+                deleter.deleteOrTerminate(klass, persistentInstance);
+            }
+        });
     }
 
     @Timed
