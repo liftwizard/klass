@@ -933,11 +933,7 @@ public class ServiceResourceGenerator {
 				+ "\n"
 				+ "        this.dataStore.runInTransaction(() ->\n"
 				+ "        {\n"
-				+ "            for (int i = result.size() - 1; i >= 0; i--)\n"
-				+ "            {\n"
-				+ "                Object persistentInstance = result.get(i);\n"
-				+ "                deleter.deleteOrTerminate(klass, persistentInstance);\n"
-				+ "            }\n"
+				+ "            deleter.deleteAllOrTerminate(klass, result);\n"
 				+ "        });\n"
 				+ "    }\n";
 		// @formatter:on

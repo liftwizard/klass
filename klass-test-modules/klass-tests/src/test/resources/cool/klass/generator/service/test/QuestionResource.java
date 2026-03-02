@@ -218,11 +218,7 @@ public class QuestionResource
 
         this.dataStore.runInTransaction(() ->
         {
-            for (int i = result.size() - 1; i >= 0; i--)
-            {
-                Object persistentInstance = result.get(i);
-                deleter.deleteOrTerminate(klass, persistentInstance);
-            }
+            deleter.deleteAllOrTerminate(klass, result);
         });
     }
 
