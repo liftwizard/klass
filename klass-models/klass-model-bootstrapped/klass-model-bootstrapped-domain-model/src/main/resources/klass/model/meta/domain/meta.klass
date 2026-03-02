@@ -526,7 +526,7 @@ class TypeMemberReferencePath
 association BinaryCriteriaHasLeft
 {
     ownerOfLeftCriteria : BinaryCriteria[0..1];
-    left                : Criteria[1..1];
+    left                : Criteria[1..1] owned;
 
     relationship this.leftId == Criteria.id
 }
@@ -534,7 +534,7 @@ association BinaryCriteriaHasLeft
 association BinaryCriteriaHasRight
 {
     ownerOfRightCriteria: BinaryCriteria[0..1];
-    right               : Criteria[1..1];
+    right               : Criteria[1..1] owned;
 
     relationship this.rightId == Criteria.id
 }
@@ -656,7 +656,7 @@ class NamedProjection
 association NamedProjectionHasRootProjection
 {
     namedProjection: NamedProjection[0..1];
-    rootProjection: RootProjection[1..1];
+    rootProjection: RootProjection[1..1] owned;
 
     relationship this.projectionId == RootProjection.id
 }
@@ -699,7 +699,7 @@ class ProjectionDataTypeProperty
 association ProjectionElementHasChildren
 {
     parent                        : ProjectionElement[0..1];
-    children                      : ProjectionElement[0..*]
+    children                      : ProjectionElement[0..*] owned
         orderBy: this.ordinal ascending;
 
     relationship this.id == ProjectionElement.parentId

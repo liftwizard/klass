@@ -914,7 +914,11 @@
 						"resultType": {
 							"name": "Criteria"
 						},
-						"associationEndModifiers": [],
+						"associationEndModifiers": [
+							{
+								"keyword": "owned"
+							}
+						],
 						"orderBys": []
 					}
 				],
@@ -944,7 +948,11 @@
 						"resultType": {
 							"name": "Criteria"
 						},
-						"associationEndModifiers": [],
+						"associationEndModifiers": [
+							{
+								"keyword": "owned"
+							}
+						],
 						"orderBys": []
 					}
 				],
@@ -1194,7 +1202,11 @@
 						"resultType": {
 							"name": "RootProjection"
 						},
-						"associationEndModifiers": [],
+						"associationEndModifiers": [
+							{
+								"keyword": "owned"
+							}
+						],
 						"orderBys": []
 					}
 				],
@@ -1224,7 +1236,11 @@
 						"resultType": {
 							"name": "ProjectionElement"
 						},
-						"associationEndModifiers": [],
+						"associationEndModifiers": [
+							{
+								"keyword": "owned"
+							}
+						],
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
