@@ -23,9 +23,7 @@
 				"name": "name",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -69,9 +67,7 @@
 				"name": "classifierName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
@@ -86,9 +82,7 @@
 				"name": "propertyName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
-					"number": 256
-				},
+				"maxLengthValidation": null,
 				"propertyModifiers": [
 					{
 						"keyword": "key"
