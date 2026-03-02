@@ -28,9 +28,7 @@ projection PackageableElementProjection on PackageableElement
     Klass.parameterizedProperties: ParameterizedPropertyProjection,
     Association.associationEnds: AssociationEndProjection,
     Association.criteria: CriteriaProjection,
-    NamedProjection.rootProjection: {
-        ProjectionElement.id: "ProjectionElement id",
-    },
+    NamedProjection.rootProjection: RootProjectionProjection,
     ServiceGroup.owningClass: {
         NamedElement.name: "NamedElement name",
     },
@@ -257,12 +255,8 @@ projection MemberReferencePathProjection on MemberReferencePath
 projection CriteriaProjection on Criteria
 {
     id: "Criteria id",
-    BinaryCriteria.left: {
-        Criteria.id: "Criteria id",
-    },
-    BinaryCriteria.right: {
-        Criteria.id: "Criteria id",
-    },
+    BinaryCriteria.left: CriteriaProjection,
+    BinaryCriteria.right: CriteriaProjection,
     OperatorCriteria.operator: "OperatorCriteria operator",
     OperatorCriteria.sourceExpressionValue: ExpressionValueProjection,
     OperatorCriteria.targetExpressionValue: ExpressionValueProjection,
@@ -279,34 +273,22 @@ projection AllCriteriaProjection on AllCriteria
 projection BinaryCriteriaProjection on BinaryCriteria
 {
     id: "Criteria id",
-    left: {
-        id: "Criteria id",
-    },
-    right: {
-        id: "Criteria id",
-    },
+    left: CriteriaProjection,
+    right: CriteriaProjection,
 }
 
 projection AndCriteriaProjection on AndCriteria
 {
     id: "Criteria id",
-    left: {
-        id: "Criteria id",
-    },
-    right: {
-        id: "Criteria id",
-    },
+    left: CriteriaProjection,
+    right: CriteriaProjection,
 }
 
 projection OrCriteriaProjection on OrCriteria
 {
     id: "Criteria id",
-    left: {
-        id: "Criteria id",
-    },
-    right: {
-        id: "Criteria id",
-    },
+    left: CriteriaProjection,
+    right: CriteriaProjection,
 }
 
 projection OperatorCriteriaProjection on OperatorCriteria
@@ -416,9 +398,7 @@ projection ProjectionElementProjection on ProjectionElement
 {
     id: "ProjectionElement id",
     name: "ProjectionElement name",
-    children: {
-        id: "ProjectionElement id",
-    },
+    children: ProjectionElementProjection,
     parent: {
         id: "ProjectionElement id",
     },
@@ -440,9 +420,7 @@ projection RootProjectionProjection on RootProjection
 {
     id: "ProjectionElement id",
     name: "ProjectionElement name",
-    children: {
-        id: "ProjectionElement id",
-    },
+    children: ProjectionElementProjection,
     parent: {
         id: "ProjectionElement id",
     },
@@ -455,18 +433,14 @@ projection NamedProjectionProjection on NamedProjection
 {
     name: "NamedElement name",
     packageName: "PackageableElement packageName",
-    rootProjection: {
-        id: "ProjectionElement id",
-    },
+    rootProjection: RootProjectionProjection,
 }
 
 projection ProjectionWithAssociationEndProjection on ProjectionWithAssociationEnd
 {
     id: "ProjectionElement id",
     name: "ProjectionElement name",
-    children: {
-        id: "ProjectionElement id",
-    },
+    children: ProjectionElementProjection,
     parent: {
         id: "ProjectionElement id",
     },
@@ -482,9 +456,7 @@ projection ProjectionReferencePropertyProjection on ProjectionReferenceProperty
 {
     id: "ProjectionElement id",
     name: "ProjectionElement name",
-    children: {
-        id: "ProjectionElement id",
-    },
+    children: ProjectionElementProjection,
     parent: {
         id: "ProjectionElement id",
     },
@@ -497,9 +469,7 @@ projection ProjectionProjectionReferenceProjection on ProjectionProjectionRefere
 {
     id: "ProjectionElement id",
     name: "ProjectionElement name",
-    children: {
-        id: "ProjectionElement id",
-    },
+    children: ProjectionElementProjection,
     parent: {
         id: "ProjectionElement id",
     },
@@ -515,9 +485,7 @@ projection ProjectionDataTypePropertyProjection on ProjectionDataTypeProperty
 {
     id: "ProjectionElement id",
     name: "ProjectionElement name",
-    children: {
-        id: "ProjectionElement id",
-    },
+    children: ProjectionElementProjection,
     parent: {
         id: "ProjectionElement id",
     },
