@@ -109,9 +109,7 @@ projection DataTypePropertyProjection on DataTypeProperty
     optional: "DataTypeProperty optional",
     minLengthValidation: MinLengthPropertyValidationProjection,
     maxLengthValidation: MaxLengthPropertyValidationProjection,
-    propertyModifiers: {
-        keyword: "PropertyModifier keyword",
-    },
+    propertyModifiers: PropertyModifierProjection,
     PrimitiveProperty.primitiveType: "PrimitiveProperty primitiveType",
     PrimitiveProperty.minValidation: MinPropertyValidationProjection,
     PrimitiveProperty.maxValidation: MaxPropertyValidationProjection,
@@ -127,9 +125,7 @@ projection PrimitivePropertyProjection on PrimitiveProperty
     primitiveType: "PrimitiveProperty primitiveType",
     minLengthValidation: MinLengthPropertyValidationProjection,
     maxLengthValidation: MaxLengthPropertyValidationProjection,
-    propertyModifiers: {
-        keyword: "PropertyModifier keyword",
-    },
+    propertyModifiers: PropertyModifierProjection,
     minValidation: MinPropertyValidationProjection,
     maxValidation: MaxPropertyValidationProjection,
 }
@@ -140,9 +136,7 @@ projection EnumerationPropertyProjection on EnumerationProperty
     optional: "DataTypeProperty optional",
     minLengthValidation: MinLengthPropertyValidationProjection,
     maxLengthValidation: MaxLengthPropertyValidationProjection,
-    propertyModifiers: {
-        keyword: "PropertyModifier keyword",
-    },
+    propertyModifiers: PropertyModifierProjection,
     enumeration: {
         name: "NamedElement name",
     },
@@ -371,9 +365,7 @@ projection ParameterizedPropertyProjection on ParameterizedProperty
         name: "NamedElement name",
     },
     parameterizedPropertyOrderings: ParameterizedPropertyOrderingProjection,
-    parameters: {
-        name: "NamedElement name",
-    },
+    parameters: ParameterizedPropertyParameterProjection,
 }
 
 projection AssociationEndOrderByProjection on AssociationEndOrderBy

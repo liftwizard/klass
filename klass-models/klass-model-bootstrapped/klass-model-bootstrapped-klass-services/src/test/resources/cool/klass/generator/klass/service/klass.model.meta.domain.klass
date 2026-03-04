@@ -94,24 +94,6 @@ service KlassResource on Klass
         }
 }
 
-service PropertyModifierResource on PropertyModifier
-{
-    /propertyModifier/{classifierName: String[1..1]}/{propertyName: String[1..1]}/{keyword: String[1..1]}
-        GET
-        {
-            multiplicity: one;
-            criteria    : this.classifierName == classifierName && this.propertyName == propertyName && this.keyword == keyword;
-            projection  : PropertyModifierProjection;
-        }
-    /propertyModifier
-        GET
-        {
-            multiplicity: many;
-            criteria    : all;
-            projection  : PropertyModifierProjection;
-        }
-}
-
 service ParameterResource on Parameter
 {
     /parameter/{id: Long[1..1]}
@@ -433,24 +415,6 @@ service TypeMemberReferencePathResource on TypeMemberReferencePath
             multiplicity: many;
             criteria    : all;
             projection  : TypeMemberReferencePathProjection;
-        }
-}
-
-service ParameterizedPropertyParameterResource on ParameterizedPropertyParameter
-{
-    /parameterizedPropertyParameter/{classifierName: String[1..1]}/{parameterizedPropertyName: String[1..1]}/{name: String[1..1]}
-        GET
-        {
-            multiplicity: one;
-            criteria    : this.classifierName == classifierName && this.parameterizedPropertyName == parameterizedPropertyName && this.name == name;
-            projection  : ParameterizedPropertyParameterProjection;
-        }
-    /parameterizedPropertyParameter
-        GET
-        {
-            multiplicity: many;
-            criteria    : all;
-            projection  : ParameterizedPropertyParameterProjection;
         }
 }
 

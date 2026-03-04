@@ -235,7 +235,7 @@ class PropertyModifier
 association DataTypePropertyHasModifiers
 {
     dataTypeProperty              : DataTypeProperty[1..1];
-    propertyModifiers             : PropertyModifier[0..*]
+    propertyModifiers             : PropertyModifier[0..*] owned
         orderBy: this.ordinal ascending;
 
     relationship this.classifierName == PropertyModifier.classifierName
@@ -622,7 +622,7 @@ class ParameterizedPropertyParameter implements NamedElement
 association ParameterizedPropertyHasParameters
 {
     parameterizedProperty         : ParameterizedProperty[1..1];
-    parameters                    : ParameterizedPropertyParameter[0..*]
+    parameters                    : ParameterizedPropertyParameter[0..*] owned
         orderBy: this.ordinal ascending;
 
     relationship this.owningClassName == ParameterizedPropertyParameter.classifierName
