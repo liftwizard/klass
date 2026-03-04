@@ -1,0 +1,34 @@
+package dummy
+
+class Root
+{
+    id: String key;
+}
+
+class OwnedChild
+{
+    rootId: String key;
+    childId: String key;
+}
+
+class OrphanedRef
+{
+    id: String key;
+    childRootId: String;
+    childChildId: String;
+}
+
+association RootHasOwnedChildren
+{
+    root: Root[1..1];
+    ownedChildren: OwnedChild[0..*] owned;
+}
+
+association OrphanedRefReferencesOwnedChild
+{
+    ownedChild: OwnedChild[1..1];
+    orphanedRefs: OrphanedRef[0..*];
+
+    relationship this.rootId == OrphanedRef.childRootId
+            && this.childId == OrphanedRef.childChildId
+}
