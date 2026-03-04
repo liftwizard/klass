@@ -412,7 +412,11 @@
 						"resultType": {
 							"name": "PropertyModifier"
 						},
-						"associationEndModifiers": [],
+						"associationEndModifiers": [
+							{
+								"keyword": "owned"
+							}
+						],
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
@@ -1165,7 +1169,11 @@
 						"resultType": {
 							"name": "ParameterizedPropertyParameter"
 						},
-						"associationEndModifiers": [],
+						"associationEndModifiers": [
+							{
+								"keyword": "owned"
+							}
+						],
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
