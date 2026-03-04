@@ -1,0 +1,17 @@
+════════════════════════════════════════ [35mWRN_ORP_CSC[m ════════════════════════════════════════
+[33mWarning: Association end 'OrphanedRefReferencesOwnedChild.orphanedRefs' is to-many and not owned, but 'OwnedChild' is transitively owned by 'Root'. 'OrphanedRef' rows would be orphaned when 'Root' is cascade-deleted. Consider adding 'owned' to this end.[m
+
+At (CascadeOrphanWarningTest.klass:30:5)
+
+[39m 1║ [35mpackage [39mdummy
+[39m27║ [35massociation [39mOrphanedRefReferencesOwnedChild
+[39m28║ [36m{
+[39m30║     [39morphanedRefs[36m: [39mOrphanedRef[36m[[34m0[36m..[34m*[36m][36m;
+[39m  ║ [33m    ^^^^^^^^^^^^
+[39m34║ [36m}
+[m
+[36mLocation:  [mCascadeOrphanWarningTest.klass:30:5[m
+[36mFile:      [mCascadeOrphanWarningTest.klass[m
+[36mLine:      [m30[m
+[36mCharacter: [m5
+═════════════════════════════════════════════════════════════════════════════════════════════
