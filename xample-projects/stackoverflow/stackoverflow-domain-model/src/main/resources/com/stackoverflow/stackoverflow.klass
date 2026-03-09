@@ -400,6 +400,33 @@ service QuestionVoteResource on QuestionVote
         }
 }
 
+service TagResource on Tag
+{
+    /tag/{name: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.name == name;
+            projection  : TagProjection;
+        }
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.name == name;
+        }
+    /tag
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : TagProjection;
+        }
+        POST
+        {
+            multiplicity: one;
+        }
+}
+
 // Just embed inside the Question class?
 service QuestionResource on Question
 {
