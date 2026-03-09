@@ -1138,7 +1138,7 @@
 						"type": "query",
 						"parameter": {
 							"__typename": "klass.model.meta.domain.PrimitiveParameter",
-							"id": 22,
+							"id": 27,
 							"name": "name",
 							"multiplicity": "1..1",
 							"primitiveType": "String"
@@ -1173,7 +1173,7 @@
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 270,
 								"parameter": {
-									"id": 22,
+									"id": 27,
 									"name": "name"
 								}
 							}
@@ -2699,6 +2699,311 @@
 						},
 						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "SharedNaturalManyToOneSourceResource",
+		"packageName": "cool.klass.xample.coverage",
+		"owningClass": {
+			"name": "SharedNaturalManyToOneSource"
+		},
+		"urls": [
+			{
+				"url": "/sharedNaturalManyToOneSource/{key}",
+				"parameters": [
+					{
+						"type": "path",
+						"parameter": {
+							"__typename": "klass.model.meta.domain.PrimitiveParameter",
+							"id": 22,
+							"name": "key",
+							"multiplicity": "1..1",
+							"primitiveType": "String"
+						}
+					}
+				],
+				"services": [
+					{
+						"verb": "DELETE",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria": {
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue": {
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 351,
+								"klass": {
+									"name": "SharedNaturalManyToOneSource"
+								},
+								"associationEnds": [],
+								"dataTypeProperty": {
+									"owningClassifier": {
+										"name": "SharedNaturalManyToOneSource"
+									},
+									"name": "key"
+								}
+							},
+							"targetExpressionValue": {
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 352,
+								"parameter": {
+									"id": 22,
+									"name": "key"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "SharedNaturalOneToManyTargetResource",
+		"packageName": "cool.klass.xample.coverage",
+		"owningClass": {
+			"name": "SharedNaturalOneToManyTarget"
+		},
+		"urls": [
+			{
+				"url": "/sharedNaturalOneToManyTarget/{key}",
+				"parameters": [
+					{
+						"type": "path",
+						"parameter": {
+							"__typename": "klass.model.meta.domain.PrimitiveParameter",
+							"id": 23,
+							"name": "key",
+							"multiplicity": "1..1",
+							"primitiveType": "String"
+						}
+					}
+				],
+				"services": [
+					{
+						"verb": "DELETE",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria": {
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue": {
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 353,
+								"klass": {
+									"name": "SharedNaturalOneToManyTarget"
+								},
+								"associationEnds": [],
+								"dataTypeProperty": {
+									"owningClassifier": {
+										"name": "SharedNaturalOneToManyTarget"
+									},
+									"name": "key"
+								}
+							},
+							"targetExpressionValue": {
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 354,
+								"parameter": {
+									"id": 23,
+									"name": "key"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "SharedNaturalOneToManySelfResource",
+		"packageName": "cool.klass.xample.coverage",
+		"owningClass": {
+			"name": "SharedNaturalOneToManySelf"
+		},
+		"urls": [
+			{
+				"url": "/sharedNaturalOneToManySelf/{key}",
+				"parameters": [
+					{
+						"type": "path",
+						"parameter": {
+							"__typename": "klass.model.meta.domain.PrimitiveParameter",
+							"id": 24,
+							"name": "key",
+							"multiplicity": "1..1",
+							"primitiveType": "String"
+						}
+					}
+				],
+				"services": [
+					{
+						"verb": "DELETE",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria": {
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue": {
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 355,
+								"klass": {
+									"name": "SharedNaturalOneToManySelf"
+								},
+								"associationEnds": [],
+								"dataTypeProperty": {
+									"owningClassifier": {
+										"name": "SharedNaturalOneToManySelf"
+									},
+									"name": "key"
+								}
+							},
+							"targetExpressionValue": {
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 356,
+								"parameter": {
+									"id": 24,
+									"name": "key"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "SharedSyntheticOneToManyTargetResource",
+		"packageName": "cool.klass.xample.coverage",
+		"owningClass": {
+			"name": "SharedSyntheticOneToManyTarget"
+		},
+		"urls": [
+			{
+				"url": "/sharedSyntheticOneToManyTarget/{id}",
+				"parameters": [
+					{
+						"type": "path",
+						"parameter": {
+							"__typename": "klass.model.meta.domain.PrimitiveParameter",
+							"id": 25,
+							"name": "id",
+							"multiplicity": "1..1",
+							"primitiveType": "Long"
+						}
+					}
+				],
+				"services": [
+					{
+						"verb": "DELETE",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria": {
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue": {
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 357,
+								"klass": {
+									"name": "SharedSyntheticOneToManyTarget"
+								},
+								"associationEnds": [],
+								"dataTypeProperty": {
+									"owningClassifier": {
+										"name": "SharedSyntheticOneToManyTarget"
+									},
+									"name": "id"
+								}
+							},
+							"targetExpressionValue": {
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 358,
+								"parameter": {
+									"id": 25,
+									"name": "id"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "SharedSyntheticOneToManySelfResource",
+		"packageName": "cool.klass.xample.coverage",
+		"owningClass": {
+			"name": "SharedSyntheticOneToManySelf"
+		},
+		"urls": [
+			{
+				"url": "/sharedSyntheticOneToManySelf/{id}",
+				"parameters": [
+					{
+						"type": "path",
+						"parameter": {
+							"__typename": "klass.model.meta.domain.PrimitiveParameter",
+							"id": 26,
+							"name": "id",
+							"multiplicity": "1..1",
+							"primitiveType": "Long"
+						}
+					}
+				],
+				"services": [
+					{
+						"verb": "DELETE",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria": {
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue": {
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 359,
+								"klass": {
+									"name": "SharedSyntheticOneToManySelf"
+								},
+								"associationEnds": [],
+								"dataTypeProperty": {
+									"owningClassifier": {
+										"name": "SharedSyntheticOneToManySelf"
+									},
+									"name": "id"
+								}
+							},
+							"targetExpressionValue": {
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 360,
+								"parameter": {
+									"id": 26,
+									"name": "id"
+								}
+							}
 						},
 						"authorizeCriteria": null,
 						"validateCriteria": null,

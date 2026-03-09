@@ -696,6 +696,56 @@ association SelfSharedSyntheticOneToMany
     relationship this.id == SharedSyntheticOneToManySelf.sourceId
 }
 
+service SharedNaturalManyToOneSourceResource on SharedNaturalManyToOneSource
+{
+    /sharedNaturalManyToOneSource/{key: String[1..1]}
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+        }
+}
+
+service SharedNaturalOneToManyTargetResource on SharedNaturalOneToManyTarget
+{
+    /sharedNaturalOneToManyTarget/{key: String[1..1]}
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+        }
+}
+
+service SharedNaturalOneToManySelfResource on SharedNaturalOneToManySelf
+{
+    /sharedNaturalOneToManySelf/{key: String[1..1]}
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+        }
+}
+
+service SharedSyntheticOneToManyTargetResource on SharedSyntheticOneToManyTarget
+{
+    /sharedSyntheticOneToManyTarget/{id: Long[1..1]}
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.id == id;
+        }
+}
+
+service SharedSyntheticOneToManySelfResource on SharedSyntheticOneToManySelf
+{
+    /sharedSyntheticOneToManySelf/{id: Long[1..1]}
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.id == id;
+        }
+}
+
 class ClassOwningClassWithDerivedProperty
 {
     key: String key;
