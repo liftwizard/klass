@@ -1476,7 +1476,11 @@
 						"resultType": {
 							"name": "Parameter"
 						},
-						"associationEndModifiers": [],
+						"associationEndModifiers": [
+							{
+								"keyword": "owned"
+							}
+						],
 						"orderBys": []
 					}
 				],

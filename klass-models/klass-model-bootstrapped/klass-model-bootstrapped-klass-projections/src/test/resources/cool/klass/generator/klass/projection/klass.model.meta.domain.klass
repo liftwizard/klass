@@ -506,9 +506,7 @@ projection UrlProjection on Url
 projection UrlParameterProjection on UrlParameter
 {
     type: "UrlParameter type",
-    parameter: {
-        id: "Parameter id",
-    },
+    parameter: ParameterProjection,
 }
 
 projection ServiceProjection on Service
