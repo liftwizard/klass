@@ -94,60 +94,6 @@ service KlassResource on Klass
         }
 }
 
-service ParameterResource on Parameter
-{
-    /parameter/{id: Long[1..1]}
-        GET
-        {
-            multiplicity: one;
-            criteria    : this.id == id;
-            projection  : ParameterProjection;
-        }
-    /parameter
-        GET
-        {
-            multiplicity: many;
-            criteria    : all;
-            projection  : ParameterProjection;
-        }
-}
-
-service EnumerationParameterResource on EnumerationParameter
-{
-    /enumerationParameter/{id: Long[1..1]}
-        GET
-        {
-            multiplicity: one;
-            criteria    : this.id == id;
-            projection  : EnumerationParameterProjection;
-        }
-    /enumerationParameter
-        GET
-        {
-            multiplicity: many;
-            criteria    : all;
-            projection  : EnumerationParameterProjection;
-        }
-}
-
-service PrimitiveParameterResource on PrimitiveParameter
-{
-    /primitiveParameter/{id: Long[1..1]}
-        GET
-        {
-            multiplicity: one;
-            criteria    : this.id == id;
-            projection  : PrimitiveParameterProjection;
-        }
-    /primitiveParameter
-        GET
-        {
-            multiplicity: many;
-            criteria    : all;
-            projection  : PrimitiveParameterProjection;
-        }
-}
-
 service ExpressionValueResource on ExpressionValue
 {
     /expressionValue/{id: Long[1..1]}
