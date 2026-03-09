@@ -504,6 +504,18 @@
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 106
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
 							}
 						]
 					},
@@ -518,7 +530,7 @@
 									"name": "ServiceGroupProjection"
 								},
 								"queryCriteria": {
-									"id": 106
+									"id": 107
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,

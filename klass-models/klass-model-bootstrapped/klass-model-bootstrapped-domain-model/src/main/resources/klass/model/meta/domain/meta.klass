@@ -1398,6 +1398,10 @@ service ServiceGroupResource on ServiceGroup
             criteria    : this.name == name;
             projection  : ServiceGroupProjection;
         }
+        DELETE
+        {
+            criteria    : this.name == name;
+        }
     /meta/serviceGroup
         GET
         {

@@ -1861,31 +1861,27 @@
 				"__typename": "ThisMemberReferencePath",
 				"id": 159,
 				"klass": {
-					"name": "EnumerationLiteral"
+					"name": "ServiceGroup"
 				},
 				"associationEnds": [],
 				"dataTypeProperty": {
 					"__typename": "PrimitiveProperty",
-					"name": "ordinal"
+					"name": "name"
 				}
 			},
 			{
-				"__typename": "ThisMemberReferencePath",
+				"__typename": "ParameterReference",
 				"id": 160,
-				"klass": {
-					"name": "ClassifierInterfaceMapping"
-				},
-				"associationEnds": [],
-				"dataTypeProperty": {
-					"__typename": "PrimitiveProperty",
-					"name": "ordinal"
+				"parameter": {
+					"__typename": "PrimitiveParameter",
+					"id": 8
 				}
 			},
 			{
 				"__typename": "ThisMemberReferencePath",
 				"id": 161,
 				"klass": {
-					"name": "ClassifierModifier"
+					"name": "EnumerationLiteral"
 				},
 				"associationEnds": [],
 				"dataTypeProperty": {
@@ -1897,7 +1893,7 @@
 				"__typename": "ThisMemberReferencePath",
 				"id": 162,
 				"klass": {
-					"name": "DataTypeProperty"
+					"name": "ClassifierInterfaceMapping"
 				},
 				"associationEnds": [],
 				"dataTypeProperty": {
@@ -1909,7 +1905,7 @@
 				"__typename": "ThisMemberReferencePath",
 				"id": 163,
 				"klass": {
-					"name": "PropertyModifier"
+					"name": "ClassifierModifier"
 				},
 				"associationEnds": [],
 				"dataTypeProperty": {
@@ -1921,19 +1917,19 @@
 				"__typename": "ThisMemberReferencePath",
 				"id": 164,
 				"klass": {
-					"name": "AssociationEnd"
+					"name": "DataTypeProperty"
 				},
 				"associationEnds": [],
 				"dataTypeProperty": {
-					"__typename": "EnumerationProperty",
-					"name": "direction"
+					"__typename": "PrimitiveProperty",
+					"name": "ordinal"
 				}
 			},
 			{
 				"__typename": "ThisMemberReferencePath",
 				"id": 165,
 				"klass": {
-					"name": "AssociationEndModifier"
+					"name": "PropertyModifier"
 				},
 				"associationEnds": [],
 				"dataTypeProperty": {
@@ -1945,19 +1941,19 @@
 				"__typename": "ThisMemberReferencePath",
 				"id": 166,
 				"klass": {
-					"name": "MemberReferencePathAssociationEndMapping"
+					"name": "AssociationEnd"
 				},
 				"associationEnds": [],
 				"dataTypeProperty": {
-					"__typename": "PrimitiveProperty",
-					"name": "ordinal"
+					"__typename": "EnumerationProperty",
+					"name": "direction"
 				}
 			},
 			{
 				"__typename": "ThisMemberReferencePath",
 				"id": 167,
 				"klass": {
-					"name": "ParameterizedProperty"
+					"name": "AssociationEndModifier"
 				},
 				"associationEnds": [],
 				"dataTypeProperty": {
@@ -1969,7 +1965,7 @@
 				"__typename": "ThisMemberReferencePath",
 				"id": 168,
 				"klass": {
-					"name": "AssociationEndOrderBy"
+					"name": "MemberReferencePathAssociationEndMapping"
 				},
 				"associationEnds": [],
 				"dataTypeProperty": {
@@ -1981,7 +1977,7 @@
 				"__typename": "ThisMemberReferencePath",
 				"id": 169,
 				"klass": {
-					"name": "ParameterizedPropertyOrdering"
+					"name": "ParameterizedProperty"
 				},
 				"associationEnds": [],
 				"dataTypeProperty": {
@@ -1993,7 +1989,7 @@
 				"__typename": "ThisMemberReferencePath",
 				"id": 170,
 				"klass": {
-					"name": "ParameterizedPropertyParameter"
+					"name": "AssociationEndOrderBy"
 				},
 				"associationEnds": [],
 				"dataTypeProperty": {
@@ -2005,7 +2001,7 @@
 				"__typename": "ThisMemberReferencePath",
 				"id": 171,
 				"klass": {
-					"name": "ProjectionElement"
+					"name": "ParameterizedPropertyOrdering"
 				},
 				"associationEnds": [],
 				"dataTypeProperty": {
@@ -2017,7 +2013,7 @@
 				"__typename": "ThisMemberReferencePath",
 				"id": 172,
 				"klass": {
-					"name": "UrlParameter"
+					"name": "ParameterizedPropertyParameter"
 				},
 				"associationEnds": [],
 				"dataTypeProperty": {
@@ -2029,7 +2025,7 @@
 				"__typename": "ThisMemberReferencePath",
 				"id": 173,
 				"klass": {
-					"name": "Url"
+					"name": "ProjectionElement"
 				},
 				"associationEnds": [],
 				"dataTypeProperty": {
@@ -2041,7 +2037,7 @@
 				"__typename": "ThisMemberReferencePath",
 				"id": 174,
 				"klass": {
-					"name": "Service"
+					"name": "UrlParameter"
 				},
 				"associationEnds": [],
 				"dataTypeProperty": {
@@ -2052,6 +2048,30 @@
 			{
 				"__typename": "ThisMemberReferencePath",
 				"id": 175,
+				"klass": {
+					"name": "Url"
+				},
+				"associationEnds": [],
+				"dataTypeProperty": {
+					"__typename": "PrimitiveProperty",
+					"name": "ordinal"
+				}
+			},
+			{
+				"__typename": "ThisMemberReferencePath",
+				"id": 176,
+				"klass": {
+					"name": "Service"
+				},
+				"associationEnds": [],
+				"dataTypeProperty": {
+					"__typename": "PrimitiveProperty",
+					"name": "ordinal"
+				}
+			},
+			{
+				"__typename": "ThisMemberReferencePath",
+				"id": 177,
 				"klass": {
 					"name": "ServiceOrderBy"
 				},

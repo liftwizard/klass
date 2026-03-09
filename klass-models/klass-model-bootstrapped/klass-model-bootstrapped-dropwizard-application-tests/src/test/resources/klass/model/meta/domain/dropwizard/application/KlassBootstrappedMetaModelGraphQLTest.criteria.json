@@ -2493,8 +2493,33 @@
 				}
 			},
 			{
+				"__typename": "OperatorCriteria",
+				"id": 106,
+				"operator": "EQUALS",
+				"sourceExpressionValue": {
+					"__typename": "ThisMemberReferencePath",
+					"id": 159,
+					"klass": {
+						"name": "ServiceGroup"
+					},
+					"associationEnds": [],
+					"dataTypeProperty": {
+						"__typename": "PrimitiveProperty",
+						"name": "name"
+					}
+				},
+				"targetExpressionValue": {
+					"__typename": "ParameterReference",
+					"id": 160,
+					"parameter": {
+						"__typename": "PrimitiveParameter",
+						"id": 8
+					}
+				}
+			},
+			{
 				"__typename": "AllCriteria",
-				"id": 106
+				"id": 107
 			}
 		]
 	}

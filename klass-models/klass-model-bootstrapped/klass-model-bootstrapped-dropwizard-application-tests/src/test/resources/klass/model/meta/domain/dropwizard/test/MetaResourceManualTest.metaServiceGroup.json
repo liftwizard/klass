@@ -56,6 +56,41 @@
 					"validateCriteria": null,
 					"conflictCriteria": null,
 					"orderBys": []
+				},
+				{
+					"verb": "DELETE",
+					"serviceMultiplicity": "one",
+					"projection": null,
+					"queryCriteria": {
+						"__typename": "klass.model.meta.domain.OperatorCriteria",
+						"operator": "==",
+						"sourceExpressionValue": {
+							"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+							"id": 159,
+							"klass": {
+								"name": "ServiceGroup"
+							},
+							"associationEnds": [],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						},
+						"targetExpressionValue": {
+							"__typename": "klass.model.meta.domain.ParameterReference",
+							"id": 160,
+							"parameter": {
+								"id": 8,
+								"name": "name"
+							}
+						}
+					},
+					"authorizeCriteria": null,
+					"validateCriteria": null,
+					"conflictCriteria": null,
+					"orderBys": []
 				}
 			]
 		},
