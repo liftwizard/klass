@@ -17,9 +17,12 @@
 package cool.klass.model.converter.compiler.state.projection;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
+import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
 import cool.klass.model.meta.domain.projection.AbstractProjectionElement.ProjectionChildBuilder;
+import cool.klass.model.meta.grammar.KlassParser.ClassifierReferenceContext;
 
 public interface AntlrProjectionChild extends AntlrProjectionElement {
 	@Nonnull
@@ -28,4 +31,21 @@ public interface AntlrProjectionChild extends AntlrProjectionElement {
 
 	@Nonnull
 	AntlrClassifier getDeclaringClassifier();
+
+	default void reportRedundantClassifierQualifier(
+		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
+		@Nullable ClassifierReferenceContext classifierReferenceContext,
+		boolean canResolveWithoutQualifier
+	) {
+		if (classifierReferenceContext == null || !canResolveWithoutQualifier) {
+			return;
+		}
+
+		String message = String.format(
+			"Redundant classifier qualifier '%s' on projection member '%s'. The property can be resolved without the qualifier.",
+			classifierReferenceContext.getText(),
+			this.getName()
+		);
+		compilerAnnotationHolder.add("ERR_PRJ_CRF", message, this, classifierReferenceContext);
+	}
 }

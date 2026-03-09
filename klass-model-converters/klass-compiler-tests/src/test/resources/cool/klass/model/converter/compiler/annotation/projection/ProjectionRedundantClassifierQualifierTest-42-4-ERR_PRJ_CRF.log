@@ -1,0 +1,17 @@
+════════════════════════════════════════ [35mERR_PRJ_CRF[m ════════════════════════════════════════
+[31mError: Redundant classifier qualifier 'Parent' on projection member 'child'. The property can be resolved without the qualifier.[m
+
+At (ProjectionRedundantClassifierQualifierTest.klass:42:5)
+
+[39m 1║ [35mpackage [39mdummy
+[39m40║ [35mprojection [39mProjectionReferenceProjection [35mon [39mParent
+[39m41║ [36m{
+[39m42║     [39mParent[36m.[39mchild[36m: [39mChildProjection[36m,
+[39m  ║ [31m    ^^^^^^
+[39m43║ [36m}
+[m
+[36mLocation:  [mProjectionRedundantClassifierQualifierTest.klass:42:5[m
+[36mFile:      [mProjectionRedundantClassifierQualifierTest.klass[m
+[36mLine:      [m42[m
+[36mCharacter: [m5
+═════════════════════════════════════════════════════════════════════════════════════════════
