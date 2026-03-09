@@ -35,6 +35,7 @@ import cool.klass.model.meta.domain.projection.AbstractProjectionElement.Project
 import cool.klass.model.meta.domain.projection.AbstractProjectionParent;
 import cool.klass.model.meta.domain.projection.AbstractProjectionParent.AbstractProjectionParentBuilder;
 import cool.klass.model.meta.domain.projection.ProjectionReferencePropertyImpl.ProjectionReferencePropertyBuilder;
+import cool.klass.model.meta.grammar.KlassParser.ClassifierReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionReferencePropertyContext;
 import org.antlr.v4.runtime.Token;
@@ -210,10 +211,29 @@ public class AntlrProjectionReferenceProperty extends AntlrProjectionParent impl
 			return;
 		}
 
+		this.reportRedundantClassifierQualifier(compilerAnnotationHolder);
 		this.reportForwardReference(compilerAnnotationHolder);
 
 		for (AntlrProjectionChild child : this.children) {
 			child.reportErrors(compilerAnnotationHolder);
+		}
+	}
+
+	private void reportRedundantClassifierQualifier(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		ClassifierReferenceContext classifierReferenceContext = this.getElementContext().classifierReference();
+		if (classifierReferenceContext == null) {
+			return;
+		}
+
+		AntlrClassifier parentClassifier = this.antlrProjectionParent.getClassifier();
+		AntlrReferenceProperty<?> parentResolvedProperty = parentClassifier.getReferencePropertyByName(this.getName());
+		if (parentResolvedProperty == this.referenceProperty) {
+			String message = String.format(
+				"Redundant classifier qualifier '%s' on projection member '%s'. The property can be resolved without the qualifier.",
+				classifierReferenceContext.getText(),
+				this.getName()
+			);
+			compilerAnnotationHolder.add("ERR_PRJ_CRF", message, this, classifierReferenceContext);
 		}
 	}
 
