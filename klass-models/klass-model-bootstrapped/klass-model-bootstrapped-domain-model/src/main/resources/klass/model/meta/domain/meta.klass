@@ -930,21 +930,21 @@ projection PackageableElementProjection on PackageableElement
     Classifier.dataTypeProperties: DataTypePropertyProjection,
     Klass.abstractClass: "Klass abstractClass",
     Klass.superClass: {
-        NamedElement.name: "NamedElement name",
+        name: "NamedElement name",
     },
     Klass.associationEnds: {
-        NamedElement.name: "NamedElement name",
+        name: "NamedElement name",
     },
     Klass.parameterizedProperties: ParameterizedPropertyProjection,
     Association.associationEnds: AssociationEndProjection,
     Association.criteria: {
-        Criteria.id: "Criteria id",
+        id: "Criteria id",
     },
     NamedProjection.rootProjection: {
-        ProjectionElement.id: "ProjectionElement id",
+        id: "ProjectionElement id",
     },
     ServiceGroup.owningClass: {
-        NamedElement.name: "NamedElement name",
+        name: "NamedElement name",
     },
     ServiceGroup.urls: UrlProjection,
 }
@@ -1034,7 +1034,7 @@ projection ParameterProjection on Parameter
     name: "Parameter name",
     multiplicity: "Parameter multiplicity",
     EnumerationParameter.enumeration: {
-        NamedElement.name: "NamedElement name",
+        name: "NamedElement name",
     },
     PrimitiveParameter.primitiveType: "PrimitiveParameter primitiveType",
 }
@@ -1151,7 +1151,7 @@ projection DataTypePropertyProjection on DataTypeProperty
     PrimitiveProperty.minValidation: NumericPropertyValidationProjection,
     PrimitiveProperty.maxValidation: NumericPropertyValidationProjection,
     EnumerationProperty.enumeration: {
-        NamedElement.name: "NamedElement name",
+        name: "NamedElement name",
     },
 }
 
@@ -1216,10 +1216,10 @@ projection ClassifierProjection on Classifier
     dataTypeProperties: DataTypePropertyProjection,
     Klass.abstractClass: "Klass abstractClass",
     Klass.superClass: {
-        NamedElement.name: "NamedElement name",
+        name: "NamedElement name",
     },
     Klass.associationEnds: {
-        NamedElement.name: "NamedElement name",
+        name: "NamedElement name",
     },
     Klass.parameterizedProperties: ParameterizedPropertyProjection,
 }
