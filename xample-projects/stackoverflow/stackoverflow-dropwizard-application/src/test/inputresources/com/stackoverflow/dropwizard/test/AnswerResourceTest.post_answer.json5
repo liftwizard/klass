@@ -1,0 +1,7 @@
+{
+	body: "This is a test answer",
+	deleted: false,
+	question: {
+		id: 1,
+	},
+}

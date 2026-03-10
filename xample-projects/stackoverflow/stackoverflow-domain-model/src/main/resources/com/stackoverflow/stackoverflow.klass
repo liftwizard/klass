@@ -266,6 +266,15 @@ projection UserProjection on User
     systemTo: "User systemTo",
 }
 
+projection QuestionVoteProjection on QuestionVote
+{
+    direction: "QuestionVote direction",
+    systemFrom: "QuestionVote systemFrom",
+    systemTo: "QuestionVote systemTo",
+    createdOn: "QuestionVote createdOn",
+    createdBy: UserProjection,
+}
+
 projection AnswerVersionProjection on AnswerVersion
 {
     systemFrom: "AnswerVersion systemFrom",
@@ -397,6 +406,7 @@ service QuestionVoteResource on QuestionVote
         POST
         {
             multiplicity: one;
+            projection  : QuestionVoteProjection;
         }
 }
 

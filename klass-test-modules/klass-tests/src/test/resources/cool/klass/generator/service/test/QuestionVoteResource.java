@@ -30,6 +30,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import cool.klass.deserializer.json.*;
 import cool.klass.deserializer.json.type.*;
 import cool.klass.reladomo.persistent.writer.*;
+import cool.klass.model.meta.domain.api.projection.Projection;
+import cool.klass.serialization.jackson.response.KlassResponseBuilder;
 
 import org.eclipse.collections.api.factory.Maps;
 import org.eclipse.collections.api.list.MutableList;
@@ -194,6 +196,7 @@ public class QuestionVoteResource
     @ExceptionMetered
     @POST
     @Path("/vote")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response method2(
             @Nonnull @NotNull ObjectNode incomingInstance,
             @Nonnull @Context UriInfo uriInfo,
@@ -239,6 +242,20 @@ public class QuestionVoteResource
             return instance;
         });
 
-        return Response.noContent().build();
+        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
+        // TODO: Append appropriate ID to the URI
+        // uriBuilder.path(Long.toString(persistentInstance.getId()));
+
+        // Deep fetch if needed: result.deepFetch(QuestionVoteFinder.createdBy());
+
+        Projection projection = this.domainModel.getProjectionByName("QuestionVoteProjection");
+
+        var responseBuilder = new KlassResponseBuilder(
+                persistentInstance,
+                projection,
+                Multiplicity.ONE_TO_ONE,
+                transactionInstant);
+
+        return Response.created(uriBuilder.build()).entity(responseBuilder.build()).build();
     }
 }
