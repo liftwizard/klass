@@ -597,7 +597,7 @@ public class ServiceResourceGenerator {
 			+ "                persistentInstance,\n"
 			+ "                projection,\n"
 			+ "                Multiplicity.ONE_TO_ONE,\n"
-			+ "                this.clock.instant());\n"
+			+ "                transactionInstant);\n"
 			+ "\n"
 			+ "        return Response.created(uriBuilder.build()).entity(responseBuilder.build()).build();\n"
 		);
@@ -799,7 +799,7 @@ public class ServiceResourceGenerator {
 			+ "                persistentInstances,\n"
 			+ "                projection,\n"
 			+ "                Multiplicity.ONE_TO_MANY,\n"
-			+ "                this.clock.instant());\n"
+			+ "                transactionInstant);\n"
 			+ "\n"
 			+ "        return Response.created(uriBuilder.build()).entity(responseBuilder.build()).build();\n"
 		);
