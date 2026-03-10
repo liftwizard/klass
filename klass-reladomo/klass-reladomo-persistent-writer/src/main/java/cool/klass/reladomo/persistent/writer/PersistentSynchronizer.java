@@ -640,6 +640,14 @@ public abstract class PersistentSynchronizer {
 			return Objects.requireNonNull(result);
 		}
 
+		return extractKeyFromJson(keyProperty, jsonNode);
+	}
+
+	@Nonnull
+	protected static Object extractKeyFromJson(@Nonnull DataTypeProperty keyProperty, @Nonnull JsonNode jsonNode) {
+		OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey =
+			keyProperty.getKeysMatchingThisForeignKey();
+
 		if (keysMatchingThisForeignKey.notEmpty()) {
 			if (keysMatchingThisForeignKey.size() != 1) {
 				throw new AssertionError();
@@ -649,8 +657,7 @@ public abstract class PersistentSynchronizer {
 
 			JsonNode childNode = jsonNode.path(pair.getOne().getName());
 			if (childNode instanceof ObjectNode objectNode) {
-				Object result = JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(pair.getTwo(), objectNode);
-				return Objects.requireNonNull(result);
+				return JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(pair.getTwo(), objectNode);
 			}
 
 			// Leniently allow a foreign key to be used in incoming json, instead of a nested object with a primary key
@@ -658,11 +665,10 @@ public abstract class PersistentSynchronizer {
 				return JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(keyProperty, (ObjectNode) jsonNode);
 			}
 
-			throw new AssertionError();
+			throw new AssertionError("Could not resolve FK key property: " + keyProperty);
 		}
 
-		Object result = JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(keyProperty, (ObjectNode) jsonNode);
-		return Objects.requireNonNull(result);
+		return JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(keyProperty, (ObjectNode) jsonNode);
 	}
 
 	@Nonnull

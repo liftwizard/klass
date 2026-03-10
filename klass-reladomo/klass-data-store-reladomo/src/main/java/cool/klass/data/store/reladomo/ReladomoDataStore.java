@@ -280,7 +280,10 @@ public class ReladomoDataStore implements DataStore {
 	) {
 		this.generateAndSetId(newInstance, klass);
 
-		ImmutableList<DataTypeProperty> keyProperties = klass.getKeyProperties().reject(DataTypeProperty::isID);
+		ImmutableList<DataTypeProperty> keyProperties = klass
+			.getKeyProperties()
+			.reject(DataTypeProperty::isID)
+			.reject(DataTypeProperty::isAudit);
 		if (keyProperties.size() != keys.size()) {
 			String error = String.format(
 				"Expected one key for each key property in %s but got %s",

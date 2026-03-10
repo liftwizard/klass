@@ -4,7 +4,6 @@ import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.Clock;
 import java.time.Instant;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -34,10 +33,8 @@ import cool.klass.reladomo.persistent.writer.*;
 
 import org.eclipse.collections.api.factory.Maps;
 import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.api.map.ImmutableMap;
-import org.eclipse.collections.api.map.MutableMap;
+import org.eclipse.collections.api.map.MapIterable;
 import org.eclipse.collections.impl.factory.Lists;
-import org.eclipse.collections.impl.map.mutable.MapAdapter;
 import org.eclipse.collections.impl.factory.primitive.LongSets;
 import org.eclipse.collections.impl.set.mutable.*;
 import org.eclipse.collections.impl.utility.*;
@@ -288,25 +285,14 @@ public class AnswerResource
         String    userPrincipalName  = principal.getName();
 
 
-        // Extract key values from incoming JSON
-        MutableMap<DataTypeProperty, Object> keys = MapAdapter.adapt(new LinkedHashMap<>());
-        for (DataTypeProperty keyProperty : klass.getKeyProperties())
-        {
-            Object keyValue = JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(keyProperty, incomingInstance);
-            if (keyValue != null)
-            {
-                keys.put(keyProperty, keyValue);
-            }
-        }
-
         // Create the instance inside a transaction
         Instant transactionInstant = Instant.now(this.clock);
         MutationContext mutationContext = new MutationContext(Optional.of(userPrincipalName), transactionInstant, Maps.immutable.empty());
         PersistentCreator creator = new PersistentCreator(mutationContext, this.dataStore);
-        ImmutableMap<DataTypeProperty, Object> finalKeys = keys.toImmutable();
+        MapIterable<DataTypeProperty, Object> resolvedKeys = creator.resolveKeysForCreate(klass, incomingInstance);
         ObjectNode finalIncomingInstance = incomingInstance;
         Object persistentInstance = this.dataStore.runInTransaction(transaction -> {
-            Object instance = this.dataStore.instantiate(klass, finalKeys);
+            Object instance = this.dataStore.instantiate(klass, resolvedKeys);
             creator.synchronize(klass, instance, finalIncomingInstance);
             this.dataStore.insert(instance);
             return instance;

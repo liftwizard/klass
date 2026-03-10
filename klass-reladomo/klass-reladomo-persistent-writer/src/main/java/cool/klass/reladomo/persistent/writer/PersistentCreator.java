@@ -18,6 +18,7 @@ package cool.klass.reladomo.persistent.writer;
 
 import java.time.Instant;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
@@ -48,6 +49,25 @@ public class PersistentCreator extends PersistentSynchronizer {
 		boolean inTransaction
 	) {
 		super(mutationContext, dataStore, inTransaction);
+	}
+
+	public MapIterable<DataTypeProperty, Object> resolveKeysForCreate(
+		@Nonnull Klass klass,
+		@Nonnull ObjectNode jsonNode
+	) {
+		MutableMap<DataTypeProperty, Object> keys = MapAdapter.adapt(new LinkedHashMap<>());
+
+		for (DataTypeProperty keyProperty : klass.getKeyProperties()) {
+			if (keyProperty.isID() || keyProperty.isAudit()) {
+				continue;
+			}
+
+			Object keyValue = extractKeyFromJson(keyProperty, jsonNode);
+			Objects.requireNonNull(keyValue, () -> "Expected non-null key for property: " + keyProperty);
+			keys.put(keyProperty, keyValue);
+		}
+
+		return keys.asUnmodifiable();
 	}
 
 	@Override
