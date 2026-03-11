@@ -345,6 +345,61 @@ projection FilteredAnswersProjection(substring: String[1..1]) on Question
 }
 */
 
+service AnswerResource on Answer
+{
+    /answer/{id: Long[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.id == id;
+            projection  : AnswerProjection;
+        }
+        PUT
+        {
+            multiplicity: one;
+            criteria    : this.id == id;
+            authorize   : this.createdById == user;
+        }
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.id == id;
+            authorize   : this.createdById == user;
+        }
+    /question/{questionId: Long[1..1]}/answers
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.questionId == questionId;
+            projection  : AnswerProjection;
+        }
+    /answer
+        POST
+        {
+            multiplicity: one;
+        }
+}
+
+service QuestionVoteResource on QuestionVote
+{
+    /question/{questionId: Long[1..1]}/votes
+        PUT
+        {
+            multiplicity: one;
+            criteria    : this.questionId == questionId && this.createdById == user;
+        }
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.questionId == questionId && this.createdById == user;
+        }
+    /vote
+        POST
+        {
+            multiplicity: one;
+        }
+}
+
 // Just embed inside the Question class?
 service QuestionResource on Question
 {
