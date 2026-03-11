@@ -103,6 +103,7 @@ modules.xml
 
 # Log file
 *.log
+!**/src/**/*.log
 
 # BlueJ files
 *.ctxt
