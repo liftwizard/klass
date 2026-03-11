@@ -28,6 +28,7 @@ import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.junit.extension.match.FileSlurper;
 import io.liftwizard.junit.extension.match.file.FileMatchExtension;
+import org.eclipse.collections.api.list.ImmutableList;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -67,13 +68,13 @@ public class ServiceResourceGeneratorTest {
 				"com.stackoverflow"
 			);
 
-			ServiceGroup serviceGroup = domainModel.getServiceGroups().getOnly();
-			String serviceGroupSourceCode = serviceResourceGenerator.getServiceGroupSourceCode(serviceGroup);
+			ImmutableList<ServiceGroup> serviceGroups = domainModel.getServiceGroups();
+			for (ServiceGroup serviceGroup : serviceGroups) {
+				String serviceGroupSourceCode = serviceResourceGenerator.getServiceGroupSourceCode(serviceGroup);
+				String resourceName = serviceGroup.getKlass().getName() + "Resource.java";
 
-			this.fileMatchExtension.assertFileContents(
-				this.getClass().getSimpleName() + ".java",
-				serviceGroupSourceCode
-			);
+				this.fileMatchExtension.assertFileContents(resourceName, serviceGroupSourceCode);
+			}
 		}
 	}
 }
