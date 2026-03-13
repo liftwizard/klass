@@ -25,7 +25,7 @@ jobs:
 
             - uses: twosigma/maven-cache-cleaner@v1
 
-            - uses: jdx/mise-action@v3
+            - uses: jdx/mise-action@v4
 
             - run: just coverage
 
@@ -85,7 +85,7 @@ jobs:
 
             - uses: twosigma/maven-cache-cleaner@v1
 
-            - uses: jdx/mise-action@v3
+            - uses: jdx/mise-action@v4
 
             - name: Configure Git
               run: |
@@ -136,7 +136,7 @@ jobs:
 
             - uses: twosigma/maven-cache-cleaner@v1
 
-            - uses: jdx/mise-action@v3
+            - uses: jdx/mise-action@v4
 
             - name: Configure Git
               run: |
@@ -187,7 +187,7 @@ jobs:
 
             - uses: twosigma/maven-cache-cleaner@v1
 
-            - uses: jdx/mise-action@v3
+            - uses: jdx/mise-action@v4
 
             - name: Configure Git
               run: |
@@ -238,7 +238,7 @@ jobs:
 
             - uses: twosigma/maven-cache-cleaner@v1
 
-            - uses: jdx/mise-action@v3
+            - uses: jdx/mise-action@v4
 
             - name: Configure Git
               run: |
@@ -289,7 +289,7 @@ jobs:
 
             - uses: twosigma/maven-cache-cleaner@v1
 
-            - uses: jdx/mise-action@v3
+            - uses: jdx/mise-action@v4
 
             - name: Configure Git
               run: |
@@ -340,7 +340,7 @@ jobs:
 
             - uses: twosigma/maven-cache-cleaner@v1
 
-            - uses: jdx/mise-action@v3
+            - uses: jdx/mise-action@v4
 
             - name: Configure Git
               run: |
@@ -381,7 +381,7 @@ jobs:
                   repository: ${{ github.event.pull_request.head.repo.full_name }}
                   token: ${{ secrets.GITHUB_TOKEN }}
 
-            - uses: jdx/mise-action@v3
+            - uses: jdx/mise-action@v4
 
             - name: Configure Git
               run: |
@@ -418,7 +418,7 @@ jobs:
                   repository: ${{ github.event.pull_request.head.repo.full_name }}
                   token: ${{ secrets.GITHUB_TOKEN }}
 
-            - uses: jdx/mise-action@v3
+            - uses: jdx/mise-action@v4
 
             - name: Configure Git
               run: |
@@ -465,7 +465,7 @@ jobs:
 
             - uses: twosigma/maven-cache-cleaner@v1
 
-            - uses: jdx/mise-action@v3
+            - uses: jdx/mise-action@v4
 
             - name: Configure Git
               run: |
@@ -522,7 +522,7 @@ jobs:
 
             - uses: twosigma/maven-cache-cleaner@v1
 
-            - uses: jdx/mise-action@v3
+            - uses: jdx/mise-action@v4
 
             - name: Configure Git
               run: |
