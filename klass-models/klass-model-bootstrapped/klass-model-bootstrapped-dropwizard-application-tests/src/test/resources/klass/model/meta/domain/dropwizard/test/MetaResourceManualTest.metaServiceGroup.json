@@ -6,6 +6,26 @@
 	},
 	"urls": [
 		{
+			"url": "/meta/serviceGroup",
+			"parameters": [],
+			"services": [
+				{
+					"verb": "GET",
+					"serviceMultiplicity": "many",
+					"projection": {
+						"name": "ServiceGroupProjection"
+					},
+					"queryCriteria": {
+						"__typename": "klass.model.meta.domain.AllCriteria"
+					},
+					"authorizeCriteria": null,
+					"validateCriteria": null,
+					"conflictCriteria": null,
+					"orderBys": []
+				}
+			]
+		},
+		{
 			"url": "/meta/serviceGroup/{name}",
 			"parameters": [
 				{
@@ -86,26 +106,6 @@
 								"name": "name"
 							}
 						}
-					},
-					"authorizeCriteria": null,
-					"validateCriteria": null,
-					"conflictCriteria": null,
-					"orderBys": []
-				}
-			]
-		},
-		{
-			"url": "/meta/serviceGroup",
-			"parameters": [],
-			"services": [
-				{
-					"verb": "GET",
-					"serviceMultiplicity": "many",
-					"projection": {
-						"name": "ServiceGroupProjection"
-					},
-					"queryCriteria": {
-						"__typename": "klass.model.meta.domain.AllCriteria"
 					},
 					"authorizeCriteria": null,
 					"validateCriteria": null,
