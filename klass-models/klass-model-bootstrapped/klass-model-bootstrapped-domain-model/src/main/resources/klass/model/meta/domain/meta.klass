@@ -1361,6 +1361,10 @@ service AssociationResource on Association
             criteria    : this.name == name;
             projection  : AssociationProjection;
         }
+        DELETE
+        {
+            criteria    : this.name == name;
+        }
     /meta/association
         GET
         {
@@ -1368,6 +1372,10 @@ service AssociationResource on Association
             criteria    : all;
             projection  : AssociationProjection;
             orderBy     : this.ordinal ascending;
+        }
+        DELETE
+        {
+            criteria    : all;
         }
 }
 
@@ -1380,6 +1388,10 @@ service NamedProjectionResource on NamedProjection
             criteria    : this.name == name;
             projection  : NamedProjectionProjection;
         }
+        DELETE
+        {
+            criteria    : this.name == name;
+        }
     /meta/projection
         GET
         {
@@ -1387,6 +1399,10 @@ service NamedProjectionResource on NamedProjection
             criteria    : all;
             projection  : NamedProjectionProjection;
             orderBy     : this.ordinal ascending;
+        }
+        DELETE
+        {
+            criteria    : all;
         }
 }
 
@@ -1410,5 +1426,9 @@ service ServiceGroupResource on ServiceGroup
             criteria    : all;
             projection  : ServiceGroupProjection;
             orderBy     : this.ordinal ascending;
+        }
+        DELETE
+        {
+            criteria    : all;
         }
 }

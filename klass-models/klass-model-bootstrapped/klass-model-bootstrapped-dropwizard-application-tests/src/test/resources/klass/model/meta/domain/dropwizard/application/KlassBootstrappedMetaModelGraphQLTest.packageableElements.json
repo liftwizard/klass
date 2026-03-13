@@ -2757,7 +2757,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 161
+									"id": 165
 								}
 							}
 						]
@@ -2799,7 +2799,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 162
+									"id": 166
 								}
 							}
 						]
@@ -2872,7 +2872,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 163
+									"id": 167
 								}
 							}
 						]
@@ -2976,7 +2976,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 164
+									"id": 168
 								}
 							}
 						]
@@ -3158,7 +3158,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 165
+									"id": 169
 								}
 							}
 						]
@@ -3231,7 +3231,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 166
+									"id": 170
 								}
 							}
 						]
@@ -3335,7 +3335,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 167
+									"id": 171
 								}
 							}
 						]
@@ -3575,7 +3575,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 168
+									"id": 172
 								}
 							}
 						]
@@ -3749,7 +3749,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 169
+									"id": 173
 								}
 							}
 						]
@@ -3791,7 +3791,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 170
+									"id": 174
 								}
 							}
 						]
@@ -3895,7 +3895,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 171
+									"id": 175
 								}
 							}
 						]
@@ -3937,7 +3937,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 172
+									"id": 176
 								}
 							}
 						]
@@ -4014,7 +4014,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 173
+									"id": 177
 								}
 							}
 						]
@@ -4211,7 +4211,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 174
+									"id": 178
 								}
 							}
 						]
@@ -4288,7 +4288,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 175
+									"id": 179
 								}
 							}
 						]
@@ -4330,7 +4330,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 176
+									"id": 180
 								}
 							}
 						]
@@ -4543,7 +4543,7 @@
 							{
 								"orderByDirection": "ASCENDING",
 								"thisMemberReferencePath": {
-									"id": 177
+									"id": 181
 								}
 							}
 						]
@@ -5206,6 +5206,18 @@
 								"validateCriteria": null,
 								"conflictCriteria": null,
 								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 102
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
 							}
 						]
 					},
@@ -5220,7 +5232,19 @@
 									"name": "AssociationProjection"
 								},
 								"queryCriteria": {
-									"id": 102
+									"id": 103
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 104
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5261,7 +5285,19 @@
 									"name": "NamedProjectionProjection"
 								},
 								"queryCriteria": {
-									"id": 103
+									"id": 105
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 106
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5281,7 +5317,19 @@
 									"name": "NamedProjectionProjection"
 								},
 								"queryCriteria": {
-									"id": 104
+									"id": 107
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 108
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5322,7 +5370,7 @@
 									"name": "ServiceGroupProjection"
 								},
 								"queryCriteria": {
-									"id": 105
+									"id": 109
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5334,7 +5382,7 @@
 								"serviceMultiplicity": "ONE",
 								"projection": null,
 								"queryCriteria": {
-									"id": 106
+									"id": 110
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,
@@ -5354,7 +5402,19 @@
 									"name": "ServiceGroupProjection"
 								},
 								"queryCriteria": {
-									"id": 107
+									"id": 111
+								},
+								"authorizeCriteria": null,
+								"validateCriteria": null,
+								"conflictCriteria": null,
+								"orderBys": []
+							},
+							{
+								"verb": "DELETE",
+								"serviceMultiplicity": "ONE",
+								"projection": null,
+								"queryCriteria": {
+									"id": 112
 								},
 								"authorizeCriteria": null,
 								"validateCriteria": null,

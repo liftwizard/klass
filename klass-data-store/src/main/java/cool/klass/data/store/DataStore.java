@@ -68,6 +68,8 @@ public interface DataStore {
 
 	void deleteOrTerminate(@Nonnull Object persistentInstance);
 
+	void delete(@Nonnull Object persistentInstance);
+
 	void purgeAll(@Nonnull Klass klass);
 
 	boolean isInstanceOf(Object persistentInstance, Classifier classifier);
