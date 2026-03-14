@@ -804,10 +804,11 @@ public class KlassBootstrapWriter {
 		@Nonnull Projection projection,
 		@Nonnull MutableMap<Projection, klass.model.meta.domain.ProjectionElement> rootProjectionByProjection
 	) {
-		var bootstrappedRootProjection = rootProjectionByProjection.get(projection);
+		klass.model.meta.domain.ProjectionElement rootElement = rootProjectionByProjection.get(projection);
+		klass.model.meta.domain.RootProjection rootProjection = rootElement.getRootProjectionSubClass();
+		rootProjection.setNamedProjectionName(projection.getName());
 		var bootstrappedProjection = new NamedProjection();
 		bootstrappedProjection.setName(projection.getName());
-		bootstrappedProjection.setProjectionId(bootstrappedRootProjection.getId());
 		return bootstrappedProjection;
 	}
 

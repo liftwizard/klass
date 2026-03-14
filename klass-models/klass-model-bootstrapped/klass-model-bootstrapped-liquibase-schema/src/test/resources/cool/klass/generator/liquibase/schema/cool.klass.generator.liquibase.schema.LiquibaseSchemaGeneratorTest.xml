@@ -31,11 +31,11 @@
 
     <changeSet author="Klass" id="initial-table-3-ENUMERATION_LITERAL">
         <createTable tableName="ENUMERATION_LITERAL">
-            <column name="ENUMERATION_NAME" type="varchar(256)">
+            <column name="NAME" type="varchar(256)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="ENUMERATION_LITERAL_PK" />
             </column>
 
-            <column name="NAME" type="varchar(256)">
+            <column name="ENUMERATION_NAME" type="varchar(256)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="ENUMERATION_LITERAL_PK" />
             </column>
 
@@ -111,11 +111,11 @@
 
     <changeSet author="Klass" id="initial-table-9-DATA_TYPE_PROPERTY">
         <createTable tableName="DATA_TYPE_PROPERTY">
-            <column name="CLASSIFIER_NAME" type="varchar(256)">
+            <column name="NAME" type="varchar(256)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="DATA_TYPE_PROPERTY_PK" />
             </column>
 
-            <column name="NAME" type="varchar(256)">
+            <column name="CLASSIFIER_NAME" type="varchar(256)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="DATA_TYPE_PROPERTY_PK" />
             </column>
 
@@ -131,11 +131,11 @@
 
     <changeSet author="Klass" id="initial-table-10-PRIMITIVE_PROPERTY">
         <createTable tableName="PRIMITIVE_PROPERTY">
-            <column name="CLASSIFIER_NAME" type="varchar(256)">
+            <column name="NAME" type="varchar(256)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PRIMITIVE_PROPERTY_PK" />
             </column>
 
-            <column name="NAME" type="varchar(256)">
+            <column name="CLASSIFIER_NAME" type="varchar(256)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PRIMITIVE_PROPERTY_PK" />
             </column>
 
@@ -147,11 +147,11 @@
 
     <changeSet author="Klass" id="initial-table-11-ENUMERATION_PROPERTY">
         <createTable tableName="ENUMERATION_PROPERTY">
-            <column name="CLASSIFIER_NAME" type="varchar(256)">
+            <column name="NAME" type="varchar(256)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="ENUMERATION_PROPERTY_PK" />
             </column>
 
-            <column name="NAME" type="varchar(256)">
+            <column name="CLASSIFIER_NAME" type="varchar(256)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="ENUMERATION_PROPERTY_PK" />
             </column>
 
@@ -439,11 +439,11 @@
 
     <changeSet author="Klass" id="initial-table-33-ASSOCIATION_END">
         <createTable tableName="ASSOCIATION_END">
-            <column name="OWNING_CLASS_NAME" type="varchar(256)">
+            <column name="NAME" type="varchar(256)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="ASSOCIATION_END_PK" />
             </column>
 
-            <column name="NAME" type="varchar(256)">
+            <column name="OWNING_CLASS_NAME" type="varchar(256)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="ASSOCIATION_END_PK" />
             </column>
 
@@ -527,11 +527,11 @@
 
     <changeSet author="Klass" id="initial-table-38-PARAMETERIZED_PROPERTY">
         <createTable tableName="PARAMETERIZED_PROPERTY">
-            <column name="OWNING_CLASS_NAME" type="varchar(256)">
+            <column name="NAME" type="varchar(256)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PARAMETERIZED_PROPERTY_PK" />
             </column>
 
-            <column name="NAME" type="varchar(256)">
+            <column name="OWNING_CLASS_NAME" type="varchar(256)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PARAMETERIZED_PROPERTY_PK" />
             </column>
 
@@ -591,15 +591,15 @@
 
     <changeSet author="Klass" id="initial-table-41-PARAMETERIZED_PROPERTY_PARAMETER">
         <createTable tableName="PARAMETERIZED_PROPERTY_PARAMETER">
+            <column name="NAME" type="varchar(256)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PARAMETERIZED_PROPERTY_PARAMETER_PK" />
+            </column>
+
             <column name="CLASSIFIER_NAME" type="varchar(256)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PARAMETERIZED_PROPERTY_PARAMETER_PK" />
             </column>
 
             <column name="PARAMETERIZED_PROPERTY_NAME" type="varchar(256)">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PARAMETERIZED_PROPERTY_PARAMETER_PK" />
-            </column>
-
-            <column name="NAME" type="varchar(256)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PARAMETERIZED_PROPERTY_PARAMETER_PK" />
             </column>
 
@@ -636,6 +636,10 @@
             <column name="CLASSIFIER_NAME" type="varchar(256)">
                 <constraints nullable="false" />
             </column>
+
+            <column name="NAMED_PROJECTION_NAME" type="varchar(256)">
+                <constraints nullable="false" />
+            </column>
         </createTable>
     </changeSet>
 
@@ -643,10 +647,6 @@
         <createTable tableName="NAMED_PROJECTION">
             <column name="NAME" type="varchar(256)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="NAMED_PROJECTION_PK" />
-            </column>
-
-            <column name="PROJECTION_ID" type="bigint">
-                <constraints nullable="false" />
             </column>
         </createTable>
     </changeSet>
@@ -1117,16 +1117,6 @@
         />
     </changeSet>
 
-    <changeSet author="Klass" id="initial-foreign-key-44-NAMED_PROJECTION_FK_ROOT_PROJECTION">
-        <addForeignKeyConstraint
-                constraintName="NAMED_PROJECTION_FK_ROOT_PROJECTION"
-                baseTableName="NAMED_PROJECTION"
-                baseColumnNames="PROJECTION_ID"
-                referencedTableName="ROOT_PROJECTION"
-                referencedColumnNames="ID"
-        />
-    </changeSet>
-
     <changeSet author="Klass" id="initial-foreign-key-45-PROJECTION_WITH_ASSOCIATION_END_FK_ASSOCIATION_END">
         <addForeignKeyConstraint
                 constraintName="PROJECTION_WITH_ASSOCIATION_END_FK_ASSOCIATION_END"
@@ -1277,6 +1267,14 @@
         />
     </changeSet>
 
+    <changeSet author="Klass" id="initial-indices-3-ENUMERATION_LITERAL_IDX_ENUMERATION">
+        <createIndex
+                indexName="ENUMERATION_LITERAL_IDX_ENUMERATION"
+                tableName="ENUMERATION_LITERAL">
+            <column name="ENUMERATION_NAME" />
+        </createIndex>
+    </changeSet>
+
     <changeSet author="Klass" id="initial-indices-6-CLASSIFIER_INTERFACE_MAPPING_IDX_SUPER_INTERFACE">
         <createIndex
                 indexName="CLASSIFIER_INTERFACE_MAPPING_IDX_SUPER_INTERFACE"
@@ -1290,6 +1288,14 @@
                 indexName="KLASS_IDX_SUPER_CLASS"
                 tableName="KLASS">
             <column name="SUPER_CLASS_NAME" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-indices-9-DATA_TYPE_PROPERTY_IDX_OWNING_CLASSIFIER">
+        <createIndex
+                indexName="DATA_TYPE_PROPERTY_IDX_OWNING_CLASSIFIER"
+                tableName="DATA_TYPE_PROPERTY">
+            <column name="CLASSIFIER_NAME" />
         </createIndex>
     </changeSet>
 
@@ -1382,6 +1388,14 @@
         </createIndex>
     </changeSet>
 
+    <changeSet author="Klass" id="initial-indices-33-ASSOCIATION_END_IDX_OWNING_CLASS">
+        <createIndex
+                indexName="ASSOCIATION_END_IDX_OWNING_CLASS"
+                tableName="ASSOCIATION_END">
+            <column name="OWNING_CLASS_NAME" />
+        </createIndex>
+    </changeSet>
+
     <changeSet author="Klass" id="initial-indices-33-ASSOCIATION_END_IDX_OWNING_ASSOCIATION">
         <createIndex
                 indexName="ASSOCIATION_END_IDX_OWNING_ASSOCIATION"
@@ -1407,6 +1421,14 @@
         </createIndex>
     </changeSet>
 
+    <changeSet author="Klass" id="initial-indices-38-PARAMETERIZED_PROPERTY_IDX_OWNING_CLASS">
+        <createIndex
+                indexName="PARAMETERIZED_PROPERTY_IDX_OWNING_CLASS"
+                tableName="PARAMETERIZED_PROPERTY">
+            <column name="OWNING_CLASS_NAME" />
+        </createIndex>
+    </changeSet>
+
     <changeSet author="Klass" id="initial-indices-38-PARAMETERIZED_PROPERTY_IDX_RESULT_TYPE">
         <createIndex
                 indexName="PARAMETERIZED_PROPERTY_IDX_RESULT_TYPE"
@@ -1423,6 +1445,15 @@
         </createIndex>
     </changeSet>
 
+    <changeSet author="Klass" id="initial-indices-41-PARAMETERIZED_PROPERTY_PARAMETER_IDX_PARAMETERIZED_PROPERTY">
+        <createIndex
+                indexName="PARAMETERIZED_PROPERTY_PARAMETER_IDX_PARAMETERIZED_PROPERTY"
+                tableName="PARAMETERIZED_PROPERTY_PARAMETER">
+            <column name="CLASSIFIER_NAME" />
+            <column name="PARAMETERIZED_PROPERTY_NAME" />
+        </createIndex>
+    </changeSet>
+
     <changeSet author="Klass" id="initial-indices-42-PROJECTION_ELEMENT_IDX_PARENT">
         <createIndex
                 indexName="PROJECTION_ELEMENT_IDX_PARENT"
@@ -1436,14 +1467,6 @@
                 indexName="ROOT_PROJECTION_IDX_CLASSIFIER"
                 tableName="ROOT_PROJECTION">
             <column name="CLASSIFIER_NAME" />
-        </createIndex>
-    </changeSet>
-
-    <changeSet author="Klass" id="initial-indices-44-NAMED_PROJECTION_IDX_ROOT_PROJECTION">
-        <createIndex
-                indexName="NAMED_PROJECTION_IDX_ROOT_PROJECTION"
-                tableName="NAMED_PROJECTION">
-            <column name="PROJECTION_ID" />
         </createIndex>
     </changeSet>
 

@@ -5,14 +5,9 @@ package klass.model.meta.domain.inference
  */
 
 
-projection NamedElementProjection on NamedElement
-{
-    name: "NamedElement name",
-}
 
 projection PackageableElementProjection on PackageableElement
 {
-    name: "NamedElement name",
     packageName: "PackageableElement packageName",
     Enumeration.enumerationLiterals: EnumerationLiteralProjection,
     Classifier.superInterfaces: ClassifierInterfaceMappingProjection,
@@ -20,54 +15,45 @@ projection PackageableElementProjection on PackageableElement
     Classifier.dataTypeProperties: DataTypePropertyProjection,
     Klass.abstractClass: "Klass abstractClass",
     Klass.superClass: {
-        NamedElement.name: "NamedElement name",
-    },
+        },
     Klass.associationEnds: {
-        NamedElement.name: "NamedElement name",
-    },
+        },
     Klass.parameterizedProperties: ParameterizedPropertyProjection,
     Association.associationEnds: AssociationEndProjection,
     Association.criteria: CriteriaProjection,
     NamedProjection.rootProjection: RootProjectionProjection,
     ServiceGroup.owningClass: {
-        NamedElement.name: "NamedElement name",
-    },
+        },
     ServiceGroup.urls: UrlProjection,
 }
 
 projection EnumerationProjection on Enumeration
 {
-    name: "NamedElement name",
     packageName: "PackageableElement packageName",
     enumerationLiterals: EnumerationLiteralProjection,
 }
 
 projection EnumerationLiteralProjection on EnumerationLiteral
 {
-    name: "NamedElement name",
     prettyName: "EnumerationLiteral prettyName",
 }
 
 projection ClassifierProjection on Classifier
 {
-    name: "NamedElement name",
     packageName: "PackageableElement packageName",
     superInterfaces: ClassifierInterfaceMappingProjection,
     classifierModifiers: ClassifierModifierProjection,
     dataTypeProperties: DataTypePropertyProjection,
     Klass.abstractClass: "Klass abstractClass",
     Klass.superClass: {
-        NamedElement.name: "NamedElement name",
-    },
+        },
     Klass.associationEnds: {
-        NamedElement.name: "NamedElement name",
-    },
+        },
     Klass.parameterizedProperties: ParameterizedPropertyProjection,
 }
 
 projection InterfaceProjection on Interface
 {
-    name: "NamedElement name",
     packageName: "PackageableElement packageName",
     superInterfaces: ClassifierInterfaceMappingProjection,
     classifierModifiers: ClassifierModifierProjection,
@@ -77,8 +63,7 @@ projection InterfaceProjection on Interface
 projection ClassifierInterfaceMappingProjection on ClassifierInterfaceMapping
 {
     superInterface: {
-        name: "NamedElement name",
-    },
+        },
 }
 
 projection ClassifierModifierProjection on ClassifierModifier
@@ -88,24 +73,20 @@ projection ClassifierModifierProjection on ClassifierModifier
 
 projection KlassProjection on Klass
 {
-    name: "NamedElement name",
     packageName: "PackageableElement packageName",
     abstractClass: "Klass abstractClass",
     superInterfaces: ClassifierInterfaceMappingProjection,
     classifierModifiers: ClassifierModifierProjection,
     dataTypeProperties: DataTypePropertyProjection,
     superClass: {
-        name: "NamedElement name",
-    },
+        },
     associationEnds: {
-        name: "NamedElement name",
-    },
+        },
     parameterizedProperties: ParameterizedPropertyProjection,
 }
 
 projection DataTypePropertyProjection on DataTypeProperty
 {
-    name: "NamedElement name",
     optional: "DataTypeProperty optional",
     minLengthValidation: MinLengthPropertyValidationProjection,
     maxLengthValidation: MaxLengthPropertyValidationProjection,
@@ -114,13 +95,11 @@ projection DataTypePropertyProjection on DataTypeProperty
     PrimitiveProperty.minValidation: MinPropertyValidationProjection,
     PrimitiveProperty.maxValidation: MaxPropertyValidationProjection,
     EnumerationProperty.enumeration: {
-        NamedElement.name: "NamedElement name",
-    },
+        },
 }
 
 projection PrimitivePropertyProjection on PrimitiveProperty
 {
-    name: "NamedElement name",
     optional: "DataTypeProperty optional",
     primitiveType: "PrimitiveProperty primitiveType",
     minLengthValidation: MinLengthPropertyValidationProjection,
@@ -132,14 +111,12 @@ projection PrimitivePropertyProjection on PrimitiveProperty
 
 projection EnumerationPropertyProjection on EnumerationProperty
 {
-    name: "NamedElement name",
     optional: "DataTypeProperty optional",
     minLengthValidation: MinLengthPropertyValidationProjection,
     maxLengthValidation: MaxLengthPropertyValidationProjection,
     propertyModifiers: PropertyModifierProjection,
     enumeration: {
-        name: "NamedElement name",
-    },
+        },
 }
 
 projection NumericPropertyValidationProjection on NumericPropertyValidation
@@ -178,8 +155,7 @@ projection ParameterProjection on Parameter
     name: "Parameter name",
     multiplicity: "Parameter multiplicity",
     EnumerationParameter.enumeration: {
-        NamedElement.name: "NamedElement name",
-    },
+        },
     PrimitiveParameter.primitiveType: "PrimitiveParameter primitiveType",
 }
 
@@ -189,8 +165,7 @@ projection EnumerationParameterProjection on EnumerationParameter
     name: "Parameter name",
     multiplicity: "Parameter multiplicity",
     enumeration: {
-        name: "NamedElement name",
-    },
+        },
 }
 
 projection PrimitiveParameterProjection on PrimitiveParameter
@@ -208,12 +183,10 @@ projection ExpressionValueProjection on ExpressionValue
         Parameter.id: "Parameter id",
     },
     MemberReferencePath.klass: {
-        NamedElement.name: "NamedElement name",
-    },
+        },
     MemberReferencePath.associationEnds: MemberReferencePathAssociationEndMappingProjection,
     MemberReferencePath.dataTypeProperty: {
-        NamedElement.name: "NamedElement name",
-    },
+        },
 }
 
 projection UserLiteralProjection on UserLiteral
@@ -238,12 +211,10 @@ projection MemberReferencePathProjection on MemberReferencePath
 {
     id: "ExpressionValue id",
     klass: {
-        name: "NamedElement name",
-    },
+        },
     associationEnds: MemberReferencePathAssociationEndMappingProjection,
     dataTypeProperty: {
-        name: "NamedElement name",
-    },
+        },
 }
 
 projection CriteriaProjection on Criteria
@@ -310,7 +281,6 @@ projection EdgePointCriteriaProjection on EdgePointCriteria
 
 projection AssociationProjection on Association
 {
-    name: "NamedElement name",
     packageName: "PackageableElement packageName",
     associationEnds: AssociationEndProjection,
     criteria: CriteriaProjection,
@@ -318,12 +288,10 @@ projection AssociationProjection on Association
 
 projection AssociationEndProjection on AssociationEnd
 {
-    name: "NamedElement name",
     direction: "AssociationEnd direction",
     multiplicity: "AssociationEnd multiplicity",
     resultType: {
-        name: "NamedElement name",
-    },
+        },
     associationEndModifiers: AssociationEndModifierProjection,
     orderBys: AssociationEndOrderByProjection,
 }
@@ -336,41 +304,34 @@ projection AssociationEndModifierProjection on AssociationEndModifier
 projection MemberReferencePathAssociationEndMappingProjection on MemberReferencePathAssociationEndMapping
 {
     associationEnd: {
-        name: "NamedElement name",
-    },
+        },
 }
 
 projection ThisMemberReferencePathProjection on ThisMemberReferencePath
 {
     id: "ExpressionValue id",
     klass: {
-        name: "NamedElement name",
-    },
+        },
     associationEnds: MemberReferencePathAssociationEndMappingProjection,
     dataTypeProperty: {
-        name: "NamedElement name",
-    },
+        },
 }
 
 projection TypeMemberReferencePathProjection on TypeMemberReferencePath
 {
     id: "ExpressionValue id",
     klass: {
-        name: "NamedElement name",
-    },
+        },
     associationEnds: MemberReferencePathAssociationEndMappingProjection,
     dataTypeProperty: {
-        name: "NamedElement name",
-    },
+        },
 }
 
 projection ParameterizedPropertyProjection on ParameterizedProperty
 {
-    name: "NamedElement name",
     multiplicity: "ParameterizedProperty multiplicity",
     resultType: {
-        name: "NamedElement name",
-    },
+        },
     parameterizedPropertyOrderings: ParameterizedPropertyOrderingProjection,
     parameters: ParameterizedPropertyParameterProjection,
 }
@@ -388,10 +349,6 @@ projection ParameterizedPropertyOrderingProjection on ParameterizedPropertyOrder
     ordinal: "ParameterizedPropertyOrdering ordinal",
 }
 
-projection ParameterizedPropertyParameterProjection on ParameterizedPropertyParameter
-{
-    name: "NamedElement name",
-}
 
 projection ProjectionElementProjection on ProjectionElement
 {
@@ -402,17 +359,13 @@ projection ProjectionElementProjection on ProjectionElement
         id: "ProjectionElement id",
     },
     RootProjection.classifier: {
-        NamedElement.name: "NamedElement name",
-    },
+        },
     ProjectionWithAssociationEnd.associationEnd: {
-        NamedElement.name: "NamedElement name",
-    },
+        },
     ProjectionProjectionReference.projection: {
-        NamedElement.name: "NamedElement name",
-    },
+        },
     ProjectionDataTypeProperty.dataTypeProperty: {
-        NamedElement.name: "NamedElement name",
-    },
+        },
 }
 
 projection RootProjectionProjection on RootProjection
@@ -424,13 +377,11 @@ projection RootProjectionProjection on RootProjection
         id: "ProjectionElement id",
     },
     classifier: {
-        name: "NamedElement name",
-    },
+        },
 }
 
 projection NamedProjectionProjection on NamedProjection
 {
-    name: "NamedElement name",
     packageName: "PackageableElement packageName",
     rootProjection: RootProjectionProjection,
 }
@@ -444,11 +395,9 @@ projection ProjectionWithAssociationEndProjection on ProjectionWithAssociationEn
         id: "ProjectionElement id",
     },
     associationEnd: {
-        name: "NamedElement name",
-    },
+        },
     ProjectionProjectionReference.projection: {
-        NamedElement.name: "NamedElement name",
-    },
+        },
 }
 
 projection ProjectionReferencePropertyProjection on ProjectionReferenceProperty
@@ -460,8 +409,7 @@ projection ProjectionReferencePropertyProjection on ProjectionReferenceProperty
         id: "ProjectionElement id",
     },
     associationEnd: {
-        name: "NamedElement name",
-    },
+        },
 }
 
 projection ProjectionProjectionReferenceProjection on ProjectionProjectionReference
@@ -473,11 +421,9 @@ projection ProjectionProjectionReferenceProjection on ProjectionProjectionRefere
         id: "ProjectionElement id",
     },
     associationEnd: {
-        name: "NamedElement name",
-    },
+        },
     projection: {
-        name: "NamedElement name",
-    },
+        },
 }
 
 projection ProjectionDataTypePropertyProjection on ProjectionDataTypeProperty
@@ -489,17 +435,14 @@ projection ProjectionDataTypePropertyProjection on ProjectionDataTypeProperty
         id: "ProjectionElement id",
     },
     dataTypeProperty: {
-        name: "NamedElement name",
-    },
+        },
 }
 
 projection ServiceGroupProjection on ServiceGroup
 {
-    name: "NamedElement name",
     packageName: "PackageableElement packageName",
     owningClass: {
-        name: "NamedElement name",
-    },
+        },
     urls: UrlProjection,
 }
 
@@ -521,8 +464,7 @@ projection ServiceProjection on Service
     verb: "Service verb",
     serviceMultiplicity: "Service serviceMultiplicity",
     projection: {
-        name: "NamedElement name",
-    },
+        },
     queryCriteria: CriteriaProjection,
     authorizeCriteria: CriteriaProjection,
     validateCriteria: CriteriaProjection,

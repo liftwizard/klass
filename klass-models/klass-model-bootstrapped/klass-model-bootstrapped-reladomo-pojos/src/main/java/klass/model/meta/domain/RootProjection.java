@@ -16,10 +16,27 @@
 
 package klass.model.meta.domain;
 
+import com.gs.fw.common.mithra.MithraBusinessException;
+
 public class RootProjection extends RootProjectionAbstract {
 
 	public RootProjection() {
 		// You must not modify this constructor. Mithra calls this internally.
 		// You can call this constructor. You can also add new constructors.
+	}
+
+	// RootProjection extends ProjectionElement (joined table inheritance).
+	// The generated cascadeDeleteImpl does not cascade through the ProjectionElement tree
+	// (children, subclass rows). We handle it manually.
+	@Override
+	protected void cascadeDeleteImpl() throws MithraBusinessException {
+		ProjectionElement projectionElement = this.getProjectionElementSuperClass();
+		if (projectionElement != null) {
+			projectionElement.getChildren().cascadeDeleteAll();
+		}
+		this.delete();
+		if (projectionElement != null) {
+			projectionElement.delete();
+		}
 	}
 }

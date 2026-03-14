@@ -645,21 +645,26 @@ class ProjectionElement
 class RootProjection
     extends ProjectionElement
 {
-    classifierName: String private maximumLength(256);
+    classifierName        : String private maximumLength(256);
+    namedProjectionName   : String private maximumLength(256);
 }
 
+// NamedProjection exists because RootProjection needs to be both a PackageableElement
+// (so it has a package-qualified name and appears in the ordered list of packageable elements)
+// and a ProjectionElement (the root of a projection element tree). Since klass does not
+// support multiple inheritance, NamedProjection bridges the two hierarchies by holding
+// the PackageableElement side and delegating to RootProjection for the element side.
 class NamedProjection
     extends PackageableElement
 {
-    projectionId: Long private;
 }
 
 association NamedProjectionHasRootProjection
 {
     namedProjection: NamedProjection[0..1];
-    rootProjection: RootProjection[1..1] owned;
+    rootProjection : RootProjection[1..1] owned;
 
-    relationship this.projectionId == RootProjection.id
+    relationship this.name == RootProjection.namedProjectionName
 }
 
 // TODO: When abstract class extends abstract class, validate that they have compatible inheritance types
