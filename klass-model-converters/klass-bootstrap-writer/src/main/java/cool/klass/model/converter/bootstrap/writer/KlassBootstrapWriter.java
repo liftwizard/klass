@@ -292,17 +292,12 @@ public class KlassBootstrapWriter {
 		}
 		projectionElementList.insertAll();
 
+		this.domainModel.getProjections().collect(this::handleNamedProjection, new NamedProjectionList()).insertAll();
+
 		this.domainModel.getProjections()
 			.collect(
 				(each) -> this.handleRootProjection(each, rootProjectionByProjection.get(each)),
 				new RootProjectionList()
-			)
-			.insertAll();
-
-		this.domainModel.getProjections()
-			.collect(
-				(projection) -> this.handleNamedProjection(projection, rootProjectionByProjection),
-				new NamedProjectionList()
 			)
 			.insertAll();
 
@@ -690,6 +685,7 @@ public class KlassBootstrapWriter {
 		var bootstrappedRootProjection = new RootProjection();
 		bootstrappedRootProjection.setId(projectionElement.getId());
 		bootstrappedRootProjection.setClassifierName(projection.getClassifier().getName());
+		bootstrappedRootProjection.setNamedProjectionName(projection.getName());
 		return bootstrappedRootProjection;
 	}
 
@@ -800,14 +796,9 @@ public class KlassBootstrapWriter {
 		);
 	}
 
-	private NamedProjection handleNamedProjection(
-		@Nonnull Projection projection,
-		@Nonnull MutableMap<Projection, klass.model.meta.domain.ProjectionElement> rootProjectionByProjection
-	) {
-		var bootstrappedRootProjection = rootProjectionByProjection.get(projection);
+	private NamedProjection handleNamedProjection(@Nonnull Projection projection) {
 		var bootstrappedProjection = new NamedProjection();
 		bootstrappedProjection.setName(projection.getName());
-		bootstrappedProjection.setProjectionId(bootstrappedRootProjection.getId());
 		return bootstrappedProjection;
 	}
 
