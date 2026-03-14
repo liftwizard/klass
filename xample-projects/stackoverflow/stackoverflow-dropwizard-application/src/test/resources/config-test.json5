@@ -94,7 +94,7 @@
 		},
 	],
 	h2: {
-		enabled: true,
+		enabled: false,
 		webPort: 8066,
 		tcpPort: 9066,
 	},
@@ -121,7 +121,7 @@
 			readOnlyByDefault: false,
 			user: "sa",
 			password: "",
-			url: "jdbc:p6spy:h2:tcp://localhost:9066/stackoverflow-h2;NON_KEYWORDS=USER",
+			url: "jdbc:p6spy:h2:mem:stackoverflow-h2;DB_CLOSE_DELAY=-1;NON_KEYWORDS=USER",
 			properties: {
 				charSet: "UTF-8",
 			},
