@@ -636,6 +636,10 @@
             <column name="CLASSIFIER_NAME" type="varchar(256)">
                 <constraints nullable="false" />
             </column>
+
+            <column name="NAMED_PROJECTION_NAME" type="varchar(256)">
+                <constraints nullable="false" />
+            </column>
         </createTable>
     </changeSet>
 
@@ -643,10 +647,6 @@
         <createTable tableName="NAMED_PROJECTION">
             <column name="NAME" type="varchar(256)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="NAMED_PROJECTION_PK" />
-            </column>
-
-            <column name="PROJECTION_ID" type="bigint">
-                <constraints nullable="false" />
             </column>
         </createTable>
     </changeSet>
@@ -1117,13 +1117,13 @@
         />
     </changeSet>
 
-    <changeSet author="Klass" id="initial-foreign-key-44-NAMED_PROJECTION_FK_ROOT_PROJECTION">
+    <changeSet author="Klass" id="initial-foreign-key-43-ROOT_PROJECTION_FK_NAMED_PROJECTION">
         <addForeignKeyConstraint
-                constraintName="NAMED_PROJECTION_FK_ROOT_PROJECTION"
-                baseTableName="NAMED_PROJECTION"
-                baseColumnNames="PROJECTION_ID"
-                referencedTableName="ROOT_PROJECTION"
-                referencedColumnNames="ID"
+                constraintName="ROOT_PROJECTION_FK_NAMED_PROJECTION"
+                baseTableName="ROOT_PROJECTION"
+                baseColumnNames="NAMED_PROJECTION_NAME"
+                referencedTableName="NAMED_PROJECTION"
+                referencedColumnNames="NAME"
         />
     </changeSet>
 
@@ -1439,11 +1439,11 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-44-NAMED_PROJECTION_IDX_ROOT_PROJECTION">
+    <changeSet author="Klass" id="initial-indices-43-ROOT_PROJECTION_IDX_NAMED_PROJECTION">
         <createIndex
-                indexName="NAMED_PROJECTION_IDX_ROOT_PROJECTION"
-                tableName="NAMED_PROJECTION">
-            <column name="PROJECTION_ID" />
+                indexName="ROOT_PROJECTION_IDX_NAMED_PROJECTION"
+                tableName="ROOT_PROJECTION">
+            <column name="NAMED_PROJECTION_NAME" />
         </createIndex>
     </changeSet>
 

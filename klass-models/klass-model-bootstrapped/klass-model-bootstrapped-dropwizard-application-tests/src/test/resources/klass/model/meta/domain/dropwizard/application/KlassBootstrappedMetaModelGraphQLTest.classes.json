@@ -1700,6 +1700,23 @@
 						"primitiveType": "STRING",
 						"minValidation": null,
 						"maxValidation": null
+					},
+					{
+						"__typename": "PrimitiveProperty",
+						"name": "namedProjectionName",
+						"optional": false,
+						"minLengthValidation": null,
+						"maxLengthValidation": {
+							"number": 256
+						},
+						"propertyModifiers": [
+							{
+								"keyword": "private"
+							}
+						],
+						"primitiveType": "STRING",
+						"minValidation": null,
+						"maxValidation": null
 					}
 				],
 				"superClass": {
@@ -1713,23 +1730,7 @@
 				"abstractClass": false,
 				"superInterfaces": [],
 				"classifierModifiers": [],
-				"dataTypeProperties": [
-					{
-						"__typename": "PrimitiveProperty",
-						"name": "projectionId",
-						"optional": false,
-						"minLengthValidation": null,
-						"maxLengthValidation": null,
-						"propertyModifiers": [
-							{
-								"keyword": "private"
-							}
-						],
-						"primitiveType": "LONG",
-						"minValidation": null,
-						"maxValidation": null
-					}
-				],
+				"dataTypeProperties": [],
 				"superClass": {
 					"name": "PackageableElement"
 				},
