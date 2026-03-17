@@ -1,0 +1,36 @@
+package dummy
+
+class Base
+    abstract
+{
+    id: Long key;
+    baseParentId: Long? private;
+}
+
+class Sub
+    extends Base
+{
+    id: Long key;
+}
+
+class Target
+{
+    id: Long key;
+}
+
+association BaseHasParent
+{
+    baseChild: Base[0..*];
+    parent: Target[0..1];
+
+    relationship this.baseParentId == Target.id
+}
+
+projection SubProjection on Sub
+{
+    id: "ID",
+    Sub.parent:
+    {
+        id: "Target ID",
+    },
+}
