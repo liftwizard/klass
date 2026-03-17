@@ -1,0 +1,19 @@
+════════════════════════════════════════ [35mERR_PRJ_CRF[m ════════════════════════════════════════
+[31mError: Redundant classifier qualifier 'Sub' on projection member 'target'. The property can be resolved without the qualifier.[m
+
+At (ProjectionRedundantClassifierQualifierInheritedTest.klass:30:5)
+
+[39m 1║ [35mpackage [39mdummy
+[39m27║ [35mprojection [39mBaseProjection [35mon [39mBase
+[39m28║ [36m{
+[39m30║     [39mSub[36m.[39mtarget[36m:
+[39m  ║ [31m    ^^^
+[39m31║     [36m{
+[39m33║     [36m}[36m,
+[39m34║ [36m}
+[m
+[36mLocation:  [mProjectionRedundantClassifierQualifierInheritedTest.klass:30:5[m
+[36mFile:      [mProjectionRedundantClassifierQualifierInheritedTest.klass[m
+[36mLine:      [m30[m
+[36mCharacter: [m5
+═════════════════════════════════════════════════════════════════════════════════════════════
