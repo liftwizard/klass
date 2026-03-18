@@ -33,8 +33,6 @@ projection QuestionProjection on Question
     answers: {
         id: "Answer id",
     },
-    votes: {
-        },
     tags: QuestionTagMappingProjection,
     version: QuestionVersionProjection,
     createdBy: {
