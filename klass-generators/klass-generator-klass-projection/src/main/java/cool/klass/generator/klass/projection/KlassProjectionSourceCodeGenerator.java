@@ -158,6 +158,10 @@ public final class KlassProjectionSourceCodeGenerator {
 			.reject((property) -> property.isForeignKey() && !property.isForeignKeyToSelf())
 			.collectWith(KlassProjectionSourceCodeGenerator::getDataTypePropertySourceCode, subClassMode);
 
+		if (keyPropertiesSourceCode.isEmpty()) {
+			return "";
+		}
+
 		String result = "    %s%s: {%n%s    },%n".formatted(
 			prefix,
 			referenceProperty.getName(),
