@@ -1,0 +1,21 @@
+package dummy
+
+class Source
+{
+    id: Long key;
+    extraId: Long?;
+}
+
+class Target
+{
+    id: Long key;
+    extraId: Long?;
+}
+
+association MixedKeyJoin
+{
+    mixedSource: Source[0..1];
+    mixedTarget: Target[0..1] owned;
+
+    relationship this.id == Target.extraId && this.extraId == Target.id
+}

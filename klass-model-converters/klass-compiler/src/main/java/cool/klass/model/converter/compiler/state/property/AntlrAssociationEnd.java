@@ -36,6 +36,7 @@ import cool.klass.model.meta.domain.property.AssociationEndImpl.AssociationEndBu
 import cool.klass.model.meta.domain.property.ModifierImpl.ModifierBuilder;
 import cool.klass.model.meta.grammar.KlassParser.AssociationEndContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.MutableOrderedMap;
@@ -95,6 +96,8 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 	private AssociationEndBuilder associationEnd;
 
 	private final MutableOrderedMap<AntlrDataTypeProperty<?>, AntlrDataTypeProperty<?>> foreignKeys =
+		OrderedMapAdapter.adapt(new LinkedHashMap<>());
+	private final MutableOrderedMap<AntlrDataTypeProperty<?>, ParserRuleContext> foreignKeyReferenceContexts =
 		OrderedMapAdapter.adapt(new LinkedHashMap<>());
 
 	public AntlrAssociationEnd(
@@ -345,6 +348,10 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 		return this.opposite.isVersion();
 	}
 
+	public AntlrAssociationEnd getOpposite() {
+		return this.opposite;
+	}
+
 	public void setOpposite(@Nonnull AntlrAssociationEnd opposite) {
 		this.opposite = Objects.requireNonNull(opposite);
 	}
@@ -361,13 +368,27 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 		return (AssociationEndContext) super.getElementContext();
 	}
 
+	public boolean hasForeignKeys() {
+		return this.foreignKeys.notEmpty();
+	}
+
+	public MutableOrderedMap<AntlrDataTypeProperty<?>, AntlrDataTypeProperty<?>> getForeignKeys() {
+		return this.foreignKeys;
+	}
+
 	public void addForeignKeyPropertyMatchingProperty(
 		@Nonnull AntlrDataTypeProperty<?> foreignKeyProperty,
-		@Nonnull AntlrDataTypeProperty<?> keyProperty
+		@Nonnull AntlrDataTypeProperty<?> keyProperty,
+		@Nonnull ParserRuleContext foreignKeyReferenceContext
 	) {
 		this.foreignKeys.put(foreignKeyProperty, keyProperty);
+		this.foreignKeyReferenceContexts.put(foreignKeyProperty, foreignKeyReferenceContext);
 		foreignKeyProperty.setKeyMatchingThisForeignKey(this, keyProperty);
 		keyProperty.setForeignKeyMatchingThisKey(this, foreignKeyProperty);
+	}
+
+	public ParserRuleContext getForeignKeyReferenceContext(@Nonnull AntlrDataTypeProperty<?> foreignKeyProperty) {
+		return this.foreignKeyReferenceContexts.get(foreignKeyProperty);
 	}
 
 	@Override
@@ -381,9 +402,5 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 
 	public boolean isTargetEnd() {
 		return this == this.owningAssociation.getTargetEnd();
-	}
-
-	public AntlrAssociationEnd getOpposite() {
-		return this.opposite;
 	}
 }
