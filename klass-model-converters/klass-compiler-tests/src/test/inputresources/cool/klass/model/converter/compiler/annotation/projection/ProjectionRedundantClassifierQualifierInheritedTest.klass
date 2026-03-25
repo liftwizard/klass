@@ -32,3 +32,12 @@ projection BaseProjection on Base
         id: "Target ID",
     },
 }
+
+projection SubProjection on Sub
+{
+    id: "ID",
+    Sub.target:
+    {
+        id: "Target ID",
+    },
+}
