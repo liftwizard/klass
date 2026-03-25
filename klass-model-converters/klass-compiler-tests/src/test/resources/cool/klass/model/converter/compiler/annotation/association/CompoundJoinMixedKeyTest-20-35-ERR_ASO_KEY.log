@@ -1,0 +1,17 @@
+════════════════════════════════════════ [35mERR_ASO_KEY[m ════════════════════════════════════════
+[31mError: Association 'MixedKeyJoin' has foreign keys on both sides: 'Target.extraId' and 'Source.extraId'.[m
+
+At (CompoundJoinMixedKeyTest.klass:20:36)
+
+[39m 1║ [35mpackage [39mdummy
+[39m15║ [35massociation [39mMixedKeyJoin
+[39m16║ [36m{
+[39m20║     [35mrelationship [32mthis[36m.[39mid [35m== [39mTarget[36m.[39mextraId [35m&& [32mthis[36m.[39mextraId [35m== [39mTarget[36m.[39mid
+[39m  ║ [31m                                   ^^^^^^^         ^^^^^^^
+[39m21║ [36m}
+[m
+[36mLocation:  [mCompoundJoinMixedKeyTest.klass:20:36[m
+[36mFile:      [mCompoundJoinMixedKeyTest.klass[m
+[36mLine:      [m20[m
+[36mCharacter: [m36
+═════════════════════════════════════════════════════════════════════════════════════════════

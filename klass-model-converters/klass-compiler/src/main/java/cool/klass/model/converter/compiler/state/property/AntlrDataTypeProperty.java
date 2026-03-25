@@ -26,6 +26,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.AnnotationSeverity;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
+import cool.klass.model.converter.compiler.state.AntlrAssociation;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
 import cool.klass.model.converter.compiler.state.AntlrElement;
 import cool.klass.model.converter.compiler.state.AntlrEnumeration;
@@ -450,6 +451,32 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 
 		if (!associationEnd.isToOne()) {
 			throw new AssertionError(associationEnd);
+		}
+
+		if (associationEnd.isSourceEnd() && associationEnd.getOpposite().hasForeignKeys()) {
+			AntlrAssociationEnd oppositeEnd = associationEnd.getOpposite();
+			AntlrDataTypeProperty<?> oppositeForeignKey = oppositeEnd.getForeignKeys().keysView().getFirst();
+			String message = String.format(
+				"Association '%s' has foreign keys on both sides: '%s.%s' and '%s.%s'.",
+				associationEnd.getOwningAssociation().getName(),
+				this.owningClassifier.getName(),
+				this.getName(),
+				oppositeForeignKey.getOwningClassifier().getName(),
+				oppositeForeignKey.getName()
+			);
+			ParserRuleContext thisReferenceContext = associationEnd.getForeignKeyReferenceContext(this);
+			ParserRuleContext oppositeReferenceContext = oppositeEnd.getForeignKeyReferenceContext(oppositeForeignKey);
+			AntlrAssociation association = associationEnd.getOwningAssociation();
+			compilerAnnotationHolder.add(
+				"ERR_ASO_KEY",
+				message,
+				association,
+				Lists.immutable
+					.<IAntlrElement>with(association.getRelationship())
+					.newWithAll(association.getSurroundingElements())
+					.distinct(),
+				Lists.immutable.with(thisReferenceContext, oppositeReferenceContext)
+			);
 		}
 
 		if (this.isOptional && associationEnd.isToOneRequired()) {

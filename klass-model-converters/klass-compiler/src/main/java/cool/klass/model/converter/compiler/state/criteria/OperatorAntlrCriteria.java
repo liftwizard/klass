@@ -38,6 +38,7 @@ import cool.klass.model.converter.compiler.state.value.AntlrTypeMemberReferenceP
 import cool.klass.model.converter.compiler.state.value.literal.AbstractAntlrLiteralValue;
 import cool.klass.model.meta.domain.criteria.OperatorCriteriaImpl.OperatorCriteriaBuilder;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaOperatorContext;
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;
 import org.eclipse.collections.api.map.OrderedMap;
@@ -189,13 +190,16 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
 
 		AntlrDataTypeProperty<?> foreignKeyProperty = isTargetEnd ? thisDataTypeProperty : typeDataTypeProperty;
 		AntlrDataTypeProperty<?> keyProperty = isTargetEnd ? typeDataTypeProperty : thisDataTypeProperty;
-		if (foreignKeyProperty.isKey() && !keyProperty.isKey()) {
-			// This can happen for non-key but unique properties
-			// TODO: Implement unique properties, and assert that the property is EITHER key or unique
-			// throw new AssertionError(foreignKeyProperty);
-		}
+		// TODO: Implement unique properties, and assert that the matched key property is EITHER key or unique
+		ParserRuleContext foreignKeyReferenceContext = isTargetEnd
+			? thisMemberReferencePath.getElementContext().memberReference().identifier()
+			: typeMemberReferencePath.getElementContext().memberReference().identifier();
 
-		endWithForeignKeys.addForeignKeyPropertyMatchingProperty(foreignKeyProperty, keyProperty);
+		endWithForeignKeys.addForeignKeyPropertyMatchingProperty(
+			foreignKeyProperty,
+			keyProperty,
+			foreignKeyReferenceContext
+		);
 	}
 
 	@Override
@@ -236,12 +240,10 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
 		//     relationship this.queryCriteriaId == Criteria.id
 		// }
 
-		// TODO: These two conditions don't make sense here, because we're only considering one pair of joined properties among several &&-clauses
 		if (thisDataTypeProperty.isKey() && !typeDataTypeProperty.isKey()) {
 			return sourceEnd;
 		}
 
-		// TODO: These two conditions don't make sense here, because we're only considering one pair of joined properties among several &&-clauses
 		if (typeDataTypeProperty.isKey() && !thisDataTypeProperty.isKey()) {
 			return targetEnd;
 		}
