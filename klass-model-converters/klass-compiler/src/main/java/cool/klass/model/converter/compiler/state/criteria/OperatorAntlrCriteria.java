@@ -224,14 +224,6 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
 			return targetEnd;
 		}
 
-		if (sourceEnd.isToOneRequired() && targetEnd.isToOneOptional()) {
-			return sourceEnd;
-		}
-
-		if (targetEnd.isToOneRequired() && sourceEnd.isToOneOptional()) {
-			return targetEnd;
-		}
-
 		// These happen for associations where the owned type has a generated id key.
 		// association ServiceHasQueryCriteria
 		// {
@@ -245,6 +237,14 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
 		}
 
 		if (typeDataTypeProperty.isKey() && !thisDataTypeProperty.isKey()) {
+			return targetEnd;
+		}
+
+		if (sourceEnd.isToOneRequired() && targetEnd.isToOneOptional()) {
+			return sourceEnd;
+		}
+
+		if (targetEnd.isToOneRequired() && sourceEnd.isToOneOptional()) {
 			return targetEnd;
 		}
 
