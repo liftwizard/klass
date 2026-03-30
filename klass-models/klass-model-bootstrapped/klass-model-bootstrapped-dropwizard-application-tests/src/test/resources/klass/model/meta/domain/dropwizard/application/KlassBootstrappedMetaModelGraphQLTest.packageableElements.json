@@ -2061,6 +2061,23 @@
 						"primitiveType": "STRING",
 						"minValidation": null,
 						"maxValidation": null
+					},
+					{
+						"__typename": "PrimitiveProperty",
+						"name": "namedProjectionName",
+						"optional": false,
+						"minLengthValidation": null,
+						"maxLengthValidation": {
+							"number": 256
+						},
+						"propertyModifiers": [
+							{
+								"keyword": "private"
+							}
+						],
+						"primitiveType": "STRING",
+						"minValidation": null,
+						"maxValidation": null
 					}
 				],
 				"abstractClass": false,
@@ -2075,23 +2092,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [],
 				"classifierModifiers": [],
-				"dataTypeProperties": [
-					{
-						"__typename": "PrimitiveProperty",
-						"name": "projectionId",
-						"optional": false,
-						"minLengthValidation": null,
-						"maxLengthValidation": null,
-						"propertyModifiers": [
-							{
-								"keyword": "private"
-							}
-						],
-						"primitiveType": "LONG",
-						"minValidation": null,
-						"maxValidation": null
-					}
-				],
+				"dataTypeProperties": [],
 				"abstractClass": false,
 				"superClass": {
 					"name": "PackageableElement"

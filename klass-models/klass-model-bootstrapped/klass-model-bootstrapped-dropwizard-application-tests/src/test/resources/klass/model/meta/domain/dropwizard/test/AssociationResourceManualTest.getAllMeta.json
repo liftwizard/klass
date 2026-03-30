@@ -2565,9 +2565,9 @@
 				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
-						"name": "NamedProjection"
+						"name": "NamedElement"
 					},
-					"name": "projectionId"
+					"name": "name"
 				}
 			},
 			"targetExpressionValue": {
@@ -2579,9 +2579,9 @@
 				"associationEnds": [],
 				"dataTypeProperty": {
 					"owningClassifier": {
-						"name": "ProjectionElement"
+						"name": "RootProjection"
 					},
-					"name": "id"
+					"name": "namedProjectionName"
 				}
 			}
 		}

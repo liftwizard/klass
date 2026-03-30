@@ -1451,7 +1451,7 @@
 					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
-						"name": "projectionId"
+						"name": "name"
 					}
 				},
 				"targetExpressionValue": {
@@ -1463,7 +1463,7 @@
 					"associationEnds": [],
 					"dataTypeProperty": {
 						"__typename": "PrimitiveProperty",
-						"name": "id"
+						"name": "namedProjectionName"
 					}
 				}
 			},
