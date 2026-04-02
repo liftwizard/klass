@@ -1,17 +1,17 @@
 ════════════════════════════════════════ [35mWRN_ORP_CSC[m ════════════════════════════════════════
-[33mWarning: Association end 'OrphanedRefReferencesOwnedChild.orphanedRefs' is not owned. 'OrphanedRef' rows would be orphaned when 'OwnedChild' is deleted. Consider adding 'owned' to this end.[m
+[33mWarning: Association end 'ParentHasChildren.children' is not owned. 'Child' rows would be orphaned when 'Parent' is deleted. Consider adding 'owned' to this end.[m
 
-At (CascadeOrphanWarningTest.klass:30:5)
+At (CascadeOrphanDirectWarningTest.klass:17:5)
 
 [39m 1║ [35mpackage [39mdummy
-[39m27║ [35massociation [39mOrphanedRefReferencesOwnedChild
-[39m28║ [36m{
-[39m30║     [39morphanedRefs[36m: [39mOrphanedRef[36m[[34m0[36m..[34m*[36m][36m;
-[39m  ║ [33m    ^^^^^^^^^^^^
-[39m34║ [36m}
+[39m14║ [35massociation [39mParentHasChildren
+[39m15║ [36m{
+[39m17║     [39mchildren[36m: [39mChild[36m[[34m0[36m..[34m*[36m][36m;
+[39m  ║ [33m    ^^^^^^^^
+[39m18║ [36m}
 [m
-[36mLocation:  [mCascadeOrphanWarningTest.klass:30:5[m
-[36mFile:      [mCascadeOrphanWarningTest.klass[m
-[36mLine:      [m30[m
+[36mLocation:  [mCascadeOrphanDirectWarningTest.klass:17:5[m
+[36mFile:      [mCascadeOrphanDirectWarningTest.klass[m
+[36mLine:      [m17[m
 [36mCharacter: [m5
 ═════════════════════════════════════════════════════════════════════════════════════════════
