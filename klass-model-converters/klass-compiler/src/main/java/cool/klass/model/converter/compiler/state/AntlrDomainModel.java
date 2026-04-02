@@ -16,6 +16,7 @@
 
 package cool.klass.model.converter.compiler.state;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.Set;
@@ -23,6 +24,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
+import cool.klass.model.converter.compiler.annotation.AnnotationSeverity;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.parser.AntlrUtils;
 import cool.klass.model.converter.compiler.state.criteria.AntlrCriteria;
@@ -47,6 +49,7 @@ import cool.klass.model.meta.domain.InterfaceImpl.InterfaceBuilder;
 import cool.klass.model.meta.domain.KlassImpl.KlassBuilder;
 import cool.klass.model.meta.domain.SourceCodeImpl.SourceCodeBuilderImpl;
 import cool.klass.model.meta.domain.api.TopLevelElement.TopLevelElementBuilder;
+import cool.klass.model.meta.domain.api.service.Verb;
 import cool.klass.model.meta.domain.projection.ProjectionImpl.ProjectionBuilder;
 import cool.klass.model.meta.domain.service.ServiceGroupImpl.ServiceGroupBuilder;
 import cool.klass.model.meta.grammar.KlassParser.AssociationDeclarationContext;
@@ -426,7 +429,100 @@ public class AntlrDomainModel {
 			}
 		}
 
+		this.reportCascadeOrphanWarnings(compilerAnnotationHolder);
+
 		this.reportUnreferencedPrivateProperties(compilerAnnotationHolder);
+	}
+
+	private void reportCascadeOrphanWarnings(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		MutableSet<AntlrClass> classesWithDeleteService = this.getClassesWithDeleteService();
+
+		for (AntlrAssociation association : this.associations) {
+			this.reportCascadeOrphanForEnd(
+				compilerAnnotationHolder,
+				association,
+				association.getSourceEnd(),
+				association.getTargetEnd(),
+				classesWithDeleteService
+			);
+			this.reportCascadeOrphanForEnd(
+				compilerAnnotationHolder,
+				association,
+				association.getTargetEnd(),
+				association.getSourceEnd(),
+				classesWithDeleteService
+			);
+		}
+	}
+
+	private void reportCascadeOrphanForEnd(
+		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
+		AntlrAssociation association,
+		AntlrAssociationEnd fkEnd,
+		AntlrAssociationEnd oppositeEnd,
+		MutableSet<AntlrClass> classesWithDeleteService
+	) {
+		if (!fkEnd.hasForeignKeys()) {
+			return;
+		}
+		if (oppositeEnd.isOwned()) {
+			return;
+		}
+		if (fkEnd.isOwned()) {
+			return;
+		}
+		AntlrClass fkHolderClass = oppositeEnd.getType();
+		if (isTransitivelyOwned(fkHolderClass)) {
+			return;
+		}
+		if (classesWithDeleteService.contains(fkHolderClass)) {
+			return;
+		}
+		AntlrClass fkTargetClass = fkEnd.getType();
+		if (!isTransitivelyOwned(fkTargetClass) && !classesWithDeleteService.contains(fkTargetClass)) {
+			return;
+		}
+		String message = String.format(
+			"Association end '%s.%s' is not owned. "
+			+ "'%s' rows would be orphaned when '%s' is deleted. Consider adding 'owned' to this end.",
+			association.getName(),
+			oppositeEnd.getName(),
+			fkHolderClass.getName(),
+			fkTargetClass.getName()
+		);
+		compilerAnnotationHolder.add("WRN_ORP_CSC", message, oppositeEnd, AnnotationSeverity.WARNING);
+	}
+
+	private MutableSet<AntlrClass> getClassesWithDeleteService() {
+		MutableSet<AntlrClass> result = Sets.mutable.empty();
+		for (AntlrServiceGroup serviceGroup : this.serviceGroups) {
+			for (AntlrUrl url : serviceGroup.getUrls()) {
+				for (AntlrService service : url.getServices()) {
+					if (service.getVerb().getVerb() == Verb.DELETE) {
+						result.add(serviceGroup.getKlass());
+					}
+				}
+			}
+		}
+		return result;
+	}
+
+	private static boolean isTransitivelyOwned(AntlrClass klass) {
+		return findOwner(klass) != null;
+	}
+
+	private static AntlrClass findOwner(AntlrClass klass) {
+		AntlrClass current = klass;
+		Set<AntlrClass> visited = new HashSet<>();
+		while (current != null && visited.add(current)) {
+			for (AntlrAssociationEnd ae : current.getDeclaredAssociationEnds()) {
+				if (ae.getOpposite().isOwned()) {
+					return ae.getType();
+				}
+			}
+			current = current.getSuperClass().orElse(null);
+		}
+		return null;
 	}
 
 	private void reportDuplicateTopLevelNames(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {

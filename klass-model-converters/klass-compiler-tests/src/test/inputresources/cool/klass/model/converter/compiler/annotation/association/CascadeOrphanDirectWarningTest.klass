@@ -1,0 +1,28 @@
+package dummy
+
+class Parent
+{
+    id: String key;
+}
+
+class Child
+{
+    parentId: String key;
+    childId: String key;
+}
+
+association ParentHasChildren
+{
+    parent: Parent[1..1];
+    children: Child[0..*];
+}
+
+service ParentService on Parent
+{
+    /parent/{id: String[1..1]}
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.id == id;
+        }
+}

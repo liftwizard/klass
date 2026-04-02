@@ -16,14 +16,11 @@
 
 package cool.klass.model.converter.compiler.state;
 
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 
-import cool.klass.model.converter.compiler.annotation.AnnotationSeverity;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.criteria.AntlrCriteriaVisitor;
 import cool.klass.model.converter.compiler.state.property.AntlrAssociationEnd;
@@ -301,8 +298,6 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
 			return;
 		}
 
-		this.reportCascadeOrphanWarning(compilerAnnotationHolder);
-
 		if (this.relationship == null) {
 			String message = String.format("Association '%s' has no relationship", this.getName());
 			compilerAnnotationHolder.add("ERR_ASO_REL", message, this);
@@ -332,74 +327,5 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
 
 	public boolean isManyToMany() {
 		return this.getSourceEnd().isToMany() && this.getTargetEnd().isToMany();
-	}
-
-	private void reportCascadeOrphanWarning(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		this.reportCascadeOrphanForEnd(compilerAnnotationHolder, this.getSourceEnd(), this.getTargetEnd());
-		this.reportCascadeOrphanForEnd(compilerAnnotationHolder, this.getTargetEnd(), this.getSourceEnd());
-	}
-
-	private void reportCascadeOrphanForEnd(
-		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
-		AntlrAssociationEnd toManyEnd,
-		AntlrAssociationEnd toOneEnd
-	) {
-		if (!toManyEnd.isToMany() || toManyEnd.isOwned()) {
-			return;
-		}
-		if (!toOneEnd.isToOne()) {
-			return;
-		}
-		AntlrClass toManyType = toManyEnd.getType();
-		if (isTransitivelyOwned(toManyType)) {
-			return;
-		}
-		AntlrClass toOneType = toOneEnd.getType();
-		if (!isTransitivelyOwned(toOneType)) {
-			return;
-		}
-		AntlrClass ownershipRoot = findOwnershipRoot(toOneType);
-		String message = String.format(
-			"Association end '%s.%s' is to-many and not owned, but '%s' is transitively owned by '%s'. "
-			+ "'%s' rows would be orphaned when '%s' is cascade-deleted. Consider adding 'owned' to this end.",
-			this.getName(),
-			toManyEnd.getName(),
-			toOneType.getName(),
-			ownershipRoot.getName(),
-			toManyEnd.getType().getName(),
-			ownershipRoot.getName()
-		);
-		compilerAnnotationHolder.add("WRN_ORP_CSC", message, toManyEnd, AnnotationSeverity.WARNING);
-	}
-
-	private static boolean isTransitivelyOwned(AntlrClass klass) {
-		return findOwner(klass) != null;
-	}
-
-	private static AntlrClass findOwnershipRoot(AntlrClass klass) {
-		Set<AntlrClass> visited = new HashSet<>();
-		AntlrClass current = klass;
-		while (visited.add(current)) {
-			AntlrClass owner = findOwner(current);
-			if (owner == null) {
-				return current;
-			}
-			current = owner;
-		}
-		return current;
-	}
-
-	private static AntlrClass findOwner(AntlrClass klass) {
-		AntlrClass current = klass;
-		Set<AntlrClass> visited = new HashSet<>();
-		while (current != null && visited.add(current)) {
-			for (AntlrAssociationEnd ae : current.getDeclaredAssociationEnds()) {
-				if (ae.getOpposite().isOwned()) {
-					return ae.getType();
-				}
-			}
-			current = current.getSuperClass().orElse(null);
-		}
-		return null;
 	}
 }
