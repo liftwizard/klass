@@ -31,7 +31,7 @@
 						"operator": "==",
 						"sourceExpressionValue": {
 							"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-							"id": 157,
+							"id": 161,
 							"klass": {
 								"name": "ServiceGroup"
 							},
@@ -45,7 +45,7 @@
 						},
 						"targetExpressionValue": {
 							"__typename": "klass.model.meta.domain.ParameterReference",
-							"id": 158,
+							"id": 162,
 							"parameter": {
 								"id": 8,
 								"name": "name"
@@ -66,7 +66,7 @@
 						"operator": "==",
 						"sourceExpressionValue": {
 							"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-							"id": 159,
+							"id": 163,
 							"klass": {
 								"name": "ServiceGroup"
 							},
@@ -80,7 +80,7 @@
 						},
 						"targetExpressionValue": {
 							"__typename": "klass.model.meta.domain.ParameterReference",
-							"id": 160,
+							"id": 164,
 							"parameter": {
 								"id": 8,
 								"name": "name"
@@ -104,6 +104,18 @@
 					"projection": {
 						"name": "ServiceGroupProjection"
 					},
+					"queryCriteria": {
+						"__typename": "klass.model.meta.domain.AllCriteria"
+					},
+					"authorizeCriteria": null,
+					"validateCriteria": null,
+					"conflictCriteria": null,
+					"orderBys": []
+				},
+				{
+					"verb": "DELETE",
+					"serviceMultiplicity": "one",
+					"projection": null,
 					"queryCriteria": {
 						"__typename": "klass.model.meta.domain.AllCriteria"
 					},
