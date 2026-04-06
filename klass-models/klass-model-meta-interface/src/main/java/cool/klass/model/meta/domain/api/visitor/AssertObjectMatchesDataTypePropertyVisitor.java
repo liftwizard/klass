@@ -89,30 +89,34 @@ public class AssertObjectMatchesDataTypePropertyVisitor implements DataTypePrope
 
 	@Override
 	public void visitInstant(PrimitiveProperty primitiveProperty) {
-		throw new UnsupportedOperationException(
-			this.getClass().getSimpleName() + ".visitInstant() not implemented yet"
-		);
+		if (this.object instanceof java.time.Instant) {
+			return;
+		}
+		this.throwError("Instant");
 	}
 
 	@Override
 	public void visitLocalDate(PrimitiveProperty primitiveProperty) {
-		throw new UnsupportedOperationException(
-			this.getClass().getSimpleName() + ".visitLocalDate() not implemented yet"
-		);
+		if (this.object instanceof java.time.LocalDate) {
+			return;
+		}
+		this.throwError("LocalDate");
 	}
 
 	@Override
 	public void visitTemporalInstant(PrimitiveProperty primitiveProperty) {
-		throw new UnsupportedOperationException(
-			this.getClass().getSimpleName() + ".visitTemporalInstant() not implemented yet"
-		);
+		if (this.object instanceof java.time.Instant) {
+			return;
+		}
+		this.throwError("Instant");
 	}
 
 	@Override
 	public void visitTemporalRange(PrimitiveProperty primitiveProperty) {
-		throw new UnsupportedOperationException(
-			this.getClass().getSimpleName() + ".visitTemporalRange() not implemented yet"
-		);
+		if (this.object instanceof java.time.Instant) {
+			return;
+		}
+		this.throwError("Instant");
 	}
 
 	private void throwError(String expected) {

@@ -22,11 +22,13 @@ import javax.annotation.Nonnull;
 
 import com.gs.fw.common.mithra.attribute.Attribute;
 import com.gs.fw.common.mithra.attribute.BooleanAttribute;
+import com.gs.fw.common.mithra.attribute.DateAttribute;
 import com.gs.fw.common.mithra.attribute.DoubleAttribute;
 import com.gs.fw.common.mithra.attribute.FloatAttribute;
 import com.gs.fw.common.mithra.attribute.IntegerAttribute;
 import com.gs.fw.common.mithra.attribute.LongAttribute;
 import com.gs.fw.common.mithra.attribute.StringAttribute;
+import com.gs.fw.common.mithra.attribute.TimestampAttribute;
 import com.gs.fw.common.mithra.finder.Operation;
 import cool.klass.model.meta.domain.api.EnumerationLiteral;
 import cool.klass.model.meta.domain.api.property.EnumerationProperty;
@@ -87,29 +89,21 @@ public class OperationVisitor implements DataTypePropertyVisitor {
 
 	@Override
 	public void visitInstant(PrimitiveProperty primitiveProperty) {
-		throw new UnsupportedOperationException(
-			this.getClass().getSimpleName() + ".visitInstant() not implemented yet"
-		);
+		this.result = ((TimestampAttribute<?>) this.attribute).eq((java.sql.Timestamp) this.key);
 	}
 
 	@Override
 	public void visitLocalDate(PrimitiveProperty primitiveProperty) {
-		throw new UnsupportedOperationException(
-			this.getClass().getSimpleName() + ".visitLocalDate() not implemented yet"
-		);
+		this.result = ((DateAttribute<?>) this.attribute).eq((java.sql.Date) this.key);
 	}
 
 	@Override
 	public void visitTemporalInstant(PrimitiveProperty primitiveProperty) {
-		throw new UnsupportedOperationException(
-			this.getClass().getSimpleName() + ".visitTemporalInstant() not implemented yet"
-		);
+		this.result = ((TimestampAttribute<?>) this.attribute).eq((java.sql.Timestamp) this.key);
 	}
 
 	@Override
 	public void visitTemporalRange(PrimitiveProperty primitiveProperty) {
-		throw new UnsupportedOperationException(
-			this.getClass().getSimpleName() + ".visitTemporalRange() not implemented yet"
-		);
+		this.result = ((TimestampAttribute<?>) this.attribute).eq((java.sql.Timestamp) this.key);
 	}
 }
