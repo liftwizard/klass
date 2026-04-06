@@ -16,13 +16,15 @@
 
 package cool.klass.data.store.reladomo;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
 import com.gs.fw.common.mithra.attribute.Attribute;
 import com.gs.fw.common.mithra.attribute.BooleanAttribute;
-import com.gs.fw.common.mithra.attribute.DateAttribute;
 import com.gs.fw.common.mithra.attribute.DoubleAttribute;
 import com.gs.fw.common.mithra.attribute.FloatAttribute;
 import com.gs.fw.common.mithra.attribute.IntegerAttribute;
@@ -89,12 +91,14 @@ public class OperationVisitor implements DataTypePropertyVisitor {
 
 	@Override
 	public void visitInstant(PrimitiveProperty primitiveProperty) {
-		this.result = ((TimestampAttribute<?>) this.attribute).eq((java.sql.Timestamp) this.key);
+		Timestamp timestamp = Timestamp.from((Instant) this.key);
+		this.result = this.attribute.nonPrimitiveEq(timestamp);
 	}
 
 	@Override
 	public void visitLocalDate(PrimitiveProperty primitiveProperty) {
-		this.result = ((DateAttribute<?>) this.attribute).eq((java.sql.Date) this.key);
+		Timestamp timestamp = Timestamp.valueOf(((LocalDate) this.key).atStartOfDay());
+		this.result = this.attribute.nonPrimitiveEq(timestamp);
 	}
 
 	@Override

@@ -32,7 +32,6 @@ import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.GET;
-import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -188,10 +187,7 @@ public class QuestionResourceManual {
 			throw new ClientErrorException(Status.CONFLICT);
 		}
 
-		if (result.size() > 1) {
-			throw new InternalServerErrorException("TODO");
-		}
-		Object persistentInstance = result.get(0);
+		Object persistentInstance = Iterate.getOnly(result);
 
 		String userPrincipalName = principal.getName();
 		Optional<String> userId = Optional.of(userPrincipalName);

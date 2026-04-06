@@ -116,11 +116,7 @@ public class QuestionVoteResource
         }
 
 
-        if (result.size() > 1)
-        {
-            throw new InternalServerErrorException("TODO");
-        }
-        Object persistentInstance = result.get(0);
+        Object persistentInstance = Iterate.getOnly(result);
 
         Instant            transactionInstant = Instant.now(this.clock);
         MutationContext    mutationContext    = new MutationContext(Optional.of(userPrincipalName), transactionInstant, Maps.immutable.empty());
@@ -242,20 +238,19 @@ public class QuestionVoteResource
             return instance;
         });
 
-        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
-        // TODO: Append appropriate ID to the URI
-        // uriBuilder.path(Long.toString(persistentInstance.getId()));
-
-        // Deep fetch if needed: result.deepFetch(QuestionVoteFinder.createdBy());
+        MapIterable<DataTypeProperty, Object> allKeys = creator.resolveAllKeysAfterCreate(klass, resolvedKeys, persistentInstance);
+        QuestionVoteList result = (QuestionVoteList) (List) this.dataStore.findByKeyReturningList(klass, allKeys);
+        result.deepFetch(QuestionVoteFinder.createdBy());
 
         Projection projection = this.domainModel.getProjectionByName("QuestionVoteProjection");
 
         var responseBuilder = new KlassResponseBuilder(
-                persistentInstance,
+                Iterate.getOnly(result),
                 projection,
                 Multiplicity.ONE_TO_ONE,
                 transactionInstant);
 
+        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
         return Response.created(uriBuilder.build()).entity(responseBuilder.build()).build();
     }
 }

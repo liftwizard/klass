@@ -518,7 +518,7 @@ public class ServiceResourceGenerator {
 		Optional<ServiceProjectionDispatch> projectionDispatch = service.getProjectionDispatch();
 		String producesAnnotation = projectionDispatch.isPresent() ? "    @Produces(MediaType.APPLICATION_JSON)\n" : "";
 
-		String responseCode = getResponseCode(projectionDispatch, serviceGroup);
+		String responseCode = getResponseCode(projectionDispatch, serviceGroup, klassName);
 
 		String validationAndCreationCode = getValidationAndCreationCode(
 			serviceMultiplicity,
@@ -560,7 +560,8 @@ public class ServiceResourceGenerator {
 
 	private static String getResponseCode(
 		Optional<ServiceProjectionDispatch> projectionDispatch,
-		ServiceGroup serviceGroup
+		ServiceGroup serviceGroup,
+		String klassName
 	) {
 		if (projectionDispatch.isEmpty()) {
 			return "        return Response.noContent().build();\n";
@@ -575,32 +576,29 @@ public class ServiceResourceGenerator {
 			projection
 		);
 		ImmutableList<String> deepFetchStrings = projectionReladomoNode.getDeepFetchStrings();
-		String deepFetchSourceCode = deepFetchStrings.isEmpty()
-			? ""
-			: deepFetchStrings
-				.collect((each) -> "        // Deep fetch if needed: result.deepFetch(" + each + ");\n")
-				.makeString("");
+		String deepFetchSourceCode = deepFetchStrings
+			.collect((each) -> "        result.deepFetch(" + each + ");\n")
+			.makeString("");
 
+		// @formatter:off
 		return (
 			""
-			+ "        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();\n"
-			+ "        // TODO: Append appropriate ID to the URI\n"
-			+ "        // uriBuilder.path(Long.toString(persistentInstance.getId()));\n"
-			+ "\n"
+			+ "        MapIterable<DataTypeProperty, Object> allKeys = creator.resolveAllKeysAfterCreate(klass, resolvedKeys, persistentInstance);\n"
+			+ "        " + klassName + "List result = (" + klassName + "List) (List) this.dataStore.findByKeyReturningList(klass, allKeys);\n"
 			+ deepFetchSourceCode
 			+ "\n"
-			+ "        Projection projection = this.domainModel.getProjectionByName(\""
-			+ projectionName
-			+ "\");\n"
+			+ "        Projection projection = this.domainModel.getProjectionByName(\"" + projectionName + "\");\n"
 			+ "\n"
 			+ "        var responseBuilder = new KlassResponseBuilder(\n"
-			+ "                persistentInstance,\n"
+			+ "                Iterate.getOnly(result),\n"
 			+ "                projection,\n"
 			+ "                Multiplicity.ONE_TO_ONE,\n"
 			+ "                transactionInstant);\n"
 			+ "\n"
+			+ "        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();\n"
 			+ "        return Response.created(uriBuilder.build()).entity(responseBuilder.build()).build();\n"
 		);
+		// @formatter:on
 	}
 
 	private static String getErrorListInitialization() {
@@ -1106,11 +1104,7 @@ public class ServiceResourceGenerator {
 				+ validatePredicateSourceCode
 				+ conflictPredicateSourceCode
 				+ "\n"
-				+ "        if (result.size() > 1)\n"
-				+ "        {\n"
-				+ "            throw new InternalServerErrorException(\"TODO\");\n"
-				+ "        }\n"
-				+ "        Object persistentInstance = result.get(0);\n"
+				+ "        Object persistentInstance = Iterate.getOnly(result);\n"
 				+ "\n"
 				+ "        Instant            transactionInstant = Instant.now(this.clock);\n"
 				+ "        MutationContext    mutationContext    = new MutationContext(" + (needsSecurityContext ? "Optional.of(userPrincipalName)" : "Optional.empty()") + ", transactionInstant, Maps.immutable.empty());\n"
