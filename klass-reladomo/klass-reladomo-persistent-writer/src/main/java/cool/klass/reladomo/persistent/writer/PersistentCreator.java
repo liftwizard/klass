@@ -70,6 +70,39 @@ public class PersistentCreator extends PersistentSynchronizer {
 		return keys.asUnmodifiable();
 	}
 
+	public MapIterable<DataTypeProperty, Object> resolveAllKeysAfterCreate(
+		@Nonnull Klass klass,
+		@Nonnull MapIterable<DataTypeProperty, Object> resolvedKeys,
+		@Nonnull Object persistentInstance
+	) {
+		MutableMap<DataTypeProperty, Object> allKeys = MapAdapter.adapt(new LinkedHashMap<>());
+
+		for (DataTypeProperty keyProperty : klass.getKeyProperties()) {
+			Object keyValue = this.resolveKeyValue(keyProperty, resolvedKeys, persistentInstance);
+			Objects.requireNonNull(keyValue, () -> "Expected non-null key for property: " + keyProperty);
+			allKeys.put(keyProperty, keyValue);
+		}
+
+		return allKeys.asUnmodifiable();
+	}
+
+	private Object resolveKeyValue(
+		@Nonnull DataTypeProperty keyProperty,
+		@Nonnull MapIterable<DataTypeProperty, Object> resolvedKeys,
+		@Nonnull Object persistentInstance
+	) {
+		if (resolvedKeys.containsKey(keyProperty)) {
+			return resolvedKeys.get(keyProperty);
+		}
+		if (keyProperty.isCreatedBy()) {
+			return this.mutationContext.getUserId().orElseThrow(() -> this.expectAuditProperty(keyProperty));
+		}
+		if (keyProperty.isID()) {
+			return this.dataStore.getDataTypeProperty(persistentInstance, keyProperty);
+		}
+		throw new AssertionError("Unhandled key property: " + keyProperty);
+	}
+
 	@Override
 	protected boolean shouldWriteKey() {
 		return true;
@@ -131,11 +164,8 @@ public class PersistentCreator extends PersistentSynchronizer {
 		});
 	}
 
-	private AssertionError expectAuditProperty(PrimitiveProperty primitiveProperty) {
-		String message = String.format(
-			"Mutation context has no userId, but found an audit property: '%s'",
-			primitiveProperty
-		);
+	private AssertionError expectAuditProperty(DataTypeProperty property) {
+		String message = String.format("Mutation context has no userId, but found an audit property: '%s'", property);
 		return new AssertionError(message);
 	}
 

@@ -146,11 +146,7 @@ public class AnswerResource
             throw new ForbiddenException();
         }
 
-        if (result.size() > 1)
-        {
-            throw new InternalServerErrorException("TODO");
-        }
-        Object persistentInstance = result.get(0);
+        Object persistentInstance = Iterate.getOnly(result);
 
         Instant            transactionInstant = Instant.now(this.clock);
         MutationContext    mutationContext    = new MutationContext(Optional.of(userPrincipalName), transactionInstant, Maps.immutable.empty());
