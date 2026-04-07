@@ -21,6 +21,15 @@ import javax.annotation.Nonnull;
 import cool.klass.model.meta.domain.api.Klass;
 
 public interface LensRegistry {
+	default boolean hasClassLens(@Nonnull Klass klass) {
+		try {
+			this.getClassLens(klass);
+			return true;
+		} catch (IllegalStateException e) {
+			return false;
+		}
+	}
+
 	@Nonnull
 	ClassLens<?> getClassLens(@Nonnull Klass klass);
 }

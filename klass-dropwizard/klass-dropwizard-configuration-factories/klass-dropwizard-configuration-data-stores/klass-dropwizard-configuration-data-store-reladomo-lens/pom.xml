@@ -43,12 +43,6 @@
 
         <dependency>
             <groupId>cool.klass</groupId>
-            <artifactId>klass-data-store-reladomo</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cool.klass</groupId>
             <artifactId>klass-data-store-reladomo-lens</artifactId>
             <version>${project.version}</version>
         </dependency>

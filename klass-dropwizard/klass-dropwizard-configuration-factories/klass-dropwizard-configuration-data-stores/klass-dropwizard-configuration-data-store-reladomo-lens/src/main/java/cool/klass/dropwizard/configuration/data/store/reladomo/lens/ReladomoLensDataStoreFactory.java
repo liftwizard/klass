@@ -27,7 +27,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.service.AutoService;
 import cool.klass.data.store.DataStore;
-import cool.klass.data.store.reladomo.ReladomoDataStore;
 import cool.klass.data.store.reladomo.lens.ReladomoLensDataStore;
 import cool.klass.dropwizard.configuration.data.store.DataStoreFactory;
 import cool.klass.model.lens.LensRegistry;
@@ -85,10 +84,9 @@ public class ReladomoLensDataStoreFactory implements DataStoreFactory {
 		}
 
 		Supplier<UUID> uuidSupplier = this.uuidFactory.createUUIDSupplier();
-		ReladomoDataStore delegate = new ReladomoDataStore(uuidSupplier, this.retryCount);
 		LensRegistry lensRegistry = this.lensRegistryFactory.createLensRegistry(domainModel);
 
-		this.dataStore = new ReladomoLensDataStore(delegate, lensRegistry);
+		this.dataStore = new ReladomoLensDataStore(lensRegistry, uuidSupplier, this.retryCount);
 		return this.dataStore;
 	}
 }

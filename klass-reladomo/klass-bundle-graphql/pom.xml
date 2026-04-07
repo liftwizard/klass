@@ -45,6 +45,11 @@
 
         <dependency>
             <groupId>io.liftwizard</groupId>
+            <artifactId>liftwizard-config-uuid</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.liftwizard</groupId>
             <artifactId>liftwizard-graphql-scalar-temporal</artifactId>
         </dependency>
 
@@ -96,12 +101,6 @@
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-data-store-reladomo</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cool.klass</groupId>
-            <artifactId>klass-data-store-reladomo-lens</artifactId>
             <version>${project.version}</version>
         </dependency>
 

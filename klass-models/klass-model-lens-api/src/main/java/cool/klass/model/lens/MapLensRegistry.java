@@ -33,6 +33,12 @@ public class MapLensRegistry implements LensRegistry {
 	}
 
 	@Override
+	public boolean hasClassLens(@Nonnull Klass klass) {
+		Objects.requireNonNull(klass);
+		return this.lensesByKlass.containsKey(klass);
+	}
+
+	@Override
 	@Nonnull
 	public ClassLens<?> getClassLens(@Nonnull Klass klass) {
 		Objects.requireNonNull(klass);

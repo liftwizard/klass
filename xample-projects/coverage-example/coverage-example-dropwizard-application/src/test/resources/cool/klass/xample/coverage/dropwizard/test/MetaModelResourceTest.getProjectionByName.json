@@ -1,0 +1,85 @@
+{
+	"name": "UserProjection",
+	"packageName": "cool.klass.xample.coverage",
+	"rootProjection": {
+		"id": 31,
+		"name": "UserProjection",
+		"children": [
+			{
+				"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+				"id": 216,
+				"name": "userId",
+				"children": [],
+				"dataTypeProperty": {
+					"owningClassifier": {
+						"name": "User"
+					},
+					"name": "userId"
+				}
+			},
+			{
+				"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+				"id": 217,
+				"name": "systemFrom",
+				"children": [],
+				"dataTypeProperty": {
+					"owningClassifier": {
+						"name": "User"
+					},
+					"name": "systemFrom"
+				}
+			},
+			{
+				"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+				"id": 218,
+				"name": "systemTo",
+				"children": [],
+				"dataTypeProperty": {
+					"owningClassifier": {
+						"name": "User"
+					},
+					"name": "systemTo"
+				}
+			},
+			{
+				"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+				"id": 219,
+				"name": "firstName",
+				"children": [],
+				"dataTypeProperty": {
+					"owningClassifier": {
+						"name": "User"
+					},
+					"name": "firstName"
+				}
+			},
+			{
+				"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+				"id": 220,
+				"name": "lastName",
+				"children": [],
+				"dataTypeProperty": {
+					"owningClassifier": {
+						"name": "User"
+					},
+					"name": "lastName"
+				}
+			},
+			{
+				"__typename": "klass.model.meta.domain.ProjectionDataTypeProperty",
+				"id": 221,
+				"name": "email",
+				"children": [],
+				"dataTypeProperty": {
+					"owningClassifier": {
+						"name": "User"
+					},
+					"name": "email"
+				}
+			}
+		],
+		"classifier": {
+			"name": "User"
+		}
+	}
+}
