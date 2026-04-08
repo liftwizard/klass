@@ -26,8 +26,16 @@ import cool.klass.model.lens.ClassLens;
  */
 public interface ReladomoClassLens<T> extends ClassLens<T> {
 	@Nonnull
+	default Class<T> getJavaClass() {
+		throw new UnsupportedOperationException("getJavaClass not yet generated for " + this.getKlass().getName());
+	}
+
+	@Nonnull
 	T instantiate();
 
 	@Nonnull
 	RelatedFinder<T> getRelatedFinder();
+
+	default void generateAndSetId(@Nonnull T instance) {
+	}
 }
