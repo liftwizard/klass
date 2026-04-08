@@ -181,6 +181,8 @@ public class ReladomoLensGenerator {
 			return;
 		}
 
+		ImmutableList<Klass> allClasses = this.domainModel.getClasses();
+
 		// TODO 2026-02-18: Should use the DomainModel's root package instead
 		// Use the first class's package as the factory package
 		String packageName = concreteClasses.getFirst().getPackageName() + ".lens.reladomo";
@@ -191,7 +193,7 @@ public class ReladomoLensGenerator {
 		String fileName = "ReladomoLensFactory.java";
 		Path outputPath = parentPath.resolve(fileName);
 
-		String sourceCode = this.getFactorySourceCode(concreteClasses, packageName);
+		String sourceCode = this.getFactorySourceCode(concreteClasses, allClasses, packageName);
 		this.printStringToFile(outputPath, sourceCode);
 	}
 
@@ -237,7 +239,7 @@ public class ReladomoLensGenerator {
 				+ "        implements LensRegistryFactory\n"
 				+ "{\n"
 				+ "    @Override\n"
-				+ "    public LensRegistry createLensRegistry(DomainModel domainModel)\n"
+				+ "    public LensRegistry createLensRegistry(@javax.annotation.Nonnull DomainModel domainModel)\n"
 				+ "    {\n"
 				+ "        return new ReladomoLensFactory(domainModel);\n"
 				+ "    }\n"
@@ -280,13 +282,11 @@ public class ReladomoLensGenerator {
 		ImmutableList<PrimitiveProperty> primitiveProperties = klass
 			.getDataTypeProperties()
 			.selectInstancesOf(PrimitiveProperty.class)
-			.reject(Property::isDerived)
 			.reject((p) -> p.getType().isTemporalRange());
 
 		ImmutableList<EnumerationProperty> enumerationProperties = klass
 			.getDataTypeProperties()
-			.selectInstancesOf(EnumerationProperty.class)
-			.reject(Property::isDerived);
+			.selectInstancesOf(EnumerationProperty.class);
 
 		ImmutableList<AssociationEnd> declaredAssociationEnds = klass.getDeclaredAssociationEnds();
 		ImmutableList<InheritedProperty<AssociationEnd>> inheritedAssociationEnds = this.getInheritedAssociationEnds(
@@ -468,7 +468,6 @@ public class ReladomoLensGenerator {
 		// Public typed lens fields - declared data type properties
 		String declaredDataTypeFields = klass
 			.getDeclaredDataTypeProperties()
-			.reject(Property::isDerived)
 			.reject(this::isTemporalRange)
 			.collect(
 				(property) ->
@@ -577,7 +576,6 @@ public class ReladomoLensGenerator {
 
 		ImmutableList<DataTypeProperty> declaredDataTypeProperties = klass
 			.getDeclaredDataTypeProperties()
-			.reject(Property::isDerived)
 			.reject(this::isTemporalRange);
 		ImmutableList<AssociationEnd> declaredAssociationEnds = klass.getDeclaredAssociationEnds();
 
@@ -656,7 +654,6 @@ public class ReladomoLensGenerator {
 		ImmutableList<PrimitiveProperty> declaredPrimitives = klass
 			.getDeclaredDataTypeProperties()
 			.selectInstancesOf(PrimitiveProperty.class)
-			.reject(Property::isDerived)
 			.reject((p) -> p.getType().isTemporalRange());
 		MutableList<String> primitiveMapEntries = Lists.mutable.empty();
 		primitiveMapEntries.addAllIterable(declaredPrimitives.collect((property) -> getMapEntry(property.getName())));
@@ -675,8 +672,7 @@ public class ReladomoLensGenerator {
 		// Initialize enumerationLenses map
 		ImmutableList<EnumerationProperty> declaredEnumerations = klass
 			.getDeclaredDataTypeProperties()
-			.selectInstancesOf(EnumerationProperty.class)
-			.reject(Property::isDerived);
+			.selectInstancesOf(EnumerationProperty.class);
 		MutableList<String> enumerationMapEntries = Lists.mutable.empty();
 		enumerationMapEntries.addAllIterable(
 			declaredEnumerations.collect((property) -> getMapEntry(property.getName()))
@@ -838,7 +834,9 @@ public class ReladomoLensGenerator {
 				+ "        return " + className + "Finder.getFinderInstance();\n"
 				+ "    }\n"
 				+ "\n"
-				+ this.getInstantiateMethod(klass);
+				+ this.getInstantiateMethod(klass)
+			+ this.getGetJavaClassMethod(klass)
+			+ this.getGenerateAndSetIdMethod(klass);
 		// @formatter:on
 
 		return result;
@@ -867,6 +865,81 @@ public class ReladomoLensGenerator {
 				+ "    public " + className + " instantiate()\n"
 				+ "    {\n"
 				+ "        return new " + className + "();\n"
+				+ "    }\n"
+				+ "\n";
+		// @formatter:on
+	}
+
+	private String getGetJavaClassMethod(@Nonnull Klass klass) {
+		String className = klass.getName();
+
+		// @formatter:off
+		return ""
+				+ "    @Override\n"
+				+ "    @Nonnull\n"
+				+ "    public Class<" + className + "> getJavaClass()\n"
+				+ "    {\n"
+				+ "        return " + className + ".class;\n"
+				+ "    }\n"
+				+ "\n";
+		// @formatter:on
+	}
+
+	private String getGenerateAndSetIdMethod(@Nonnull Klass klass) {
+		String className = klass.getName();
+
+		ImmutableList<DataTypeProperty> idProperties = klass.getDataTypeProperties().select(DataTypeProperty::isID);
+		if (idProperties.isEmpty()) {
+			// @formatter:off
+			return ""
+					+ "    @Override\n"
+					+ "    public void generateAndSetId(@Nonnull " + className + " instance)\n"
+					+ "    {\n"
+					+ "    }\n"
+					+ "\n";
+			// @formatter:on
+		}
+
+		PrimitiveProperty idProperty = (PrimitiveProperty) idProperties.getOnly();
+
+		// Non-numeric IDs (e.g., String) are handled by the data store via UUID supplier
+		if (!idProperty.getType().isNumeric()) {
+			// @formatter:off
+			return ""
+					+ "    @Override\n"
+					+ "    public void generateAndSetId(@Nonnull " + className + " instance)\n"
+					+ "    {\n"
+					+ "    }\n"
+					+ "\n";
+			// @formatter:on
+		}
+
+		String idPropNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, idProperty.getName());
+
+		// Navigate to the owning class if the ID is inherited
+		Klass owningKlass = (Klass) idProperty.getOwningClassifier();
+		String navigation = "instance";
+		if (!owningKlass.equals(klass)) {
+			// Build navigation chain to the owning superclass
+			Klass current = klass;
+			while (!current.equals(owningKlass)) {
+				Optional<Klass> superClass = current.getSuperClass();
+				if (superClass.isEmpty()) {
+					throw new AssertionError(
+						"Could not find owning class " + owningKlass.getName() + " in superclass chain of " + className
+					);
+				}
+				navigation = navigation + ".get" + superClass.get().getName() + "SuperClass()";
+				current = superClass.get();
+			}
+		}
+
+		// @formatter:off
+		return ""
+				+ "    @Override\n"
+				+ "    public void generateAndSetId(@Nonnull " + className + " instance)\n"
+				+ "    {\n"
+				+ "        " + navigation + ".generateAndSet" + idPropNameUpper + "();\n"
 				+ "    }\n"
 				+ "\n";
 		// @formatter:on
@@ -913,7 +986,6 @@ public class ReladomoLensGenerator {
 		// Inner classes for declared data type properties
 		String declaredDataTypeLensClasses = klass
 			.getDeclaredDataTypeProperties()
-			.reject(Property::isDerived)
 			.reject(this::isTemporalRange)
 			.collect((property) -> this.getDataTypeLensClass(klass, property))
 			.makeString("");
@@ -993,10 +1065,15 @@ public class ReladomoLensGenerator {
 		String getterName = (isBoolean ? "is" : "get") + propNameUpper;
 		String setterName = "set" + propNameUpper;
 		boolean needsConversion = this.needsTypeConversion(property.getType());
-		boolean needsNullCheck = property.isOptional() && this.hasUnboxedMethods(property.getType());
+		// Derived properties don't have Reladomo-generated isXxxNull() methods
+		boolean needsNullCheck =
+			!property.isDerived() && property.isOptional() && this.hasUnboxedMethods(property.getType());
 
 		String getBody;
-		if (needsConversion) {
+		if (property.isDerived() && needsConversion) {
+			// Derived properties with type conversion: getter returns the native type directly
+			getBody = "            return domainObject." + getterName + "();\n";
+		} else if (needsConversion) {
 			getBody = this.getConversionGetterBody(property, getterName);
 		} else if (needsNullCheck) {
 			getBody =
@@ -1014,11 +1091,37 @@ public class ReladomoLensGenerator {
 			getBody = "            return domainObject." + getterName + "();\n";
 		}
 
-		String setBody = needsConversion
-			? this.getConversionSetterBody(property, setterName)
-			: "            domainObject." + setterName + "(value);\n";
+		String setBody;
+		if (property.isDerived()) {
+			setBody =
+				"            throw new UnsupportedOperationException(\"Cannot set derived property: "
+				+ propName
+				+ "\");\n";
+		} else if (needsConversion) {
+			setBody = this.getConversionSetterBody(property, setterName);
+		} else {
+			setBody = "            domainObject." + setterName + "(value);\n";
+		}
 
-		String unboxed = this.hasUnboxedMethods(property.getType()) ? this.getUnboxedMethods(klass, property) : "";
+		String unboxed = this.hasUnboxedMethods(property.getType())
+			? (property.isDerived()
+					? this.getDerivedUnboxedMethods(klass, property)
+					: this.getUnboxedMethods(klass, property))
+			: "";
+
+		String getAttributeMethod = property.isDerived()
+			? ""
+			: ""
+			+ "\n"
+			+ "        @Nonnull\n"
+			+ "        public Attribute getAttribute()\n"
+			+ "        {\n"
+			+ "            return "
+			+ className
+			+ "Finder."
+			+ propName
+			+ "();\n"
+			+ "        }\n";
 
 		// @formatter:off
 		// language=JAVA
@@ -1065,12 +1168,7 @@ public class ReladomoLensGenerator {
 				+ "        {\n"
 				+ "            return this.property;\n"
 				+ "        }\n"
-				+ "\n"
-				+ "        @Nonnull\n"
-				+ "        public Attribute getAttribute()\n"
-				+ "        {\n"
-				+ "            return " + className + "Finder." + propName + "();\n"
-				+ "        }\n"
+				+ getAttributeMethod
 				+ "    }\n"
 				+ "\n";
 		// @formatter:on
@@ -1167,6 +1265,31 @@ public class ReladomoLensGenerator {
 				+ "        public void set" + methodSuffix + "(@Nonnull " + className + " domainObject, " + primitiveType + " value)\n"
 				+ "        {\n"
 				+ "            domainObject." + setterName + "(value);\n"
+				+ "        }\n";
+		// @formatter:on
+	}
+
+	private String getDerivedUnboxedMethods(@Nonnull Klass klass, @Nonnull PrimitiveProperty property) {
+		String className = klass.getName();
+		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, property.getName());
+		boolean isBoolean = property.getType() == PrimitiveType.BOOLEAN;
+		String getterName = (isBoolean ? "is" : "get") + propNameUpper;
+		String primitiveType = this.getPrimitiveTypeName(property.getType());
+		String methodSuffix = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, primitiveType);
+
+		// @formatter:off
+		return ""
+				+ "\n"
+				+ "        @Override\n"
+				+ "        public " + primitiveType + " get" + methodSuffix + "(@Nonnull " + className + " domainObject)\n"
+				+ "        {\n"
+				+ "            return domainObject." + getterName + "();\n"
+				+ "        }\n"
+				+ "\n"
+				+ "        @Override\n"
+				+ "        public void set" + methodSuffix + "(@Nonnull " + className + " domainObject, " + primitiveType + " value)\n"
+				+ "        {\n"
+				+ "            throw new UnsupportedOperationException(\"Cannot set derived property: " + property.getName() + "\");\n"
 				+ "        }\n";
 		// @formatter:on
 	}
@@ -1756,7 +1879,11 @@ public class ReladomoLensGenerator {
 		// @formatter:on
 	}
 
-	private String getFactorySourceCode(@Nonnull ImmutableList<Klass> concreteClasses, String packageName) {
+	private String getFactorySourceCode(
+		@Nonnull ImmutableList<Klass> concreteClasses,
+		@Nonnull ImmutableList<Klass> allClasses,
+		String packageName
+	) {
 		// Fields for each lens
 		String lensFields = concreteClasses
 			.collect(
@@ -1796,6 +1923,38 @@ public class ReladomoLensGenerator {
 			"        this.lensesByKlass = Maps.immutable.<Klass, ClassLens<?>>empty()\n" + mapEntries.makeString("");
 		lensesByKlassMap = lensesByKlassMap.substring(0, lensesByKlassMap.length() - 1) + ";\n";
 
+		// Map entries for klassByJavaClass (reverse lookup) — use FQN to avoid name conflicts
+		MutableList<String> klassByJavaClassEntries = concreteClasses
+			.collect(
+				(klass) ->
+					"                .newWithKeyValue("
+					+ klass.getFullyQualifiedName()
+					+ ".class, domainModel.getClassByName(\""
+					+ klass.getName()
+					+ "\"))\n"
+			)
+			.toList();
+		String klassByJavaClassMap =
+			"        this.klassByJavaClass = Maps.immutable.<Class<?>, Klass>empty()\n"
+			+ klassByJavaClassEntries.makeString("");
+		klassByJavaClassMap = klassByJavaClassMap.substring(0, klassByJavaClassMap.length() - 1) + ";\n";
+
+		// Map entries for relatedFindersByKlass (ALL classes including abstract) — use FQN to avoid name conflicts
+		MutableList<String> finderEntries = allClasses
+			.collect(
+				(klass) ->
+					"                .newWithKeyValue(domainModel.getClassByName(\""
+					+ klass.getName()
+					+ "\"), "
+					+ klass.getFullyQualifiedName()
+					+ "Finder.getFinderInstance())\n"
+			)
+			.toList();
+		String relatedFindersByKlassMap =
+			"        this.relatedFindersByKlass = Maps.immutable.<Klass, com.gs.fw.common.mithra.finder.RelatedFinder<?>>empty()\n"
+			+ finderEntries.makeString("");
+		relatedFindersByKlassMap = relatedFindersByKlassMap.substring(0, relatedFindersByKlassMap.length() - 1) + ";\n";
+
 		// Getter methods for each lens
 		String getterMethods = concreteClasses
 			.collect((klass) -> {
@@ -1828,7 +1987,7 @@ public class ReladomoLensGenerator {
 				+ "import javax.annotation.Nonnull;\n"
 				+ "\n"
 				+ "import cool.klass.model.lens.ClassLens;\n"
-				+ "import cool.klass.model.lens.LensRegistry;\n"
+				+ "import cool.klass.model.lens.reladomo.ReladomoLensRegistry;\n"
 				+ "import cool.klass.model.meta.domain.api.DomainModel;\n"
 				+ "import cool.klass.model.meta.domain.api.Klass;\n"
 				+ "\n"
@@ -1841,20 +2000,32 @@ public class ReladomoLensGenerator {
 				+ " * <p>Generated by {@link " + this.getClass().getCanonicalName() + "}\n"
 				+ " */\n"
 				+ "public class ReladomoLensFactory\n"
-				+ "        implements LensRegistry\n"
+				+ "        implements ReladomoLensRegistry\n"
 				+ "{\n"
 				+ lensFields
 				+ "\n"
 				+ "    private final ImmutableMap<Klass, ClassLens<?>> lensesByKlass;\n"
+				+ "    private final ImmutableMap<Class<?>, Klass> klassByJavaClass;\n"
+				+ "    private final ImmutableMap<Klass, com.gs.fw.common.mithra.finder.RelatedFinder<?>> relatedFindersByKlass;\n"
 				+ "\n"
 				+ "    public ReladomoLensFactory(@Nonnull DomainModel domainModel)\n"
 				+ "    {\n"
 				+ lensFieldInits
 				+ "\n"
 				+ lensesByKlassMap
+				+ "\n"
+				+ klassByJavaClassMap
+				+ "\n"
+				+ relatedFindersByKlassMap
 				+ "    }\n"
 				+ "\n"
 				+ getterMethods
+				+ "    @Override\n"
+				+ "    public boolean hasClassLens(@Nonnull Klass klass)\n"
+				+ "    {\n"
+				+ "        return this.lensesByKlass.containsKey(klass);\n"
+				+ "    }\n"
+				+ "\n"
 				+ "    @Override\n"
 				+ "    @Nonnull\n"
 				+ "    public ClassLens<?> getClassLens(@Nonnull Klass klass)\n"
@@ -1866,6 +2037,32 @@ public class ReladomoLensGenerator {
 				+ "            throw new IllegalStateException(\"No ClassLens registered for Klass: \" + klass.getName());\n"
 				+ "        }\n"
 				+ "        return lens;\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    @Nonnull\n"
+				+ "    public Klass getKlassForJavaClass(@Nonnull Class<?> javaClass)\n"
+				+ "    {\n"
+				+ "        Objects.requireNonNull(javaClass);\n"
+				+ "        Klass klass = this.klassByJavaClass.get(javaClass);\n"
+				+ "        if (klass == null)\n"
+				+ "        {\n"
+				+ "            throw new IllegalStateException(\"No Klass registered for Java class: \" + javaClass.getName());\n"
+				+ "        }\n"
+				+ "        return klass;\n"
+				+ "    }\n"
+				+ "\n"
+				+ "    @Override\n"
+				+ "    @Nonnull\n"
+				+ "    public com.gs.fw.common.mithra.finder.RelatedFinder<?> getRelatedFinderForKlass(@Nonnull Klass klass)\n"
+				+ "    {\n"
+				+ "        Objects.requireNonNull(klass);\n"
+				+ "        com.gs.fw.common.mithra.finder.RelatedFinder<?> finder = this.relatedFindersByKlass.get(klass);\n"
+				+ "        if (finder == null)\n"
+				+ "        {\n"
+				+ "            throw new IllegalStateException(\"No RelatedFinder registered for Klass: \" + klass.getName());\n"
+				+ "        }\n"
+				+ "        return finder;\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Nonnull\n"
