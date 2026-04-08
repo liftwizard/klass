@@ -58,6 +58,12 @@
             <artifactId>klass-model-meta-interface</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-model-reladomo-lens-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!--endregion-->
 
         <!--region Liftwizard compile dependencies -->

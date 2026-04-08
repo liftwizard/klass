@@ -31,6 +31,7 @@ import cool.klass.data.store.reladomo.lens.ReladomoLensDataStore;
 import cool.klass.dropwizard.configuration.data.store.DataStoreFactory;
 import cool.klass.model.lens.LensRegistry;
 import cool.klass.model.lens.LensRegistryFactory;
+import cool.klass.model.lens.reladomo.ReladomoLensRegistry;
 import cool.klass.model.meta.domain.api.DomainModel;
 import io.liftwizard.dropwizard.configuration.uuid.UUIDSupplierFactory;
 import io.liftwizard.dropwizard.configuration.uuid.seed.SeedUUIDSupplierFactory;
@@ -86,7 +87,7 @@ public class ReladomoLensDataStoreFactory implements DataStoreFactory {
 		Supplier<UUID> uuidSupplier = this.uuidFactory.createUUIDSupplier();
 		LensRegistry lensRegistry = this.lensRegistryFactory.createLensRegistry(domainModel);
 
-		this.dataStore = new ReladomoLensDataStore(lensRegistry, uuidSupplier, this.retryCount);
+		this.dataStore = new ReladomoLensDataStore((ReladomoLensRegistry) lensRegistry, uuidSupplier, this.retryCount);
 		return this.dataStore;
 	}
 }

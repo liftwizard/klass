@@ -14,27 +14,19 @@
  * limitations under the License.
  */
 
-package cool.klass.model.lens;
+package cool.klass.model.lens.reladomo;
 
 import javax.annotation.Nonnull;
 
+import com.gs.fw.common.mithra.finder.RelatedFinder;
+import cool.klass.model.lens.LensRegistry;
 import cool.klass.model.meta.domain.api.Klass;
 
-public interface LensRegistry {
-	default boolean hasClassLens(@Nonnull Klass klass) {
-		try {
-			this.getClassLens(klass);
-			return true;
-		} catch (IllegalStateException e) {
-			return false;
-		}
-	}
-
+/**
+ * A LensRegistry that also provides Reladomo-specific operations,
+ * such as finder lookup for any Klass (including abstract classes).
+ */
+public interface ReladomoLensRegistry extends LensRegistry {
 	@Nonnull
-	ClassLens<?> getClassLens(@Nonnull Klass klass);
-
-	@Nonnull
-	default Klass getKlassForJavaClass(@Nonnull Class<?> javaClass) {
-		throw new UnsupportedOperationException("getKlassForJavaClass not implemented");
-	}
+	RelatedFinder<?> getRelatedFinderForKlass(@Nonnull Klass klass);
 }

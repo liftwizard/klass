@@ -54,9 +54,9 @@ import cool.klass.data.store.reladomo.OperationVisitor;
 import cool.klass.data.store.reladomo.TransactionAdapter;
 import cool.klass.model.lens.ClassLens;
 import cool.klass.model.lens.DataTypeLens;
-import cool.klass.model.lens.LensRegistry;
 import cool.klass.model.lens.reladomo.ReladomoAssociationLens;
 import cool.klass.model.lens.reladomo.ReladomoClassLens;
+import cool.klass.model.lens.reladomo.ReladomoLensRegistry;
 import cool.klass.model.meta.domain.api.Classifier;
 import cool.klass.model.meta.domain.api.Enumeration;
 import cool.klass.model.meta.domain.api.EnumerationLiteral;
@@ -96,7 +96,7 @@ public class ReladomoLensDataStore implements DataStore {
 		CaseFormat.LOWER_CAMEL
 	);
 
-	private final LensRegistry lensRegistry;
+	private final ReladomoLensRegistry lensRegistry;
 	private final Supplier<UUID> uuidSupplier;
 	private final int retryCount;
 
@@ -108,7 +108,7 @@ public class ReladomoLensDataStore implements DataStore {
 	private final MutableOrderedMap<Property, Method> memoizedGetters = OrderedMapAdapter.adapt(new LinkedHashMap<>());
 
 	public ReladomoLensDataStore(
-		@Nonnull LensRegistry lensRegistry,
+		@Nonnull ReladomoLensRegistry lensRegistry,
 		@Nonnull Supplier<UUID> uuidSupplier,
 		int retryCount
 	) {
