@@ -91,4 +91,33 @@ public abstract class AbstractResourceTestCase extends AbstractDropwizardAppTest
 		String jsonResponse = response.readEntity(String.class);
 		assertEquals("", jsonResponse);
 	}
+
+	protected void assertUrlDeletes(@Nonnull String testName, @Nonnull String url) {
+		Class<?> klass = this.getClass();
+		String clientName = klass.getPackage().getName() + '.' + klass.getSimpleName() + '.' + testName;
+		Client client = this.getClient(clientName);
+
+		Response response = client
+			.target("http://localhost:{port}/api/" + url)
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.header("Authorization", "Impersonation test user 1")
+			.delete();
+
+		assertEquals(Status.NO_CONTENT.getStatusCode(), response.getStatus());
+	}
+
+	protected void assertUrlReturnsGone(@Nonnull String testName, @Nonnull String url) {
+		Class<?> klass = this.getClass();
+		String clientName = klass.getPackage().getName() + '.' + klass.getSimpleName() + '.' + testName;
+		Client client = this.getClient(clientName);
+
+		Response response = client
+			.target("http://localhost:{port}/api/" + url)
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.get();
+
+		assertEquals(Status.GONE.getStatusCode(), response.getStatus());
+	}
 }

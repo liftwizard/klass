@@ -24,4 +24,20 @@ class ServiceGroupResourceManualTest extends AbstractResourceTestCase {
 	void getAllMeta() {
 		this.assertUrlReturns("getAllMeta", "/meta/serviceGroup");
 	}
+
+	@Test
+	void getByName() {
+		this.assertUrlReturns("getByName", "/meta/serviceGroup/ServiceGroupResource");
+	}
+
+	@Test
+	void getByNameKlassResource() {
+		this.assertUrlReturns("getByNameKlassResource", "/meta/serviceGroup/KlassResource");
+	}
+
+	@Test
+	void deleteByNameAndVerifyGone() {
+		this.assertUrlDeletes("deleteByName", "/meta/serviceGroup/KlassResource");
+		this.assertUrlReturnsGone("getByNameAfterDelete", "/meta/serviceGroup/KlassResource");
+	}
 }

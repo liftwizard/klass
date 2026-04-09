@@ -24,4 +24,14 @@ class InterfaceResourceManualTest extends AbstractResourceTestCase {
 	void getAllMeta() {
 		this.assertUrlReturns("getAllMeta", "/meta/interface");
 	}
+
+	@Test
+	void getByName() {
+		this.assertUrlReturns("getByName", "/meta/interface/NamedElement");
+	}
+
+	@Test
+	void getByNameElement() {
+		this.assertUrlReturns("getByNameElement", "/meta/interface/Element");
+	}
 }

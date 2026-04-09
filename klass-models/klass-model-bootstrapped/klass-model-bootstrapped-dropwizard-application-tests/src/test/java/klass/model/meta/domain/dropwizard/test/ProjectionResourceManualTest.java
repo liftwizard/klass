@@ -24,4 +24,14 @@ class ProjectionResourceManualTest extends AbstractResourceTestCase {
 	void getAllMeta() {
 		this.assertUrlReturns("getAllMeta", "/meta/projection");
 	}
+
+	@Test
+	void getByName() {
+		this.assertUrlReturns("getByName", "/meta/projection/KlassProjection");
+	}
+
+	@Test
+	void getByNameAssociationProjection() {
+		this.assertUrlReturns("getByNameAssociationProjection", "/meta/projection/AssociationProjection");
+	}
 }

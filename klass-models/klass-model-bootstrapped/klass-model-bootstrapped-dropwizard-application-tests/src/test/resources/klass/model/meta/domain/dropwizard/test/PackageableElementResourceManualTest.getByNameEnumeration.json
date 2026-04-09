@@ -1,0 +1,24 @@
+{
+	"__typename": "klass.model.meta.domain.Klass",
+	"name": "Enumeration",
+	"packageName": "klass.model.meta.domain",
+	"superInterfaces": [],
+	"classifierModifiers": [],
+	"dataTypeProperties": [],
+	"abstractClass": false,
+	"superClass": {
+		"name": "PackageableElement"
+	},
+	"associationEnds": [
+		{
+			"name": "enumerationLiterals"
+		},
+		{
+			"name": "enumerationProperties"
+		},
+		{
+			"name": "enumerationParameters"
+		}
+	],
+	"parameterizedProperties": []
+}

@@ -24,4 +24,22 @@ class AssociationResourceManualTest extends AbstractResourceTestCase {
 	void getAllMeta() {
 		this.assertUrlReturns("getAllMeta", "/meta/association");
 	}
+
+	@Test
+	void getByName() {
+		this.assertUrlReturns("getByName", "/meta/association/ClassHasSuperClass");
+	}
+
+	@Test
+	void getByNameEnumerationHasLiterals() {
+		this.assertUrlReturns("getByNameEnumerationHasLiterals", "/meta/association/EnumerationHasLiterals");
+	}
+
+	@Test
+	void getByNameDataTypePropertyHasModifiers() {
+		this.assertUrlReturns(
+			"getByNameDataTypePropertyHasModifiers",
+			"/meta/association/DataTypePropertyHasModifiers"
+		);
+	}
 }
