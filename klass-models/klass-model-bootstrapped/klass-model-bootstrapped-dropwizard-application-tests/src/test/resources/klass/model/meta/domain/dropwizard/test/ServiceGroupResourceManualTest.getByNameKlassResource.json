@@ -1,0 +1,177 @@
+{
+	"name": "KlassResource",
+	"packageName": "klass.model.meta.domain",
+	"owningClass": {
+		"name": "Klass"
+	},
+	"urls": [
+		{
+			"url": "/meta/class/{name}",
+			"parameters": [
+				{
+					"type": "path",
+					"parameter": {
+						"__typename": "klass.model.meta.domain.PrimitiveParameter",
+						"id": 4,
+						"name": "name",
+						"multiplicity": "1..1",
+						"primitiveType": "String"
+					}
+				}
+			],
+			"services": [
+				{
+					"verb": "GET",
+					"serviceMultiplicity": "one",
+					"projection": {
+						"name": "KlassProjection"
+					},
+					"queryCriteria": {
+						"__typename": "klass.model.meta.domain.OperatorCriteria",
+						"operator": "==",
+						"sourceExpressionValue": {
+							"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+							"id": 157,
+							"klass": {
+								"name": "Klass"
+							},
+							"associationEnds": [],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						},
+						"targetExpressionValue": {
+							"__typename": "klass.model.meta.domain.ParameterReference",
+							"id": 158,
+							"parameter": {
+								"id": 4,
+								"name": "name"
+							}
+						}
+					},
+					"authorizeCriteria": null,
+					"validateCriteria": null,
+					"conflictCriteria": null,
+					"orderBys": []
+				},
+				{
+					"verb": "PUT",
+					"serviceMultiplicity": "one",
+					"projection": null,
+					"queryCriteria": {
+						"__typename": "klass.model.meta.domain.OperatorCriteria",
+						"operator": "==",
+						"sourceExpressionValue": {
+							"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+							"id": 159,
+							"klass": {
+								"name": "Klass"
+							},
+							"associationEnds": [],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						},
+						"targetExpressionValue": {
+							"__typename": "klass.model.meta.domain.ParameterReference",
+							"id": 160,
+							"parameter": {
+								"id": 4,
+								"name": "name"
+							}
+						}
+					},
+					"authorizeCriteria": null,
+					"validateCriteria": null,
+					"conflictCriteria": null,
+					"orderBys": []
+				},
+				{
+					"verb": "DELETE",
+					"serviceMultiplicity": "one",
+					"projection": null,
+					"queryCriteria": {
+						"__typename": "klass.model.meta.domain.OperatorCriteria",
+						"operator": "==",
+						"sourceExpressionValue": {
+							"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+							"id": 161,
+							"klass": {
+								"name": "Klass"
+							},
+							"associationEnds": [],
+							"dataTypeProperty": {
+								"owningClassifier": {
+									"name": "NamedElement"
+								},
+								"name": "name"
+							}
+						},
+						"targetExpressionValue": {
+							"__typename": "klass.model.meta.domain.ParameterReference",
+							"id": 162,
+							"parameter": {
+								"id": 4,
+								"name": "name"
+							}
+						}
+					},
+					"authorizeCriteria": null,
+					"validateCriteria": null,
+					"conflictCriteria": null,
+					"orderBys": []
+				}
+			]
+		},
+		{
+			"url": "/meta/class",
+			"parameters": [],
+			"services": [
+				{
+					"verb": "GET",
+					"serviceMultiplicity": "many",
+					"projection": {
+						"name": "KlassProjection"
+					},
+					"queryCriteria": {
+						"__typename": "klass.model.meta.domain.AllCriteria"
+					},
+					"authorizeCriteria": null,
+					"validateCriteria": null,
+					"conflictCriteria": null,
+					"orderBys": []
+				},
+				{
+					"verb": "PUT",
+					"serviceMultiplicity": "one",
+					"projection": null,
+					"queryCriteria": {
+						"__typename": "klass.model.meta.domain.AllCriteria"
+					},
+					"authorizeCriteria": null,
+					"validateCriteria": null,
+					"conflictCriteria": null,
+					"orderBys": []
+				},
+				{
+					"verb": "DELETE",
+					"serviceMultiplicity": "one",
+					"projection": null,
+					"queryCriteria": {
+						"__typename": "klass.model.meta.domain.AllCriteria"
+					},
+					"authorizeCriteria": null,
+					"validateCriteria": null,
+					"conflictCriteria": null,
+					"orderBys": []
+				}
+			]
+		}
+	]
+}

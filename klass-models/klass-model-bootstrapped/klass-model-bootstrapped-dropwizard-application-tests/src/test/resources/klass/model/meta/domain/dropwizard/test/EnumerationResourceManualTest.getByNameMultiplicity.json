@@ -1,0 +1,22 @@
+{
+	"name": "Multiplicity",
+	"packageName": "klass.model.meta.domain",
+	"enumerationLiterals": [
+		{
+			"name": "ZERO_TO_ONE",
+			"prettyName": "0..1"
+		},
+		{
+			"name": "ONE_TO_ONE",
+			"prettyName": "1..1"
+		},
+		{
+			"name": "ZERO_TO_MANY",
+			"prettyName": "0..*"
+		},
+		{
+			"name": "ONE_TO_MANY",
+			"prettyName": "1..*"
+		}
+	]
+}
