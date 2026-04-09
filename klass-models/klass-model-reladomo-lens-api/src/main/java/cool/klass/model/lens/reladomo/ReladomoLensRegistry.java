@@ -27,6 +27,10 @@ import cool.klass.model.meta.domain.api.Klass;
  * such as finder lookup for any Klass (including abstract classes).
  */
 public interface ReladomoLensRegistry extends LensRegistry {
+	default boolean hasRelatedFinderForKlass(@Nonnull Klass klass) {
+		return false;
+	}
+
 	@Nonnull
 	RelatedFinder<?> getRelatedFinderForKlass(@Nonnull Klass klass);
 }

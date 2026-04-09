@@ -52,26 +52,32 @@ public class CompositeReladomoLensRegistry implements ReladomoLensRegistry {
 	}
 
 	@Override
+	public boolean hasKlassForJavaClass(@Nonnull Class<?> javaClass) {
+		return this.registries.anySatisfy((registry) -> registry.hasKlassForJavaClass(javaClass));
+	}
+
+	@Override
 	@Nonnull
 	public Klass getKlassForJavaClass(@Nonnull Class<?> javaClass) {
 		for (ReladomoLensRegistry registry : this.registries) {
-			try {
+			if (registry.hasKlassForJavaClass(javaClass)) {
 				return registry.getKlassForJavaClass(javaClass);
-			} catch (IllegalStateException ignored) {
-				// try next registry
 			}
 		}
 		throw new IllegalStateException("No Klass registered for Java class: " + javaClass.getName());
 	}
 
 	@Override
+	public boolean hasRelatedFinderForKlass(@Nonnull Klass klass) {
+		return this.registries.anySatisfy((registry) -> registry.hasRelatedFinderForKlass(klass));
+	}
+
+	@Override
 	@Nonnull
 	public RelatedFinder<?> getRelatedFinderForKlass(@Nonnull Klass klass) {
 		for (ReladomoLensRegistry registry : this.registries) {
-			try {
+			if (registry.hasRelatedFinderForKlass(klass)) {
 				return registry.getRelatedFinderForKlass(klass);
-			} catch (IllegalStateException ignored) {
-				// try next registry
 			}
 		}
 		throw new IllegalStateException("No RelatedFinder registered for Klass: " + klass.getName());
