@@ -22,6 +22,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -51,7 +52,9 @@ public class IncomingCreateDataModelValidator {
 	@Nonnull
 	protected final DataStore dataStore;
 
-	@Nonnull
+	// Null for domain models that don't define a User class (e.g. the bootstrapped meta model).
+	// When null, user-related authorization validation is skipped.
+	@Nullable
 	protected final Klass userKlass;
 
 	@Nonnull
@@ -79,7 +82,7 @@ public class IncomingCreateDataModelValidator {
 
 	public IncomingCreateDataModelValidator(
 		@Nonnull DataStore dataStore,
-		@Nonnull Klass userKlass,
+		@Nullable Klass userKlass,
 		@Nonnull Klass klass,
 		@Nonnull MutationContext mutationContext,
 		@Nonnull ObjectNode objectNode,
@@ -90,7 +93,7 @@ public class IncomingCreateDataModelValidator {
 		boolean isRoot
 	) {
 		this.dataStore = Objects.requireNonNull(dataStore);
-		this.userKlass = Objects.requireNonNull(userKlass);
+		this.userKlass = userKlass;
 		this.klass = Objects.requireNonNull(klass);
 		this.mutationContext = Objects.requireNonNull(mutationContext);
 		this.objectNode = Objects.requireNonNull(objectNode);
@@ -103,7 +106,7 @@ public class IncomingCreateDataModelValidator {
 
 	public static void validate(
 		@Nonnull DataStore dataStore,
-		@Nonnull Klass userKlass,
+		@Nullable Klass userKlass,
 		@Nonnull Klass klass,
 		@Nonnull MutationContext mutationContext,
 		@Nonnull ObjectNode objectNode,
@@ -344,8 +347,8 @@ public class IncomingCreateDataModelValidator {
 		this.contextStack.push(associationEndName);
 
 		Optional<String> userId = this.mutationContext.getUserId();
-		if (userId.isEmpty()) {
-			throw new AssertionError("Expected user ID to be present in mutation context.");
+		if (userId.isEmpty() || this.userKlass == null) {
+			return;
 		}
 
 		DataTypeProperty userIdProperty = this.userKlass.getKeyProperties().getOnly();
