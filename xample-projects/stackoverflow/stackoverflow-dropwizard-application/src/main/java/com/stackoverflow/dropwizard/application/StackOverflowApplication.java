@@ -82,8 +82,8 @@ public class StackOverflowApplication extends AbstractStackOverflowApplication {
 
 		ObjectMapper objectMapper = environment.getObjectMapper();
 		KlassFactory klassFactory = configuration.getKlassFactory();
-		DataStore dataStore = klassFactory.getDataStoreFactory().createDataStore();
 		DomainModel domainModel = klassFactory.getDomainModelFactory().createDomainModel(objectMapper);
+		DataStore dataStore = klassFactory.getDataStoreFactory().createDataStore(domainModel);
 		Clock clock = configuration.getClockFactory().createClock();
 
 		environment.jersey().register(new QuestionResourceManual(domainModel, dataStore, clock));

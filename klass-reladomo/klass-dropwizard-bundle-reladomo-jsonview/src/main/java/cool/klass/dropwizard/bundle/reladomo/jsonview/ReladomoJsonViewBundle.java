@@ -59,7 +59,7 @@ public class ReladomoJsonViewBundle implements PrioritizedBundle {
 
 		ObjectMapper objectMapper = environment.getObjectMapper();
 		DomainModel domainModel = domainModelFactoryProvider.getDomainModelFactory().createDomainModel(objectMapper);
-		DataStore dataStore = dataStoreFactoryProvider.getDataStoreFactory().createDataStore();
+		DataStore dataStore = dataStoreFactoryProvider.getDataStoreFactory().createDataStore(domainModel);
 
 		JsonSerializer<MithraObject> serializer = new ReladomoJsonViewSerializer(domainModel, dataStore);
 

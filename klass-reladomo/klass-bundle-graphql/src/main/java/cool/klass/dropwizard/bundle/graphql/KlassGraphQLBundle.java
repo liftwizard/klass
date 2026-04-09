@@ -143,7 +143,9 @@ public class KlassGraphQLBundle<
 
 		ObjectMapper objectMapper = this.environment.getObjectMapper();
 		DomainModel domainModel = configuration.getDomainModelFactory().createDomainModel(objectMapper);
-		ReladomoDataStore dataStore = (ReladomoDataStore) configuration.getDataStoreFactory().createDataStore();
+		ReladomoDataStore dataStore = (ReladomoDataStore) configuration
+			.getDataStoreFactory()
+			.createDataStore(domainModel);
 
 		RuntimeWiring.Builder builder = RuntimeWiring.newRuntimeWiring();
 		builder

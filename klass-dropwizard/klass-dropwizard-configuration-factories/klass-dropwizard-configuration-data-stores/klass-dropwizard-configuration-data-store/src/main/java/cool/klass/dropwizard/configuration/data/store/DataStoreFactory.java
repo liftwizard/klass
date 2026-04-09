@@ -19,6 +19,7 @@ package cool.klass.dropwizard.configuration.data.store;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.auto.service.AutoService;
 import cool.klass.data.store.DataStore;
+import cool.klass.model.meta.domain.api.DomainModel;
 import io.dropwizard.jackson.Discoverable;
 import io.liftwizard.dropwizard.configuration.uuid.UUIDSupplierFactory;
 
@@ -27,5 +28,5 @@ import io.liftwizard.dropwizard.configuration.uuid.UUIDSupplierFactory;
 public interface DataStoreFactory extends Discoverable {
 	UUIDSupplierFactory getUuidFactory();
 
-	DataStore createDataStore();
+	DataStore createDataStore(DomainModel domainModel);
 }

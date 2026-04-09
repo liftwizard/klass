@@ -29,6 +29,7 @@ import com.google.auto.service.AutoService;
 import cool.klass.data.store.DataStore;
 import cool.klass.data.store.reladomo.ReladomoDataStore;
 import cool.klass.dropwizard.configuration.data.store.DataStoreFactory;
+import cool.klass.model.meta.domain.api.DomainModel;
 import io.liftwizard.dropwizard.configuration.uuid.UUIDSupplierFactory;
 import io.liftwizard.dropwizard.configuration.uuid.seed.SeedUUIDSupplierFactory;
 
@@ -64,7 +65,7 @@ public class ReladomoDataStoreFactory implements DataStoreFactory {
 	}
 
 	@Override
-	public DataStore createDataStore() {
+	public DataStore createDataStore(DomainModel domainModel) {
 		if (this.dataStore != null) {
 			return this.dataStore;
 		}
