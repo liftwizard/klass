@@ -24,4 +24,19 @@ class EnumerationResourceManualTest extends AbstractResourceTestCase {
 	void getAllMeta() {
 		this.assertUrlReturns("getAllMeta", "/meta/enumeration");
 	}
+
+	@Test
+	void getByName() {
+		this.assertUrlReturns("getByName", "/meta/enumeration/PrimitiveType");
+	}
+
+	@Test
+	void getByNameVerb() {
+		this.assertUrlReturns("getByNameVerb", "/meta/enumeration/Verb");
+	}
+
+	@Test
+	void getByNameMultiplicity() {
+		this.assertUrlReturns("getByNameMultiplicity", "/meta/enumeration/Multiplicity");
+	}
 }

@@ -24,4 +24,14 @@ class ClassifierResourceManualTest extends AbstractResourceTestCase {
 	void getAllMeta() {
 		this.assertUrlReturns("getAllMeta", "/meta/classifier");
 	}
+
+	@Test
+	void getByName() {
+		this.assertUrlReturns("getByName", "/meta/classifier/Klass");
+	}
+
+	@Test
+	void getByNameInterface() {
+		this.assertUrlReturns("getByNameInterface", "/meta/classifier/NamedElement");
+	}
 }

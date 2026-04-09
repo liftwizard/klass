@@ -1,0 +1,26 @@
+{
+	"name": "Verb",
+	"packageName": "klass.model.meta.domain",
+	"enumerationLiterals": [
+		{
+			"name": "GET",
+			"prettyName": null
+		},
+		{
+			"name": "POST",
+			"prettyName": null
+		},
+		{
+			"name": "PUT",
+			"prettyName": null
+		},
+		{
+			"name": "PATCH",
+			"prettyName": null
+		},
+		{
+			"name": "DELETE",
+			"prettyName": null
+		}
+	]
+}

@@ -1,0 +1,69 @@
+{
+	"name": "EnumerationHasLiterals",
+	"packageName": "klass.model.meta.domain",
+	"associationEnds": [
+		{
+			"name": "enumeration",
+			"direction": "source",
+			"multiplicity": "1..1",
+			"resultType": {
+				"name": "Enumeration"
+			},
+			"associationEndModifiers": [],
+			"orderBys": []
+		},
+		{
+			"name": "enumerationLiterals",
+			"direction": "target",
+			"multiplicity": "1..*",
+			"resultType": {
+				"name": "EnumerationLiteral"
+			},
+			"associationEndModifiers": [
+				{
+					"keyword": "owned"
+				}
+			],
+			"orderBys": [
+				{
+					"orderByDirection": "ascending",
+					"thisMemberReferencePath": {
+						"id": 187
+					}
+				}
+			]
+		}
+	],
+	"criteria": {
+		"__typename": "klass.model.meta.domain.OperatorCriteria",
+		"operator": "==",
+		"sourceExpressionValue": {
+			"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+			"id": 1,
+			"klass": {
+				"name": "Enumeration"
+			},
+			"associationEnds": [],
+			"dataTypeProperty": {
+				"owningClassifier": {
+					"name": "NamedElement"
+				},
+				"name": "name"
+			}
+		},
+		"targetExpressionValue": {
+			"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
+			"id": 2,
+			"klass": {
+				"name": "EnumerationLiteral"
+			},
+			"associationEnds": [],
+			"dataTypeProperty": {
+				"owningClassifier": {
+					"name": "EnumerationLiteral"
+				},
+				"name": "enumerationName"
+			}
+		}
+	}
+}

@@ -24,4 +24,14 @@ class PackageableElementResourceManualTest extends AbstractResourceTestCase {
 	void getAllMeta() {
 		this.assertUrlReturns("getAllMeta", "/meta/packageableElement");
 	}
+
+	@Test
+	void getByName() {
+		this.assertUrlReturns("getByName", "/meta/packageableElement/Association");
+	}
+
+	@Test
+	void getByNameEnumeration() {
+		this.assertUrlReturns("getByNameEnumeration", "/meta/packageableElement/Enumeration");
+	}
 }
