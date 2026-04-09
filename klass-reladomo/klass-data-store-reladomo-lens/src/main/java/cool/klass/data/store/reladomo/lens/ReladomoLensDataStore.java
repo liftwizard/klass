@@ -16,16 +16,8 @@
 
 package cool.klass.data.store.reladomo.lens;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -40,9 +32,6 @@ import com.gs.fw.common.mithra.MithraManagerProvider;
 import com.gs.fw.common.mithra.MithraObject;
 import com.gs.fw.common.mithra.MithraTransaction;
 import com.gs.fw.common.mithra.MithraTransactionalObject;
-import com.gs.fw.common.mithra.attribute.AsOfAttribute;
-import com.gs.fw.common.mithra.attribute.Attribute;
-import com.gs.fw.common.mithra.attribute.TimestampAttribute;
 import com.gs.fw.common.mithra.finder.AbstractRelatedFinder;
 import com.gs.fw.common.mithra.finder.Operation;
 import com.gs.fw.common.mithra.finder.RelatedFinder;
@@ -58,25 +47,16 @@ import cool.klass.model.lens.reladomo.ReladomoAssociationLens;
 import cool.klass.model.lens.reladomo.ReladomoClassLens;
 import cool.klass.model.lens.reladomo.ReladomoLensRegistry;
 import cool.klass.model.meta.domain.api.Classifier;
-import cool.klass.model.meta.domain.api.Enumeration;
-import cool.klass.model.meta.domain.api.EnumerationLiteral;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.PrimitiveType;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
-import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
-import cool.klass.model.meta.domain.api.property.Property;
 import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import cool.klass.model.meta.domain.api.visitor.AssertObjectMatchesDataTypePropertyVisitor;
-import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.MapIterable;
-import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.api.map.OrderedMap;
-import org.eclipse.collections.api.tuple.Pair;
-import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
-import org.eclipse.collections.impl.tuple.Tuples;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -88,10 +68,6 @@ public class ReladomoLensDataStore implements DataStore {
 	private static final Marker MARKER = MarkerFactory.getMarker("reladomo transaction stats");
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReladomoLensDataStore.class);
 
-	private static final Converter<String, String> LOWER_TO_UPPER_CAMEL = CaseFormat.LOWER_CAMEL.converterTo(
-		CaseFormat.UPPER_CAMEL
-	);
-
 	private static final Converter<String, String> UPPER_TO_LOWER_CAMEL = CaseFormat.UPPER_CAMEL.converterTo(
 		CaseFormat.LOWER_CAMEL
 	);
@@ -99,13 +75,6 @@ public class ReladomoLensDataStore implements DataStore {
 	private final ReladomoLensRegistry lensRegistry;
 	private final Supplier<UUID> uuidSupplier;
 	private final int retryCount;
-
-	private final MutableOrderedMap<Classifier, AbstractRelatedFinder> memoizedRelatedFinders = OrderedMapAdapter.adapt(
-		new LinkedHashMap<>()
-	);
-	private final MutableOrderedMap<Pair<Class<?>, PrimitiveProperty>, Method> memoizedGenerateAndSetIdMethods =
-		OrderedMapAdapter.adapt(new LinkedHashMap<>());
-	private final MutableOrderedMap<Property, Method> memoizedGetters = OrderedMapAdapter.adapt(new LinkedHashMap<>());
 
 	public ReladomoLensDataStore(
 		@Nonnull ReladomoLensRegistry lensRegistry,
@@ -176,15 +145,10 @@ public class ReladomoLensDataStore implements DataStore {
 	public Object instantiate(@Nonnull Klass klass, @Nonnull MapIterable<DataTypeProperty, Object> keys) {
 		keys.each(Objects::requireNonNull);
 
-		Object newInstance;
-		if (this.lensRegistry.hasClassLens(klass)) {
-			ReladomoClassLens<?> reladomoLens = (ReladomoClassLens<?>) this.lensRegistry.getClassLens(klass);
-			newInstance = reladomoLens.instantiate();
-		} else {
-			newInstance = this.instantiateReflectively(klass);
-		}
+		ReladomoClassLens<?> reladomoLens = (ReladomoClassLens<?>) this.lensRegistry.getClassLens(klass);
+		Object newInstance = reladomoLens.instantiate();
 
-		this.generateAndSetId(newInstance, klass);
+		this.generateAndSetId(newInstance, klass, reladomoLens);
 
 		ImmutableList<DataTypeProperty> keyProperties = klass
 			.getKeyProperties()
@@ -211,7 +175,8 @@ public class ReladomoLensDataStore implements DataStore {
 	@Override
 	@Nonnull
 	public List<Object> findAll(@Nonnull Klass klass) {
-		RelatedFinder<?> finder = this.getFinderForKlass(klass);
+		ReladomoClassLens<?> reladomoLens = (ReladomoClassLens<?>) this.lensRegistry.getClassLens(klass);
+		RelatedFinder<?> finder = reladomoLens.getRelatedFinder();
 		return (List<Object>) finder.findMany(finder.all());
 	}
 
@@ -219,8 +184,8 @@ public class ReladomoLensDataStore implements DataStore {
 	@Nullable
 	public Object findByKey(@Nonnull Klass klass, @Nonnull MapIterable<DataTypeProperty, Object> keys) {
 		Operation operation = this.buildFindByKeyOperation(klass, keys);
-		RelatedFinder<?> finder = this.getFinderForKlass(klass);
-		return finder.findOne(operation);
+		ReladomoClassLens<?> reladomoLens = (ReladomoClassLens<?>) this.lensRegistry.getClassLens(klass);
+		return reladomoLens.getRelatedFinder().findOne(operation);
 	}
 
 	@Override
@@ -230,8 +195,8 @@ public class ReladomoLensDataStore implements DataStore {
 		@Nonnull MapIterable<DataTypeProperty, Object> keys
 	) {
 		Operation operation = this.buildFindByKeyOperation(klass, keys);
-		RelatedFinder<?> finder = this.getFinderForKlass(klass);
-		return (List<Object>) finder.findMany(operation);
+		ReladomoClassLens<?> reladomoLens = (ReladomoClassLens<?>) this.lensRegistry.getClassLens(klass);
+		return (List<Object>) reladomoLens.getRelatedFinder().findMany(operation);
 	}
 
 	// endregion
@@ -241,27 +206,19 @@ public class ReladomoLensDataStore implements DataStore {
 	@Override
 	@Nullable
 	public Object getDataTypeProperty(@Nonnull Object persistentInstance, @Nonnull DataTypeProperty dataTypeProperty) {
-		if (dataTypeProperty.isDerived()) {
-			return this.getPropertyReflectively(persistentInstance, dataTypeProperty);
+		Klass klass = this.resolveKlassForProperty(persistentInstance, dataTypeProperty);
+
+		Object effectiveInstance = this.navigateToOwningInstance(persistentInstance, klass);
+		ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
+		DataTypeLens<Object, ?> dataTypeLens = (DataTypeLens<Object, ?>) classLens.getLensByProperty(dataTypeProperty);
+		Object result = dataTypeLens.get(effectiveInstance);
+
+		if (result == null && dataTypeProperty.isRequired()) {
+			String message = String.format("Found null for required property: '%s'", dataTypeProperty);
+			throw new IllegalStateException(message);
 		}
 
-		if (dataTypeProperty.getOwningClassifier() instanceof Klass klass && this.lensRegistry.hasClassLens(klass)) {
-			Object effectiveInstance = this.navigateToOwningInstance(persistentInstance, klass);
-			ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
-			DataTypeLens<Object, ?> dataTypeLens = (DataTypeLens<Object, ?>) classLens.getLensByProperty(
-				dataTypeProperty
-			);
-			Object result = dataTypeLens.get(effectiveInstance);
-
-			if (result == null && dataTypeProperty.isRequired()) {
-				String message = String.format("Found null for required property: '%s'", dataTypeProperty);
-				throw new IllegalStateException(message);
-			}
-
-			return result;
-		}
-
-		return this.getDataTypePropertyViaAttribute(persistentInstance, dataTypeProperty);
+		return result;
 	}
 
 	@Override
@@ -274,58 +231,52 @@ public class ReladomoLensDataStore implements DataStore {
 			throw new AssertionError("May not set derived property: " + dataTypeProperty);
 		}
 
-		if (dataTypeProperty.getOwningClassifier() instanceof Klass klass && this.lensRegistry.hasClassLens(klass)) {
-			Object effectiveInstance = this.navigateToOwningInstance(persistentInstance, klass);
-			ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
-			DataTypeLens<Object, Object> dataTypeLens = (DataTypeLens<Object, Object>) classLens.getLensByProperty(
-				dataTypeProperty
-			);
-			Object oldValue = dataTypeLens.get(effectiveInstance);
-			if (Objects.equals(oldValue, newValue)) {
-				return false;
-			}
+		Klass klass = this.resolveKlassForProperty(persistentInstance, dataTypeProperty);
 
-			if (newValue == null && dataTypeProperty.isRequired()) {
-				String message = String.format(
-					"May not set required property to null: '%s.%s'",
-					dataTypeProperty.getOwningClassifier().getName(),
-					dataTypeProperty
-				);
-				throw new IllegalStateException(message);
-			}
-
-			dataTypeLens.set(effectiveInstance, newValue);
-			return true;
+		Object effectiveInstance = this.navigateToOwningInstance(persistentInstance, klass);
+		ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
+		DataTypeLens<Object, Object> dataTypeLens = (DataTypeLens<Object, Object>) classLens.getLensByProperty(
+			dataTypeProperty
+		);
+		Object oldValue = dataTypeLens.get(effectiveInstance);
+		if (Objects.equals(oldValue, newValue)) {
+			return false;
 		}
 
-		return this.setDataTypePropertyViaAttribute(persistentInstance, dataTypeProperty, newValue);
+		if (newValue == null && dataTypeProperty.isRequired()) {
+			String message = String.format(
+				"May not set required property to null: '%s.%s'",
+				dataTypeProperty.getOwningClassifier().getName(),
+				dataTypeProperty
+			);
+			throw new IllegalStateException(message);
+		}
+
+		dataTypeLens.set(effectiveInstance, newValue);
+		return true;
 	}
 
 	@Override
 	@Nullable
 	public Object getToOne(@Nonnull Object persistentSourceInstance, @Nonnull ReferenceProperty referenceProperty) {
-		Classifier owningClassifier = referenceProperty.getOwningClassifier();
-
-		if (
-			referenceProperty instanceof AssociationEnd associationEnd
-			&& owningClassifier instanceof Klass klass
-			&& this.lensRegistry.hasClassLens(klass)
-		) {
-			Object effectiveInstance = this.navigateToOwningInstance(persistentSourceInstance, klass);
-			ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
-			ReladomoAssociationLens<Object, ?> associationLens = (ReladomoAssociationLens<
-				Object,
-				?
-			>) classLens.getLensByProperty(associationEnd);
-			AbstractRelatedFinder relationshipFinder = associationLens.getRelationshipFinder();
-			Object result = relationshipFinder.valueOf(effectiveInstance);
-			if (result instanceof List<?> list) {
-				throw new IllegalStateException("Expected single object but got " + list.size());
-			}
-			return result;
+		if (!(referenceProperty instanceof AssociationEnd associationEnd)) {
+			throw new AssertionError("Expected AssociationEnd but got " + referenceProperty);
 		}
 
-		return this.getToOneViaFinder(persistentSourceInstance, referenceProperty);
+		Klass klass = this.resolveKlassForAssociation(persistentSourceInstance, associationEnd);
+
+		Object effectiveInstance = this.navigateToOwningInstance(persistentSourceInstance, klass);
+		ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
+		ReladomoAssociationLens<Object, ?> associationLens = (ReladomoAssociationLens<
+			Object,
+			?
+		>) classLens.getLensByProperty(associationEnd);
+		AbstractRelatedFinder relationshipFinder = associationLens.getRelationshipFinder();
+		Object result = relationshipFinder.valueOf(effectiveInstance);
+		if (result instanceof List<?> list) {
+			throw new IllegalStateException("Expected single object but got " + list.size());
+		}
+		return result;
 	}
 
 	@Override
@@ -334,31 +285,27 @@ public class ReladomoLensDataStore implements DataStore {
 		@Nonnull Object persistentSourceInstance,
 		@Nonnull ReferenceProperty referenceProperty
 	) {
-		Classifier owningClassifier = referenceProperty.getOwningClassifier();
-
-		if (
-			referenceProperty instanceof AssociationEnd associationEnd
-			&& owningClassifier instanceof Klass klass
-			&& this.lensRegistry.hasClassLens(klass)
-		) {
-			Object effectiveInstance = this.navigateToOwningInstance(persistentSourceInstance, klass);
-			ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
-			ReladomoAssociationLens<Object, ?> associationLens = (ReladomoAssociationLens<
-				Object,
-				?
-			>) classLens.getLensByProperty(associationEnd);
-			AbstractRelatedFinder relationshipFinder = associationLens.getRelationshipFinder();
-			Object result = relationshipFinder.valueOf(effectiveInstance);
-			if (result == null) {
-				return List.of();
-			}
-			if (!(result instanceof List)) {
-				throw new IllegalStateException("Expected list but got " + result.getClass().getCanonicalName());
-			}
-			return (List<Object>) result;
+		if (!(referenceProperty instanceof AssociationEnd associationEnd)) {
+			throw new AssertionError("Expected AssociationEnd but got " + referenceProperty);
 		}
 
-		return this.getToManyViaFinder(persistentSourceInstance, referenceProperty);
+		Klass klass = this.resolveKlassForAssociation(persistentSourceInstance, associationEnd);
+
+		Object effectiveInstance = this.navigateToOwningInstance(persistentSourceInstance, klass);
+		ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
+		ReladomoAssociationLens<Object, ?> associationLens = (ReladomoAssociationLens<
+			Object,
+			?
+		>) classLens.getLensByProperty(associationEnd);
+		AbstractRelatedFinder relationshipFinder = associationLens.getRelationshipFinder();
+		Object result = relationshipFinder.valueOf(effectiveInstance);
+		if (result == null) {
+			return List.of();
+		}
+		if (!(result instanceof List)) {
+			throw new IllegalStateException("Expected list but got " + result.getClass().getCanonicalName());
+		}
+		return (List<Object>) result;
 	}
 
 	// endregion
@@ -425,7 +372,8 @@ public class ReladomoLensDataStore implements DataStore {
 			return;
 		}
 
-		RelatedFinder<?> finder = this.getFinderForKlass(klass);
+		ReladomoClassLens<?> reladomoLens = (ReladomoClassLens<?>) this.lensRegistry.getClassLens(klass);
+		RelatedFinder<?> finder = reladomoLens.getRelatedFinder();
 
 		if (klass.isSystemTemporal()) {
 			throw new UnsupportedOperationException(
@@ -445,13 +393,8 @@ public class ReladomoLensDataStore implements DataStore {
 
 	@Override
 	public boolean isInstanceOf(@Nonnull Object persistentInstance, @Nonnull Classifier classifier) {
-		try {
-			Class<?> persistentInstanceClass = persistentInstance.getClass();
-			Class<?> domainModelClass = Class.forName(classifier.getFullyQualifiedName());
-			return domainModelClass.isAssignableFrom(persistentInstanceClass);
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
-		}
+		Klass concreteKlass = this.lensRegistry.getKlassForJavaClass(persistentInstance.getClass());
+		return concreteKlass.isSubTypeOf(classifier);
 	}
 
 	@Override
@@ -493,44 +436,16 @@ public class ReladomoLensDataStore implements DataStore {
 	}
 
 	private MithraObject getSubClassPersistentInstance(Klass klass, Klass subClass, MithraObject persistentInstance) {
-		AbstractRelatedFinder finder = this.getRelatedFinder(klass);
-
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(subClass.getName()) + "SubClass";
-
-		AbstractRelatedFinder relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
-			relationshipName
-		);
-
-		if (relationshipFinder == null) {
-			String detailMessage =
-				"Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property "
-				+ relationshipName;
-			throw new AssertionError(detailMessage);
-		}
-
-		Object result = relationshipFinder.valueOf(persistentInstance);
+		Object result = this.navigateRelationship(klass, relationshipName, persistentInstance);
 		return (MithraObject) result;
 	}
 
 	@Override
 	@Nullable
 	public Object getSuperClass(@Nonnull Object persistentInstance, @Nonnull Klass klass) {
-		AbstractRelatedFinder finder = this.getRelatedFinder(klass);
-
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(klass.getSuperClass().get().getName()) + "SuperClass";
-
-		AbstractRelatedFinder relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
-			relationshipName
-		);
-
-		if (relationshipFinder == null) {
-			String detailMessage =
-				"Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property "
-				+ relationshipName;
-			throw new AssertionError(detailMessage);
-		}
-
-		Object result = relationshipFinder.valueOf(persistentInstance);
+		Object result = this.navigateRelationship(klass, relationshipName, persistentInstance);
 		Objects.requireNonNull(result, () ->
 			"Expected result to not be null for superClass: %s, persistentInstance: %s".formatted(
 				klass,
@@ -547,29 +462,41 @@ public class ReladomoLensDataStore implements DataStore {
 			throw new AssertionError("Expected " + subClass + " to be a strict subtype of " + superClass);
 		}
 
-		AbstractRelatedFinder finder = this.getRelatedFinder(superClass);
-
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(subClass.getName()) + "SubClass";
+		return this.navigateRelationship(superClass, relationshipName, persistentInstance);
+	}
+
+	// endregion
+
+	// region Private helpers
+
+	@Nullable
+	private Object navigateRelationship(
+		@Nonnull Klass klass,
+		@Nonnull String relationshipName,
+		@Nonnull Object persistentInstance
+	) {
+		AbstractRelatedFinder finder = (AbstractRelatedFinder) this.lensRegistry.getRelatedFinderForKlass(klass);
 
 		AbstractRelatedFinder relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
 			relationshipName
 		);
 
 		if (relationshipFinder == null) {
-			String detailMessage =
+			throw new AssertionError(
 				"Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property "
-				+ relationshipName;
-			throw new AssertionError(detailMessage);
+				+ relationshipName
+			);
 		}
 
 		return relationshipFinder.valueOf(persistentInstance);
 	}
 
-	// endregion
-
-	// region Private helpers — ID generation
-
-	private void generateAndSetId(@Nonnull Object persistentInstance, @Nonnull Klass klass) {
+	private void generateAndSetId(
+		@Nonnull Object persistentInstance,
+		@Nonnull Klass klass,
+		@Nonnull ReladomoClassLens<?> reladomoLens
+	) {
 		ImmutableList<DataTypeProperty> idProperties = klass.getDataTypeProperties().select(DataTypeProperty::isID);
 		if (idProperties.isEmpty()) {
 			return;
@@ -578,40 +505,18 @@ public class ReladomoLensDataStore implements DataStore {
 		PrimitiveProperty idProperty = (PrimitiveProperty) idProperties.getOnly();
 
 		if (idProperty.getType().isNumeric()) {
-			try {
-				Method generateAndSetIdMethod = this.getGenerateAndSetIdMethod(
-					persistentInstance.getClass(),
-					idProperty
-				);
-				generateAndSetIdMethod.invoke(persistentInstance);
-			} catch (ReflectiveOperationException e) {
-				throw new RuntimeException(e);
-			}
+			((ReladomoClassLens<Object>) reladomoLens).generateAndSetId(persistentInstance);
 		} else if (idProperty.getType() == PrimitiveType.STRING) {
 			UUID uuid = this.uuidSupplier.get();
 			String uuidString = uuid.toString();
-			this.setDataTypeProperty(persistentInstance, idProperty, uuidString);
+			DataTypeLens<Object, Object> idLens = (DataTypeLens<Object, Object>) reladomoLens.getLensByProperty(
+				idProperty
+			);
+			idLens.set(persistentInstance, uuidString);
 		} else {
 			throw new AssertionError(idProperty);
 		}
 	}
-
-	@Nonnull
-	private Method getGenerateAndSetIdMethod(Class<?> klass, PrimitiveProperty idProperty)
-		throws NoSuchMethodException {
-		Pair<Class<?>, PrimitiveProperty> key = Tuples.pair(klass, idProperty);
-		if (this.memoizedGenerateAndSetIdMethods.containsKey(key)) {
-			return this.memoizedGenerateAndSetIdMethods.get(key);
-		}
-		String methodName = "generateAndSet" + LOWER_TO_UPPER_CAMEL.convert(idProperty.getName());
-		Method generateAndSetIdMethod = klass.getMethod(methodName);
-		this.memoizedGenerateAndSetIdMethods.put(key, generateAndSetIdMethod);
-		return generateAndSetIdMethod;
-	}
-
-	// endregion
-
-	// region Private helpers — finder operations
 
 	@Nonnull
 	private Operation buildFindByKeyOperation(
@@ -628,7 +533,8 @@ public class ReladomoLensDataStore implements DataStore {
 			throw new IllegalArgumentException(error);
 		}
 
-		RelatedFinder<?> finder = this.getFinderForKlass(klass);
+		ReladomoClassLens<?> reladomoLens = (ReladomoClassLens<?>) this.lensRegistry.getClassLens(klass);
+		RelatedFinder<?> finder = reladomoLens.getRelatedFinder();
 
 		ImmutableList<Operation> operations = keyProperties.collect((keyProperty) -> {
 			Object key = keys.get(keyProperty);
@@ -638,7 +544,7 @@ public class ReladomoLensDataStore implements DataStore {
 
 			keyProperty.visit(new AssertObjectMatchesDataTypePropertyVisitor(key));
 
-			Attribute attribute = finder.getAttributeByName(keyProperty.getName());
+			com.gs.fw.common.mithra.attribute.Attribute attribute = finder.getAttributeByName(keyProperty.getName());
 
 			OperationVisitor visitor = new OperationVisitor(attribute, key);
 			keyProperty.visit(visitor);
@@ -648,17 +554,19 @@ public class ReladomoLensDataStore implements DataStore {
 		return operations.reduce(Operation::and).get();
 	}
 
-	private RelatedFinder<?> getFinderForKlass(@Nonnull Klass klass) {
-		if (this.lensRegistry.hasClassLens(klass)) {
-			ReladomoClassLens<?> reladomoLens = (ReladomoClassLens<?>) this.lensRegistry.getClassLens(klass);
-			return reladomoLens.getRelatedFinder();
+	private Klass resolveKlassForProperty(Object persistentInstance, DataTypeProperty property) {
+		if (property.getOwningClassifier() instanceof Klass klass) {
+			return klass;
 		}
-		return this.getRelatedFinder(klass);
+		return this.lensRegistry.getKlassForJavaClass(persistentInstance.getClass());
 	}
 
-	// endregion
-
-	// region Private helpers — hierarchy navigation
+	private Klass resolveKlassForAssociation(Object persistentInstance, AssociationEnd associationEnd) {
+		if (associationEnd.getOwningClassifier() instanceof Klass klass) {
+			return klass;
+		}
+		return this.lensRegistry.getKlassForJavaClass(persistentInstance.getClass());
+	}
 
 	private Object navigateToOwningInstance(Object persistentInstance, Klass owningKlass) {
 		if (!(persistentInstance instanceof MithraObject) || this.isInstanceOf(persistentInstance, owningKlass)) {
@@ -694,257 +602,6 @@ public class ReladomoLensDataStore implements DataStore {
 			+ " from "
 			+ persistentInstance.getClass().getCanonicalName()
 		);
-	}
-
-	@Nonnull
-	private AbstractRelatedFinder getRelatedFinder(@Nonnull Classifier classifier) {
-		if (this.memoizedRelatedFinders.containsKey(classifier)) {
-			return this.memoizedRelatedFinders.get(classifier);
-		}
-
-		try {
-			String finderName = classifier.getFullyQualifiedName() + "Finder";
-			Class<?> finderClass = Class.forName(finderName);
-			Method getFinderMethod = finderClass.getMethod("getFinderInstance");
-			AbstractRelatedFinder result = (AbstractRelatedFinder) getFinderMethod.invoke(null);
-			this.memoizedRelatedFinders.put(classifier, result);
-			return result;
-		} catch (@Nonnull ReflectiveOperationException | IllegalArgumentException | SecurityException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	// endregion
-
-	// region Private helpers — attribute-based fallback for unregistered classes
-
-	@Nonnull
-	private Object instantiateReflectively(@Nonnull Klass klass) {
-		try {
-			Class<?> aClass = Class.forName(klass.getFullyQualifiedName());
-			Class<?>[] parameterTypes = klass.isSystemTemporal()
-				? new Class<?>[] { Timestamp.class }
-				: new Class<?>[] {};
-			Constructor<?> constructor = aClass.getConstructor(parameterTypes);
-			Object[] constructorArgs = klass.isSystemTemporal()
-				? new Object[] { UtcInfinityTimestamp.getDefaultInfinity() }
-				: new Object[] {};
-			return constructor.newInstance(constructorArgs);
-		} catch (ReflectiveOperationException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Nullable
-	private Object getDataTypePropertyViaAttribute(
-		@Nonnull Object persistentInstance,
-		@Nonnull DataTypeProperty dataTypeProperty
-	) {
-		Objects.requireNonNull(persistentInstance);
-		if (!(persistentInstance instanceof MithraObject mithraObject)) {
-			String detailMessage = "Expected MithraObject but got " + persistentInstance.getClass().getCanonicalName();
-			throw new AssertionError(detailMessage);
-		}
-
-		Attribute attribute = this.findAttribute(mithraObject, dataTypeProperty);
-		if (attribute == null) {
-			String detailMessage =
-				"Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find attribute: "
-				+ dataTypeProperty.getName();
-			throw new AssertionError(detailMessage);
-		}
-
-		if (attribute.isAttributeNull(persistentInstance)) {
-			if (dataTypeProperty.isOptional()) {
-				return null;
-			}
-
-			String message = String.format("Found null for required property: '%s'", dataTypeProperty);
-			throw new IllegalStateException(message);
-		}
-
-		Object result = attribute.valueOf(persistentInstance);
-
-		if (dataTypeProperty.getType() == PrimitiveType.LOCAL_DATE) {
-			return ((Date) result).toLocalDate();
-		}
-
-		if (dataTypeProperty.getType() == PrimitiveType.INSTANT) {
-			return ((Timestamp) result).toInstant();
-		}
-
-		if (dataTypeProperty.isTemporalRange()) {
-			Timestamp infinity = ((AsOfAttribute<?>) attribute).getInfinityDate();
-			if (infinity.equals(result)) {
-				return null;
-			}
-			return ((Timestamp) result).toInstant();
-		}
-
-		if (dataTypeProperty.isTemporalInstant()) {
-			Timestamp infinity = ((TimestampAttribute<?>) attribute).getAsOfAttributeInfinity();
-			if (infinity.equals(result)) {
-				return null;
-			}
-			return ((Timestamp) result).toInstant();
-		}
-
-		if (dataTypeProperty instanceof EnumerationProperty enumerationProperty) {
-			String prettyName = (String) result;
-			Enumeration enumeration = enumerationProperty.getType();
-
-			Optional<EnumerationLiteral> enumerationLiteral = enumeration
-				.getEnumerationLiterals()
-				.detectOptional((each) -> each.getPrettyName().equals(prettyName));
-
-			return enumerationLiteral.orElseThrow(() ->
-				new AssertionError("No enumeration literal found for " + prettyName + " in " + enumeration.getName())
-			);
-		}
-
-		return result;
-	}
-
-	private boolean setDataTypePropertyViaAttribute(
-		@Nonnull Object persistentInstance,
-		@Nonnull DataTypeProperty dataTypeProperty,
-		@Nullable Object newValue
-	) {
-		if (!(persistentInstance instanceof MithraObject mithraObject)) {
-			String detailMessage = "Expected MithraObject but got " + persistentInstance.getClass().getCanonicalName();
-			throw new AssertionError(detailMessage);
-		}
-
-		Attribute attribute = this.findAttribute(mithraObject, dataTypeProperty);
-
-		Object oldValue = attribute.isAttributeNull(persistentInstance) ? null : attribute.valueOf(persistentInstance);
-		if (Objects.equals(oldValue, newValue)) {
-			return false;
-		}
-
-		if (newValue == null) {
-			if (dataTypeProperty.isRequired()) {
-				String message = String.format(
-					"May not set required property to null: '%s.%s'",
-					dataTypeProperty.getOwningClassifier().getName(),
-					dataTypeProperty
-				);
-				throw new IllegalStateException(message);
-			}
-			attribute.setValueNull(persistentInstance);
-		} else if (dataTypeProperty instanceof EnumerationProperty) {
-			attribute.setValue(persistentInstance, ((EnumerationLiteral) newValue).getPrettyName());
-		} else if (dataTypeProperty.getType() == PrimitiveType.LOCAL_DATE) {
-			Timestamp timestamp = Timestamp.valueOf(((LocalDate) newValue).atStartOfDay());
-			attribute.setValue(persistentInstance, timestamp);
-		} else if (dataTypeProperty.getType() == PrimitiveType.INSTANT) {
-			Timestamp timestamp = Timestamp.from((Instant) newValue);
-			attribute.setValue(persistentInstance, timestamp);
-		} else {
-			attribute.setValue(persistentInstance, newValue);
-		}
-
-		return true;
-	}
-
-	@Nullable
-	private Object getToOneViaFinder(Object persistentSourceInstance, ReferenceProperty referenceProperty) {
-		Object result = this.getViaRelationshipFinder(persistentSourceInstance, referenceProperty);
-		if (result instanceof List<?> list) {
-			throw new AssertionError("Expected single object but got " + list.size());
-		}
-		return result;
-	}
-
-	@Nonnull
-	private List<Object> getToManyViaFinder(Object persistentSourceInstance, ReferenceProperty referenceProperty) {
-		Object result = this.getViaRelationshipFinder(persistentSourceInstance, referenceProperty);
-		if (result == null) {
-			return List.of();
-		}
-		if (!(result instanceof List)) {
-			throw new AssertionError("Expected list but got " + result.getClass().getCanonicalName());
-		}
-		return (List<Object>) result;
-	}
-
-	private Object getViaRelationshipFinder(Object persistentSourceInstance, ReferenceProperty referenceProperty) {
-		Classifier owningClassifier = referenceProperty.getOwningClassifier();
-		RelatedFinder<?> finder = this.getRelatedFinder(owningClassifier);
-		AbstractRelatedFinder relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
-			referenceProperty.getName()
-		);
-
-		if (relationshipFinder == null) {
-			String detailMessage =
-				"Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property "
-				+ referenceProperty;
-			throw new AssertionError(detailMessage);
-		}
-
-		Object effectiveInstance = persistentSourceInstance;
-		if (
-			persistentSourceInstance instanceof MithraObject
-			&& !this.isInstanceOf(persistentSourceInstance, owningClassifier)
-		) {
-			effectiveInstance = this.navigateToClassifierInstance(persistentSourceInstance, owningClassifier);
-			if (effectiveInstance == null) {
-				return null;
-			}
-		}
-
-		return relationshipFinder.valueOf(effectiveInstance);
-	}
-
-	@Nullable
-	private Attribute findAttribute(@Nonnull MithraObject mithraObject, @Nonnull DataTypeProperty dataTypeProperty) {
-		RelatedFinder<?> concreteFinder = mithraObject.zGetPortal().getFinder();
-		Attribute attribute = concreteFinder.getAttributeByName(dataTypeProperty.getName());
-		if (attribute != null) {
-			return attribute;
-		}
-
-		Classifier owningClassifier = dataTypeProperty.getOwningClassifier();
-		if (owningClassifier instanceof Klass) {
-			AbstractRelatedFinder ownerFinder = this.getRelatedFinder(owningClassifier);
-			return ownerFinder.getAttributeByName(dataTypeProperty.getName());
-		}
-
-		return null;
-	}
-
-	// endregion
-
-	// region Private helpers — reflection
-
-	private Object getPropertyReflectively(@Nonnull Object persistentInstance, @Nonnull Property property) {
-		try {
-			Method method = this.getMethod(property);
-			return method.invoke(persistentInstance);
-		} catch (ReflectiveOperationException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Nonnull
-	private Method getMethod(@Nonnull Property property) throws ClassNotFoundException, NoSuchMethodException {
-		if (this.memoizedGetters.containsKey(property)) {
-			return this.memoizedGetters.get(property);
-		}
-		Classifier owningClassifier = property.getOwningClassifier();
-		String fullyQualifiedName = owningClassifier.getFullyQualifiedName();
-		Class<?> aClass = Class.forName(fullyQualifiedName);
-		String methodName = this.getMethodName(property);
-		Method method = aClass.getMethod(methodName);
-		this.memoizedGetters.put(property, method);
-		return method;
-	}
-
-	@Nonnull
-	private String getMethodName(Property property) {
-		String prefix = property.getType() == PrimitiveType.BOOLEAN ? "is" : "get";
-		String suffix = LOWER_TO_UPPER_CAMEL.convert(property.getName());
-		return prefix + suffix;
 	}
 
 	// endregion

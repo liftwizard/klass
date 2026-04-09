@@ -112,7 +112,13 @@
 		},
 		dataStore: {
 			type: "reladomoLens",
-			lensRegistry: { type: "cool.klass.xample.coverage" },
+			lensRegistry: {
+				type: "composite",
+				registries: [
+					{ type: "cool.klass.xample.coverage" },
+					{ type: "klass.model.meta.domain" },
+				],
+			},
 			uuid: {
 				type: "seed",
 				seed: "test seed",
