@@ -47,6 +47,12 @@
         </dependency>
 
         <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-model-meta-interface</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>io.liftwizard</groupId>
             <artifactId>liftwizard-config-uuid</artifactId>
         </dependency>

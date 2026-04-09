@@ -73,7 +73,7 @@ public class SampleDataGeneratorBundle implements PrioritizedBundle {
 
 		ObjectMapper objectMapper = environment.getObjectMapper();
 		DomainModel domainModel = domainModelFactoryProvider.getDomainModelFactory().createDomainModel(objectMapper);
-		DataStore dataStore = dataStoreFactoryProvider.getDataStoreFactory().createDataStore();
+		DataStore dataStore = dataStoreFactoryProvider.getDataStoreFactory().createDataStore(domainModel);
 
 		SampleDataGenerator sampleDataGenerator = new SampleDataGenerator(
 			domainModel,

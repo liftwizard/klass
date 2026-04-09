@@ -56,8 +56,8 @@ public class BootstrapWriterBundle implements PrioritizedBundle {
 
 		ObjectMapper objectMapper = environment.getObjectMapper();
 		KlassFactory klassFactory = klassConfiguration.getKlassFactory();
-		DataStore dataStore = klassFactory.getDataStoreFactory().createDataStore();
 		DomainModel domainModel = klassFactory.getDomainModelFactory().createDomainModel(objectMapper);
+		DataStore dataStore = klassFactory.getDataStoreFactory().createDataStore(domainModel);
 
 		KlassBootstrapWriter klassBootstrapWriter = new KlassBootstrapWriter(domainModel, dataStore);
 		klassBootstrapWriter.bootstrapMetaModel();
