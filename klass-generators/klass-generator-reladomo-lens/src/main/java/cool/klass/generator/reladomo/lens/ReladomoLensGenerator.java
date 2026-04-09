@@ -460,10 +460,12 @@ public class ReladomoLensGenerator {
 		return Lists.mutable
 			.with(groups)
 			.reject(Set::isEmpty)
-			.collect((group) -> Lists.mutable
-				.withAll(group)
-				.collect((fqcn) -> "import " + fqcn + ";\n")
-				.makeString(""))
+			.collect((group) ->
+				Lists.mutable
+					.withAll(group)
+					.collect((fqcn) -> "import " + fqcn + ";\n")
+					.makeString("")
+			)
 			.makeString("\n");
 	}
 

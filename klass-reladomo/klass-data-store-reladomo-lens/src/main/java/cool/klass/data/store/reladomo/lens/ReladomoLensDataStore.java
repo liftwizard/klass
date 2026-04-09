@@ -52,6 +52,7 @@ import cool.klass.model.meta.domain.api.PrimitiveType;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
+import cool.klass.model.meta.domain.api.property.Property;
 import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import cool.klass.model.meta.domain.api.visitor.AssertObjectMatchesDataTypePropertyVisitor;
 import org.eclipse.collections.api.list.ImmutableList;
@@ -263,7 +264,7 @@ public class ReladomoLensDataStore implements DataStore {
 			throw new AssertionError("Expected AssociationEnd but got " + referenceProperty);
 		}
 
-		Klass klass = this.resolveKlassForAssociation(persistentSourceInstance, associationEnd);
+		Klass klass = this.resolveKlassForProperty(persistentSourceInstance, associationEnd);
 
 		Object effectiveInstance = this.navigateToOwningInstance(persistentSourceInstance, klass);
 		ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
@@ -289,7 +290,7 @@ public class ReladomoLensDataStore implements DataStore {
 			throw new AssertionError("Expected AssociationEnd but got " + referenceProperty);
 		}
 
-		Klass klass = this.resolveKlassForAssociation(persistentSourceInstance, associationEnd);
+		Klass klass = this.resolveKlassForProperty(persistentSourceInstance, associationEnd);
 
 		Object effectiveInstance = this.navigateToOwningInstance(persistentSourceInstance, klass);
 		ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
@@ -554,15 +555,8 @@ public class ReladomoLensDataStore implements DataStore {
 		return operations.reduce(Operation::and).get();
 	}
 
-	private Klass resolveKlassForProperty(Object persistentInstance, DataTypeProperty property) {
+	private Klass resolveKlassForProperty(Object persistentInstance, Property property) {
 		if (property.getOwningClassifier() instanceof Klass klass) {
-			return klass;
-		}
-		return this.lensRegistry.getKlassForJavaClass(persistentInstance.getClass());
-	}
-
-	private Klass resolveKlassForAssociation(Object persistentInstance, AssociationEnd associationEnd) {
-		if (associationEnd.getOwningClassifier() instanceof Klass klass) {
 			return klass;
 		}
 		return this.lensRegistry.getKlassForJavaClass(persistentInstance.getClass());
