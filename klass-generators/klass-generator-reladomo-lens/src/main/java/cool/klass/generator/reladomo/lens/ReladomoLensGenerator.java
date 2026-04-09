@@ -42,17 +42,6 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.factory.Lists;
 
-/**
- * Generates Reladomo ClassLens implementations for each Klass in the domain model.
- *
- * <p>For each Klass, generates:
- * <ul>
- *     <li>A ClassLens implementation with typed lens fields</li>
- *     <li>Inner classes for each property lens (unified get/set/getProperty)</li>
- *     <li>Type conversion handling for temporal types (Timestamp ↔ Instant, Date ↔ LocalDate)</li>
- *     <li>Inheritance handling via recursive delegation to superclass lens</li>
- * </ul>
- */
 public class ReladomoLensGenerator {
 
 	private final DomainModel domainModel;
@@ -63,10 +52,6 @@ public class ReladomoLensGenerator {
 		this.applicationName = Objects.requireNonNull(applicationName);
 	}
 
-	/**
-	 * Collects inherited data type properties from the superclass chain, paired with their
-	 * navigation expressions. Walks up the class hierarchy recursively.
-	 */
 	private ImmutableList<InheritedProperty<DataTypeProperty>> getInheritedDataTypeProperties(@Nonnull Klass klass) {
 		MutableList<InheritedProperty<DataTypeProperty>> result = Lists.mutable.empty();
 		this.collectInheritedDataTypeProperties(klass, klass, "domainObject", result);
@@ -95,12 +80,6 @@ public class ReladomoLensGenerator {
 			alreadyCollected.add(inherited.property().getName());
 		}
 
-		// Compute properties introduced at this ancestor level: properties in this class's
-		// getDataTypeProperties() that are NOT in its superclass's getDataTypeProperties().
-		// This correctly includes interface-inherited properties (e.g. 'name' and 'ordinal'
-		// from NamedElement) at the class that first introduces them (PackageableElement),
-		// while avoiding attributing them to intermediate classes (Classifier) that inherit
-		// them from their superclass chain.
 		Set<String> superClassPropertyNames = superClass
 			.getSuperClass()
 			.map((sc) -> sc.getDataTypeProperties().collect(Property::getName).toSet())
@@ -118,10 +97,6 @@ public class ReladomoLensGenerator {
 		this.collectInheritedDataTypeProperties(originalKlass, superClass, navigation, result);
 	}
 
-	/**
-	 * Collects inherited association ends from the superclass chain, paired with their
-	 * navigation expressions.
-	 */
 	private ImmutableList<InheritedProperty<AssociationEnd>> getInheritedAssociationEnds(@Nonnull Klass klass) {
 		MutableList<InheritedProperty<AssociationEnd>> result = Lists.mutable.empty();
 		this.collectInheritedAssociationEnds(klass, "domainObject", result);
@@ -1141,39 +1116,32 @@ public class ReladomoLensGenerator {
 		boolean needsNullCheck =
 			!property.isDerived() && property.isOptional() && this.hasUnboxedMethods(property.getType());
 
+		// @formatter:off
 		String getBody;
 		if (property.isDerived() && needsConversion) {
-			// Derived properties with type conversion: getter returns the native type directly
 			getBody = "            return domainObject." + getterName + "();\n";
 		} else if (needsConversion) {
 			getBody = this.getConversionGetterBody(property, getterName);
 		} else if (needsNullCheck) {
-			getBody =
-				""
-				+ "            if (domainObject.is"
-				+ propNameUpper
-				+ "Null())\n"
+			getBody = ""
+				+ "            if (domainObject.is" + propNameUpper + "Null())\n"
 				+ "            {\n"
 				+ "                return null;\n"
 				+ "            }\n"
-				+ "            return domainObject."
-				+ getterName
-				+ "();\n";
+				+ "            return domainObject." + getterName + "();\n";
 		} else {
 			getBody = "            return domainObject." + getterName + "();\n";
 		}
 
 		String setBody;
 		if (property.isDerived()) {
-			setBody =
-				"            throw new UnsupportedOperationException(\"Cannot set derived property: "
-				+ propName
-				+ "\");\n";
+			setBody = "            throw new UnsupportedOperationException(\"Cannot set derived property: " + propName + "\");\n";
 		} else if (needsConversion) {
 			setBody = this.getConversionSetterBody(property, setterName);
 		} else {
 			setBody = "            domainObject." + setterName + "(value);\n";
 		}
+		// @formatter:on
 
 		String unboxed = this.hasUnboxedMethods(property.getType())
 			? (property.isDerived()
@@ -1275,24 +1243,18 @@ public class ReladomoLensGenerator {
 		);
 	}
 
+	// @formatter:off
 	private String getConversionGetterBody(@Nonnull PrimitiveProperty property, String getterName) {
 		PrimitiveType type = property.getType();
 		if (type == PrimitiveType.INSTANT || type == PrimitiveType.TEMPORAL_INSTANT) {
-			return (
-				"            Timestamp ts = domainObject."
-				+ getterName
-				+ "();\n"
-				+ "            return ts == null ? null : ts.toInstant();\n"
-			);
+			return ""
+				+ "            Timestamp ts = domainObject." + getterName + "();\n"
+				+ "            return ts == null ? null : ts.toInstant();\n";
 		}
 		if (type == PrimitiveType.LOCAL_DATE) {
-			// Reladomo declares return type as java.util.Date but stores java.sql.Date
-			return (
-				"            java.util.Date date = domainObject."
-				+ getterName
-				+ "();\n"
-				+ "            return date == null ? null : ((java.sql.Date) date).toLocalDate();\n"
-			);
+			return ""
+				+ "            java.util.Date date = domainObject." + getterName + "();\n"
+				+ "            return date == null ? null : ((java.sql.Date) date).toLocalDate();\n";
 		}
 		throw new IllegalStateException("Unexpected type needing conversion: " + type);
 	}
@@ -1307,6 +1269,7 @@ public class ReladomoLensGenerator {
 		}
 		throw new IllegalStateException("Unexpected type needing conversion: " + type);
 	}
+	// @formatter:on
 
 	private boolean hasUnboxedMethods(@Nonnull PrimitiveType type) {
 		return switch (type) {
@@ -1484,82 +1447,60 @@ public class ReladomoLensGenerator {
 			setterBody = "            domainObject.set" + propNameUpper + "(value);\n";
 		}
 
-		return (
-			// language=JAVA
-			""
-			+ "    private static class "
-			+ lensClass
-			+ "\n"
-			+ "            implements "
-			+ interfaceType
-			+ "\n"
-			+ "    {\n"
-			+ "        private final cool.klass.model.meta.domain.api.property.AssociationEnd property;\n"
-			+ "\n"
-			+ "        "
-			+ lensClass
-			+ "(cool.klass.model.meta.domain.api.property.AssociationEnd property)\n"
-			+ "        {\n"
-			+ "            this.property = Objects.requireNonNull(property);\n"
-			+ "        }\n"
-			+ "\n"
-			+ "        @Override\n"
-			+ "        @Nullable\n"
-			+ "        public "
-			+ returnType
-			+ " get(@Nonnull "
-			+ className
-			+ " domainObject)\n"
-			+ "        {\n"
-			+ getterBody
-			+ "        }\n"
-			+ "\n"
-			+ "        @Override\n"
-			+ "        public void set(@Nonnull "
-			+ className
-			+ " domainObject, @Nullable "
-			+ returnType
-			+ " value)\n"
-			+ "        {\n"
-			+ setterBody
-			+ "        }\n"
-			+ "\n"
-			+ "        @Override\n"
-			+ "        public boolean isNull(@Nonnull "
-			+ className
-			+ " domainObject)\n"
-			+ "        {\n"
-			+ "            return this.get(domainObject) == null;\n"
-			+ "        }\n"
-			+ "\n"
-			+ "        @Override\n"
-			+ "        public void setNull(@Nonnull "
-			+ className
-			+ " domainObject)\n"
-			+ "        {\n"
-			+ "            this.set(domainObject, null);\n"
-			+ "        }\n"
-			+ "\n"
-			+ "        @Override\n"
-			+ "        @Nonnull\n"
-			+ "        public cool.klass.model.meta.domain.api.property.AssociationEnd getAssociationEnd()\n"
-			+ "        {\n"
-			+ "            return this.property;\n"
-			+ "        }\n"
-			+ "\n"
-			+ "        @Override\n"
-			+ "        @Nonnull\n"
-			+ "        public AbstractRelatedFinder getRelationshipFinder()\n"
-			+ "        {\n"
-			+ "            return "
-			+ className
-			+ "Finder."
-			+ propName
-			+ "();\n"
-			+ "        }\n"
-			+ "    }\n"
-			+ "\n"
-		);
+		// @formatter:off
+		// language=JAVA
+		return ""
+				+ "    private static class " + lensClass + "\n"
+				+ "            implements " + interfaceType + "\n"
+				+ "    {\n"
+				+ "        private final cool.klass.model.meta.domain.api.property.AssociationEnd property;\n"
+				+ "\n"
+				+ "        " + lensClass + "(cool.klass.model.meta.domain.api.property.AssociationEnd property)\n"
+				+ "        {\n"
+				+ "            this.property = Objects.requireNonNull(property);\n"
+				+ "        }\n"
+				+ "\n"
+				+ "        @Override\n"
+				+ "        @Nullable\n"
+				+ "        public " + returnType + " get(@Nonnull " + className + " domainObject)\n"
+				+ "        {\n"
+				+ getterBody
+				+ "        }\n"
+				+ "\n"
+				+ "        @Override\n"
+				+ "        public void set(@Nonnull " + className + " domainObject, @Nullable " + returnType + " value)\n"
+				+ "        {\n"
+				+ setterBody
+				+ "        }\n"
+				+ "\n"
+				+ "        @Override\n"
+				+ "        public boolean isNull(@Nonnull " + className + " domainObject)\n"
+				+ "        {\n"
+				+ "            return this.get(domainObject) == null;\n"
+				+ "        }\n"
+				+ "\n"
+				+ "        @Override\n"
+				+ "        public void setNull(@Nonnull " + className + " domainObject)\n"
+				+ "        {\n"
+				+ "            this.set(domainObject, null);\n"
+				+ "        }\n"
+				+ "\n"
+				+ "        @Override\n"
+				+ "        @Nonnull\n"
+				+ "        public cool.klass.model.meta.domain.api.property.AssociationEnd getAssociationEnd()\n"
+				+ "        {\n"
+				+ "            return this.property;\n"
+				+ "        }\n"
+				+ "\n"
+				+ "        @Override\n"
+				+ "        @Nonnull\n"
+				+ "        public AbstractRelatedFinder getRelationshipFinder()\n"
+				+ "        {\n"
+				+ "            return " + className + "Finder." + propName + "();\n"
+				+ "        }\n"
+				+ "    }\n"
+				+ "\n";
+		// @formatter:on
 	}
 
 	private String getInheritedPrimitiveLensClass(
@@ -1582,21 +1523,17 @@ public class ReladomoLensGenerator {
 
 		boolean needsNullCheck = property.isOptional() && this.hasUnboxedMethods(property.getType());
 
+		// @formatter:off
 		String getBody;
 		if (needsConversion) {
 			getBody = this.getInheritedConversionGetterBody(property, getterName);
 		} else if (needsNullCheck) {
-			getBody =
-				""
-				+ "            if (ancestor.is"
-				+ propNameUpper
-				+ "Null())\n"
+			getBody = ""
+				+ "            if (ancestor.is" + propNameUpper + "Null())\n"
 				+ "            {\n"
 				+ "                return null;\n"
 				+ "            }\n"
-				+ "            return ancestor."
-				+ getterName
-				+ "();\n";
+				+ "            return ancestor." + getterName + "();\n";
 		} else {
 			getBody = "            return ancestor." + getterName + "();\n";
 		}
@@ -1604,6 +1541,7 @@ public class ReladomoLensGenerator {
 		String setBody = needsConversion
 			? this.getInheritedConversionSetterBody(property, setterName)
 			: "            ancestor." + setterName + "(value);\n";
+		// @formatter:on
 
 		String unboxed = this.hasUnboxedMethods(property.getType())
 			? this.getInheritedUnboxedMethods(klass, property, ancestor, navigation)
@@ -1676,23 +1614,18 @@ public class ReladomoLensGenerator {
 		// @formatter:on
 	}
 
+	// @formatter:off
 	private String getInheritedConversionGetterBody(@Nonnull PrimitiveProperty property, String getterName) {
 		PrimitiveType type = property.getType();
 		if (type == PrimitiveType.INSTANT || type == PrimitiveType.TEMPORAL_INSTANT) {
-			return (
-				"            Timestamp ts = ancestor."
-				+ getterName
-				+ "();\n"
-				+ "            return ts == null ? null : ts.toInstant();\n"
-			);
+			return ""
+				+ "            Timestamp ts = ancestor." + getterName + "();\n"
+				+ "            return ts == null ? null : ts.toInstant();\n";
 		}
 		if (type == PrimitiveType.LOCAL_DATE) {
-			return (
-				"            java.util.Date date = ancestor."
-				+ getterName
-				+ "();\n"
-				+ "            return date == null ? null : ((java.sql.Date) date).toLocalDate();\n"
-			);
+			return ""
+				+ "            java.util.Date date = ancestor." + getterName + "();\n"
+				+ "            return date == null ? null : ((java.sql.Date) date).toLocalDate();\n";
 		}
 		throw new IllegalStateException("Unexpected type needing conversion: " + type);
 	}
@@ -1707,6 +1640,7 @@ public class ReladomoLensGenerator {
 		}
 		throw new IllegalStateException("Unexpected type needing conversion: " + type);
 	}
+	// @formatter:on
 
 	private String getInheritedUnboxedMethods(
 		@Nonnull Klass klass,
@@ -2018,27 +1952,20 @@ public class ReladomoLensGenerator {
 			+ finderEntries.makeString("");
 		relatedFindersByKlassMap = relatedFindersByKlassMap.substring(0, relatedFindersByKlassMap.length() - 1) + ";\n";
 
-		// Getter methods for each lens
+		// @formatter:off
 		String getterMethods = concreteClasses
 			.collect((klass) -> {
 				String fieldName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "Lens";
-				return (
-					""
+				return ""
 					+ "    @Nonnull\n"
-					+ "    public Reladomo"
-					+ klass.getName()
-					+ "ClassLens get"
-					+ klass.getName()
-					+ "Lens()\n"
+					+ "    public Reladomo" + klass.getName() + "ClassLens get" + klass.getName() + "Lens()\n"
 					+ "    {\n"
-					+ "        return this."
-					+ fieldName
-					+ ";\n"
+					+ "        return this." + fieldName + ";\n"
 					+ "    }\n"
-					+ "\n"
-				);
+					+ "\n";
 			})
 			.makeString("");
+		// @formatter:on
 
 		// @formatter:off
 		// language=JAVA
@@ -2157,14 +2084,5 @@ public class ReladomoLensGenerator {
 		}
 	}
 
-	/**
-	 * Pairs an inherited property with its ancestor class and the Reladomo navigation expression
-	 * needed to reach that ancestor from the concrete subclass.
-	 *
-	 * <p>For example, if {@code Klass} extends {@code Classifier}, and {@code Classifier} declares
-	 * the {@code classifierModifiers} association end, the navigation would be
-	 * {@code "domainObject.getClassifierSuperClass()"} since Reladomo uses table-per-class inheritance
-	 * and requires explicit navigation through the superclass relationship.
-	 */
 	private record InheritedProperty<T>(T property, Klass ancestor, String navigation) {}
 }
