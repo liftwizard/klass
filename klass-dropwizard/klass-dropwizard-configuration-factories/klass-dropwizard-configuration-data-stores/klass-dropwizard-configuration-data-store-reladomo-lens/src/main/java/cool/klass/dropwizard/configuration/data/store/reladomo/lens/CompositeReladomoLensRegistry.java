@@ -57,7 +57,9 @@ public class CompositeReladomoLensRegistry implements ReladomoLensRegistry {
 		for (ReladomoLensRegistry registry : this.registries) {
 			try {
 				return registry.getKlassForJavaClass(javaClass);
-			} catch (IllegalStateException ignored) {}
+			} catch (IllegalStateException ignored) {
+				// try next registry
+			}
 		}
 		throw new IllegalStateException("No Klass registered for Java class: " + javaClass.getName());
 	}
@@ -68,7 +70,9 @@ public class CompositeReladomoLensRegistry implements ReladomoLensRegistry {
 		for (ReladomoLensRegistry registry : this.registries) {
 			try {
 				return registry.getRelatedFinderForKlass(klass);
-			} catch (IllegalStateException ignored) {}
+			} catch (IllegalStateException ignored) {
+				// try next registry
+			}
 		}
 		throw new IllegalStateException("No RelatedFinder registered for Klass: " + klass.getName());
 	}
