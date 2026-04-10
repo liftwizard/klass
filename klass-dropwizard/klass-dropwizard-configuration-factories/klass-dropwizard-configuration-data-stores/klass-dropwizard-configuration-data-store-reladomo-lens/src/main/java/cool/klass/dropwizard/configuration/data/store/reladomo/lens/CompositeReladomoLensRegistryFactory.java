@@ -38,12 +38,12 @@ public class CompositeReladomoLensRegistryFactory implements LensRegistryFactory
 
 	private @NotNull @Valid List<LensRegistryFactory> registries;
 
-	@JsonProperty("registries")
+	@JsonProperty
 	public List<LensRegistryFactory> getRegistries() {
 		return this.registries;
 	}
 
-	@JsonProperty("registries")
+	@JsonProperty
 	public void setRegistries(List<LensRegistryFactory> registries) {
 		this.registries = registries;
 	}
