@@ -71,7 +71,10 @@
       colorScheme: "dark",
     },
     dataStore: {
-      type: "reladomo",
+      type: "reladomoLens",
+      lensRegistry: {
+        type: "${package}",
+      },
       uuid: {
         type: "seed",
         seed: "test seed",
