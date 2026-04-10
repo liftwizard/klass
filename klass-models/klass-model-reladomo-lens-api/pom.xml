@@ -42,7 +42,14 @@
         </dependency>
         <!--endregion-->
 
-        <!--region Liftwizard compile dependencies -->
+        <!--region Eclipse Collections compile dependencies -->
+        <dependency>
+            <groupId>org.eclipse.collections</groupId>
+            <artifactId>eclipse-collections-api</artifactId>
+        </dependency>
+        <!--endregion-->
+
+        <!--region Compile dependencies -->
         <dependency>
             <groupId>com.goldmansachs.reladomo</groupId>
             <artifactId>reladomo</artifactId>

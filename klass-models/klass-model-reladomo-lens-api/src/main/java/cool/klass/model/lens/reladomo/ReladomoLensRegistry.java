@@ -18,7 +18,6 @@ package cool.klass.model.lens.reladomo;
 
 import javax.annotation.Nonnull;
 
-import com.gs.fw.common.mithra.finder.RelatedFinder;
 import cool.klass.model.lens.LensRegistry;
 import cool.klass.model.meta.domain.api.Klass;
 
@@ -27,10 +26,7 @@ import cool.klass.model.meta.domain.api.Klass;
  * such as finder lookup for any Klass (including abstract classes).
  */
 public interface ReladomoLensRegistry extends LensRegistry {
-	default boolean hasRelatedFinderForKlass(@Nonnull Klass klass) {
-		return false;
-	}
-
+	@Override
 	@Nonnull
-	RelatedFinder<?> getRelatedFinderForKlass(@Nonnull Klass klass);
+	ReladomoClassLens<?> getClassLens(@Nonnull Klass klass);
 }

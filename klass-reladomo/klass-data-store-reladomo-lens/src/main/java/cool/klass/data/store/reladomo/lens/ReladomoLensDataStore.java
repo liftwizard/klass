@@ -477,7 +477,7 @@ public class ReladomoLensDataStore implements DataStore {
 		@Nonnull String relationshipName,
 		@Nonnull Object persistentInstance
 	) {
-		AbstractRelatedFinder finder = (AbstractRelatedFinder) this.lensRegistry.getRelatedFinderForKlass(klass);
+		AbstractRelatedFinder finder = (AbstractRelatedFinder) this.lensRegistry.getClassLens(klass).getRelatedFinder();
 
 		AbstractRelatedFinder relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
 			relationshipName

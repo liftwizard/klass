@@ -20,8 +20,7 @@ import java.util.Objects;
 
 import javax.annotation.Nonnull;
 
-import com.gs.fw.common.mithra.finder.RelatedFinder;
-import cool.klass.model.lens.ClassLens;
+import cool.klass.model.lens.reladomo.ReladomoClassLens;
 import cool.klass.model.lens.reladomo.ReladomoLensRegistry;
 import cool.klass.model.meta.domain.api.Klass;
 import org.eclipse.collections.api.list.ImmutableList;
@@ -42,7 +41,7 @@ public class CompositeReladomoLensRegistry implements ReladomoLensRegistry {
 
 	@Override
 	@Nonnull
-	public ClassLens<?> getClassLens(@Nonnull Klass klass) {
+	public ReladomoClassLens<?> getClassLens(@Nonnull Klass klass) {
 		for (ReladomoLensRegistry registry : this.registries) {
 			if (registry.hasClassLens(klass)) {
 				return registry.getClassLens(klass);
@@ -67,19 +66,4 @@ public class CompositeReladomoLensRegistry implements ReladomoLensRegistry {
 		throw new IllegalStateException("No Klass registered for Java class: " + javaClass.getName());
 	}
 
-	@Override
-	public boolean hasRelatedFinderForKlass(@Nonnull Klass klass) {
-		return this.registries.anySatisfy((registry) -> registry.hasRelatedFinderForKlass(klass));
-	}
-
-	@Override
-	@Nonnull
-	public RelatedFinder<?> getRelatedFinderForKlass(@Nonnull Klass klass) {
-		for (ReladomoLensRegistry registry : this.registries) {
-			if (registry.hasRelatedFinderForKlass(klass)) {
-				return registry.getRelatedFinderForKlass(klass);
-			}
-		}
-		throw new IllegalStateException("No RelatedFinder registered for Klass: " + klass.getName());
-	}
 }
