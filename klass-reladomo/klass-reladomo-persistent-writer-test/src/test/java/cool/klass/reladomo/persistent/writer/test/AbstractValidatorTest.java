@@ -23,13 +23,15 @@ import javax.annotation.Nonnull;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import cool.klass.data.store.reladomo.ReladomoDataStore;
+import cool.klass.data.store.DataStore;
+import cool.klass.data.store.reladomo.lens.ReladomoLensDataStore;
 import cool.klass.deserializer.json.OperationMode;
 import cool.klass.dropwizard.configuration.domain.model.loader.compiler.DomainModelCompilerFactory;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.reladomo.persistent.writer.IncomingCreateDataModelValidator;
+import cool.klass.xample.coverage.lens.reladomo.ReladomoLensFactory;
 import io.dropwizard.jackson.Jackson;
 import io.liftwizard.dropwizard.configuration.uuid.seed.SeedUUIDSupplier;
 import io.liftwizard.junit.extension.liquibase.migrations.LiquibaseTestExtension;
@@ -62,9 +64,9 @@ public abstract class AbstractValidatorTest {
 
 	protected final MutableList<String> actualErrors = Lists.mutable.empty();
 	protected final MutableList<String> actualWarnings = Lists.mutable.empty();
-	protected final ReladomoDataStore reladomoDataStore = this.getReladomoDataStore();
 	protected final ObjectMapper objectMapper = AbstractValidatorTest.getObjectMapper();
 	protected final DomainModel domainModel = AbstractValidatorTest.getDomainModel(this.objectMapper);
+	protected final DataStore reladomoDataStore = this.getReladomoDataStore();
 
 	protected void validate(String testName) throws JsonProcessingException {
 		this.validate(testName, null);
@@ -104,10 +106,11 @@ public abstract class AbstractValidatorTest {
 	protected abstract OperationMode getMode();
 
 	@Nonnull
-	private ReladomoDataStore getReladomoDataStore() {
+	private DataStore getReladomoDataStore() {
 		String seed = IncomingCreateDataModelValidator.class.getSimpleName();
 		SeedUUIDSupplier uuidSupplier = new SeedUUIDSupplier(seed);
-		return new ReladomoDataStore(uuidSupplier, 1);
+		ReladomoLensFactory lensRegistry = new ReladomoLensFactory(this.domainModel);
+		return new ReladomoLensDataStore(lensRegistry, uuidSupplier, 1);
 	}
 
 	private static DomainModel getDomainModel(ObjectMapper objectMapper) {
