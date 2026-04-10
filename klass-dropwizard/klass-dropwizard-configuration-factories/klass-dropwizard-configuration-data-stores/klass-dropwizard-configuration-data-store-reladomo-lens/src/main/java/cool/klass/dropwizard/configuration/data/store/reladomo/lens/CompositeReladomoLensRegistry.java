@@ -65,5 +65,4 @@ public class CompositeReladomoLensRegistry implements ReladomoLensRegistry {
 		}
 		throw new IllegalStateException("No Klass registered for Java class: " + javaClass.getName());
 	}
-
 }

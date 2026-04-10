@@ -1884,11 +1884,12 @@ public class ReladomoLensGenerator {
 	) {
 		// Fields for each lens (all classes including abstract)
 		String lensFields = allClasses
-			.collect(
-				(klass) -> MessageFormat.format(
-						"    private final Reladomo{0}ClassLens {1}Lens;\n",
-						klass.getName(),
-						CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()))
+			.collect((klass) ->
+				MessageFormat.format(
+					"    private final Reladomo{0}ClassLens {1}Lens;\n",
+					klass.getName(),
+					CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName())
+				)
 			)
 			.makeString("");
 
@@ -1897,15 +1898,21 @@ public class ReladomoLensGenerator {
 			.collect((klass) -> {
 				String fieldName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "Lens";
 				return MessageFormat.format(
-						"        this.{0} = new Reladomo{1}ClassLens(domainModel.getClassByName(\"{1}\"));\n",
-						fieldName,
-						klass.getName());
+					"        this.{0} = new Reladomo{1}ClassLens(domainModel.getClassByName(\"{1}\"));\n",
+					fieldName,
+					klass.getName()
+				);
 			})
 			.makeString("");
 
 		// getAllLenses() body - list of all lens fields
 		String allLensesEntries = allClasses
-			.collect((klass) -> "                this." + CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "Lens")
+			.collect(
+				(klass) ->
+					"                this."
+					+ CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName())
+					+ "Lens"
+			)
 			.makeString(",\n");
 
 		// @formatter:off
