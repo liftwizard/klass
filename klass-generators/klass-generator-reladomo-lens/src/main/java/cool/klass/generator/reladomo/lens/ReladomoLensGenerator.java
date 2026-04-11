@@ -43,7 +43,6 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.factory.Lists;
 
-// TODO 2026-04-10: Generate toString() methods on class and property lenses
 // TODO 2026-04-10: Lots of generated code uses the identifier domainObject, and it would be cool to use the lowerSnakeCase name of the type that we know it actually is
 public class ReladomoLensGenerator {
 
@@ -867,7 +866,8 @@ public class ReladomoLensGenerator {
 				+ "\n"
 				+ this.getInstantiateMethod(klass)
 			+ this.getGetJavaClassMethod(klass)
-			+ this.getGenerateAndSetIdMethod(klass);
+			+ this.getGenerateAndSetIdMethod(klass)
+			+ this.getClassLensToString("Reladomo" + className + "ClassLens");
 		// @formatter:on
 
 		return result;
@@ -971,6 +971,18 @@ public class ReladomoLensGenerator {
 				+ "    public void generateAndSetId(@Nonnull " + className + " instance)\n"
 				+ "    {\n"
 				+ "        " + navigation + ".generateAndSet" + idPropNameUpper + "();\n"
+				+ "    }\n"
+				+ "\n";
+		// @formatter:on
+	}
+
+	private String getClassLensToString(String lensClassName) {
+		// @formatter:off
+		return ""
+				+ "    @Override\n"
+				+ "    public String toString()\n"
+				+ "    {\n"
+				+ "        return \"" + lensClassName + "{\" + this.metaKlass.getName() + \"}\";\n"
 				+ "    }\n"
 				+ "\n";
 		// @formatter:on
@@ -1201,6 +1213,12 @@ public class ReladomoLensGenerator {
 				+ "            return this.property;\n"
 				+ "        }\n"
 				+ getAttributeMethod
+				+ "\n"
+				+ "        @Override\n"
+				+ "        public String toString()\n"
+				+ "        {\n"
+				+ "            return \"" + lensClass + "{" + propName + "}\";\n"
+				+ "        }\n"
 				+ "    }\n"
 				+ "\n";
 		// @formatter:on
@@ -1394,6 +1412,12 @@ public class ReladomoLensGenerator {
 				+ "        {\n"
 				+ "            return " + className + "Finder." + propName + "();\n"
 				+ "        }\n"
+				+ "\n"
+				+ "        @Override\n"
+				+ "        public String toString()\n"
+				+ "        {\n"
+				+ "            return \"" + lensClass + "{" + propName + "}\";\n"
+				+ "        }\n"
 				+ "    }\n"
 				+ "\n";
 		// @formatter:on
@@ -1489,6 +1513,12 @@ public class ReladomoLensGenerator {
 				+ "        public AbstractRelatedFinder getRelationshipFinder()\n"
 				+ "        {\n"
 				+ "            return " + className + "Finder." + propName + "();\n"
+				+ "        }\n"
+				+ "\n"
+				+ "        @Override\n"
+				+ "        public String toString()\n"
+				+ "        {\n"
+				+ "            return \"" + lensClass + "{" + propName + "}\";\n"
 				+ "        }\n"
 				+ "    }\n"
 				+ "\n";
@@ -1600,6 +1630,12 @@ public class ReladomoLensGenerator {
 				+ "        public Attribute getAttribute()\n"
 				+ "        {\n"
 				+ "            return " + ancestorName + "Finder." + propName + "();\n"
+				+ "        }\n"
+				+ "\n"
+				+ "        @Override\n"
+				+ "        public String toString()\n"
+				+ "        {\n"
+				+ "            return \"" + lensClass + "{" + propName + "}\";\n"
 				+ "        }\n"
 				+ "    }\n"
 				+ "\n";
@@ -1748,6 +1784,12 @@ public class ReladomoLensGenerator {
 				+ "        {\n"
 				+ "            return " + ancestorName + "Finder." + propName + "();\n"
 				+ "        }\n"
+				+ "\n"
+				+ "        @Override\n"
+				+ "        public String toString()\n"
+				+ "        {\n"
+				+ "            return \"" + lensClass + "{" + propName + "}\";\n"
+				+ "        }\n"
 				+ "    }\n"
 				+ "\n";
 		// @formatter:on
@@ -1862,6 +1904,12 @@ public class ReladomoLensGenerator {
 				+ "        public AbstractRelatedFinder getRelationshipFinder()\n"
 				+ "        {\n"
 				+ "            return " + ancestorName + "Finder." + propName + "();\n"
+				+ "        }\n"
+				+ "\n"
+				+ "        @Override\n"
+				+ "        public String toString()\n"
+				+ "        {\n"
+				+ "            return \"" + lensClass + "{" + propName + "}\";\n"
 				+ "        }\n"
 				+ "    }\n"
 				+ "\n";
