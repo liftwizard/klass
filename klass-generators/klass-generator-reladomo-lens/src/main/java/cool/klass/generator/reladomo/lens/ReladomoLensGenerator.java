@@ -41,6 +41,7 @@ import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.property.Property;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
+import org.eclipse.collections.api.map.ImmutableMap;
 import org.eclipse.collections.impl.factory.Lists;
 
 public class ReladomoLensGenerator {
@@ -316,21 +317,7 @@ public class ReladomoLensGenerator {
 		return !klass.isAbstract();
 	}
 
-	private ImmutableList<DataTypeProperty> getInterfaceOnlyProperties(@Nonnull Klass klass) {
-		Set<String> declaredNames = new LinkedHashSet<>();
-		for (DataTypeProperty p : klass.getDeclaredDataTypeProperties()) {
-			declaredNames.add(p.getName());
-		}
-		for (InheritedProperty<DataTypeProperty> inherited : this.getInheritedDataTypeProperties(klass)) {
-			declaredNames.add(inherited.property().getName());
-		}
 
-		return klass
-			.getDataTypeProperties()
-			.reject((p) -> declaredNames.contains(p.getName()))
-			.reject(Property::isDerived)
-			.reject(this::isTemporalRange);
-	}
 
 	private String getImports(@Nonnull Klass klass) {
 		ImmutableList<PrimitiveProperty> primitiveProperties = klass
@@ -516,27 +503,17 @@ public class ReladomoLensGenerator {
 	}
 
 	private String getFields(@Nonnull Klass klass) {
-		ImmutableList<InheritedProperty<DataTypeProperty>> inheritedDataTypeProperties =
-			this.getInheritedDataTypeProperties(klass);
-		ImmutableList<InheritedProperty<AssociationEnd>> inheritedAssociationEnds = this.getInheritedAssociationEnds(
-			klass
-		);
-		ImmutableList<DataTypeProperty> interfaceOnlyProperties = this.getInterfaceOnlyProperties(klass);
+		ImmutableList<DataTypeProperty> dataTypeProperties = this.getIncludedDataTypeProperties(klass);
+		ImmutableList<AssociationEnd> associationEnds = this.getIncludedAssociationEnds(klass);
 
-		// Public typed lens fields - declared data type properties
-		String declaredDataTypeFields = klass
-			.getDeclaredDataTypeProperties()
-			.reject((p) -> !this.shouldIncludeDerived(klass) && p.isDerived())
-			.reject(this::isTemporalRange)
+		String dataTypeFields = dataTypeProperties
 			.collect(
 				(property) ->
 					"    public final " + this.getLensFieldType(klass, property) + " " + property.getName() + ";\n"
 			)
 			.makeString("");
 
-		// Public typed lens fields - declared association ends
-		String declaredAssociationFields = klass
-			.getDeclaredAssociationEnds()
+		String associationFields = associationEnds
 			.collect(
 				(associationEnd) ->
 					"    public final "
@@ -547,51 +524,15 @@ public class ReladomoLensGenerator {
 			)
 			.makeString("");
 
-		// Public typed lens fields - inherited data type properties
-		String inheritedDataTypeFields = inheritedDataTypeProperties
-			.collect(
-				(inherited) ->
-					"    public final "
-					+ this.getLensFieldType(klass, inherited.property())
-					+ " "
-					+ inherited.property().getName()
-					+ ";\n"
-			)
-			.makeString("");
-
-		// Public typed lens fields - inherited association ends
-		String inheritedAssociationFields = inheritedAssociationEnds
-			.collect(
-				(inherited) ->
-					"    public final "
-					+ this.getAssociationLensFieldType(inherited.property(), klass)
-					+ " "
-					+ inherited.property().getName()
-					+ ";\n"
-			)
-			.makeString("");
-
-		// Public typed lens fields - interface-only data type properties (direct access)
-		String interfaceOnlyFields = interfaceOnlyProperties
-			.collect(
-				(property) ->
-					"    public final " + this.getLensFieldType(klass, property) + " " + property.getName() + ";\n"
-			)
-			.makeString("");
-
 		String className = klass.getName();
 
 		// @formatter:off
 		return ""
 				+ "    private final cool.klass.model.meta.domain.api.Klass metaKlass;\n"
 				+ "\n"
-				+ declaredDataTypeFields
-				+ declaredAssociationFields
-				+ inheritedDataTypeFields
-				+ inheritedAssociationFields
-				+ interfaceOnlyFields
+				+ dataTypeFields
+				+ associationFields
 				+ "\n"
-				+ "    private final ImmutableList<PropertyLens<" + className + ", ?>> allLenses;\n"
 				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.DataTypeProperty, DataTypeLens<" + className + ", ?>> dataTypePropertyLenses;\n"
 				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.PrimitiveProperty, PrimitiveLens<" + className + ", ?>> primitivePropertyLenses;\n"
 				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.EnumerationProperty, EnumerationLens<" + className + ">> enumerationPropertyLenses;\n"
@@ -599,6 +540,27 @@ public class ReladomoLensGenerator {
 				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.Property, PropertyLens<" + className + ", ?>> propertyLenses;\n"
 				+ "\n";
 		// @formatter:on
+	}
+
+	private ImmutableList<DataTypeProperty> getIncludedDataTypeProperties(@Nonnull Klass klass) {
+		Set<String> declaredAndInheritedNames = new LinkedHashSet<>();
+		klass.getDeclaredDataTypeProperties().forEach((p) -> declaredAndInheritedNames.add(p.getName()));
+		this.getInheritedDataTypeProperties(klass).forEach((p) -> declaredAndInheritedNames.add(p.property().getName()));
+
+		return klass
+			.getDataTypeProperties()
+			.reject((property) -> !this.shouldIncludeDerived(klass) && property.isDerived())
+			.reject((property) -> property.isDerived() && !declaredAndInheritedNames.contains(property.getName()))
+			.reject(this::isTemporalRange);
+	}
+
+	private ImmutableList<AssociationEnd> getIncludedAssociationEnds(@Nonnull Klass klass) {
+		ImmutableList<InheritedProperty<AssociationEnd>> inheritedAssociationEnds = this.getInheritedAssociationEnds(
+			klass
+		);
+		return klass
+			.getDeclaredAssociationEnds()
+			.newWithAll(inheritedAssociationEnds.collect(InheritedProperty::property));
 	}
 
 	private String getLensFieldType(@Nonnull Klass klass, @Nonnull DataTypeProperty property) {
@@ -637,21 +599,13 @@ public class ReladomoLensGenerator {
 	}
 
 	private String getConstructor(@Nonnull Klass klass, String lensClassName) {
-		ImmutableList<InheritedProperty<DataTypeProperty>> inheritedDataTypeProperties =
-			this.getInheritedDataTypeProperties(klass);
-		ImmutableList<InheritedProperty<AssociationEnd>> inheritedAssociationEnds = this.getInheritedAssociationEnds(
-			klass
-		);
-		ImmutableList<DataTypeProperty> interfaceOnlyProperties = this.getInterfaceOnlyProperties(klass);
+		ImmutableList<DataTypeProperty> dataTypeProperties = this.getIncludedDataTypeProperties(klass);
+		ImmutableList<AssociationEnd> associationEnds = this.getIncludedAssociationEnds(klass);
 
-		// Use the same three disjoint sets as field declarations to ensure consistency
-		ImmutableList<DataTypeProperty> declaredDataTypeProperties = klass
-			.getDeclaredDataTypeProperties()
-			.reject((property) -> !this.shouldIncludeDerived(klass) && property.isDerived())
-			.reject(this::isTemporalRange);
+		String className = klass.getName();
 
-		// Initialize lens fields - declared data type properties
-		String initDeclared = declaredDataTypeProperties
+		// Initialize data type lens fields
+		String initDataType = dataTypeProperties
 			.collect((property) ->
 				MessageFormat.format(
 					"        this.{0} = new {1}({2});\n",
@@ -662,33 +616,8 @@ public class ReladomoLensGenerator {
 			)
 			.makeString("");
 
-		// Initialize lens fields - inherited data type properties
-		String initInherited = inheritedDataTypeProperties
-			.collect((inherited) ->
-				MessageFormat.format(
-					"        this.{0} = new {1}({2});\n",
-					inherited.property().getName(),
-					this.getLensClassName(klass, inherited.property()),
-					this.getPropertyLookup(inherited.property())
-				)
-			)
-			.makeString("");
-
-		// Initialize lens fields - interface-only data type properties
-		String initInterfaceOnly = interfaceOnlyProperties
-			.collect((property) ->
-				MessageFormat.format(
-					"        this.{0} = new {1}({2});\n",
-					property.getName(),
-					this.getLensClassName(klass, property),
-					this.getPropertyLookup(property)
-				)
-			)
-			.makeString("");
-
-		// Initialize lens fields - declared association ends
-		String initDeclaredAssociation = klass
-			.getDeclaredAssociationEnds()
+		// Initialize association end lens fields
+		String initAssociation = associationEnds
 			.collect((associationEnd) ->
 				MessageFormat.format(
 					"        this.{0} = new {1}(klass.getAssociationEndByName(\"{0}\"));\n",
@@ -698,34 +627,34 @@ public class ReladomoLensGenerator {
 			)
 			.makeString("");
 
-		// Initialize lens fields - inherited association ends
-		String initInheritedAssociation = inheritedAssociationEnds
-			.collect((inherited) ->
-				MessageFormat.format(
-					"        this.{0} = new {1}(klass.getAssociationEndByName(\"{0}\"));\n",
-					inherited.property().getName(),
-					this.getAssociationLensClassName(klass, inherited.property())
-				)
-			)
-			.makeString("");
-
-		// Initialize allLenses list
-		MutableList<String> lensNames = Lists.mutable.empty();
-		lensNames.addAllIterable(declaredDataTypeProperties.collect((property) -> "this." + property.getName()));
-		lensNames.addAllIterable(
-			klass.getDeclaredAssociationEnds().collect((associationEnd) -> "this." + associationEnd.getName())
+		// Build typed sublists for groupByUniqueKey — no unchecked casts needed
+		ImmutableList<PrimitiveProperty> primitiveProperties = dataTypeProperties.selectInstancesOf(
+			PrimitiveProperty.class
 		);
-		lensNames.addAllIterable(
-			inheritedDataTypeProperties.collect((inherited) -> "this." + inherited.property().getName())
+		ImmutableList<EnumerationProperty> enumerationProperties = dataTypeProperties.selectInstancesOf(
+			EnumerationProperty.class
 		);
-		lensNames.addAllIterable(
-			inheritedAssociationEnds.collect((inherited) -> "this." + inherited.property().getName())
+
+		String primitiveListEntries = primitiveProperties
+			.collect((property) -> "this." + property.getName())
+			.makeString(", ");
+		String enumerationListEntries = enumerationProperties
+			.collect((property) -> "this." + property.getName())
+			.makeString(", ");
+		String dataTypeListEntries = dataTypeProperties
+			.collect((property) -> "this." + property.getName())
+			.makeString(", ");
+		String associationListEntries = associationEnds
+			.collect((associationEnd) -> "this." + associationEnd.getName())
+			.makeString(", ");
+
+		// Combine all property names for the propertyLenses map
+		MutableList<String> allPropertyNames = Lists.mutable.empty();
+		allPropertyNames.addAllIterable(dataTypeProperties.collect((property) -> "this." + property.getName()));
+		allPropertyNames.addAllIterable(
+			associationEnds.collect((associationEnd) -> "this." + associationEnd.getName())
 		);
-		lensNames.addAllIterable(interfaceOnlyProperties.collect((property) -> "this." + property.getName()));
-
-		String className = klass.getName();
-
-		// Map initialization strings - all derived from allLenses via groupByUniqueKey
+		String allListEntries = allPropertyNames.makeString(", ");
 
 		// @formatter:off
 		return ""
@@ -733,24 +662,18 @@ public class ReladomoLensGenerator {
 				+ "    {\n"
 				+ "        this.metaKlass = Objects.requireNonNull(klass);\n"
 				+ "\n"
-				+ initDeclared
-				+ initInherited
-				+ initInterfaceOnly
-				+ initDeclaredAssociation
-				+ initInheritedAssociation
+				+ initDataType
+				+ initAssociation
 				+ "\n"
-				+ "        this.allLenses = Lists.immutable.with(\n"
-				+ "                " + lensNames.makeString(", ") + ");\n"
+				+ "        ImmutableList<PrimitiveLens<" + className + ", ?>> primitiveList = Lists.immutable.with(" + primitiveListEntries + ");\n"
+				+ "        ImmutableList<EnumerationLens<" + className + ">> enumerationList = Lists.immutable.with(" + enumerationListEntries + ");\n"
+				+ "        ImmutableList<AssociationLens<" + className + ", ?>> associationList = Lists.immutable.with(" + associationListEntries + ");\n"
 				+ "\n"
-				+ "        //noinspection unchecked,rawtypes\n"
-				+ "        this.dataTypePropertyLenses = (ImmutableMap) this.allLenses.selectInstancesOf(DataTypeLens.class).groupByUniqueKey(DataTypeLens::getProperty);\n"
-				+ "        //noinspection unchecked,rawtypes\n"
-				+ "        this.primitivePropertyLenses = (ImmutableMap) this.allLenses.selectInstancesOf(PrimitiveLens.class).groupByUniqueKey(PrimitiveLens::getProperty);\n"
-				+ "        //noinspection unchecked,rawtypes\n"
-				+ "        this.enumerationPropertyLenses = (ImmutableMap) this.allLenses.selectInstancesOf(EnumerationLens.class).groupByUniqueKey(EnumerationLens::getProperty);\n"
-				+ "        //noinspection unchecked,rawtypes\n"
-				+ "        this.associationEndLenses = (ImmutableMap) this.allLenses.selectInstancesOf(AssociationLens.class).groupByUniqueKey(AssociationLens::getProperty);\n"
-				+ "        this.propertyLenses = this.allLenses.groupByUniqueKey(PropertyLens::getProperty);\n"
+				+ "        this.primitivePropertyLenses = primitiveList.groupByUniqueKey(PrimitiveLens::getProperty);\n"
+				+ "        this.enumerationPropertyLenses = enumerationList.groupByUniqueKey(EnumerationLens::getProperty);\n"
+				+ "        this.dataTypePropertyLenses = Lists.immutable.<DataTypeLens<" + className + ", ?>>empty().newWithAll(primitiveList).newWithAll(enumerationList).groupByUniqueKey(DataTypeLens::getProperty);\n"
+				+ "        this.associationEndLenses = associationList.groupByUniqueKey(AssociationLens::getProperty);\n"
+				+ "        this.propertyLenses = Lists.immutable.<PropertyLens<" + className + ", ?>>withAll(primitiveList).newWithAll(enumerationList).newWithAll(associationList).groupByUniqueKey(PropertyLens::getProperty);\n"
 				+ "    }\n"
 				+ "\n";
 		// @formatter:on
@@ -793,13 +716,6 @@ public class ReladomoLensGenerator {
 				+ "\n"
 				+ "    @Override\n"
 				+ "    @Nonnull\n"
-				+ "    public ImmutableList<PropertyLens<" + className + ", ?>> getLenses()\n"
-				+ "    {\n"
-				+ "        return this.allLenses;\n"
-				+ "    }\n"
-				+ "\n"
-				+ "    @Override\n"
-				+ "    @Nonnull\n"
 				+ "    public PropertyLens<" + className + ", ?> getLensByProperty(@Nonnull cool.klass.model.meta.domain.api.property.Property property)\n"
 				+ "    {\n"
 				+ "        return Objects.requireNonNull(\n"
@@ -812,13 +728,6 @@ public class ReladomoLensGenerator {
 				+ this.getDirectOverload("EnumerationLens<" + className + ">", "cool.klass.model.meta.domain.api.property.EnumerationProperty", "enumerationPropertyLenses")
 				+ this.getCastOverload(className, "ReferenceLens", "cool.klass.model.meta.domain.api.property.ReferenceProperty", "propertyLenses")
 				+ this.getDirectOverload("AssociationLens<" + className + ", ?>", "cool.klass.model.meta.domain.api.property.AssociationEnd", "associationEndLenses")
-				+ "    @Override\n"
-				+ "    @Nonnull\n"
-				+ "    public ImmutableMap<cool.klass.model.meta.domain.api.property.Property, PropertyLens<" + className + ", ?>> getLensesByProperty()\n"
-				+ "    {\n"
-				+ "        return this.propertyLenses;\n"
-				+ "    }\n"
-				+ "\n"
 				+ "    @Override\n"
 				+ "    @Nonnull\n"
 				+ "    public com.gs.fw.common.mithra.finder.RelatedFinder<" + className + "> getRelatedFinder()\n"
@@ -943,7 +852,7 @@ public class ReladomoLensGenerator {
 				+ "    @Override\n"
 				+ "    public String toString()\n"
 				+ "    {\n"
-				+ "        return \"" + lensClassName + "{\" + this.metaKlass.getName() + \"}\";\n"
+				+ "        return \"" + lensClassName + "\";\n"
 				+ "    }\n"
 				+ "\n";
 		// @formatter:on
@@ -980,49 +889,40 @@ public class ReladomoLensGenerator {
 	}
 
 	private String getInnerLensClasses(@Nonnull Klass klass) {
-		// Inner classes for declared data type properties
-		String declaredDataTypeLensClasses = klass
-			.getDeclaredDataTypeProperties()
-			.reject((p) -> !this.shouldIncludeDerived(klass) && p.isDerived())
-			.reject(this::isTemporalRange)
-			.collect((property) -> this.getDataTypeLensClass(klass, property))
+		ImmutableList<DataTypeProperty> dataTypeProperties = this.getIncludedDataTypeProperties(klass);
+		ImmutableList<AssociationEnd> associationEnds = this.getIncludedAssociationEnds(klass);
+
+		ImmutableMap<String, InheritedProperty<DataTypeProperty>> inheritedDataTypeByName =
+			this.getInheritedDataTypeProperties(klass).groupByUniqueKey((inherited) -> inherited.property().getName());
+		ImmutableMap<String, InheritedProperty<AssociationEnd>> inheritedAssociationByName =
+			this.getInheritedAssociationEnds(klass).groupByUniqueKey((inherited) -> inherited.property().getName());
+
+		String dataTypeLensClasses = dataTypeProperties
+			.collect((property) -> {
+				InheritedProperty<DataTypeProperty> inherited = inheritedDataTypeByName.get(property.getName());
+				if (inherited != null) {
+					return this.getInheritedDataTypeLensClass(klass, inherited);
+				}
+				return this.getDataTypeLensClass(klass, property);
+			})
 			.makeString("");
 
-		// Inner classes for declared association ends
-		String declaredAssociationLensClasses = klass
-			.getDeclaredAssociationEnds()
-			.collect((associationEnd) -> this.getAssociationLensClass(klass, associationEnd))
+		String associationLensClasses = associationEnds
+			.collect((associationEnd) -> {
+				InheritedProperty<AssociationEnd> inherited = inheritedAssociationByName.get(associationEnd.getName());
+				if (inherited != null) {
+					return this.getInheritedAssociationLensClass(
+						klass,
+						inherited.property(),
+						inherited.ancestor(),
+						inherited.navigation()
+					);
+				}
+				return this.getAssociationLensClass(klass, associationEnd);
+			})
 			.makeString("");
 
-		// Inner classes for inherited data type properties (with navigation)
-		String inheritedDataTypeLensClasses = this.getInheritedDataTypeProperties(klass)
-			.collect((inherited) -> this.getInheritedDataTypeLensClass(klass, inherited))
-			.makeString("");
-
-		// Inner classes for inherited association ends (with navigation)
-		String inheritedAssociationLensClasses = this.getInheritedAssociationEnds(klass)
-			.collect((inherited) ->
-				this.getInheritedAssociationLensClass(
-					klass,
-					inherited.property(),
-					inherited.ancestor(),
-					inherited.navigation()
-				)
-			)
-			.makeString("");
-
-		// Inner classes for interface-only data type properties (direct access, same as declared)
-		String interfaceOnlyLensClasses = this.getInterfaceOnlyProperties(klass)
-			.collect((property) -> this.getDataTypeLensClass(klass, property))
-			.makeString("");
-
-		return (
-			declaredDataTypeLensClasses
-			+ declaredAssociationLensClasses
-			+ interfaceOnlyLensClasses
-			+ inheritedDataTypeLensClasses
-			+ inheritedAssociationLensClasses
-		);
+		return dataTypeLensClasses + associationLensClasses;
 	}
 
 	private String getDataTypeLensClass(@Nonnull Klass klass, @Nonnull DataTypeProperty property) {

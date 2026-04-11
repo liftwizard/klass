@@ -25,15 +25,10 @@ import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.property.Property;
 import cool.klass.model.meta.domain.api.property.ReferenceProperty;
-import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.map.ImmutableMap;
 
 public interface ClassLens<T> {
 	@Nonnull
 	Klass getKlass();
-
-	@Nonnull
-	ImmutableList<PropertyLens<T, ?>> getLenses();
 
 	@Nonnull
 	PropertyLens<T, ?> getLensByProperty(@Nonnull Property property);
@@ -52,7 +47,4 @@ public interface ClassLens<T> {
 
 	@Nonnull
 	AssociationLens<T, ?> getLensByProperty(@Nonnull AssociationEnd property);
-
-	@Nonnull
-	ImmutableMap<Property, PropertyLens<T, ?>> getLensesByProperty();
 }
