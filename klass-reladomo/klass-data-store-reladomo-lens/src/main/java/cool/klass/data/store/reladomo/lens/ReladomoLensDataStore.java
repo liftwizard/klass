@@ -41,6 +41,7 @@ import cool.klass.data.store.Transaction;
 import cool.klass.data.store.TransactionalCommand;
 import cool.klass.data.store.reladomo.OperationVisitor;
 import cool.klass.data.store.reladomo.TransactionAdapter;
+import cool.klass.model.lens.AssociationLens;
 import cool.klass.model.lens.ClassLens;
 import cool.klass.model.lens.DataTypeLens;
 import cool.klass.model.lens.PrimitiveLens;
@@ -268,12 +269,11 @@ public class ReladomoLensDataStore implements DataStore {
 
 		Object effectiveInstance = this.navigateToOwningInstance(persistentSourceInstance, klass);
 		ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
-		ReladomoAssociationLens<Object, ?> associationLens = (ReladomoAssociationLens<
-			Object,
-			?
-		>) classLens.getLensByProperty(associationEnd);
-		AbstractRelatedFinder relationshipFinder = associationLens.getRelationshipFinder();
-		Object result = relationshipFinder.valueOf(effectiveInstance);
+		@SuppressWarnings("unchecked")
+		AssociationLens<Object, ?> associationLens = (AssociationLens<Object, ?>) classLens.getLensByProperty(
+			associationEnd
+		);
+		Object result = associationLens.get(effectiveInstance);
 		if (result instanceof List<?> list) {
 			throw new IllegalStateException("Expected single object but got " + list.size());
 		}
@@ -293,11 +293,9 @@ public class ReladomoLensDataStore implements DataStore {
 		Klass klass = this.resolveKlassForProperty(persistentSourceInstance, associationEnd);
 
 		Object effectiveInstance = this.navigateToOwningInstance(persistentSourceInstance, klass);
-		ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
-		ReladomoAssociationLens<Object, ?> associationLens = (ReladomoAssociationLens<
-			Object,
-			?
-		>) classLens.getLensByProperty(associationEnd);
+		ReladomoClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
+		@SuppressWarnings("unchecked")
+		ReladomoAssociationLens<Object, ?> associationLens = (ReladomoAssociationLens<Object, ?>) classLens.getLensByProperty(associationEnd);
 		AbstractRelatedFinder relationshipFinder = associationLens.getRelationshipFinder();
 		Object result = relationshipFinder.valueOf(effectiveInstance);
 		if (result == null) {
