@@ -823,17 +823,12 @@ public class ReladomoLensGenerator {
 		return "                .newWithKeyValue(this." + propertyName + ".getProperty(), this." + propertyName + ")\n";
 	}
 
-	// TODO 2026-04-10: Use getPrimitivePropertyByName instead
 	private String getPropertyLookup(@Nonnull DataTypeProperty property) {
-		return "klass.get" + this.getPropertyTypePrefix(property) + "PropertyByName(\"" + property.getName() + "\")";
-	}
-
-	private String getPropertyTypePrefix(DataTypeProperty property) {
 		if (property instanceof PrimitiveProperty) {
-			return "Primitive";
+			return "klass.getPrimitivePropertyByName(\"" + property.getName() + "\")";
 		}
 		if (property instanceof EnumerationProperty) {
-			return "Enumeration";
+			return "klass.getEnumerationPropertyByName(\"" + property.getName() + "\")";
 		}
 		throw new IllegalStateException("Unknown property type: " + property.getClass());
 	}
