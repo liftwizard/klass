@@ -317,8 +317,6 @@ public class ReladomoLensGenerator {
 		return !klass.isAbstract();
 	}
 
-
-
 	private String getImports(@Nonnull Klass klass) {
 		ImmutableList<PrimitiveProperty> primitiveProperties = klass
 			.getDataTypeProperties()

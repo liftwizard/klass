@@ -111,8 +111,6 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
 		var reladomoProjectionConverter = new ReladomoProjectionConverter();
 		RootReladomoNode projectionReladomoNode = reladomoProjectionConverter.getRootReladomoNode(klass, projection);
 
-		// This would work if we consistently used the same DomainModel everywhere (instead of sometimes compiled and sometimes code generated).
-		// Projection projection = this.domainModel.getProjections().selectInstancesOf(activeView).getOnly();
 		this.serialize(mithraObject, jsonGenerator, projectionReladomoNode);
 	}
 
