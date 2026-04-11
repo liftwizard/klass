@@ -886,9 +886,7 @@ public class ReladomoLensGenerator {
 	private String getLensClassName(@Nonnull Klass klass, @Nonnull DataTypeProperty property) {
 		String className = klass.getName();
 		String propName = property.getName();
-		String suffix = property instanceof PrimitiveProperty
-			? "PrimitivePropertyLens"
-			: "EnumerationPropertyLens";
+		String suffix = property instanceof PrimitiveProperty ? "PrimitivePropertyLens" : "EnumerationPropertyLens";
 		return "Reladomo_" + className + "_" + propName + "_" + suffix;
 	}
 
