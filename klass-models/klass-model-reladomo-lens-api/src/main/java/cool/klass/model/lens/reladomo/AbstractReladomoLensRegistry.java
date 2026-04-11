@@ -31,8 +31,7 @@ public abstract class AbstractReladomoLensRegistry implements ReladomoLensRegist
 	private final ImmutableMap<Klass, ReladomoClassLens<?>> lensesByKlass;
 	private final ImmutableMap<Class<?>, ReladomoClassLens<?>> lensesByJavaClass;
 
-	protected AbstractReladomoLensRegistry(DomainModel domainModel)
-	{
+	protected AbstractReladomoLensRegistry(DomainModel domainModel) {
 		ImmutableList<ReladomoClassLens<?>> lenses = this.getAllLenses(domainModel);
 
 		this.lensesByKlass = lenses.groupByUniqueKey(ClassLens::getKlass);

@@ -586,25 +586,27 @@ public class ReladomoLensGenerator {
 
 		// Initialize lens fields - declared data type properties
 		String initDataType = dataTypeProperties
-			.collect((property) -> MessageFormat.format(
+			.collect((property) ->
+				MessageFormat.format(
 					"        this.{0} = new {1}({2});\n",
 					property.getName(),
 					this.getLensClassName(klass, property),
-					this.getPropertyLookup(property))
+					this.getPropertyLookup(property)
+				)
 			)
 			.makeString("");
 
 		// Initialize lens fields - declared association ends
 		String initDeclaredAssociation = klass
-				.getAssociationEnds()
-				.collect(
-						(associationEnd) ->
-								MessageFormat.format(
-										"        this.{0} = new {1}(klass.getAssociationEndByName(\"{0}\"));\n",
-										associationEnd.getName(),
-										this.getAssociationLensClassName(klass, associationEnd))
+			.getAssociationEnds()
+			.collect((associationEnd) ->
+				MessageFormat.format(
+					"        this.{0} = new {1}(klass.getAssociationEndByName(\"{0}\"));\n",
+					associationEnd.getName(),
+					this.getAssociationLensClassName(klass, associationEnd)
 				)
-				.makeString("");
+			)
+			.makeString("");
 
 		// Initialize lens fields - interface-only data type properties (direct access, same as declared)
 		String initInterfaceOnly = interfaceOnlyProperties
@@ -766,14 +768,11 @@ public class ReladomoLensGenerator {
 		return "klass.get" + this.getPropertyTypePrefix(property) + "PropertyByName(\"" + property.getName() + "\")";
 	}
 
-	private String getPropertyTypePrefix(DataTypeProperty property)
-	{
-		if (property instanceof PrimitiveProperty)
-		{
+	private String getPropertyTypePrefix(DataTypeProperty property) {
+		if (property instanceof PrimitiveProperty) {
 			return "Primitive";
 		}
-		if (property instanceof EnumerationProperty)
-		{
+		if (property instanceof EnumerationProperty) {
 			return "Enumeration";
 		}
 		throw new IllegalStateException("Unknown property type: " + property.getClass());
@@ -1845,10 +1844,7 @@ public class ReladomoLensGenerator {
 		// @formatter:on
 	}
 
-	private String getFactorySourceCode(
-		@Nonnull ImmutableList<Klass> allClasses,
-		String packageName
-	) {
+	private String getFactorySourceCode(@Nonnull ImmutableList<Klass> allClasses, String packageName) {
 		// getAllLenses() body - create lenses as local variables
 		String lensLocalVars = allClasses
 			.collect((klass) -> {
@@ -1865,9 +1861,7 @@ public class ReladomoLensGenerator {
 		String allLensesEntries = allClasses
 			.collect(
 				(klass) ->
-					"                "
-					+ CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName())
-					+ "Lens"
+					"                " + CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "Lens"
 			)
 			.makeString(",\n");
 

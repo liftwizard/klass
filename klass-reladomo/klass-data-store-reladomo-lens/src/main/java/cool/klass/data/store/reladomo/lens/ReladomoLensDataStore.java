@@ -239,9 +239,7 @@ public class ReladomoLensDataStore implements DataStore {
 
 		Object effectiveInstance = this.navigateToOwningInstance(persistentInstance, klass);
 		ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
-		var dataTypeLens = (DataTypeLens<Object, Object>) classLens.getLensByProperty(
-			dataTypeProperty
-		);
+		var dataTypeLens = (DataTypeLens<Object, Object>) classLens.getLensByProperty(dataTypeProperty);
 		Object oldValue = dataTypeLens.get(effectiveInstance);
 		if (Objects.equals(oldValue, newValue)) {
 			return false;
@@ -351,8 +349,7 @@ public class ReladomoLensDataStore implements DataStore {
 				? null
 				: this.getDataTypeProperty(persistentTargetInstance, keyInRelatedObject);
 
-			mutationOccurred |= this.setDataTypeProperty(persistentSourceInstance,
-					targetDataTypeProperty, keyValue);
+			mutationOccurred |= this.setDataTypeProperty(persistentSourceInstance, targetDataTypeProperty, keyValue);
 		}
 
 		return mutationOccurred;
@@ -514,9 +511,7 @@ public class ReladomoLensDataStore implements DataStore {
 		} else if (idProperty.getType() == PrimitiveType.STRING) {
 			UUID uuid = this.uuidSupplier.get();
 			String uuidString = uuid.toString();
-			PrimitiveLens<T, String> idLens = (PrimitiveLens<T, String>) reladomoLens.getLensByProperty(
-					idProperty
-			);
+			PrimitiveLens<T, String> idLens = (PrimitiveLens<T, String>) reladomoLens.getLensByProperty(idProperty);
 			idLens.set(persistentInstance, uuidString);
 		} else {
 			throw new AssertionError(idProperty);
