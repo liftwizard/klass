@@ -543,7 +543,7 @@ public class ReladomoLensGenerator {
 				+ interfaceOnlyFields
 				+ "\n"
 				+ "    private final ImmutableList<PropertyLens<" + className + ", ?>> allLenses;\n"
-				// TODO 2026-04-10: We have primitiveLenses and enumerationLenses but not DataTypeLenses here, then later, we require a cast which we shouldn't need
+				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.DataTypeProperty, DataTypeLens<" + className + ", ?>> dataTypeLenses;\n"
 				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.PrimitiveProperty, PrimitiveLens<" + className + ", ?>> primitiveLenses;\n"
 				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.EnumerationProperty, EnumerationLens<" + className + ">> enumerationLenses;\n"
 				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.AssociationEnd, AssociationLens<" + className + ", ?>> associationLenses;\n"
@@ -727,6 +727,24 @@ public class ReladomoLensGenerator {
 			enumerationMapEntries
 		);
 
+		// Initialize dataTypeLenses map
+		MutableList<String> dataTypeMapEntries = Lists.mutable.empty();
+		dataTypeMapEntries.addAllIterable(
+			declaredDataTypeProperties.collect((property) -> getMapEntry(property.getName()))
+		);
+		dataTypeMapEntries.addAllIterable(
+			inheritedDataTypeProperties.collect((inherited) -> getMapEntry(inherited.property().getName()))
+		);
+		dataTypeMapEntries.addAllIterable(
+			interfaceOnlyProperties.collect((property) -> getMapEntry(property.getName()))
+		);
+		String dataTypeLensMap = getMapInit(
+			"dataTypeLenses",
+			"cool.klass.model.meta.domain.api.property.DataTypeProperty",
+			"DataTypeLens<" + className + ", ?>",
+			dataTypeMapEntries
+		);
+
 		// Initialize associationLenses map
 		MutableList<String> associationMapEntries = Lists.mutable.empty();
 		associationMapEntries.addAllIterable(
@@ -776,6 +794,8 @@ public class ReladomoLensGenerator {
 				+ "\n"
 				+ "        this.allLenses = Lists.immutable.with(\n"
 				+ "                " + lensNames.makeString(", ") + ");\n"
+				+ "\n"
+				+ dataTypeLensMap
 				+ "\n"
 				+ primitiveLensMap
 				+ "\n"
@@ -862,7 +882,7 @@ public class ReladomoLensGenerator {
 				+ "        return lens;\n"
 				+ "    }\n"
 				+ "\n"
-				+ this.getCastOverload(className, "DataTypeLens", "cool.klass.model.meta.domain.api.property.DataTypeProperty", "allLensesByProperty")
+				+ this.getDirectOverload("DataTypeLens<" + className + ", ?>", "cool.klass.model.meta.domain.api.property.DataTypeProperty", "dataTypeLenses")
 				+ this.getDirectOverload("PrimitiveLens<" + className + ", ?>", "cool.klass.model.meta.domain.api.property.PrimitiveProperty", "primitiveLenses")
 				+ this.getDirectOverload("EnumerationLens<" + className + ">", "cool.klass.model.meta.domain.api.property.EnumerationProperty", "enumerationLenses")
 				+ this.getCastOverload(className, "ReferenceLens", "cool.klass.model.meta.domain.api.property.ReferenceProperty", "allLensesByProperty")
