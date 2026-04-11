@@ -543,7 +543,9 @@ public class ReladomoLensGenerator {
 	private ImmutableList<DataTypeProperty> getIncludedDataTypeProperties(@Nonnull Klass klass) {
 		Set<String> declaredAndInheritedNames = new LinkedHashSet<>();
 		klass.getDeclaredDataTypeProperties().forEach((p) -> declaredAndInheritedNames.add(p.getName()));
-		this.getInheritedDataTypeProperties(klass).forEach((p) -> declaredAndInheritedNames.add(p.property().getName()));
+		this.getInheritedDataTypeProperties(klass).forEach((p) ->
+			declaredAndInheritedNames.add(p.property().getName())
+		);
 
 		return klass
 			.getDataTypeProperties()

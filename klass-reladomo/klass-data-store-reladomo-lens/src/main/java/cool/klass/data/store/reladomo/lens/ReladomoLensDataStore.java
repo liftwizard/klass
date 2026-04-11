@@ -295,7 +295,10 @@ public class ReladomoLensDataStore implements DataStore {
 		Object effectiveInstance = this.navigateToOwningInstance(persistentSourceInstance, klass);
 		ReladomoClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
 		@SuppressWarnings("unchecked")
-		ReladomoAssociationLens<Object, ?> associationLens = (ReladomoAssociationLens<Object, ?>) classLens.getLensByProperty(associationEnd);
+		ReladomoAssociationLens<Object, ?> associationLens = (ReladomoAssociationLens<
+			Object,
+			?
+		>) classLens.getLensByProperty(associationEnd);
 		AbstractRelatedFinder relationshipFinder = associationLens.getRelationshipFinder();
 		Object result = relationshipFinder.valueOf(effectiveInstance);
 		if (result == null) {
