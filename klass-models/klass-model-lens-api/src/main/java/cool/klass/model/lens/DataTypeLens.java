@@ -21,6 +21,10 @@ import javax.annotation.Nonnull;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 
 public interface DataTypeLens<T, V> extends PropertyLens<T, V> {
+	boolean isNull(@Nonnull T domainObject);
+
+	void setNull(@Nonnull T domainObject);
+
 	@Override
 	@Nonnull
 	DataTypeProperty getProperty();

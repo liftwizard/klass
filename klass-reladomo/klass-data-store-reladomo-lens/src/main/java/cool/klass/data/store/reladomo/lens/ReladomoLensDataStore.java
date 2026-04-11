@@ -254,7 +254,11 @@ public class ReladomoLensDataStore implements DataStore {
 			throw new IllegalStateException(message);
 		}
 
-		dataTypeLens.set(effectiveInstance, newValue);
+		if (newValue == null) {
+			dataTypeLens.setNull(effectiveInstance);
+		} else {
+			dataTypeLens.set(effectiveInstance, newValue);
+		}
 		return true;
 	}
 

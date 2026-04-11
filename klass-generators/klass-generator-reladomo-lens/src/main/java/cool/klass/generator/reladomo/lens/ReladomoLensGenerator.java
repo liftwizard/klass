@@ -1001,6 +1001,25 @@ public class ReladomoLensGenerator {
 		}
 		// @formatter:on
 
+		String isNullBody;
+		String setNullBody;
+		if (needsNullCheck) {
+			// Optional primitive types with isXxxNull()/setXxxNull() on the Reladomo class
+			isNullBody = "            return " + lowerCamelName + ".is" + propNameUpper + "Null();\n";
+			setNullBody = "            " + lowerCamelName + ".set" + propNameUpper + "Null();\n";
+		} else if (property.isDerived()) {
+			isNullBody = "            return this.get(" + lowerCamelName + ") == null;\n";
+			setNullBody = "            throw new UnsupportedOperationException(\"Cannot set derived property: " + propName + "\");\n";
+		} else if (this.hasUnboxedMethods(property.getType()) && property.isRequired()) {
+			// Required primitive types — cannot be null
+			isNullBody = "            return false;\n";
+			setNullBody = "            throw new UnsupportedOperationException(\"Cannot set required primitive property to null: " + propName + "\");\n";
+		} else {
+			// Reference types (String, Instant, LocalDate) — null is a valid value
+			isNullBody = "            return this.get(" + lowerCamelName + ") == null;\n";
+			setNullBody = "            " + lowerCamelName + "." + setterName + "(null);\n";
+		}
+
 		String unboxed = this.hasUnboxedMethods(property.getType())
 			? (property.isDerived()
 					? this.getDerivedUnboxedMethods(klass, property)
@@ -1050,13 +1069,13 @@ public class ReladomoLensGenerator {
 				+ "        @Override\n"
 				+ "        public boolean isNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            return this.get(" + lowerCamelName + ") == null;\n"
+				+ isNullBody
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
 				+ "        public void setNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            this.set(" + lowerCamelName + ", null);\n"
+				+ setNullBody
 				+ "        }\n"
 				+ unboxed
 				+ "\n"
@@ -1348,18 +1367,6 @@ public class ReladomoLensGenerator {
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public boolean isNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
-				+ "        {\n"
-				+ "            return this.get(" + lowerCamelName + ") == null;\n"
-				+ "        }\n"
-				+ "\n"
-				+ "        @Override\n"
-				+ "        public void setNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
-				+ "        {\n"
-				+ "            this.set(" + lowerCamelName + ", null);\n"
-				+ "        }\n"
-				+ "\n"
-				+ "        @Override\n"
 				+ "        @Nonnull\n"
 				+ "        public cool.klass.model.meta.domain.api.property.AssociationEnd getAssociationEnd()\n"
 				+ "        {\n"
@@ -1468,13 +1475,22 @@ public class ReladomoLensGenerator {
 				+ "        @Override\n"
 				+ "        public boolean isNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            return this.get(" + lowerCamelName + ") == null;\n"
+				+ (needsNullCheck
+					? "            " + ancestorName + " ancestor = " + navigation + ";\n"
+					+ "            return ancestor == null || ancestor.is" + propNameUpper + "Null();\n"
+					: "            return this.get(" + lowerCamelName + ") == null;\n")
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
 				+ "        public void setNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            this.set(" + lowerCamelName + ", null);\n"
+				+ (needsNullCheck
+					? "            " + ancestorName + " ancestor = " + navigation + ";\n"
+					+ "            if (ancestor != null)\n"
+					+ "            {\n"
+					+ "                ancestor.set" + propNameUpper + "Null();\n"
+					+ "            }\n"
+					: "            this.set(" + lowerCamelName + ", null);\n")
 				+ "        }\n"
 				+ unboxed
 				+ "\n"
@@ -1740,18 +1756,6 @@ public class ReladomoLensGenerator {
 				+ "                return;\n"
 				+ "            }\n"
 				+ setBody
-				+ "        }\n"
-				+ "\n"
-				+ "        @Override\n"
-				+ "        public boolean isNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
-				+ "        {\n"
-				+ "            return this.get(" + lowerCamelName + ") == null;\n"
-				+ "        }\n"
-				+ "\n"
-				+ "        @Override\n"
-				+ "        public void setNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
-				+ "        {\n"
-				+ "            this.set(" + lowerCamelName + ", null);\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"

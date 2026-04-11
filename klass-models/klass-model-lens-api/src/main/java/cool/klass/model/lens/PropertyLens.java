@@ -27,10 +27,6 @@ public interface PropertyLens<T, V> {
 
 	void set(@Nonnull T domainObject, @Nullable V value);
 
-	boolean isNull(@Nonnull T domainObject);
-
-	void setNull(@Nonnull T domainObject);
-
 	@Nonnull
 	Property getProperty();
 }
