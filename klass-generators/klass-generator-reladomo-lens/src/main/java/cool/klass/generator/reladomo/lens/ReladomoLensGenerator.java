@@ -868,13 +868,9 @@ public class ReladomoLensGenerator {
 				+ "    @Nonnull\n"
 				+ "    public PropertyLens<" + className + ", ?> getLensByProperty(@Nonnull cool.klass.model.meta.domain.api.property.Property property)\n"
 				+ "    {\n"
-				+ "        PropertyLens<" + className + ", ?> lens = this.allLensesByProperty.get(property);\n"
-				// TODO 2026-04-10: Use Objects.requireNonNull() here instead, the overload with the Supplier
-				+ "        if (lens == null)\n"
-				+ "        {\n"
-				+ "            throw new IllegalStateException(\"No lens found for property: \" + property.getName());\n"
-				+ "        }\n"
-				+ "        return lens;\n"
+				+ "        return Objects.requireNonNull(\n"
+				+ "                this.allLensesByProperty.get(property),\n"
+				+ "                () -> \"No lens found for property: \" + property.getName());\n"
 				+ "    }\n"
 				+ "\n"
 				+ this.getDirectOverload("DataTypeLens<" + className + ", ?>", "cool.klass.model.meta.domain.api.property.DataTypeProperty", "dataTypeLenses")
@@ -1027,13 +1023,9 @@ public class ReladomoLensGenerator {
 				+ "    @Nonnull\n"
 				+ "    public " + returnLensType + "<" + className + ", ?> getLensByProperty(@Nonnull " + paramPropertyType + " property)\n"
 				+ "    {\n"
-				+ "        PropertyLens<" + className + ", ?> lens = this." + mapName + ".get(property);\n"
-				// TODO 2026-04-10: Use Objects.requireNonNull() here instead, the overload with the Supplier
-				+ "        if (lens == null)\n"
-				+ "        {\n"
-				+ "            throw new IllegalStateException(\"No lens found for property: \" + property.getName());\n"
-				+ "        }\n"
-				+ "        return (" + returnLensType + "<" + className + ", ?>) lens;\n"
+				+ "        return (" + returnLensType + "<" + className + ", ?>) Objects.requireNonNull(\n"
+				+ "                this." + mapName + ".get(property),\n"
+				+ "                () -> \"No lens found for property: \" + property.getName());\n"
 				+ "    }\n"
 				+ "\n";
 		// @formatter:on
@@ -1046,13 +1038,9 @@ public class ReladomoLensGenerator {
 				+ "    @Nonnull\n"
 				+ "    public " + returnType + " getLensByProperty(@Nonnull " + paramPropertyType + " property)\n"
 				+ "    {\n"
-				+ "        " + returnType + " lens = this." + mapName + ".get(property);\n"
-				// TODO 2026-04-10: Use Objects.requireNonNull() here instead, the overload with the Supplier
-				+ "        if (lens == null)\n"
-				+ "        {\n"
-				+ "            throw new IllegalStateException(\"No lens found for property: \" + property.getName());\n"
-				+ "        }\n"
-				+ "        return lens;\n"
+				+ "        return Objects.requireNonNull(\n"
+				+ "                this." + mapName + ".get(property),\n"
+				+ "                () -> \"No lens found for property: \" + property.getName());\n"
 				+ "    }\n"
 				+ "\n";
 		// @formatter:on
