@@ -31,7 +31,7 @@ import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.reladomo.persistent.writer.IncomingCreateDataModelValidator;
-import cool.klass.xample.coverage.lens.reladomo.ReladomoLensFactory;
+import cool.klass.xample.coverage.lens.reladomo.CoverageExampleReladomoLensFactory;
 import io.dropwizard.jackson.Jackson;
 import io.liftwizard.dropwizard.configuration.uuid.seed.SeedUUIDSupplier;
 import io.liftwizard.junit.extension.liquibase.migrations.LiquibaseTestExtension;
@@ -109,7 +109,7 @@ public abstract class AbstractValidatorTest {
 	private DataStore getReladomoDataStore() {
 		String seed = IncomingCreateDataModelValidator.class.getSimpleName();
 		SeedUUIDSupplier uuidSupplier = new SeedUUIDSupplier(seed);
-		ReladomoLensFactory lensRegistry = new ReladomoLensFactory(this.domainModel);
+		CoverageExampleReladomoLensFactory lensRegistry = new CoverageExampleReladomoLensFactory(this.domainModel);
 		return new ReladomoLensDataStore(lensRegistry, uuidSupplier, 1);
 	}
 
