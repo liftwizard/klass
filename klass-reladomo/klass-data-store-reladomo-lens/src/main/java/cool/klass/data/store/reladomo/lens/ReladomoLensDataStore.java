@@ -169,8 +169,7 @@ public class ReladomoLensDataStore implements DataStore {
 		for (DataTypeProperty keyProperty : keyProperties) {
 			Object key = keys.get(keyProperty);
 			Objects.requireNonNull(key, () -> "Expected non-null key for property: " + keyProperty);
-			// TODO 2026-04-10: Here we're calling to the generic interface method setDataTypeProperty but at this point we have a lot more information, because we have the klass and lens available to us. If we delegate to the generic setDataTypeProperty, we do a bunch of superclass navigation. We should create a second setDataTypeProperty overload to use here that takes the ReladomoClassLens for more efficient property navigation. In addition, we're not using the boolean returned from setDataTypeProperty, partially because we know we're changing the value from null to non-null, but that's another inefficiency that we can solve through code generation and a better overload here
-			this.setDataTypeProperty(newInstance, keyProperty, key);
+			setDataTypeProperty(newInstance, reladomoLens, keyProperty, key);
 		}
 
 		return newInstance;
@@ -516,6 +515,17 @@ public class ReladomoLensDataStore implements DataStore {
 		} else {
 			throw new AssertionError(idProperty);
 		}
+	}
+
+	private static <T> void setDataTypeProperty(
+		@Nonnull T persistentInstance,
+		@Nonnull ReladomoClassLens<T> reladomoLens,
+		@Nonnull DataTypeProperty dataTypeProperty,
+		@Nonnull Object value
+	) {
+		@SuppressWarnings("unchecked")
+		var dataTypeLens = (DataTypeLens<T, Object>) reladomoLens.getLensByProperty(dataTypeProperty);
+		dataTypeLens.set(persistentInstance, value);
 	}
 
 	@Nonnull
