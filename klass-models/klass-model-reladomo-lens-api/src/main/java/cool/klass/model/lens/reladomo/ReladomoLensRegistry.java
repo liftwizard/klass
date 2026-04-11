@@ -29,4 +29,9 @@ public interface ReladomoLensRegistry extends LensRegistry {
 	@Override
 	@Nonnull
 	ReladomoClassLens<?> getClassLens(@Nonnull Klass klass);
+
+	boolean hasClassLensForJavaClass(@Nonnull Class<?> javaClass);
+
+	@Nonnull
+	ReladomoClassLens<?> getClassLensForJavaClass(@Nonnull Class<?> javaClass);
 }

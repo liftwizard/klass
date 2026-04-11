@@ -25,13 +25,4 @@ public interface LensRegistry {
 
 	@Nonnull
 	ClassLens<?> getClassLens(@Nonnull Klass klass);
-
-	default boolean hasKlassForJavaClass(@Nonnull Class<?> javaClass) {
-		return false;
-	}
-
-	@Nonnull
-	default Klass getKlassForJavaClass(@Nonnull Class<?> javaClass) {
-		throw new UnsupportedOperationException("getKlassForJavaClass not implemented");
-	}
 }

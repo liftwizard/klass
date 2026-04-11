@@ -56,16 +56,16 @@ public abstract class AbstractReladomoLensRegistry implements ReladomoLensRegist
 	}
 
 	@Override
-	public boolean hasKlassForJavaClass(@Nonnull Class<?> javaClass) {
+	public boolean hasClassLensForJavaClass(@Nonnull Class<?> javaClass) {
 		return this.lensesByJavaClass.containsKey(javaClass);
 	}
 
 	@Override
 	@Nonnull
-	public Klass getKlassForJavaClass(@Nonnull Class<?> javaClass) {
+	public ReladomoClassLens<?> getClassLensForJavaClass(@Nonnull Class<?> javaClass) {
 		return Objects.requireNonNull(
 			this.lensesByJavaClass.get(javaClass),
-			() -> "No Klass registered for Java class: " + javaClass.getName()
-		).getKlass();
+			() -> "No ClassLens registered for Java class: " + javaClass.getName()
+		);
 	}
 }

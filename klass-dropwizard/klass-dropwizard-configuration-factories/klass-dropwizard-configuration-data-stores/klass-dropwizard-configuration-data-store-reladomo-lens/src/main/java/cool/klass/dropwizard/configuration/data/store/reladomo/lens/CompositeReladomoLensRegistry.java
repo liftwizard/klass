@@ -51,18 +51,18 @@ public class CompositeReladomoLensRegistry implements ReladomoLensRegistry {
 	}
 
 	@Override
-	public boolean hasKlassForJavaClass(@Nonnull Class<?> javaClass) {
-		return this.registries.anySatisfy((registry) -> registry.hasKlassForJavaClass(javaClass));
+	public boolean hasClassLensForJavaClass(@Nonnull Class<?> javaClass) {
+		return this.registries.anySatisfy((registry) -> registry.hasClassLensForJavaClass(javaClass));
 	}
 
 	@Override
 	@Nonnull
-	public Klass getKlassForJavaClass(@Nonnull Class<?> javaClass) {
+	public ReladomoClassLens<?> getClassLensForJavaClass(@Nonnull Class<?> javaClass) {
 		for (ReladomoLensRegistry registry : this.registries) {
-			if (registry.hasKlassForJavaClass(javaClass)) {
-				return registry.getKlassForJavaClass(javaClass);
+			if (registry.hasClassLensForJavaClass(javaClass)) {
+				return registry.getClassLensForJavaClass(javaClass);
 			}
 		}
-		throw new IllegalStateException("No Klass registered for Java class: " + javaClass.getName());
+		throw new IllegalStateException("No ClassLens registered for Java class: " + javaClass.getName());
 	}
 }

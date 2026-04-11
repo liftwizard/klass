@@ -394,7 +394,7 @@ public class ReladomoLensDataStore implements DataStore {
 
 	@Override
 	public boolean isInstanceOf(@Nonnull Object persistentInstance, @Nonnull Classifier classifier) {
-		Klass concreteKlass = this.lensRegistry.getKlassForJavaClass(persistentInstance.getClass());
+		Klass concreteKlass = this.lensRegistry.getClassLensForJavaClass(persistentInstance.getClass()).getKlass();
 		return concreteKlass.isSubTypeOf(classifier);
 	}
 
@@ -568,7 +568,7 @@ public class ReladomoLensDataStore implements DataStore {
 		if (property.getOwningClassifier() instanceof Klass klass) {
 			return klass;
 		}
-		return this.lensRegistry.getKlassForJavaClass(persistentInstance.getClass());
+		return this.lensRegistry.getClassLensForJavaClass(persistentInstance.getClass()).getKlass();
 	}
 
 	private Object navigateToOwningInstance(Object persistentInstance, Klass owningKlass) {
