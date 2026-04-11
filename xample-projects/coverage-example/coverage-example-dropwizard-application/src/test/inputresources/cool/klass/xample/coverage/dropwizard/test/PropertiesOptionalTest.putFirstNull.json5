@@ -1,0 +1,14 @@
+{
+	propertiesOptionalId: 1,
+	optionalString: null,
+	optionalInteger: null,
+	optionalLong: null,
+	optionalDouble: null,
+	optionalFloat: null,
+	optionalBoolean: null,
+	optionalInstant: null,
+	optionalLocalDate: null,
+	version: {
+		number: 1,
+	},
+}
