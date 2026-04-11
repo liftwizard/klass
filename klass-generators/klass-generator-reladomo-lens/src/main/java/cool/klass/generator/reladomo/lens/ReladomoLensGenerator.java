@@ -1009,11 +1009,17 @@ public class ReladomoLensGenerator {
 			setNullBody = "            " + lowerCamelName + ".set" + propNameUpper + "Null();\n";
 		} else if (property.isDerived()) {
 			isNullBody = "            return this.get(" + lowerCamelName + ") == null;\n";
-			setNullBody = "            throw new UnsupportedOperationException(\"Cannot set derived property: " + propName + "\");\n";
+			setNullBody =
+				"            throw new UnsupportedOperationException(\"Cannot set derived property: "
+				+ propName
+				+ "\");\n";
 		} else if (this.hasUnboxedMethods(property.getType()) && property.isRequired()) {
 			// Required primitive types — cannot be null
 			isNullBody = "            return false;\n";
-			setNullBody = "            throw new UnsupportedOperationException(\"Cannot set required primitive property to null: " + propName + "\");\n";
+			setNullBody =
+				"            throw new UnsupportedOperationException(\"Cannot set required primitive property to null: "
+				+ propName
+				+ "\");\n";
 		} else {
 			// Reference types (String, Instant, LocalDate) — null is a valid value
 			isNullBody = "            return this.get(" + lowerCamelName + ") == null;\n";
