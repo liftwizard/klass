@@ -46,12 +46,56 @@ import org.eclipse.collections.impl.factory.Lists;
 public class ReladomoLensGenerator {
 
 	private static final Set<String> JAVA_KEYWORDS = Set.of(
-		"abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const",
-		"continue", "default", "do", "double", "else", "enum", "extends", "final", "finally", "float",
-		"for", "goto", "if", "implements", "import", "instanceof", "int", "interface", "long", "native",
-		"new", "package", "private", "protected", "public", "return", "short", "static", "strictfp",
-		"super", "switch", "synchronized", "this", "throw", "throws", "transient", "try", "void",
-		"volatile", "while"
+		"abstract",
+		"assert",
+		"boolean",
+		"break",
+		"byte",
+		"case",
+		"catch",
+		"char",
+		"class",
+		"const",
+		"continue",
+		"default",
+		"do",
+		"double",
+		"else",
+		"enum",
+		"extends",
+		"final",
+		"finally",
+		"float",
+		"for",
+		"goto",
+		"if",
+		"implements",
+		"import",
+		"instanceof",
+		"int",
+		"interface",
+		"long",
+		"native",
+		"new",
+		"package",
+		"private",
+		"protected",
+		"public",
+		"return",
+		"short",
+		"static",
+		"strictfp",
+		"super",
+		"switch",
+		"synchronized",
+		"this",
+		"throw",
+		"throws",
+		"transient",
+		"try",
+		"void",
+		"volatile",
+		"while"
 	);
 
 	private final DomainModel domainModel;
@@ -1951,7 +1995,11 @@ public class ReladomoLensGenerator {
 		// @formatter:on
 	}
 
-	private String getFactorySourceCode(@Nonnull ImmutableList<Klass> allClasses, String packageName, String factoryClassName) {
+	private String getFactorySourceCode(
+		@Nonnull ImmutableList<Klass> allClasses,
+		String packageName,
+		String factoryClassName
+	) {
 		// getAllLenses() body - create lenses as local variables
 		String lensLocalVars = allClasses
 			.collect((klass) -> {
