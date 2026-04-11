@@ -208,6 +208,8 @@ public class ReladomoLensGenerator {
 		return ""
 				+ "package " + packageName + ";\n"
 				+ "\n"
+				+ "import javax.annotation.Nonnull;\n"
+				+ "\n"
 				+ "import com.fasterxml.jackson.annotation.JsonTypeName;\n"
 				+ "import com.google.auto.service.AutoService;\n"
 				+ "import cool.klass.model.lens.LensRegistry;\n"
@@ -226,8 +228,7 @@ public class ReladomoLensGenerator {
 				+ "        implements LensRegistryFactory\n"
 				+ "{\n"
 				+ "    @Override\n"
-				// TODO 2026-04-10: move javax.annotation.Nonnull to be an import here instead
-				+ "    public LensRegistry createLensRegistry(@javax.annotation.Nonnull DomainModel domainModel)\n"
+				+ "    public LensRegistry createLensRegistry(@Nonnull DomainModel domainModel)\n"
 				+ "    {\n"
 				+ "        return new ReladomoLensFactory(domainModel);\n"
 				+ "    }\n"
