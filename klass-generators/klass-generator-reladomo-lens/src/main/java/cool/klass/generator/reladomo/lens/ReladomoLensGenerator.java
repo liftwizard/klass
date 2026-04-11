@@ -43,8 +43,16 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.factory.Lists;
 
-// TODO 2026-04-10: Lots of generated code uses the identifier domainObject, and it would be cool to use the lowerSnakeCase name of the type that we know it actually is
 public class ReladomoLensGenerator {
+
+	private static final Set<String> JAVA_KEYWORDS = Set.of(
+		"abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const",
+		"continue", "default", "do", "double", "else", "enum", "extends", "final", "finally", "float",
+		"for", "goto", "if", "implements", "import", "instanceof", "int", "interface", "long", "native",
+		"new", "package", "private", "protected", "public", "return", "short", "static", "strictfp",
+		"super", "switch", "synchronized", "this", "throw", "throws", "transient", "try", "void",
+		"volatile", "while"
+	);
 
 	private final DomainModel domainModel;
 	private final String applicationName;
@@ -54,9 +62,18 @@ public class ReladomoLensGenerator {
 		this.applicationName = Objects.requireNonNull(applicationName);
 	}
 
+	private static String getLowerCamelIdentifier(@Nonnull String upperCamelName) {
+		String lowerCamel = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, upperCamelName);
+		if (JAVA_KEYWORDS.contains(lowerCamel)) {
+			return lowerCamel + "_";
+		}
+		return lowerCamel;
+	}
+
 	private ImmutableList<InheritedProperty<DataTypeProperty>> getInheritedDataTypeProperties(@Nonnull Klass klass) {
+		String lowerCamelName = getLowerCamelIdentifier(klass.getName());
 		MutableList<InheritedProperty<DataTypeProperty>> result = Lists.mutable.empty();
-		this.collectInheritedDataTypeProperties(klass, klass, "domainObject", result);
+		this.collectInheritedDataTypeProperties(klass, klass, lowerCamelName, result);
 		return result.toImmutable();
 	}
 
@@ -100,8 +117,9 @@ public class ReladomoLensGenerator {
 	}
 
 	private ImmutableList<InheritedProperty<AssociationEnd>> getInheritedAssociationEnds(@Nonnull Klass klass) {
+		String lowerCamelName = getLowerCamelIdentifier(klass.getName());
 		MutableList<InheritedProperty<AssociationEnd>> result = Lists.mutable.empty();
-		this.collectInheritedAssociationEnds(klass, "domainObject", result);
+		this.collectInheritedAssociationEnds(klass, lowerCamelName, result);
 		return result.toImmutable();
 	}
 
@@ -1107,6 +1125,7 @@ public class ReladomoLensGenerator {
 
 	private String getPrimitiveLensClass(@Nonnull Klass klass, @Nonnull PrimitiveProperty property) {
 		String className = klass.getName();
+		String lowerCamelName = getLowerCamelIdentifier(className);
 		String propName = property.getName();
 		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propName);
 		String lensClass = className + propNameUpper + "Lens";
@@ -1123,27 +1142,27 @@ public class ReladomoLensGenerator {
 		// @formatter:off
 		String getBody;
 		if (property.isDerived() && needsConversion) {
-			getBody = "            return domainObject." + getterName + "();\n";
+			getBody = "            return " + lowerCamelName + "." + getterName + "();\n";
 		} else if (needsConversion) {
-			getBody = this.getConversionGetterBody(property, getterName);
+			getBody = this.getConversionGetterBody(lowerCamelName, property, getterName);
 		} else if (needsNullCheck) {
 			getBody = ""
-				+ "            if (domainObject.is" + propNameUpper + "Null())\n"
+				+ "            if (" + lowerCamelName + ".is" + propNameUpper + "Null())\n"
 				+ "            {\n"
 				+ "                return null;\n"
 				+ "            }\n"
-				+ "            return domainObject." + getterName + "();\n";
+				+ "            return " + lowerCamelName + "." + getterName + "();\n";
 		} else {
-			getBody = "            return domainObject." + getterName + "();\n";
+			getBody = "            return " + lowerCamelName + "." + getterName + "();\n";
 		}
 
 		String setBody;
 		if (property.isDerived()) {
 			setBody = "            throw new UnsupportedOperationException(\"Cannot set derived property: " + propName + "\");\n";
 		} else if (needsConversion) {
-			setBody = this.getConversionSetterBody(property, setterName);
+			setBody = this.getConversionSetterBody(lowerCamelName, property, setterName);
 		} else {
-			setBody = "            domainObject." + setterName + "(value);\n";
+			setBody = "            " + lowerCamelName + "." + setterName + "(value);\n";
 		}
 		// @formatter:on
 
@@ -1182,27 +1201,27 @@ public class ReladomoLensGenerator {
 				+ "\n"
 				+ "        @Override\n"
 				+ "        @Nullable\n"
-				+ "        public " + javaType + " get(@Nonnull " + className + " domainObject)\n"
+				+ "        public " + javaType + " get(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
 				+ getBody
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public void set(@Nonnull " + className + " domainObject, @Nullable " + javaType + " value)\n"
+				+ "        public void set(@Nonnull " + className + " " + lowerCamelName + ", @Nullable " + javaType + " value)\n"
 				+ "        {\n"
 				+ setBody
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public boolean isNull(@Nonnull " + className + " domainObject)\n"
+				+ "        public boolean isNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            return this.get(domainObject) == null;\n"
+				+ "            return this.get(" + lowerCamelName + ") == null;\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public void setNull(@Nonnull " + className + " domainObject)\n"
+				+ "        public void setNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            this.set(domainObject, null);\n"
+				+ "            this.set(" + lowerCamelName + ", null);\n"
 				+ "        }\n"
 				+ unboxed
 				+ "\n"
@@ -1254,28 +1273,28 @@ public class ReladomoLensGenerator {
 	}
 
 	// @formatter:off
-	private String getConversionGetterBody(@Nonnull PrimitiveProperty property, String getterName) {
+	private String getConversionGetterBody(String varName, @Nonnull PrimitiveProperty property, String getterName) {
 		PrimitiveType type = property.getType();
 		if (type == PrimitiveType.INSTANT || type == PrimitiveType.TEMPORAL_INSTANT) {
 			return ""
-				+ "            Timestamp ts = domainObject." + getterName + "();\n"
+				+ "            Timestamp ts = " + varName + "." + getterName + "();\n"
 				+ "            return ts == null ? null : ts.toInstant();\n";
 		}
 		if (type == PrimitiveType.LOCAL_DATE) {
 			return ""
-				+ "            java.util.Date date = domainObject." + getterName + "();\n"
+				+ "            java.util.Date date = " + varName + "." + getterName + "();\n"
 				+ "            return date == null ? null : ((java.sql.Date) date).toLocalDate();\n";
 		}
 		throw new IllegalStateException("Unexpected type needing conversion: " + type);
 	}
 
-	private String getConversionSetterBody(@Nonnull PrimitiveProperty property, String setterName) {
+	private String getConversionSetterBody(String varName, @Nonnull PrimitiveProperty property, String setterName) {
 		PrimitiveType type = property.getType();
 		if (type == PrimitiveType.INSTANT || type == PrimitiveType.TEMPORAL_INSTANT) {
-			return "            domainObject." + setterName + "(value == null ? null : Timestamp.from(value));\n";
+			return "            " + varName + "." + setterName + "(value == null ? null : Timestamp.from(value));\n";
 		}
 		if (type == PrimitiveType.LOCAL_DATE) {
-			return "            domainObject." + setterName + "(value == null ? null : Date.valueOf(value));\n";
+			return "            " + varName + "." + setterName + "(value == null ? null : Date.valueOf(value));\n";
 		}
 		throw new IllegalStateException("Unexpected type needing conversion: " + type);
 	}
@@ -1290,6 +1309,7 @@ public class ReladomoLensGenerator {
 
 	private String getUnboxedMethods(@Nonnull Klass klass, @Nonnull PrimitiveProperty property) {
 		String className = klass.getName();
+		String lowerCamelName = getLowerCamelIdentifier(className);
 		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, property.getName());
 		boolean isBoolean = property.getType() == PrimitiveType.BOOLEAN;
 		String getterName = (isBoolean ? "is" : "get") + propNameUpper;
@@ -1301,21 +1321,22 @@ public class ReladomoLensGenerator {
 		return ""
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public " + primitiveType + " get" + methodSuffix + "(@Nonnull " + className + " domainObject)\n"
+				+ "        public " + primitiveType + " get" + methodSuffix + "(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            return domainObject." + getterName + "();\n"
+				+ "            return " + lowerCamelName + "." + getterName + "();\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public void set" + methodSuffix + "(@Nonnull " + className + " domainObject, " + primitiveType + " value)\n"
+				+ "        public void set" + methodSuffix + "(@Nonnull " + className + " " + lowerCamelName + ", " + primitiveType + " value)\n"
 				+ "        {\n"
-				+ "            domainObject." + setterName + "(value);\n"
+				+ "            " + lowerCamelName + "." + setterName + "(value);\n"
 				+ "        }\n";
 		// @formatter:on
 	}
 
 	private String getDerivedUnboxedMethods(@Nonnull Klass klass, @Nonnull PrimitiveProperty property) {
 		String className = klass.getName();
+		String lowerCamelName = getLowerCamelIdentifier(className);
 		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, property.getName());
 		boolean isBoolean = property.getType() == PrimitiveType.BOOLEAN;
 		String getterName = (isBoolean ? "is" : "get") + propNameUpper;
@@ -1326,13 +1347,13 @@ public class ReladomoLensGenerator {
 		return ""
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public " + primitiveType + " get" + methodSuffix + "(@Nonnull " + className + " domainObject)\n"
+				+ "        public " + primitiveType + " get" + methodSuffix + "(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            return domainObject." + getterName + "();\n"
+				+ "            return " + lowerCamelName + "." + getterName + "();\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public void set" + methodSuffix + "(@Nonnull " + className + " domainObject, " + primitiveType + " value)\n"
+				+ "        public void set" + methodSuffix + "(@Nonnull " + className + " " + lowerCamelName + ", " + primitiveType + " value)\n"
 				+ "        {\n"
 				+ "            throw new UnsupportedOperationException(\"Cannot set derived property: " + property.getName() + "\");\n"
 				+ "        }\n";
@@ -1352,6 +1373,7 @@ public class ReladomoLensGenerator {
 
 	private String getEnumerationLensClass(@Nonnull Klass klass, @Nonnull EnumerationProperty property) {
 		String className = klass.getName();
+		String lowerCamelName = getLowerCamelIdentifier(className);
 		String propName = property.getName();
 		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propName);
 		String lensClass = className + propNameUpper + "Lens";
@@ -1371,9 +1393,9 @@ public class ReladomoLensGenerator {
 				+ "\n"
 				+ "        @Override\n"
 				+ "        @Nullable\n"
-				+ "        public EnumerationLiteral get(@Nonnull " + className + " domainObject)\n"
+				+ "        public EnumerationLiteral get(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            String prettyName = domainObject.get" + propNameUpper + "();\n"
+				+ "            String prettyName = " + lowerCamelName + ".get" + propNameUpper + "();\n"
 				+ "            if (prettyName == null)\n"
 				+ "            {\n"
 				+ "                return null;\n"
@@ -1383,21 +1405,21 @@ public class ReladomoLensGenerator {
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public void set(@Nonnull " + className + " domainObject, @Nullable EnumerationLiteral value)\n"
+				+ "        public void set(@Nonnull " + className + " " + lowerCamelName + ", @Nullable EnumerationLiteral value)\n"
 				+ "        {\n"
-				+ "            domainObject.set" + propNameUpper + "(value == null ? null : value.getPrettyName());\n"
+				+ "            " + lowerCamelName + ".set" + propNameUpper + "(value == null ? null : value.getPrettyName());\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public boolean isNull(@Nonnull " + className + " domainObject)\n"
+				+ "        public boolean isNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            return this.get(domainObject) == null;\n"
+				+ "            return this.get(" + lowerCamelName + ") == null;\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public void setNull(@Nonnull " + className + " domainObject)\n"
+				+ "        public void setNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            this.set(domainObject, null);\n"
+				+ "            this.set(" + lowerCamelName + ", null);\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
@@ -1425,6 +1447,7 @@ public class ReladomoLensGenerator {
 
 	private String getAssociationLensClass(@Nonnull Klass klass, @Nonnull AssociationEnd associationEnd) {
 		String className = klass.getName();
+		String lowerCamelName = getLowerCamelIdentifier(className);
 		String propName = associationEnd.getName();
 		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propName);
 		String lensClass = className + propNameUpper + "Lens";
@@ -1441,8 +1464,8 @@ public class ReladomoLensGenerator {
 		String returnType = isToMany ? "ImmutableList<" + targetType + ">" : targetType;
 
 		String getterBody = isToMany
-			? "            return Lists.immutable.withAll(domainObject.get" + propNameUpper + "());\n"
-			: "            return domainObject.get" + propNameUpper + "();\n";
+			? "            return Lists.immutable.withAll(" + lowerCamelName + ".get" + propNameUpper + "());\n"
+			: "            return " + lowerCamelName + ".get" + propNameUpper + "();\n";
 
 		String setterBody;
 		if (isToMany) {
@@ -1451,16 +1474,16 @@ public class ReladomoLensGenerator {
 			setterBody = ""
 					+ "            if (value == null)\n"
 					+ "            {\n"
-					+ "                domainObject.get" + propNameUpper + "().clear();\n"
+					+ "                " + lowerCamelName + ".get" + propNameUpper + "().clear();\n"
 					+ "            }\n"
 					+ "            else\n"
 					+ "            {\n"
 					+ "                " + targetType + "List incoming = new " + targetType + "List(value.castToList());\n"
-					+ "                domainObject.get" + propNameUpper + "().merge(incoming, new TopLevelMergeOptions<>(" + targetType + "Finder.getFinderInstance()));\n"
+					+ "                " + lowerCamelName + ".get" + propNameUpper + "().merge(incoming, new TopLevelMergeOptions<>(" + targetType + "Finder.getFinderInstance()));\n"
 					+ "            }\n";
 			// @formatter:on
 		} else {
-			setterBody = "            domainObject.set" + propNameUpper + "(value);\n";
+			setterBody = "            " + lowerCamelName + ".set" + propNameUpper + "(value);\n";
 		}
 
 		// @formatter:off
@@ -1478,27 +1501,27 @@ public class ReladomoLensGenerator {
 				+ "\n"
 				+ "        @Override\n"
 				+ "        @Nullable\n"
-				+ "        public " + returnType + " get(@Nonnull " + className + " domainObject)\n"
+				+ "        public " + returnType + " get(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
 				+ getterBody
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public void set(@Nonnull " + className + " domainObject, @Nullable " + returnType + " value)\n"
+				+ "        public void set(@Nonnull " + className + " " + lowerCamelName + ", @Nullable " + returnType + " value)\n"
 				+ "        {\n"
 				+ setterBody
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public boolean isNull(@Nonnull " + className + " domainObject)\n"
+				+ "        public boolean isNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            return this.get(domainObject) == null;\n"
+				+ "            return this.get(" + lowerCamelName + ") == null;\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public void setNull(@Nonnull " + className + " domainObject)\n"
+				+ "        public void setNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            this.set(domainObject, null);\n"
+				+ "            this.set(" + lowerCamelName + ", null);\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
@@ -1532,6 +1555,7 @@ public class ReladomoLensGenerator {
 		@Nonnull String navigation
 	) {
 		String className = klass.getName();
+		String lowerCamelName = getLowerCamelIdentifier(className);
 		String ancestorName = ancestor.getName();
 		String propName = property.getName();
 		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propName);
@@ -1585,7 +1609,7 @@ public class ReladomoLensGenerator {
 				+ "\n"
 				+ "        @Override\n"
 				+ "        @Nullable\n"
-				+ "        public " + javaType + " get(@Nonnull " + className + " domainObject)\n"
+				+ "        public " + javaType + " get(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
 				+ "            " + ancestorName + " ancestor = " + navigation + ";\n"
 				+ "            if (ancestor == null)\n"
@@ -1596,7 +1620,7 @@ public class ReladomoLensGenerator {
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public void set(@Nonnull " + className + " domainObject, @Nullable " + javaType + " value)\n"
+				+ "        public void set(@Nonnull " + className + " " + lowerCamelName + ", @Nullable " + javaType + " value)\n"
 				+ "        {\n"
 				+ "            " + ancestorName + " ancestor = " + navigation + ";\n"
 				+ "            if (ancestor == null)\n"
@@ -1607,15 +1631,15 @@ public class ReladomoLensGenerator {
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public boolean isNull(@Nonnull " + className + " domainObject)\n"
+				+ "        public boolean isNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            return this.get(domainObject) == null;\n"
+				+ "            return this.get(" + lowerCamelName + ") == null;\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public void setNull(@Nonnull " + className + " domainObject)\n"
+				+ "        public void setNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            this.set(domainObject, null);\n"
+				+ "            this.set(" + lowerCamelName + ", null);\n"
 				+ "        }\n"
 				+ unboxed
 				+ "\n"
@@ -1677,6 +1701,7 @@ public class ReladomoLensGenerator {
 		@Nonnull String navigation
 	) {
 		String className = klass.getName();
+		String lowerCamelName = getLowerCamelIdentifier(className);
 		String ancestorName = ancestor.getName();
 		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, property.getName());
 		boolean isBoolean = property.getType() == PrimitiveType.BOOLEAN;
@@ -1690,14 +1715,14 @@ public class ReladomoLensGenerator {
 		return ""
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public " + primitiveType + " get" + methodSuffix + "(@Nonnull " + className + " domainObject)\n"
+				+ "        public " + primitiveType + " get" + methodSuffix + "(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
 				+ "            " + ancestorName + " ancestor = " + navigation + ";\n"
 				+ "            return ancestor." + getterName + "();\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public void set" + methodSuffix + "(@Nonnull " + className + " domainObject, " + primitiveType + " value)\n"
+				+ "        public void set" + methodSuffix + "(@Nonnull " + className + " " + lowerCamelName + ", " + primitiveType + " value)\n"
 				+ "        {\n"
 				+ "            " + ancestorName + " ancestor = " + navigation + ";\n"
 				+ "            ancestor." + setterName + "(value);\n"
@@ -1712,6 +1737,7 @@ public class ReladomoLensGenerator {
 		@Nonnull String navigation
 	) {
 		String className = klass.getName();
+		String lowerCamelName = getLowerCamelIdentifier(className);
 		String ancestorName = ancestor.getName();
 		String propName = property.getName();
 		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propName);
@@ -1733,7 +1759,7 @@ public class ReladomoLensGenerator {
 				+ "\n"
 				+ "        @Override\n"
 				+ "        @Nullable\n"
-				+ "        public EnumerationLiteral get(@Nonnull " + className + " domainObject)\n"
+				+ "        public EnumerationLiteral get(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
 				+ "            " + ancestorName + " ancestor = " + navigation + ";\n"
 				+ "            if (ancestor == null)\n"
@@ -1750,7 +1776,7 @@ public class ReladomoLensGenerator {
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public void set(@Nonnull " + className + " domainObject, @Nullable EnumerationLiteral value)\n"
+				+ "        public void set(@Nonnull " + className + " " + lowerCamelName + ", @Nullable EnumerationLiteral value)\n"
 				+ "        {\n"
 				+ "            " + ancestorName + " ancestor = " + navigation + ";\n"
 				+ "            if (ancestor == null)\n"
@@ -1761,15 +1787,15 @@ public class ReladomoLensGenerator {
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public boolean isNull(@Nonnull " + className + " domainObject)\n"
+				+ "        public boolean isNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            return this.get(domainObject) == null;\n"
+				+ "            return this.get(" + lowerCamelName + ") == null;\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public void setNull(@Nonnull " + className + " domainObject)\n"
+				+ "        public void setNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            this.set(domainObject, null);\n"
+				+ "            this.set(" + lowerCamelName + ", null);\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
@@ -1802,6 +1828,7 @@ public class ReladomoLensGenerator {
 		@Nonnull String navigation
 	) {
 		String className = klass.getName();
+		String lowerCamelName = getLowerCamelIdentifier(className);
 		String ancestorName = ancestor.getName();
 		String propName = associationEnd.getName();
 		String propNameUpper = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, propName);
@@ -1859,7 +1886,7 @@ public class ReladomoLensGenerator {
 				+ "\n"
 				+ "        @Override\n"
 				+ "        @Nullable\n"
-				+ "        public " + returnType + " get(@Nonnull " + className + " domainObject)\n"
+				+ "        public " + returnType + " get(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
 				+ "            " + ancestorName + " ancestor = " + navigation + ";\n"
 				+ "            if (ancestor == null)\n"
@@ -1870,7 +1897,7 @@ public class ReladomoLensGenerator {
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public void set(@Nonnull " + className + " domainObject, @Nullable " + returnType + " value)\n"
+				+ "        public void set(@Nonnull " + className + " " + lowerCamelName + ", @Nullable " + returnType + " value)\n"
 				+ "        {\n"
 				+ "            " + ancestorName + " ancestor = " + navigation + ";\n"
 				+ "            if (ancestor == null)\n"
@@ -1881,15 +1908,15 @@ public class ReladomoLensGenerator {
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public boolean isNull(@Nonnull " + className + " domainObject)\n"
+				+ "        public boolean isNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            return this.get(domainObject) == null;\n"
+				+ "            return this.get(" + lowerCamelName + ") == null;\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
-				+ "        public void setNull(@Nonnull " + className + " domainObject)\n"
+				+ "        public void setNull(@Nonnull " + className + " " + lowerCamelName + ")\n"
 				+ "        {\n"
-				+ "            this.set(domainObject, null);\n"
+				+ "            this.set(" + lowerCamelName + ", null);\n"
 				+ "        }\n"
 				+ "\n"
 				+ "        @Override\n"
