@@ -429,7 +429,6 @@ public class ReladomoLensGenerator {
 		eclipseCollectionsImports.add("org.eclipse.collections.api.list.ImmutableList");
 		eclipseCollectionsImports.add("org.eclipse.collections.api.map.ImmutableMap");
 		eclipseCollectionsImports.add("org.eclipse.collections.impl.factory.Lists");
-		eclipseCollectionsImports.add("org.eclipse.collections.impl.factory.Maps");
 
 		// Reladomo type imports
 		reladomoTypeImports.add("com.gs.fw.common.mithra.attribute.Attribute");
@@ -726,109 +725,7 @@ public class ReladomoLensGenerator {
 
 		String className = klass.getName();
 
-		// Initialize primitivePropertyLenses map
-		ImmutableList<PrimitiveProperty> declaredPrimitives = klass
-			.getDeclaredDataTypeProperties()
-			.selectInstancesOf(PrimitiveProperty.class)
-			.reject((p) -> !this.shouldIncludeDerived(klass) && p.isDerived())
-			.reject((p) -> p.getType().isTemporalRange());
-		MutableList<String> primitiveMapEntries = Lists.mutable.empty();
-		primitiveMapEntries.addAllIterable(declaredPrimitives.collect((property) -> getMapEntry(property.getName())));
-		primitiveMapEntries.addAllIterable(
-			inheritedDataTypeProperties
-				.select((inherited) -> inherited.property() instanceof PrimitiveProperty)
-				.collect((inherited) -> getMapEntry(inherited.property().getName()))
-		);
-		primitiveMapEntries.addAllIterable(
-			interfaceOnlyProperties
-				.selectInstancesOf(PrimitiveProperty.class)
-				.collect((property) -> getMapEntry(property.getName()))
-		);
-		String primitiveLensMap = getMapInit(
-			"primitivePropertyLenses",
-			"cool.klass.model.meta.domain.api.property.PrimitiveProperty",
-			"PrimitiveLens<" + className + ", ?>",
-			primitiveMapEntries
-		);
-
-		// Initialize enumerationPropertyLenses map
-		ImmutableList<EnumerationProperty> declaredEnumerations = klass
-			.getDeclaredDataTypeProperties()
-			.selectInstancesOf(EnumerationProperty.class)
-			.reject((p) -> !this.shouldIncludeDerived(klass) && p.isDerived());
-		MutableList<String> enumerationMapEntries = Lists.mutable.empty();
-		enumerationMapEntries.addAllIterable(
-			declaredEnumerations.collect((property) -> getMapEntry(property.getName()))
-		);
-		enumerationMapEntries.addAllIterable(
-			inheritedDataTypeProperties
-				.select((inherited) -> inherited.property() instanceof EnumerationProperty)
-				.collect((inherited) -> getMapEntry(inherited.property().getName()))
-		);
-		enumerationMapEntries.addAllIterable(
-			interfaceOnlyProperties
-				.selectInstancesOf(EnumerationProperty.class)
-				.collect((property) -> getMapEntry(property.getName()))
-		);
-		String enumerationLensMap = getMapInit(
-			"enumerationPropertyLenses",
-			"cool.klass.model.meta.domain.api.property.EnumerationProperty",
-			"EnumerationLens<" + className + ">",
-			enumerationMapEntries
-		);
-
-		// Initialize dataTypePropertyLenses map
-		MutableList<String> dataTypeMapEntries = Lists.mutable.empty();
-		dataTypeMapEntries.addAllIterable(
-			declaredDataTypeProperties.collect((property) -> getMapEntry(property.getName()))
-		);
-		dataTypeMapEntries.addAllIterable(
-			inheritedDataTypeProperties.collect((inherited) -> getMapEntry(inherited.property().getName()))
-		);
-		dataTypeMapEntries.addAllIterable(
-			interfaceOnlyProperties.collect((property) -> getMapEntry(property.getName()))
-		);
-		String dataTypeLensMap = getMapInit(
-			"dataTypePropertyLenses",
-			"cool.klass.model.meta.domain.api.property.DataTypeProperty",
-			"DataTypeLens<" + className + ", ?>",
-			dataTypeMapEntries
-		);
-
-		// Initialize associationEndLenses map
-		MutableList<String> associationMapEntries = Lists.mutable.empty();
-		associationMapEntries.addAllIterable(
-			klass.getDeclaredAssociationEnds().collect((associationEnd) -> getMapEntry(associationEnd.getName()))
-		);
-		associationMapEntries.addAllIterable(
-			inheritedAssociationEnds.collect((inherited) -> getMapEntry(inherited.property().getName()))
-		);
-		String associationLensMap = getMapInit(
-			"associationEndLenses",
-			"cool.klass.model.meta.domain.api.property.AssociationEnd",
-			"AssociationLens<" + className + ", ?>",
-			associationMapEntries
-		);
-
-		// Initialize propertyLenses map (combined)
-		MutableList<String> allMapEntries = Lists.mutable.empty();
-		allMapEntries.addAllIterable(declaredDataTypeProperties.collect((property) -> getMapEntry(property.getName())));
-		allMapEntries.addAllIterable(
-			klass.getDeclaredAssociationEnds().collect((associationEnd) -> getMapEntry(associationEnd.getName()))
-		);
-		allMapEntries.addAllIterable(
-			inheritedDataTypeProperties.collect((inherited) -> getMapEntry(inherited.property().getName()))
-		);
-		allMapEntries.addAllIterable(
-			inheritedAssociationEnds.collect((inherited) -> getMapEntry(inherited.property().getName()))
-		);
-		allMapEntries.addAllIterable(interfaceOnlyProperties.collect((property) -> getMapEntry(property.getName())));
-		String propertyLensesMap = getMapInit(
-			"propertyLenses",
-			"cool.klass.model.meta.domain.api.property.Property",
-			"PropertyLens<" + className + ", ?>",
-			allMapEntries
-		);
+		// Map initialization strings - all derived from allLenses via groupByUniqueKey
 
 		// @formatter:off
 		return ""
@@ -845,32 +742,18 @@ public class ReladomoLensGenerator {
 				+ "        this.allLenses = Lists.immutable.with(\n"
 				+ "                " + lensNames.makeString(", ") + ");\n"
 				+ "\n"
-				+ dataTypeLensMap
-				+ "\n"
-				+ primitiveLensMap
-				+ "\n"
-				+ enumerationLensMap
-				+ "\n"
-				+ associationLensMap
-				+ "\n"
-				+ propertyLensesMap
+				+ "        //noinspection unchecked,rawtypes\n"
+				+ "        this.dataTypePropertyLenses = (ImmutableMap) this.allLenses.selectInstancesOf(DataTypeLens.class).groupByUniqueKey(DataTypeLens::getProperty);\n"
+				+ "        //noinspection unchecked,rawtypes\n"
+				+ "        this.primitivePropertyLenses = (ImmutableMap) this.allLenses.selectInstancesOf(PrimitiveLens.class).groupByUniqueKey(PrimitiveLens::getProperty);\n"
+				+ "        //noinspection unchecked,rawtypes\n"
+				+ "        this.enumerationPropertyLenses = (ImmutableMap) this.allLenses.selectInstancesOf(EnumerationLens.class).groupByUniqueKey(EnumerationLens::getProperty);\n"
+				+ "        //noinspection unchecked,rawtypes\n"
+				+ "        this.associationEndLenses = (ImmutableMap) this.allLenses.selectInstancesOf(AssociationLens.class).groupByUniqueKey(AssociationLens::getProperty);\n"
+				+ "        this.propertyLenses = this.allLenses.groupByUniqueKey(PropertyLens::getProperty);\n"
 				+ "    }\n"
 				+ "\n";
 		// @formatter:on
-	}
-
-	private static String getMapInit(String fieldName, String keyType, String valueType, MutableList<String> entries) {
-		String prefix = "        this." + fieldName + " = Maps.immutable.<" + keyType + ", " + valueType + ">empty()";
-		if (entries.isEmpty()) {
-			return prefix + ";\n";
-		}
-		String body = entries.makeString("");
-		// Remove the trailing \n from the last entry and add semicolon
-		return prefix + "\n" + body.substring(0, body.length() - 1) + ";\n";
-	}
-
-	private static String getMapEntry(String propertyName) {
-		return "                .newWithKeyValue(this." + propertyName + ".getProperty(), this." + propertyName + ")\n";
 	}
 
 	private String getPropertyLookup(@Nonnull DataTypeProperty property) {
