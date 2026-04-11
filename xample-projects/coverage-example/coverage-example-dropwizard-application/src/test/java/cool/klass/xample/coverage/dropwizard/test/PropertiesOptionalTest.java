@@ -60,5 +60,28 @@ class PropertiesOptionalTest extends AbstractCoverageTest {
 			.get();
 
 		this.assertResponse("putFirst2", Status.OK, getResponse);
+
+		// Now PUT with all optional primitives set to null
+		String nullJsonName = this.getClass().getSimpleName() + ".putFirstNull.json5";
+		String nullJson = FileSlurper.slurp(nullJsonName, this.getClass());
+
+		Response putNullResponse = client
+			.target("http://localhost:{port}/api/propertiesOptional/{id}")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.resolveTemplate("id", 1)
+			.request()
+			.header("Authorization", "Impersonation User userId 1")
+			.put(Entity.json(nullJson));
+
+		this.assertEmptyResponse(Status.NO_CONTENT, putNullResponse);
+
+		Response getNullResponse = client
+			.target("http://localhost:{port}/api/propertiesOptional/{id}")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.resolveTemplate("id", 1)
+			.request()
+			.get();
+
+		this.assertResponse("putFirstNull2", Status.OK, getNullResponse);
 	}
 }
