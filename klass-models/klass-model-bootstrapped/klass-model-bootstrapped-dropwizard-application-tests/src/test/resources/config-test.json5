@@ -61,7 +61,7 @@
 		},
 		dataStore: {
 			type: "reladomoLens",
-			lensRegistry: { type: "klass.model.meta.domain" },
+			lensRegistry: { type: "KlassBootstrappedMetaModel" },
 			uuid: {
 				type: "seed",
 				seed: "test seed",

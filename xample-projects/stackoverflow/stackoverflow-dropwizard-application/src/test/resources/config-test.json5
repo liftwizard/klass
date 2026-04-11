@@ -77,7 +77,7 @@
 		},
 		dataStore: {
 			type: "reladomoLens",
-			lensRegistry: { type: "com.stackoverflow" },
+			lensRegistry: { type: "StackOverflow" },
 			uuid: {
 				type: "seed",
 				seed: "test seed",

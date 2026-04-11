@@ -115,8 +115,8 @@
 			lensRegistry: {
 				type: "composite",
 				registries: [
-					{ type: "cool.klass.xample.coverage" },
-					{ type: "klass.model.meta.domain" },
+					{ type: "CoverageExample" },
+					{ type: "KlassBootstrappedMetaModel" },
 				],
 			},
 			uuid: {

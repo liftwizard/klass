@@ -57,7 +57,7 @@
 		dataStore: {
 			type: "reladomoLens",
 			lensRegistry: {
-				type: "com.stackoverflow",
+				type: "StackOverflow",
 			},
 			uuid: {
 				type: "system",

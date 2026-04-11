@@ -77,7 +77,7 @@
 		dataStore: {
 			type: "reladomoLens",
 			lensRegistry: {
-				type: "klass.model.meta.domain",
+				type: "KlassBootstrappedMetaModel",
 			},
 			uuid: {
 				type: "system",

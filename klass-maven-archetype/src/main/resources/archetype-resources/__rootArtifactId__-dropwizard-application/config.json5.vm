@@ -108,7 +108,7 @@
     dataStore: {
       type: "reladomoLens",
       lensRegistry: {
-        type: "${package}",
+        type: "${name}",
       },
       uuid: {
         type: "system",
