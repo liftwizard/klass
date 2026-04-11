@@ -1883,23 +1883,13 @@ public class ReladomoLensGenerator {
 		String packageName,
 		String factoryClassName
 	) {
-		// getAllLenses() body - create lenses as local variables
-		String lensLocalVars = allClasses
-			.collect((klass) -> {
-				String fieldName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "Lens";
-				return MessageFormat.format(
-					"        ReladomoClassLens<?> {0} = new Reladomo_{1}_ClassLens(domainModel.getClassByName(\"{1}\"));\n",
-					fieldName,
-					klass.getName()
-				);
-			})
-			.makeString("");
-
-		// getAllLenses() return - list of all lens local variables
+		// getAllLenses() body - inline constructor calls
 		String allLensesEntries = allClasses
-			.collect(
-				(klass) ->
-					"                " + CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "Lens"
+			.collect((klass) ->
+				MessageFormat.format(
+					"                new Reladomo_{0}_ClassLens(domainModel.getClassByName(\"{0}\"))",
+					klass.getName()
+				)
 			)
 			.makeString(",\n");
 
@@ -1934,8 +1924,6 @@ public class ReladomoLensGenerator {
 				+ "    @Nonnull\n"
 				+ "    protected ImmutableList<ReladomoClassLens<?>> getAllLenses(@Nonnull DomainModel domainModel)\n"
 				+ "    {\n"
-				+ lensLocalVars
-				+ "\n"
 				+ "        return Lists.immutable.with(\n"
 				+ allLensesEntries + ");\n"
 				+ "    }\n"
