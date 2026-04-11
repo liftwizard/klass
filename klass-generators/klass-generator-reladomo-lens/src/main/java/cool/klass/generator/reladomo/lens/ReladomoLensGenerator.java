@@ -400,6 +400,10 @@ public class ReladomoLensGenerator {
 			reladomoTypeImports.add(ancestor.getPackageName() + "." + ancestor.getName() + "Finder");
 		}
 
+		if (klass.isSystemTemporal()) {
+			reladomoTypeImports.add("cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp");
+		}
+
 		if (hasAnyAssociationEnd) {
 			reladomoTypeImports.add("com.gs.fw.common.mithra.finder.AbstractRelatedFinder");
 		}
@@ -924,8 +928,7 @@ public class ReladomoLensGenerator {
 					+ "    @Nonnull\n"
 					+ "    public " + className + " instantiate()\n"
 					+ "    {\n"
-					// TODO 2026-04-10: Use an import for cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp
-					+ "        return new " + className + "(cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp.getDefaultInfinity());\n"
+					+ "        return new " + className + "(UtcInfinityTimestamp.getDefaultInfinity());\n"
 					+ "    }\n"
 					+ "\n";
 			// @formatter:on
