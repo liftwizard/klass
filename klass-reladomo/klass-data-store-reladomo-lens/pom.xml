@@ -59,22 +59,12 @@
             <version>${project.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>cool.klass</groupId>
-            <artifactId>klass-reladomo-utc-infinity-timestamp</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <!--endregion-->
 
         <!--region Compile dependencies -->
         <dependency>
             <groupId>org.eclipse.collections</groupId>
             <artifactId>eclipse-collections-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.collections</groupId>
-            <artifactId>eclipse-collections</artifactId>
         </dependency>
 
         <dependency>
@@ -85,11 +75,6 @@
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
         </dependency>
 
         <dependency>

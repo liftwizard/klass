@@ -24,8 +24,6 @@ import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.google.common.base.CaseFormat;
-import com.google.common.base.Converter;
 import com.gs.fw.common.mithra.MithraDatedTransactionalObject;
 import com.gs.fw.common.mithra.MithraList;
 import com.gs.fw.common.mithra.MithraManagerProvider;
@@ -70,10 +68,6 @@ public class ReladomoLensDataStore implements DataStore {
 
 	private static final Marker MARKER = MarkerFactory.getMarker("reladomo transaction stats");
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReladomoLensDataStore.class);
-
-	private static final Converter<String, String> UPPER_TO_LOWER_CAMEL = CaseFormat.UPPER_CAMEL.converterTo(
-		CaseFormat.LOWER_CAMEL
-	);
 
 	private final ReladomoLensRegistry lensRegistry;
 	private final Supplier<UUID> uuidSupplier;
@@ -199,7 +193,7 @@ public class ReladomoLensDataStore implements DataStore {
 		@Nonnull MapIterable<DataTypeProperty, Object> keys
 	) {
 		Operation operation = this.buildFindByKeyOperation(klass, keys);
-		ReladomoClassLens<?> reladomoLens = (ReladomoClassLens<?>) this.lensRegistry.getClassLens(klass);
+		ReladomoClassLens<?> reladomoLens = this.lensRegistry.getClassLens(klass);
 		return (List<Object>) reladomoLens.getRelatedFinder().findMany(operation);
 	}
 
@@ -382,7 +376,7 @@ public class ReladomoLensDataStore implements DataStore {
 			return;
 		}
 
-		ReladomoClassLens<?> reladomoLens = (ReladomoClassLens<?>) this.lensRegistry.getClassLens(klass);
+		ReladomoClassLens<?> reladomoLens = this.lensRegistry.getClassLens(klass);
 		RelatedFinder<?> finder = reladomoLens.getRelatedFinder();
 
 		if (klass.isSystemTemporal()) {
@@ -446,16 +440,13 @@ public class ReladomoLensDataStore implements DataStore {
 	}
 
 	private MithraObject getSubClassPersistentInstance(Klass klass, Klass subClass, MithraObject persistentInstance) {
-		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(subClass.getName()) + "SubClass";
-		Object result = this.navigateRelationship(klass, relationshipName, persistentInstance);
-		return (MithraObject) result;
+		return (MithraObject) this.getUntypedClassLens(klass).getSubClassInstance(persistentInstance, subClass);
 	}
 
 	@Override
-	@Nullable
+	@Nonnull
 	public Object getSuperClass(@Nonnull Object persistentInstance, @Nonnull Klass klass) {
-		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(klass.getSuperClass().get().getName()) + "SuperClass";
-		Object result = this.navigateRelationship(klass, relationshipName, persistentInstance);
+		Object result = this.getUntypedClassLens(klass).getSuperClassInstance(persistentInstance);
 		Objects.requireNonNull(result, () ->
 			"Expected result to not be null for superClass: %s, persistentInstance: %s".formatted(
 				klass,
@@ -472,34 +463,16 @@ public class ReladomoLensDataStore implements DataStore {
 			throw new AssertionError("Expected " + subClass + " to be a strict subtype of " + superClass);
 		}
 
-		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(subClass.getName()) + "SubClass";
-		return this.navigateRelationship(superClass, relationshipName, persistentInstance);
+		return this.getUntypedClassLens(superClass).getSubClassInstance(persistentInstance, subClass);
 	}
 
 	// endregion
 
 	// region Private helpers
 
-	@Nullable
-	private Object navigateRelationship(
-		@Nonnull Klass klass,
-		@Nonnull String relationshipName,
-		@Nonnull Object persistentInstance
-	) {
-		AbstractRelatedFinder finder = (AbstractRelatedFinder) this.lensRegistry.getClassLens(klass).getRelatedFinder();
-
-		AbstractRelatedFinder relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
-			relationshipName
-		);
-
-		if (relationshipFinder == null) {
-			throw new AssertionError(
-				"Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property "
-				+ relationshipName
-			);
-		}
-
-		return relationshipFinder.valueOf(persistentInstance);
+	@SuppressWarnings("unchecked")
+	private ReladomoClassLens<Object> getUntypedClassLens(@Nonnull Klass klass) {
+		return (ReladomoClassLens<Object>) this.lensRegistry.getClassLens(klass);
 	}
 
 	private <T> void generateAndSetId(
@@ -552,7 +525,7 @@ public class ReladomoLensDataStore implements DataStore {
 			throw new IllegalArgumentException(error);
 		}
 
-		ReladomoClassLens<?> reladomoLens = (ReladomoClassLens<?>) this.lensRegistry.getClassLens(klass);
+		ReladomoClassLens<?> reladomoLens = this.lensRegistry.getClassLens(klass);
 		RelatedFinder<?> finder = reladomoLens.getRelatedFinder();
 
 		ImmutableList<Operation> operations = keyProperties.collect((keyProperty) -> {
@@ -589,23 +562,36 @@ public class ReladomoLensDataStore implements DataStore {
 	}
 
 	private Object navigateToClassifierInstance(Object persistentInstance, Classifier targetClassifier) {
-		RelatedFinder<?> concreteFinder = ((MithraObject) persistentInstance).zGetPortal().getFinder();
+		Klass concreteKlass = this.lensRegistry.getClassLensForJavaClass(persistentInstance.getClass()).getKlass();
 
-		String superClassRelationshipName = UPPER_TO_LOWER_CAMEL.convert(targetClassifier.getName()) + "SuperClass";
-		AbstractRelatedFinder superClassRelationship =
-			(AbstractRelatedFinder) concreteFinder.getRelationshipFinderByName(superClassRelationshipName);
-
-		if (superClassRelationship != null) {
-			return superClassRelationship.valueOf(persistentInstance);
+		if (concreteKlass.isSubTypeOf(targetClassifier)) {
+			// Walk up the superclass chain
+			Object current = persistentInstance;
+			Klass currentKlass = concreteKlass;
+			while (!currentKlass.equals(targetClassifier)) {
+				current = this.getUntypedClassLens(currentKlass).getSuperClassInstance(current);
+				currentKlass = currentKlass.getSuperClass().get();
+			}
+			return current;
 		}
 
-		String subClassRelationshipName = UPPER_TO_LOWER_CAMEL.convert(targetClassifier.getName()) + "SubClass";
-		AbstractRelatedFinder subClassRelationship = (AbstractRelatedFinder) concreteFinder.getRelationshipFinderByName(
-			subClassRelationshipName
-		);
-
-		if (subClassRelationship != null) {
-			return subClassRelationship.valueOf(persistentInstance);
+		if (targetClassifier instanceof Klass targetKlass && targetKlass.isStrictSubTypeOf(concreteKlass)) {
+			// Walk down the subclass chain, finding the direct child on the path to target at each step
+			Object current = persistentInstance;
+			Klass currentKlass = concreteKlass;
+			while (!currentKlass.equals(targetKlass)) {
+				Klass nextSubClass = currentKlass
+					.getSubClasses()
+					.detect((sub) -> targetKlass.equals(sub) || targetKlass.isStrictSubTypeOf(sub));
+				if (nextSubClass == null) {
+					throw new AssertionError(
+						"Could not find subclass path from " + currentKlass.getName() + " to " + targetKlass.getName()
+					);
+				}
+				current = this.getUntypedClassLens(currentKlass).getSubClassInstance(current, nextSubClass);
+				currentKlass = nextSubClass;
+			}
+			return current;
 		}
 
 		throw new AssertionError(

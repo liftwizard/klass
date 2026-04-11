@@ -17,9 +17,11 @@
 package cool.klass.model.lens.reladomo;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.gs.fw.common.mithra.finder.RelatedFinder;
 import cool.klass.model.lens.ClassLens;
+import cool.klass.model.meta.domain.api.Klass;
 
 /**
  * A ClassLens that also provides Reladomo/Mithra-specific operations.
@@ -38,5 +40,19 @@ public interface ReladomoClassLens<T> extends ClassLens<T> {
 
 	default void generateAndSetId(@Nonnull T instance) {
 		throw new IllegalStateException("generateAndSetId not implemented for " + this.getKlass().getName());
+	}
+
+	@Nullable
+	default Object getSuperClassInstance(@Nonnull T instance) {
+		throw new UnsupportedOperationException(
+			"getSuperClassInstance not yet generated for " + this.getKlass().getName()
+		);
+	}
+
+	@Nullable
+	default Object getSubClassInstance(@Nonnull T instance, @Nonnull Klass subClass) {
+		throw new UnsupportedOperationException(
+			"getSubClassInstance not yet generated for " + this.getKlass().getName()
+		);
 	}
 }

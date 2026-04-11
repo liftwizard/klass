@@ -738,6 +738,7 @@ public class ReladomoLensGenerator {
 				+ this.getInstantiateMethod(klass)
 			+ this.getGetJavaClassMethod(klass)
 			+ this.getGenerateAndSetIdMethod(klass)
+			+ this.getHierarchyMethods(klass)
 			+ this.getClassLensToString("Reladomo_" + className + "_ClassLens");
 		// @formatter:on
 
@@ -841,6 +842,62 @@ public class ReladomoLensGenerator {
 				+ "    public void generateAndSetId(@Nonnull " + className + " instance)\n"
 				+ "    {\n"
 				+ "        " + navigation + ".generateAndSet" + idPropNameUpper + "();\n"
+				+ "    }\n"
+				+ "\n";
+		// @formatter:on
+	}
+
+	private String getHierarchyMethods(@Nonnull Klass klass) {
+		return this.getSuperClassInstanceMethod(klass) + this.getSubClassInstanceMethod(klass);
+	}
+
+	private String getSuperClassInstanceMethod(@Nonnull Klass klass) {
+		Optional<Klass> optionalSuperClass = klass.getSuperClass();
+		if (optionalSuperClass.isEmpty()) {
+			return "";
+		}
+
+		String className = klass.getName();
+		String superClassName = optionalSuperClass.get().getName();
+
+		// @formatter:off
+		return ""
+				+ "    @Override\n"
+				+ "    @javax.annotation.Nullable\n"
+				+ "    public Object getSuperClassInstance(@Nonnull " + className + " instance)\n"
+				+ "    {\n"
+				+ "        return instance.get" + superClassName + "SuperClass();\n"
+				+ "    }\n"
+				+ "\n";
+		// @formatter:on
+	}
+
+	private String getSubClassInstanceMethod(@Nonnull Klass klass) {
+		ImmutableList<Klass> subClasses = klass.getSubClasses();
+		if (subClasses.isEmpty()) {
+			return "";
+		}
+
+		String className = klass.getName();
+
+		String switchCases = subClasses
+			.collect((subClass) -> {
+				String subName = subClass.getName();
+				return "            case \"" + subName + "\" -> instance.get" + subName + "SubClass();\n";
+			})
+			.makeString("");
+
+		// @formatter:off
+		return ""
+				+ "    @Override\n"
+				+ "    @javax.annotation.Nullable\n"
+				+ "    public Object getSubClassInstance(@Nonnull " + className + " instance, @Nonnull cool.klass.model.meta.domain.api.Klass subClass)\n"
+				+ "    {\n"
+				+ "        return switch (subClass.getName())\n"
+				+ "        {\n"
+				+ switchCases
+				+ "            default -> throw new AssertionError(\"Unknown subclass of " + className + ": \" + subClass.getName());\n"
+				+ "        };\n"
 				+ "    }\n"
 				+ "\n";
 		// @formatter:on
