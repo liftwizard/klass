@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"> 
+<title>Klass: Overview</title>
+<link rel="stylesheet" type="text/css" href="/docs/static/css/katex.min.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/main.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+</head>
+<link rel="shortcut icon" href="/docs/favicon.png"type="image/ico"/>
+<body class="znai-theme theme-znai-dark">
+<script>(function() {
+    var themeNameKey = 'znaiTheme';
+    var darkThemeName = 'znai-dark';
+    var lightThemeName = 'default';
+
+    var znaiTheme = {
+        changeHandlers: [],
+        addChangeHandler(handler) {
+            this.changeHandlers.push(handler);
+        },
+        removeChangeHandler(handler) {
+            var idx = this.changeHandlers.indexOf(handler);
+            this.changeHandlers.splice(idx, 1);
+        },
+        set(name) {
+            this.name = name;
+            document.body.className = 'znai-theme theme-' + name;
+
+            var idx = 0;
+            var len = this.changeHandlers.length;
+            for (; idx < len; idx++) {
+                this.changeHandlers[idx](name);
+            }
+        },
+        setExplicitly(name) {
+            storeThemeName(name);
+            this.set(name);
+        },
+        setExplicitlyIfNotSetAlready(name) {
+            const themeName = getStoredThemeName();
+            if (themeName) {
+                return
+            }
+
+            this.setExplicitly(name)
+        },
+        toggle() {
+            this.setExplicitly(this.name === lightThemeName ? darkThemeName : lightThemeName)
+        }
+    };
+
+    var mediaThemeName = setLightMatchMediaListenerAndGetThemeName()
+    var themeName = getStoredThemeName() || mediaThemeName;
+    znaiTheme.set(themeName);
+
+    window.znaiTheme = znaiTheme;
+
+    function getStoredThemeName() {
+        return localStorage.getItem(themeNameKey);
+    }
+
+    function storeThemeName(name) {
+        return localStorage.setItem(themeNameKey, name);
+    }
+
+    function setLightMatchMediaListenerAndGetThemeName() {
+        if (!window.matchMedia) {
+            return darkThemeName;
+        }
+
+        var lightQuery = window.matchMedia('(prefers-color-scheme: light)');
+        lightQuery.addListener(function (e) {
+            const newThemeName = e.matches ? lightThemeName : darkThemeName;
+            znaiTheme.setExplicitly(newThemeName);
+        });
+
+        return lightQuery.matches ? lightThemeName : darkThemeName;
+    }
+})()</script>
+<div id="znai"><div id="znai-initial-page-loading" style="margin: -20px 0 0 -20px; padding: 0 40px 40px 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center">
+    <div></div>
+</div><section id="page-content" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+<article>
+<header><h1>Additional Features</h1></header>
+<p>In this section we ll continue the Stack Overflow example and implement up down votes on Questions We ll explore enumerations parameterized properties parameterized projections and aggregations Enumerations We ll start with an enumeration to indicate the direction of a vote The upper case literal names are used within the model The quoted strings are pretty names that will appear in service request and response bodies Partial inference composite keys Next we ll define the vote class Stack Overflow restricts voting based on how many times you ve voted and whether the post was edited since the last vote So votes must be Votes must be to keep track of who cast the vote A user can only cast one vote so the key should be questionId createdById There is no auto generated property has a natural composite key Normally we d allow the property to be inferred based on the keyword but then it would be inferred without the modifier A user cannot upvote and downvote the same question so is not part of the key Associations A vote is like many to many mapping from Question to User Services We ll create an upsert service for creating and editing votes No create service is necessary because there s no auto incrementing id The main criteria uses the global which is the name of the currently logged in principal The validation criteria uses the global less 5 minutes in milliseconds to check whether the vote was created within the last 5 minutes The DELETE service is very similar It just doesn t need to validate that the vote exists and it doesn t need to validate that the voter and the question author are different users Parameterized properties When viewing a question on Stack Overflow you can see your own vote if you ve cast one We add as a parameterized property though there are no parameters in this example This criteria is another example using the global Once the parameterized property is defined it can be included in a projection using the same syntax as an association end In fact a parameterized property without any parameters can be thought of as a uni directional association Parameterized projections The definition of above is fine and fairly similar to the and properties in the real StackOverflow api However let s add some perhaps unrealistic variants that take parameters just to see what parameterized properties can do Parameterized properties can be included in read projections There are two ways to provide the parameter as a constant or as a projection parameter Here we define a projection that parameterizes twice once for each Here we define a parameterized projection that passes its parameter through to Parameterized service When using a parameterized projection the service must also be parameterized Parameterized responses When a json response includes parameterized properties the parameters become part of the field names Aggregations StackOverflow s documentation states Voting scores as displayed are the sum of the up and down votes on a post Vote counts are the individual up and down votes that make up the score You can view the vote counts by clicking on the score of a post This will break the score into upvotes and downvotes We add two aggregation properties to Question and Associations and parameterized properties are defined using criteria Aggregation properties are defined using a fuller expression language These aggregations use the function Other available functions include and Once these aggregation properties are defined in a class they can be included in read projections like normal properties They cannot be included in write projections enumeration VoteDirection UP up DOWN down class QuestionVote systemTemporal audited questionId Long key createdById String key createdBy direction VoteDirection systemTemporal audited id QuestionVote createdById audited key direction association QuestionHasVotes question Question 1 1 final votes QuestionVote 0 * relationship this id QuestionVote questionId association UserHasQuestionVotes user User 1 1 final votes QuestionVote 0 * relationship this userId QuestionVote createdById service QuestionVoteResource upsert upsertQuestionVote questionId Long 1 1 path user User 1 1 user questionVote QuestionVote 1 body service http url question vote questionId Long 1 1 criteria this question id questionId &amp;&amp; this createdById user userId after this question createdById user userId &amp;&amp; this createdOn &gt; now 5 * 60 * 1000 || this systemFrom &lt; this question systemFrom upsert upsertQuestionVote questionVote QuestionVote 1 body user User 1 1 user service rpc url question vote criteria this question id questionVote question id &amp;&amp; this createdById user userId after this question createdById user userId &amp;&amp; this createdOn &gt; now 5 * 60 * 1000 || this systemFrom &lt; this question systemFrom question vote questionId Long 1 1 PUT multiplicity one criteria this questionId questionId &amp;&amp; this createdById userId validate this question createdById userId &amp;&amp; this null || this createdOn &gt; now 5 * 60 * 1000 || this systemFrom &lt; this question systemFrom projection QuestionVoteWriteProjection userId now service QuestionVote question vote questionId Long 1 1 PUT DELETE multiplicity one criteria this questionId questionId &amp;&amp; this createdById userId validate this createdOn &gt; now 5 * 60 * 1000 || this systemFrom &lt; this question systemFrom projection QuestionVoteWriteProjection class Question systemTemporal versioned audited myVote QuestionVote 0 1 this votes createdById userId myVote userId myVote upvoted downvoted class Question systemTemporal versioned audited votesByDirection direction VoteDirection 1 1 QuestionVote 0 * this votes direction direction voteByUser userId String 1 1 userId QuestionVote 0 1 userId refers to the parameter not the global this votes createdById userId votesByDirection VoteDirection projection ProjectionWithConstant on Question id Question id title Question title body Question body votesByDirection up This would work but the information is redundant direction Upvote direction user userId Upvote user id votesByDirection down This would work but the information is redundant direction Upvote direction user userId Upvote user id voteByUser projection ProjectionWithParameter userId String 1 1 userId on Question id Question id title Question title body Question body voteByUser userId direction Vote direction This would work but the information is redundant * user userId Vote user id * service Question question id Long 1 1 userId String 1 1 userId GET format json multiplicity one criteria this id id projection ProjectionWithParameter userId upvotes downvotes class Question systemTemporal versioned audited upvotes Integer count this votes direction VoteDirection UP downvotes Integer count this votes direction VoteDirection DOWN count sum min max average</p>
+</article>
+</section>
+<section id="table-of-contents" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+<article>
+<a href="/docs/vision/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/vision/classes/">Classes</a>
+</article>
+
+<article>
+<a href="/docs/vision/associations/">Associations</a>
+</article>
+
+<article>
+<a href="/docs/vision/projections-and-services/">Projections And Services</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/audit-model/">Audit Model</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/audited-services/">Audited Services</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/bootstrapped-model-data/">Bootstrapped Model Data</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/bootstrapped-meta-model-data/">Bootstrapped Meta Model Data</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-query/">Dynamic Query</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-ui/">Dynamic Ui</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-model/">Dynamic Model</a>
+</article>
+
+<article>
+<a href="/docs/additional-features/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/alternative-implementations/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/related-works/overview/">Overview</a>
+</article>
+</section>
+</div>
+<script type="text/javascript" src="/docs/footer.js"></script>
+<script type="text/javascript" src="/docs/toc.js"></script>
+<script type="text/javascript" src="/docs/assets.js"></script>
+<script type="module" src="/docs/static/__vite-browser-external-8Pss11n5.js"></script>
+<script type="module" src="/docs/static/architecture-U656AL7Q-DjPBJmSV.js"></script>
+<script type="module" src="/docs/static/architectureDiagram-VXUJARFQ-ChBn1xk8.js"></script>
+<script type="module" src="/docs/static/blockDiagram-VD42YOAC-Budi6d17.js"></script>
+<script type="module" src="/docs/static/c4Diagram-YG6GDRKO-Blf-Q85b.js"></script>
+<script type="module" src="/docs/static/classDiagram-2ON5EDUG-CV-r9Le6.js"></script>
+<script type="module" src="/docs/static/classDiagram-v2-WZHVMYZB-FjmVyVcW.js"></script>
+<script type="module" src="/docs/static/cose-bilkent-S5V4N54A-CwokiWn5.js"></script>
+<script type="module" src="/docs/static/dagre-6UL2VRFP-qGDT-4E-.js"></script>
+<script type="module" src="/docs/static/diagram-PSM6KHXK-asygiqY4.js"></script>
+<script type="module" src="/docs/static/diagram-QEK2KX5R-RckI0Vxl.js"></script>
+<script type="module" src="/docs/static/diagram-S2PKOQOG-D3NvEb3Q.js"></script>
+<script type="module" src="/docs/static/erDiagram-Q2GNP2WA-Cyp4lw77.js"></script>
+<script type="module" src="/docs/static/flowDiagram-NV44I4VS-Durqfvdj.js"></script>
+<script type="module" src="/docs/static/ganttDiagram-JELNMOA3-COOaPycs.js"></script>
+<script type="module" src="/docs/static/gitGraph-F6HP7TQM-CqS9sC5f.js"></script>
+<script type="module" src="/docs/static/gitGraphDiagram-NY62KEGX-BQN4gPQ9.js"></script>
+<script type="module" src="/docs/static/index-CvuEZtbh.js"></script>
+<script type="module" src="/docs/static/info-NVLQJR56-BUcKGpxN.js"></script>
+<script type="module" src="/docs/static/infoDiagram-WHAUD3N6-D7Xs3PNk.js"></script>
+<script type="module" src="/docs/static/journeyDiagram-XKPGCS4Q-C0gcrYJQ.js"></script>
+<script type="module" src="/docs/static/kanban-definition-3W4ZIXB7-DA5VTkMF.js"></script>
+<script type="module" src="/docs/static/katex-DDX8Hq9d.js"></script>
+<script type="module" src="/docs/static/mermaid-DyDSBgik.js"></script>
+<script type="module" src="/docs/static/mindmap-definition-VGOIOE7T-CeGF8Nug.js"></script>
+<script type="module" src="/docs/static/packet-BFZMPI3H-BiSDgaWb.js"></script>
+<script type="module" src="/docs/static/pie-7BOR55EZ-6DVHbXh5.js"></script>
+<script type="module" src="/docs/static/pieDiagram-ADFJNKIX-D8LeIfHz.js"></script>
+<script type="module" src="/docs/static/quadrantDiagram-AYHSOK5B-CT_QATm0.js"></script>
+<script type="module" src="/docs/static/radar-NHE76QYJ-DmqrXv6L.js"></script>
+<script type="module" src="/docs/static/requirementDiagram-UZGBJVZJ-BbaHa2fs.js"></script>
+<script type="module" src="/docs/static/rolldown-runtime-BfSZLbwf.js"></script>
+<script type="module" src="/docs/static/sankeyDiagram-TZEHDZUN-D9YTmh-I.js"></script>
+<script type="module" src="/docs/static/sequenceDiagram-WL72ISMW-D9tLLYI1.js"></script>
+<script type="module" src="/docs/static/stateDiagram-FKZM4ZOC-C__hSZA6.js"></script>
+<script type="module" src="/docs/static/stateDiagram-v2-4FDKWEC3-i8H-EINL.js"></script>
+<script type="module" src="/docs/static/timeline-definition-IT6M3QCI-xF8WKVt0.js"></script>
+<script type="module" src="/docs/static/treemap-KMMF4GRG-DIUMOj6d.js"></script>
+<script type="module" src="/docs/static/xychartDiagram-PRI3JC2R-BDCeeoNZ.js"></script>
+<script type="module" src="/docs/search-index.js"></script>
+<script type="module">
+document.getElementById('znai').innerHTML = '';
+/*<!--*/
+/*
+ * Copyright 2025 znai maintainers
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+function initializeSearchIndex() {
+    if (window.znaiSearchData) {
+        window.znaiSearchIdx = window.createLocalSearchIndex();
+        window.populateLocalSearchIndexWithData(window.znaiSearchIdx, window.znaiSearchData);
+    }
+}
+
+// Call the method to initialize the search index.
+initializeSearchIndex();
+
+window.ReactDOM.render(React.createElement(Documentation, {
+  "docMeta" : {
+    "viewOn" : {
+      "link" : "https://github.com/motlin/klass/blob/main/docs/src/main/znai",
+      "title" : "View On GitHub"
+    },
+    "id" : "docs",
+    "title" : "Klass",
+    "type" : "Guide",
+    "previewEnabled" : false
+  },
+  "page" : {
+    "type" : "Page",
+    "content" : [ {
+      "id" : "additional-features",
+      "additionalIds" : [ ],
+      "title" : "Additional Features",
+      "type" : "Section",
+      "content" : [ {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "In this section, we'll continue the Stack Overflow example and implement up/down votes on Questions.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "We'll explore enumerations, parameterized properties, parameterized projections, and aggregations.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "id" : "additional-features-enumerations",
+        "additionalIds" : [ "enumerations" ],
+        "level" : 2,
+        "title" : "Enumerations",
+        "type" : "SubHeading"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "We'll start with an enumeration to indicate the direction of a vote.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "lang" : "klass",
+        "snippet" : "enumeration VoteDirection\n{\n    UP(\"up\"),\n    DOWN(\"down\"),\n}",
+        "lineNumber" : "",
+        "type" : "Snippet"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "The upper-case literal names are used within the model. The quoted strings are pretty names that will appear in service request and response bodies.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "id" : "additional-features-partial-inference-composite-keys",
+        "additionalIds" : [ "partial-inference-composite-keys" ],
+        "level" : 2,
+        "title" : "Partial inference, composite keys",
+        "type" : "SubHeading"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "Next we'll define the vote class.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "lang" : "klass",
+        "snippet" : "class QuestionVote\n    systemTemporal\n    audited\n{\n    questionId : Long key;\n    createdById: String key createdBy;\n    direction  : VoteDirection;\n}",
+        "lineNumber" : "",
+        "type" : "Snippet"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "Stack Overflow ",
+          "type" : "SimpleText"
+        }, {
+          "url" : "https://meta.stackexchange.com/a/5213/147927",
+          "isFile" : false,
+          "type" : "Link",
+          "content" : [ {
+            "text" : "restricts voting",
+            "type" : "SimpleText"
+          } ]
+        }, {
+          "text" : " based on how many times you've voted and whether the post was edited since the last vote. So votes must be ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "systemTemporal",
+          "type" : "InlinedCode"
+        }, {
+          "text" : ".",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "Votes must be ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "audited",
+          "type" : "InlinedCode"
+        }, {
+          "text" : ", to keep track of who cast the vote.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "A user can only cast one vote, so the key should be (questionId, createdById). There is no auto-generated ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "id",
+          "type" : "InlinedCode"
+        }, {
+          "text" : " property. ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "QuestionVote",
+          "type" : "InlinedCode"
+        }, {
+          "text" : " has a natural, composite key.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "Normally, we'd allow the ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "createdById",
+          "type" : "InlinedCode"
+        }, {
+          "text" : " property to be inferred based on the ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "audited",
+          "type" : "InlinedCode"
+        }, {
+          "text" : " keyword, but then it would be inferred without the ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "key",
+          "type" : "InlinedCode"
+        }, {
+          "text" : " modifier.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "A user cannot upvote and downvote the same question, so ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "direction",
+          "type" : "InlinedCode"
+        }, {
+          "text" : " is not part of the key.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "id" : "additional-features-associations",
+        "additionalIds" : [ "associations" ],
+        "level" : 2,
+        "title" : "Associations",
+        "type" : "SubHeading"
+      }, {
+        "lang" : "klass",
+        "snippet" : "association QuestionHasVotes\n{\n    question: Question[1..1] final;\n    votes: QuestionVote[0..*];\n\n    relationship this.id == QuestionVote.questionId\n}\n\nassociation UserHasQuestionVotes\n{\n    user: User[1..1] final;\n    votes: QuestionVote[0..*];\n\n    relationship this.userId == QuestionVote.createdById\n}",
+        "lineNumber" : "",
+        "type" : "Snippet"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "A vote is like many-to-many mapping from Question to User.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "id" : "additional-features-services",
+        "additionalIds" : [ "services" ],
+        "level" : 2,
+        "title" : "Services",
+        "type" : "SubHeading"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "We'll create an upsert service for creating and editing votes. No create service is necessary because there's no auto-incrementing id.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "lang" : "klass",
+        "snippet" : "service QuestionVoteResource\n{\n    upsert upsertQuestionVote(\n        questionId: Long[1..1] path,\n        user: User[1..1] user,\n        questionVote: QuestionVote[1] body)\n    {\n        // service : http;\n\n        url     : /question/vote/{questionId: Long[1..1]};\n\n        criteria: this.question.id == questionId && this.createdById == user.userId;\n\n        after   : this.question.createdById != user.userId\n            && (this.createdOn > now - (5 * 60 * 1000)\n                || this.systemFrom < this.question.systemFrom);\n    }\n\n    upsert upsertQuestionVote(\n        questionVote: QuestionVote[1] body,\n        user: User[1..1] user)\n    {\n        // service : rpc;\n\n        url     : /question/vote;\n\n        criteria: this.question.id == questionVote.question.id && this.createdById == user.userId;\n\n        after   : this.question.createdById != user.userId\n            && (this.createdOn > now - (5 * 60 * 1000)\n                || this.systemFrom < this.question.systemFrom);\n    }\n\n    /question/vote/{questionId: Long[1..1]}\n        PUT\n        {\n            multiplicity: one;\n            criteria    : this.questionId == questionId && this.createdById == userId;\n            validate    : this.question.createdById != userId\n                && (this == null\n                || this.createdOn > now - (5 * 60 * 1000)\n                || this.systemFrom < this.question.systemFrom);\n            projection  : QuestionVoteWriteProjection;\n        }\n}",
+        "lineNumber" : "",
+        "type" : "Snippet"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "The main criteria uses the global ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "userId",
+          "type" : "InlinedCode"
+        }, {
+          "text" : " which is the name of the currently logged in principal.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "The validation criteria uses the global ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "now",
+          "type" : "InlinedCode"
+        }, {
+          "text" : ", less 5 minutes in milliseconds, to check whether the vote was created within the last 5 minutes.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "lang" : "klass",
+        "snippet" : "service QuestionVote\n{\n    /question/vote/{questionId: Long[1..1]}\n        // PUT ...\n        DELETE\n        {\n            multiplicity: one;\n            criteria    : this.questionId == questionId && this.createdById == userId;\n            validate    : this.createdOn > now - (5 * 60 * 1000)\n                    || this.systemFrom < this.question.systemFrom);\n            projection  : QuestionVoteWriteProjection;\n        }\n}",
+        "lineNumber" : "",
+        "type" : "Snippet"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "The DELETE service is very similar. It just doesn't need to validate that the vote exists, and it doesn't need to validate that the voter and the question author are different users.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "id" : "additional-features-parameterized-properties",
+        "additionalIds" : [ "parameterized-properties" ],
+        "level" : 2,
+        "title" : "Parameterized properties",
+        "type" : "SubHeading"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "When viewing a question on Stack Overflow, you can see your own vote if you've cast one.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "lang" : "klass",
+        "snippet" : "class Question\n    systemTemporal\n    versioned\n    audited\n{\n    // ...\n\n    myVote(): QuestionVote[0..1]\n    {\n        this.votes.createdById == userId\n    }\n}",
+        "lineNumber" : "",
+        "type" : "Snippet"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "We add ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "myVote()",
+          "type" : "InlinedCode"
+        }, {
+          "text" : " as a parameterized property, though there are no parameters in this example. This criteria is another example using the global ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "userId",
+          "type" : "InlinedCode"
+        }, {
+          "text" : ". Once the parameterized property is defined, it can be included in a projection using the same syntax as an association end. In fact, a parameterized property without any parameters can be thought of as a uni-directional association.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "id" : "additional-features-parameterized-projections",
+        "additionalIds" : [ "parameterized-projections" ],
+        "level" : 2,
+        "title" : "Parameterized projections",
+        "type" : "SubHeading"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "The definition of ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "myVote()",
+          "type" : "InlinedCode"
+        }, {
+          "text" : " above is fine, and fairly similar to the ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "upvoted",
+          "type" : "InlinedCode"
+        }, {
+          "text" : " and ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "downvoted",
+          "type" : "InlinedCode"
+        }, {
+          "text" : " properties in ",
+          "type" : "SimpleText"
+        }, {
+          "url" : "https://api.stackexchange.com/docs/types/question",
+          "isFile" : false,
+          "type" : "Link",
+          "content" : [ {
+            "text" : "the real StackOverflow api",
+            "type" : "SimpleText"
+          } ]
+        }, {
+          "text" : ".",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "However, let's add some perhaps unrealistic variants that take parameters, just to see what parameterized properties can do.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "lang" : "klass",
+        "snippet" : "class Question\n    systemTemporal\n    versioned\n    audited\n{\n    // ...\n\n    votesByDirection(direction: VoteDirection[1..1]): QuestionVote[0..*]\n    {\n        this.votes.direction == direction\n    }\n\n    voteByUser(userId: String[1..1] userId): QuestionVote[0..1]\n    {\n        // userId refers to the parameter, not the global\n        this.votes.createdById == userId\n    }\n}",
+        "lineNumber" : "",
+        "type" : "Snippet"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "Parameterized properties can be included in read projections. There are two ways to provide the parameter, as a constant or as a projection parameter.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "Here we define a projection that parameterizes ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "votesByDirection",
+          "type" : "InlinedCode"
+        }, {
+          "text" : " twice, once for each ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "VoteDirection",
+          "type" : "InlinedCode"
+        }, {
+          "text" : ".",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "lang" : "klass",
+        "snippet" : "projection ProjectionWithConstant on Question\n{\n    id             : \"Question id\",\n    title          : \"Question title\",\n    body           : \"Question body\",\n\n    votesByDirection(\"up\"):\n    {\n        // This would work, but the information is redundant\n        // direction: \"Upvote direction\",\n        user: {\n            userId: \"Upvote user id\",\n        },\n    },\n\n    votesByDirection(\"down\"):\n    {\n        // This would work, but the information is redundant\n        // direction: \"Upvote direction\",\n        user: {\n            userId: \"Upvote user id\",\n        },\n    },\n}",
+        "lineNumber" : "",
+        "type" : "Snippet"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "Here we define a parameterized projection, that passes its parameter through to ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "voteByUser",
+          "type" : "InlinedCode"
+        }, {
+          "text" : ".",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "lang" : "klass",
+        "snippet" : "projection ProjectionWithParameter(userId: String[1..1] userId) on Question\n{\n    id             : \"Question id\",\n    title          : \"Question title\",\n    body           : \"Question body\",\n\n    voteByUser(userId):\n    {\n        direction: \"Vote direction\",\n        // This would work, but the information is redundant\n        /*\n        user: {\n            userId: \"Vote user id\",\n        },\n        */\n    }\n}",
+        "lineNumber" : "",
+        "type" : "Snippet"
+      }, {
+        "id" : "additional-features-parameterized-projections-parameterized-service",
+        "additionalIds" : [ "parameterized-service" ],
+        "level" : 3,
+        "title" : "Parameterized service",
+        "type" : "SubHeading"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "When using a parameterized projection, the service must also be parameterized.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "lang" : "klass",
+        "snippet" : "service Question\n{\n    /question/{id: Long[1..1]}/{userId: String[1..1] userId}\n        GET\n        {\n            format      : json;\n            multiplicity: one;\n            criteria    : this.id == id;\n            projection  : ProjectionWithParameter(userId);\n        }\n}",
+        "lineNumber" : "",
+        "type" : "Snippet"
+      }, {
+        "id" : "additional-features-parameterized-projections-parameterized-responses",
+        "additionalIds" : [ "parameterized-responses" ],
+        "level" : 3,
+        "title" : "Parameterized responses",
+        "type" : "SubHeading"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "When a json response includes parameterized properties, the parameters become part of the field names.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "data" : {
+          "id" : 1,
+          "title" : "Question title 1",
+          "body" : "Question body 1",
+          "votesByDirection(up)" : [ {
+            "user" : {
+              "userId" : "Example user id"
+            }
+          } ],
+          "votesByDirection(down)" : [ ],
+          "voteByUser(Example user id)" : {
+            "direction" : "up"
+          }
+        },
+        "highlightValues" : [ ],
+        "highlightKeys" : [ ],
+        "type" : "Json"
+      }, {
+        "id" : "additional-features-aggregations",
+        "additionalIds" : [ "aggregations" ],
+        "level" : 2,
+        "title" : "Aggregations",
+        "type" : "SubHeading"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "url" : "https://stackoverflow.com/help/privileges/established-user",
+          "isFile" : false,
+          "type" : "Link",
+          "content" : [ {
+            "text" : "StackOverflow's documentation",
+            "type" : "SimpleText"
+          } ]
+        }, {
+          "text" : " states:",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "type" : "BlockQuote",
+        "content" : [ {
+          "type" : "Paragraph",
+          "content" : [ {
+            "text" : "Voting scores, as displayed, are the sum of the up and down votes on a post. Vote counts are the individual up and down votes that make up the score.",
+            "type" : "SimpleText"
+          } ]
+        }, {
+          "type" : "Paragraph",
+          "content" : [ {
+            "text" : "You can view the vote counts by clicking on the score of a post. This will break the score into upvotes and downvotes.",
+            "type" : "SimpleText"
+          } ]
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "We add two aggregation properties to Question; ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "upvotes",
+          "type" : "InlinedCode"
+        }, {
+          "text" : " and ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "downvotes",
+          "type" : "InlinedCode"
+        }, {
+          "text" : ".",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "lang" : "klass",
+        "snippet" : "class Question\n    systemTemporal\n    versioned\n    audited\n{\n    // ...\n\n    upvotes: Integer\n    {\n        count(this.votes.direction == VoteDirection.UP)\n    }\n\n    downvotes: Integer\n    {\n        count(this.votes.direction == VoteDirection.DOWN)\n    }\n}",
+        "lineNumber" : "",
+        "type" : "Snippet"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "Associations and parameterized properties are defined using criteria. Aggregation properties are defined using a fuller expression language. These aggregations use the ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "count()",
+          "type" : "InlinedCode"
+        }, {
+          "text" : " function. Other available functions include ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "sum()",
+          "type" : "InlinedCode"
+        }, {
+          "text" : ", ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "min()",
+          "type" : "InlinedCode"
+        }, {
+          "text" : ", ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "max()",
+          "type" : "InlinedCode"
+        }, {
+          "text" : ", and ",
+          "type" : "SimpleText"
+        }, {
+          "code" : "average()",
+          "type" : "InlinedCode"
+        }, {
+          "text" : ".",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "Once these aggregation properties are defined in a class, they can be included in read projections like normal properties. They cannot be included in write projections.",
+          "type" : "SimpleText"
+        } ]
+      } ]
+    } ],
+    "lastModifiedTime" : 1775935534234,
+    "tocItem" : {
+      "chapterTitle" : "Additional Features",
+      "pageTitle" : "Overview",
+      "pageMeta" : { },
+      "dirName" : "additional-features",
+      "fileName" : "overview",
+      "fileExtension" : "md",
+      "viewOnRelativePath" : null,
+      "pageSectionIdTitles" : [ {
+        "title" : "Additional Features",
+        "id" : "additional-features",
+        "customAnchorId" : "additional-features"
+      } ]
+    }
+  }
+}), document.getElementById("znai"));
+/*-->*/
+
+</script>
+
+</body>
+</html>

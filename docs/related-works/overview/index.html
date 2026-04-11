@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"> 
+<title>Klass: Overview</title>
+<link rel="stylesheet" type="text/css" href="/docs/static/css/katex.min.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/main.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+</head>
+<link rel="shortcut icon" href="/docs/favicon.png"type="image/ico"/>
+<body class="znai-theme theme-znai-dark">
+<script>(function() {
+    var themeNameKey = 'znaiTheme';
+    var darkThemeName = 'znai-dark';
+    var lightThemeName = 'default';
+
+    var znaiTheme = {
+        changeHandlers: [],
+        addChangeHandler(handler) {
+            this.changeHandlers.push(handler);
+        },
+        removeChangeHandler(handler) {
+            var idx = this.changeHandlers.indexOf(handler);
+            this.changeHandlers.splice(idx, 1);
+        },
+        set(name) {
+            this.name = name;
+            document.body.className = 'znai-theme theme-' + name;
+
+            var idx = 0;
+            var len = this.changeHandlers.length;
+            for (; idx < len; idx++) {
+                this.changeHandlers[idx](name);
+            }
+        },
+        setExplicitly(name) {
+            storeThemeName(name);
+            this.set(name);
+        },
+        setExplicitlyIfNotSetAlready(name) {
+            const themeName = getStoredThemeName();
+            if (themeName) {
+                return
+            }
+
+            this.setExplicitly(name)
+        },
+        toggle() {
+            this.setExplicitly(this.name === lightThemeName ? darkThemeName : lightThemeName)
+        }
+    };
+
+    var mediaThemeName = setLightMatchMediaListenerAndGetThemeName()
+    var themeName = getStoredThemeName() || mediaThemeName;
+    znaiTheme.set(themeName);
+
+    window.znaiTheme = znaiTheme;
+
+    function getStoredThemeName() {
+        return localStorage.getItem(themeNameKey);
+    }
+
+    function storeThemeName(name) {
+        return localStorage.setItem(themeNameKey, name);
+    }
+
+    function setLightMatchMediaListenerAndGetThemeName() {
+        if (!window.matchMedia) {
+            return darkThemeName;
+        }
+
+        var lightQuery = window.matchMedia('(prefers-color-scheme: light)');
+        lightQuery.addListener(function (e) {
+            const newThemeName = e.matches ? lightThemeName : darkThemeName;
+            znaiTheme.setExplicitly(newThemeName);
+        });
+
+        return lightQuery.matches ? lightThemeName : darkThemeName;
+    }
+})()</script>
+<div id="znai"><div id="znai-initial-page-loading" style="margin: -20px 0 0 -20px; padding: 0 40px 40px 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center">
+    <div></div>
+</div><section id="page-content" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+<article>
+<header><h1>Related Works</h1></header>
+<p>Data mapping aggregators Examples Spark Catalyst Spark SQL Hive In Klass the model store and mapping are all 1 1 1 These tools allow non trivial mappings between the model and the store Model Clean domain model Store A model still but of the data store Can be messy Mapping Which tables columns etc map to which part of the clean model How to perform joins aggregations Systems that support non trivial mappings tend to be read only The mappings are lossy transformations For example not every column may be mapped into the model Or a property may be the result of an aggregation So there s no obvious way to write through the model These systems are powerful analytical tools Catalyst is a powerful query engine with advanced planning and routing Read write systems can t support complex mappings but can rely on the data store for efficient query execution OpenAPI Things to like SwaggerHub is a site for Hosted Interactive API Documentation It s a great resource for developers to find and use a documented api You could imagine it as the foundation for a service discovery mechanism Drawbacks The OpenAPI model is tightly bound to http It includes implementation details like numeric http codes It cannot represent other service types like gRPC without vendor extensions It cannot represent data layer concerns like keys foreign keys joins It doesn t help with fetching data and serializing it to json It cannot represent UI concerns like display names Relationships are uni directional So a Question has answers and Answer has a question but nothing in the schema links these two properties This is fine for json and after all OpenAPI doesn t help you at the data layer Bidirectional relationships are critical at the data layer to know that a single foreign key is used to perform the same join when navigating the relationship in either direction Loose ecosystem of tools of varying quality The OpenAPI specification and core tools like the Swagger editor are maintained by core contributors The various code generators for different technologies have different maintainers and varying quality The Jersey 2 generator which is the most popular http variant for Java has quality problems Minor releases have produced breaking changes in both the code and the http api Exception handling isn t done in Jersey s idiomatic way Serializer plugins aren t done in Jersey s idiomatic way The community s top contributors created a hostile fork called openapi generator Some of the issues above like breaking changes were mentioned in the rationale Spring Boot JHipster Spring Boot builds on top of Spring JHipster builds on top of Spring Boot The Spring Boot stack is probably the most spiritually similar related work There s plenty to like about it and some drawbacks that may justify not using it Things to like JHipster includes JDL a spiritually similar DSL JDL Studio is a web based IDE with syntax highlighting and live updating read only UML diagrams Relationships in JDL are bidirectional Relationships can be annotated with a display field which is the name of the field that should show up in select boxes For example in an auto generated form to create Answers there may be a select box for which Question it answers It should display rather than Spring Data supports many data stores Drawbacks Every entity class gets an property which is an auto incrementing integer There are no natural keys Spring Data has limited support for audit data It can track the version number last updated time and last updated user However all previous versions are lost Hibernate Envers is an extension that is meant to be non lossy However Envers is not integrated into Spring Boot JHipster Envers keeps audit data in separate audit tables with a completely different schema It is difficult to recreate previous state of anything other than a single vertex in isolation Envers adds audit functionality but doesn t disable Hibernate s destructive You have to remember not to call update and delete GraphQL GraphQL is a query language for APIs The ecosystem of frameworks that have developed around it can be considered related work GraphQL s query language is probably the closest thing in open source to Klass s projections Things to like GraphQL s query fields are similar to Klass s read projections The nested structure exactly matches the structure of the returned json Fields can take arguments This is another term for parameterized properties This is a powerful technique for refining relationships For example we can refine the relationship between Question and Answer by declaring a field for a Question s answers by some user Drawbacks GraphQL s relationships are uni directional So a Question has answers and Answer has a question but nothing in the schema links these two properties This is fine for reads and after all GraphQL started as just a query language Bidirectional relationships are critical for writes This is one reason why dgraph s query language is GraphQL which extends edge declarations with a reverse edge GraphQL makes it easy to express powerful queries for which there is no efficient execution plan For example a multi hop graph walk with predicates that narrow the walk on each hop The only possible implementation is to perform IO for every hop GraphQL was invented to stitch together microservice responses into a cohesive subgraph It assumes that a foreign key in one json response will lead to a GET against another service GraphQL s responses are always json There s no notion of flattening GraphQL cannot return csv GraphML etc Mutations feel second class The mutation bodies conform to a schema but you re on your own for performing the mutation It s common to expose a graphql endpoint over http While not as dangerous as exposing a sql endpoint it gives complete control to clients by default It requires extra effort to handle some cross cutting concerns like recording meaningful metrics rate limiting data level entitlements etc Other related works EdgeDB Relay dgraph FOAM Framework TextUML questionId title id id</p>
+</article>
+</section>
+<section id="table-of-contents" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+<article>
+<a href="/docs/vision/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/vision/classes/">Classes</a>
+</article>
+
+<article>
+<a href="/docs/vision/associations/">Associations</a>
+</article>
+
+<article>
+<a href="/docs/vision/projections-and-services/">Projections And Services</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/audit-model/">Audit Model</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/audited-services/">Audited Services</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/bootstrapped-model-data/">Bootstrapped Model Data</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/bootstrapped-meta-model-data/">Bootstrapped Meta Model Data</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-query/">Dynamic Query</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-ui/">Dynamic Ui</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-model/">Dynamic Model</a>
+</article>
+
+<article>
+<a href="/docs/additional-features/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/alternative-implementations/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/related-works/overview/">Overview</a>
+</article>
+</section>
+</div>
+<script type="text/javascript" src="/docs/footer.js"></script>
+<script type="text/javascript" src="/docs/toc.js"></script>
+<script type="text/javascript" src="/docs/assets.js"></script>
+<script type="module" src="/docs/static/__vite-browser-external-8Pss11n5.js"></script>
+<script type="module" src="/docs/static/architecture-U656AL7Q-DjPBJmSV.js"></script>
+<script type="module" src="/docs/static/architectureDiagram-VXUJARFQ-ChBn1xk8.js"></script>
+<script type="module" src="/docs/static/blockDiagram-VD42YOAC-Budi6d17.js"></script>
+<script type="module" src="/docs/static/c4Diagram-YG6GDRKO-Blf-Q85b.js"></script>
+<script type="module" src="/docs/static/classDiagram-2ON5EDUG-CV-r9Le6.js"></script>
+<script type="module" src="/docs/static/classDiagram-v2-WZHVMYZB-FjmVyVcW.js"></script>
+<script type="module" src="/docs/static/cose-bilkent-S5V4N54A-CwokiWn5.js"></script>
+<script type="module" src="/docs/static/dagre-6UL2VRFP-qGDT-4E-.js"></script>
+<script type="module" src="/docs/static/diagram-PSM6KHXK-asygiqY4.js"></script>
+<script type="module" src="/docs/static/diagram-QEK2KX5R-RckI0Vxl.js"></script>
+<script type="module" src="/docs/static/diagram-S2PKOQOG-D3NvEb3Q.js"></script>
+<script type="module" src="/docs/static/erDiagram-Q2GNP2WA-Cyp4lw77.js"></script>
+<script type="module" src="/docs/static/flowDiagram-NV44I4VS-Durqfvdj.js"></script>
+<script type="module" src="/docs/static/ganttDiagram-JELNMOA3-COOaPycs.js"></script>
+<script type="module" src="/docs/static/gitGraph-F6HP7TQM-CqS9sC5f.js"></script>
+<script type="module" src="/docs/static/gitGraphDiagram-NY62KEGX-BQN4gPQ9.js"></script>
+<script type="module" src="/docs/static/index-CvuEZtbh.js"></script>
+<script type="module" src="/docs/static/info-NVLQJR56-BUcKGpxN.js"></script>
+<script type="module" src="/docs/static/infoDiagram-WHAUD3N6-D7Xs3PNk.js"></script>
+<script type="module" src="/docs/static/journeyDiagram-XKPGCS4Q-C0gcrYJQ.js"></script>
+<script type="module" src="/docs/static/kanban-definition-3W4ZIXB7-DA5VTkMF.js"></script>
+<script type="module" src="/docs/static/katex-DDX8Hq9d.js"></script>
+<script type="module" src="/docs/static/mermaid-DyDSBgik.js"></script>
+<script type="module" src="/docs/static/mindmap-definition-VGOIOE7T-CeGF8Nug.js"></script>
+<script type="module" src="/docs/static/packet-BFZMPI3H-BiSDgaWb.js"></script>
+<script type="module" src="/docs/static/pie-7BOR55EZ-6DVHbXh5.js"></script>
+<script type="module" src="/docs/static/pieDiagram-ADFJNKIX-D8LeIfHz.js"></script>
+<script type="module" src="/docs/static/quadrantDiagram-AYHSOK5B-CT_QATm0.js"></script>
+<script type="module" src="/docs/static/radar-NHE76QYJ-DmqrXv6L.js"></script>
+<script type="module" src="/docs/static/requirementDiagram-UZGBJVZJ-BbaHa2fs.js"></script>
+<script type="module" src="/docs/static/rolldown-runtime-BfSZLbwf.js"></script>
+<script type="module" src="/docs/static/sankeyDiagram-TZEHDZUN-D9YTmh-I.js"></script>
+<script type="module" src="/docs/static/sequenceDiagram-WL72ISMW-D9tLLYI1.js"></script>
+<script type="module" src="/docs/static/stateDiagram-FKZM4ZOC-C__hSZA6.js"></script>
+<script type="module" src="/docs/static/stateDiagram-v2-4FDKWEC3-i8H-EINL.js"></script>
+<script type="module" src="/docs/static/timeline-definition-IT6M3QCI-xF8WKVt0.js"></script>
+<script type="module" src="/docs/static/treemap-KMMF4GRG-DIUMOj6d.js"></script>
+<script type="module" src="/docs/static/xychartDiagram-PRI3JC2R-BDCeeoNZ.js"></script>
+<script type="module" src="/docs/search-index.js"></script>
+<script type="module">
+document.getElementById('znai').innerHTML = '';
+/*<!--*/
+/*
+ * Copyright 2025 znai maintainers
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+function initializeSearchIndex() {
+    if (window.znaiSearchData) {
+        window.znaiSearchIdx = window.createLocalSearchIndex();
+        window.populateLocalSearchIndexWithData(window.znaiSearchIdx, window.znaiSearchData);
+    }
+}
+
+// Call the method to initialize the search index.
+initializeSearchIndex();
+
+window.ReactDOM.render(React.createElement(Documentation, {
+  "docMeta" : {
+    "viewOn" : {
+      "link" : "https://github.com/motlin/klass/blob/main/docs/src/main/znai",
+      "title" : "View On GitHub"
+    },
+    "id" : "docs",
+    "title" : "Klass",
+    "type" : "Guide",
+    "previewEnabled" : false
+  },
+  "page" : {
+    "type" : "Page",
+    "content" : [ {
+      "id" : "related-works",
+      "additionalIds" : [ ],
+      "title" : "Related Works",
+      "type" : "Section",
+      "content" : [ {
+        "id" : "related-works-data-mapping-aggregators",
+        "additionalIds" : [ "data-mapping-aggregators" ],
+        "level" : 2,
+        "title" : "Data mapping aggregators",
+        "type" : "SubHeading"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "Examples:",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "bulletMarker" : "-",
+        "tight" : true,
+        "type" : "BulletList",
+        "content" : [ {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "Spark Catalyst / Spark SQL",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "Hive",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "In Klass, the model, store, and mapping are all 1-1-1. These tools allow non-trivial mappings between the model and the store.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "bulletMarker" : "-",
+        "tight" : true,
+        "type" : "BulletList",
+        "content" : [ {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "Model: Clean domain model",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "Store: A model still, but of the data store. Can be messy.",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "Mapping: Which tables, columns, etc. map to which part of the clean model. How to perform joins, aggregations.",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "Systems that support non-trivial mappings tend to be read-only. The mappings are lossy transformations. For example, not every column may be mapped into the model. Or a property may be the result of an aggregation. So there's no obvious way to write through the model.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "These systems are powerful analytical tools. Catalyst is a powerful query engine, with advanced planning and routing.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "Read-write systems can't support complex mappings, but can rely on the data store for efficient query execution.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "id" : "related-works-openapi",
+        "additionalIds" : [ "openapi" ],
+        "level" : 2,
+        "title" : "OpenAPI",
+        "type" : "SubHeading"
+      }, {
+        "id" : "related-works-openapi-things-to-like",
+        "additionalIds" : [ "things-to-like" ],
+        "level" : 3,
+        "title" : "Things to like",
+        "type" : "SubHeading"
+      }, {
+        "bulletMarker" : "-",
+        "tight" : true,
+        "type" : "BulletList",
+        "content" : [ {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "url" : "https://swagger.io/tools/swaggerhub/",
+              "isFile" : false,
+              "type" : "Link",
+              "content" : [ {
+                "text" : "SwaggerHub",
+                "type" : "SimpleText"
+              } ]
+            }, {
+              "text" : " is a site for \"Hosted, Interactive API Documentation\".",
+              "type" : "SimpleText"
+            } ]
+          }, {
+            "bulletMarker" : "-",
+            "tight" : true,
+            "type" : "BulletList",
+            "content" : [ {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "It's a great resource for developers to find and use a documented api.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            }, {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "You could imagine it as the foundation for a service discovery mechanism.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            } ]
+          } ]
+        } ]
+      }, {
+        "id" : "related-works-openapi-drawbacks",
+        "additionalIds" : [ "drawbacks" ],
+        "level" : 3,
+        "title" : "Drawbacks",
+        "type" : "SubHeading"
+      }, {
+        "bulletMarker" : "-",
+        "tight" : true,
+        "type" : "BulletList",
+        "content" : [ {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "The OpenAPI model is tightly bound to http.",
+              "type" : "SimpleText"
+            } ]
+          }, {
+            "bulletMarker" : "-",
+            "tight" : true,
+            "type" : "BulletList",
+            "content" : [ {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "It includes implementation details like numeric http codes.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            }, {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "It cannot represent other service types like gRPC without vendor extensions.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            }, {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "It cannot represent data layer concerns like keys, foreign keys, joins. It doesn't help with fetching data and serializing it to json.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            }, {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "It cannot represent UI concerns like display names.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "url" : "https://swagger.io/docs/specification/data-models/data-types/",
+              "isFile" : false,
+              "type" : "Link",
+              "content" : [ {
+                "text" : "Relationships are uni-directional",
+                "type" : "SimpleText"
+              } ]
+            }, {
+              "text" : ".",
+              "type" : "SimpleText"
+            } ]
+          }, {
+            "bulletMarker" : "-",
+            "tight" : true,
+            "type" : "BulletList",
+            "content" : [ {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "So a Question has answers, and Answer has a question, but nothing in the schema links these two properties.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            }, {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "This is fine for json; and after all OpenAPI doesn't help you at the data layer.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            }, {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "Bidirectional relationships are critical at the data layer, to know that a single foreign key ",
+                  "type" : "SimpleText"
+                }, {
+                  "code" : "questionId",
+                  "type" : "InlinedCode"
+                }, {
+                  "text" : " is used to perform the same join when navigating the relationship in either direction.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "Loose ecosystem of tools of varying quality.",
+              "type" : "SimpleText"
+            } ]
+          }, {
+            "bulletMarker" : "-",
+            "tight" : true,
+            "type" : "BulletList",
+            "content" : [ {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "The OpenAPI specification and core tools like the Swagger editor are maintained by core contributors.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            }, {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "The various code generators for different technologies have different maintainers and varying quality.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            }, {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "The Jersey 2 generator, which is the most popular http variant for Java, has quality problems.",
+                  "type" : "SimpleText"
+                } ]
+              }, {
+                "bulletMarker" : "-",
+                "tight" : true,
+                "type" : "BulletList",
+                "content" : [ {
+                  "type" : "ListItem",
+                  "content" : [ {
+                    "type" : "Paragraph",
+                    "content" : [ {
+                      "text" : "Minor releases have produced breaking changes in both the code and the http api.",
+                      "type" : "SimpleText"
+                    } ]
+                  } ]
+                }, {
+                  "type" : "ListItem",
+                  "content" : [ {
+                    "type" : "Paragraph",
+                    "content" : [ {
+                      "text" : "Exception handling isn't done in Jersey's idiomatic way.",
+                      "type" : "SimpleText"
+                    } ]
+                  } ]
+                }, {
+                  "type" : "ListItem",
+                  "content" : [ {
+                    "type" : "Paragraph",
+                    "content" : [ {
+                      "text" : "Serializer plugins aren't done in Jersey's idiomatic way.",
+                      "type" : "SimpleText"
+                    } ]
+                  } ]
+                } ]
+              } ]
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "The community's top contributors created a ",
+              "type" : "SimpleText"
+            }, {
+              "url" : "https://github.com/OpenAPITools/openapi-generator/blob/master/docs/qna.md",
+              "isFile" : false,
+              "type" : "Link",
+              "content" : [ {
+                "text" : "hostile fork called openapi-generator",
+                "type" : "SimpleText"
+              } ]
+            }, {
+              "text" : ".",
+              "type" : "SimpleText"
+            } ]
+          }, {
+            "bulletMarker" : "-",
+            "tight" : true,
+            "type" : "BulletList",
+            "content" : [ {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "Some of the issues above, like breaking changes, were mentioned in the rationale.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            } ]
+          } ]
+        } ]
+      }, {
+        "id" : "related-works-spring-boot-jhipster",
+        "additionalIds" : [ "spring-boot-jhipster" ],
+        "level" : 2,
+        "title" : "Spring Boot / JHipster",
+        "type" : "SubHeading"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "Spring Boot builds on top of Spring. JHipster builds on top of Spring Boot.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "The Spring Boot stack is probably the most spiritually similar related work. There's plenty to like about it, and some drawbacks that may justify not using it.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "id" : "related-works-spring-boot-jhipster-things-to-like",
+        "additionalIds" : [ "things-to-like-2" ],
+        "level" : 3,
+        "title" : "Things to like",
+        "type" : "SubHeading"
+      }, {
+        "bulletMarker" : "-",
+        "tight" : true,
+        "type" : "BulletList",
+        "content" : [ {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "JHipster includes JDL, a spiritually similar DSL.",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "url" : "https://start.jhipster.tech/jdl-studio/",
+              "isFile" : false,
+              "type" : "Link",
+              "content" : [ {
+                "text" : "JDL-Studio",
+                "type" : "SimpleText"
+              } ]
+            }, {
+              "text" : " is a web-based IDE with syntax-highlighting and live-updating read-only UML diagrams.",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "Relationships in JDL are bidirectional.",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "url" : "https://www.jhipster.tech/jdl/#relationshipdeclaration",
+              "isFile" : false,
+              "type" : "Link",
+              "content" : [ {
+                "text" : "Relationships can be annotated with a display field",
+                "type" : "SimpleText"
+              } ]
+            }, {
+              "text" : ", which is \"the name of the field that should show up in select boxes.\" For example, in an auto-generated form to create Answers, there may be a select box for which Question it answers. It should display ",
+              "type" : "SimpleText"
+            }, {
+              "code" : "title",
+              "type" : "InlinedCode"
+            }, {
+              "text" : ", rather than ",
+              "type" : "SimpleText"
+            }, {
+              "code" : "id",
+              "type" : "InlinedCode"
+            }, {
+              "text" : ".",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "Spring Data supports many data stores.",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        } ]
+      }, {
+        "id" : "related-works-spring-boot-jhipster-drawbacks",
+        "additionalIds" : [ "drawbacks-2" ],
+        "level" : 3,
+        "title" : "Drawbacks",
+        "type" : "SubHeading"
+      }, {
+        "bulletMarker" : "-",
+        "tight" : true,
+        "type" : "BulletList",
+        "content" : [ {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "Every entity (class) gets an ",
+              "type" : "SimpleText"
+            }, {
+              "code" : "id",
+              "type" : "InlinedCode"
+            }, {
+              "text" : " property, which is an auto-incrementing integer. There are no natural keys.",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "Spring Data has limited support for audit-data. It can track the version number, last updated time, and last updated user. However, all previous versions are lost.",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "Hibernate Envers is an extension that is meant to be non-lossy. However:",
+              "type" : "SimpleText"
+            } ]
+          }, {
+            "bulletMarker" : "-",
+            "tight" : true,
+            "type" : "BulletList",
+            "content" : [ {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "Envers is not integrated into Spring Boot / JHipster",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            }, {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "Envers keeps audit data in separate audit tables with a completely different schema. It is difficult to recreate previous state of anything other than a single vertex in isolation.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            }, {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "Envers adds audit functionality, but doesn't disable Hibernate's destructive. You have to remember not to call update() and delete().",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            } ]
+          } ]
+        } ]
+      }, {
+        "id" : "related-works-graphql",
+        "additionalIds" : [ "graphql" ],
+        "level" : 2,
+        "title" : "GraphQL",
+        "type" : "SubHeading"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "url" : "https://graphql.org/",
+          "isFile" : false,
+          "type" : "Link",
+          "content" : [ {
+            "text" : "GraphQL",
+            "type" : "SimpleText"
+          } ]
+        }, {
+          "text" : " is a query language for APIs. The ecosystem of frameworks that have developed around it can be considered related work.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "GraphQL's query language is probably the closest thing in open source to Klass's projections.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "id" : "related-works-graphql-things-to-like",
+        "additionalIds" : [ "things-to-like-3" ],
+        "level" : 3,
+        "title" : "Things to like",
+        "type" : "SubHeading"
+      }, {
+        "bulletMarker" : "-",
+        "tight" : true,
+        "type" : "BulletList",
+        "content" : [ {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "GraphQL's ",
+              "type" : "SimpleText"
+            }, {
+              "url" : "https://graphql.org/learn/queries/#fields",
+              "isFile" : false,
+              "type" : "Link",
+              "content" : [ {
+                "text" : "query fields",
+                "type" : "SimpleText"
+              } ]
+            }, {
+              "text" : " are similar to Klass's read projections.",
+              "type" : "SimpleText"
+            } ]
+          }, {
+            "bulletMarker" : "-",
+            "tight" : true,
+            "type" : "BulletList",
+            "content" : [ {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "The nested structure exactly matches the structure of the returned json.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "url" : "https://graphql.org/learn/queries/#arguments",
+              "isFile" : false,
+              "type" : "Link",
+              "content" : [ {
+                "text" : "Fields can take arguments",
+                "type" : "SimpleText"
+              } ]
+            }, {
+              "text" : ".",
+              "type" : "SimpleText"
+            } ]
+          }, {
+            "bulletMarker" : "-",
+            "tight" : true,
+            "type" : "BulletList",
+            "content" : [ {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "This is another term for parameterized properties.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            }, {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "This is a powerful technique for refining relationships.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            }, {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "For example, we can refine the relationship between Question and Answer by declaring a field for a Question's answers by some user.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            } ]
+          } ]
+        } ]
+      }, {
+        "id" : "related-works-graphql-drawbacks",
+        "additionalIds" : [ "drawbacks-3" ],
+        "level" : 3,
+        "title" : "Drawbacks",
+        "type" : "SubHeading"
+      }, {
+        "bulletMarker" : "-",
+        "tight" : true,
+        "type" : "BulletList",
+        "content" : [ {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "url" : "https://graphql.org/learn/schema/#object-types-and-fields",
+              "isFile" : false,
+              "type" : "Link",
+              "content" : [ {
+                "text" : "GraphQL's relationships",
+                "type" : "SimpleText"
+              } ]
+            }, {
+              "text" : " are uni-directional. So a Question has answers, and Answer has a question, but nothing in the schema links these two properties. This is fine for reads; and after all GraphQL started as just a query language. Bidirectional relationships are critical for writes. This is one reason why ",
+              "type" : "SimpleText"
+            }, {
+              "url" : "https://docs.dgraph.io/master/query-language/",
+              "isFile" : false,
+              "type" : "Link",
+              "content" : [ {
+                "text" : "dgraph's query language",
+                "type" : "SimpleText"
+              } ]
+            }, {
+              "text" : " is GraphQL+-, which extends edge declarations with a ",
+              "type" : "SimpleText"
+            }, {
+              "url" : "https://docs.dgraph.io/master/query-language/#reverse-edges",
+              "isFile" : false,
+              "type" : "Link",
+              "content" : [ {
+                "text" : "reverse edge",
+                "type" : "SimpleText"
+              } ]
+            }, {
+              "text" : ".",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "GraphQL makes it easy to express powerful queries for which there is no efficient execution plan.",
+              "type" : "SimpleText"
+            } ]
+          }, {
+            "bulletMarker" : "-",
+            "tight" : true,
+            "type" : "BulletList",
+            "content" : [ {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "For example, a multi-hop graph walk with predicates that narrow the walk on each hop.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            }, {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "The only possible implementation is to perform IO for every hop.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            }, {
+              "type" : "ListItem",
+              "content" : [ {
+                "type" : "Paragraph",
+                "content" : [ {
+                  "text" : "GraphQL was invented to stitch together microservice responses into a cohesive subgraph. It assumes that a \"foreign key\" in one json response will lead to a GET against another service.",
+                  "type" : "SimpleText"
+                } ]
+              } ]
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "GraphQL's responses are always json. There's no notion of flattening. GraphQL cannot return csv, ",
+              "type" : "SimpleText"
+            }, {
+              "url" : "http://graphml.graphdrawing.org/",
+              "isFile" : false,
+              "type" : "Link",
+              "content" : [ {
+                "text" : "GraphML",
+                "type" : "SimpleText"
+              } ]
+            }, {
+              "text" : ", etc.",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "Mutations feel second class. The mutation bodies conform to a schema, but you're on your own for performing the mutation.",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "It's common to expose a /graphql/ endpoint over http. While not as dangerous as exposing a /sql/ endpoint, it gives complete control to clients by default. It requires extra effort to handle some cross-cutting concerns like recording meaningful metrics, rate limiting, data-level entitlements, etc.",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        } ]
+      }, {
+        "id" : "related-works-other-related-works",
+        "additionalIds" : [ "other-related-works" ],
+        "level" : 2,
+        "title" : "Other related works",
+        "type" : "SubHeading"
+      }, {
+        "bulletMarker" : "-",
+        "tight" : true,
+        "type" : "BulletList",
+        "content" : [ {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "EdgeDB",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "Relay",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "dgraph",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "FOAM Framework",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "TextUML",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        } ]
+      } ]
+    } ],
+    "lastModifiedTime" : 1775935534234,
+    "tocItem" : {
+      "chapterTitle" : "Related Works",
+      "pageTitle" : "Overview",
+      "pageMeta" : { },
+      "dirName" : "related-works",
+      "fileName" : "overview",
+      "fileExtension" : "md",
+      "viewOnRelativePath" : null,
+      "pageSectionIdTitles" : [ {
+        "title" : "Related Works",
+        "id" : "related-works",
+        "customAnchorId" : "related-works"
+      } ]
+    }
+  }
+}), document.getElementById("znai"));
+/*-->*/
+
+</script>
+
+</body>
+</html>
