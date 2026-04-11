@@ -594,11 +594,11 @@ public class ReladomoLensGenerator {
 				+ interfaceOnlyFields
 				+ "\n"
 				+ "    private final ImmutableList<PropertyLens<" + className + ", ?>> allLenses;\n"
-				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.DataTypeProperty, DataTypeLens<" + className + ", ?>> dataTypeLenses;\n"
-				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.PrimitiveProperty, PrimitiveLens<" + className + ", ?>> primitiveLenses;\n"
-				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.EnumerationProperty, EnumerationLens<" + className + ">> enumerationLenses;\n"
-				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.AssociationEnd, AssociationLens<" + className + ", ?>> associationLenses;\n"
-				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.Property, PropertyLens<" + className + ", ?>> allLensesByProperty;\n"
+				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.DataTypeProperty, DataTypeLens<" + className + ", ?>> dataTypePropertyLenses;\n"
+				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.PrimitiveProperty, PrimitiveLens<" + className + ", ?>> primitivePropertyLenses;\n"
+				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.EnumerationProperty, EnumerationLens<" + className + ">> enumerationPropertyLenses;\n"
+				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.AssociationEnd, AssociationLens<" + className + ", ?>> associationEndLenses;\n"
+				+ "    private final ImmutableMap<cool.klass.model.meta.domain.api.property.Property, PropertyLens<" + className + ", ?>> propertyLenses;\n"
 				+ "\n";
 		// @formatter:on
 	}
@@ -727,7 +727,7 @@ public class ReladomoLensGenerator {
 
 		String className = klass.getName();
 
-		// Initialize primitiveLenses map
+		// Initialize primitivePropertyLenses map
 		ImmutableList<PrimitiveProperty> declaredPrimitives = klass
 			.getDeclaredDataTypeProperties()
 			.selectInstancesOf(PrimitiveProperty.class)
@@ -746,13 +746,13 @@ public class ReladomoLensGenerator {
 				.collect((property) -> getMapEntry(property.getName()))
 		);
 		String primitiveLensMap = getMapInit(
-			"primitiveLenses",
+			"primitivePropertyLenses",
 			"cool.klass.model.meta.domain.api.property.PrimitiveProperty",
 			"PrimitiveLens<" + className + ", ?>",
 			primitiveMapEntries
 		);
 
-		// Initialize enumerationLenses map
+		// Initialize enumerationPropertyLenses map
 		ImmutableList<EnumerationProperty> declaredEnumerations = klass
 			.getDeclaredDataTypeProperties()
 			.selectInstancesOf(EnumerationProperty.class)
@@ -772,13 +772,13 @@ public class ReladomoLensGenerator {
 				.collect((property) -> getMapEntry(property.getName()))
 		);
 		String enumerationLensMap = getMapInit(
-			"enumerationLenses",
+			"enumerationPropertyLenses",
 			"cool.klass.model.meta.domain.api.property.EnumerationProperty",
 			"EnumerationLens<" + className + ">",
 			enumerationMapEntries
 		);
 
-		// Initialize dataTypeLenses map
+		// Initialize dataTypePropertyLenses map
 		MutableList<String> dataTypeMapEntries = Lists.mutable.empty();
 		dataTypeMapEntries.addAllIterable(
 			declaredDataTypeProperties.collect((property) -> getMapEntry(property.getName()))
@@ -790,13 +790,13 @@ public class ReladomoLensGenerator {
 			interfaceOnlyProperties.collect((property) -> getMapEntry(property.getName()))
 		);
 		String dataTypeLensMap = getMapInit(
-			"dataTypeLenses",
+			"dataTypePropertyLenses",
 			"cool.klass.model.meta.domain.api.property.DataTypeProperty",
 			"DataTypeLens<" + className + ", ?>",
 			dataTypeMapEntries
 		);
 
-		// Initialize associationLenses map
+		// Initialize associationEndLenses map
 		MutableList<String> associationMapEntries = Lists.mutable.empty();
 		associationMapEntries.addAllIterable(
 			klass.getDeclaredAssociationEnds().collect((associationEnd) -> getMapEntry(associationEnd.getName()))
@@ -805,13 +805,13 @@ public class ReladomoLensGenerator {
 			inheritedAssociationEnds.collect((inherited) -> getMapEntry(inherited.property().getName()))
 		);
 		String associationLensMap = getMapInit(
-			"associationLenses",
+			"associationEndLenses",
 			"cool.klass.model.meta.domain.api.property.AssociationEnd",
 			"AssociationLens<" + className + ", ?>",
 			associationMapEntries
 		);
 
-		// Initialize allLensesByProperty map (combined)
+		// Initialize propertyLenses map (combined)
 		MutableList<String> allMapEntries = Lists.mutable.empty();
 		allMapEntries.addAllIterable(declaredDataTypeProperties.collect((property) -> getMapEntry(property.getName())));
 		allMapEntries.addAllIterable(
@@ -824,8 +824,8 @@ public class ReladomoLensGenerator {
 			inheritedAssociationEnds.collect((inherited) -> getMapEntry(inherited.property().getName()))
 		);
 		allMapEntries.addAllIterable(interfaceOnlyProperties.collect((property) -> getMapEntry(property.getName())));
-		String allLensesByPropertyMap = getMapInit(
-			"allLensesByProperty",
+		String propertyLensesMap = getMapInit(
+			"propertyLenses",
 			"cool.klass.model.meta.domain.api.property.Property",
 			"PropertyLens<" + className + ", ?>",
 			allMapEntries
@@ -854,7 +854,7 @@ public class ReladomoLensGenerator {
 				+ "\n"
 				+ associationLensMap
 				+ "\n"
-				+ allLensesByPropertyMap
+				+ propertyLensesMap
 				+ "    }\n"
 				+ "\n";
 		// @formatter:on
@@ -920,20 +920,20 @@ public class ReladomoLensGenerator {
 				+ "    public PropertyLens<" + className + ", ?> getLensByProperty(@Nonnull cool.klass.model.meta.domain.api.property.Property property)\n"
 				+ "    {\n"
 				+ "        return Objects.requireNonNull(\n"
-				+ "                this.allLensesByProperty.get(property),\n"
+				+ "                this.propertyLenses.get(property),\n"
 				+ "                () -> \"No lens found for property: \" + property.getName());\n"
 				+ "    }\n"
 				+ "\n"
-				+ this.getDirectOverload("DataTypeLens<" + className + ", ?>", "cool.klass.model.meta.domain.api.property.DataTypeProperty", "dataTypeLenses")
-				+ this.getDirectOverload("PrimitiveLens<" + className + ", ?>", "cool.klass.model.meta.domain.api.property.PrimitiveProperty", "primitiveLenses")
-				+ this.getDirectOverload("EnumerationLens<" + className + ">", "cool.klass.model.meta.domain.api.property.EnumerationProperty", "enumerationLenses")
-				+ this.getCastOverload(className, "ReferenceLens", "cool.klass.model.meta.domain.api.property.ReferenceProperty", "allLensesByProperty")
-				+ this.getDirectOverload("AssociationLens<" + className + ", ?>", "cool.klass.model.meta.domain.api.property.AssociationEnd", "associationLenses")
+				+ this.getDirectOverload("DataTypeLens<" + className + ", ?>", "cool.klass.model.meta.domain.api.property.DataTypeProperty", "dataTypePropertyLenses")
+				+ this.getDirectOverload("PrimitiveLens<" + className + ", ?>", "cool.klass.model.meta.domain.api.property.PrimitiveProperty", "primitivePropertyLenses")
+				+ this.getDirectOverload("EnumerationLens<" + className + ">", "cool.klass.model.meta.domain.api.property.EnumerationProperty", "enumerationPropertyLenses")
+				+ this.getCastOverload(className, "ReferenceLens", "cool.klass.model.meta.domain.api.property.ReferenceProperty", "propertyLenses")
+				+ this.getDirectOverload("AssociationLens<" + className + ", ?>", "cool.klass.model.meta.domain.api.property.AssociationEnd", "associationEndLenses")
 				+ "    @Override\n"
 				+ "    @Nonnull\n"
 				+ "    public ImmutableMap<cool.klass.model.meta.domain.api.property.Property, PropertyLens<" + className + ", ?>> getLensesByProperty()\n"
 				+ "    {\n"
-				+ "        return this.allLensesByProperty;\n"
+				+ "        return this.propertyLenses;\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    @Override\n"
