@@ -333,6 +333,8 @@ public class ReladomoLensDataStore implements DataStore {
 	) {
 		boolean mutationOccurred = false;
 
+		// A Reladomo bug prevents just calling a method like setQuestion here. Instead, we have to call foreign key setters like setQuestionId
+
 		ImmutableList<DataTypeProperty> targetDataTypeProperties = associationEnd
 			.getOwningClassifier()
 			.getDataTypeProperties();
@@ -345,11 +347,13 @@ public class ReladomoLensDataStore implements DataStore {
 				continue;
 			}
 
+			DataTypeProperty foreignKey = targetDataTypeProperty;
+
 			Object keyValue = persistentTargetInstance == null
 				? null
 				: this.getDataTypeProperty(persistentTargetInstance, keyInRelatedObject);
 
-			mutationOccurred |= this.setDataTypeProperty(persistentSourceInstance, targetDataTypeProperty, keyValue);
+			mutationOccurred |= this.setDataTypeProperty(persistentSourceInstance, foreignKey, keyValue);
 		}
 
 		return mutationOccurred;

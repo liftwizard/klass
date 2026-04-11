@@ -638,7 +638,7 @@ public class ReladomoDataStore implements DataStore {
 	) {
 		boolean mutationOccurred = false;
 
-		// A Reladomo bug prevents just calling a method like setQuestion here. Instead we have to call foreign key setters like setQuestionId
+		// A Reladomo bug prevents just calling a method like setQuestion here. Instead, we have to call foreign key setters like setQuestionId
 
 		ImmutableList<DataTypeProperty> targetDataTypeProperties = associationEnd
 			.getOwningClassifier()
