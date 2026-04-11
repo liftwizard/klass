@@ -36,5 +36,7 @@ public interface ReladomoClassLens<T> extends ClassLens<T> {
 	@Nonnull
 	RelatedFinder<T> getRelatedFinder();
 
-	default void generateAndSetId(@Nonnull T instance) {}
+	default void generateAndSetId(@Nonnull T instance) {
+		throw new IllegalStateException("generateAndSetId not implemented for " + this.getKlass().getName());
+	}
 }

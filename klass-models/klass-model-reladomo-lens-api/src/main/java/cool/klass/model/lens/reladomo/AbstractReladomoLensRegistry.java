@@ -21,23 +21,26 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 
 import cool.klass.model.lens.ClassLens;
+import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 
 public abstract class AbstractReladomoLensRegistry implements ReladomoLensRegistry {
 
-	private ImmutableMap<Klass, ReladomoClassLens<?>> lensesByKlass;
-	private ImmutableMap<Class<?>, ReladomoClassLens<?>> lensesByJavaClass;
+	private final ImmutableMap<Klass, ReladomoClassLens<?>> lensesByKlass;
+	private final ImmutableMap<Class<?>, ReladomoClassLens<?>> lensesByJavaClass;
 
-	@Nonnull
-	protected abstract ImmutableList<ReladomoClassLens<?>> getAllLenses();
+	protected AbstractReladomoLensRegistry(DomainModel domainModel)
+	{
+		ImmutableList<ReladomoClassLens<?>> lenses = this.getAllLenses(domainModel);
 
-	protected void initialize() {
-		ImmutableList<ReladomoClassLens<?>> lenses = this.getAllLenses();
 		this.lensesByKlass = lenses.groupByUniqueKey(ClassLens::getKlass);
 		this.lensesByJavaClass = lenses.groupByUniqueKey(ReladomoClassLens::getJavaClass);
 	}
+
+	@Nonnull
+	protected abstract ImmutableList<ReladomoClassLens<?>> getAllLenses(DomainModel domainModel);
 
 	@Override
 	public boolean hasClassLens(@Nonnull Klass klass) {

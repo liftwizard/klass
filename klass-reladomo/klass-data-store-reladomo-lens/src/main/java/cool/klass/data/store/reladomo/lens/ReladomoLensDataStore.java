@@ -43,6 +43,7 @@ import cool.klass.data.store.reladomo.OperationVisitor;
 import cool.klass.data.store.reladomo.TransactionAdapter;
 import cool.klass.model.lens.ClassLens;
 import cool.klass.model.lens.DataTypeLens;
+import cool.klass.model.lens.PrimitiveLens;
 import cool.klass.model.lens.reladomo.ReladomoAssociationLens;
 import cool.klass.model.lens.reladomo.ReladomoClassLens;
 import cool.klass.model.lens.reladomo.ReladomoLensRegistry;
@@ -146,7 +147,8 @@ public class ReladomoLensDataStore implements DataStore {
 	public Object instantiate(@Nonnull Klass klass, @Nonnull MapIterable<DataTypeProperty, Object> keys) {
 		keys.each(Objects::requireNonNull);
 
-		ReladomoClassLens<?> reladomoLens = (ReladomoClassLens<?>) this.lensRegistry.getClassLens(klass);
+		@SuppressWarnings("unchecked")
+		ReladomoClassLens<Object> reladomoLens = (ReladomoClassLens<Object>) this.lensRegistry.getClassLens(klass);
 		Object newInstance = reladomoLens.instantiate();
 
 		this.generateAndSetId(newInstance, klass, reladomoLens);
@@ -167,6 +169,7 @@ public class ReladomoLensDataStore implements DataStore {
 		for (DataTypeProperty keyProperty : keyProperties) {
 			Object key = keys.get(keyProperty);
 			Objects.requireNonNull(key, () -> "Expected non-null key for property: " + keyProperty);
+			// TODO 2026-04-10: Here we're calling to the generic interface method setDataTypeProperty but at this point we have a lot more information, because we have the klass and lens available to us. If we delegate to the generic setDataTypeProperty, we do a bunch of superclass navigation. We should create a second setDataTypeProperty overload to use here that takes the ReladomoClassLens for more efficient property navigation. In addition, we're not using the boolean returned from setDataTypeProperty, partially because we know we're changing the value from null to non-null, but that's another inefficiency that we can solve through code generation and a better overload here
 			this.setDataTypeProperty(newInstance, keyProperty, key);
 		}
 
@@ -176,7 +179,7 @@ public class ReladomoLensDataStore implements DataStore {
 	@Override
 	@Nonnull
 	public List<Object> findAll(@Nonnull Klass klass) {
-		ReladomoClassLens<?> reladomoLens = (ReladomoClassLens<?>) this.lensRegistry.getClassLens(klass);
+		ReladomoClassLens<?> reladomoLens = this.lensRegistry.getClassLens(klass);
 		RelatedFinder<?> finder = reladomoLens.getRelatedFinder();
 		return (List<Object>) finder.findMany(finder.all());
 	}
@@ -236,7 +239,7 @@ public class ReladomoLensDataStore implements DataStore {
 
 		Object effectiveInstance = this.navigateToOwningInstance(persistentInstance, klass);
 		ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
-		DataTypeLens<Object, Object> dataTypeLens = (DataTypeLens<Object, Object>) classLens.getLensByProperty(
+		var dataTypeLens = (DataTypeLens<Object, Object>) classLens.getLensByProperty(
 			dataTypeProperty
 		);
 		Object oldValue = dataTypeLens.get(effectiveInstance);
@@ -348,7 +351,8 @@ public class ReladomoLensDataStore implements DataStore {
 				? null
 				: this.getDataTypeProperty(persistentTargetInstance, keyInRelatedObject);
 
-			mutationOccurred |= this.setDataTypeProperty(persistentSourceInstance, targetDataTypeProperty, keyValue);
+			mutationOccurred |= this.setDataTypeProperty(persistentSourceInstance,
+					targetDataTypeProperty, keyValue);
 		}
 
 		return mutationOccurred;
@@ -493,10 +497,10 @@ public class ReladomoLensDataStore implements DataStore {
 		return relationshipFinder.valueOf(persistentInstance);
 	}
 
-	private void generateAndSetId(
-		@Nonnull Object persistentInstance,
+	private <T> void generateAndSetId(
+		@Nonnull T persistentInstance,
 		@Nonnull Klass klass,
-		@Nonnull ReladomoClassLens<?> reladomoLens
+		@Nonnull ReladomoClassLens<T> reladomoLens
 	) {
 		ImmutableList<DataTypeProperty> idProperties = klass.getDataTypeProperties().select(DataTypeProperty::isID);
 		if (idProperties.isEmpty()) {
@@ -506,12 +510,12 @@ public class ReladomoLensDataStore implements DataStore {
 		PrimitiveProperty idProperty = (PrimitiveProperty) idProperties.getOnly();
 
 		if (idProperty.getType().isNumeric()) {
-			((ReladomoClassLens<Object>) reladomoLens).generateAndSetId(persistentInstance);
+			reladomoLens.generateAndSetId(persistentInstance);
 		} else if (idProperty.getType() == PrimitiveType.STRING) {
 			UUID uuid = this.uuidSupplier.get();
 			String uuidString = uuid.toString();
-			DataTypeLens<Object, Object> idLens = (DataTypeLens<Object, Object>) reladomoLens.getLensByProperty(
-				idProperty
+			PrimitiveLens<T, String> idLens = (PrimitiveLens<T, String>) reladomoLens.getLensByProperty(
+					idProperty
 			);
 			idLens.set(persistentInstance, uuidString);
 		} else {

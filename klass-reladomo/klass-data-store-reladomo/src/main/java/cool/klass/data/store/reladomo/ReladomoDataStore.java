@@ -493,7 +493,7 @@ public class ReladomoDataStore implements DataStore {
 	@Override
 	public boolean setDataTypeProperty(
 		@Nonnull Object persistentInstance,
-		@Nonnull DataTypeProperty dataTypeProperty,
+			@Nonnull DataTypeProperty dataTypeProperty,
 		@Nullable Object newValue
 	) {
 		if (dataTypeProperty.isDerived()) {
