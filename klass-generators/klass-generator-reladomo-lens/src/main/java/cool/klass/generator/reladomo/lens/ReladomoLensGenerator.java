@@ -338,8 +338,18 @@ public class ReladomoLensGenerator {
 			(p) -> p.getType() == PrimitiveType.INSTANT || p.getType() == PrimitiveType.TEMPORAL_INSTANT
 		);
 		boolean hasLocalDate = primitiveProperties.anySatisfy((p) -> p.getType() == PrimitiveType.LOCAL_DATE);
-		boolean hasTimestamp = hasInstant; // Reladomo uses Timestamp for Instant/TemporalInstant
-		boolean hasDate = hasLocalDate; // Reladomo uses Date for LocalDate
+		boolean hasNonDerivedInstant = primitiveProperties.anySatisfy(
+			(p) -> !p.isDerived()
+				&& (p.getType() == PrimitiveType.INSTANT || p.getType() == PrimitiveType.TEMPORAL_INSTANT)
+		);
+		boolean hasNonDerivedLocalDate = primitiveProperties.anySatisfy(
+			(p) -> !p.isDerived() && p.getType() == PrimitiveType.LOCAL_DATE
+		);
+		boolean hasTimestamp = hasNonDerivedInstant; // Reladomo uses Timestamp for Instant/TemporalInstant
+		boolean hasDate = hasNonDerivedLocalDate; // Reladomo uses Date for LocalDate
+		boolean hasToOne =
+			declaredAssociationEnds.anySatisfy((ae) -> !ae.getMultiplicity().isToMany())
+			|| inheritedAssociationEnds.anySatisfy((ip) -> !ip.property().getMultiplicity().isToMany());
 		boolean hasToMany =
 			declaredAssociationEnds.anySatisfy((ae) -> ae.getMultiplicity().isToMany())
 			|| inheritedAssociationEnds.anySatisfy((ip) -> ip.property().getMultiplicity().isToMany());
@@ -381,7 +391,6 @@ public class ReladomoLensGenerator {
 
 		// Lens imports
 		lensImports.add("cool.klass.model.lens.AssociationLens");
-		lensImports.add("cool.klass.model.lens.ClassLens");
 		lensImports.add("cool.klass.model.lens.DataTypeLens");
 		lensImports.add("cool.klass.model.lens.EnumerationLens");
 		lensImports.add("cool.klass.model.lens.PrimitiveLens");
@@ -398,8 +407,10 @@ public class ReladomoLensGenerator {
 		}
 
 		if (hasAnyAssociationEnd) {
-			lensImports.add("cool.klass.model.lens.ToOneLens");
 			lensImports.add("cool.klass.model.lens.reladomo.ReladomoAssociationLens");
+			if (hasToOne) {
+				lensImports.add("cool.klass.model.lens.ToOneLens");
+			}
 			if (hasToMany) {
 				lensImports.add("cool.klass.model.lens.ToManyLens");
 			}
@@ -442,8 +453,8 @@ public class ReladomoLensGenerator {
 		for (AssociationEnd associationEnd : declaredAssociationEnds) {
 			Klass targetType = associationEnd.getType();
 			associationTypeImports.add(targetType.getPackageName() + "." + targetType.getName());
-			associationTypeImports.add(targetType.getPackageName() + "." + targetType.getName() + "Finder");
 			if (associationEnd.getMultiplicity().isToMany()) {
+				associationTypeImports.add(targetType.getPackageName() + "." + targetType.getName() + "Finder");
 				associationTypeImports.add(targetType.getPackageName() + "." + targetType.getName() + "List");
 			}
 		}
@@ -452,11 +463,13 @@ public class ReladomoLensGenerator {
 		for (InheritedProperty<AssociationEnd> inherited : inheritedAssociationEnds) {
 			Klass targetType = inherited.property().getType();
 			associationTypeImports.add(targetType.getPackageName() + "." + targetType.getName());
-			associationTypeImports.add(targetType.getPackageName() + "." + targetType.getName() + "Finder");
 			if (inherited.property().getMultiplicity().isToMany()) {
+				associationTypeImports.add(targetType.getPackageName() + "." + targetType.getName() + "Finder");
 				associationTypeImports.add(targetType.getPackageName() + "." + targetType.getName() + "List");
 			}
 		}
+
+		associationTypeImports.removeAll(reladomoTypeImports);
 
 		return this.renderImportGroups(
 			javaSqlImports,
