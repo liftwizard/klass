@@ -40,12 +40,13 @@ public class MapLensRegistry implements LensRegistry {
 
 	@Override
 	@Nonnull
-	public ClassLens<?> getClassLens(@Nonnull Klass klass) {
+	@SuppressWarnings("unchecked")
+	public <T> ClassLens<T> getClassLens(@Nonnull Klass klass) {
 		Objects.requireNonNull(klass);
 		ClassLens<?> classLens = this.lensesByKlass.get(klass);
 		if (classLens == null) {
 			throw new IllegalStateException("No ClassLens registered for Klass: " + klass.getName());
 		}
-		return classLens;
+		return (ClassLens<T>) classLens;
 	}
 }

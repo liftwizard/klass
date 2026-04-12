@@ -28,10 +28,10 @@ import cool.klass.model.meta.domain.api.Klass;
 public interface ReladomoLensRegistry extends LensRegistry {
 	@Override
 	@Nonnull
-	ReladomoClassLens<?> getClassLens(@Nonnull Klass klass);
+	<T> ReladomoClassLens<T> getClassLens(@Nonnull Klass klass);
 
 	boolean hasClassLensForJavaClass(@Nonnull Class<?> javaClass);
 
 	@Nonnull
-	ReladomoClassLens<?> getClassLensForJavaClass(@Nonnull Class<?> javaClass);
+	<T> ReladomoClassLens<T> getClassLensForJavaClass(@Nonnull Class<?> javaClass);
 }

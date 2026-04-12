@@ -863,8 +863,8 @@ public class ReladomoLensGenerator {
 		// @formatter:off
 		return ""
 				+ "    @Override\n"
-				+ "    @javax.annotation.Nullable\n"
-				+ "    public Object getSuperClassInstance(@Nonnull " + className + " instance)\n"
+				+ "    @Nullable\n"
+				+ "    public " + superClassName + " getSuperClassInstance(@Nonnull " + className + " instance)\n"
 				+ "    {\n"
 				+ "        return instance.get" + superClassName + "SuperClass();\n"
 				+ "    }\n"
@@ -890,7 +890,7 @@ public class ReladomoLensGenerator {
 		// @formatter:off
 		return ""
 				+ "    @Override\n"
-				+ "    @javax.annotation.Nullable\n"
+				+ "    @Nullable\n"
 				+ "    public Object getSubClassInstance(@Nonnull " + className + " instance, @Nonnull cool.klass.model.meta.domain.api.Klass subClass)\n"
 				+ "    {\n"
 				+ "        return switch (subClass.getName())\n"

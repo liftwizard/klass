@@ -41,7 +41,7 @@ public class CompositeReladomoLensRegistry implements ReladomoLensRegistry {
 
 	@Override
 	@Nonnull
-	public ReladomoClassLens<?> getClassLens(@Nonnull Klass klass) {
+	public <T> ReladomoClassLens<T> getClassLens(@Nonnull Klass klass) {
 		for (ReladomoLensRegistry registry : this.registries) {
 			if (registry.hasClassLens(klass)) {
 				return registry.getClassLens(klass);
@@ -57,7 +57,7 @@ public class CompositeReladomoLensRegistry implements ReladomoLensRegistry {
 
 	@Override
 	@Nonnull
-	public ReladomoClassLens<?> getClassLensForJavaClass(@Nonnull Class<?> javaClass) {
+	public <T> ReladomoClassLens<T> getClassLensForJavaClass(@Nonnull Class<?> javaClass) {
 		for (ReladomoLensRegistry registry : this.registries) {
 			if (registry.hasClassLensForJavaClass(javaClass)) {
 				return registry.getClassLensForJavaClass(javaClass);

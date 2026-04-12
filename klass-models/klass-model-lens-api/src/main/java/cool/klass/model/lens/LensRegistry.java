@@ -24,5 +24,5 @@ public interface LensRegistry {
 	boolean hasClassLens(@Nonnull Klass klass);
 
 	@Nonnull
-	ClassLens<?> getClassLens(@Nonnull Klass klass);
+	<T> ClassLens<T> getClassLens(@Nonnull Klass klass);
 }

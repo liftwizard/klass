@@ -48,8 +48,9 @@ public abstract class AbstractReladomoLensRegistry implements ReladomoLensRegist
 
 	@Override
 	@Nonnull
-	public ReladomoClassLens<?> getClassLens(@Nonnull Klass klass) {
-		return Objects.requireNonNull(
+	@SuppressWarnings("unchecked")
+	public <T> ReladomoClassLens<T> getClassLens(@Nonnull Klass klass) {
+		return (ReladomoClassLens<T>) Objects.requireNonNull(
 			this.lensesByKlass.get(klass),
 			() -> "No ClassLens registered for Klass: " + klass.getName()
 		);
@@ -62,8 +63,9 @@ public abstract class AbstractReladomoLensRegistry implements ReladomoLensRegist
 
 	@Override
 	@Nonnull
-	public ReladomoClassLens<?> getClassLensForJavaClass(@Nonnull Class<?> javaClass) {
-		return Objects.requireNonNull(
+	@SuppressWarnings("unchecked")
+	public <T> ReladomoClassLens<T> getClassLensForJavaClass(@Nonnull Class<?> javaClass) {
+		return (ReladomoClassLens<T>) Objects.requireNonNull(
 			this.lensesByJavaClass.get(javaClass),
 			() -> "No ClassLens registered for Java class: " + javaClass.getName()
 		);

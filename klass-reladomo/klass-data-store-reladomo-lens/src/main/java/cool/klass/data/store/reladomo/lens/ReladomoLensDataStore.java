@@ -142,8 +142,7 @@ public class ReladomoLensDataStore implements DataStore {
 	public Object instantiate(@Nonnull Klass klass, @Nonnull MapIterable<DataTypeProperty, Object> keys) {
 		keys.each(Objects::requireNonNull);
 
-		@SuppressWarnings("unchecked")
-		ReladomoClassLens<Object> reladomoLens = (ReladomoClassLens<Object>) this.lensRegistry.getClassLens(klass);
+		ReladomoClassLens<Object> reladomoLens = this.lensRegistry.getClassLens(klass);
 		Object newInstance = reladomoLens.instantiate();
 
 		this.generateAndSetId(newInstance, klass, reladomoLens);
@@ -182,7 +181,7 @@ public class ReladomoLensDataStore implements DataStore {
 	@Nullable
 	public Object findByKey(@Nonnull Klass klass, @Nonnull MapIterable<DataTypeProperty, Object> keys) {
 		Operation operation = this.buildFindByKeyOperation(klass, keys);
-		ReladomoClassLens<?> reladomoLens = (ReladomoClassLens<?>) this.lensRegistry.getClassLens(klass);
+		ReladomoClassLens<?> reladomoLens = this.lensRegistry.getClassLens(klass);
 		return reladomoLens.getRelatedFinder().findOne(operation);
 	}
 
@@ -207,8 +206,8 @@ public class ReladomoLensDataStore implements DataStore {
 		Klass klass = this.resolveKlassForProperty(persistentInstance, dataTypeProperty);
 
 		Object effectiveInstance = this.navigateToOwningInstance(persistentInstance, klass);
-		ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
-		DataTypeLens<Object, ?> dataTypeLens = (DataTypeLens<Object, ?>) classLens.getLensByProperty(dataTypeProperty);
+		ClassLens<Object> classLens = this.lensRegistry.getClassLens(klass);
+		DataTypeLens<Object, ?> dataTypeLens = classLens.getLensByProperty(dataTypeProperty);
 		Object result = dataTypeLens.get(effectiveInstance);
 
 		if (result == null && dataTypeProperty.isRequired()) {
@@ -232,8 +231,8 @@ public class ReladomoLensDataStore implements DataStore {
 		Klass klass = this.resolveKlassForProperty(persistentInstance, dataTypeProperty);
 
 		Object effectiveInstance = this.navigateToOwningInstance(persistentInstance, klass);
-		ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
-		var dataTypeLens = (DataTypeLens<Object, Object>) classLens.getLensByProperty(dataTypeProperty);
+		ClassLens<Object> classLens = this.lensRegistry.getClassLens(klass);
+		DataTypeLens<Object, Object> dataTypeLens = (DataTypeLens<Object, Object>) classLens.getLensByProperty(dataTypeProperty);
 		Object oldValue = dataTypeLens.get(effectiveInstance);
 		if (Objects.equals(oldValue, newValue)) {
 			return false;
@@ -266,11 +265,8 @@ public class ReladomoLensDataStore implements DataStore {
 		Klass klass = this.resolveKlassForProperty(persistentSourceInstance, associationEnd);
 
 		Object effectiveInstance = this.navigateToOwningInstance(persistentSourceInstance, klass);
-		ClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
-		@SuppressWarnings("unchecked")
-		AssociationLens<Object, ?> associationLens = (AssociationLens<Object, ?>) classLens.getLensByProperty(
-			associationEnd
-		);
+		ClassLens<Object> classLens = this.lensRegistry.getClassLens(klass);
+		AssociationLens<Object, ?> associationLens = classLens.getLensByProperty(associationEnd);
 		Object result = associationLens.get(effectiveInstance);
 		if (result instanceof List<?> list) {
 			throw new IllegalStateException("Expected single object but got " + list.size());
@@ -291,12 +287,8 @@ public class ReladomoLensDataStore implements DataStore {
 		Klass klass = this.resolveKlassForProperty(persistentSourceInstance, associationEnd);
 
 		Object effectiveInstance = this.navigateToOwningInstance(persistentSourceInstance, klass);
-		ReladomoClassLens<?> classLens = this.lensRegistry.getClassLens(klass);
-		@SuppressWarnings("unchecked")
-		ReladomoAssociationLens<Object, ?> associationLens = (ReladomoAssociationLens<
-			Object,
-			?
-		>) classLens.getLensByProperty(associationEnd);
+		ReladomoClassLens<Object> classLens = this.lensRegistry.getClassLens(klass);
+		ReladomoAssociationLens<Object, ?> associationLens = (ReladomoAssociationLens<Object, ?>) classLens.getLensByProperty(associationEnd);
 		AbstractRelatedFinder relationshipFinder = associationLens.getRelationshipFinder();
 		Object result = relationshipFinder.valueOf(effectiveInstance);
 		if (result == null) {
@@ -440,13 +432,13 @@ public class ReladomoLensDataStore implements DataStore {
 	}
 
 	private MithraObject getSubClassPersistentInstance(Klass klass, Klass subClass, MithraObject persistentInstance) {
-		return (MithraObject) this.getUntypedClassLens(klass).getSubClassInstance(persistentInstance, subClass);
+		return (MithraObject) this.lensRegistry.getClassLens(klass).getSubClassInstance(persistentInstance, subClass);
 	}
 
 	@Override
 	@Nonnull
 	public Object getSuperClass(@Nonnull Object persistentInstance, @Nonnull Klass klass) {
-		Object result = this.getUntypedClassLens(klass).getSuperClassInstance(persistentInstance);
+		Object result = this.lensRegistry.getClassLens(klass).getSuperClassInstance(persistentInstance);
 		Objects.requireNonNull(result, () ->
 			"Expected result to not be null for superClass: %s, persistentInstance: %s".formatted(
 				klass,
@@ -463,17 +455,12 @@ public class ReladomoLensDataStore implements DataStore {
 			throw new AssertionError("Expected " + subClass + " to be a strict subtype of " + superClass);
 		}
 
-		return this.getUntypedClassLens(superClass).getSubClassInstance(persistentInstance, subClass);
+		return this.lensRegistry.getClassLens(superClass).getSubClassInstance(persistentInstance, subClass);
 	}
 
 	// endregion
 
 	// region Private helpers
-
-	@SuppressWarnings("unchecked")
-	private ReladomoClassLens<Object> getUntypedClassLens(@Nonnull Klass klass) {
-		return (ReladomoClassLens<Object>) this.lensRegistry.getClassLens(klass);
-	}
 
 	private <T> void generateAndSetId(
 		@Nonnull T persistentInstance,
@@ -569,7 +556,7 @@ public class ReladomoLensDataStore implements DataStore {
 			Object current = persistentInstance;
 			Klass currentKlass = concreteKlass;
 			while (!currentKlass.equals(targetClassifier)) {
-				current = this.getUntypedClassLens(currentKlass).getSuperClassInstance(current);
+				current = this.lensRegistry.getClassLens(currentKlass).getSuperClassInstance(current);
 				currentKlass = currentKlass.getSuperClass().get();
 			}
 			return current;
@@ -588,7 +575,7 @@ public class ReladomoLensDataStore implements DataStore {
 						"Could not find subclass path from " + currentKlass.getName() + " to " + targetKlass.getName()
 					);
 				}
-				current = this.getUntypedClassLens(currentKlass).getSubClassInstance(current, nextSubClass);
+				current = this.lensRegistry.getClassLens(currentKlass).getSubClassInstance(current, nextSubClass);
 				currentKlass = nextSubClass;
 			}
 			return current;
