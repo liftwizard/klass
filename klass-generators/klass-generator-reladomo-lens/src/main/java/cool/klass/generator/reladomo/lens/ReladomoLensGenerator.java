@@ -336,9 +336,7 @@ public class ReladomoLensGenerator {
 
 		boolean hasInstant = primitiveProperties.anySatisfy(this::isInstantType);
 		boolean hasLocalDate = primitiveProperties.anySatisfy((p) -> p.getType() == PrimitiveType.LOCAL_DATE);
-		boolean hasNonDerivedInstant = primitiveProperties.anySatisfy(
-			(p) -> !p.isDerived() && this.isInstantType(p)
-		);
+		boolean hasNonDerivedInstant = primitiveProperties.anySatisfy((p) -> !p.isDerived() && this.isInstantType(p));
 		boolean hasNonDerivedLocalDate = primitiveProperties.anySatisfy(
 			(p) -> !p.isDerived() && p.getType() == PrimitiveType.LOCAL_DATE
 		);

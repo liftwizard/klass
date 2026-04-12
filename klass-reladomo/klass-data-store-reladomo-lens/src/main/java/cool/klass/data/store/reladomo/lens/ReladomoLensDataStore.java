@@ -163,7 +163,9 @@ public class ReladomoLensDataStore implements DataStore {
 		for (DataTypeProperty keyProperty : keyProperties) {
 			Object key = keys.get(keyProperty);
 			Objects.requireNonNull(key, () -> "Expected non-null key for property: " + keyProperty);
-			setDataTypeProperty(newInstance, reladomoLens, keyProperty, key);
+			@SuppressWarnings("unchecked")
+			var keyLens = (DataTypeLens<Object, Object>) reladomoLens.getLensByProperty(keyProperty);
+			keyLens.set(newInstance, key);
 		}
 
 		return newInstance;
@@ -489,17 +491,6 @@ public class ReladomoLensDataStore implements DataStore {
 		} else {
 			throw new AssertionError(idProperty);
 		}
-	}
-
-	private static <T> void setDataTypeProperty(
-		@Nonnull T persistentInstance,
-		@Nonnull ReladomoClassLens<T> reladomoLens,
-		@Nonnull DataTypeProperty dataTypeProperty,
-		@Nonnull Object value
-	) {
-		@SuppressWarnings("unchecked")
-		var dataTypeLens = (DataTypeLens<T, Object>) reladomoLens.getLensByProperty(dataTypeProperty);
-		dataTypeLens.set(persistentInstance, value);
 	}
 
 	@Nonnull
