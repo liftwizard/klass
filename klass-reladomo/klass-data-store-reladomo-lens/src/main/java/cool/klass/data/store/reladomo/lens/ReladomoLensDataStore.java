@@ -232,7 +232,9 @@ public class ReladomoLensDataStore implements DataStore {
 
 		Object effectiveInstance = this.navigateToOwningInstance(persistentInstance, klass);
 		ClassLens<Object> classLens = this.lensRegistry.getClassLens(klass);
-		DataTypeLens<Object, Object> dataTypeLens = (DataTypeLens<Object, Object>) classLens.getLensByProperty(dataTypeProperty);
+		DataTypeLens<Object, Object> dataTypeLens = (DataTypeLens<Object, Object>) classLens.getLensByProperty(
+			dataTypeProperty
+		);
 		Object oldValue = dataTypeLens.get(effectiveInstance);
 		if (Objects.equals(oldValue, newValue)) {
 			return false;
@@ -288,7 +290,10 @@ public class ReladomoLensDataStore implements DataStore {
 
 		Object effectiveInstance = this.navigateToOwningInstance(persistentSourceInstance, klass);
 		ReladomoClassLens<Object> classLens = this.lensRegistry.getClassLens(klass);
-		ReladomoAssociationLens<Object, ?> associationLens = (ReladomoAssociationLens<Object, ?>) classLens.getLensByProperty(associationEnd);
+		ReladomoAssociationLens<Object, ?> associationLens = (ReladomoAssociationLens<
+			Object,
+			?
+		>) classLens.getLensByProperty(associationEnd);
 		AbstractRelatedFinder relationshipFinder = associationLens.getRelationshipFinder();
 		Object result = relationshipFinder.valueOf(effectiveInstance);
 		if (result == null) {
