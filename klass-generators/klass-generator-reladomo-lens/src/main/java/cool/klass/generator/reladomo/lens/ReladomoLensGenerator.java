@@ -334,13 +334,10 @@ public class ReladomoLensGenerator {
 			klass
 		);
 
-		boolean hasInstant = primitiveProperties.anySatisfy(
-			(p) -> p.getType() == PrimitiveType.INSTANT || p.getType() == PrimitiveType.TEMPORAL_INSTANT
-		);
+		boolean hasInstant = primitiveProperties.anySatisfy(this::isInstantType);
 		boolean hasLocalDate = primitiveProperties.anySatisfy((p) -> p.getType() == PrimitiveType.LOCAL_DATE);
 		boolean hasNonDerivedInstant = primitiveProperties.anySatisfy(
-			(p) -> !p.isDerived()
-				&& (p.getType() == PrimitiveType.INSTANT || p.getType() == PrimitiveType.TEMPORAL_INSTANT)
+			(p) -> !p.isDerived() && this.isInstantType(p)
 		);
 		boolean hasNonDerivedLocalDate = primitiveProperties.anySatisfy(
 			(p) -> !p.isDerived() && p.getType() == PrimitiveType.LOCAL_DATE
@@ -1187,6 +1184,10 @@ public class ReladomoLensGenerator {
 				"TEMPORAL_RANGE properties should be filtered out before lens generation"
 			);
 		};
+	}
+
+	private boolean isInstantType(@Nonnull PrimitiveProperty property) {
+		return property.getType() == PrimitiveType.INSTANT || property.getType() == PrimitiveType.TEMPORAL_INSTANT;
 	}
 
 	private boolean isTemporalRange(@Nonnull DataTypeProperty property) {
