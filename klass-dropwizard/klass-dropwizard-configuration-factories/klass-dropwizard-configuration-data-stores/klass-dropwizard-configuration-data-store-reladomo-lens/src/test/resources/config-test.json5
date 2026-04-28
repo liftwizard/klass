@@ -1,0 +1,11 @@
+{
+	type: "reladomoLens",
+	lensRegistry: {
+		type: "composite",
+		registries: [],
+	},
+	uuid: {
+		type: "seed",
+		seed: "example seed",
+	},
+}

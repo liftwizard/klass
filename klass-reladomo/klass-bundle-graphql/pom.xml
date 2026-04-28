@@ -45,6 +45,11 @@
 
         <dependency>
             <groupId>io.liftwizard</groupId>
+            <artifactId>liftwizard-config-uuid</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.liftwizard</groupId>
             <artifactId>liftwizard-graphql-scalar-temporal</artifactId>
         </dependency>
 

@@ -1,0 +1,58 @@
+/*
+ * Copyright 2026 Craig Motlin
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package cool.klass.model.lens.reladomo;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.gs.fw.common.mithra.finder.RelatedFinder;
+import cool.klass.model.lens.ClassLens;
+import cool.klass.model.meta.domain.api.Klass;
+
+/**
+ * A ClassLens that also provides Reladomo/Mithra-specific operations.
+ */
+public interface ReladomoClassLens<T> extends ClassLens<T> {
+	@Nonnull
+	default Class<T> getJavaClass() {
+		throw new UnsupportedOperationException("getJavaClass not yet generated for " + this.getKlass().getName());
+	}
+
+	@Nonnull
+	T instantiate();
+
+	@Nonnull
+	RelatedFinder<T> getRelatedFinder();
+
+	default void generateAndSetId(@Nonnull T instance) {
+		throw new IllegalStateException("generateAndSetId not implemented for " + this.getKlass().getName());
+	}
+
+	@Nullable
+	default Object getSuperClassInstance(@Nonnull T instance) {
+		throw new UnsupportedOperationException(
+			"getSuperClassInstance not yet generated for " + this.getKlass().getName()
+		);
+	}
+
+	@Nullable
+	default Object getSubClassInstance(@Nonnull T instance, @Nonnull Klass subClass) {
+		throw new UnsupportedOperationException(
+			"getSubClassInstance not yet generated for " + this.getKlass().getName()
+		);
+	}
+}

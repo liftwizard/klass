@@ -26,23 +26,60 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import io.dropwizard.client.JerseyClientBuilder;
+import io.dropwizard.client.JerseyClientConfiguration;
 import io.dropwizard.testing.ResourceHelpers;
-import io.liftwizard.dropwizard.testing.junit.AbstractDropwizardAppTest;
+import io.dropwizard.util.Duration;
 import io.liftwizard.junit.extension.app.LiftwizardAppExtension;
 import io.liftwizard.junit.extension.match.FileSlurper;
+import io.liftwizard.junit.extension.match.json.JsonMatchExtension;
 import klass.model.meta.domain.dropwizard.application.KlassBootstrappedMetaModelApplication;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public abstract class AbstractResourceTestCase extends AbstractDropwizardAppTest {
+@TestInstance(Lifecycle.PER_CLASS)
+public abstract class AbstractResourceTestCase {
 
-	@Nonnull
-	@Override
-	protected LiftwizardAppExtension<?> getDropwizardAppExtension() {
-		return new LiftwizardAppExtension<>(
-			KlassBootstrappedMetaModelApplication.class,
-			ResourceHelpers.resourceFilePath("config-test.json5")
-		);
+	@RegisterExtension
+	protected final JsonMatchExtension jsonMatchExtension = new JsonMatchExtension(this.getClass());
+
+	protected final LiftwizardAppExtension<?> appExtension = new LiftwizardAppExtension<>(
+		KlassBootstrappedMetaModelApplication.class,
+		ResourceHelpers.resourceFilePath("config-test.json5")
+	);
+
+	@BeforeAll
+	void startApp() throws Exception {
+		this.appExtension.before();
+	}
+
+	@AfterAll
+	void stopApp() {
+		this.appExtension.after();
+	}
+
+	protected Client getClient(@Nonnull String testName) {
+		var jerseyClientConfiguration = new JerseyClientConfiguration();
+		jerseyClientConfiguration.setTimeout(Duration.minutes(5));
+
+		String className = this.getClass().getCanonicalName();
+		String clientName = className + "." + testName;
+
+		return new JerseyClientBuilder(this.appExtension.getEnvironment())
+			.using(jerseyClientConfiguration)
+			.build(clientName);
+	}
+
+	protected void assertResponseStatus(@Nonnull Response response, Status status) {
+		assertThat(response.hasEntity()).isTrue();
+		response.bufferEntity();
+		String entityAsString = response.readEntity(String.class);
+		assertThat(response.getStatusInfo()).as(entityAsString).isEqualTo(status);
 	}
 
 	protected void assertUrlReturns(@Nonnull String testName, @Nonnull String url) {
@@ -85,11 +122,16 @@ public abstract class AbstractResourceTestCase extends AbstractDropwizardAppTest
 			.target("http://localhost:{port}/api/" + url)
 			.resolveTemplate("port", this.appExtension.getLocalPort())
 			.request()
+			.header("Authorization", "Impersonation test user 1")
 			.put(Entity.json(expectedStringFromFile));
 
-		this.assertResponseStatus(response, Status.OK);
-		String jsonResponse = response.readEntity(String.class);
-		assertEquals("", jsonResponse);
+		if (response.hasEntity()) {
+			response.bufferEntity();
+			String entityAsString = response.readEntity(String.class);
+			assertThat(response.getStatusInfo()).as(entityAsString).isEqualTo(Status.NO_CONTENT);
+		} else {
+			assertThat(response.getStatusInfo()).isEqualTo(Status.NO_CONTENT);
+		}
 	}
 
 	protected void assertUrlDeletes(@Nonnull String testName, @Nonnull String url) {
@@ -104,7 +146,13 @@ public abstract class AbstractResourceTestCase extends AbstractDropwizardAppTest
 			.header("Authorization", "Impersonation test user 1")
 			.delete();
 
-		assertEquals(Status.NO_CONTENT.getStatusCode(), response.getStatus());
+		if (response.hasEntity()) {
+			response.bufferEntity();
+			String entityAsString = response.readEntity(String.class);
+			assertThat(response.getStatusInfo()).as(entityAsString).isEqualTo(Status.NO_CONTENT);
+		} else {
+			assertThat(response.getStatusInfo()).isEqualTo(Status.NO_CONTENT);
+		}
 	}
 
 	protected void assertUrlReturnsGone(@Nonnull String testName, @Nonnull String url) {
@@ -118,6 +166,6 @@ public abstract class AbstractResourceTestCase extends AbstractDropwizardAppTest
 			.request()
 			.get();
 
-		assertEquals(Status.GONE.getStatusCode(), response.getStatus());
+		assertThat(response.getStatusInfo()).isEqualTo(Status.GONE);
 	}
 }

@@ -60,7 +60,8 @@
 			colorScheme: "dark",
 		},
 		dataStore: {
-			type: "reladomo",
+			type: "reladomoLens",
+			lensRegistry: { type: "KlassBootstrappedMetaModel" },
 			uuid: {
 				type: "seed",
 				seed: "test seed",
@@ -92,7 +93,7 @@
 			readOnlyByDefault: false,
 			user: "sa",
 			password: "",
-			url: "jdbc:p6spy:h2:mem:;NON_KEYWORDS=USER",
+			url: "jdbc:p6spy:h2:mem:klass-bootstrapped-h2;DB_CLOSE_DELAY=-1;NON_KEYWORDS=USER",
 			properties: {
 				charSet: "UTF-8",
 			},

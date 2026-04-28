@@ -76,7 +76,8 @@
 			colorScheme: "dark",
 		},
 		dataStore: {
-			type: "reladomo",
+			type: "reladomoLens",
+			lensRegistry: { type: "StackOverflow" },
 			uuid: {
 				type: "seed",
 				seed: "test seed",

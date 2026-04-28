@@ -100,7 +100,11 @@ public class PersistentReplacer extends PersistentSynchronizer {
 			);
 		}
 
-		if (incomingChildInstance.isMissingNode() || incomingChildInstance.isNull()) {
+		if (incomingChildInstance.isMissingNode()) {
+			return false;
+		}
+
+		if (incomingChildInstance.isNull()) {
 			return this.dataStore.setToOne(persistentParentInstance, associationEnd, null);
 		}
 

@@ -48,6 +48,7 @@
         <module>coverage-example-reladomo-definitions</module>
         <module>coverage-example-reladomo-merge-hooks</module>
         <module>coverage-example-reladomo-pojos</module>
+        <module>coverage-example-reladomo-lenses</module>
         <module>coverage-example-reladomo-readable-interfaces</module>
         <module>coverage-example-reladomo-runtime-configuration</module>
         <module>coverage-example-relational-schema</module>
@@ -118,6 +119,8 @@
                                 <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-liquibase-schema</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-reladomo-runtime-configuration</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-relational-schema</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-configuration-data-store</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-configuration-domain-model-loader</ignoredUnusedDeclaredDependency>
                             </ignoredUnusedDeclaredDependencies>
                         </configuration>
                     </plugin>

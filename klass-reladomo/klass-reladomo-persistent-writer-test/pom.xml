@@ -58,6 +58,13 @@
 
         <dependency>
             <groupId>cool.klass.xample.coverage</groupId>
+            <artifactId>coverage-example-reladomo-lenses</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass.xample.coverage</groupId>
             <artifactId>coverage-example-liquibase-schema</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
@@ -181,7 +188,14 @@
 
         <dependency>
             <groupId>cool.klass</groupId>
-            <artifactId>klass-data-store-reladomo</artifactId>
+            <artifactId>klass-data-store-reladomo-lens</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-model-reladomo-lens-api</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>

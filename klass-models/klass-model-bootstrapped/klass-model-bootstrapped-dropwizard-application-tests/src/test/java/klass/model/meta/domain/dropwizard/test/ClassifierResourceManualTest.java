@@ -16,22 +16,44 @@
 
 package klass.model.meta.domain.dropwizard.test;
 
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
+@TestMethodOrder(OrderAnnotation.class)
 class ClassifierResourceManualTest extends AbstractResourceTestCase {
 
 	@Test
+	@Order(1)
 	void getAllMeta() {
 		this.assertUrlReturns("getAllMeta", "/meta/classifier");
 	}
 
 	@Test
+	@Order(2)
 	void getByName() {
 		this.assertUrlReturns("getByName", "/meta/classifier/Klass");
 	}
 
 	@Test
+	@Order(3)
 	void getByNameInterface() {
 		this.assertUrlReturns("getByNameInterface", "/meta/classifier/NamedElement");
+	}
+
+	@Test
+	@Order(4)
+	@Disabled("TODO: DELETE for Classifier 'NamedElement' returns 500 due to dependent entities")
+	void deleteByName() {
+		this.assertUrlDeletes("deleteByName", "/meta/classifier/NamedElement");
+	}
+
+	@Test
+	@Order(5)
+	@Disabled("TODO: DELETE for Classifier 'NamedElement' returns 500 due to dependent entities")
+	void getByNameAfterDelete() {
+		this.assertUrlReturnsGone("getByNameAfterDelete", "/meta/classifier/NamedElement");
 	}
 }

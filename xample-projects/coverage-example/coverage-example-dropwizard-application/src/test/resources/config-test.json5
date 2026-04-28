@@ -111,7 +111,14 @@
 			colorScheme: "dark",
 		},
 		dataStore: {
-			type: "reladomo",
+			type: "reladomoLens",
+			lensRegistry: {
+				type: "composite",
+				registries: [
+					{ type: "CoverageExample" },
+					{ type: "KlassBootstrappedMetaModel" },
+				],
+			},
 			uuid: {
 				type: "seed",
 				seed: "test seed",

@@ -39,6 +39,13 @@
         <!--region Project runtime dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>${app.artifactId}-reladomo-lenses</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>${app.artifactId}-domain-model</artifactId>
             <version>${project.version}</version>
             <scope>runtime</scope>
@@ -353,9 +360,24 @@
             <artifactId>klass-model-bootstrapped-services</artifactId>
             <version>0.7.0-SNAPSHOT</version>
         </dependency>
+
         <!--endregion-->
 
         <!--region Klass runtime dependencies -->
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-data-store-reladomo-lens</artifactId>
+            <version>0.7.0-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-model-bootstrapped-reladomo-lenses</artifactId>
+            <version>0.7.0-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-dropwizard-bundle-sample-data</artifactId>
@@ -387,6 +409,13 @@
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-dropwizard-configuration-data-store-reladomo</artifactId>
+            <version>0.7.0-SNAPSHOT</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-dropwizard-configuration-data-store-reladomo-lens</artifactId>
             <version>0.7.0-SNAPSHOT</version>
             <scope>runtime</scope>
         </dependency>

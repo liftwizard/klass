@@ -45,6 +45,7 @@
         <module>klass-model-bootstrapped-liquibase-schema</module>
         <module>klass-model-bootstrapped-reladomo-definitions</module>
         <module>klass-model-bootstrapped-reladomo-pojos</module>
+        <module>klass-model-bootstrapped-reladomo-lenses</module>
         <module>klass-model-bootstrapped-reladomo-runtime-configuration</module>
         <module>klass-model-bootstrapped-relational-schema</module>
         <module>klass-model-bootstrapped-services</module>
@@ -87,6 +88,8 @@
                                 <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-liquibase-schema</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-reladomo-runtime-configuration</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-relational-schema</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-configuration-data-store</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-configuration-domain-model-loader</ignoredUnusedDeclaredDependency>
                             </ignoredUnusedDeclaredDependencies>
                         </configuration>
                     </plugin>

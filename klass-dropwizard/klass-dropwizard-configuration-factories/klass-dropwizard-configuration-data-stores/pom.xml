@@ -30,5 +30,6 @@
     <modules>
         <module>klass-dropwizard-configuration-data-store</module>
         <module>klass-dropwizard-configuration-data-store-reladomo</module>
+        <module>klass-dropwizard-configuration-data-store-reladomo-lens</module>
     </modules>
 </project>

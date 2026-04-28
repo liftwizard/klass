@@ -50,6 +50,7 @@
         <module>stackoverflow-reladomo-definitions</module>
         <module>stackoverflow-reladomo-merge-hooks</module>
         <module>stackoverflow-reladomo-pojos</module>
+        <module>stackoverflow-reladomo-lenses</module>
         <module>stackoverflow-reladomo-runtime-configuration</module>
         <module>stackoverflow-relational-schema</module>
         <module>stackoverflow-services</module>
@@ -114,6 +115,8 @@
                                 <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-liquibase-schema</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-reladomo-runtime-configuration</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-relational-schema</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-configuration-data-store</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-configuration-domain-model-loader</ignoredUnusedDeclaredDependency>
                             </ignoredUnusedDeclaredDependencies>
                         </configuration>
                     </plugin>

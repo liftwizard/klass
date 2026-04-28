@@ -16,22 +16,44 @@
 
 package klass.model.meta.domain.dropwizard.test;
 
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
+@TestMethodOrder(OrderAnnotation.class)
 class InterfaceResourceManualTest extends AbstractResourceTestCase {
 
 	@Test
+	@Order(1)
 	void getAllMeta() {
 		this.assertUrlReturns("getAllMeta", "/meta/interface");
 	}
 
 	@Test
+	@Order(2)
 	void getByName() {
 		this.assertUrlReturns("getByName", "/meta/interface/NamedElement");
 	}
 
 	@Test
+	@Order(3)
 	void getByNameElement() {
 		this.assertUrlReturns("getByNameElement", "/meta/interface/Element");
+	}
+
+	@Test
+	@Order(4)
+	@Disabled("TODO: DELETE for Interface 'Element' returns 500 due to dependent entities")
+	void deleteByName() {
+		this.assertUrlDeletes("deleteByName", "/meta/interface/Element");
+	}
+
+	@Test
+	@Order(5)
+	@Disabled("TODO: DELETE for Interface 'Element' returns 500 due to dependent entities")
+	void getByNameAfterDelete() {
+		this.assertUrlReturnsGone("getByNameAfterDelete", "/meta/interface/Element");
 	}
 }

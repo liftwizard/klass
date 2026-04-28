@@ -16,17 +16,38 @@
 
 package klass.model.meta.domain.dropwizard.test;
 
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
+@TestMethodOrder(OrderAnnotation.class)
 class ClassResourceManualTest extends AbstractResourceTestCase {
 
 	@Test
+	@Order(1)
 	void getAllMeta() {
 		this.assertUrlReturns("getAllMeta", "/meta/class");
 	}
 
 	@Test
+	@Order(2)
 	void getByName() {
 		this.assertUrlReturns("getByName", "/meta/class/Klass");
+	}
+
+	@Test
+	@Order(3)
+	@Disabled("TODO: DELETE for Class 'Enumeration' returns 500 due to dependent entities")
+	void deleteByName() {
+		this.assertUrlDeletes("deleteByName", "/meta/class/Enumeration");
+	}
+
+	@Test
+	@Order(4)
+	@Disabled("TODO: DELETE for Class 'Enumeration' returns 500 due to dependent entities")
+	void getByNameAfterDelete() {
+		this.assertUrlReturnsGone("getByNameAfterDelete", "/meta/class/Enumeration");
 	}
 }

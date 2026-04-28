@@ -18,6 +18,8 @@ package cool.klass.dropwizard.bundle.graphql;
 
 import java.time.Clock;
 import java.util.List;
+import java.util.UUID;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.servlet.ServletRegistration.Dynamic;
@@ -28,6 +30,7 @@ import com.google.common.base.CaseFormat;
 import com.smoketurner.dropwizard.graphql.CachingPreparsedDocumentProvider;
 import com.smoketurner.dropwizard.graphql.GraphQLBundle;
 import com.smoketurner.dropwizard.graphql.GraphQLFactory;
+import cool.klass.data.store.DataStore;
 import cool.klass.data.store.reladomo.ReladomoDataStore;
 import cool.klass.dropwizard.configuration.data.store.DataStoreFactoryProvider;
 import cool.klass.dropwizard.configuration.domain.model.loader.DomainModelFactoryProvider;
@@ -143,9 +146,14 @@ public class KlassGraphQLBundle<
 
 		ObjectMapper objectMapper = this.environment.getObjectMapper();
 		DomainModel domainModel = configuration.getDomainModelFactory().createDomainModel(objectMapper);
-		ReladomoDataStore dataStore = (ReladomoDataStore) configuration
-			.getDataStoreFactory()
-			.createDataStore(domainModel);
+		DataStore rawDataStore = configuration.getDataStoreFactory().createDataStore(domainModel);
+		ReladomoDataStore dataStore;
+		if (rawDataStore instanceof ReladomoDataStore rds) {
+			dataStore = rds;
+		} else {
+			Supplier<UUID> uuidSupplier = configuration.getDataStoreFactory().getUuidFactory().createUUIDSupplier();
+			dataStore = new ReladomoDataStore(uuidSupplier, 1);
+		}
 
 		RuntimeWiring.Builder builder = RuntimeWiring.newRuntimeWiring();
 		builder

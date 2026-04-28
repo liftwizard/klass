@@ -76,15 +76,22 @@ public final class ObjectNodeTypeCheckingValidator {
 	}
 
 	private void validateObjectNode(@Nonnull ObjectNode objectNode) {
+		Klass resolvedKlass = this.resolveConcreteKlass(objectNode);
+
 		objectNode
 			.fields()
 			.forEachRemaining((entry) -> {
 				String childFieldName = entry.getKey();
 				JsonNode childJsonNode = entry.getValue();
-				Optional<Property> optionalProperty = this.klass.findPropertyByName(childFieldName);
+
+				if ("__typename".equals(childFieldName)) {
+					return;
+				}
+
+				Optional<Property> optionalProperty = resolvedKlass.findPropertyByName(childFieldName);
 
 				if (optionalProperty.isEmpty()) {
-					this.handleMissingProperty(childFieldName, childJsonNode);
+					this.handleMissingProperty(resolvedKlass, childFieldName, childJsonNode);
 					return;
 				}
 
@@ -102,13 +109,28 @@ public final class ObjectNodeTypeCheckingValidator {
 			});
 	}
 
-	private void handleMissingProperty(String childFieldName, JsonNode childJsonNode) {
+	@Nonnull
+	private Klass resolveConcreteKlass(@Nonnull ObjectNode objectNode) {
+		JsonNode typenameNode = objectNode.get("__typename");
+		if (typenameNode == null || !typenameNode.isTextual()) {
+			return this.klass;
+		}
+
+		String typename = typenameNode.asText();
+		return this.klass.getSubClassChainWithThis()
+			.detectOptional(
+				(subclass) -> subclass.getName().equals(typename) || subclass.getFullyQualifiedName().equals(typename)
+			)
+			.orElse(this.klass);
+	}
+
+	private void handleMissingProperty(@Nonnull Klass resolvedKlass, String childFieldName, JsonNode childJsonNode) {
 		String error = String.format(
 			"No such property '%s.%s' but got %s. Expected properties: %s.",
-			this.klass,
+			resolvedKlass,
 			childFieldName,
 			childJsonNode,
-			this.klass.getProperties().reject(Property::isPrivate).collect(NamedElement::getName).makeString()
+			resolvedKlass.getProperties().reject(Property::isPrivate).collect(NamedElement::getName).makeString()
 		);
 		this.contextStack.addError(error);
 	}

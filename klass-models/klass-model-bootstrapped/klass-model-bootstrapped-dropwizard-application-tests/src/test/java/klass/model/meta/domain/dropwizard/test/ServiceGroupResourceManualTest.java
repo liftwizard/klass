@@ -16,28 +16,41 @@
 
 package klass.model.meta.domain.dropwizard.test;
 
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
+@TestMethodOrder(OrderAnnotation.class)
 class ServiceGroupResourceManualTest extends AbstractResourceTestCase {
 
 	@Test
+	@Order(1)
 	void getAllMeta() {
 		this.assertUrlReturns("getAllMeta", "/meta/serviceGroup");
 	}
 
 	@Test
+	@Order(2)
 	void getByName() {
 		this.assertUrlReturns("getByName", "/meta/serviceGroup/ServiceGroupResource");
 	}
 
 	@Test
+	@Order(3)
 	void getByNameKlassResource() {
 		this.assertUrlReturns("getByNameKlassResource", "/meta/serviceGroup/KlassResource");
 	}
 
 	@Test
-	void deleteByNameAndVerifyGone() {
+	@Order(4)
+	void deleteByName() {
 		this.assertUrlDeletes("deleteByName", "/meta/serviceGroup/KlassResource");
+	}
+
+	@Test
+	@Order(5)
+	void getByNameAfterDelete() {
 		this.assertUrlReturnsGone("getByNameAfterDelete", "/meta/serviceGroup/KlassResource");
 	}
 }

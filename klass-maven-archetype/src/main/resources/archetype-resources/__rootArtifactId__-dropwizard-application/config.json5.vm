@@ -106,7 +106,10 @@
       colorScheme: "dark",
     },
     dataStore: {
-      type: "reladomo",
+      type: "reladomoLens",
+      lensRegistry: {
+        type: "${name}",
+      },
       uuid: {
         type: "system",
       },

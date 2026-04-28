@@ -106,6 +106,12 @@
         <!--region Project compile dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>${app.artifactId}-reladomo-lenses</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>${app.artifactId}-services</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -358,6 +364,12 @@
 
         <dependency>
             <groupId>cool.klass</groupId>
+            <artifactId>klass-data-store-reladomo-lens</artifactId>
+            <version>${klass.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
             <artifactId>klass-dropwizard-configuration-data-store</artifactId>
             <version>${klass.version}</version>
         </dependency>
@@ -435,6 +447,13 @@
         <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-dropwizard-configuration-data-store-reladomo</artifactId>
+            <version>${klass.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
+            <artifactId>klass-dropwizard-configuration-data-store-reladomo-lens</artifactId>
             <version>${klass.version}</version>
             <scope>runtime</scope>
         </dependency>
