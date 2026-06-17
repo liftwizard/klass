@@ -119,7 +119,7 @@ public class OrderByPhase extends AbstractCompilerPhase {
 	private AntlrThisMemberReferencePath getAntlrThisMemberReferencePath(
 		@Nonnull OrderByMemberReferencePathContext orderByMemberReferencePathContext
 	) {
-		ExpressionValueVisitor expressionValueVisitor = new ExpressionValueVisitor(
+		var expressionValueVisitor = new ExpressionValueVisitor(
 			this.compilerState,
 			this.compilerState.getCompilerWalk().getThisReference(),
 			this.orderBy

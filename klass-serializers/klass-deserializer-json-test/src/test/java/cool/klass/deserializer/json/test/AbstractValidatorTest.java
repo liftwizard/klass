@@ -61,7 +61,7 @@ public abstract class AbstractValidatorTest {
 		String incomingJsonName = this.getClass().getSimpleName() + '.' + testName + ".json5";
 		String incomingJson = FileSlurper.slurp(incomingJsonName, this.getClass());
 
-		ObjectNode incomingInstance = (ObjectNode) this.objectMapper.readTree(incomingJson);
+		var incomingInstance = (ObjectNode) this.objectMapper.readTree(incomingJson);
 		this.performValidation(incomingInstance);
 		this.assertErrors(testName);
 	}
@@ -86,7 +86,7 @@ public abstract class AbstractValidatorTest {
 	}
 
 	private static DomainModel getDomainModel(ObjectMapper objectMapper) {
-		DomainModelCompilerFactory domainModelCompilerFactory = new DomainModelCompilerFactory();
+		var domainModelCompilerFactory = new DomainModelCompilerFactory();
 		domainModelCompilerFactory.setSourcePackages(List.of("cool.klass.xample.coverage"));
 		domainModelCompilerFactory.setColorScheme("dark");
 		return domainModelCompilerFactory.createDomainModel(objectMapper);

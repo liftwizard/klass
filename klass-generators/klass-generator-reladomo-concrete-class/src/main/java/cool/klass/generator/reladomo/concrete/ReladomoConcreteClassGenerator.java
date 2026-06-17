@@ -182,11 +182,11 @@ public class ReladomoConcreteClassGenerator {
 		PrimitiveType primitiveType = derivedProperty.getType();
 		String javaReturnType = primitiveType.getPrimitiveJavaClass().getSimpleName();
 
-		RequiredDataTypePropertyVisitor visitor = new RequiredDataTypePropertyVisitor();
+		var visitor = new RequiredDataTypePropertyVisitor();
 		derivedProperty.visit(visitor);
 		Object value = visitor.getResult();
 
-		ValueToJavaSourceCodePrimitiveTypeVisitor sourceCodeVisitor = new ValueToJavaSourceCodePrimitiveTypeVisitor(
+		var sourceCodeVisitor = new ValueToJavaSourceCodePrimitiveTypeVisitor(
 			value
 		);
 
@@ -207,7 +207,7 @@ public class ReladomoConcreteClassGenerator {
 
 	private void printStringToFile(@Nonnull Path path, String contents) {
 		try (
-			PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
+			var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
 		) {
 			printStream.print(contents);
 		} catch (FileNotFoundException e) {

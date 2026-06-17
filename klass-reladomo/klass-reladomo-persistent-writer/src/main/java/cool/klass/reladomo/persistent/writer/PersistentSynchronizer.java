@@ -137,7 +137,7 @@ public abstract class PersistentSynchronizer {
 			throw new AssertionError();
 		}
 
-		boolean propertyMutationOccurred = false;
+		var propertyMutationOccurred = false;
 		if (!this.isRestrictedFromWriting(klass)) {
 			propertyMutationOccurred |= this.synchronizeDataTypeProperties(klass, persistentInstance, incomingJson);
 		}
@@ -194,7 +194,7 @@ public abstract class PersistentSynchronizer {
 
 		this.validateSetIdDataTypeProperties(klass, persistentInstance);
 
-		boolean mutationOccurred = false;
+		var mutationOccurred = false;
 		for (DataTypeProperty dataTypeProperty : simpleDataTypeProperties) {
 			mutationOccurred |= this.synchronizeDataTypeProperty(dataTypeProperty, persistentInstance, incomingJson);
 		}
@@ -247,7 +247,7 @@ public abstract class PersistentSynchronizer {
 			.reject(AssociationEnd::isAudit)
 			.partition(AssociationEnd::isOwned);
 
-		boolean mutationOccurred = false;
+		var mutationOccurred = false;
 		for (AssociationEnd associationEnd : forwardOwnedAssociationEnds.getSelected()) {
 			Multiplicity multiplicity = associationEnd.getMultiplicity();
 
@@ -372,17 +372,13 @@ public abstract class PersistentSynchronizer {
 			newInstance,
 			(ObjectNode) incomingChildInstance
 		);
-		if (!mutationOccurred) {
-			// TODO: This is a workaround for a bug and should be revisited to see if it still applies in the happy path. The bug started with an association between Owner[1..1] and Details[1..1] owned. The database wound up corrupted with no row or Details. The incoming Details object is {}, because the key matches and no other properties are being patched.
-			// throw new AssertionError();
-		}
 		// TODO: This is the backwards order from how I used to do it
 		this.dataStore.setToOne(persistentParentInstance, associationEnd, newInstance);
 		this.dataStore.insert(newInstance);
 	}
 
 	private void deleteOrTerminate(Klass klass, @Nonnull Object persistentInstance) {
-		PersistentDeleter reladomoPersistentDeleter = new PersistentDeleter(this.mutationContext, this.dataStore);
+		var reladomoPersistentDeleter = new PersistentDeleter(this.mutationContext, this.dataStore);
 		reladomoPersistentDeleter.deleteOrTerminate(klass, persistentInstance);
 	}
 
@@ -391,7 +387,7 @@ public abstract class PersistentSynchronizer {
 		Object persistentParentInstance,
 		@Nonnull JsonNode incomingChildInstances
 	) {
-		boolean mutationOccurred = false;
+		var mutationOccurred = false;
 		// TODO: Test null where an array goes
 
 		ImmutableList<JsonNode> incomingInstancesForUpdate = Lists.immutable
@@ -408,7 +404,7 @@ public abstract class PersistentSynchronizer {
 				associationEnd.getType()
 			);
 			if (!incomingChildInstancesByKey.containsKey(keys)) {
-				PersistentDeleter reladomoPersistentDeleter = new PersistentDeleter(
+				var reladomoPersistentDeleter = new PersistentDeleter(
 					this.mutationContext,
 					this.dataStore
 				);
@@ -503,7 +499,7 @@ public abstract class PersistentSynchronizer {
 			return false;
 		}
 
-		boolean mutationOccurred = false;
+		var mutationOccurred = false;
 
 		// TODO: Test null where an array goes
 

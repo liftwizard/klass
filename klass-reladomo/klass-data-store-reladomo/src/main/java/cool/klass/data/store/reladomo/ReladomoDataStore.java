@@ -224,7 +224,7 @@ public class ReladomoDataStore implements DataStore {
 		this.assertObjectMatchesType(keyProperty, key);
 
 		Attribute attribute = finder.getAttributeByName(keyProperty.getName());
-		OperationVisitor visitor = new OperationVisitor(attribute, key);
+		var visitor = new OperationVisitor(attribute, key);
 		keyProperty.visit(visitor);
 		return visitor.getResult();
 	}
@@ -305,7 +305,7 @@ public class ReladomoDataStore implements DataStore {
 			return;
 		}
 
-		PrimitiveProperty idProperty = (PrimitiveProperty) idProperties.getOnly();
+		var idProperty = (PrimitiveProperty) idProperties.getOnly();
 
 		if (idProperty.getType().isNumeric()) {
 			try {
@@ -417,7 +417,7 @@ public class ReladomoDataStore implements DataStore {
 		}
 
 		if (dataTypeProperty instanceof EnumerationProperty enumerationProperty) {
-			String prettyName = (String) result;
+			var prettyName = (String) result;
 			Enumeration enumeration = enumerationProperty.getType();
 
 			Optional<EnumerationLiteral> enumerationLiteral = enumeration
@@ -476,7 +476,7 @@ public class ReladomoDataStore implements DataStore {
 		}
 
 		if (dataTypeProperty instanceof EnumerationProperty enumerationProperty) {
-			String prettyName = (String) result;
+			var prettyName = (String) result;
 			Enumeration enumeration = enumerationProperty.getType();
 
 			Optional<EnumerationLiteral> enumerationLiteral = enumeration
@@ -581,7 +581,7 @@ public class ReladomoDataStore implements DataStore {
 	public Object get(Object persistentSourceInstance, @Nonnull ReferenceProperty referenceProperty) {
 		RelatedFinder<?> finder = this.getRelatedFinder(referenceProperty.getOwningClassifier());
 		String referencePropertyName = referenceProperty.getName();
-		AbstractRelatedFinder relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
+		var relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
 			referencePropertyName
 		);
 
@@ -620,7 +620,7 @@ public class ReladomoDataStore implements DataStore {
 	) {
 		Objects.requireNonNull(persistentTargetInstance);
 
-		boolean mutationOccurred = false;
+		var mutationOccurred = false;
 
 		// A Reladomo bug prevents just calling a method like setQuestion here. Instead we have to call foreign key setters like setQuestionId
 
@@ -749,7 +749,7 @@ public class ReladomoDataStore implements DataStore {
 
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(subClass.getName()) + "SubClass";
 
-		AbstractRelatedFinder relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
+		var relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
 			relationshipName
 		);
 
@@ -770,7 +770,7 @@ public class ReladomoDataStore implements DataStore {
 
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(klass.getSuperClass().get().getName()) + "SuperClass";
 
-		AbstractRelatedFinder relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
+		var relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
 			relationshipName
 		);
 
@@ -801,7 +801,7 @@ public class ReladomoDataStore implements DataStore {
 
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(subClass.getName()) + "SubClass";
 
-		AbstractRelatedFinder relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
+		var relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
 			relationshipName
 		);
 
@@ -838,7 +838,7 @@ public class ReladomoDataStore implements DataStore {
 			String finderName = classifier.getFullyQualifiedName() + "Finder";
 			Class<?> finderClass = Class.forName(finderName);
 			Method getFinderMethod = finderClass.getMethod("getFinderInstance");
-			AbstractRelatedFinder result = (AbstractRelatedFinder) getFinderMethod.invoke(null);
+			var result = (AbstractRelatedFinder) getFinderMethod.invoke(null);
 			this.memoizedRelatedFinders.put(classifier, result);
 			return result;
 		} catch (@Nonnull ReflectiveOperationException | IllegalArgumentException | SecurityException e) {

@@ -52,7 +52,7 @@ public class OrderByDirectionInferencePhase extends AbstractCompilerPhase {
 			return;
 		}
 
-		String sourceCodeText = "ascending";
+		var sourceCodeText = "ascending";
 		ParseTreeListener compilerPhase = new OrderByDirectionPhase(this.compilerState);
 
 		this.compilerState.runInPlaceCompilerMacro(

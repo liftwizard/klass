@@ -102,7 +102,7 @@ public final class ColorSchemeProvider {
 				return new JsonAnsiColorScheme(colorSchemeDefinition);
 			}
 
-			StringBuilder errorMessage = new StringBuilder("Color scheme validation errors:");
+			var errorMessage = new StringBuilder("Color scheme validation errors:");
 			for (ConstraintViolation<ColorSchemeDefinition> violation : violations) {
 				errorMessage
 					.append("\n  - ")

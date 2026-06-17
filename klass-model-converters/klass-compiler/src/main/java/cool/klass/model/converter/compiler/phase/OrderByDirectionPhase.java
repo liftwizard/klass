@@ -38,7 +38,7 @@ public class OrderByDirectionPhase extends AbstractCompilerPhase {
 	public void enterOrderByDirection(@Nonnull OrderByDirectionContext ctx) {
 		super.enterOrderByDirection(ctx);
 
-		AntlrOrderByDirection orderByDirection = new AntlrOrderByDirection(
+		var orderByDirection = new AntlrOrderByDirection(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			OrderByDirectionPhase.getOrderByDirection(ctx)

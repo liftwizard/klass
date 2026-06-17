@@ -114,13 +114,13 @@ public abstract class AbstractKlassCompilerErrorTestCase {
 
 	private ImmutableList<String> findCompilerAnnotationFiles() {
 		String packagePath = this.getClass().getPackage().getName().replace('.', '/');
-		File resourcesDir = new File("src/test/resources/" + packagePath);
+		var resourcesDir = new File("src/test/resources/" + packagePath);
 
 		if (!resourcesDir.exists() || !resourcesDir.isDirectory()) {
 			return Lists.immutable.empty();
 		}
 
-		String annotationFilePattern = "-\\d+(_\\d+)*-\\d+-([A-Z]{3})(_[A-Z]{3}){2}\\.log";
+		var annotationFilePattern = "-\\d+(_\\d+)*-\\d+-([A-Z]{3})(_[A-Z]{3}){2}\\.log";
 		FilenameFilter annotationFileFilter = (dir, name) -> name.matches(this.getTestName() + annotationFilePattern);
 		File[] annotationFiles = resourcesDir.listFiles(annotationFileFilter);
 
@@ -185,7 +185,7 @@ public abstract class AbstractKlassCompilerErrorTestCase {
 		public static CompilerAnnotationKey parseAnnotationFilename(String annotationFilename) {
 			// TestName-LineNumbers-ColumnNumber-ErrorCode.log
 			// Where LineNumbers can be a single number or multiple numbers joined by underscores
-			String regex = ".*?-(\\d+(?:_\\d+)*?)-(\\d+)-([A-Z]{3}_[A-Z]{3}_[A-Z]{3})\\.log";
+			var regex = ".*?-(\\d+(?:_\\d+)*?)-(\\d+)-([A-Z]{3}_[A-Z]{3}_[A-Z]{3})\\.log";
 			Pattern pattern = Pattern.compile(regex);
 			Matcher matcher = pattern.matcher(annotationFilename);
 

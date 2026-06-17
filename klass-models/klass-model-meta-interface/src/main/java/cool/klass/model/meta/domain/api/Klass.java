@@ -205,7 +205,7 @@ public interface Klass extends Classifier {
 			return false;
 		}
 
-		Klass klass = (Klass) classifier;
+		var klass = (Klass) classifier;
 		Optional<Klass> optionalSuperClass = klass.getSuperClass();
 		if (optionalSuperClass.isEmpty()) {
 			return false;

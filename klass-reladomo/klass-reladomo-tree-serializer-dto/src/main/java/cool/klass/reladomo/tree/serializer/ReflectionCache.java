@@ -48,7 +48,7 @@ public class ReflectionCache {
 
 	@Nonnull
 	public Method getMethod(Class<?> objectClass, String methodName, Class<?>... parameterTypes) {
-		CacheKey key = new CacheKey(objectClass, methodName, List.of(parameterTypes));
+		var key = new CacheKey(objectClass, methodName, List.of(parameterTypes));
 		if (this.methodCache.containsKey(key)) {
 			return this.methodCache.get(key);
 		}

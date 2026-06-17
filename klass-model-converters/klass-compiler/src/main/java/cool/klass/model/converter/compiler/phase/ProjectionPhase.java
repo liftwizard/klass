@@ -86,7 +86,7 @@ public class ProjectionPhase extends AbstractCompilerPhase {
 
 		AntlrDataTypeProperty<?> dataTypePropertyState = classifier.getDataTypePropertyByName(name);
 
-		AntlrProjectionDataTypeProperty projectionPrimitiveMemberState = new AntlrProjectionDataTypeProperty(
+		var projectionPrimitiveMemberState = new AntlrProjectionDataTypeProperty(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			projectionParent.getNumChildren() + 1,
@@ -116,7 +116,7 @@ public class ProjectionPhase extends AbstractCompilerPhase {
 			: this.compilerState.getDomainModel().getClassifierByName(classifierReferenceContext.getText());
 		AntlrReferenceProperty<?> referenceProperty = classifier.getReferencePropertyByName(name);
 
-		AntlrProjectionReferenceProperty projectionReferenceProperty = new AntlrProjectionReferenceProperty(
+		var projectionReferenceProperty = new AntlrProjectionReferenceProperty(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			projectionParent.getNumChildren() + 1,
@@ -157,7 +157,7 @@ public class ProjectionPhase extends AbstractCompilerPhase {
 
 		AntlrProjection projection = this.compilerState.getDomainModel().getProjectionByName(projectionName);
 
-		AntlrProjectionProjectionReference projectionProjectionReference = new AntlrProjectionProjectionReference(
+		var projectionProjectionReference = new AntlrProjectionProjectionReference(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			projectionParent.getNumChildren() + 1,
@@ -170,11 +170,6 @@ public class ProjectionPhase extends AbstractCompilerPhase {
 		);
 
 		projectionParent.enterAntlrProjectionMember(projectionProjectionReference);
-	}
-
-	@Override
-	public void exitProjectionProjectionReference(@Nonnull ProjectionProjectionReferenceContext ctx) {
-		super.exitProjectionProjectionReference(ctx);
 	}
 
 	@Override

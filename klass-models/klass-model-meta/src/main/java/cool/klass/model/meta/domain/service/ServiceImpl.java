@@ -283,7 +283,7 @@ public final class ServiceImpl extends AbstractElement implements Service {
 		@Nonnull
 		@Override
 		protected ServiceImpl buildUnsafe() {
-			ServiceImpl service = new ServiceImpl(
+			var service = new ServiceImpl(
 				(ServiceDeclarationContext) this.elementContext,
 				this.macroElement.map(ElementBuilder::getElement),
 				this.sourceCode.build(),

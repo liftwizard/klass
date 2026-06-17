@@ -60,7 +60,7 @@ public class CompilationUnitPhase extends AbstractCompilerPhase {
 	public void enterPackageDeclaration(@Nonnull PackageDeclarationContext ctx) {
 		super.enterPackageDeclaration(ctx);
 
-		AntlrPackage pkg = new AntlrPackage(
+		var pkg = new AntlrPackage(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			-1,

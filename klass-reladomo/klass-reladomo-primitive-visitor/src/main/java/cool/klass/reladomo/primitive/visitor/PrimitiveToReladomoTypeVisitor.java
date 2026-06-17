@@ -26,7 +26,7 @@ public class PrimitiveToReladomoTypeVisitor implements PrimitiveTypeVisitor {
 	private String result;
 
 	public static String getJavaType(@Nonnull PrimitiveType primitiveType) {
-		PrimitiveToReladomoTypeVisitor primitiveToJavaTypeVisitor = new PrimitiveToReladomoTypeVisitor();
+		var primitiveToJavaTypeVisitor = new PrimitiveToReladomoTypeVisitor();
 		primitiveType.visit(primitiveToJavaTypeVisitor);
 		return primitiveToJavaTypeVisitor.getResult();
 	}

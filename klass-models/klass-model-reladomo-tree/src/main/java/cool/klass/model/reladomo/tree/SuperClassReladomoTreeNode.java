@@ -55,7 +55,7 @@ public class SuperClassReladomoTreeNode extends AbstractReladomoTreeNode {
 			return false;
 		}
 
-		SuperClassReladomoTreeNode that = (SuperClassReladomoTreeNode) o;
+		var that = (SuperClassReladomoTreeNode) o;
 
 		return this.klass.equals(that.klass) && this.superClass.equals(that.superClass);
 	}

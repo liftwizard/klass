@@ -19,7 +19,7 @@ package cool.klass.model.converter.compiler.annotation.projection;
 import cool.klass.model.converter.compiler.annotation.AbstractKlassCompilerErrorTestCase;
 import org.junit.jupiter.api.Test;
 
-public class ProjectionDuplicateNameDisjointTest extends AbstractKlassCompilerErrorTestCase {
+class ProjectionDuplicateNameDisjointTest extends AbstractKlassCompilerErrorTestCase {
 
 	@Override
 	@Test

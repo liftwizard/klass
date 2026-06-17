@@ -146,10 +146,10 @@ public final class ReladomoProjectionConverter {
 		Classifier end
 	) {
 		ProjectionElementReladomoNode eachReladomoNode = reladomoNode;
-		Classifier start = (Classifier) reladomoNode.getType();
+		var start = (Classifier) reladomoNode.getType();
 
 		if (start.isStrictSubTypeOf(end)) {
-			Klass eachKlass = (Klass) start;
+			var eachKlass = (Klass) start;
 			while (eachKlass != end) {
 				Klass superClass = eachKlass.getSuperClass().orElse(null);
 				if (superClass == null) {
@@ -165,14 +165,14 @@ public final class ReladomoProjectionConverter {
 
 		if (start.isStrictSuperTypeOf(end)) {
 			MutableStack<Klass> stack = Stacks.mutable.empty();
-			Klass eachClassifier = (Klass) end;
+			var eachClassifier = (Klass) end;
 			while (eachClassifier != start) {
 				Klass superClass = eachClassifier.getSuperClass().get();
 				stack.push(eachClassifier);
 				eachClassifier = superClass;
 			}
 
-			Klass eachClassifier2 = (Klass) start;
+			var eachClassifier2 = (Klass) start;
 			while (stack.notEmpty()) {
 				Klass eachSubClass = stack.pop();
 				String name = UPPER_TO_LOWER_CAMEL.convert(eachSubClass.getName()) + "SubClass";

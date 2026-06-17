@@ -57,8 +57,8 @@ public class GenerateReladomoObjectFilesMojo extends AbstractGenerateMojo {
 		Path outputPath = this.outputDirectory.toPath();
 		DomainModel domainModel = this.getDomainModel();
 
-		ReladomoObjectFileGenerator reladomoObjectFileGenerator = new ReladomoObjectFileGenerator(domainModel);
-		ReladomoInterfaceFileGenerator reladomoInterfaceFileGenerator = new ReladomoInterfaceFileGenerator(domainModel);
+		var reladomoObjectFileGenerator = new ReladomoObjectFileGenerator(domainModel);
+		var reladomoInterfaceFileGenerator = new ReladomoInterfaceFileGenerator(domainModel);
 		try {
 			reladomoObjectFileGenerator.writeObjectFiles(outputPath);
 			reladomoInterfaceFileGenerator.writeObjectFiles(outputPath);
@@ -66,7 +66,7 @@ public class GenerateReladomoObjectFilesMojo extends AbstractGenerateMojo {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 
-		Resource resource = new Resource();
+		var resource = new Resource();
 		resource.setDirectory(this.outputDirectory.getAbsolutePath());
 		// TODO: Should be based on the output path
 		resource.setTargetPath("reladomo");

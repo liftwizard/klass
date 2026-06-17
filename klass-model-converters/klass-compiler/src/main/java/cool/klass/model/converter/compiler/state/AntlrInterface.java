@@ -246,8 +246,8 @@ public class AntlrInterface extends AntlrClassifier {
 
 	@Override
 	protected void reportCircularInheritance(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		boolean noCircularInheritance = true;
-		for (int i = 0; i < this.declaredInterfaces.size(); i++) {
+		var noCircularInheritance = true;
+		for (var i = 0; i < this.declaredInterfaces.size(); i++) {
 			AntlrInterface iface = this.declaredInterfaces.get(i);
 			if (!iface.extendsInterface(this, Sets.mutable.empty())) {
 				continue;

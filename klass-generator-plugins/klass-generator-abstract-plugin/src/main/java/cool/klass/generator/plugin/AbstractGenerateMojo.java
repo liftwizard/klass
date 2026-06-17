@@ -130,7 +130,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 			this.getLog().info("No color scheme configured, using default");
 		}
 		// TODO: We should use an abstract DomainModelFactory here, not necessarily the compiler.
-		KlassCompiler klassCompiler = new KlassCompiler(compilationUnits, ansiColorScheme, false);
+		var klassCompiler = new KlassCompiler(compilationUnits, ansiColorScheme, false);
 		return klassCompiler.compile();
 	}
 
@@ -366,7 +366,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 				.withAll(this.klassSourcePackages)
 				.flatCollectWith(ClasspathHelper::forPackage, classLoader);
 
-			FilterBuilder filterBuilder = new FilterBuilder();
+			var filterBuilder = new FilterBuilder();
 			this.klassSourcePackages.forEach(filterBuilder::includePackage);
 
 			ConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
@@ -374,7 +374,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 				.setUrls(urls.castToList())
 				.filterInputsBy(filterBuilder);
 
-			Reflections reflections = new Reflections(configurationBuilder);
+			var reflections = new Reflections(configurationBuilder);
 
 			MutableList<String> klassFiles = Lists.mutable.withAll(reflections.getResources(KLASS_FILE_EXTENSION));
 			klassFiles.sortThis();
@@ -390,7 +390,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 			}
 
 			byte[] hashBytes = digest.digest();
-			StringBuilder hexString = new StringBuilder();
+			var hexString = new StringBuilder();
 			for (byte b : hashBytes) {
 				String hex = Integer.toHexString(0xff & b);
 				if (hex.length() == 1) {
@@ -409,7 +409,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 			return "";
 		}
 
-		File hashFile = new File(outputDirectory, ".input-hash");
+		var hashFile = new File(outputDirectory, ".input-hash");
 		if (!hashFile.exists()) {
 			return "";
 		}
@@ -427,7 +427,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 			return;
 		}
 
-		File hashFile = new File(outputDirectory, ".input-hash");
+		var hashFile = new File(outputDirectory, ".input-hash");
 		try {
 			Files.writeString(hashFile.toPath(), hash);
 		} catch (IOException e) {

@@ -84,7 +84,7 @@ public final class ForeignKeyGenerator {
 			.makeString(", ");
 
 		// language=XML
-		String format = """
+		var format = """
 			    <changeSet author="Klass" id="initial-foreign-key-%d-%s">
 			        <addForeignKeyConstraint
 			                constraintName="%s"

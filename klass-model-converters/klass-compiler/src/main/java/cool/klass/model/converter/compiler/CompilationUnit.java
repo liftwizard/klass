@@ -116,7 +116,7 @@ public final class CompilationUnit {
 	public String getFullPathSourceName() {
 		if (this.macroElement.isEmpty()) {
 			List<String> split = Splitter.on('/').splitToList(this.sourceName);
-			return split.get(split.size() - 1);
+			return split.getLast();
 		}
 
 		String fullPathSourceName = this.macroElement.flatMap(AntlrElement::getCompilationUnit)
@@ -218,13 +218,13 @@ public final class CompilationUnit {
 		@Nonnull Optional<AntlrElement> macroElement,
 		@Nonnull String sourceName,
 		@Nonnull String sourceCodeText,
-		@Nonnull Function<KlassParser, ? extends ParserRuleContext> parserRule
+		@Nonnull Function<? super KlassParser, ? extends ParserRuleContext> parserRule
 	) {
 		String[] lines = NEWLINE_PATTERN.split(sourceCodeText);
 		ANTLRErrorListener errorListener = new ThrowingErrorListener(sourceName, lines);
 		CodePointCharStream charStream = CharStreams.fromString(sourceCodeText, sourceName);
 		KlassLexer lexer = CompilationUnit.getKlassLexer(errorListener, charStream);
-		CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+		var tokenStream = new CommonTokenStream(lexer);
 		KlassParser parser = CompilationUnit.getParser(errorListener, tokenStream);
 		ParserRuleContext parserRuleContext = parserRule.apply(parser);
 		return new CompilationUnit(ordinal, macroElement, sourceName, sourceCodeText, tokenStream, parserRuleContext);
@@ -232,14 +232,14 @@ public final class CompilationUnit {
 
 	@Nonnull
 	private static KlassLexer getKlassLexer(@Nonnull ANTLRErrorListener errorListener, CodePointCharStream charStream) {
-		KlassLexer lexer = new KlassLexer(charStream);
+		var lexer = new KlassLexer(charStream);
 		lexer.addErrorListener(errorListener);
 		return lexer;
 	}
 
 	@Nonnull
 	private static KlassParser getParser(@Nonnull ANTLRErrorListener errorListener, CommonTokenStream tokenStream) {
-		KlassParser parser = new KlassParser(tokenStream);
+		var parser = new KlassParser(tokenStream);
 		parser.removeErrorListeners();
 		parser.addErrorListener(errorListener);
 		return parser;
@@ -251,7 +251,7 @@ public final class CompilationUnit {
 		@Nonnull AntlrElement macroElement,
 		@Nonnull AbstractCompilerPhase macroExpansionCompilerPhase,
 		@Nonnull String sourceCodeText,
-		@Nonnull Function<KlassParser, ? extends ParserRuleContext> parserRule
+		@Nonnull Function<? super KlassParser, ? extends ParserRuleContext> parserRule
 	) {
 		String sourceName = macroExpansionCompilerPhase.getName() + " macro";
 		CompilationUnit result = CompilationUnit.createFromText(

@@ -61,7 +61,7 @@ public class DomainModelReferencesPropertyVisitor implements PropertyVisitor {
 
 	@Override
 	public void visitEnumerationProperty(EnumerationProperty enumerationProperty) {
-		EnumerationPropertyWithSourceCode elementWithSourceCode =
+		var elementWithSourceCode =
 			(EnumerationPropertyWithSourceCode) enumerationProperty;
 		EnumerationPropertyContext elementContext = elementWithSourceCode.getElementContext();
 		EnumerationReferenceContext reference = elementContext.enumerationReference();
@@ -72,7 +72,7 @@ public class DomainModelReferencesPropertyVisitor implements PropertyVisitor {
 
 	@Override
 	public void visitAssociationEnd(AssociationEnd associationEnd) {
-		AssociationEndWithSourceCode elementWithSourceCode = (AssociationEndWithSourceCode) associationEnd;
+		var elementWithSourceCode = (AssociationEndWithSourceCode) associationEnd;
 		AssociationEndContext elementContext = elementWithSourceCode.getElementContext();
 		ClassReferenceContext reference = elementContext.classReference();
 		KlassWithSourceCode klass = elementWithSourceCode.getType();
@@ -84,7 +84,7 @@ public class DomainModelReferencesPropertyVisitor implements PropertyVisitor {
 
 	@Override
 	public void visitAssociationEndSignature(AssociationEndSignature associationEndSignature) {
-		AssociationEndSignatureWithSourceCode elementWithSourceCode =
+		var elementWithSourceCode =
 			(AssociationEndSignatureWithSourceCode) associationEndSignature;
 		AssociationEndSignatureContext elementContext = elementWithSourceCode.getElementContext();
 		ClassifierReferenceContext reference = elementContext.classifierReference();
@@ -97,7 +97,7 @@ public class DomainModelReferencesPropertyVisitor implements PropertyVisitor {
 
 	@Override
 	public void visitParameterizedProperty(ParameterizedProperty parameterizedProperty) {
-		ParameterizedPropertyWithSourceCode elementWithSourceCode =
+		var elementWithSourceCode =
 			(ParameterizedPropertyWithSourceCode) parameterizedProperty;
 		ParameterizedPropertyContext elementContext = elementWithSourceCode.getElementContext();
 		ClassReferenceContext reference = elementContext.classReference();

@@ -99,7 +99,7 @@ public class PersistentPatcher extends PersistentSynchronizer {
 			.getDataTypeProperties()
 			.select(DataTypeProperty::isVersion)
 			.getOnly();
-		Integer versionNumber = (Integer) this.dataStore.getDataTypeProperty(
+		var versionNumber = (Integer) this.dataStore.getDataTypeProperty(
 			versionPersistentInstance,
 			versionProperty
 		);

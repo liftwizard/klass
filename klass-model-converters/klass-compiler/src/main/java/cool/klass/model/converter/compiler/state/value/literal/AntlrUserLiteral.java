@@ -57,7 +57,7 @@ public class AntlrUserLiteral extends AbstractAntlrLiteralValue {
 			return;
 		}
 
-		String message = "'user' literal requires one 'user' class in the domain model.";
+		var message = "'user' literal requires one 'user' class in the domain model.";
 		compilerAnnotationHolder.add("ERR_USR_LIT", message, this);
 	}
 

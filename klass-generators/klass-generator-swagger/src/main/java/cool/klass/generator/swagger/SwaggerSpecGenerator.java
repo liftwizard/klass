@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cool.klass.model.meta.domain.api.DomainModel;
+import cool.klass.model.meta.domain.api.TopLevelElement;
 import io.swagger.models.Info;
 import io.swagger.models.Swagger;
 
@@ -67,10 +68,10 @@ public class SwaggerSpecGenerator {
 
 	@Nonnull
 	private String generateSwaggerSpec() {
-		Swagger swagger = new Swagger();
+		var swagger = new Swagger();
 		swagger.setSwagger("2.0");
 
-		Info info = new Info();
+		var info = new Info();
 		info.setTitle(this.applicationName + " API");
 		info.setVersion("1.0.0");
 		info.setDescription("Generated from Klass model");
@@ -82,7 +83,7 @@ public class SwaggerSpecGenerator {
 
 		// Visit all top-level elements and populate the Swagger model
 		var visitor = new ServiceGroupToSwaggerSpecVisitor(swagger);
-		this.domainModel.getTopLevelElements().forEach((element) -> element.visit(visitor));
+		this.domainModel.getTopLevelElements().forEachWith(TopLevelElement::visit,visitor);
 
 		try {
 			return this.objectMapper.writeValueAsString(swagger);
@@ -93,7 +94,7 @@ public class SwaggerSpecGenerator {
 
 	private void printStringToFile(@Nonnull Path path, String contents) {
 		try (
-			PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
+			var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
 		) {
 			printStream.print(contents);
 		} catch (FileNotFoundException e) {

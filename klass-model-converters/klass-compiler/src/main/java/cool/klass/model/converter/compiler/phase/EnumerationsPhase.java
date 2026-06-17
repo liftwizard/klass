@@ -67,7 +67,7 @@ public class EnumerationsPhase extends AbstractCompilerPhase {
 
 		Optional<String> prettyName = prettyNameContext.map(RuleContext::getText).map(this::trimQuotes);
 
-		AntlrEnumerationLiteral enumerationLiteral = new AntlrEnumerationLiteral(
+		var enumerationLiteral = new AntlrEnumerationLiteral(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			this.enumeration.getNumLiterals() + 1,

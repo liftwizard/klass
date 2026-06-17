@@ -70,7 +70,7 @@ class KlassCompilerTest {
 			sourceCodeText
 		);
 		AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
-		KlassCompiler compiler = new KlassCompiler(compilationUnit, colorScheme);
+		var compiler = new KlassCompiler(compilationUnit, colorScheme);
 		CompilationResult compilationResult = compiler.compile();
 		ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult
 			.compilerAnnotations()

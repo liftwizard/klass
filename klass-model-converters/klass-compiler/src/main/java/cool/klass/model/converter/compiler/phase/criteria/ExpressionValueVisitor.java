@@ -81,7 +81,7 @@ public class ExpressionValueVisitor extends KlassBaseVisitor<AntlrExpressionValu
 	@Nonnull
 	@Override
 	public AntlrLiteralListValue visitLiteralList(@Nonnull LiteralListContext ctx) {
-		AntlrLiteralListValue literalListValue = new AntlrLiteralListValue(
+		var literalListValue = new AntlrLiteralListValue(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			this.expressionValueOwner
@@ -140,7 +140,7 @@ public class ExpressionValueVisitor extends KlassBaseVisitor<AntlrExpressionValu
 	public AntlrThisMemberReferencePath visitThisMemberReferencePath(@Nonnull ThisMemberReferencePathContext ctx) {
 		MemberReferenceContext memberReferenceContext = ctx.memberReference();
 
-		AntlrClass currentClass = (AntlrClass) this.thisReference;
+		var currentClass = (AntlrClass) this.thisReference;
 		MutableList<AntlrAssociationEnd> associationEnds = Lists.mutable.empty();
 		for (AssociationEndReferenceContext associationEndReferenceContext : ctx.associationEndReference()) {
 			// TODO: Or parameterizedPropertyName?

@@ -113,7 +113,7 @@ public class IncomingCreateDataModelValidator {
 		@Nonnull MutableList<String> errors,
 		@Nonnull MutableList<String> warnings
 	) {
-		IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+		var validator = new IncomingCreateDataModelValidator(
 			dataStore,
 			userKlass,
 			klass,
@@ -318,8 +318,8 @@ public class IncomingCreateDataModelValidator {
         */
 
 		try {
-			ObjectNode childObjectNode = (ObjectNode) childJsonNode;
-			IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+			var childObjectNode = (ObjectNode) childJsonNode;
+			var validator = new IncomingCreateDataModelValidator(
 				this.dataStore,
 				this.userKlass,
 				associationEnd.getType(),
@@ -367,7 +367,7 @@ public class IncomingCreateDataModelValidator {
 
 		try {
 			// TODO: Support a IncomingLastUpdatedByDataModelValidator which allows the current user to be substituted in for lastUpdatedBy.
-			IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+			var validator = new IncomingCreateDataModelValidator(
 				this.dataStore,
 				this.userKlass,
 				associationEnd.getType(),
@@ -470,9 +470,9 @@ public class IncomingCreateDataModelValidator {
 				this.errors.add(error);
 			} else {
 				// validate that present properties match, if they are temporal, version, created on, created by
-				ObjectNode childObjectNode = (ObjectNode) childJsonNode;
+				var childObjectNode = (ObjectNode) childJsonNode;
 				// TODO: Add isInProject == false
-				IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+				var validator = new IncomingCreateDataModelValidator(
 					this.dataStore,
 					this.userKlass,
 					associationEnd.getType(),
@@ -540,8 +540,8 @@ public class IncomingCreateDataModelValidator {
 				);
 				this.errors.add(error);
 			}
-			ObjectNode childObjectNode = (ObjectNode) childJsonNode;
-			IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+			var childObjectNode = (ObjectNode) childJsonNode;
+			var validator = new IncomingCreateDataModelValidator(
 				this.dataStore,
 				this.userKlass,
 				associationEnd.getType(),
@@ -578,7 +578,7 @@ public class IncomingCreateDataModelValidator {
                 this.objectNode);
         */
 
-		for (int index = 0; index < incomingChildInstances.size(); index++) {
+		for (var index = 0; index < incomingChildInstances.size(); index++) {
 			String contextString = String.format("%s[%d]", associationEnd.getName(), index);
 
 			this.contextStack.push(contextString);
@@ -593,8 +593,8 @@ public class IncomingCreateDataModelValidator {
                 }
                 */
 
-				ObjectNode childObjectNode = (ObjectNode) childJsonNode;
-				IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+				var childObjectNode = (ObjectNode) childJsonNode;
+				var validator = new IncomingCreateDataModelValidator(
 					this.dataStore,
 					this.userKlass,
 					associationEnd.getType(),

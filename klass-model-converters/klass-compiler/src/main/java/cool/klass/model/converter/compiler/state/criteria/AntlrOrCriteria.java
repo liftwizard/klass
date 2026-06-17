@@ -68,14 +68,6 @@ public class AntlrOrCriteria extends AntlrBinaryCriteria {
 	}
 
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		// TODO: Error if both clauses are identical, or if any left true subclause is a subclause of the right
-		// Java | Probable bugs | Constant conditions & exceptions
-
-		super.reportErrors(compilerAnnotationHolder);
-	}
-
-	@Override
 	public void visit(AntlrCriteriaVisitor visitor) {
 		visitor.visitOr(this);
 		this.left.visit(visitor);

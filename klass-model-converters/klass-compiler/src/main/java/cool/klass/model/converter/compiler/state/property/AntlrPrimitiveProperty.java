@@ -150,7 +150,7 @@ public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType>
 
 		ListIterable<AntlrModifier> idModifiers = this.getModifiersByName("id");
 		for (AntlrModifier idModifier : idModifiers) {
-			String message = "Properties with the 'id' modifier must also have the 'key' modifier.";
+			var message = "Properties with the 'id' modifier must also have the 'key' modifier.";
 			compilerAnnotationHolder.add("ERR_NKY_IDP", message, idModifier);
 		}
 	}

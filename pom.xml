@@ -92,8 +92,6 @@
     </ciManagement>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <project.build.outputTimestamp>2026-01-13T13:03:03Z</project.build.outputTimestamp>
 
@@ -156,7 +154,9 @@
         <plugins>
             <!--region Phase 7: compile-->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.15.0</version>
                 <configuration>
                     <annotationProcessorPaths combine.children="append">
                         <path>
@@ -196,6 +196,7 @@
                         <plugin>
                             <groupId>org.openrewrite.maven</groupId>
                             <artifactId>rewrite-maven-plugin</artifactId>
+                            <version>6.42.0</version>
                             <configuration>
                                 <activeRecipes combine.children="append">
                                     <recipe>cool.klass.UpdateCopyrightYear</recipe>
@@ -219,7 +220,9 @@
                 <plugins>
 
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-enforcer-plugin</artifactId>
+                        <version>3.6.3</version>
                         <configuration>
                             <rules combine.children="append">
                                 <enforceBytecodeVersion>
@@ -249,7 +252,9 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
+                        <version>3.11.0</version>
                         <configuration>
                             <ignoredUnusedDeclaredDependencies combine.children="append">
                                 <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-domain-model</ignoredUnusedDeclaredDependency>

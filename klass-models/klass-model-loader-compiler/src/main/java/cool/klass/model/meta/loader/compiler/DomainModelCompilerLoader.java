@@ -99,7 +99,7 @@ public class DomainModelCompilerLoader implements DomainModelLoader {
 
 		ImmutableList<CompilationUnit> compilationUnits = this.getCompilationUnits();
 
-		KlassCompiler klassCompiler = new KlassCompiler(compilationUnits, this.colorScheme, this.enableIdeLinks);
+		var klassCompiler = new KlassCompiler(compilationUnits, this.colorScheme, this.enableIdeLinks);
 		CompilationResult compilationResult = klassCompiler.compile();
 		DomainModelWithSourceCode domainModel = this.handleResult(compilationResult);
 
@@ -121,13 +121,13 @@ public class DomainModelCompilerLoader implements DomainModelLoader {
 			ClasspathHelper::forPackage,
 			this.classLoader
 		);
-		FilterBuilder filterBuilder = new FilterBuilder();
+		var filterBuilder = new FilterBuilder();
 		this.klassSourcePackages.forEach(filterBuilder::includePackage);
 		ConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
 			.setScanners(new ResourcesScanner())
 			.setUrls(urls.castToList())
 			.filterInputsBy(filterBuilder);
-		Reflections reflections = new Reflections(configurationBuilder);
+		var reflections = new Reflections(configurationBuilder);
 		ImmutableList<String> klassLocations = Lists.immutable.withAll(reflections.getResources(KLASS_FILE_EXTENSION));
 
 		LOGGER.debug("Found source files on classpath: {}", klassLocations);

@@ -64,7 +64,7 @@ public class GenerateSwaggerSpecMojo extends AbstractGenerateMojo {
 			this.getLog().info("Generated Swagger specification in: " + this.outputDirectory.getPath());
 		}
 
-		Resource resource = new Resource();
+		var resource = new Resource();
 		resource.setDirectory(this.outputDirectory.getAbsolutePath());
 		this.mavenProject.addResource(resource);
 	}

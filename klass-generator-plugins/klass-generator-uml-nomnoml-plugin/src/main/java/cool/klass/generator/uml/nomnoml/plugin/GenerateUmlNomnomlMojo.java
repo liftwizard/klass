@@ -60,7 +60,7 @@ public class GenerateUmlNomnomlMojo extends AbstractGenerateMojo {
 				DomainModel domainModel = this.getDomainModel();
 				Path outputPath = this.outputDirectory.toPath();
 
-				UmlNomnomlGenerator generator = new UmlNomnomlGenerator(
+				var generator = new UmlNomnomlGenerator(
 					domainModel,
 					this.rootPackageName,
 					this.applicationName
@@ -73,7 +73,7 @@ public class GenerateUmlNomnomlMojo extends AbstractGenerateMojo {
 			this.getLog().info("Generated UML diagram in: " + this.outputDirectory.getPath());
 		}
 
-		Resource resource = new Resource();
+		var resource = new Resource();
 		resource.setDirectory(this.outputDirectory.getAbsolutePath());
 		// TODO: Should be based on the output path
 		this.mavenProject.addResource(resource);

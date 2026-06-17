@@ -125,7 +125,7 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 	}
 
 	private void processService(Path path, Service service) {
-		Operation operation = new Operation();
+		var operation = new Operation();
 
 		Klass klass = service.getUrl().getServiceGroup().getKlass();
 		String klassName = klass.getName();
@@ -143,11 +143,11 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 		}
 
 		if (service.getVerb() == Verb.POST || service.getVerb() == Verb.PUT || service.getVerb() == Verb.PATCH) {
-			BodyParameter bodyParam = new BodyParameter();
+			var bodyParam = new BodyParameter();
 			bodyParam.setName("body");
 			bodyParam.setRequired(true);
 
-			RefModel refModel = new RefModel(klassName);
+			var refModel = new RefModel(klassName);
 			bodyParam.setSchema(refModel);
 			operation.addParameter(bodyParam);
 		}
@@ -178,7 +178,7 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 	}
 
 	private String generateOperationDescription(Service service) {
-		StringBuilder desc = new StringBuilder();
+		var desc = new StringBuilder();
 		desc.append(this.generateOperationSummary(service));
 
 		if (service.getAuthorizeCriteria().isPresent()) {
@@ -206,18 +206,18 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 	}
 
 	private void addResponses(Operation operation, Service service) {
-		Response successResponse = new Response();
+		var successResponse = new Response();
 
 		if (service.getProjectionDispatch().isPresent()) {
 			Projection projection = service.getProjectionDispatch().get().getProjection();
 
 			if (service.getServiceMultiplicity() == ServiceMultiplicity.MANY) {
-				ArrayModel arrayModel = new ArrayModel();
+				var arrayModel = new ArrayModel();
 				arrayModel.setItems(new RefProperty(projection.getName()));
 				successResponse.setResponseSchema(arrayModel);
 				successResponse.setDescription("Success - returns list of " + projection.getName());
 			} else {
-				RefModel refModel = new RefModel(projection.getName());
+				var refModel = new RefModel(projection.getName());
 				successResponse.setResponseSchema(refModel);
 				successResponse.setDescription("Success - returns " + projection.getName());
 			}
@@ -271,7 +271,7 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 	}
 
 	private Model createProjectionModel(Projection projection) {
-		ModelImpl model = new ModelImpl();
+		var model = new ModelImpl();
 		model.setType("object");
 
 		Map<String, Property> properties = new LinkedHashMap<>();
@@ -309,7 +309,7 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 
 				this.processProjectionChildren(referenceProperty.getChildren(), nestedProperties, nestedRequired);
 
-				ObjectProperty objectProperty = new ObjectProperty();
+				var objectProperty = new ObjectProperty();
 				objectProperty.setProperties(nestedProperties);
 				properties.put(child.getName(), objectProperty);
 			}
@@ -317,7 +317,7 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 	}
 
 	private Model createKlassModel(Klass klass) {
-		ModelImpl model = new ModelImpl();
+		var model = new ModelImpl();
 		model.setType("object");
 
 		Map<String, Property> properties = new LinkedHashMap<>();
@@ -355,7 +355,7 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 		}
 
 		if (dataType instanceof Enumeration enumeration) {
-			StringProperty stringProperty = new StringProperty();
+			var stringProperty = new StringProperty();
 			stringProperty._enum(enumeration.getEnumerationLiterals().collect(NamedElement::getName).castToList());
 			return stringProperty;
 		}

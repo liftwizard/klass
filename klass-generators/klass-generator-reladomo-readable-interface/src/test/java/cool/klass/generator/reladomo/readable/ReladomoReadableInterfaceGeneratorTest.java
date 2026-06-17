@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public class ReladomoReadableInterfaceGeneratorTest {
+class ReladomoReadableInterfaceGeneratorTest {
 
 	@RegisterExtension
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
@@ -54,7 +54,7 @@ public class ReladomoReadableInterfaceGeneratorTest {
 			"example.klass",
 			klassSourceCode
 		);
-		KlassCompiler compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("dark"));
+		var compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("dark"));
 		CompilationResult compilationResult = compiler.compile();
 
 		if (compilationResult.domainModelWithSourceCode().isEmpty()) {
@@ -65,7 +65,7 @@ public class ReladomoReadableInterfaceGeneratorTest {
 			DomainModelWithSourceCode domainModel = compilationResult.domainModelWithSourceCode().get();
 			assertThat(domainModel).isNotNull();
 
-			ReladomoReadableInterfaceGenerator generator = new ReladomoReadableInterfaceGenerator(domainModel);
+			var generator = new ReladomoReadableInterfaceGenerator(domainModel);
 
 			Klass klass = domainModel.getClassByName("ClassWithDerivedProperty");
 			String javaSourceCode = generator.getSourceCode(klass);

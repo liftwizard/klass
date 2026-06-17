@@ -83,7 +83,7 @@ public class GenerateReladomoRuntimeConfigurationMojo extends AbstractGenerateMo
 		Path outputPath = this.outputDirectory.toPath();
 		Path path = outputPath.resolve(this.outputFilename);
 		try {
-			ReladomoRuntimeConfigurationGenerator reladomoRuntimeConfigurationGenerator =
+			var reladomoRuntimeConfigurationGenerator =
 				new ReladomoRuntimeConfigurationGenerator(
 					domainModel,
 					this.connectionManagerClassName,
@@ -96,7 +96,7 @@ public class GenerateReladomoRuntimeConfigurationMojo extends AbstractGenerateMo
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 
-		Resource resource = new Resource();
+		var resource = new Resource();
 		resource.setDirectory(this.outputDirectory.getAbsolutePath());
 		// TODO: Should be based on the output path
 		resource.setTargetPath("reladomo-runtime-configuration");

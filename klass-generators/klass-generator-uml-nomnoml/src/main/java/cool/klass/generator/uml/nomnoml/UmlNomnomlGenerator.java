@@ -94,7 +94,7 @@ public class UmlNomnomlGenerator {
 
 	private void printStringToFile(@Nonnull Path path, String contents) {
 		try (
-			PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
+			var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
 		) {
 			printStream.print(contents);
 		} catch (FileNotFoundException e) {
@@ -132,7 +132,7 @@ public class UmlNomnomlGenerator {
 
 		@Override
 		public void visitInterface(Interface anInterface) {
-			String classGeneralizationSourceCode = "";
+			var classGeneralizationSourceCode = "";
 			this.sourceCode = this.getClassifierSourceCode(anInterface, classGeneralizationSourceCode);
 		}
 

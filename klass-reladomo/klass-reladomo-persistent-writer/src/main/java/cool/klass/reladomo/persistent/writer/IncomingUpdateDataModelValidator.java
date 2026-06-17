@@ -126,7 +126,7 @@ public class IncomingUpdateDataModelValidator {
 		@Nonnull MutableList<String> errors,
 		@Nonnull MutableList<String> warnings
 	) {
-		IncomingUpdateDataModelValidator validator = new IncomingUpdateDataModelValidator(
+		var validator = new IncomingUpdateDataModelValidator(
 			dataStore,
 			userKlass,
 			klass,
@@ -288,7 +288,7 @@ public class IncomingUpdateDataModelValidator {
 		@Nonnull ObjectNode objectNode,
 		@Nonnull Object persistentInstance
 	) {
-		IncomingUpdateDataModelValidator validator = new IncomingUpdateDataModelValidator(
+		var validator = new IncomingUpdateDataModelValidator(
 			this.dataStore,
 			this.userKlass,
 			associationEnd.getType(),
@@ -336,7 +336,7 @@ public class IncomingUpdateDataModelValidator {
 
 		try {
 			// TODO: Support a IncomingLastUpdatedByDataModelValidator which allows the current user to be substituted in for lastUpdatedBy.
-			IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+			var validator = new IncomingCreateDataModelValidator(
 				this.dataStore,
 				this.userKlass,
 				associationEnd.getType(),
@@ -458,13 +458,13 @@ public class IncomingUpdateDataModelValidator {
 		this.contextStack.push(associationEndName);
 
 		try {
-			if (childJsonNode instanceof ObjectNode) {
+			if (childJsonNode instanceof ObjectNode node) {
 				Object childPersistentInstance = this.dataStore.getToOne(this.persistentInstance, associationEnd);
 				if (childPersistentInstance == null) {
 					// TODO: This is a workaround for a bug and should be revisited to see if it still applies in the happy path. The bug started with an association between Owner[1..1] and Details[1..1] owned. The database wound up corrupted with no row or Details. Here we're trying to validate the incoming Details json against the childPersistentInstance which is null. It's possible that this situation comes up with a nullable Details object as well.
 					return;
 				}
-				this.handleAssociationEnd(associationEnd, (ObjectNode) childJsonNode, childPersistentInstance);
+				this.handleAssociationEnd(associationEnd, node, childPersistentInstance);
 			}
 		} finally {
 			this.contextStack.pop();
@@ -494,7 +494,7 @@ public class IncomingUpdateDataModelValidator {
 		MapIterable<ImmutableList<Object>, Object> persistentChildInstancesByKey =
 			this.getPersistentChildInstancesByKey(incomingChildInstancesByKey, associationEnd);
 
-		for (int index = 0; index < incomingChildInstances.size(); index++) {
+		for (var index = 0; index < incomingChildInstances.size(); index++) {
 			String contextString = String.format("%s[%d]", associationEnd.getName(), index);
 
 			this.contextStack.push(contextString);
@@ -513,7 +513,7 @@ public class IncomingUpdateDataModelValidator {
 				Object childPersistentInstance = persistentChildInstancesByKey.get(keysFromJsonNode);
 				if (childPersistentInstance == null) {
 					// recurse in create mode
-					IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+					var validator = new IncomingCreateDataModelValidator(
 						this.dataStore,
 						this.userKlass,
 						associationEnd.getType(),
@@ -577,7 +577,7 @@ public class IncomingUpdateDataModelValidator {
 		MapIterable<ImmutableList<Object>, Object> persistentChildInstancesByKey =
 			this.getPersistentChildInstancesByKey(incomingChildInstancesByKey, associationEnd);
 
-		for (int index = 0; index < incomingChildInstances.size(); index++) {
+		for (var index = 0; index < incomingChildInstances.size(); index++) {
 			String contextString = String.format("%s[%d]", associationEnd.getName(), index);
 			this.contextStack.push(contextString);
 
@@ -595,7 +595,7 @@ public class IncomingUpdateDataModelValidator {
 				Object childPersistentInstance = persistentChildInstancesByKey.get(keysFromJsonNode);
 				if (childPersistentInstance == null) {
 					// recurse in create mode
-					IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+					var validator = new IncomingCreateDataModelValidator(
 						this.dataStore,
 						this.userKlass,
 						associationEnd.getType(),

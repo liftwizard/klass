@@ -84,7 +84,7 @@ public class RelationalSchemaGenerator {
 
 	private void printStringToFile(@Nonnull Path path, String contents) {
 		try (
-			PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
+			var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
 		) {
 			printStream.print(contents);
 		} catch (FileNotFoundException e) {

@@ -162,7 +162,7 @@ public abstract class AntlrProperty extends AntlrIdentifierElement {
 				.select((modifier) -> modifier.isCreatedBy() || modifier.isLastUpdatedBy())
 				.toImmutable();
 			ImmutableList<ParserRuleContext> modifierContexts = modifiers.collect(AntlrElement::getElementContext);
-			String message = "Property may not have both 'createdBy' and lastUpdatedBy' modifiers.";
+			var message = "Property may not have both 'createdBy' and lastUpdatedBy' modifiers.";
 			compilerAnnotationHolder.add("ERR_CBY_LBY", message, this, modifierContexts);
 		}
 	}

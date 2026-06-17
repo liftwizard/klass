@@ -232,10 +232,10 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
 	 * @param isForeground True for foreground color, false for background
 	 */
 	private void applyColor(Ansi ansi, Object colorValue, boolean isForeground) {
-		if (colorValue instanceof String) {
-			applyColorString(ansi, (String) colorValue, isForeground);
-		} else if (colorValue instanceof Number) {
-			applyColorNumber(ansi, (Number) colorValue, isForeground);
+		if (colorValue instanceof String string) {
+			applyColorString(ansi, string, isForeground);
+		} else if (colorValue instanceof Number number) {
+			applyColorNumber(ansi, number, isForeground);
 		} else if (colorValue == null) {
 			LOGGER.warn("Null color value provided");
 		} else {

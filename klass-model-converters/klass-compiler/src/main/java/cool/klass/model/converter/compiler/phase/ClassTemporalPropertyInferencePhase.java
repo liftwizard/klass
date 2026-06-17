@@ -68,7 +68,7 @@ public class ClassTemporalPropertyInferencePhase extends AbstractCompilerPhase {
 
 		if (validTemporalModifiers.size() == 1) {
 			AntlrModifier validTemporalModifier = validTemporalModifiers.getOnly();
-			StringBuilder sourceCodeText = new StringBuilder();
+			var sourceCodeText = new StringBuilder();
 			if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isValidRange)) {
 				sourceCodeText.append("    valid    : TemporalRange?   valid private;\n");
 			}
@@ -83,7 +83,7 @@ public class ClassTemporalPropertyInferencePhase extends AbstractCompilerPhase {
 
 		if (systemTemporalModifiers.size() == 1) {
 			AntlrModifier systemTemporalModifier = systemTemporalModifiers.getOnly();
-			StringBuilder sourceCodeText = new StringBuilder();
+			var sourceCodeText = new StringBuilder();
 			if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isSystemRange)) {
 				sourceCodeText.append("    system    : TemporalRange?   system private;\n");
 			}

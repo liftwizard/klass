@@ -71,7 +71,7 @@ public final class FkGenerator {
 			.makeString(", ");
 
 		// language=SQL
-		String format = """
+		var format = """
 			alter table %s add constraint %s foreign key (
 			    %s
 			)

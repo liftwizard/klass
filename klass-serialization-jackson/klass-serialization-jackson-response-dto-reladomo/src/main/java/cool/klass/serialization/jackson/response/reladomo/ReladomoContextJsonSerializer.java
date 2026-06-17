@@ -148,7 +148,7 @@ public class ReladomoContextJsonSerializer extends JsonSerializer<MithraObject> 
 		}
 
 		if (dataType instanceof Enumeration) {
-			EnumerationLiteral enumerationLiteral = (EnumerationLiteral) dataTypeValue;
+			var enumerationLiteral = (EnumerationLiteral) dataTypeValue;
 			jsonGenerator.writeStringField(propertyName, enumerationLiteral.getPrettyName());
 			return;
 		}
@@ -184,7 +184,7 @@ public class ReladomoContextJsonSerializer extends JsonSerializer<MithraObject> 
 
 		if (multiplicity.isToMany()) {
 			Object value = this.dataStore.getToMany(mithraObject, referenceProperty);
-			MithraList<MithraObject> mithraList = (MithraList<MithraObject>) Objects.requireNonNull(value);
+			var mithraList = (MithraList<MithraObject>) Objects.requireNonNull(value);
 
 			// TODO: Add configuration to disable serialization of empty lists
 			jsonGenerator.writeArrayFieldStart(associationEndName);
