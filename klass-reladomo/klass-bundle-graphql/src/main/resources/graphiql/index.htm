@@ -58,9 +58,9 @@
 	<body>
 		<div id="graphiql">Loading...</div>
 		<script>
-			const root = ReactDOM.createRoot(document.getElementById("graphiql"));
+			const root = ReactDOM.createRoot(document.getElementById('graphiql'));
 			const fetcher = GraphiQL.createFetcher({
-				url: "/graphql",
+				url: '/graphql',
 			});
 			const explorerPlugin = GraphiQLPluginExplorer.explorerPlugin();
 			root.render(

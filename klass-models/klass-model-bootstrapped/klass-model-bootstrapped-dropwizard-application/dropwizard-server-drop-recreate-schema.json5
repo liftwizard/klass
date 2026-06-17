@@ -1,53 +1,53 @@
 {
 	server: {
 		detailedJsonProcessingExceptionMapper: true,
-		rootPath: "/api/*",
+		rootPath: '/api/*',
 		requestLog: {
 			appenders: [
 				{
-					type: "console",
+					type: 'console',
 				},
 			],
 		},
 	},
 	logging: {
-		level: "DEBUG",
+		level: 'DEBUG',
 		loggers: {
-			"com.gs.fw.common.mithra.batch.sqllogs": "INFO",
-			"com.gs.fw.common.mithra.connectionmanager": "INFO",
-			"com.gs.fw.common.mithra.sqllogs": "DEBUG",
-			"klass.model.meta.domain": "DEBUG",
-			"liquibase.resource": "INFO",
-			"io.liftwizard": "DEBUG",
-			"liquibase.servicelocator": "INFO",
-			"liquibase.util.MD5Util": "INFO",
-			"org.apache.http": "INFO",
-			"org.eclipse.jetty": "INFO",
-			"org.hibernate.validator.internal": "INFO",
-			"org.reflections.Reflections": "INFO",
+			'com.gs.fw.common.mithra.batch.sqllogs': 'INFO',
+			'com.gs.fw.common.mithra.connectionmanager': 'INFO',
+			'com.gs.fw.common.mithra.sqllogs': 'DEBUG',
+			'klass.model.meta.domain': 'DEBUG',
+			'liquibase.resource': 'INFO',
+			'io.liftwizard': 'DEBUG',
+			'liquibase.servicelocator': 'INFO',
+			'liquibase.util.MD5Util': 'INFO',
+			'org.apache.http': 'INFO',
+			'org.eclipse.jetty': 'INFO',
+			'org.hibernate.validator.internal': 'INFO',
+			'org.reflections.Reflections': 'INFO',
 		},
 		appenders: [
 			{
-				type: "console",
-				timeZone: "${LOGGING_TIMEZONE:-system}",
-				logFormat: "%highlight(%-5level) %cyan(%date{HH:mm:ss.SSS, %dwTimeZone}) %gray(\\(%file:%line\\)) [%white(%thread)] %blue(%marker) {%magenta(%mdc)} %green(%logger): %message%n%rootException",
+				type: 'console',
+				timeZone: '${LOGGING_TIMEZONE:-system}',
+				logFormat: '%highlight(%-5level) %cyan(%date{HH:mm:ss.SSS, %dwTimeZone}) %gray(\\(%file:%line\\)) [%white(%thread)] %blue(%marker) {%magenta(%mdc)} %green(%logger): %message%n%rootException',
 				includeCallerData: true,
 			},
 		],
 	},
 	klass: {
 		clock: {
-			type: "system",
+			type: 'system',
 		},
 		domainModel: {
-			type: "compiler",
-			sourcePackages: ["klass.model.meta.domain"],
-			colorScheme: "dark",
+			type: 'compiler',
+			sourcePackages: ['klass.model.meta.domain'],
+			colorScheme: 'dark',
 		},
 		dataStore: {
-			type: "reladomo",
+			type: 'reladomo',
 			uuid: {
-				type: "system",
+				type: 'system',
 			},
 		},
 	},
@@ -61,39 +61,39 @@
 	},
 	dataSources: [
 		{
-			name: "h2-tcp",
-			driverClass: "com.p6spy.engine.spy.P6SpyDriver",
+			name: 'h2-tcp',
+			driverClass: 'com.p6spy.engine.spy.P6SpyDriver',
 			readOnlyByDefault: false,
-			user: "sa",
-			password: "",
-			url: "jdbc:p6spy:h2:tcp://localhost:9064/klass-bootstrapped-h2;NON_KEYWORDS=USER",
+			user: 'sa',
+			password: '',
+			url: 'jdbc:p6spy:h2:tcp://localhost:9064/klass-bootstrapped-h2;NON_KEYWORDS=USER',
 			properties: {
-				charSet: "UTF-8",
+				charSet: 'UTF-8',
 			},
 			logValidationErrors: true,
-			maxWaitForConnection: "1 second",
+			maxWaitForConnection: '1 second',
 		},
 	],
 	ddlExecutors: [
 		{
-			dataSourceName: "h2-tcp",
+			dataSourceName: 'h2-tcp',
 		},
 	],
 	reladomo: {
-		runtimeConfigurationPaths: ["reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml"],
-		transactionTimeout: "1 hour",
+		runtimeConfigurationPaths: ['reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml'],
+		transactionTimeout: '1 hour',
 	},
 	connectionManagers: [
 		{
-			connectionManagerName: "h2-tcp",
-			dataSourceName: "h2-tcp",
-			databaseType: "H2",
-			schemaName: "klass-bootstrapped-h2",
+			connectionManagerName: 'h2-tcp',
+			dataSourceName: 'h2-tcp',
+			databaseType: 'H2',
+			schemaName: 'klass-bootstrapped-h2',
 		},
 	],
 	jerseyHttpLogging: {
 		enabled: true,
-		maxEntitySize: "1 kilobyte",
+		maxEntitySize: '1 kilobyte',
 	},
 	bootstrap: {
 		enabled: true,
@@ -102,9 +102,9 @@
 		enabled: true,
 		dataSourceMigrations: [
 			{
-				dataSourceName: "h2-tcp",
-				migrationFileName: "no-migrations.xml",
-				migrationFileLocation: "classpath",
+				dataSourceName: 'h2-tcp',
+				migrationFileName: 'no-migrations.xml',
+				migrationFileLocation: 'classpath',
 				contexts: [],
 			},
 		],

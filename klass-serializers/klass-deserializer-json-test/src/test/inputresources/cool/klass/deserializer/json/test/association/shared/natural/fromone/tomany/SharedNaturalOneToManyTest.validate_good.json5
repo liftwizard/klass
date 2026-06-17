@@ -1,11 +1,11 @@
 {
-	value: "value",
+	value: 'value',
 	targets: [
 		{
-			key: "key 1",
+			key: 'key 1',
 		},
 		{
-			key: "key 2",
+			key: 'key 2',
 		},
 	],
 }

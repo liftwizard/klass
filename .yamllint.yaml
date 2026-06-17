@@ -2,9 +2,9 @@
 # Rules: https://yamllint.readthedocs.io/en/stable/rules.html
 ---
 yaml-files:
-    - "*.yaml"
-    - "*.yml"
-    - ".yamllint"
+    - '*.yaml'
+    - '*.yml'
+    - '.yamllint'
 
 rules:
     anchors: enable

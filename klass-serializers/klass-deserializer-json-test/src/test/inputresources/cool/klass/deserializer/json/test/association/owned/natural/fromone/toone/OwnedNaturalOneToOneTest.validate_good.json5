@@ -1,7 +1,7 @@
 {
-	value: "value",
+	value: 'value',
 	target: {
-		key: "key",
-		value: "value",
+		key: 'key',
+		value: 'value',
 	},
 }

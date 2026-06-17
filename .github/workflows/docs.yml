@@ -11,7 +11,7 @@ concurrency:
     cancel-in-progress: true
 
 env:
-    GROUP_ID: "cool/klass"
+    GROUP_ID: 'cool/klass'
 
 jobs:
     deploy-github-pages:
@@ -48,7 +48,7 @@ jobs:
                   publish_dir: ./deploy
                   cname: klass.cool
                   force_orphan: true
-                  commit_message: "[skip ci] deploy to gh-pages"
+                  commit_message: '[skip ci] deploy to gh-pages'
 
             - name: Deploy to Cloudflare Pages
               id: cloudflare-deploy
@@ -106,5 +106,5 @@ jobs:
                         });
                       }
 
-            - name: "Clean Maven cache"
+            - name: 'Clean Maven cache'
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}

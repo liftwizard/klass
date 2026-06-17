@@ -1,12 +1,12 @@
 {
 	title: 1,
-	status: "Invalid Choice",
+	status: 'Invalid Choice',
 	deleted: [],
-	extra: "extra",
+	extra: 'extra',
 	answers: [
 		{
 			body: 2,
-			nestedExtra: "nestedExtra",
+			nestedExtra: 'nestedExtra',
 			nestedExtraNull: null,
 		},
 	],
@@ -21,7 +21,7 @@
 			},
 			tag: {},
 		},
-		"oops",
+		'oops',
 	],
 	version: {
 		number: 20000000000,

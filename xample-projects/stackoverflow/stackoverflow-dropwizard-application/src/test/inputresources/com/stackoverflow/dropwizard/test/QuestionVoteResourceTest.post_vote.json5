@@ -1,5 +1,5 @@
 {
-	direction: "up",
+	direction: 'up',
 	question: {
 		id: 1,
 	},

@@ -2,10 +2,10 @@
 	everyTypeForeignKeyProperties: [
 		{
 			id: 1,
-			data: "edited",
+			data: 'edited',
 		},
 		{
-			data: "new",
+			data: 'new',
 		},
 	],
 	version: {
