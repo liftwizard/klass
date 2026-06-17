@@ -520,7 +520,7 @@ jobs:
             - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
-    biome:
+    pre-commit:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -528,22 +528,13 @@ jobs:
                   persist-credentials: false
                   ref: ${{ github.event.pull_request.head.sha }}
 
-            - uses: jdx/mise-action@f10502fc09dadecfefb962fff68ce77213930204 # v4.2.2
-
-            - name: "Biome Format Check"
-              run: npx @biomejs/biome ci
-
-    prettier:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+            - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.0.0
               with:
-                  ref: ${{ github.event.pull_request.head.sha }}
+                  python-version: "3.x"
 
             - uses: jdx/mise-action@f10502fc09dadecfefb962fff68ce77213930204 # v4.2.2
 
-            - name: "Prettier Format Check"
-              run: npx prettier --check .
+            - uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
 
     reviewdog-markdownlint:
         runs-on: ubuntu-latest
@@ -627,8 +618,7 @@ jobs:
                 spotless-java-cleanthat,
                 spotless-sql,
                 spotless-pom,
-                biome,
-                prettier,
+                pre-commit,
                 reviewdog-markdownlint,
                 reviewdog-yamllint,
                 reviewdog-actionlint,
