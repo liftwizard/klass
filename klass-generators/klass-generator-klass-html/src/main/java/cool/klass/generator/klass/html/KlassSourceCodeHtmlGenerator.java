@@ -150,7 +150,7 @@ public class KlassSourceCodeHtmlGenerator {
 					<script type="module" src="https://unpkg.com/dark-mode-toggle"></script>
 					<style>
 						:root {
-							font-family: "Lucida Console", Courier, monospace;
+							font-family: 'Lucida Console', Courier, monospace;
 							font-size: 16px;
 						}
 					</style>

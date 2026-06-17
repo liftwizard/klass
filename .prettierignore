@@ -1,0 +1,3 @@
+# Generated golden HTML fixtures contain generator-owned formatting.
+# oxfmt reads .prettierignore and must not rewrite those fixtures.
+**/src/test/resources/**/*.html
