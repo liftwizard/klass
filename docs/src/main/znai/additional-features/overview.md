@@ -264,20 +264,20 @@ When a json response includes parameterized properties, the parameters become pa
 
 ```json
 {
-    "id": 1,
-    "title": "Question title 1",
-    "body": "Question body 1",
-    "votesByDirection(up)": [
-        {
-            "user": {
-                "userId": "Example user id"
-            }
-        }
-    ],
-    "votesByDirection(down)": [],
-    "voteByUser(Example user id)": {
-        "direction": "up"
-    }
+	"id": 1,
+	"title": "Question title 1",
+	"body": "Question body 1",
+	"votesByDirection(up)": [
+		{
+			"user": {
+				"userId": "Example user id"
+			}
+		}
+	],
+	"votesByDirection(down)": [],
+	"voteByUser(Example user id)": {
+		"direction": "up"
+	}
 }
 ```
 
