@@ -11,6 +11,9 @@ concurrency:
 env:
     GROUP_ID: "cool/klass"
 
+permissions:
+    contents: read
+
 jobs:
     maven-test:
         runs-on: ubuntu-latest
@@ -516,6 +519,9 @@ jobs:
 
     reviewdog-markdownlint:
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            checks: write
         steps:
             - uses: actions/checkout@v7
             - uses: reviewdog/action-markdownlint@v0.27.0
@@ -526,6 +532,9 @@ jobs:
 
     reviewdog-yamllint:
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            checks: write
         steps:
             - uses: actions/checkout@v7
             - uses: reviewdog/action-yamllint@v1.22.0
@@ -536,6 +545,9 @@ jobs:
 
     reviewdog-actionlint:
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            checks: write
         steps:
             - uses: actions/checkout@v7
             - uses: reviewdog/action-actionlint@v1.72.0
@@ -546,6 +558,9 @@ jobs:
 
     reviewdog-shellcheck:
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            checks: write
         steps:
             - uses: actions/checkout@v7
             - uses: reviewdog/action-shellcheck@v1.32.0
