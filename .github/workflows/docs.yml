@@ -24,6 +24,8 @@ jobs:
             pull-requests: write
         steps:
             - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+              with:
+                  persist-credentials: false
 
             - uses: twosigma/maven-cache-cleaner@0f3e445b9beae1b63bd0ca4fa347f9f91e0a59b3 # v2.1.0
 
