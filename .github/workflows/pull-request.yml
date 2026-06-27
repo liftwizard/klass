@@ -10,26 +10,34 @@ concurrency:
 env:
     GROUP_ID: "cool/klass"
 
+permissions:
+    contents: read
+
 jobs:
     maven-coverage:
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            pull-requests: write
         steps:
-            - uses: actions/checkout@v7
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+              with:
+                  persist-credentials: false
 
-            - uses: actions/cache@v6
+            - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
               with:
                   key: maven-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
                   restore-keys: |
                       maven-
 
-            - uses: twosigma/maven-cache-cleaner@v2
+            - uses: twosigma/maven-cache-cleaner@0f3e445b9beae1b63bd0ca4fa347f9f91e0a59b3 # v2.1.0
 
-            - uses: jdx/mise-action@v4
+            - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
 
             - run: just coverage
 
-            - uses: madrapps/jacoco-report@v1.8.0
+            - uses: madrapps/jacoco-report@e51ce1f46f7f8b5331593f935e59cbaf44b84920 # v1.8.0
               with:
                   paths: |
                       ${{ github.workspace }}/**/target/site/jacoco/jacoco.xml
@@ -46,8 +54,10 @@ jobs:
     # Check if the new commits in a Pull Request contain a merge commit. If so, fail and print them out.
     forbid-merge-commits:
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
         steps:
-            - uses: motlin/forbid-merge-commits-action@main
+            - uses: motlin/forbid-merge-commits-action@e79f9ed1c54b0bfb9e8a4ecaa8acfabfd01c1953 # main
 
     automerge-dependabot:
         if: github.event.pull_request.user.login == 'dependabot[bot]'
@@ -56,7 +66,7 @@ jobs:
             contents: write
             pull-requests: write
         steps:
-            - uses: actions/checkout@v7
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
             - name: Enable auto-merge for Dependabot PR
               run: gh pr merge --rebase --auto "${{ github.event.pull_request.number }}"
@@ -69,13 +79,13 @@ jobs:
             contents: write
             pull-requests: write
         steps:
-            - uses: actions/checkout@v7
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
                   ref: ${{ github.event.pull_request.head.ref }}
                   repository: ${{ github.event.pull_request.head.repo.full_name }}
                   token: ${{ secrets.GITHUB_TOKEN }}
 
-            - uses: actions/cache@v6
+            - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
               with:
                   key: maven-rewrite-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -83,9 +93,9 @@ jobs:
                       maven-rewrite-
                       maven-
 
-            - uses: twosigma/maven-cache-cleaner@v2
+            - uses: twosigma/maven-cache-cleaner@0f3e445b9beae1b63bd0ca4fa347f9f91e0a59b3 # v2.1.0
 
-            - uses: jdx/mise-action@v4
+            - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
 
             - name: Configure Git
               run: |
@@ -120,13 +130,13 @@ jobs:
             contents: write
             pull-requests: write
         steps:
-            - uses: actions/checkout@v7
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
                   ref: ${{ github.event.pull_request.head.ref }}
                   repository: ${{ github.event.pull_request.head.repo.full_name }}
                   token: ${{ secrets.GITHUB_TOKEN }}
 
-            - uses: actions/cache@v6
+            - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
               with:
                   key: maven-spotless-pom-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -134,9 +144,9 @@ jobs:
                       maven-spotless-
                       maven-
 
-            - uses: twosigma/maven-cache-cleaner@v2
+            - uses: twosigma/maven-cache-cleaner@0f3e445b9beae1b63bd0ca4fa347f9f91e0a59b3 # v2.1.0
 
-            - uses: jdx/mise-action@v4
+            - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
 
             - name: Configure Git
               run: |
@@ -171,13 +181,13 @@ jobs:
             contents: write
             pull-requests: write
         steps:
-            - uses: actions/checkout@v7
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
                   ref: ${{ github.event.pull_request.head.ref }}
                   repository: ${{ github.event.pull_request.head.repo.full_name }}
                   token: ${{ secrets.GITHUB_TOKEN }}
 
-            - uses: actions/cache@v6
+            - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
               with:
                   key: maven-spotless-formats-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -185,9 +195,9 @@ jobs:
                       maven-spotless-
                       maven-
 
-            - uses: twosigma/maven-cache-cleaner@v2
+            - uses: twosigma/maven-cache-cleaner@0f3e445b9beae1b63bd0ca4fa347f9f91e0a59b3 # v2.1.0
 
-            - uses: jdx/mise-action@v4
+            - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
 
             - name: Configure Git
               run: |
@@ -222,13 +232,13 @@ jobs:
             contents: write
             pull-requests: write
         steps:
-            - uses: actions/checkout@v7
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
                   ref: ${{ github.event.pull_request.head.ref }}
                   repository: ${{ github.event.pull_request.head.repo.full_name }}
                   token: ${{ secrets.GITHUB_TOKEN }}
 
-            - uses: actions/cache@v6
+            - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
               with:
                   key: maven-spotless-java-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -236,9 +246,9 @@ jobs:
                       maven-spotless-
                       maven-
 
-            - uses: twosigma/maven-cache-cleaner@v2
+            - uses: twosigma/maven-cache-cleaner@0f3e445b9beae1b63bd0ca4fa347f9f91e0a59b3 # v2.1.0
 
-            - uses: jdx/mise-action@v4
+            - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
 
             - name: Configure Git
               run: |
@@ -273,13 +283,13 @@ jobs:
             contents: write
             pull-requests: write
         steps:
-            - uses: actions/checkout@v7
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
                   ref: ${{ github.event.pull_request.head.ref }}
                   repository: ${{ github.event.pull_request.head.repo.full_name }}
                   token: ${{ secrets.GITHUB_TOKEN }}
 
-            - uses: actions/cache@v6
+            - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
               with:
                   key: maven-spotless-prettier-java-sort-imports-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -287,9 +297,9 @@ jobs:
                       maven-spotless-
                       maven-
 
-            - uses: twosigma/maven-cache-cleaner@v2
+            - uses: twosigma/maven-cache-cleaner@0f3e445b9beae1b63bd0ca4fa347f9f91e0a59b3 # v2.1.0
 
-            - uses: jdx/mise-action@v4
+            - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
 
             - name: Configure Git
               run: |
@@ -324,13 +334,13 @@ jobs:
             contents: write
             pull-requests: write
         steps:
-            - uses: actions/checkout@v7
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
                   ref: ${{ github.event.pull_request.head.ref }}
                   repository: ${{ github.event.pull_request.head.repo.full_name }}
                   token: ${{ secrets.GITHUB_TOKEN }}
 
-            - uses: actions/cache@v6
+            - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
               with:
                   key: maven-spotless-java-cleanthat-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -338,9 +348,9 @@ jobs:
                       maven-spotless-
                       maven-
 
-            - uses: twosigma/maven-cache-cleaner@v2
+            - uses: twosigma/maven-cache-cleaner@0f3e445b9beae1b63bd0ca4fa347f9f91e0a59b3 # v2.1.0
 
-            - uses: jdx/mise-action@v4
+            - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
 
             - name: Configure Git
               run: |
@@ -375,13 +385,13 @@ jobs:
             contents: write
             pull-requests: write
         steps:
-            - uses: actions/checkout@v7
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
                   ref: ${{ github.event.pull_request.head.ref }}
                   repository: ${{ github.event.pull_request.head.repo.full_name }}
                   token: ${{ secrets.GITHUB_TOKEN }}
 
-            - uses: jdx/mise-action@v4
+            - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
 
             - name: Configure Git
               run: |
@@ -412,13 +422,13 @@ jobs:
             contents: write
             pull-requests: write
         steps:
-            - uses: actions/checkout@v7
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
                   ref: ${{ github.event.pull_request.head.ref }}
                   repository: ${{ github.event.pull_request.head.repo.full_name }}
                   token: ${{ secrets.GITHUB_TOKEN }}
 
-            - uses: jdx/mise-action@v4
+            - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
 
             - name: Configure Git
               run: |
@@ -449,13 +459,13 @@ jobs:
             contents: write
             pull-requests: write
         steps:
-            - uses: actions/checkout@v7
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
                   ref: ${{ github.event.pull_request.head.ref }}
                   repository: ${{ github.event.pull_request.head.repo.full_name }}
                   token: ${{ secrets.GITHUB_TOKEN }}
 
-            - uses: actions/cache@v6
+            - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
               with:
                   key: maven-errorprone-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -463,9 +473,9 @@ jobs:
                       maven-errorprone-
                       maven-
 
-            - uses: twosigma/maven-cache-cleaner@v2
+            - uses: twosigma/maven-cache-cleaner@0f3e445b9beae1b63bd0ca4fa347f9f91e0a59b3 # v2.1.0
 
-            - uses: jdx/mise-action@v4
+            - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
 
             - name: Configure Git
               run: |
@@ -505,14 +515,14 @@ jobs:
             contents: write
             pull-requests: write
         steps:
-            - uses: actions/checkout@v7
+            - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
                   ref: ${{ github.event.pull_request.head.ref }}
                   repository: ${{ github.event.pull_request.head.repo.full_name }}
                   fetch-depth: 0
                   token: ${{ secrets.GITHUB_TOKEN }}
 
-            - uses: actions/cache@v6
+            - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
               with:
                   key: maven-liftwizard-rerecord-${{ hashFiles('**/pom.xml') }}
                   path: ~/.m2/repository
@@ -520,9 +530,9 @@ jobs:
                       maven-liftwizard-rerecord-
                       maven-
 
-            - uses: twosigma/maven-cache-cleaner@v2
+            - uses: twosigma/maven-cache-cleaner@0f3e445b9beae1b63bd0ca4fa347f9f91e0a59b3 # v2.1.0
 
-            - uses: jdx/mise-action@v4
+            - uses: jdx/mise-action@e6a8b3978addb5a52f2b4cd9d91eafa7f0ab959d # v4.2.0
 
             - name: Configure Git
               run: |
