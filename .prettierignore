@@ -7,6 +7,11 @@
 !**/*.md
 !**/*.html
 
+# Generated golden HTML fixtures are emitted by the Klass HTML generator (with
+# single-quoted CSS); prettier (singleQuote: false) must not reformat them or it
+# would diverge from the generator's output and break the file-match tests.
+**/src/test/resources/**/*.html
+
 # But still ignore these directories
 node_modules
 dist
