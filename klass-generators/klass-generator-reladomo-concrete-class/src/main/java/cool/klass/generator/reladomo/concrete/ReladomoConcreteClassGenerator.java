@@ -108,19 +108,20 @@ public class ReladomoConcreteClassGenerator {
 		String className = klass.getName();
 
 		if (klass.isTemporal()) {
+			String systemPropertyName = klass.getSystemProperty().orElseThrow().getName();
 			// language=JAVA
 			// prettier-ignore
 			return ""
-				+ "    public " + className + "(Timestamp system)\n"
+				+ "    public " + className + "(Timestamp " + systemPropertyName + ")\n"
 				+ "    {\n"
-				+ "        super(system);\n"
+				+ "        super(" + systemPropertyName + ");\n"
 				+ "        // You must not modify this constructor. Reladomo calls this internally.\n"
 				+ "        // You can call this constructor. You can also add new constructors.\n"
 				+ "    }\n"
 				+ "\n"
 				+ "    public " + className + "()\n"
 				+ "    {\n"
-				+ "        this(UtcInfinityTimestamp.getDefaultInfinity());\n"
+				+ "        this(" + className + "Finder." + systemPropertyName + "().getInfinityDate());\n"
 				+ "    }\n";
 		} else {
 			// language=JAVA
@@ -158,11 +159,6 @@ public class ReladomoConcreteClassGenerator {
 		}
 		if (hasLocalDate) {
 			importLines.add("import java.time.LocalDate;\n");
-		}
-
-		if (isTemporal) {
-			importLines.add("\n");
-			importLines.add("import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;\n");
 		}
 
 		// prettier-ignore

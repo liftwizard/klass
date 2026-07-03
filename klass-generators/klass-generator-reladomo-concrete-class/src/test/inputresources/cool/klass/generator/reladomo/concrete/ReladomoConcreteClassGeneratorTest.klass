@@ -22,3 +22,9 @@ class ClassWithDerivedProperty
     derivedOptionalInstant     : Instant   ? derived;
     derivedOptionalLocalDate   : LocalDate ? derived;
 }
+
+class ClassWithSystemTemporal
+    systemTemporal
+{
+    key : String key;
+}

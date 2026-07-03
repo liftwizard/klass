@@ -18,8 +18,6 @@ package cool.klass.xample.coverage;
 
 import java.sql.Timestamp;
 
-import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
-
 public class UserVersion extends UserVersionAbstract {
 
 	public UserVersion(Timestamp system) {
@@ -29,6 +27,6 @@ public class UserVersion extends UserVersionAbstract {
 	}
 
 	public UserVersion() {
-		this(UtcInfinityTimestamp.getDefaultInfinity());
+		this(UserVersionFinder.system().getInfinityDate());
 	}
 }

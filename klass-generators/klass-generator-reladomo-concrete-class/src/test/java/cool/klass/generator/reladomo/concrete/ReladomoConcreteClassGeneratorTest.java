@@ -57,4 +57,26 @@ public class ReladomoConcreteClassGeneratorTest {
 		String resourceClassPathLocation = this.getClass().getSimpleName() + ".smokeTest.java";
 		this.fileMatchExtension.assertFileContents(resourceClassPathLocation, javaSourceCode);
 	}
+
+	@Test
+	void temporalSmokeTest() {
+		ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
+
+		var domainModelCompilerLoader = new DomainModelCompilerLoader(
+			klassSourcePackages,
+			Thread.currentThread().getContextClassLoader(),
+			DomainModelCompilerLoader::logCompilerError,
+			ColorSchemeProvider.getByName("dark"),
+			false
+		);
+
+		DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
+
+		var generator = new ReladomoConcreteClassGenerator(domainModel);
+
+		Klass klass = domainModel.getClassByName("ClassWithSystemTemporal");
+		String javaSourceCode = generator.getSourceCode(klass);
+		String resourceClassPathLocation = this.getClass().getSimpleName() + ".temporalSmokeTest.java";
+		this.fileMatchExtension.assertFileContents(resourceClassPathLocation, javaSourceCode);
+	}
 }

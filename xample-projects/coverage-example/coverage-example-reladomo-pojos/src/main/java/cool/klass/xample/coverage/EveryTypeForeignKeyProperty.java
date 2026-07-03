@@ -18,8 +18,6 @@ package cool.klass.xample.coverage;
 
 import java.sql.Timestamp;
 
-import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
-
 public class EveryTypeForeignKeyProperty extends EveryTypeForeignKeyPropertyAbstract {
 
 	public EveryTypeForeignKeyProperty(Timestamp system) {
@@ -29,6 +27,6 @@ public class EveryTypeForeignKeyProperty extends EveryTypeForeignKeyPropertyAbst
 	}
 
 	public EveryTypeForeignKeyProperty() {
-		this(UtcInfinityTimestamp.getDefaultInfinity());
+		this(EveryTypeForeignKeyPropertyFinder.system().getInfinityDate());
 	}
 }

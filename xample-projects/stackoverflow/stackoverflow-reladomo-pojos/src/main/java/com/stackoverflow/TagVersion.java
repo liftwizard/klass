@@ -18,8 +18,6 @@ package com.stackoverflow;
 
 import java.sql.Timestamp;
 
-import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
-
 public class TagVersion extends TagVersionAbstract {
 
 	public TagVersion(Timestamp system) {
@@ -29,6 +27,6 @@ public class TagVersion extends TagVersionAbstract {
 	}
 
 	public TagVersion() {
-		this(UtcInfinityTimestamp.getDefaultInfinity());
+		this(TagVersionFinder.system().getInfinityDate());
 	}
 }

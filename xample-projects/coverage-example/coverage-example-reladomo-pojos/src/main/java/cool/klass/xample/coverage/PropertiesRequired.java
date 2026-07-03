@@ -20,8 +20,6 @@ import java.sql.Timestamp;
 
 import javax.annotation.Nonnull;
 
-import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
-
 public class PropertiesRequired extends PropertiesRequiredAbstract {
 
 	public PropertiesRequired(Timestamp system) {
@@ -31,7 +29,7 @@ public class PropertiesRequired extends PropertiesRequiredAbstract {
 	}
 
 	public PropertiesRequired() {
-		this(UtcInfinityTimestamp.getDefaultInfinity());
+		this(PropertiesRequiredFinder.system().getInfinityDate());
 	}
 
 	@Nonnull
