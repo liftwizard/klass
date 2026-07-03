@@ -18,8 +18,6 @@ package cool.klass.xample.coverage;
 
 import java.sql.Timestamp;
 
-import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
-
 public class PropertiesRequiredVersion extends PropertiesRequiredVersionAbstract {
 
 	public PropertiesRequiredVersion(Timestamp system) {
@@ -29,6 +27,6 @@ public class PropertiesRequiredVersion extends PropertiesRequiredVersionAbstract
 	}
 
 	public PropertiesRequiredVersion() {
-		this(UtcInfinityTimestamp.getDefaultInfinity());
+		this(PropertiesRequiredVersionFinder.system().getInfinityDate());
 	}
 }

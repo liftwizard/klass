@@ -18,8 +18,6 @@ package com.stackoverflow;
 
 import java.sql.Timestamp;
 
-import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
-
 public class QuestionTagMapping extends QuestionTagMappingAbstract {
 
 	public QuestionTagMapping(Timestamp system) {
@@ -29,6 +27,6 @@ public class QuestionTagMapping extends QuestionTagMappingAbstract {
 	}
 
 	public QuestionTagMapping() {
-		this(UtcInfinityTimestamp.getDefaultInfinity());
+		this(QuestionTagMappingFinder.system().getInfinityDate());
 	}
 }

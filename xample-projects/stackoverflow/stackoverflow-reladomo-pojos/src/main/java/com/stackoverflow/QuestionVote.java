@@ -18,8 +18,6 @@ package com.stackoverflow;
 
 import java.sql.Timestamp;
 
-import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
-
 public class QuestionVote extends QuestionVoteAbstract {
 
 	public QuestionVote(Timestamp system) {
@@ -29,6 +27,6 @@ public class QuestionVote extends QuestionVoteAbstract {
 	}
 
 	public QuestionVote() {
-		this(UtcInfinityTimestamp.getDefaultInfinity());
+		this(QuestionVoteFinder.system().getInfinityDate());
 	}
 }
