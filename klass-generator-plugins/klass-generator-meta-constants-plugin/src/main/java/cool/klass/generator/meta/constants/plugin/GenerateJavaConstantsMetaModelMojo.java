@@ -60,8 +60,11 @@ public class GenerateJavaConstantsMetaModelMojo extends AbstractGenerateMojo {
 				DomainModel domainModel = this.getDomainModel();
 				Path outputPath = this.outputDirectory.toPath();
 				try {
-					JavaConstantsMetaModelGenerator javaConstantsMetaModelGenerator =
-						new JavaConstantsMetaModelGenerator(domainModel, this.applicationName, this.rootPackageName);
+					var javaConstantsMetaModelGenerator = new JavaConstantsMetaModelGenerator(
+						domainModel,
+						this.applicationName,
+						this.rootPackageName
+					);
 					javaConstantsMetaModelGenerator.writeJavaConstantsMetaModelFiles(outputPath);
 				} catch (IOException e) {
 					throw new MojoExecutionException(e.getMessage(), e);

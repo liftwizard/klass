@@ -53,7 +53,7 @@ public final class ReladomoTreeGraphqlConverter {
 	}
 
 	public RootReladomoTreeNode convert(Klass klass, DataFetchingFieldSelectionSet selectionSet) {
-		RootReladomoTreeNode result = new RootReladomoTreeNode("root", klass);
+		var result = new RootReladomoTreeNode("root", klass);
 
 		for (SelectedField selectedField : selectionSet.getImmediateFields()) {
 			this.convertSelectedField(selectedField, result);

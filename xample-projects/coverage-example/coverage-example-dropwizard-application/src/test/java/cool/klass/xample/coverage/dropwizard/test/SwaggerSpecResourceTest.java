@@ -49,7 +49,7 @@ public class SwaggerSpecResourceTest extends AbstractCoverageTest {
 		assertTrue(responseJson.length() > 100, "Swagger spec should have meaningful content");
 
 		// Parse and validate it's valid JSON with expected Swagger structure
-		ObjectMapper objectMapper = new ObjectMapper();
+		var objectMapper = new ObjectMapper();
 		JsonNode swaggerSpec = objectMapper.readTree(responseJson);
 
 		assertNotNull(swaggerSpec.get("swagger"), "Should have swagger version");

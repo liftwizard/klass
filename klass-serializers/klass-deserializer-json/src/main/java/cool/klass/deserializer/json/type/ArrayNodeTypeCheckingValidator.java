@@ -57,7 +57,7 @@ public final class ArrayNodeTypeCheckingValidator {
 	}
 
 	public static void validate(@Nonnull MutableList<String> errors, @Nonnull JsonNode jsonNode, @Nonnull Klass klass) {
-		ContextStack contextStack = new ContextStack(errors, null);
+		var contextStack = new ContextStack(errors, null);
 		var incomingDataValidator = new ArrayNodeTypeCheckingValidator(contextStack, klass, klass, jsonNode);
 		incomingDataValidator.validateIncomingData();
 	}

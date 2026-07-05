@@ -141,7 +141,7 @@ public class AntlrServiceGroup extends AntlrPackageableElement implements AntlrT
 	}
 
 	private void reportDuplicateUrls(CompilerAnnotationHolder compilerAnnotationHolder) {
-		HashBagWithHashingStrategy<AntlrUrl> antlrUrls = new HashBagWithHashingStrategy<>(
+		var antlrUrls = new HashBagWithHashingStrategy<AntlrUrl>(
 			HashingStrategies.fromFunction(AntlrUrl::getNormalizedPathSegments)
 		);
 

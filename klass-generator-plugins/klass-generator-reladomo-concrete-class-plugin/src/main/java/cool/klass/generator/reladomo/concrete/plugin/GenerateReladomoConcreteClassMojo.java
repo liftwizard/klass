@@ -47,7 +47,7 @@ public class GenerateReladomoConcreteClassMojo extends AbstractGenerateMojo {
 	public void execute() throws MojoExecutionException {
 		DomainModel domainModel = this.getDomainModel();
 
-		ReladomoConcreteClassGenerator generator = new ReladomoConcreteClassGenerator(domainModel);
+		var generator = new ReladomoConcreteClassGenerator(domainModel);
 		try {
 			generator.writeConcreteClasses(this.outputDirectory.toPath());
 		} catch (RuntimeException e) {

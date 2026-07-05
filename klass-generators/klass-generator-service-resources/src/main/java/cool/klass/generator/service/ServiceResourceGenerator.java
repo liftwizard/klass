@@ -102,9 +102,7 @@ public class ServiceResourceGenerator {
 	}
 
 	private void printStringToFile(@Nonnull Path path, String contents) throws FileNotFoundException {
-		try (
-			PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
-		) {
+		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)) {
 			printStream.print(contents);
 		}
 	}
@@ -1197,7 +1195,7 @@ public class ServiceResourceGenerator {
 
 	@Nonnull
 	private String getOperation(String finderName, @Nonnull Criteria criteria) {
-		StringBuilder stringBuilder = new StringBuilder();
+		var stringBuilder = new StringBuilder();
 		criteria.visit(new OperationCriteriaVisitor(finderName, stringBuilder));
 		return stringBuilder.toString();
 	}
@@ -1277,7 +1275,7 @@ public class ServiceResourceGenerator {
 			return "";
 		}
 
-		StringBuilder stringBuilder = new StringBuilder();
+		var stringBuilder = new StringBuilder();
 		for (int i = 0; i < orderBySourceCodeClauses.size(); i++) {
 			String orderBySourceCodeClause = orderBySourceCodeClauses.get(i);
 			if (i == 0) {

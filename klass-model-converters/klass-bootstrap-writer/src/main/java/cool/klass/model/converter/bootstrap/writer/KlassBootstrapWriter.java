@@ -215,7 +215,7 @@ public class KlassBootstrapWriter {
 			.flatCollect(OrderBy::getOrderByMemberReferencePaths)
 			.collect(OrderByMemberReferencePath::getThisMemberReferencePath);
 
-		BootstrapExpressionValueVisitor1 expressionValueVisitor1 = new BootstrapExpressionValueVisitor1();
+		var expressionValueVisitor1 = new BootstrapExpressionValueVisitor1();
 		var criteriaVisitor1 = new BootstrapExpressionValueCriteriaVisitor(expressionValueVisitor1);
 
 		allCriteria.each((criteria) -> criteria.visit(criteriaVisitor1));
@@ -284,7 +284,7 @@ public class KlassBootstrapWriter {
 		MutableMap<Projection, klass.model.meta.domain.ProjectionElement> rootProjectionByProjection =
 			Maps.mutable.empty();
 
-		ProjectionElementList projectionElementList = new ProjectionElementList();
+		var projectionElementList = new ProjectionElementList();
 		for (Projection projection : this.domainModel.getProjections()) {
 			klass.model.meta.domain.ProjectionElement projectionElement = this.handleRootProjectionElement(projection);
 			rootProjectionByProjection.put(projection, projectionElement);
@@ -434,7 +434,7 @@ public class KlassBootstrapWriter {
 		@Nonnull Classifier classifier,
 		Interface superInterface
 	) {
-		ClassifierInterfaceMapping classifierInterfaceMapping = new ClassifierInterfaceMapping();
+		var classifierInterfaceMapping = new ClassifierInterfaceMapping();
 		classifierInterfaceMapping.setClassifierName(classifier.getName());
 		classifierInterfaceMapping.setInterfaceName(superInterface.getName());
 		return classifierInterfaceMapping;
@@ -803,7 +803,7 @@ public class KlassBootstrapWriter {
 	}
 
 	private klass.model.meta.domain.ServiceGroup handleServiceGroup(@Nonnull ServiceGroup serviceGroup) {
-		klass.model.meta.domain.ServiceGroup bootstrappedServiceGroup = new klass.model.meta.domain.ServiceGroup();
+		var bootstrappedServiceGroup = new klass.model.meta.domain.ServiceGroup();
 		bootstrappedServiceGroup.setName(serviceGroup.getName());
 		bootstrappedServiceGroup.setClassName(serviceGroup.getKlass().getName());
 		return bootstrappedServiceGroup;
@@ -837,7 +837,7 @@ public class KlassBootstrapWriter {
 	) {
 		var bootstrappedParameter = bootstrappedParametersByParameter.get(parameter);
 
-		UrlParameter bootstrappedUrlParameter = new UrlParameter();
+		var bootstrappedUrlParameter = new UrlParameter();
 		bootstrappedUrlParameter.setParameter(bootstrappedParameter);
 		bootstrappedUrlParameter.setServiceGroupName(url.getServiceGroup().getName());
 		bootstrappedUrlParameter.setUrlString(url.getUrlString());
@@ -853,7 +853,7 @@ public class KlassBootstrapWriter {
 		var bootstrappedParameter = bootstrappedParametersByParameter.get(parameter);
 
 		PrimitiveType primitiveType = (PrimitiveType) parameter.getType();
-		PrimitiveParameter bootstrappedPrimitiveParameter = new PrimitiveParameter();
+		var bootstrappedPrimitiveParameter = new PrimitiveParameter();
 		bootstrappedPrimitiveParameter.setPrimitiveType(primitiveType.getPrettyName());
 		bootstrappedPrimitiveParameter.setId(bootstrappedParameter.getId());
 
@@ -867,7 +867,7 @@ public class KlassBootstrapWriter {
 		var bootstrappedParameter = bootstrappedParametersByParameter.get(parameter);
 
 		Enumeration enumeration = (Enumeration) parameter.getType();
-		EnumerationParameter bootstrappedEnumerationParameter = new EnumerationParameter();
+		var bootstrappedEnumerationParameter = new EnumerationParameter();
 		bootstrappedEnumerationParameter.setEnumerationName(enumeration.getName());
 		bootstrappedEnumerationParameter.setId(bootstrappedParameter.getId());
 
@@ -881,7 +881,7 @@ public class KlassBootstrapWriter {
 		Url url = service.getUrl();
 		ServiceGroup serviceGroup = url.getServiceGroup();
 
-		klass.model.meta.domain.Service bootstrappedService = new klass.model.meta.domain.Service();
+		var bootstrappedService = new klass.model.meta.domain.Service();
 		bootstrappedService.setServiceGroupName(serviceGroup.getName());
 		bootstrappedService.setUrlString(url.getUrlString());
 		bootstrappedService.setVerb(service.getVerb().name());

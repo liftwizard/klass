@@ -120,7 +120,7 @@ public abstract class AntlrElement implements IAntlrElement {
 
 		int startIndex = start.getStartIndex();
 		int stopIndex = stop.getStopIndex();
-		Interval interval = new Interval(startIndex, stopIndex);
+		var interval = new Interval(startIndex, stopIndex);
 		return start.getInputStream().getText(interval);
 	}
 
@@ -129,7 +129,7 @@ public abstract class AntlrElement implements IAntlrElement {
 		Objects.requireNonNull(parserRuleContext.getStop());
 		int startIndex = parserRuleContext.getStart().getStartIndex();
 		int stopIndex = parserRuleContext.getStop().getStopIndex();
-		Interval interval = new Interval(startIndex, stopIndex);
+		var interval = new Interval(startIndex, stopIndex);
 		return parserRuleContext.getStart().getInputStream().getText(interval);
 	}
 

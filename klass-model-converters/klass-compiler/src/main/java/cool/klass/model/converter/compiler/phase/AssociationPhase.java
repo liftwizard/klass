@@ -113,7 +113,7 @@ public class AssociationPhase extends ReferencePropertyPhase {
 		super.enterAssociationEndModifier(ctx);
 
 		Objects.requireNonNull(this.associationEnd);
-		AntlrModifier antlrAssociationEndModifier = new AntlrModifier(
+		var antlrAssociationEndModifier = new AntlrModifier(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			this.associationEnd.getNumModifiers() + 1,

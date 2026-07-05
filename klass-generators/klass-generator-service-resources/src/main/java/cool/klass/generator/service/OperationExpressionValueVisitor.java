@@ -165,7 +165,7 @@ public class OperationExpressionValueVisitor implements ExpressionValueVisitor {
 
 	@Nonnull
 	private String getLiteralString(@Nonnull LiteralValue literalValue) {
-		StringBuilder stringBuilder = new StringBuilder();
+		var stringBuilder = new StringBuilder();
 		literalValue.visit(new OperationExpressionValueVisitor(this.finderName, stringBuilder));
 		return stringBuilder.toString();
 	}

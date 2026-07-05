@@ -196,7 +196,7 @@ public class QuestionResourceManual {
 		DataTypeProperty idProperty = klass.getDataTypePropertyByName("id");
 		ImmutableMap<DataTypeProperty, Object> propertyDataFromUrl = Maps.immutable.with(idProperty, id);
 
-		MutationContext mutationContext = new MutationContext(userId, transactionInstant, propertyDataFromUrl);
+		var mutationContext = new MutationContext(userId, transactionInstant, propertyDataFromUrl);
 
 		Klass userKlass = this.domainModel.getUserClass().get();
 		IncomingUpdateDataModelValidator.validate(
@@ -214,7 +214,7 @@ public class QuestionResourceManual {
 			throw new BadRequestException("Incoming data failed validation.", response);
 		}
 
-		PersistentReplacer replacer = new PersistentReplacer(mutationContext, this.dataStore);
+		var replacer = new PersistentReplacer(mutationContext, this.dataStore);
 		replacer.synchronize(klass, persistentInstance, incomingInstance);
 
 		Projection projection = this.domainModel.getProjectionByName("QuestionReadProjection");
@@ -457,7 +457,7 @@ public class QuestionResourceManual {
 		Optional<String> userId = Optional.of(userPrincipalName);
 
 		Instant transactionInstant = this.clock.instant();
-		MutationContext mutationContext = new MutationContext(userId, transactionInstant, Maps.immutable.empty());
+		var mutationContext = new MutationContext(userId, transactionInstant, Maps.immutable.empty());
 
 		Klass userKlass = this.domainModel.getUserClass().get();
 		IncomingCreateDataModelValidator.validate(
@@ -481,10 +481,10 @@ public class QuestionResourceManual {
 		Question persistentInstance = MithraManagerProvider.getMithraManager().executeTransactionalCommand((tx) -> {
 				tx.setProcessingStartTime(transactionInstant.toEpochMilli());
 
-				Question question = new Question();
+				var question = new Question();
 				question.generateAndSetId();
 
-				PersistentCreator creator = new PersistentCreator(mutationContext, this.dataStore);
+				var creator = new PersistentCreator(mutationContext, this.dataStore);
 				creator.synchronize(klass, question, incomingInstance);
 				question.insert();
 				return question;

@@ -65,7 +65,7 @@ public abstract class AbstractCreateValidatorTest extends AbstractValidatorTest 
 			this.getMode()
 		);
 
-		MutationContext mutationContext = new MutationContext(
+		var mutationContext = new MutationContext(
 			Optional.of("test user 1"),
 			Instant.parse("1999-12-31T23:59:59.999Z"),
 			propertyDataFromUrl

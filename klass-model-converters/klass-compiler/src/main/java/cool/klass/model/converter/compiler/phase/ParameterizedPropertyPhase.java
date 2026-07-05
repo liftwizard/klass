@@ -209,7 +209,7 @@ public class ParameterizedPropertyPhase extends ReferencePropertyPhase {
 		}
 
 		int ordinal = this.parameter.getNumModifiers();
-		AntlrModifier modifier = new AntlrModifier(
+		var modifier = new AntlrModifier(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			ordinal,

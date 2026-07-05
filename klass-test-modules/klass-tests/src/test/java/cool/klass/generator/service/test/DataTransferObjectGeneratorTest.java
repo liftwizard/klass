@@ -53,7 +53,7 @@ public class DataTransferObjectGeneratorTest {
 			"example.klass",
 			sourceCodeText
 		);
-		KlassCompiler compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("dark"));
+		var compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("dark"));
 		CompilationResult compilationResult = compiler.compile();
 
 		if (compilationResult.domainModelWithSourceCode().isEmpty()) {
@@ -64,7 +64,7 @@ public class DataTransferObjectGeneratorTest {
 			DomainModelWithSourceCode domainModel = compilationResult.domainModelWithSourceCode().get();
 			assertThat(domainModel).isNotNull();
 
-			DataTransferObjectsGenerator dataTransferObjectsGenerator = new DataTransferObjectsGenerator(domainModel);
+			var dataTransferObjectsGenerator = new DataTransferObjectsGenerator(domainModel);
 
 			Klass klass = domainModel.getClassByName("Question");
 			String klassSourceCode = dataTransferObjectsGenerator.getClassSourceCode(klass);

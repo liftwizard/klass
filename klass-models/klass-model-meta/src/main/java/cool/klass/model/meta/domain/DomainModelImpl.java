@@ -488,7 +488,7 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 		}
 
 		private DomainModelDeclarations getDomainModelDeclarations(ImmutableList<TopLevelElement> topLevelElements) {
-			DomainModelDeclarations domainModelDeclarations = new DomainModelDeclarations();
+			var domainModelDeclarations = new DomainModelDeclarations();
 			for (TopLevelElement topLevelElement : topLevelElements) {
 				topLevelElement.visit(new DomainModelDeclarationsTopLevelElementVisitor(domainModelDeclarations));
 			}
@@ -496,7 +496,7 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 		}
 
 		private DomainModelReferences getDomainModelReferences(ImmutableList<TopLevelElement> topLevelElements) {
-			DomainModelReferences domainModelReferences = new DomainModelReferences();
+			var domainModelReferences = new DomainModelReferences();
 			for (TopLevelElement topLevelElement : topLevelElements) {
 				topLevelElement.visit(new DomainModelReferencesTopLevelElementVisitor(domainModelReferences));
 			}

@@ -51,7 +51,7 @@ public class GenerateReactPropTypesMojo extends AbstractGenerateMojo {
 	public void execute() throws MojoExecutionException {
 		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
 				DomainModel domainModel = this.getDomainModel();
-				ReactPropTypeGenerator propTypeGenerator = new ReactPropTypeGenerator(domainModel);
+				var propTypeGenerator = new ReactPropTypeGenerator(domainModel);
 				propTypeGenerator.writePropTypes(this.outputDirectory.toPath());
 				return null;
 			});
@@ -60,7 +60,7 @@ public class GenerateReactPropTypesMojo extends AbstractGenerateMojo {
 			this.getLog().info("Generated React prop types in: " + this.outputDirectory.getPath());
 		}
 
-		Resource resource = new Resource();
+		var resource = new Resource();
 		resource.setDirectory(this.outputDirectory.getAbsolutePath());
 		// TODO: Should be based on the output path
 		resource.setTargetPath("react-prop-types");

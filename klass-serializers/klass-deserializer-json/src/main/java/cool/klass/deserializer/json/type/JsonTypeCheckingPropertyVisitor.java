@@ -142,7 +142,7 @@ public record JsonTypeCheckingPropertyVisitor(
 					validator.validateIncomingData();
 				});
 		} else if (multiplicity.isToMany()) {
-			ArrayNodeTypeCheckingValidator jsonTypeCheckingValidator = new ArrayNodeTypeCheckingValidator(
+			var jsonTypeCheckingValidator = new ArrayNodeTypeCheckingValidator(
 				this.contextStack,
 				associationEnd,
 				associationEnd.getType(),

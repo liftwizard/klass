@@ -63,7 +63,7 @@ public class ReladomoResponseBundle implements PrioritizedBundle {
 
 		JsonSerializer<KlassResponse> serializer = new KlassResponseReladomoJsonSerializer(domainModel, dataStore);
 
-		SimpleModule module = new SimpleModule();
+		var module = new SimpleModule();
 		module.addSerializer(KlassResponse.class, serializer);
 		objectMapper.registerModule(module);
 

@@ -39,12 +39,12 @@ public class ReladomoClassListGenerator extends AbstractReladomoGenerator {
 	}
 
 	public void writeClassListFile(@Nonnull Path path) throws IOException {
-		MithraGeneratorMarshaller mithraGeneratorMarshaller = new MithraGeneratorMarshaller();
+		var mithraGeneratorMarshaller = new MithraGeneratorMarshaller();
 		mithraGeneratorMarshaller.setIndent(true);
 
 		Mithra mithra = this.generateMithra();
 
-		StringBuilder stringBuilder = new StringBuilder();
+		var stringBuilder = new StringBuilder();
 		mithraGeneratorMarshaller.marshall(stringBuilder, mithra);
 		String xmlString = this.sanitizeXmlString(stringBuilder);
 
@@ -67,7 +67,7 @@ public class ReladomoClassListGenerator extends AbstractReladomoGenerator {
 			.collect(NamedElement::getName)
 			.collect(this::getInterfaceResource);
 
-		Mithra mithra = new Mithra();
+		var mithra = new Mithra();
 		mithra.setMithraObjectResources(objectResources.castToList());
 		mithra.setMithraPureObjectResources(pureObjectResources.castToList());
 		mithra.setMithraInterfaceResources(interfaceResources.castToList());
@@ -76,21 +76,21 @@ public class ReladomoClassListGenerator extends AbstractReladomoGenerator {
 
 	@Nonnull
 	private MithraObjectResourceType getObjectResource(String className) {
-		MithraObjectResourceType objectResource = new MithraObjectResourceType();
+		var objectResource = new MithraObjectResourceType();
 		objectResource.setName(className);
 		return objectResource;
 	}
 
 	@Nonnull
 	private MithraPureObjectResourceType getPureObjectResource(String className) {
-		MithraPureObjectResourceType pureObjectResource = new MithraPureObjectResourceType();
+		var pureObjectResource = new MithraPureObjectResourceType();
 		pureObjectResource.setName(className);
 		return pureObjectResource;
 	}
 
 	@Nonnull
 	private MithraInterfaceResourceType getInterfaceResource(String interfaceName) {
-		MithraInterfaceResourceType interfaceResource = new MithraInterfaceResourceType();
+		var interfaceResource = new MithraInterfaceResourceType();
 		interfaceResource.setName(interfaceName);
 		return interfaceResource;
 	}

@@ -54,7 +54,7 @@ public class GenerateRelationalSchemaMojo extends AbstractGenerateMojo {
 				DomainModel domainModel = this.getDomainModel();
 				Path outputPath = this.outputDirectory.toPath();
 
-				RelationalSchemaGenerator generator = new RelationalSchemaGenerator(domainModel);
+				var generator = new RelationalSchemaGenerator(domainModel);
 				try {
 					generator.writeRelationalSchema(outputPath);
 				} catch (RuntimeException e) {
@@ -67,7 +67,7 @@ public class GenerateRelationalSchemaMojo extends AbstractGenerateMojo {
 			this.getLog().info("Generated relational schema in: " + this.outputDirectory.getPath());
 		}
 
-		Resource resource = new Resource();
+		var resource = new Resource();
 		resource.setDirectory(this.outputDirectory.getAbsolutePath());
 		// TODO: Should be based on the output path
 		this.mavenProject.addResource(resource);
