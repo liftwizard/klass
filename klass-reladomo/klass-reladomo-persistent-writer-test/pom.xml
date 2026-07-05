@@ -104,7 +104,6 @@
         <dependency>
             <groupId>io.liftwizard</groupId>
             <artifactId>liftwizard-reladomo-csv-test-extension</artifactId>
-            <version>${liftwizard.version}</version>
             <scope>test</scope>
         </dependency>
 

@@ -31,24 +31,6 @@
         <dependencies>
 
             <dependency>
-                <groupId>com.graphql-java-kickstart</groupId>
-                <artifactId>graphql-java-kickstart-javax</artifactId>
-                <version>16.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.graphql-java-kickstart</groupId>
-                <artifactId>graphql-java-servlet-javax</artifactId>
-                <version>16.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.antlr</groupId>
-                <artifactId>antlr4-runtime</artifactId>
-                <version>4.9.3</version>
-            </dependency>
-
-            <dependency>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>animal-sniffer-annotations</artifactId>
                 <version>1.27</version>
@@ -94,13 +76,6 @@
                 <groupId>org.fusesource.jansi</groupId>
                 <artifactId>jansi</artifactId>
                 <version>2.4.3</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.glassfish.jaxb</groupId>
-                <artifactId>jaxb-runtime</artifactId>
-                <version>4.0.9</version>
-                <scope>runtime</scope>
             </dependency>
 
         </dependencies>
