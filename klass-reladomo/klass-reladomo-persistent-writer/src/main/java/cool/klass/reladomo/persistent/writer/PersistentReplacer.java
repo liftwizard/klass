@@ -80,10 +80,7 @@ public class PersistentReplacer extends PersistentSynchronizer {
 			.getDataTypeProperties()
 			.select(DataTypeProperty::isVersion)
 			.getOnly();
-		Integer versionNumber = (Integer) this.dataStore.getDataTypeProperty(
-			versionPersistentInstance,
-			versionProperty
-		);
+		var versionNumber = (Integer) this.dataStore.getDataTypeProperty(versionPersistentInstance, versionProperty);
 		this.dataStore.setDataTypeProperty(versionPersistentInstance, versionProperty, versionNumber + 1);
 	}
 

@@ -78,10 +78,9 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 		KlassVisitor<AntlrExpressionValue> expressionValueVisitor = this.getExpressionValueVisitor(
 			edgePointAntlrCriteria
 		);
-		AntlrMemberReferencePath memberExpressionValue =
-			(AntlrMemberReferencePath) expressionValueVisitor.visitExpressionMemberReference(
-				ctx.expressionMemberReference()
-			);
+		var memberExpressionValue = (AntlrMemberReferencePath) expressionValueVisitor.visitExpressionMemberReference(
+			ctx.expressionMemberReference()
+		);
 		edgePointAntlrCriteria.setMemberExpressionValue(memberExpressionValue);
 		return edgePointAntlrCriteria;
 	}

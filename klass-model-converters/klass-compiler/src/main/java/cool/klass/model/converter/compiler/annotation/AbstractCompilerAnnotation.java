@@ -267,7 +267,7 @@ public abstract class AbstractCompilerAnnotation {
 
 	private void startLine(Deque<Token> currentLine, Token nextToken) {
 		int beginTokenIndex = this.getBeginTokenIndex(nextToken.getLine(), nextToken.getTokenIndex());
-		CommonTokenStream tokenStream = (CommonTokenStream) this.compilationUnit.getTokenStream();
+		var tokenStream = (CommonTokenStream) this.compilationUnit.getTokenStream();
 		List<Token> tokenRange = tokenStream.get(beginTokenIndex, nextToken.getTokenIndex() - 1);
 		MutableList<Token> tokens = tokenRange == null ? Lists.mutable.empty() : ListAdapter.adapt(tokenRange);
 		currentLine.addAll(tokens);
@@ -276,7 +276,7 @@ public abstract class AbstractCompilerAnnotation {
 
 	private void endLine(Deque<Token> currentLine, Token nextToken) {
 		int endTokenIndex = this.getEndTokenIndex(nextToken.getLine(), nextToken.getTokenIndex());
-		CommonTokenStream tokenStream = (CommonTokenStream) this.compilationUnit.getTokenStream();
+		var tokenStream = (CommonTokenStream) this.compilationUnit.getTokenStream();
 		List<Token> tokenRange = tokenStream.get(endTokenIndex, nextToken.getTokenIndex() - 1);
 		MutableList<Token> tokens = tokenRange == null ? Lists.mutable.empty() : ListAdapter.adapt(tokenRange);
 		currentLine.add(nextToken);
@@ -333,7 +333,7 @@ public abstract class AbstractCompilerAnnotation {
 		int startTokenIndex = startToken.getTokenIndex();
 		int stopTokenIndex = stopToken.getTokenIndex();
 
-		CommonTokenStream tokenStream = (CommonTokenStream) this.compilationUnit.getTokenStream();
+		var tokenStream = (CommonTokenStream) this.compilationUnit.getTokenStream();
 
 		List<Token> tokens = tokenStream.get(startTokenIndex, stopTokenIndex);
 		return Lists.immutable.withAll(tokens);

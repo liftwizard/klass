@@ -57,7 +57,7 @@ public class DomainModelDeclarationsTopLevelElementVisitor implements TopLevelEl
 
 	@Override
 	public void visitEnumeration(Enumeration enumeration) {
-		EnumerationWithSourceCode element = (EnumerationWithSourceCode) enumeration;
+		var element = (EnumerationWithSourceCode) enumeration;
 		EnumerationDeclarationContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addEnumerationDeclaration(declaration, element);
 
@@ -67,14 +67,14 @@ public class DomainModelDeclarationsTopLevelElementVisitor implements TopLevelEl
 	}
 
 	private void visitEnumerationLiteral(EnumerationLiteral enumerationLiteral) {
-		EnumerationLiteralWithSourceCode element = (EnumerationLiteralWithSourceCode) enumerationLiteral;
+		var element = (EnumerationLiteralWithSourceCode) enumerationLiteral;
 		EnumerationLiteralContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addEnumerationLiteralDeclaration(declaration, element);
 	}
 
 	@Override
 	public void visitInterface(Interface anInterface) {
-		InterfaceWithSourceCode element = (InterfaceWithSourceCode) anInterface;
+		var element = (InterfaceWithSourceCode) anInterface;
 		InterfaceDeclarationContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addInterfaceDeclaration(declaration, element);
 
@@ -83,7 +83,7 @@ public class DomainModelDeclarationsTopLevelElementVisitor implements TopLevelEl
 
 	@Override
 	public void visitKlass(Klass klass) {
-		KlassWithSourceCode element = (KlassWithSourceCode) klass;
+		var element = (KlassWithSourceCode) klass;
 		ClassDeclarationContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addKlassDeclaration(declaration, element);
 
@@ -99,7 +99,7 @@ public class DomainModelDeclarationsTopLevelElementVisitor implements TopLevelEl
 
 	@Override
 	public void visitAssociation(Association association) {
-		AssociationWithSourceCode element = (AssociationWithSourceCode) association;
+		var element = (AssociationWithSourceCode) association;
 		AssociationDeclarationContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addAssociationDeclaration(declaration, element);
 		// Don't need to visit association ends. We get those on the Classifier.
@@ -107,14 +107,14 @@ public class DomainModelDeclarationsTopLevelElementVisitor implements TopLevelEl
 
 	@Override
 	public void visitProjection(Projection projection) {
-		ProjectionWithSourceCode element = (ProjectionWithSourceCode) projection;
+		var element = (ProjectionWithSourceCode) projection;
 		ProjectionDeclarationContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addProjectionDeclaration(declaration, element);
 	}
 
 	@Override
 	public void visitServiceGroup(ServiceGroup serviceGroup) {
-		ServiceGroupWithSourceCode element = (ServiceGroupWithSourceCode) serviceGroup;
+		var element = (ServiceGroupWithSourceCode) serviceGroup;
 		ServiceGroupDeclarationContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addServiceGroupDeclaration(declaration, element);
 	}

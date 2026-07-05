@@ -88,13 +88,13 @@ public class ReladomoTreeObjectToMapSerializerListener implements ReladomoTreeNo
 
 	@Override
 	public void enterListIndex(int index) {
-		MutableList<Object> resultNode = (MutableList<Object>) this.resultNodeStack.peek();
+		var resultNode = (MutableList<Object>) this.resultNodeStack.peek();
 
 		Object persistentInstance = this.persistentInstanceStack.peek();
 		if (!(persistentInstance instanceof List)) {
 			throw new AssertionError("Expected List but found: " + persistentInstance.getClass().getCanonicalName());
 		}
-		List<Object> persistentList = (List<Object>) persistentInstance;
+		var persistentList = (List<Object>) persistentInstance;
 		Object nextPersistentInstance = persistentList.get(index);
 
 		MutableMap<String, Object> nextResultNode = MapAdapter.adapt(new LinkedHashMap<>());
@@ -161,7 +161,7 @@ public class ReladomoTreeObjectToMapSerializerListener implements ReladomoTreeNo
 			return;
 		}
 
-		MutableMap<String, Object> resultNode = (MutableMap<String, Object>) this.resultNodeStack.peek();
+		var resultNode = (MutableMap<String, Object>) this.resultNodeStack.peek();
 
 		Object data = this.dataStore.getDataTypeProperty(persistentInstance, dataTypeProperty);
 		if (data == null) {
@@ -183,9 +183,7 @@ public class ReladomoTreeObjectToMapSerializerListener implements ReladomoTreeNo
 		Klass superClass = superClassReladomoTreeNode.getType();
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(superClass.getName()) + "SuperClass";
 		RelatedFinder<?> relatedFinder = this.finderStack.peek();
-		AbstractRelatedFinder nextFinder = (AbstractRelatedFinder) relatedFinder.getRelationshipFinderByName(
-			relationshipName
-		);
+		var nextFinder = (AbstractRelatedFinder) relatedFinder.getRelationshipFinderByName(relationshipName);
 		Object persistentInstance = this.persistentInstanceStack.peek();
 
 		Object superClassPersistentInstance = this.dataStore.getSuperClass(persistentInstance, owningClassifier);
@@ -208,9 +206,7 @@ public class ReladomoTreeObjectToMapSerializerListener implements ReladomoTreeNo
 		Klass subClass = subClassReladomoTreeNode.getType();
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(subClass.getName()) + "SubClass";
 		RelatedFinder<?> relatedFinder = this.finderStack.peek();
-		AbstractRelatedFinder nextFinder = (AbstractRelatedFinder) relatedFinder.getRelationshipFinderByName(
-			relationshipName
-		);
+		var nextFinder = (AbstractRelatedFinder) relatedFinder.getRelationshipFinderByName(relationshipName);
 		Object persistentInstance = this.persistentInstanceStack.peek();
 
 		Object subClassPersistentInstance = this.dataStore.getSubClassPersistentInstance(
@@ -220,7 +216,7 @@ public class ReladomoTreeObjectToMapSerializerListener implements ReladomoTreeNo
 		);
 
 		if (subClassPersistentInstance != null) {
-			MutableMap<String, Object> resultNode = (MutableMap<String, Object>) this.resultNodeStack.peek();
+			var resultNode = (MutableMap<String, Object>) this.resultNodeStack.peek();
 			resultNode.put("__typeName", subClass.getName());
 		}
 
@@ -245,12 +241,10 @@ public class ReladomoTreeObjectToMapSerializerListener implements ReladomoTreeNo
 
 		String propertyName = referenceProperty.getName();
 		RelatedFinder<?> relatedFinder = this.finderStack.peek();
-		AbstractRelatedFinder nextFinder = (AbstractRelatedFinder) relatedFinder.getRelationshipFinderByName(
-			propertyName
-		);
+		var nextFinder = (AbstractRelatedFinder) relatedFinder.getRelationshipFinderByName(propertyName);
 		this.finderStack.push(nextFinder);
 		Object persistentInstance = this.persistentInstanceStack.peek();
-		MutableMap<String, Object> resultNode = (MutableMap<String, Object>) this.resultNodeStack.peek();
+		var resultNode = (MutableMap<String, Object>) this.resultNodeStack.peek();
 		Object nextPersistentInstance = this.dataStore.get(persistentInstance, referenceProperty);
 		this.persistentInstanceStack.push(nextPersistentInstance);
 
@@ -278,7 +272,7 @@ public class ReladomoTreeObjectToMapSerializerListener implements ReladomoTreeNo
 
 			this.resultNodeStack.push(nextResultNode);
 
-			List<Object> toMany = (List<Object>) nextPersistentInstance;
+			var toMany = (List<Object>) nextPersistentInstance;
 
 			return Optional.of(toMany.size());
 		}

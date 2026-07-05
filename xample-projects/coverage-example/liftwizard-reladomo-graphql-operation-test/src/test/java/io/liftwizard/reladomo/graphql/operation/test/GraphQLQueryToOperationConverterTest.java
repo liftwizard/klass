@@ -577,7 +577,7 @@ public class GraphQLQueryToOperationConverterTest {
 			Object inputOrderBy = arguments.get("orderBy");
 
 			Operation operation = this.getOperation((Map<?, ?>) inputOperation);
-			List<Map<String, ?>> inputOrderByList = (List<Map<String, ?>>) inputOrderBy;
+			var inputOrderByList = (List<Map<String, ?>>) inputOrderBy;
 			Optional<OrderBy> orderBy = this.getOrderBys(inputOrderByList);
 			assertThat(operation).isNotNull();
 			if (!inputOrderByList.isEmpty()) {

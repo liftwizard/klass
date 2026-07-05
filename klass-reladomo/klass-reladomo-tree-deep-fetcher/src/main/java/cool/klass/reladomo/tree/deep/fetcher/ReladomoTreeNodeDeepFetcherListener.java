@@ -100,7 +100,7 @@ public class ReladomoTreeNodeDeepFetcherListener implements ReladomoTreeNodeList
 	@Override
 	public void exitSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode) {
 		RelatedFinder<?> relatedFinder = this.stack.peek();
-		Navigation<?> navigation = (Navigation<?>) relatedFinder;
+		var navigation = (Navigation<?>) relatedFinder;
 		this.domainList.deepFetch(navigation);
 		this.stack.pop();
 		this.contextStack.pop();
@@ -119,7 +119,7 @@ public class ReladomoTreeNodeDeepFetcherListener implements ReladomoTreeNodeList
 	@Override
 	public void exitSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode) {
 		RelatedFinder<?> relatedFinder = this.stack.peek();
-		Navigation<?> navigation = (Navigation<?>) relatedFinder;
+		var navigation = (Navigation<?>) relatedFinder;
 		this.domainList.deepFetch(navigation);
 		this.stack.pop();
 		this.contextStack.pop();
@@ -138,7 +138,7 @@ public class ReladomoTreeNodeDeepFetcherListener implements ReladomoTreeNodeList
 	@Override
 	public void exitReferenceProperty(ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode) {
 		RelatedFinder<?> relatedFinder = this.stack.peek();
-		Navigation<?> navigation = (Navigation<?>) relatedFinder;
+		var navigation = (Navigation<?>) relatedFinder;
 		this.domainList.deepFetch(navigation);
 		this.stack.pop();
 		this.contextStack.pop();

@@ -99,7 +99,7 @@ public final class GraphQLDeepFetcher {
 		if (!(currentFinder instanceof Navigation)) {
 			throw new IllegalStateException("Expected a navigation, but got: " + currentFinder);
 		}
-		Navigation<T> navigation = (Navigation<T>) currentFinder;
+		var navigation = (Navigation<T>) currentFinder;
 		result.deepFetch(navigation);
 	}
 }

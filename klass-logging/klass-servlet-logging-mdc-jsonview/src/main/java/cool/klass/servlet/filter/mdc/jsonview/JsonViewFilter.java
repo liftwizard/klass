@@ -39,7 +39,7 @@ public class JsonViewFilter implements ContainerRequestFilter {
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) {
-		MultiMDCCloseable mdc = (MultiMDCCloseable) requestContext.getProperty("mdc");
+		var mdc = (MultiMDCCloseable) requestContext.getProperty("mdc");
 
 		mdc.put("klass.jsonView.projectionName", String.valueOf(this.projection));
 		mdc.put("klass.jsonView.projectionClassifier", this.projection.getClassifier().getFullyQualifiedName());

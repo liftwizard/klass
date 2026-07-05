@@ -61,8 +61,7 @@ public class DomainModelReferencesPropertyVisitor implements PropertyVisitor {
 
 	@Override
 	public void visitEnumerationProperty(EnumerationProperty enumerationProperty) {
-		EnumerationPropertyWithSourceCode elementWithSourceCode =
-			(EnumerationPropertyWithSourceCode) enumerationProperty;
+		var elementWithSourceCode = (EnumerationPropertyWithSourceCode) enumerationProperty;
 		EnumerationPropertyContext elementContext = elementWithSourceCode.getElementContext();
 		EnumerationReferenceContext reference = elementContext.enumerationReference();
 		EnumerationWithSourceCode enumeration = elementWithSourceCode.getType();
@@ -72,7 +71,7 @@ public class DomainModelReferencesPropertyVisitor implements PropertyVisitor {
 
 	@Override
 	public void visitAssociationEnd(AssociationEnd associationEnd) {
-		AssociationEndWithSourceCode elementWithSourceCode = (AssociationEndWithSourceCode) associationEnd;
+		var elementWithSourceCode = (AssociationEndWithSourceCode) associationEnd;
 		AssociationEndContext elementContext = elementWithSourceCode.getElementContext();
 		ClassReferenceContext reference = elementContext.classReference();
 		KlassWithSourceCode klass = elementWithSourceCode.getType();
@@ -84,8 +83,7 @@ public class DomainModelReferencesPropertyVisitor implements PropertyVisitor {
 
 	@Override
 	public void visitAssociationEndSignature(AssociationEndSignature associationEndSignature) {
-		AssociationEndSignatureWithSourceCode elementWithSourceCode =
-			(AssociationEndSignatureWithSourceCode) associationEndSignature;
+		var elementWithSourceCode = (AssociationEndSignatureWithSourceCode) associationEndSignature;
 		AssociationEndSignatureContext elementContext = elementWithSourceCode.getElementContext();
 		ClassifierReferenceContext reference = elementContext.classifierReference();
 		ClassifierWithSourceCode classifier = elementWithSourceCode.getType();
@@ -97,8 +95,7 @@ public class DomainModelReferencesPropertyVisitor implements PropertyVisitor {
 
 	@Override
 	public void visitParameterizedProperty(ParameterizedProperty parameterizedProperty) {
-		ParameterizedPropertyWithSourceCode elementWithSourceCode =
-			(ParameterizedPropertyWithSourceCode) parameterizedProperty;
+		var elementWithSourceCode = (ParameterizedPropertyWithSourceCode) parameterizedProperty;
 		ParameterizedPropertyContext elementContext = elementWithSourceCode.getElementContext();
 		ClassReferenceContext reference = elementContext.classReference();
 		KlassWithSourceCode klass = elementWithSourceCode.getType();

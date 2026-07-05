@@ -305,7 +305,7 @@ public class ReladomoDataStore implements DataStore {
 			return;
 		}
 
-		PrimitiveProperty idProperty = (PrimitiveProperty) idProperties.getOnly();
+		var idProperty = (PrimitiveProperty) idProperties.getOnly();
 
 		if (idProperty.getType().isNumeric()) {
 			try {
@@ -417,7 +417,7 @@ public class ReladomoDataStore implements DataStore {
 		}
 
 		if (dataTypeProperty instanceof EnumerationProperty enumerationProperty) {
-			String prettyName = (String) result;
+			var prettyName = (String) result;
 			Enumeration enumeration = enumerationProperty.getType();
 
 			Optional<EnumerationLiteral> enumerationLiteral = enumeration
@@ -476,7 +476,7 @@ public class ReladomoDataStore implements DataStore {
 		}
 
 		if (dataTypeProperty instanceof EnumerationProperty enumerationProperty) {
-			String prettyName = (String) result;
+			var prettyName = (String) result;
 			Enumeration enumeration = enumerationProperty.getType();
 
 			Optional<EnumerationLiteral> enumerationLiteral = enumeration
@@ -581,9 +581,7 @@ public class ReladomoDataStore implements DataStore {
 	public Object get(Object persistentSourceInstance, @Nonnull ReferenceProperty referenceProperty) {
 		RelatedFinder<?> finder = this.getRelatedFinder(referenceProperty.getOwningClassifier());
 		String referencePropertyName = referenceProperty.getName();
-		AbstractRelatedFinder relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
-			referencePropertyName
-		);
+		var relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(referencePropertyName);
 
 		if (relationshipFinder == null) {
 			String detailMessage =
@@ -749,9 +747,7 @@ public class ReladomoDataStore implements DataStore {
 
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(subClass.getName()) + "SubClass";
 
-		AbstractRelatedFinder relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
-			relationshipName
-		);
+		var relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(relationshipName);
 
 		if (relationshipFinder == null) {
 			String detailMessage =
@@ -770,9 +766,7 @@ public class ReladomoDataStore implements DataStore {
 
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(klass.getSuperClass().get().getName()) + "SuperClass";
 
-		AbstractRelatedFinder relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
-			relationshipName
-		);
+		var relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(relationshipName);
 
 		if (relationshipFinder == null) {
 			String detailMessage =
@@ -801,9 +795,7 @@ public class ReladomoDataStore implements DataStore {
 
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(subClass.getName()) + "SubClass";
 
-		AbstractRelatedFinder relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(
-			relationshipName
-		);
+		var relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(relationshipName);
 
 		if (relationshipFinder == null) {
 			String detailMessage =
@@ -838,7 +830,7 @@ public class ReladomoDataStore implements DataStore {
 			String finderName = classifier.getFullyQualifiedName() + "Finder";
 			Class<?> finderClass = Class.forName(finderName);
 			Method getFinderMethod = finderClass.getMethod("getFinderInstance");
-			AbstractRelatedFinder result = (AbstractRelatedFinder) getFinderMethod.invoke(null);
+			var result = (AbstractRelatedFinder) getFinderMethod.invoke(null);
 			this.memoizedRelatedFinders.put(classifier, result);
 			return result;
 		} catch (@Nonnull ReflectiveOperationException | IllegalArgumentException | SecurityException e) {
