@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class SwaggerSpecResourceTest extends AbstractCoverageTest {
+class SwaggerSpecResourceTest extends AbstractCoverageTest {
 
 	@Test
 	void swagger_spec_is_served() throws Exception {

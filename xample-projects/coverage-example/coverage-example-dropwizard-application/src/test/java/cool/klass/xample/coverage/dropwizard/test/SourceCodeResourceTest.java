@@ -25,7 +25,7 @@ import io.liftwizard.junit.extension.match.file.FileMatchExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class SourceCodeResourceTest extends AbstractCoverageTest {
+class SourceCodeResourceTest extends AbstractCoverageTest {
 
 	@RegisterExtension
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
