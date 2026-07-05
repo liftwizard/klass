@@ -111,7 +111,7 @@ public class ReladomoTreeNodeToManyAwareWalkerVisitor implements ReladomoTreeNod
 		}
 
 		Integer numChildren = maybeNumChildren.get();
-		for (int i = 0; i < numChildren; i++) {
+		for (var i = 0; i < numChildren; i++) {
 			this.listener.enterListIndex(i);
 			node.getChildren().forEachKeyValue((name, child) -> child.visit(this));
 			this.listener.exitListIndex(i);

@@ -188,7 +188,7 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
 		ImmutableList<AssociationEnd> associationEnds = klass.getDeclaredAssociationEnds();
 
 		for (AssociationEnd associationEnd : associationEnds) {
-			int count = 0;
+			var count = 0;
 			if (this.isForwardRelationship(associationEnd)) {
 				count++;
 			}

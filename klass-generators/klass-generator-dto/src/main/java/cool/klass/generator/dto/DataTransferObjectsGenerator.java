@@ -266,7 +266,7 @@ public class DataTransferObjectsGenerator {
 		Multiplicity multiplicity = associationEnd.getMultiplicity();
 
 		// TODO: NotNull shouldn't apply if the ONE_TO_ONE is a version association end.
-		String annotation = "";
+		var annotation = "";
 		// String annotation = multiplicity.isToMany() || multiplicity == Multiplicity.ONE_TO_ONE ? "    @NotNull\n" : "";
 		String type = this.getType(associationEnd.getType(), multiplicity);
 		return String.format("%s    private %s %s;%n", annotation, type, associationEnd.getName());

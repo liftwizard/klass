@@ -39,7 +39,7 @@ class ColorSchemeValidationTest {
 
 	@Test
 	void validScheme() {
-		String json = """
+		var json = """
 			{
 			  "name": "test",
 			  "description": "Valid test color scheme",
@@ -73,7 +73,7 @@ class ColorSchemeValidationTest {
 
 	@Test
 	void missingName() {
-		String json = """
+		var json = """
 			{
 			  "name": "",
 			  "description": "Invalid test color scheme",
@@ -103,7 +103,7 @@ class ColorSchemeValidationTest {
 
 	@Test
 	void missingDescription() {
-		String json = """
+		var json = """
 			{
 			  "name": "test",
 			  "description": null,
@@ -133,7 +133,7 @@ class ColorSchemeValidationTest {
 
 	@Test
 	void emptyRules() {
-		String json = """
+		var json = """
 			{
 			  "name": "test",
 			  "description": "Test scheme",
@@ -159,7 +159,7 @@ class ColorSchemeValidationTest {
 
 	@Test
 	void noBackgroundRule() {
-		String json = """
+		var json = """
 			{
 			  "name": "test",
 			  "description": "Test scheme",
@@ -189,7 +189,7 @@ class ColorSchemeValidationTest {
 
 	@Test
 	void invalidColorName() {
-		String json = """
+		var json = """
 			{
 			  "name": "test",
 			  "description": "Test scheme",
@@ -243,7 +243,7 @@ class ColorSchemeValidationTest {
 
 	@Test
 	void invalidHexColor() {
-		String json = """
+		var json = """
 			{
 			  "name": "test",
 			  "description": "Test scheme",
@@ -279,7 +279,7 @@ class ColorSchemeValidationTest {
 
 	@Test
 	void invalidNumericColor() {
-		String json = """
+		var json = """
 			{
 			  "name": "test",
 			  "description": "Test scheme",
@@ -315,7 +315,7 @@ class ColorSchemeValidationTest {
 
 	@Test
 	void invalidRuleName() {
-		String json = """
+		var json = """
 			{
 			  "name": "test",
 			  "description": "Test scheme with invalid rule name",
@@ -351,7 +351,7 @@ class ColorSchemeValidationTest {
 
 	@Test
 	void multipleInvalidRuleNames() {
-		String json = """
+		var json = """
 			{
 			  "name": "test",
 			  "description": "Test scheme with multiple invalid rule names",
@@ -393,7 +393,7 @@ class ColorSchemeValidationTest {
 
 	@Test
 	void invalidJson() {
-		String json = """
+		var json = """
 			{
 			  "name": "",
 			  "description": null,

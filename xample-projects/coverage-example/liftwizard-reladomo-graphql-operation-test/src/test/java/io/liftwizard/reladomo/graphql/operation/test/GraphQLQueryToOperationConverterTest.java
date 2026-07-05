@@ -64,7 +64,7 @@ public class GraphQLQueryToOperationConverterTest {
 	@Test
 	void convertQueries() {
 		// language=GraphQL
-		String query = """
+		var query = """
 			{
 			  propertiesOptionalByFinder(
 			    operation: {

@@ -140,7 +140,7 @@ public class KlassSourceCodeHtmlGenerator {
 			.makeString("");
 
 		// language=HTML
-		String prefix = """
+		var prefix = """
 			<html>
 				<head>
 					<link rel="stylesheet" type="text/css" href="/static/css/light.css" media="(prefers-color-scheme: light)" />

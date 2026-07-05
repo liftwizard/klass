@@ -84,7 +84,7 @@ class SyntaxHighlighterListenerTest {
 		AnsiColorScheme colorScheme = ColorSchemeProvider.getByName(schemeName);
 		Stopwatch lexerStopwatch = Stopwatch.createStarted();
 		String sourceCodeText = FileSlurper.slurp("/com/stackoverflow/stackoverflow.klass", this.getClass());
-		String sourceName = "example.klass";
+		var sourceName = "example.klass";
 		CodePointCharStream charStream = CharStreams.fromString(sourceCodeText, sourceName);
 		var lexer = new KlassLexer(charStream);
 		lexer.addErrorListener(THROWING_ERROR_LISTENER);

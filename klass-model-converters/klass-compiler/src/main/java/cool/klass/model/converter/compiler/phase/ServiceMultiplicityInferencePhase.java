@@ -47,7 +47,7 @@ public class ServiceMultiplicityInferencePhase extends AbstractCompilerPhase {
 		if (service.getServiceMultiplicity() != null) {
 			return;
 		}
-		String sourceCodeText = "            multiplicity: one;\n";
+		var sourceCodeText = "            multiplicity: one;\n";
 		this.runCompilerMacro(inPlaceContext, sourceCodeText);
 	}
 

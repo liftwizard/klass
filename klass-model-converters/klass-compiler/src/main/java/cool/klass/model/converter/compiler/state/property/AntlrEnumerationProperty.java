@@ -180,7 +180,7 @@ public class AntlrEnumerationProperty extends AntlrDataTypeProperty<EnumerationI
 	protected void reportInvalidIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
 		ListIterable<AntlrModifier> idModifiers = this.getModifiersByName("id");
 		for (AntlrModifier idModifier : idModifiers) {
-			String message = "Enumeration properties may not be auto-generated ids.";
+			var message = "Enumeration properties may not be auto-generated ids.";
 			compilerAnnotationHolder.add("ERR_ENM_IDP", message, this, idModifier.getElementContext());
 		}
 	}

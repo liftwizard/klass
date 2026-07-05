@@ -91,7 +91,7 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
 		String severityColor = this.severity == AnnotationSeverity.ERROR ? "red" : "yellow";
 		String severityName = this.severity == AnnotationSeverity.ERROR ? "Error" : "Warning";
 
-		String format = """
+		var format = """
 			════════════════════════════════════════ @|magenta %s|@ ════════════════════════════════════════
 			@|%s %s: %s|@
 

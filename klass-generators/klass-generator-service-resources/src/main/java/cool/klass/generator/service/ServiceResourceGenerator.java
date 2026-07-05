@@ -1276,7 +1276,7 @@ public class ServiceResourceGenerator {
 		}
 
 		var stringBuilder = new StringBuilder();
-		for (int i = 0; i < orderBySourceCodeClauses.size(); i++) {
+		for (var i = 0; i < orderBySourceCodeClauses.size(); i++) {
 			String orderBySourceCodeClause = orderBySourceCodeClauses.get(i);
 			if (i == 0) {
 				stringBuilder.append(orderBySourceCodeClause);

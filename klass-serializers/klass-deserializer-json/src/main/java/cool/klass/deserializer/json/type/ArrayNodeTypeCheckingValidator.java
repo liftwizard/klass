@@ -77,7 +77,7 @@ public final class ArrayNodeTypeCheckingValidator {
 	}
 
 	private void validateArrayNode(@Nonnull ArrayNode arrayNode) {
-		for (int index = 0; index < arrayNode.size(); index++) {
+		for (var index = 0; index < arrayNode.size(); index++) {
 			JsonNode childJsonNode = arrayNode.path(index);
 			var contextNode = new ContextNode(this.context, index);
 			this.contextStack.runWithContext(contextNode, () -> {
