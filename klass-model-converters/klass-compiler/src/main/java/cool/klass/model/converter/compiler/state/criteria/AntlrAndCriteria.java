@@ -22,7 +22,6 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
-import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.meta.domain.criteria.AndCriteriaImpl.AndCriteriaBuilder;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaExpressionAndContext;
@@ -65,14 +64,6 @@ public class AntlrAndCriteria extends AntlrBinaryCriteria {
 	@Override
 	public AndCriteriaBuilder getElementBuilder() {
 		return Objects.requireNonNull(this.elementBuilder);
-	}
-
-	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		// TODO: Error if both clauses are identical, or if any left true subclause is a subclause of the right
-		// Java | Probable bugs | Constant conditions & exceptions
-
-		super.reportErrors(compilerAnnotationHolder);
 	}
 
 	@Override
