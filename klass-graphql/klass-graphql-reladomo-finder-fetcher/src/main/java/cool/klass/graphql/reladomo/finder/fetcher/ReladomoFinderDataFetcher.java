@@ -67,7 +67,7 @@ public class ReladomoFinderDataFetcher<T> implements DataFetcher<List<T>> {
 		Operation operation = this.getOperation((Map<?, ?>) inputOperation);
 		Object inputOrderBy = arguments.get("orderBy");
 		Optional<OrderBy> orderBys = this.getOrderBys((List<Map<String, ?>>) inputOrderBy);
-		DomainList<T> result = (DomainList<T>) this.finder.findMany(operation);
+		var result = (DomainList<T>) this.finder.findMany(operation);
 		orderBys.ifPresent(result::setOrderBy);
 
 		Klass klass = this.domainModel.getClassByName("Enumeration");

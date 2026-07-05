@@ -56,8 +56,7 @@ public class DomainModelReferencesProjectionVisitor implements ProjectionVisitor
 
 	@Override
 	public void visitProjectionReferenceProperty(ProjectionReferenceProperty projectionReferenceProperty) {
-		ProjectionReferencePropertyWithSourceCode elementWithSourceCode =
-			(ProjectionReferencePropertyWithSourceCode) projectionReferenceProperty;
+		var elementWithSourceCode = (ProjectionReferencePropertyWithSourceCode) projectionReferenceProperty;
 		ProjectionReferencePropertyContext elementContext = elementWithSourceCode.getElementContext();
 		IdentifierContext reference = elementContext.identifier();
 		ReferencePropertyWithSourceCode element = elementWithSourceCode.getProperty();
@@ -71,8 +70,7 @@ public class DomainModelReferencesProjectionVisitor implements ProjectionVisitor
 
 	@Override
 	public void visitProjectionProjectionReference(ProjectionProjectionReference projectionProjectionReference) {
-		ProjectionProjectionReferenceWithSourceCode elementWithSourceCode =
-			(ProjectionProjectionReferenceWithSourceCode) projectionProjectionReference;
+		var elementWithSourceCode = (ProjectionProjectionReferenceWithSourceCode) projectionProjectionReference;
 		ProjectionProjectionReferenceContext elementContext = elementWithSourceCode.getElementContext();
 		IdentifierContext reference = elementContext.identifier();
 		ReferencePropertyWithSourceCode element = elementWithSourceCode.getProperty();
@@ -87,8 +85,7 @@ public class DomainModelReferencesProjectionVisitor implements ProjectionVisitor
 
 	@Override
 	public void visitProjectionDataTypeProperty(ProjectionDataTypeProperty projectionDataTypeProperty) {
-		ProjectionDataTypePropertyWithSourceCode elementWithSourceCode =
-			(ProjectionDataTypePropertyWithSourceCode) projectionDataTypeProperty;
+		var elementWithSourceCode = (ProjectionDataTypePropertyWithSourceCode) projectionDataTypeProperty;
 		ProjectionPrimitiveMemberContext elementContext = elementWithSourceCode.getElementContext();
 		IdentifierContext reference = elementContext.identifier();
 		DataTypePropertyWithSourceCode element = elementWithSourceCode.getProperty();

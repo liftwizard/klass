@@ -140,7 +140,7 @@ public class ExpressionValueVisitor extends KlassBaseVisitor<AntlrExpressionValu
 	public AntlrThisMemberReferencePath visitThisMemberReferencePath(@Nonnull ThisMemberReferencePathContext ctx) {
 		MemberReferenceContext memberReferenceContext = ctx.memberReference();
 
-		AntlrClass currentClass = (AntlrClass) this.thisReference;
+		var currentClass = (AntlrClass) this.thisReference;
 		MutableList<AntlrAssociationEnd> associationEnds = Lists.mutable.empty();
 		for (AssociationEndReferenceContext associationEndReferenceContext : ctx.associationEndReference()) {
 			// TODO: Or parameterizedPropertyName?

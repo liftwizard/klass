@@ -852,7 +852,7 @@ public class KlassBootstrapWriter {
 	) {
 		var bootstrappedParameter = bootstrappedParametersByParameter.get(parameter);
 
-		PrimitiveType primitiveType = (PrimitiveType) parameter.getType();
+		var primitiveType = (PrimitiveType) parameter.getType();
 		var bootstrappedPrimitiveParameter = new PrimitiveParameter();
 		bootstrappedPrimitiveParameter.setPrimitiveType(primitiveType.getPrettyName());
 		bootstrappedPrimitiveParameter.setId(bootstrappedParameter.getId());
@@ -866,7 +866,7 @@ public class KlassBootstrapWriter {
 	) {
 		var bootstrappedParameter = bootstrappedParametersByParameter.get(parameter);
 
-		Enumeration enumeration = (Enumeration) parameter.getType();
+		var enumeration = (Enumeration) parameter.getType();
 		var bootstrappedEnumerationParameter = new EnumerationParameter();
 		bootstrappedEnumerationParameter.setEnumerationName(enumeration.getName());
 		bootstrappedEnumerationParameter.setId(bootstrappedParameter.getId());

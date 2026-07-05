@@ -48,35 +48,35 @@ public class DomainModelDeclarationsPropertyVisitor implements PropertyVisitor {
 
 	@Override
 	public void visitPrimitiveProperty(PrimitiveProperty primitiveProperty) {
-		PrimitivePropertyWithSourceCode element = (PrimitivePropertyWithSourceCode) primitiveProperty;
+		var element = (PrimitivePropertyWithSourceCode) primitiveProperty;
 		PrimitivePropertyContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addPrimitivePropertyDeclaration(declaration, element);
 	}
 
 	@Override
 	public void visitEnumerationProperty(EnumerationProperty enumerationProperty) {
-		EnumerationPropertyWithSourceCode element = (EnumerationPropertyWithSourceCode) enumerationProperty;
+		var element = (EnumerationPropertyWithSourceCode) enumerationProperty;
 		EnumerationPropertyContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addEnumerationPropertyDeclaration(declaration, element);
 	}
 
 	@Override
 	public void visitAssociationEnd(AssociationEnd associationEnd) {
-		AssociationEndWithSourceCode element = (AssociationEndWithSourceCode) associationEnd;
+		var element = (AssociationEndWithSourceCode) associationEnd;
 		AssociationEndContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addAssociationEndDeclaration(declaration, element);
 	}
 
 	@Override
 	public void visitAssociationEndSignature(AssociationEndSignature associationEndSignature) {
-		AssociationEndSignatureWithSourceCode element = (AssociationEndSignatureWithSourceCode) associationEndSignature;
+		var element = (AssociationEndSignatureWithSourceCode) associationEndSignature;
 		AssociationEndSignatureContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addAssociationEndSignatureDeclaration(declaration, element);
 	}
 
 	@Override
 	public void visitParameterizedProperty(ParameterizedProperty parameterizedProperty) {
-		ParameterizedPropertyWithSourceCode element = (ParameterizedPropertyWithSourceCode) parameterizedProperty;
+		var element = (ParameterizedPropertyWithSourceCode) parameterizedProperty;
 		ParameterizedPropertyContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addParameterizedPropertyDeclaration(declaration, element);
 		// TODO: Parameter declarations

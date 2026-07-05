@@ -74,7 +74,7 @@ public abstract class AbstractValidatorTest {
 		String incomingJsonName = this.getClass().getSimpleName() + '.' + testName + ".json5";
 		String incomingJson = FileSlurper.slurp(incomingJsonName, this.getClass());
 
-		ObjectNode incomingInstance = (ObjectNode) this.objectMapper.readTree(incomingJson);
+		var incomingInstance = (ObjectNode) this.objectMapper.readTree(incomingJson);
 		this.validate(incomingInstance, persistentInstance);
 
 		this.jsonMatchExtension.assertFileContents(

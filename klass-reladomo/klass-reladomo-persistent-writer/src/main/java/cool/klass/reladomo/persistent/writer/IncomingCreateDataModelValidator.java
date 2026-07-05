@@ -318,7 +318,7 @@ public class IncomingCreateDataModelValidator {
         */
 
 		try {
-			ObjectNode childObjectNode = (ObjectNode) childJsonNode;
+			var childObjectNode = (ObjectNode) childJsonNode;
 			var validator = new IncomingCreateDataModelValidator(
 				this.dataStore,
 				this.userKlass,
@@ -470,7 +470,7 @@ public class IncomingCreateDataModelValidator {
 				this.errors.add(error);
 			} else {
 				// validate that present properties match, if they are temporal, version, created on, created by
-				ObjectNode childObjectNode = (ObjectNode) childJsonNode;
+				var childObjectNode = (ObjectNode) childJsonNode;
 				// TODO: Add isInProject == false
 				var validator = new IncomingCreateDataModelValidator(
 					this.dataStore,
@@ -540,7 +540,7 @@ public class IncomingCreateDataModelValidator {
 				);
 				this.errors.add(error);
 			}
-			ObjectNode childObjectNode = (ObjectNode) childJsonNode;
+			var childObjectNode = (ObjectNode) childJsonNode;
 			var validator = new IncomingCreateDataModelValidator(
 				this.dataStore,
 				this.userKlass,
@@ -593,7 +593,7 @@ public class IncomingCreateDataModelValidator {
                 }
                 */
 
-				ObjectNode childObjectNode = (ObjectNode) childJsonNode;
+				var childObjectNode = (ObjectNode) childJsonNode;
 				var validator = new IncomingCreateDataModelValidator(
 					this.dataStore,
 					this.userKlass,

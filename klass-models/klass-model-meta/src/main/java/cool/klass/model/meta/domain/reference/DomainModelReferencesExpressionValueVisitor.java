@@ -57,8 +57,7 @@ public class DomainModelReferencesExpressionValueVisitor implements ExpressionVa
 
 	@Override
 	public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue) {
-		TypeMemberReferencePathWithSourceCode elementWithSourceCode =
-			(TypeMemberReferencePathWithSourceCode) typeMemberExpressionValue;
+		var elementWithSourceCode = (TypeMemberReferencePathWithSourceCode) typeMemberExpressionValue;
 		TypeMemberReferencePathContext elementContext = elementWithSourceCode.getElementContext();
 
 		ClassReferenceContext classReference = elementContext.classReference();
@@ -84,8 +83,7 @@ public class DomainModelReferencesExpressionValueVisitor implements ExpressionVa
 
 	@Override
 	public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue) {
-		ThisMemberReferencePathWithSourceCode elementWithSourceCode =
-			(ThisMemberReferencePathWithSourceCode) thisMemberExpressionValue;
+		var elementWithSourceCode = (ThisMemberReferencePathWithSourceCode) thisMemberExpressionValue;
 		ThisMemberReferencePathContext elementContext = elementWithSourceCode.getElementContext();
 
 		List<AssociationEndReferenceContext> associationEndReferenceContexts = elementContext.associationEndReference();
@@ -137,9 +135,9 @@ public class DomainModelReferencesExpressionValueVisitor implements ExpressionVa
 
 	@Override
 	public void visitUserLiteral(@Nonnull UserLiteral userLiteral) {
-		ElementWithSourceCode elementWithSourceCode = (ElementWithSourceCode) userLiteral;
+		var elementWithSourceCode = (ElementWithSourceCode) userLiteral;
 		ParserRuleContext reference = elementWithSourceCode.getElementContext();
-		KlassWithSourceCode element = (KlassWithSourceCode) userLiteral.getUserClass();
+		var element = (KlassWithSourceCode) userLiteral.getUserClass();
 		this.domainModelReferences.addUserReference(reference, element);
 	}
 

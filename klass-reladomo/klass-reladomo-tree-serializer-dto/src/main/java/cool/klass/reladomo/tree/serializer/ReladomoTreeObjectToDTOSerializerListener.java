@@ -99,12 +99,12 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 			throw new AssertionError(detailMessage);
 		}
 
-		List<Object> persistentList = (List<Object>) persistentInstance;
+		var persistentList = (List<Object>) persistentInstance;
 		Object nextPersistentInstance = persistentList.get(index);
 		Classifier classifierFromContext = this.getClassifierFromPersistentInstance(nextPersistentInstance);
 		Object nextResultNode = this.instantiateDTO(classifierFromContext);
 
-		MutableList<Object> resultNode = (MutableList<Object>) this.resultNodeStack.peek();
+		var resultNode = (MutableList<Object>) this.resultNodeStack.peek();
 		resultNode.add(nextResultNode);
 
 		this.contextStack.push(index);
@@ -181,9 +181,7 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 		Klass superClass = superClassReladomoTreeNode.getType();
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(superClass.getName()) + "SuperClass";
 		RelatedFinder<?> relatedFinder = this.finderStack.peek();
-		AbstractRelatedFinder nextFinder = (AbstractRelatedFinder) relatedFinder.getRelationshipFinderByName(
-			relationshipName
-		);
+		var nextFinder = (AbstractRelatedFinder) relatedFinder.getRelationshipFinderByName(relationshipName);
 		Object persistentInstance = this.persistentInstanceStack.peek();
 
 		Object superClassPersistentInstance = this.dataStore.getSuperClass(persistentInstance, owningClassifier);
@@ -206,9 +204,7 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 		Klass subClass = subClassReladomoTreeNode.getType();
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(subClass.getName()) + "SubClass";
 		RelatedFinder<?> relatedFinder = this.finderStack.peek();
-		AbstractRelatedFinder nextFinder = (AbstractRelatedFinder) relatedFinder.getRelationshipFinderByName(
-			relationshipName
-		);
+		var nextFinder = (AbstractRelatedFinder) relatedFinder.getRelationshipFinderByName(relationshipName);
 		Object persistentInstance = this.persistentInstanceStack.peek();
 
 		Object subClassPersistentInstance = this.dataStore.getSubClassPersistentInstance(
@@ -238,9 +234,7 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 
 		String propertyName = referenceProperty.getName();
 		RelatedFinder<?> relatedFinder = this.finderStack.peek();
-		AbstractRelatedFinder nextFinder = (AbstractRelatedFinder) relatedFinder.getRelationshipFinderByName(
-			propertyName
-		);
+		var nextFinder = (AbstractRelatedFinder) relatedFinder.getRelationshipFinderByName(propertyName);
 		this.finderStack.push(nextFinder);
 		Object persistentInstance = this.persistentInstanceStack.peek();
 		Object resultNode = this.resultNodeStack.peek();
@@ -267,7 +261,7 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 			MutableList<Object> nextResultNode = Lists.mutable.empty();
 			this.setChildProperty(referenceProperty, resultNode, nextResultNode);
 			this.resultNodeStack.push(nextResultNode);
-			List<Object> toMany = (List<Object>) nextPersistentInstance;
+			var toMany = (List<Object>) nextPersistentInstance;
 			return Optional.of(toMany.size());
 		}
 

@@ -58,7 +58,7 @@ public class ByOperationDataFetcher implements DataFetcher<Object> {
 	@Override
 	public Object get(DataFetchingEnvironment environment) throws Exception {
 		Map<String, Object> arguments = environment.getArguments();
-		String inputOperation = (String) arguments.get("operation");
+		var inputOperation = (String) arguments.get("operation");
 		Operation operation = this.compileOperation(this.finder, inputOperation);
 		MithraList<?> result = this.finder.findMany(operation);
 

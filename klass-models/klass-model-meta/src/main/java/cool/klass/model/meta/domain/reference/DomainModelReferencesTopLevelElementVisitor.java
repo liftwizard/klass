@@ -91,7 +91,7 @@ public class DomainModelReferencesTopLevelElementVisitor implements TopLevelElem
 
 	@Override
 	public void visitProjection(@Nonnull Projection projection) {
-		ProjectionWithSourceCode elementWithSourceCode = (ProjectionWithSourceCode) projection;
+		var elementWithSourceCode = (ProjectionWithSourceCode) projection;
 		ProjectionDeclarationContext elementContext = elementWithSourceCode.getElementContext();
 		ClassifierReferenceContext reference = elementContext.classifierReference();
 		ClassifierWithSourceCode classifier = elementWithSourceCode.getClassifier();
@@ -105,7 +105,7 @@ public class DomainModelReferencesTopLevelElementVisitor implements TopLevelElem
 
 	@Override
 	public void visitServiceGroup(@Nonnull ServiceGroup serviceGroup) {
-		ServiceGroupWithSourceCode elementWithSourceCode = (ServiceGroupWithSourceCode) serviceGroup;
+		var elementWithSourceCode = (ServiceGroupWithSourceCode) serviceGroup;
 		ServiceGroupDeclarationContext elementContext = elementWithSourceCode.getElementContext();
 		ClassReferenceContext reference = elementContext.classReference();
 		KlassWithSourceCode klass = elementWithSourceCode.getKlass();
@@ -142,8 +142,7 @@ public class DomainModelReferencesTopLevelElementVisitor implements TopLevelElem
 	}
 
 	public void visitProjectionDispatch(ServiceProjectionDispatch serviceProjectionDispatch) {
-		ServiceProjectionDispatchWithSourceCode elementWithSourceCode =
-			(ServiceProjectionDispatchWithSourceCode) serviceProjectionDispatch;
+		var elementWithSourceCode = (ServiceProjectionDispatchWithSourceCode) serviceProjectionDispatch;
 		ServiceProjectionDispatchContext elementContext = elementWithSourceCode.getElementContext();
 		ProjectionReferenceContext reference = elementContext.projectionReference();
 		ProjectionWithSourceCode projection = elementWithSourceCode.getProjection();
