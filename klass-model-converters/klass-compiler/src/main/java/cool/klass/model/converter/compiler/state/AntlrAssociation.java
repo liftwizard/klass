@@ -318,7 +318,7 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
 	}
 
 	public AntlrAssociationEnd getSourceEnd() {
-		return this.associationEnds.get(0);
+		return this.associationEnds.getFirst();
 	}
 
 	public AntlrAssociationEnd getTargetEnd() {

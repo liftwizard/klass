@@ -116,7 +116,7 @@ public final class CompilationUnit {
 	public String getFullPathSourceName() {
 		if (this.macroElement.isEmpty()) {
 			List<String> split = Splitter.on('/').splitToList(this.sourceName);
-			return split.get(split.size() - 1);
+			return split.getLast();
 		}
 
 		String fullPathSourceName = this.macroElement.flatMap(AntlrElement::getCompilationUnit)
