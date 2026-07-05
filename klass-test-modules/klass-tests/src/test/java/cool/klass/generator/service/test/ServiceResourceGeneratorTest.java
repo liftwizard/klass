@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public class ServiceResourceGeneratorTest {
+class ServiceResourceGeneratorTest {
 
 	@RegisterExtension
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());

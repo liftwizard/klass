@@ -40,7 +40,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public class LiquibaseMigrationRollbackTest {
+class LiquibaseMigrationRollbackTest {
 
 	private static final String MIGRATIONS_FILE =
 		"cool/klass/xample/coverage/liquibase/schema/migrations-initial-schema.xml";

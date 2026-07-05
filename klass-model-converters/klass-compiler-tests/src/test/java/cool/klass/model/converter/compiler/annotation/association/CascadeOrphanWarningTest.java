@@ -19,7 +19,7 @@ package cool.klass.model.converter.compiler.annotation.association;
 import cool.klass.model.converter.compiler.annotation.AbstractKlassCompilerErrorTestCase;
 import org.junit.jupiter.api.Test;
 
-public class CascadeOrphanWarningTest extends AbstractKlassCompilerErrorTestCase {
+class CascadeOrphanWarningTest extends AbstractKlassCompilerErrorTestCase {
 
 	@Test
 	@Override
