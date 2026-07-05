@@ -46,7 +46,7 @@ public class GenerateServiceMojo extends AbstractGenerateMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 		DomainModel domainModel = this.getDomainModel();
-		KlassServiceGenerator generator = new KlassServiceGenerator(domainModel);
+		var generator = new KlassServiceGenerator(domainModel);
 		generator.writeFiles(this.outputDirectory.toPath());
 	}
 }

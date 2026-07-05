@@ -87,7 +87,7 @@ public class KlassResponseReladomoJsonSerializer extends JsonSerializer<KlassRes
 		@Nonnull JsonGenerator jsonGenerator,
 		@Nonnull SerializerProvider serializerProvider
 	) throws IOException {
-		MithraObject mithraObject = (MithraObject) klassResponse.getData();
+		var mithraObject = (MithraObject) klassResponse.getData();
 
 		if (mithraObject == null) {
 			jsonGenerator.writeNullField("_data");
@@ -113,7 +113,7 @@ public class KlassResponseReladomoJsonSerializer extends JsonSerializer<KlassRes
 			throw new ClassCastException(detailMessage);
 		}
 
-		List<MithraObject> mithraList = (List<MithraObject>) data;
+		var mithraList = (List<MithraObject>) data;
 		jsonGenerator.writeArrayFieldStart("_data");
 		try {
 			ReladomoContextJsonSerializer reladomoJsonSerializer = this.getReladomoContextJsonSerializer(klassResponse);

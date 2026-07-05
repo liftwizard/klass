@@ -65,7 +65,7 @@ public class AuditPropertyInferencePhase extends AbstractCompilerPhase {
 		MutableList<AntlrModifier> declaredModifiers = classifier.getDeclaredModifiers();
 		ImmutableList<AntlrDataTypeProperty<?>> allDataTypeProperties = classifier.getAllDataTypeProperties();
 
-		MutableList<AntlrModifier> auditedModifiers = declaredModifiers.select((modifier) -> modifier.is("audited"));
+		MutableList<AntlrModifier> auditedModifiers = declaredModifiers.selectWith(AntlrModifier::is,"audited");
 		if (auditedModifiers.size() != 1) {
 			return;
 		}
@@ -87,7 +87,7 @@ public class AuditPropertyInferencePhase extends AbstractCompilerPhase {
 
 		String validationSourceCode = validations.isEmpty() ? "" : validations.makeString(" ", " ", "");
 
-		StringBuilder sourceCodeText = new StringBuilder();
+		var sourceCodeText = new StringBuilder();
 		if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isCreatedBy)) {
 			sourceCodeText
 				.append("    createdById    : String createdBy private userId final")

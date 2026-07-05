@@ -87,10 +87,10 @@ public class ReladomoRuntimeConfigurationGenerator extends AbstractReladomoGener
 	public void writeRuntimeConfigFile(@Nonnull Path path) throws IOException {
 		MithraRuntime mithraRuntime = this.getMithraRuntime();
 
-		MithraRuntimeMarshaller mithraRuntimeMarshaller = new MithraRuntimeMarshaller();
+		var mithraRuntimeMarshaller = new MithraRuntimeMarshaller();
 		mithraRuntimeMarshaller.setIndent(true);
 
-		StringBuilder stringBuilder = new StringBuilder();
+		var stringBuilder = new StringBuilder();
 		mithraRuntimeMarshaller.marshall(stringBuilder, mithraRuntime);
 		String xmlString = this.sanitizeXmlString(stringBuilder);
 
@@ -99,7 +99,7 @@ public class ReladomoRuntimeConfigurationGenerator extends AbstractReladomoGener
 
 	@Nonnull
 	private MithraRuntime getMithraRuntime() {
-		MithraRuntime mithraRuntime = new MithraRuntime();
+		var mithraRuntime = new MithraRuntime();
 		ConnectionManagerType connectionManager = this.getConnectionManager();
 		mithraRuntime.setConnectionManagers(Lists.mutable.with(connectionManager));
 		mithraRuntime.setPureObjects(this.getPureObjectsType());
@@ -120,7 +120,7 @@ public class ReladomoRuntimeConfigurationGenerator extends AbstractReladomoGener
 
 	@Nonnull
 	private PureObjectsType getPureObjectsType() {
-		PureObjectsType pureObjectsType = new PureObjectsType();
+		var pureObjectsType = new PureObjectsType();
 		pureObjectsType.setNotificationIdentifier(this.rootPackageName);
 		pureObjectsType.setMithraObjectConfigurations(this.getMithraPureObjectConfigurationTypes().castToList());
 		return pureObjectsType;
@@ -128,7 +128,7 @@ public class ReladomoRuntimeConfigurationGenerator extends AbstractReladomoGener
 
 	@Nonnull
 	private static PropertyType createPropertyType(String name, String value) {
-		PropertyType propertyType = new PropertyType();
+		var propertyType = new PropertyType();
 		propertyType.setName(name);
 		propertyType.setValue(value);
 		return propertyType;
@@ -139,7 +139,7 @@ public class ReladomoRuntimeConfigurationGenerator extends AbstractReladomoGener
 		ImmutableList<PropertyType> propertyTypes = this.getPropertyTypes();
 		List<PropertyType> properties = propertyTypes.castToList();
 
-		ConnectionManagerType connectionManagerType = new ConnectionManagerType();
+		var connectionManagerType = new ConnectionManagerType();
 		connectionManagerType.setClassName(this.connectionManagerClassName);
 		connectionManagerType.setProperties(properties);
 		connectionManagerType.setMithraObjectConfigurations(
@@ -186,7 +186,7 @@ public class ReladomoRuntimeConfigurationGenerator extends AbstractReladomoGener
 		String fullyQualifiedClassName,
 		CacheType cacheType
 	) {
-		MithraObjectConfigurationType mithraObjectConfigurationType = new MithraObjectConfigurationType();
+		var mithraObjectConfigurationType = new MithraObjectConfigurationType();
 		mithraObjectConfigurationType.setCacheType(cacheType);
 		mithraObjectConfigurationType.setClassName(fullyQualifiedClassName);
 		mithraObjectConfigurationType.setOffHeapReplicationExport(false);
@@ -197,7 +197,7 @@ public class ReladomoRuntimeConfigurationGenerator extends AbstractReladomoGener
 	private static MithraPureObjectConfigurationType createMithraPureObjectConfigurationType(
 		String fullyQualifiedClassName
 	) {
-		MithraPureObjectConfigurationType mithraPureObjectConfigurationType = new MithraPureObjectConfigurationType();
+		var mithraPureObjectConfigurationType = new MithraPureObjectConfigurationType();
 		mithraPureObjectConfigurationType.setClassName(fullyQualifiedClassName);
 		return mithraPureObjectConfigurationType;
 	}

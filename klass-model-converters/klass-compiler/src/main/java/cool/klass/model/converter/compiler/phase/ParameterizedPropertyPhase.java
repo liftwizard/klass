@@ -88,7 +88,7 @@ public class ParameterizedPropertyPhase extends ReferencePropertyPhase {
 		// TODO: Parameterized Property modifiers
 
 		CompilerWalkState compilerWalk = this.compilerState.getCompilerWalk();
-		AntlrClass thisReference = (AntlrClass) compilerWalk.getThisReference();
+		var thisReference = (AntlrClass) compilerWalk.getThisReference();
 
 		this.parameterizedProperty = new AntlrParameterizedProperty(
 			ctx,
@@ -209,7 +209,7 @@ public class ParameterizedPropertyPhase extends ReferencePropertyPhase {
 		}
 
 		int ordinal = this.parameter.getNumModifiers();
-		AntlrModifier modifier = new AntlrModifier(
+		var modifier = new AntlrModifier(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			ordinal,

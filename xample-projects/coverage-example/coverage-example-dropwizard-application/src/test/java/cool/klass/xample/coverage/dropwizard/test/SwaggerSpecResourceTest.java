@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class SwaggerSpecResourceTest extends AbstractCoverageTest {
+class SwaggerSpecResourceTest extends AbstractCoverageTest {
 
 	@Test
 	void swagger_spec_is_served() throws Exception {
@@ -49,7 +49,7 @@ public class SwaggerSpecResourceTest extends AbstractCoverageTest {
 		assertTrue(responseJson.length() > 100, "Swagger spec should have meaningful content");
 
 		// Parse and validate it's valid JSON with expected Swagger structure
-		ObjectMapper objectMapper = new ObjectMapper();
+		var objectMapper = new ObjectMapper();
 		JsonNode swaggerSpec = objectMapper.readTree(responseJson);
 
 		assertNotNull(swaggerSpec.get("swagger"), "Should have swagger version");

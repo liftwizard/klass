@@ -58,7 +58,7 @@ public class KlassHtmlResource {
 	@Path("/meta/code/element/{topLevelElementName}")
 	@Produces(MediaType.TEXT_HTML)
 	public String topLevelElementNameSourceCode(@PathParam("topLevelElementName") String topLevelElementName) {
-		TopLevelElementWithSourceCode topLevelElement =
+		var topLevelElement =
 			(TopLevelElementWithSourceCode) this.domainModel.findTopLevelElementByName(topLevelElementName).orElseThrow(
 					() -> {
 						String message = this.domainModel.getTopLevelElements()
@@ -90,7 +90,7 @@ public class KlassHtmlResource {
 		@PathParam("topLevelElementName") String topLevelElementName,
 		@PathParam("memberName") String memberName
 	) {
-		TopLevelElementWithSourceCode topLevelElement =
+		var topLevelElement =
 			(TopLevelElementWithSourceCode) this.domainModel.findTopLevelElementByName(topLevelElementName).orElseThrow(
 					() -> {
 						String message = this.domainModel.getTopLevelElements()

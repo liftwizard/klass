@@ -60,13 +60,13 @@ public class GenerateReladomoClassListMojo extends AbstractGenerateMojo {
 		Path outputPath = this.outputDirectory.toPath();
 		Path path = outputPath.resolve(this.outputFilename);
 		try {
-			ReladomoClassListGenerator reladomoClassListGenerator = new ReladomoClassListGenerator(domainModel);
+			var reladomoClassListGenerator = new ReladomoClassListGenerator(domainModel);
 			reladomoClassListGenerator.writeClassListFile(path);
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 
-		Resource resource = new Resource();
+		var resource = new Resource();
 		resource.setDirectory(this.outputDirectory.getAbsolutePath());
 		// TODO: Should be based on the output path
 		resource.setTargetPath("reladomo");

@@ -54,7 +54,7 @@ public class GenerateReladomoMergeHooksMojo extends AbstractGenerateMojo {
 
 		DomainModel domainModel = this.getDomainModel();
 
-		ReladomoMergeHookGenerator generator = new ReladomoMergeHookGenerator(domainModel);
+		var generator = new ReladomoMergeHookGenerator(domainModel);
 
 		generator.writeMergeHookFiles(this.outputDirectory.toPath());
 

@@ -183,7 +183,7 @@ public class PropertyPhase extends AbstractCompilerPhase {
 
 		IntegerLiteralContext integerLiteralContext = ctx.integerValidationParameter().integerLiteral();
 		int length = this.getIntegerFromLiteral(integerLiteralContext);
-		AntlrMinLengthPropertyValidation minLengthValidation = new AntlrMinLengthPropertyValidation(
+		var minLengthValidation = new AntlrMinLengthPropertyValidation(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			this.dataTypeProperty,
@@ -198,7 +198,7 @@ public class PropertyPhase extends AbstractCompilerPhase {
 
 		IntegerLiteralContext integerLiteralContext = ctx.integerValidationParameter().integerLiteral();
 		int length = this.getIntegerFromLiteral(integerLiteralContext);
-		AntlrMaxLengthPropertyValidation maxLengthValidation = new AntlrMaxLengthPropertyValidation(
+		var maxLengthValidation = new AntlrMaxLengthPropertyValidation(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			this.dataTypeProperty,
@@ -213,7 +213,7 @@ public class PropertyPhase extends AbstractCompilerPhase {
 
 		IntegerLiteralContext integerLiteralContext = ctx.integerValidationParameter().integerLiteral();
 		int minimum = this.getIntegerFromLiteral(integerLiteralContext);
-		AntlrMinPropertyValidation minValidation = new AntlrMinPropertyValidation(
+		var minValidation = new AntlrMinPropertyValidation(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			this.dataTypeProperty,
@@ -228,7 +228,7 @@ public class PropertyPhase extends AbstractCompilerPhase {
 
 		IntegerLiteralContext integerLiteralContext = ctx.integerValidationParameter().integerLiteral();
 		int maximum = this.getIntegerFromLiteral(integerLiteralContext);
-		AntlrMaxPropertyValidation maxValidation = new AntlrMaxPropertyValidation(
+		var maxValidation = new AntlrMaxPropertyValidation(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			this.dataTypeProperty,
@@ -245,7 +245,7 @@ public class PropertyPhase extends AbstractCompilerPhase {
 			return;
 		}
 
-		AntlrMultiplicity multiplicity = new AntlrMultiplicity(
+		var multiplicity = new AntlrMultiplicity(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			this.multiplicityOwner
@@ -257,7 +257,7 @@ public class PropertyPhase extends AbstractCompilerPhase {
 	@Override
 	public void enterDataTypePropertyModifier(DataTypePropertyModifierContext ctx) {
 		super.enterDataTypePropertyModifier(ctx);
-		AntlrModifier modifier = new AntlrModifier(
+		var modifier = new AntlrModifier(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			this.dataTypeProperty.getNumModifiers() + 1,
@@ -274,7 +274,7 @@ public class PropertyPhase extends AbstractCompilerPhase {
 			return;
 		}
 
-		AntlrModifier antlrAssociationEndModifier = new AntlrModifier(
+		var antlrAssociationEndModifier = new AntlrModifier(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			this.associationEndSignature.getNumModifiers() + 1,
@@ -294,7 +294,7 @@ public class PropertyPhase extends AbstractCompilerPhase {
 		String classifierName = ctx.identifier().getText();
 		AntlrDomainModel domainModel = this.compilerState.getDomainModel();
 		AntlrClassifier classifier = domainModel.getClassifierByName(classifierName);
-		AntlrClassifierReference classifierReference = new AntlrClassifierReference(
+		var classifierReference = new AntlrClassifierReference(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			this.classifierReferenceOwner,

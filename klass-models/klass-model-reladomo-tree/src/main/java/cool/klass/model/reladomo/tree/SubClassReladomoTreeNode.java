@@ -55,7 +55,7 @@ public class SubClassReladomoTreeNode extends AbstractReladomoTreeNode {
 			return false;
 		}
 
-		SubClassReladomoTreeNode that = (SubClassReladomoTreeNode) o;
+		var that = (SubClassReladomoTreeNode) o;
 
 		return this.klass.equals(that.klass) && this.subClass.equals(that.subClass);
 	}

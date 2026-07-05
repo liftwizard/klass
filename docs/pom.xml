@@ -40,6 +40,7 @@
                     <plugin>
                         <groupId>org.testingisdocumenting.znai</groupId>
                         <artifactId>znai-maven-plugin</artifactId>
+                        <version>1.91</version>
                         <dependencies>
                             <dependency>
                                 <groupId>com.fasterxml.jackson.core</groupId>

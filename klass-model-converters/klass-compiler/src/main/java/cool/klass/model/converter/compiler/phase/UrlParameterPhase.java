@@ -74,7 +74,7 @@ public class UrlParameterPhase extends AbstractCompilerPhase {
 		super.enterUrlConstant(ctx);
 
 		AntlrUrl url = this.compilerState.getCompilerWalk().getUrl();
-		AntlrUrlConstant antlrUrlConstant = new AntlrUrlConstant(
+		var antlrUrlConstant = new AntlrUrlConstant(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			url.getNumPathSegments() + 1
@@ -139,7 +139,7 @@ public class UrlParameterPhase extends AbstractCompilerPhase {
 
 		// TODO: Check if parameter is non null?
 		int ordinal = this.parameter.getNumModifiers();
-		AntlrModifier modifier = new AntlrModifier(
+		var modifier = new AntlrModifier(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			ordinal,
@@ -182,7 +182,7 @@ public class UrlParameterPhase extends AbstractCompilerPhase {
 		super.enterMultiplicity(ctx);
 
 		if (this.multiplicityOwner != null) {
-			AntlrMultiplicity multiplicity = new AntlrMultiplicity(
+			var multiplicity = new AntlrMultiplicity(
 				ctx,
 				Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 				this.multiplicityOwner

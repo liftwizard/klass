@@ -125,7 +125,7 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
 		try {
 			boolean hasPolymorphicChildren = projectionReladomoNode.hasPolymorphicChildren();
 			if (hasPolymorphicChildren) {
-				Klass type = (Klass) projectionReladomoNode.getType();
+				var type = (Klass) projectionReladomoNode.getType();
 				Klass mostSpecificSubclass = this.dataStore.getMostSpecificSubclass(mithraObject, type);
 				jsonGenerator.writeStringField("__typename", mostSpecificSubclass.getFullyQualifiedName());
 			}
@@ -218,7 +218,7 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
 		}
 
 		if (dataType instanceof Enumeration) {
-			EnumerationLiteral enumerationLiteral = (EnumerationLiteral) dataTypeValue;
+			var enumerationLiteral = (EnumerationLiteral) dataTypeValue;
 			jsonGenerator.writeStringField(propertyName, enumerationLiteral.getPrettyName());
 			return;
 		}
@@ -247,7 +247,7 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
 
 		if (multiplicity.isToMany()) {
 			Object value = this.dataStore.getToMany(mithraObject, referenceProperty);
-			MithraList<MithraObject> mithraList = (MithraList<MithraObject>) Objects.requireNonNull(value);
+			var mithraList = (MithraList<MithraObject>) Objects.requireNonNull(value);
 
 			// TODO: Add configuration to disable serialization of empty lists
 			jsonGenerator.writeArrayFieldStart(associationEndName);

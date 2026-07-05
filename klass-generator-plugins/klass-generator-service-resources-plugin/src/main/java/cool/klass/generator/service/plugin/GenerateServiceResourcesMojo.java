@@ -63,7 +63,7 @@ public class GenerateServiceResourcesMojo extends AbstractGenerateMojo {
 		DomainModel domainModel = this.getDomainModel();
 		Path outputPath = this.outputDirectory.toPath();
 		try {
-			ServiceResourceGenerator serviceResourceGenerator = new ServiceResourceGenerator(
+			var serviceResourceGenerator = new ServiceResourceGenerator(
 				domainModel,
 				this.applicationName,
 				this.rootPackageName

@@ -51,7 +51,7 @@ public class SuperClassReladomoNode extends AbstractProjectionElementReladomoNod
 			return false;
 		}
 
-		SuperClassReladomoNode that = (SuperClassReladomoNode) o;
+		var that = (SuperClassReladomoNode) o;
 
 		return this.klass.equals(that.klass) && this.superClass.equals(that.superClass);
 	}

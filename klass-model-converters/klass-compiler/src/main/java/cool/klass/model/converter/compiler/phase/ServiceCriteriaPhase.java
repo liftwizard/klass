@@ -42,7 +42,7 @@ public class ServiceCriteriaPhase extends AbstractCompilerPhase {
 
 		String serviceCriteriaKeyword = serviceCriteriaKeywordContext.getText();
 
-		AntlrServiceCriteria serviceCriteria = new AntlrServiceCriteria(
+		var serviceCriteria = new AntlrServiceCriteria(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			serviceCriteriaKeyword,
@@ -51,7 +51,7 @@ public class ServiceCriteriaPhase extends AbstractCompilerPhase {
 
 		CriteriaExpressionContext criteriaExpressionContext = ctx.criteriaExpression();
 
-		CriteriaVisitor criteriaVisitor = new CriteriaVisitor(this.compilerState, serviceCriteria);
+		var criteriaVisitor = new CriteriaVisitor(this.compilerState, serviceCriteria);
 
 		AntlrCriteria antlrCriteria = criteriaVisitor.visit(criteriaExpressionContext);
 		serviceCriteria.setCriteria(antlrCriteria);

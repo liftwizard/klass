@@ -79,7 +79,7 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
 
 	@Nonnull
 	private MithraInterface convertToMithraInterface(@Nonnull Interface anInterface) {
-		MithraInterface mithraInterface = new MithraInterface();
+		var mithraInterface = new MithraInterface();
 		mithraInterface.setPackageName(anInterface.getPackageName());
 		mithraInterface.setClassName(anInterface.getName());
 
@@ -122,7 +122,7 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
 	@Nonnull
 	private RelationshipInterfaceType convertRelationship(@Nonnull AssociationEnd associationEnd, boolean reverse) {
 		AssociationEnd opposite = associationEnd.getOpposite();
-		RelationshipInterfaceType relationshipType = new RelationshipInterfaceType();
+		var relationshipType = new RelationshipInterfaceType();
 		relationshipType.setName(associationEnd.getName());
 		relationshipType.setCardinality(this.getCardinality(associationEnd, opposite));
 		relationshipType.setRelatedObject(associationEnd.getType().getName());
@@ -136,7 +136,7 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
 
 	@Nonnull
 	private String getRelationshipString(@Nonnull Criteria criteria, boolean reverse) {
-		StringBuilder stringBuilder = new StringBuilder();
+		var stringBuilder = new StringBuilder();
 		CriteriaVisitor visitor = new CriteriaToRelationshipVisitor(stringBuilder, reverse);
 		criteria.visit(visitor);
 		return stringBuilder.toString();
@@ -144,7 +144,7 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
 
 	@Nonnull
 	private AsOfAttributeInterfaceType convertToAsOfAttributeType(@Nonnull DataTypeProperty dataTypeProperty) {
-		AsOfAttributeInterfaceType asOfAttributeType = new AsOfAttributeInterfaceType();
+		var asOfAttributeType = new AsOfAttributeInterfaceType();
 		this.convertToAsOfAttributeType(dataTypeProperty, asOfAttributeType);
 		return asOfAttributeType;
 	}
@@ -163,7 +163,7 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
 		asOfAttributeType.setInfinityIsNull(false);
 		// TODO: futureExpiringRowsExist is a de-optimization that allows for future times, and also makes the end dates more understandable. Add a better explanation and allow this to be customizable.
 
-		TimezoneConversionType timezoneConversion = new TimezoneConversionType();
+		var timezoneConversion = new TimezoneConversionType();
 		timezoneConversion.with("convert-to-utc", asOfAttributeType);
 		asOfAttributeType.setTimezoneConversion(timezoneConversion);
 
@@ -178,7 +178,7 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
 
 	@Nonnull
 	private AttributeInterfaceType convertToAttributeType(@Nonnull DataTypeProperty dataTypeProperty) {
-		AttributeInterfaceType attributeType = new AttributeInterfaceType();
+		var attributeType = new AttributeInterfaceType();
 		this.convertToAttributeType(dataTypeProperty, attributeType);
 		return attributeType;
 	}

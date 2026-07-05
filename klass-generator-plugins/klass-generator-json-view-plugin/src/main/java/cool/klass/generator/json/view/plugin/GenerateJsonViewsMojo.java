@@ -53,7 +53,7 @@ public class GenerateJsonViewsMojo extends AbstractGenerateMojo {
 	public void execute() throws MojoExecutionException {
 		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
 				DomainModel domainModel = this.getDomainModel();
-				JsonViewGenerator jsonViewGenerator = new JsonViewGenerator(
+				var jsonViewGenerator = new JsonViewGenerator(
 					domainModel,
 					this.rootPackageName,
 					this.applicationName

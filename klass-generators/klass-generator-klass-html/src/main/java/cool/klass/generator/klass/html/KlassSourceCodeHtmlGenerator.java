@@ -140,7 +140,7 @@ public class KlassSourceCodeHtmlGenerator {
 			.makeString("");
 
 		// language=HTML
-		String prefix = """
+		var prefix = """
 			<html>
 				<head>
 					<link rel="stylesheet" type="text/css" href="/static/css/light.css" media="(prefers-color-scheme: light)" />
@@ -227,13 +227,13 @@ public class KlassSourceCodeHtmlGenerator {
 
 	private static Path getRootParentPath(SourceCode sourceCode) {
 		String sourceName = sourceCode.getSourceName();
-		File sourceFile = new File(sourceName);
+		var sourceFile = new File(sourceName);
 		return sourceFile.toPath().getParent();
 	}
 
 	private static void printStringToFile(@Nonnull Path path, String contents) {
 		try (
-			PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
+			var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
 		) {
 			printStream.print(contents);
 		} catch (FileNotFoundException e) {

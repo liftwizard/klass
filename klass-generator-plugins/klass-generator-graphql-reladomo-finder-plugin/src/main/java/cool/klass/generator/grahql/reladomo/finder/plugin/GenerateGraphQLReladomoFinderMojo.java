@@ -60,7 +60,7 @@ public class GenerateGraphQLReladomoFinderMojo extends AbstractGenerateMojo {
 		Path outputPath = this.outputDirectory.toPath();
 		generator.writeFiles(outputPath);
 
-		Resource resource = new Resource();
+		var resource = new Resource();
 		resource.setDirectory(this.outputDirectory.getAbsolutePath());
 		this.mavenProject.addResource(resource);
 	}

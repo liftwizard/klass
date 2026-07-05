@@ -54,7 +54,7 @@ public final class ObjectNodeTypeCheckingValidator {
 	}
 
 	public static void validate(@Nonnull MutableList<String> errors, @Nonnull JsonNode jsonNode, @Nonnull Klass klass) {
-		ContextStack contextStack = new ContextStack(errors, null);
+		var contextStack = new ContextStack(errors, null);
 		var contextNode = new ContextNode(klass);
 		contextStack.runWithContext(contextNode, () -> {
 			var validator = new ObjectNodeTypeCheckingValidator(contextStack, klass, jsonNode);

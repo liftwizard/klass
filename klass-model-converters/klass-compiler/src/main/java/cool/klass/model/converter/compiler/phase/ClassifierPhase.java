@@ -105,7 +105,7 @@ public class ClassifierPhase extends AbstractCompilerPhase {
 
 		int ordinal = this.classifier.getNumClassifierModifiers();
 
-		AntlrModifier modifier = new AntlrModifier(
+		var modifier = new AntlrModifier(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			ordinal + 1,

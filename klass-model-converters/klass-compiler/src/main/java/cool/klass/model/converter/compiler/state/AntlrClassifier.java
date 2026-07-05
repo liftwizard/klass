@@ -419,7 +419,7 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
 	}
 
 	private void reportInterfaceNotFound(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		for (int i = 0; i < this.declaredInterfaces.size(); i++) {
+		for (var i = 0; i < this.declaredInterfaces.size(); i++) {
 			AntlrInterface iface = this.declaredInterfaces.get(i);
 			if (iface == AntlrInterface.NOT_FOUND) {
 				InterfaceReferenceContext offendingToken = this.getOffendingInterfaceReference(i);
@@ -432,7 +432,7 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
 	private void reportRedundantInterface(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
 		MutableSet<AntlrInterface> visitedInterfaces = Sets.mutable.empty();
 
-		for (int i = 0; i < this.declaredInterfaces.size(); i++) {
+		for (var i = 0; i < this.declaredInterfaces.size(); i++) {
 			AntlrInterface iface = this.declaredInterfaces.get(i);
 			if (iface == AntlrInterface.NOT_FOUND) {
 				continue;
@@ -610,7 +610,7 @@ public abstract class AntlrClassifier extends AntlrPackageableElement implements
 	}
 
 	protected void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder) {
-		for (int i = 0; i < this.declaredInterfaces.size(); i++) {
+		for (var i = 0; i < this.declaredInterfaces.size(); i++) {
 			AntlrInterface iface = this.declaredInterfaces.get(i);
 			if (this.isForwardReference(iface)) {
 				String message = String.format(

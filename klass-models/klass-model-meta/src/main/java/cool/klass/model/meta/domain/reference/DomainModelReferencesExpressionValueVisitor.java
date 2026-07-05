@@ -57,7 +57,7 @@ public class DomainModelReferencesExpressionValueVisitor implements ExpressionVa
 
 	@Override
 	public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue) {
-		TypeMemberReferencePathWithSourceCode elementWithSourceCode =
+		var elementWithSourceCode =
 			(TypeMemberReferencePathWithSourceCode) typeMemberExpressionValue;
 		TypeMemberReferencePathContext elementContext = elementWithSourceCode.getElementContext();
 
@@ -68,7 +68,7 @@ public class DomainModelReferencesExpressionValueVisitor implements ExpressionVa
 		List<AssociationEndReferenceContext> associationEndReferenceContexts = elementContext.associationEndReference();
 		ImmutableList<AssociationEnd> associationEnds = typeMemberExpressionValue.getAssociationEnds();
 
-		for (int i = 0; i < associationEndReferenceContexts.size(); i++) {
+		for (var i = 0; i < associationEndReferenceContexts.size(); i++) {
 			AssociationEndReferenceContext associationEndReference = associationEndReferenceContexts.get(i);
 			AssociationEnd associationEnd = associationEnds.get(i);
 			this.domainModelReferences.addAssociationEndReference(
@@ -84,14 +84,14 @@ public class DomainModelReferencesExpressionValueVisitor implements ExpressionVa
 
 	@Override
 	public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue) {
-		ThisMemberReferencePathWithSourceCode elementWithSourceCode =
+		var elementWithSourceCode =
 			(ThisMemberReferencePathWithSourceCode) thisMemberExpressionValue;
 		ThisMemberReferencePathContext elementContext = elementWithSourceCode.getElementContext();
 
 		List<AssociationEndReferenceContext> associationEndReferenceContexts = elementContext.associationEndReference();
 		ImmutableList<AssociationEnd> associationEnds = thisMemberExpressionValue.getAssociationEnds();
 
-		for (int i = 0; i < associationEndReferenceContexts.size(); i++) {
+		for (var i = 0; i < associationEndReferenceContexts.size(); i++) {
 			AssociationEndReferenceContext associationEndReference = associationEndReferenceContexts.get(i);
 			AssociationEnd associationEnd = associationEnds.get(i);
 			this.domainModelReferences.addAssociationEndReference(
@@ -137,9 +137,9 @@ public class DomainModelReferencesExpressionValueVisitor implements ExpressionVa
 
 	@Override
 	public void visitUserLiteral(@Nonnull UserLiteral userLiteral) {
-		ElementWithSourceCode elementWithSourceCode = (ElementWithSourceCode) userLiteral;
+		var elementWithSourceCode = (ElementWithSourceCode) userLiteral;
 		ParserRuleContext reference = elementWithSourceCode.getElementContext();
-		KlassWithSourceCode element = (KlassWithSourceCode) userLiteral.getUserClass();
+		var element = (KlassWithSourceCode) userLiteral.getUserClass();
 		this.domainModelReferences.addUserReference(reference, element);
 	}
 

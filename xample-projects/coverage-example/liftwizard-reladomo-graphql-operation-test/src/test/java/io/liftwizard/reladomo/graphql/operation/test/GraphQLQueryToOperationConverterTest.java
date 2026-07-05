@@ -64,7 +64,7 @@ public class GraphQLQueryToOperationConverterTest {
 	@Test
 	void convertQueries() {
 		// language=GraphQL
-		String query = """
+		var query = """
 			{
 			  propertiesOptionalByFinder(
 			    operation: {
@@ -495,7 +495,7 @@ public class GraphQLQueryToOperationConverterTest {
 
 		TypeDefinitionRegistry typeRegistry = this.getRegistry();
 
-		SchemaGenerator schemaGenerator = new SchemaGenerator();
+		var schemaGenerator = new SchemaGenerator();
 		GraphQLSchema graphQLSchema = schemaGenerator.makeExecutableSchema(typeRegistry, runtimeWiring);
 
 		GraphQL graphQL = GraphQL.newGraphQL(graphQLSchema).build();
@@ -560,7 +560,7 @@ public class GraphQLQueryToOperationConverterTest {
 	private TypeDefinitionRegistry getRegistry(String resourceName) {
 		InputStream result = this.getClass().getResourceAsStream(resourceName);
 		Objects.requireNonNull(result, resourceName);
-		SchemaParser schemaParser = new SchemaParser();
+		var schemaParser = new SchemaParser();
 		return schemaParser.parse(result);
 	}
 
@@ -577,7 +577,7 @@ public class GraphQLQueryToOperationConverterTest {
 			Object inputOrderBy = arguments.get("orderBy");
 
 			Operation operation = this.getOperation((Map<?, ?>) inputOperation);
-			List<Map<String, ?>> inputOrderByList = (List<Map<String, ?>>) inputOrderBy;
+			var inputOrderByList = (List<Map<String, ?>>) inputOrderBy;
 			Optional<OrderBy> orderBy = this.getOrderBys(inputOrderByList);
 			assertThat(operation).isNotNull();
 			if (!inputOrderByList.isEmpty()) {

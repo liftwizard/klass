@@ -37,7 +37,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public class ReladomoTestResourceWriterTest {
+class ReladomoTestResourceWriterTest {
 
 	@Order(1)
 	@RegisterExtension
@@ -73,7 +73,7 @@ public class ReladomoTestResourceWriterTest {
 	}
 
 	private static DomainModel getDomainModel(ObjectMapper objectMapper) {
-		DomainModelCompilerFactory domainModelCompilerFactory = new DomainModelCompilerFactory();
+		var domainModelCompilerFactory = new DomainModelCompilerFactory();
 		domainModelCompilerFactory.setSourcePackages(List.of("cool.klass.xample.coverage"));
 		domainModelCompilerFactory.setColorScheme("dark");
 		return domainModelCompilerFactory.createDomainModel(objectMapper);

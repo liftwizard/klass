@@ -38,7 +38,7 @@ public class ServiceMultiplicityPhase extends AbstractCompilerPhase {
 		super.enterServiceMultiplicityDeclaration(ctx);
 		ServiceMultiplicityContext multiplicityContext = ctx.serviceMultiplicity();
 
-		AntlrServiceMultiplicity serviceMultiplicity = new AntlrServiceMultiplicity(
+		var serviceMultiplicity = new AntlrServiceMultiplicity(
 			multiplicityContext,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			this.getServiceMultiplicity(multiplicityContext)

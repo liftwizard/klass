@@ -130,7 +130,7 @@ public class KlassCompiler {
 			.getCompilationUnits()
 			.toImmutable();
 
-		ParseTreeWalker parseTreeWalker = new ParseTreeWalker();
+		var parseTreeWalker = new ParseTreeWalker();
 		for (CompilationUnit compilationUnit : immutableCompilationUnits) {
 			try {
 				this.compilerState.getCompilerWalk().assertEmpty();

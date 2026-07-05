@@ -35,7 +35,7 @@ public class KlassResponseStructuredLoggingFilter implements ContainerResponseFi
 	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) {
 		Object structuredArguments = requestContext.getProperty("structuredArguments");
 		Objects.requireNonNull(structuredArguments);
-		Map<String, Object> structuredArgumentsMap = (Map<String, Object>) structuredArguments;
+		var structuredArgumentsMap = (Map<String, Object>) structuredArguments;
 
 		Object entity = responseContext.getEntity();
 		if (entity instanceof KlassResponse klassResponse) {

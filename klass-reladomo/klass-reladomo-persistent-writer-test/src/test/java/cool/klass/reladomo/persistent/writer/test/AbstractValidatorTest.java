@@ -74,7 +74,7 @@ public abstract class AbstractValidatorTest {
 		String incomingJsonName = this.getClass().getSimpleName() + '.' + testName + ".json5";
 		String incomingJson = FileSlurper.slurp(incomingJsonName, this.getClass());
 
-		ObjectNode incomingInstance = (ObjectNode) this.objectMapper.readTree(incomingJson);
+		var incomingInstance = (ObjectNode) this.objectMapper.readTree(incomingJson);
 		this.validate(incomingInstance, persistentInstance);
 
 		this.jsonMatchExtension.assertFileContents(
@@ -106,12 +106,12 @@ public abstract class AbstractValidatorTest {
 	@Nonnull
 	private ReladomoDataStore getReladomoDataStore() {
 		String seed = IncomingCreateDataModelValidator.class.getSimpleName();
-		SeedUUIDSupplier uuidSupplier = new SeedUUIDSupplier(seed);
+		var uuidSupplier = new SeedUUIDSupplier(seed);
 		return new ReladomoDataStore(uuidSupplier, 1);
 	}
 
 	private static DomainModel getDomainModel(ObjectMapper objectMapper) {
-		DomainModelCompilerFactory domainModelCompilerFactory = new DomainModelCompilerFactory();
+		var domainModelCompilerFactory = new DomainModelCompilerFactory();
 		domainModelCompilerFactory.setSourcePackages(List.of("cool.klass.xample.coverage"));
 		domainModelCompilerFactory.setColorScheme("dark");
 		return domainModelCompilerFactory.createDomainModel(objectMapper);

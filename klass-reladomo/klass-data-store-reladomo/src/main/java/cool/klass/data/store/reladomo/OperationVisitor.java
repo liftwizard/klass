@@ -103,11 +103,11 @@ public class OperationVisitor implements DataTypePropertyVisitor {
 
 	@Override
 	public void visitTemporalInstant(PrimitiveProperty primitiveProperty) {
-		this.result = ((TimestampAttribute<?>) this.attribute).eq((java.sql.Timestamp) this.key);
+		this.result = ((TimestampAttribute<?>) this.attribute).eq((Timestamp) this.key);
 	}
 
 	@Override
 	public void visitTemporalRange(PrimitiveProperty primitiveProperty) {
-		this.result = ((TimestampAttribute<?>) this.attribute).eq((java.sql.Timestamp) this.key);
+		this.result = ((TimestampAttribute<?>) this.attribute).eq((Timestamp) this.key);
 	}
 }

@@ -56,7 +56,7 @@ public class DomainModelReferencesProjectionVisitor implements ProjectionVisitor
 
 	@Override
 	public void visitProjectionReferenceProperty(ProjectionReferenceProperty projectionReferenceProperty) {
-		ProjectionReferencePropertyWithSourceCode elementWithSourceCode =
+		var elementWithSourceCode =
 			(ProjectionReferencePropertyWithSourceCode) projectionReferenceProperty;
 		ProjectionReferencePropertyContext elementContext = elementWithSourceCode.getElementContext();
 		IdentifierContext reference = elementContext.identifier();
@@ -71,7 +71,7 @@ public class DomainModelReferencesProjectionVisitor implements ProjectionVisitor
 
 	@Override
 	public void visitProjectionProjectionReference(ProjectionProjectionReference projectionProjectionReference) {
-		ProjectionProjectionReferenceWithSourceCode elementWithSourceCode =
+		var elementWithSourceCode =
 			(ProjectionProjectionReferenceWithSourceCode) projectionProjectionReference;
 		ProjectionProjectionReferenceContext elementContext = elementWithSourceCode.getElementContext();
 		IdentifierContext reference = elementContext.identifier();
@@ -87,7 +87,7 @@ public class DomainModelReferencesProjectionVisitor implements ProjectionVisitor
 
 	@Override
 	public void visitProjectionDataTypeProperty(ProjectionDataTypeProperty projectionDataTypeProperty) {
-		ProjectionDataTypePropertyWithSourceCode elementWithSourceCode =
+		var elementWithSourceCode =
 			(ProjectionDataTypePropertyWithSourceCode) projectionDataTypeProperty;
 		ProjectionPrimitiveMemberContext elementContext = elementWithSourceCode.getElementContext();
 		IdentifierContext reference = elementContext.identifier();
