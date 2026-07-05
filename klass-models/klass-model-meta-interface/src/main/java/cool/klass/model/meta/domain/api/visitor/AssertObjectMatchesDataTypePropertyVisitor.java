@@ -16,6 +16,8 @@
 
 package cool.klass.model.meta.domain.api.visitor;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import cool.klass.model.meta.domain.api.EnumerationLiteral;
@@ -89,7 +91,7 @@ public class AssertObjectMatchesDataTypePropertyVisitor implements DataTypePrope
 
 	@Override
 	public void visitInstant(PrimitiveProperty primitiveProperty) {
-		if (this.object instanceof java.time.Instant) {
+		if (this.object instanceof Instant) {
 			return;
 		}
 		this.throwError("Instant");
@@ -97,7 +99,7 @@ public class AssertObjectMatchesDataTypePropertyVisitor implements DataTypePrope
 
 	@Override
 	public void visitLocalDate(PrimitiveProperty primitiveProperty) {
-		if (this.object instanceof java.time.LocalDate) {
+		if (this.object instanceof LocalDate) {
 			return;
 		}
 		this.throwError("LocalDate");
@@ -105,7 +107,7 @@ public class AssertObjectMatchesDataTypePropertyVisitor implements DataTypePrope
 
 	@Override
 	public void visitTemporalInstant(PrimitiveProperty primitiveProperty) {
-		if (this.object instanceof java.time.Instant) {
+		if (this.object instanceof Instant) {
 			return;
 		}
 		this.throwError("Instant");
@@ -113,7 +115,7 @@ public class AssertObjectMatchesDataTypePropertyVisitor implements DataTypePrope
 
 	@Override
 	public void visitTemporalRange(PrimitiveProperty primitiveProperty) {
-		if (this.object instanceof java.time.Instant) {
+		if (this.object instanceof Instant) {
 			return;
 		}
 		this.throwError("Instant");
