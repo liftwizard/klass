@@ -274,6 +274,7 @@
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.11.0</version>
                 <executions>
                     <execution>
                         <id>injected-central-publishing</id>
@@ -294,6 +295,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-dependency-plugin</artifactId>
+                        <version>3.11.0</version>
                         <configuration>
                             <ignoredUnusedDeclaredDependencies combine.children="append">
                                 <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-reladomo-pojos</ignoredUnusedDeclaredDependency>
