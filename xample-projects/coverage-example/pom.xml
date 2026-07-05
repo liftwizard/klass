@@ -120,6 +120,7 @@
                                 <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-liquibase-schema</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-reladomo-runtime-configuration</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-relational-schema</ignoredUnusedDeclaredDependency>
+                                <ignoredUnusedDeclaredDependency>org.yaml:snakeyaml</ignoredUnusedDeclaredDependency>
                             </ignoredUnusedDeclaredDependencies>
                         </configuration>
                     </plugin>
