@@ -59,7 +59,7 @@ public class BootstrapWriterBundle implements PrioritizedBundle {
 		DomainModel domainModel = klassFactory.getDomainModelFactory().createDomainModel(objectMapper);
 		DataStore dataStore = klassFactory.getDataStoreFactory().createDataStore(domainModel);
 
-		KlassBootstrapWriter klassBootstrapWriter = new KlassBootstrapWriter(domainModel, dataStore);
+		var klassBootstrapWriter = new KlassBootstrapWriter(domainModel, dataStore);
 		klassBootstrapWriter.bootstrapMetaModel();
 
 		LOGGER.info("Completing {}.", this.getClass().getSimpleName());

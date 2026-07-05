@@ -45,7 +45,7 @@ public class RelationshipPhase extends AbstractCompilerPhase {
 
 		AntlrAssociation association = this.compilerState.getCompilerWalk().getAssociation();
 
-		AntlrRelationship relationship = new AntlrRelationship(
+		var relationship = new AntlrRelationship(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			association
@@ -81,11 +81,8 @@ public class RelationshipPhase extends AbstractCompilerPhase {
 		@Nonnull CriteriaExpressionContext criteriaExpressionContext,
 		@Nonnull AntlrClass targetType
 	) {
-		PossibleJoinCriteriaListener listener = new PossibleJoinCriteriaListener(
-			this.compilerState.getDomainModel(),
-			targetType
-		);
-		ParseTreeWalker parseTreeWalker = new ParseTreeWalker();
+		var listener = new PossibleJoinCriteriaListener(this.compilerState.getDomainModel(), targetType);
+		var parseTreeWalker = new ParseTreeWalker();
 		parseTreeWalker.walk(listener, criteriaExpressionContext);
 		return listener.hasForeignKeys();
 	}

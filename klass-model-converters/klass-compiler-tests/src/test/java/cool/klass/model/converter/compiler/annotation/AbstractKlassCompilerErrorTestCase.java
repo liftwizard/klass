@@ -114,7 +114,7 @@ public abstract class AbstractKlassCompilerErrorTestCase {
 
 	private ImmutableList<String> findCompilerAnnotationFiles() {
 		String packagePath = this.getClass().getPackage().getName().replace('.', '/');
-		File resourcesDir = new File("src/test/resources/" + packagePath);
+		var resourcesDir = new File("src/test/resources/" + packagePath);
 
 		if (!resourcesDir.exists() || !resourcesDir.isDirectory()) {
 			return Lists.immutable.empty();

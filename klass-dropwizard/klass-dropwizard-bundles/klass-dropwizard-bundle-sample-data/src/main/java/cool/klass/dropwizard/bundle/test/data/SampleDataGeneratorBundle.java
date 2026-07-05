@@ -75,12 +75,7 @@ public class SampleDataGeneratorBundle implements PrioritizedBundle {
 		DomainModel domainModel = domainModelFactoryProvider.getDomainModelFactory().createDomainModel(objectMapper);
 		DataStore dataStore = dataStoreFactoryProvider.getDataStoreFactory().createDataStore(domainModel);
 
-		SampleDataGenerator sampleDataGenerator = new SampleDataGenerator(
-			domainModel,
-			dataStore,
-			dataInstant,
-			skippedPackages
-		);
+		var sampleDataGenerator = new SampleDataGenerator(domainModel, dataStore, dataInstant, skippedPackages);
 		sampleDataGenerator.generate();
 
 		LOGGER.info("Completing {}.", this.getClass().getSimpleName());

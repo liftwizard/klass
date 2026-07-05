@@ -66,10 +66,10 @@ class AttributeTypeVisitor implements PrimitiveTypeVisitor {
 				|| this.owningClass.getSuperClass().isEmpty())
 		) {
 			// TODO: Infer during compilation that ID properties are key properties, or add an error when they are not.
-			PrimaryKeyGeneratorStrategyType primaryKeyGeneratorStrategyType = new PrimaryKeyGeneratorStrategyType();
+			var primaryKeyGeneratorStrategyType = new PrimaryKeyGeneratorStrategyType();
 			primaryKeyGeneratorStrategyType.with("SimulatedSequence", this.attributeType);
 			this.attributeType.setPrimaryKeyGeneratorStrategy(primaryKeyGeneratorStrategyType);
-			SimulatedSequenceType simulatedSequence = new SimulatedSequenceType();
+			var simulatedSequence = new SimulatedSequenceType();
 			simulatedSequence.setSequenceName(this.owningClass.getName());
 			simulatedSequence.setSequenceObjectFactoryName(ObjectSequenceObjectFactory.class.getCanonicalName());
 			simulatedSequence.setHasSourceAttribute(false);
@@ -98,7 +98,7 @@ class AttributeTypeVisitor implements PrimitiveTypeVisitor {
 	@Override
 	public void visitInstant() {
 		this.attributeType.setJavaType("Timestamp");
-		TimezoneConversionType timezoneConversion = new TimezoneConversionType();
+		var timezoneConversion = new TimezoneConversionType();
 		timezoneConversion.with("convert-to-utc", this.attributeType);
 		this.attributeType.setTimezoneConversion(timezoneConversion);
 	}

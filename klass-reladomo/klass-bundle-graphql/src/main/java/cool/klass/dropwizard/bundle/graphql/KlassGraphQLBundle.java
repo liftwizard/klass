@@ -175,7 +175,7 @@ public class KlassGraphQLBundle<
 		ReladomoDataStore dataStore,
 		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
 	) {
-		TypeRuntimeWiring.Builder queryTypeBuilder = new TypeRuntimeWiring.Builder();
+		var queryTypeBuilder = new TypeRuntimeWiring.Builder();
 		queryTypeBuilder.typeName("Query");
 
 		this.handleQueryAll(queryTypeBuilder, domainModel, dataStore, reladomoTreeGraphqlConverter);
@@ -206,7 +206,7 @@ public class KlassGraphQLBundle<
 		Klass klass
 	) {
 		String propertyName = this.getPropertyName(klass);
-		AllDataFetcher allDataFetcher = new AllDataFetcher(klass, dataStore, reladomoTreeGraphqlConverter);
+		var allDataFetcher = new AllDataFetcher(klass, dataStore, reladomoTreeGraphqlConverter);
 		queryTypeBuilder.dataFetcher(propertyName, allDataFetcher);
 	}
 
@@ -254,7 +254,7 @@ public class KlassGraphQLBundle<
 	) {
 		String propertyName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName());
 
-		ByKeyDataFetcher byKeyDataFetcher = new ByKeyDataFetcher(klass, dataStore, reladomoTreeGraphqlConverter);
+		var byKeyDataFetcher = new ByKeyDataFetcher(klass, dataStore, reladomoTreeGraphqlConverter);
 		queryTypeBuilder.dataFetcher(propertyName, byKeyDataFetcher);
 	}
 
@@ -279,11 +279,7 @@ public class KlassGraphQLBundle<
 	) {
 		String propertyName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "ByOperation";
 
-		ByOperationDataFetcher byOperationDataFetcher = new ByOperationDataFetcher(
-			klass,
-			dataStore,
-			reladomoTreeGraphqlConverter
-		);
+		var byOperationDataFetcher = new ByOperationDataFetcher(klass, dataStore, reladomoTreeGraphqlConverter);
 		queryTypeBuilder.dataFetcher(propertyName, byOperationDataFetcher);
 	}
 
@@ -308,16 +304,12 @@ public class KlassGraphQLBundle<
 	) {
 		String propertyName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "ByFinder";
 
-		ByFinderDataFetcher byFinderDataFetcher = new ByFinderDataFetcher(
-			klass,
-			dataStore,
-			reladomoTreeGraphqlConverter
-		);
+		var byFinderDataFetcher = new ByFinderDataFetcher(klass, dataStore, reladomoTreeGraphqlConverter);
 		queryTypeBuilder.dataFetcher(propertyName, byFinderDataFetcher);
 	}
 
 	private TypeRuntimeWiring.Builder getTypeResolver(Klass klass) {
-		TypeRuntimeWiring.Builder typeBuilder = new TypeRuntimeWiring.Builder();
+		var typeBuilder = new TypeRuntimeWiring.Builder();
 		typeBuilder.typeName(klass.getName());
 
 		typeBuilder.typeResolver(new KlassTypeResolver(klass));

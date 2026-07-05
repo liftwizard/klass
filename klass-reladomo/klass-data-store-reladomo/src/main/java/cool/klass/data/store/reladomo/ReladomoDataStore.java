@@ -224,7 +224,7 @@ public class ReladomoDataStore implements DataStore {
 		this.assertObjectMatchesType(keyProperty, key);
 
 		Attribute attribute = finder.getAttributeByName(keyProperty.getName());
-		OperationVisitor visitor = new OperationVisitor(attribute, key);
+		var visitor = new OperationVisitor(attribute, key);
 		keyProperty.visit(visitor);
 		return visitor.getResult();
 	}

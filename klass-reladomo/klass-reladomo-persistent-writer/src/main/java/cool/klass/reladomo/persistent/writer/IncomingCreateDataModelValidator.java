@@ -113,7 +113,7 @@ public class IncomingCreateDataModelValidator {
 		@Nonnull MutableList<String> errors,
 		@Nonnull MutableList<String> warnings
 	) {
-		IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+		var validator = new IncomingCreateDataModelValidator(
 			dataStore,
 			userKlass,
 			klass,
@@ -319,7 +319,7 @@ public class IncomingCreateDataModelValidator {
 
 		try {
 			ObjectNode childObjectNode = (ObjectNode) childJsonNode;
-			IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+			var validator = new IncomingCreateDataModelValidator(
 				this.dataStore,
 				this.userKlass,
 				associationEnd.getType(),
@@ -367,7 +367,7 @@ public class IncomingCreateDataModelValidator {
 
 		try {
 			// TODO: Support a IncomingLastUpdatedByDataModelValidator which allows the current user to be substituted in for lastUpdatedBy.
-			IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+			var validator = new IncomingCreateDataModelValidator(
 				this.dataStore,
 				this.userKlass,
 				associationEnd.getType(),
@@ -472,7 +472,7 @@ public class IncomingCreateDataModelValidator {
 				// validate that present properties match, if they are temporal, version, created on, created by
 				ObjectNode childObjectNode = (ObjectNode) childJsonNode;
 				// TODO: Add isInProject == false
-				IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+				var validator = new IncomingCreateDataModelValidator(
 					this.dataStore,
 					this.userKlass,
 					associationEnd.getType(),
@@ -541,7 +541,7 @@ public class IncomingCreateDataModelValidator {
 				this.errors.add(error);
 			}
 			ObjectNode childObjectNode = (ObjectNode) childJsonNode;
-			IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+			var validator = new IncomingCreateDataModelValidator(
 				this.dataStore,
 				this.userKlass,
 				associationEnd.getType(),
@@ -594,7 +594,7 @@ public class IncomingCreateDataModelValidator {
                 */
 
 				ObjectNode childObjectNode = (ObjectNode) childJsonNode;
-				IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+				var validator = new IncomingCreateDataModelValidator(
 					this.dataStore,
 					this.userKlass,
 					associationEnd.getType(),

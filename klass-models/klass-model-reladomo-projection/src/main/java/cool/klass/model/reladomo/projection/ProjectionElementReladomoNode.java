@@ -91,7 +91,7 @@ public interface ProjectionElementReladomoNode {
 	}
 
 	default String toString(String indent) {
-		StringBuilder stringBuilder = new StringBuilder();
+		var stringBuilder = new StringBuilder();
 		stringBuilder.append(indent);
 		stringBuilder.append(this.getNodeString());
 		stringBuilder.append('\n');

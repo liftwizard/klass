@@ -52,9 +52,7 @@ public class GenerateDataTransferObjectsMojo extends AbstractGenerateMojo {
 		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
 				DomainModel domainModel = this.getDomainModel();
 				Path outputPath = this.outputDirectory.toPath();
-				DataTransferObjectsGenerator dataTransferObjectsGenerator = new DataTransferObjectsGenerator(
-					domainModel
-				);
+				var dataTransferObjectsGenerator = new DataTransferObjectsGenerator(domainModel);
 				dataTransferObjectsGenerator.writeDataTransferObjectFiles(outputPath);
 				return null;
 			});

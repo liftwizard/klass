@@ -67,7 +67,7 @@ public class GenerateCssMojo extends AbstractMojo {
 			}
 		}
 
-		File cssFile = new File(this.outputDirectory, "klass-syntax.css");
+		var cssFile = new File(this.outputDirectory, "klass-syntax.css");
 		try {
 			this.generateCssFile(cssFile);
 			this.addResourceDirectory();
@@ -95,14 +95,14 @@ public class GenerateCssMojo extends AbstractMojo {
 			if (inputStream == null) {
 				throw new MojoExecutionException("CSS template file not found on classpath: " + CSS_TEMPLATE_PATH);
 			}
-			try (InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
+			try (var reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
 				return CharStreams.toString(reader);
 			}
 		}
 	}
 
 	private void addResourceDirectory() {
-		Resource resource = new Resource();
+		var resource = new Resource();
 		resource.setDirectory(this.outputDirectory.getAbsolutePath());
 		this.mavenProject.addResource(resource);
 

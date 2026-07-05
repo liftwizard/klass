@@ -52,7 +52,7 @@ public class ReferencePropertyPhase extends AbstractCompilerPhase {
 		AntlrDomainModel domainModel = this.compilerState.getDomainModel();
 		AntlrClass klass = domainModel.getClassByName(className);
 
-		AntlrClassReference classReference = new AntlrClassReference(
+		var classReference = new AntlrClassReference(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			this.classReferenceOwner,
@@ -67,7 +67,7 @@ public class ReferencePropertyPhase extends AbstractCompilerPhase {
 			return;
 		}
 
-		AntlrMultiplicity multiplicity = new AntlrMultiplicity(
+		var multiplicity = new AntlrMultiplicity(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			this.multiplicityOwner

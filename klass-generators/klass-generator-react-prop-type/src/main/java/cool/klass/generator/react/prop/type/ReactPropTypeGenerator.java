@@ -47,7 +47,7 @@ public class ReactPropTypeGenerator {
 	}
 
 	private String getPropTypeSourceCode(@Nonnull Projection projection) {
-		PropTypeSourceCodeProjectionVisitor visitor = new PropTypeSourceCodeProjectionVisitor(projection, 0);
+		var visitor = new PropTypeSourceCodeProjectionVisitor(projection, 0);
 		projection.visit(visitor);
 		return visitor.getResult();
 	}
@@ -62,9 +62,7 @@ public class ReactPropTypeGenerator {
 	}
 
 	private void printStringToFile(@Nonnull Path path, String contents) {
-		try (
-			PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
-		) {
+		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)) {
 			printStream.print(contents);
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);

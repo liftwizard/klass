@@ -126,7 +126,7 @@ public class IncomingUpdateDataModelValidator {
 		@Nonnull MutableList<String> errors,
 		@Nonnull MutableList<String> warnings
 	) {
-		IncomingUpdateDataModelValidator validator = new IncomingUpdateDataModelValidator(
+		var validator = new IncomingUpdateDataModelValidator(
 			dataStore,
 			userKlass,
 			klass,
@@ -288,7 +288,7 @@ public class IncomingUpdateDataModelValidator {
 		@Nonnull ObjectNode objectNode,
 		@Nonnull Object persistentInstance
 	) {
-		IncomingUpdateDataModelValidator validator = new IncomingUpdateDataModelValidator(
+		var validator = new IncomingUpdateDataModelValidator(
 			this.dataStore,
 			this.userKlass,
 			associationEnd.getType(),
@@ -336,7 +336,7 @@ public class IncomingUpdateDataModelValidator {
 
 		try {
 			// TODO: Support a IncomingLastUpdatedByDataModelValidator which allows the current user to be substituted in for lastUpdatedBy.
-			IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+			var validator = new IncomingCreateDataModelValidator(
 				this.dataStore,
 				this.userKlass,
 				associationEnd.getType(),
@@ -513,7 +513,7 @@ public class IncomingUpdateDataModelValidator {
 				Object childPersistentInstance = persistentChildInstancesByKey.get(keysFromJsonNode);
 				if (childPersistentInstance == null) {
 					// recurse in create mode
-					IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+					var validator = new IncomingCreateDataModelValidator(
 						this.dataStore,
 						this.userKlass,
 						associationEnd.getType(),
@@ -595,7 +595,7 @@ public class IncomingUpdateDataModelValidator {
 				Object childPersistentInstance = persistentChildInstancesByKey.get(keysFromJsonNode);
 				if (childPersistentInstance == null) {
 					// recurse in create mode
-					IncomingCreateDataModelValidator validator = new IncomingCreateDataModelValidator(
+					var validator = new IncomingCreateDataModelValidator(
 						this.dataStore,
 						this.userKlass,
 						associationEnd.getType(),

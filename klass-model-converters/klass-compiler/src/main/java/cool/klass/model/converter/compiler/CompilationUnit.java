@@ -224,7 +224,7 @@ public final class CompilationUnit {
 		ANTLRErrorListener errorListener = new ThrowingErrorListener(sourceName, lines);
 		CodePointCharStream charStream = CharStreams.fromString(sourceCodeText, sourceName);
 		KlassLexer lexer = CompilationUnit.getKlassLexer(errorListener, charStream);
-		CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+		var tokenStream = new CommonTokenStream(lexer);
 		KlassParser parser = CompilationUnit.getParser(errorListener, tokenStream);
 		ParserRuleContext parserRuleContext = parserRule.apply(parser);
 		return new CompilationUnit(ordinal, macroElement, sourceName, sourceCodeText, tokenStream, parserRuleContext);
@@ -232,14 +232,14 @@ public final class CompilationUnit {
 
 	@Nonnull
 	private static KlassLexer getKlassLexer(@Nonnull ANTLRErrorListener errorListener, CodePointCharStream charStream) {
-		KlassLexer lexer = new KlassLexer(charStream);
+		var lexer = new KlassLexer(charStream);
 		lexer.addErrorListener(errorListener);
 		return lexer;
 	}
 
 	@Nonnull
 	private static KlassParser getParser(@Nonnull ANTLRErrorListener errorListener, CommonTokenStream tokenStream) {
-		KlassParser parser = new KlassParser(tokenStream);
+		var parser = new KlassParser(tokenStream);
 		parser.removeErrorListeners();
 		parser.addErrorListener(errorListener);
 		return parser;

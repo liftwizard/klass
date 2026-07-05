@@ -63,7 +63,7 @@ public class GenerateAbstractApplicationMojo extends AbstractGenerateMojo {
 		DomainModel domainModel = this.getDomainModel();
 		Path outputPath = this.outputDirectory.toPath();
 		try {
-			ApplicationSuperClassGenerator abstractApplicationGenerator = new ApplicationSuperClassGenerator(
+			var abstractApplicationGenerator = new ApplicationSuperClassGenerator(
 				domainModel,
 				this.rootPackageName,
 				this.applicationName

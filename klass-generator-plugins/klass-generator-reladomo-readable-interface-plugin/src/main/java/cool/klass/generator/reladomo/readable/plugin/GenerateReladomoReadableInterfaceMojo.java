@@ -55,7 +55,7 @@ public class GenerateReladomoReadableInterfaceMojo extends AbstractGenerateMojo 
 		DomainModel domainModel = this.getDomainModel();
 
 		try {
-			ReladomoReadableInterfaceGenerator generator = new ReladomoReadableInterfaceGenerator(domainModel);
+			var generator = new ReladomoReadableInterfaceGenerator(domainModel);
 			generator.writeReadableInterfaces(this.outputDirectory.toPath());
 		} catch (RuntimeException e) {
 			throw new MojoExecutionException(e.getMessage(), e);

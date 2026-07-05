@@ -81,7 +81,7 @@ public class ExpressionValueVisitor extends KlassBaseVisitor<AntlrExpressionValu
 	@Nonnull
 	@Override
 	public AntlrLiteralListValue visitLiteralList(@Nonnull LiteralListContext ctx) {
-		AntlrLiteralListValue literalListValue = new AntlrLiteralListValue(
+		var literalListValue = new AntlrLiteralListValue(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			this.expressionValueOwner

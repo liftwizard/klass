@@ -57,7 +57,7 @@ public class GenerateLiquibaseSchemaMojo extends AbstractGenerateMojo {
 				DomainModel domainModel = this.getDomainModel();
 				Path outputPath = this.outputDirectory.toPath();
 
-				LiquibaseSchemaGenerator generator = new LiquibaseSchemaGenerator(domainModel, this.fileName);
+				var generator = new LiquibaseSchemaGenerator(domainModel, this.fileName);
 				try {
 					generator.writeFiles(outputPath);
 				} catch (RuntimeException e) {
@@ -70,7 +70,7 @@ public class GenerateLiquibaseSchemaMojo extends AbstractGenerateMojo {
 			this.getLog().info("Generated Liquibase schema in: " + this.outputDirectory.getPath());
 		}
 
-		Resource resource = new Resource();
+		var resource = new Resource();
 		resource.setDirectory(this.outputDirectory.getAbsolutePath());
 		// TODO: Should be based on the output path
 		this.mavenProject.addResource(resource);

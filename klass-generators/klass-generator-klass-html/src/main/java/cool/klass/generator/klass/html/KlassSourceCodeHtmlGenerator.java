@@ -227,14 +227,12 @@ public class KlassSourceCodeHtmlGenerator {
 
 	private static Path getRootParentPath(SourceCode sourceCode) {
 		String sourceName = sourceCode.getSourceName();
-		File sourceFile = new File(sourceName);
+		var sourceFile = new File(sourceName);
 		return sourceFile.toPath().getParent();
 	}
 
 	private static void printStringToFile(@Nonnull Path path, String contents) {
-		try (
-			PrintStream printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)
-		) {
+		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)) {
 			printStream.print(contents);
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);

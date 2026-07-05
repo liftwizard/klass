@@ -87,7 +87,7 @@ public class AuditPropertyInferencePhase extends AbstractCompilerPhase {
 
 		String validationSourceCode = validations.isEmpty() ? "" : validations.makeString(" ", " ", "");
 
-		StringBuilder sourceCodeText = new StringBuilder();
+		var sourceCodeText = new StringBuilder();
 		if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isCreatedBy)) {
 			sourceCodeText
 				.append("    createdById    : String createdBy private userId final")

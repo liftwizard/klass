@@ -54,7 +54,7 @@ public class GenerateGraphQLSchemaQueryMojo extends AbstractGenerateMojo {
 		var generator = new GraphQLSchemaQueryGenerator(domainModel);
 		generator.writeFiles(this.outputDirectory.toPath());
 
-		Resource resource = new Resource();
+		var resource = new Resource();
 		resource.setDirectory(this.outputDirectory.getAbsolutePath());
 		this.mavenProject.addResource(resource);
 	}

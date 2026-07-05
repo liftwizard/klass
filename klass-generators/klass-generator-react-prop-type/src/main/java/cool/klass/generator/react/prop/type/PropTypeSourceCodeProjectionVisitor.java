@@ -45,10 +45,7 @@ public class PropTypeSourceCodeProjectionVisitor implements ProjectionVisitor {
 	}
 
 	private String getPropTypeSourceCode(@Nonnull ProjectionElement projectionElement) {
-		PropTypeSourceCodeProjectionVisitor visitor = new PropTypeSourceCodeProjectionVisitor(
-			this.originalProjection,
-			this.indentLevel + 1
-		);
+		var visitor = new PropTypeSourceCodeProjectionVisitor(this.originalProjection, this.indentLevel + 1);
 		projectionElement.visit(visitor);
 		return visitor.getResult();
 	}
@@ -59,7 +56,7 @@ public class PropTypeSourceCodeProjectionVisitor implements ProjectionVisitor {
 
 	@Override
 	public void visitProjection(@Nonnull Projection projection) {
-		GatherProjectionReferencesVisitor visitor = new GatherProjectionReferencesVisitor(projection);
+		var visitor = new GatherProjectionReferencesVisitor(projection);
 		projection.getChildren().forEachWith(ProjectionElement::visit, visitor);
 		ImmutableSet<Projection> referencedProjections = visitor.getReferencedProjections();
 		String imports = referencedProjections
@@ -70,9 +67,7 @@ public class PropTypeSourceCodeProjectionVisitor implements ProjectionVisitor {
 
 		String childrenSourceCode = projection.getChildren().collect(this::getPropTypeSourceCode).makeString("");
 
-		GatherProjectionSelfReferencesVisitor visitor2 = new GatherProjectionSelfReferencesVisitor(
-			this.originalProjection
-		);
+		var visitor2 = new GatherProjectionSelfReferencesVisitor(this.originalProjection);
 		projection.getChildren().forEachWith(ProjectionElement::visit, visitor2);
 		ImmutableList<String> selfReferences = visitor2.getResults();
 		String selfReferencesSourceCode = selfReferences.makeString("");
@@ -145,7 +140,7 @@ public class PropTypeSourceCodeProjectionVisitor implements ProjectionVisitor {
 		DataTypeProperty property = projectionDataTypeProperty.getProperty();
 		boolean isNullableInfinity = property.isTemporalRange() || (property.isTemporalInstant() && property.isTo());
 
-		PropTypeSourceCodeDataTypePropertyVisitor visitor = new PropTypeSourceCodeDataTypePropertyVisitor();
+		var visitor = new PropTypeSourceCodeDataTypePropertyVisitor();
 		property.visit(visitor);
 
 		String isRequiredSuffix = property.isRequired() && !isNullableInfinity ? ".isRequired" : "";

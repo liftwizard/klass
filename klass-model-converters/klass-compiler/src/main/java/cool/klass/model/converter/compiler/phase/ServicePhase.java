@@ -98,7 +98,7 @@ public class ServicePhase extends AbstractCompilerPhase {
 	public void enterServiceDeclaration(@Nonnull ServiceDeclarationContext ctx) {
 		super.enterServiceDeclaration(ctx);
 		VerbContext verb = ctx.verb();
-		AntlrVerb antlrVerb = new AntlrVerb(
+		var antlrVerb = new AntlrVerb(
 			verb,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			Verb.valueOf(verb.getText())
@@ -131,7 +131,7 @@ public class ServicePhase extends AbstractCompilerPhase {
 			throw new AssertionError();
 		}
 
-		AntlrServiceProjectionDispatch projectionDispatch = new AntlrServiceProjectionDispatch(
+		var projectionDispatch = new AntlrServiceProjectionDispatch(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
 			this.service,

@@ -110,7 +110,7 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
 
 	@Nonnull
 	private MithraPureObject convertToMithraPureObject(@Nonnull Klass klass) {
-		MithraPureObject mithraPureObject = new MithraPureObject();
+		var mithraPureObject = new MithraPureObject();
 
 		this.convertCommonObject(klass, mithraPureObject);
 
@@ -136,7 +136,7 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
 
 	@Nonnull
 	private MithraObject convertToMithraObject(@Nonnull Klass klass) {
-		MithraObject mithraObject = new MithraObject();
+		var mithraObject = new MithraObject();
 		this.convertCommonObject(klass, mithraObject);
 
 		mithraObject.setDefaultTable(quote(TABLE_NAME_CONVERTER.convert(klass.getName())));
@@ -175,7 +175,7 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
 	}
 
 	private void convertCommonObject(@Nonnull Klass klass, @Nonnull MithraCommonObjectType mithraCommonObject) {
-		ObjectType objectType = new ObjectType();
+		var objectType = new ObjectType();
 		objectType.with("transactional", mithraCommonObject);
 		mithraCommonObject.setObjectType(objectType);
 
@@ -251,7 +251,7 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
 		}
 
 		AssociationEnd opposite = associationEnd.getOpposite();
-		RelationshipType relationshipType = new RelationshipType();
+		var relationshipType = new RelationshipType();
 		relationshipType.setName(associationEnd.getName());
 		relationshipType.setReverseRelationshipName(opposite.getName());
 		relationshipType.setCardinality(this.getCardinality(associationEnd, opposite));
@@ -269,7 +269,7 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
 	private RelationshipType convertSubClassRelationship(Klass subClass) {
 		Klass superClass = subClass.getSuperClass().get();
 
-		RelationshipType relationshipType = new RelationshipType();
+		var relationshipType = new RelationshipType();
 		relationshipType.setName(TO_LOWER.convert(subClass.getName()) + "SubClass");
 		relationshipType.setReverseRelationshipName(TO_LOWER.convert(superClass.getName()) + "SuperClass");
 		relationshipType.setCardinality(this.getCardinalityType("one-to-one"));
@@ -291,7 +291,7 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
 
 	@Nonnull
 	private String getRelationshipString(@Nonnull Criteria criteria, boolean reverse) {
-		StringBuilder stringBuilder = new StringBuilder();
+		var stringBuilder = new StringBuilder();
 		CriteriaVisitor visitor = new CriteriaToRelationshipVisitor(stringBuilder, reverse);
 		criteria.visit(visitor);
 		return stringBuilder.toString();
@@ -359,7 +359,7 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
 
 	@Nonnull
 	private AsOfAttributeType convertToAsOfAttributeType(@Nonnull DataTypeProperty dataTypeProperty) {
-		AsOfAttributeType asOfAttributeType = new AsOfAttributeType();
+		var asOfAttributeType = new AsOfAttributeType();
 		this.convertToAsOfAttributeType(dataTypeProperty, asOfAttributeType);
 		return asOfAttributeType;
 	}
@@ -387,7 +387,7 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
 		asOfAttributeType.setFutureExpiringRowsExist(true);
 		asOfAttributeType.setFinalGetter(true);
 
-		TimezoneConversionType timezoneConversion = new TimezoneConversionType();
+		var timezoneConversion = new TimezoneConversionType();
 		timezoneConversion.with("convert-to-utc", asOfAttributeType);
 		asOfAttributeType.setTimezoneConversion(timezoneConversion);
 
@@ -405,7 +405,7 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
 
 	@Nonnull
 	private AsOfAttributePureType convertToAsOfAttributePureType(@Nonnull DataTypeProperty dataTypeProperty) {
-		AsOfAttributePureType asOfAttributeType = new AsOfAttributePureType();
+		var asOfAttributeType = new AsOfAttributePureType();
 		this.convertToAsOfAttributeType(dataTypeProperty, asOfAttributeType);
 		return asOfAttributeType;
 	}
@@ -415,7 +415,7 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
 		@Nonnull Klass owningClass,
 		@Nonnull DataTypeProperty dataTypeProperty
 	) {
-		AttributeType attributeType = new AttributeType();
+		var attributeType = new AttributeType();
 		this.convertToAttributeType(owningClass, dataTypeProperty, attributeType);
 		return attributeType;
 	}
@@ -463,7 +463,7 @@ public class ReladomoObjectFileGenerator extends AbstractReladomoGenerator {
 		@Nonnull Klass owningClass,
 		@Nonnull DataTypeProperty dataTypeProperty
 	) {
-		AttributePureType attributeType = new AttributePureType();
+		var attributeType = new AttributePureType();
 		this.convertToAttributeType(owningClass, dataTypeProperty, attributeType);
 		return attributeType;
 	}

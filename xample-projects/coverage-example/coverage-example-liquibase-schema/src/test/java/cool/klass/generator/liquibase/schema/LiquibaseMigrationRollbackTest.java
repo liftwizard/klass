@@ -75,7 +75,7 @@ public class LiquibaseMigrationRollbackTest {
 	}
 
 	private Liquibase openLiquibase(Database database) throws LiquibaseException {
-		Liquibase liquibase = new Liquibase(MIGRATIONS_FILE, new ClassLoaderResourceAccessor(), database);
+		var liquibase = new Liquibase(MIGRATIONS_FILE, new ClassLoaderResourceAccessor(), database);
 		liquibase.setShowSummaryOutput(UpdateSummaryOutputEnum.LOG);
 		return liquibase;
 	}

@@ -63,7 +63,7 @@ public class ReladomoJsonViewBundle implements PrioritizedBundle {
 
 		JsonSerializer<MithraObject> serializer = new ReladomoJsonViewSerializer(domainModel, dataStore);
 
-		SimpleModule module = new SimpleModule();
+		var module = new SimpleModule();
 		module.addSerializer(MithraObject.class, serializer);
 		objectMapper.registerModule(module);
 

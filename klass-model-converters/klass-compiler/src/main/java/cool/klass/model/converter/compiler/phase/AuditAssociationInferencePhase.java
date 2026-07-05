@@ -91,7 +91,7 @@ public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
 			return;
 		}
 
-		StringBuilder stringBuilder = new StringBuilder();
+		var stringBuilder = new StringBuilder();
 		AntlrClass klass = this.compilerState.getCompilerWalk().getKlass();
 		stringBuilder.append("package ").append(klass.getPackageName()).append("\n");
 

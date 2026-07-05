@@ -54,7 +54,7 @@ public class CompilerInputState {
 		@Nonnull ImmutableList<ParseTreeListener> listeners
 	) {
 		this.addCompilationUnit(compilationUnit);
-		ParseTreeWalker parseTreeWalker = new ParseTreeWalker();
+		var parseTreeWalker = new ParseTreeWalker();
 		for (ParseTreeListener listener : listeners) {
 			parseTreeWalker.walk(listener, compilationUnit.getParserContext());
 		}
@@ -64,7 +64,7 @@ public class CompilerInputState {
 		@Nonnull CompilationUnit compilationUnit,
 		@Nonnull ImmutableList<ParseTreeListener> listeners
 	) {
-		ParseTreeWalker parseTreeWalker = new ParseTreeWalker();
+		var parseTreeWalker = new ParseTreeWalker();
 		for (ParseTreeListener listener : listeners) {
 			parseTreeWalker.walk(listener, compilationUnit.getParserContext());
 		}

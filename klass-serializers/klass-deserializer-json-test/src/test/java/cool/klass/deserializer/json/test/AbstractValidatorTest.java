@@ -86,7 +86,7 @@ public abstract class AbstractValidatorTest {
 	}
 
 	private static DomainModel getDomainModel(ObjectMapper objectMapper) {
-		DomainModelCompilerFactory domainModelCompilerFactory = new DomainModelCompilerFactory();
+		var domainModelCompilerFactory = new DomainModelCompilerFactory();
 		domainModelCompilerFactory.setSourcePackages(List.of("cool.klass.xample.coverage"));
 		domainModelCompilerFactory.setColorScheme("dark");
 		return domainModelCompilerFactory.createDomainModel(objectMapper);

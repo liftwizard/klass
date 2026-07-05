@@ -74,11 +74,7 @@ public class KlassResponseBuilder {
 			throw new IllegalStateException();
 		}
 
-		KlassResponsePagination klassResponsePagination = new KlassResponsePagination(
-			pageSize,
-			numberOfPages,
-			pageNumber
-		);
+		var klassResponsePagination = new KlassResponsePagination(pageSize, numberOfPages, pageNumber);
 		this.pagination = Optional.of(klassResponsePagination);
 		return this;
 	}
@@ -102,7 +98,7 @@ public class KlassResponseBuilder {
 	}
 
 	public KlassResponse build() {
-		KlassResponseMetadata metadata = new KlassResponseMetadata(
+		var metadata = new KlassResponseMetadata(
 			this.criteria,
 			this.orderBy,
 			this.multiplicity,
