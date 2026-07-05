@@ -218,7 +218,7 @@ public final class CompilationUnit {
 		@Nonnull Optional<AntlrElement> macroElement,
 		@Nonnull String sourceName,
 		@Nonnull String sourceCodeText,
-		@Nonnull Function<KlassParser, ? extends ParserRuleContext> parserRule
+		@Nonnull Function<? super KlassParser, ? extends ParserRuleContext> parserRule
 	) {
 		String[] lines = NEWLINE_PATTERN.split(sourceCodeText);
 		ANTLRErrorListener errorListener = new ThrowingErrorListener(sourceName, lines);
@@ -251,7 +251,7 @@ public final class CompilationUnit {
 		@Nonnull AntlrElement macroElement,
 		@Nonnull AbstractCompilerPhase macroExpansionCompilerPhase,
 		@Nonnull String sourceCodeText,
-		@Nonnull Function<KlassParser, ? extends ParserRuleContext> parserRule
+		@Nonnull Function<? super KlassParser, ? extends ParserRuleContext> parserRule
 	) {
 		String sourceName = macroExpansionCompilerPhase.getName() + " macro";
 		CompilationUnit result = CompilationUnit.createFromText(
