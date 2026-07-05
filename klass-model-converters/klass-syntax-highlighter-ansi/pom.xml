@@ -131,14 +131,12 @@
         <dependency>
             <groupId>io.liftwizard</groupId>
             <artifactId>liftwizard-logging-buffered-appender</artifactId>
-            <version>${liftwizard.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>io.liftwizard</groupId>
             <artifactId>liftwizard-junit-extension-log-marker</artifactId>
-            <version>${liftwizard.version}</version>
             <scope>test</scope>
         </dependency>
 
