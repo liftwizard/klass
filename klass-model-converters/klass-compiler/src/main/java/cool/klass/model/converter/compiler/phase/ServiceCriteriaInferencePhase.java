@@ -48,7 +48,7 @@ public class ServiceCriteriaInferencePhase extends AbstractCompilerPhase {
 		if (service.getServiceCriterias().notEmpty() || service.getVerb().getVerb() != Verb.GET) {
 			return;
 		}
-		String sourceCodeText = "            criteria    : all;\n";
+		var sourceCodeText = "            criteria    : all;\n";
 		this.runCompilerMacro(inPlaceContext, sourceCodeText);
 	}
 

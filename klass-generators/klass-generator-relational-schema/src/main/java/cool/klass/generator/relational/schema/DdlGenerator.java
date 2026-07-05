@@ -46,7 +46,7 @@ public final class DdlGenerator {
 		String tableName = getTableName(klass);
 		String propertiesSourceCode = getPropertiesSourceCode(klass);
 
-		String format = """
+		var format = """
 			drop table if exists {0};
 
 			create table {0}

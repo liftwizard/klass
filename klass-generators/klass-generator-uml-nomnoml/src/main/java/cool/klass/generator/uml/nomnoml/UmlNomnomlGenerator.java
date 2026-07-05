@@ -130,7 +130,7 @@ public class UmlNomnomlGenerator {
 
 		@Override
 		public void visitInterface(Interface anInterface) {
-			String classGeneralizationSourceCode = "";
+			var classGeneralizationSourceCode = "";
 			this.sourceCode = this.getClassifierSourceCode(anInterface, classGeneralizationSourceCode);
 		}
 

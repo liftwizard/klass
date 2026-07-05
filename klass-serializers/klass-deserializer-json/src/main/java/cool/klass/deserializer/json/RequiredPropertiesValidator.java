@@ -393,7 +393,7 @@ public class RequiredPropertiesValidator {
 			return;
 		}
 
-		for (int index = 0; index < jsonNode.size(); index++) {
+		for (var index = 0; index < jsonNode.size(); index++) {
 			var contextNode = new ContextNode(associationEnd, index);
 			int finalIndex = index;
 			this.contextStack.runWithContext(contextNode, () -> {
@@ -556,7 +556,7 @@ public class RequiredPropertiesValidator {
 			return;
 		}
 
-		for (int index = 0; index < jsonNode.size(); index++) {
+		for (var index = 0; index < jsonNode.size(); index++) {
 			int finalIndex = index;
 			var contextNode = new ContextNode(associationEnd, finalIndex);
 			this.contextStack.runWithContext(contextNode, () -> {

@@ -494,7 +494,7 @@ public class IncomingUpdateDataModelValidator {
 		MapIterable<ImmutableList<Object>, Object> persistentChildInstancesByKey =
 			this.getPersistentChildInstancesByKey(incomingChildInstancesByKey, associationEnd);
 
-		for (int index = 0; index < incomingChildInstances.size(); index++) {
+		for (var index = 0; index < incomingChildInstances.size(); index++) {
 			String contextString = String.format("%s[%d]", associationEnd.getName(), index);
 
 			this.contextStack.push(contextString);
@@ -577,7 +577,7 @@ public class IncomingUpdateDataModelValidator {
 		MapIterable<ImmutableList<Object>, Object> persistentChildInstancesByKey =
 			this.getPersistentChildInstancesByKey(incomingChildInstancesByKey, associationEnd);
 
-		for (int index = 0; index < incomingChildInstances.size(); index++) {
+		for (var index = 0; index < incomingChildInstances.size(); index++) {
 			String contextString = String.format("%s[%d]", associationEnd.getName(), index);
 			this.contextStack.push(contextString);
 

@@ -85,7 +85,7 @@ public abstract class AntlrMemberReferencePath extends AntlrExpressionValue {
 		@Nonnull List<AssociationEndReferenceContext> associationEndReferenceContexts
 	) {
 		AntlrClass currentClass = this.klass;
-		for (int i = 0; i < this.associationEnd.size(); i++) {
+		for (var i = 0; i < this.associationEnd.size(); i++) {
 			AntlrAssociationEnd associationEnd = this.associationEnd.get(i);
 			if (associationEnd == AntlrAssociationEnd.NOT_FOUND) {
 				IdentifierContext identifier = associationEndReferenceContexts.get(i).identifier();

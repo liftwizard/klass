@@ -618,7 +618,7 @@ public class ReladomoDataStore implements DataStore {
 	) {
 		Objects.requireNonNull(persistentTargetInstance);
 
-		boolean mutationOccurred = false;
+		var mutationOccurred = false;
 
 		// A Reladomo bug prevents just calling a method like setQuestion here. Instead we have to call foreign key setters like setQuestionId
 

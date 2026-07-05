@@ -663,7 +663,7 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 					.select((modifier) -> modifier.isFrom() || modifier.isTo())
 					.toImmutable();
 				ImmutableList<ParserRuleContext> modifierContexts = modifiers.collect(AntlrElement::getElementContext);
-				String message = "Property may not have both 'from' and to' modifiers.";
+				var message = "Property may not have both 'from' and to' modifiers.";
 				compilerAnnotationHolder.add("ERR_TMP_FTO", message, this, modifierContexts);
 			}
 		}

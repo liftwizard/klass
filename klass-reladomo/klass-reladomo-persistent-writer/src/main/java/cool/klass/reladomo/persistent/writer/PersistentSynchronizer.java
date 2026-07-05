@@ -137,7 +137,7 @@ public abstract class PersistentSynchronizer {
 			throw new AssertionError();
 		}
 
-		boolean propertyMutationOccurred = false;
+		var propertyMutationOccurred = false;
 		if (!this.isRestrictedFromWriting(klass)) {
 			propertyMutationOccurred |= this.synchronizeDataTypeProperties(klass, persistentInstance, incomingJson);
 		}
@@ -194,7 +194,7 @@ public abstract class PersistentSynchronizer {
 
 		this.validateSetIdDataTypeProperties(klass, persistentInstance);
 
-		boolean mutationOccurred = false;
+		var mutationOccurred = false;
 		for (DataTypeProperty dataTypeProperty : simpleDataTypeProperties) {
 			mutationOccurred |= this.synchronizeDataTypeProperty(dataTypeProperty, persistentInstance, incomingJson);
 		}
@@ -247,7 +247,7 @@ public abstract class PersistentSynchronizer {
 			.reject(AssociationEnd::isAudit)
 			.partition(AssociationEnd::isOwned);
 
-		boolean mutationOccurred = false;
+		var mutationOccurred = false;
 		for (AssociationEnd associationEnd : forwardOwnedAssociationEnds.getSelected()) {
 			Multiplicity multiplicity = associationEnd.getMultiplicity();
 
@@ -391,7 +391,7 @@ public abstract class PersistentSynchronizer {
 		Object persistentParentInstance,
 		@Nonnull JsonNode incomingChildInstances
 	) {
-		boolean mutationOccurred = false;
+		var mutationOccurred = false;
 		// TODO: Test null where an array goes
 
 		ImmutableList<JsonNode> incomingInstancesForUpdate = Lists.immutable
@@ -500,7 +500,7 @@ public abstract class PersistentSynchronizer {
 			return false;
 		}
 
-		boolean mutationOccurred = false;
+		var mutationOccurred = false;
 
 		// TODO: Test null where an array goes
 

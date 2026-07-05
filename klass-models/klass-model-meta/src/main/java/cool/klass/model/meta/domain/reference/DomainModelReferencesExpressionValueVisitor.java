@@ -67,7 +67,7 @@ public class DomainModelReferencesExpressionValueVisitor implements ExpressionVa
 		List<AssociationEndReferenceContext> associationEndReferenceContexts = elementContext.associationEndReference();
 		ImmutableList<AssociationEnd> associationEnds = typeMemberExpressionValue.getAssociationEnds();
 
-		for (int i = 0; i < associationEndReferenceContexts.size(); i++) {
+		for (var i = 0; i < associationEndReferenceContexts.size(); i++) {
 			AssociationEndReferenceContext associationEndReference = associationEndReferenceContexts.get(i);
 			AssociationEnd associationEnd = associationEnds.get(i);
 			this.domainModelReferences.addAssociationEndReference(
@@ -89,7 +89,7 @@ public class DomainModelReferencesExpressionValueVisitor implements ExpressionVa
 		List<AssociationEndReferenceContext> associationEndReferenceContexts = elementContext.associationEndReference();
 		ImmutableList<AssociationEnd> associationEnds = thisMemberExpressionValue.getAssociationEnds();
 
-		for (int i = 0; i < associationEndReferenceContexts.size(); i++) {
+		for (var i = 0; i < associationEndReferenceContexts.size(); i++) {
 			AssociationEndReferenceContext associationEndReference = associationEndReferenceContexts.get(i);
 			AssociationEnd associationEnd = associationEnds.get(i);
 			this.domainModelReferences.addAssociationEndReference(
