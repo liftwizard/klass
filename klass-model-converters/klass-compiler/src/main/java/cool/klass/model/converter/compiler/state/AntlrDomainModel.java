@@ -512,7 +512,7 @@ public class AntlrDomainModel {
 
 	private static AntlrClass findOwner(AntlrClass klass) {
 		AntlrClass current = klass;
-		Set<AntlrClass> visited = org.eclipse.collections.api.factory.Sets.mutable.empty();
+		MutableSet<AntlrClass> visited = org.eclipse.collections.api.factory.Sets.mutable.empty();
 		while (current != null && visited.add(current)) {
 			for (AntlrAssociationEnd ae : current.getDeclaredAssociationEnds()) {
 				if (ae.getOpposite().isOwned()) {
