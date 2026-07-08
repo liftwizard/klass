@@ -1,14 +1,14 @@
 ## Scope
 
-This document covers long-term vision. A shorter-term, **minimal-viable-product** is discussed [here](../part5/README.md).
+This document covers long-term vision. A shorter-term, **minimal-viable-product** is discussed in [part 5](../part5/README.md).
 
-This covers one set of implementation choices. **Alternatives** are discussed [here](../part5/README.md).
+This covers one set of implementation choices. **Alternatives** are discussed in [part 5](../part5/README.md).
 
-Business value, rationale, justification are discussed [here](TODO).
+Business value, rationale, justification are discussed in [business value notes](TODO).
 
-**Related works** are discussed [here](../part6/README.md).
+**Related works** are discussed in [part 6](../part6/README.md).
 
-Internal design is discussed [here](TODO).
+Internal design is discussed in [internal design notes](TODO).
 
 ## Running example
 
