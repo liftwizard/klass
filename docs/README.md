@@ -55,108 +55,105 @@ package com.stackoverflow
 
 // 'user' is a special class that represents logged-in users.
 user User
-    read
-    systemTemporal
+	read
+	systemTemporal
 {
-    userId                 : String key userId;
-    firstName              : String?;
-    lastName               : String?;
-    email                  : String?;
+	userId: String key userId;
+	firstName: String?;
+	lastName: String?;
+	email: String?;
 }
 
 enumeration Status
 {
-    OPEN("Open"),
-    ON_HOLD("On hold"),
-    CLOSED("Closed"),
+	OPEN("Open"),
+	ON_HOLD("On hold"),
+	CLOSED("Closed"),
 }
 
 interface Document
 {
-    id                     : Long key id;
-    body                   : String;
+	id: Long key id;
+	body: String;
 }
 
 class Question
-    implements Document
-    read(QuestionReadProjection)
-    systemTemporal
-    versioned
-    audited
+	implements Document
+	read(QuestionReadProjection)
+	systemTemporal
+	versioned
+	audited
 {
-    id                     : Long key id;
-    title                  : String;
-    status                 : Status;
-    deleted                : Boolean;
+	id: Long key id;
+	title: String;
+	status: Status;
+	deleted: Boolean;
 }
 
 class Answer
-    implements Document
-    systemTemporal
-    versioned
-    audited
+	implements Document
+	systemTemporal
+	versioned
+	audited
 {
-    id                     : Long key id;
-    questionId             : Long private final;
-    deleted                : Boolean;
+	id: Long key id;
+	questionId: Long private final;
+	deleted: Boolean;
 }
 
 association QuestionHasAnswer
 {
-    question               : Question[1..1] final;
-    answers                : Answer[0..*]
-        orderBy: this.id ascending;
+	question: Question[1..1] final;
+	answers: Answer[0..*]
+		orderBy: this.id ascending;
 }
 
 // A Projection defines the shape of the data returned by an API.
 projection AnswerProjection on Answer
 {
-    id: "Answer id",
-    body: "Document body",
-    deleted: "Answer deleted",
+	id: "Answer id",
+	body: "Document body",
+	deleted: "Answer deleted",
 }
 
 projection QuestionReadProjection on Question
 {
-    id             : "Question id",
-    title          : "Question title",
-    body           : "Question body",
-    status         : "Question status",
-    deleted        : "Question is deleted",
-    answers        : AnswerProjection,
+	id: "Question id",
+	title: "Question title",
+	body: "Question body",
+	status: "Question status",
+	deleted: "Question is deleted",
+	answers: AnswerProjection,
 }
 
 // A Service defines a RESTful API endpoint.
 service QuestionResource on Question
 {
-    /question/{id: Long[1..1]}
-        GET
-        {
-            multiplicity: one;
-            criteria    : this.id == id;
-            projection  : QuestionReadProjection;
-        }
-
-    /question
-        POST
-        {
-            multiplicity: one;
-        }
-
-    /question/{id: Long[1..1]}
-        PUT
-        {
-            multiplicity: one;
-            criteria    : this.id == id;
-        }
-        DELETE
-        {
-            multiplicity: one;
-            criteria    : this.id == id;
-            authorize   : this.createdById == user;
-        }
+	/question/{id: Long[1..1]}
+		GET
+		{
+			multiplicity: one;
+			criteria: this.id == id;
+			projection: QuestionReadProjection;
+		}
+	/question
+		POST
+		{
+			multiplicity: one;
+		}
+	/question/{id: Long[1..1]}
+		PUT
+		{
+			multiplicity: one;
+			criteria: this.id == id;
+		}
+		DELETE
+		{
+			multiplicity: one;
+			criteria: this.id == id;
+			authorize: this.createdById == user;
+		}
 }
-
 ```
 
 ### Why a DSL?

@@ -34,3 +34,8 @@ repos:
             entry: markdownlint-cli2
             language: system
             types: [markdown]
+
+    - repo: https://github.com/motlin/klassfmt
+      rev: v0.1.0
+      hooks:
+          - id: klassfmt-markdown

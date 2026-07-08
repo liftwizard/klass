@@ -5,10 +5,10 @@ Let's add the one-to-many association between questions and answers.
 ```klass
 association QuestionHasAnswer
 {
-    question: Question[1..1] final;
-    answers: Answer[0..*];
+	question: Question[1..1] final;
+	answers: Answer[0..*];
 
-    relationship this.id == Answer.questionId
+	relationship this.id == Answer.questionId
 }
 ```
 

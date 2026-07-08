@@ -7,9 +7,9 @@ Let's add the classes `Question` and `Answer` to the model in stackoverflow.klas
 ```klass
 class Question
 {
-    id        : Long key id;
-    title     : String minLength(15) maxLength(150);
-    body      : String maxLength(30000);
+	id: Long key id;
+	title: String minLength(15) maxLength(150);
+	body: String maxLength(30000);
 }
 ```
 

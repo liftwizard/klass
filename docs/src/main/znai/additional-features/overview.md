@@ -11,8 +11,8 @@ We'll start with an enumeration to indicate the direction of a vote.
 ```klass
 enumeration VoteDirection
 {
-    UP("up"),
-    DOWN("down"),
+	UP("up"),
+	DOWN("down"),
 }
 ```
 
@@ -24,12 +24,12 @@ Next we'll define the vote class.
 
 ```klass
 class QuestionVote
-    systemTemporal
-    audited
+	systemTemporal
+	audited
 {
-    questionId : Long key;
-    createdById: String key createdBy;
-    direction  : VoteDirection;
+	questionId: Long key;
+	createdById: String key createdBy;
+	direction: VoteDirection;
 }
 ```
 
@@ -48,18 +48,18 @@ A user cannot upvote and downvote the same question, so `direction` is not part 
 ```klass
 association QuestionHasVotes
 {
-    question: Question[1..1] final;
-    votes: QuestionVote[0..*];
+	question: Question[1..1] final;
+	votes: QuestionVote[0..*];
 
-    relationship this.id == QuestionVote.questionId
+	relationship this.id == QuestionVote.questionId
 }
 
 association UserHasQuestionVotes
 {
-    user: User[1..1] final;
-    votes: QuestionVote[0..*];
+	user: User[1..1] final;
+	votes: QuestionVote[0..*];
 
-    relationship this.userId == QuestionVote.createdById
+	relationship this.userId == QuestionVote.createdById
 }
 ```
 
@@ -145,16 +145,15 @@ When viewing a question on Stack Overflow, you can see your own vote if you've c
 
 ```klass
 class Question
-    systemTemporal
-    versioned
-    audited
+	systemTemporal
+	versioned
+	audited
 {
-    // ...
-
-    myVote(): QuestionVote[0..1]
-    {
-        this.votes.createdById == userId
-    }
+	// ...
+	myVote(): QuestionVote[0..1]
+	{
+		this.votes.createdById == userId
+	}
 }
 ```
 
@@ -168,22 +167,21 @@ However, let's add some perhaps unrealistic variants that take parameters, just 
 
 ```klass
 class Question
-    systemTemporal
-    versioned
-    audited
+	systemTemporal
+	versioned
+	audited
 {
-    // ...
+	// ...
+	votesByDirection(direction: VoteDirection[1..1]): QuestionVote[0..*]
+	{
+		this.votes.direction == direction
+	}
 
-    votesByDirection(direction: VoteDirection[1..1]): QuestionVote[0..*]
-    {
-        this.votes.direction == direction
-    }
-
-    voteByUser(userId: String[1..1] userId): QuestionVote[0..1]
-    {
-        // userId refers to the parameter, not the global
-        this.votes.createdById == userId
-    }
+	voteByUser(userId: String[1..1] userId): QuestionVote[0..1]
+	{
+		// userId refers to the parameter, not the global
+		this.votes.createdById == userId
+	}
 }
 ```
 
@@ -194,27 +192,29 @@ Here we define a projection that parameterizes `votesByDirection` twice, once fo
 ```klass
 projection ProjectionWithConstant on Question
 {
-    id             : "Question id",
-    title          : "Question title",
-    body           : "Question body",
+	id: "Question id",
+	title: "Question title",
+	body: "Question body",
 
-    votesByDirection("up"):
-    {
-        // This would work, but the information is redundant
-        // direction: "Upvote direction",
-        user: {
-            userId: "Upvote user id",
-        },
-    },
+	votesByDirection("up"):
+	{
+		// This would work, but the information is redundant
+		// direction: "Upvote direction",
+		user:
+		{
+			userId: "Upvote user id",
+		},
+	},
 
-    votesByDirection("down"):
-    {
-        // This would work, but the information is redundant
-        // direction: "Upvote direction",
-        user: {
-            userId: "Upvote user id",
-        },
-    },
+	votesByDirection("down"):
+	{
+		// This would work, but the information is redundant
+		// direction: "Upvote direction",
+		user:
+		{
+			userId: "Upvote user id",
+		},
+	},
 }
 ```
 
