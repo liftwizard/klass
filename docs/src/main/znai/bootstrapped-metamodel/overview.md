@@ -17,73 +17,73 @@ interface Element
 }
 
 interface NamedElement
-    implements Element
+	implements Element
 {
-    name: String key maximumLength(256);
-    ordinal: Integer private;
+	name: String key maximumLength(256);
+	ordinal: Integer private;
 }
 
 class PackageableElement
-    abstract
-    implements NamedElement
+	abstract
+	implements NamedElement
 {
-    packageName: String maximumLength(100000);
+	packageName: String maximumLength(100000);
 }
 
 class Classifier
-    abstract
-    extends PackageableElement
+	abstract
+	extends PackageableElement
 {
 }
 
 class Klass
-    extends Classifier
+	extends Classifier
 {
-    superClassName: String? private maximumLength(256);
-    abstractClass: Boolean;
+	superClassName: String? private maximumLength(256);
+	abstractClass: Boolean;
 }
 
 enumeration PrimitiveType
 {
-    INTEGER("Integer"),
-    LONG("Long"),
-    DOUBLE("Double"),
-    FLOAT("Float"),
-    BOOLEAN("Boolean"),
-    STRING("String"),
-    INSTANT("Instant"),
-    LOCAL_DATE("LocalDate"),
-    TEMPORAL_INSTANT("TemporalInstant"),
-    TEMPORAL_RANGE("TemporalRange"),
+	INTEGER("Integer"),
+	LONG("Long"),
+	DOUBLE("Double"),
+	FLOAT("Float"),
+	BOOLEAN("Boolean"),
+	STRING("String"),
+	INSTANT("Instant"),
+	LOCAL_DATE("LocalDate"),
+	TEMPORAL_INSTANT("TemporalInstant"),
+	TEMPORAL_RANGE("TemporalRange"),
 }
 
 enumeration Multiplicity
 {
-    ZERO_TO_ONE("0..1"),
-    ONE_TO_ONE("1..1"),
-    ZERO_TO_MANY("0..*"),
-    ONE_TO_MANY("1..*"),
+	ZERO_TO_ONE("0..1"),
+	ONE_TO_ONE("1..1"),
+	ZERO_TO_MANY("0..*"),
+	ONE_TO_MANY("1..*"),
 }
 
 class DataTypeProperty
-    abstract
-    implements NamedElement
+	abstract
+	implements NamedElement
 {
-    classifierName                : String key maximumLength(256);
-    optional                      : Boolean;
+	classifierName: String key maximumLength(256);
+	optional: Boolean;
 }
 
 class PrimitiveProperty
-    extends DataTypeProperty
+	extends DataTypeProperty
 {
-    primitiveType                 : PrimitiveType maximumLength(256);
+	primitiveType: PrimitiveType maximumLength(256);
 }
 
 association ClassifierHasDataTypeTypeProperties
 {
-    owningClassifier              : Classifier[1..1];
-    dataTypeProperties            : DataTypeProperty[0..*] owned
-        orderBy: this.ordinal ascending;
+	owningClassifier: Classifier[1..1];
+	dataTypeProperties: DataTypeProperty[0..*] owned
+		orderBy: this.ordinal ascending;
 }
 ```
 
@@ -96,37 +96,39 @@ package klass.model.meta.domain
 
 projection KlassProjection on Klass
 {
-    name: "NamedElement name",
-    packageName: "PackageableElement packageName",
-    abstractClass: "Klass abstractClass",
-    superInterfaces: ClassifierInterfaceMappingProjection,
-    classifierModifiers: ClassifierModifierProjection,
-    dataTypeProperties: DataTypePropertyProjection,
-    superClass: {
-        name: "NamedElement name",
-    },
-    associationEnds: {
-        name: "NamedElement name",
-    },
-    parameterizedProperties: ParameterizedPropertyProjection,
+	name: "NamedElement name",
+	packageName: "PackageableElement packageName",
+	abstractClass: "Klass abstractClass",
+	superInterfaces: ClassifierInterfaceMappingProjection,
+	classifierModifiers: ClassifierModifierProjection,
+	dataTypeProperties: DataTypePropertyProjection,
+	superClass:
+	{
+		name: "NamedElement name",
+	},
+	associationEnds:
+	{
+		name: "NamedElement name",
+	},
+	parameterizedProperties: ParameterizedPropertyProjection,
 }
 
 service KlassResource on Klass
 {
-    /meta/class/{name: String[1..1]}
-        GET
-        {
-            multiplicity: one;
-            criteria    : this.name == name;
-            projection  : KlassProjection;
-        }
-    /meta/class
-        GET
-        {
-            multiplicity: many;
-            criteria    : all;
-            projection  : KlassProjection;
-            orderBy     : this.ordinal ascending;
-        }
+	/meta/class/{name: String[1..1]}
+		GET
+		{
+			multiplicity: one;
+			criteria: this.name == name;
+			projection: KlassProjection;
+		}
+	/meta/class
+		GET
+		{
+			multiplicity: many;
+			criteria: all;
+			projection: KlassProjection;
+			orderBy: this.ordinal ascending;
+		}
 }
 ```

@@ -30,15 +30,15 @@ The service referred to the projection `QuestionReadProjection` without defining
 ```klass
 projection QuestionReadProjection on Question
 {
-    id     : "Question id",
-    title  : "Question title",
-    body   : "Question body",
+	id: "Question id",
+	title: "Question title",
+	body: "Question body",
 
-    answers:
-    {
-        id  : "Answer id",
-        body: "Answer body",
-    },
+	answers:
+	{
+		id: "Answer id",
+		body: "Answer body",
+	},
 }
 ```
 
