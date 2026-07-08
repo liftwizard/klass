@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"> 
+<title>Klass: Projections And Services</title>
+<link rel="stylesheet" type="text/css" href="/docs/static/css/katex.min.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/main.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+</head>
+<link rel="shortcut icon" href="/docs/favicon.png"type="image/ico"/>
+<body class="znai-theme theme-znai-dark">
+<script>(function() {
+    var themeNameKey = 'znaiTheme';
+    var darkThemeName = 'znai-dark';
+    var lightThemeName = 'default';
+
+    var znaiTheme = {
+        changeHandlers: [],
+        addChangeHandler(handler) {
+            this.changeHandlers.push(handler);
+        },
+        removeChangeHandler(handler) {
+            var idx = this.changeHandlers.indexOf(handler);
+            this.changeHandlers.splice(idx, 1);
+        },
+        set(name) {
+            this.name = name;
+            document.body.className = 'znai-theme theme-' + name;
+
+            var idx = 0;
+            var len = this.changeHandlers.length;
+            for (; idx < len; idx++) {
+                this.changeHandlers[idx](name);
+            }
+        },
+        setExplicitly(name) {
+            storeThemeName(name);
+            this.set(name);
+        },
+        setExplicitlyIfNotSetAlready(name) {
+            const themeName = getStoredThemeName();
+            if (themeName) {
+                return
+            }
+
+            this.setExplicitly(name)
+        },
+        toggle() {
+            this.setExplicitly(this.name === lightThemeName ? darkThemeName : lightThemeName)
+        }
+    };
+
+    var mediaThemeName = setLightMatchMediaListenerAndGetThemeName()
+    var themeName = getStoredThemeName() || mediaThemeName;
+    znaiTheme.set(themeName);
+
+    window.znaiTheme = znaiTheme;
+
+    function getStoredThemeName() {
+        return localStorage.getItem(themeNameKey);
+    }
+
+    function storeThemeName(name) {
+        return localStorage.setItem(themeNameKey, name);
+    }
+
+    function setLightMatchMediaListenerAndGetThemeName() {
+        if (!window.matchMedia) {
+            return darkThemeName;
+        }
+
+        var lightQuery = window.matchMedia('(prefers-color-scheme: light)');
+        lightQuery.addListener(function (e) {
+            const newThemeName = e.matches ? lightThemeName : darkThemeName;
+            znaiTheme.setExplicitly(newThemeName);
+        });
+
+        return lightQuery.matches ? lightThemeName : darkThemeName;
+    }
+})()</script>
+<div id="znai"><div id="znai-initial-page-loading" style="margin: -20px 0 0 -20px; padding: 0 40px 40px 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center">
+    <div></div>
+</div><section id="page-content" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+<article>
+<p>Projections and Services Let s add the service to fetch a question by its id Service Read operations translate to the verb when using http We ll be able to to fetch the Question with id 1 The response will be json The return multiplicity is one so the response body will be a json object not a json array The criteria matches against the path parameter like the sql The projection defines how much data will get serialized in the response body Projection The service referred to the projection without defining it Let s do that now This projection includes everything all of the question s properties including its answers and all of the answers properties We do want everything included in the service s json response but if we didn t we could remove parts to shrink the response JSON Format Since the service definition includes the response body will match the nested structure of the projection and the projection s header names will be ignored CSV Format If the service definition included instead then the nested structure would be flattened and the header names would become column headers in the response The order of the columns would be defined by the order they appear in the projection definition from top to bottom which is depth first Note that to many association ends get flattened so the data for question 1 appears twice service QuestionResource read getById questionId Long 1 1 id path QuestionReadProjection 1 url question questionId Long 1 1 id criteria this id questionId format json GET GET api question 1 Question id questionId where q id QuestionReadProjection projection QuestionReadProjection on Question id Question id title Question title body Question body answers id Answer id body Answer body format json format csv Question id Question title Question body Answer id Answer body 1 Question title 1 Question body 1 1 Answer body 1 1 Question title 1 Question body 1 2 Answer body 2</p>
+</article>
+</section>
+<section id="table-of-contents" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+<article>
+<a href="/docs/vision/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/vision/classes/">Classes</a>
+</article>
+
+<article>
+<a href="/docs/vision/associations/">Associations</a>
+</article>
+
+<article>
+<a href="/docs/vision/projections-and-services/">Projections And Services</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/audit-model/">Audit Model</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/audited-services/">Audited Services</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/bootstrapped-model-data/">Bootstrapped Model Data</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/bootstrapped-meta-model-data/">Bootstrapped Meta Model Data</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-query/">Dynamic Query</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-ui/">Dynamic Ui</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-model/">Dynamic Model</a>
+</article>
+
+<article>
+<a href="/docs/additional-features/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/alternative-implementations/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/related-works/overview/">Overview</a>
+</article>
+</section>
+</div>
+<script type="text/javascript" src="/docs/footer.js"></script>
+<script type="text/javascript" src="/docs/toc.js"></script>
+<script type="text/javascript" src="/docs/assets.js"></script>
+<script type="module" src="/docs/static/__vite-browser-external-RdVdkQtE.js"></script>
+<script type="module" src="/docs/static/architecture-7EHR7CIX-xxpzkfCG.js"></script>
+<script type="module" src="/docs/static/architectureDiagram-3BPJPVTR-BUvXLKpc.js"></script>
+<script type="module" src="/docs/static/blockDiagram-GPEHLZMM-DQkskzPw.js"></script>
+<script type="module" src="/docs/static/c4Diagram-AAUBKEIU-Bpn-7umj.js"></script>
+<script type="module" src="/docs/static/classDiagram-4FO5ZUOK-C-2B96sD.js"></script>
+<script type="module" src="/docs/static/classDiagram-v2-Q7XG4LA2-D3oi48vF.js"></script>
+<script type="module" src="/docs/static/cose-bilkent-S5V4N54A-BCXCvQOF.js"></script>
+<script type="module" src="/docs/static/dagre-BM42HDAG-Cc78wdVZ.js"></script>
+<script type="module" src="/docs/static/diagram-2AECGRRQ-C097eezT.js"></script>
+<script type="module" src="/docs/static/diagram-5GNKFQAL-hjxnnMhB.js"></script>
+<script type="module" src="/docs/static/diagram-KO2AKTUF-CAUZLpoG.js"></script>
+<script type="module" src="/docs/static/diagram-LMA3HP47-diPTlvm_.js"></script>
+<script type="module" src="/docs/static/diagram-OG6HWLK6-CH2jcJIT.js"></script>
+<script type="module" src="/docs/static/erDiagram-TEJ5UH35-Cr1VvSmz.js"></script>
+<script type="module" src="/docs/static/eventmodeling-FCH6USID-RC1BLkKd.js"></script>
+<script type="module" src="/docs/static/flowDiagram-I6XJVG4X-CDCv2295.js"></script>
+<script type="module" src="/docs/static/ganttDiagram-6RSMTGT7-BR4mRbFY.js"></script>
+<script type="module" src="/docs/static/gitGraph-WXDBUCRP-CpmxTMqy.js"></script>
+<script type="module" src="/docs/static/gitGraphDiagram-PVQCEYII-DxNbnbwd.js"></script>
+<script type="module" src="/docs/static/index-7Sh1X86R.js"></script>
+<script type="module" src="/docs/static/info-J43DQDTF-DAgppa5S.js"></script>
+<script type="module" src="/docs/static/infoDiagram-5YYISTIA-CVuWbv6I.js"></script>
+<script type="module" src="/docs/static/ishikawaDiagram-YF4QCWOH-DB_WPzDJ.js"></script>
+<script type="module" src="/docs/static/journeyDiagram-JHISSGLW-BPrxtqhf.js"></script>
+<script type="module" src="/docs/static/kanban-definition-UN3LZRKU-DUfwLEfg.js"></script>
+<script type="module" src="/docs/static/katex-DeIpYIwo.js"></script>
+<script type="module" src="/docs/static/mermaid-BqwjLks-.js"></script>
+<script type="module" src="/docs/static/mindmap-definition-RKZ34NQL-DaM2_BWN.js"></script>
+<script type="module" src="/docs/static/packet-YPE3B663-DTT4Hb4J.js"></script>
+<script type="module" src="/docs/static/pie-LRSECV5Y-BDDKzod5.js"></script>
+<script type="module" src="/docs/static/pieDiagram-4H26LBE5-N6wANTAe.js"></script>
+<script type="module" src="/docs/static/quadrantDiagram-W4KKPZXB-DR0fXv_u.js"></script>
+<script type="module" src="/docs/static/radar-GUYGQ44K-C2mNSmA1.js"></script>
+<script type="module" src="/docs/static/requirementDiagram-4Y6WPE33-C8mXe5ei.js"></script>
+<script type="module" src="/docs/static/rolldown-runtime-CWU8vmCm.js"></script>
+<script type="module" src="/docs/static/sankeyDiagram-5OEKKPKP-BBDoZ-sx.js"></script>
+<script type="module" src="/docs/static/sequenceDiagram-3UESZ5HK-BqisPtOK.js"></script>
+<script type="module" src="/docs/static/stateDiagram-AJRCARHV-CiC-Moml.js"></script>
+<script type="module" src="/docs/static/stateDiagram-v2-BHNVJYJU-D0Ryiamm.js"></script>
+<script type="module" src="/docs/static/timeline-definition-PNZ67QCA-D661wfqD.js"></script>
+<script type="module" src="/docs/static/treeView-BLDUP644-C40wJjez.js"></script>
+<script type="module" src="/docs/static/treemap-LRROVOQU-BsK_pOnH.js"></script>
+<script type="module" src="/docs/static/vennDiagram-CIIHVFJN-DwXJOwH8.js"></script>
+<script type="module" src="/docs/static/wardley-L42UT6IY-CZ93k7bK.js"></script>
+<script type="module" src="/docs/static/wardleyDiagram-YWT4CUSO-C_RE8KDW.js"></script>
+<script type="module" src="/docs/static/xychartDiagram-2RQKCTM6-DZh5UzCw.js"></script>
+<script type="module" src="/docs/search-index.js"></script>
+<script type="module">
+document.getElementById('znai').innerHTML = '';
+/*<!--*/
+/*
+ * Copyright 2025 znai maintainers
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+function initializeSearchIndex() {
+    if (window.znaiSearchData) {
+        window.znaiSearchIdx = window.createLocalSearchIndex();
+        window.populateLocalSearchIndexWithData(window.znaiSearchIdx, window.znaiSearchData);
+    }
+}
+
+// Call the method to initialize the search index.
+initializeSearchIndex();
+
+window.ReactDOM.render(React.createElement(Documentation, {
+  "docMeta" : {
+    "viewOn" : {
+      "link" : "https://github.com/motlin/klass/blob/main/docs/src/main/znai",
+      "title" : "View On GitHub"
+    },
+    "id" : "docs",
+    "title" : "Klass",
+    "type" : "Guide",
+    "previewEnabled" : false
+  },
+  "page" : {
+    "type" : "Page",
+    "content" : [ {
+      "id" : "projections-and-services",
+      "additionalIds" : [ ],
+      "level" : 2,
+      "title" : "Projections and Services",
+      "type" : "SubHeading"
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "text" : "Let's add the service to fetch a question by its id.",
+        "type" : "SimpleText"
+      } ]
+    }, {
+      "id" : "projections-and-services-service",
+      "additionalIds" : [ "service" ],
+      "level" : 3,
+      "title" : "Service",
+      "type" : "SubHeading"
+    }, {
+      "lang" : "klass",
+      "snippet" : "service QuestionResource\n{\n    read getById(questionId: Long[1..1] id path): QuestionReadProjection[1]\n    {\n        url      : /question/{questionId: Long[1..1] id};\n        criteria : this.id == questionId;\n        format   : json;\n    }\n}",
+      "lineNumber" : "",
+      "type" : "Snippet"
+    }, {
+      "bulletMarker" : "-",
+      "tight" : true,
+      "type" : "BulletList",
+      "content" : [ {
+        "type" : "ListItem",
+        "content" : [ {
+          "type" : "Paragraph",
+          "content" : [ {
+            "text" : "Read operations translate to the ",
+            "type" : "SimpleText"
+          }, {
+            "code" : "GET",
+            "type" : "InlinedCode"
+          }, {
+            "text" : " verb when using http.",
+            "type" : "SimpleText"
+          } ]
+        } ]
+      }, {
+        "type" : "ListItem",
+        "content" : [ {
+          "type" : "Paragraph",
+          "content" : [ {
+            "text" : "We'll be able to ",
+            "type" : "SimpleText"
+          }, {
+            "code" : "GET",
+            "type" : "InlinedCode"
+          }, {
+            "text" : " ",
+            "type" : "SimpleText"
+          }, {
+            "code" : "/api/question/1",
+            "type" : "InlinedCode"
+          }, {
+            "text" : " to fetch the Question with id 1.",
+            "type" : "SimpleText"
+          } ]
+        } ]
+      }, {
+        "type" : "ListItem",
+        "content" : [ {
+          "type" : "Paragraph",
+          "content" : [ {
+            "text" : "The response will be json.",
+            "type" : "SimpleText"
+          } ]
+        } ]
+      }, {
+        "type" : "ListItem",
+        "content" : [ {
+          "type" : "Paragraph",
+          "content" : [ {
+            "text" : "The return multiplicity is one, so the response body will be a json object, not a json array.",
+            "type" : "SimpleText"
+          } ]
+        } ]
+      }, {
+        "type" : "ListItem",
+        "content" : [ {
+          "type" : "Paragraph",
+          "content" : [ {
+            "text" : "The criteria matches ",
+            "type" : "SimpleText"
+          }, {
+            "code" : "Question.id",
+            "type" : "InlinedCode"
+          }, {
+            "text" : " against the path parameter ",
+            "type" : "SimpleText"
+          }, {
+            "code" : "questionId",
+            "type" : "InlinedCode"
+          }, {
+            "text" : ", like the sql ",
+            "type" : "SimpleText"
+          }, {
+            "code" : "where q.id = ?",
+            "type" : "InlinedCode"
+          } ]
+        } ]
+      }, {
+        "type" : "ListItem",
+        "content" : [ {
+          "type" : "Paragraph",
+          "content" : [ {
+            "text" : "The projection defines how much data will get serialized in the response body.",
+            "type" : "SimpleText"
+          } ]
+        } ]
+      } ]
+    }, {
+      "id" : "projections-and-services-projection",
+      "additionalIds" : [ "projection" ],
+      "level" : 3,
+      "title" : "Projection",
+      "type" : "SubHeading"
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "text" : "The service referred to the projection ",
+        "type" : "SimpleText"
+      }, {
+        "code" : "QuestionReadProjection",
+        "type" : "InlinedCode"
+      }, {
+        "text" : " without defining it. Let's do that now.",
+        "type" : "SimpleText"
+      } ]
+    }, {
+      "lang" : "klass",
+      "snippet" : "projection QuestionReadProjection on Question\n{\n    id     : \"Question id\",\n    title  : \"Question title\",\n    body   : \"Question body\",\n\n    answers:\n    {\n        id  : \"Answer id\",\n        body: \"Answer body\",\n    },\n}",
+      "lineNumber" : "",
+      "type" : "Snippet"
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "text" : "This projection includes everything; all of the question's properties including its answers, and all of the answers' properties. We do want everything included in the service's json response, but if we didn't we could remove parts to shrink the response.",
+        "type" : "SimpleText"
+      } ]
+    }, {
+      "id" : "projections-and-services-json-format",
+      "additionalIds" : [ "json-format" ],
+      "level" : 3,
+      "title" : "JSON Format",
+      "type" : "SubHeading"
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "text" : "Since the service definition includes ",
+        "type" : "SimpleText"
+      }, {
+        "code" : "format: json",
+        "type" : "InlinedCode"
+      }, {
+        "text" : ", the response body will match the nested structure of the projection, and the projection's header names will be ignored.",
+        "type" : "SimpleText"
+      } ]
+    }, {
+      "data" : {
+        "id" : 1,
+        "title" : "Question title 1",
+        "body" : "Question body 1",
+        "answers" : [ {
+          "id" : 1,
+          "body" : "Answer body 1"
+        }, {
+          "id" : 2,
+          "body" : "Answer body 2"
+        } ]
+      },
+      "highlightValues" : [ ],
+      "highlightKeys" : [ ],
+      "type" : "Json"
+    }, {
+      "id" : "projections-and-services-csv-format",
+      "additionalIds" : [ "csv-format" ],
+      "level" : 3,
+      "title" : "CSV Format",
+      "type" : "SubHeading"
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "text" : "If the service definition included ",
+        "type" : "SimpleText"
+      }, {
+        "code" : "format: csv",
+        "type" : "InlinedCode"
+      }, {
+        "text" : " instead, then the nested structure would be flattened and the header names would become column headers in the response. The order of the columns would be defined by the order they appear in the projection definition from top-to-bottom, which is depth-first.",
+        "type" : "SimpleText"
+      } ]
+    }, {
+      "lang" : "csv",
+      "snippet" : "\"Question id\", \"Question title\"  , \"Question body\"  , \"Answer id\", \"Answer body\"\n            1, \"Question title 1\", \"Question body 1\",           1, \"Answer body 1\"\n            1, \"Question title 1\", \"Question body 1\",           2, \"Answer body 2\"",
+      "lineNumber" : "",
+      "type" : "Snippet"
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "text" : "Note that to-many association ends get flattened, so the data for question 1 appears twice.",
+        "type" : "SimpleText"
+      } ]
+    } ],
+    "lastModifiedTime" : 1783554823678,
+    "tocItem" : {
+      "chapterTitle" : "Vision",
+      "pageTitle" : "Projections And Services",
+      "pageMeta" : { },
+      "dirName" : "vision",
+      "fileName" : "projections-and-services",
+      "fileExtension" : "md",
+      "viewOnRelativePath" : null,
+      "pageSectionIdTitles" : [ ]
+    }
+  }
+}), document.getElementById("znai"));
+/*-->*/
+
+</script>
+
+</body>
+</html>

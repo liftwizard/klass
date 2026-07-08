@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"> 
+<title>Klass: Overview</title>
+<link rel="stylesheet" type="text/css" href="/docs/static/css/katex.min.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/main.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+</head>
+<link rel="shortcut icon" href="/docs/favicon.png"type="image/ico"/>
+<body class="znai-theme theme-znai-dark">
+<script>(function() {
+    var themeNameKey = 'znaiTheme';
+    var darkThemeName = 'znai-dark';
+    var lightThemeName = 'default';
+
+    var znaiTheme = {
+        changeHandlers: [],
+        addChangeHandler(handler) {
+            this.changeHandlers.push(handler);
+        },
+        removeChangeHandler(handler) {
+            var idx = this.changeHandlers.indexOf(handler);
+            this.changeHandlers.splice(idx, 1);
+        },
+        set(name) {
+            this.name = name;
+            document.body.className = 'znai-theme theme-' + name;
+
+            var idx = 0;
+            var len = this.changeHandlers.length;
+            for (; idx < len; idx++) {
+                this.changeHandlers[idx](name);
+            }
+        },
+        setExplicitly(name) {
+            storeThemeName(name);
+            this.set(name);
+        },
+        setExplicitlyIfNotSetAlready(name) {
+            const themeName = getStoredThemeName();
+            if (themeName) {
+                return
+            }
+
+            this.setExplicitly(name)
+        },
+        toggle() {
+            this.setExplicitly(this.name === lightThemeName ? darkThemeName : lightThemeName)
+        }
+    };
+
+    var mediaThemeName = setLightMatchMediaListenerAndGetThemeName()
+    var themeName = getStoredThemeName() || mediaThemeName;
+    znaiTheme.set(themeName);
+
+    window.znaiTheme = znaiTheme;
+
+    function getStoredThemeName() {
+        return localStorage.getItem(themeNameKey);
+    }
+
+    function storeThemeName(name) {
+        return localStorage.setItem(themeNameKey, name);
+    }
+
+    function setLightMatchMediaListenerAndGetThemeName() {
+        if (!window.matchMedia) {
+            return darkThemeName;
+        }
+
+        var lightQuery = window.matchMedia('(prefers-color-scheme: light)');
+        lightQuery.addListener(function (e) {
+            const newThemeName = e.matches ? lightThemeName : darkThemeName;
+            znaiTheme.setExplicitly(newThemeName);
+        });
+
+        return lightQuery.matches ? lightThemeName : darkThemeName;
+    }
+})()</script>
+<div id="znai"><div id="znai-initial-page-loading" style="margin: -20px 0 0 -20px; padding: 0 40px 40px 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center">
+    <div></div>
+</div><section id="page-content" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+<article>
+<p>Scope This document covers long term vision A shorter term minimal viable product is discussed in alternative implementations This covers one set of implementation choices Alternatives are discussed in alternative implementations Related works are discussed in related works Running example To demonstrate the framework s capabilities we will walk through building a realistic subset of Stack Overflow functionality Getting started First run the maven archetype This command creates a new project in The project compiles and runs but doesn t yet do anything interesting Model The model was generated in It is nearly empty except for the package declaration An Klass model consists of classes enumerations associations projections and services The classes enumerations and associations make up the data model From the data model Klass generates a database schema POJOs DTOs example data etc We will define the and classes as well as the one to many association between questions and answers Services are traditional http or rpc services We will define a service to get a by its id Projections map services to data They answer how much data a service reads or writes conceptually how far the service walks through the object graph For example when we fetch a by its id should we return the title and the body or just the title Should we include the question s answers in the response mvn archetype generate DarchetypeGroupId com klass DarchetypeArtifactId klass maven archetype DinteractiveMode false DgroupId com stackoverflow DartifactId stackoverflow Dversion 1 0 0 Dpackage com stackoverflow Dname StackOverflow stackoverflow stackoverflow stackoverflow domain model src main resources com stackoverflow stackoverflow klass Question Answer Question Question</p>
+</article>
+</section>
+<section id="table-of-contents" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+<article>
+<a href="/docs/vision/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/vision/classes/">Classes</a>
+</article>
+
+<article>
+<a href="/docs/vision/associations/">Associations</a>
+</article>
+
+<article>
+<a href="/docs/vision/projections-and-services/">Projections And Services</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/audit-model/">Audit Model</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/audited-services/">Audited Services</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/bootstrapped-model-data/">Bootstrapped Model Data</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/bootstrapped-meta-model-data/">Bootstrapped Meta Model Data</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-query/">Dynamic Query</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-ui/">Dynamic Ui</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-model/">Dynamic Model</a>
+</article>
+
+<article>
+<a href="/docs/additional-features/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/alternative-implementations/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/related-works/overview/">Overview</a>
+</article>
+</section>
+</div>
+<script type="text/javascript" src="/docs/footer.js"></script>
+<script type="text/javascript" src="/docs/toc.js"></script>
+<script type="text/javascript" src="/docs/assets.js"></script>
+<script type="module" src="/docs/static/__vite-browser-external-RdVdkQtE.js"></script>
+<script type="module" src="/docs/static/architecture-7EHR7CIX-xxpzkfCG.js"></script>
+<script type="module" src="/docs/static/architectureDiagram-3BPJPVTR-BUvXLKpc.js"></script>
+<script type="module" src="/docs/static/blockDiagram-GPEHLZMM-DQkskzPw.js"></script>
+<script type="module" src="/docs/static/c4Diagram-AAUBKEIU-Bpn-7umj.js"></script>
+<script type="module" src="/docs/static/classDiagram-4FO5ZUOK-C-2B96sD.js"></script>
+<script type="module" src="/docs/static/classDiagram-v2-Q7XG4LA2-D3oi48vF.js"></script>
+<script type="module" src="/docs/static/cose-bilkent-S5V4N54A-BCXCvQOF.js"></script>
+<script type="module" src="/docs/static/dagre-BM42HDAG-Cc78wdVZ.js"></script>
+<script type="module" src="/docs/static/diagram-2AECGRRQ-C097eezT.js"></script>
+<script type="module" src="/docs/static/diagram-5GNKFQAL-hjxnnMhB.js"></script>
+<script type="module" src="/docs/static/diagram-KO2AKTUF-CAUZLpoG.js"></script>
+<script type="module" src="/docs/static/diagram-LMA3HP47-diPTlvm_.js"></script>
+<script type="module" src="/docs/static/diagram-OG6HWLK6-CH2jcJIT.js"></script>
+<script type="module" src="/docs/static/erDiagram-TEJ5UH35-Cr1VvSmz.js"></script>
+<script type="module" src="/docs/static/eventmodeling-FCH6USID-RC1BLkKd.js"></script>
+<script type="module" src="/docs/static/flowDiagram-I6XJVG4X-CDCv2295.js"></script>
+<script type="module" src="/docs/static/ganttDiagram-6RSMTGT7-BR4mRbFY.js"></script>
+<script type="module" src="/docs/static/gitGraph-WXDBUCRP-CpmxTMqy.js"></script>
+<script type="module" src="/docs/static/gitGraphDiagram-PVQCEYII-DxNbnbwd.js"></script>
+<script type="module" src="/docs/static/index-7Sh1X86R.js"></script>
+<script type="module" src="/docs/static/info-J43DQDTF-DAgppa5S.js"></script>
+<script type="module" src="/docs/static/infoDiagram-5YYISTIA-CVuWbv6I.js"></script>
+<script type="module" src="/docs/static/ishikawaDiagram-YF4QCWOH-DB_WPzDJ.js"></script>
+<script type="module" src="/docs/static/journeyDiagram-JHISSGLW-BPrxtqhf.js"></script>
+<script type="module" src="/docs/static/kanban-definition-UN3LZRKU-DUfwLEfg.js"></script>
+<script type="module" src="/docs/static/katex-DeIpYIwo.js"></script>
+<script type="module" src="/docs/static/mermaid-BqwjLks-.js"></script>
+<script type="module" src="/docs/static/mindmap-definition-RKZ34NQL-DaM2_BWN.js"></script>
+<script type="module" src="/docs/static/packet-YPE3B663-DTT4Hb4J.js"></script>
+<script type="module" src="/docs/static/pie-LRSECV5Y-BDDKzod5.js"></script>
+<script type="module" src="/docs/static/pieDiagram-4H26LBE5-N6wANTAe.js"></script>
+<script type="module" src="/docs/static/quadrantDiagram-W4KKPZXB-DR0fXv_u.js"></script>
+<script type="module" src="/docs/static/radar-GUYGQ44K-C2mNSmA1.js"></script>
+<script type="module" src="/docs/static/requirementDiagram-4Y6WPE33-C8mXe5ei.js"></script>
+<script type="module" src="/docs/static/rolldown-runtime-CWU8vmCm.js"></script>
+<script type="module" src="/docs/static/sankeyDiagram-5OEKKPKP-BBDoZ-sx.js"></script>
+<script type="module" src="/docs/static/sequenceDiagram-3UESZ5HK-BqisPtOK.js"></script>
+<script type="module" src="/docs/static/stateDiagram-AJRCARHV-CiC-Moml.js"></script>
+<script type="module" src="/docs/static/stateDiagram-v2-BHNVJYJU-D0Ryiamm.js"></script>
+<script type="module" src="/docs/static/timeline-definition-PNZ67QCA-D661wfqD.js"></script>
+<script type="module" src="/docs/static/treeView-BLDUP644-C40wJjez.js"></script>
+<script type="module" src="/docs/static/treemap-LRROVOQU-BsK_pOnH.js"></script>
+<script type="module" src="/docs/static/vennDiagram-CIIHVFJN-DwXJOwH8.js"></script>
+<script type="module" src="/docs/static/wardley-L42UT6IY-CZ93k7bK.js"></script>
+<script type="module" src="/docs/static/wardleyDiagram-YWT4CUSO-C_RE8KDW.js"></script>
+<script type="module" src="/docs/static/xychartDiagram-2RQKCTM6-DZh5UzCw.js"></script>
+<script type="module" src="/docs/search-index.js"></script>
+<script type="module">
+document.getElementById('znai').innerHTML = '';
+/*<!--*/
+/*
+ * Copyright 2025 znai maintainers
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+function initializeSearchIndex() {
+    if (window.znaiSearchData) {
+        window.znaiSearchIdx = window.createLocalSearchIndex();
+        window.populateLocalSearchIndexWithData(window.znaiSearchIdx, window.znaiSearchData);
+    }
+}
+
+// Call the method to initialize the search index.
+initializeSearchIndex();
+
+window.ReactDOM.render(React.createElement(Documentation, {
+  "docMeta" : {
+    "viewOn" : {
+      "link" : "https://github.com/motlin/klass/blob/main/docs/src/main/znai",
+      "title" : "View On GitHub"
+    },
+    "id" : "docs",
+    "title" : "Klass",
+    "type" : "Guide",
+    "previewEnabled" : false
+  },
+  "page" : {
+    "type" : "Page",
+    "content" : [ {
+      "id" : "scope",
+      "additionalIds" : [ ],
+      "level" : 2,
+      "title" : "Scope",
+      "type" : "SubHeading"
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "text" : "This document covers long-term vision. A shorter-term, ",
+        "type" : "SimpleText"
+      }, {
+        "type" : "StrongEmphasis",
+        "content" : [ {
+          "text" : "minimal-viable-product",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "text" : " is discussed in ",
+        "type" : "SimpleText"
+      }, {
+        "url" : "/docs/alternative-implementations/overview",
+        "isFile" : false,
+        "type" : "Link",
+        "content" : [ {
+          "text" : "alternative implementations",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "text" : ".",
+        "type" : "SimpleText"
+      } ]
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "text" : "This covers one set of implementation choices. ",
+        "type" : "SimpleText"
+      }, {
+        "type" : "StrongEmphasis",
+        "content" : [ {
+          "text" : "Alternatives",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "text" : " are discussed in ",
+        "type" : "SimpleText"
+      }, {
+        "url" : "/docs/alternative-implementations/overview",
+        "isFile" : false,
+        "type" : "Link",
+        "content" : [ {
+          "text" : "alternative implementations",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "text" : ".",
+        "type" : "SimpleText"
+      } ]
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "type" : "StrongEmphasis",
+        "content" : [ {
+          "text" : "Related works",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "text" : " are discussed in ",
+        "type" : "SimpleText"
+      }, {
+        "url" : "/docs/related-works/overview",
+        "isFile" : false,
+        "type" : "Link",
+        "content" : [ {
+          "text" : "related works",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "text" : ".",
+        "type" : "SimpleText"
+      } ]
+    }, {
+      "id" : "running-example",
+      "additionalIds" : [ ],
+      "level" : 2,
+      "title" : "Running example",
+      "type" : "SubHeading"
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "text" : "To demonstrate the framework's capabilities, we will walk through building a realistic subset of Stack Overflow functionality.",
+        "type" : "SimpleText"
+      } ]
+    }, {
+      "id" : "getting-started",
+      "additionalIds" : [ ],
+      "level" : 2,
+      "title" : "Getting started",
+      "type" : "SubHeading"
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "text" : "First, run the maven archetype.",
+        "type" : "SimpleText"
+      } ]
+    }, {
+      "lang" : "bash",
+      "snippet" : "mvn archetype:generate \\\n  -DarchetypeGroupId=com.klass \\\n  -DarchetypeArtifactId=klass-maven-archetype \\\n  -DinteractiveMode=false \\\n  -DgroupId=com.stackoverflow \\\n  -DartifactId=stackoverflow \\\n  -Dversion=1.0.0 \\\n  -Dpackage=com.stackoverflow \\\n  -Dname=StackOverflow",
+      "lineNumber" : "",
+      "type" : "Snippet"
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "text" : "This command creates a new project in ",
+        "type" : "SimpleText"
+      }, {
+        "code" : "./stackoverflow/",
+        "type" : "InlinedCode"
+      }, {
+        "text" : ". The project compiles and runs, but doesn't yet do anything interesting.",
+        "type" : "SimpleText"
+      } ]
+    }, {
+      "id" : "model",
+      "additionalIds" : [ ],
+      "level" : 2,
+      "title" : "Model",
+      "type" : "SubHeading"
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "text" : "The model was generated in ",
+        "type" : "SimpleText"
+      }, {
+        "code" : "./stackoverflow/stackoverflow-domain-model/src/main/resources/com/stackoverflow/stackoverflow.klass",
+        "type" : "InlinedCode"
+      }, {
+        "text" : ". It is nearly empty except for the package declaration.",
+        "type" : "SimpleText"
+      } ]
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "text" : "An Klass model consists of classes, enumerations, associations, projections, and services.",
+        "type" : "SimpleText"
+      } ]
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "text" : "The ",
+        "type" : "SimpleText"
+      }, {
+        "type" : "StrongEmphasis",
+        "content" : [ {
+          "text" : "classes",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "text" : ", ",
+        "type" : "SimpleText"
+      }, {
+        "type" : "StrongEmphasis",
+        "content" : [ {
+          "text" : "enumerations",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "text" : ", and ",
+        "type" : "SimpleText"
+      }, {
+        "type" : "StrongEmphasis",
+        "content" : [ {
+          "text" : "associations",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "text" : " make up the data model. From the data model, Klass generates a database schema, POJOs, DTOs, example data, etc. We will define the ",
+        "type" : "SimpleText"
+      }, {
+        "code" : "Question",
+        "type" : "InlinedCode"
+      }, {
+        "text" : " and ",
+        "type" : "SimpleText"
+      }, {
+        "code" : "Answer",
+        "type" : "InlinedCode"
+      }, {
+        "text" : " classes, as well as the one-to-many association between questions and answers.",
+        "type" : "SimpleText"
+      } ]
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "type" : "StrongEmphasis",
+        "content" : [ {
+          "text" : "Services",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "text" : " are traditional http or rpc services. We will define a service to get a ",
+        "type" : "SimpleText"
+      }, {
+        "code" : "Question",
+        "type" : "InlinedCode"
+      }, {
+        "text" : " by its id.",
+        "type" : "SimpleText"
+      } ]
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "type" : "StrongEmphasis",
+        "content" : [ {
+          "text" : "Projections",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "text" : " map services to data. They answer how much data a service reads or writes; conceptually how far the service walks through the object graph. For example, when we fetch a ",
+        "type" : "SimpleText"
+      }, {
+        "code" : "Question",
+        "type" : "InlinedCode"
+      }, {
+        "text" : " by its id, should we return the title and the body, or just the title? Should we include the question's answers in the response?",
+        "type" : "SimpleText"
+      } ]
+    } ],
+    "lastModifiedTime" : 1783554823678,
+    "tocItem" : {
+      "chapterTitle" : "Vision",
+      "pageTitle" : "Overview",
+      "pageMeta" : { },
+      "dirName" : "vision",
+      "fileName" : "overview",
+      "fileExtension" : "md",
+      "viewOnRelativePath" : null,
+      "pageSectionIdTitles" : [ ]
+    }
+  }
+}), document.getElementById("znai"));
+/*-->*/
+
+</script>
+
+</body>
+</html>
