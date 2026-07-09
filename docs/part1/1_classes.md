@@ -26,9 +26,9 @@ So far, this exactly matches the real Stack Overflow.
 ```klass
 class Answer
 {
-    id        : Long key id;
-    body      : String(30000);
-    questionId: Long private;
+	id: Long key id;
+	body: String maxLength(30000);
+	questionId: Long private;
 }
 ```
 
