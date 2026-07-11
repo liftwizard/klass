@@ -30,10 +30,6 @@ KEYWORD_IMPLEMENTS        : 'implements';
 KEYWORD_ALL               : 'all';
 KEYWORD_EQUALS_EDGE_POINT : 'equalsEdgePoint';
 
-KEYWORD_TABLE_PER_SUBCLASS       : 'table-per-subclass';
-KEYWORD_TABLE_FOR_ALL_SUBCLASSES : 'table-for-all-subclasses';
-KEYWORD_TABLE_PER_CLASS          : 'table-per-class';
-
 PRIMITIVE_TYPE_BOOLEAN          : 'Boolean';
 PRIMITIVE_TYPE_INTEGER          : 'Integer';
 PRIMITIVE_TYPE_LONG             : 'Long';
