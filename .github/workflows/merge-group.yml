@@ -490,29 +490,15 @@ jobs:
             - name: "Clean Maven cache"
               run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
-    biome:
+    pre-commit:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v6
+            - uses: actions/setup-python@v6
               with:
-                  ref: ${{ github.event.pull_request.head.sha }}
-
+                  python-version: "3.x"
             - uses: jdx/mise-action@v4
-
-            - name: "Biome Format Check"
-              run: npx @biomejs/biome ci
-
-    prettier:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v6
-              with:
-                  ref: ${{ github.event.pull_request.head.sha }}
-
-            - uses: jdx/mise-action@v4
-
-            - name: "Prettier Format Check"
-              run: npx prettier --check .
+            - uses: pre-commit/action@v3.0.1
 
     reviewdog-markdownlint:
         runs-on: ubuntu-latest
@@ -576,8 +562,7 @@ jobs:
                 spotless-java-cleanthat,
                 spotless-sql,
                 spotless-pom,
-                biome,
-                prettier,
+                pre-commit,
                 reviewdog-markdownlint,
                 reviewdog-yamllint,
                 reviewdog-actionlint,
