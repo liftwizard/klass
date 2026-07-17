@@ -4,7 +4,7 @@ Let's add the service to fetch a question by its id.
 
 ### Service
 
-```klass
+```text
 service QuestionResource
 {
     read getById(questionId: Long[1..1] id path): QuestionReadProjection[1]
