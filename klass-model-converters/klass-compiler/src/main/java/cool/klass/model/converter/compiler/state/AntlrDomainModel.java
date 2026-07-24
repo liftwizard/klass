@@ -16,13 +16,6 @@
 
 package cool.klass.model.converter.compiler.state;
 
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Optional;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.AnnotationSeverity;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
@@ -60,6 +53,10 @@ import cool.klass.model.meta.grammar.KlassParser.InterfaceDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceGroupDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.TopLevelDeclarationContext;
+import java.util.LinkedHashMap;
+import java.util.Optional;
+import java.util.Set;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.bag.ImmutableBag;
 import org.eclipse.collections.api.factory.Lists;
@@ -513,7 +510,7 @@ public class AntlrDomainModel {
 
 	private static AntlrClass findOwner(AntlrClass klass) {
 		AntlrClass current = klass;
-		Set<AntlrClass> visited = new HashSet<>();
+		Set<AntlrClass> visited = org.eclipse.collections.api.factory.Sets.mutable.empty();
 		while (current != null && visited.add(current)) {
 			for (AntlrAssociationEnd ae : current.getDeclaredAssociationEnds()) {
 				if (ae.getOpposite().isOwned()) {
