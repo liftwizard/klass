@@ -50,7 +50,7 @@ build-first:
     git commit -m "Move .gitignore and .gitattributes in place."
 
 build-second:
-    git rm *-reladomo-pojos/src/main/java/{{group_id_with_slashes}}/DeleteMe*.java
+    git rm *-reladomo-pojos/src/main/java/{{ group_id_with_slashes }}/DeleteMe*.java
     git commit -m "Remove DeleteMe*."
 
     git add -A
