@@ -41,12 +41,15 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.eclipse.collections.api.map.MapIterable;
 import org.fusesource.jansi.Ansi;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(LogMarkerTestExtension.class)
 class SyntaxHighlighterListenerTest {
@@ -75,6 +78,28 @@ class SyntaxHighlighterListenerTest {
 			Arguments.of("dark-cube"),
 			Arguments.of("dark-rgb"),
 			Arguments.of("empty")
+		);
+	}
+
+	@Test
+	void lexerTokenCategories() {
+		CodePointCharStream charStream = CharStreams.fromString("String name == \"Alice\"\n");
+		var lexer = new KlassLexer(charStream);
+		var tokenStream = new CommonTokenStream(lexer);
+		tokenStream.fill();
+
+		MapIterable<Token, TokenCategory> tokenCategories = LexerBasedTokenCategorizer.findTokenCategoriesFromLexer(
+			tokenStream
+		);
+
+		assertThat(tokenCategories.valuesView()).containsExactly(
+			TokenCategory.WHITESPACE,
+			TokenCategory.WHITESPACE,
+			TokenCategory.OPERATOR_EQUALS,
+			TokenCategory.WHITESPACE,
+			TokenCategory.STRING_LITERAL,
+			TokenCategory.NEWLINE,
+			TokenCategory.END_OF_FILE
 		);
 	}
 

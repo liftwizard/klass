@@ -72,42 +72,49 @@ public final class LexerBasedTokenCategorizer {
 		}
 
 		int tokenType = token.getType();
-		return switch (tokenType) {
-			case KlassLexer.StringLiteral -> TokenCategory.STRING_LITERAL;
-			case KlassLexer.IntegerLiteral -> TokenCategory.INTEGER_LITERAL;
-			case KlassLexer.BooleanLiteral -> TokenCategory.BOOLEAN_LITERAL;
-			case KlassLexer.CharacterLiteral -> TokenCategory.CHARACTER_LITERAL;
-			case KlassLexer.FloatingPointLiteral -> TokenCategory.FLOATING_POINT_LITERAL;
-			case KlassLexer.PUNCTUATION_LPAREN -> TokenCategory.PARENTHESIS_LEFT;
-			case KlassLexer.PUNCTUATION_RPAREN -> TokenCategory.PARENTHESIS_RIGHT;
-			case KlassLexer.PUNCTUATION_LBRACE -> TokenCategory.CURLY_LEFT;
-			case KlassLexer.PUNCTUATION_RBRACE -> TokenCategory.CURLY_RIGHT;
-			case KlassLexer.PUNCTUATION_LBRACK -> TokenCategory.SQUARE_BRACKET_LEFT;
-			case KlassLexer.PUNCTUATION_RBRACK -> TokenCategory.SQUARE_BRACKET_RIGHT;
-			case KlassLexer.PUNCTUATION_COLON -> TokenCategory.COLON;
-			case KlassLexer.PUNCTUATION_SLASH -> TokenCategory.SLASH;
-			case KlassLexer.PUNCTUATION_QUESTION -> TokenCategory.QUESTION;
-			case KlassLexer.PUNCTUATION_COMMA -> TokenCategory.COMMA;
-			case KlassLexer.PUNCTUATION_DOTDOT -> TokenCategory.DOTDOT;
-			case KlassLexer.PUNCTUATION_DOT -> TokenCategory.DOT;
-			case KlassLexer.PUNCTUATION_SEMI -> TokenCategory.SEMICOLON;
-			case KlassLexer.PUNCTUATION_AMPERSAND -> TokenCategory.AMPERSAND;
-			case KlassLexer.PUNCTUATION_ASTERISK -> TokenCategory.ASTERISK_LITERAL;
-			case KlassLexer.OPERATOR_EQUALS -> TokenCategory.OPERATOR_EQUALS;
-			case KlassLexer.OPERATOR_NOT_EQUALS -> TokenCategory.OPERATOR_NOT_EQUALS;
-			case KlassLexer.OPERATOR_LESS_THAN -> TokenCategory.OPERATOR_LESS_THAN;
-			case KlassLexer.OPERATOR_GREATER_THAN -> TokenCategory.OPERATOR_GREATER_THAN;
-			case KlassLexer.OPERATOR_LESS_THAN_OR_EQUAL -> TokenCategory.OPERATOR_LESS_THAN_OR_EQUAL;
-			case KlassLexer.OPERATOR_GREATER_THAN_OR_EQUAL -> TokenCategory.OPERATOR_GREATER_THAN_OR_EQUAL;
-			case KlassLexer.OPERATOR_AND -> TokenCategory.OPERATOR_AND;
-			case KlassLexer.OPERATOR_OR -> TokenCategory.OPERATOR_OR;
-			case KlassLexer.WHITESPACE -> TokenCategory.WHITESPACE;
-			case KlassLexer.NEWLINE -> TokenCategory.NEWLINE;
-			case KlassLexer.EOF -> TokenCategory.END_OF_FILE;
+		if (tokenType == Token.EOF) {
+			return TokenCategory.END_OF_FILE;
+		}
+
+		String symbolicName = KlassLexer.VOCABULARY.getSymbolicName(tokenType);
+		if (symbolicName == null) {
+			return null;
+		}
+		return switch (symbolicName) {
+			case "StringLiteral" -> TokenCategory.STRING_LITERAL;
+			case "IntegerLiteral" -> TokenCategory.INTEGER_LITERAL;
+			case "BooleanLiteral" -> TokenCategory.BOOLEAN_LITERAL;
+			case "CharacterLiteral" -> TokenCategory.CHARACTER_LITERAL;
+			case "FloatingPointLiteral" -> TokenCategory.FLOATING_POINT_LITERAL;
+			case "PUNCTUATION_LPAREN" -> TokenCategory.PARENTHESIS_LEFT;
+			case "PUNCTUATION_RPAREN" -> TokenCategory.PARENTHESIS_RIGHT;
+			case "PUNCTUATION_LBRACE" -> TokenCategory.CURLY_LEFT;
+			case "PUNCTUATION_RBRACE" -> TokenCategory.CURLY_RIGHT;
+			case "PUNCTUATION_LBRACK" -> TokenCategory.SQUARE_BRACKET_LEFT;
+			case "PUNCTUATION_RBRACK" -> TokenCategory.SQUARE_BRACKET_RIGHT;
+			case "PUNCTUATION_COLON" -> TokenCategory.COLON;
+			case "PUNCTUATION_SLASH" -> TokenCategory.SLASH;
+			case "PUNCTUATION_QUESTION" -> TokenCategory.QUESTION;
+			case "PUNCTUATION_COMMA" -> TokenCategory.COMMA;
+			case "PUNCTUATION_DOTDOT" -> TokenCategory.DOTDOT;
+			case "PUNCTUATION_DOT" -> TokenCategory.DOT;
+			case "PUNCTUATION_SEMI" -> TokenCategory.SEMICOLON;
+			case "PUNCTUATION_AMPERSAND" -> TokenCategory.AMPERSAND;
+			case "PUNCTUATION_ASTERISK" -> TokenCategory.ASTERISK_LITERAL;
+			case "OPERATOR_EQUALS" -> TokenCategory.OPERATOR_EQUALS;
+			case "OPERATOR_NOT_EQUALS" -> TokenCategory.OPERATOR_NOT_EQUALS;
+			case "OPERATOR_LESS_THAN" -> TokenCategory.OPERATOR_LESS_THAN;
+			case "OPERATOR_GREATER_THAN" -> TokenCategory.OPERATOR_GREATER_THAN;
+			case "OPERATOR_LESS_THAN_OR_EQUAL" -> TokenCategory.OPERATOR_LESS_THAN_OR_EQUAL;
+			case "OPERATOR_GREATER_THAN_OR_EQUAL" -> TokenCategory.OPERATOR_GREATER_THAN_OR_EQUAL;
+			case "OPERATOR_AND" -> TokenCategory.OPERATOR_AND;
+			case "OPERATOR_OR" -> TokenCategory.OPERATOR_OR;
+			case "WHITESPACE" -> TokenCategory.WHITESPACE;
+			case "NEWLINE" -> TokenCategory.NEWLINE;
 			// Let parser categorize UrlIdentifiers based on context
-			case KlassLexer.UrlIdentifier -> null;
+			case "UrlIdentifier" -> null;
 			// Let parser categorize Identifiers based on context
-			case KlassLexer.Identifier -> null;
+			case "Identifier" -> null;
 			default -> null;
 		};
 	}
