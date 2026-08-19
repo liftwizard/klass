@@ -19,27 +19,15 @@ package cool.klass.reladomo.utc.infinity.timestamp;
 import java.time.Instant;
 
 import com.gs.fw.common.mithra.util.DefaultInfinityTimestamp;
-import com.gs.fw.common.mithra.util.MithraTimestamp;
+import org.junit.jupiter.api.Test;
 
-public final class UtcInfinityTimestamp {
+import static org.assertj.core.api.Assertions.assertThat;
 
-	private static final MithraTimestamp DEFAULT_INFINITY;
-	private static final Instant DEFAULT_INFINITY_INSTANT;
+class UtcInfinityTimestampTest {
 
-	static {
-		DEFAULT_INFINITY = DefaultInfinityTimestamp.getDefaultInfinity();
-		DEFAULT_INFINITY_INSTANT = Instant.parse("9999-12-01T23:59:00Z");
-	}
-
-	private UtcInfinityTimestamp() {
-		throw new AssertionError("Suppress default constructor for noninstantiability");
-	}
-
-	public static MithraTimestamp getDefaultInfinity() {
-		return DEFAULT_INFINITY;
-	}
-
-	public static Instant getDefaultInfinityInstant() {
-		return DEFAULT_INFINITY_INSTANT;
+	@Test
+	void separatesReladomoInfinityFromItsExternalInstant() {
+		assertThat(UtcInfinityTimestamp.getDefaultInfinity()).isEqualTo(DefaultInfinityTimestamp.getDefaultInfinity());
+		assertThat(UtcInfinityTimestamp.getDefaultInfinityInstant()).isEqualTo(Instant.parse("9999-12-01T23:59:00Z"));
 	}
 }
