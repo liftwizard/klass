@@ -1,0 +1,10 @@
+{
+  "viewOn" : {
+    "link" : "https://github.com/motlin/klass/blob/main/docs/src/main/znai",
+    "title" : "View On GitHub"
+  },
+  "id" : "docs",
+  "title" : "Klass",
+  "type" : "Guide",
+  "previewEnabled" : false
+}
