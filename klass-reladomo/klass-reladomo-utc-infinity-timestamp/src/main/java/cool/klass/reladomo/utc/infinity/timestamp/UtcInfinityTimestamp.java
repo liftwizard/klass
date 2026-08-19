@@ -17,9 +17,8 @@
 package cool.klass.reladomo.utc.infinity.timestamp;
 
 import java.time.Instant;
-import java.util.Calendar;
-import java.util.TimeZone;
 
+import com.gs.fw.common.mithra.util.DefaultInfinityTimestamp;
 import com.gs.fw.common.mithra.util.MithraTimestamp;
 
 public final class UtcInfinityTimestamp {
@@ -28,15 +27,7 @@ public final class UtcInfinityTimestamp {
 	private static final Instant DEFAULT_INFINITY_INSTANT;
 
 	static {
-		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-		calendar.set(Calendar.YEAR, 9999);
-		calendar.set(Calendar.MONTH, 11);
-		calendar.set(Calendar.DAY_OF_MONTH, 1);
-		calendar.set(Calendar.HOUR_OF_DAY, 23);
-		calendar.set(Calendar.MINUTE, 59);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		DEFAULT_INFINITY = new MithraTimestamp(calendar.getTime().getTime(), false);
+		DEFAULT_INFINITY = DefaultInfinityTimestamp.getDefaultInfinity();
 		DEFAULT_INFINITY_INSTANT = Instant.parse("9999-12-01T23:59:00Z");
 	}
 
