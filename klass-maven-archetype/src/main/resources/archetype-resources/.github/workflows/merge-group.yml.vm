@@ -28,7 +28,7 @@ jobs:
 
             - uses: jdx/mise-action@v3
 
-            - run: just test "mvn" "-Dklass.logGitHubAnnotations=true"
+            - run: just test --mvn mvn -- "-Dklass.logGitHubAnnotations=true"
 
             # Remove any jars we may have created before actions/cache caches .m2
             - name: "Clean Maven cache"
@@ -196,7 +196,7 @@ jobs:
             - uses: jdx/mise-action@v3
 
             - name: "Produce Checkstyle XML: Semantics"
-              run: just checkstyle-profile checkstyle-semantics false
+              run: just checkstyle-profile --profile checkstyle-semantics --warn
 
             - uses: motlin/checkstyle-results@v1
               with:
@@ -227,7 +227,7 @@ jobs:
             - uses: jdx/mise-action@v3
 
             - name: "Produce Checkstyle XML: Strict Semantics"
-              run: just checkstyle-profile checkstyle-semantics-strict false
+              run: just checkstyle-profile --profile checkstyle-semantics-strict --warn
 
             - uses: motlin/checkstyle-results@v1
               with:
@@ -258,7 +258,7 @@ jobs:
             - uses: jdx/mise-action@v3
 
             - name: "Produce Checkstyle XML: Formatting"
-              run: just checkstyle-profile checkstyle-formatting false
+              run: just checkstyle-profile --profile checkstyle-formatting --warn
 
             - uses: motlin/checkstyle-results@v1
               with:
@@ -336,7 +336,7 @@ jobs:
             - uses: jdx/mise-action@v3
 
             - name: "Spotless Check: Formats"
-              run: just spotless formats
+              run: just spotless --name formats
 
             - name: "Check for local modifications"
               run: just _check-local-modifications
@@ -365,7 +365,7 @@ jobs:
             - uses: jdx/mise-action@v3
 
             - name: "Spotless Check: Java cleanthat"
-              run: just spotless java-cleanthat
+              run: just spotless --name java-cleanthat
 
             - name: "Check for local modifications"
               run: just _check-local-modifications
@@ -394,7 +394,7 @@ jobs:
             - uses: jdx/mise-action@v3
 
             - name: "Spotless Check: Java"
-              run: just spotless java
+              run: just spotless --name java
 
             - name: "Check for local modifications"
               run: just _check-local-modifications
@@ -423,7 +423,7 @@ jobs:
             - uses: jdx/mise-action@v3
 
             - name: "Spotless Check: Prettier Java (with sorted imports)"
-              run: just spotless prettier-java-sort-imports
+              run: just spotless --name prettier-java-sort-imports
 
             - name: "Check for local modifications"
               run: just _check-local-modifications
@@ -452,7 +452,7 @@ jobs:
             - uses: jdx/mise-action@v3
 
             - name: "Spotless Check: Pom"
-              run: just spotless pom
+              run: just spotless --name pom
 
             - name: "Check for local modifications"
               run: just _check-local-modifications
@@ -481,7 +481,7 @@ jobs:
             - uses: jdx/mise-action@v3
 
             - name: "Spotless Check: Json"
-              run: just spotless json
+              run: just spotless --name json
 
             - name: "Check for local modifications"
               run: just _check-local-modifications

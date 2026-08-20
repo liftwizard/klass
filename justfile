@@ -28,8 +28,9 @@ precommit: mvn
     uv tool run pre-commit run --all-files
 
 # mvn archetype
+[arg("MVN", long="mvn", help="Maven binary to use")]
 @archetype MVN=default_mvn:
-    just _run "{{MVN}} {{ANSI_GREEN}}install{{ANSI_DEFAULT}} --also-make --projects klass-maven-archetype"
+    just _run "{{ MVN }} {{ ANSI_GREEN }}install{{ ANSI_DEFAULT }} --also-make --projects klass-maven-archetype"
 
 # Override this with a command called `woof` which notifies you in whatever ways you prefer.
 # My `woof` command uses `echo`, `say`, and sends a Pushover notification.
@@ -44,7 +45,7 @@ coverage_example_main := "cool.klass.xample.coverage.dropwizard.application.Cove
 run-coverage-example:
     #!/usr/bin/env bash
     set -uo pipefail
-    echo "{{ANSI_BOLD}}Starting CoverageExampleApplication...{{ANSI_NORMAL}}"
+    echo "{{ ANSI_BOLD }}Starting CoverageExampleApplication...{{ ANSI_NORMAL }}"
     echo "Swagger UI will open at http://localhost:8080/swagger/"
     echo "ReDoc will be available at http://localhost:8080/redoc/"
     echo ""
@@ -53,4 +54,4 @@ run-coverage-example:
     (sleep 20 && open http://localhost:8080/swagger/) &
 
     # Run the application (foreground, so Ctrl+C stops it)
-    just _run "mvn -f {{ANSI_YELLOW}}{{coverage_example_app}}/pom.xml{{ANSI_DEFAULT}} exec:java -Dexec.mainClass=\"{{ANSI_YELLOW}}{{coverage_example_main}}{{ANSI_DEFAULT}}\" -Dexec.args=\"server {{ANSI_YELLOW}}{{coverage_example_config}}{{ANSI_DEFAULT}}\""
+    just _run "mvn -f {{ ANSI_YELLOW }}{{ coverage_example_app }}/pom.xml{{ ANSI_DEFAULT }} exec:java -Dexec.mainClass=\"{{ ANSI_YELLOW }}{{ coverage_example_main }}{{ ANSI_DEFAULT }}\" -Dexec.args=\"server {{ ANSI_YELLOW }}{{ coverage_example_config }}{{ ANSI_DEFAULT }}\""
