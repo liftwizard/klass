@@ -126,12 +126,4 @@ public class PossibleJoinCriteriaListener extends KlassBaseListener {
 			this.allReferencesResolve = false;
 		}
 	}
-
-	@Override
-	public void enterLiteral(@Nonnull LiteralContext ctx) {
-		super.enterLiteral(ctx);
-		// TODO: Not sure if this should count. But the example is:
-		// this.key == Comment.blueprintKey
-		//         && Comment.replyToId == null
-	}
 }
