@@ -16,7 +16,6 @@
 
 package cool.klass.model.converter.compiler.state;
 
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.Set;
@@ -513,7 +512,7 @@ public class AntlrDomainModel {
 
 	private static AntlrClass findOwner(AntlrClass klass) {
 		AntlrClass current = klass;
-		Set<AntlrClass> visited = new HashSet<>();
+		Set<AntlrClass> visited = org.eclipse.collections.api.factory.Sets.mutable.empty();
 		while (current != null && visited.add(current)) {
 			for (AntlrAssociationEnd ae : current.getDeclaredAssociationEnds()) {
 				if (ae.getOpposite().isOwned()) {

@@ -130,8 +130,7 @@ public abstract class AbstractCompilerAnnotation {
 		String maxLineString = String.valueOf(maxLine);
 		int lineNumberWidth = maxLineString.length();
 
-		String entireContext = contextStrings
-			.collect((contextString) -> contextString.toString(lineNumberWidth))
+		String entireContext = contextStrings.collectWith(AbstractContextString::toString, lineNumberWidth)
 			.makeString("", "\n", "\n");
 		return Ansi.ansi().a(entireContext).reset().toString();
 	}
