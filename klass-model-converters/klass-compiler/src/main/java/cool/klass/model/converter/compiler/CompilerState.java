@@ -58,7 +58,7 @@ public class CompilerState {
 		@Nonnull AntlrElement macroElement,
 		@Nonnull AbstractCompilerPhase macroExpansionCompilerPhase,
 		@Nonnull String sourceCodeText,
-		@Nonnull Function<KlassParser, ? extends ParserRuleContext> parserRule,
+		@Nonnull Function<? super KlassParser, ? extends ParserRuleContext> parserRule,
 		ParserRuleContext inPlaceContext,
 		ParseTreeListener... listeners
 	) {
@@ -85,7 +85,7 @@ public class CompilerState {
 		@Nonnull AntlrElement macroElement,
 		@Nonnull AbstractCompilerPhase macroExpansionCompilerPhase,
 		@Nonnull String sourceCodeText,
-		@Nonnull Function<KlassParser, ? extends ParserRuleContext> parserRule,
+		@Nonnull Function<? super KlassParser, ? extends ParserRuleContext> parserRule,
 		@Nonnull ImmutableList<ParseTreeListener> listeners
 	) {
 		CompilationUnit compilationUnit = CompilationUnit.getMacroCompilationUnit(

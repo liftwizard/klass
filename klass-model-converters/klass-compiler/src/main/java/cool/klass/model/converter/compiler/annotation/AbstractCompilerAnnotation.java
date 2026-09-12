@@ -131,7 +131,7 @@ public abstract class AbstractCompilerAnnotation {
 		int lineNumberWidth = maxLineString.length();
 
 		String entireContext = contextStrings
-			.collect((contextString) -> contextString.toString(lineNumberWidth))
+			.collectWith(AbstractContextString::toString, lineNumberWidth)
 			.makeString("", "\n", "\n");
 		return Ansi.ansi().a(entireContext).reset().toString();
 	}

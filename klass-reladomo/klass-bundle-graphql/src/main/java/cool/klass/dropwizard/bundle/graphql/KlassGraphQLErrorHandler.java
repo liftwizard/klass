@@ -24,11 +24,6 @@ import graphql.kickstart.execution.error.DefaultGraphQLErrorHandler;
 public class KlassGraphQLErrorHandler extends DefaultGraphQLErrorHandler {
 
 	@Override
-	public List<GraphQLError> processErrors(List<GraphQLError> errors) {
-		return super.processErrors(errors);
-	}
-
-	@Override
 	protected void logError(GraphQLError error) {
 		super.logError(error);
 	}
