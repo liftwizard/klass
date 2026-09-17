@@ -173,11 +173,6 @@ public class ProjectionPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitProjectionProjectionReference(@Nonnull ProjectionProjectionReferenceContext ctx) {
-		super.exitProjectionProjectionReference(ctx);
-	}
-
-	@Override
 	public void enterProjectionParameterizedProperty(@Nonnull ProjectionParameterizedPropertyContext ctx) {
 		super.enterProjectionParameterizedProperty(ctx);
 		throw new UnsupportedOperationException(

@@ -53,7 +53,6 @@
     </modules>
 
     <properties>
-        <klass.version>${project.version}</klass.version>
 
         <app.artifactId>klass-model-bootstrapped</app.artifactId>
         <app.rootPackageName>klass.model.meta.domain</app.rootPackageName>

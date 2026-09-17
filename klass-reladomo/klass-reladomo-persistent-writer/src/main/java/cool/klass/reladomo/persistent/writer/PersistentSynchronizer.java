@@ -372,10 +372,6 @@ public abstract class PersistentSynchronizer {
 			newInstance,
 			(ObjectNode) incomingChildInstance
 		);
-		if (!mutationOccurred) {
-			// TODO: This is a workaround for a bug and should be revisited to see if it still applies in the happy path. The bug started with an association between Owner[1..1] and Details[1..1] owned. The database wound up corrupted with no row or Details. The incoming Details object is {}, because the key matches and no other properties are being patched.
-			// throw new AssertionError();
-		}
 		// TODO: This is the backwards order from how I used to do it
 		this.dataStore.setToOne(persistentParentInstance, associationEnd, newInstance);
 		this.dataStore.insert(newInstance);

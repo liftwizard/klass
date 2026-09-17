@@ -56,7 +56,7 @@ public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
 		}
 	}
 
-	private boolean hasAuditReferenceProperty(Predicate<AntlrReferenceProperty> predicate) {
+	private boolean hasAuditReferenceProperty(Predicate<? super AntlrReferenceProperty> predicate) {
 		return this.compilerState.getCompilerWalk()
 			.getKlass()
 			.getAllProperties()
@@ -65,7 +65,7 @@ public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
 			.anySatisfy(predicate);
 	}
 
-	private boolean hasAuditDataTypeProperty(Predicate<AntlrDataTypeProperty> predicate) {
+	private boolean hasAuditDataTypeProperty(Predicate<? super AntlrDataTypeProperty> predicate) {
 		return this.compilerState.getCompilerWalk().getKlass().getAllDataTypeProperties().count(predicate) == 1;
 	}
 
@@ -134,7 +134,7 @@ public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
 	private String getSourceCode(
 		AntlrClass userClass,
 		String modifier,
-		Predicate<AntlrDataTypeProperty> predicate,
+		Predicate<? super AntlrDataTypeProperty> predicate,
 		boolean isFinal
 	) {
 		String suffix = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, modifier);
