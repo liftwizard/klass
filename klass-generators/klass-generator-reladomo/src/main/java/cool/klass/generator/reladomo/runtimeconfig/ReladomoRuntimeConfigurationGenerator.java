@@ -16,14 +16,6 @@
 
 package cool.klass.generator.reladomo.runtimeconfig;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.gs.fw.common.mithra.mithraruntime.CacheType;
 import com.gs.fw.common.mithra.mithraruntime.ConnectionManagerType;
 import com.gs.fw.common.mithra.mithraruntime.MithraObjectConfigurationType;
@@ -36,6 +28,12 @@ import cool.klass.generator.reladomo.AbstractReladomoGenerator;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.PackageableElement;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Objects;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 

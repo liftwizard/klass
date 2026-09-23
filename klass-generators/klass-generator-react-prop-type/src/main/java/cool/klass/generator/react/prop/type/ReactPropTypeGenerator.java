@@ -16,17 +16,15 @@
 
 package cool.klass.generator.react.prop.type;
 
+import cool.klass.model.meta.domain.api.DomainModel;
+import cool.klass.model.meta.domain.api.projection.Projection;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Objects;
-
 import javax.annotation.Nonnull;
-
-import cool.klass.model.meta.domain.api.DomainModel;
-import cool.klass.model.meta.domain.api.projection.Projection;
 
 // TODO: Refactor out the commonality between the several Generators
 

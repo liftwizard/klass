@@ -16,14 +16,12 @@
 
 package cool.klass.generator.grahql.schema;
 
-import java.nio.file.Path;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.generator.perpackage.AbstractPerPackageGenerator;
 import cool.klass.model.meta.domain.api.Classifier;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.TopLevelElement;
+import java.nio.file.Path;
+import javax.annotation.Nonnull;
 
 public class GraphQLSchemaGenerator extends AbstractPerPackageGenerator {
 

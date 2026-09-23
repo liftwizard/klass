@@ -16,7 +16,7 @@
 
 package cool.klass.generator.klass.macro;
 
-import java.util.Optional;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
@@ -24,14 +24,13 @@ import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.loader.compiler.DomainModelCompilerLoader;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.junit.extension.match.file.FileMatchExtension;
+import java.util.Optional;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.multimap.list.ImmutableListMultimap;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
-
-import static org.junit.jupiter.api.Assertions.fail;
 
 @ExtendWith(LogMarkerTestExtension.class)
 public class KlassMacroGeneratorTest {

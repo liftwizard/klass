@@ -16,14 +16,8 @@
 
 package io.liftwizard.model.reladomo.operation.compiler.test;
 
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
-import javax.annotation.Nullable;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import com.gs.fw.common.mithra.finder.Operation;
 import com.gs.fw.common.mithra.finder.RelatedFinder;
@@ -36,6 +30,13 @@ import cool.klass.xample.coverage.PropertiesRequiredFinder;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.model.reladomo.operation.compiler.ReladomoOperationCompiler;
 import io.liftwizard.reladomo.test.extension.ReladomoInitializeExtension;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import javax.annotation.Nullable;
 import org.eclipse.collections.api.factory.primitive.BooleanSets;
 import org.eclipse.collections.api.factory.primitive.DoubleSets;
 import org.eclipse.collections.api.factory.primitive.FloatSets;
@@ -43,9 +44,6 @@ import org.eclipse.collections.api.factory.primitive.IntSets;
 import org.eclipse.collections.api.factory.primitive.LongSets;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 public class ReladomoOperationCompilerTest {
 

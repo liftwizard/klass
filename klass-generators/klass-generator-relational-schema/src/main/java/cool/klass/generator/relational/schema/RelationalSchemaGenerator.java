@@ -16,6 +16,10 @@
 
 package cool.klass.generator.relational.schema;
 
+import com.google.common.base.CaseFormat;
+import com.google.common.base.Converter;
+import cool.klass.model.meta.domain.api.DomainModel;
+import cool.klass.model.meta.domain.api.Klass;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,13 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Optional;
-
 import javax.annotation.Nonnull;
-
-import com.google.common.base.CaseFormat;
-import com.google.common.base.Converter;
-import cool.klass.model.meta.domain.api.DomainModel;
-import cool.klass.model.meta.domain.api.Klass;
 
 public class RelationalSchemaGenerator {
 

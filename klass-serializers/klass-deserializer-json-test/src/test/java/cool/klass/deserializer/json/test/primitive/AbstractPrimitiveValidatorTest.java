@@ -16,9 +16,8 @@
 
 package cool.klass.deserializer.json.test.primitive;
 
-import java.io.IOException;
-
 import cool.klass.deserializer.json.test.AbstractValidatorTest;
+import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
 public abstract class AbstractPrimitiveValidatorTest extends AbstractValidatorTest {

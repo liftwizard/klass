@@ -16,11 +16,6 @@
 
 package cool.klass.model.converter.compiler.phase.criteria;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilerState;
 import cool.klass.model.converter.compiler.state.operator.AntlrEqualityOperator;
 import cool.klass.model.converter.compiler.state.operator.AntlrInOperator;
@@ -32,6 +27,9 @@ import cool.klass.model.meta.grammar.KlassParser.EqualityOperatorContext;
 import cool.klass.model.meta.grammar.KlassParser.InOperatorContext;
 import cool.klass.model.meta.grammar.KlassParser.InequalityOperatorContext;
 import cool.klass.model.meta.grammar.KlassParser.StringOperatorContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 public class OperatorVisitor extends KlassBaseVisitor<AntlrOperator> {

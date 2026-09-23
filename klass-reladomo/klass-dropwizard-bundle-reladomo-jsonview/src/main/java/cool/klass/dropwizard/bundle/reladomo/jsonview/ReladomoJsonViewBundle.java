@@ -16,8 +16,6 @@
 
 package cool.klass.dropwizard.bundle.reladomo.jsonview;
 
-import javax.annotation.Nonnull;
-
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -30,6 +28,7 @@ import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.serialization.jackson.jsonview.reladomo.ReladomoJsonViewSerializer;
 import io.dropwizard.setup.Environment;
 import io.liftwizard.dropwizard.bundle.prioritized.PrioritizedBundle;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -16,12 +16,11 @@
 
 package cool.klass.generator.uml.nomnoml.plugin;
 
-import java.io.File;
-import java.nio.file.Path;
-
 import cool.klass.generator.plugin.AbstractGenerateMojo;
 import cool.klass.generator.uml.nomnoml.UmlNomnomlGenerator;
 import cool.klass.model.meta.domain.api.DomainModel;
+import java.io.File;
+import java.nio.file.Path;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;

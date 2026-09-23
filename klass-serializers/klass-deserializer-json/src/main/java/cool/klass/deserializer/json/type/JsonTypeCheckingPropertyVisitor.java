@@ -16,11 +16,6 @@
 
 package cool.klass.deserializer.json.type;
 
-import java.util.Locale;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import cool.klass.deserializer.json.context.ContextNode;
 import cool.klass.deserializer.json.context.ContextStack;
@@ -36,6 +31,9 @@ import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.property.Property;
 import cool.klass.model.meta.domain.api.property.PropertyVisitor;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
+import java.util.Locale;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public record JsonTypeCheckingPropertyVisitor(

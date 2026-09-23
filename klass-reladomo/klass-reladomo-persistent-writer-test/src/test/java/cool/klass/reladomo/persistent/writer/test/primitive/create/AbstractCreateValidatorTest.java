@@ -16,10 +16,7 @@
 
 package cool.klass.reladomo.persistent.writer.test.primitive.create;
 
-import java.time.Instant;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import cool.klass.deserializer.json.RequiredPropertiesValidator;
@@ -31,10 +28,11 @@ import cool.klass.reladomo.persistent.writer.MutationContext;
 import cool.klass.reladomo.persistent.writer.test.AbstractValidatorTest;
 import io.liftwizard.reladomo.csv.test.extension.CsvTestDataExtension;
 import io.liftwizard.reladomo.test.extension.ReladomoExtensionBuilder;
+import java.time.Instant;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.junit.jupiter.api.extension.RegisterExtension;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class AbstractCreateValidatorTest extends AbstractValidatorTest {
 

@@ -16,10 +16,6 @@
 
 package cool.klass.graphql.reladomo.operation.fetcher;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
 import com.codahale.metrics.annotation.ExceptionMetered;
 import com.codahale.metrics.annotation.Metered;
 import com.codahale.metrics.annotation.Timed;
@@ -36,6 +32,9 @@ import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 import io.liftwizard.graphql.exception.LiftwizardGraphQLException;
 import io.liftwizard.model.reladomo.operation.compiler.ReladomoOperationCompiler;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import org.eclipse.collections.api.factory.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -16,13 +16,11 @@
 
 package cool.klass.model.converter.compiler.state.projection;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.meta.domain.projection.AbstractProjectionElement.ProjectionElementBuilder;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 
 public interface AntlrProjectionElement extends IAntlrElement {
 	@Nonnull

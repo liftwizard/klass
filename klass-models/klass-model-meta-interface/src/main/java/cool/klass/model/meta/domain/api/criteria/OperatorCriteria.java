@@ -16,10 +16,9 @@
 
 package cool.klass.model.meta.domain.api.criteria;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.operator.Operator;
 import cool.klass.model.meta.domain.api.value.ExpressionValue;
+import javax.annotation.Nonnull;
 
 public interface OperatorCriteria extends Criteria {
 	@Nonnull

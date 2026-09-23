@@ -16,18 +16,16 @@
 
 package cool.klass.servlet.logging.structured.klass.response;
 
+import cool.klass.serialization.jackson.response.KlassResponse;
+import cool.klass.serialization.jackson.response.KlassResponseMetadata;
+import cool.klass.serialization.jackson.response.KlassResponsePagination;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
-
-import cool.klass.serialization.jackson.response.KlassResponse;
-import cool.klass.serialization.jackson.response.KlassResponseMetadata;
-import cool.klass.serialization.jackson.response.KlassResponsePagination;
 
 public class KlassResponseStructuredLoggingFilter implements ContainerResponseFilter {
 

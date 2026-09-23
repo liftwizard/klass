@@ -17,7 +17,6 @@
 package cool.klass.model.meta.domain.api;
 
 import java.util.Optional;
-
 import javax.annotation.Nonnull;
 
 public interface EnumerationLiteral extends TypedElement {

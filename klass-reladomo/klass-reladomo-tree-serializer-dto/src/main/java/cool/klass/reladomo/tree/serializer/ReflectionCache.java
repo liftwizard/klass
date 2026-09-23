@@ -19,9 +19,7 @@ package cool.klass.reladomo.tree.serializer;
 import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.List;
-
 import javax.annotation.Nonnull;
-
 import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 

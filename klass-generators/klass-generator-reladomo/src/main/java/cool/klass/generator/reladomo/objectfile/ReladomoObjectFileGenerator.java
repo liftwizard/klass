@@ -16,13 +16,6 @@
 
 package cool.klass.generator.reladomo.objectfile;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Converter;
 import com.gs.fw.common.mithra.generator.metamodel.AsOfAttributePureType;
@@ -55,6 +48,11 @@ import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.property.validation.NumericPropertyValidation;
 import cool.klass.model.meta.domain.api.value.ThisMemberReferencePath;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 

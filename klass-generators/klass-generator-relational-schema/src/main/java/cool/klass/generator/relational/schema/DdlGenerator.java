@@ -16,15 +16,13 @@
 
 package cool.klass.generator.relational.schema;
 
-import java.text.MessageFormat;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Converter;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import java.text.MessageFormat;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 
 public final class DdlGenerator {
 

@@ -16,11 +16,6 @@
 
 package cool.klass.reladomo.tree.serializer;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Converter;
 import com.gs.fw.common.mithra.MithraObject;
@@ -41,6 +36,10 @@ import cool.klass.model.reladomo.tree.ReladomoTreeNodeToManyAwareListener;
 import cool.klass.model.reladomo.tree.RootReladomoTreeNode;
 import cool.klass.model.reladomo.tree.SubClassReladomoTreeNode;
 import cool.klass.model.reladomo.tree.SuperClassReladomoTreeNode;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableMap;

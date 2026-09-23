@@ -16,9 +16,6 @@
 
 package cool.klass.dropwizard.bundle.graphql;
 
-import java.util.Map;
-import java.util.Objects;
-
 import com.gs.fw.common.mithra.MithraList;
 import com.gs.fw.common.mithra.finder.Operation;
 import com.gs.fw.common.mithra.finder.RelatedFinder;
@@ -33,6 +30,8 @@ import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.DataFetchingFieldSelectionSet;
 import io.liftwizard.graphql.exception.LiftwizardGraphQLException;
 import io.liftwizard.model.reladomo.operation.compiler.ReladomoOperationCompiler;
+import java.util.Map;
+import java.util.Objects;
 import org.eclipse.collections.api.factory.Lists;
 
 public class ByOperationDataFetcher implements DataFetcher<Object> {

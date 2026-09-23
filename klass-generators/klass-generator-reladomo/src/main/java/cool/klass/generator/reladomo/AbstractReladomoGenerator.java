@@ -16,19 +16,17 @@
 
 package cool.klass.generator.reladomo;
 
+import com.gs.fw.common.mithra.generator.metamodel.CardinalityType;
+import cool.klass.model.meta.domain.api.DomainModel;
+import cool.klass.model.meta.domain.api.Multiplicity;
+import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Objects;
-
 import javax.annotation.Nonnull;
-
-import com.gs.fw.common.mithra.generator.metamodel.CardinalityType;
-import cool.klass.model.meta.domain.api.DomainModel;
-import cool.klass.model.meta.domain.api.Multiplicity;
-import cool.klass.model.meta.domain.api.property.AssociationEnd;
 
 public abstract class AbstractReladomoGenerator {
 

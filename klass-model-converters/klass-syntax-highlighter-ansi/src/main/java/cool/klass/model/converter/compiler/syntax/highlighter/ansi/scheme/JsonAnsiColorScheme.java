@@ -16,15 +16,13 @@
 
 package cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme;
 
-import java.awt.Color;
-import java.util.Objects;
-import java.util.regex.Pattern;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto.ColorSchemeDefinition;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto.ColorSchemeRule;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto.StyleSettings;
+import java.awt.Color;
+import java.util.Objects;
+import java.util.regex.Pattern;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.factory.Maps;
 import org.eclipse.collections.api.factory.Sets;
 import org.eclipse.collections.api.map.ImmutableMap;

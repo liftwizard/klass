@@ -16,13 +16,11 @@
 
 package cool.klass.generator.liquibase.schema;
 
-import java.nio.file.Path;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.generator.perpackage.AbstractPerPackageGenerator;
 import cool.klass.model.meta.domain.api.DomainModel;
+import java.nio.file.Path;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 
 public class LiquibaseSchemaGenerator extends AbstractPerPackageGenerator {
 

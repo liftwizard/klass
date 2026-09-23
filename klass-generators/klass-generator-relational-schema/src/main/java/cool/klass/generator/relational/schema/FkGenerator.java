@@ -16,11 +16,10 @@
 
 package cool.klass.generator.relational.schema;
 
-import java.util.Optional;
-
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import java.util.Optional;
 import org.eclipse.collections.api.map.MutableOrderedMap;
 
 public final class FkGenerator {

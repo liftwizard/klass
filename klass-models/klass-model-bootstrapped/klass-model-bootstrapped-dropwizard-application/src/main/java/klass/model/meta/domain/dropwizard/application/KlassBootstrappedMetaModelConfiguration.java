@@ -16,15 +16,14 @@
 
 package klass.model.meta.domain.dropwizard.application;
 
-import javax.annotation.Nonnull;
-import javax.validation.Valid;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.smoketurner.dropwizard.graphql.GraphQLFactory;
 import cool.klass.dropwizard.configuration.AbstractKlassConfiguration;
 import io.liftwizard.dropwizard.configuration.graphql.GraphQLFactoryProvider;
 import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactory;
 import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactoryProvider;
+import javax.annotation.Nonnull;
+import javax.validation.Valid;
 
 public class KlassBootstrappedMetaModelConfiguration
 	extends AbstractKlassConfiguration

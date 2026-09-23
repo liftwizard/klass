@@ -16,11 +16,6 @@
 
 package cool.klass.graphql.reladomo.finder.fetcher;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-
 import com.codahale.metrics.annotation.ExceptionMetered;
 import com.codahale.metrics.annotation.Metered;
 import com.codahale.metrics.annotation.Timed;
@@ -40,6 +35,10 @@ import io.liftwizard.graphql.exception.LiftwizardGraphQLException;
 import io.liftwizard.reladomo.graphql.operation.GraphQLQueryToOperationConverter;
 import io.liftwizard.reladomo.graphql.operation.LiftwizardGraphQLContextException;
 import io.liftwizard.reladomo.graphql.orderby.GraphQLQueryToOrderByConverter;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 public class ReladomoFinderDataFetcher<T> implements DataFetcher<List<T>> {
 

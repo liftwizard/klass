@@ -16,8 +16,6 @@
 
 package io.liftwizard.reladomo.test.resource.writer.tests;
 
-import java.util.List;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cool.klass.dropwizard.configuration.domain.model.loader.compiler.DomainModelCompilerFactory;
 import cool.klass.model.meta.domain.api.DomainModel;
@@ -30,6 +28,7 @@ import io.liftwizard.reladomo.test.extension.ReladomoLoadDataExtension;
 import io.liftwizard.reladomo.test.extension.ReladomoTestFile;
 import io.liftwizard.reladomo.test.resource.writer.ReladomoTestResourceWriter;
 import io.liftwizard.serialization.jackson.config.ObjectMapperConfig;
+import java.util.List;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

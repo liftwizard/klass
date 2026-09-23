@@ -16,13 +16,11 @@
 
 package cool.klass.generator.klass.projection;
 
-import java.nio.file.Path;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.generator.perpackage.AbstractPerPackageGenerator;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.PackageableElement;
+import java.nio.file.Path;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public class KlassProjectionGenerator extends AbstractPerPackageGenerator {

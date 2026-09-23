@@ -16,8 +16,6 @@
 
 package cool.klass.model.meta.domain.api.value;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.value.literal.BooleanLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.FloatingPointLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.IntegerLiteralValue;
@@ -25,6 +23,7 @@ import cool.klass.model.meta.domain.api.value.literal.LiteralListValue;
 import cool.klass.model.meta.domain.api.value.literal.NullLiteral;
 import cool.klass.model.meta.domain.api.value.literal.StringLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.UserLiteral;
+import javax.annotation.Nonnull;
 
 public interface ExpressionValueVisitor {
 	void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue);

@@ -17,7 +17,6 @@
 package cool.klass.model.converter.compiler.parser;
 
 import javax.annotation.Nonnull;
-
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;

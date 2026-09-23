@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain.service;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.AbstractElement;
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.criteria.Criteria;
@@ -38,6 +32,10 @@ import cool.klass.model.meta.domain.service.ServiceProjectionDispatchImpl.Servic
 import cool.klass.model.meta.domain.service.url.UrlImpl;
 import cool.klass.model.meta.domain.service.url.UrlImpl.UrlBuilder;
 import cool.klass.model.meta.grammar.KlassParser.ServiceDeclarationContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public final class ServiceImpl extends AbstractElement implements Service {
 

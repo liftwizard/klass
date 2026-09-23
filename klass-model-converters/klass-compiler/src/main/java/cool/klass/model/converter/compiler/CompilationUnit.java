@@ -16,6 +16,14 @@
 
 package cool.klass.model.converter.compiler;
 
+import com.google.common.base.Splitter;
+import cool.klass.model.converter.compiler.parser.ThrowingErrorListener;
+import cool.klass.model.converter.compiler.phase.AbstractCompilerPhase;
+import cool.klass.model.converter.compiler.state.AntlrElement;
+import cool.klass.model.meta.domain.AbstractElement.ElementBuilder;
+import cool.klass.model.meta.domain.SourceCodeImpl.SourceCodeBuilderImpl;
+import cool.klass.model.meta.grammar.KlassLexer;
+import cool.klass.model.meta.grammar.KlassParser;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,17 +34,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-
 import javax.annotation.Nonnull;
-
-import com.google.common.base.Splitter;
-import cool.klass.model.converter.compiler.parser.ThrowingErrorListener;
-import cool.klass.model.converter.compiler.phase.AbstractCompilerPhase;
-import cool.klass.model.converter.compiler.state.AntlrElement;
-import cool.klass.model.meta.domain.AbstractElement.ElementBuilder;
-import cool.klass.model.meta.domain.SourceCodeImpl.SourceCodeBuilderImpl;
-import cool.klass.model.meta.grammar.KlassLexer;
-import cool.klass.model.meta.grammar.KlassParser;
 import org.antlr.v4.runtime.ANTLRErrorListener;
 import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.CharStreams;

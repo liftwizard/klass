@@ -16,10 +16,6 @@
 
 package com.stackoverflow.dropwizard.application;
 
-import java.time.Clock;
-
-import javax.annotation.Nonnull;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stackoverflow.service.resource.QuestionResourceManual;
 import cool.klass.data.store.DataStore;
@@ -33,6 +29,8 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.liftwizard.dropwizard.bundle.httplogging.JerseyHttpLoggingBundle;
 import io.liftwizard.servlet.logging.mdc.StructuredArgumentsMDCLogger;
+import java.time.Clock;
+import javax.annotation.Nonnull;
 
 public class StackOverflowApplication extends AbstractStackOverflowApplication {
 

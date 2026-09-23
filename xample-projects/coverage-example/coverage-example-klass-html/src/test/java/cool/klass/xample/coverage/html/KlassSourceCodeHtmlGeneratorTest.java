@@ -16,6 +16,8 @@
 
 package cool.klass.xample.coverage.html;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import cool.klass.generator.klass.html.KlassSourceCodeHtmlGenerator;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
@@ -29,8 +31,6 @@ import org.eclipse.collections.api.multimap.list.ImmutableListMultimap;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
-
-import static org.junit.jupiter.api.Assertions.fail;
 
 @ExtendWith(LogMarkerTestExtension.class)
 public class KlassSourceCodeHtmlGeneratorTest {

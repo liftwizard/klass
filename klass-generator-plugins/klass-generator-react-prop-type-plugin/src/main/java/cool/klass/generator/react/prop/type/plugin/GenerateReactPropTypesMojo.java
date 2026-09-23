@@ -16,11 +16,10 @@
 
 package cool.klass.generator.react.prop.type.plugin;
 
-import java.io.File;
-
 import cool.klass.generator.plugin.AbstractGenerateMojo;
 import cool.klass.generator.react.prop.type.ReactPropTypeGenerator;
 import cool.klass.model.meta.domain.api.DomainModel;
+import java.io.File;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;

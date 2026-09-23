@@ -16,13 +16,12 @@
 
 package com.stackoverflow.dropwizard.test;
 
+import io.liftwizard.junit.extension.match.FileSlurper;
+import io.liftwizard.reladomo.test.extension.ReladomoTestFile;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-
-import io.liftwizard.junit.extension.match.FileSlurper;
-import io.liftwizard.reladomo.test.extension.ReladomoTestFile;
 import org.junit.jupiter.api.Test;
 
 class AnswerResourceTest extends AbstractStackOverflowApplicationTest {

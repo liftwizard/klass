@@ -16,13 +16,6 @@
 
 package cool.klass.dropwizard.configuration.data.store.reladomo;
 
-import java.util.UUID;
-import java.util.function.Supplier;
-
-import javax.annotation.Nonnull;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.service.AutoService;
@@ -32,6 +25,11 @@ import cool.klass.dropwizard.configuration.data.store.DataStoreFactory;
 import cool.klass.model.meta.domain.api.DomainModel;
 import io.liftwizard.dropwizard.configuration.uuid.UUIDSupplierFactory;
 import io.liftwizard.dropwizard.configuration.uuid.seed.SeedUUIDSupplierFactory;
+import java.util.UUID;
+import java.util.function.Supplier;
+import javax.annotation.Nonnull;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @JsonTypeName("reladomo")
 @AutoService(DataStoreFactory.class)

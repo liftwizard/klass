@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain.order;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.AbstractElement;
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.order.OrderByDirection;
@@ -29,6 +23,10 @@ import cool.klass.model.meta.domain.api.order.OrderByDirectionDeclaration;
 import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import cool.klass.model.meta.grammar.KlassParser.OrderByDirectionContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public final class OrderByDirectionDeclarationImpl extends AbstractElement implements OrderByDirectionDeclaration {
 

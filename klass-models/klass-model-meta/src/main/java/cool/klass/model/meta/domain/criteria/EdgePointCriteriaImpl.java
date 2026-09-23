@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain.criteria;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.criteria.EdgePointCriteria;
 import cool.klass.model.meta.domain.api.source.SourceCode;
@@ -29,6 +23,10 @@ import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import cool.klass.model.meta.domain.value.AbstractMemberReferencePath;
 import cool.klass.model.meta.domain.value.AbstractMemberReferencePath.AbstractMemberReferencePathBuilder;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaEdgePointContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public final class EdgePointCriteriaImpl extends AbstractCriteria implements EdgePointCriteria {
 

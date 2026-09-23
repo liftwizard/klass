@@ -16,16 +16,14 @@
 
 package cool.klass.model.converter.compiler.state.operator;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrType;
 import cool.klass.model.meta.domain.operator.InOperatorImpl.InOperatorBuilder;
 import cool.klass.model.meta.grammar.KlassParser.InOperatorContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ListIterable;
 
 public class AntlrInOperator extends AntlrOperator {

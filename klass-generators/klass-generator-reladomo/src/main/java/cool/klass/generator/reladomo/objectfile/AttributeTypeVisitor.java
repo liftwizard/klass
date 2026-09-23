@@ -16,8 +16,6 @@
 
 package cool.klass.generator.reladomo.objectfile;
 
-import java.util.Objects;
-
 import com.gs.fw.common.mithra.generator.metamodel.AttributePureType;
 import com.gs.fw.common.mithra.generator.metamodel.PrimaryKeyGeneratorStrategyType;
 import com.gs.fw.common.mithra.generator.metamodel.SimulatedSequenceType;
@@ -27,6 +25,7 @@ import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.property.validation.NumericPropertyValidation;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
 import io.liftwizard.reladomo.simseq.ObjectSequenceObjectFactory;
+import java.util.Objects;
 
 // TODO: Create a DataTypeVisitor that factors in enumerations too
 class AttributeTypeVisitor implements PrimitiveTypeVisitor {

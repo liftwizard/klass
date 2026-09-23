@@ -16,13 +16,11 @@
 
 package cool.klass.model.converter.compiler.phase;
 
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilerState;
 import cool.klass.model.converter.compiler.parser.DelegatingKlassListener;
 import cool.klass.model.meta.grammar.KlassListener;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 
 @SuppressWarnings("AbstractClassExtendsConcreteClass")
 public abstract class AbstractCompilerPhase extends DelegatingKlassListener {

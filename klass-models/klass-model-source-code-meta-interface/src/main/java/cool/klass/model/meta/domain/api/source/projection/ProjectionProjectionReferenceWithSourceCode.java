@@ -16,13 +16,12 @@
 
 package cool.klass.model.meta.domain.api.source.projection;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.projection.ProjectionProjectionReference;
 import cool.klass.model.meta.domain.api.source.ClassifierWithSourceCode;
 import cool.klass.model.meta.domain.api.source.NamedElementWithSourceCode;
 import cool.klass.model.meta.domain.api.source.property.ReferencePropertyWithSourceCode;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionProjectionReferenceContext;
+import javax.annotation.Nonnull;
 
 public interface ProjectionProjectionReferenceWithSourceCode
 	extends ProjectionProjectionReference, NamedElementWithSourceCode {

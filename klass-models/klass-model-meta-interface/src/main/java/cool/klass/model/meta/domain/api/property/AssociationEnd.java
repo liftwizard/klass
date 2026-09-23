@@ -16,10 +16,9 @@
 
 package cool.klass.model.meta.domain.api.property;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.Association;
 import cool.klass.model.meta.domain.api.Klass;
+import javax.annotation.Nonnull;
 
 public interface AssociationEnd extends ReferenceProperty {
 	@Nonnull

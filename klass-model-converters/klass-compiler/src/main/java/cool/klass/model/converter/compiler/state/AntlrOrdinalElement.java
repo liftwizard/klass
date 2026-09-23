@@ -16,11 +16,9 @@
 
 package cool.klass.model.converter.compiler.state;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public abstract class AntlrOrdinalElement extends AntlrElement {

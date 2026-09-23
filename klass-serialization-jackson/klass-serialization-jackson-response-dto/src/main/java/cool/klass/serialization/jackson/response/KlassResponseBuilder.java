@@ -16,16 +16,14 @@
 
 package cool.klass.serialization.jackson.response;
 
+import cool.klass.model.meta.domain.api.Multiplicity;
+import cool.klass.model.meta.domain.api.projection.Projection;
 import java.security.Principal;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import cool.klass.model.meta.domain.api.Multiplicity;
-import cool.klass.model.meta.domain.api.projection.Projection;
 
 public class KlassResponseBuilder {
 

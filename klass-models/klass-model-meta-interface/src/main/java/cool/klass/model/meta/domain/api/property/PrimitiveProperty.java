@@ -16,12 +16,11 @@
 
 package cool.klass.model.meta.domain.api.property;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.PrimitiveType;
 import cool.klass.model.meta.domain.api.modifier.Modifier;
 import cool.klass.model.meta.domain.api.visitor.DataTypePropertyVisitor;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
+import javax.annotation.Nonnull;
 
 public interface PrimitiveProperty extends DataTypeProperty {
 	@Override

@@ -16,12 +16,10 @@
 
 package cool.klass.generator.grahql.fragment;
 
-import java.nio.file.Path;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.generator.perpackage.AbstractPerPackageGenerator;
 import cool.klass.model.meta.domain.api.DomainModel;
+import java.nio.file.Path;
+import javax.annotation.Nonnull;
 
 public class GraphQLFragmentGenerator extends AbstractPerPackageGenerator {
 

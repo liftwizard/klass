@@ -16,13 +16,12 @@
 
 package cool.klass.dropwizard.bundle.swagger.ui;
 
-import javax.annotation.Nonnull;
-
 import com.google.auto.service.AutoService;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.liftwizard.dropwizard.bundle.prioritized.PrioritizedBundle;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -16,9 +16,8 @@
 
 package cool.klass.model.converter.compiler.state.parameter;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.grammar.KlassParser.ParameterDeclarationContext;
+import javax.annotation.Nonnull;
 
 public interface AntlrParameterOwner {
 	int getNumParameters();

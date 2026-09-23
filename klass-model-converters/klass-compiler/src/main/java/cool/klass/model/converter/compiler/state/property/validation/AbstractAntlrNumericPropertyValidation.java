@@ -16,13 +16,11 @@
 
 package cool.klass.model.converter.compiler.state.property.validation;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
 import cool.klass.model.meta.domain.property.validation.AbstractNumericPropertyValidation.NumericPropertyValidationBuilder;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public abstract class AbstractAntlrNumericPropertyValidation extends AbstractAntlrPropertyValidation {

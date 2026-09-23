@@ -17,9 +17,7 @@
 package cool.klass.model.meta.domain.api.source;
 
 import java.util.Optional;
-
 import javax.annotation.Nonnull;
-
 import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 

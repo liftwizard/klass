@@ -16,11 +16,10 @@
 
 package cool.klass.generator.graphql.schema.query.plugin;
 
-import java.io.File;
-
 import cool.klass.generator.grahql.schema.query.GraphQLSchemaQueryGenerator;
 import cool.klass.generator.plugin.AbstractGenerateMojo;
 import cool.klass.model.meta.domain.api.DomainModel;
+import java.io.File;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;

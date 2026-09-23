@@ -16,13 +16,11 @@
 
 package cool.klass.dropwizard.bundle.graphql;
 
-import java.util.Objects;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import graphql.kickstart.servlet.GraphQLConfiguration;
 import graphql.kickstart.servlet.GraphQLHttpServlet;
+import java.util.Objects;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class ConfiguredGraphQLHttpServlet extends GraphQLHttpServlet {
 

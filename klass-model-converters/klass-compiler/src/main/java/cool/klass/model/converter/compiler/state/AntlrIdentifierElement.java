@@ -16,12 +16,10 @@
 
 package cool.klass.model.converter.compiler.state;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public abstract class AntlrIdentifierElement extends AntlrNamedElement {

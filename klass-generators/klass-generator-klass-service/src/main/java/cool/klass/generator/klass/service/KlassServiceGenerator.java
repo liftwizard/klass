@@ -16,12 +16,10 @@
 
 package cool.klass.generator.klass.service;
 
-import java.nio.file.Path;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.generator.perpackage.AbstractPerPackageGenerator;
 import cool.klass.model.meta.domain.api.DomainModel;
+import java.nio.file.Path;
+import javax.annotation.Nonnull;
 
 public class KlassServiceGenerator extends AbstractPerPackageGenerator {
 

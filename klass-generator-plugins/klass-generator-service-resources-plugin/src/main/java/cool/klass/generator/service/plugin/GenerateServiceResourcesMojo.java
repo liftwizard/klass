@@ -16,13 +16,12 @@
 
 package cool.klass.generator.service.plugin;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-
 import cool.klass.generator.plugin.AbstractGenerateMojo;
 import cool.klass.generator.service.ServiceResourceGenerator;
 import cool.klass.model.meta.domain.api.DomainModel;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;

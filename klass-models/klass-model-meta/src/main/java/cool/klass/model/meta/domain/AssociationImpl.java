@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.source.AssociationWithSourceCode;
@@ -32,6 +26,10 @@ import cool.klass.model.meta.domain.criteria.AbstractCriteria.AbstractCriteriaBu
 import cool.klass.model.meta.domain.property.AssociationEndImpl.AssociationEndBuilder;
 import cool.klass.model.meta.grammar.KlassParser.AssociationDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public final class AssociationImpl extends AbstractPackageableElement implements AssociationWithSourceCode {

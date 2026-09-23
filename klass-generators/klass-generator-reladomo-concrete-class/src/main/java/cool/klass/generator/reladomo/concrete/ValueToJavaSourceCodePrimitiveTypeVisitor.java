@@ -16,10 +16,9 @@
 
 package cool.klass.generator.reladomo.concrete;
 
+import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
 import java.time.Instant;
 import java.time.LocalDate;
-
-import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
 import org.apache.commons.text.StringEscapeUtils;
 
 @SuppressWarnings("RedundantCast")

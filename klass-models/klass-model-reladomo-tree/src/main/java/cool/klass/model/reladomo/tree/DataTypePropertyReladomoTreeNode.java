@@ -16,11 +16,10 @@
 
 package cool.klass.model.reladomo.tree;
 
-import java.util.Objects;
-
 import cool.klass.model.meta.domain.api.Classifier;
 import cool.klass.model.meta.domain.api.DataType;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import java.util.Objects;
 
 public class DataTypePropertyReladomoTreeNode extends AbstractReladomoTreeNode {
 

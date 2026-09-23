@@ -16,17 +16,15 @@
 
 package cool.klass.deserializer.json.type;
 
-import java.util.Locale;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import cool.klass.deserializer.json.context.ContextNode;
 import cool.klass.deserializer.json.context.ContextStack;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.NamedElement;
+import java.util.Locale;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.MutableList;
 
 public final class ArrayNodeTypeCheckingValidator {

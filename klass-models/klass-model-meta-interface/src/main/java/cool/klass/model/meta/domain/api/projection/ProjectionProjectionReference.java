@@ -16,9 +16,8 @@
 
 package cool.klass.model.meta.domain.api.projection;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.Classifier;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public interface ProjectionProjectionReference extends ProjectionWithReferenceProperty {

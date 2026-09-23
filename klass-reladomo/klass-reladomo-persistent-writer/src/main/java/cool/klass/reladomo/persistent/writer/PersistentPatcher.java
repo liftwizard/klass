@@ -16,8 +16,6 @@
 
 package cool.klass.reladomo.persistent.writer;
 
-import javax.annotation.Nonnull;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import cool.klass.data.store.DataStore;
@@ -25,6 +23,7 @@ import cool.klass.deserializer.json.OperationMode;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.map.MapIterable;
 
 public class PersistentPatcher extends PersistentSynchronizer {

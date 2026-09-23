@@ -17,7 +17,6 @@
 package cool.klass.reladomo.sample.data;
 
 import java.time.LocalDateTime;
-
 import javax.annotation.Nonnull;
 
 public class OptionalDataTypePropertyVisitor extends AbstractDataTypePropertyVisitor {

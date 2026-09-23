@@ -17,9 +17,7 @@
 package cool.klass.model.converter.compiler;
 
 import java.util.IdentityHashMap;
-
 import javax.annotation.Nonnull;
-
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;

@@ -16,15 +16,13 @@
 
 package cool.klass.model.converter.compiler.state.property;
 
-import java.util.LinkedHashMap;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrNamedElement;
 import cool.klass.model.converter.compiler.state.parameter.AntlrParameter;
 import cool.klass.model.converter.compiler.state.parameter.AntlrParameterOwner;
 import cool.klass.model.meta.grammar.KlassParser.ParameterDeclarationContext;
+import java.util.LinkedHashMap;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.MutableList;

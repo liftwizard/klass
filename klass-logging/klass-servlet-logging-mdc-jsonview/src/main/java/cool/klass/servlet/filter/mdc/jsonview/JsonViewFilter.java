@@ -16,16 +16,14 @@
 
 package cool.klass.servlet.filter.mdc.jsonview;
 
+import cool.klass.model.meta.domain.api.projection.Projection;
+import io.liftwizard.logging.slf4j.mdc.MultiMDCCloseable;
 import java.util.Objects;
-
 import javax.annotation.Priority;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.ext.Provider;
-
-import cool.klass.model.meta.domain.api.projection.Projection;
-import io.liftwizard.logging.slf4j.mdc.MultiMDCCloseable;
 
 @Provider
 @Priority(Priorities.USER - 10)

@@ -16,9 +16,8 @@
 
 package klass.model.meta.domain;
 
-import java.util.Collection;
-
 import com.gs.fw.finder.Operation;
+import java.util.Collection;
 
 public class AllCriteriaList extends AllCriteriaListAbstract {
 

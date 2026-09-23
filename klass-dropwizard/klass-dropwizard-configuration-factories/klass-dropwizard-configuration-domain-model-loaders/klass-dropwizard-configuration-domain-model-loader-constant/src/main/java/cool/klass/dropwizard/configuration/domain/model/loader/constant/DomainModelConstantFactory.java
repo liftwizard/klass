@@ -16,19 +16,17 @@
 
 package cool.klass.dropwizard.configuration.domain.model.loader.constant;
 
-import java.lang.reflect.Field;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auto.service.AutoService;
 import cool.klass.dropwizard.configuration.domain.model.loader.DomainModelFactory;
 import cool.klass.model.meta.domain.api.DomainModel;
+import java.lang.reflect.Field;
+import java.util.Objects;
+import javax.annotation.Nonnull;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @JsonTypeName("constant")
 @AutoService(DomainModelFactory.class)

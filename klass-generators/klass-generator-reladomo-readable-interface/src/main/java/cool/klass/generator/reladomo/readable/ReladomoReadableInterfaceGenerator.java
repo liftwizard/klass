@@ -16,6 +16,13 @@
 
 package cool.klass.generator.reladomo.readable;
 
+import com.google.common.base.CaseFormat;
+import cool.klass.model.meta.domain.api.DomainModel;
+import cool.klass.model.meta.domain.api.Klass;
+import cool.klass.model.meta.domain.api.PrimitiveType;
+import cool.klass.model.meta.domain.api.modifier.Modifier;
+import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
+import cool.klass.reladomo.primitive.visitor.PrimitiveToReladomoTypeVisitor;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,16 +31,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
-
 import javax.annotation.Nonnull;
-
-import com.google.common.base.CaseFormat;
-import cool.klass.model.meta.domain.api.DomainModel;
-import cool.klass.model.meta.domain.api.Klass;
-import cool.klass.model.meta.domain.api.PrimitiveType;
-import cool.klass.model.meta.domain.api.modifier.Modifier;
-import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
-import cool.klass.reladomo.primitive.visitor.PrimitiveToReladomoTypeVisitor;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public class ReladomoReadableInterfaceGenerator {

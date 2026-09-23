@@ -16,14 +16,12 @@
 
 package cool.klass.reladomo.persistent.writer.test.primitive.create;
 
-import java.io.IOException;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.deserializer.json.OperationMode;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.reladomo.persistent.writer.test.primitive.PrimitiveValidatorTest;
+import java.io.IOException;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.factory.Maps;
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.junit.jupiter.api.Test;

@@ -16,8 +16,6 @@
 
 package cool.klass.generator.grahql.schema;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.Association;
 import cool.klass.model.meta.domain.api.Enumeration;
 import cool.klass.model.meta.domain.api.Interface;
@@ -30,6 +28,7 @@ import cool.klass.model.meta.domain.api.projection.Projection;
 import cool.klass.model.meta.domain.api.property.Property;
 import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import cool.klass.model.meta.domain.api.service.ServiceGroup;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public class GraphQLElementToSchemaSourceVisitor implements TopLevelElementVisitor {

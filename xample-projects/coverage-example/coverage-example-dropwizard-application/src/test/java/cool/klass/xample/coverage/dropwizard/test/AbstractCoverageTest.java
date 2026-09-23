@@ -16,15 +16,14 @@
 
 package cool.klass.xample.coverage.dropwizard.test;
 
-import javax.annotation.Nonnull;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
-
 import cool.klass.xample.coverage.dropwizard.application.CoverageExampleApplication;
 import io.dropwizard.testing.ResourceHelpers;
 import io.liftwizard.dropwizard.testing.junit.AbstractDropwizardAppTest;
 import io.liftwizard.junit.extension.app.LiftwizardAppExtension;
+import javax.annotation.Nonnull;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 public abstract class AbstractCoverageTest extends AbstractDropwizardAppTest {
 

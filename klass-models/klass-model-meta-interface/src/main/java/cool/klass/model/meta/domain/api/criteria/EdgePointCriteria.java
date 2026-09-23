@@ -16,9 +16,8 @@
 
 package cool.klass.model.meta.domain.api.criteria;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.value.MemberReferencePath;
+import javax.annotation.Nonnull;
 
 public interface EdgePointCriteria extends Criteria {
 	@Nonnull
