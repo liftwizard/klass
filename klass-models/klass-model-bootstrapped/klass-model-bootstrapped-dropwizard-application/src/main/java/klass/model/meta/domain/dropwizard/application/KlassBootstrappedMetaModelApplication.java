@@ -16,8 +16,6 @@
 
 package klass.model.meta.domain.dropwizard.application;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.dropwizard.bundle.graphql.KlassGraphQLBundle;
 import cool.klass.serialization.jackson.module.meta.model.module.KlassMetaModelJacksonModule;
 import io.dropwizard.db.DataSourceFactory;
@@ -28,6 +26,7 @@ import io.liftwizard.dropwizard.bundle.httplogging.JerseyHttpLoggingBundle;
 import io.liftwizard.servlet.bundle.singlepage.SinglePageRedirectFilterBundle;
 import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactory;
 import io.liftwizard.servlet.logging.mdc.StructuredArgumentsMDCLogger;
+import javax.annotation.Nonnull;
 
 public class KlassBootstrappedMetaModelApplication extends AbstractKlassBootstrappedMetaModelApplication {
 

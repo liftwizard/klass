@@ -16,15 +16,13 @@
 
 package cool.klass.reladomo.persistent.writer.test.primitive.update;
 
-import java.io.IOException;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.deserializer.json.OperationMode;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import io.liftwizard.reladomo.csv.test.extension.CsvTestDataExtension;
 import io.liftwizard.reladomo.test.extension.ReladomoExtensionBuilder;
+import java.io.IOException;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.factory.Maps;
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.junit.jupiter.api.BeforeEach;

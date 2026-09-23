@@ -16,10 +16,6 @@
 
 package cool.klass.dropwizard.bundle.test.data;
 
-import java.time.Instant;
-
-import javax.annotation.Nonnull;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auto.service.AutoService;
 import cool.klass.data.store.DataStore;
@@ -31,6 +27,8 @@ import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.reladomo.sample.data.SampleDataGenerator;
 import io.dropwizard.setup.Environment;
 import io.liftwizard.dropwizard.bundle.prioritized.PrioritizedBundle;
+import java.time.Instant;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

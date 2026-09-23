@@ -16,13 +16,11 @@
 
 package cool.klass.reladomo.persistent.writer.test.association.owned.natural.fromone.tomany;
 
-import java.io.IOException;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.deserializer.json.OperationMode;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.reladomo.persistent.writer.test.primitive.create.AbstractCreateValidatorTest;
+import java.io.IOException;
+import javax.annotation.Nonnull;
 import org.junit.jupiter.api.Test;
 
 class Create_OwnedNaturalOneToManyTest extends AbstractCreateValidatorTest {

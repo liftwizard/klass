@@ -16,11 +16,6 @@
 
 package cool.klass.model.converter.compiler.phase;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilerState;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
 import cool.klass.model.converter.compiler.state.projection.AntlrProjection;
@@ -39,6 +34,9 @@ import cool.klass.model.meta.grammar.KlassParser.ProjectionPrimitiveMemberContex
 import cool.klass.model.meta.grammar.KlassParser.ProjectionProjectionReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionReferencePropertyContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.factory.Stacks;
 import org.eclipse.collections.api.stack.MutableStack;
 

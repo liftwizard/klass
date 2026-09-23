@@ -16,9 +16,8 @@
 
 package cool.klass.model.meta.domain.api.projection;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 

@@ -16,10 +16,6 @@
 
 package cool.klass.model.converter.bootstrap.writer;
 
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.parameter.Parameter;
 import cool.klass.model.meta.domain.api.value.ExpressionValue;
 import cool.klass.model.meta.domain.api.value.ExpressionValueVisitor;
@@ -33,6 +29,8 @@ import cool.klass.model.meta.domain.api.value.literal.LiteralListValue;
 import cool.klass.model.meta.domain.api.value.literal.NullLiteral;
 import cool.klass.model.meta.domain.api.value.literal.StringLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.UserLiteral;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.map.ImmutableMap;
 
 public class BootstrapExpressionValueVisitor3 implements ExpressionValueVisitor {

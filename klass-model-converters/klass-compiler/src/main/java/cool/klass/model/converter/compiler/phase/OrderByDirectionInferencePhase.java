@@ -16,13 +16,12 @@
 
 package cool.klass.model.converter.compiler.phase;
 
-import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
 import cool.klass.model.converter.compiler.CompilerState;
 import cool.klass.model.converter.compiler.state.order.AntlrOrderByMemberReferencePath;
 import cool.klass.model.meta.grammar.KlassParser;
 import cool.klass.model.meta.grammar.KlassParser.OrderByMemberReferencePathContext;
+import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 public class OrderByDirectionInferencePhase extends AbstractCompilerPhase {

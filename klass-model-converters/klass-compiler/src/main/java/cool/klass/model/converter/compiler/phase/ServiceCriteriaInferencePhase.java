@@ -16,13 +16,12 @@
 
 package cool.klass.model.converter.compiler.phase;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilerState;
 import cool.klass.model.converter.compiler.state.service.AntlrService;
 import cool.klass.model.meta.domain.api.service.Verb;
 import cool.klass.model.meta.grammar.KlassParser;
 import cool.klass.model.meta.grammar.KlassParser.ServiceBodyContext;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 public class ServiceCriteriaInferencePhase extends AbstractCompilerPhase {

@@ -16,15 +16,13 @@
 
 package cool.klass.generator.klass.service;
 
-import java.text.MessageFormat;
-
-import javax.annotation.Nonnull;
-
 import com.google.common.base.CaseFormat;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.NamedElement;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import java.text.MessageFormat;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ListIterable;
 
 public final class KlassServiceSourceCodeGenerator {

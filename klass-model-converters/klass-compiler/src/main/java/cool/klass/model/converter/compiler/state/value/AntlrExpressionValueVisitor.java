@@ -16,8 +16,6 @@
 
 package cool.klass.model.converter.compiler.state.value;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.state.value.literal.AntlrBooleanLiteralValue;
 import cool.klass.model.converter.compiler.state.value.literal.AntlrFloatingPointLiteralValue;
 import cool.klass.model.converter.compiler.state.value.literal.AntlrIntegerLiteralValue;
@@ -25,6 +23,7 @@ import cool.klass.model.converter.compiler.state.value.literal.AntlrLiteralListV
 import cool.klass.model.converter.compiler.state.value.literal.AntlrNullLiteral;
 import cool.klass.model.converter.compiler.state.value.literal.AntlrStringLiteralValue;
 import cool.klass.model.converter.compiler.state.value.literal.AntlrUserLiteral;
+import javax.annotation.Nonnull;
 
 public interface AntlrExpressionValueVisitor {
 	void visitTypeMember(@Nonnull AntlrTypeMemberReferencePath typeMemberExpressionValue);

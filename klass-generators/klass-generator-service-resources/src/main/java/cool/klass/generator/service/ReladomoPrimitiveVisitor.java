@@ -16,9 +16,8 @@
 
 package cool.klass.generator.service;
 
-import java.util.Objects;
-
 import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
+import java.util.Objects;
 
 public class ReladomoPrimitiveVisitor implements PrimitiveTypeVisitor {
 

@@ -17,7 +17,6 @@
 package cool.klass.reladomo.persistent.writer.test.primitive;
 
 import java.io.IOException;
-
 import org.junit.jupiter.api.Test;
 
 public interface PrimitiveValidatorTest {

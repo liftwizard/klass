@@ -16,13 +16,6 @@
 
 package cool.klass.dropwizard.configuration.domain.model.loader.compiler;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -35,6 +28,11 @@ import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import cool.klass.model.meta.loader.compiler.DomainModelCompilerLoader;
 import io.dropwizard.validation.ValidationMethod;
 import io.liftwizard.dropwizard.configuration.enabled.EnabledFactory;
+import java.util.Arrays;
+import java.util.List;
+import javax.annotation.Nonnull;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.hibernate.validator.constraints.NotEmpty;

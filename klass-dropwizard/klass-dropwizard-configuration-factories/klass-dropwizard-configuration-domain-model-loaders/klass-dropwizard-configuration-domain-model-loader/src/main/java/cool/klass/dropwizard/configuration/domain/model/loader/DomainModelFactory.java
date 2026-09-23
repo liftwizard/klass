@@ -16,13 +16,12 @@
 
 package cool.klass.dropwizard.configuration.domain.model.loader;
 
-import javax.annotation.Nonnull;
-
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auto.service.AutoService;
 import cool.klass.model.meta.domain.api.DomainModel;
 import io.dropwizard.jackson.Discoverable;
+import javax.annotation.Nonnull;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @AutoService(Discoverable.class)

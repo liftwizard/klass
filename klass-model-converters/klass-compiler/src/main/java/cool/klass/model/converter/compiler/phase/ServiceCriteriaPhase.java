@@ -16,10 +16,6 @@
 
 package cool.klass.model.converter.compiler.phase;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilerState;
 import cool.klass.model.converter.compiler.phase.criteria.CriteriaVisitor;
 import cool.klass.model.converter.compiler.state.criteria.AntlrCriteria;
@@ -27,6 +23,8 @@ import cool.klass.model.converter.compiler.state.service.AntlrServiceCriteria;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaExpressionContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceCriteriaDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceCriteriaKeywordContext;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 
 public class ServiceCriteriaPhase extends AbstractCompilerPhase {
 

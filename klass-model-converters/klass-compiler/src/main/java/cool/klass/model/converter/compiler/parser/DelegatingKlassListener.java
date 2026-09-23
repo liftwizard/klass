@@ -16,8 +16,6 @@
 
 package cool.klass.model.converter.compiler.parser;
 
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
 import cool.klass.model.meta.grammar.KlassListener;
 import cool.klass.model.meta.grammar.KlassParser.AbstractDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ArgumentContext;
@@ -148,6 +146,7 @@ import cool.klass.model.meta.grammar.KlassParser.UrlParameterDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlParameterDeclarationEOFContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlPathSegmentContext;
 import cool.klass.model.meta.grammar.KlassParser.VerbContext;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;

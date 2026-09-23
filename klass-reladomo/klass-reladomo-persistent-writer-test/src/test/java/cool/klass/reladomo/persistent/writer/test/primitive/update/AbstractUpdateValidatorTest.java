@@ -16,17 +16,15 @@
 
 package cool.klass.reladomo.persistent.writer.test.primitive.update;
 
-import java.time.Instant;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import cool.klass.deserializer.json.RequiredPropertiesValidator;
 import cool.klass.deserializer.json.type.ObjectNodeTypeCheckingValidator;
 import cool.klass.reladomo.persistent.writer.IncomingUpdateDataModelValidator;
 import cool.klass.reladomo.persistent.writer.MutationContext;
 import cool.klass.reladomo.persistent.writer.test.AbstractValidatorTest;
+import java.time.Instant;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 
 public abstract class AbstractUpdateValidatorTest extends AbstractValidatorTest {
 

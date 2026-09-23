@@ -16,11 +16,6 @@
 
 package cool.klass.serialization.jackson.response.reladomo;
 
-import java.io.IOException;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -45,6 +40,9 @@ import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
 import cool.klass.serialization.jackson.model.data.property.SerializeValueToJsonFieldPrimitiveTypeVisitor;
 import cool.klass.serialization.jackson.response.KlassResponseMetadata;
+import java.io.IOException;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public class ReladomoContextJsonSerializer extends JsonSerializer<MithraObject> {

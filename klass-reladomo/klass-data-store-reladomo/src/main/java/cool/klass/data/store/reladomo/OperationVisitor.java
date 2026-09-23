@@ -16,13 +16,6 @@
 
 package cool.klass.data.store.reladomo;
 
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import com.gs.fw.common.mithra.attribute.Attribute;
 import com.gs.fw.common.mithra.attribute.BooleanAttribute;
 import com.gs.fw.common.mithra.attribute.DoubleAttribute;
@@ -36,6 +29,11 @@ import cool.klass.model.meta.domain.api.EnumerationLiteral;
 import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.visitor.DataTypePropertyVisitor;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 
 public class OperationVisitor implements DataTypePropertyVisitor {
 

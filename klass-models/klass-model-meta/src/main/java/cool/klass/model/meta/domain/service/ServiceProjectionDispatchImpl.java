@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain.service;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.AbstractElement;
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.source.SourceCode;
@@ -30,6 +24,10 @@ import cool.klass.model.meta.domain.api.source.service.ServiceProjectionDispatch
 import cool.klass.model.meta.domain.projection.ProjectionImpl;
 import cool.klass.model.meta.domain.projection.ProjectionImpl.ProjectionBuilder;
 import cool.klass.model.meta.grammar.KlassParser.ServiceProjectionDispatchContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public final class ServiceProjectionDispatchImpl
 	extends AbstractElement

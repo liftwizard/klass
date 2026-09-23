@@ -16,14 +16,12 @@
 
 package cool.klass.reladomo.sample.data;
 
-import java.time.Instant;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.data.store.DataStore;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
+import java.time.Instant;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public class SampleDataGenerator {

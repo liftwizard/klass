@@ -16,12 +16,11 @@
 
 package cool.klass.xample.coverage.dropwizard.test;
 
+import io.liftwizard.junit.extension.match.file.FileMatchExtension;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-
-import io.liftwizard.junit.extension.match.file.FileMatchExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 

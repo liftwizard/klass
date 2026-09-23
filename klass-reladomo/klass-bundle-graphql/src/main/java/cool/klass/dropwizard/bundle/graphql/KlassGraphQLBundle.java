@@ -16,12 +16,6 @@
 
 package cool.klass.dropwizard.bundle.graphql;
 
-import java.time.Clock;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.servlet.ServletRegistration.Dynamic;
-
 import com.codahale.metrics.MetricRegistry;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.CaseFormat;
@@ -54,6 +48,10 @@ import io.liftwizard.graphql.instrumentation.logging.LiftwizardGraphQLLoggingIns
 import io.liftwizard.graphql.instrumentation.metrics.LiftwizardGraphQLMetricsInstrumentation;
 import io.liftwizard.graphql.scalar.temporal.GraphQLLocalDateScalar;
 import io.liftwizard.graphql.scalar.temporal.GraphQLTemporalScalar;
+import java.time.Clock;
+import java.util.List;
+import javax.annotation.Nonnull;
+import javax.servlet.ServletRegistration.Dynamic;
 import org.atteo.evo.inflector.English;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;

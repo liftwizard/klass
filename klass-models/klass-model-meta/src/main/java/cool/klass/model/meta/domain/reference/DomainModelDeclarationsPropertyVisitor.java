@@ -16,10 +16,6 @@
 
 package cool.klass.model.meta.domain.reference;
 
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.AssociationEndSignature;
 import cool.klass.model.meta.domain.api.property.EnumerationProperty;
@@ -36,6 +32,8 @@ import cool.klass.model.meta.grammar.KlassParser.AssociationEndSignatureContext;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationPropertyContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertyContext;
 import cool.klass.model.meta.grammar.KlassParser.PrimitivePropertyContext;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 
 public class DomainModelDeclarationsPropertyVisitor implements PropertyVisitor {
 

@@ -16,16 +16,14 @@
 
 package cool.klass.model.converter.compiler.state.property.validation;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
 import cool.klass.model.meta.domain.property.validation.MinLengthPropertyValidationImpl.MinLengthPropertyValidationBuilder;
 import cool.klass.model.meta.grammar.KlassParser.MinLengthValidationContext;
 import cool.klass.model.meta.grammar.KlassParser.MinLengthValidationKeywordContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 
 public class AntlrMinLengthPropertyValidation extends AbstractAntlrNumericPropertyValidation {
 

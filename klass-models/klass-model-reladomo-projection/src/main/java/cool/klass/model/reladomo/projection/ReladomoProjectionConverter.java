@@ -16,10 +16,6 @@
 
 package cool.klass.model.reladomo.projection;
 
-import java.util.LinkedHashMap;
-
-import javax.annotation.Nonnull;
-
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Converter;
 import cool.klass.model.meta.domain.api.Classifier;
@@ -31,6 +27,8 @@ import cool.klass.model.meta.domain.api.projection.ProjectionParent;
 import cool.klass.model.meta.domain.api.projection.ProjectionProjectionReference;
 import cool.klass.model.meta.domain.api.projection.ProjectionReferenceProperty;
 import cool.klass.model.meta.domain.api.property.Property;
+import java.util.LinkedHashMap;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.factory.Maps;
 import org.eclipse.collections.api.factory.Stacks;
 import org.eclipse.collections.api.map.MutableMap;

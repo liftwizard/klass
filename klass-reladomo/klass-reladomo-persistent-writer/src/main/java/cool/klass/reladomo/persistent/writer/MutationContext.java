@@ -16,13 +16,11 @@
 
 package cool.klass.reladomo.persistent.writer;
 
+import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
-
 import javax.annotation.Nonnull;
-
-import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import org.eclipse.collections.api.map.ImmutableMap;
 
 public class MutationContext {

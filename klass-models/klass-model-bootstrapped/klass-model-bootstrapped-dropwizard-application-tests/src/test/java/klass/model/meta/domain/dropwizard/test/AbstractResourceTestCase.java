@@ -16,23 +16,21 @@
 
 package klass.model.meta.domain.dropwizard.test;
 
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.dropwizard.testing.ResourceHelpers;
 import io.liftwizard.dropwizard.testing.junit.AbstractDropwizardAppTest;
 import io.liftwizard.junit.extension.app.LiftwizardAppExtension;
 import io.liftwizard.junit.extension.match.FileSlurper;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
+import javax.annotation.Nonnull;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import klass.model.meta.domain.dropwizard.application.KlassBootstrappedMetaModelApplication;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class AbstractResourceTestCase extends AbstractDropwizardAppTest {
 

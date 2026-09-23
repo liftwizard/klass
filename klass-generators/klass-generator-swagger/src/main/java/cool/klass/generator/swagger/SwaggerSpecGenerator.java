@@ -16,20 +16,18 @@
 
 package cool.klass.generator.swagger;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import cool.klass.model.meta.domain.api.DomainModel;
+import io.swagger.models.Info;
+import io.swagger.models.Swagger;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Objects;
-
 import javax.annotation.Nonnull;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import cool.klass.model.meta.domain.api.DomainModel;
-import io.swagger.models.Info;
-import io.swagger.models.Swagger;
 
 /**
  * Generates a single swagger.json file containing the OpenAPI specification

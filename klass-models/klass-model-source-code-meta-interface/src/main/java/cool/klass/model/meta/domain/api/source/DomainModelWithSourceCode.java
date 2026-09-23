@@ -16,12 +16,10 @@
 
 package cool.klass.model.meta.domain.api.source;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import cool.klass.model.meta.domain.api.DomainModel;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.list.ImmutableList;
 

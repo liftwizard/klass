@@ -16,11 +16,10 @@
 
 package cool.klass.generator.klass.projection.plugin;
 
-import java.io.File;
-
 import cool.klass.generator.klass.projection.KlassProjectionGenerator;
 import cool.klass.generator.plugin.AbstractGenerateMojo;
 import cool.klass.model.meta.domain.api.DomainModel;
+import java.io.File;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;

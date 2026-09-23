@@ -16,10 +16,6 @@
 
 package cool.klass.model.converter.bootstrap.writer;
 
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.criteria.AllCriteria;
 import cool.klass.model.meta.domain.api.criteria.AndCriteria;
@@ -33,6 +29,8 @@ import cool.klass.model.meta.domain.api.parameter.Parameter;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.meta.domain.api.value.ExpressionValue;
 import cool.klass.model.meta.domain.api.value.MemberReferencePath;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.map.ImmutableMap;
 
 public class BootstrapCriteriaVisitor implements CriteriaVisitor {

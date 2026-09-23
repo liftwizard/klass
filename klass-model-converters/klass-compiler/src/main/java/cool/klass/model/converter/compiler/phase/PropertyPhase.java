@@ -16,12 +16,6 @@
 
 package cool.klass.model.converter.compiler.phase;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.converter.compiler.CompilerState;
 import cool.klass.model.converter.compiler.CompilerWalkState;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
@@ -54,6 +48,10 @@ import cool.klass.model.meta.grammar.KlassParser.MinLengthValidationContext;
 import cool.klass.model.meta.grammar.KlassParser.MinValidationContext;
 import cool.klass.model.meta.grammar.KlassParser.MultiplicityContext;
 import cool.klass.model.meta.grammar.KlassParser.PrimitivePropertyContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class PropertyPhase extends AbstractCompilerPhase {
 

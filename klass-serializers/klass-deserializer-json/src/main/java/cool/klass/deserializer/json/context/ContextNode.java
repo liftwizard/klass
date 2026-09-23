@@ -16,10 +16,9 @@
 
 package cool.klass.deserializer.json.context;
 
+import cool.klass.model.meta.domain.api.NamedElement;
 import java.util.Objects;
 import java.util.Optional;
-
-import cool.klass.model.meta.domain.api.NamedElement;
 
 public class ContextNode {
 

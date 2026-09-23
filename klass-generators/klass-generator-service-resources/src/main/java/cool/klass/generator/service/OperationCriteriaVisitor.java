@@ -16,10 +16,6 @@
 
 package cool.klass.generator.service;
 
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.criteria.AllCriteria;
 import cool.klass.model.meta.domain.api.criteria.AndCriteria;
 import cool.klass.model.meta.domain.api.criteria.CriteriaVisitor;
@@ -30,6 +26,8 @@ import cool.klass.model.meta.domain.api.operator.Operator;
 import cool.klass.model.meta.domain.api.value.ExpressionValue;
 import cool.klass.model.meta.domain.api.value.MemberReferencePath;
 import cool.klass.model.meta.domain.api.value.literal.NullLiteral;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 
 public class OperationCriteriaVisitor implements CriteriaVisitor {
 

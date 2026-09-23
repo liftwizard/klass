@@ -16,11 +16,6 @@
 
 package cool.klass.model.converter.compiler.state.value.literal;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrType;
@@ -30,6 +25,9 @@ import cool.klass.model.converter.compiler.state.value.AntlrExpressionValueVisit
 import cool.klass.model.meta.domain.value.literal.AbstractLiteralValue.AbstractLiteralValueBuilder;
 import cool.klass.model.meta.domain.value.literal.LiteralListValueImpl.LiteralListValueBuilder;
 import cool.klass.model.meta.grammar.KlassParser.LiteralListContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public class AntlrLiteralListValue extends AbstractAntlrLiteralValue {

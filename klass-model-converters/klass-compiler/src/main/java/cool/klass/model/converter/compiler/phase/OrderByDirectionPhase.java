@@ -16,16 +16,14 @@
 
 package cool.klass.model.converter.compiler.phase;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
 import cool.klass.model.converter.compiler.CompilerState;
 import cool.klass.model.converter.compiler.state.order.AntlrOrderByDirection;
 import cool.klass.model.converter.compiler.state.order.AntlrOrderByMemberReferencePath;
 import cool.klass.model.meta.domain.api.order.OrderByDirection;
 import cool.klass.model.meta.grammar.KlassParser.OrderByDirectionContext;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 public class OrderByDirectionPhase extends AbstractCompilerPhase {
 

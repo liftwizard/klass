@@ -16,10 +16,6 @@
 
 package cool.klass.model.converter.compiler.phase;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilerState;
 import cool.klass.model.converter.compiler.state.AntlrClass;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
@@ -29,6 +25,8 @@ import cool.klass.model.meta.grammar.KlassParser.ExtendsDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ImplementsDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.InterfaceReferenceContext;
+import java.util.List;
+import javax.annotation.Nonnull;
 
 public class InheritancePhase extends AbstractCompilerPhase {
 

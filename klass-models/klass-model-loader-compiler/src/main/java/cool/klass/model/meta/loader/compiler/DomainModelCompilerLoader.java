@@ -16,16 +16,6 @@
 
 package cool.klass.model.meta.loader.compiler;
 
-import java.net.URL;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.regex.Pattern;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationResult;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.KlassCompiler;
@@ -33,6 +23,14 @@ import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import cool.klass.model.meta.loader.DomainModelLoader;
+import java.net.URL;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.regex.Pattern;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.reflections.Reflections;

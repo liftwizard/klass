@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain.property;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.AssociationImpl;
 import cool.klass.model.meta.domain.AssociationImpl.AssociationBuilder;
 import cool.klass.model.meta.domain.KlassImpl;
@@ -34,6 +28,10 @@ import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import cool.klass.model.meta.domain.api.source.property.AssociationEndWithSourceCode;
 import cool.klass.model.meta.grammar.KlassParser.AssociationEndContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 // TODO: Super class for reference-type-property?
 public final class AssociationEndImpl extends ReferencePropertyImpl<KlassImpl> implements AssociationEndWithSourceCode {

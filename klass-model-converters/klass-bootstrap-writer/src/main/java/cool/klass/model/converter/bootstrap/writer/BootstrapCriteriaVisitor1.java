@@ -16,10 +16,6 @@
 
 package cool.klass.model.converter.bootstrap.writer;
 
-import java.util.LinkedHashMap;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.criteria.AllCriteria;
 import cool.klass.model.meta.domain.api.criteria.AndCriteria;
 import cool.klass.model.meta.domain.api.criteria.Criteria;
@@ -27,6 +23,8 @@ import cool.klass.model.meta.domain.api.criteria.CriteriaVisitor;
 import cool.klass.model.meta.domain.api.criteria.EdgePointCriteria;
 import cool.klass.model.meta.domain.api.criteria.OperatorCriteria;
 import cool.klass.model.meta.domain.api.criteria.OrCriteria;
+import java.util.LinkedHashMap;
+import javax.annotation.Nonnull;
 import klass.model.meta.domain.CriteriaList;
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.eclipse.collections.api.map.MutableMap;

@@ -16,11 +16,6 @@
 
 package cool.klass.model.converter.compiler.phase.criteria;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilerState;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.converter.compiler.state.value.literal.AbstractAntlrLiteralValue;
@@ -36,6 +31,9 @@ import cool.klass.model.meta.grammar.KlassParser.FloatingPointLiteralContext;
 import cool.klass.model.meta.grammar.KlassParser.IntegerLiteralContext;
 import cool.klass.model.meta.grammar.KlassParser.NullLiteralContext;
 import cool.klass.model.meta.grammar.KlassParser.StringLiteralContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 
 public class LiteralValueVisitor extends KlassBaseVisitor<AbstractAntlrLiteralValue> {
 

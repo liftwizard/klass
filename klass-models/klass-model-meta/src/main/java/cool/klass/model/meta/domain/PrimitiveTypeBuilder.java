@@ -16,14 +16,12 @@
 
 package cool.klass.model.meta.domain;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.AbstractElement.ElementBuilder;
 import cool.klass.model.meta.domain.api.DataType.DataTypeGetter;
 import cool.klass.model.meta.domain.api.PrimitiveType;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public class PrimitiveTypeBuilder extends ElementBuilder<PrimitiveType> implements DataTypeGetter {

@@ -16,10 +16,9 @@
 
 package cool.klass.model.meta.domain.api.property;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.Enumeration;
 import cool.klass.model.meta.domain.api.visitor.DataTypePropertyVisitor;
+import javax.annotation.Nonnull;
 
 public interface EnumerationProperty extends DataTypeProperty {
 	@Override

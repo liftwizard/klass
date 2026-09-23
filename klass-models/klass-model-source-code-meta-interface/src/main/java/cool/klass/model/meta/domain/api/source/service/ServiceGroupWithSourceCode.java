@@ -16,12 +16,11 @@
 
 package cool.klass.model.meta.domain.api.source.service;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.service.ServiceGroup;
 import cool.klass.model.meta.domain.api.source.KlassWithSourceCode;
 import cool.klass.model.meta.domain.api.source.TopLevelElementWithSourceCode;
 import cool.klass.model.meta.grammar.KlassParser.ServiceGroupDeclarationContext;
+import javax.annotation.Nonnull;
 
 public interface ServiceGroupWithSourceCode extends ServiceGroup, TopLevelElementWithSourceCode {
 	@Override

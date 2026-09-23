@@ -16,13 +16,11 @@
 
 package cool.klass.reladomo.sample.data;
 
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.data.store.DataStore;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 

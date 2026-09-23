@@ -16,9 +16,8 @@
 
 package cool.klass.xample.coverage;
 
-import java.sql.Timestamp;
-
 import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
+import java.sql.Timestamp;
 
 public class EveryTypeKeyPropertyVersion extends EveryTypeKeyPropertyVersionAbstract {
 

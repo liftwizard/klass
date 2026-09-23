@@ -16,9 +16,8 @@
 
 package cool.klass.model.meta.loader;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.DomainModel;
+import javax.annotation.Nonnull;
 
 public interface DomainModelLoader {
 	@Nonnull

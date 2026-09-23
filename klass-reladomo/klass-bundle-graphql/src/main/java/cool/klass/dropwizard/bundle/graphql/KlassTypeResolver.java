@@ -16,12 +16,11 @@
 
 package cool.klass.dropwizard.bundle.graphql;
 
-import java.util.Objects;
-
 import cool.klass.model.meta.domain.api.Klass;
 import graphql.TypeResolutionEnvironment;
 import graphql.schema.GraphQLObjectType;
 import graphql.schema.TypeResolver;
+import java.util.Objects;
 
 public class KlassTypeResolver implements TypeResolver {
 

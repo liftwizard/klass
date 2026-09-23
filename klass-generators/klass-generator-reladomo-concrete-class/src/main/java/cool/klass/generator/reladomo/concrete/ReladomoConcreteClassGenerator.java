@@ -16,6 +16,13 @@
 
 package cool.klass.generator.reladomo.concrete;
 
+import com.google.common.base.CaseFormat;
+import cool.klass.model.meta.domain.api.DomainModel;
+import cool.klass.model.meta.domain.api.Klass;
+import cool.klass.model.meta.domain.api.PrimitiveType;
+import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
+import cool.klass.model.meta.domain.api.property.Property;
+import cool.klass.reladomo.sample.data.RequiredDataTypePropertyVisitor;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,16 +31,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
-
 import javax.annotation.Nonnull;
-
-import com.google.common.base.CaseFormat;
-import cool.klass.model.meta.domain.api.DomainModel;
-import cool.klass.model.meta.domain.api.Klass;
-import cool.klass.model.meta.domain.api.PrimitiveType;
-import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
-import cool.klass.model.meta.domain.api.property.Property;
-import cool.klass.reladomo.sample.data.RequiredDataTypePropertyVisitor;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;

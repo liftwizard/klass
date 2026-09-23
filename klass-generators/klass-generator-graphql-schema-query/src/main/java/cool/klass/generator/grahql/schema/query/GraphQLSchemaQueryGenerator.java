@@ -16,11 +16,6 @@
 
 package cool.klass.generator.grahql.schema.query;
 
-import java.nio.file.Path;
-import java.text.MessageFormat;
-
-import javax.annotation.Nonnull;
-
 import com.google.common.base.CaseFormat;
 import cool.klass.generator.perpackage.AbstractPerPackageGenerator;
 import cool.klass.model.meta.domain.api.Classifier;
@@ -30,6 +25,9 @@ import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.PrimitiveType;
 import cool.klass.model.meta.domain.api.Type;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import java.nio.file.Path;
+import java.text.MessageFormat;
+import javax.annotation.Nonnull;
 import org.atteo.evo.inflector.English;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;

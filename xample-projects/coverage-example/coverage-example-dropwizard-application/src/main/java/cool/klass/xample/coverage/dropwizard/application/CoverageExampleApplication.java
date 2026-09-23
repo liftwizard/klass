@@ -16,10 +16,6 @@
 
 package cool.klass.xample.coverage.dropwizard.application;
 
-import java.util.function.Consumer;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.dropwizard.bundle.graphql.KlassGraphQLBundle;
 import cool.klass.serialization.jackson.module.meta.model.module.KlassMetaModelJacksonModule;
 import io.dropwizard.db.DataSourceFactory;
@@ -32,6 +28,8 @@ import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactory;
 import io.liftwizard.servlet.logging.logstash.encoder.StructuredArgumentsLogstashEncoderLogger;
 import io.liftwizard.servlet.logging.mdc.StructuredArgumentsMDCLogger;
 import io.liftwizard.servlet.logging.typesafe.StructuredArguments;
+import java.util.function.Consumer;
+import javax.annotation.Nonnull;
 
 public class CoverageExampleApplication extends AbstractCoverageExampleApplication {
 

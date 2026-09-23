@@ -16,8 +16,6 @@
 
 package cool.klass.model.converter.compiler.state;
 
-import java.util.Set;
-
 import cool.klass.model.converter.compiler.state.criteria.AllAntlrCriteria;
 import cool.klass.model.converter.compiler.state.criteria.AntlrAndCriteria;
 import cool.klass.model.converter.compiler.state.criteria.AntlrCriteriaVisitor;
@@ -29,6 +27,7 @@ import cool.klass.model.converter.compiler.state.property.AntlrAssociationEnd;
 import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
 import cool.klass.model.converter.compiler.state.value.AntlrExpressionValue;
 import cool.klass.model.converter.compiler.state.value.AntlrMemberReferencePath;
+import java.util.Set;
 
 public class ReferencedPropertiesCriteriaVisitor implements AntlrCriteriaVisitor {
 

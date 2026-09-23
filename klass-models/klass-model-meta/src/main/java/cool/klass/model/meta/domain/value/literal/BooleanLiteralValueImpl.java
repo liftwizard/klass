@@ -16,16 +16,14 @@
 
 package cool.klass.model.meta.domain.value.literal;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import cool.klass.model.meta.domain.api.value.literal.BooleanLiteralValue;
 import cool.klass.model.meta.grammar.KlassParser.BooleanLiteralContext;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public final class BooleanLiteralValueImpl extends AbstractLiteralValue implements BooleanLiteralValue {
 

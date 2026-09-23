@@ -16,10 +16,6 @@
 
 package cool.klass.model.converter.compiler.token.categorizing.parser;
 
-import java.util.LinkedHashMap;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import cool.klass.model.meta.grammar.KlassBaseListener;
 import cool.klass.model.meta.grammar.KlassParser.AbstractDeclarationContext;
@@ -79,6 +75,8 @@ import cool.klass.model.meta.grammar.KlassParser.ServiceProjectionDispatchContex
 import cool.klass.model.meta.grammar.KlassParser.ThisMemberReferencePathContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlConstantContext;
 import cool.klass.model.meta.grammar.KlassParser.VerbContext;
+import java.util.LinkedHashMap;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeListener;

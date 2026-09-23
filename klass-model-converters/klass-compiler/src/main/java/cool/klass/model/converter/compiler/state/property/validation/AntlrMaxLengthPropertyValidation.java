@@ -16,16 +16,14 @@
 
 package cool.klass.model.converter.compiler.state.property.validation;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
 import cool.klass.model.meta.domain.property.validation.MaxLengthPropertyValidationImpl.MaxLengthPropertyValidationBuilder;
 import cool.klass.model.meta.grammar.KlassParser.MaxLengthValidationContext;
 import cool.klass.model.meta.grammar.KlassParser.MaxLengthValidationKeywordContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 
 public class AntlrMaxLengthPropertyValidation extends AbstractAntlrNumericPropertyValidation {
 

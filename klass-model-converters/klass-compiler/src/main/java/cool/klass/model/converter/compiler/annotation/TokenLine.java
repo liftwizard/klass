@@ -17,7 +17,6 @@
 package cool.klass.model.converter.compiler.annotation;
 
 import java.util.Objects;
-
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.list.ImmutableList;
 

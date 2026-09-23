@@ -16,13 +16,12 @@
 
 package cool.klass.generator.swagger.plugin;
 
-import java.io.File;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import cool.klass.generator.plugin.AbstractGenerateMojo;
 import cool.klass.generator.swagger.SwaggerSpecGenerator;
 import cool.klass.model.meta.domain.api.DomainModel;
+import java.io.File;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;

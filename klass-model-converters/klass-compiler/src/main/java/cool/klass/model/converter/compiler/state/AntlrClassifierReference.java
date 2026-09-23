@@ -16,13 +16,11 @@
 
 package cool.klass.model.converter.compiler.state;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.meta.grammar.KlassParser.ClassifierReferenceContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 
 public class AntlrClassifierReference extends AntlrElement {
 

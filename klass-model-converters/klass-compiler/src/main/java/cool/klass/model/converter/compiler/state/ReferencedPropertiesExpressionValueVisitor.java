@@ -16,11 +16,6 @@
 
 package cool.klass.model.converter.compiler.state;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.state.parameter.AntlrParameter;
 import cool.klass.model.converter.compiler.state.property.AntlrAssociationEnd;
 import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
@@ -35,6 +30,9 @@ import cool.klass.model.converter.compiler.state.value.literal.AntlrLiteralListV
 import cool.klass.model.converter.compiler.state.value.literal.AntlrNullLiteral;
 import cool.klass.model.converter.compiler.state.value.literal.AntlrStringLiteralValue;
 import cool.klass.model.converter.compiler.state.value.literal.AntlrUserLiteral;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public class ReferencedPropertiesExpressionValueVisitor implements AntlrExpressionValueVisitor {

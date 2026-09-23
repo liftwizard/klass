@@ -16,9 +16,7 @@
 
 package cool.klass.model.converter.compiler;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import cool.klass.model.converter.compiler.annotation.AbstractCompilerAnnotation;
 import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
@@ -26,12 +24,12 @@ import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiCo
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.junit.extension.match.FileSlurper;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(LogMarkerTestExtension.class)
 class KlassCompilerTest {

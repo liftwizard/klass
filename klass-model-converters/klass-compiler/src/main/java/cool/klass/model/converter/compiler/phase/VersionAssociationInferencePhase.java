@@ -16,8 +16,6 @@
 
 package cool.klass.model.converter.compiler.phase;
 
-import javax.annotation.Nonnull;
-
 import com.google.common.base.CaseFormat;
 import cool.klass.model.converter.compiler.CompilerState;
 import cool.klass.model.converter.compiler.state.AntlrClass;
@@ -26,6 +24,7 @@ import cool.klass.model.converter.compiler.state.property.AntlrModifier;
 import cool.klass.model.converter.compiler.state.property.AntlrProperty;
 import cool.klass.model.meta.grammar.KlassParser;
 import cool.klass.model.meta.grammar.KlassParser.ClassifierModifierContext;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
