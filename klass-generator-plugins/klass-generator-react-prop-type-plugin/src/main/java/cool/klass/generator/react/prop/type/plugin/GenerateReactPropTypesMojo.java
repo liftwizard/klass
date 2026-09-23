@@ -34,8 +34,9 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
-public class GenerateReactPropTypesMojo extends AbstractGenerateMojo {
-
+public class GenerateReactPropTypesMojo
+	extends AbstractGenerateMojo
+{
 	@Parameter(
 		property = "outputDirectory",
 		defaultValue = "${project.build.directory}/generated-resources/react-prop-types"
@@ -43,20 +44,25 @@ public class GenerateReactPropTypesMojo extends AbstractGenerateMojo {
 	private File outputDirectory;
 
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.CLASSPATH;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
-		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
-				DomainModel domainModel = this.getDomainModel();
-				var propTypeGenerator = new ReactPropTypeGenerator(domainModel);
-				propTypeGenerator.writePropTypes(this.outputDirectory.toPath());
-				return null;
-			});
+	public void execute()
+		throws MojoExecutionException
+	{
+		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () ->
+		{
+			DomainModel domainModel = this.getDomainModel();
+			var propTypeGenerator = new ReactPropTypeGenerator(domainModel);
+			propTypeGenerator.writePropTypes(this.outputDirectory.toPath());
+			return null;
+		});
 
-		if (wasGenerated) {
+		if (wasGenerated)
+		{
 			this.getLog().info("Generated React prop types in: " + this.outputDirectory.getPath());
 		}
 

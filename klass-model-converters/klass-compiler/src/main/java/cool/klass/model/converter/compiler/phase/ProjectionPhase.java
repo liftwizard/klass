@@ -42,16 +42,19 @@ import cool.klass.model.meta.grammar.KlassParser.ProjectionReferencePropertyCont
 import org.eclipse.collections.api.factory.Stacks;
 import org.eclipse.collections.api.stack.MutableStack;
 
-public class ProjectionPhase extends AbstractCompilerPhase {
-
+public class ProjectionPhase
+	extends AbstractCompilerPhase
+{
 	private final MutableStack<AntlrProjectionParent> elementStack = Stacks.mutable.empty();
 
-	public ProjectionPhase(@Nonnull CompilerState compilerState) {
+	public ProjectionPhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Override
-	public void enterProjectionDeclaration(@Nonnull ProjectionDeclarationContext ctx) {
+	public void enterProjectionDeclaration(@Nonnull ProjectionDeclarationContext ctx)
+	{
 		super.enterProjectionDeclaration(ctx);
 
 		AntlrProjection projection = this.compilerState.getCompilerWalk().getProjection();
@@ -60,13 +63,15 @@ public class ProjectionPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitProjectionDeclaration(@Nonnull ProjectionDeclarationContext ctx) {
+	public void exitProjectionDeclaration(@Nonnull ProjectionDeclarationContext ctx)
+	{
 		this.elementStack.pop();
 		super.exitProjectionDeclaration(ctx);
 	}
 
 	@Override
-	public void enterProjectionPrimitiveMember(@Nonnull ProjectionPrimitiveMemberContext ctx) {
+	public void enterProjectionPrimitiveMember(@Nonnull ProjectionPrimitiveMemberContext ctx)
+	{
 		super.enterProjectionPrimitiveMember(ctx);
 
 		AntlrProjectionParent projectionParent = this.elementStack.peek();
@@ -80,9 +85,10 @@ public class ProjectionPhase extends AbstractCompilerPhase {
 		String headerText = headerQuotedText.substring(1, headerQuotedText.length() - 1);
 
 		ClassifierReferenceContext classifierReferenceContext = ctx.classifierReference();
-		AntlrClassifier classifier = classifierReferenceContext == null
-			? projectionParent.getClassifier()
-			: this.compilerState.getDomainModel().getClassifierByName(classifierReferenceContext.getText());
+		AntlrClassifier classifier =
+			classifierReferenceContext == null
+				? projectionParent.getClassifier()
+				: this.compilerState.getDomainModel().getClassifierByName(classifierReferenceContext.getText());
 
 		AntlrDataTypeProperty<?> dataTypePropertyState = classifier.getDataTypePropertyByName(name);
 
@@ -102,7 +108,8 @@ public class ProjectionPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void enterProjectionReferenceProperty(@Nonnull ProjectionReferencePropertyContext ctx) {
+	public void enterProjectionReferenceProperty(@Nonnull ProjectionReferencePropertyContext ctx)
+	{
 		super.enterProjectionReferenceProperty(ctx);
 
 		AntlrProjectionParent projectionParent = this.elementStack.peek();
@@ -111,9 +118,10 @@ public class ProjectionPhase extends AbstractCompilerPhase {
 		String name = nameContext.getText();
 
 		ClassifierReferenceContext classifierReferenceContext = ctx.classifierReference();
-		AntlrClassifier classifier = classifierReferenceContext == null
-			? projectionParent.getClassifier()
-			: this.compilerState.getDomainModel().getClassifierByName(classifierReferenceContext.getText());
+		AntlrClassifier classifier =
+			classifierReferenceContext == null
+				? projectionParent.getClassifier()
+				: this.compilerState.getDomainModel().getClassifierByName(classifierReferenceContext.getText());
 		AntlrReferenceProperty<?> referenceProperty = classifier.getReferencePropertyByName(name);
 
 		var projectionReferenceProperty = new AntlrProjectionReferenceProperty(
@@ -133,13 +141,15 @@ public class ProjectionPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitProjectionReferenceProperty(@Nonnull ProjectionReferencePropertyContext ctx) {
+	public void exitProjectionReferenceProperty(@Nonnull ProjectionReferencePropertyContext ctx)
+	{
 		this.elementStack.pop();
 		super.exitProjectionReferenceProperty(ctx);
 	}
 
 	@Override
-	public void enterProjectionProjectionReference(@Nonnull ProjectionProjectionReferenceContext ctx) {
+	public void enterProjectionProjectionReference(@Nonnull ProjectionProjectionReferenceContext ctx)
+	{
 		super.enterProjectionProjectionReference(ctx);
 
 		AntlrProjectionParent projectionParent = this.elementStack.peek();
@@ -150,9 +160,10 @@ public class ProjectionPhase extends AbstractCompilerPhase {
 		String projectionName = projectionReferenceContext.identifier().getText();
 
 		ClassifierReferenceContext classifierReferenceContext = ctx.classifierReference();
-		AntlrClassifier classifier = classifierReferenceContext == null
-			? projectionParent.getClassifier()
-			: this.compilerState.getDomainModel().getClassByName(classifierReferenceContext.getText());
+		AntlrClassifier classifier =
+			classifierReferenceContext == null
+				? projectionParent.getClassifier()
+				: this.compilerState.getDomainModel().getClassByName(classifierReferenceContext.getText());
 		AntlrReferenceProperty<?> referenceProperty = classifier.getReferencePropertyByName(name);
 
 		AntlrProjection projection = this.compilerState.getDomainModel().getProjectionByName(projectionName);
@@ -173,12 +184,14 @@ public class ProjectionPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitProjectionProjectionReference(@Nonnull ProjectionProjectionReferenceContext ctx) {
+	public void exitProjectionProjectionReference(@Nonnull ProjectionProjectionReferenceContext ctx)
+	{
 		super.exitProjectionProjectionReference(ctx);
 	}
 
 	@Override
-	public void enterProjectionParameterizedProperty(@Nonnull ProjectionParameterizedPropertyContext ctx) {
+	public void enterProjectionParameterizedProperty(@Nonnull ProjectionParameterizedPropertyContext ctx)
+	{
 		super.enterProjectionParameterizedProperty(ctx);
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".enterProjectionParameterizedProperty() not implemented yet"
@@ -186,7 +199,8 @@ public class ProjectionPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitProjectionParameterizedProperty(@Nonnull ProjectionParameterizedPropertyContext ctx) {
+	public void exitProjectionParameterizedProperty(@Nonnull ProjectionParameterizedPropertyContext ctx)
+	{
 		super.exitProjectionParameterizedProperty(ctx);
 		throw new UnsupportedOperationException(this.getClass().getSimpleName());
 	}

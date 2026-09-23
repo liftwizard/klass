@@ -32,8 +32,10 @@ import cool.klass.model.meta.domain.api.value.literal.LiteralValue;
 import cool.klass.model.meta.grammar.KlassParser.LiteralListContext;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public final class LiteralListValueImpl extends AbstractLiteralValue implements LiteralListValue {
-
+public final class LiteralListValueImpl
+	extends AbstractLiteralValue
+	implements LiteralListValue
+{
 	@Nonnull
 	private final Type type;
 
@@ -44,25 +46,30 @@ public final class LiteralListValueImpl extends AbstractLiteralValue implements 
 		@Nonnull Optional<Element> macroElement,
 		@Nullable SourceCode sourceCode,
 		@Nonnull Type type
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode);
 		this.type = Objects.requireNonNull(type);
 	}
 
 	@Nonnull
 	@Override
-	public LiteralListContext getElementContext() {
+	public LiteralListContext getElementContext()
+	{
 		return (LiteralListContext) super.getElementContext();
 	}
 
 	@Override
 	@Nonnull
-	public ImmutableList<LiteralValue> getLiteralValues() {
+	public ImmutableList<LiteralValue> getLiteralValues()
+	{
 		return Objects.requireNonNull(this.literalValues);
 	}
 
-	public void setLiteralValues(@Nonnull ImmutableList<LiteralValue> literalValues) {
-		if (this.literalValues != null) {
+	public void setLiteralValues(@Nonnull ImmutableList<LiteralValue> literalValues)
+	{
+		if (this.literalValues != null)
+		{
 			throw new IllegalArgumentException("Literal values already set");
 		}
 		this.literalValues = Objects.requireNonNull(literalValues);
@@ -70,12 +77,14 @@ public final class LiteralListValueImpl extends AbstractLiteralValue implements 
 
 	@Override
 	@Nonnull
-	public Type getType() {
+	public Type getType()
+	{
 		return this.type;
 	}
 
-	public static final class LiteralListValueBuilder extends AbstractLiteralValueBuilder<LiteralListValueImpl> {
-
+	public static final class LiteralListValueBuilder
+		extends AbstractLiteralValueBuilder<LiteralListValueImpl>
+	{
 		@Nonnull
 		private final TypeGetter typeBuilder;
 
@@ -86,15 +95,18 @@ public final class LiteralListValueImpl extends AbstractLiteralValue implements 
 			@Nonnull Optional<ElementBuilder<?>> macroElement,
 			@Nullable SourceCodeBuilder sourceCode,
 			@Nonnull TypeGetter typeBuilder
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode);
 			this.typeBuilder = Objects.requireNonNull(typeBuilder);
 		}
 
 		public void setLiteralValueBuilders(
 			@Nonnull ImmutableList<AbstractLiteralValueBuilder<?>> literalValueBuilders
-		) {
-			if (this.literalValueBuilders != null) {
+		)
+		{
+			if (this.literalValueBuilders != null)
+			{
 				throw new IllegalStateException();
 			}
 			this.literalValueBuilders = Objects.requireNonNull(literalValueBuilders);
@@ -102,7 +114,8 @@ public final class LiteralListValueImpl extends AbstractLiteralValue implements 
 
 		@Override
 		@Nonnull
-		protected LiteralListValueImpl buildUnsafe() {
+		protected LiteralListValueImpl buildUnsafe()
+		{
 			return new LiteralListValueImpl(
 				(LiteralListContext) this.elementContext,
 				this.macroElement.map(ElementBuilder::getElement),
@@ -112,7 +125,8 @@ public final class LiteralListValueImpl extends AbstractLiteralValue implements 
 		}
 
 		@Override
-		protected void buildChildren() {
+		protected void buildChildren()
+		{
 			this.element.setLiteralValues(this.literalValueBuilders.collect(AbstractLiteralValueBuilder::build));
 		}
 	}

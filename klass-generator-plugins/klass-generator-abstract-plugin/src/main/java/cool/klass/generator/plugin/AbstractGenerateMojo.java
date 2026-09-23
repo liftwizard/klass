@@ -65,8 +65,9 @@ import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
 import org.sonatype.plexus.build.incremental.BuildContext;
 
-public abstract class AbstractGenerateMojo extends AbstractMojo {
-
+public abstract class AbstractGenerateMojo
+	extends AbstractMojo
+{
 	public static final Pattern KLASS_FILE_EXTENSION = Pattern.compile(".*\\.klass");
 
 	@Parameter(property = "klassSourcePackages", required = true)
@@ -93,7 +94,8 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 	private ImmutableList<File> cachedInputFiles;
 	private ImmutableMap<String, String> cachedFileContents = Maps.immutable.empty();
 
-	public enum InputSource {
+	public enum InputSource
+	{
 		FILESYSTEM,
 		CLASSPATH,
 	}
@@ -101,7 +103,9 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 	protected abstract InputSource getInputSource();
 
 	@Nonnull
-	protected DomainModelWithSourceCode getDomainModelFromFiles() throws MojoExecutionException {
+	protected DomainModelWithSourceCode getDomainModelFromFiles()
+		throws MojoExecutionException
+	{
 		CompilationResult compilationResult = this.getCompilationResultFromFiles();
 
 		this.handleErrorsCompilationResult(compilationResult);
@@ -110,10 +114,13 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 	}
 
 	@Nonnull
-	private CompilationResult getCompilationResultFromFiles() throws MojoExecutionException {
+	private CompilationResult getCompilationResultFromFiles()
+		throws MojoExecutionException
+	{
 		ImmutableList<File> klassLocations = this.loadInputFiles();
 
-		if (klassLocations.isEmpty()) {
+		if (klassLocations.isEmpty())
+		{
 			String message = "Could not find any files matching %s in: %s".formatted(
 				KLASS_FILE_EXTENSION,
 				this.mavenProject.getResources()
@@ -124,9 +131,12 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 		ImmutableList<CompilationUnit> compilationUnits = this.getCompilationUnits(klassLocations);
 
 		AnsiColorScheme ansiColorScheme = ColorSchemeProvider.getByName(this.colorScheme);
-		if (this.colorScheme != null) {
+		if (this.colorScheme != null)
+		{
 			this.getLog().info("Using configured color scheme: " + this.colorScheme);
-		} else {
+		}
+		else
+		{
 			this.getLog().info("No color scheme configured, using default");
 		}
 		// TODO: We should use an abstract DomainModelFactory here, not necessarily the compiler.
@@ -135,8 +145,11 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 	}
 
 	@Nonnull
-	protected DomainModelWithSourceCode getDomainModel() throws MojoExecutionException {
-		if (this.klassSourcePackages.isEmpty()) {
+	protected DomainModelWithSourceCode getDomainModel()
+		throws MojoExecutionException
+	{
+		if (this.klassSourcePackages.isEmpty())
+		{
 			String message =
 				""
 				+ "Klass maven plugins must be configured with at least one klassSourcePackage. For example:\n"
@@ -159,15 +172,18 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 		return loader.load();
 	}
 
-	private ImmutableList<File> loadInputFiles() {
-		if (this.cachedInputFiles != null) {
+	private ImmutableList<File> loadInputFiles()
+	{
+		if (this.cachedInputFiles != null)
+		{
 			return this.cachedInputFiles;
 		}
 
 		MutableList<String> adaptedKlassSourcePackages = ListAdapter.adapt(this.klassSourcePackages);
 
 		MutableList<File> klassLocations = Lists.mutable.empty();
-		for (Resource resource : this.mavenProject.getResources()) {
+		for (Resource resource : this.mavenProject.getResources())
+		{
 			this.loadfiles(klassLocations, adaptedKlassSourcePackages, resource);
 		}
 
@@ -179,7 +195,8 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 		MutableList<File> resultKlassLocations,
 		ListIterable<String> klassSourcePackages,
 		Resource resource
-	) {
+	)
+	{
 		String directory = resource.getDirectory();
 		String message = "Scanning source packages: %s in directory: %s".formatted(
 			klassSourcePackages.makeString(),
@@ -191,9 +208,11 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 			.asLazy()
 			.collect((klassSourcePackage) -> klassSourcePackage.replaceAll("\\.", "/"))
 			.collect((relativeDirectory) -> new File(directory, relativeDirectory))
-			.forEach((file) -> {
+			.forEach((file) ->
+			{
 				File[] files = file.listFiles();
-				if (files == null) {
+				if (files == null)
+				{
 					this.getLog().warn("Could not find directory: " + file.getAbsolutePath());
 				}
 			});
@@ -214,41 +233,54 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 			);
 	}
 
-	protected void handleErrorsCompilationResult(CompilationResult compilationResult) throws MojoExecutionException {
-		for (RootCompilerAnnotation compilerAnnotation : compilationResult.compilerAnnotations()) {
+	protected void handleErrorsCompilationResult(CompilationResult compilationResult)
+		throws MojoExecutionException
+	{
+		for (RootCompilerAnnotation compilerAnnotation : compilationResult.compilerAnnotations())
+		{
 			this.logCompilerAnnotation(compilerAnnotation);
 		}
 
-		if (compilationResult.domainModelWithSourceCode().isEmpty()) {
+		if (compilationResult.domainModelWithSourceCode().isEmpty())
+		{
 			throw new MojoExecutionException("There were compiler errors.");
 		}
 	}
 
-	private void logCompilerAnnotation(RootCompilerAnnotation compilerAnnotation) {
+	private void logCompilerAnnotation(RootCompilerAnnotation compilerAnnotation)
+	{
 		AnsiConsole.systemInstall();
 
-		if (compilerAnnotation.isError()) {
-			if (this.logGitHubAnnotations) {
+		if (compilerAnnotation.isError())
+		{
+			if (this.logGitHubAnnotations)
+			{
 				this.getLog().info("\n" + compilerAnnotation.toGitHubAnnotation());
 			}
 			this.getLog().error("\n" + compilerAnnotation);
-		} else if (compilerAnnotation.isWarning() && this.logCompilerAnnotations) {
-			if (this.logGitHubAnnotations) {
+		}
+		else if (compilerAnnotation.isWarning() && this.logCompilerAnnotations)
+		{
+			if (this.logGitHubAnnotations)
+			{
 				this.getLog().info("\n" + compilerAnnotation.toGitHubAnnotation());
 			}
 			this.getLog().warn("\n" + compilerAnnotation);
 		}
 	}
 
-	private ImmutableList<CompilationUnit> getCompilationUnits(ImmutableList<File> klassLocations) {
+	private ImmutableList<CompilationUnit> getCompilationUnits(ImmutableList<File> klassLocations)
+	{
 		this.getLog().debug("Found source files on classpath: " + klassLocations);
 
 		// Build cache if needed
-		if (this.cachedFileContents.isEmpty() && klassLocations.notEmpty()) {
+		if (this.cachedFileContents.isEmpty() && klassLocations.notEmpty())
+		{
 			this.cachedFileContents = this.buildFileContentCache(klassLocations);
 		}
 
-		ImmutableList<CompilationUnit> compilationUnits = klassLocations.collectWithIndex((file, index) -> {
+		ImmutableList<CompilationUnit> compilationUnits = klassLocations.collectWithIndex((file, index) ->
+		{
 			String path = file.getAbsolutePath();
 			String content = this.cachedFileContents.get(path);
 			return CompilationUnit.createFromText(index, Optional.empty(), path, content);
@@ -257,50 +289,70 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 		return compilationUnits;
 	}
 
-	private ImmutableMap<String, String> buildFileContentCache(ImmutableList<File> files) {
-		return files.toImmutableMap(File::getAbsolutePath, (file) -> {
-			try {
+	private ImmutableMap<String, String> buildFileContentCache(ImmutableList<File> files)
+	{
+		return files.toImmutableMap(File::getAbsolutePath, (file) ->
+		{
+			try
+			{
 				return Files.readString(file.toPath());
-			} catch (IOException e) {
+			}
+			catch (IOException e)
+			{
 				throw new RuntimeException("Failed to read file: " + file.getAbsolutePath(), e);
 			}
 		});
 	}
 
 	@Nonnull
-	private ClassLoader getClassLoader() throws MojoExecutionException {
-		try {
+	private ClassLoader getClassLoader()
+		throws MojoExecutionException
+	{
+		try
+		{
 			List<String> classpathElements = this.mavenProject.getCompileClasspathElements();
 			MutableList<URL> projectClasspathList = Lists.mutable.empty();
-			for (String element : classpathElements) {
+			for (String element : classpathElements)
+			{
 				URL url = AbstractGenerateMojo.getUrl(element);
 				projectClasspathList.add(url);
 			}
 
 			URL[] urls = projectClasspathList.toArray(new URL[0]);
 			return new URLClassLoader(urls, Thread.currentThread().getContextClassLoader());
-		} catch (DependencyResolutionRequiredException e) {
+		}
+		catch (DependencyResolutionRequiredException e)
+		{
 			throw new MojoExecutionException("Dependency resolution failed", e);
 		}
 	}
 
 	@Nonnull
-	private static URL getUrl(@Nonnull String classpathElement) throws MojoExecutionException {
-		try {
+	private static URL getUrl(@Nonnull String classpathElement)
+		throws MojoExecutionException
+	{
+		try
+		{
 			return new File(classpathElement).toURI().toURL();
-		} catch (MalformedURLException e) {
+		}
+		catch (MalformedURLException e)
+		{
 			throw new MojoExecutionException(classpathElement + " is an invalid classpath element", e);
 		}
 	}
 
-	protected boolean shouldSkipGeneration(File outputDirectory) throws MojoExecutionException {
-		if (!outputDirectory.exists()) {
+	protected boolean shouldSkipGeneration(File outputDirectory)
+		throws MojoExecutionException
+	{
+		if (!outputDirectory.exists())
+		{
 			this.getLog().info("Output directory does not exist, generating");
 			return false;
 		}
 
 		File[] outputFiles = outputDirectory.listFiles();
-		if (ArrayIterate.isEmpty(outputFiles)) {
+		if (ArrayIterate.isEmpty(outputFiles))
+		{
 			this.getLog().info("No output files exist, generating");
 			return false;
 		}
@@ -313,10 +365,13 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 			: this.shouldSkipClasspathGeneration(outputDirectory);
 	}
 
-	private boolean shouldSkipFilesystemGeneration(long oldestOutputTime) {
+	private boolean shouldSkipFilesystemGeneration(long oldestOutputTime)
+	{
 		ImmutableList<File> inputFiles = this.loadInputFiles();
-		for (File inputFile : inputFiles) {
-			if (this.buildContext.hasDelta(inputFile)) {
+		for (File inputFile : inputFiles)
+		{
+			if (this.buildContext.hasDelta(inputFile))
+			{
 				this.getLog().debug("Input file changed: " + inputFile.getPath());
 				this.getLog().info("Input files changed, regenerating outputs");
 				return false;
@@ -325,7 +380,8 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 
 		long newestInputTime = inputFiles.collect(File::lastModified).max();
 
-		if (newestInputTime > oldestOutputTime) {
+		if (newestInputTime > oldestOutputTime)
+		{
 			this.getLog().info("Input files newer than outputs, regenerating");
 			return false;
 		}
@@ -334,31 +390,40 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 		return true;
 	}
 
-	private boolean shouldSkipClasspathGeneration(File outputDirectory) {
-		if (!this.cachingEnabled) {
+	private boolean shouldSkipClasspathGeneration(File outputDirectory)
+	{
+		if (!this.cachingEnabled)
+		{
 			this.getLog().info("Caching disabled, regenerating");
 			return false;
 		}
 
-		try {
+		try
+		{
 			String currentInputHash = this.calculateClasspathHash();
 			String previousInputHash = this.loadPreviousInputHash(outputDirectory);
 
-			if (!currentInputHash.equals(previousInputHash)) {
+			if (!currentInputHash.equals(previousInputHash))
+			{
 				this.getLog().info("Classpath inputs changed, regenerating outputs");
 				return false;
 			}
 
 			this.getLog().info("No input changes detected, skipping generation");
 			return true;
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			this.getLog().warn("Failed to calculate classpath hash, regenerating: " + e.getMessage());
 			return false;
 		}
 	}
 
-	private String calculateClasspathHash() throws MojoExecutionException {
-		try {
+	private String calculateClasspathHash()
+		throws MojoExecutionException
+	{
+		try
+		{
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
 			ClassLoader classLoader = this.getClassLoader();
 
@@ -380,9 +445,12 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 			klassFiles.sortThis();
 
 			// Hash the content of each file
-			for (String klassFile : klassFiles) {
-				try (InputStream is = classLoader.getResourceAsStream(klassFile)) {
-					if (is != null) {
+			for (String klassFile : klassFiles)
+			{
+				try (InputStream is = classLoader.getResourceAsStream(klassFile))
+				{
+					if (is != null)
+					{
 						digest.update(klassFile.getBytes(StandardCharsets.UTF_8));
 						digest.update(is.readAllBytes());
 					}
@@ -391,77 +459,105 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 
 			byte[] hashBytes = digest.digest();
 			var hexString = new StringBuilder();
-			for (byte b : hashBytes) {
+			for (byte b : hashBytes)
+			{
 				String hex = Integer.toHexString(0xff & b);
-				if (hex.length() == 1) {
+				if (hex.length() == 1)
+				{
 					hexString.append('0');
 				}
 				hexString.append(hex);
 			}
 			return hexString.toString();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			throw new MojoExecutionException("Failed to calculate classpath hash", e);
 		}
 	}
 
-	private String loadPreviousInputHash(File outputDirectory) {
-		if (!this.cachingEnabled) {
+	private String loadPreviousInputHash(File outputDirectory)
+	{
+		if (!this.cachingEnabled)
+		{
 			return "";
 		}
 
 		var hashFile = new File(outputDirectory, ".input-hash");
-		if (!hashFile.exists()) {
+		if (!hashFile.exists())
+		{
 			return "";
 		}
 
-		try {
+		try
+		{
 			return Files.readString(hashFile.toPath()).trim();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			this.getLog().warn("Failed to read previous input hash: " + e.getMessage());
 			return "";
 		}
 	}
 
-	private void saveCurrentInputHash(File outputDirectory, String hash) {
-		if (!this.cachingEnabled) {
+	private void saveCurrentInputHash(File outputDirectory, String hash)
+	{
+		if (!this.cachingEnabled)
+		{
 			return;
 		}
 
 		var hashFile = new File(outputDirectory, ".input-hash");
-		try {
+		try
+		{
 			Files.writeString(hashFile.toPath(), hash);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			this.getLog().warn("Failed to save input hash: " + e.getMessage());
 		}
 	}
 
-	protected boolean executeWithCaching(File outputDirectory, Callable<Void> task) throws MojoExecutionException {
+	protected boolean executeWithCaching(File outputDirectory, Callable<Void> task)
+		throws MojoExecutionException
+	{
 		this.getLog().info("Checking if generation should be skipped for: " + outputDirectory.getPath());
-		if (this.shouldSkipGeneration(outputDirectory)) {
+		if (this.shouldSkipGeneration(outputDirectory))
+		{
 			this.getLog().info("Skipping generation based on caching logic");
 			return false;
 		}
 
 		this.getLog().info("Proceeding with generation");
-		if (!outputDirectory.exists()) {
+		if (!outputDirectory.exists())
+		{
 			outputDirectory.mkdirs();
 		}
 
-		try {
+		try
+		{
 			task.call();
 
 			InputSource inputSource = this.getInputSource();
-			if (inputSource == InputSource.CLASSPATH) {
-				try {
+			if (inputSource == InputSource.CLASSPATH)
+			{
+				try
+				{
 					String currentInputHash = this.calculateClasspathHash();
 					this.saveCurrentInputHash(outputDirectory, currentInputHash);
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					this.getLog().warn("Failed to save classpath hash: " + e.getMessage());
 				}
 			}
-		} catch (MojoExecutionException e) {
+		}
+		catch (MojoExecutionException e)
+		{
 			throw e;
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			throw new MojoExecutionException("Generation failed", e);
 		}
 		return true;

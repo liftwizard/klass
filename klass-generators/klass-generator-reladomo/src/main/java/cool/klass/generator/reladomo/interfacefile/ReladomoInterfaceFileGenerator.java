@@ -42,19 +42,26 @@ import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
-
-	public ReladomoInterfaceFileGenerator(@Nonnull DomainModel domainModel) {
+public class ReladomoInterfaceFileGenerator
+	extends AbstractReladomoGenerator
+{
+	public ReladomoInterfaceFileGenerator(@Nonnull DomainModel domainModel)
+	{
 		super(domainModel);
 	}
 
-	public void writeObjectFiles(@Nonnull Path outputPath) throws IOException {
-		for (Interface anInterface : this.domainModel.getInterfaces()) {
+	public void writeObjectFiles(@Nonnull Path outputPath)
+		throws IOException
+	{
+		for (Interface anInterface : this.domainModel.getInterfaces())
+		{
 			this.writeObjectFile(outputPath, anInterface);
 		}
 	}
 
-	private void writeObjectFile(@Nonnull Path outputPath, @Nonnull Interface anInterface) throws IOException {
+	private void writeObjectFile(@Nonnull Path outputPath, @Nonnull Interface anInterface)
+		throws IOException
+	{
 		var mithraGeneratorMarshaller = new MithraGeneratorMarshaller();
 		mithraGeneratorMarshaller.setIndent(true);
 		var stringBuilder = new StringBuilder();
@@ -72,13 +79,16 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
 		@Nonnull Interface anInterface,
 		@Nonnull MithraGeneratorMarshaller mithraGeneratorMarshaller,
 		StringBuilder stringBuilder
-	) throws IOException {
+	)
+		throws IOException
+	{
 		MithraInterface mithraInterface = this.convertToMithraInterface(anInterface);
 		mithraGeneratorMarshaller.marshall(stringBuilder, mithraInterface);
 	}
 
 	@Nonnull
-	private MithraInterface convertToMithraInterface(@Nonnull Interface anInterface) {
+	private MithraInterface convertToMithraInterface(@Nonnull Interface anInterface)
+	{
 		var mithraInterface = new MithraInterface();
 		mithraInterface.setPackageName(anInterface.getPackageName());
 		mithraInterface.setClassName(anInterface.getName());
@@ -110,7 +120,8 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
 
 	private List<RelationshipInterfaceType> convertRelationships(
 		@Nonnull ImmutableList<AssociationEnd> associationEnds
-	) {
+	)
+	{
 		return associationEnds
 			.select(
 				(associationEnd) -> associationEnd == associationEnd.getOwningAssociation().getTargetAssociationEnd()
@@ -120,7 +131,8 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
 	}
 
 	@Nonnull
-	private RelationshipInterfaceType convertRelationship(@Nonnull AssociationEnd associationEnd, boolean reverse) {
+	private RelationshipInterfaceType convertRelationship(@Nonnull AssociationEnd associationEnd, boolean reverse)
+	{
 		AssociationEnd opposite = associationEnd.getOpposite();
 		var relationshipType = new RelationshipInterfaceType();
 		relationshipType.setName(associationEnd.getName());
@@ -135,7 +147,8 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
 	}
 
 	@Nonnull
-	private String getRelationshipString(@Nonnull Criteria criteria, boolean reverse) {
+	private String getRelationshipString(@Nonnull Criteria criteria, boolean reverse)
+	{
 		var stringBuilder = new StringBuilder();
 		CriteriaVisitor visitor = new CriteriaToRelationshipVisitor(stringBuilder, reverse);
 		criteria.visit(visitor);
@@ -143,7 +156,8 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
 	}
 
 	@Nonnull
-	private AsOfAttributeInterfaceType convertToAsOfAttributeType(@Nonnull DataTypeProperty dataTypeProperty) {
+	private AsOfAttributeInterfaceType convertToAsOfAttributeType(@Nonnull DataTypeProperty dataTypeProperty)
+	{
 		var asOfAttributeType = new AsOfAttributeInterfaceType();
 		this.convertToAsOfAttributeType(dataTypeProperty, asOfAttributeType);
 		return asOfAttributeType;
@@ -152,7 +166,8 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
 	private void convertToAsOfAttributeType(
 		@Nonnull DataTypeProperty dataTypeProperty,
 		@Nonnull AsOfAttributeInterfaceType asOfAttributeType
-	) {
+	)
+	{
 		String propertyName = dataTypeProperty.getName();
 
 		asOfAttributeType.setName(propertyName);
@@ -167,17 +182,23 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
 		timezoneConversion.with("convert-to-utc", asOfAttributeType);
 		asOfAttributeType.setTimezoneConversion(timezoneConversion);
 
-		if (dataTypeProperty.isValid()) {
+		if (dataTypeProperty.isValid())
+		{
 			asOfAttributeType.setIsProcessingDate(false);
-		} else if (dataTypeProperty.isSystem()) {
+		}
+		else if (dataTypeProperty.isSystem())
+		{
 			asOfAttributeType.setIsProcessingDate(true);
-		} else {
+		}
+		else
+		{
 			throw new AssertionError(propertyName);
 		}
 	}
 
 	@Nonnull
-	private AttributeInterfaceType convertToAttributeType(@Nonnull DataTypeProperty dataTypeProperty) {
+	private AttributeInterfaceType convertToAttributeType(@Nonnull DataTypeProperty dataTypeProperty)
+	{
 		var attributeType = new AttributeInterfaceType();
 		this.convertToAttributeType(dataTypeProperty, attributeType);
 		return attributeType;
@@ -186,18 +207,22 @@ public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {
 	private void convertToAttributeType(
 		@Nonnull DataTypeProperty dataTypeProperty,
 		@Nonnull AttributeInterfaceType attributeType
-	) {
+	)
+	{
 		String propertyName = dataTypeProperty.getName();
 		attributeType.setName(propertyName);
 		this.handleType(attributeType, dataTypeProperty);
 	}
 
-	private void handleType(@Nonnull AttributeInterfaceType attributeType, DataTypeProperty dataTypeProperty) {
-		if (dataTypeProperty instanceof EnumerationProperty) {
+	private void handleType(@Nonnull AttributeInterfaceType attributeType, DataTypeProperty dataTypeProperty)
+	{
+		if (dataTypeProperty instanceof EnumerationProperty)
+		{
 			attributeType.setJavaType("String");
 		}
 
-		if (dataTypeProperty instanceof PrimitiveProperty primitiveProperty) {
+		if (dataTypeProperty instanceof PrimitiveProperty primitiveProperty)
+		{
 			PrimitiveType primitiveType = primitiveProperty.getType();
 			primitiveType.visit(new AttributeInterfaceTypeVisitor(attributeType));
 		}

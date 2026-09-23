@@ -42,8 +42,8 @@ import cool.klass.model.meta.grammar.KlassParser.ProjectionProjectionReferenceCo
 
 public final class ProjectionProjectionReferenceImpl
 	extends AbstractIdentifierElement
-	implements ProjectionProjectionReferenceWithSourceCode {
-
+	implements ProjectionProjectionReferenceWithSourceCode
+{
 	@Nonnull
 	private final ProjectionParent parent;
 
@@ -64,7 +64,8 @@ public final class ProjectionProjectionReferenceImpl
 		@Nonnull ProjectionParent parent,
 		@Nonnull AbstractClassifier classifier,
 		@Nonnull ReferencePropertyWithSourceCode referenceProperty
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode, ordinal, nameContext);
 		this.parent = Objects.requireNonNull(parent);
 		this.classifier = Objects.requireNonNull(classifier);
@@ -73,35 +74,42 @@ public final class ProjectionProjectionReferenceImpl
 
 	@Nonnull
 	@Override
-	public ProjectionProjectionReferenceContext getElementContext() {
+	public ProjectionProjectionReferenceContext getElementContext()
+	{
 		return (ProjectionProjectionReferenceContext) super.getElementContext();
 	}
 
 	@Override
-	public ProjectionWithSourceCode getProjection() {
+	public ProjectionWithSourceCode getProjection()
+	{
 		return this.referencedProjection;
 	}
 
 	@Override
 	@Nonnull
-	public Optional<ProjectionParent> getParent() {
+	public Optional<ProjectionParent> getParent()
+	{
 		return Optional.of(this.parent);
 	}
 
 	@Nonnull
 	@Override
-	public Classifier getDeclaredClassifier() {
+	public Classifier getDeclaredClassifier()
+	{
 		return this.classifier;
 	}
 
 	@Override
 	@Nonnull
-	public ReferencePropertyWithSourceCode getProperty() {
+	public ReferencePropertyWithSourceCode getProperty()
+	{
 		return this.referenceProperty;
 	}
 
-	private void setReferencedProjection(ProjectionImpl referencedProjection) {
-		if (this.referencedProjection != null) {
+	private void setReferencedProjection(ProjectionImpl referencedProjection)
+	{
+		if (this.referencedProjection != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.referencedProjection = Objects.requireNonNull(referencedProjection);
@@ -109,8 +117,8 @@ public final class ProjectionProjectionReferenceImpl
 
 	public static final class ProjectionProjectionReferenceBuilder
 		extends IdentifierElementBuilder<ProjectionProjectionReferenceImpl>
-		implements ProjectionChildBuilder {
-
+		implements ProjectionChildBuilder
+	{
 		@Nonnull
 		private final AbstractProjectionParentBuilder<?> parentBuilder;
 
@@ -131,15 +139,18 @@ public final class ProjectionProjectionReferenceImpl
 			@Nonnull AbstractProjectionParentBuilder<?> parentBuilder,
 			@Nonnull ClassifierBuilder<?> classifierBuilder,
 			@Nonnull ReferencePropertyBuilder<?, ?, ?> referencePropertyBuilder
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode, ordinal, nameContext);
 			this.parentBuilder = Objects.requireNonNull(parentBuilder);
 			this.classifierBuilder = Objects.requireNonNull(classifierBuilder);
 			this.referencePropertyBuilder = Objects.requireNonNull(referencePropertyBuilder);
 		}
 
-		public void setReferencedProjectionBuilder(ProjectionBuilder referencedProjectionBuilder) {
-			if (this.referencedProjectionBuilder != null) {
+		public void setReferencedProjectionBuilder(ProjectionBuilder referencedProjectionBuilder)
+		{
+			if (this.referencedProjectionBuilder != null)
+			{
 				throw new IllegalStateException();
 			}
 
@@ -148,7 +159,8 @@ public final class ProjectionProjectionReferenceImpl
 
 		@Override
 		@Nonnull
-		protected ProjectionProjectionReferenceImpl buildUnsafe() {
+		protected ProjectionProjectionReferenceImpl buildUnsafe()
+		{
 			return new ProjectionProjectionReferenceImpl(
 				(ProjectionProjectionReferenceContext) this.elementContext,
 				this.macroElement.map(ElementBuilder::getElement),
@@ -162,7 +174,8 @@ public final class ProjectionProjectionReferenceImpl
 		}
 
 		@Override
-		public void build2() {
+		public void build2()
+		{
 			ProjectionImpl projection = this.referencedProjectionBuilder.getElement();
 			this.getElement().setReferencedProjection(projection);
 		}

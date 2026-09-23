@@ -28,10 +28,12 @@ import cool.klass.reladomo.persistent.writer.IncomingUpdateDataModelValidator;
 import cool.klass.reladomo.persistent.writer.MutationContext;
 import cool.klass.reladomo.persistent.writer.test.AbstractValidatorTest;
 
-public abstract class AbstractUpdateValidatorTest extends AbstractValidatorTest {
-
+public abstract class AbstractUpdateValidatorTest
+	extends AbstractValidatorTest
+{
 	@Override
-	protected final void validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance) {
+	protected final void validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance)
+	{
 		ObjectNodeTypeCheckingValidator.validate(this.actualErrors, incomingInstance, this.getKlass());
 
 		RequiredPropertiesValidator.validate(

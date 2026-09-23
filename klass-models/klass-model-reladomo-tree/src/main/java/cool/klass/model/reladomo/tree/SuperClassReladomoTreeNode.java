@@ -20,38 +20,46 @@ import java.util.Objects;
 
 import cool.klass.model.meta.domain.api.Klass;
 
-public class SuperClassReladomoTreeNode extends AbstractReladomoTreeNode {
-
+public class SuperClassReladomoTreeNode
+	extends AbstractReladomoTreeNode
+{
 	private final Klass klass;
 	private final Klass superClass;
 
-	public SuperClassReladomoTreeNode(String name, Klass klass, Klass superClass) {
+	public SuperClassReladomoTreeNode(String name, Klass klass, Klass superClass)
+	{
 		super(name);
 		this.klass = Objects.requireNonNull(klass);
 		this.superClass = Objects.requireNonNull(superClass);
 	}
 
 	@Override
-	public void visit(ReladomoTreeNodeVisitor visitor) {
+	public void visit(ReladomoTreeNodeVisitor visitor)
+	{
 		visitor.visitSuperClass(this);
 	}
 
 	@Override
-	public Klass getOwningClassifier() {
+	public Klass getOwningClassifier()
+	{
 		return this.klass;
 	}
 
 	@Override
-	public Klass getType() {
+	public Klass getType()
+	{
 		return this.superClass;
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public boolean equals(Object o)
+	{
+		if (this == o)
+		{
 			return true;
 		}
-		if (o == null || this.getClass() != o.getClass()) {
+		if (o == null || this.getClass() != o.getClass())
+		{
 			return false;
 		}
 
@@ -61,7 +69,8 @@ public class SuperClassReladomoTreeNode extends AbstractReladomoTreeNode {
 	}
 
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		int result = this.klass.hashCode();
 		result = 31 * result + this.superClass.hashCode();
 		return result;

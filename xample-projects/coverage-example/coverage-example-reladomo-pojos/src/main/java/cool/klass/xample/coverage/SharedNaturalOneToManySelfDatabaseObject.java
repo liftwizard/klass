@@ -16,4 +16,7 @@
 
 package cool.klass.xample.coverage;
 
-public class SharedNaturalOneToManySelfDatabaseObject extends SharedNaturalOneToManySelfDatabaseObjectAbstract {}
+public class SharedNaturalOneToManySelfDatabaseObject
+	extends SharedNaturalOneToManySelfDatabaseObjectAbstract
+{
+}

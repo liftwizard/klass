@@ -36,50 +36,59 @@ import org.eclipse.collections.api.list.ListIterable;
 import org.eclipse.collections.api.list.MutableList;
 
 // TODO: Only put audit properties onto version types
-public class AuditPropertyInferencePhase extends AbstractCompilerPhase {
-
-	public AuditPropertyInferencePhase(@Nonnull CompilerState compilerState) {
+public class AuditPropertyInferencePhase
+	extends AbstractCompilerPhase
+{
+	public AuditPropertyInferencePhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Nonnull
 	@Override
-	public String getName() {
+	public String getName()
+	{
 		return "Audit modifier";
 	}
 
 	@Override
-	public void exitInterfaceBody(InterfaceBodyContext ctx) {
+	public void exitInterfaceBody(InterfaceBodyContext ctx)
+	{
 		this.runCompilerMacro(ctx);
 		super.exitInterfaceBody(ctx);
 	}
 
 	@Override
-	public void exitClassBody(ClassBodyContext ctx) {
+	public void exitClassBody(ClassBodyContext ctx)
+	{
 		this.runCompilerMacro(ctx);
 		super.exitClassBody(ctx);
 	}
 
-	private void runCompilerMacro(ParserRuleContext inPlaceContext) {
+	private void runCompilerMacro(ParserRuleContext inPlaceContext)
+	{
 		AntlrClassifier classifier = this.compilerState.getCompilerWalk().getClassifier();
 		MutableList<AntlrModifier> declaredModifiers = classifier.getDeclaredModifiers();
 		ImmutableList<AntlrDataTypeProperty<?>> allDataTypeProperties = classifier.getAllDataTypeProperties();
 
 		MutableList<AntlrModifier> auditedModifiers = declaredModifiers.select((modifier) -> modifier.is("audited"));
-		if (auditedModifiers.size() != 1) {
+		if (auditedModifiers.size() != 1)
+		{
 			return;
 		}
 		AntlrModifier auditedModifier = auditedModifiers.getOnly();
 
 		Optional<AntlrClass> maybeUserClass = this.compilerState.getDomainModel().getUserClass();
-		if (maybeUserClass.isEmpty()) {
+		if (maybeUserClass.isEmpty())
+		{
 			return;
 		}
 		AntlrClass userClass = maybeUserClass.get();
 		ImmutableList<AntlrDataTypeProperty<?>> userIdProperties = userClass
 			.getAllDataTypeProperties()
 			.select(AntlrDataTypeProperty::isUserId);
-		if (userIdProperties.size() != 1) {
+		if (userIdProperties.size() != 1)
+		{
 			return;
 		}
 		AntlrDataTypeProperty<?> userIdProperty = userIdProperties.getOnly();
@@ -88,16 +97,19 @@ public class AuditPropertyInferencePhase extends AbstractCompilerPhase {
 		String validationSourceCode = validations.isEmpty() ? "" : validations.makeString(" ", " ", "");
 
 		var sourceCodeText = new StringBuilder();
-		if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isCreatedBy)) {
+		if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isCreatedBy))
+		{
 			sourceCodeText
 				.append("    createdById    : String createdBy private userId final")
 				.append(validationSourceCode)
 				.append(";\n");
 		}
-		if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isCreatedOn)) {
+		if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isCreatedOn))
+		{
 			sourceCodeText.append("    createdOn      : Instant createdOn final;\n");
 		}
-		if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isLastUpdatedBy)) {
+		if (allDataTypeProperties.noneSatisfy(AntlrDataTypeProperty::isLastUpdatedBy))
+		{
 			sourceCodeText
 				.append("    lastUpdatedById: String lastUpdatedBy private userId")
 				.append(validationSourceCode)
@@ -135,8 +147,10 @@ public class AuditPropertyInferencePhase extends AbstractCompilerPhase {
 		ParserRuleContext inPlaceContext,
 		@Nonnull String sourceCodeText,
 		AntlrModifier macroElement
-	) {
-		if (sourceCodeText.isEmpty()) {
+	)
+	{
+		if (sourceCodeText.isEmpty())
+		{
 			return;
 		}
 		ParseTreeListener compilerPhase = new PropertyPhase(this.compilerState);

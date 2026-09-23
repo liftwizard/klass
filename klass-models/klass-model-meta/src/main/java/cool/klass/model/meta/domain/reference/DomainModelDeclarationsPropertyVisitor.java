@@ -37,45 +37,52 @@ import cool.klass.model.meta.grammar.KlassParser.EnumerationPropertyContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertyContext;
 import cool.klass.model.meta.grammar.KlassParser.PrimitivePropertyContext;
 
-public class DomainModelDeclarationsPropertyVisitor implements PropertyVisitor {
-
+public class DomainModelDeclarationsPropertyVisitor
+	implements PropertyVisitor
+{
 	@Nonnull
 	private final DomainModelDeclarations domainModelDeclarations;
 
-	public DomainModelDeclarationsPropertyVisitor(@Nonnull DomainModelDeclarations domainModelDeclarations) {
+	public DomainModelDeclarationsPropertyVisitor(@Nonnull DomainModelDeclarations domainModelDeclarations)
+	{
 		this.domainModelDeclarations = Objects.requireNonNull(domainModelDeclarations);
 	}
 
 	@Override
-	public void visitPrimitiveProperty(PrimitiveProperty primitiveProperty) {
+	public void visitPrimitiveProperty(PrimitiveProperty primitiveProperty)
+	{
 		var element = (PrimitivePropertyWithSourceCode) primitiveProperty;
 		PrimitivePropertyContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addPrimitivePropertyDeclaration(declaration, element);
 	}
 
 	@Override
-	public void visitEnumerationProperty(EnumerationProperty enumerationProperty) {
+	public void visitEnumerationProperty(EnumerationProperty enumerationProperty)
+	{
 		var element = (EnumerationPropertyWithSourceCode) enumerationProperty;
 		EnumerationPropertyContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addEnumerationPropertyDeclaration(declaration, element);
 	}
 
 	@Override
-	public void visitAssociationEnd(AssociationEnd associationEnd) {
+	public void visitAssociationEnd(AssociationEnd associationEnd)
+	{
 		var element = (AssociationEndWithSourceCode) associationEnd;
 		AssociationEndContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addAssociationEndDeclaration(declaration, element);
 	}
 
 	@Override
-	public void visitAssociationEndSignature(AssociationEndSignature associationEndSignature) {
+	public void visitAssociationEndSignature(AssociationEndSignature associationEndSignature)
+	{
 		var element = (AssociationEndSignatureWithSourceCode) associationEndSignature;
 		AssociationEndSignatureContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addAssociationEndSignatureDeclaration(declaration, element);
 	}
 
 	@Override
-	public void visitParameterizedProperty(ParameterizedProperty parameterizedProperty) {
+	public void visitParameterizedProperty(ParameterizedProperty parameterizedProperty)
+	{
 		var element = (ParameterizedPropertyWithSourceCode) parameterizedProperty;
 		ParameterizedPropertyContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addParameterizedPropertyDeclaration(declaration, element);

@@ -27,8 +27,8 @@ import javax.annotation.Nullable;
 import cool.klass.model.meta.domain.api.Multiplicity;
 import cool.klass.model.meta.domain.api.projection.Projection;
 
-public class KlassResponseBuilder {
-
+public class KlassResponseBuilder
+{
 	@Nullable
 	private final Object data;
 
@@ -58,19 +58,23 @@ public class KlassResponseBuilder {
 		@Nonnull Projection projection,
 		@Nonnull Multiplicity multiplicity,
 		@Nonnull Instant transactionTimestamp
-	) {
+	)
+	{
 		this.data = data;
 		this.projection = Objects.requireNonNull(projection);
 		this.multiplicity = Objects.requireNonNull(multiplicity);
 		this.transactionTimestamp = Objects.requireNonNull(transactionTimestamp);
 	}
 
-	public KlassResponseBuilder setPagination(int pageSize, int numberOfPages, int pageNumber) {
-		if (!this.multiplicity.isToMany()) {
+	public KlassResponseBuilder setPagination(int pageSize, int numberOfPages, int pageNumber)
+	{
+		if (!this.multiplicity.isToMany())
+		{
 			throw new IllegalStateException();
 		}
 
-		if (this.pagination.isPresent()) {
+		if (this.pagination.isPresent())
+		{
 			throw new IllegalStateException();
 		}
 
@@ -79,25 +83,30 @@ public class KlassResponseBuilder {
 		return this;
 	}
 
-	public KlassResponseBuilder setPrincipal(@Nonnull Principal principal) {
-		if (this.principal.isPresent()) {
+	public KlassResponseBuilder setPrincipal(@Nonnull Principal principal)
+	{
+		if (this.principal.isPresent())
+		{
 			throw new IllegalStateException();
 		}
 		this.principal = Optional.of(principal);
 		return this;
 	}
 
-	public KlassResponseBuilder setCriteria(@Nonnull String criteria) {
+	public KlassResponseBuilder setCriteria(@Nonnull String criteria)
+	{
 		this.criteria = Optional.of(criteria);
 		return this;
 	}
 
-	public KlassResponseBuilder setOrderBy(@Nonnull String orderBy) {
+	public KlassResponseBuilder setOrderBy(@Nonnull String orderBy)
+	{
 		this.orderBy = Optional.of(orderBy);
 		return this;
 	}
 
-	public KlassResponse build() {
+	public KlassResponse build()
+	{
 		var metadata = new KlassResponseMetadata(
 			this.criteria,
 			this.orderBy,
@@ -111,7 +120,8 @@ public class KlassResponseBuilder {
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return (
 			"KlassResponseBuilder{"
 			+ "projection="

@@ -25,30 +25,37 @@ import cool.klass.model.meta.grammar.KlassParser;
 import cool.klass.model.meta.grammar.KlassParser.OrderByMemberReferencePathContext;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
-public class OrderByDirectionInferencePhase extends AbstractCompilerPhase {
-
-	public OrderByDirectionInferencePhase(@Nonnull CompilerState compilerState) {
+public class OrderByDirectionInferencePhase
+	extends AbstractCompilerPhase
+{
+	public OrderByDirectionInferencePhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Nonnull
 	@Override
-	public String getName() {
+	public String getName()
+	{
 		return "OrderBy Direction";
 	}
 
 	@Override
 	@OverridingMethodsMustInvokeSuper
-	public void exitOrderByMemberReferencePath(OrderByMemberReferencePathContext inPlaceContext) {
+	public void exitOrderByMemberReferencePath(OrderByMemberReferencePathContext inPlaceContext)
+	{
 		this.runCompilerMacro(inPlaceContext);
 		super.exitOrderByMemberReferencePath(inPlaceContext);
 	}
 
-	private void runCompilerMacro(OrderByMemberReferencePathContext inPlaceContext) {
-		AntlrOrderByMemberReferencePath orderByMemberReferencePath =
-			this.compilerState.getCompilerWalk().getOrderByMemberReferencePath();
+	private void runCompilerMacro(OrderByMemberReferencePathContext inPlaceContext)
+	{
+		AntlrOrderByMemberReferencePath orderByMemberReferencePath = this.compilerState
+			.getCompilerWalk()
+			.getOrderByMemberReferencePath();
 
-		if (orderByMemberReferencePath.getOrderByDirection() != null) {
+		if (orderByMemberReferencePath.getOrderByDirection() != null)
+		{
 			return;
 		}
 

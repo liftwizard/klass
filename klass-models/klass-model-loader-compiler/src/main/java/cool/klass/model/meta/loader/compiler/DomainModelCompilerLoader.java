@@ -43,8 +43,9 @@ import org.reflections.util.FilterBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DomainModelCompilerLoader implements DomainModelLoader {
-
+public class DomainModelCompilerLoader
+	implements DomainModelLoader
+{
 	public static final Pattern KLASS_FILE_EXTENSION = Pattern.compile(".*\\.klass");
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DomainModelCompilerLoader.class);
@@ -69,7 +70,8 @@ public class DomainModelCompilerLoader implements DomainModelLoader {
 		@Nonnull Consumer<RootCompilerAnnotation> compilerAnnotationHandler,
 		AnsiColorScheme colorScheme,
 		boolean enableIdeLinks
-	) {
+	)
+	{
 		this.klassSourcePackages = Objects.requireNonNull(klassSourcePackages);
 		this.classLoader = Objects.requireNonNull(classLoader);
 		this.compilerAnnotationHandler = Objects.requireNonNull(compilerAnnotationHandler);
@@ -77,23 +79,30 @@ public class DomainModelCompilerLoader implements DomainModelLoader {
 		this.enableIdeLinks = enableIdeLinks;
 	}
 
-	public static void logCompilerError(RootCompilerAnnotation compilerAnnotation) {
-		if (compilerAnnotation.isError()) {
+	public static void logCompilerError(RootCompilerAnnotation compilerAnnotation)
+	{
+		if (compilerAnnotation.isError())
+		{
 			LOGGER.error("{}", compilerAnnotation);
 		}
 	}
 
-	public static void logCompilerAnnotation(RootCompilerAnnotation compilerAnnotation) {
-		if (compilerAnnotation.isError()) {
+	public static void logCompilerAnnotation(RootCompilerAnnotation compilerAnnotation)
+	{
+		if (compilerAnnotation.isError())
+		{
 			LOGGER.error("{}", compilerAnnotation);
-		} else {
+		}
+		else
+		{
 			LOGGER.warn("{}", compilerAnnotation);
 		}
 	}
 
 	@Override
 	@Nonnull
-	public DomainModelWithSourceCode load() {
+	public DomainModelWithSourceCode load()
+	{
 		LOGGER.info("Scanning source packages: {}", this.klassSourcePackages);
 		Instant start = Instant.now();
 
@@ -116,7 +125,8 @@ public class DomainModelCompilerLoader implements DomainModelLoader {
 	}
 
 	@Nonnull
-	private ImmutableList<CompilationUnit> getCompilationUnits() {
+	private ImmutableList<CompilationUnit> getCompilationUnits()
+	{
 		ImmutableList<URL> urls = this.klassSourcePackages.flatCollectWith(
 			ClasspathHelper::forPackage,
 			this.classLoader
@@ -136,7 +146,8 @@ public class DomainModelCompilerLoader implements DomainModelLoader {
 			CompilationUnit.createFromClasspathLocation(index, each)
 		);
 
-		if (compilationUnits.isEmpty()) {
+		if (compilationUnits.isEmpty())
+		{
 			String message = "Could not find any files matching *.klass in urls: " + urls;
 			throw new RuntimeException(message);
 		}
@@ -144,13 +155,16 @@ public class DomainModelCompilerLoader implements DomainModelLoader {
 	}
 
 	@Nonnull
-	private DomainModelWithSourceCode handleResult(@Nonnull CompilationResult compilationResult) {
+	private DomainModelWithSourceCode handleResult(@Nonnull CompilationResult compilationResult)
+	{
 		ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
-		for (RootCompilerAnnotation compilerAnnotation : compilerAnnotations) {
+		for (RootCompilerAnnotation compilerAnnotation : compilerAnnotations)
+		{
 			this.compilerAnnotationHandler.accept(compilerAnnotation);
 		}
 
-		if (compilationResult.domainModelWithSourceCode().isEmpty()) {
+		if (compilationResult.domainModelWithSourceCode().isEmpty())
+		{
 			throw new RuntimeException("There were compiler errors.");
 		}
 

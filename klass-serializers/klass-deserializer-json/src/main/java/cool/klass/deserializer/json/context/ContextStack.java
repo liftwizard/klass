@@ -25,8 +25,8 @@ import org.eclipse.collections.api.factory.Stacks;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.stack.MutableStack;
 
-public class ContextStack {
-
+public class ContextStack
+{
 	@Nonnull
 	private final MutableStack<ContextNode> delegate = Stacks.mutable.empty();
 
@@ -36,45 +36,55 @@ public class ContextStack {
 	@Nullable
 	private final MutableList<String> warnings;
 
-	public ContextStack(@Nonnull MutableList<String> errors, @Nullable MutableList<String> warnings) {
+	public ContextStack(@Nonnull MutableList<String> errors, @Nullable MutableList<String> warnings)
+	{
 		this.errors = Objects.requireNonNull(errors);
 		this.warnings = warnings;
 	}
 
-	public void push(@Nonnull ContextNode contextNode) {
+	public void push(@Nonnull ContextNode contextNode)
+	{
 		Objects.requireNonNull(contextNode);
 		this.delegate.push(contextNode);
 	}
 
-	public void pop() {
+	public void pop()
+	{
 		this.delegate.pop();
 	}
 
-	public void runWithContext(@Nonnull ContextNode contextNode, @Nonnull Runnable runnable) {
+	public void runWithContext(@Nonnull ContextNode contextNode, @Nonnull Runnable runnable)
+	{
 		Objects.requireNonNull(contextNode);
 		Objects.requireNonNull(runnable);
 
 		this.delegate.push(contextNode);
 
-		try {
+		try
+		{
 			runnable.run();
-		} finally {
+		}
+		finally
+		{
 			this.delegate.pop();
 		}
 	}
 
-	public void addError(String message) {
+	public void addError(String message)
+	{
 		String error = String.format("Error at %s. %s", this, message);
 		this.errors.add(error);
 	}
 
-	public void addWarning(String message) {
+	public void addWarning(String message)
+	{
 		String warning = String.format("Warning at %s. %s", this, message);
 		this.warnings.add(warning);
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return this.delegate.toList().asReversed().makeString(".");
 	}
 }

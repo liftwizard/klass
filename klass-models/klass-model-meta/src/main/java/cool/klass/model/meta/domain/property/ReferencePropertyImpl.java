@@ -41,8 +41,8 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public abstract class ReferencePropertyImpl<T extends ClassifierWithSourceCode>
 	extends AbstractProperty<T>
-	implements ReferencePropertyWithSourceCode {
-
+	implements ReferencePropertyWithSourceCode
+{
 	@Nonnull
 	protected final Multiplicity multiplicity;
 
@@ -60,34 +60,40 @@ public abstract class ReferencePropertyImpl<T extends ClassifierWithSourceCode>
 		@Nonnull T type,
 		@Nonnull AbstractClassifier owningClassifier,
 		@Nonnull Multiplicity multiplicity
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode, ordinal, nameContext, type, owningClassifier);
 		this.multiplicity = Objects.requireNonNull(multiplicity);
 	}
 
 	@Override
 	@Nonnull
-	public final Multiplicity getMultiplicity() {
+	public final Multiplicity getMultiplicity()
+	{
 		return this.multiplicity;
 	}
 
 	@Override
 	@Nonnull
-	public final Optional<OrderBy> getOrderBy() {
+	public final Optional<OrderBy> getOrderBy()
+	{
 		return Objects.requireNonNull(this.orderBy);
 	}
 
-	protected final void setOrderBy(@Nonnull Optional<OrderBy> orderBy) {
+	protected final void setOrderBy(@Nonnull Optional<OrderBy> orderBy)
+	{
 		this.orderBy = Objects.requireNonNull(orderBy);
 	}
 
 	@Override
 	@Nonnull
-	public final ImmutableList<Modifier> getModifiers() {
+	public final ImmutableList<Modifier> getModifiers()
+	{
 		return this.modifiers;
 	}
 
-	protected final void setModifiers(ImmutableList<Modifier> modifiers) {
+	protected final void setModifiers(ImmutableList<Modifier> modifiers)
+	{
 		this.modifiers = modifiers;
 	}
 
@@ -96,8 +102,8 @@ public abstract class ReferencePropertyImpl<T extends ClassifierWithSourceCode>
 		TG extends TypeGetter,
 		BuiltElement extends ReferencePropertyImpl<T>
 	>
-		extends PropertyBuilder<T, TG, BuiltElement> {
-
+		extends PropertyBuilder<T, TG, BuiltElement>
+	{
 		@Nonnull
 		protected final Multiplicity multiplicity;
 
@@ -115,21 +121,25 @@ public abstract class ReferencePropertyImpl<T extends ClassifierWithSourceCode>
 			@Nonnull TG type,
 			@Nonnull ClassifierBuilder<?> owningClassifierBuilder,
 			@Nonnull Multiplicity multiplicity
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode, ordinal, nameContext, type, owningClassifierBuilder);
 			this.multiplicity = Objects.requireNonNull(multiplicity);
 		}
 
-		public void setOrderBy(@Nonnull Optional<OrderByBuilder> orderBy) {
+		public void setOrderBy(@Nonnull Optional<OrderByBuilder> orderBy)
+		{
 			this.orderBy = Objects.requireNonNull(orderBy);
 		}
 
-		public void setModifiers(ImmutableList<ModifierBuilder> modifiers) {
+		public void setModifiers(ImmutableList<ModifierBuilder> modifiers)
+		{
 			this.modifier = modifiers;
 		}
 
 		@Override
-		protected final void buildChildren() {
+		protected final void buildChildren()
+		{
 			ImmutableList<Modifier> modifiers = this.modifier.collect(ModifierBuilder::build);
 			this.element.setModifiers(modifiers);
 

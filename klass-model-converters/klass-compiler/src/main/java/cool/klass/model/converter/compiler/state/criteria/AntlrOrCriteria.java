@@ -27,28 +27,33 @@ import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.meta.domain.criteria.OrCriteriaImpl.OrCriteriaBuilder;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaExpressionOrContext;
 
-public class AntlrOrCriteria extends AntlrBinaryCriteria {
-
+public class AntlrOrCriteria
+	extends AntlrBinaryCriteria
+{
 	private OrCriteriaBuilder elementBuilder;
 
 	public AntlrOrCriteria(
 		@Nonnull CriteriaExpressionOrContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull IAntlrElement criteriaOwner
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, criteriaOwner);
 	}
 
 	@Nonnull
 	@Override
-	public CriteriaExpressionOrContext getElementContext() {
+	public CriteriaExpressionOrContext getElementContext()
+	{
 		return (CriteriaExpressionOrContext) super.getElementContext();
 	}
 
 	@Nonnull
 	@Override
-	public OrCriteriaBuilder build() {
-		if (this.elementBuilder != null) {
+	public OrCriteriaBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.elementBuilder = new OrCriteriaBuilder(
@@ -63,12 +68,14 @@ public class AntlrOrCriteria extends AntlrBinaryCriteria {
 
 	@Nonnull
 	@Override
-	public OrCriteriaBuilder getElementBuilder() {
+	public OrCriteriaBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		// TODO: Error if both clauses are identical, or if any left true subclause is a subclause of the right
 		// Java | Probable bugs | Constant conditions & exceptions
 
@@ -76,7 +83,8 @@ public class AntlrOrCriteria extends AntlrBinaryCriteria {
 	}
 
 	@Override
-	public void visit(AntlrCriteriaVisitor visitor) {
+	public void visit(AntlrCriteriaVisitor visitor)
+	{
 		visitor.visitOr(this);
 		this.left.visit(visitor);
 		this.right.visit(visitor);

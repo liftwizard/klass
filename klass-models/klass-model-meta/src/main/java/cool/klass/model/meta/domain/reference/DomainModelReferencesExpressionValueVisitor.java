@@ -47,16 +47,19 @@ import cool.klass.model.meta.grammar.KlassParser.TypeMemberReferencePathContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class DomainModelReferencesExpressionValueVisitor implements ExpressionValueVisitor {
-
+public class DomainModelReferencesExpressionValueVisitor
+	implements ExpressionValueVisitor
+{
 	private final DomainModelReferences domainModelReferences;
 
-	public DomainModelReferencesExpressionValueVisitor(@Nonnull DomainModelReferences domainModelReferences) {
+	public DomainModelReferencesExpressionValueVisitor(@Nonnull DomainModelReferences domainModelReferences)
+	{
 		this.domainModelReferences = Objects.requireNonNull(domainModelReferences);
 	}
 
 	@Override
-	public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue) {
+	public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue)
+	{
 		var elementWithSourceCode = (TypeMemberReferencePathWithSourceCode) typeMemberExpressionValue;
 		TypeMemberReferencePathContext elementContext = elementWithSourceCode.getElementContext();
 
@@ -67,7 +70,8 @@ public class DomainModelReferencesExpressionValueVisitor implements ExpressionVa
 		List<AssociationEndReferenceContext> associationEndReferenceContexts = elementContext.associationEndReference();
 		ImmutableList<AssociationEnd> associationEnds = typeMemberExpressionValue.getAssociationEnds();
 
-		for (var i = 0; i < associationEndReferenceContexts.size(); i++) {
+		for (var i = 0; i < associationEndReferenceContexts.size(); i++)
+		{
 			AssociationEndReferenceContext associationEndReference = associationEndReferenceContexts.get(i);
 			AssociationEnd associationEnd = associationEnds.get(i);
 			this.domainModelReferences.addAssociationEndReference(
@@ -82,14 +86,16 @@ public class DomainModelReferencesExpressionValueVisitor implements ExpressionVa
 	}
 
 	@Override
-	public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue) {
+	public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue)
+	{
 		var elementWithSourceCode = (ThisMemberReferencePathWithSourceCode) thisMemberExpressionValue;
 		ThisMemberReferencePathContext elementContext = elementWithSourceCode.getElementContext();
 
 		List<AssociationEndReferenceContext> associationEndReferenceContexts = elementContext.associationEndReference();
 		ImmutableList<AssociationEnd> associationEnds = thisMemberExpressionValue.getAssociationEnds();
 
-		for (var i = 0; i < associationEndReferenceContexts.size(); i++) {
+		for (var i = 0; i < associationEndReferenceContexts.size(); i++)
+		{
 			AssociationEndReferenceContext associationEndReference = associationEndReferenceContexts.get(i);
 			AssociationEnd associationEnd = associationEnds.get(i);
 			this.domainModelReferences.addAssociationEndReference(
@@ -104,37 +110,44 @@ public class DomainModelReferencesExpressionValueVisitor implements ExpressionVa
 	}
 
 	@Override
-	public void visitParameterReference(@Nonnull ParameterReference parameterReference) {
+	public void visitParameterReference(@Nonnull ParameterReference parameterReference)
+	{
 		// TODO: Implement more references
 	}
 
 	@Override
-	public void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue) {
+	public void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue)
+	{
 		// Deliberately empty
 	}
 
 	@Override
-	public void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue) {
+	public void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue)
+	{
 		// Deliberately empty
 	}
 
 	@Override
-	public void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue) {
+	public void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue)
+	{
 		// Deliberately empty
 	}
 
 	@Override
-	public void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue) {
+	public void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue)
+	{
 		// Deliberately empty
 	}
 
 	@Override
-	public void visitLiteralList(@Nonnull LiteralListValue literalListValue) {
+	public void visitLiteralList(@Nonnull LiteralListValue literalListValue)
+	{
 		// Deliberately empty
 	}
 
 	@Override
-	public void visitUserLiteral(@Nonnull UserLiteral userLiteral) {
+	public void visitUserLiteral(@Nonnull UserLiteral userLiteral)
+	{
 		var elementWithSourceCode = (ElementWithSourceCode) userLiteral;
 		ParserRuleContext reference = elementWithSourceCode.getElementContext();
 		var element = (KlassWithSourceCode) userLiteral.getUserClass();
@@ -142,7 +155,8 @@ public class DomainModelReferencesExpressionValueVisitor implements ExpressionVa
 	}
 
 	@Override
-	public void visitNullLiteral(@Nonnull NullLiteral nullLiteral) {
+	public void visitNullLiteral(@Nonnull NullLiteral nullLiteral)
+	{
 		// Deliberately empty
 	}
 }

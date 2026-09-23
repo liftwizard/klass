@@ -41,8 +41,9 @@ import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
 // TODO: Specific subclasses for the specific antlr context types
-public class AntlrOrderBy extends AntlrElement {
-
+public class AntlrOrderBy
+	extends AntlrElement
+{
 	@Nonnull
 	private final AntlrClassifier thisContext;
 
@@ -65,7 +66,8 @@ public class AntlrOrderBy extends AntlrElement {
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull AntlrClassifier thisContext,
 		@Nonnull AntlrOrderByOwner orderByOwner
-	) {
+	)
+	{
 		super(elementContext, compilationUnit);
 		this.thisContext = Objects.requireNonNull(thisContext);
 		this.orderByOwner = Objects.requireNonNull(orderByOwner);
@@ -73,54 +75,65 @@ public class AntlrOrderBy extends AntlrElement {
 
 	@Nonnull
 	@Override
-	public Optional<IAntlrElement> getSurroundingElement() {
+	public Optional<IAntlrElement> getSurroundingElement()
+	{
 		return Optional.of(this.orderByOwner);
 	}
 
 	@Override
-	public boolean isContext() {
+	public boolean isContext()
+	{
 		return this.orderByOwner instanceof AntlrService;
 	}
 
 	@Nonnull
-	public ImmutableList<AntlrOrderByMemberReferencePath> getOrderByMemberReferencePaths() {
+	public ImmutableList<AntlrOrderByMemberReferencePath> getOrderByMemberReferencePaths()
+	{
 		return this.orderByMemberReferencePaths.toImmutable();
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore() {
+	public Pair<Token, Token> getContextBefore()
+	{
 		return this.getEntireContext();
 	}
 
-	public int getNumProperties() {
+	public int getNumProperties()
+	{
 		return this.orderByMemberReferencePaths.size();
 	}
 
-	public void enterOrderByMemberReferencePath(AntlrOrderByMemberReferencePath orderByMemberReferencePath) {
+	public void enterOrderByMemberReferencePath(AntlrOrderByMemberReferencePath orderByMemberReferencePath)
+	{
 		this.orderByMemberReferencePaths.add(orderByMemberReferencePath);
 
 		AntlrOrderByMemberReferencePath duplicate = this.orderByMemberReferencePathsByContext.put(
 			orderByMemberReferencePath.getElementContext(),
 			orderByMemberReferencePath
 		);
-		if (duplicate != null) {
+		if (duplicate != null)
+		{
 			throw new AssertionError();
 		}
 	}
 
-	public AntlrOrderByMemberReferencePath getOrderByMemberReferencePath(OrderByMemberReferencePathContext ctx) {
+	public AntlrOrderByMemberReferencePath getOrderByMemberReferencePath(OrderByMemberReferencePathContext ctx)
+	{
 		return this.orderByMemberReferencePathsByContext.get(ctx);
 	}
 
-	public void reportErrors(CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		this.orderByMemberReferencePaths.forEachWith(
 			AntlrOrderByMemberReferencePath::reportErrors,
 			compilerAnnotationHolder
 		);
 	}
 
-	public OrderByBuilder build() {
-		if (this.elementBuilder != null) {
+	public OrderByBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.elementBuilder = new OrderByBuilder(
@@ -138,11 +151,13 @@ public class AntlrOrderBy extends AntlrElement {
 
 	@Override
 	@Nonnull
-	public OrderByBuilder getElementBuilder() {
+	public OrderByBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
-	public void visit(@Nonnull AntlrOrderByVisitor visitor) {
+	public void visit(@Nonnull AntlrOrderByVisitor visitor)
+	{
 		visitor.visit(this);
 	}
 }

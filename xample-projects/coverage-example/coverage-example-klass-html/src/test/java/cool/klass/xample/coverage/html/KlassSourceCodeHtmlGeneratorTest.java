@@ -33,15 +33,16 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public class KlassSourceCodeHtmlGeneratorTest {
-
+public class KlassSourceCodeHtmlGeneratorTest
+{
 	public static final String FULLY_QUALIFIED_PACKAGE = "cool.klass.xample.coverage";
 
 	@RegisterExtension
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
 	@Test
-	void smokeTest() {
+	void smokeTest()
+	{
 		ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
 
 		var domainModelCompilerLoader = new DomainModelCompilerLoader(
@@ -59,13 +60,16 @@ public class KlassSourceCodeHtmlGeneratorTest {
 		ImmutableListMultimap<String, SourceCode> sourceCodesByFullPath = sourceCodesFromMacros.groupBy(
 			SourceCode::getFullPathSourceName
 		);
-		sourceCodesByFullPath.forEachKeyMultiValues((fullPath, sourceCodes) -> {
-			if (sourceCodes.size() > 1) {
+		sourceCodesByFullPath.forEachKeyMultiValues((fullPath, sourceCodes) ->
+		{
+			if (sourceCodes.size() > 1)
+			{
 				fail("Multiple source codes for " + fullPath);
 			}
 		});
 
-		for (SourceCode sourceCode : domainModel.getSourceCodes()) {
+		for (SourceCode sourceCode : domainModel.getSourceCodes())
+		{
 			String fullPathSourceName = sourceCode.getFullPathSourceName();
 
 			String html = KlassSourceCodeHtmlGenerator.getSourceCode(domainModel, sourceCode);

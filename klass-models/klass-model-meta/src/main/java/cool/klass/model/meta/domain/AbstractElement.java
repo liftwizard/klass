@@ -28,8 +28,9 @@ import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public abstract class AbstractElement implements ElementWithSourceCode {
-
+public abstract class AbstractElement
+	implements ElementWithSourceCode
+{
 	@Nonnull
 	private final ParserRuleContext elementContext;
 
@@ -46,7 +47,8 @@ public abstract class AbstractElement implements ElementWithSourceCode {
 		@Nonnull ParserRuleContext elementContext,
 		@Nonnull Optional<Element> macroElement,
 		@Nullable SourceCode sourceCode
-	) {
+	)
+	{
 		this.elementContext = Objects.requireNonNull(elementContext);
 		this.macroElement = Objects.requireNonNull(macroElement);
 		this.sourceCode = sourceCode;
@@ -54,23 +56,26 @@ public abstract class AbstractElement implements ElementWithSourceCode {
 
 	@Nonnull
 	@Override
-	public Optional<Element> getMacroElement() {
+	public Optional<Element> getMacroElement()
+	{
 		return this.macroElement;
 	}
 
 	@Override
-	public SourceCode getSourceCodeObject() {
+	public SourceCode getSourceCodeObject()
+	{
 		return Objects.requireNonNull(this.sourceCode);
 	}
 
 	@Override
 	@Nonnull
-	public ParserRuleContext getElementContext() {
+	public ParserRuleContext getElementContext()
+	{
 		return this.elementContext;
 	}
 
-	public abstract static class ElementBuilder<BuiltElement extends Element> {
-
+	public abstract static class ElementBuilder<BuiltElement extends Element>
+	{
 		@Nonnull
 		protected final ParserRuleContext elementContext;
 
@@ -86,15 +91,18 @@ public abstract class AbstractElement implements ElementWithSourceCode {
 			@Nonnull ParserRuleContext elementContext,
 			@Nonnull Optional<ElementBuilder<?>> macroElement,
 			@Nullable SourceCodeBuilder sourceCode
-		) {
+		)
+		{
 			this.elementContext = Objects.requireNonNull(elementContext);
 			this.macroElement = Objects.requireNonNull(macroElement);
 			this.sourceCode = sourceCode;
 		}
 
 		@Nonnull
-		public final BuiltElement build() {
-			if (this.element != null) {
+		public final BuiltElement build()
+		{
+			if (this.element != null)
+			{
 				throw new IllegalStateException();
 			}
 			this.element = Objects.requireNonNull(this.buildUnsafe());
@@ -105,10 +113,13 @@ public abstract class AbstractElement implements ElementWithSourceCode {
 		@Nonnull
 		protected abstract BuiltElement buildUnsafe();
 
-		protected void buildChildren() {}
+		protected void buildChildren()
+		{
+		}
 
 		@Nonnull
-		public final BuiltElement getElement() {
+		public final BuiltElement getElement()
+		{
 			return Objects.requireNonNull(this.element);
 		}
 	}

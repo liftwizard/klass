@@ -35,39 +35,46 @@ import org.eclipse.collections.api.factory.SortedBags;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.tuple.Pair;
 
-public abstract class AbstractDataTypePropertyVisitor implements DataTypePropertyVisitor {
-
+public abstract class AbstractDataTypePropertyVisitor
+	implements DataTypePropertyVisitor
+{
 	private final MutableSortedBag<DataTypeProperty> propertyCounts = SortedBags.mutable.empty(
 		AbstractDataTypePropertyVisitor.getDataTypePropertyComparator()
 	);
 
 	private Object result;
 
-	private static Comparator<DataTypeProperty> getDataTypePropertyComparator() {
+	private static Comparator<DataTypeProperty> getDataTypePropertyComparator()
+	{
 		Comparator<DataTypeProperty> byClassifierName = Comparator.comparing((dtp) ->
 			dtp.getOwningClassifier().getName()
 		);
 		return byClassifierName.thenComparing(NamedElement::getName);
 	}
 
-	public Object getResult() {
+	public Object getResult()
+	{
 		return this.result;
 	}
 
 	@Override
-	public void visitEnumerationProperty(@Nonnull EnumerationProperty enumerationProperty) {
+	public void visitEnumerationProperty(@Nonnull EnumerationProperty enumerationProperty)
+	{
 		ImmutableList<EnumerationLiteral> enumerationLiterals = enumerationProperty.getType().getEnumerationLiterals();
 		// TODO: Compiler error for enumeration with <2 literals
 		this.result = enumerationLiterals.get(this.getIndex() - 1);
 	}
 
 	@Override
-	public void visitString(@Nonnull PrimitiveProperty primitiveProperty) {
+	public void visitString(@Nonnull PrimitiveProperty primitiveProperty)
+	{
 		// TODO: Something more reliable, or ban shared foreign keys
-		if (primitiveProperty.getKeysMatchingThisForeignKey().size() > 1) {
+		if (primitiveProperty.getKeysMatchingThisForeignKey().size() > 1)
+		{
 			throw new AssertionError(primitiveProperty);
 		}
-		if (primitiveProperty.getKeysMatchingThisForeignKey().size() == 1) {
+		if (primitiveProperty.getKeysMatchingThisForeignKey().size() == 1)
+		{
 			Pair<AssociationEnd, DataTypeProperty> pair = primitiveProperty
 				.getKeysMatchingThisForeignKey()
 				.keyValuesView()
@@ -78,11 +85,15 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 
 			// Self-referential associations (like parent -> child in a tree)
 			// First record should be null (root node), subsequent records can reference earlier records
-			if (associationEnd.getType().equals(primitiveProperty.getOwningClassifier())) {
+			if (associationEnd.getType().equals(primitiveProperty.getOwningClassifier()))
+			{
 				Integer parentIndex = this.getSelfReferentialParentIndex();
-				if (parentIndex == null) {
+				if (parentIndex == null)
+				{
 					this.result = null;
-				} else {
+				}
+				else
+				{
 					String emoji = keyProperty.isUserId() ? "" : " " + this.getEmoji();
 					this.result = String.format(
 						"%s %s %d%s",
@@ -105,7 +116,9 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 				this.getIndex(),
 				emoji
 			);
-		} else {
+		}
+		else
+		{
 			// HTTP headers are ASCII-only per RFC 7230, so skip emoji for userId properties
 			String emoji = primitiveProperty.isUserId() ? "" : " " + this.getEmoji();
 			this.result = String.format(
@@ -119,76 +132,102 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 	}
 
 	@Override
-	public void visitInteger(@Nonnull PrimitiveProperty primitiveProperty) {
-		if (primitiveProperty.isForeignKey()) {
+	public void visitInteger(@Nonnull PrimitiveProperty primitiveProperty)
+	{
+		if (primitiveProperty.isForeignKey())
+		{
 			// Self-referential associations: first record is root (null), subsequent records reference earlier records
-			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
+			if (this.isSelfReferentialForeignKey(primitiveProperty))
+			{
 				this.result = this.getSelfReferentialParentIndex();
 				return;
 			}
 			this.result = this.getIndex();
-		} else {
+		}
+		else
+		{
 			this.result = this.getNumber(primitiveProperty);
 		}
 	}
 
 	@Override
-	public void visitLong(@Nonnull PrimitiveProperty primitiveProperty) {
-		if (primitiveProperty.isForeignKey()) {
+	public void visitLong(@Nonnull PrimitiveProperty primitiveProperty)
+	{
+		if (primitiveProperty.isForeignKey())
+		{
 			// Self-referential associations: first record is root (null), subsequent records reference earlier records
-			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
+			if (this.isSelfReferentialForeignKey(primitiveProperty))
+			{
 				Integer parentIndex = this.getSelfReferentialParentIndex();
 				this.result = parentIndex == null ? null : (long) parentIndex;
 				return;
 			}
 			this.result = (long) this.getIndex();
-		} else if (primitiveProperty.isKey()) {
+		}
+		else if (primitiveProperty.isKey())
+		{
 			this.result = (long) this.getNumber(primitiveProperty);
-		} else {
+		}
+		else
+		{
 			this.result = 100_000_000_000L * this.getNumber(primitiveProperty);
 		}
 	}
 
 	@Override
-	public void visitDouble(@Nonnull PrimitiveProperty primitiveProperty) {
-		if (primitiveProperty.isForeignKey()) {
+	public void visitDouble(@Nonnull PrimitiveProperty primitiveProperty)
+	{
+		if (primitiveProperty.isForeignKey())
+		{
 			// Self-referential associations: first record is root (null), subsequent records reference earlier records
-			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
+			if (this.isSelfReferentialForeignKey(primitiveProperty))
+			{
 				Integer parentIndex = this.getSelfReferentialParentIndex();
 				this.result = parentIndex == null ? null : (double) parentIndex + 0.0123456789;
 				return;
 			}
 			this.result = (double) this.getIndex() + 0.0123456789;
-		} else {
+		}
+		else
+		{
 			this.result = (double) this.getNumber(primitiveProperty) + 0.0123456789;
 		}
 	}
 
 	@Override
-	public void visitFloat(@Nonnull PrimitiveProperty primitiveProperty) {
-		if (primitiveProperty.isForeignKey()) {
+	public void visitFloat(@Nonnull PrimitiveProperty primitiveProperty)
+	{
+		if (primitiveProperty.isForeignKey())
+		{
 			// Self-referential associations: first record is root (null), subsequent records reference earlier records
-			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
+			if (this.isSelfReferentialForeignKey(primitiveProperty))
+			{
 				Integer parentIndex = this.getSelfReferentialParentIndex();
 				this.result = parentIndex == null ? null : (float) parentIndex + 0.01234567f;
 				return;
 			}
 			this.result = (float) this.getIndex() + 0.01234567f;
-		} else {
+		}
+		else
+		{
 			this.result = (float) this.getNumber(primitiveProperty) + 0.01234567f;
 		}
 	}
 
 	@Override
-	public void visitBoolean(PrimitiveProperty primitiveProperty) {
+	public void visitBoolean(PrimitiveProperty primitiveProperty)
+	{
 		this.result = this.getBoolean();
 	}
 
 	@Override
-	public void visitInstant(@Nonnull PrimitiveProperty primitiveProperty) {
-		if (primitiveProperty.isForeignKey()) {
+	public void visitInstant(@Nonnull PrimitiveProperty primitiveProperty)
+	{
+		if (primitiveProperty.isForeignKey())
+		{
 			// Self-referential associations: first record is root (null), subsequent records reference earlier records
-			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
+			if (this.isSelfReferentialForeignKey(primitiveProperty))
+			{
 				LocalDateTime parentDateTime = this.getSelfReferentialParentLocalDateTime();
 				this.result = parentDateTime == null ? null : parentDateTime.toInstant(ZoneOffset.UTC);
 				return;
@@ -198,10 +237,13 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 	}
 
 	@Override
-	public void visitLocalDate(@Nonnull PrimitiveProperty primitiveProperty) {
-		if (primitiveProperty.isForeignKey()) {
+	public void visitLocalDate(@Nonnull PrimitiveProperty primitiveProperty)
+	{
+		if (primitiveProperty.isForeignKey())
+		{
 			// Self-referential associations: first record is root (null), subsequent records reference earlier records
-			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
+			if (this.isSelfReferentialForeignKey(primitiveProperty))
+			{
 				LocalDateTime parentDateTime = this.getSelfReferentialParentLocalDateTime();
 				this.result = parentDateTime == null ? null : parentDateTime.toLocalDate();
 				return;
@@ -211,15 +253,18 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 	}
 
 	@Override
-	public void visitTemporalInstant(PrimitiveProperty primitiveProperty) {
+	public void visitTemporalInstant(PrimitiveProperty primitiveProperty)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitTemporalInstant() not implemented yet"
 		);
 	}
 
 	@Override
-	public void visitTemporalRange(@Nonnull PrimitiveProperty primitiveProperty) {
-		if (!primitiveProperty.isSystem()) {
+	public void visitTemporalRange(@Nonnull PrimitiveProperty primitiveProperty)
+	{
+		if (!primitiveProperty.isSystem())
+		{
 			throw new AssertionError();
 		}
 	}
@@ -256,8 +301,10 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 	 * Checks if this property is a foreign key to a self-referential association
 	 * (e.g., a parent pointer in a tree structure where Node.parentId -> Node.id).
 	 */
-	private boolean isSelfReferentialForeignKey(@Nonnull PrimitiveProperty primitiveProperty) {
-		if (primitiveProperty.getKeysMatchingThisForeignKey().size() != 1) {
+	private boolean isSelfReferentialForeignKey(@Nonnull PrimitiveProperty primitiveProperty)
+	{
+		if (primitiveProperty.getKeysMatchingThisForeignKey().size() != 1)
+		{
 			return false;
 		}
 		Pair<AssociationEnd, DataTypeProperty> pair = primitiveProperty
@@ -268,8 +315,10 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 		return associationEnd.getType().equals(primitiveProperty.getOwningClassifier());
 	}
 
-	private LocalDateTime getUniqueLocalDateTime(@Nonnull PrimitiveProperty primitiveProperty) {
-		if (primitiveProperty.isForeignKey()) {
+	private LocalDateTime getUniqueLocalDateTime(@Nonnull PrimitiveProperty primitiveProperty)
+	{
+		if (primitiveProperty.isForeignKey())
+		{
 			return this.getLocalDateTime();
 		}
 
@@ -277,7 +326,8 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 		return this.getLocalDateTime().plus(occurrences, ChronoUnit.YEARS);
 	}
 
-	private int getNumber(DataTypeProperty dataTypeProperty) {
+	private int getNumber(DataTypeProperty dataTypeProperty)
+	{
 		int occurrences = this.propertyCounts.addOccurrences(dataTypeProperty, 1);
 		int oldOccurrences = occurrences - 1;
 		return oldOccurrences * 2 + this.getIndex();

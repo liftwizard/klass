@@ -18,25 +18,30 @@ package klass.model.meta.domain.dropwizard.test;
 
 import org.junit.jupiter.api.Test;
 
-class AssociationResourceManualTest extends AbstractResourceTestCase {
-
+class AssociationResourceManualTest
+	extends AbstractResourceTestCase
+{
 	@Test
-	void getAllMeta() {
+	void getAllMeta()
+	{
 		this.assertUrlReturns("getAllMeta", "/meta/association");
 	}
 
 	@Test
-	void getByName() {
+	void getByName()
+	{
 		this.assertUrlReturns("getByName", "/meta/association/ClassHasSuperClass");
 	}
 
 	@Test
-	void getByNameEnumerationHasLiterals() {
+	void getByNameEnumerationHasLiterals()
+	{
 		this.assertUrlReturns("getByNameEnumerationHasLiterals", "/meta/association/EnumerationHasLiterals");
 	}
 
 	@Test
-	void getByNameDataTypePropertyHasModifiers() {
+	void getByNameDataTypePropertyHasModifiers()
+	{
 		this.assertUrlReturns(
 			"getByNameDataTypePropertyHasModifiers",
 			"/meta/association/DataTypePropertyHasModifiers"

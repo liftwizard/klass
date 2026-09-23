@@ -20,19 +20,25 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class ParameterList extends ParameterListAbstract {
+public class ParameterList
+	extends ParameterListAbstract
+{
+	public ParameterList()
+	{
+	}
 
-	public ParameterList() {}
-
-	public ParameterList(int initialSize) {
+	public ParameterList(int initialSize)
+	{
 		super(initialSize);
 	}
 
-	public ParameterList(Collection c) {
+	public ParameterList(Collection c)
+	{
 		super(c);
 	}
 
-	public ParameterList(Operation operation) {
+	public ParameterList(Operation operation)
+	{
 		super(operation);
 	}
 }

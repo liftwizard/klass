@@ -35,8 +35,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(LogMarkerTestExtension.class)
-class DomainModelConstantFactoryTest {
-
+class DomainModelConstantFactoryTest
+{
 	private final ObjectMapper objectMapper = getObjectMapper();
 	private final Validator validator = Validators.newValidator();
 
@@ -48,7 +48,8 @@ class DomainModelConstantFactoryTest {
 	);
 
 	@Test
-	void isDiscoverable() {
+	void isDiscoverable()
+	{
 		// Make sure the types we specified in META-INF gets picked up
 		var discoverableSubtypeResolver = new DiscoverableSubtypeResolver();
 		List<Class<?>> discoveredSubtypes = discoverableSubtypeResolver.getDiscoveredSubtypes();
@@ -56,7 +57,9 @@ class DomainModelConstantFactoryTest {
 	}
 
 	@Test
-	void domainModelConstant() throws Exception {
+	void domainModelConstant()
+		throws Exception
+	{
 		DomainModelFactory domainModelFactory = this.factory.build(
 			new ResourceConfigurationSourceProvider(),
 			"config-test.json5"
@@ -64,7 +67,8 @@ class DomainModelConstantFactoryTest {
 		assertThat(domainModelFactory).isInstanceOf(DomainModelConstantFactory.class);
 	}
 
-	private static ObjectMapper getObjectMapper() {
+	private static ObjectMapper getObjectMapper()
+	{
 		ObjectMapper objectMapper = Jackson.newObjectMapper();
 		ObjectMapperConfig.configure(objectMapper);
 		return objectMapper;

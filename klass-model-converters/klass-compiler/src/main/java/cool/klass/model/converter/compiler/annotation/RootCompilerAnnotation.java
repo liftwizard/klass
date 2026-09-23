@@ -32,8 +32,10 @@ import org.eclipse.collections.api.tuple.Pair;
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.Ansi.Color;
 
-public class RootCompilerAnnotation extends AbstractCompilerAnnotation implements Comparable<RootCompilerAnnotation> {
-
+public class RootCompilerAnnotation
+	extends AbstractCompilerAnnotation
+	implements Comparable<RootCompilerAnnotation>
+{
 	private static final Comparator<RootCompilerAnnotation> COMPILER_ANNOTATION_COMPARATOR = Comparator.comparing(
 		RootCompilerAnnotation::getSeverity
 	)
@@ -57,7 +59,8 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
 		@Nonnull AnsiTokenColorizer ansiTokenColorizer,
 		@Nonnull AnnotationSeverity severity,
 		boolean enableIdeLinks
-	) {
+	)
+	{
 		super(
 			compilationUnit,
 			macroCause,
@@ -72,18 +75,21 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
 	}
 
 	@Nonnull
-	public String getAnnotationCode() {
+	public String getAnnotationCode()
+	{
 		return this.annotationCode;
 	}
 
 	@Override
-	public int compareTo(@Nonnull RootCompilerAnnotation other) {
+	public int compareTo(@Nonnull RootCompilerAnnotation other)
+	{
 		return COMPILER_ANNOTATION_COMPARATOR.compare(this, other);
 	}
 
 	@Nonnull
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		String contextString = this.getContextString();
 		String locationMessage = this.getOptionalLocationMessage();
 		String causeString = this.getCauseString();
@@ -92,14 +98,14 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
 		String severityName = this.severity == AnnotationSeverity.ERROR ? "Error" : "Warning";
 
 		var format = """
-			════════════════════════════════════════ @|magenta %s|@ ════════════════════════════════════════
-			@|%s %s: %s|@
+		════════════════════════════════════════ @|magenta %s|@ ════════════════════════════════════════
+		@|%s %s: %s|@
 
-			At %s
+		At %s
 
-			%s%s%s%s
-			═════════════════════════════════════════════════════════════════════════════════════════════
-			""";
+		%s%s%s%s
+		═════════════════════════════════════════════════════════════════════════════════════════════
+		""";
 
 		String ansi = String.format(
 			format,
@@ -119,15 +125,18 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
 
 	@Nonnull
 	@Override
-	protected Color getCaretColor() {
-		return switch (this.severity) {
+	protected Color getCaretColor()
+	{
+		return switch (this.severity)
+		{
 			case ERROR -> Color.RED;
 			case WARNING -> Color.YELLOW;
 		};
 	}
 
 	@Override
-	public String toGitHubAnnotation() {
+	public String toGitHubAnnotation()
+	{
 		Pair<Token, Token> firstAndLastToken = this.getFirstAndLastToken();
 		Token startToken = firstAndLastToken.getOne();
 		Token endToken = firstAndLastToken.getTwo();
@@ -146,8 +155,10 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
 	}
 
 	@Nonnull
-	protected String getSeverityString() {
-		return switch (this.severity) {
+	protected String getSeverityString()
+	{
+		return switch (this.severity)
+		{
 			case ERROR -> "error";
 			case WARNING -> "warning";
 		};

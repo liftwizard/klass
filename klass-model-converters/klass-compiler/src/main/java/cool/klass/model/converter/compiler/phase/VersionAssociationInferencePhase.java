@@ -30,30 +30,36 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class VersionAssociationInferencePhase extends AbstractCompilerPhase {
-
-	public VersionAssociationInferencePhase(@Nonnull CompilerState compilerState) {
+public class VersionAssociationInferencePhase
+	extends AbstractCompilerPhase
+{
+	public VersionAssociationInferencePhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Nonnull
 	@Override
-	public String getName() {
+	public String getName()
+	{
 		return "Version association";
 	}
 
 	@Override
-	public void enterClassifierModifier(@Nonnull ClassifierModifierContext ctx) {
+	public void enterClassifierModifier(@Nonnull ClassifierModifierContext ctx)
+	{
 		super.enterClassifierModifier(ctx);
 		String modifierText = ctx.getText();
-		if (!"versioned".equals(modifierText)) {
+		if (!"versioned".equals(modifierText))
+		{
 			return;
 		}
 
 		AntlrClass klass = this.compilerState.getCompilerWalk().getKlass();
 		ImmutableList<AntlrDataTypeProperty<?>> allKeyProperties = klass.getAllKeyProperties();
 
-		if (allKeyProperties.isEmpty()) {
+		if (allKeyProperties.isEmpty())
+		{
 			return;
 		}
 
@@ -76,7 +82,8 @@ public class VersionAssociationInferencePhase extends AbstractCompilerPhase {
 	}
 
 	@Nonnull
-	private String getSourceCode(@Nonnull ImmutableList<AntlrDataTypeProperty<?>> keyProperties) {
+	private String getSourceCode(@Nonnull ImmutableList<AntlrDataTypeProperty<?>> keyProperties)
+	{
 		AntlrClass klass = this.compilerState.getCompilerWalk().getKlass();
 		String className = klass.getName();
 

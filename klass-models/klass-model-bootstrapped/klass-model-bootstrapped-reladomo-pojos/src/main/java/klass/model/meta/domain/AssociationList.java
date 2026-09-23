@@ -20,19 +20,25 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class AssociationList extends AssociationListAbstract {
+public class AssociationList
+	extends AssociationListAbstract
+{
+	public AssociationList()
+	{
+	}
 
-	public AssociationList() {}
-
-	public AssociationList(int initialSize) {
+	public AssociationList(int initialSize)
+	{
 		super(initialSize);
 	}
 
-	public AssociationList(Collection<?> c) {
+	public AssociationList(Collection<?> c)
+	{
 		super(c);
 	}
 
-	public AssociationList(Operation operation) {
+	public AssociationList(Operation operation)
+	{
 		super(operation);
 	}
 }

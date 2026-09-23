@@ -28,22 +28,26 @@ import cool.klass.model.meta.domain.operator.InOperatorImpl.InOperatorBuilder;
 import cool.klass.model.meta.grammar.KlassParser.InOperatorContext;
 import org.eclipse.collections.api.list.ListIterable;
 
-public class AntlrInOperator extends AntlrOperator {
-
+public class AntlrInOperator
+	extends AntlrOperator
+{
 	private InOperatorBuilder elementBuilder;
 
 	public AntlrInOperator(
 		@Nonnull InOperatorContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull String operatorText
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, operatorText);
 	}
 
 	@Nonnull
 	@Override
-	public InOperatorBuilder build() {
-		if (this.elementBuilder != null) {
+	public InOperatorBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.elementBuilder = new InOperatorBuilder(
@@ -57,7 +61,8 @@ public class AntlrInOperator extends AntlrOperator {
 
 	@Nonnull
 	@Override
-	public InOperatorBuilder getElementBuilder() {
+	public InOperatorBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
@@ -66,16 +71,20 @@ public class AntlrInOperator extends AntlrOperator {
 		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
 		@Nonnull ListIterable<AntlrType> sourceTypes,
 		@Nonnull ListIterable<AntlrType> targetTypes
-	) {
-		if (sourceTypes.isEmpty() || targetTypes.isEmpty()) {
+	)
+	{
+		if (sourceTypes.isEmpty() || targetTypes.isEmpty())
+		{
 			return;
 		}
 
-		if (sourceTypes.equals(targetTypes)) {
+		if (sourceTypes.equals(targetTypes))
+		{
 			return;
 		}
 
-		if (sourceTypes.size() == 1 && targetTypes.contains(sourceTypes.getOnly())) {
+		if (sourceTypes.size() == 1 && targetTypes.contains(sourceTypes.getOnly()))
+		{
 			return;
 		}
 

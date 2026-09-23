@@ -18,4 +18,7 @@ package cool.klass.model.converter.compiler.annotation.association;
 
 import cool.klass.model.converter.compiler.annotation.AbstractKlassCompilerErrorTestCase;
 
-public class CompoundJoinMixedKeyTest extends AbstractKlassCompilerErrorTestCase {}
+public class CompoundJoinMixedKeyTest
+	extends AbstractKlassCompilerErrorTestCase
+{
+}

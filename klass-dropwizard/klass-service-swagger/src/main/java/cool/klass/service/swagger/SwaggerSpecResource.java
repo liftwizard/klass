@@ -35,8 +35,8 @@ import org.slf4j.LoggerFactory;
  * JAX-RS resource that serves the Swagger/OpenAPI specification file.
  */
 @Path("/")
-public class SwaggerSpecResource {
-
+public class SwaggerSpecResource
+{
 	private static final Logger LOGGER = LoggerFactory.getLogger(SwaggerSpecResource.class);
 	private static final String SWAGGER_RESOURCE_PATH = "/swagger/swagger.json";
 
@@ -45,17 +45,22 @@ public class SwaggerSpecResource {
 	@GET
 	@Path("/swagger.json")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getSwaggerSpec() {
+	public String getSwaggerSpec()
+	{
 		LOGGER.debug("Loading Swagger spec from: {}", SWAGGER_RESOURCE_PATH);
 
-		try (InputStream inputStream = this.getClass().getResourceAsStream(SWAGGER_RESOURCE_PATH)) {
-			if (inputStream == null) {
+		try (InputStream inputStream = this.getClass().getResourceAsStream(SWAGGER_RESOURCE_PATH))
+		{
+			if (inputStream == null)
+			{
 				LOGGER.warn("Swagger spec not found at: {}", SWAGGER_RESOURCE_PATH);
 				throw new NotFoundException("Swagger specification not found");
 			}
 
 			return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			LOGGER.error("Error reading Swagger spec from: {}", SWAGGER_RESOURCE_PATH, e);
 			throw new RuntimeException("Error reading Swagger specification", e);
 		}

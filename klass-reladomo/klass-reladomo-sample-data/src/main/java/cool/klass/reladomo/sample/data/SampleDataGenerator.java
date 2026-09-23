@@ -26,8 +26,8 @@ import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class SampleDataGenerator {
-
+public class SampleDataGenerator
+{
 	private final DomainModel domainModel;
 	private final DataStore dataStore;
 
@@ -45,7 +45,8 @@ public class SampleDataGenerator {
 		@Nonnull DataStore dataStore,
 		@Nonnull Instant systemTime,
 		@Nonnull ImmutableList<String> skippedPackages
-	) {
+	)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 		this.dataStore = Objects.requireNonNull(dataStore);
 		this.systemTime = Objects.requireNonNull(systemTime);
@@ -55,16 +56,20 @@ public class SampleDataGenerator {
 		this.optionalDataGenerator = new KlassOptionalDataGenerator(this.dataStore);
 	}
 
-	public void generate() {
-		this.dataStore.runInTransaction((transaction) -> {
-				transaction.setSystemTime(this.systemTime.toEpochMilli());
-				this.domainModel.getClasses().each(this::generate);
-				return null;
-			});
+	public void generate()
+	{
+		this.dataStore.runInTransaction((transaction) ->
+		{
+			transaction.setSystemTime(this.systemTime.toEpochMilli());
+			this.domainModel.getClasses().each(this::generate);
+			return null;
+		});
 	}
 
-	private void generate(@Nonnull Klass klass) {
-		if (this.skippedPackages.contains(klass.getPackageName())) {
+	private void generate(@Nonnull Klass klass)
+	{
+		if (this.skippedPackages.contains(klass.getPackageName()))
+		{
 			return;
 		}
 		this.requiredDataGenerator.generateIfRequired(klass);

@@ -35,8 +35,9 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
-public class GenerateRelationalSchemaMojo extends AbstractGenerateMojo {
-
+public class GenerateRelationalSchemaMojo
+	extends AbstractGenerateMojo
+{
 	@Parameter(
 		property = "outputDirectory",
 		defaultValue = "${project.build.directory}/generated-resources/relational-schema"
@@ -44,26 +45,34 @@ public class GenerateRelationalSchemaMojo extends AbstractGenerateMojo {
 	private File outputDirectory;
 
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.CLASSPATH;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
-		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
-				DomainModel domainModel = this.getDomainModel();
-				Path outputPath = this.outputDirectory.toPath();
+	public void execute()
+		throws MojoExecutionException
+	{
+		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () ->
+		{
+			DomainModel domainModel = this.getDomainModel();
+			Path outputPath = this.outputDirectory.toPath();
 
-				var generator = new RelationalSchemaGenerator(domainModel);
-				try {
-					generator.writeRelationalSchema(outputPath);
-				} catch (RuntimeException e) {
-					throw new MojoExecutionException(e.getMessage(), e);
-				}
-				return null;
-			});
+			var generator = new RelationalSchemaGenerator(domainModel);
+			try
+			{
+				generator.writeRelationalSchema(outputPath);
+			}
+			catch (RuntimeException e)
+			{
+				throw new MojoExecutionException(e.getMessage(), e);
+			}
+			return null;
+		});
 
-		if (wasGenerated) {
+		if (wasGenerated)
+		{
 			this.getLog().info("Generated relational schema in: " + this.outputDirectory.getPath());
 		}
 

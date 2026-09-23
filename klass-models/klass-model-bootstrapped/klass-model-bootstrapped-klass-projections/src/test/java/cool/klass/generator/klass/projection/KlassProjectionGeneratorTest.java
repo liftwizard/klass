@@ -29,15 +29,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public class KlassProjectionGeneratorTest {
-
+public class KlassProjectionGeneratorTest
+{
 	public static final String FULLY_QUALIFIED_PACKAGE = "klass.model.meta.domain";
 
 	@RegisterExtension
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
 	@Test
-	void smokeTest() {
+	void smokeTest()
+	{
 		ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
 
 		var domainModelCompilerLoader = new DomainModelCompilerLoader(
@@ -55,7 +56,8 @@ public class KlassProjectionGeneratorTest {
 			.collect(PackageableElement::getPackageName)
 			.distinct()
 			.toImmutableList();
-		for (String packageName : packageNames) {
+		for (String packageName : packageNames)
+		{
 			String sourceCode = KlassProjectionSourceCodeGenerator.getPackageSourceCode(domainModel, packageName);
 
 			String resourceClassPathLocation = packageName + ".klass";

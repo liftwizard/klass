@@ -30,17 +30,20 @@ import org.slf4j.LoggerFactory;
  * Dropwizard bundle that serves Swagger UI for interactive API documentation.
  */
 @AutoService(PrioritizedBundle.class)
-public class SwaggerUIBundle implements PrioritizedBundle {
-
+public class SwaggerUIBundle
+	implements PrioritizedBundle
+{
 	private static final Logger LOGGER = LoggerFactory.getLogger(SwaggerUIBundle.class);
 
 	@Override
-	public int getPriority() {
+	public int getPriority()
+	{
 		return 0;
 	}
 
 	@Override
-	public void initializeWithMdc(@Nonnull Bootstrap<?> bootstrap) {
+	public void initializeWithMdc(@Nonnull Bootstrap<?> bootstrap)
+	{
 		LOGGER.info("Initializing {}.", this.getClass().getSimpleName());
 
 		bootstrap.addBundle(
@@ -56,7 +59,8 @@ public class SwaggerUIBundle implements PrioritizedBundle {
 	}
 
 	@Override
-	public void runWithMdc(@Nonnull Object configuration, @Nonnull Environment environment) {
+	public void runWithMdc(@Nonnull Object configuration, @Nonnull Environment environment)
+	{
 		LOGGER.info("Running {}.", this.getClass().getSimpleName());
 	}
 }

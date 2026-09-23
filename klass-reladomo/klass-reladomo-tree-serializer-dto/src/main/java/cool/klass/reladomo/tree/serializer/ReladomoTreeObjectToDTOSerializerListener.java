@@ -48,8 +48,9 @@ import org.eclipse.collections.api.stack.ImmutableStack;
 import org.eclipse.collections.api.stack.MutableStack;
 import org.eclipse.collections.impl.stack.mutable.ArrayStack;
 
-public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNodeToManyAwareListener {
-
+public class ReladomoTreeObjectToDTOSerializerListener
+	implements ReladomoTreeNodeToManyAwareListener
+{
 	private static final Converter<String, String> LOWER_TO_UPPER_CAMEL = CaseFormat.LOWER_CAMEL.converterTo(
 		CaseFormat.UPPER_CAMEL
 	);
@@ -71,18 +72,21 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 
 	private final MutableList<Object> result = Lists.mutable.empty();
 
-	public ReladomoTreeObjectToDTOSerializerListener(ReladomoDataStore dataStore, DomainList domainList, Klass klass) {
+	public ReladomoTreeObjectToDTOSerializerListener(ReladomoDataStore dataStore, DomainList domainList, Klass klass)
+	{
 		this.dataStore = Objects.requireNonNull(dataStore);
 		this.domainList = Objects.requireNonNull(domainList);
 		this.klass = Objects.requireNonNull(klass);
 	}
 
-	public MutableList<Object> getResult() {
+	public MutableList<Object> getResult()
+	{
 		return this.result;
 	}
 
 	@Override
-	public Object getStateToAssertInvariants() {
+	public Object getStateToAssertInvariants()
+	{
 		return new State(
 			this.contextStack.toImmutable(),
 			this.finderStack.toImmutable(),
@@ -92,9 +96,11 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 	}
 
 	@Override
-	public void enterListIndex(int index) {
+	public void enterListIndex(int index)
+	{
 		Object persistentInstance = this.persistentInstanceStack.peek();
-		if (!(persistentInstance instanceof List)) {
+		if (!(persistentInstance instanceof List))
+		{
 			String detailMessage = "Expected List but found: " + persistentInstance.getClass().getCanonicalName();
 			throw new AssertionError(detailMessage);
 		}
@@ -113,15 +119,18 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 	}
 
 	@Override
-	public void exitListIndex(int index) {
+	public void exitListIndex(int index)
+	{
 		this.contextStack.pop();
 		this.persistentInstanceStack.pop();
 		this.resultNodeStack.pop();
 	}
 
 	@Override
-	public Optional<Integer> enterRoot(RootReladomoTreeNode rootReladomoTreeNode) {
-		if (this.klass != rootReladomoTreeNode.getOwningClassifier()) {
+	public Optional<Integer> enterRoot(RootReladomoTreeNode rootReladomoTreeNode)
+	{
+		if (this.klass != rootReladomoTreeNode.getOwningClassifier())
+		{
 			String detailMessage = "Expected " + this.klass + " but got " + rootReladomoTreeNode.getOwningClassifier();
 			throw new AssertionError(detailMessage);
 		}
@@ -138,7 +147,8 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 	}
 
 	@Override
-	public void exitRoot(RootReladomoTreeNode rootReladomoTreeNode) {
+	public void exitRoot(RootReladomoTreeNode rootReladomoTreeNode)
+	{
 		this.contextStack.pop();
 		this.finderStack.pop();
 		this.persistentInstanceStack.pop();
@@ -146,19 +156,22 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 	}
 
 	@Override
-	public void enterDataTypeProperty(DataTypePropertyReladomoTreeNode dataTypePropertyReladomoTreeNode) {
+	public void enterDataTypeProperty(DataTypePropertyReladomoTreeNode dataTypePropertyReladomoTreeNode)
+	{
 		DataTypeProperty dataTypeProperty = dataTypePropertyReladomoTreeNode.getDataTypeProperty();
 		this.contextStack.push(dataTypeProperty);
 
 		Object persistentInstance = this.persistentInstanceStack.peek();
-		if (persistentInstance == null) {
+		if (persistentInstance == null)
+		{
 			return;
 		}
 
 		Object resultNode = this.resultNodeStack.peek();
 
 		Object data = this.dataStore.getDataTypeProperty(persistentInstance, dataTypeProperty);
-		if (data == null) {
+		if (data == null)
+		{
 			return;
 		}
 
@@ -171,12 +184,14 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 	}
 
 	@Override
-	public void exitDataTypeProperty(DataTypePropertyReladomoTreeNode dataTypePropertyReladomoTreeNode) {
+	public void exitDataTypeProperty(DataTypePropertyReladomoTreeNode dataTypePropertyReladomoTreeNode)
+	{
 		this.contextStack.pop();
 	}
 
 	@Override
-	public void enterSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode) {
+	public void enterSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode)
+	{
 		Klass owningClassifier = superClassReladomoTreeNode.getOwningClassifier();
 		Klass superClass = superClassReladomoTreeNode.getType();
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(superClass.getName()) + "SuperClass";
@@ -192,14 +207,16 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 	}
 
 	@Override
-	public void exitSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode) {
+	public void exitSuperClass(SuperClassReladomoTreeNode superClassReladomoTreeNode)
+	{
 		this.contextStack.pop();
 		this.finderStack.pop();
 		this.persistentInstanceStack.pop();
 	}
 
 	@Override
-	public void enterSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode) {
+	public void enterSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode)
+	{
 		Klass owningClassifier = subClassReladomoTreeNode.getOwningClassifier();
 		Klass subClass = subClassReladomoTreeNode.getType();
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(subClass.getName()) + "SubClass";
@@ -219,7 +236,8 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 	}
 
 	@Override
-	public void exitSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode) {
+	public void exitSubClass(SubClassReladomoTreeNode subClassReladomoTreeNode)
+	{
 		this.contextStack.pop();
 		this.finderStack.pop();
 		this.persistentInstanceStack.pop();
@@ -228,7 +246,8 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 	@Override
 	public Optional<Integer> enterReferenceProperty(
 		ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode
-	) {
+	)
+	{
 		ReferenceProperty referenceProperty = referencePropertyReladomoTreeNode.getReferenceProperty();
 		this.contextStack.push(referenceProperty);
 
@@ -241,7 +260,8 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 		Object nextPersistentInstance = this.dataStore.get(persistentInstance, referenceProperty);
 		this.persistentInstanceStack.push(nextPersistentInstance);
 
-		if (nextPersistentInstance == null) {
+		if (nextPersistentInstance == null)
+		{
 			this.resultNodeStack.push(null);
 
 			// Returning 0 children is a way to say stop recursing through the Projection
@@ -249,7 +269,8 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 		}
 
 		Multiplicity multiplicity = referenceProperty.getMultiplicity();
-		if (multiplicity.isToOne()) {
+		if (multiplicity.isToOne())
+		{
 			Classifier classifierFromContext = this.getClassifierFromPersistentInstance(nextPersistentInstance);
 			Object nextResultNode = this.instantiateDTO(classifierFromContext);
 			this.resultNodeStack.push(nextResultNode);
@@ -257,7 +278,8 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 			return Optional.empty();
 		}
 
-		if (multiplicity.isToMany()) {
+		if (multiplicity.isToMany())
+		{
 			MutableList<Object> nextResultNode = Lists.mutable.empty();
 			this.setChildProperty(referenceProperty, resultNode, nextResultNode);
 			this.resultNodeStack.push(nextResultNode);
@@ -269,7 +291,8 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 	}
 
 	@Override
-	public void exitReferenceProperty(ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode) {
+	public void exitReferenceProperty(ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode)
+	{
 		this.contextStack.pop();
 		this.finderStack.pop();
 		this.persistentInstanceStack.pop();
@@ -277,24 +300,28 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 	}
 
 	@Override
-	public Optional<Integer> enterReference(ReferenceReladomoTreeNode referenceReladomoTreeNode) {
+	public Optional<Integer> enterReference(ReferenceReladomoTreeNode referenceReladomoTreeNode)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".enterReference() not implemented yet"
 		);
 	}
 
 	@Override
-	public void exitReference(ReferenceReladomoTreeNode referenceReladomoTreeNode) {
+	public void exitReference(ReferenceReladomoTreeNode referenceReladomoTreeNode)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".exitReference() not implemented yet"
 		);
 	}
 
 	@Nonnull
-	private Classifier getClassifierFromPersistentInstance(Object nextPersistentInstance) {
+	private Classifier getClassifierFromPersistentInstance(Object nextPersistentInstance)
+	{
 		Klass klassFromContext = this.getKlassFromContext();
 		Klass mostSpecificSubclass = this.dataStore.getMostSpecificSubclass(nextPersistentInstance, klassFromContext);
-		if (mostSpecificSubclass.isAbstract()) {
+		if (mostSpecificSubclass.isAbstract())
+		{
 			String detailMessage = "Cannot instantiate abstract class: " + mostSpecificSubclass;
 			throw new AssertionError(detailMessage);
 		}
@@ -302,59 +329,74 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 	}
 
 	@Nonnull
-	private Klass getKlassFromContext() {
+	private Klass getKlassFromContext()
+	{
 		Object context = this.contextStack.peek();
 
-		if (context instanceof ReferenceProperty referenceProperty) {
+		if (context instanceof ReferenceProperty referenceProperty)
+		{
 			return (Klass) referenceProperty.getType();
 		}
 
-		if (context instanceof Classifier classifier) {
+		if (context instanceof Classifier classifier)
+		{
 			return (Klass) classifier;
 		}
 
 		throw new AssertionError("Unknown context: " + context);
 	}
 
-	private void setChildProperty(ReferenceProperty referenceProperty, Object resultNode, Object nextResultNode) {
+	private void setChildProperty(ReferenceProperty referenceProperty, Object resultNode, Object nextResultNode)
+	{
 		String methodName = "set" + LOWER_TO_UPPER_CAMEL.convert(referenceProperty.getName());
 		Class<?> resultNodeClass = resultNode.getClass();
 
 		Class<?> nextResultNodeClass = this.getNextResultNodeClass(referenceProperty);
-		try {
+		try
+		{
 			Method method = this.reflectionCache.getMethod(resultNodeClass, methodName, nextResultNodeClass);
 			method.invoke(resultNode, nextResultNode);
-		} catch (ReflectiveOperationException e) {
+		}
+		catch (ReflectiveOperationException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}
 
 	@Nonnull
-	private Class<?> getNextResultNodeClass(ReferenceProperty referenceProperty) {
+	private Class<?> getNextResultNodeClass(ReferenceProperty referenceProperty)
+	{
 		Multiplicity multiplicity = referenceProperty.getMultiplicity();
-		if (multiplicity.isToOne()) {
+		if (multiplicity.isToOne())
+		{
 			Classifier classifier = referenceProperty.getType();
 			String dtoFQCN = classifier.getPackageName() + ".dto." + classifier.getName() + "DTO";
 			return this.reflectionCache.classForName(dtoFQCN);
 		}
-		if (multiplicity.isToMany()) {
+		if (multiplicity.isToMany())
+		{
 			return List.class;
 		}
 		throw new AssertionError("Unknown multiplicity: " + multiplicity);
 	}
 
 	@Nonnull
-	private Object instantiateDTO(Classifier classifier) {
-		if (classifier.isAbstract()) {
+	private Object instantiateDTO(Classifier classifier)
+	{
+		if (classifier.isAbstract())
+		{
 			String detailMessage = "Cannot instantiate abstract class: " + classifier;
 			throw new AssertionError(detailMessage);
 		}
 
 		String dtoFQCN = classifier.getPackageName() + ".dto." + classifier.getName() + "DTO";
-		try {
+		try
+		{
 			Class<?> aClass = this.reflectionCache.classForName(dtoFQCN);
 			return aClass.getConstructor().newInstance();
-		} catch (ReflectiveOperationException e) {
+		}
+		catch (ReflectiveOperationException e)
+		{
 			throw new RuntimeException("Could not construct " + dtoFQCN, e);
 		}
 	}
@@ -364,5 +406,7 @@ public class ReladomoTreeObjectToDTOSerializerListener implements ReladomoTreeNo
 		ImmutableStack<AbstractRelatedFinder> finderStack,
 		ImmutableStack<Object> persistentInstanceStack,
 		ImmutableStack<Object> resultNodeStack
-	) {}
+	)
+	{
+	}
 }

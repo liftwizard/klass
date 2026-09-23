@@ -37,8 +37,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 @ExtendWith(LogMarkerTestExtension.class)
-class ReladomoTestResourceWriterTest {
-
+class ReladomoTestResourceWriterTest
+{
 	@Order(1)
 	@RegisterExtension
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
@@ -64,7 +64,8 @@ class ReladomoTestResourceWriterTest {
 
 	@Test
 	@ReladomoTestFile("test-data/ReladomoTestResourceWriterTest.txt")
-	void reladomoTestResourceWriter() {
+	void reladomoTestResourceWriter()
+	{
 		ImmutableList<String> classNames = this.domainModel.getClasses().collect(NamedElement::getName);
 		String actual = ReladomoTestResourceWriter.generate(classNames);
 
@@ -72,7 +73,8 @@ class ReladomoTestResourceWriterTest {
 		this.fileMatchExtension.assertFileContents(resourceClassPathLocation, actual);
 	}
 
-	private static DomainModel getDomainModel(ObjectMapper objectMapper) {
+	private static DomainModel getDomainModel(ObjectMapper objectMapper)
+	{
 		var domainModelCompilerFactory = new DomainModelCompilerFactory();
 		domainModelCompilerFactory.setSourcePackages(List.of("cool.klass.xample.coverage"));
 		domainModelCompilerFactory.setColorScheme("dark");

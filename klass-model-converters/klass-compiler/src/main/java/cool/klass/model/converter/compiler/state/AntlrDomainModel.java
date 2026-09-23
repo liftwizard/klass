@@ -70,8 +70,8 @@ import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.impl.factory.Sets;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
-public class AntlrDomainModel {
-
+public class AntlrDomainModel
+{
 	private final MutableList<AntlrCompilationUnit> compilationUnits = Lists.mutable.empty();
 	private final MutableList<AntlrTopLevelElement> topLevelElements = Lists.mutable.empty();
 	private final MutableList<AntlrEnumeration> enumerations = Lists.mutable.empty();
@@ -130,33 +130,39 @@ public class AntlrDomainModel {
 		new LinkedHashMap<>()
 	);
 
-	public Optional<AntlrClass> getUserClass() {
+	public Optional<AntlrClass> getUserClass()
+	{
 		return this.userClasses.size() == 1 ? this.userClasses.getFirstOptional() : Optional.empty();
 	}
 
-	public void enterTopLevelDeclaration(TopLevelDeclarationContext ctx) {
+	public void enterTopLevelDeclaration(TopLevelDeclarationContext ctx)
+	{
 		Integer duplicate = this.topLevelElementOrdinalsByContext.put(
 			ctx,
 			this.topLevelElementOrdinalsByContext.size() + 1
 		);
 
-		if (duplicate != null) {
+		if (duplicate != null)
+		{
 			throw new AssertionError();
 		}
 	}
 
-	public void exitCompilationUnit(@Nonnull AntlrCompilationUnit compilationUnit) {
+	public void exitCompilationUnit(@Nonnull AntlrCompilationUnit compilationUnit)
+	{
 		this.compilationUnits.add(compilationUnit);
 		AntlrCompilationUnit duplicateCompilationUnit = this.compilationUnitsByContext.put(
 			compilationUnit.getElementContext(),
 			compilationUnit
 		);
-		if (duplicateCompilationUnit != null) {
+		if (duplicateCompilationUnit != null)
+		{
 			throw new AssertionError();
 		}
 	}
 
-	public void exitEnumerationDeclaration(@Nonnull AntlrEnumeration enumeration) {
+	public void exitEnumerationDeclaration(@Nonnull AntlrEnumeration enumeration)
+	{
 		this.topLevelElements.add(enumeration);
 		this.enumerations.add(enumeration);
 		this.enumerationsByName.compute(enumeration.getName(), (name, builder) ->
@@ -167,7 +173,8 @@ public class AntlrDomainModel {
 			enumeration.getElementContext(),
 			enumeration
 		);
-		if (duplicateEnumeration != null) {
+		if (duplicateEnumeration != null)
+		{
 			throw new AssertionError();
 		}
 
@@ -179,12 +186,14 @@ public class AntlrDomainModel {
 			topLevelDeclarationContext,
 			enumeration
 		);
-		if (duplicateTopLevelElement != null) {
+		if (duplicateTopLevelElement != null)
+		{
 			throw new AssertionError();
 		}
 	}
 
-	public void exitInterfaceDeclaration(@Nonnull AntlrInterface iface) {
+	public void exitInterfaceDeclaration(@Nonnull AntlrInterface iface)
+	{
 		this.topLevelElements.add(iface);
 		this.classifiers.add(iface);
 		this.interfaces.add(iface);
@@ -197,12 +206,14 @@ public class AntlrDomainModel {
 		);
 
 		AntlrClassifier duplicateClassifier = this.classifiersByContext.put(iface.getElementContext(), iface);
-		if (duplicateClassifier != null) {
+		if (duplicateClassifier != null)
+		{
 			throw new AssertionError();
 		}
 
 		AntlrInterface duplicateInterface = this.interfacesByContext.put(iface.getElementContext(), iface);
-		if (duplicateInterface != null) {
+		if (duplicateInterface != null)
+		{
 			throw new AssertionError();
 		}
 
@@ -214,17 +225,20 @@ public class AntlrDomainModel {
 			topLevelDeclarationContext,
 			iface
 		);
-		if (duplicateTopLevelElement != null) {
+		if (duplicateTopLevelElement != null)
+		{
 			throw new AssertionError();
 		}
 	}
 
-	public void exitClassDeclaration(@Nonnull AntlrClass klass) {
+	public void exitClassDeclaration(@Nonnull AntlrClass klass)
+	{
 		this.topLevelElements.add(klass);
 		this.classifiers.add(klass);
 		this.klasses.add(klass);
 
-		if (klass.isUser()) {
+		if (klass.isUser())
+		{
 			this.userClasses.add(klass);
 		}
 
@@ -234,12 +248,14 @@ public class AntlrDomainModel {
 		this.classesByName.compute(klass.getName(), (name, builder) -> builder == null ? klass : AntlrClass.AMBIGUOUS);
 
 		AntlrClassifier duplicateClassifier = this.classifiersByContext.put(klass.getElementContext(), klass);
-		if (duplicateClassifier != null) {
+		if (duplicateClassifier != null)
+		{
 			throw new AssertionError();
 		}
 
 		AntlrClass duplicateClass = this.classesByContext.put(klass.getElementContext(), klass);
-		if (duplicateClass != null) {
+		if (duplicateClass != null)
+		{
 			throw new AssertionError();
 		}
 
@@ -251,12 +267,14 @@ public class AntlrDomainModel {
 			topLevelDeclarationContext,
 			klass
 		);
-		if (duplicateTopLevelElement != null) {
+		if (duplicateTopLevelElement != null)
+		{
 			throw new AssertionError();
 		}
 	}
 
-	public void exitAssociationDeclaration(@Nonnull AntlrAssociation association) {
+	public void exitAssociationDeclaration(@Nonnull AntlrAssociation association)
+	{
 		this.topLevelElements.add(association);
 		this.associations.add(association);
 		this.associationsByName.compute(association.getName(), (name, builder) ->
@@ -267,7 +285,8 @@ public class AntlrDomainModel {
 			association.getElementContext(),
 			association
 		);
-		if (duplicateAssociation != null) {
+		if (duplicateAssociation != null)
+		{
 			throw new AssertionError();
 		}
 
@@ -279,12 +298,14 @@ public class AntlrDomainModel {
 			topLevelDeclarationContext,
 			association
 		);
-		if (duplicateTopLevelElement != null) {
+		if (duplicateTopLevelElement != null)
+		{
 			throw new AssertionError();
 		}
 	}
 
-	public void exitProjectionDeclaration(@Nonnull AntlrProjection projection) {
+	public void exitProjectionDeclaration(@Nonnull AntlrProjection projection)
+	{
 		this.topLevelElements.add(projection);
 		this.projections.add(projection);
 		this.projectionsByName.compute(projection.getName(), (name, builder) ->
@@ -292,7 +313,8 @@ public class AntlrDomainModel {
 		);
 
 		AntlrProjection duplicateProjection = this.projectionsByContext.put(projection.getElementContext(), projection);
-		if (duplicateProjection != null) {
+		if (duplicateProjection != null)
+		{
 			throw new AssertionError();
 		}
 
@@ -304,12 +326,14 @@ public class AntlrDomainModel {
 			topLevelDeclarationContext,
 			projection
 		);
-		if (duplicateTopLevelElement != null) {
+		if (duplicateTopLevelElement != null)
+		{
 			throw new AssertionError();
 		}
 	}
 
-	public void exitServiceGroupDeclaration(@Nonnull AntlrServiceGroup serviceGroup) {
+	public void exitServiceGroupDeclaration(@Nonnull AntlrServiceGroup serviceGroup)
+	{
 		this.topLevelElements.add(serviceGroup);
 		this.serviceGroups.add(serviceGroup);
 		this.serviceGroupsByClass.compute(serviceGroup.getKlass(), (name, builder) ->
@@ -320,7 +344,8 @@ public class AntlrDomainModel {
 			serviceGroup.getElementContext(),
 			serviceGroup
 		);
-		if (duplicateServiceGroup != null) {
+		if (duplicateServiceGroup != null)
+		{
 			throw new AssertionError();
 		}
 
@@ -332,99 +357,124 @@ public class AntlrDomainModel {
 			topLevelDeclarationContext,
 			serviceGroup
 		);
-		if (duplicateTopLevelElement != null) {
+		if (duplicateTopLevelElement != null)
+		{
 			throw new AssertionError();
 		}
 	}
 
-	public AntlrEnumeration getEnumerationByName(String enumerationName) {
+	public AntlrEnumeration getEnumerationByName(String enumerationName)
+	{
 		return this.enumerationsByName.getIfAbsentValue(enumerationName, AntlrEnumeration.NOT_FOUND);
 	}
 
-	public AntlrClassifier getClassifierByName(String classifierName) {
+	public AntlrClassifier getClassifierByName(String classifierName)
+	{
 		return this.classifiersByName.getIfAbsentValue(classifierName, AntlrClassifier.NOT_FOUND);
 	}
 
-	public AntlrInterface getInterfaceByName(String interfaceName) {
+	public AntlrInterface getInterfaceByName(String interfaceName)
+	{
 		return this.interfacesByName.getIfAbsentValue(interfaceName, AntlrInterface.NOT_FOUND);
 	}
 
-	public AntlrClass getClassByName(String className) {
+	public AntlrClass getClassByName(String className)
+	{
 		return this.classesByName.getIfAbsentValue(className, AntlrClass.NOT_FOUND);
 	}
 
-	public AntlrProjection getProjectionByName(String projectionName) {
+	public AntlrProjection getProjectionByName(String projectionName)
+	{
 		return this.projectionsByName.getIfAbsentValue(projectionName, AntlrProjection.NOT_FOUND);
 	}
 
-	public AntlrCompilationUnit getCompilationUnitByContext(CompilationUnitContext context) {
+	public AntlrCompilationUnit getCompilationUnitByContext(CompilationUnitContext context)
+	{
 		return this.compilationUnitsByContext.get(context);
 	}
 
-	public AntlrTopLevelElement getTopLevelElementByContext(TopLevelDeclarationContext context) {
+	public AntlrTopLevelElement getTopLevelElementByContext(TopLevelDeclarationContext context)
+	{
 		return this.topLevelElementsByContext.get(context);
 	}
 
-	public Integer getTopLevelElementOrdinalByContext(TopLevelDeclarationContext context) {
+	public Integer getTopLevelElementOrdinalByContext(TopLevelDeclarationContext context)
+	{
 		return this.topLevelElementOrdinalsByContext.get(context);
 	}
 
-	public AntlrEnumeration getEnumerationByContext(EnumerationDeclarationContext context) {
+	public AntlrEnumeration getEnumerationByContext(EnumerationDeclarationContext context)
+	{
 		return this.enumerationsByContext.get(context);
 	}
 
-	public AntlrClassifier getClassifierByContext(ParserRuleContext context) {
+	public AntlrClassifier getClassifierByContext(ParserRuleContext context)
+	{
 		return this.classifiersByContext.get(context);
 	}
 
-	public AntlrInterface getInterfaceByContext(InterfaceDeclarationContext context) {
+	public AntlrInterface getInterfaceByContext(InterfaceDeclarationContext context)
+	{
 		return this.interfacesByContext.get(context);
 	}
 
-	public AntlrClass getClassByContext(ClassDeclarationContext context) {
+	public AntlrClass getClassByContext(ClassDeclarationContext context)
+	{
 		return this.classesByContext.get(context);
 	}
 
-	public AntlrAssociation getAssociationByContext(AssociationDeclarationContext context) {
+	public AntlrAssociation getAssociationByContext(AssociationDeclarationContext context)
+	{
 		return this.associationsByContext.get(context);
 	}
 
-	public AntlrProjection getProjectionByContext(ProjectionDeclarationContext context) {
+	public AntlrProjection getProjectionByContext(ProjectionDeclarationContext context)
+	{
 		return this.projectionsByContext.get(context);
 	}
 
-	public AntlrServiceGroup getServiceGroupByContext(ServiceGroupDeclarationContext context) {
+	public AntlrServiceGroup getServiceGroupByContext(ServiceGroupDeclarationContext context)
+	{
 		return this.serviceGroupsByContext.get(context);
 	}
 
 	// <editor-fold desc="Report Compiler Errors">
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		for (AntlrClass userClass : this.userClasses) {
-			if (this.userClasses.size() > 1) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		for (AntlrClass userClass : this.userClasses)
+		{
+			if (this.userClasses.size() > 1)
+			{
 				userClass.reportDuplicateUserClass(compilerAnnotationHolder);
 			}
 		}
 
 		this.reportDuplicateTopLevelNames(compilerAnnotationHolder);
 
-		for (AntlrCompilationUnit compilationUnitState : this.compilationUnits) {
+		for (AntlrCompilationUnit compilationUnitState : this.compilationUnits)
+		{
 			compilationUnitState.reportNameErrors(compilerAnnotationHolder);
 		}
 
-		for (AntlrTopLevelElement topLevelElement : this.topLevelElements) {
+		for (AntlrTopLevelElement topLevelElement : this.topLevelElements)
+		{
 			topLevelElement.reportNameErrors(compilerAnnotationHolder);
 			topLevelElement.reportErrors(compilerAnnotationHolder);
 		}
 
-		for (AntlrClassifier classifier : this.classifiers) {
-			if (this.userClasses.isEmpty()) {
+		for (AntlrClassifier classifier : this.classifiers)
+		{
+			if (this.userClasses.isEmpty())
+			{
 				classifier.reportAuditErrors(compilerAnnotationHolder);
 			}
 		}
 
 		ImmutableBag<AntlrClass> duplicateServiceGroupKlasses = this.getDuplicateServiceGroupClasses();
-		for (AntlrServiceGroup serviceGroup : this.serviceGroups) {
-			if (duplicateServiceGroupKlasses.contains(serviceGroup.getKlass())) {
+		for (AntlrServiceGroup serviceGroup : this.serviceGroups)
+		{
+			if (duplicateServiceGroupKlasses.contains(serviceGroup.getKlass()))
+			{
 				serviceGroup.reportDuplicateServiceGroupClass(compilerAnnotationHolder);
 			}
 		}
@@ -434,10 +484,12 @@ public class AntlrDomainModel {
 		this.reportUnreferencedPrivateProperties(compilerAnnotationHolder);
 	}
 
-	private void reportCascadeOrphanWarnings(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	private void reportCascadeOrphanWarnings(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		MutableSet<AntlrClass> classesWithDeleteService = this.getClassesWithDeleteService();
 
-		for (AntlrAssociation association : this.associations) {
+		for (AntlrAssociation association : this.associations)
+		{
 			this.reportCascadeOrphanForEnd(
 				compilerAnnotationHolder,
 				association,
@@ -461,30 +513,37 @@ public class AntlrDomainModel {
 		AntlrAssociationEnd fkEnd,
 		AntlrAssociationEnd oppositeEnd,
 		MutableSet<AntlrClass> classesWithDeleteService
-	) {
-		if (!fkEnd.hasForeignKeys()) {
+	)
+	{
+		if (!fkEnd.hasForeignKeys())
+		{
 			return;
 		}
-		if (oppositeEnd.isOwned()) {
+		if (oppositeEnd.isOwned())
+		{
 			return;
 		}
-		if (fkEnd.isOwned()) {
+		if (fkEnd.isOwned())
+		{
 			return;
 		}
 		AntlrClass fkHolderClass = oppositeEnd.getType();
-		if (isTransitivelyOwned(fkHolderClass)) {
+		if (isTransitivelyOwned(fkHolderClass))
+		{
 			return;
 		}
-		if (classesWithDeleteService.contains(fkHolderClass)) {
+		if (classesWithDeleteService.contains(fkHolderClass))
+		{
 			return;
 		}
 		AntlrClass fkTargetClass = fkEnd.getType();
-		if (!isTransitivelyOwned(fkTargetClass) && !classesWithDeleteService.contains(fkTargetClass)) {
+		if (!isTransitivelyOwned(fkTargetClass) && !classesWithDeleteService.contains(fkTargetClass))
+		{
 			return;
 		}
 		String message = String.format(
 			"Association end '%s.%s' is not owned. "
-			+ "'%s' rows would be orphaned when '%s' is deleted. Consider adding 'owned' to this end.",
+				+ "'%s' rows would be orphaned when '%s' is deleted. Consider adding 'owned' to this end.",
 			association.getName(),
 			oppositeEnd.getName(),
 			fkHolderClass.getName(),
@@ -493,12 +552,17 @@ public class AntlrDomainModel {
 		compilerAnnotationHolder.add("WRN_ORP_CSC", message, oppositeEnd, AnnotationSeverity.WARNING);
 	}
 
-	private MutableSet<AntlrClass> getClassesWithDeleteService() {
+	private MutableSet<AntlrClass> getClassesWithDeleteService()
+	{
 		MutableSet<AntlrClass> result = Sets.mutable.empty();
-		for (AntlrServiceGroup serviceGroup : this.serviceGroups) {
-			for (AntlrUrl url : serviceGroup.getUrls()) {
-				for (AntlrService service : url.getServices()) {
-					if (service.getVerb().getVerb() == Verb.DELETE) {
+		for (AntlrServiceGroup serviceGroup : this.serviceGroups)
+		{
+			for (AntlrUrl url : serviceGroup.getUrls())
+			{
+				for (AntlrService service : url.getServices())
+				{
+					if (service.getVerb().getVerb() == Verb.DELETE)
+					{
 						result.add(serviceGroup.getKlass());
 					}
 				}
@@ -507,16 +571,21 @@ public class AntlrDomainModel {
 		return result;
 	}
 
-	private static boolean isTransitivelyOwned(AntlrClass klass) {
+	private static boolean isTransitivelyOwned(AntlrClass klass)
+	{
 		return findOwner(klass) != null;
 	}
 
-	private static AntlrClass findOwner(AntlrClass klass) {
+	private static AntlrClass findOwner(AntlrClass klass)
+	{
 		AntlrClass current = klass;
 		Set<AntlrClass> visited = new HashSet<>();
-		while (current != null && visited.add(current)) {
-			for (AntlrAssociationEnd ae : current.getDeclaredAssociationEnds()) {
-				if (ae.getOpposite().isOwned()) {
+		while (current != null && visited.add(current))
+		{
+			for (AntlrAssociationEnd ae : current.getDeclaredAssociationEnds())
+			{
+				if (ae.getOpposite().isOwned())
+				{
 					return ae.getType();
 				}
 			}
@@ -525,23 +594,26 @@ public class AntlrDomainModel {
 		return null;
 	}
 
-	private void reportDuplicateTopLevelNames(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		ImmutableList<String> topLevelNames = this.topLevelElements.collect(
-			AntlrTopLevelElement::getName
-		).toImmutable();
+	private void reportDuplicateTopLevelNames(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		ImmutableList<String> topLevelNames = this.topLevelElements
+			.collect(AntlrTopLevelElement::getName)
+			.toImmutable();
 
 		ImmutableBag<String> duplicateTopLevelNames = topLevelNames
 			.toBag()
 			.selectByOccurrences((occurrences) -> occurrences > 1)
 			.toImmutable();
 
-		this.topLevelElements.select((topLevelElement) ->
-			duplicateTopLevelNames.contains(topLevelElement.getName())
-		).forEachWith(AntlrTopLevelElement::reportDuplicateTopLevelName, compilerAnnotationHolder);
+		this.topLevelElements
+			.select((topLevelElement) -> duplicateTopLevelNames.contains(topLevelElement.getName()))
+			.forEachWith(AntlrTopLevelElement::reportDuplicateTopLevelName, compilerAnnotationHolder);
 	}
 
-	private ImmutableBag<AntlrClass> getDuplicateServiceGroupClasses() {
-		return this.serviceGroups.collect(AntlrServiceGroup::getKlass)
+	private ImmutableBag<AntlrClass> getDuplicateServiceGroupClasses()
+	{
+		return this.serviceGroups
+			.collect(AntlrServiceGroup::getKlass)
 			.toBag()
 			.selectByOccurrences((occurrences) -> occurrences > 1)
 			.reject(AntlrClass.AMBIGUOUS::equals)
@@ -549,7 +621,8 @@ public class AntlrDomainModel {
 			.toImmutable();
 	}
 
-	private void reportUnreferencedPrivateProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	private void reportUnreferencedPrivateProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		var criteriaVisitor = new ReferencedPropertiesCriteriaVisitor();
 		var orderByVisitor = new ReferencedPropertiesOrderByVisitor();
 
@@ -571,24 +644,33 @@ public class AntlrDomainModel {
 		);
 	}
 
-	private void visitCriteria(AntlrCriteriaVisitor criteriaVisitor) {
-		for (AntlrClassifier classifier : this.classifiers) {
-			for (AntlrProperty property : classifier.getAllProperties()) {
-				if (property instanceof AntlrParameterizedProperty parameterizedProperty) {
+	private void visitCriteria(AntlrCriteriaVisitor criteriaVisitor)
+	{
+		for (AntlrClassifier classifier : this.classifiers)
+		{
+			for (AntlrProperty property : classifier.getAllProperties())
+			{
+				if (property instanceof AntlrParameterizedProperty parameterizedProperty)
+				{
 					AntlrCriteria criteria = parameterizedProperty.getCriteria();
 					criteria.visit(criteriaVisitor);
 				}
 			}
 		}
 
-		for (AntlrAssociation association : this.associations) {
+		for (AntlrAssociation association : this.associations)
+		{
 			association.visitCriteria(criteriaVisitor);
 		}
 
-		for (AntlrServiceGroup serviceGroup : this.serviceGroups) {
-			for (AntlrUrl url : serviceGroup.getUrls()) {
-				for (AntlrService service : url.getServices()) {
-					for (AntlrServiceCriteria serviceCriteria : service.getServiceCriterias()) {
+		for (AntlrServiceGroup serviceGroup : this.serviceGroups)
+		{
+			for (AntlrUrl url : serviceGroup.getUrls())
+			{
+				for (AntlrService service : url.getServices())
+				{
+					for (AntlrServiceCriteria serviceCriteria : service.getServiceCriterias())
+					{
 						serviceCriteria.getCriteria().visit(criteriaVisitor);
 					}
 				}
@@ -596,23 +678,32 @@ public class AntlrDomainModel {
 		}
 	}
 
-	private void visitOrderBy(AntlrOrderByVisitor orderByVisitor) {
-		for (AntlrClassifier classifier : this.classifiers) {
-			for (AntlrProperty property : classifier.getAllProperties()) {
-				if (property instanceof AntlrOrderByOwner orderByOwner) {
+	private void visitOrderBy(AntlrOrderByVisitor orderByVisitor)
+	{
+		for (AntlrClassifier classifier : this.classifiers)
+		{
+			for (AntlrProperty property : classifier.getAllProperties())
+			{
+				if (property instanceof AntlrOrderByOwner orderByOwner)
+				{
 					ImmutableList<AntlrOrderBy> orderBys = orderByOwner.getOrderBys();
-					for (AntlrOrderBy orderBy : orderBys) {
+					for (AntlrOrderBy orderBy : orderBys)
+					{
 						orderBy.visit(orderByVisitor);
 					}
 				}
 			}
 		}
 
-		for (AntlrServiceGroup serviceGroup : this.serviceGroups) {
-			for (AntlrUrl url : serviceGroup.getUrls()) {
-				for (AntlrService service : url.getServices()) {
+		for (AntlrServiceGroup serviceGroup : this.serviceGroups)
+		{
+			for (AntlrUrl url : serviceGroup.getUrls())
+			{
+				for (AntlrService service : url.getServices())
+				{
 					ImmutableList<AntlrOrderBy> orderBys = service.getOrderBys();
-					for (AntlrOrderBy orderBy : orderBys) {
+					for (AntlrOrderBy orderBy : orderBys)
+					{
 						orderBy.visit(orderByVisitor);
 					}
 				}
@@ -624,28 +715,35 @@ public class AntlrDomainModel {
 		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
 		@Nonnull Set<AntlrDataTypeProperty<?>> dataTypePropertiesReferenced,
 		@Nonnull Set<AntlrAssociationEnd> associationEndsReferenced
-	) {
-		for (AntlrClassifier classifier : this.classifiers) {
-			for (AntlrDataTypeProperty<?> dataTypeProperty : classifier.getAllDataTypeProperties()) {
+	)
+	{
+		for (AntlrClassifier classifier : this.classifiers)
+		{
+			for (AntlrDataTypeProperty<?> dataTypeProperty : classifier.getAllDataTypeProperties())
+			{
 				ImmutableList<AntlrDataTypeProperty<?>> overriddenProperties =
 					dataTypeProperty.getOverriddenProperties();
 				if (
 					dataTypeProperty.isPrivate()
 					&& dataTypeProperty.getType() != AntlrPrimitiveType.TEMPORAL_RANGE
 					&& overriddenProperties.noneSatisfy(dataTypePropertiesReferenced::contains)
-				) {
+				)
+				{
 					dataTypeProperty.reportUnreferencedPrivateProperty(compilerAnnotationHolder);
 				}
 			}
 		}
 
-		for (AntlrClass klass : this.klasses) {
-			for (AntlrAssociationEnd associationEnds : klass.getDeclaredAssociationEnds()) {
+		for (AntlrClass klass : this.klasses)
+		{
+			for (AntlrAssociationEnd associationEnds : klass.getDeclaredAssociationEnds())
+			{
 				if (
 					associationEnds.isPrivate()
 					&& !associationEndsReferenced.contains(associationEnds)
 					&& !associationEndsReferenced.contains(associationEnds.getOpposite())
-				) {
+				)
+				{
 					associationEnds.reportUnreferencedPrivateProperty(compilerAnnotationHolder);
 				}
 			}
@@ -655,37 +753,38 @@ public class AntlrDomainModel {
 	// </editor-fold>
 
 	@Nonnull
-	public DomainModelBuilder build(ImmutableList<CompilationUnit> compilationUnits) {
+	public DomainModelBuilder build(ImmutableList<CompilationUnit> compilationUnits)
+	{
 		ImmutableList<SourceCodeBuilderImpl> sourceCodeBuilders = compilationUnits.collect(CompilationUnit::build);
-		ImmutableList<EnumerationBuilder> enumerationBuilders = this.enumerations.collect(
-			AntlrEnumeration::build
-		).toImmutable();
-		ImmutableList<InterfaceBuilder> interfaceBuilders = this.interfaces.collect(
-			AntlrInterface::build1
-		).toImmutable();
+		ImmutableList<EnumerationBuilder> enumerationBuilders = this.enumerations
+			.collect(AntlrEnumeration::build)
+			.toImmutable();
+		ImmutableList<InterfaceBuilder> interfaceBuilders = this.interfaces
+			.collect(AntlrInterface::build1)
+			.toImmutable();
 		ImmutableList<KlassBuilder> classBuilders = this.klasses.collect(AntlrClass::build1).toImmutable();
 
-		ImmutableList<ClassifierBuilder<?>> classifierBuilders = this.classifiers.<ClassifierBuilder<?>>collect(
-			AntlrClassifier::getElementBuilder
-		).toImmutable();
+		ImmutableList<ClassifierBuilder<?>> classifierBuilders = this.classifiers
+			.<ClassifierBuilder<?>>collect(AntlrClassifier::getElementBuilder)
+			.toImmutable();
 
-		ImmutableList<AssociationBuilder> associationBuilders = this.associations.collect(
-			AntlrAssociation::build
-		).toImmutable();
+		ImmutableList<AssociationBuilder> associationBuilders = this.associations
+			.collect(AntlrAssociation::build)
+			.toImmutable();
 		this.interfaces.each(AntlrInterface::build2);
 		this.klasses.each(AntlrClass::build2);
 
-		ImmutableList<ProjectionBuilder> projectionBuilders = this.projections.collect(
-			AntlrProjection::build
-		).toImmutable();
+		ImmutableList<ProjectionBuilder> projectionBuilders = this.projections
+			.collect(AntlrProjection::build)
+			.toImmutable();
 		this.projections.each(AntlrProjection::build2);
-		ImmutableList<ServiceGroupBuilder> serviceGroupBuilders = this.serviceGroups.collect(
-			AntlrServiceGroup::build
-		).toImmutable();
+		ImmutableList<ServiceGroupBuilder> serviceGroupBuilders = this.serviceGroups
+			.collect(AntlrServiceGroup::build)
+			.toImmutable();
 
-		ImmutableList<TopLevelElementBuilder> topLevelElementBuilders = this.topLevelElements.collect(
-			AntlrTopLevelElement::getElementBuilder
-		).toImmutable();
+		ImmutableList<TopLevelElementBuilder> topLevelElementBuilders = this.topLevelElements
+			.collect(AntlrTopLevelElement::getElementBuilder)
+			.toImmutable();
 
 		compilationUnits.each(CompilationUnit::build2);
 

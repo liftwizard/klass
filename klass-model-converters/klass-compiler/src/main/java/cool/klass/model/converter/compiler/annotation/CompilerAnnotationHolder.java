@@ -30,14 +30,15 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 
-public class CompilerAnnotationHolder {
-
+public class CompilerAnnotationHolder
+{
 	private final MutableList<RootCompilerAnnotation> compilerAnnotations = Lists.mutable.empty();
 
 	private AnsiTokenColorizer ansiTokenColorizer;
 	private boolean enableIdeLinks;
 
-	public void add(@Nonnull String annotationCode, @Nonnull String message, @Nonnull IAntlrElement element) {
+	public void add(@Nonnull String annotationCode, @Nonnull String message, @Nonnull IAntlrElement element)
+	{
 		this.add(annotationCode, message, element, AnnotationSeverity.ERROR);
 	}
 
@@ -46,11 +47,15 @@ public class CompilerAnnotationHolder {
 		@Nonnull String message,
 		@Nonnull IAntlrElement element,
 		@Nonnull AnnotationSeverity severity
-	) {
+	)
+	{
 		Objects.requireNonNull(element);
-		if (element instanceof AntlrNamedElement namedElement) {
+		if (element instanceof AntlrNamedElement namedElement)
+		{
 			this.add(annotationCode, message, element, namedElement.getNameContext(), severity);
-		} else {
+		}
+		else
+		{
 			this.add(annotationCode, message, element, element.getElementContext(), severity);
 		}
 	}
@@ -60,7 +65,8 @@ public class CompilerAnnotationHolder {
 		@Nonnull String message,
 		@Nonnull IAntlrElement element,
 		@Nonnull ParserRuleContext offendingContext
-	) {
+	)
+	{
 		this.add(annotationCode, message, element, offendingContext, AnnotationSeverity.ERROR);
 	}
 
@@ -70,7 +76,8 @@ public class CompilerAnnotationHolder {
 		@Nonnull IAntlrElement element,
 		@Nonnull ParserRuleContext offendingContext,
 		@Nonnull AnnotationSeverity severity
-	) {
+	)
+	{
 		this.add(annotationCode, message, element, Lists.immutable.with(offendingContext), severity);
 	}
 
@@ -79,7 +86,8 @@ public class CompilerAnnotationHolder {
 		@Nonnull String message,
 		@Nonnull IAntlrElement element,
 		@Nonnull ImmutableList<ParserRuleContext> offendingContexts
-	) {
+	)
+	{
 		this.add(annotationCode, message, element, offendingContexts, AnnotationSeverity.ERROR);
 	}
 
@@ -89,7 +97,8 @@ public class CompilerAnnotationHolder {
 		@Nonnull IAntlrElement element,
 		@Nonnull ImmutableList<ParserRuleContext> offendingContexts,
 		@Nonnull AnnotationSeverity severity
-	) {
+	)
+	{
 		this.add(annotationCode, message, element, element.getSurroundingElements(), offendingContexts, severity);
 	}
 
@@ -99,7 +108,8 @@ public class CompilerAnnotationHolder {
 		@Nonnull IAntlrElement element,
 		@Nonnull ImmutableList<IAntlrElement> surroundingElements,
 		@Nonnull ImmutableList<ParserRuleContext> offendingContexts
-	) {
+	)
+	{
 		this.add(annotationCode, message, element, surroundingElements, offendingContexts, AnnotationSeverity.ERROR);
 	}
 
@@ -110,7 +120,8 @@ public class CompilerAnnotationHolder {
 		@Nonnull ImmutableList<IAntlrElement> surroundingElements,
 		@Nonnull ImmutableList<ParserRuleContext> offendingContexts,
 		@Nonnull AnnotationSeverity severity
-	) {
+	)
+	{
 		RootCompilerAnnotation compilerAnnotation = this.getCompilerAnnotation(
 			annotationCode,
 			message,
@@ -130,7 +141,8 @@ public class CompilerAnnotationHolder {
 		@Nonnull ImmutableList<IAntlrElement> surroundingElements,
 		@Nonnull ImmutableList<ParserRuleContext> offendingContexts,
 		@Nonnull AnnotationSeverity severity
-	) {
+	)
+	{
 		Optional<CauseCompilerAnnotation> macroCause = this.getCauseCompilerAnnotation(element, severity);
 
 		CompilationUnit compilationUnit = element.getCompilationUnit().get();
@@ -153,7 +165,8 @@ public class CompilerAnnotationHolder {
 		@Nonnull ImmutableList<IAntlrElement> surroundingElements,
 		@Nonnull ImmutableList<ParserRuleContext> offendingContexts,
 		@Nonnull AnnotationSeverity severity
-	) {
+	)
+	{
 		Optional<CauseCompilerAnnotation> macroCause = this.getCauseCompilerAnnotation(element, severity);
 
 		CompilationUnit compilationUnit = element.getCompilationUnit().get();
@@ -171,7 +184,8 @@ public class CompilerAnnotationHolder {
 	private Optional<CauseCompilerAnnotation> getCauseCompilerAnnotation(
 		@Nonnull IAntlrElement element,
 		@Nonnull AnnotationSeverity severity
-	) {
+	)
+	{
 		return element
 			.getMacroElement()
 			.map((macroElement) ->
@@ -184,19 +198,23 @@ public class CompilerAnnotationHolder {
 			);
 	}
 
-	public ImmutableList<RootCompilerAnnotation> getCompilerAnnotations() {
+	public ImmutableList<RootCompilerAnnotation> getCompilerAnnotations()
+	{
 		return this.compilerAnnotations.toSortedList().toImmutable();
 	}
 
-	public boolean hasCompilerAnnotations() {
+	public boolean hasCompilerAnnotations()
+	{
 		return this.compilerAnnotations.notEmpty();
 	}
 
-	public void setAnsiTokenColorizer(@Nonnull AnsiTokenColorizer ansiTokenColorizer) {
+	public void setAnsiTokenColorizer(@Nonnull AnsiTokenColorizer ansiTokenColorizer)
+	{
 		this.ansiTokenColorizer = Objects.requireNonNull(ansiTokenColorizer);
 	}
 
-	public void setEnableIdeLinks(boolean enableIdeLinks) {
+	public void setEnableIdeLinks(boolean enableIdeLinks)
+	{
 		this.enableIdeLinks = enableIdeLinks;
 	}
 }

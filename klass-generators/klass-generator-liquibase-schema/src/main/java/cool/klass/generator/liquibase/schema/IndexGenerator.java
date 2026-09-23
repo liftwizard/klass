@@ -25,13 +25,15 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableOrderedMap;
 
-public final class IndexGenerator {
-
-	private IndexGenerator() {
+public final class IndexGenerator
+{
+	private IndexGenerator()
+	{
 		throw new AssertionError("Suppress default constructor for noninstantiability");
 	}
 
-	public static String getIndex(Klass klass, int ordinal) {
+	public static String getIndex(Klass klass, int ordinal)
+	{
 		String tableName = TableGenerator.TABLE_NAME_CONVERTER.convert(klass.getName());
 
 		MutableOrderedMap<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> foreignKeyConstraints =
@@ -45,14 +47,15 @@ public final class IndexGenerator {
 			.reject(String::isEmpty)
 			.toList();
 
-		if (!Objects.equals(result, result.distinct())) {
+		if (!Objects.equals(result, result.distinct()))
+		{
 			throw new AssertionError(
 				"Duplicate foreign key index detected for "
-				+ tableName
-				+ " in "
-				+ klass.getName()
-				+ ". Indexes: "
-				+ result
+					+ tableName
+					+ " in "
+					+ klass.getName()
+					+ ". Indexes: "
+					+ result
 			);
 		}
 
@@ -65,7 +68,8 @@ public final class IndexGenerator {
 		Klass klass,
 		String tableName,
 		int ordinal
-	) {
+	)
+	{
 		String constraintName =
 			tableName + "_IDX_" + TableGenerator.COLUMN_NAME_CONVERTER.convert(associationEnd.getName());
 
@@ -77,7 +81,8 @@ public final class IndexGenerator {
 			.concatenate(toProperties)
 			.toImmutableList();
 
-		if (isPrefixList(allKeyProperties, getAllKeyProperties(klass))) {
+		if (isPrefixList(allKeyProperties, getAllKeyProperties(klass)))
+		{
 			return "";
 		}
 
@@ -106,15 +111,18 @@ public final class IndexGenerator {
 		);
 	}
 
-	private static boolean isPrefixList(ImmutableList<DataTypeProperty> list1, ImmutableList<DataTypeProperty> list2) {
-		if (list1.size() > list2.size()) {
+	private static boolean isPrefixList(ImmutableList<DataTypeProperty> list1, ImmutableList<DataTypeProperty> list2)
+	{
+		if (list1.size() > list2.size())
+		{
 			return false;
 		}
 
 		return list1.equals(list2.subList(0, list1.size()));
 	}
 
-	private static ImmutableList<DataTypeProperty> getAllKeyProperties(Klass klass) {
+	private static ImmutableList<DataTypeProperty> getAllKeyProperties(Klass klass)
+	{
 		ImmutableList<DataTypeProperty> toProperties = klass.getDataTypeProperties().select(DataTypeProperty::isTo);
 		return klass.getKeyProperties().newWithAll(toProperties);
 	}

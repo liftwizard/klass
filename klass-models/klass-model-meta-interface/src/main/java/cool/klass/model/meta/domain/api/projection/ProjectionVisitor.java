@@ -16,7 +16,8 @@
 
 package cool.klass.model.meta.domain.api.projection;
 
-public interface ProjectionVisitor {
+public interface ProjectionVisitor
+{
 	void visitProjection(Projection projection);
 
 	void visitProjectionReferenceProperty(ProjectionReferenceProperty projectionReferenceProperty);

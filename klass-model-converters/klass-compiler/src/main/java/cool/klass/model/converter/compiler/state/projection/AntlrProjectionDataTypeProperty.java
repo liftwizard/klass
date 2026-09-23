@@ -37,8 +37,10 @@ import cool.klass.model.meta.grammar.KlassParser.ProjectionPrimitiveMemberContex
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.tuple.Pair;
 
-public class AntlrProjectionDataTypeProperty extends AntlrIdentifierElement implements AntlrProjectionChild {
-
+public class AntlrProjectionDataTypeProperty
+	extends AntlrIdentifierElement
+	implements AntlrProjectionChild
+{
 	@Nonnull
 	private final HeaderContext headerContext;
 
@@ -66,7 +68,8 @@ public class AntlrProjectionDataTypeProperty extends AntlrIdentifierElement impl
 		@Nonnull AntlrProjectionParent antlrProjectionParent,
 		@Nonnull AntlrClassifier classifier,
 		@Nonnull AntlrDataTypeProperty<?> dataTypeProperty
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, ordinal, nameContext);
 		this.antlrProjectionParent = Objects.requireNonNull(antlrProjectionParent);
 		this.headerText = Objects.requireNonNull(headerText);
@@ -76,20 +79,24 @@ public class AntlrProjectionDataTypeProperty extends AntlrIdentifierElement impl
 	}
 
 	@Nonnull
-	public AntlrDataTypeProperty<?> getProperty() {
+	public AntlrDataTypeProperty<?> getProperty()
+	{
 		return this.dataTypeProperty;
 	}
 
 	@Nonnull
 	@Override
-	public AntlrClassifier getDeclaringClassifier() {
+	public AntlrClassifier getDeclaringClassifier()
+	{
 		return this.classifier;
 	}
 
 	@Nonnull
 	@Override
-	public ProjectionDataTypePropertyBuilder build() {
-		if (this.projectionDataTypePropertyBuilder != null) {
+	public ProjectionDataTypePropertyBuilder build()
+	{
+		if (this.projectionDataTypePropertyBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.projectionDataTypePropertyBuilder = new ProjectionDataTypePropertyBuilder(
@@ -108,47 +115,56 @@ public class AntlrProjectionDataTypeProperty extends AntlrIdentifierElement impl
 	}
 
 	@Override
-	public void build2() {
+	public void build2()
+	{
 		// Deliberately empty
 	}
 
 	@Override
-	public void visit(@Nonnull AntlrProjectionVisitor visitor) {
+	public void visit(@Nonnull AntlrProjectionVisitor visitor)
+	{
 		visitor.visitDataTypeProperty(this);
 	}
 
 	@Override
 	@Nonnull
-	public ProjectionPrimitiveMemberContext getElementContext() {
+	public ProjectionPrimitiveMemberContext getElementContext()
+	{
 		return (ProjectionPrimitiveMemberContext) this.elementContext;
 	}
 
 	@Override
 	@Nonnull
-	public ProjectionDataTypePropertyBuilder getElementBuilder() {
+	public ProjectionDataTypePropertyBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.projectionDataTypePropertyBuilder);
 	}
 
 	@Override
-	public boolean isContext() {
+	public boolean isContext()
+	{
 		return true;
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore() {
+	public Pair<Token, Token> getContextBefore()
+	{
 		return this.getEntireContext();
 	}
 
 	@Nonnull
 	@Override
-	public AntlrProjectionParent getParent() {
+	public AntlrProjectionParent getParent()
+	{
 		return this.antlrProjectionParent;
 	}
 
 	// <editor-fold desc="Report Compiler Errors">
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.headerText.trim().isEmpty()) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.headerText.trim().isEmpty())
+		{
 			compilerAnnotationHolder.add("ERR_PRJ_HDR", "Empty header string.", this, this.headerContext);
 		}
 
@@ -158,20 +174,25 @@ public class AntlrProjectionDataTypeProperty extends AntlrIdentifierElement impl
 			|| parentClassifier == AntlrClass.AMBIGUOUS
 			|| parentClassifier == AntlrClassifier.AMBIGUOUS
 			|| parentClassifier == AntlrClassifier.NOT_FOUND
-		) {
+		)
+		{
 			return;
 		}
 
-		if (this.dataTypeProperty == AntlrEnumerationProperty.NOT_FOUND) {
+		if (this.dataTypeProperty == AntlrEnumerationProperty.NOT_FOUND)
+		{
 			AntlrReferenceProperty<?> referenceProperty = parentClassifier.getReferencePropertyByName(this.getName());
-			if (referenceProperty == AntlrReferenceProperty.NOT_FOUND) {
+			if (referenceProperty == AntlrReferenceProperty.NOT_FOUND)
+			{
 				String message = String.format(
 					"Cannot find member '%s.%s'.",
 					parentClassifier.getName(),
 					this.getName()
 				);
 				compilerAnnotationHolder.add("ERR_PRJ_DTP", message, this);
-			} else {
+			}
+			else
+			{
 				String message =
 					"Leaf projection nodes require a data type property, but found a reference property '%s.%s' with type '%s'".formatted(
 						parentClassifier.getName(),
@@ -187,7 +208,8 @@ public class AntlrProjectionDataTypeProperty extends AntlrIdentifierElement impl
 		this.reportForwardReference(compilerAnnotationHolder);
 	}
 
-	private void reportRedundantClassifierQualifier(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	private void reportRedundantClassifierQualifier(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		AntlrClassifier parentClassifier = this.antlrProjectionParent.getClassifier();
 		AntlrDataTypeProperty<?> parentResolvedProperty = parentClassifier.getDataTypePropertyByName(this.getName());
 		this.reportRedundantClassifierQualifier(
@@ -197,8 +219,10 @@ public class AntlrProjectionDataTypeProperty extends AntlrIdentifierElement impl
 		);
 	}
 
-	private void reportPrivateProperty(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.dataTypeProperty.isPrivate()) {
+	private void reportPrivateProperty(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.dataTypeProperty.isPrivate())
+		{
 			String message = String.format(
 				"Projection includes private property '%s.%s'.",
 				this.dataTypeProperty.getOwningClassifier().getName(),
@@ -208,8 +232,10 @@ public class AntlrProjectionDataTypeProperty extends AntlrIdentifierElement impl
 		}
 	}
 
-	private void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (!this.isForwardReference(this.dataTypeProperty)) {
+	private void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (!this.isForwardReference(this.dataTypeProperty))
+		{
 			return;
 		}
 
@@ -225,13 +251,15 @@ public class AntlrProjectionDataTypeProperty extends AntlrIdentifierElement impl
 	}
 
 	@Override
-	public void reportDuplicateMemberName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportDuplicateMemberName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		String message = String.format("Duplicate member: '%s'.", this.getName());
 		compilerAnnotationHolder.add("ERR_DUP_PRJ", message, this);
 	}
 
 	@Override
-	public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		// Intentionally blank. Reference to a named element that gets its name checked.
 	}
 
@@ -239,7 +267,8 @@ public class AntlrProjectionDataTypeProperty extends AntlrIdentifierElement impl
 
 	@Nonnull
 	@Override
-	protected Pattern getNamePattern() {
+	protected Pattern getNamePattern()
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".getNamePattern() not implemented yet"
 		);

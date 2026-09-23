@@ -20,19 +20,25 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class MinPropertyValidationList extends MinPropertyValidationListAbstract {
+public class MinPropertyValidationList
+	extends MinPropertyValidationListAbstract
+{
+	public MinPropertyValidationList()
+	{
+	}
 
-	public MinPropertyValidationList() {}
-
-	public MinPropertyValidationList(int initialSize) {
+	public MinPropertyValidationList(int initialSize)
+	{
 		super(initialSize);
 	}
 
-	public MinPropertyValidationList(Collection c) {
+	public MinPropertyValidationList(Collection c)
+	{
 		super(c);
 	}
 
-	public MinPropertyValidationList(Operation operation) {
+	public MinPropertyValidationList(Operation operation)
+	{
 		super(operation);
 	}
 }

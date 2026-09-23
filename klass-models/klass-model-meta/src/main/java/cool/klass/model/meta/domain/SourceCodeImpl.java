@@ -31,8 +31,9 @@ import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 
-public final class SourceCodeImpl implements SourceCode {
-
+public final class SourceCodeImpl
+	implements SourceCode
+{
 	@Nonnull
 	private final String sourceName;
 
@@ -56,7 +57,8 @@ public final class SourceCodeImpl implements SourceCode {
 		@Nonnull BufferedTokenStream tokenStream,
 		@Nonnull ParserRuleContext parserContext,
 		@Nonnull Optional<SourceCodeImpl> macroSourceCode
-	) {
+	)
+	{
 		this.sourceName = Objects.requireNonNull(sourceName);
 		this.sourceCodeText = Objects.requireNonNull(sourceCodeText);
 		this.tokenStream = Objects.requireNonNull(tokenStream);
@@ -66,14 +68,17 @@ public final class SourceCodeImpl implements SourceCode {
 
 	@Override
 	@Nonnull
-	public String getSourceName() {
+	public String getSourceName()
+	{
 		return this.sourceName;
 	}
 
 	@Nonnull
 	@Override
-	public String getFullPathSourceName() {
-		if (this.macroElement.isEmpty()) {
+	public String getFullPathSourceName()
+	{
+		if (this.macroElement.isEmpty())
+		{
 			List<String> split = Splitter.on('/').splitToList(this.sourceName);
 			return split.getLast();
 		}
@@ -93,42 +98,50 @@ public final class SourceCodeImpl implements SourceCode {
 
 	@Override
 	@Nonnull
-	public String getSourceCodeText() {
+	public String getSourceCodeText()
+	{
 		return this.sourceCodeText;
 	}
 
 	@Override
 	@Nonnull
-	public BufferedTokenStream getTokenStream() {
+	public BufferedTokenStream getTokenStream()
+	{
 		return this.tokenStream;
 	}
 
 	@Override
 	@Nonnull
-	public ParserRuleContext getParserContext() {
+	public ParserRuleContext getParserContext()
+	{
 		return this.parserContext;
 	}
 
 	@Nonnull
 	@Override
-	public Optional<SourceCode> getMacroSourceCode() {
+	public Optional<SourceCode> getMacroSourceCode()
+	{
 		return this.macroSourceCode.map(Function.identity());
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return this.sourceName;
 	}
 
-	public void setMacroElement(Optional<Element> macroElement) {
-		if (this.macroElement != null) {
+	public void setMacroElement(Optional<Element> macroElement)
+	{
+		if (this.macroElement != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.macroElement = macroElement;
 	}
 
-	public static final class SourceCodeBuilderImpl implements SourceCodeBuilder {
-
+	public static final class SourceCodeBuilderImpl
+		implements SourceCodeBuilder
+	{
 		@Nonnull
 		private final String sourceName;
 
@@ -153,7 +166,8 @@ public final class SourceCodeImpl implements SourceCode {
 			@Nonnull BufferedTokenStream tokenStream,
 			@Nonnull ParserRuleContext parserContext,
 			@Nonnull Optional<SourceCodeBuilderImpl> macroSourceCodeBuilder
-		) {
+		)
+		{
 			this.sourceName = Objects.requireNonNull(sourceName);
 			this.sourceCodeText = Objects.requireNonNull(sourceCodeText);
 			this.tokenStream = Objects.requireNonNull(tokenStream);
@@ -162,8 +176,10 @@ public final class SourceCodeImpl implements SourceCode {
 		}
 
 		@Override
-		public SourceCodeImpl build() {
-			if (this.sourceCode == null) {
+		public SourceCodeImpl build()
+		{
+			if (this.sourceCode == null)
+			{
 				this.sourceCode = new SourceCodeImpl(
 					this.sourceName,
 					this.sourceCodeText,
@@ -175,18 +191,22 @@ public final class SourceCodeImpl implements SourceCode {
 			return this.sourceCode;
 		}
 
-		public Optional<ElementBuilder<?>> getMacroElement() {
+		public Optional<ElementBuilder<?>> getMacroElement()
+		{
 			return Objects.requireNonNull(this.macroElement);
 		}
 
-		public void setMacroElement(Optional<ElementBuilder<?>> macroElement) {
-			if (this.macroElement != null) {
+		public void setMacroElement(Optional<ElementBuilder<?>> macroElement)
+		{
+			if (this.macroElement != null)
+			{
 				throw new IllegalStateException();
 			}
 			this.macroElement = macroElement;
 		}
 
-		public void build2() {
+		public void build2()
+		{
 			Optional<Element> element = this.macroElement.map(ElementBuilder::getElement);
 			this.sourceCode.setMacroElement(element);
 		}

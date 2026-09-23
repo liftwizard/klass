@@ -31,8 +31,9 @@ import cool.klass.model.meta.domain.order.OrderByMemberReferencePathImpl.OrderBy
 import cool.klass.model.meta.domain.value.ThisMemberReferencePathImpl.ThisMemberReferencePathBuilder;
 import cool.klass.model.meta.grammar.KlassParser.OrderByMemberReferencePathContext;
 
-public class AntlrOrderByMemberReferencePath extends AntlrElement {
-
+public class AntlrOrderByMemberReferencePath
+	extends AntlrElement
+{
 	@Nonnull
 	private final AntlrOrderBy orderBy;
 
@@ -52,7 +53,8 @@ public class AntlrOrderByMemberReferencePath extends AntlrElement {
 		@Nonnull AntlrOrderBy orderBy,
 		int ordinal,
 		@Nonnull AntlrThisMemberReferencePath thisMemberReferencePath
-	) {
+	)
+	{
 		super(elementContext, compilationUnit);
 		this.orderBy = Objects.requireNonNull(orderBy);
 		this.ordinal = ordinal;
@@ -61,38 +63,46 @@ public class AntlrOrderByMemberReferencePath extends AntlrElement {
 
 	@Nonnull
 	@Override
-	public Optional<IAntlrElement> getSurroundingElement() {
+	public Optional<IAntlrElement> getSurroundingElement()
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".getSurroundingContext() not implemented yet"
 		);
 	}
 
-	public int getOrdinal() {
+	public int getOrdinal()
+	{
 		return this.ordinal;
 	}
 
-	public void enterOrderByDirection(@Nonnull AntlrOrderByDirection orderByDirection) {
+	public void enterOrderByDirection(@Nonnull AntlrOrderByDirection orderByDirection)
+	{
 		this.orderByDirection = Objects.requireNonNull(orderByDirection);
 	}
 
 	@Nullable
-	public AntlrOrderByDirection getOrderByDirection() {
+	public AntlrOrderByDirection getOrderByDirection()
+	{
 		return this.orderByDirection;
 	}
 
 	@Nonnull
-	public AntlrThisMemberReferencePath getThisMemberReferencePath() {
+	public AntlrThisMemberReferencePath getThisMemberReferencePath()
+	{
 		return this.thisMemberReferencePath;
 	}
 
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		// TODO: ❗️ Redo context stack for error reporting
 		this.thisMemberReferencePath.reportErrors(compilerAnnotationHolder);
 	}
 
 	@Nonnull
-	public OrderByMemberReferencePathBuilder build() {
-		if (this.elementBuilder != null) {
+	public OrderByMemberReferencePathBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		ThisMemberReferencePathBuilder thisMemberReferencePathBuilder = this.thisMemberReferencePath.build();
@@ -112,7 +122,8 @@ public class AntlrOrderByMemberReferencePath extends AntlrElement {
 
 	@Override
 	@Nonnull
-	public OrderByMemberReferencePathBuilder getElementBuilder() {
+	public OrderByMemberReferencePathBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 }

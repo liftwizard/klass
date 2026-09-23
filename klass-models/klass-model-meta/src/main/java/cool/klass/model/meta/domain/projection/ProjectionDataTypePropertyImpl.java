@@ -40,8 +40,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 
 public final class ProjectionDataTypePropertyImpl
 	extends AbstractIdentifierElement
-	implements AbstractProjectionElement, ProjectionDataTypePropertyWithSourceCode {
-
+	implements AbstractProjectionElement, ProjectionDataTypePropertyWithSourceCode
+{
 	@Nonnull
 	private final ParserRuleContext headerContext;
 
@@ -68,7 +68,8 @@ public final class ProjectionDataTypePropertyImpl
 		@Nonnull ProjectionParent parent,
 		@Nonnull AbstractClassifier classifier,
 		@Nonnull AbstractDataTypeProperty<?> property
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode, ordinal, nameContext);
 		this.headerContext = Objects.requireNonNull(headerContext);
 		this.headerText = Objects.requireNonNull(headerText);
@@ -79,38 +80,43 @@ public final class ProjectionDataTypePropertyImpl
 
 	@Nonnull
 	@Override
-	public ProjectionPrimitiveMemberContext getElementContext() {
+	public ProjectionPrimitiveMemberContext getElementContext()
+	{
 		return (ProjectionPrimitiveMemberContext) super.getElementContext();
 	}
 
 	@Nonnull
 	@Override
-	public Optional<ProjectionParent> getParent() {
+	public Optional<ProjectionParent> getParent()
+	{
 		return Optional.of(this.parent);
 	}
 
 	@Override
 	@Nonnull
-	public String getHeaderText() {
+	public String getHeaderText()
+	{
 		return this.headerText;
 	}
 
 	@Nonnull
 	@Override
-	public Classifier getDeclaredClassifier() {
+	public Classifier getDeclaredClassifier()
+	{
 		return this.classifier;
 	}
 
 	@Override
 	@Nonnull
-	public AbstractDataTypeProperty<?> getProperty() {
+	public AbstractDataTypeProperty<?> getProperty()
+	{
 		return this.property;
 	}
 
 	public static final class ProjectionDataTypePropertyBuilder
 		extends IdentifierElementBuilder<ProjectionDataTypePropertyImpl>
-		implements ProjectionChildBuilder {
-
+		implements ProjectionChildBuilder
+	{
 		@Nonnull
 		private final ParserRuleContext headerContext;
 
@@ -137,7 +143,8 @@ public final class ProjectionDataTypePropertyImpl
 			@Nonnull AbstractProjectionParentBuilder<?> parentBuilder,
 			@Nonnull ClassifierBuilder<?> classifierBuilder,
 			@Nonnull DataTypePropertyBuilder<?, ?, ?> propertyBuilder
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode, ordinal, nameContext);
 			this.headerContext = Objects.requireNonNull(headerContext);
 			this.headerText = Objects.requireNonNull(headerText);
@@ -148,7 +155,8 @@ public final class ProjectionDataTypePropertyImpl
 
 		@Override
 		@Nonnull
-		protected ProjectionDataTypePropertyImpl buildUnsafe() {
+		protected ProjectionDataTypePropertyImpl buildUnsafe()
+		{
 			return new ProjectionDataTypePropertyImpl(
 				(ProjectionPrimitiveMemberContext) this.elementContext,
 				this.macroElement.map(ElementBuilder::getElement),
@@ -164,7 +172,8 @@ public final class ProjectionDataTypePropertyImpl
 		}
 
 		@Override
-		public void build2() {
+		public void build2()
+		{
 			// Deliberately empty
 		}
 	}

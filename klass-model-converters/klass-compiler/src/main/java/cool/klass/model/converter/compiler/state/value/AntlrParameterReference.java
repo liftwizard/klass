@@ -34,8 +34,9 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.OrderedMap;
 
-public class AntlrParameterReference extends AntlrExpressionValue {
-
+public class AntlrParameterReference
+	extends AntlrExpressionValue
+{
 	@Nonnull
 	private final String variableName;
 
@@ -49,20 +50,24 @@ public class AntlrParameterReference extends AntlrExpressionValue {
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull String variableName,
 		@Nonnull IAntlrElement expressionValueOwner
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, expressionValueOwner);
 		this.variableName = Objects.requireNonNull(variableName);
 	}
 
 	@Nullable
-	public AntlrParameter getAntlrParameter() {
+	public AntlrParameter getAntlrParameter()
+	{
 		return this.antlrParameter;
 	}
 
 	@Nonnull
 	@Override
-	public ParameterReferenceBuilder build() {
-		if (this.elementBuilder != null) {
+	public ParameterReferenceBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.elementBuilder = new ParameterReferenceBuilder(
@@ -76,17 +81,21 @@ public class AntlrParameterReference extends AntlrExpressionValue {
 
 	@Nonnull
 	@Override
-	public ParameterReferenceBuilder getElementBuilder() {
+	public ParameterReferenceBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.antlrParameter == AntlrParameter.AMBIGUOUS) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.antlrParameter == AntlrParameter.AMBIGUOUS)
+		{
 			return;
 		}
 
-		if (this.antlrParameter == AntlrParameter.NOT_FOUND) {
+		if (this.antlrParameter == AntlrParameter.NOT_FOUND)
+		{
 			String message = String.format("Cannot find parameter '%s'.", this.elementContext.getText());
 			compilerAnnotationHolder.add("ERR_VAR_REF", message, this);
 		}
@@ -94,7 +103,8 @@ public class AntlrParameterReference extends AntlrExpressionValue {
 
 	@Nonnull
 	@Override
-	public ImmutableList<AntlrType> getPossibleTypes() {
+	public ImmutableList<AntlrType> getPossibleTypes()
+	{
 		Objects.requireNonNull(this.antlrParameter);
 		AntlrType type = this.antlrParameter.getType();
 		return type == AntlrEnumeration.NOT_FOUND || type == AntlrEnumeration.AMBIGUOUS
@@ -103,12 +113,14 @@ public class AntlrParameterReference extends AntlrExpressionValue {
 	}
 
 	@Override
-	public void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName) {
+	public void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName)
+	{
 		this.antlrParameter = formalParametersByName.getIfAbsentValue(this.variableName, AntlrParameter.NOT_FOUND);
 	}
 
 	@Override
-	public void visit(AntlrExpressionValueVisitor visitor) {
+	public void visit(AntlrExpressionValueVisitor visitor)
+	{
 		visitor.visitParameterReference(this);
 	}
 }

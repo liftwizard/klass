@@ -61,8 +61,8 @@ import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.tuple.primitive.ObjectBooleanPair;
 import org.eclipse.collections.impl.tuple.primitive.PrimitiveTuples;
 
-public class ServiceResourceGenerator {
-
+public class ServiceResourceGenerator
+{
 	private static final Converter<String, String> UPPER_TO_LOWER_CAMEL = CaseFormat.UPPER_CAMEL.converterTo(
 		CaseFormat.LOWER_CAMEL
 	);
@@ -80,14 +80,18 @@ public class ServiceResourceGenerator {
 		@Nonnull DomainModel domainModel,
 		@Nonnull String applicationName,
 		@Nonnull String rootPackageName
-	) {
+	)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 		this.applicationName = Objects.requireNonNull(applicationName);
 		this.rootPackageName = Objects.requireNonNull(rootPackageName);
 	}
 
-	public void writeServiceResourceFiles(@Nonnull Path outputPath) throws IOException {
-		for (ServiceGroup serviceGroup : this.domainModel.getServiceGroups()) {
+	public void writeServiceResourceFiles(@Nonnull Path outputPath)
+		throws IOException
+	{
+		for (ServiceGroup serviceGroup : this.domainModel.getServiceGroups())
+		{
 			// TODO: Instead of inferring a resource name, change the DSL to include it in the declaration, like this:
 			// service QuestionResource on Question
 
@@ -101,14 +105,18 @@ public class ServiceResourceGenerator {
 		}
 	}
 
-	private void printStringToFile(@Nonnull Path path, String contents) throws FileNotFoundException {
-		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)) {
+	private void printStringToFile(@Nonnull Path path, String contents)
+		throws FileNotFoundException
+	{
+		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8))
+		{
 			printStream.print(contents);
 		}
 	}
 
 	@Nonnull
-	public String getServiceGroupSourceCode(@Nonnull ServiceGroup serviceGroup) {
+	public String getServiceGroupSourceCode(@Nonnull ServiceGroup serviceGroup)
+	{
 		Klass klass = serviceGroup.getKlass();
 		String packageName = serviceGroup.getPackageName() + ".service.resource";
 		String serviceResourceName = serviceGroup.getName();
@@ -161,19 +169,19 @@ public class ServiceResourceGenerator {
 
 		String writeImports = hasWriteServices
 			? """
-			import javax.validation.constraints.NotNull;
-			import com.fasterxml.jackson.databind.node.ObjectNode;
-			import cool.klass.deserializer.json.*;
-			import cool.klass.deserializer.json.type.*;
-			import cool.klass.reladomo.persistent.writer.*;
-			"""
+				import javax.validation.constraints.NotNull;
+				import com.fasterxml.jackson.databind.node.ObjectNode;
+				import cool.klass.deserializer.json.*;
+				import cool.klass.deserializer.json.type.*;
+				import cool.klass.reladomo.persistent.writer.*;
+				"""
 			: "";
 
 		String projectionImports = hasPostWithProjection
 			? """
-			import cool.klass.model.meta.domain.api.projection.Projection;
-			import cool.klass.serialization.jackson.response.KlassResponseBuilder;
-			"""
+				import cool.klass.model.meta.domain.api.projection.Projection;
+				import cool.klass.serialization.jackson.response.KlassResponseBuilder;
+				"""
 			: "";
 
 		// @formatter:off
@@ -248,13 +256,16 @@ public class ServiceResourceGenerator {
 		// @formatter:on
 	}
 
-	private boolean hasDropwizardParamWrapper(@Nonnull Url url) {
+	private boolean hasDropwizardParamWrapper(@Nonnull Url url)
+	{
 		return url.getParameters().anySatisfy(this::hasDropwizardParamWrapper);
 	}
 
-	private boolean hasDropwizardParamWrapper(@Nonnull Parameter parameter) {
+	private boolean hasDropwizardParamWrapper(@Nonnull Parameter parameter)
+	{
 		DataType dataType = parameter.getType();
-		if (!(dataType instanceof PrimitiveType)) {
+		if (!(dataType instanceof PrimitiveType))
+		{
 			return false;
 		}
 
@@ -266,24 +277,30 @@ public class ServiceResourceGenerator {
 	}
 
 	@Nonnull
-	private String getServiceSourceCode(@Nonnull Service service, int index) {
-		if (service.getVerb() == Verb.GET) {
+	private String getServiceSourceCode(@Nonnull Service service, int index)
+	{
+		if (service.getVerb() == Verb.GET)
+		{
 			return this.getGetSourceCode(service, index);
 		}
 
-		if (service.getVerb() == Verb.POST) {
+		if (service.getVerb() == Verb.POST)
+		{
 			return this.getPostSourceCode(service, index);
 		}
 
-		if (service.getVerb() == Verb.PUT) {
+		if (service.getVerb() == Verb.PUT)
+		{
 			return this.getWriteSourceCode(service, index, "OperationMode.REPLACE");
 		}
 
-		if (service.getVerb() == Verb.PATCH) {
+		if (service.getVerb() == Verb.PATCH)
+		{
 			return this.getWriteSourceCode(service, index, "OperationMode.PATCH");
 		}
 
-		if (service.getVerb() == Verb.DELETE) {
+		if (service.getVerb() == Verb.DELETE)
+		{
 			return this.getDeleteSourceCode(service, index);
 		}
 
@@ -291,7 +308,8 @@ public class ServiceResourceGenerator {
 	}
 
 	@Nonnull
-	private String getGetSourceCode(@Nonnull Service service, int index) {
+	private String getGetSourceCode(@Nonnull Service service, int index)
+	{
 		Url url = service.getUrl();
 
 		ServiceGroup serviceGroup = url.getServiceGroup();
@@ -305,9 +323,8 @@ public class ServiceResourceGenerator {
 
 		Klass klass = serviceGroup.getKlass();
 		String klassName = this.getKlassName(klass);
-		String returnType = service.getServiceMultiplicity() == ServiceMultiplicity.ONE
-			? klassName
-			: "List<" + klassName + ">";
+		String returnType =
+			service.getServiceMultiplicity() == ServiceMultiplicity.ONE ? klassName : "List<" + klassName + ">";
 		String returnStatement = this.getReturnStatement(service.getServiceMultiplicity());
 
 		String queryParametersString = queryParameters.isEmpty()
@@ -413,16 +430,19 @@ public class ServiceResourceGenerator {
 		// @formatter:on
 	}
 
-	private String getKlassName(Klass klass) {
+	private String getKlassName(Klass klass)
+	{
 		String klassName = klass.getName();
-		if (klassName.equals("Klass")) {
+		if (klassName.equals("Klass"))
+		{
 			return klass.getFullyQualifiedName();
 		}
 		return klassName;
 	}
 
 	@Nonnull
-	private String getPostSourceCode(Service service, int index) {
+	private String getPostSourceCode(Service service, int index)
+	{
 		Url url = service.getUrl();
 		ServiceGroup serviceGroup = url.getServiceGroup();
 
@@ -444,15 +464,14 @@ public class ServiceResourceGenerator {
 
 		ServiceMultiplicity serviceMultiplicity = service.getServiceMultiplicity();
 
-		String incomingInstanceParameterType = serviceMultiplicity == ServiceMultiplicity.ONE
-			? "ObjectNode"
-			: "ArrayNode";
-		String incomingInstanceParameterName = serviceMultiplicity == ServiceMultiplicity.ONE
-			? "incomingInstance"
-			: "incomingInstances";
+		String incomingInstanceParameterType =
+			serviceMultiplicity == ServiceMultiplicity.ONE ? "ObjectNode" : "ArrayNode";
+		String incomingInstanceParameterName =
+			serviceMultiplicity == ServiceMultiplicity.ONE ? "incomingInstance" : "incomingInstances";
 
 		int numParameters = service.getNumParameters() + 2; // +1 for ObjectNode/ArrayNode, +1 for UriInfo
-		if (needsSecurityContext) {
+		if (needsSecurityContext)
+		{
 			numParameters++;
 		}
 
@@ -473,7 +492,8 @@ public class ServiceResourceGenerator {
 		parameterStrings.add(incomingInstanceSourceCode);
 		parameterStrings.add(parameterIndent + "@Nonnull @Context UriInfo uriInfo");
 
-		if (needsSecurityContext) {
+		if (needsSecurityContext)
+		{
 			parameterStrings.add(parameterIndent + "@Nonnull @Auth Principal principal");
 		}
 
@@ -533,9 +553,8 @@ public class ServiceResourceGenerator {
 
 		String manyResponseCode = getManyResponseCode(projectionDispatch);
 
-		String effectiveResponseCode = serviceMultiplicity == ServiceMultiplicity.MANY
-			? manyResponseCode
-			: responseCode;
+		String effectiveResponseCode =
+			serviceMultiplicity == ServiceMultiplicity.MANY ? manyResponseCode : responseCode;
 
 		// @formatter:off
 		// language=JAVA
@@ -560,8 +579,10 @@ public class ServiceResourceGenerator {
 		Optional<ServiceProjectionDispatch> projectionDispatch,
 		ServiceGroup serviceGroup,
 		String klassName
-	) {
-		if (projectionDispatch.isEmpty()) {
+	)
+	{
+		if (projectionDispatch.isEmpty())
+		{
 			return "        return Response.noContent().build();\n";
 		}
 
@@ -599,7 +620,8 @@ public class ServiceResourceGenerator {
 		// @formatter:on
 	}
 
-	private static String getErrorListInitialization() {
+	private static String getErrorListInitialization()
+	{
 		return (
 			""
 			+ "        MutableList<String> errors = Lists.mutable.empty();\n"
@@ -607,7 +629,8 @@ public class ServiceResourceGenerator {
 		);
 	}
 
-	private static String getErrorCheckAndThrow() {
+	private static String getErrorCheckAndThrow()
+	{
 		return (
 			""
 			+ "        if (errors.notEmpty())\n"
@@ -624,13 +647,14 @@ public class ServiceResourceGenerator {
 		);
 	}
 
-	private static String getMutationContextSetup(boolean needsSecurityContext) {
+	private static String getMutationContextSetup(boolean needsSecurityContext)
+	{
 		return (
 			""
 			+ "        Instant transactionInstant = Instant.now(this.clock);\n"
 			+ (needsSecurityContext
-					? "        MutationContext mutationContext = new MutationContext(Optional.of(userPrincipalName), transactionInstant, Maps.immutable.empty());\n"
-					: "        MutationContext mutationContext = new MutationContext(Optional.empty(), transactionInstant, Maps.immutable.empty());\n")
+				? "        MutationContext mutationContext = new MutationContext(Optional.of(userPrincipalName), transactionInstant, Maps.immutable.empty());\n"
+				: "        MutationContext mutationContext = new MutationContext(Optional.empty(), transactionInstant, Maps.immutable.empty());\n")
 			+ "        PersistentCreator creator = new PersistentCreator(mutationContext, this.dataStore);\n"
 		);
 	}
@@ -643,7 +667,8 @@ public class ServiceResourceGenerator {
 		String authorizePredicateSourceCode,
 		String validatePredicateSourceCode,
 		String conflictPredicateSourceCode
-	) {
+	)
+	{
 		return (
 			""
 			+ userPrincipalNameLocalVariable
@@ -668,7 +693,8 @@ public class ServiceResourceGenerator {
 		String validatePredicateSourceCode,
 		String conflictPredicateSourceCode,
 		boolean needsSecurityContext
-	) {
+	)
+	{
 		String operationsAndPredicates = getOperationsAndPredicates(
 			userPrincipalNameLocalVariable,
 			authorizeOperationSourceCode,
@@ -679,7 +705,8 @@ public class ServiceResourceGenerator {
 			conflictPredicateSourceCode
 		);
 
-		if (serviceMultiplicity == ServiceMultiplicity.ONE) {
+		if (serviceMultiplicity == ServiceMultiplicity.ONE)
+		{
 			return (
 				""
 				+ getErrorListInitialization()
@@ -776,8 +803,10 @@ public class ServiceResourceGenerator {
 		);
 	}
 
-	private static String getManyResponseCode(Optional<ServiceProjectionDispatch> projectionDispatch) {
-		if (projectionDispatch.isEmpty()) {
+	private static String getManyResponseCode(Optional<ServiceProjectionDispatch> projectionDispatch)
+	{
+		if (projectionDispatch.isEmpty())
+		{
 			return "        return Response.noContent().build();\n";
 		}
 
@@ -802,7 +831,8 @@ public class ServiceResourceGenerator {
 	}
 
 	@Nonnull
-	private String getDeleteSourceCode(@Nonnull Service service, int index) {
+	private String getDeleteSourceCode(@Nonnull Service service, int index)
+	{
 		Url url = service.getUrl();
 
 		ServiceGroup serviceGroup = url.getServiceGroup();
@@ -823,7 +853,8 @@ public class ServiceResourceGenerator {
 		boolean needsSecurityContext = hasAuthorizeCriteria || klass.isAudited();
 
 		int numParameters = service.getNumParameters();
-		if (needsSecurityContext) {
+		if (needsSecurityContext)
+		{
 			numParameters++;
 		}
 		boolean lineWrapParameters = numParameters > 1;
@@ -837,7 +868,8 @@ public class ServiceResourceGenerator {
 
 		MutableList<String> parameterStrings = urlParameterStrings.toList();
 
-		if (needsSecurityContext) {
+		if (needsSecurityContext)
+		{
 			parameterStrings.add(parameterIndent + "@Nonnull @Auth Principal principal");
 		}
 
@@ -940,7 +972,8 @@ public class ServiceResourceGenerator {
 	}
 
 	@Nonnull
-	private String getWriteSourceCode(@Nonnull Service service, int index, String operationMode) {
+	private String getWriteSourceCode(@Nonnull Service service, int index, String operationMode)
+	{
 		Url url = service.getUrl();
 
 		ServiceGroup serviceGroup = url.getServiceGroup();
@@ -961,7 +994,8 @@ public class ServiceResourceGenerator {
 		boolean needsSecurityContext = hasAuthorizeCriteria || klass.isAudited();
 
 		int numParameters = service.getNumParameters() + 1;
-		if (needsSecurityContext) {
+		if (needsSecurityContext)
+		{
 			numParameters++;
 		}
 
@@ -974,17 +1008,16 @@ public class ServiceResourceGenerator {
 
 		MutableList<String> parameterStrings = urlParameterStrings.toList();
 
-		if (needsSecurityContext) {
+		if (needsSecurityContext)
+		{
 			parameterStrings.add(parameterIndent + "@Nonnull @Auth Principal principal");
 		}
 
 		ServiceMultiplicity serviceMultiplicity = service.getServiceMultiplicity();
-		String incomingInstanceParameterType = serviceMultiplicity == ServiceMultiplicity.ONE
-			? "ObjectNode"
-			: "ArrayNode";
-		String incomingInstanceParameterName = serviceMultiplicity == ServiceMultiplicity.ONE
-			? "incomingInstance"
-			: "incomingInstances";
+		String incomingInstanceParameterType =
+			serviceMultiplicity == ServiceMultiplicity.ONE ? "ObjectNode" : "ArrayNode";
+		String incomingInstanceParameterName =
+			serviceMultiplicity == ServiceMultiplicity.ONE ? "incomingInstance" : "incomingInstances";
 		String incomingInstanceSourceCode = "%s@Nonnull @NotNull %s %s".formatted(
 			parameterIndent,
 			incomingInstanceParameterType,
@@ -1140,8 +1173,10 @@ public class ServiceResourceGenerator {
 	}
 
 	@Nonnull
-	private String getReturnStatement(ServiceMultiplicity serviceMultiplicity) {
-		if (serviceMultiplicity == ServiceMultiplicity.MANY) {
+	private String getReturnStatement(ServiceMultiplicity serviceMultiplicity)
+	{
+		if (serviceMultiplicity == ServiceMultiplicity.MANY)
+		{
 			return "        return result;\n";
 		}
 
@@ -1157,7 +1192,8 @@ public class ServiceResourceGenerator {
 		// @formatter:on
 	}
 
-	private String getParameterSourceCode(@Nonnull ObjectBooleanPair<Parameter> pair, String indent) {
+	private String getParameterSourceCode(@Nonnull ObjectBooleanPair<Parameter> pair, String indent)
+	{
 		Parameter parameter = pair.getOne();
 		boolean isPathParameter = pair.getTwo();
 
@@ -1182,19 +1218,22 @@ public class ServiceResourceGenerator {
 	}
 
 	@Nonnull
-	private String getOperation(String finderName, @Nonnull Optional<Criteria> optionalCriteria, String criteriaName) {
+	private String getOperation(String finderName, @Nonnull Optional<Criteria> optionalCriteria, String criteriaName)
+	{
 		return optionalCriteria.map((criteria) -> this.getOperation(finderName, criteria, criteriaName)).orElse("");
 	}
 
 	@Nonnull
-	private String getOperation(String finderName, @Nonnull Criteria criteria, String criteriaName) {
+	private String getOperation(String finderName, @Nonnull Criteria criteria, String criteriaName)
+	{
 		String operation = this.getOperation(finderName, criteria);
 		String paddedOperationName = String.format("%-18s", criteriaName + "Operation");
 		return "        Operation " + paddedOperationName + " = " + operation + ";\n";
 	}
 
 	@Nonnull
-	private String getOperation(String finderName, @Nonnull Criteria criteria) {
+	private String getOperation(String finderName, @Nonnull Criteria criteria)
+	{
 		var stringBuilder = new StringBuilder();
 		criteria.visit(new OperationCriteriaVisitor(finderName, stringBuilder));
 		return stringBuilder.toString();
@@ -1205,14 +1244,16 @@ public class ServiceResourceGenerator {
 		String finderName,
 		@Nonnull Optional<Criteria> optionalCriteria,
 		String criteriaName
-	) {
+	)
+	{
 		return optionalCriteria
 			.map((criteria) -> this.getOptionalOperation(finderName, criteria, criteriaName))
 			.orElse("");
 	}
 
 	@Nonnull
-	private String getOptionalOperation(String finderName, @Nonnull Criteria criteria, String criteriaName) {
+	private String getOptionalOperation(String finderName, @Nonnull Criteria criteria, String criteriaName)
+	{
 		String operation = this.getOperation(finderName, criteria);
 		String paddedOperationName = String.format("%-18s", criteriaName + "Operation");
 
@@ -1237,14 +1278,16 @@ public class ServiceResourceGenerator {
 		String criteriaName,
 		String flagName,
 		String exceptionName
-	) {
+	)
+	{
 		return optionalCriteria
 			.map((criteria) -> this.checkPredicate(criteriaName, flagName, exceptionName))
 			.orElse("");
 	}
 
 	@Nonnull
-	private String checkPredicate(String criteriaName, String flagName, String exceptionName) {
+	private String checkPredicate(String criteriaName, String flagName, String exceptionName)
+	{
 		// @formatter:off
 		return ""
 				+ "        boolean " + flagName + " = result.asEcList().allSatisfy(" + criteriaName + "Operation::matches);\n"
@@ -1256,8 +1299,10 @@ public class ServiceResourceGenerator {
 	}
 
 	@Nonnull
-	private String getExecuteOperationSourceCode(@Nonnull Optional<Criteria> queryCriteria, String klassName) {
-		if (queryCriteria.isEmpty()) {
+	private String getExecuteOperationSourceCode(@Nonnull Optional<Criteria> queryCriteria, String klassName)
+	{
+		if (queryCriteria.isEmpty())
+		{
 			return "";
 		}
 
@@ -1265,22 +1310,28 @@ public class ServiceResourceGenerator {
 	}
 
 	@Nonnull
-	private String getOrderBysSourceCode(@Nonnull OrderBy orderBy) {
+	private String getOrderBysSourceCode(@Nonnull OrderBy orderBy)
+	{
 		ImmutableList<String> orderBySourceCodeClauses = orderBy
 			.getOrderByMemberReferencePaths()
 			.reject((each) -> each.getThisMemberReferencePath().getProperty().isDerived())
 			.collect(this::getOrderBySourceCode);
 
-		if (orderBySourceCodeClauses.isEmpty()) {
+		if (orderBySourceCodeClauses.isEmpty())
+		{
 			return "";
 		}
 
 		var stringBuilder = new StringBuilder();
-		for (var i = 0; i < orderBySourceCodeClauses.size(); i++) {
+		for (var i = 0; i < orderBySourceCodeClauses.size(); i++)
+		{
 			String orderBySourceCodeClause = orderBySourceCodeClauses.get(i);
-			if (i == 0) {
+			if (i == 0)
+			{
 				stringBuilder.append(orderBySourceCodeClause);
-			} else {
+			}
+			else
+			{
 				stringBuilder.append(".and(");
 				stringBuilder.append(orderBySourceCodeClause);
 				stringBuilder.append(")");
@@ -1291,15 +1342,18 @@ public class ServiceResourceGenerator {
 	}
 
 	@Nonnull
-	private String getOrderBySourceCode(@Nonnull OrderByMemberReferencePath orderByMemberReferencePath) {
+	private String getOrderBySourceCode(@Nonnull OrderByMemberReferencePath orderByMemberReferencePath)
+	{
 		return (
 			this.getThisMemberReferencePathSourceCode(orderByMemberReferencePath.getThisMemberReferencePath())
 			+ this.getOrderByDirectionDeclarationSourceCode(orderByMemberReferencePath.getOrderByDirectionDeclaration())
 		);
 	}
 
-	private String getThisMemberReferencePathSourceCode(@Nonnull ThisMemberReferencePath thisMemberReferencePath) {
-		if (thisMemberReferencePath.getAssociationEnds().notEmpty()) {
+	private String getThisMemberReferencePathSourceCode(@Nonnull ThisMemberReferencePath thisMemberReferencePath)
+	{
+		if (thisMemberReferencePath.getAssociationEnds().notEmpty())
+		{
 			throw new AssertionError();
 		}
 
@@ -1313,10 +1367,12 @@ public class ServiceResourceGenerator {
 		return result;
 	}
 
-	private ImmutableList<Klass> getSuperClassPath(Klass klass, Classifier owningClassifier) {
+	private ImmutableList<Klass> getSuperClassPath(Klass klass, Classifier owningClassifier)
+	{
 		MutableList<Klass> result = Lists.mutable.empty();
 		Klass currentKlass = klass;
-		while (currentKlass != owningClassifier && currentKlass != null) {
+		while (currentKlass != owningClassifier && currentKlass != null)
+		{
 			Optional<Klass> superClass = currentKlass.getSuperClass();
 			superClass.ifPresent(result::add);
 			currentKlass = superClass.orElse(null);
@@ -1327,21 +1383,26 @@ public class ServiceResourceGenerator {
 	@Nonnull
 	private String getOrderByDirectionDeclarationSourceCode(
 		@Nonnull OrderByDirectionDeclaration orderByDirectionDeclaration
-	) {
+	)
+	{
 		OrderByDirection orderByDirection = orderByDirectionDeclaration.getOrderByDirection();
-		return switch (orderByDirection) {
+		return switch (orderByDirection)
+		{
 			case ASCENDING -> ".ascendingOrderBy()";
 			case DESCENDING -> ".descendingOrderBy()";
 			default -> throw new AssertionError();
 		};
 	}
 
-	private String getParameterType(DataType dataType) {
-		if (dataType instanceof Enumeration) {
+	private String getParameterType(DataType dataType)
+	{
+		if (dataType instanceof Enumeration)
+		{
 			return "String";
 			// return ((Enumeration) dataType).getName();
 		}
-		if (dataType instanceof PrimitiveType primitiveType) {
+		if (dataType instanceof PrimitiveType primitiveType)
+		{
 			return PrimitiveToJavaParameterTypeVisitor.getJavaType(primitiveType);
 		}
 		throw new AssertionError();

@@ -27,14 +27,16 @@ import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public final class GraphQLFragmentSourceCodeGenerator {
-
-	private GraphQLFragmentSourceCodeGenerator() {
+public final class GraphQLFragmentSourceCodeGenerator
+{
+	private GraphQLFragmentSourceCodeGenerator()
+	{
 		throw new AssertionError("Suppress default constructor for noninstantiability");
 	}
 
 	@Nonnull
-	public static String getPackageSourceCode(DomainModel domainModel, String fullyQualifiedPackage) {
+	public static String getPackageSourceCode(DomainModel domainModel, String fullyQualifiedPackage)
+	{
 		String sourceCode = domainModel
 			.getClassifiers()
 			.select((c) -> c.getPackageName().equals(fullyQualifiedPackage))
@@ -51,14 +53,14 @@ public final class GraphQLFragmentSourceCodeGenerator {
 		);
 	}
 
-	private static String getClassifierSourceCode(Classifier classifier) {
+	private static String getClassifierSourceCode(Classifier classifier)
+	{
 		String dataTypePropertiesSourceCode = getDataTypePropertiesSourceCode(classifier, false).makeString("");
 
 		String referencePropertiesSourceCode = getReferencePropertiesSourceCode(classifier, false).makeString("");
 
-		ImmutableList<Klass> subClasses = classifier instanceof Klass klass
-			? klass.getSubClassChain()
-			: Lists.immutable.empty();
+		ImmutableList<Klass> subClasses =
+			classifier instanceof Klass klass ? klass.getSubClassChain() : Lists.immutable.empty();
 
 		String subClassesSourceCode = subClasses
 			.collect(GraphQLFragmentSourceCodeGenerator::getSubClassSourceCode)
@@ -68,7 +70,8 @@ public final class GraphQLFragmentSourceCodeGenerator {
 			dataTypePropertiesSourceCode.isEmpty()
 			&& referencePropertiesSourceCode.isEmpty()
 			&& subClassesSourceCode.isEmpty()
-		) {
+		)
+		{
 			return "";
 		}
 
@@ -89,12 +92,14 @@ public final class GraphQLFragmentSourceCodeGenerator {
 	}
 
 	@Nonnull
-	private static String getSubClassSourceCode(Klass subClass) {
+	private static String getSubClassSourceCode(Klass subClass)
+	{
 		String dataTypePropertiesSourceCode = getDataTypePropertiesSourceCode(subClass, true).makeString("");
 
 		String referencePropertiesSourceCode = getReferencePropertiesSourceCode(subClass, true).makeString("");
 
-		if (dataTypePropertiesSourceCode.isEmpty() && referencePropertiesSourceCode.isEmpty()) {
+		if (dataTypePropertiesSourceCode.isEmpty() && referencePropertiesSourceCode.isEmpty())
+		{
 			return "";
 		}
 
@@ -108,7 +113,8 @@ public final class GraphQLFragmentSourceCodeGenerator {
 		);
 	}
 
-	private static ImmutableList<String> getDataTypePropertiesSourceCode(Classifier classifier, boolean subClassMode) {
+	private static ImmutableList<String> getDataTypePropertiesSourceCode(Classifier classifier, boolean subClassMode)
+	{
 		ImmutableList<DataTypeProperty> dataTypeProperties = subClassMode
 			? classifier.getDeclaredDataTypeProperties()
 			: classifier.getDataTypeProperties();
@@ -119,12 +125,14 @@ public final class GraphQLFragmentSourceCodeGenerator {
 			.collectWith(GraphQLFragmentSourceCodeGenerator::getDataTypePropertySourceCode, subClassMode);
 	}
 
-	private static String getDataTypePropertySourceCode(DataTypeProperty dataTypeProperty, boolean subClassMode) {
+	private static String getDataTypePropertySourceCode(DataTypeProperty dataTypeProperty, boolean subClassMode)
+	{
 		String indentation = subClassMode ? "\t" : "";
 		return String.format("\t%s%s%n", indentation, dataTypeProperty.getName());
 	}
 
-	private static ImmutableList<String> getReferencePropertiesSourceCode(Classifier classifier, boolean subClassMode) {
+	private static ImmutableList<String> getReferencePropertiesSourceCode(Classifier classifier, boolean subClassMode)
+	{
 		ImmutableList<ReferenceProperty> properties = subClassMode
 			? classifier.getDeclaredReferenceProperties()
 			: classifier.getReferenceProperties();
@@ -135,7 +143,8 @@ public final class GraphQLFragmentSourceCodeGenerator {
 			.collectWith(GraphQLFragmentSourceCodeGenerator::getReferencePropertySourceCode, subClassMode);
 	}
 
-	private static String getReferencePropertySourceCode(ReferenceProperty referenceProperty, boolean subClassMode) {
+	private static String getReferencePropertySourceCode(ReferenceProperty referenceProperty, boolean subClassMode)
+	{
 		String indentation = subClassMode ? "\t" : "";
 		return (
 			indentation
@@ -148,13 +157,15 @@ public final class GraphQLFragmentSourceCodeGenerator {
 		);
 	}
 
-	private static String getReferencePropertyBody(ReferenceProperty referenceProperty, boolean subClassMode) {
+	private static String getReferencePropertyBody(ReferenceProperty referenceProperty, boolean subClassMode)
+	{
 		String indentation = subClassMode ? "\t" : "";
 
 		if (
 			referenceProperty.isOwned()
 			|| GraphQLFragmentSourceCodeGenerator.isOneRequiredToOneOptional(referenceProperty)
-		) {
+		)
+		{
 			return indentation + "\t\t..." + referenceProperty.getType().getName() + "Fragment\n";
 		}
 
@@ -169,7 +180,8 @@ public final class GraphQLFragmentSourceCodeGenerator {
 		return typeNameString + keyPropertiesSourceCode;
 	}
 
-	private static boolean isOneRequiredToOneOptional(ReferenceProperty referenceProperty) {
+	private static boolean isOneRequiredToOneOptional(ReferenceProperty referenceProperty)
+	{
 		return (
 			referenceProperty instanceof AssociationEnd associationEnd
 			&& associationEnd.getMultiplicity().isToOne()
@@ -179,7 +191,8 @@ public final class GraphQLFragmentSourceCodeGenerator {
 		);
 	}
 
-	private static boolean includeInProjection(ReferenceProperty referenceProperty) {
+	private static boolean includeInProjection(ReferenceProperty referenceProperty)
+	{
 		return (
 			!(referenceProperty instanceof AssociationEnd associationEnd)
 			|| associationEnd.getOwningAssociation().getTargetAssociationEnd() == associationEnd

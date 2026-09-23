@@ -37,8 +37,8 @@ import cool.klass.model.meta.grammar.KlassParser.ProjectionReferencePropertyCont
 
 public final class ProjectionReferencePropertyImpl
 	extends AbstractProjectionParent
-	implements ProjectionReferencePropertyWithSourceCode {
-
+	implements ProjectionReferencePropertyWithSourceCode
+{
 	@Nonnull
 	private final ProjectionParent parent;
 
@@ -57,7 +57,8 @@ public final class ProjectionReferencePropertyImpl
 		@Nonnull ProjectionParent parent,
 		@Nonnull ClassifierWithSourceCode classifier,
 		@Nonnull ReferencePropertyWithSourceCode referenceProperty
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode, ordinal, nameContext);
 		this.parent = Objects.requireNonNull(parent);
 		this.classifier = Objects.requireNonNull(classifier);
@@ -66,32 +67,36 @@ public final class ProjectionReferencePropertyImpl
 
 	@Nonnull
 	@Override
-	public ProjectionReferencePropertyContext getElementContext() {
+	public ProjectionReferencePropertyContext getElementContext()
+	{
 		return (ProjectionReferencePropertyContext) super.getElementContext();
 	}
 
 	@Override
 	@Nonnull
-	public Optional<ProjectionParent> getParent() {
+	public Optional<ProjectionParent> getParent()
+	{
 		return Optional.of(this.parent);
 	}
 
 	@Nonnull
 	@Override
-	public Classifier getDeclaredClassifier() {
+	public Classifier getDeclaredClassifier()
+	{
 		return this.classifier;
 	}
 
 	@Override
 	@Nonnull
-	public ReferencePropertyWithSourceCode getProperty() {
+	public ReferencePropertyWithSourceCode getProperty()
+	{
 		return this.referenceProperty;
 	}
 
 	public static final class ProjectionReferencePropertyBuilder
 		extends AbstractProjectionParentBuilder<ProjectionReferencePropertyImpl>
-		implements ProjectionChildBuilder {
-
+		implements ProjectionChildBuilder
+	{
 		@Nonnull
 		private final AbstractProjectionParentBuilder<?> parentBuilder;
 
@@ -110,7 +115,8 @@ public final class ProjectionReferencePropertyImpl
 			@Nonnull AbstractProjectionParentBuilder<?> parentBuilder,
 			@Nonnull ClassifierBuilder<?> classifierBuilder,
 			@Nonnull ReferencePropertyBuilder<?, ?, ?> referencePropertyBuilder
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode, ordinal, nameContext);
 			this.parentBuilder = Objects.requireNonNull(parentBuilder);
 			this.classifierBuilder = Objects.requireNonNull(classifierBuilder);
@@ -119,7 +125,8 @@ public final class ProjectionReferencePropertyImpl
 
 		@Override
 		@Nonnull
-		protected ProjectionReferencePropertyImpl buildUnsafe() {
+		protected ProjectionReferencePropertyImpl buildUnsafe()
+		{
 			return new ProjectionReferencePropertyImpl(
 				(ProjectionReferencePropertyContext) this.elementContext,
 				this.macroElement.map(ElementBuilder::getElement),

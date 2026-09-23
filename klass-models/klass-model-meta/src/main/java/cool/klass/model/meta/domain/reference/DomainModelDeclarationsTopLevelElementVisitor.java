@@ -46,34 +46,40 @@ import cool.klass.model.meta.grammar.KlassParser.ProjectionDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceGroupDeclarationContext;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class DomainModelDeclarationsTopLevelElementVisitor implements TopLevelElementVisitor {
-
+public class DomainModelDeclarationsTopLevelElementVisitor
+	implements TopLevelElementVisitor
+{
 	@Nonnull
 	private final DomainModelDeclarations domainModelDeclarations;
 
-	public DomainModelDeclarationsTopLevelElementVisitor(@Nonnull DomainModelDeclarations domainModelDeclarations) {
+	public DomainModelDeclarationsTopLevelElementVisitor(@Nonnull DomainModelDeclarations domainModelDeclarations)
+	{
 		this.domainModelDeclarations = Objects.requireNonNull(domainModelDeclarations);
 	}
 
 	@Override
-	public void visitEnumeration(Enumeration enumeration) {
+	public void visitEnumeration(Enumeration enumeration)
+	{
 		var element = (EnumerationWithSourceCode) enumeration;
 		EnumerationDeclarationContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addEnumerationDeclaration(declaration, element);
 
-		for (EnumerationLiteral enumerationLiteral : enumeration.getEnumerationLiterals()) {
+		for (EnumerationLiteral enumerationLiteral : enumeration.getEnumerationLiterals())
+		{
 			this.visitEnumerationLiteral(enumerationLiteral);
 		}
 	}
 
-	private void visitEnumerationLiteral(EnumerationLiteral enumerationLiteral) {
+	private void visitEnumerationLiteral(EnumerationLiteral enumerationLiteral)
+	{
 		var element = (EnumerationLiteralWithSourceCode) enumerationLiteral;
 		EnumerationLiteralContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addEnumerationLiteralDeclaration(declaration, element);
 	}
 
 	@Override
-	public void visitInterface(Interface anInterface) {
+	public void visitInterface(Interface anInterface)
+	{
 		var element = (InterfaceWithSourceCode) anInterface;
 		InterfaceDeclarationContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addInterfaceDeclaration(declaration, element);
@@ -82,7 +88,8 @@ public class DomainModelDeclarationsTopLevelElementVisitor implements TopLevelEl
 	}
 
 	@Override
-	public void visitKlass(Klass klass) {
+	public void visitKlass(Klass klass)
+	{
 		var element = (KlassWithSourceCode) klass;
 		ClassDeclarationContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addKlassDeclaration(declaration, element);
@@ -90,15 +97,18 @@ public class DomainModelDeclarationsTopLevelElementVisitor implements TopLevelEl
 		this.visitClassifier(klass);
 	}
 
-	private void visitClassifier(Classifier classifier) {
+	private void visitClassifier(Classifier classifier)
+	{
 		ImmutableList<Property> properties = classifier.getDeclaredProperties();
-		for (Property property : properties) {
+		for (Property property : properties)
+		{
 			property.visit(new DomainModelDeclarationsPropertyVisitor(this.domainModelDeclarations));
 		}
 	}
 
 	@Override
-	public void visitAssociation(Association association) {
+	public void visitAssociation(Association association)
+	{
 		var element = (AssociationWithSourceCode) association;
 		AssociationDeclarationContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addAssociationDeclaration(declaration, element);
@@ -106,14 +116,16 @@ public class DomainModelDeclarationsTopLevelElementVisitor implements TopLevelEl
 	}
 
 	@Override
-	public void visitProjection(Projection projection) {
+	public void visitProjection(Projection projection)
+	{
 		var element = (ProjectionWithSourceCode) projection;
 		ProjectionDeclarationContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addProjectionDeclaration(declaration, element);
 	}
 
 	@Override
-	public void visitServiceGroup(ServiceGroup serviceGroup) {
+	public void visitServiceGroup(ServiceGroup serviceGroup)
+	{
 		var element = (ServiceGroupWithSourceCode) serviceGroup;
 		ServiceGroupDeclarationContext declaration = element.getElementContext();
 		this.domainModelDeclarations.addServiceGroupDeclaration(declaration, element);

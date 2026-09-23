@@ -16,4 +16,7 @@
 
 package klass.model.meta.domain;
 
-public class ParameterReferenceDatabaseObject extends ParameterReferenceDatabaseObjectAbstract {}
+public class ParameterReferenceDatabaseObject
+	extends ParameterReferenceDatabaseObjectAbstract
+{
+}

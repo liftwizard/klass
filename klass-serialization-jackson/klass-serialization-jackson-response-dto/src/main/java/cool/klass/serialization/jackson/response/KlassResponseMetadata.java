@@ -28,8 +28,8 @@ import cool.klass.model.meta.domain.api.Multiplicity;
 import cool.klass.model.meta.domain.api.projection.Projection;
 import io.liftwizard.logging.slf4j.mdc.MultiMDCCloseable;
 
-public class KlassResponseMetadata {
-
+public class KlassResponseMetadata
+{
 	@Nonnull
 	private final Optional<String> criteria;
 
@@ -59,7 +59,8 @@ public class KlassResponseMetadata {
 		@Nonnull Instant transactionTimestamp,
 		@Nonnull Optional<KlassResponsePagination> pagination,
 		@Nonnull Optional<? extends Principal> principal
-	) {
+	)
+	{
 		this.projection = Objects.requireNonNull(projection);
 		this.multiplicity = Objects.requireNonNull(multiplicity);
 		this.pagination = Objects.requireNonNull(pagination);
@@ -71,48 +72,56 @@ public class KlassResponseMetadata {
 
 	@JsonProperty
 	@Nonnull
-	public Optional<String> getCriteria() {
+	public Optional<String> getCriteria()
+	{
 		return this.criteria;
 	}
 
 	@JsonProperty
 	@Nonnull
-	public Optional<String> getOrderBy() {
+	public Optional<String> getOrderBy()
+	{
 		return this.orderBy;
 	}
 
 	@JsonProperty
 	@Nonnull
-	public Multiplicity getMultiplicity() {
+	public Multiplicity getMultiplicity()
+	{
 		return this.multiplicity;
 	}
 
 	@JsonProperty
 	@Nonnull
-	public Projection getProjection() {
+	public Projection getProjection()
+	{
 		return this.projection;
 	}
 
 	@JsonProperty
 	@Nonnull
-	public Instant getTransactionTimestamp() {
+	public Instant getTransactionTimestamp()
+	{
 		return this.transactionTimestamp;
 	}
 
 	@JsonProperty
 	@Nonnull
-	public Optional<KlassResponsePagination> getPagination() {
+	public Optional<KlassResponsePagination> getPagination()
+	{
 		return this.pagination;
 	}
 
 	@JsonProperty
 	@Nonnull
-	public Optional<? extends Principal> getPrincipal() {
+	public Optional<? extends Principal> getPrincipal()
+	{
 		return this.principal;
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return String.format(
 			"{\"criteria\":%s,\"orderBy\":%s,\"multiplicity\":%s,\"projection\":%s,\"transactionTimestamp\":%s,\"pagination\":%s,\"principal\":%s}",
 			this.criteria.orElse(null),
@@ -125,7 +134,8 @@ public class KlassResponseMetadata {
 		);
 	}
 
-	public void withMDC(MultiMDCCloseable mdc) {
+	public void withMDC(MultiMDCCloseable mdc)
+	{
 		mdc.put("klass.response.criteria", this.criteria.orElse(null));
 		mdc.put("klass.response.orderBy", this.orderBy.orElse(null));
 		mdc.put("klass.response.multiplicity", this.multiplicity.getPrettyName());

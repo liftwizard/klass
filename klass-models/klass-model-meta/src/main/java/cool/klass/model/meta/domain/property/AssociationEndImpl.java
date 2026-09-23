@@ -36,8 +36,10 @@ import cool.klass.model.meta.grammar.KlassParser.AssociationEndContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 
 // TODO: Super class for reference-type-property?
-public final class AssociationEndImpl extends ReferencePropertyImpl<KlassImpl> implements AssociationEndWithSourceCode {
-
+public final class AssociationEndImpl
+	extends ReferencePropertyImpl<KlassImpl>
+	implements AssociationEndWithSourceCode
+{
 	@Nonnull
 	private final AssociationImpl owningAssociation;
 
@@ -51,31 +53,36 @@ public final class AssociationEndImpl extends ReferencePropertyImpl<KlassImpl> i
 		@Nonnull KlassImpl owningClass,
 		@Nonnull AssociationImpl owningAssociation,
 		@Nonnull Multiplicity multiplicity
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode, ordinal, nameContext, type, owningClass, multiplicity);
 		this.owningAssociation = Objects.requireNonNull(owningAssociation);
 	}
 
 	@Nonnull
 	@Override
-	public AssociationEndContext getElementContext() {
+	public AssociationEndContext getElementContext()
+	{
 		return (AssociationEndContext) super.getElementContext();
 	}
 
 	@Nonnull
 	@Override
-	public Klass getOwningClassifier() {
+	public Klass getOwningClassifier()
+	{
 		return (Klass) super.getOwningClassifier();
 	}
 
 	@Override
 	@Nonnull
-	public AssociationImpl getOwningAssociation() {
+	public AssociationImpl getOwningAssociation()
+	{
 		return this.owningAssociation;
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return String.format(
 			"%s.%s: %s[%s]",
 			this.getOwningClassifier().getName(),
@@ -86,8 +93,8 @@ public final class AssociationEndImpl extends ReferencePropertyImpl<KlassImpl> i
 	}
 
 	public static final class AssociationEndBuilder
-		extends ReferencePropertyBuilder<KlassImpl, KlassBuilder, AssociationEndImpl> {
-
+		extends ReferencePropertyBuilder<KlassImpl, KlassBuilder, AssociationEndImpl>
+	{
 		@Nonnull
 		private final AssociationBuilder owningAssociation;
 
@@ -101,7 +108,8 @@ public final class AssociationEndImpl extends ReferencePropertyImpl<KlassImpl> i
 			@Nonnull KlassBuilder owningClassBuilder,
 			@Nonnull AssociationBuilder owningAssociation,
 			@Nonnull Multiplicity multiplicity
-		) {
+		)
+		{
 			super(
 				elementContext,
 				macroElement,
@@ -117,7 +125,8 @@ public final class AssociationEndImpl extends ReferencePropertyImpl<KlassImpl> i
 
 		@Override
 		@Nonnull
-		protected AssociationEndImpl buildUnsafe() {
+		protected AssociationEndImpl buildUnsafe()
+		{
 			return new AssociationEndImpl(
 				(AssociationEndContext) this.elementContext,
 				this.macroElement.map(ElementBuilder::getElement),

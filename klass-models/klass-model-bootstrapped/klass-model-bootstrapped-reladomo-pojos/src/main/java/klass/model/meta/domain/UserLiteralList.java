@@ -20,19 +20,25 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class UserLiteralList extends UserLiteralListAbstract {
+public class UserLiteralList
+	extends UserLiteralListAbstract
+{
+	public UserLiteralList()
+	{
+	}
 
-	public UserLiteralList() {}
-
-	public UserLiteralList(int initialSize) {
+	public UserLiteralList(int initialSize)
+	{
 		super(initialSize);
 	}
 
-	public UserLiteralList(Collection c) {
+	public UserLiteralList(Collection c)
+	{
 		super(c);
 	}
 
-	public UserLiteralList(Operation operation) {
+	public UserLiteralList(Operation operation)
+	{
 		super(operation);
 	}
 }

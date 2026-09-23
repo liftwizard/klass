@@ -29,10 +29,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class SwaggerSpecResourceTest extends AbstractCoverageTest {
-
+class SwaggerSpecResourceTest
+	extends AbstractCoverageTest
+{
 	@Test
-	void swagger_spec_is_served() throws Exception {
+	void swagger_spec_is_served()
+		throws Exception
+	{
 		Client client = this.getClient("swagger_spec_is_served");
 
 		Response response = client

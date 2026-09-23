@@ -47,8 +47,10 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 
-public abstract class AbstractClassifier extends AbstractPackageableElement implements ClassifierWithSourceCode {
-
+public abstract class AbstractClassifier
+	extends AbstractPackageableElement
+	implements ClassifierWithSourceCode
+{
 	private ImmutableList<Interface> interfaces;
 	private ImmutableList<Modifier> modifiers;
 	private ImmutableList<Property> declaredProperties;
@@ -76,18 +78,22 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 		int ordinal,
 		@Nonnull IdentifierContext nameContext,
 		@Nonnull String packageName
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode, ordinal, nameContext, packageName);
 	}
 
 	@Override
 	@Nonnull
-	public ImmutableList<Interface> getInterfaces() {
+	public ImmutableList<Interface> getInterfaces()
+	{
 		return Objects.requireNonNull(this.interfaces);
 	}
 
-	protected void setInterfaces(@Nonnull ImmutableList<Interface> interfaces) {
-		if (this.interfaces != null) {
+	protected void setInterfaces(@Nonnull ImmutableList<Interface> interfaces)
+	{
+		if (this.interfaces != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.interfaces = Objects.requireNonNull(interfaces);
@@ -95,12 +101,15 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 
 	@Nonnull
 	@Override
-	public ImmutableList<Modifier> getDeclaredModifiers() {
+	public ImmutableList<Modifier> getDeclaredModifiers()
+	{
 		return this.modifiers;
 	}
 
-	protected void setModifiers(@Nonnull ImmutableList<Modifier> classifierModifiers) {
-		if (this.modifiers != null) {
+	protected void setModifiers(@Nonnull ImmutableList<Modifier> classifierModifiers)
+	{
+		if (this.modifiers != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.modifiers = Objects.requireNonNull(classifierModifiers);
@@ -108,12 +117,15 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 
 	@Nonnull
 	@Override
-	public ImmutableList<Property> getDeclaredProperties() {
+	public ImmutableList<Property> getDeclaredProperties()
+	{
 		return this.declaredProperties;
 	}
 
-	protected void setDeclaredProperties(ImmutableList<Property> declaredProperties) {
-		if (this.declaredProperties != null) {
+	protected void setDeclaredProperties(ImmutableList<Property> declaredProperties)
+	{
+		if (this.declaredProperties != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.declaredProperties = Objects.requireNonNull(declaredProperties);
@@ -121,12 +133,15 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 
 	@Nonnull
 	@Override
-	public ImmutableList<DataTypeProperty> getDeclaredDataTypeProperties() {
+	public ImmutableList<DataTypeProperty> getDeclaredDataTypeProperties()
+	{
 		return this.declaredDataTypeProperties;
 	}
 
-	protected void setDeclaredDataTypeProperties(@Nonnull ImmutableList<DataTypeProperty> declaredDataTypeProperties) {
-		if (this.declaredDataTypeProperties != null) {
+	protected void setDeclaredDataTypeProperties(@Nonnull ImmutableList<DataTypeProperty> declaredDataTypeProperties)
+	{
+		if (this.declaredDataTypeProperties != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.declaredDataTypeProperties = Objects.requireNonNull(declaredDataTypeProperties);
@@ -134,12 +149,15 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 
 	@Nonnull
 	@Override
-	public ImmutableList<DataTypeProperty> getDataTypeProperties() {
+	public ImmutableList<DataTypeProperty> getDataTypeProperties()
+	{
 		return this.dataTypeProperties;
 	}
 
-	protected void setDataTypeProperties(@Nonnull ImmutableList<DataTypeProperty> dataTypeProperties) {
-		if (this.dataTypeProperties != null) {
+	protected void setDataTypeProperties(@Nonnull ImmutableList<DataTypeProperty> dataTypeProperties)
+	{
+		if (this.dataTypeProperties != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.dataTypeProperties = Objects.requireNonNull(dataTypeProperties);
@@ -148,158 +166,197 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 
 	@Nonnull
 	@Override
-	public Optional<DataTypeProperty> findDataTypePropertyByName(String name) {
+	public Optional<DataTypeProperty> findDataTypePropertyByName(String name)
+	{
 		return Optional.ofNullable(this.dataTypePropertiesByName.get(name));
 	}
 
 	@Override
-	public ImmutableList<ReferenceProperty> getDeclaredReferenceProperties() {
+	public ImmutableList<ReferenceProperty> getDeclaredReferenceProperties()
+	{
 		return this.declaredReferenceProperties;
 	}
 
 	@Override
-	public ImmutableList<ReferenceProperty> getReferenceProperties() {
+	public ImmutableList<ReferenceProperty> getReferenceProperties()
+	{
 		return this.referenceProperties;
 	}
 
 	protected void setDeclaredAssociationEndSignatures(
 		ImmutableList<AssociationEndSignature> declaredAssociationEndSignatures
-	) {
-		if (this.declaredAssociationEndSignatures != null) {
+	)
+	{
+		if (this.declaredAssociationEndSignatures != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.declaredAssociationEndSignatures = Objects.requireNonNull(declaredAssociationEndSignatures);
 	}
 
-	protected void setDeclaredReferenceProperties(ImmutableList<ReferenceProperty> declaredReferenceProperties) {
-		if (this.declaredReferenceProperties != null) {
+	protected void setDeclaredReferenceProperties(ImmutableList<ReferenceProperty> declaredReferenceProperties)
+	{
+		if (this.declaredReferenceProperties != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.declaredReferenceProperties = Objects.requireNonNull(declaredReferenceProperties);
 	}
 
-	protected void setReferenceProperties(ImmutableList<ReferenceProperty> referenceProperties) {
-		if (this.referenceProperties != null) {
+	protected void setReferenceProperties(ImmutableList<ReferenceProperty> referenceProperties)
+	{
+		if (this.referenceProperties != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.referenceProperties = Objects.requireNonNull(referenceProperties);
 	}
 
 	@Override
-	public ImmutableList<DataTypeProperty> getKeyProperties() {
+	public ImmutableList<DataTypeProperty> getKeyProperties()
+	{
 		return this.keyProperties;
 	}
 
-	protected void setKeyProperties(ImmutableList<DataTypeProperty> keyProperties) {
-		if (this.keyProperties != null) {
+	protected void setKeyProperties(ImmutableList<DataTypeProperty> keyProperties)
+	{
+		if (this.keyProperties != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.keyProperties = Objects.requireNonNull(keyProperties);
 	}
 
 	@Override
-	public Optional<PrimitiveProperty> getSystemProperty() {
+	public Optional<PrimitiveProperty> getSystemProperty()
+	{
 		return this.systemProperty;
 	}
 
-	protected void setSystemProperty(Optional<PrimitiveProperty> systemProperty) {
-		if (this.systemProperty != null) {
+	protected void setSystemProperty(Optional<PrimitiveProperty> systemProperty)
+	{
+		if (this.systemProperty != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.systemProperty = Objects.requireNonNull(systemProperty);
 	}
 
 	@Override
-	public Optional<PrimitiveProperty> getSystemFromProperty() {
+	public Optional<PrimitiveProperty> getSystemFromProperty()
+	{
 		return this.systemFromProperty;
 	}
 
-	protected void setSystemFromProperty(Optional<PrimitiveProperty> systemFromProperty) {
-		if (this.systemFromProperty != null) {
+	protected void setSystemFromProperty(Optional<PrimitiveProperty> systemFromProperty)
+	{
+		if (this.systemFromProperty != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.systemFromProperty = Objects.requireNonNull(systemFromProperty);
 	}
 
 	@Override
-	public Optional<PrimitiveProperty> getSystemToProperty() {
+	public Optional<PrimitiveProperty> getSystemToProperty()
+	{
 		return this.systemToProperty;
 	}
 
-	protected void setSystemToProperty(Optional<PrimitiveProperty> systemToProperty) {
-		if (this.systemToProperty != null) {
+	protected void setSystemToProperty(Optional<PrimitiveProperty> systemToProperty)
+	{
+		if (this.systemToProperty != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.systemToProperty = Objects.requireNonNull(systemToProperty);
 	}
 
 	@Override
-	public Optional<PrimitiveProperty> getValidProperty() {
+	public Optional<PrimitiveProperty> getValidProperty()
+	{
 		return this.validProperty;
 	}
 
-	protected void setValidProperty(Optional<PrimitiveProperty> validProperty) {
-		if (this.validProperty != null) {
+	protected void setValidProperty(Optional<PrimitiveProperty> validProperty)
+	{
+		if (this.validProperty != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.validProperty = Objects.requireNonNull(validProperty);
 	}
 
 	@Override
-	public Optional<PrimitiveProperty> getValidFromProperty() {
+	public Optional<PrimitiveProperty> getValidFromProperty()
+	{
 		return this.validFromProperty;
 	}
 
-	protected void setValidFromProperty(Optional<PrimitiveProperty> validFromProperty) {
-		if (this.validFromProperty != null) {
+	protected void setValidFromProperty(Optional<PrimitiveProperty> validFromProperty)
+	{
+		if (this.validFromProperty != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.validFromProperty = Objects.requireNonNull(validFromProperty);
 	}
 
 	@Override
-	public Optional<PrimitiveProperty> getValidToProperty() {
+	public Optional<PrimitiveProperty> getValidToProperty()
+	{
 		return this.validToProperty;
 	}
 
-	protected void setValidToProperty(Optional<PrimitiveProperty> validToProperty) {
-		if (this.validToProperty != null) {
+	protected void setValidToProperty(Optional<PrimitiveProperty> validToProperty)
+	{
+		if (this.validToProperty != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.validToProperty = Objects.requireNonNull(validToProperty);
 	}
 
 	@Override
-	public Optional<PrimitiveProperty> getCreatedByProperty() {
+	public Optional<PrimitiveProperty> getCreatedByProperty()
+	{
 		return this.createdByProperty;
 	}
 
-	protected void setCreatedByProperty(Optional<PrimitiveProperty> createdByProperty) {
-		if (this.createdByProperty != null) {
+	protected void setCreatedByProperty(Optional<PrimitiveProperty> createdByProperty)
+	{
+		if (this.createdByProperty != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.createdByProperty = Objects.requireNonNull(createdByProperty);
 	}
 
 	@Override
-	public Optional<PrimitiveProperty> getCreatedOnProperty() {
+	public Optional<PrimitiveProperty> getCreatedOnProperty()
+	{
 		return this.createdOnProperty;
 	}
 
-	protected void setCreatedOnProperty(Optional<PrimitiveProperty> createdOnProperty) {
-		if (this.createdOnProperty != null) {
+	protected void setCreatedOnProperty(Optional<PrimitiveProperty> createdOnProperty)
+	{
+		if (this.createdOnProperty != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.createdOnProperty = Objects.requireNonNull(createdOnProperty);
 	}
 
 	@Override
-	public Optional<PrimitiveProperty> getLastUpdatedByProperty() {
+	public Optional<PrimitiveProperty> getLastUpdatedByProperty()
+	{
 		return this.lastUpdatedByProperty;
 	}
 
-	protected void setLastUpdatedByProperty(Optional<PrimitiveProperty> lastUpdatedByProperty) {
-		if (this.lastUpdatedByProperty != null) {
+	protected void setLastUpdatedByProperty(Optional<PrimitiveProperty> lastUpdatedByProperty)
+	{
+		if (this.lastUpdatedByProperty != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.lastUpdatedByProperty = Objects.requireNonNull(lastUpdatedByProperty);
@@ -307,8 +364,8 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 
 	public abstract static class ClassifierBuilder<BuiltElement extends AbstractClassifier>
 		extends PackageableElementBuilder<BuiltElement>
-		implements TypeGetter, TopLevelElementBuilderWithSourceCode {
-
+		implements TypeGetter, TopLevelElementBuilderWithSourceCode
+	{
 		protected ImmutableList<PropertyBuilder<?, ?, ?>> declaredProperties;
 		protected ImmutableList<DataTypePropertyBuilder<?, ?, ?>> declaredDataTypeProperties;
 		protected ImmutableList<AssociationEndSignatureBuilder> declaredAssociationEndSignatureBuilders;
@@ -323,21 +380,26 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 			int ordinal,
 			@Nonnull IdentifierContext nameContext,
 			@Nonnull String packageName
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode, ordinal, nameContext, packageName);
 		}
 
 		public void setDeclaredDataTypeProperties(
 			@Nonnull ImmutableList<DataTypePropertyBuilder<?, ?, ?>> declaredDataTypeProperties
-		) {
-			if (this.declaredDataTypeProperties != null) {
+		)
+		{
+			if (this.declaredDataTypeProperties != null)
+			{
 				throw new IllegalStateException();
 			}
 			this.declaredDataTypeProperties = Objects.requireNonNull(declaredDataTypeProperties);
 		}
 
-		public void setDeclaredModifiers(@Nonnull ImmutableList<ModifierBuilder> declaredModifiers) {
-			if (this.declaredModifiers != null) {
+		public void setDeclaredModifiers(@Nonnull ImmutableList<ModifierBuilder> declaredModifiers)
+		{
+			if (this.declaredModifiers != null)
+			{
 				throw new IllegalStateException();
 			}
 			this.declaredModifiers = Objects.requireNonNull(declaredModifiers);
@@ -345,8 +407,10 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 
 		public void setDeclaredAssociationEndSignatures(
 			@Nonnull ImmutableList<AssociationEndSignatureBuilder> declaredAssociationEndSignatures
-		) {
-			if (this.declaredAssociationEndSignatureBuilders != null) {
+		)
+		{
+			if (this.declaredAssociationEndSignatureBuilders != null)
+			{
 				throw new IllegalStateException();
 			}
 			this.declaredAssociationEndSignatureBuilders = Objects.requireNonNull(declaredAssociationEndSignatures);
@@ -354,37 +418,45 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 
 		public void setDeclaredReferenceProperties(
 			@Nonnull ImmutableList<ReferencePropertyBuilder<?, ?, ?>> declaredReferenceProperties
-		) {
-			if (this.declaredReferenceProperties != null) {
+		)
+		{
+			if (this.declaredReferenceProperties != null)
+			{
 				throw new IllegalStateException();
 			}
 			this.declaredReferenceProperties = Objects.requireNonNull(declaredReferenceProperties);
 		}
 
-		public void setDeclaredProperties(@Nonnull ImmutableList<PropertyBuilder<?, ?, ?>> declaredProperties) {
-			if (this.declaredProperties != null) {
+		public void setDeclaredProperties(@Nonnull ImmutableList<PropertyBuilder<?, ?, ?>> declaredProperties)
+		{
+			if (this.declaredProperties != null)
+			{
 				throw new IllegalStateException();
 			}
 			this.declaredProperties = Objects.requireNonNull(declaredProperties);
 		}
 
 		@Override
-		protected void buildChildren() {
+		protected void buildChildren()
+		{
 			ImmutableList<Modifier> modifiers = this.declaredModifiers.collect(ModifierBuilder::build);
 			this.element.setModifiers(modifiers);
 
-			ImmutableList<DataTypeProperty> dataTypeProperties = this.declaredDataTypeProperties.<
-				DataTypeProperty
-			>collect(DataTypePropertyBuilder::build).toImmutable();
+			ImmutableList<DataTypeProperty> dataTypeProperties = this.declaredDataTypeProperties
+				.<DataTypeProperty>collect(DataTypePropertyBuilder::build)
+				.toImmutable();
 			this.element.setDeclaredDataTypeProperties(dataTypeProperties);
 		}
 
-		public void setDeclaredInterfaces(ImmutableList<InterfaceBuilder> declaredInterfaces) {
+		public void setDeclaredInterfaces(ImmutableList<InterfaceBuilder> declaredInterfaces)
+		{
 			this.declaredInterfaces = declaredInterfaces;
 		}
 
-		public void build2() {
-			if (this.element == null) {
+		public void build2()
+		{
+			if (this.element == null)
+			{
 				throw new IllegalStateException();
 			}
 
@@ -393,23 +465,24 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 			this.element.setInterfaces(superInterfaces);
 
 			ImmutableList<AssociationEndSignature> declaredAssociationEndSignatures =
-				this.declaredAssociationEndSignatureBuilders.<AssociationEndSignature>collect(
-					AssociationEndSignatureBuilder::build
-				).toImmutable();
+				this.declaredAssociationEndSignatureBuilders
+					.<AssociationEndSignature>collect(AssociationEndSignatureBuilder::build)
+					.toImmutable();
 			this.element.setDeclaredAssociationEndSignatures(declaredAssociationEndSignatures);
 
-			ImmutableList<ReferenceProperty> declaredReferenceProperties = this.declaredReferenceProperties.<
-				ReferenceProperty
-			>collect(ReferencePropertyBuilder::getElement).toImmutable();
+			ImmutableList<ReferenceProperty> declaredReferenceProperties = this.declaredReferenceProperties
+				.<ReferenceProperty>collect(ReferencePropertyBuilder::getElement)
+				.toImmutable();
 			this.element.setDeclaredReferenceProperties(declaredReferenceProperties);
 
-			ImmutableList<Property> properties = this.declaredProperties.<Property>collect(
-				PropertyBuilder::getElement
-			).toImmutable();
+			ImmutableList<Property> properties = this.declaredProperties
+				.<Property>collect(PropertyBuilder::getElement)
+				.toImmutable();
 			this.element.setDeclaredProperties(properties);
 		}
 
-		public void build3() {
+		public void build3()
+		{
 			ImmutableList<DataTypeProperty> dataTypeProperties = this.getDataTypeProperties();
 
 			ImmutableList<DataTypeProperty> foreignKeys = dataTypeProperties.select(DataTypeProperty::isForeignKey);
@@ -462,7 +535,8 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 
 			ImmutableList<DataTypeProperty> result = initialDataTypeProperties.newWithAll(otherDataTypeProperties);
 
-			if (!result.equals(result.distinct())) {
+			if (!result.equals(result.distinct()))
+			{
 				throw new AssertionError(result);
 			}
 
@@ -489,14 +563,14 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 			this.element.setReferenceProperties(referenceProperties);
 		}
 
-		protected ImmutableList<DataTypeProperty> getDataTypeProperties() {
+		protected ImmutableList<DataTypeProperty> getDataTypeProperties()
+		{
 			ImmutableList<DataTypeProperty> declaredDataTypeProperties = this.declaredDataTypeProperties.collect(
 				(property) -> property.getElement()
 			);
 
-			ImmutableList<DataTypeProperty> interfaceProperties = this.declaredInterfaces.collect(
-					ElementBuilder::getElement
-				)
+			ImmutableList<DataTypeProperty> interfaceProperties = this.declaredInterfaces
+				.collect(ElementBuilder::getElement)
 				.flatCollect(Classifier::getDataTypeProperties)
 				.toImmutable();
 
@@ -512,14 +586,14 @@ public abstract class AbstractClassifier extends AbstractPackageableElement impl
 			return result;
 		}
 
-		protected ImmutableList<ReferenceProperty> getReferenceProperties() {
+		protected ImmutableList<ReferenceProperty> getReferenceProperties()
+		{
 			ImmutableList<ReferenceProperty> declaredReferenceProperties = this.declaredReferenceProperties.collect(
 				(property) -> property.getElement()
 			);
 
-			ImmutableList<ReferenceProperty> interfaceProperties = this.declaredInterfaces.collect(
-					ElementBuilder::getElement
-				)
+			ImmutableList<ReferenceProperty> interfaceProperties = this.declaredInterfaces
+				.collect(ElementBuilder::getElement)
 				.flatCollect(Classifier::getReferenceProperties)
 				.toImmutable();
 

@@ -29,42 +29,49 @@ import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
 import io.liftwizard.reladomo.simseq.ObjectSequenceObjectFactory;
 
 // TODO: Create a DataTypeVisitor that factors in enumerations too
-class AttributeTypeVisitor implements PrimitiveTypeVisitor {
-
+class AttributeTypeVisitor
+	implements PrimitiveTypeVisitor
+{
 	private final Klass owningClass;
 	private final PrimitiveProperty primitiveProperty;
 	private final AttributePureType attributeType;
 
-	AttributeTypeVisitor(Klass owningClass, PrimitiveProperty primitiveProperty, AttributePureType attributeType) {
+	AttributeTypeVisitor(Klass owningClass, PrimitiveProperty primitiveProperty, AttributePureType attributeType)
+	{
 		this.owningClass = Objects.requireNonNull(owningClass);
 		this.primitiveProperty = Objects.requireNonNull(primitiveProperty);
 		this.attributeType = Objects.requireNonNull(attributeType);
 	}
 
 	@Override
-	public void visitString() {
+	public void visitString()
+	{
 		this.attributeType.setJavaType("String");
 		this.attributeType.setTrim(false);
 
-		this.primitiveProperty.getMaxLengthPropertyValidation()
+		this.primitiveProperty
+			.getMaxLengthPropertyValidation()
 			.map(NumericPropertyValidation::getNumber)
 			.ifPresent(this.attributeType::setMaxLength);
 	}
 
 	@Override
-	public void visitInteger() {
+	public void visitInteger()
+	{
 		this.attributeType.setJavaType("int");
 	}
 
 	@Override
-	public void visitLong() {
+	public void visitLong()
+	{
 		this.attributeType.setJavaType("long");
 
 		if (
 			this.primitiveProperty.isID()
 			&& (this.owningClass == this.primitiveProperty.getOwningClassifier()
 				|| this.owningClass.getSuperClass().isEmpty())
-		) {
+		)
+		{
 			// TODO: Infer during compilation that ID properties are key properties, or add an error when they are not.
 			var primaryKeyGeneratorStrategyType = new PrimaryKeyGeneratorStrategyType();
 			primaryKeyGeneratorStrategyType.with("SimulatedSequence", this.attributeType);
@@ -81,22 +88,26 @@ class AttributeTypeVisitor implements PrimitiveTypeVisitor {
 	}
 
 	@Override
-	public void visitDouble() {
+	public void visitDouble()
+	{
 		this.attributeType.setJavaType("double");
 	}
 
 	@Override
-	public void visitFloat() {
+	public void visitFloat()
+	{
 		this.attributeType.setJavaType("float");
 	}
 
 	@Override
-	public void visitBoolean() {
+	public void visitBoolean()
+	{
 		this.attributeType.setJavaType("boolean");
 	}
 
 	@Override
-	public void visitInstant() {
+	public void visitInstant()
+	{
 		this.attributeType.setJavaType("Timestamp");
 		var timezoneConversion = new TimezoneConversionType();
 		timezoneConversion.with("convert-to-utc", this.attributeType);
@@ -104,17 +115,20 @@ class AttributeTypeVisitor implements PrimitiveTypeVisitor {
 	}
 
 	@Override
-	public void visitLocalDate() {
+	public void visitLocalDate()
+	{
 		this.attributeType.setJavaType("Date");
 	}
 
 	@Override
-	public void visitTemporalInstant() {
+	public void visitTemporalInstant()
+	{
 		throw new AssertionError();
 	}
 
 	@Override
-	public void visitTemporalRange() {
+	public void visitTemporalRange()
+	{
 		throw new AssertionError();
 	}
 }

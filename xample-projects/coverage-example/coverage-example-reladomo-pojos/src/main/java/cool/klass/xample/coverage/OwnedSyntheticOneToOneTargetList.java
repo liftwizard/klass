@@ -20,19 +20,25 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class OwnedSyntheticOneToOneTargetList extends OwnedSyntheticOneToOneTargetListAbstract {
+public class OwnedSyntheticOneToOneTargetList
+	extends OwnedSyntheticOneToOneTargetListAbstract
+{
+	public OwnedSyntheticOneToOneTargetList()
+	{
+	}
 
-	public OwnedSyntheticOneToOneTargetList() {}
-
-	public OwnedSyntheticOneToOneTargetList(int initialSize) {
+	public OwnedSyntheticOneToOneTargetList(int initialSize)
+	{
 		super(initialSize);
 	}
 
-	public OwnedSyntheticOneToOneTargetList(Collection c) {
+	public OwnedSyntheticOneToOneTargetList(Collection c)
+	{
 		super(c);
 	}
 
-	public OwnedSyntheticOneToOneTargetList(Operation operation) {
+	public OwnedSyntheticOneToOneTargetList(Operation operation)
+	{
 		super(operation);
 	}
 }

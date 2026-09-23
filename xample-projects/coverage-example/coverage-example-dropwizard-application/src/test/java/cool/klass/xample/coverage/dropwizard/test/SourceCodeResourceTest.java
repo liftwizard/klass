@@ -25,13 +25,15 @@ import io.liftwizard.junit.extension.match.file.FileMatchExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-class SourceCodeResourceTest extends AbstractCoverageTest {
-
+class SourceCodeResourceTest
+	extends AbstractCoverageTest
+{
 	@RegisterExtension
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
 	@Test
-	void smoke_test() {
+	void smoke_test()
+	{
 		Client client = this.getClient("smoke_test");
 
 		Response response = client

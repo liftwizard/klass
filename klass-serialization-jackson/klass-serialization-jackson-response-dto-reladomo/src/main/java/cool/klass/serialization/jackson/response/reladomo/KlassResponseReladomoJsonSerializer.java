@@ -32,15 +32,17 @@ import cool.klass.serialization.jackson.response.KlassResponse;
 import cool.klass.serialization.jackson.response.KlassResponseMetadata;
 
 // TODO: Split into one for non-null lists and one for nullable MithraObjects
-public class KlassResponseReladomoJsonSerializer extends JsonSerializer<KlassResponse> {
-
+public class KlassResponseReladomoJsonSerializer
+	extends JsonSerializer<KlassResponse>
+{
 	@Nonnull
 	private final DomainModel domainModel;
 
 	@Nonnull
 	private final DataStore dataStore;
 
-	public KlassResponseReladomoJsonSerializer(@Nonnull DomainModel domainModel, @Nonnull DataStore dataStore) {
+	public KlassResponseReladomoJsonSerializer(@Nonnull DomainModel domainModel, @Nonnull DataStore dataStore)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 		this.dataStore = Objects.requireNonNull(dataStore);
 	}
@@ -50,9 +52,12 @@ public class KlassResponseReladomoJsonSerializer extends JsonSerializer<KlassRes
 		@Nonnull KlassResponse klassResponse,
 		@Nonnull JsonGenerator jsonGenerator,
 		@Nonnull SerializerProvider serializerProvider
-	) throws IOException {
+	)
+		throws IOException
+	{
 		Class<?> activeViewClass = serializerProvider.getActiveView();
-		if (activeViewClass != null) {
+		if (activeViewClass != null)
+		{
 			String detailMessage = "Expected no active view while serializing KlassResponse but got %s".formatted(
 				activeViewClass.getCanonicalName()
 			);
@@ -62,10 +67,13 @@ public class KlassResponseReladomoJsonSerializer extends JsonSerializer<KlassRes
 		KlassResponseMetadata metadata = klassResponse.getMetadata();
 
 		jsonGenerator.writeStartObject();
-		try {
+		try
+		{
 			jsonGenerator.writeObjectField("_metadata", metadata);
 			this.serializeData(klassResponse, jsonGenerator, serializerProvider);
-		} finally {
+		}
+		finally
+		{
 			jsonGenerator.writeEndObject();
 		}
 	}
@@ -74,10 +82,15 @@ public class KlassResponseReladomoJsonSerializer extends JsonSerializer<KlassRes
 		@Nonnull KlassResponse klassResponse,
 		@Nonnull JsonGenerator jsonGenerator,
 		@Nonnull SerializerProvider serializerProvider
-	) throws IOException {
-		if (klassResponse.getMetadata().getMultiplicity().isToOne()) {
+	)
+		throws IOException
+	{
+		if (klassResponse.getMetadata().getMultiplicity().isToOne())
+		{
 			this.serializeDataOne(klassResponse, jsonGenerator, serializerProvider);
-		} else {
+		}
+		else
+		{
 			this.serializeDataMany(klassResponse, jsonGenerator, serializerProvider);
 		}
 	}
@@ -86,10 +99,13 @@ public class KlassResponseReladomoJsonSerializer extends JsonSerializer<KlassRes
 		@Nonnull KlassResponse klassResponse,
 		@Nonnull JsonGenerator jsonGenerator,
 		@Nonnull SerializerProvider serializerProvider
-	) throws IOException {
+	)
+		throws IOException
+	{
 		var mithraObject = (MithraObject) klassResponse.getData();
 
-		if (mithraObject == null) {
+		if (mithraObject == null)
+		{
 			jsonGenerator.writeNullField("_data");
 			return;
 		}
@@ -103,9 +119,12 @@ public class KlassResponseReladomoJsonSerializer extends JsonSerializer<KlassRes
 		@Nonnull KlassResponse klassResponse,
 		@Nonnull JsonGenerator jsonGenerator,
 		@Nonnull SerializerProvider serializerProvider
-	) throws IOException {
+	)
+		throws IOException
+	{
 		Object data = klassResponse.getData();
-		if (!(data instanceof List<?>)) {
+		if (!(data instanceof List<?>))
+		{
 			String detailMessage = "%s cannot be cast to %s".formatted(
 				data.getClass().getCanonicalName(),
 				List.class.getCanonicalName()
@@ -115,18 +134,23 @@ public class KlassResponseReladomoJsonSerializer extends JsonSerializer<KlassRes
 
 		var mithraList = (List<MithraObject>) data;
 		jsonGenerator.writeArrayFieldStart("_data");
-		try {
+		try
+		{
 			ReladomoContextJsonSerializer reladomoJsonSerializer = this.getReladomoContextJsonSerializer(klassResponse);
-			for (MithraObject eachMithraObject : mithraList) {
+			for (MithraObject eachMithraObject : mithraList)
+			{
 				reladomoJsonSerializer.serialize(eachMithraObject, jsonGenerator, serializerProvider);
 			}
-		} finally {
+		}
+		finally
+		{
 			jsonGenerator.writeEndArray();
 		}
 	}
 
 	@Nonnull
-	private ReladomoContextJsonSerializer getReladomoContextJsonSerializer(@Nonnull KlassResponse klassResponse) {
+	private ReladomoContextJsonSerializer getReladomoContextJsonSerializer(@Nonnull KlassResponse klassResponse)
+	{
 		KlassResponseMetadata metadata = klassResponse.getMetadata();
 
 		return new ReladomoContextJsonSerializer(this.domainModel, this.dataStore, metadata);

@@ -22,20 +22,24 @@ import javax.annotation.Nonnull;
 
 import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
 
-public class PropertiesOptional extends PropertiesOptionalAbstract {
-
-	public PropertiesOptional(Timestamp system) {
+public class PropertiesOptional
+	extends PropertiesOptionalAbstract
+{
+	public PropertiesOptional(Timestamp system)
+	{
 		super(system);
 		// You must not modify this constructor. Mithra calls this internally.
 		// You can call this constructor. You can also add new constructors.
 	}
 
-	public PropertiesOptional() {
+	public PropertiesOptional()
+	{
 		this(UtcInfinityTimestamp.getDefaultInfinity());
 	}
 
 	@Nonnull
-	public String getOptionalDerived() {
+	public String getOptionalDerived()
+	{
 		return "cool.klass.xample.coverage.PropertiesOptional.getOptionalDerived";
 	}
 }

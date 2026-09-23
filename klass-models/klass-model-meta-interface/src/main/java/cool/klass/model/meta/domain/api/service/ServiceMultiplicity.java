@@ -19,7 +19,8 @@ package cool.klass.model.meta.domain.api.service;
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 
-public enum ServiceMultiplicity {
+public enum ServiceMultiplicity
+{
 	ONE("one"),
 	MANY("many");
 
@@ -30,15 +31,18 @@ public enum ServiceMultiplicity {
 
 	private final String prettyName;
 
-	ServiceMultiplicity(String prettyName) {
+	ServiceMultiplicity(String prettyName)
+	{
 		this.prettyName = prettyName;
 	}
 
-	public static ServiceMultiplicity getByPrettyName(String prettyName) {
+	public static ServiceMultiplicity getByPrettyName(String prettyName)
+	{
 		return SERVICE_MULTIPLICITY_BY_PRETTY_NAME.get(prettyName);
 	}
 
-	public String getPrettyName() {
+	public String getPrettyName()
+	{
 		return this.prettyName;
 	}
 }

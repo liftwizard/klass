@@ -30,23 +30,28 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;
 
-public class VersionClassInferencePhase extends AbstractCompilerPhase {
-
-	public VersionClassInferencePhase(@Nonnull CompilerState compilerState) {
+public class VersionClassInferencePhase
+	extends AbstractCompilerPhase
+{
+	public VersionClassInferencePhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Nonnull
 	@Override
-	public String getName() {
+	public String getName()
+	{
 		return "Version class";
 	}
 
 	@Override
-	public void enterClassifierModifier(@Nonnull ClassifierModifierContext ctx) {
+	public void enterClassifierModifier(@Nonnull ClassifierModifierContext ctx)
+	{
 		super.enterClassifierModifier(ctx);
 		String modifierText = ctx.getText();
-		if (!"versioned".equals(modifierText)) {
+		if (!"versioned".equals(modifierText))
+		{
 			return;
 		}
 
@@ -71,7 +76,8 @@ public class VersionClassInferencePhase extends AbstractCompilerPhase {
 	}
 
 	@Nonnull
-	private String getSourceCode() {
+	private String getSourceCode()
+	{
 		AntlrClass klass = this.compilerState.getCompilerWalk().getKlass();
 		String propertySourceCode = klass
 			.getAllDataTypeProperties()
@@ -102,7 +108,8 @@ public class VersionClassInferencePhase extends AbstractCompilerPhase {
 		);
 	}
 
-	private String getSourceCode(@Nonnull AntlrDataTypeProperty<?> dataTypeProperty) {
+	private String getSourceCode(@Nonnull AntlrDataTypeProperty<?> dataTypeProperty)
+	{
 		String isOptionalString = dataTypeProperty.isOptional() ? "?" : "";
 
 		ListIterable<AntlrModifier> modifiers = dataTypeProperty.getModifiers().reject(AntlrModifier::isId);

@@ -20,19 +20,25 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class PackageableElementList extends PackageableElementListAbstract {
+public class PackageableElementList
+	extends PackageableElementListAbstract
+{
+	public PackageableElementList()
+	{
+	}
 
-	public PackageableElementList() {}
-
-	public PackageableElementList(int initialSize) {
+	public PackageableElementList(int initialSize)
+	{
 		super(initialSize);
 	}
 
-	public PackageableElementList(Collection c) {
+	public PackageableElementList(Collection c)
+	{
 		super(c);
 	}
 
-	public PackageableElementList(Operation operation) {
+	public PackageableElementList(Operation operation)
+	{
 		super(operation);
 	}
 }

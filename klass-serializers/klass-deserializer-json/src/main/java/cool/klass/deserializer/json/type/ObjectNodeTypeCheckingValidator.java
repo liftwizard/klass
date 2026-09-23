@@ -32,8 +32,8 @@ import cool.klass.model.meta.domain.api.property.Property;
 import cool.klass.model.meta.domain.api.property.PropertyVisitor;
 import org.eclipse.collections.api.list.MutableList;
 
-public final class ObjectNodeTypeCheckingValidator {
-
+public final class ObjectNodeTypeCheckingValidator
+{
 	@Nonnull
 	private final ContextStack contextStack;
 
@@ -47,25 +47,32 @@ public final class ObjectNodeTypeCheckingValidator {
 		@Nonnull ContextStack contextStack,
 		@Nonnull Klass klass,
 		@Nonnull JsonNode jsonNode
-	) {
+	)
+	{
 		this.contextStack = Objects.requireNonNull(contextStack);
 		this.klass = Objects.requireNonNull(klass);
 		this.jsonNode = Objects.requireNonNull(jsonNode);
 	}
 
-	public static void validate(@Nonnull MutableList<String> errors, @Nonnull JsonNode jsonNode, @Nonnull Klass klass) {
+	public static void validate(@Nonnull MutableList<String> errors, @Nonnull JsonNode jsonNode, @Nonnull Klass klass)
+	{
 		var contextStack = new ContextStack(errors, null);
 		var contextNode = new ContextNode(klass);
-		contextStack.runWithContext(contextNode, () -> {
+		contextStack.runWithContext(contextNode, () ->
+		{
 			var validator = new ObjectNodeTypeCheckingValidator(contextStack, klass, jsonNode);
 			validator.validateIncomingData();
 		});
 	}
 
-	public void validateIncomingData() {
-		if (this.jsonNode instanceof ObjectNode objectNode) {
+	public void validateIncomingData()
+	{
+		if (this.jsonNode instanceof ObjectNode objectNode)
+		{
 			this.validateObjectNode(objectNode);
-		} else {
+		}
+		else
+		{
 			String error = String.format(
 				"Expected json object but value was %s: %s.",
 				this.jsonNode.getNodeType().toString().toLowerCase(Locale.ROOT),
@@ -75,34 +82,33 @@ public final class ObjectNodeTypeCheckingValidator {
 		}
 	}
 
-	private void validateObjectNode(@Nonnull ObjectNode objectNode) {
-		objectNode
-			.fields()
-			.forEachRemaining((entry) -> {
-				String childFieldName = entry.getKey();
-				JsonNode childJsonNode = entry.getValue();
-				Optional<Property> optionalProperty = this.klass.findPropertyByName(childFieldName);
+	private void validateObjectNode(@Nonnull ObjectNode objectNode)
+	{
+		objectNode.fields().forEachRemaining((entry) ->
+		{
+			String childFieldName = entry.getKey();
+			JsonNode childJsonNode = entry.getValue();
+			Optional<Property> optionalProperty = this.klass.findPropertyByName(childFieldName);
 
-				if (optionalProperty.isEmpty()) {
-					this.handleMissingProperty(childFieldName, childJsonNode);
-					return;
-				}
+			if (optionalProperty.isEmpty())
+			{
+				this.handleMissingProperty(childFieldName, childJsonNode);
+				return;
+			}
 
-				if (childJsonNode.isNull()) {
-					return;
-				}
+			if (childJsonNode.isNull())
+			{
+				return;
+			}
 
-				Property property = optionalProperty.get();
-				PropertyVisitor visitor = new JsonTypeCheckingPropertyVisitor(
-					this.contextStack,
-					property,
-					childJsonNode
-				);
-				property.visit(visitor);
-			});
+			Property property = optionalProperty.get();
+			PropertyVisitor visitor = new JsonTypeCheckingPropertyVisitor(this.contextStack, property, childJsonNode);
+			property.visit(visitor);
+		});
 	}
 
-	private void handleMissingProperty(String childFieldName, JsonNode childJsonNode) {
+	private void handleMissingProperty(String childFieldName, JsonNode childJsonNode)
+	{
 		String error = String.format(
 			"No such property '%s.%s' but got %s. Expected properties: %s.",
 			this.klass,

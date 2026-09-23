@@ -18,20 +18,24 @@ package klass.model.meta.domain.dropwizard.test;
 
 import org.junit.jupiter.api.Test;
 
-class PackageableElementResourceManualTest extends AbstractResourceTestCase {
-
+class PackageableElementResourceManualTest
+	extends AbstractResourceTestCase
+{
 	@Test
-	void getAllMeta() {
+	void getAllMeta()
+	{
 		this.assertUrlReturns("getAllMeta", "/meta/packageableElement");
 	}
 
 	@Test
-	void getByName() {
+	void getByName()
+	{
 		this.assertUrlReturns("getByName", "/meta/packageableElement/Association");
 	}
 
 	@Test
-	void getByNameEnumeration() {
+	void getByNameEnumeration()
+	{
 		this.assertUrlReturns("getByNameEnumeration", "/meta/packageableElement/Enumeration");
 	}
 }

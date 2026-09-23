@@ -27,14 +27,16 @@ import cool.klass.model.meta.domain.api.NamedElement;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import org.eclipse.collections.api.list.ListIterable;
 
-public final class KlassServiceSourceCodeGenerator {
-
-	private KlassServiceSourceCodeGenerator() {
+public final class KlassServiceSourceCodeGenerator
+{
+	private KlassServiceSourceCodeGenerator()
+	{
 		throw new AssertionError("Suppress default constructor for noninstantiability");
 	}
 
 	@Nonnull
-	public static String getPackageSourceCode(@Nonnull DomainModel domainModel, @Nonnull String fullyQualifiedPackage) {
+	public static String getPackageSourceCode(@Nonnull DomainModel domainModel, @Nonnull String fullyQualifiedPackage)
+	{
 		String sourceCode = domainModel
 			.getClasses()
 			.select((c) -> c.getPackageName().equals(fullyQualifiedPackage))
@@ -59,7 +61,8 @@ public final class KlassServiceSourceCodeGenerator {
 		);
 	}
 
-	private static String getSourceCode(Klass klass) {
+	private static String getSourceCode(Klass klass)
+	{
 		String className = klass.getName();
 		String lowercaseName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, className);
 		ListIterable<String> urlPaths = getUrlPaths(klass);
@@ -102,18 +105,21 @@ public final class KlassServiceSourceCodeGenerator {
 		);
 	}
 
-	private static ListIterable<String> getUrlPaths(Klass klass) {
+	private static ListIterable<String> getUrlPaths(Klass klass)
+	{
 		return klass.getKeyProperties().collect(KlassServiceSourceCodeGenerator::getUrlPath);
 	}
 
-	private static String getUrlPath(DataTypeProperty dataTypeProperty) {
+	private static String getUrlPath(DataTypeProperty dataTypeProperty)
+	{
 		String name = dataTypeProperty.getName();
 		String type = dataTypeProperty.getType().getDataTypeName();
 		String multiplicity = dataTypeProperty.isRequired() ? "1..1" : "0..1";
 		return String.format("/{%s: %s[%s]}", name, type, multiplicity);
 	}
 
-	private static ListIterable<String> getCriteria(Klass klass) {
+	private static ListIterable<String> getCriteria(Klass klass)
+	{
 		return klass
 			.getKeyProperties()
 			.collect(NamedElement::getName)

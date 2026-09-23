@@ -16,8 +16,11 @@
 
 package cool.klass.model.reladomo.tree;
 
-public interface ReladomoTreeNodeListener {
-	default void assertInvariants() {}
+public interface ReladomoTreeNodeListener
+{
+	default void assertInvariants()
+	{
+	}
 
 	void enterRoot(RootReladomoTreeNode rootReladomoTreeNode);
 

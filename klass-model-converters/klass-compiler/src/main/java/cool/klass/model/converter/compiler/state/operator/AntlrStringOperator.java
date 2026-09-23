@@ -28,22 +28,26 @@ import cool.klass.model.meta.domain.operator.StringOperatorImpl.StringOperatorBu
 import cool.klass.model.meta.grammar.KlassParser.StringOperatorContext;
 import org.eclipse.collections.api.list.ListIterable;
 
-public class AntlrStringOperator extends AntlrOperator {
-
+public class AntlrStringOperator
+	extends AntlrOperator
+{
 	private StringOperatorBuilder elementBuilder;
 
 	public AntlrStringOperator(
 		@Nonnull StringOperatorContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull String operatorText
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, operatorText);
 	}
 
 	@Nonnull
 	@Override
-	public StringOperatorBuilder build() {
-		if (this.elementBuilder != null) {
+	public StringOperatorBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.elementBuilder = new StringOperatorBuilder(
@@ -58,7 +62,8 @@ public class AntlrStringOperator extends AntlrOperator {
 
 	@Nonnull
 	@Override
-	public StringOperatorBuilder getElementBuilder() {
+	public StringOperatorBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
@@ -67,8 +72,10 @@ public class AntlrStringOperator extends AntlrOperator {
 		CompilerAnnotationHolder compilerAnnotationHolder,
 		@Nonnull ListIterable<AntlrType> sourceTypes,
 		ListIterable<AntlrType> targetTypes
-	) {
-		if (sourceTypes.equals(targetTypes)) {
+	)
+	{
+		if (sourceTypes.equals(targetTypes))
+		{
 			return;
 		}
 

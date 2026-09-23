@@ -20,19 +20,25 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class KlassList extends KlassListAbstract {
+public class KlassList
+	extends KlassListAbstract
+{
+	public KlassList()
+	{
+	}
 
-	public KlassList() {}
-
-	public KlassList(int initialSize) {
+	public KlassList(int initialSize)
+	{
 		super(initialSize);
 	}
 
-	public KlassList(Collection<?> c) {
+	public KlassList(Collection<?> c)
+	{
 		super(c);
 	}
 
-	public KlassList(Operation operation) {
+	public KlassList(Operation operation)
+	{
 		super(operation);
 	}
 }

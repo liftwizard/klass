@@ -32,13 +32,17 @@ import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.NamedElement;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class ReladomoClassListGenerator extends AbstractReladomoGenerator {
-
-	public ReladomoClassListGenerator(@Nonnull DomainModel domainModel) {
+public class ReladomoClassListGenerator
+	extends AbstractReladomoGenerator
+{
+	public ReladomoClassListGenerator(@Nonnull DomainModel domainModel)
+	{
 		super(domainModel);
 	}
 
-	public void writeClassListFile(@Nonnull Path path) throws IOException {
+	public void writeClassListFile(@Nonnull Path path)
+		throws IOException
+	{
 		var mithraGeneratorMarshaller = new MithraGeneratorMarshaller();
 		mithraGeneratorMarshaller.setIndent(true);
 
@@ -52,18 +56,22 @@ public class ReladomoClassListGenerator extends AbstractReladomoGenerator {
 	}
 
 	@Nonnull
-	private Mithra generateMithra() {
-		ImmutableList<MithraObjectResourceType> objectResources = this.domainModel.getClasses()
+	private Mithra generateMithra()
+	{
+		ImmutableList<MithraObjectResourceType> objectResources = this.domainModel
+			.getClasses()
 			.reject(Klass::isTransient)
 			.collect(NamedElement::getName)
 			.collect(this::getObjectResource);
 
-		ImmutableList<MithraPureObjectResourceType> pureObjectResources = this.domainModel.getClasses()
+		ImmutableList<MithraPureObjectResourceType> pureObjectResources = this.domainModel
+			.getClasses()
 			.select(Klass::isTransient)
 			.collect(NamedElement::getName)
 			.collect(this::getPureObjectResource);
 
-		ImmutableList<MithraInterfaceResourceType> interfaceResources = this.domainModel.getInterfaces()
+		ImmutableList<MithraInterfaceResourceType> interfaceResources = this.domainModel
+			.getInterfaces()
 			.collect(NamedElement::getName)
 			.collect(this::getInterfaceResource);
 
@@ -75,21 +83,24 @@ public class ReladomoClassListGenerator extends AbstractReladomoGenerator {
 	}
 
 	@Nonnull
-	private MithraObjectResourceType getObjectResource(String className) {
+	private MithraObjectResourceType getObjectResource(String className)
+	{
 		var objectResource = new MithraObjectResourceType();
 		objectResource.setName(className);
 		return objectResource;
 	}
 
 	@Nonnull
-	private MithraPureObjectResourceType getPureObjectResource(String className) {
+	private MithraPureObjectResourceType getPureObjectResource(String className)
+	{
 		var pureObjectResource = new MithraPureObjectResourceType();
 		pureObjectResource.setName(className);
 		return pureObjectResource;
 	}
 
 	@Nonnull
-	private MithraInterfaceResourceType getInterfaceResource(String interfaceName) {
+	private MithraInterfaceResourceType getInterfaceResource(String interfaceName)
+	{
 		var interfaceResource = new MithraInterfaceResourceType();
 		interfaceResource.setName(interfaceName);
 		return interfaceResource;

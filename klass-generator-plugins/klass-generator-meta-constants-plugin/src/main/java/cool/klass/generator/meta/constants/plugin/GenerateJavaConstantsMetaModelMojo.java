@@ -35,8 +35,9 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
-public class GenerateJavaConstantsMetaModelMojo extends AbstractGenerateMojo {
-
+public class GenerateJavaConstantsMetaModelMojo
+	extends AbstractGenerateMojo
+{
 	@Parameter(
 		property = "outputDirectory",
 		defaultValue = "${project.build.directory}/generated-sources/meta-model-constants"
@@ -50,29 +51,37 @@ public class GenerateJavaConstantsMetaModelMojo extends AbstractGenerateMojo {
 	private String rootPackageName;
 
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.CLASSPATH;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
-		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
-				DomainModel domainModel = this.getDomainModel();
-				Path outputPath = this.outputDirectory.toPath();
-				try {
-					var javaConstantsMetaModelGenerator = new JavaConstantsMetaModelGenerator(
-						domainModel,
-						this.applicationName,
-						this.rootPackageName
-					);
-					javaConstantsMetaModelGenerator.writeJavaConstantsMetaModelFiles(outputPath);
-				} catch (IOException e) {
-					throw new MojoExecutionException(e.getMessage(), e);
-				}
-				return null;
-			});
+	public void execute()
+		throws MojoExecutionException
+	{
+		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () ->
+		{
+			DomainModel domainModel = this.getDomainModel();
+			Path outputPath = this.outputDirectory.toPath();
+			try
+			{
+				var javaConstantsMetaModelGenerator = new JavaConstantsMetaModelGenerator(
+					domainModel,
+					this.applicationName,
+					this.rootPackageName
+				);
+				javaConstantsMetaModelGenerator.writeJavaConstantsMetaModelFiles(outputPath);
+			}
+			catch (IOException e)
+			{
+				throw new MojoExecutionException(e.getMessage(), e);
+			}
+			return null;
+		});
 
-		if (wasGenerated) {
+		if (wasGenerated)
+		{
 			this.getLog().info("Generated meta model constants in: " + this.outputDirectory.getPath());
 		}
 
