@@ -154,26 +154,6 @@
         </pluginManagement>
 
         <plugins>
-            <plugin>
-                <groupId>com.diffplug.spotless</groupId>
-                <artifactId>spotless-maven-plugin</artifactId>
-                <configuration>
-                    <java>
-                        <prettier combine.self="override">
-                            <devDependencies>
-                                <prettier>3.3.2</prettier>
-                                <prettier-plugin-java>2.7.4</prettier-plugin-java>
-                            </devDependencies>
-                            <configFile>.prettierrc.json5</configFile>
-                            <config>
-                                <parser>java</parser>
-                                <plugins>prettier-plugin-java</plugins>
-                            </config>
-                        </prettier>
-                    </java>
-                </configuration>
-            </plugin>
-
             <!--region Phase 7: compile-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -233,6 +213,33 @@
             </build>
         </profile>
         <!--endregion No phase-->
+
+        <profile>
+            <id>spotless-prettier-java-sort-imports</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.diffplug.spotless</groupId>
+                        <artifactId>spotless-maven-plugin</artifactId>
+                        <configuration>
+                            <java>
+                                <prettier combine.self="override">
+                                    <devDependencies>
+                                        <prettier>3.3.2</prettier>
+                                        <prettier-plugin-java>2.7.4</prettier-plugin-java>
+                                    </devDependencies>
+                                    <configFile>.prettierrc.json5</configFile>
+                                    <config>
+                                        <parser>java</parser>
+                                        <plugins>prettier-plugin-java</plugins>
+                                    </config>
+                                </prettier>
+                            </java>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 
         <!--region Phase 1: validate-->
         <profile>
