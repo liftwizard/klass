@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain.parameter;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.AbstractIdentifierElement;
 import cool.klass.model.meta.domain.api.DataType;
 import cool.klass.model.meta.domain.api.DataType.DataTypeGetter;
@@ -31,6 +25,10 @@ import cool.klass.model.meta.domain.api.parameter.Parameter;
 import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public final class ParameterImpl extends AbstractIdentifierElement implements Parameter {

@@ -16,13 +16,6 @@
 
 package cool.klass.model.converter.compiler;
 
-import java.util.LinkedHashMap;
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
-
-import javax.annotation.Nonnull;
-
 import com.google.common.base.Stopwatch;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
@@ -59,6 +52,11 @@ import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import cool.klass.model.converter.compiler.token.categorizing.lexer.LexerBasedTokenCategorizer;
 import cool.klass.model.converter.compiler.token.categorizing.parser.ParserBasedTokenCategorizer;
 import cool.klass.model.meta.grammar.KlassListener;
+import java.util.LinkedHashMap;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.eclipse.collections.api.factory.Lists;

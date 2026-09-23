@@ -16,6 +16,10 @@
 
 package cool.klass.syntax.maven.plugin;
 
+import com.google.common.base.CaseFormat;
+import com.google.common.base.Converter;
+import com.google.common.io.CharStreams;
+import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,11 +29,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-
-import com.google.common.base.CaseFormat;
-import com.google.common.base.Converter;
-import com.google.common.io.CharStreams;
-import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;

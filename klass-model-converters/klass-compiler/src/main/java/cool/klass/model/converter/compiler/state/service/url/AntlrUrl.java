@@ -16,12 +16,6 @@
 
 package cool.klass.model.converter.compiler.state.service.url;
 
-import java.util.LinkedHashMap;
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrElement;
@@ -39,6 +33,10 @@ import cool.klass.model.meta.domain.service.ServiceImpl.ServiceBuilder;
 import cool.klass.model.meta.domain.service.url.UrlImpl.UrlBuilder;
 import cool.klass.model.meta.grammar.KlassParser.ServiceDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlDeclarationContext;
+import java.util.LinkedHashMap;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.bag.ImmutableBag;
 import org.eclipse.collections.api.factory.Lists;

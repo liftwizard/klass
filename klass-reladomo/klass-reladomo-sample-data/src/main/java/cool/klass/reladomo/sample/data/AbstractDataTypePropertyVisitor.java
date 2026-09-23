@@ -16,13 +16,6 @@
 
 package cool.klass.reladomo.sample.data;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
-import java.util.Comparator;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.EnumerationLiteral;
 import cool.klass.model.meta.domain.api.NamedElement;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
@@ -30,6 +23,11 @@ import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.visitor.DataTypePropertyVisitor;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.bag.sorted.MutableSortedBag;
 import org.eclipse.collections.api.factory.SortedBags;
 import org.eclipse.collections.api.list.ImmutableList;

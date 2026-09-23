@@ -16,12 +16,6 @@
 
 package cool.klass.model.converter.compiler.state.property;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrClass;
@@ -35,6 +29,10 @@ import cool.klass.model.meta.domain.property.ParameterizedPropertyImpl.Parameter
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertyContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class AntlrParameterizedProperty extends AntlrClassReferenceProperty implements AntlrParameterOwner {
 

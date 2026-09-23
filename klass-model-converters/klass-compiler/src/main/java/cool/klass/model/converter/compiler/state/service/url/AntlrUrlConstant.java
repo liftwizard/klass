@@ -16,17 +16,15 @@
 
 package cool.klass.model.converter.compiler.state.service.url;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrOrdinalElement;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.meta.domain.service.url.UrlConstantImpl.UrlConstantBuilder;
 import cool.klass.model.meta.grammar.KlassParser.UrlConstantContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 
 public class AntlrUrlConstant extends AntlrOrdinalElement {
 

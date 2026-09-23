@@ -16,11 +16,6 @@
 
 package cool.klass.model.converter.compiler.state;
 
-import java.util.LinkedHashMap;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.criteria.AntlrCriteriaVisitor;
 import cool.klass.model.converter.compiler.state.property.AntlrAssociationEnd;
@@ -32,6 +27,9 @@ import cool.klass.model.meta.grammar.KlassParser.AssociationBlockContext;
 import cool.klass.model.meta.grammar.KlassParser.AssociationDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.AssociationEndContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
+import java.util.LinkedHashMap;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;

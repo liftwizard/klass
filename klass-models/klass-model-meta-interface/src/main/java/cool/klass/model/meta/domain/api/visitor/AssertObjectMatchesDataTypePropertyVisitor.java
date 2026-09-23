@@ -16,13 +16,12 @@
 
 package cool.klass.model.meta.domain.api.visitor;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Objects;
-
 import cool.klass.model.meta.domain.api.EnumerationLiteral;
 import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Objects;
 
 public class AssertObjectMatchesDataTypePropertyVisitor implements DataTypePropertyVisitor {
 

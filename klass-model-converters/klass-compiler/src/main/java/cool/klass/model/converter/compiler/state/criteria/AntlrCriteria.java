@@ -16,17 +16,15 @@
 
 package cool.klass.model.converter.compiler.state.criteria;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrElement;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.converter.compiler.state.parameter.AntlrParameter;
 import cool.klass.model.meta.domain.criteria.AbstractCriteria.AbstractCriteriaBuilder;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.map.OrderedMap;
 

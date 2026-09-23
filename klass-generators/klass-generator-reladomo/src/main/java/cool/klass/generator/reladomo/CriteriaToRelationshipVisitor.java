@@ -16,10 +16,6 @@
 
 package cool.klass.generator.reladomo;
 
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.criteria.AllCriteria;
 import cool.klass.model.meta.domain.api.criteria.AndCriteria;
 import cool.klass.model.meta.domain.api.criteria.CriteriaVisitor;
@@ -29,6 +25,8 @@ import cool.klass.model.meta.domain.api.criteria.OrCriteria;
 import cool.klass.model.meta.domain.api.operator.Operator;
 import cool.klass.model.meta.domain.api.value.ExpressionValue;
 import cool.klass.model.meta.domain.api.value.literal.NullLiteral;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 
 public class CriteriaToRelationshipVisitor implements CriteriaVisitor {
 

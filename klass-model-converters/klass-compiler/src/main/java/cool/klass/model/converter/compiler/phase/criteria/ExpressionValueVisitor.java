@@ -16,11 +16,6 @@
 
 package cool.klass.model.converter.compiler.phase.criteria;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilerState;
 import cool.klass.model.converter.compiler.state.AntlrClass;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
@@ -45,6 +40,9 @@ import cool.klass.model.meta.grammar.KlassParser.ParameterReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ThisMemberReferencePathContext;
 import cool.klass.model.meta.grammar.KlassParser.TypeMemberReferencePathContext;
 import cool.klass.model.meta.grammar.KlassVisitor;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;

@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain.value.literal;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.KlassImpl.KlassBuilder;
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.source.KlassWithSourceCode;
@@ -29,6 +23,10 @@ import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import cool.klass.model.meta.domain.api.value.literal.UserLiteral;
 import cool.klass.model.meta.grammar.KlassParser.NativeLiteralContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public final class UserLiteralImpl extends AbstractLiteralValue implements UserLiteral {
 

@@ -16,11 +16,6 @@
 
 package cool.klass.model.converter.compiler.phase;
 
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.state.AntlrClass;
 import cool.klass.model.converter.compiler.state.AntlrDomainModel;
 import cool.klass.model.meta.grammar.KlassBaseListener;
@@ -34,6 +29,9 @@ import cool.klass.model.meta.grammar.KlassParser.CriteriaOperatorContext;
 import cool.klass.model.meta.grammar.KlassParser.ExpressionValueContext;
 import cool.klass.model.meta.grammar.KlassParser.LiteralContext;
 import cool.klass.model.meta.grammar.KlassParser.TypeMemberReferencePathContext;
+import java.util.List;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 
 public class PossibleJoinCriteriaListener extends KlassBaseListener {
 

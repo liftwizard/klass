@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain;
 
-import java.util.LinkedHashMap;
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import cool.klass.model.converter.compiler.token.categorizing.lexer.LexerBasedTokenCategorizer;
 import cool.klass.model.converter.compiler.token.categorizing.parser.ParserBasedTokenCategorizer;
@@ -52,6 +46,10 @@ import cool.klass.model.meta.domain.reference.DomainModelDeclarationsTopLevelEle
 import cool.klass.model.meta.domain.reference.DomainModelReferences;
 import cool.klass.model.meta.domain.reference.DomainModelReferencesTopLevelElementVisitor;
 import cool.klass.model.meta.domain.service.ServiceGroupImpl.ServiceGroupBuilder;
+import java.util.LinkedHashMap;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;

@@ -16,11 +16,9 @@
 
 package cool.klass.model.converter.compiler.state.order;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.state.IAntlrElement;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 

@@ -18,7 +18,6 @@ package cool.klass.model.converter.compiler.parser;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public final class AntlrUtils {

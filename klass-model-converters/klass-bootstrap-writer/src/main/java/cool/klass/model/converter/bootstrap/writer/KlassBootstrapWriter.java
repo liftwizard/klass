@@ -16,11 +16,6 @@
 
 package cool.klass.model.converter.bootstrap.writer;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.data.store.DataStore;
 import cool.klass.model.meta.domain.api.Association;
 import cool.klass.model.meta.domain.api.Classifier;
@@ -54,6 +49,9 @@ import cool.klass.model.meta.domain.api.service.ServiceProjectionDispatch;
 import cool.klass.model.meta.domain.api.service.url.Url;
 import cool.klass.model.meta.domain.api.value.ExpressionValue;
 import cool.klass.model.meta.domain.api.value.ThisMemberReferencePath;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import klass.model.meta.domain.AssociationEndList;
 import klass.model.meta.domain.AssociationEndModifier;
 import klass.model.meta.domain.AssociationEndModifierList;

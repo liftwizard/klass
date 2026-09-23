@@ -16,12 +16,11 @@
 
 package klass.model.meta.domain.dropwizard.application;
 
+import io.liftwizard.junit.extension.match.FileSlurper;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-
-import io.liftwizard.junit.extension.match.FileSlurper;
 import org.eclipse.collections.api.factory.Maps;
 import org.junit.jupiter.api.Test;
 

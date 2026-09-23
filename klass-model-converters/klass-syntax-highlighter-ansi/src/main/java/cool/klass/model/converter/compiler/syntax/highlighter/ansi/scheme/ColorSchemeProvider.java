@@ -16,20 +16,18 @@
 
 package cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto.ColorSchemeDefinition;
+import io.dropwizard.jersey.validation.Validators;
+import io.liftwizard.serialization.jackson.config.ObjectMapperConfig;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
-
 import javax.annotation.Nonnull;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto.ColorSchemeDefinition;
-import io.dropwizard.jersey.validation.Validators;
-import io.liftwizard.serialization.jackson.config.ObjectMapperConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

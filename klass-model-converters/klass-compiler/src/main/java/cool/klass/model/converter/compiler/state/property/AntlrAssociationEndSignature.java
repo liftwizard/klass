@@ -16,11 +16,6 @@
 
 package cool.klass.model.converter.compiler.state.property;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
@@ -33,6 +28,9 @@ import cool.klass.model.meta.domain.property.AssociationEndSignatureImpl.Associa
 import cool.klass.model.meta.domain.property.ModifierImpl.ModifierBuilder;
 import cool.klass.model.meta.grammar.KlassParser.AssociationEndSignatureContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public class AntlrAssociationEndSignature

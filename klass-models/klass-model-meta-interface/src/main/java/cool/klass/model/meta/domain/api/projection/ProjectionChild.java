@@ -16,10 +16,9 @@
 
 package cool.klass.model.meta.domain.api.projection;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.Classifier;
 import cool.klass.model.meta.domain.api.property.Property;
+import javax.annotation.Nonnull;
 
 public interface ProjectionChild extends ProjectionElement {
 	@Nonnull

@@ -16,11 +16,6 @@
 
 package cool.klass.model.meta.domain.projection.write;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.Classifier;
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.Klass;
@@ -29,6 +24,9 @@ import cool.klass.model.meta.domain.api.projection.ProjectionParent;
 import cool.klass.model.meta.domain.api.projection.ProjectionReferenceProperty;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.ReferenceProperty;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public class WriteProjectionAssociationEndAdapter implements ProjectionReferenceProperty {

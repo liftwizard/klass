@@ -16,12 +16,11 @@
 
 package cool.klass.generator.relational.schema;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.NamedElement;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.MutableOrderedMap;
 

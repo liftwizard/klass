@@ -16,11 +16,8 @@
 
 package cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme;
 
-import java.util.List;
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
@@ -28,10 +25,11 @@ import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto.Co
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto.ColorSchemeRule;
 import io.dropwizard.jersey.validation.Validators;
 import io.liftwizard.serialization.jackson.config.ObjectMapperConfig;
+import java.util.List;
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ColorSchemeValidationTest {
 

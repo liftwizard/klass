@@ -16,11 +16,10 @@
 
 package cool.klass.reladomo.utc.infinity.timestamp;
 
+import com.gs.fw.common.mithra.util.MithraTimestamp;
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.TimeZone;
-
-import com.gs.fw.common.mithra.util.MithraTimestamp;
 
 public final class UtcInfinityTimestamp {
 

@@ -16,12 +16,11 @@
 
 package cool.klass.model.meta.domain.api.service;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.TopLevelElement;
 import cool.klass.model.meta.domain.api.TopLevelElementVisitor;
 import cool.klass.model.meta.domain.api.service.url.Url;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public interface ServiceGroup extends TopLevelElement {

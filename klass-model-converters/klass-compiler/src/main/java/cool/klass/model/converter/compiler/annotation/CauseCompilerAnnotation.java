@@ -16,13 +16,11 @@
 
 package cool.klass.model.converter.compiler.annotation;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.fusesource.jansi.Ansi.Color;

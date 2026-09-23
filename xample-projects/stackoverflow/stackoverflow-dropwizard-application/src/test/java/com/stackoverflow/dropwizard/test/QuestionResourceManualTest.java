@@ -16,11 +16,7 @@
 
 package com.stackoverflow.dropwizard.test;
 
-import javax.annotation.Nonnull;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.stackoverflow.dropwizard.application.StackOverflowApplication;
 import io.dropwizard.testing.ResourceHelpers;
@@ -28,9 +24,12 @@ import io.liftwizard.dropwizard.testing.junit.AbstractDropwizardAppTest;
 import io.liftwizard.junit.extension.app.LiftwizardAppExtension;
 import io.liftwizard.junit.extension.match.FileSlurper;
 import io.liftwizard.reladomo.test.extension.ReladomoTestFile;
+import javax.annotation.Nonnull;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class QuestionResourceManualTest extends AbstractDropwizardAppTest {
 

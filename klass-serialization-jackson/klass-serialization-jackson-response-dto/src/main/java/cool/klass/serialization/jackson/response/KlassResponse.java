@@ -16,16 +16,14 @@
 
 package cool.klass.serialization.jackson.response;
 
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.liftwizard.logging.slf4j.mdc.MultiMDCCloseable;
+import java.util.List;
+import java.util.Objects;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 @JsonPropertyOrder({ "_metadata", "_data" })
 public class KlassResponse {

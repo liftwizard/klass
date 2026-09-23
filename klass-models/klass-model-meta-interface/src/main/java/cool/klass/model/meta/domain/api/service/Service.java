@@ -16,14 +16,12 @@
 
 package cool.klass.model.meta.domain.api.service;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.criteria.Criteria;
 import cool.klass.model.meta.domain.api.order.OrderBy;
 import cool.klass.model.meta.domain.api.service.url.Url;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 
 public interface Service extends Element {
 	@Nonnull

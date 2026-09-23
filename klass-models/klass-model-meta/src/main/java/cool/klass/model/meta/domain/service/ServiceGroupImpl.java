@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain.service;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.AbstractPackageableElement;
 import cool.klass.model.meta.domain.KlassImpl;
 import cool.klass.model.meta.domain.KlassImpl.KlassBuilder;
@@ -33,6 +27,10 @@ import cool.klass.model.meta.domain.api.source.service.ServiceGroupWithSourceCod
 import cool.klass.model.meta.domain.service.url.UrlImpl.UrlBuilder;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceGroupDeclarationContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public final class ServiceGroupImpl extends AbstractPackageableElement implements ServiceGroupWithSourceCode {

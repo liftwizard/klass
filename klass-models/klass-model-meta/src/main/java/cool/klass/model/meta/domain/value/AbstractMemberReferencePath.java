@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain.value;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.KlassImpl;
 import cool.klass.model.meta.domain.KlassImpl.KlassBuilder;
 import cool.klass.model.meta.domain.api.Element;
@@ -32,6 +26,10 @@ import cool.klass.model.meta.domain.api.value.MemberReferencePath;
 import cool.klass.model.meta.domain.property.AbstractDataTypeProperty;
 import cool.klass.model.meta.domain.property.AbstractDataTypeProperty.DataTypePropertyBuilder;
 import cool.klass.model.meta.domain.property.AssociationEndImpl.AssociationEndBuilder;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.list.ImmutableList;
 

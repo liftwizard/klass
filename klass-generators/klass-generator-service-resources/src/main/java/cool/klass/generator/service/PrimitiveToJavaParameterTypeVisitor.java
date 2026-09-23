@@ -16,10 +16,9 @@
 
 package cool.klass.generator.service;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.PrimitiveType;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
+import javax.annotation.Nonnull;
 
 public class PrimitiveToJavaParameterTypeVisitor implements PrimitiveTypeVisitor {
 

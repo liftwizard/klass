@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain.criteria;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.criteria.OperatorCriteria;
 import cool.klass.model.meta.domain.api.source.SourceCode;
@@ -31,6 +25,10 @@ import cool.klass.model.meta.domain.operator.AbstractOperator.AbstractOperatorBu
 import cool.klass.model.meta.domain.value.AbstractExpressionValue;
 import cool.klass.model.meta.domain.value.AbstractExpressionValue.AbstractExpressionValueBuilder;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaOperatorContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public final class OperatorCriteriaImpl extends AbstractCriteria implements OperatorCriteria {
 

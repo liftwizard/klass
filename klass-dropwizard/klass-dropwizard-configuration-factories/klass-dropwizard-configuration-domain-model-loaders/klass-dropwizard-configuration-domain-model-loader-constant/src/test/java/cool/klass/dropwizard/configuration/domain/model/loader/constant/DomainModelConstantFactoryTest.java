@@ -16,9 +16,7 @@
 
 package cool.klass.dropwizard.configuration.domain.model.loader.constant;
 
-import java.util.List;
-
-import javax.validation.Validator;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cool.klass.dropwizard.configuration.domain.model.loader.DomainModelFactory;
@@ -29,10 +27,10 @@ import io.dropwizard.jackson.Jackson;
 import io.dropwizard.jersey.validation.Validators;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.serialization.jackson.config.ObjectMapperConfig;
+import java.util.List;
+import javax.validation.Validator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(LogMarkerTestExtension.class)
 class DomainModelConstantFactoryTest {

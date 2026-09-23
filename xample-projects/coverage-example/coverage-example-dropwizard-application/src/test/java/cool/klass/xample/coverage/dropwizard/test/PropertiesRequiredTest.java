@@ -16,12 +16,11 @@
 
 package cool.klass.xample.coverage.dropwizard.test;
 
+import io.liftwizard.junit.extension.match.FileSlurper;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-
-import io.liftwizard.junit.extension.match.FileSlurper;
 import org.junit.jupiter.api.Test;
 
 class PropertiesRequiredTest extends AbstractCoverageTest {

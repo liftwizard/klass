@@ -16,10 +16,6 @@
 
 package cool.klass.model.meta.domain.reference;
 
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.projection.Projection;
 import cool.klass.model.meta.domain.api.projection.ProjectionChild;
 import cool.klass.model.meta.domain.api.projection.ProjectionDataTypeProperty;
@@ -37,6 +33,8 @@ import cool.klass.model.meta.grammar.KlassParser.ProjectionPrimitiveMemberContex
 import cool.klass.model.meta.grammar.KlassParser.ProjectionProjectionReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionReferencePropertyContext;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 
 public class DomainModelReferencesProjectionVisitor implements ProjectionVisitor {
 

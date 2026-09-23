@@ -16,14 +16,8 @@
 
 package cool.klass.model.converter.compiler.annotation;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.util.Comparator;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.annotation.Nonnull;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Comparators;
@@ -36,6 +30,13 @@ import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.junit.extension.match.FileSlurper;
 import io.liftwizard.junit.extension.match.file.FileMatchExtension;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
@@ -45,9 +46,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 @ExtendWith(LogMarkerTestExtension.class)
 public abstract class AbstractKlassCompilerErrorTestCase {

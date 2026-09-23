@@ -16,8 +16,6 @@
 
 package cool.klass.generator.relational.schema;
 
-import java.util.Optional;
-
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Converter;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
@@ -26,6 +24,7 @@ import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import cool.klass.model.meta.loader.compiler.DomainModelCompilerLoader;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.junit.extension.match.file.FileMatchExtension;
+import java.util.Optional;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.junit.jupiter.api.Test;

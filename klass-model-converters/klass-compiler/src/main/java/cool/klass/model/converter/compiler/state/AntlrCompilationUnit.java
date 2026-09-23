@@ -16,15 +16,13 @@
 
 package cool.klass.model.converter.compiler.state;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.meta.grammar.KlassParser.CompilationUnitContext;
 import cool.klass.model.meta.grammar.KlassParser.PackageDeclarationContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.tuple.Tuples;

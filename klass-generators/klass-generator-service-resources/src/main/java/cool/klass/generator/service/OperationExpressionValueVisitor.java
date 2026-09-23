@@ -16,10 +16,6 @@
 
 package cool.klass.generator.service;
 
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.DataType;
 import cool.klass.model.meta.domain.api.Enumeration;
 import cool.klass.model.meta.domain.api.Multiplicity;
@@ -41,6 +37,8 @@ import cool.klass.model.meta.domain.api.value.literal.NullLiteral;
 import cool.klass.model.meta.domain.api.value.literal.StringLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.UserLiteral;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveToJavaTypeVisitor;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public class OperationExpressionValueVisitor implements ExpressionValueVisitor {

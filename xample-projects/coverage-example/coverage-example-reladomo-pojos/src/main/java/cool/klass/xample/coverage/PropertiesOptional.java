@@ -16,11 +16,9 @@
 
 package cool.klass.xample.coverage;
 
-import java.sql.Timestamp;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
+import java.sql.Timestamp;
+import javax.annotation.Nonnull;
 
 public class PropertiesOptional extends PropertiesOptionalAbstract {
 

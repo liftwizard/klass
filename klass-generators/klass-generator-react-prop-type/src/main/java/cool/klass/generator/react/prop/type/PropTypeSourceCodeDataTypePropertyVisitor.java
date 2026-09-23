@@ -16,11 +16,10 @@
 
 package cool.klass.generator.react.prop.type;
 
-import java.util.Objects;
-
 import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.visitor.DataTypePropertyVisitor;
+import java.util.Objects;
 
 public class PropTypeSourceCodeDataTypePropertyVisitor implements DataTypePropertyVisitor {
 

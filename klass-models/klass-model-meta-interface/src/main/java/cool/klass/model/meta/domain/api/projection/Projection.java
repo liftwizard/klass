@@ -16,10 +16,9 @@
 
 package cool.klass.model.meta.domain.api.projection;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.TopLevelElement;
 import cool.klass.model.meta.domain.api.TopLevelElementVisitor;
+import javax.annotation.Nonnull;
 
 public interface Projection extends ProjectionParent, TopLevelElement {
 	@Override

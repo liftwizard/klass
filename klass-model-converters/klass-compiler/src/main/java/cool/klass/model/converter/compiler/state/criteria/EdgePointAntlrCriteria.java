@@ -16,12 +16,6 @@
 
 package cool.klass.model.converter.compiler.state.criteria;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrType;
@@ -31,6 +25,10 @@ import cool.klass.model.converter.compiler.state.value.AntlrMemberReferencePath;
 import cool.klass.model.meta.domain.api.PrimitiveType;
 import cool.klass.model.meta.domain.criteria.EdgePointCriteriaImpl.EdgePointCriteriaBuilder;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaEdgePointContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.eclipse.collections.api.list.ListIterable;
 import org.eclipse.collections.api.map.OrderedMap;
 

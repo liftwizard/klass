@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain.service.url;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.AbstractElement;
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.parameter.Parameter;
@@ -34,6 +28,10 @@ import cool.klass.model.meta.domain.service.ServiceGroupImpl;
 import cool.klass.model.meta.domain.service.ServiceGroupImpl.ServiceGroupBuilder;
 import cool.klass.model.meta.domain.service.ServiceImpl.ServiceBuilder;
 import cool.klass.model.meta.grammar.KlassParser.UrlDeclarationContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public final class UrlImpl extends AbstractElement implements Url {

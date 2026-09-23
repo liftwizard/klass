@@ -16,9 +16,8 @@
 
 package cool.klass.xample.coverage;
 
-import java.util.Collection;
-
 import com.gs.fw.finder.Operation;
+import java.util.Collection;
 
 public class UserList extends UserListAbstract {
 

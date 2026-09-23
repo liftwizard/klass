@@ -16,9 +16,8 @@
 
 package cool.klass.model.meta.domain.api.value;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.parameter.Parameter;
+import javax.annotation.Nonnull;
 
 public interface ParameterReference extends ExpressionValue {
 	@Nonnull

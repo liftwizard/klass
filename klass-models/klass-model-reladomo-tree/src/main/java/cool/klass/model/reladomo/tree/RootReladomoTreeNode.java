@@ -16,10 +16,9 @@
 
 package cool.klass.model.reladomo.tree;
 
-import java.util.Objects;
-
 import cool.klass.model.meta.domain.api.Classifier;
 import cool.klass.model.meta.domain.api.Klass;
+import java.util.Objects;
 
 public class RootReladomoTreeNode extends AbstractReladomoTreeNode {
 

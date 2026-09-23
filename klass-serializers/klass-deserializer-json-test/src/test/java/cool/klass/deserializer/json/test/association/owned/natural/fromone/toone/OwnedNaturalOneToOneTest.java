@@ -16,13 +16,11 @@
 
 package cool.klass.deserializer.json.test.association.owned.natural.fromone.toone;
 
-import java.io.IOException;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.deserializer.json.OperationMode;
 import cool.klass.deserializer.json.test.AbstractValidatorTest;
 import cool.klass.model.meta.domain.api.Klass;
+import java.io.IOException;
+import javax.annotation.Nonnull;
 import org.junit.jupiter.api.Test;
 
 class OwnedNaturalOneToOneTest extends AbstractValidatorTest {

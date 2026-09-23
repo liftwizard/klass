@@ -16,12 +16,6 @@
 
 package cool.klass.deserializer.json.type;
 
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import cool.klass.deserializer.json.context.ContextNode;
@@ -30,6 +24,10 @@ import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.NamedElement;
 import cool.klass.model.meta.domain.api.property.Property;
 import cool.klass.model.meta.domain.api.property.PropertyVisitor;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.MutableList;
 
 public final class ObjectNodeTypeCheckingValidator {

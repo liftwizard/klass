@@ -16,18 +16,16 @@
 
 package cool.klass.servlet.filter.mdc.jsonview;
 
-import java.lang.reflect.Method;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-import javax.ws.rs.container.DynamicFeature;
-import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.FeatureContext;
-
 import com.fasterxml.jackson.annotation.JsonView;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.projection.Projection;
 import cool.klass.serialization.jackson.jsonview.KlassJsonView;
+import java.lang.reflect.Method;
+import java.util.Objects;
+import javax.annotation.Nonnull;
+import javax.ws.rs.container.DynamicFeature;
+import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.core.FeatureContext;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 
 public class JsonViewDynamicFeature implements DynamicFeature {

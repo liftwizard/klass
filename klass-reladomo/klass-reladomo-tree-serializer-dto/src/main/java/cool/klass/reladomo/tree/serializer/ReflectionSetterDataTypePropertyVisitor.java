@@ -16,17 +16,16 @@
 
 package cool.klass.reladomo.tree.serializer;
 
-import java.lang.reflect.Method;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Objects;
-
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Converter;
 import cool.klass.model.meta.domain.api.Enumeration;
 import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.visitor.DataTypePropertyVisitor;
+import java.lang.reflect.Method;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

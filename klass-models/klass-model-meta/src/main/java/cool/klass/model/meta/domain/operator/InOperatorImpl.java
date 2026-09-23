@@ -16,16 +16,14 @@
 
 package cool.klass.model.meta.domain.operator;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.operator.InOperator;
 import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import cool.klass.model.meta.grammar.KlassParser.InOperatorContext;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public final class InOperatorImpl extends AbstractOperator implements InOperator {
 

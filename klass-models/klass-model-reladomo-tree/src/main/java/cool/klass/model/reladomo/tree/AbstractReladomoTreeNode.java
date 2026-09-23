@@ -16,10 +16,9 @@
 
 package cool.klass.model.reladomo.tree;
 
+import cool.klass.model.meta.domain.api.Klass;
 import java.util.LinkedHashMap;
 import java.util.Objects;
-
-import cool.klass.model.meta.domain.api.Klass;
 import org.eclipse.collections.api.RichIterable;
 import org.eclipse.collections.api.map.MapIterable;
 import org.eclipse.collections.api.map.MutableMap;

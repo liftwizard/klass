@@ -16,12 +16,6 @@
 
 package cool.klass.model.converter.compiler.state.criteria;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrAssociation;
@@ -38,6 +32,10 @@ import cool.klass.model.converter.compiler.state.value.AntlrTypeMemberReferenceP
 import cool.klass.model.converter.compiler.state.value.literal.AbstractAntlrLiteralValue;
 import cool.klass.model.meta.domain.criteria.OperatorCriteriaImpl.OperatorCriteriaBuilder;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaOperatorContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;

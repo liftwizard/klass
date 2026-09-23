@@ -16,6 +16,8 @@
 
 package cool.klass.generator.json.view;
 
+import cool.klass.model.meta.domain.api.DomainModel;
+import cool.klass.model.meta.domain.api.projection.Projection;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,11 +25,7 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Objects;
-
 import javax.annotation.Nonnull;
-
-import cool.klass.model.meta.domain.api.DomainModel;
-import cool.klass.model.meta.domain.api.projection.Projection;
 
 // TODO: Refactor out the commonality between the several Generators
 public class JsonViewGenerator {

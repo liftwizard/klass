@@ -16,17 +16,15 @@
 
 package cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.JsonAnsiColorScheme;
+import io.dropwizard.validation.ValidationMethod;
 import java.util.LinkedHashMap;
-
 import javax.annotation.Nonnull;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.JsonAnsiColorScheme;
-import io.dropwizard.validation.ValidationMethod;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MapIterable;
 import org.eclipse.collections.api.map.MutableOrderedMap;

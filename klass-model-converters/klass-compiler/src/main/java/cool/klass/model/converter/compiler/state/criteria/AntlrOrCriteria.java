@@ -16,16 +16,14 @@
 
 package cool.klass.model.converter.compiler.state.criteria;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.meta.domain.criteria.OrCriteriaImpl.OrCriteriaBuilder;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaExpressionOrContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 
 public class AntlrOrCriteria extends AntlrBinaryCriteria {
 

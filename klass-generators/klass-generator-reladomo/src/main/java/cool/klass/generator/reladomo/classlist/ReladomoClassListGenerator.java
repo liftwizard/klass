@@ -16,11 +16,6 @@
 
 package cool.klass.generator.reladomo.classlist;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
-import javax.annotation.Nonnull;
-
 import com.gs.fw.common.mithra.generator.metamodel.Mithra;
 import com.gs.fw.common.mithra.generator.metamodel.MithraGeneratorMarshaller;
 import com.gs.fw.common.mithra.generator.metamodel.MithraInterfaceResourceType;
@@ -30,6 +25,9 @@ import cool.klass.generator.reladomo.AbstractReladomoGenerator;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.NamedElement;
+import java.io.IOException;
+import java.nio.file.Path;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public class ReladomoClassListGenerator extends AbstractReladomoGenerator {

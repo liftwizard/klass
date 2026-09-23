@@ -16,10 +16,6 @@
 
 package cool.klass.generator.react.prop.type;
 
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.Multiplicity;
 import cool.klass.model.meta.domain.api.projection.Projection;
 import cool.klass.model.meta.domain.api.projection.ProjectionDataTypeProperty;
@@ -28,6 +24,8 @@ import cool.klass.model.meta.domain.api.projection.ProjectionListener;
 import cool.klass.model.meta.domain.api.projection.ProjectionProjectionReference;
 import cool.klass.model.meta.domain.api.projection.ProjectionReferenceProperty;
 import cool.klass.model.meta.domain.api.property.ReferenceProperty;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.factory.Stacks;
 import org.eclipse.collections.api.list.ImmutableList;

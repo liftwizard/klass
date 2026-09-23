@@ -16,10 +16,9 @@
 
 package cool.klass.model.meta.domain.api.value.literal;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.value.ExpressionValueVisitor;
+import javax.annotation.Nonnull;
 
 public interface UserLiteral extends LiteralValue {
 	Klass getUserClass();

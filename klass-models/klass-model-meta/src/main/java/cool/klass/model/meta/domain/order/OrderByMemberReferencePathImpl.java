@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain.order;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.AbstractElement;
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.order.OrderByMemberReferencePath;
@@ -32,6 +26,10 @@ import cool.klass.model.meta.domain.order.OrderByImpl.OrderByBuilder;
 import cool.klass.model.meta.domain.value.ThisMemberReferencePathImpl;
 import cool.klass.model.meta.domain.value.ThisMemberReferencePathImpl.ThisMemberReferencePathBuilder;
 import cool.klass.model.meta.grammar.KlassParser.OrderByMemberReferencePathContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public final class OrderByMemberReferencePathImpl extends AbstractElement implements OrderByMemberReferencePath {
 

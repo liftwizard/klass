@@ -16,11 +16,6 @@
 
 package cool.klass.model.converter.compiler;
 
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.converter.compiler.state.AntlrAssociation;
 import cool.klass.model.converter.compiler.state.AntlrClass;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
@@ -66,6 +61,9 @@ import cool.klass.model.meta.grammar.KlassParser.ServiceDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceGroupDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.TopLevelDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlDeclarationContext;
+import java.util.Objects;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class CompilerWalkState {
 

@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain.api;
 
-import java.util.LinkedHashMap;
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.modifier.Modifier;
 import cool.klass.model.meta.domain.api.modifier.ModifierOwner;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
@@ -29,6 +23,10 @@ import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.property.Property;
 import cool.klass.model.meta.domain.api.property.ReferenceProperty;
+import java.util.LinkedHashMap;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.api.map.OrderedMap;

@@ -16,12 +16,6 @@
 
 package cool.klass.generator.reladomo.interfacefile;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import com.gs.fw.common.mithra.generator.metamodel.AsOfAttributeInterfaceType;
 import com.gs.fw.common.mithra.generator.metamodel.AttributeInterfaceType;
 import com.gs.fw.common.mithra.generator.metamodel.MithraGeneratorMarshaller;
@@ -40,6 +34,10 @@ import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public class ReladomoInterfaceFileGenerator extends AbstractReladomoGenerator {

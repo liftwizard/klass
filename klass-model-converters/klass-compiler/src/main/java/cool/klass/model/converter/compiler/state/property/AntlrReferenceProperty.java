@@ -16,11 +16,6 @@
 
 package cool.klass.model.converter.compiler.state.property;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrClass;
@@ -33,6 +28,9 @@ import cool.klass.model.converter.compiler.state.order.AntlrOrderByOwner;
 import cool.klass.model.meta.domain.api.Multiplicity;
 import cool.klass.model.meta.domain.property.ReferencePropertyImpl.ReferencePropertyBuilder;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 

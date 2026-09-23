@@ -17,9 +17,7 @@
 package cool.klass.model.meta.domain.api.order;
 
 import java.util.Objects;
-
 import javax.annotation.Nonnull;
-
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;

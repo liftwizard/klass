@@ -16,8 +16,6 @@
 
 package cool.klass.model.meta.domain.reference;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.criteria.AllCriteria;
 import cool.klass.model.meta.domain.api.criteria.AndCriteria;
 import cool.klass.model.meta.domain.api.criteria.CriteriaVisitor;
@@ -26,6 +24,7 @@ import cool.klass.model.meta.domain.api.criteria.OperatorCriteria;
 import cool.klass.model.meta.domain.api.criteria.OrCriteria;
 import cool.klass.model.meta.domain.api.value.ExpressionValue;
 import cool.klass.model.meta.domain.api.value.MemberReferencePath;
+import javax.annotation.Nonnull;
 
 public class DomainModelReferencesCriteriaVisitor implements CriteriaVisitor {
 

@@ -16,13 +16,12 @@
 
 package cool.klass.dropwizard.configuration;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cool.klass.dropwizard.configuration.data.store.DataStoreFactory;
 import cool.klass.dropwizard.configuration.data.store.reladomo.ReladomoDataStoreFactory;
 import cool.klass.dropwizard.configuration.domain.model.loader.DomainModelFactory;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 public class KlassFactory {
 

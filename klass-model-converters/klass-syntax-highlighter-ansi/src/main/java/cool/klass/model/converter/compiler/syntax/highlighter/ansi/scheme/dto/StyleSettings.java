@@ -16,12 +16,11 @@
 
 package cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.dropwizard.validation.ValidationMethod;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.regex.Pattern;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.dropwizard.validation.ValidationMethod;
 import org.fusesource.jansi.Ansi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

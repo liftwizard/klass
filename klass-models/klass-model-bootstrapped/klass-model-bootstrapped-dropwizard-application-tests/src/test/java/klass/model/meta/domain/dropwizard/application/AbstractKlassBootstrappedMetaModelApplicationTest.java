@@ -16,11 +16,10 @@
 
 package klass.model.meta.domain.dropwizard.application;
 
-import javax.annotation.Nonnull;
-
 import io.dropwizard.testing.ResourceHelpers;
 import io.liftwizard.dropwizard.testing.junit.AbstractDropwizardAppTest;
 import io.liftwizard.junit.extension.app.LiftwizardAppExtension;
+import javax.annotation.Nonnull;
 
 public class AbstractKlassBootstrappedMetaModelApplicationTest extends AbstractDropwizardAppTest {
 

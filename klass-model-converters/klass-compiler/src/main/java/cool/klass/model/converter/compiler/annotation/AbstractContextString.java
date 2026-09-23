@@ -17,9 +17,7 @@
 package cool.klass.model.converter.compiler.annotation;
 
 import java.util.Objects;
-
 import javax.annotation.Nonnull;
-
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 import org.fusesource.jansi.Ansi;

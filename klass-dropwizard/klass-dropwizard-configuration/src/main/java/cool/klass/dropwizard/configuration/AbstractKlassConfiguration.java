@@ -16,12 +16,6 @@
 
 package cool.klass.dropwizard.configuration;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -48,6 +42,10 @@ import io.liftwizard.dropwizard.configuration.reladomo.ReladomoFactory;
 import io.liftwizard.dropwizard.configuration.reladomo.ReladomoFactoryProvider;
 import io.liftwizard.dropwizard.configuration.uuid.UUIDSupplierFactory;
 import io.liftwizard.dropwizard.configuration.uuid.UUIDSupplierFactoryProvider;
+import java.util.List;
+import javax.annotation.Nullable;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @JsonPropertyOrder(
 	{

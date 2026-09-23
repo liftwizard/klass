@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain.value;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
@@ -29,6 +23,10 @@ import cool.klass.model.meta.domain.api.value.ParameterReference;
 import cool.klass.model.meta.domain.parameter.ParameterImpl;
 import cool.klass.model.meta.domain.parameter.ParameterImpl.ParameterBuilder;
 import cool.klass.model.meta.grammar.KlassParser.ParameterReferenceContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public final class ParameterReferenceImpl extends AbstractExpressionValue implements ParameterReference {
 

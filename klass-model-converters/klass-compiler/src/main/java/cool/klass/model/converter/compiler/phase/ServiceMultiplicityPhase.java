@@ -16,16 +16,14 @@
 
 package cool.klass.model.converter.compiler.phase;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilerState;
 import cool.klass.model.converter.compiler.state.service.AntlrService;
 import cool.klass.model.converter.compiler.state.service.AntlrServiceMultiplicity;
 import cool.klass.model.meta.domain.api.service.ServiceMultiplicity;
 import cool.klass.model.meta.grammar.KlassParser.ServiceMultiplicityContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceMultiplicityDeclarationContext;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 
 public class ServiceMultiplicityPhase extends AbstractCompilerPhase {
 

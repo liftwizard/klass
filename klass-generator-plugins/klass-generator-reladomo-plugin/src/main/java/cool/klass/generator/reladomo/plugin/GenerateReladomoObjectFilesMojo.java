@@ -16,14 +16,13 @@
 
 package cool.klass.generator.reladomo.plugin;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Path;
-
 import cool.klass.generator.plugin.AbstractGenerateMojo;
 import cool.klass.generator.reladomo.interfacefile.ReladomoInterfaceFileGenerator;
 import cool.klass.generator.reladomo.objectfile.ReladomoObjectFileGenerator;
 import cool.klass.model.meta.domain.api.DomainModel;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;

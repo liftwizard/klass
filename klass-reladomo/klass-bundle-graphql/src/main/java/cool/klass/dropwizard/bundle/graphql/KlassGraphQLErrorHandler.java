@@ -16,10 +16,9 @@
 
 package cool.klass.dropwizard.bundle.graphql;
 
-import java.util.List;
-
 import graphql.GraphQLError;
 import graphql.kickstart.execution.error.DefaultGraphQLErrorHandler;
+import java.util.List;
 
 public class KlassGraphQLErrorHandler extends DefaultGraphQLErrorHandler {
 

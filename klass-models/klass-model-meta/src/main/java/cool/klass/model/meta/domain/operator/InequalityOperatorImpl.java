@@ -16,16 +16,14 @@
 
 package cool.klass.model.meta.domain.operator;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.operator.InequalityOperator;
 import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import cool.klass.model.meta.grammar.KlassParser.InequalityOperatorContext;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public final class InequalityOperatorImpl extends AbstractOperator implements InequalityOperator {
 

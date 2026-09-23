@@ -16,13 +16,6 @@
 
 package cool.klass.model.converter.compiler.state.parameter;
 
-import java.util.Objects;
-import java.util.Optional;
-import java.util.regex.Pattern;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrEnumeration;
@@ -38,6 +31,11 @@ import cool.klass.model.meta.domain.parameter.ParameterImpl.ParameterBuilder;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationParameterDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.regex.Pattern;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.factory.Lists;

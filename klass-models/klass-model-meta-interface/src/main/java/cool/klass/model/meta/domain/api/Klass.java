@@ -16,10 +16,6 @@
 
 package cool.klass.model.meta.domain.api;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.modifier.Modifier;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
@@ -27,6 +23,8 @@ import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.property.Property;
 import cool.klass.model.meta.domain.api.property.ReferenceProperty;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 

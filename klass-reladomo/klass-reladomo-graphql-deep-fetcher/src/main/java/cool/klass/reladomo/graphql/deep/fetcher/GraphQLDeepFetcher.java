@@ -16,9 +16,6 @@
 
 package cool.klass.reladomo.graphql.deep.fetcher;
 
-import java.util.Objects;
-import java.util.Optional;
-
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Converter;
 import com.gs.fw.common.mithra.finder.RelatedFinder;
@@ -29,6 +26,8 @@ import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import graphql.schema.DataFetchingFieldSelectionSet;
 import graphql.schema.SelectedField;
+import java.util.Objects;
+import java.util.Optional;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 

@@ -16,13 +16,6 @@
 
 package cool.klass.model.converter.compiler.state.value;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrClass;
@@ -32,6 +25,11 @@ import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
 import cool.klass.model.meta.domain.value.AbstractMemberReferencePath.AbstractMemberReferencePathBuilder;
 import cool.klass.model.meta.grammar.KlassParser.AssociationEndReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.list.ImmutableList;
 

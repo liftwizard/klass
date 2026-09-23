@@ -16,11 +16,10 @@
 
 package cool.klass.serialization.jackson.model.data.property;
 
-import java.io.IOException;
-import java.util.Objects;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
+import java.io.IOException;
+import java.util.Objects;
 
 public class SerializeValueToJsonFieldPrimitiveTypeVisitor implements PrimitiveTypeVisitor {
 

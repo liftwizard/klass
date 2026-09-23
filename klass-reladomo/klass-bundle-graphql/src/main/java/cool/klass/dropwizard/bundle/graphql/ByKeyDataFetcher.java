@@ -16,9 +16,6 @@
 
 package cool.klass.dropwizard.bundle.graphql;
 
-import java.util.List;
-import java.util.Objects;
-
 import com.gs.fw.finder.DomainList;
 import cool.klass.data.store.reladomo.ReladomoDataStore;
 import cool.klass.model.meta.domain.api.Klass;
@@ -30,6 +27,8 @@ import cool.klass.reladomo.tree.serializer.ReladomoTreeObjectToDTOSerializerList
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.DataFetchingFieldSelectionSet;
+import java.util.List;
+import java.util.Objects;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableMap;
 

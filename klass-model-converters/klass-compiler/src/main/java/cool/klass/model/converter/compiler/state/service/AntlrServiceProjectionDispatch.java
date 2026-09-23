@@ -16,11 +16,6 @@
 
 package cool.klass.model.converter.compiler.state.service;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrClass;
@@ -31,6 +26,9 @@ import cool.klass.model.converter.compiler.state.projection.AntlrProjection;
 import cool.klass.model.meta.domain.service.ServiceProjectionDispatchImpl.ServiceProjectionDispatchBuilder;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceProjectionDispatchContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.tuple.Pair;
 

@@ -16,10 +16,6 @@
 
 package cool.klass.model.meta.domain.reference;
 
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.Association;
 import cool.klass.model.meta.domain.api.Classifier;
 import cool.klass.model.meta.domain.api.Enumeration;
@@ -48,6 +44,8 @@ import cool.klass.model.meta.grammar.KlassParser.ProjectionDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceGroupDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceProjectionDispatchContext;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.list.ImmutableList;
 
 public class DomainModelReferencesTopLevelElementVisitor implements TopLevelElementVisitor {

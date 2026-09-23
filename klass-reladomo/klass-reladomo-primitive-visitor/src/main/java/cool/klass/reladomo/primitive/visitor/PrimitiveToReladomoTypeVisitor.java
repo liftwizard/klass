@@ -16,10 +16,9 @@
 
 package cool.klass.reladomo.primitive.visitor;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.PrimitiveType;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
+import javax.annotation.Nonnull;
 
 public class PrimitiveToReladomoTypeVisitor implements PrimitiveTypeVisitor {
 

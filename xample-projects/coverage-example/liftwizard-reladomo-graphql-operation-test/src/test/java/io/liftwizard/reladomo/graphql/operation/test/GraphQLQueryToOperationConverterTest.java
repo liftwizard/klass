@@ -16,13 +16,7 @@
 
 package io.liftwizard.reladomo.graphql.operation.test;
 
-import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.gs.fw.common.mithra.finder.AbstractRelatedFinder;
 import com.gs.fw.common.mithra.finder.Operation;
@@ -46,14 +40,18 @@ import io.liftwizard.graphql.scalar.temporal.GraphQLLocalDateScalar;
 import io.liftwizard.graphql.scalar.temporal.GraphQLTemporalScalar;
 import io.liftwizard.junit.extension.error.ErrorCollectorExtension;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.impl.utility.Iterate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(LogMarkerTestExtension.class)
 public class GraphQLQueryToOperationConverterTest {

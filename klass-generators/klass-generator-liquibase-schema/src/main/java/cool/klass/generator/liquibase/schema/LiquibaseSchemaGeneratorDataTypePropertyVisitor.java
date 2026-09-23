@@ -16,13 +16,12 @@
 
 package cool.klass.generator.liquibase.schema;
 
-import java.util.Objects;
-
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.model.meta.domain.api.property.validation.NumericPropertyValidation;
 import cool.klass.model.meta.domain.api.visitor.DataTypePropertyVisitor;
+import java.util.Objects;
 
 public class LiquibaseSchemaGeneratorDataTypePropertyVisitor implements DataTypePropertyVisitor {
 

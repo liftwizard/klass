@@ -16,9 +16,6 @@
 
 package cool.klass.model.reladomo.tree.converter.graphql;
 
-import java.util.List;
-import java.util.Objects;
-
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Converter;
 import cool.klass.model.meta.domain.api.Classifier;
@@ -34,6 +31,8 @@ import cool.klass.model.reladomo.tree.SubClassReladomoTreeNode;
 import cool.klass.model.reladomo.tree.SuperClassReladomoTreeNode;
 import graphql.schema.DataFetchingFieldSelectionSet;
 import graphql.schema.SelectedField;
+import java.util.List;
+import java.util.Objects;
 import org.eclipse.collections.api.bag.MutableBag;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.factory.Stacks;

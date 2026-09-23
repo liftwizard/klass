@@ -16,11 +16,6 @@
 
 package cool.klass.model.meta.domain.reference;
 
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.source.ElementWithSourceCode;
 import cool.klass.model.meta.domain.api.source.KlassWithSourceCode;
@@ -44,6 +39,9 @@ import cool.klass.model.meta.grammar.KlassParser.ClassReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ThisMemberReferencePathContext;
 import cool.klass.model.meta.grammar.KlassParser.TypeMemberReferencePathContext;
+import java.util.List;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.list.ImmutableList;
 

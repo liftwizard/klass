@@ -16,12 +16,6 @@
 
 package cool.klass.serialization.jackson.response.reladomo;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.Nonnull;
-
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -30,6 +24,10 @@ import cool.klass.data.store.DataStore;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.serialization.jackson.response.KlassResponse;
 import cool.klass.serialization.jackson.response.KlassResponseMetadata;
+import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 
 // TODO: Split into one for non-null lists and one for nullable MithraObjects
 public class KlassResponseReladomoJsonSerializer extends JsonSerializer<KlassResponse> {

@@ -16,12 +16,13 @@
 
 package cool.klass.generator.liquibase.schema;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.reladomo.connectionmanager.h2.memory.H2InMemoryConnectionManager;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 import liquibase.Liquibase;
 import liquibase.Scope;
 import liquibase.Scope.Attr;
@@ -36,8 +37,6 @@ import liquibase.resource.ClassLoaderResourceAccessor;
 import liquibase.ui.LoggerUIService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(LogMarkerTestExtension.class)
 class LiquibaseMigrationRollbackTest {

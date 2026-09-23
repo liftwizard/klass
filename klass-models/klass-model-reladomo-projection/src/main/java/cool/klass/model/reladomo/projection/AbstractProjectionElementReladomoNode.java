@@ -16,12 +16,10 @@
 
 package cool.klass.model.reladomo.projection;
 
+import cool.klass.model.meta.domain.api.Interface;
 import java.util.LinkedHashMap;
 import java.util.Objects;
-
 import javax.annotation.Nonnull;
-
-import cool.klass.model.meta.domain.api.Interface;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.impl.map.mutable.MapAdapter;
 

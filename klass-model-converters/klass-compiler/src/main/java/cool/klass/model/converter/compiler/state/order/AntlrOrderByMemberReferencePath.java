@@ -16,12 +16,6 @@
 
 package cool.klass.model.converter.compiler.state.order;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrElement;
@@ -30,6 +24,10 @@ import cool.klass.model.converter.compiler.state.value.AntlrThisMemberReferenceP
 import cool.klass.model.meta.domain.order.OrderByMemberReferencePathImpl.OrderByMemberReferencePathBuilder;
 import cool.klass.model.meta.domain.value.ThisMemberReferencePathImpl.ThisMemberReferencePathBuilder;
 import cool.klass.model.meta.grammar.KlassParser.OrderByMemberReferencePathContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class AntlrOrderByMemberReferencePath extends AntlrElement {
 

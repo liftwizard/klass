@@ -16,12 +16,6 @@
 
 package cool.klass.model.meta.domain.projection;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import cool.klass.model.meta.domain.AbstractClassifier.ClassifierBuilder;
 import cool.klass.model.meta.domain.api.Classifier;
 import cool.klass.model.meta.domain.api.Element;
@@ -34,6 +28,10 @@ import cool.klass.model.meta.domain.api.source.property.ReferencePropertyWithSou
 import cool.klass.model.meta.domain.property.ReferencePropertyImpl.ReferencePropertyBuilder;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionReferencePropertyContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public final class ProjectionReferencePropertyImpl
 	extends AbstractProjectionParent

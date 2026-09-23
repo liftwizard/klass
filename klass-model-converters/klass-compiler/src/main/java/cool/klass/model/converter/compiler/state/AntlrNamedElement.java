@@ -16,14 +16,12 @@
 
 package cool.klass.model.converter.compiler.state;
 
+import cool.klass.model.converter.compiler.CompilationUnit;
+import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
-
 import javax.annotation.Nonnull;
-
-import cool.klass.model.converter.compiler.CompilationUnit;
-import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;

@@ -16,10 +16,9 @@
 
 package cool.klass.model.converter.compiler.token.categorizing.lexer;
 
-import java.util.LinkedHashMap;
-
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import cool.klass.model.meta.grammar.KlassLexer;
+import java.util.LinkedHashMap;
 import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.map.MapIterable;

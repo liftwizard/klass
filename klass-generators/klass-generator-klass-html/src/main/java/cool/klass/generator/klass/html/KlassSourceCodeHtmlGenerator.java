@@ -16,19 +16,6 @@
 
 package cool.klass.generator.klass.html;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.text.MessageFormat;
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Converter;
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
@@ -40,6 +27,17 @@ import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import cool.klass.model.meta.domain.api.source.ElementWithSourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.domain.api.source.TopLevelElementWithSourceCode;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.text.MessageFormat;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.Token;
 import org.apache.commons.text.StringEscapeUtils;

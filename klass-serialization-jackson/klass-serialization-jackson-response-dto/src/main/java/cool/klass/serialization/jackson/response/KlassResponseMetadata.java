@@ -16,17 +16,15 @@
 
 package cool.klass.serialization.jackson.response;
 
-import java.security.Principal;
-import java.time.Instant;
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cool.klass.model.meta.domain.api.Multiplicity;
 import cool.klass.model.meta.domain.api.projection.Projection;
 import io.liftwizard.logging.slf4j.mdc.MultiMDCCloseable;
+import java.security.Principal;
+import java.time.Instant;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 
 public class KlassResponseMetadata {
 

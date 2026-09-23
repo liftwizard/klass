@@ -16,12 +16,6 @@
 
 package cool.klass.model.converter.compiler.phase;
 
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
 import cool.klass.model.converter.compiler.CompilerState;
 import cool.klass.model.converter.compiler.phase.criteria.ExpressionValueVisitor;
 import cool.klass.model.converter.compiler.state.order.AntlrOrderBy;
@@ -32,6 +26,10 @@ import cool.klass.model.meta.grammar.KlassParser.OrderByDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.OrderByMemberReferencePathContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceOrderByDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ThisMemberReferencePathContext;
+import java.util.Optional;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public class OrderByPhase extends AbstractCompilerPhase {

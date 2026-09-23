@@ -16,11 +16,11 @@
 
 package cool.klass.model.converter.compiler.annotation.general;
 
-import cool.klass.model.converter.compiler.annotation.AbstractKlassCompilerErrorTestCase;
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import cool.klass.model.converter.compiler.annotation.AbstractKlassCompilerErrorTestCase;
+import org.junit.jupiter.api.Test;
 
 class MiscErrorTest extends AbstractKlassCompilerErrorTestCase {
 

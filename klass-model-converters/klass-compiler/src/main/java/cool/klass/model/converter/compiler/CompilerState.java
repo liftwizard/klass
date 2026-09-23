@@ -16,11 +16,6 @@
 
 package cool.klass.model.converter.compiler;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.annotation.AbstractCompilerAnnotation;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
@@ -35,6 +30,9 @@ import cool.klass.model.meta.grammar.KlassListener;
 import cool.klass.model.meta.grammar.KlassParser;
 import cool.klass.model.meta.grammar.KlassParser.CompilationUnitContext;
 import cool.klass.model.meta.grammar.KlassParser.TopLevelDeclarationContext;
+import java.util.Objects;
+import java.util.Optional;
+import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.eclipse.collections.api.block.function.Function;

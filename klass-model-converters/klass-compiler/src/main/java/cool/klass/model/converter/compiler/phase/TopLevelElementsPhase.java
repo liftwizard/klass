@@ -16,10 +16,9 @@
 
 package cool.klass.model.converter.compiler.phase;
 
-import javax.annotation.Nonnull;
-
 import cool.klass.model.converter.compiler.CompilerState;
 import cool.klass.model.meta.grammar.KlassParser.TopLevelDeclarationContext;
+import javax.annotation.Nonnull;
 
 public class TopLevelElementsPhase extends AbstractCompilerPhase {
 

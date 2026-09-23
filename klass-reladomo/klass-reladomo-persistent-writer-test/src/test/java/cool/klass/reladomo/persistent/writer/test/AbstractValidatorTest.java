@@ -16,10 +16,6 @@
 
 package cool.klass.reladomo.persistent.writer.test;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -38,6 +34,8 @@ import io.liftwizard.junit.extension.match.FileSlurper;
 import io.liftwizard.junit.extension.match.file.FileMatchExtension;
 import io.liftwizard.junit.extension.match.json.JsonMatchExtension;
 import io.liftwizard.serialization.jackson.config.ObjectMapperConfig;
+import java.util.List;
+import javax.annotation.Nonnull;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.factory.Maps;
 import org.eclipse.collections.api.list.MutableList;

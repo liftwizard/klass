@@ -16,14 +16,12 @@
 
 package cool.klass.generator.grahql.reladomo.finder;
 
-import java.nio.file.Path;
-
-import javax.annotation.Nonnull;
-
 import cool.klass.generator.perpackage.AbstractPerPackageGenerator;
 import cool.klass.model.meta.domain.api.Classifier;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.property.Property;
+import java.nio.file.Path;
+import javax.annotation.Nonnull;
 
 public class GraphQLReladomoFinderGenerator extends AbstractPerPackageGenerator {
 
