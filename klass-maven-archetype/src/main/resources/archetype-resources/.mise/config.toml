@@ -1,6 +1,7 @@
 [tools]
+pre-commit = "4.6.2"
 java = "temurin-21.0.6+7.0.LTS"
-just = "1.40.0"
+just = "1.58.0"
 maven = "3.9.10"
 node = "24.2.0"
 "npm:markdownlint-cli" = "0.45.0"

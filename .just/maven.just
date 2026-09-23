@@ -1,6 +1,6 @@
-default_mvn      := env('MVN_BINARY',   "mvn")
-default_target   := env('MVN_TARGET',   "verify")
-default_flags    := env('MVN_FLAGS',    "--threads 2C")
+default_mvn := env('MVN_BINARY', "mvn")
+default_target := env('MVN_TARGET', "verify")
+default_flags := env('MVN_FLAGS', "--threads 2C")
 skip_tests_flags := default_flags + " -DskipTests"
 
 default_verify_profiles := env('MVN_VERIFY_PROFILES', "spotless-preserve-cache,errorprone-strict,maven-enforcer-plugin,maven-dependency-plugin,maven-javadoc-plugin")
@@ -19,12 +19,12 @@ mvn MVN=default_mvn TARGET=default_target PROFILES=default_profiles *FLAGS=defau
     fi
 
     # Set colors based on whether values match defaults
-    if [ "{{MVN}}" = "{{default_mvn}}" ]; then MVN_COLOR="{{ANSI_GRAY}}"; else MVN_COLOR="{{ANSI_MAGENTA}}"; fi
-    if [ "{{TARGET}}" = "{{default_target}}" ]; then TARGET_COLOR="{{ANSI_GRAY}}"; else TARGET_COLOR="{{ANSI_GREEN}}"; fi
-    if [ "{{PROFILES}}" = "{{default_profiles}}" ]; then PROFILES_COLOR="{{ANSI_GRAY}}"; else PROFILES_COLOR="{{ANSI_BLUE}}"; fi
-    if [ "{{FLAGS}}" = "{{default_flags}}" ]; then FLAGS_COLOR="{{ANSI_GRAY}}"; else FLAGS_COLOR="{{ANSI_MAGENTA}}"; fi
+    if [ "{{ MVN }}" = "{{ default_mvn }}" ]; then MVN_COLOR="{{ ANSI_GRAY }}"; else MVN_COLOR="{{ ANSI_MAGENTA }}"; fi
+    if [ "{{ TARGET }}" = "{{ default_target }}" ]; then TARGET_COLOR="{{ ANSI_GRAY }}"; else TARGET_COLOR="{{ ANSI_GREEN }}"; fi
+    if [ "{{ PROFILES }}" = "{{ default_profiles }}" ]; then PROFILES_COLOR="{{ ANSI_GRAY }}"; else PROFILES_COLOR="{{ ANSI_BLUE }}"; fi
+    if [ "{{ FLAGS }}" = "{{ default_flags }}" ]; then FLAGS_COLOR="{{ ANSI_GRAY }}"; else FLAGS_COLOR="{{ ANSI_MAGENTA }}"; fi
 
-    just _run "${MVN_COLOR}{{MVN}}{{ANSI_DEFAULT}} ${TARGET_COLOR}{{TARGET}}{{ANSI_DEFAULT}} ${FLAGS_COLOR}{{FLAGS}}{{ANSI_DEFAULT}} ${PROFILES_COLOR}{{PROFILES}}{{ANSI_DEFAULT}}"
+    just _run "${MVN_COLOR}{{ MVN }}{{ ANSI_DEFAULT }} ${TARGET_COLOR}{{ TARGET }}{{ ANSI_DEFAULT }} ${FLAGS_COLOR}{{ FLAGS }}{{ ANSI_DEFAULT }} ${PROFILES_COLOR}{{ PROFILES }}{{ ANSI_DEFAULT }}"
 
     EXIT_CODE=$?
     if [ $EXIT_CODE -eq 0 ]; then
@@ -35,7 +35,7 @@ mvn MVN=default_mvn TARGET=default_target PROFILES=default_profiles *FLAGS=defau
     COMMIT_MESSAGE=$(git log --format=%B -n 1 HEAD)
 
     MESSAGE="Failed in directory ${DIRECTORY} on commit: '${COMMIT_MESSAGE}' with exit code ${EXIT_CODE}"
-    {{echo_command}} "$MESSAGE"
+    {{ echo_command }} "$MESSAGE"
     exit $EXIT_CODE
 
 # clean ~/.m2 with `rm -rf ~/.m2/repository/...`
@@ -43,7 +43,7 @@ mvn MVN=default_mvn TARGET=default_target PROFILES=default_profiles *FLAGS=defau
 _clean-m2:
     #!/usr/bin/env bash
     set -uo pipefail
-    just _run "rm -rf ~/.m2/repository/{{ANSI_YELLOW}}{{group_id_with_slashes}}{{ANSI_DEFAULT}}/**/*-SNAPSHOT"
+    just _run "rm -rf ~/.m2/repository/{{ ANSI_YELLOW }}{{ group_id_with_slashes }}{{ ANSI_DEFAULT }}/**/*-SNAPSHOT"
     exit 0
 
 # `mvn clean`
@@ -101,11 +101,7 @@ checkstyle-profile PROFILE FAIL_ON_VIOLATION="true" MVN="mvn": (mvn MVN "checkst
 
 # Run checkstyle with all profiles
 [group('lint')]
-checkstyle FAIL_ON_VIOLATION="true" MVN="mvn": \
-    (checkstyle-profile "checkstyle-semantics" FAIL_ON_VIOLATION MVN) \
-    (checkstyle-profile "checkstyle-formatting" FAIL_ON_VIOLATION MVN) \
-    (checkstyle-profile "checkstyle-semantics-strict" FAIL_ON_VIOLATION MVN) \
-    (checkstyle-profile "checkstyle-formatting-strict" FAIL_ON_VIOLATION MVN)
+checkstyle FAIL_ON_VIOLATION="true" MVN="mvn": (checkstyle-profile "checkstyle-semantics" FAIL_ON_VIOLATION MVN) (checkstyle-profile "checkstyle-formatting" FAIL_ON_VIOLATION MVN) (checkstyle-profile "checkstyle-semantics-strict" FAIL_ON_VIOLATION MVN) (checkstyle-profile "checkstyle-formatting-strict" FAIL_ON_VIOLATION MVN)
 
 # `mvn spotless:apply` with a single formatter
 [group('format')]
@@ -134,27 +130,27 @@ rewrite RECIPE MVN=default_mvn: (mvn MVN "install org.openrewrite.maven:rewrite-
 # display available updates (dependencies, plugins, properties)
 [group('maven')]
 @display-updates:
-    just _run "mvn {{ANSI_MAGENTA}}--threads 1{{ANSI_DEFAULT}} versions:display-dependency-updates versions:display-plugin-updates versions:display-property-updates"
+    just _run "mvn {{ ANSI_MAGENTA }}--threads 1{{ ANSI_DEFAULT }} versions:display-dependency-updates versions:display-plugin-updates versions:display-property-updates"
 
 # `mvn dependency:tree`
 [group('maven')]
 @dependency-tree:
-    just _run "mvn {{ANSI_MAGENTA}}--threads 1{{ANSI_DEFAULT}} dependency:tree"
+    just _run "mvn {{ ANSI_MAGENTA }}--threads 1{{ ANSI_DEFAULT }} dependency:tree"
 
 # `mvn buildplan:list`
 [group('maven')]
 @buildplan-list:
-    just _run "mvn {{ANSI_MAGENTA}}--threads 1{{ANSI_DEFAULT}} buildplan:list"
+    just _run "mvn {{ ANSI_MAGENTA }}--threads 1{{ ANSI_DEFAULT }} buildplan:list"
 
 # `mvn buildplan:list-phase`
 [group('maven')]
 @buildplan-list-phase:
-    just _run "mvn {{ANSI_MAGENTA}}--threads 1{{ANSI_DEFAULT}} buildplan:list-phase"
+    just _run "mvn {{ ANSI_MAGENTA }}--threads 1{{ ANSI_DEFAULT }} buildplan:list-phase"
 
 # `mvn wrapper:wrapper`
 [group('maven')]
 @wrapper VERSION:
-    just _run "mvn {{ANSI_MAGENTA}}--threads 1{{ANSI_DEFAULT}} wrapper:wrapper -Dmaven={{ANSI_YELLOW}}{{VERSION}}{{ANSI_DEFAULT}}"
+    just _run "mvn {{ ANSI_MAGENTA }}--threads 1{{ ANSI_DEFAULT }} wrapper:wrapper -Dmaven={{ ANSI_YELLOW }}{{ VERSION }}{{ ANSI_DEFAULT }}"
 
 # `mvn release:prepare`
 [group('deploy')]
@@ -162,7 +158,7 @@ release: clean _check-local-modifications && _clean-git _check-local-modificatio
     #!/usr/bin/env bash
     set -Eeuo pipefail
 
-    just _run "git checkout {{ANSI_BRIGHT_RED}}{{ANSI_BOLD}}{{upstream_remote}}/{{upstream_branch}}{{ANSI_NORMAL}}"
+    just _run "git checkout {{ ANSI_BRIGHT_RED }}{{ ANSI_BOLD }}{{ upstream_remote }}/{{ upstream_branch }}{{ ANSI_NORMAL }}"
 
     CURRENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
 
@@ -175,12 +171,12 @@ release: clean _check-local-modifications && _clean-git _check-local-modificatio
         NEXT_VERSION="$CURRENT_VERSION"
     fi
 
-    echo "Current version is: {{ANSI_YELLOW}}$CURRENT_VERSION{{ANSI_DEFAULT}}"
+    echo "Current version is: {{ ANSI_YELLOW }}$CURRENT_VERSION{{ ANSI_DEFAULT }}"
 
-    read -p "Enter next version (default: {{ANSI_YELLOW}}$NEXT_VERSION{{ANSI_DEFAULT}}): " INPUT_VERSION
+    read -p "Enter next version (default: {{ ANSI_YELLOW }}$NEXT_VERSION{{ ANSI_DEFAULT }}): " INPUT_VERSION
     NEXT_VERSION=${INPUT_VERSION:-$NEXT_VERSION}
 
-    just _run "mvn {{ANSI_MAGENTA}}--batch-mode{{ANSI_DEFAULT}} clean release:clean release:prepare -DdevelopmentVersion={{ANSI_YELLOW}}$NEXT_VERSION{{ANSI_DEFAULT}}"
+    just _run "mvn {{ ANSI_MAGENTA }}--batch-mode{{ ANSI_DEFAULT }} clean release:clean release:prepare -DdevelopmentVersion={{ ANSI_YELLOW }}$NEXT_VERSION{{ ANSI_DEFAULT }}"
 
 # `mvn deploy`
 [group('deploy')]
