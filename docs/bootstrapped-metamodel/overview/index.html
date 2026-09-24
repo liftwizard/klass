@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"> 
+<title>Klass: Overview</title>
+<link rel="stylesheet" type="text/css" href="/docs/static/css/katex.min.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/main.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+</head>
+<link rel="shortcut icon" href="/docs/favicon.png"type="image/ico"/>
+<body class="znai-theme theme-znai-dark">
+<script>(function() {
+    var themeNameKey = 'znaiTheme';
+    var darkThemeName = 'znai-dark';
+    var lightThemeName = 'default';
+
+    var znaiTheme = {
+        changeHandlers: [],
+        addChangeHandler(handler) {
+            this.changeHandlers.push(handler);
+        },
+        removeChangeHandler(handler) {
+            var idx = this.changeHandlers.indexOf(handler);
+            this.changeHandlers.splice(idx, 1);
+        },
+        set(name) {
+            this.name = name;
+            document.body.className = 'znai-theme theme-' + name;
+
+            var idx = 0;
+            var len = this.changeHandlers.length;
+            for (; idx < len; idx++) {
+                this.changeHandlers[idx](name);
+            }
+        },
+        setExplicitly(name) {
+            storeThemeName(name);
+            this.set(name);
+        },
+        setExplicitlyIfNotSetAlready(name) {
+            const themeName = getStoredThemeName();
+            if (themeName) {
+                return
+            }
+
+            this.setExplicitly(name)
+        },
+        toggle() {
+            this.setExplicitly(this.name === lightThemeName ? darkThemeName : lightThemeName)
+        }
+    };
+
+    var mediaThemeName = setLightMatchMediaListenerAndGetThemeName()
+    var themeName = getStoredThemeName() || mediaThemeName;
+    znaiTheme.set(themeName);
+
+    window.znaiTheme = znaiTheme;
+
+    function getStoredThemeName() {
+        return localStorage.getItem(themeNameKey);
+    }
+
+    function storeThemeName(name) {
+        return localStorage.setItem(themeNameKey, name);
+    }
+
+    function setLightMatchMediaListenerAndGetThemeName() {
+        if (!window.matchMedia) {
+            return darkThemeName;
+        }
+
+        var lightQuery = window.matchMedia('(prefers-color-scheme: light)');
+        lightQuery.addListener(function (e) {
+            const newThemeName = e.matches ? lightThemeName : darkThemeName;
+            znaiTheme.setExplicitly(newThemeName);
+        });
+
+        return lightQuery.matches ? lightThemeName : darkThemeName;
+    }
+})()</script>
+<div id="znai"><div id="znai-initial-page-loading" style="margin: -20px 0 0 -20px; padding: 0 40px 40px 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center">
+    <div></div>
+</div><section id="page-content" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+<article>
+<header><h1>Bootstrapped Metamodel</h1></header>
+<p>Klass has a metamodel; a model of models. In fact, it has several representations of the same metamodel. The Abstract Syntax Tree used internally by the compiler. The in-memory DomainModel object returned upon successful compilation. The bootstrapped metamodel. etc. The bootstrapped metamodel is expressed like a regular model. The first few meta-types are defined like this: The full source is too large to include here. It defines enumeration, class, association, projection, and service, plus their parts. The bootstrapped metamodel allows us to work with metadata like regular data. It defines some projections and services which return model data. For example, here's the service to get a class by its name: package klass.model.meta.domain interface Element { } interface NamedElement implements Element { name: String key maximumLength(256); ordinal: Integer private; } class PackageableElement abstract implements NamedElement { packageName: String maximumLength(100000); } class Classifier abstract extends PackageableElement { } class Klass extends Classifier { superClassName: String? private maximumLength(256); abstractClass: Boolean; } enumeration PrimitiveType { INTEGER(&quot;Integer&quot;), LONG(&quot;Long&quot;), DOUBLE(&quot;Double&quot;), FLOAT(&quot;Float&quot;), BOOLEAN(&quot;Boolean&quot;), STRING(&quot;String&quot;), INSTANT(&quot;Instant&quot;), LOCAL_DATE(&quot;LocalDate&quot;), TEMPORAL_INSTANT(&quot;TemporalInstant&quot;), TEMPORAL_RANGE(&quot;TemporalRange&quot;), } enumeration Multiplicity { ZERO_TO_ONE(&quot;0..1&quot;), ONE_TO_ONE(&quot;1..1&quot;), ZERO_TO_MANY(&quot;0..*&quot;), ONE_TO_MANY(&quot;1..*&quot;), } class DataTypeProperty abstract implements NamedElement { classifierName: String key maximumLength(256); optional: Boolean; } class PrimitiveProperty extends DataTypeProperty { primitiveType: PrimitiveType maximumLength(256); } association ClassifierHasDataTypeTypeProperties { owningClassifier: Classifier[1..1]; dataTypeProperties: DataTypeProperty[0..*] owned orderBy: this.ordinal ascending; } package klass.model.meta.domain projection KlassProjection on Klass { name: &quot;NamedElement name&quot;, packageName: &quot;PackageableElement packageName&quot;, abstractClass: &quot;Klass abstractClass&quot;, superInterfaces: ClassifierInterfaceMappingProjection, classifierModifiers: ClassifierModifierProjection, dataTypeProperties: DataTypePropertyProjection, superClass: { name: &quot;NamedElement name&quot;, }, associationEnds: { name: &quot;NamedElement name&quot;, }, parameterizedProperties: ParameterizedPropertyProjection, } service KlassResource on Klass { /meta/class/{name: String[1..1]} GET { multiplicity: one; criteria: this.name == name; projection: KlassProjection; } /meta/class GET { multiplicity: many; criteria: all; projection: KlassProjection; orderBy: this.ordinal ascending; } }</p>
+</article>
+</section>
+<section id="table-of-contents" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+<article>
+<a href="/docs/vision/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/vision/classes/">Classes</a>
+</article>
+
+<article>
+<a href="/docs/vision/associations/">Associations</a>
+</article>
+
+<article>
+<a href="/docs/vision/projections-and-services/">Projections And Services</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/audit-model/">Audit Model</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/audited-services/">Audited Services</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/bootstrapped-model-data/">Bootstrapped Model Data</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/bootstrapped-meta-model-data/">Bootstrapped Meta Model Data</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-query/">Dynamic Query</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-ui/">Dynamic Ui</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-model/">Dynamic Model</a>
+</article>
+
+<article>
+<a href="/docs/additional-features/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/alternative-implementations/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/related-works/overview/">Overview</a>
+</article>
+</section>
+</div>
+<script type="text/javascript" src="/docs/footer.js"></script>
+<script type="text/javascript" src="/docs/toc.js"></script>
+<script type="text/javascript" src="/docs/assets.js"></script>
+<script type="module" src="/docs/static/__vite-browser-external-BGnBTosV.js"></script>
+<script type="module" src="/docs/static/abnfDiagram-VCTEODGH-BRqqqU5n.js"></script>
+<script type="module" src="/docs/static/architecture-7GRP2DOG-9wnybhUh.js"></script>
+<script type="module" src="/docs/static/architectureDiagram-5GKGNRK7-DUMpRZn_.js"></script>
+<script type="module" src="/docs/static/blockDiagram-NRAW4CY4-DeF7MqHw.js"></script>
+<script type="module" src="/docs/static/c4Diagram-UCG6FXSJ-CQSgNXVJ.js"></script>
+<script type="module" src="/docs/static/classDiagram-DTDB5LWJ-D863XQzz.js"></script>
+<script type="module" src="/docs/static/classDiagram-v2-JRS7N3AN-CDCQkTaj.js"></script>
+<script type="module" src="/docs/static/cose-bilkent-JH36ORCC-DhtGuMMZ.js"></script>
+<script type="module" src="/docs/static/cynefin-OW5HDTMX-Dno3j-4p.js"></script>
+<script type="module" src="/docs/static/cynefinDiagram-5FMLGOSQ-D9kl4s_F.js"></script>
+<script type="module" src="/docs/static/dagre-3AP2YEHR-cM5jdJlp.js"></script>
+<script type="module" src="/docs/static/diagram-S7CK7UJ4-DfnLH3P7.js"></script>
+<script type="module" src="/docs/static/diagram-UQ7AKVKN-CKMreXQQ.js"></script>
+<script type="module" src="/docs/static/diagram-VSXAHHWV-CLKhy1UN.js"></script>
+<script type="module" src="/docs/static/diagram-VX7I27RA-drWC67Ov.js"></script>
+<script type="module" src="/docs/static/diagram-Z3DM3KII-Dgl5joOb.js"></script>
+<script type="module" src="/docs/static/ebnfDiagram-PWID7BFC-DW0zjF79.js"></script>
+<script type="module" src="/docs/static/erDiagram-SSCWMZ5O-DzXHzvmH.js"></script>
+<script type="module" src="/docs/static/eventmodeling-NTZA5JFV-DSDJE_Yh.js"></script>
+<script type="module" src="/docs/static/flowDiagram-A5DVABFB-BTSDM-Tn.js"></script>
+<script type="module" src="/docs/static/ganttDiagram-EL5Y4UJY-CCL7MAdr.js"></script>
+<script type="module" src="/docs/static/gitGraph-4MIJSDKK-BLMXBjkK.js"></script>
+<script type="module" src="/docs/static/gitGraphDiagram-WWUBYQGX-C0kBUhQM.js"></script>
+<script type="module" src="/docs/static/index-nmggSSz7.js"></script>
+<script type="module" src="/docs/static/info-A6RAGUB7-CytVF5aE.js"></script>
+<script type="module" src="/docs/static/infoDiagram-RXCK75RN-Bh98jVhK.js"></script>
+<script type="module" src="/docs/static/ishikawaDiagram-5VMMS53U-CxC_0eim.js"></script>
+<script type="module" src="/docs/static/journeyDiagram-EYS64GPL-B17cxPC1.js"></script>
+<script type="module" src="/docs/static/kanban-definition-3QL26DDD-DqqGxz6g.js"></script>
+<script type="module" src="/docs/static/katex-BF0GAwrn.js"></script>
+<script type="module" src="/docs/static/mermaid-Bje8tQKQ.js"></script>
+<script type="module" src="/docs/static/mindmap-definition-FBJOCRG2-DCIRoLe6.js"></script>
+<script type="module" src="/docs/static/packet-AYTQ26CC-BnC5KTC9.js"></script>
+<script type="module" src="/docs/static/pegDiagram-XKGWAZYB-BQlHFEwn.js"></script>
+<script type="module" src="/docs/static/pie-WAS4IAKB-BR412gJn.js"></script>
+<script type="module" src="/docs/static/pieDiagram-E7YTZNPT-BdWOuFiX.js"></script>
+<script type="module" src="/docs/static/quadrantDiagram-AXDQQJYC-ChfenDBq.js"></script>
+<script type="module" src="/docs/static/radar-RG4KPBEZ-BISF9Shy.js"></script>
+<script type="module" src="/docs/static/railroad-74A4TZTK-DtURFlGs.js"></script>
+<script type="module" src="/docs/static/railroad-abnf-HS5TGJTU-DPNpY8y-.js"></script>
+<script type="module" src="/docs/static/railroad-ebnf-LZEXJU2U-CeDSNOFY.js"></script>
+<script type="module" src="/docs/static/railroad-peg-WCYAUIDC-D0S9kVuf.js"></script>
+<script type="module" src="/docs/static/railroadDiagram-O6MQD6OU-CEoECMup.js"></script>
+<script type="module" src="/docs/static/requirementDiagram-EFPCY7ZU-BLK0KrQG.js"></script>
+<script type="module" src="/docs/static/rolldown-runtime-CWU8vmCm.js"></script>
+<script type="module" src="/docs/static/sankeyDiagram-P5KCCOFB-BK1wgcPR.js"></script>
+<script type="module" src="/docs/static/sequenceDiagram-WJ2MYXX4-MVFdMkIK.js"></script>
+<script type="module" src="/docs/static/sizeCapture-X5ZJPWSS-ZBcTWF9d.js"></script>
+<script type="module" src="/docs/static/stateDiagram-HBIQ2CUA-DyJALGuK.js"></script>
+<script type="module" src="/docs/static/stateDiagram-v2-4QOOHH4V-z3EUtHS4.js"></script>
+<script type="module" src="/docs/static/swimlanes-XN3QIQJK-CAuI4M8s.js"></script>
+<script type="module" src="/docs/static/swimlanesDiagram-VK2B7HYN-BSs7f_Qg.js"></script>
+<script type="module" src="/docs/static/timeline-definition-24CTP7MA-DvfLBzHn.js"></script>
+<script type="module" src="/docs/static/treeView-Q6P3EWNA--TEYZIp3.js"></script>
+<script type="module" src="/docs/static/treemap-WGGIJYW6-DucTnIQr.js"></script>
+<script type="module" src="/docs/static/vennDiagram-4TSXK5OY-vK95oJjb.js"></script>
+<script type="module" src="/docs/static/wardley-WFR3VGLG-CC6342D5.js"></script>
+<script type="module" src="/docs/static/wardleyDiagram-VM6X3IG4-C90LZQR8.js"></script>
+<script type="module" src="/docs/static/xychartDiagram-S5SC5T6Z-BXqZ35JW.js"></script>
+<script type="module" src="/docs/search-index.js"></script>
+<script type="module">
+document.getElementById('znai').innerHTML = '';
+/*<!--*/
+/*
+ * Copyright 2025 znai maintainers
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+function initializeSearchIndex() {
+    if (window.znaiSearchData) {
+        window.znaiSearchIdx = window.createLocalSearchIndex();
+        window.populateLocalSearchIndexWithData(window.znaiSearchIdx, window.znaiSearchData);
+    }
+}
+
+// Call the method to initialize the search index.
+initializeSearchIndex();
+
+window.ReactDOM.render(React.createElement(Documentation, {
+  "docMeta" : {
+    "viewOn" : {
+      "link" : "https://github.com/motlin/klass/blob/main/docs/src/main/znai",
+      "title" : "View On GitHub"
+    },
+    "id" : "docs",
+    "title" : "Klass",
+    "type" : "Guide",
+    "previewEnabled" : false
+  },
+  "page" : {
+    "type" : "Page",
+    "content" : [ {
+      "id" : "bootstrapped-metamodel",
+      "additionalIds" : [ ],
+      "title" : "Bootstrapped Metamodel",
+      "type" : "Section",
+      "content" : [ {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "Klass has a metamodel; a model of models. In fact, it has several representations of the same metamodel.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "bulletMarker" : "-",
+        "tight" : true,
+        "type" : "BulletList",
+        "content" : [ {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "The Abstract Syntax Tree used internally by the compiler.",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "The in-memory DomainModel object returned upon successful compilation.",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "The bootstrapped metamodel.",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        }, {
+          "type" : "ListItem",
+          "content" : [ {
+            "type" : "Paragraph",
+            "content" : [ {
+              "text" : "etc.",
+              "type" : "SimpleText"
+            } ]
+          } ]
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "The bootstrapped metamodel is expressed like a regular model. The first few meta-types are defined like this:",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "lang" : "klass",
+        "snippet" : "package klass.model.meta.domain\n\ninterface Element\n{\n}\n\ninterface NamedElement\n\timplements Element\n{\n\tname: String key maximumLength(256);\n\tordinal: Integer private;\n}\n\nclass PackageableElement\n\tabstract\n\timplements NamedElement\n{\n\tpackageName: String maximumLength(100000);\n}\n\nclass Classifier\n\tabstract\n\textends PackageableElement\n{\n}\n\nclass Klass\n\textends Classifier\n{\n\tsuperClassName: String? private maximumLength(256);\n\tabstractClass: Boolean;\n}\n\nenumeration PrimitiveType\n{\n\tINTEGER(\"Integer\"),\n\tLONG(\"Long\"),\n\tDOUBLE(\"Double\"),\n\tFLOAT(\"Float\"),\n\tBOOLEAN(\"Boolean\"),\n\tSTRING(\"String\"),\n\tINSTANT(\"Instant\"),\n\tLOCAL_DATE(\"LocalDate\"),\n\tTEMPORAL_INSTANT(\"TemporalInstant\"),\n\tTEMPORAL_RANGE(\"TemporalRange\"),\n}\n\nenumeration Multiplicity\n{\n\tZERO_TO_ONE(\"0..1\"),\n\tONE_TO_ONE(\"1..1\"),\n\tZERO_TO_MANY(\"0..*\"),\n\tONE_TO_MANY(\"1..*\"),\n}\n\nclass DataTypeProperty\n\tabstract\n\timplements NamedElement\n{\n\tclassifierName: String key maximumLength(256);\n\toptional: Boolean;\n}\n\nclass PrimitiveProperty\n\textends DataTypeProperty\n{\n\tprimitiveType: PrimitiveType maximumLength(256);\n}\n\nassociation ClassifierHasDataTypeTypeProperties\n{\n\towningClassifier: Classifier[1..1];\n\tdataTypeProperties: DataTypeProperty[0..*] owned\n\t\torderBy: this.ordinal ascending;\n}",
+        "lineNumber" : "",
+        "type" : "Snippet"
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "The full source is too large to include here. It defines enumeration, class, association, projection, and service, plus their parts.",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "type" : "Paragraph",
+        "content" : [ {
+          "text" : "The bootstrapped metamodel allows us to work with metadata like regular data. It defines some projections and services which return model data. For example, here's the service to get a class by its name:",
+          "type" : "SimpleText"
+        } ]
+      }, {
+        "lang" : "klass",
+        "snippet" : "package klass.model.meta.domain\n\nprojection KlassProjection on Klass\n{\n\tname: \"NamedElement name\",\n\tpackageName: \"PackageableElement packageName\",\n\tabstractClass: \"Klass abstractClass\",\n\tsuperInterfaces: ClassifierInterfaceMappingProjection,\n\tclassifierModifiers: ClassifierModifierProjection,\n\tdataTypeProperties: DataTypePropertyProjection,\n\tsuperClass:\n\t{\n\t\tname: \"NamedElement name\",\n\t},\n\tassociationEnds:\n\t{\n\t\tname: \"NamedElement name\",\n\t},\n\tparameterizedProperties: ParameterizedPropertyProjection,\n}\n\nservice KlassResource on Klass\n{\n\t/meta/class/{name: String[1..1]}\n\t\tGET\n\t\t{\n\t\t\tmultiplicity: one;\n\t\t\tcriteria: this.name == name;\n\t\t\tprojection: KlassProjection;\n\t\t}\n\t/meta/class\n\t\tGET\n\t\t{\n\t\t\tmultiplicity: many;\n\t\t\tcriteria: all;\n\t\t\tprojection: KlassProjection;\n\t\t\torderBy: this.ordinal ascending;\n\t\t}\n}",
+        "lineNumber" : "",
+        "type" : "Snippet"
+      } ]
+    } ],
+    "lastModifiedTime" : 1790289913708,
+    "tocItem" : {
+      "chapterTitle" : "Bootstrapped Metamodel",
+      "pageTitle" : "Overview",
+      "pageMeta" : { },
+      "dirName" : "bootstrapped-metamodel",
+      "fileName" : "overview",
+      "fileExtension" : "md",
+      "viewOnRelativePath" : null,
+      "pageSectionIdTitles" : [ {
+        "title" : "Bootstrapped Metamodel",
+        "id" : "bootstrapped-metamodel",
+        "customAnchorId" : "bootstrapped-metamodel"
+      } ]
+    }
+  }
+}), document.getElementById("znai"));
+/*-->*/
+
+</script>
+
+</body>
+</html>

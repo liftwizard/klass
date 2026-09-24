@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" /> 
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"> 
+<title>Klass: Bootstrapped Meta Model Data</title>
+<link rel="stylesheet" type="text/css" href="/docs/static/css/katex.min.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/main.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+<link rel="stylesheet" type="text/css" href="/docs/static/css/global-overrides.css">
+</head>
+<link rel="shortcut icon" href="/docs/favicon.png"type="image/ico"/>
+<body class="znai-theme theme-znai-dark">
+<script>(function() {
+    var themeNameKey = 'znaiTheme';
+    var darkThemeName = 'znai-dark';
+    var lightThemeName = 'default';
+
+    var znaiTheme = {
+        changeHandlers: [],
+        addChangeHandler(handler) {
+            this.changeHandlers.push(handler);
+        },
+        removeChangeHandler(handler) {
+            var idx = this.changeHandlers.indexOf(handler);
+            this.changeHandlers.splice(idx, 1);
+        },
+        set(name) {
+            this.name = name;
+            document.body.className = 'znai-theme theme-' + name;
+
+            var idx = 0;
+            var len = this.changeHandlers.length;
+            for (; idx < len; idx++) {
+                this.changeHandlers[idx](name);
+            }
+        },
+        setExplicitly(name) {
+            storeThemeName(name);
+            this.set(name);
+        },
+        setExplicitlyIfNotSetAlready(name) {
+            const themeName = getStoredThemeName();
+            if (themeName) {
+                return
+            }
+
+            this.setExplicitly(name)
+        },
+        toggle() {
+            this.setExplicitly(this.name === lightThemeName ? darkThemeName : lightThemeName)
+        }
+    };
+
+    var mediaThemeName = setLightMatchMediaListenerAndGetThemeName()
+    var themeName = getStoredThemeName() || mediaThemeName;
+    znaiTheme.set(themeName);
+
+    window.znaiTheme = znaiTheme;
+
+    function getStoredThemeName() {
+        return localStorage.getItem(themeNameKey);
+    }
+
+    function storeThemeName(name) {
+        return localStorage.setItem(themeNameKey, name);
+    }
+
+    function setLightMatchMediaListenerAndGetThemeName() {
+        if (!window.matchMedia) {
+            return darkThemeName;
+        }
+
+        var lightQuery = window.matchMedia('(prefers-color-scheme: light)');
+        lightQuery.addListener(function (e) {
+            const newThemeName = e.matches ? lightThemeName : darkThemeName;
+            znaiTheme.setExplicitly(newThemeName);
+        });
+
+        return lightQuery.matches ? lightThemeName : darkThemeName;
+    }
+})()</script>
+<div id="znai"><div id="znai-initial-page-loading" style="margin: -20px 0 0 -20px; padding: 0 40px 40px 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center">
+    <div></div>
+</div><section id="page-content" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+<article>
+<p>Bootstrapped Metamodel Data Since the metamodel is part of the model, the bootstrap process populates metamodel types too. This means that we can GET for the Klass class in any application. /api/meta/class/Klass</p>
+</article>
+</section>
+<section id="table-of-contents" style="max-width: 640px; margin-left: auto; margin-right: auto;">
+<article>
+<a href="/docs/vision/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/vision/classes/">Classes</a>
+</article>
+
+<article>
+<a href="/docs/vision/associations/">Associations</a>
+</article>
+
+<article>
+<a href="/docs/vision/projections-and-services/">Projections And Services</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/audit-model/">Audit Model</a>
+</article>
+
+<article>
+<a href="/docs/audit-data/audited-services/">Audited Services</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/bootstrapped-model-data/">Bootstrapped Model Data</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/bootstrapped-meta-model-data/">Bootstrapped Meta Model Data</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-query/">Dynamic Query</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-ui/">Dynamic Ui</a>
+</article>
+
+<article>
+<a href="/docs/bootstrapped-metamodel/dynamic-model/">Dynamic Model</a>
+</article>
+
+<article>
+<a href="/docs/additional-features/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/alternative-implementations/overview/">Overview</a>
+</article>
+
+<article>
+<a href="/docs/related-works/overview/">Overview</a>
+</article>
+</section>
+</div>
+<script type="text/javascript" src="/docs/footer.js"></script>
+<script type="text/javascript" src="/docs/toc.js"></script>
+<script type="text/javascript" src="/docs/assets.js"></script>
+<script type="module" src="/docs/static/__vite-browser-external-BGnBTosV.js"></script>
+<script type="module" src="/docs/static/abnfDiagram-VCTEODGH-BRqqqU5n.js"></script>
+<script type="module" src="/docs/static/architecture-7GRP2DOG-9wnybhUh.js"></script>
+<script type="module" src="/docs/static/architectureDiagram-5GKGNRK7-DUMpRZn_.js"></script>
+<script type="module" src="/docs/static/blockDiagram-NRAW4CY4-DeF7MqHw.js"></script>
+<script type="module" src="/docs/static/c4Diagram-UCG6FXSJ-CQSgNXVJ.js"></script>
+<script type="module" src="/docs/static/classDiagram-DTDB5LWJ-D863XQzz.js"></script>
+<script type="module" src="/docs/static/classDiagram-v2-JRS7N3AN-CDCQkTaj.js"></script>
+<script type="module" src="/docs/static/cose-bilkent-JH36ORCC-DhtGuMMZ.js"></script>
+<script type="module" src="/docs/static/cynefin-OW5HDTMX-Dno3j-4p.js"></script>
+<script type="module" src="/docs/static/cynefinDiagram-5FMLGOSQ-D9kl4s_F.js"></script>
+<script type="module" src="/docs/static/dagre-3AP2YEHR-cM5jdJlp.js"></script>
+<script type="module" src="/docs/static/diagram-S7CK7UJ4-DfnLH3P7.js"></script>
+<script type="module" src="/docs/static/diagram-UQ7AKVKN-CKMreXQQ.js"></script>
+<script type="module" src="/docs/static/diagram-VSXAHHWV-CLKhy1UN.js"></script>
+<script type="module" src="/docs/static/diagram-VX7I27RA-drWC67Ov.js"></script>
+<script type="module" src="/docs/static/diagram-Z3DM3KII-Dgl5joOb.js"></script>
+<script type="module" src="/docs/static/ebnfDiagram-PWID7BFC-DW0zjF79.js"></script>
+<script type="module" src="/docs/static/erDiagram-SSCWMZ5O-DzXHzvmH.js"></script>
+<script type="module" src="/docs/static/eventmodeling-NTZA5JFV-DSDJE_Yh.js"></script>
+<script type="module" src="/docs/static/flowDiagram-A5DVABFB-BTSDM-Tn.js"></script>
+<script type="module" src="/docs/static/ganttDiagram-EL5Y4UJY-CCL7MAdr.js"></script>
+<script type="module" src="/docs/static/gitGraph-4MIJSDKK-BLMXBjkK.js"></script>
+<script type="module" src="/docs/static/gitGraphDiagram-WWUBYQGX-C0kBUhQM.js"></script>
+<script type="module" src="/docs/static/index-nmggSSz7.js"></script>
+<script type="module" src="/docs/static/info-A6RAGUB7-CytVF5aE.js"></script>
+<script type="module" src="/docs/static/infoDiagram-RXCK75RN-Bh98jVhK.js"></script>
+<script type="module" src="/docs/static/ishikawaDiagram-5VMMS53U-CxC_0eim.js"></script>
+<script type="module" src="/docs/static/journeyDiagram-EYS64GPL-B17cxPC1.js"></script>
+<script type="module" src="/docs/static/kanban-definition-3QL26DDD-DqqGxz6g.js"></script>
+<script type="module" src="/docs/static/katex-BF0GAwrn.js"></script>
+<script type="module" src="/docs/static/mermaid-Bje8tQKQ.js"></script>
+<script type="module" src="/docs/static/mindmap-definition-FBJOCRG2-DCIRoLe6.js"></script>
+<script type="module" src="/docs/static/packet-AYTQ26CC-BnC5KTC9.js"></script>
+<script type="module" src="/docs/static/pegDiagram-XKGWAZYB-BQlHFEwn.js"></script>
+<script type="module" src="/docs/static/pie-WAS4IAKB-BR412gJn.js"></script>
+<script type="module" src="/docs/static/pieDiagram-E7YTZNPT-BdWOuFiX.js"></script>
+<script type="module" src="/docs/static/quadrantDiagram-AXDQQJYC-ChfenDBq.js"></script>
+<script type="module" src="/docs/static/radar-RG4KPBEZ-BISF9Shy.js"></script>
+<script type="module" src="/docs/static/railroad-74A4TZTK-DtURFlGs.js"></script>
+<script type="module" src="/docs/static/railroad-abnf-HS5TGJTU-DPNpY8y-.js"></script>
+<script type="module" src="/docs/static/railroad-ebnf-LZEXJU2U-CeDSNOFY.js"></script>
+<script type="module" src="/docs/static/railroad-peg-WCYAUIDC-D0S9kVuf.js"></script>
+<script type="module" src="/docs/static/railroadDiagram-O6MQD6OU-CEoECMup.js"></script>
+<script type="module" src="/docs/static/requirementDiagram-EFPCY7ZU-BLK0KrQG.js"></script>
+<script type="module" src="/docs/static/rolldown-runtime-CWU8vmCm.js"></script>
+<script type="module" src="/docs/static/sankeyDiagram-P5KCCOFB-BK1wgcPR.js"></script>
+<script type="module" src="/docs/static/sequenceDiagram-WJ2MYXX4-MVFdMkIK.js"></script>
+<script type="module" src="/docs/static/sizeCapture-X5ZJPWSS-ZBcTWF9d.js"></script>
+<script type="module" src="/docs/static/stateDiagram-HBIQ2CUA-DyJALGuK.js"></script>
+<script type="module" src="/docs/static/stateDiagram-v2-4QOOHH4V-z3EUtHS4.js"></script>
+<script type="module" src="/docs/static/swimlanes-XN3QIQJK-CAuI4M8s.js"></script>
+<script type="module" src="/docs/static/swimlanesDiagram-VK2B7HYN-BSs7f_Qg.js"></script>
+<script type="module" src="/docs/static/timeline-definition-24CTP7MA-DvfLBzHn.js"></script>
+<script type="module" src="/docs/static/treeView-Q6P3EWNA--TEYZIp3.js"></script>
+<script type="module" src="/docs/static/treemap-WGGIJYW6-DucTnIQr.js"></script>
+<script type="module" src="/docs/static/vennDiagram-4TSXK5OY-vK95oJjb.js"></script>
+<script type="module" src="/docs/static/wardley-WFR3VGLG-CC6342D5.js"></script>
+<script type="module" src="/docs/static/wardleyDiagram-VM6X3IG4-C90LZQR8.js"></script>
+<script type="module" src="/docs/static/xychartDiagram-S5SC5T6Z-BXqZ35JW.js"></script>
+<script type="module" src="/docs/search-index.js"></script>
+<script type="module">
+document.getElementById('znai').innerHTML = '';
+/*<!--*/
+/*
+ * Copyright 2025 znai maintainers
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+function initializeSearchIndex() {
+    if (window.znaiSearchData) {
+        window.znaiSearchIdx = window.createLocalSearchIndex();
+        window.populateLocalSearchIndexWithData(window.znaiSearchIdx, window.znaiSearchData);
+    }
+}
+
+// Call the method to initialize the search index.
+initializeSearchIndex();
+
+window.ReactDOM.render(React.createElement(Documentation, {
+  "docMeta" : {
+    "viewOn" : {
+      "link" : "https://github.com/motlin/klass/blob/main/docs/src/main/znai",
+      "title" : "View On GitHub"
+    },
+    "id" : "docs",
+    "title" : "Klass",
+    "type" : "Guide",
+    "previewEnabled" : false
+  },
+  "page" : {
+    "type" : "Page",
+    "content" : [ {
+      "id" : "bootstrapped-metamodel-data",
+      "additionalIds" : [ ],
+      "level" : 2,
+      "title" : "Bootstrapped Metamodel Data",
+      "type" : "SubHeading"
+    }, {
+      "type" : "Paragraph",
+      "content" : [ {
+        "text" : "Since the metamodel is part of the model, the bootstrap process populates metamodel types too. This means that we can GET ",
+        "type" : "SimpleText"
+      }, {
+        "code" : "/api/meta/class/Klass",
+        "type" : "InlinedCode"
+      }, {
+        "text" : " for the Klass class in any application.",
+        "type" : "SimpleText"
+      } ]
+    }, {
+      "data" : {
+        "name" : "Klass",
+        "packageName" : "klass.model.meta.domain",
+        "superInterfaces" : [ ],
+        "classifierModifiers" : [ ],
+        "dataTypeProperties" : [ {
+          "__typename" : "klass.model.meta.domain.PrimitiveProperty",
+          "name" : "superClassName",
+          "optional" : true,
+          "minLengthValidation" : null,
+          "maxLengthValidation" : {
+            "number" : 256
+          },
+          "propertyModifiers" : [ {
+            "keyword" : "private"
+          } ],
+          "primitiveType" : "String",
+          "minValidation" : null,
+          "maxValidation" : null
+        }, {
+          "__typename" : "klass.model.meta.domain.PrimitiveProperty",
+          "name" : "abstractClass",
+          "optional" : false,
+          "minLengthValidation" : null,
+          "maxLengthValidation" : null,
+          "propertyModifiers" : [ ],
+          "primitiveType" : "Boolean",
+          "minValidation" : null,
+          "maxValidation" : null
+        } ],
+        "abstractClass" : false,
+        "superClass" : {
+          "name" : "Classifier"
+        },
+        "associationEnds" : [ {
+          "name" : "subClasses"
+        }, {
+          "name" : "superClass"
+        }, {
+          "name" : "associationEnds"
+        }, {
+          "name" : "associationEndsResultTypeOf"
+        }, {
+          "name" : "memberReferencePaths"
+        }, {
+          "name" : "parameterizedProperties"
+        }, {
+          "name" : "parameterizedPropertiesResultTypeOf"
+        }, {
+          "name" : "serviceGroups"
+        } ],
+        "parameterizedProperties" : [ ]
+      },
+      "highlightValues" : [ ],
+      "highlightKeys" : [ ],
+      "type" : "Json"
+    } ],
+    "lastModifiedTime" : 1790289913708,
+    "tocItem" : {
+      "chapterTitle" : "Bootstrapped Metamodel",
+      "pageTitle" : "Bootstrapped Meta Model Data",
+      "pageMeta" : { },
+      "dirName" : "bootstrapped-metamodel",
+      "fileName" : "bootstrapped-meta-model-data",
+      "fileExtension" : "md",
+      "viewOnRelativePath" : null,
+      "pageSectionIdTitles" : [ ]
+    }
+  }
+}), document.getElementById("znai"));
+/*-->*/
+
+</script>
+
+</body>
+</html>
