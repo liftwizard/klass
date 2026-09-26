@@ -92,8 +92,6 @@
     </ciManagement>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <project.build.outputTimestamp>2026-01-13T13:03:03Z</project.build.outputTimestamp>
 
@@ -200,6 +198,10 @@
                             <artifactId>rewrite-maven-plugin</artifactId>
                             <version>6.46.1</version>
                             <configuration>
+                                <exclusions combine.children="append">
+                                    <!-- Remove when rewrite-migrate-java includes https://github.com/openrewrite/rewrite-migrate-java/pull/1229. -->
+                                    <exclusion>**/META-INF/archetype-post-generate.groovy</exclusion>
+                                </exclusions>
                                 <activeRecipes combine.children="append">
                                     <recipe>cool.klass.UpdateCopyrightYear</recipe>
                                 </activeRecipes>
@@ -221,6 +223,7 @@
                     <plugin>
                         <groupId>com.diffplug.spotless</groupId>
                         <artifactId>spotless-maven-plugin</artifactId>
+                        <version>3.10.2</version>
                         <configuration>
                             <java>
                                 <prettier combine.self="override">
