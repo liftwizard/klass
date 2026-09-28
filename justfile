@@ -1,5 +1,3 @@
-set dotenv-filename := ".envrc"
-
 group_id_with_slashes := "cool/klass"
 
 import ".just/console.just"
