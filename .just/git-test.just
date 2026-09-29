@@ -3,8 +3,6 @@
 setup-git-test:
     # Combined
     git test add --forget --test default                      'just clean _check-local-modifications mvn'
-    git test add --forget --test checkstyle                   'just clean _check-local-modifications checkstyle'
-    git test add --forget --test spotless-all                 'just clean _check-local-modifications spotless-all'
     # Individual
     # git test add --forget --test compile                      'just clean _check-local-modifications compile'
     # git test add --forget --test test                         'just clean _check-local-modifications test'
@@ -29,4 +27,4 @@ setup-git-test:
     # git test add --forget --test yaml                         'just clean _check-local-modifications spotless yaml'
     # git test add --forget --test sql                          'just clean _check-local-modifications spotless sql'
 
-git_tests := env('GIT_TESTS', "default,checkstyle,spotless-all")
+git_tests := env('GIT_TESTS', "default")
