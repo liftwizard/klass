@@ -1,112 +1,112 @@
 # Based on https://github.com/testingisdocumenting/znai/blob/master/.github/workflows/documentation-deploy.yaml
 
 on:
-    push:
-        branches:
-            - main
-    pull_request:
+  push:
+    branches:
+      - main
+  pull_request:
 
 concurrency:
-    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-    cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 env:
-    GROUP_ID: "cool/klass"
+  GROUP_ID: "cool/klass"
 
 permissions:
-    contents: read
+  contents: read
 
 jobs:
-    deploy-github-pages:
-        runs-on: ubuntu-latest
-        permissions:
-            contents: write
-            pull-requests: write
-        steps:
-            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-              with:
-                  persist-credentials: false
+  deploy-github-pages:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-            - uses: twosigma/maven-cache-cleaner@8cc87ff622d543e1aad4085cbf5c05236b2d16d9 # v2.3.0
+      - uses: twosigma/maven-cache-cleaner@8cc87ff622d543e1aad4085cbf5c05236b2d16d9 # v2.3.0
 
-            - uses: jdx/mise-action@f10502fc09dadecfefb962fff68ce77213930204 # v4.2.2
-              with:
-                  cache: false
+      - uses: jdx/mise-action@f10502fc09dadecfefb962fff68ce77213930204 # v4.2.2
+        with:
+          cache: false
 
-            - name: Generate Znai docs
-              run: mvn package --projects docs --also-make --activate-profiles 'znai-maven-plugin'
+      - name: Generate Znai docs
+        run: mvn package --projects docs --also-make --activate-profiles 'znai-maven-plugin'
 
-            - name: Create deploy directory
-              run: |
-                  mkdir ./deploy
-                  mv ./docs/target/docs/ ./deploy/
-                  cp ./docs/index.html   ./deploy/
+      - name: Create deploy directory
+        run: |
+          mkdir ./deploy
+          mv ./docs/target/docs/ ./deploy/
+          cp ./docs/index.html   ./deploy/
 
-            - name: Push to GitHub Pages
-              uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
-              if: github.event_name == 'push'
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  publish_dir: ./deploy
-                  cname: klass.cool
-                  force_orphan: true
-                  commit_message: "[skip ci] deploy to gh-pages"
+      - name: Push to GitHub Pages
+        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
+        if: github.event_name == 'push'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./deploy
+          cname: klass.cool
+          force_orphan: true
+          commit_message: "[skip ci] deploy to gh-pages"
 
-            - name: Deploy to Cloudflare Pages
-              id: cloudflare-deploy
-              uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4.1.3
-              with:
-                  apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-                  accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-                  command: pages deploy ./deploy --project-name=klass --branch=${{ github.head_ref || github.ref_name }}
+      - name: Deploy to Cloudflare Pages
+        id: cloudflare-deploy
+        uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4.1.3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy ./deploy --project-name=klass --branch=${{ github.head_ref || github.ref_name }}
 
-            - name: Add Cloudflare preview URL to PR comment
-              if: github.event_name == 'pull_request'
-              uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
-              env:
-                  DEPLOYMENT_URL: ${{ steps.cloudflare-deploy.outputs.deployment-url }}
-                  HEAD_REF: ${{ github.head_ref }}
-                  HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-              with:
-                  script: |
-                      const deploymentUrl = process.env.DEPLOYMENT_URL;
-                      // Extract project subdomain from deployment URL: https://<hash>.<project>.pages.dev
-                      const projectSubdomain = new URL(deploymentUrl).hostname.split('.').slice(1, -2).join('.');
-                      const branchUrl = `https://${process.env.HEAD_REF}.${projectSubdomain}.pages.dev`;
-                      const headSha = process.env.HEAD_SHA;
-                      const body = [
-                        '## Cloudflare Pages Deployment',
-                        '',
-                        '| | |',
-                        '|---|---|',
-                        `| **Latest commit:** | \`${headSha}\` |`,
-                        '| **Status:** | ✅ Deploy successful! |',
-                        `| **Preview URL:** | ${deploymentUrl}/docs/ |`,
-                        `| **Branch Preview URL:** | ${branchUrl}/docs/ |`,
-                      ].join('\n');
+      - name: Add Cloudflare preview URL to PR comment
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          DEPLOYMENT_URL: ${{ steps.cloudflare-deploy.outputs.deployment-url }}
+          HEAD_REF: ${{ github.head_ref }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        with:
+          script: |
+            const deploymentUrl = process.env.DEPLOYMENT_URL;
+            // Extract project subdomain from deployment URL: https://<hash>.<project>.pages.dev
+            const projectSubdomain = new URL(deploymentUrl).hostname.split('.').slice(1, -2).join('.');
+            const branchUrl = `https://${process.env.HEAD_REF}.${projectSubdomain}.pages.dev`;
+            const headSha = process.env.HEAD_SHA;
+            const body = [
+              '## Cloudflare Pages Deployment',
+              '',
+              '| | |',
+              '|---|---|',
+              `| **Latest commit:** | \`${headSha}\` |`,
+              '| **Status:** | ✅ Deploy successful! |',
+              `| **Preview URL:** | ${deploymentUrl}/docs/ |`,
+              `| **Branch Preview URL:** | ${branchUrl}/docs/ |`,
+            ].join('\n');
 
-                      const { data: comments } = await github.rest.issues.listComments({
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        issue_number: context.issue.number,
-                      });
-                      const botComment = comments.find(c => c.body.includes('Cloudflare Pages Deployment'));
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const botComment = comments.find(c => c.body.includes('Cloudflare Pages Deployment'));
 
-                      if (botComment) {
-                        await github.rest.issues.updateComment({
-                          owner: context.repo.owner,
-                          repo: context.repo.repo,
-                          comment_id: botComment.id,
-                          body,
-                        });
-                      } else {
-                        await github.rest.issues.createComment({
-                          owner: context.repo.owner,
-                          repo: context.repo.repo,
-                          issue_number: context.issue.number,
-                          body,
-                        });
-                      }
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
 
-            - name: "Clean Maven cache"
-              run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
+      - name: "Clean Maven cache"
+        run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
