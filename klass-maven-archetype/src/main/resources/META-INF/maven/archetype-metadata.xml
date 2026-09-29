@@ -129,7 +129,6 @@
         <fileSet filtered="true">
             <directory></directory>
             <includes>
-                <include>biome.jsonc.vm</include>
                 <include>justfile.vm</include>
                 <include>package.json.vm</include>
             </includes>
