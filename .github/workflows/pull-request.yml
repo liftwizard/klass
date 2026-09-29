@@ -451,6 +451,49 @@ jobs:
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
+  pre-commit-fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.x"
+
+      - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+
+      - name: Run pre-commit
+        run: |
+          pre-commit run --all-files || true
+
+          if [[ -n $(git status --porcelain) ]]; then
+            FIX_BRANCH="fix-${{ github.event.pull_request.number }}-pre-commit"
+            git switch --create $FIX_BRANCH
+
+            git add --all
+            git commit --message "Apply pre-commit fixes."
+            git push --force origin $FIX_BRANCH
+
+            echo "pre-commit fixes have been pushed to the $FIX_BRANCH branch."
+            exit 1
+          else
+            echo "No changes needed by pre-commit"
+          fi
+
   liftwizard-file-match-rerecord-fix:
     runs-on: ubuntu-latest
     permissions:
