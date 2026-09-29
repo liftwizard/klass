@@ -121,6 +121,7 @@
                 <include>mvnw.cmd</include>
                 <include>mvnw</include>
                 <include>spotbugs-exclude.xml</include>
+                <include>vite.config.ts</include>
             </includes>
         </fileSet>
 
