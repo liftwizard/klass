@@ -25,7 +25,7 @@ mise:
 @clean: _clean-git _clean-maven _clean-m2
 
 markdownlint:
-    markdownlint --config .markdownlint.jsonc  --fix .
+    markdownlint-cli2 --fix
 
 # Format JSON files with Biome
 biome-format:
