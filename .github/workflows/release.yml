@@ -1,48 +1,48 @@
 name: Release
 
 on:
-    workflow_dispatch:
-        inputs:
-            next-version:
-                description: "Next development version (e.g., 2.1.35-SNAPSHOT)"
-                required: false
-                type: string
+  workflow_dispatch:
+    inputs:
+      next-version:
+        description: "Next development version (e.g., 2.1.35-SNAPSHOT)"
+        required: false
+        type: string
 
 jobs:
-    release:
-        permissions:
-            contents: write
+  release:
+    permissions:
+      contents: write
 
-        name: Create Release Tag
-        runs-on: ubuntu-latest
+    name: Create Release Tag
+    runs-on: ubuntu-latest
 
-        steps:
-            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-              with:
-                  fetch-depth: 0
-                  token: ${{ secrets.RELEASE_TOKEN }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN }}
 
-            - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
-              with:
-                  java-version: 21
-                  distribution: oracle
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          java-version: 21
+          distribution: oracle
 
-            - uses: jdx/mise-action@f10502fc09dadecfefb962fff68ce77213930204 # v4.2.2
+      - uses: jdx/mise-action@f10502fc09dadecfefb962fff68ce77213930204 # v4.2.2
 
-            - name: Configure Git
-              run: |
-                  git config user.email "actions@github.com"
-                  git config user.name "GitHub Actions"
+      - name: Configure Git
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
 
-            - name: Prepare Release
-              run: |
-                  mvn --batch-mode clean release:clean release:prepare \
-                    ${NEXT_VERSION:+-DdevelopmentVersion=$NEXT_VERSION} \
-                    -Darguments="-DskipTests"
-              env:
-                  NEXT_VERSION: ${{ inputs.next-version }}
+      - name: Prepare Release
+        run: |
+          mvn --batch-mode clean release:clean release:prepare \
+            ${NEXT_VERSION:+-DdevelopmentVersion=$NEXT_VERSION} \
+            -Darguments="-DskipTests"
+        env:
+          NEXT_VERSION: ${{ inputs.next-version }}
 
-            - name: Push changes
-              run: |
-                  git push origin HEAD:main
-                  git push origin --tags
+      - name: Push changes
+        run: |
+          git push origin HEAD:main
+          git push origin --tags
