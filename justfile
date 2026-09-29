@@ -31,6 +31,7 @@ verify: mvn
 precommit: verify
 
 # mvn archetype
+[arg("MVN", long="mvn", help="Maven binary to use")]
 @archetype MVN=default_mvn:
     just _run "{{ MVN }} {{ ANSI_GREEN }}install{{ ANSI_DEFAULT }} --also-make --projects klass-maven-archetype"
 
