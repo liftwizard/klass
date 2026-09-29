@@ -130,6 +130,7 @@
             <includes>
                 <include>biome.jsonc.vm</include>
                 <include>justfile.vm</include>
+                <include>package.json.vm</include>
             </includes>
             <excludes>
                 <exclude>biome.template.jsonc</exclude>
