@@ -5,8 +5,8 @@
 
     <parent>
         <groupId>io.liftwizard</groupId>
-        <artifactId>liftwizard-parent-build</artifactId>
-        <version>2.1.40</version>
+        <artifactId>liftwizard-profile-parent</artifactId>
+        <version>2.1.50</version>
     </parent>
 
     <groupId>\${groupId}</groupId>
@@ -36,7 +36,7 @@
         <checkstyle.suppressions>\${maven.multiModuleProjectDirectory}/checkstyle-suppressions.xml</checkstyle.suppressions>
         <checkstyle.cache>\${project.build.directory}/checkstyle-cache</checkstyle.cache>
 
-        <liftwizard.version>2.1.40</liftwizard.version>
+        <liftwizard.version>2.1.50</liftwizard.version>
         <klass.version>0.5.0</klass.version>
     </properties>
 
