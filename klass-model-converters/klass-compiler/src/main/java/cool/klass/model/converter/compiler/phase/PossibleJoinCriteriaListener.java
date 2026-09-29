@@ -32,7 +32,6 @@ import cool.klass.model.meta.grammar.KlassParser.CriteriaExpressionOrContext;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaNativeContext;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaOperatorContext;
 import cool.klass.model.meta.grammar.KlassParser.ExpressionValueContext;
-import cool.klass.model.meta.grammar.KlassParser.LiteralContext;
 import cool.klass.model.meta.grammar.KlassParser.TypeMemberReferencePathContext;
 
 public class PossibleJoinCriteriaListener extends KlassBaseListener {
@@ -125,13 +124,5 @@ public class PossibleJoinCriteriaListener extends KlassBaseListener {
 		} else if (klass == AntlrClass.NOT_FOUND || klass == AntlrClass.AMBIGUOUS) {
 			this.allReferencesResolve = false;
 		}
-	}
-
-	@Override
-	public void enterLiteral(@Nonnull LiteralContext ctx) {
-		super.enterLiteral(ctx);
-		// TODO: Not sure if this should count. But the example is:
-		// this.key == Comment.blueprintKey
-		//         && Comment.replyToId == null
 	}
 }
