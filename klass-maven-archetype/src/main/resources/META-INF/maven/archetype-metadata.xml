@@ -110,6 +110,7 @@
         <fileSet>
             <directory></directory>
             <includes>
+                <include>.markdownlint-cli2.jsonc</include>
                 <include>.markdownlint.jsonc</include>
                 <include>.pre-commit-config.yaml</include>
                 <include>.prettierrc.json5</include>
