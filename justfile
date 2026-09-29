@@ -24,8 +24,11 @@ markdownlint:
     markdownlint-cli2 --fix
 
 # Run all formatting tools for pre-commit
-precommit: mvn
+verify: mvn
     uv tool run pre-commit run --all-files
+
+# Deprecated alias for `verify`
+precommit: verify
 
 # mvn archetype
 @archetype MVN=default_mvn:
