@@ -7,6 +7,10 @@ JUSTFILE_BRANCH
 _book
 spy.log
 
+# IntelliJ IDEA javac argument files created when using "Shorten command line" with @argfile
+javac.*.args
+node_modules/
+
 # Created by https://www.toptal.com/developers/gitignore/api/java,maven,intellij+iml,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,maven,intellij+iml,visualstudiocode
 
