@@ -105,6 +105,9 @@
         <klass.version>${project.version}</klass.version>
         <h2.version>2.5.252</h2.version>
         <auto-service.version>1.0.1</auto-service.version>
+
+        <!-- Pin the test JVM time zone so recorded timestamps match outside UTC; surefire appends this via @{argLine} -->
+        <argLine>-Duser.timezone=UTC</argLine>
     </properties>
 
     <dependencyManagement>
