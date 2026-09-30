@@ -347,6 +347,13 @@
         </module>
         <!--endregion-->
 
+        <!--region ${rootArtifactId}-reladomo-readable-interfaces-->
+        <module
+                id="${rootArtifactId}-reladomo-readable-interfaces"
+                dir="__rootArtifactId__-reladomo-readable-interfaces"
+                name="${rootArtifactId}-reladomo-readable-interfaces">
+        </module>
+        <!--endregion-->
         <!--region ${rootArtifactId}-reladomo-pojos-->
         <module
                 id="${rootArtifactId}-reladomo-pojos"
