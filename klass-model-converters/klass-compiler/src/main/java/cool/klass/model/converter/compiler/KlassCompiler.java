@@ -69,8 +69,8 @@ import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class KlassCompiler {
-
+public class KlassCompiler
+{
 	public static final ImmutableList<Function<CompilerState, KlassListener>> COMPILER_PHASE_BUILDERS =
 		Lists.immutable.with(
 			CompilationUnitPhase::new,
@@ -108,7 +108,8 @@ public class KlassCompiler {
 	private final AnsiColorScheme colorScheme;
 	private final boolean enableIdeLinks;
 
-	public KlassCompiler(CompilationUnit compilationUnit, AnsiColorScheme colorScheme) {
+	public KlassCompiler(CompilationUnit compilationUnit, AnsiColorScheme colorScheme)
+	{
 		this(Lists.immutable.with(compilationUnit), colorScheme, false);
 	}
 
@@ -116,27 +117,34 @@ public class KlassCompiler {
 		ImmutableList<CompilationUnit> compilationUnits,
 		AnsiColorScheme colorScheme,
 		boolean enableIdeLinks
-	) {
+	)
+	{
 		this.compilerState = new CompilerState(compilationUnits);
 		this.colorScheme = Objects.requireNonNull(colorScheme);
 		this.enableIdeLinks = enableIdeLinks;
 	}
 
-	private void executeCompilerPhase(KlassListener compilerPhase) {
+	private void executeCompilerPhase(KlassListener compilerPhase)
+	{
 		Stopwatch stopwatch = Stopwatch.createStarted();
 
 		// Compiler macros may add new compilation units within a compiler phase, so take an immutable copy
-		ImmutableList<CompilationUnit> immutableCompilationUnits = this.compilerState.getCompilerInput()
+		ImmutableList<CompilationUnit> immutableCompilationUnits = this.compilerState
+			.getCompilerInput()
 			.getCompilationUnits()
 			.toImmutable();
 
 		var parseTreeWalker = new ParseTreeWalker();
-		for (CompilationUnit compilationUnit : immutableCompilationUnits) {
-			try {
+		for (CompilationUnit compilationUnit : immutableCompilationUnits)
+		{
+			try
+			{
 				this.compilerState.getCompilerWalk().assertEmpty();
 				parseTreeWalker.walk(compilerPhase, compilationUnit.getParserContext());
 				this.compilerState.getCompilerWalk().assertEmpty();
-			} catch (RuntimeException e) {
+			}
+			catch (RuntimeException e)
+			{
 				String message = "Exception in compiler during phase: %s for compilation unit: %s".formatted(
 					compilerPhase.getClass().getSimpleName(),
 					compilationUnit.getFullPathSourceName()
@@ -157,12 +165,14 @@ public class KlassCompiler {
 	}
 
 	@Nonnull
-	public CompilationResult compile() {
+	public CompilationResult compile()
+	{
 		ImmutableList<KlassListener> compilerPhases = COMPILER_PHASE_BUILDERS.collectWith(
 			Function::apply,
 			this.compilerState
 		);
-		for (KlassListener compilerPhase : compilerPhases) {
+		for (KlassListener compilerPhase : compilerPhases)
+		{
 			this.executeCompilerPhase(compilerPhase);
 		}
 
@@ -191,7 +201,8 @@ public class KlassCompiler {
 
 	private MapIterable<Token, TokenCategory> getTokenCategoriesFromLexer(
 		ImmutableList<CompilationUnit> compilationUnits
-	) {
+	)
+	{
 		MutableMapIterable<Token, TokenCategory> tokenCategoriesFromLexer = OrderedMapAdapter.adapt(
 			new LinkedHashMap<>()
 		);
@@ -203,7 +214,8 @@ public class KlassCompiler {
 
 	private MapIterable<Token, TokenCategory> getTokenCategoriesFromParser(
 		ImmutableList<CompilationUnit> compilationUnits
-	) {
+	)
+	{
 		var listener = new ParserBasedTokenCategorizer();
 
 		compilationUnits

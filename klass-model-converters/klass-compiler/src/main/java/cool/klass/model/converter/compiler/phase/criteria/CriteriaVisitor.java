@@ -53,22 +53,25 @@ import cool.klass.model.meta.grammar.KlassParser.TypeMemberReferencePathContext;
 import cool.klass.model.meta.grammar.KlassVisitor;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
-
+public class CriteriaVisitor
+	extends KlassBaseVisitor<AntlrCriteria>
+{
 	@Nonnull
 	private final CompilerState compilerState;
 
 	@Nonnull
 	private final IAntlrElement criteriaOwner;
 
-	public CriteriaVisitor(@Nonnull CompilerState compilerState, @Nonnull IAntlrElement criteriaOwner) {
+	public CriteriaVisitor(@Nonnull CompilerState compilerState, @Nonnull IAntlrElement criteriaOwner)
+	{
 		this.compilerState = Objects.requireNonNull(compilerState);
 		this.criteriaOwner = Objects.requireNonNull(criteriaOwner);
 	}
 
 	@Nonnull
 	@Override
-	public AntlrCriteria visitCriteriaEdgePoint(@Nonnull CriteriaEdgePointContext ctx) {
+	public AntlrCriteria visitCriteriaEdgePoint(@Nonnull CriteriaEdgePointContext ctx)
+	{
 		var edgePointAntlrCriteria = new EdgePointAntlrCriteria(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
@@ -87,7 +90,8 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
 	@Nonnull
 	@Override
-	public AntlrCriteria visitCriteriaExpressionAnd(@Nonnull CriteriaExpressionAndContext ctx) {
+	public AntlrCriteria visitCriteriaExpressionAnd(@Nonnull CriteriaExpressionAndContext ctx)
+	{
 		var andCriteria = new AntlrAndCriteria(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
@@ -107,7 +111,8 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
 	@Nonnull
 	@Override
-	public AntlrCriteria visitCriteriaNative(CriteriaNativeContext ctx) {
+	public AntlrCriteria visitCriteriaNative(CriteriaNativeContext ctx)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitCriteriaNative() not implemented yet"
 		);
@@ -115,14 +120,16 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
 	@Nonnull
 	@Override
-	public AntlrCriteria visitCriteriaExpressionGroup(@Nonnull CriteriaExpressionGroupContext ctx) {
+	public AntlrCriteria visitCriteriaExpressionGroup(@Nonnull CriteriaExpressionGroupContext ctx)
+	{
 		CriteriaExpressionContext childContext = ctx.criteriaExpression();
 		return childContext.accept(this);
 	}
 
 	@Nonnull
 	@Override
-	public AntlrCriteria visitCriteriaAll(@Nonnull CriteriaAllContext ctx) {
+	public AntlrCriteria visitCriteriaAll(@Nonnull CriteriaAllContext ctx)
+	{
 		return new AllAntlrCriteria(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
@@ -132,7 +139,8 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
 	@Nonnull
 	@Override
-	public OperatorAntlrCriteria visitCriteriaOperator(@Nonnull CriteriaOperatorContext ctx) {
+	public OperatorAntlrCriteria visitCriteriaOperator(@Nonnull CriteriaOperatorContext ctx)
+	{
 		KlassVisitor<AntlrOperator> operatorVisitor = new OperatorVisitor(this.compilerState);
 		AntlrOperator operator = operatorVisitor.visitOperator(ctx.operator());
 
@@ -161,7 +169,8 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
 	@Nonnull
 	@Override
-	public AntlrCriteria visitCriteriaExpressionOr(@Nonnull CriteriaExpressionOrContext ctx) {
+	public AntlrCriteria visitCriteriaExpressionOr(@Nonnull CriteriaExpressionOrContext ctx)
+	{
 		var orCriteria = new AntlrOrCriteria(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
@@ -181,7 +190,8 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
 	@Nonnull
 	@Override
-	public AntlrCriteria visitLiteralList(LiteralListContext ctx) {
+	public AntlrCriteria visitLiteralList(LiteralListContext ctx)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitLiteralList() not implemented yet"
 		);
@@ -189,7 +199,8 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
 	@Nonnull
 	@Override
-	public AntlrCriteria visitNativeLiteral(NativeLiteralContext ctx) {
+	public AntlrCriteria visitNativeLiteral(NativeLiteralContext ctx)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitNativeLiteral() not implemented yet"
 		);
@@ -197,7 +208,8 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
 	@Nonnull
 	@Override
-	public AntlrCriteria visitEqualityOperator(EqualityOperatorContext ctx) {
+	public AntlrCriteria visitEqualityOperator(EqualityOperatorContext ctx)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitEqualityOperator() not implemented yet"
 		);
@@ -205,7 +217,8 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
 	@Nonnull
 	@Override
-	public AntlrCriteria visitInequalityOperator(InequalityOperatorContext ctx) {
+	public AntlrCriteria visitInequalityOperator(InequalityOperatorContext ctx)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitInequalityOperator() not implemented yet"
 		);
@@ -213,7 +226,8 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
 	@Nonnull
 	@Override
-	public AntlrCriteria visitInOperator(InOperatorContext ctx) {
+	public AntlrCriteria visitInOperator(InOperatorContext ctx)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitInOperator() not implemented yet"
 		);
@@ -221,7 +235,8 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
 	@Nonnull
 	@Override
-	public AntlrCriteria visitStringOperator(StringOperatorContext ctx) {
+	public AntlrCriteria visitStringOperator(StringOperatorContext ctx)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitStringOperator() not implemented yet"
 		);
@@ -229,7 +244,8 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
 	@Nonnull
 	@Override
-	public AntlrCriteria visitParameterReference(ParameterReferenceContext ctx) {
+	public AntlrCriteria visitParameterReference(ParameterReferenceContext ctx)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitParameterReference() not implemented yet"
 		);
@@ -237,7 +253,8 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
 	@Nonnull
 	@Override
-	public AntlrCriteria visitTypeMemberReferencePath(TypeMemberReferencePathContext ctx) {
+	public AntlrCriteria visitTypeMemberReferencePath(TypeMemberReferencePathContext ctx)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitTypeMemberReferencePath() not implemented yet"
 		);
@@ -245,14 +262,16 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
 	@Nonnull
 	@Override
-	public AntlrCriteria visitLiteral(LiteralContext ctx) {
+	public AntlrCriteria visitLiteral(LiteralContext ctx)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitLiteral() not implemented yet"
 		);
 	}
 
 	@Nonnull
-	private ExpressionValueVisitor getExpressionValueVisitor(IAntlrElement expressionValueOwner) {
+	private ExpressionValueVisitor getExpressionValueVisitor(IAntlrElement expressionValueOwner)
+	{
 		return new ExpressionValueVisitor(
 			this.compilerState,
 			this.compilerState.getCompilerWalk().getThisReference(),
@@ -262,7 +281,8 @@ public class CriteriaVisitor extends KlassBaseVisitor<AntlrCriteria> {
 
 	@Nonnull
 	@Override
-	public AntlrCriteria visitTerminal(TerminalNode node) {
+	public AntlrCriteria visitTerminal(TerminalNode node)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitTerminal() not implemented yet"
 		);

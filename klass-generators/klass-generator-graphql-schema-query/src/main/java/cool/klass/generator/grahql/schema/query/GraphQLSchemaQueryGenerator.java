@@ -35,30 +35,35 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 
-public class GraphQLSchemaQueryGenerator extends AbstractPerPackageGenerator {
-
-	public GraphQLSchemaQueryGenerator(@Nonnull DomainModel domainModel) {
+public class GraphQLSchemaQueryGenerator
+	extends AbstractPerPackageGenerator
+{
+	public GraphQLSchemaQueryGenerator(@Nonnull DomainModel domainModel)
+	{
 		super(domainModel);
 	}
 
 	@Nonnull
 	@Override
-	protected Path getPluginRelativePath(Path path) {
+	protected Path getPluginRelativePath(Path path)
+	{
 		return path.resolve("graphql").resolve("schema").resolve("query");
 	}
 
 	@Nonnull
 	@Override
-	protected String getFileName() {
+	protected String getFileName()
+	{
 		return "GraphQLQuerySchema.graphqls";
 	}
 
 	@Nonnull
 	@Override
-	protected String getPackageSourceCode(@Nonnull String fullyQualifiedPackage) {
-		ImmutableList<Klass> classes = this.domainModel.getClasses().select((each) ->
-			each.getPackageName().equals(fullyQualifiedPackage)
-		);
+	protected String getPackageSourceCode(@Nonnull String fullyQualifiedPackage)
+	{
+		ImmutableList<Klass> classes = this.domainModel
+			.getClasses()
+			.select((each) -> each.getPackageName().equals(fullyQualifiedPackage));
 
 		String allSourceCode = classes.collect(this::getAllSourceCode).makeString("");
 
@@ -92,11 +97,13 @@ public class GraphQLSchemaQueryGenerator extends AbstractPerPackageGenerator {
 		return sourceCode;
 	}
 
-	private String getAllSourceCode(Classifier classifier) {
+	private String getAllSourceCode(Classifier classifier)
+	{
 		return "    " + this.getPropertyName(classifier) + ": [" + classifier.getName() + "!]!\n";
 	}
 
-	private String getPropertyName(Classifier classifier) {
+	private String getPropertyName(Classifier classifier)
+	{
 		String classifierName = classifier.getName();
 
 		String lowerUnderscore = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, classifierName);
@@ -107,19 +114,23 @@ public class GraphQLSchemaQueryGenerator extends AbstractPerPackageGenerator {
 			.makeString("");
 	}
 
-	private String capitalizeSplit(String eachSplit, int index, int splitsSize) {
+	private String capitalizeSplit(String eachSplit, int index, int splitsSize)
+	{
 		return this.getCapitalized(index, this.getPluralized(index, splitsSize, eachSplit));
 	}
 
-	private String getPluralized(int index, int splitsSize, String eachSplit) {
+	private String getPluralized(int index, int splitsSize, String eachSplit)
+	{
 		return index == splitsSize - 1 ? English.plural(eachSplit) : eachSplit;
 	}
 
-	private String getCapitalized(int index, String eachSplit) {
+	private String getCapitalized(int index, String eachSplit)
+	{
 		return index != 0 ? CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, eachSplit) : eachSplit;
 	}
 
-	private String getByKeySourceCode(Classifier classifier) {
+	private String getByKeySourceCode(Classifier classifier)
+	{
 		String classifierName = classifier.getName();
 		String lowerCaseName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, classifierName);
 
@@ -127,7 +138,8 @@ public class GraphQLSchemaQueryGenerator extends AbstractPerPackageGenerator {
 		return "    " + lowerCaseName + "(" + parameters + "): " + classifierName + "\n";
 	}
 
-	private String getByOperationSourceCode(Classifier classifier) {
+	private String getByOperationSourceCode(Classifier classifier)
+	{
 		String classifierName = classifier.getName();
 		String lowerCaseName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, classifierName);
 		return MessageFormat.format(
@@ -137,7 +149,8 @@ public class GraphQLSchemaQueryGenerator extends AbstractPerPackageGenerator {
 		);
 	}
 
-	private String getByFinderSourceCode(Classifier classifier) {
+	private String getByFinderSourceCode(Classifier classifier)
+	{
 		String classifierName = classifier.getName();
 		String lowerCaseName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, classifierName);
 
@@ -148,21 +161,26 @@ public class GraphQLSchemaQueryGenerator extends AbstractPerPackageGenerator {
 		);
 	}
 
-	private String getParameterSourceCode(DataTypeProperty dataTypeProperty) {
+	private String getParameterSourceCode(DataTypeProperty dataTypeProperty)
+	{
 		String propertyName = dataTypeProperty.getName();
 		String scalarType = GraphQLSchemaQueryGenerator.convertType(dataTypeProperty.getType());
 		String multiplicity = dataTypeProperty.isRequired() ? "!" : "";
 		return String.format("%s: %s%s", propertyName, scalarType, multiplicity);
 	}
 
-	private static String convertType(@Nonnull Type type) {
-		if (type instanceof Enumeration) {
+	private static String convertType(@Nonnull Type type)
+	{
+		if (type instanceof Enumeration)
+		{
 			return "String";
 		}
-		if (type == PrimitiveType.INTEGER) {
+		if (type == PrimitiveType.INTEGER)
+		{
 			return "Int";
 		}
-		if (type == PrimitiveType.DOUBLE) {
+		if (type == PrimitiveType.DOUBLE)
+		{
 			return "Float";
 		}
 		return type.toString();

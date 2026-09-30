@@ -31,8 +31,9 @@ import cool.klass.model.meta.grammar.KlassParser.RelationshipContext;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class RelationshipInferencePhase extends AbstractCompilerPhase {
-
+public class RelationshipInferencePhase
+	extends AbstractCompilerPhase
+{
 	private static final Converter<String, String> LOWER_CAMEL_TO_UPPER_CAMEL = CaseFormat.LOWER_CAMEL.converterTo(
 		CaseFormat.UPPER_CAMEL
 	);
@@ -41,30 +42,36 @@ public class RelationshipInferencePhase extends AbstractCompilerPhase {
 		CaseFormat.LOWER_CAMEL
 	);
 
-	public RelationshipInferencePhase(@Nonnull CompilerState compilerState) {
+	public RelationshipInferencePhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Nonnull
 	@Override
-	public String getName() {
+	public String getName()
+	{
 		return "Association relationship";
 	}
 
 	@Override
-	public void exitAssociationBody(AssociationBodyContext ctx) {
+	public void exitAssociationBody(AssociationBodyContext ctx)
+	{
 		this.runCompilerMacro(ctx);
 		super.exitAssociationBody(ctx);
 	}
 
-	private void runCompilerMacro(AssociationBodyContext inPlaceContext) {
+	private void runCompilerMacro(AssociationBodyContext inPlaceContext)
+	{
 		RelationshipContext relationship = inPlaceContext.relationship();
-		if (relationship != null) {
+		if (relationship != null)
+		{
 			return;
 		}
 
 		AntlrAssociation association = this.compilerState.getCompilerWalk().getAssociation();
-		if (association.isManyToMany()) {
+		if (association.isManyToMany())
+		{
 			return;
 		}
 
@@ -72,30 +79,38 @@ public class RelationshipInferencePhase extends AbstractCompilerPhase {
 		AntlrAssociationEnd targetEnd = association.getTargetEnd();
 
 		// [_..*] --> [_..1];
-		if (targetEnd.isToOne() && sourceEnd.isToMany()) {
+		if (targetEnd.isToOne() && sourceEnd.isToMany())
+		{
 			this.handleSourceAssociationEnd(inPlaceContext, sourceEnd);
 		}
 		// [_..1] owned --> [_..*];
-		else if (sourceEnd.isToOne() && targetEnd.isToMany()) {
+		else if (sourceEnd.isToOne() && targetEnd.isToMany())
+		{
 			this.handleTargetAssociationEnd(inPlaceContext, targetEnd);
 		}
 		// [0..1] --> [1..1]
-		else if (sourceEnd.isToOneOptional() && targetEnd.isToOneRequired()) {
+		else if (sourceEnd.isToOneOptional() && targetEnd.isToOneRequired())
+		{
 			this.handleSourceAssociationEnd(inPlaceContext, sourceEnd);
 		}
 		// [1..1] --> [0..1]
-		else if (targetEnd.isToOneOptional() && sourceEnd.isToOneRequired()) {
+		else if (targetEnd.isToOneOptional() && sourceEnd.isToOneRequired())
+		{
 			this.handleTargetAssociationEnd(inPlaceContext, targetEnd);
-		} else {
+		}
+		else
+		{
 			throw new IllegalStateException("Unhandled association end combination: " + association);
 		}
 	}
 
-	private void handleSourceAssociationEnd(AssociationBodyContext inPlaceContext, AntlrAssociationEnd associationEnd) {
+	private void handleSourceAssociationEnd(AssociationBodyContext inPlaceContext, AntlrAssociationEnd associationEnd)
+	{
 		AntlrClass oppositeType = associationEnd.getOpposite().getType();
 
 		ImmutableList<AntlrDataTypeProperty<?>> allKeyProperties = oppositeType.getAllKeyProperties();
-		if (allKeyProperties.isEmpty()) {
+		if (allKeyProperties.isEmpty())
+		{
 			return;
 		}
 
@@ -113,11 +128,13 @@ public class RelationshipInferencePhase extends AbstractCompilerPhase {
 		this.runInPlaceCompilerMacro(inPlaceContext, sourceCodeText);
 	}
 
-	private void handleTargetAssociationEnd(AssociationBodyContext inPlaceContext, AntlrAssociationEnd associationEnd) {
+	private void handleTargetAssociationEnd(AssociationBodyContext inPlaceContext, AntlrAssociationEnd associationEnd)
+	{
 		AntlrClass oppositeType = associationEnd.getOpposite().getType();
 
 		ImmutableList<AntlrDataTypeProperty<?>> allKeyProperties = oppositeType.getAllKeyProperties();
-		if (allKeyProperties.isEmpty()) {
+		if (allKeyProperties.isEmpty())
+		{
 			return;
 		}
 
@@ -135,7 +152,8 @@ public class RelationshipInferencePhase extends AbstractCompilerPhase {
 		this.runInPlaceCompilerMacro(inPlaceContext, sourceCodeText);
 	}
 
-	private void runInPlaceCompilerMacro(AssociationBodyContext inPlaceContext, @Nonnull String sourceCodeText) {
+	private void runInPlaceCompilerMacro(AssociationBodyContext inPlaceContext, @Nonnull String sourceCodeText)
+	{
 		AntlrAssociation association = this.compilerState.getCompilerWalk().getAssociation();
 
 		ParseTreeListener compilerPhase = new RelationshipPhase(this.compilerState);

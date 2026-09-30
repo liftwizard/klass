@@ -35,8 +35,8 @@ import io.swagger.models.Swagger;
  * Generates a single swagger.json file containing the OpenAPI specification
  * for all service groups in the domain model.
  */
-public class SwaggerSpecGenerator {
-
+public class SwaggerSpecGenerator
+{
 	@Nonnull
 	private final ObjectMapper objectMapper;
 
@@ -50,13 +50,15 @@ public class SwaggerSpecGenerator {
 		@Nonnull ObjectMapper objectMapper,
 		@Nonnull DomainModel domainModel,
 		@Nonnull String applicationName
-	) {
+	)
+	{
 		this.objectMapper = Objects.requireNonNull(objectMapper);
 		this.domainModel = Objects.requireNonNull(domainModel);
 		this.applicationName = Objects.requireNonNull(applicationName);
 	}
 
-	public void writeFiles(@Nonnull Path outputPath) {
+	public void writeFiles(@Nonnull Path outputPath)
+	{
 		Path swaggerPath = outputPath.resolve("swagger");
 		swaggerPath.toFile().mkdirs();
 
@@ -66,7 +68,8 @@ public class SwaggerSpecGenerator {
 	}
 
 	@Nonnull
-	private String generateSwaggerSpec() {
+	private String generateSwaggerSpec()
+	{
 		var swagger = new Swagger();
 		swagger.setSwagger("2.0");
 
@@ -84,17 +87,24 @@ public class SwaggerSpecGenerator {
 		var visitor = new ServiceGroupToSwaggerSpecVisitor(swagger);
 		this.domainModel.getTopLevelElements().forEach((element) -> element.visit(visitor));
 
-		try {
+		try
+		{
 			return this.objectMapper.writeValueAsString(swagger);
-		} catch (JsonProcessingException e) {
+		}
+		catch (JsonProcessingException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}
 
-	private void printStringToFile(@Nonnull Path path, String contents) {
-		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)) {
+	private void printStringToFile(@Nonnull Path path, String contents)
+	{
+		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8))
+		{
 			printStream.print(contents);
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}

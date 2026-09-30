@@ -25,11 +25,13 @@ import io.liftwizard.junit.extension.match.FileSlurper;
 import io.liftwizard.reladomo.test.extension.ReladomoTestFile;
 import org.junit.jupiter.api.Test;
 
-class QuestionVoteResourceTest extends AbstractStackOverflowApplicationTest {
-
+class QuestionVoteResourceTest
+	extends AbstractStackOverflowApplicationTest
+{
 	@Test
 	@ReladomoTestFile("test-data/existing-question.txt")
-	void post_vote() {
+	void post_vote()
+	{
 		Client client = this.getClient("post_vote");
 
 		String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".post_vote.json5", this.getClass());

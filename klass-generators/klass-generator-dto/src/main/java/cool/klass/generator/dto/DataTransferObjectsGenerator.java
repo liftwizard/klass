@@ -41,29 +41,35 @@ import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveToJavaTypeVisitor;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class DataTransferObjectsGenerator {
-
+public class DataTransferObjectsGenerator
+{
 	@Nonnull
 	private final DomainModel domainModel;
 
-	public DataTransferObjectsGenerator(@Nonnull DomainModel domainModel) {
+	public DataTransferObjectsGenerator(@Nonnull DomainModel domainModel)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 	}
 
-	public void writeDataTransferObjectFiles(@Nonnull Path outputPath) throws IOException {
-		for (Enumeration enumeration : this.domainModel.getEnumerations()) {
+	public void writeDataTransferObjectFiles(@Nonnull Path outputPath)
+		throws IOException
+	{
+		for (Enumeration enumeration : this.domainModel.getEnumerations())
+		{
 			Path dtoOutputPath = this.getDtoOutputPath(outputPath, enumeration);
 			this.printStringToFile(dtoOutputPath, this.getEnumerationSourceCode(enumeration));
 		}
 
-		for (Klass klass : this.domainModel.getClasses()) {
+		for (Klass klass : this.domainModel.getClasses())
+		{
 			Path dtoOutputPath = this.getDtoOutputPath(outputPath, klass);
 			this.printStringToFile(dtoOutputPath, this.getClassSourceCode(klass));
 		}
 	}
 
 	@Nonnull
-	public Path getDtoOutputPath(@Nonnull Path outputPath, @Nonnull PackageableElement packageableElement) {
+	public Path getDtoOutputPath(@Nonnull Path outputPath, @Nonnull PackageableElement packageableElement)
+	{
 		String packageRelativePath = packageableElement.getPackageName().replaceAll("\\.", "/");
 		Path dtoDirectory = outputPath.resolve(packageRelativePath).resolve("dto");
 		dtoDirectory.toFile().mkdirs();
@@ -71,14 +77,18 @@ public class DataTransferObjectsGenerator {
 		return dtoDirectory.resolve(fileName);
 	}
 
-	private void printStringToFile(@Nonnull Path path, String contents) throws FileNotFoundException {
-		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)) {
+	private void printStringToFile(@Nonnull Path path, String contents)
+		throws FileNotFoundException
+	{
+		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8))
+		{
 			printStream.print(contents);
 		}
 	}
 
 	@Nonnull
-	private String getEnumerationSourceCode(@Nonnull Enumeration enumeration) {
+	private String getEnumerationSourceCode(@Nonnull Enumeration enumeration)
+	{
 		String packageName = enumeration.getPackageName() + ".dto";
 		String literalsSourceCode = enumeration.getEnumerationLiterals().collect(this::getLiteral).makeString("");
 
@@ -104,7 +114,8 @@ public class DataTransferObjectsGenerator {
 	}
 
 	@Nonnull
-	public String getClassSourceCode(@Nonnull Klass klass) {
+	public String getClassSourceCode(@Nonnull Klass klass)
+	{
 		String packageName = klass.getPackageName() + ".dto";
 
 		ImmutableList<DataTypeProperty> dataTypeProperties = klass
@@ -165,7 +176,8 @@ public class DataTransferObjectsGenerator {
 	}
 
 	@Nonnull
-	private String getLiteral(@Nonnull EnumerationLiteral enumerationLiteral) {
+	private String getLiteral(@Nonnull EnumerationLiteral enumerationLiteral)
+	{
 		String line1 = enumerationLiteral
 			.getDeclaredPrettyName()
 			.map((prettyName) -> "    @JsonProperty(\"" + prettyName + "\")\n")
@@ -177,7 +189,8 @@ public class DataTransferObjectsGenerator {
 	}
 
 	@Nonnull
-	private String getDataGetterSetter(@Nonnull DataTypeProperty dataTypeProperty) {
+	private String getDataGetterSetter(@Nonnull DataTypeProperty dataTypeProperty)
+	{
 		String type = this.getType(dataTypeProperty.getType());
 		String name = dataTypeProperty.getName();
 		String uppercaseName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, name);
@@ -185,7 +198,8 @@ public class DataTransferObjectsGenerator {
 	}
 
 	@Nonnull
-	private String getReferenceGetterSetter(@Nonnull AssociationEnd associationEnd) {
+	private String getReferenceGetterSetter(@Nonnull AssociationEnd associationEnd)
+	{
 		String type = this.getType(associationEnd.getType(), associationEnd.getMultiplicity());
 		String name = associationEnd.getName();
 		String uppercaseName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, name);
@@ -193,7 +207,8 @@ public class DataTransferObjectsGenerator {
 	}
 
 	@Nonnull
-	private String getGetterSetter(String type, String name, String uppercaseName) {
+	private String getGetterSetter(String type, String name, String uppercaseName)
+	{
 		// language=JAVA
 		return (
 			""
@@ -227,42 +242,51 @@ public class DataTransferObjectsGenerator {
 	}
 
 	@Nonnull
-	private String getType(DataType dataType) {
-		if (dataType instanceof Enumeration enumeration) {
+	private String getType(DataType dataType)
+	{
+		if (dataType instanceof Enumeration enumeration)
+		{
 			return enumeration.getName() + "DTO";
 		}
-		if (dataType instanceof PrimitiveType primitiveType) {
+		if (dataType instanceof PrimitiveType primitiveType)
+		{
 			return PrimitiveToJavaTypeVisitor.getJavaType(primitiveType);
 		}
 		throw new AssertionError();
 	}
 
 	@Nonnull
-	private String getType(@Nonnull Klass klass, @Nonnull Multiplicity multiplicity) {
+	private String getType(@Nonnull Klass klass, @Nonnull Multiplicity multiplicity)
+	{
 		String toOneType = klass.getName() + "DTO";
-		if (multiplicity.isToOne()) {
+		if (multiplicity.isToOne())
+		{
 			return toOneType;
 		}
 
 		return "List<" + toOneType + ">";
 	}
 
-	private String getDataField(@Nonnull DataTypeProperty dataTypeProperty) {
+	private String getDataField(@Nonnull DataTypeProperty dataTypeProperty)
+	{
 		String annotation = this.getAnnotation(dataTypeProperty);
 		String type = this.getType(dataTypeProperty.getType());
 		return String.format("%s    private %s %s;%n", annotation, type, dataTypeProperty.getName());
 	}
 
 	@Nonnull
-	private String getAnnotation(@Nonnull DataTypeProperty dataTypeProperty) {
+	private String getAnnotation(@Nonnull DataTypeProperty dataTypeProperty)
+	{
 		return this.isNullable(dataTypeProperty) ? "" : "    @NotNull\n";
 	}
 
-	private boolean isNullable(@Nonnull DataTypeProperty dataTypeProperty) {
+	private boolean isNullable(@Nonnull DataTypeProperty dataTypeProperty)
+	{
 		return dataTypeProperty.isTemporal() || dataTypeProperty.isOptional() || dataTypeProperty.isKey();
 	}
 
-	private String getReferenceField(@Nonnull AssociationEnd associationEnd) {
+	private String getReferenceField(@Nonnull AssociationEnd associationEnd)
+	{
 		Multiplicity multiplicity = associationEnd.getMultiplicity();
 
 		// TODO: NotNull shouldn't apply if the ONE_TO_ONE is a version association end.

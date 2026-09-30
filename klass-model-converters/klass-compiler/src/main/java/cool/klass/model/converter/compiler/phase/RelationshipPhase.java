@@ -33,14 +33,17 @@ import cool.klass.model.meta.grammar.KlassVisitor;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.eclipse.collections.api.list.MutableList;
 
-public class RelationshipPhase extends AbstractCompilerPhase {
-
-	public RelationshipPhase(@Nonnull CompilerState compilerState) {
+public class RelationshipPhase
+	extends AbstractCompilerPhase
+{
+	public RelationshipPhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Override
-	public void enterRelationship(@Nonnull RelationshipContext ctx) {
+	public void enterRelationship(@Nonnull RelationshipContext ctx)
+	{
 		super.enterRelationship(ctx);
 
 		AntlrAssociation association = this.compilerState.getCompilerWalk().getAssociation();
@@ -59,11 +62,13 @@ public class RelationshipPhase extends AbstractCompilerPhase {
 		relationship.setCriteria(criteria);
 
 		MutableList<AntlrAssociationEnd> associationEnds = association.getAssociationEnds();
-		if (associationEnds.size() != 2) {
+		if (associationEnds.size() != 2)
+		{
 			return;
 		}
 
-		if (association.isManyToMany()) {
+		if (association.isManyToMany())
+		{
 			return;
 		}
 
@@ -72,7 +77,8 @@ public class RelationshipPhase extends AbstractCompilerPhase {
 			association.getTargetEnd().getType()
 		);
 
-		if (possibleJoinCriteria) {
+		if (possibleJoinCriteria)
+		{
 			criteria.addForeignKeys();
 		}
 	}
@@ -80,7 +86,8 @@ public class RelationshipPhase extends AbstractCompilerPhase {
 	private boolean hasPossibleJoinCriteria(
 		@Nonnull CriteriaExpressionContext criteriaExpressionContext,
 		@Nonnull AntlrClass targetType
-	) {
+	)
+	{
 		var listener = new PossibleJoinCriteriaListener(this.compilerState.getDomainModel(), targetType);
 		var parseTreeWalker = new ParseTreeWalker();
 		parseTreeWalker.walk(listener, criteriaExpressionContext);

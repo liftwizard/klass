@@ -32,19 +32,21 @@ import graphql.schema.SelectedField;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 
-public final class GraphQLDeepFetcher {
-
+public final class GraphQLDeepFetcher
+{
 	private static final Converter<String, String> UPPER_TO_LOWER_CAMEL = CaseFormat.UPPER_CAMEL.converterTo(
 		CaseFormat.LOWER_CAMEL
 	);
 
 	private DomainModel domainModel;
 
-	public DomainModel getDomainModel() {
+	public DomainModel getDomainModel()
+	{
 		return this.domainModel;
 	}
 
-	public void setDomainModel(DomainModel domainModel) {
+	public void setDomainModel(DomainModel domainModel)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 	}
 
@@ -53,9 +55,11 @@ public final class GraphQLDeepFetcher {
 		String className,
 		RelatedFinder<T> finderInstance,
 		DataFetchingFieldSelectionSet selectionSet
-	) {
+	)
+	{
 		Klass klass = this.domainModel.getClassByName(className);
-		for (SelectedField selectedField : selectionSet.getFields()) {
+		for (SelectedField selectedField : selectionSet.getFields())
+		{
 			this.deepFetchSelectedField(result, klass, finderInstance, selectedField);
 		}
 	}
@@ -65,24 +69,28 @@ public final class GraphQLDeepFetcher {
 		Klass klass,
 		RelatedFinder<T> finderInstance,
 		SelectedField selectedField
-	) {
+	)
+	{
 		Objects.requireNonNull(finderInstance);
 		Objects.requireNonNull(klass);
 
 		String qualifiedName = selectedField.getQualifiedName();
 		MutableList<String> fieldNamesNames = ArrayAdapter.adapt(qualifiedName.split("/"));
 		MutableList<String> navigationNames = fieldNamesNames.take(fieldNamesNames.size() - 1);
-		if (navigationNames.isEmpty()) {
+		if (navigationNames.isEmpty())
+		{
 			return;
 		}
 
 		RelatedFinder<T> currentFinder = finderInstance;
 		Klass currentClass = klass;
-		for (String navigationName : navigationNames) {
+		for (String navigationName : navigationNames)
+		{
 			Optional<AssociationEnd> maybeAssociationEnd = currentClass.findDeclaredAssociationEndByName(
 				navigationName
 			);
-			while (maybeAssociationEnd.isEmpty()) {
+			while (maybeAssociationEnd.isEmpty())
+			{
 				Klass superClass = currentClass.getSuperClass().get();
 				String superClassNavigationName = UPPER_TO_LOWER_CAMEL.convert(superClass.getName()) + "SuperClass";
 				currentClass = superClass;
@@ -96,7 +104,8 @@ public final class GraphQLDeepFetcher {
 			currentFinder = currentFinder.getRelationshipFinderByName(navigationName);
 			Objects.requireNonNull(currentFinder);
 		}
-		if (!(currentFinder instanceof Navigation)) {
+		if (!(currentFinder instanceof Navigation))
+		{
 			throw new IllegalStateException("Expected a navigation, but got: " + currentFinder);
 		}
 		var navigation = (Navigation<T>) currentFinder;

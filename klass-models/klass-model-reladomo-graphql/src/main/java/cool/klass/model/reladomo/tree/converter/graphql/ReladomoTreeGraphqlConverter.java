@@ -40,29 +40,33 @@ import org.eclipse.collections.api.factory.Stacks;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.stack.MutableStack;
 
-public final class ReladomoTreeGraphqlConverter {
-
+public final class ReladomoTreeGraphqlConverter
+{
 	public static final Converter<String, String> UPPER_TO_LOWER_CAMEL = CaseFormat.UPPER_CAMEL.converterTo(
 		CaseFormat.LOWER_CAMEL
 	);
 
 	private final DomainModel domainModel;
 
-	public ReladomoTreeGraphqlConverter(DomainModel domainModel) {
+	public ReladomoTreeGraphqlConverter(DomainModel domainModel)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 	}
 
-	public RootReladomoTreeNode convert(Klass klass, DataFetchingFieldSelectionSet selectionSet) {
+	public RootReladomoTreeNode convert(Klass klass, DataFetchingFieldSelectionSet selectionSet)
+	{
 		var result = new RootReladomoTreeNode("root", klass);
 
-		for (SelectedField selectedField : selectionSet.getImmediateFields()) {
+		for (SelectedField selectedField : selectionSet.getImmediateFields())
+		{
 			this.convertSelectedField(selectedField, result);
 		}
 
 		return result;
 	}
 
-	private void convertSelectedField(SelectedField selectedField, ReladomoTreeNode parentTreeNode) {
+	private void convertSelectedField(SelectedField selectedField, ReladomoTreeNode parentTreeNode)
+	{
 		String name = selectedField.getName();
 		List<String> objectTypeNames = selectedField.getObjectTypeNames();
 
@@ -74,13 +78,16 @@ public final class ReladomoTreeGraphqlConverter {
 		ReladomoTreeNode eachParentTreeNode = inheritancePath;
 		var eachClass = (Klass) eachParentTreeNode.getType();
 
-		if (childrenFields.isEmpty()) {
-			if (name.equals("__typename")) {
+		if (childrenFields.isEmpty())
+		{
+			if (name.equals("__typename"))
+			{
 				return;
 			}
 			DataTypeProperty dataTypeProperty = eachClass.getDataTypePropertyByName(name);
 
-			while (dataTypeProperty.getOwningClassifier() != eachClass && eachClass.getSuperClass().isPresent()) {
+			while (dataTypeProperty.getOwningClassifier() != eachClass && eachClass.getSuperClass().isPresent())
+			{
 				Klass superClass = eachClass.getSuperClass().get();
 				String superClassName = UPPER_TO_LOWER_CAMEL.convert(superClass.getName()) + "SuperClass";
 				var nextReladomoNode = new SuperClassReladomoTreeNode(superClassName, eachClass, superClass);
@@ -97,7 +104,8 @@ public final class ReladomoTreeGraphqlConverter {
 
 		AssociationEnd associationEnd = eachClass.getAssociationEndByName(name);
 
-		while (associationEnd.getOwningClassifier() != eachClass && eachClass.getSuperClass().isPresent()) {
+		while (associationEnd.getOwningClassifier() != eachClass && eachClass.getSuperClass().isPresent())
+		{
 			Klass superClass = eachClass.getSuperClass().get();
 			String superClassName = UPPER_TO_LOWER_CAMEL.convert(superClass.getName()) + "SuperClass";
 			var nextReladomoNode = new SuperClassReladomoTreeNode(superClassName, eachClass, superClass);
@@ -111,17 +119,20 @@ public final class ReladomoTreeGraphqlConverter {
 
 		ReladomoTreeNode reladomoTreeNode = eachParentTreeNode.computeChild(name, associationEndReladomoTreeNode);
 
-		for (SelectedField childSelectedField : childrenFields) {
+		for (SelectedField childSelectedField : childrenFields)
+		{
 			this.convertSelectedField(childSelectedField, reladomoTreeNode);
 		}
 	}
 
-	private Klass findCommonSuperClass(List<String> objectTypeNames) {
+	private Klass findCommonSuperClass(List<String> objectTypeNames)
+	{
 		ImmutableList<Klass> classes = Lists.immutable
 			.withAll(objectTypeNames)
 			.collect(this.domainModel::getClassByName);
 
-		if (classes.size() == 1) {
+		if (classes.size() == 1)
+		{
 			return classes.getOnly();
 		}
 
@@ -134,15 +145,19 @@ public final class ReladomoTreeGraphqlConverter {
 		return Objects.requireNonNull(result);
 	}
 
-	public static ReladomoTreeNode getInheritancePath(ReladomoTreeNode reladomoNode, Classifier end) {
+	public static ReladomoTreeNode getInheritancePath(ReladomoTreeNode reladomoNode, Classifier end)
+	{
 		ReladomoTreeNode eachReladomoNode = reladomoNode;
 		var start = (Classifier) reladomoNode.getType();
 
-		if (start.isStrictSubTypeOf(end)) {
+		if (start.isStrictSubTypeOf(end))
+		{
 			var eachKlass = (Klass) start;
-			while (eachKlass != end) {
+			while (eachKlass != end)
+			{
 				Klass superClass = eachKlass.getSuperClass().orElse(null);
-				if (superClass == null) {
+				if (superClass == null)
+				{
 					return eachReladomoNode;
 				}
 				String name = UPPER_TO_LOWER_CAMEL.convert(superClass.getName()) + "SuperClass";
@@ -153,17 +168,20 @@ public final class ReladomoTreeGraphqlConverter {
 			return eachReladomoNode;
 		}
 
-		if (start.isStrictSuperTypeOf(end)) {
+		if (start.isStrictSuperTypeOf(end))
+		{
 			MutableStack<Klass> stack = Stacks.mutable.empty();
 			var eachClassifier = (Klass) end;
-			while (eachClassifier != start) {
+			while (eachClassifier != start)
+			{
 				Klass superClass = eachClassifier.getSuperClass().get();
 				stack.push(eachClassifier);
 				eachClassifier = superClass;
 			}
 
 			var eachClassifier2 = (Klass) start;
-			while (stack.notEmpty()) {
+			while (stack.notEmpty())
+			{
 				Klass eachSubClass = stack.pop();
 				String name = UPPER_TO_LOWER_CAMEL.convert(eachSubClass.getName()) + "SubClass";
 				var nextReladomoNode = new SubClassReladomoTreeNode(name, eachClassifier2, eachSubClass);

@@ -32,8 +32,9 @@ import cool.klass.model.meta.grammar.KlassParser.IntegerLiteralContext;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public final class AntlrIntegerLiteralValue extends AbstractAntlrLiteralValue {
-
+public final class AntlrIntegerLiteralValue
+	extends AbstractAntlrLiteralValue
+{
 	private final long value;
 	private IntegerLiteralValueBuilder elementBuilder;
 
@@ -42,18 +43,23 @@ public final class AntlrIntegerLiteralValue extends AbstractAntlrLiteralValue {
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		long value,
 		@Nonnull IAntlrElement expressionValueOwner
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, expressionValueOwner);
 		this.value = value;
 	}
 
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {}
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+	}
 
 	@Nonnull
 	@Override
-	public IntegerLiteralValueBuilder build() {
-		if (this.elementBuilder != null) {
+	public IntegerLiteralValueBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.elementBuilder = new IntegerLiteralValueBuilder(
@@ -67,13 +73,15 @@ public final class AntlrIntegerLiteralValue extends AbstractAntlrLiteralValue {
 
 	@Nonnull
 	@Override
-	public IntegerLiteralValueBuilder getElementBuilder() {
+	public IntegerLiteralValueBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
 	@Nonnull
 	@Override
-	public ImmutableList<AntlrType> getPossibleTypes() {
+	public ImmutableList<AntlrType> getPossibleTypes()
+	{
 		return Lists.immutable.with(
 			AntlrPrimitiveType.INTEGER,
 			AntlrPrimitiveType.LONG,
@@ -83,7 +91,8 @@ public final class AntlrIntegerLiteralValue extends AbstractAntlrLiteralValue {
 	}
 
 	@Override
-	public void visit(AntlrExpressionValueVisitor visitor) {
+	public void visit(AntlrExpressionValueVisitor visitor)
+	{
 		visitor.visitIntegerLiteral(this);
 	}
 }

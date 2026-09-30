@@ -48,8 +48,8 @@ import org.eclipse.collections.api.block.function.Function;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class CompilationUnit {
-
+public final class CompilationUnit
+{
 	private static final Logger LOGGER = LoggerFactory.getLogger(CompilationUnit.class);
 
 	private static final Pattern NEWLINE_PATTERN = Pattern.compile("\\r?\\n");
@@ -80,7 +80,8 @@ public final class CompilationUnit {
 		@Nonnull String sourceCodeText,
 		@Nonnull BufferedTokenStream tokenStream,
 		@Nonnull ParserRuleContext parserRuleContext
-	) {
+	)
+	{
 		this.ordinal = ordinal;
 		this.macroElement = Objects.requireNonNull(macroElement);
 		this.sourceName = Objects.requireNonNull(sourceName);
@@ -88,38 +89,46 @@ public final class CompilationUnit {
 		this.tokenStream = Objects.requireNonNull(tokenStream);
 		this.parserContext = Objects.requireNonNull(parserRuleContext);
 
-		if (macroElement.isPresent() && !sourceName.contains("macro")) {
+		if (macroElement.isPresent() && !sourceName.contains("macro"))
+		{
 			throw new AssertionError(sourceName);
 		}
 	}
 
-	public int getOrdinal() {
+	public int getOrdinal()
+	{
 		return this.ordinal;
 	}
 
 	@Nonnull
-	public Optional<AntlrElement> getMacroElement() {
+	public Optional<AntlrElement> getMacroElement()
+	{
 		return this.macroElement;
 	}
 
 	@Nonnull
-	public ParserRuleContext getParserContext() {
+	public ParserRuleContext getParserContext()
+	{
 		return this.parserContext;
 	}
 
 	@Nonnull
-	public String getSourceName() {
+	public String getSourceName()
+	{
 		return this.sourceName;
 	}
 
 	@Nonnull
-	public String getFullPathSourceName() {
-		if (this.macroElement.isEmpty()) {
+	public String getFullPathSourceName()
+	{
+		if (this.macroElement.isEmpty())
+		{
 			List<String> split = Splitter.on('/').splitToList(this.sourceName);
 			return split.getLast();
 		}
 
-		String fullPathSourceName = this.macroElement.flatMap(AntlrElement::getCompilationUnit)
+		String fullPathSourceName = this.macroElement
+			.flatMap(AntlrElement::getCompilationUnit)
 			.map(CompilationUnit::getFullPathSourceName)
 			.orElseThrow();
 
@@ -135,17 +144,20 @@ public final class CompilationUnit {
 	}
 
 	@Nonnull
-	public String getSourceCodeText() {
+	public String getSourceCodeText()
+	{
 		return this.sourceCodeText;
 	}
 
 	@Nonnull
-	public BufferedTokenStream getTokenStream() {
+	public BufferedTokenStream getTokenStream()
+	{
 		return this.tokenStream;
 	}
 
 	@Nonnull
-	public static CompilationUnit createFromFile(int ordinal, @Nonnull File file) {
+	public static CompilationUnit createFromFile(int ordinal, @Nonnull File file)
+	{
 		String sourceCodeText = CompilationUnit.slurp(file);
 		String sourceName = file.getAbsolutePath();
 		return CompilationUnit.createFromText(ordinal, Optional.empty(), sourceName, sourceCodeText);
@@ -156,7 +168,8 @@ public final class CompilationUnit {
 		int ordinal,
 		@Nonnull String classpathLocation,
 		@Nonnull ClassLoader classLoader
-	) {
+	)
+	{
 		String sourceCodeText = CompilationUnit.slurp(classpathLocation, classLoader);
 		URL resource = classLoader.getResource(classpathLocation);
 		String file = resource.getFile();
@@ -165,7 +178,8 @@ public final class CompilationUnit {
 	}
 
 	@Nonnull
-	public static CompilationUnit createFromClasspathLocation(int ordinal, @Nonnull String classpathLocation) {
+	public static CompilationUnit createFromClasspathLocation(int ordinal, @Nonnull String classpathLocation)
+	{
 		return CompilationUnit.createFromClasspathLocation(
 			ordinal,
 			classpathLocation,
@@ -174,24 +188,31 @@ public final class CompilationUnit {
 	}
 
 	@Nonnull
-	private static String slurp(File file) {
-		try (Scanner scanner = new Scanner(file, StandardCharsets.UTF_8).useDelimiter("\\A")) {
+	private static String slurp(File file)
+	{
+		try (Scanner scanner = new Scanner(file, StandardCharsets.UTF_8).useDelimiter("\\A"))
+		{
 			return scanner.hasNext() ? scanner.next() : "";
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}
 
 	@Nonnull
-	private static String slurp(@Nonnull String classpathLocation, @Nonnull ClassLoader classLoader) {
+	private static String slurp(@Nonnull String classpathLocation, @Nonnull ClassLoader classLoader)
+	{
 		InputStream inputStream = classLoader.getResourceAsStream(classpathLocation);
 		Objects.requireNonNull(inputStream);
 		return CompilationUnit.slurp(inputStream);
 	}
 
 	@Nonnull
-	private static String slurp(@Nonnull InputStream inputStream) {
-		try (Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8).useDelimiter("\\A")) {
+	private static String slurp(@Nonnull InputStream inputStream)
+	{
+		try (Scanner scanner = new Scanner(inputStream, StandardCharsets.UTF_8).useDelimiter("\\A"))
+		{
 			return scanner.hasNext() ? scanner.next() : "";
 		}
 	}
@@ -202,7 +223,8 @@ public final class CompilationUnit {
 		@Nonnull Optional<AntlrElement> macroElement,
 		@Nonnull String sourceName,
 		@Nonnull String sourceCodeText
-	) {
+	)
+	{
 		return CompilationUnit.createFromText(
 			ordinal,
 			macroElement,
@@ -219,7 +241,8 @@ public final class CompilationUnit {
 		@Nonnull String sourceName,
 		@Nonnull String sourceCodeText,
 		@Nonnull Function<KlassParser, ? extends ParserRuleContext> parserRule
-	) {
+	)
+	{
 		String[] lines = NEWLINE_PATTERN.split(sourceCodeText);
 		ANTLRErrorListener errorListener = new ThrowingErrorListener(sourceName, lines);
 		CodePointCharStream charStream = CharStreams.fromString(sourceCodeText, sourceName);
@@ -231,14 +254,16 @@ public final class CompilationUnit {
 	}
 
 	@Nonnull
-	private static KlassLexer getKlassLexer(@Nonnull ANTLRErrorListener errorListener, CodePointCharStream charStream) {
+	private static KlassLexer getKlassLexer(@Nonnull ANTLRErrorListener errorListener, CodePointCharStream charStream)
+	{
 		var lexer = new KlassLexer(charStream);
 		lexer.addErrorListener(errorListener);
 		return lexer;
 	}
 
 	@Nonnull
-	private static KlassParser getParser(@Nonnull ANTLRErrorListener errorListener, CommonTokenStream tokenStream) {
+	private static KlassParser getParser(@Nonnull ANTLRErrorListener errorListener, CommonTokenStream tokenStream)
+	{
 		var parser = new KlassParser(tokenStream);
 		parser.removeErrorListeners();
 		parser.addErrorListener(errorListener);
@@ -252,7 +277,8 @@ public final class CompilationUnit {
 		@Nonnull AbstractCompilerPhase macroExpansionCompilerPhase,
 		@Nonnull String sourceCodeText,
 		@Nonnull Function<KlassParser, ? extends ParserRuleContext> parserRule
-	) {
+	)
+	{
 		String sourceName = macroExpansionCompilerPhase.getName() + " macro";
 		CompilationUnit result = CompilationUnit.createFromText(
 			ordinal,
@@ -266,27 +292,32 @@ public final class CompilationUnit {
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return this.sourceName;
 	}
 
-	public SourceCodeBuilderImpl build() {
-		if (this.sourceCodeBuilder == null) {
-			Optional<SourceCodeBuilderImpl> macroSourceCodeBuilder = this.macroElement.flatMap(
-				AntlrElement::getCompilationUnit
-			).map(CompilationUnit::build);
+	public SourceCodeBuilderImpl build()
+	{
+		if (this.sourceCodeBuilder == null)
+		{
+			Optional<SourceCodeBuilderImpl> macroSourceCodeBuilder = this.macroElement
+				.flatMap(AntlrElement::getCompilationUnit)
+				.map(CompilationUnit::build);
 
 			this.sourceCodeBuilder = this.getSourceCodeBuilder(macroSourceCodeBuilder);
 		}
 		return this.sourceCodeBuilder;
 	}
 
-	public void build2() {
+	public void build2()
+	{
 		Optional<ElementBuilder<?>> macroElementBuilder = this.macroElement.map(AntlrElement::getElementBuilder);
 		this.sourceCodeBuilder.setMacroElement(macroElementBuilder);
 	}
 
-	private SourceCodeBuilderImpl getSourceCodeBuilder(Optional<SourceCodeBuilderImpl> macroSourceCodeBuilder) {
+	private SourceCodeBuilderImpl getSourceCodeBuilder(Optional<SourceCodeBuilderImpl> macroSourceCodeBuilder)
+	{
 		return new SourceCodeBuilderImpl(
 			this.sourceName,
 			this.sourceCodeText,

@@ -35,8 +35,9 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
-public class GenerateGraphQLFragmentMojo extends AbstractGenerateMojo {
-
+public class GenerateGraphQLFragmentMojo
+	extends AbstractGenerateMojo
+{
 	@Parameter(
 		property = "outputDirectory",
 		defaultValue = "${project.build.directory}/generated-resources/graphql-fragment"
@@ -44,22 +45,27 @@ public class GenerateGraphQLFragmentMojo extends AbstractGenerateMojo {
 	private File outputDirectory;
 
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.CLASSPATH;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
-		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
-				DomainModel domainModel = this.getDomainModel();
+	public void execute()
+		throws MojoExecutionException
+	{
+		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () ->
+		{
+			DomainModel domainModel = this.getDomainModel();
 
-				var generator = new GraphQLFragmentGenerator(domainModel);
-				Path outputPath = this.outputDirectory.toPath();
-				generator.writeFiles(outputPath);
-				return null;
-			});
+			var generator = new GraphQLFragmentGenerator(domainModel);
+			Path outputPath = this.outputDirectory.toPath();
+			generator.writeFiles(outputPath);
+			return null;
+		});
 
-		if (wasGenerated) {
+		if (wasGenerated)
+		{
 			this.getLog().info("Generated GraphQL fragments in: " + this.outputDirectory.getPath());
 		}
 

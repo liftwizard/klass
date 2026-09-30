@@ -38,8 +38,8 @@ import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.api.stack.MutableStack;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
-public final class ReladomoProjectionConverter {
-
+public final class ReladomoProjectionConverter
+{
 	public static final Converter<String, String> UPPER_TO_LOWER_CAMEL = CaseFormat.UPPER_CAMEL.converterTo(
 		CaseFormat.LOWER_CAMEL
 	);
@@ -58,35 +58,39 @@ public final class ReladomoProjectionConverter {
 
 	private final int maxDepth;
 
-	public ReladomoProjectionConverter() {
+	public ReladomoProjectionConverter()
+	{
 		this(DEFAULT_MAX_DEPTH);
 	}
 
-	public ReladomoProjectionConverter(int maxDepth) {
+	public ReladomoProjectionConverter(int maxDepth)
+	{
 		this.maxDepth = maxDepth;
 	}
 
 	@Nonnull
-	public RootReladomoNode getRootReladomoNode(Classifier classifier, Projection projection) {
+	public RootReladomoNode getRootReladomoNode(Classifier classifier, Projection projection)
+	{
 		var projectionReladomoNode = new RootReladomoNode("root", classifier, projection);
 		this.projectionChildrenToReladomoTree(projectionReladomoNode, projection, 0);
 		this.rootNodesByProjection.put(projection, projectionReladomoNode);
 
-		this.projectionHoldersByProjectionReference.toImmutable().forEachKeyValue(
-				(eachProjectionReference, eachProjectionReferenceNode) -> {
-					RootReladomoNode rootReladomoNode = this.rootNodesByProjection.getIfAbsent(
-						eachProjectionReference.getProjection(),
-						() ->
-							this.getRootReladomoNode(
-								eachProjectionReference.getClassifier(),
-								eachProjectionReference.getProjection()
-							)
-					);
+		this.projectionHoldersByProjectionReference
+			.toImmutable()
+			.forEachKeyValue((eachProjectionReference, eachProjectionReferenceNode) ->
+			{
+				RootReladomoNode rootReladomoNode = this.rootNodesByProjection.getIfAbsent(
+					eachProjectionReference.getProjection(),
+					() ->
+						this.getRootReladomoNode(
+							eachProjectionReference.getClassifier(),
+							eachProjectionReference.getProjection()
+						)
+				);
 
-					eachProjectionReferenceNode.setProjection(rootReladomoNode);
-					this.projectionHoldersByProjectionReference.remove(eachProjectionReference);
-				}
-			);
+				eachProjectionReferenceNode.setProjection(rootReladomoNode);
+				this.projectionHoldersByProjectionReference.remove(eachProjectionReference);
+			});
 
 		return projectionReladomoNode;
 	}
@@ -95,11 +99,14 @@ public final class ReladomoProjectionConverter {
 		ProjectionElementReladomoNode reladomoNode,
 		ProjectionParent projectionParent,
 		int depth
-	) {
-		if (depth >= this.maxDepth) {
+	)
+	{
+		if (depth >= this.maxDepth)
+		{
 			return;
 		}
-		for (ProjectionChild projectionChild : projectionParent.getChildren()) {
+		for (ProjectionChild projectionChild : projectionParent.getChildren())
+		{
 			this.projectionElementToReladomoTree(reladomoNode, projectionChild, depth);
 		}
 	}
@@ -108,17 +115,20 @@ public final class ReladomoProjectionConverter {
 		ProjectionElementReladomoNode projectionReladomoNode,
 		ProjectionChild projectionChild,
 		int depth
-	) {
+	)
+	{
 		Property property = projectionChild.getProperty();
 		String name = property.getName();
 
 		ProjectionElementReladomoNode reladomoNode = projectionReladomoNode;
 		reladomoNode = getInheritancePath(reladomoNode, property.getOwningClassifier());
-		if (reladomoNode == null) {
+		if (reladomoNode == null)
+		{
 			return;
 		}
 
-		if (projectionChild instanceof ProjectionProjectionReference projectionProjectionReference) {
+		if (projectionChild instanceof ProjectionProjectionReference projectionProjectionReference)
+		{
 			var childNode = new ProjectionProjectionReferenceReladomoNode(name, projectionProjectionReference);
 			reladomoNode = reladomoNode.computeChild(name, childNode);
 			reladomoNode = getInheritancePath(
@@ -126,17 +136,23 @@ public final class ReladomoProjectionConverter {
 				projectionProjectionReference.getProjection().getClassifier()
 			);
 			this.projectionHoldersByProjectionReference.put(projectionProjectionReference, reladomoNode);
-		} else if (projectionChild instanceof ProjectionReferenceProperty projectionReferenceProperty) {
+		}
+		else if (projectionChild instanceof ProjectionReferenceProperty projectionReferenceProperty)
+		{
 			var childNode = new ProjectionReferencePropertyReladomoNode(name, projectionReferenceProperty);
 			reladomoNode = reladomoNode.computeChild(name, childNode);
 			this.projectionChildrenToReladomoTree(reladomoNode, projectionReferenceProperty, depth + 1);
-		} else if (projectionChild instanceof ProjectionDataTypeProperty projectionDataTypeProperty) {
+		}
+		else if (projectionChild instanceof ProjectionDataTypeProperty projectionDataTypeProperty)
+		{
 			var childNode = new ProjectionDataTypePropertyReladomoNode(name, projectionDataTypeProperty);
 			reladomoNode = reladomoNode.computeChild(name, childNode);
-		} else {
+		}
+		else
+		{
 			throw new AssertionError(
 				"Expected ProjectionProjectionReference or ProjectionReferenceProperty but got "
-				+ projectionChild.getClass().getCanonicalName()
+					+ projectionChild.getClass().getCanonicalName()
 			);
 		}
 	}
@@ -144,15 +160,19 @@ public final class ReladomoProjectionConverter {
 	public static ProjectionElementReladomoNode getInheritancePath(
 		ProjectionElementReladomoNode reladomoNode,
 		Classifier end
-	) {
+	)
+	{
 		ProjectionElementReladomoNode eachReladomoNode = reladomoNode;
 		var start = (Classifier) reladomoNode.getType();
 
-		if (start.isStrictSubTypeOf(end)) {
+		if (start.isStrictSubTypeOf(end))
+		{
 			var eachKlass = (Klass) start;
-			while (eachKlass != end) {
+			while (eachKlass != end)
+			{
 				Klass superClass = eachKlass.getSuperClass().orElse(null);
-				if (superClass == null) {
+				if (superClass == null)
+				{
 					return eachReladomoNode;
 				}
 				String name = UPPER_TO_LOWER_CAMEL.convert(superClass.getName()) + "SuperClass";
@@ -163,17 +183,20 @@ public final class ReladomoProjectionConverter {
 			return eachReladomoNode;
 		}
 
-		if (start.isStrictSuperTypeOf(end)) {
+		if (start.isStrictSuperTypeOf(end))
+		{
 			MutableStack<Klass> stack = Stacks.mutable.empty();
 			var eachClassifier = (Klass) end;
-			while (eachClassifier != start) {
+			while (eachClassifier != start)
+			{
 				Klass superClass = eachClassifier.getSuperClass().get();
 				stack.push(eachClassifier);
 				eachClassifier = superClass;
 			}
 
 			var eachClassifier2 = (Klass) start;
-			while (stack.notEmpty()) {
+			while (stack.notEmpty())
+			{
 				Klass eachSubClass = stack.pop();
 				String name = UPPER_TO_LOWER_CAMEL.convert(eachSubClass.getName()) + "SubClass";
 				var nextReladomoNode = new SubClassReladomoNode(name, eachClassifier2, eachSubClass);
@@ -184,7 +207,8 @@ public final class ReladomoProjectionConverter {
 			return eachReladomoNode;
 		}
 
-		if (start == end) {
+		if (start == end)
+		{
 			return eachReladomoNode;
 		}
 
