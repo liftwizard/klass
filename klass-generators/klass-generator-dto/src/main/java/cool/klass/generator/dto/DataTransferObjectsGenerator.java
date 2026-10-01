@@ -128,8 +128,7 @@ public class DataTransferObjectsGenerator {
 			.asLazy()
 			.reject(DataTypeProperty::isKey)
 			.reject(DataTypeProperty::isTemporal)
-			.select(DataTypeProperty::isRequired)
-			.notEmpty();
+			.anySatisfy(DataTypeProperty::isRequired);
 		String constraintImports = hasConstraints ? "import javax.validation.constraints.*;\n" : "";
 
 		String superClassDeclaration = klass.getSuperClass().isPresent()
