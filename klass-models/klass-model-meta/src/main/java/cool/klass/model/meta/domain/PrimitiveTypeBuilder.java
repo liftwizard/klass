@@ -26,8 +26,10 @@ import cool.klass.model.meta.domain.api.DataType.DataTypeGetter;
 import cool.klass.model.meta.domain.api.PrimitiveType;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public class PrimitiveTypeBuilder extends ElementBuilder<PrimitiveType> implements DataTypeGetter {
-
+public class PrimitiveTypeBuilder
+	extends ElementBuilder<PrimitiveType>
+	implements DataTypeGetter
+{
 	@Nonnull
 	private final PrimitiveType primitiveType;
 
@@ -35,25 +37,29 @@ public class PrimitiveTypeBuilder extends ElementBuilder<PrimitiveType> implemen
 		@Nonnull ParserRuleContext elementContext,
 		@Nonnull Optional<ElementBuilder<?>> macroElement,
 		@Nonnull PrimitiveType primitiveType
-	) {
+	)
+	{
 		super(elementContext, macroElement, null);
 		this.primitiveType = Objects.requireNonNull(primitiveType);
 	}
 
 	@Nonnull
 	@Override
-	public PrimitiveType getType() {
+	public PrimitiveType getType()
+	{
 		return this.primitiveType;
 	}
 
 	@Nonnull
 	@Override
-	protected PrimitiveType buildUnsafe() {
+	protected PrimitiveType buildUnsafe()
+	{
 		return this.primitiveType;
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "PrimitiveTypeBuilder{" + "primitiveType=" + this.primitiveType + "}";
 	}
 }

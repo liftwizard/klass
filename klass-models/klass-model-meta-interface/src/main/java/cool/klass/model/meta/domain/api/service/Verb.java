@@ -16,7 +16,8 @@
 
 package cool.klass.model.meta.domain.api.service;
 
-public enum Verb {
+public enum Verb
+{
 	GET,
 	POST,
 	PUT,

@@ -40,8 +40,9 @@ import org.eclipse.collections.api.factory.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ReladomoOperationDataFetcher<T> implements DataFetcher<List<T>> {
-
+public class ReladomoOperationDataFetcher<T>
+	implements DataFetcher<List<T>>
+{
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReladomoOperationDataFetcher.class);
 
 	private final DomainModel domainModel;
@@ -54,7 +55,8 @@ public class ReladomoOperationDataFetcher<T> implements DataFetcher<List<T>> {
 		ReladomoDataStore dataStore,
 		String className,
 		RelatedFinder<?> relatedFinder
-	) {
+	)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 		this.dataStore = Objects.requireNonNull(dataStore);
 		this.klass = this.domainModel.getClassByName(className);
@@ -65,7 +67,8 @@ public class ReladomoOperationDataFetcher<T> implements DataFetcher<List<T>> {
 	@Metered
 	@ExceptionMetered
 	@Override
-	public List<T> get(DataFetchingEnvironment environment) {
+	public List<T> get(DataFetchingEnvironment environment)
+	{
 		Map<String, Object> arguments = environment.getArguments();
 		var inputOperation = (String) arguments.get("operation");
 		Operation operation = this.compileOperation(this.finder, inputOperation);
@@ -86,11 +89,15 @@ public class ReladomoOperationDataFetcher<T> implements DataFetcher<List<T>> {
 		return result;
 	}
 
-	private Operation compileOperation(RelatedFinder<?> relatedFinder, String inputOperation) {
-		try {
+	private Operation compileOperation(RelatedFinder<?> relatedFinder, String inputOperation)
+	{
+		try
+		{
 			var compiler = new ReladomoOperationCompiler();
 			return compiler.compile(relatedFinder, inputOperation);
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e)
+		{
 			throw new LiftwizardGraphQLException(e.getMessage(), Lists.immutable.with(inputOperation), e);
 		}
 	}

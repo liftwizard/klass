@@ -35,8 +35,9 @@ import io.liftwizard.dropwizard.configuration.uuid.seed.SeedUUIDSupplierFactory;
 
 @JsonTypeName("reladomo")
 @AutoService(DataStoreFactory.class)
-public class ReladomoDataStoreFactory implements DataStoreFactory {
-
+public class ReladomoDataStoreFactory
+	implements DataStoreFactory
+{
 	private @NotNull @Valid UUIDSupplierFactory uuidFactory = new SeedUUIDSupplierFactory();
 	private int retryCount = 1;
 
@@ -45,28 +46,34 @@ public class ReladomoDataStoreFactory implements DataStoreFactory {
 	@Nonnull
 	@Override
 	@JsonProperty("uuid")
-	public UUIDSupplierFactory getUuidFactory() {
+	public UUIDSupplierFactory getUuidFactory()
+	{
 		return this.uuidFactory;
 	}
 
 	@JsonProperty("uuid")
-	public void setUuid(@Nonnull UUIDSupplierFactory uuidFactory) {
+	public void setUuid(@Nonnull UUIDSupplierFactory uuidFactory)
+	{
 		this.uuidFactory = uuidFactory;
 	}
 
 	@JsonProperty
-	public int getRetryCount() {
+	public int getRetryCount()
+	{
 		return this.retryCount;
 	}
 
 	@JsonProperty
-	public void setRetryCount(int retryCount) {
+	public void setRetryCount(int retryCount)
+	{
 		this.retryCount = retryCount;
 	}
 
 	@Override
-	public DataStore createDataStore(DomainModel domainModel) {
-		if (this.dataStore != null) {
+	public DataStore createDataStore(DomainModel domainModel)
+	{
+		if (this.dataStore != null)
+		{
 			return this.dataStore;
 		}
 

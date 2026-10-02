@@ -33,36 +33,38 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class ColorSchemeValidationTest {
-
+class ColorSchemeValidationTest
+{
 	private final Validator validator = Validators.newValidator();
 
 	@Test
-	void validScheme() {
+	void validScheme()
+	{
 		var json = """
-			{
-			  "name": "test",
-			  "description": "Valid test color scheme",
-			  "rules": [
-			    {
-			      "name": "background",
-			      "style": {
-			        "background": "BLACK"
-			      }
-			    },
-			    {
-			      "name": "keyword",
-			      "style": {
-			        "foreground": "MAGENTA"
-			      }
-			    }
-			  ]
-			}
-			""";
+		{
+		  "name": "test",
+		  "description": "Valid test color scheme",
+		  "rules": [
+		    {
+		      "name": "background",
+		      "style": {
+		        "background": "BLACK"
+		      }
+		    },
+		    {
+		      "name": "keyword",
+		      "style": {
+		        "foreground": "MAGENTA"
+		      }
+		    }
+		  ]
+		}
+		""";
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -72,25 +74,27 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void missingName() {
+	void missingName()
+	{
 		var json = """
-			{
-			  "name": "",
-			  "description": "Invalid test color scheme",
-			  "rules": [
-			    {
-			      "name": "background",
-			      "style": {
-			        "background": "BLACK"
-			      }
-			    }
-			  ]
-			}
-			""";
+		{
+		  "name": "",
+		  "description": "Invalid test color scheme",
+		  "rules": [
+		    {
+		      "name": "background",
+		      "style": {
+		        "background": "BLACK"
+		      }
+		    }
+		  ]
+		}
+		""";
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -102,25 +106,27 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void missingDescription() {
+	void missingDescription()
+	{
 		var json = """
-			{
-			  "name": "test",
-			  "description": null,
-			  "rules": [
-			    {
-			      "name": "background",
-			      "style": {
-			        "background": "BLACK"
-			      }
-			    }
-			  ]
-			}
-			""";
+		{
+		  "name": "test",
+		  "description": null,
+		  "rules": [
+		    {
+		      "name": "background",
+		      "style": {
+		        "background": "BLACK"
+		      }
+		    }
+		  ]
+		}
+		""";
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -132,18 +138,20 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void emptyRules() {
+	void emptyRules()
+	{
 		var json = """
-			{
-			  "name": "test",
-			  "description": "Test scheme",
-			  "rules": []
-			}
-			""";
+		{
+		  "name": "test",
+		  "description": "Test scheme",
+		  "rules": []
+		}
+		""";
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -158,25 +166,27 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void noBackgroundRule() {
+	void noBackgroundRule()
+	{
 		var json = """
-			{
-			  "name": "test",
-			  "description": "Test scheme",
-			  "rules": [
-			    {
-			      "name": "keyword",
-			      "style": {
-			        "foreground": "MAGENTA"
-			      }
-			    }
-			  ]
-			}
-			""";
+		{
+		  "name": "test",
+		  "description": "Test scheme",
+		  "rules": [
+		    {
+		      "name": "keyword",
+		      "style": {
+		        "foreground": "MAGENTA"
+		      }
+		    }
+		  ]
+		}
+		""";
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -188,31 +198,33 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void invalidColorName() {
+	void invalidColorName()
+	{
 		var json = """
-			{
-			  "name": "test",
-			  "description": "Test scheme",
-			  "rules": [
-			    {
-			      "name": "background",
-			      "style": {
-			        "background": "BLACK"
-			      }
-			    },
-			    {
-			      "name": "keyword",
-			      "style": {
-			        "foreground": "INVALID_COLOR"
-			      }
-			    }
-			  ]
-			}
-			""";
+		{
+		  "name": "test",
+		  "description": "Test scheme",
+		  "rules": [
+		    {
+		      "name": "background",
+		      "style": {
+		        "background": "BLACK"
+		      }
+		    },
+		    {
+		      "name": "keyword",
+		      "style": {
+		        "foreground": "INVALID_COLOR"
+		      }
+		    }
+		  ]
+		}
+		""";
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -230,7 +242,8 @@ class ColorSchemeValidationTest {
 		assertThat(ruleViolations).as("Rule itself should be valid since name is present").isEmpty();
 
 		// Style settings should have the validation error
-		List<String> actualStyleViolationMessages = this.validator.validate(definition.rules().get(1).style())
+		List<String> actualStyleViolationMessages = this.validator
+			.validate(definition.rules().get(1).style())
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -242,31 +255,33 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void invalidHexColor() {
+	void invalidHexColor()
+	{
 		var json = """
-			{
-			  "name": "test",
-			  "description": "Test scheme",
-			  "rules": [
-			    {
-			      "name": "background",
-			      "style": {
-			        "background": "BLACK"
-			      }
-			    },
-			    {
-			      "name": "keyword",
-			      "style": {
-			        "foreground": "#XYZ"
-			      }
-			    }
-			  ]
-			}
-			""";
+		{
+		  "name": "test",
+		  "description": "Test scheme",
+		  "rules": [
+		    {
+		      "name": "background",
+		      "style": {
+		        "background": "BLACK"
+		      }
+		    },
+		    {
+		      "name": "keyword",
+		      "style": {
+		        "foreground": "#XYZ"
+		      }
+		    }
+		  ]
+		}
+		""";
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -278,31 +293,33 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void invalidNumericColor() {
+	void invalidNumericColor()
+	{
 		var json = """
-			{
-			  "name": "test",
-			  "description": "Test scheme",
-			  "rules": [
-			    {
-			      "name": "background",
-			      "style": {
-			        "background": "BLACK"
-			      }
-			    },
-			    {
-			      "name": "keyword",
-			      "style": {
-			        "foreground": 300
-			      }
-			    }
-			  ]
-			}
-			""";
+		{
+		  "name": "test",
+		  "description": "Test scheme",
+		  "rules": [
+		    {
+		      "name": "background",
+		      "style": {
+		        "background": "BLACK"
+		      }
+		    },
+		    {
+		      "name": "keyword",
+		      "style": {
+		        "foreground": 300
+		      }
+		    }
+		  ]
+		}
+		""";
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -314,31 +331,33 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void invalidRuleName() {
+	void invalidRuleName()
+	{
 		var json = """
-			{
-			  "name": "test",
-			  "description": "Test scheme with invalid rule name",
-			  "rules": [
-			    {
-			      "name": "background",
-			      "style": {
-			        "background": "BLACK"
-			      }
-			    },
-			    {
-			      "name": "nonexistent_syntax_node",
-			      "style": {
-			        "foreground": "RED"
-			      }
-			    }
-			  ]
-			}
-			""";
+		{
+		  "name": "test",
+		  "description": "Test scheme with invalid rule name",
+		  "rules": [
+		    {
+		      "name": "background",
+		      "style": {
+		        "background": "BLACK"
+		      }
+		    },
+		    {
+		      "name": "nonexistent_syntax_node",
+		      "style": {
+		        "foreground": "RED"
+		      }
+		    }
+		  ]
+		}
+		""";
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -350,37 +369,39 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void multipleInvalidRuleNames() {
+	void multipleInvalidRuleNames()
+	{
 		var json = """
-			{
-			  "name": "test",
-			  "description": "Test scheme with multiple invalid rule names",
-			  "rules": [
-			    {
-			      "name": "background",
-			      "style": {
-			        "background": "BLACK"
-			      }
-			    },
-			    {
-			      "name": "invalid_name_1",
-			      "style": {
-			        "foreground": "RED"
-			      }
-			    },
-			    {
-			      "name": "invalid_name_2",
-			      "style": {
-			        "foreground": "GREEN"
-			      }
-			    }
-			  ]
-			}
-			""";
+		{
+		  "name": "test",
+		  "description": "Test scheme with multiple invalid rule names",
+		  "rules": [
+		    {
+		      "name": "background",
+		      "style": {
+		        "background": "BLACK"
+		      }
+		    },
+		    {
+		      "name": "invalid_name_1",
+		      "style": {
+		        "foreground": "RED"
+		      }
+		    },
+		    {
+		      "name": "invalid_name_2",
+		      "style": {
+		        "foreground": "GREEN"
+		      }
+		    }
+		  ]
+		}
+		""";
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -392,21 +413,22 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void invalidJson() {
+	void invalidJson()
+	{
 		var json = """
-			{
-			  "name": "",
-			  "description": null,
-			  "rules": [
-			    {
-			      "t": "keyword",
-			      "style": {
-			        "foreground": "INVALID_COLOR"
-			      }
-			    }
-			  ]
-			}
-			""";
+		{
+		  "name": "",
+		  "description": null,
+		  "rules": [
+		    {
+		      "t": "keyword",
+		      "style": {
+		        "foreground": "INVALID_COLOR"
+		      }
+		    }
+		  ]
+		}
+		""";
 
 		assertThatThrownBy(() -> this.parseAndValidate(json))
 			.as("Should throw RuntimeException for invalid JSON")
@@ -417,11 +439,15 @@ class ColorSchemeValidationTest {
 			.hasMessageContaining("Unrecognized field \"t\"");
 	}
 
-	private ColorSchemeDefinition parseAndValidate(String json) {
-		try {
+	private ColorSchemeDefinition parseAndValidate(String json)
+	{
+		try
+		{
 			ObjectMapper objectMapper = ObjectMapperConfig.configure(new ObjectMapper());
 			return objectMapper.readValue(json, ColorSchemeDefinition.class);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			throw new RuntimeException("Failed to parse JSON", e);
 		}
 	}

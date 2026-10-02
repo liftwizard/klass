@@ -23,11 +23,13 @@ import javax.ws.rs.core.Response.Status;
 
 import org.junit.jupiter.api.Test;
 
-class MetaModelResourceTest extends AbstractCoverageTest {
-
+class MetaModelResourceTest
+	extends AbstractCoverageTest
+{
 	// PackageableElement tests
 	@Test
-	void getPackageableElements() {
+	void getPackageableElements()
+	{
 		Client client = this.getClient("getPackageableElements");
 
 		Response response = client
@@ -40,7 +42,8 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 	}
 
 	@Test
-	void getPackageableElementByName() {
+	void getPackageableElementByName()
+	{
 		Client client = this.getClient("getPackageableElementByName");
 
 		Response response = client
@@ -55,7 +58,8 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 
 	// Class tests
 	@Test
-	void getClasses() {
+	void getClasses()
+	{
 		Client client = this.getClient("getClasses");
 
 		Response response = client
@@ -68,7 +72,8 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 	}
 
 	@Test
-	void getClassByName() {
+	void getClassByName()
+	{
 		Client client = this.getClient("getClassByName");
 
 		Response response = client
@@ -83,7 +88,8 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 
 	// Enumeration tests
 	@Test
-	void getEnumerations() {
+	void getEnumerations()
+	{
 		Client client = this.getClient("getEnumerations");
 
 		Response response = client
@@ -96,7 +102,8 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 	}
 
 	@Test
-	void getEnumerationByName() {
+	void getEnumerationByName()
+	{
 		Client client = this.getClient("getEnumerationByName");
 
 		Response response = client
@@ -111,7 +118,8 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 
 	// Association tests
 	@Test
-	void getAssociations() {
+	void getAssociations()
+	{
 		Client client = this.getClient("getAssociations");
 
 		Response response = client
@@ -124,7 +132,8 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 	}
 
 	@Test
-	void getAssociationByName() {
+	void getAssociationByName()
+	{
 		Client client = this.getClient("getAssociationByName");
 
 		Response response = client
@@ -139,7 +148,8 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 
 	// Classifier tests
 	@Test
-	void getClassifiers() {
+	void getClassifiers()
+	{
 		Client client = this.getClient("getClassifiers");
 
 		Response response = client
@@ -152,7 +162,8 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 	}
 
 	@Test
-	void getClassifierByName() {
+	void getClassifierByName()
+	{
 		Client client = this.getClient("getClassifierByName");
 
 		Response response = client
@@ -167,7 +178,8 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 
 	// Interface tests
 	@Test
-	void getInterfaces() {
+	void getInterfaces()
+	{
 		Client client = this.getClient("getInterfaces");
 
 		Response response = client
@@ -180,7 +192,8 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 	}
 
 	@Test
-	void getInterfaceByName() {
+	void getInterfaceByName()
+	{
 		Client client = this.getClient("getInterfaceByName");
 
 		Response response = client
@@ -195,7 +208,8 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 
 	// Projection tests
 	@Test
-	void getProjections() {
+	void getProjections()
+	{
 		Client client = this.getClient("getProjections");
 
 		Response response = client
@@ -208,7 +222,8 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 	}
 
 	@Test
-	void getProjectionByName() {
+	void getProjectionByName()
+	{
 		Client client = this.getClient("getProjectionByName");
 
 		Response response = client
@@ -223,7 +238,8 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 
 	// ServiceGroup tests
 	@Test
-	void getServiceGroups() {
+	void getServiceGroups()
+	{
 		Client client = this.getClient("getServiceGroups");
 
 		Response response = client
@@ -236,7 +252,8 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 	}
 
 	@Test
-	void getServiceGroupByName() {
+	void getServiceGroupByName()
+	{
 		Client client = this.getClient("getServiceGroupByName");
 
 		Response response = client

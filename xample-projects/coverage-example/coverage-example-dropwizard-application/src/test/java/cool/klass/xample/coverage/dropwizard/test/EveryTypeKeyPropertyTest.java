@@ -24,15 +24,18 @@ import javax.ws.rs.core.Response.Status;
 import io.liftwizard.junit.extension.match.FileSlurper;
 import org.junit.jupiter.api.Test;
 
-class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
-
+class EveryTypeKeyPropertyTest
+	extends AbstractCoverageTest
+{
 	@Test
-	void get() {
+	void get()
+	{
 		this.assertUrlReturns("get", "everyTypeKeyProperty");
 	}
 
 	@Test
-	void postSingle() {
+	void postSingle()
+	{
 		Client client = this.getClient("postSingle");
 		String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".postSingle.json5", this.getClass());
 
@@ -47,7 +50,8 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
 	}
 
 	@Test
-	void postSingleWithProjection() {
+	void postSingleWithProjection()
+	{
 		Client client = this.getClient("postSingleWithProjection");
 		String json = FileSlurper.slurp(
 			this.getClass().getSimpleName() + ".postSingleWithProjection.json5",
@@ -65,7 +69,8 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
 	}
 
 	@Test
-	void postMultiple() {
+	void postMultiple()
+	{
 		Client client = this.getClient("postMultiple");
 		String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".postMultiple.json5", this.getClass());
 
@@ -80,7 +85,8 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
 	}
 
 	@Test
-	void postMultipleWithProjection() {
+	void postMultipleWithProjection()
+	{
 		Client client = this.getClient("postMultipleWithProjection");
 		String json = FileSlurper.slurp(
 			this.getClass().getSimpleName() + ".postMultipleWithProjection.json5",
@@ -98,36 +104,33 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
 	}
 
 	@Test
-	void put() {
+	void put()
+	{
 		Client client = this.getClient("put");
 
-		{
-			Response response = client
-				.target(
-					"http://localhost:{port}/api/everyTypeKeyProperty/EveryTypeKeyProperty keyString 1 ☝/1/1/1.0123456789/1.0123457/true/1999-12-31T23:59:00Z/1999-12-31"
-				)
-				.resolveTemplate("port", this.appExtension.getLocalPort())
-				.request()
-				.get();
+		Response originalResponse = client
+			.target(
+				"http://localhost:{port}/api/everyTypeKeyProperty/EveryTypeKeyProperty keyString 1 ☝/1/1/1.0123456789/1.0123457/true/1999-12-31T23:59:00Z/1999-12-31"
+			)
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.get();
 
-			this.assertResponse("put1", Status.OK, response);
-		}
+		this.assertResponse("put1", Status.OK, originalResponse);
 
-		{
-			String jsonName = this.getClass().getSimpleName() + ".put.json5";
-			String json = FileSlurper.slurp(jsonName, this.getClass());
+		String jsonName = this.getClass().getSimpleName() + ".put.json5";
+		String json = FileSlurper.slurp(jsonName, this.getClass());
 
-			Response response = client
-				.target(
-					"http://localhost:{port}/api/everyTypeKeyProperty/EveryTypeKeyProperty keyString 1 ☝/1/1/1.0123456789/1.0123457/true/1999-12-31T23:59:00Z/1999-12-31"
-				)
-				.resolveTemplate("port", this.appExtension.getLocalPort())
-				.request()
-				.header("Authorization", "Impersonation User userId 1")
-				.put(Entity.json(json));
+		Response updateResponse = client
+			.target(
+				"http://localhost:{port}/api/everyTypeKeyProperty/EveryTypeKeyProperty keyString 1 ☝/1/1/1.0123456789/1.0123457/true/1999-12-31T23:59:00Z/1999-12-31"
+			)
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.header("Authorization", "Impersonation User userId 1")
+			.put(Entity.json(json));
 
-			this.assertEmptyResponse(Status.NO_CONTENT, response);
-		}
+		this.assertEmptyResponse(Status.NO_CONTENT, updateResponse);
 
 		Response response = client
 			.target(

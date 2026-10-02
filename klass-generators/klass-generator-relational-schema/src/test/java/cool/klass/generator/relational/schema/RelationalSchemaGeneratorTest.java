@@ -33,8 +33,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public class RelationalSchemaGeneratorTest {
-
+public class RelationalSchemaGeneratorTest
+{
 	public static final String FULLY_QUALIFIED_PACKAGE = "cool.klass.generator.relational.schema";
 
 	private static final Converter<String, String> CONVERTER = CaseFormat.UPPER_CAMEL.converterTo(
@@ -45,7 +45,8 @@ public class RelationalSchemaGeneratorTest {
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
 	@Test
-	void smokeTest() {
+	void smokeTest()
+	{
 		ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
 
 		var domainModelCompilerLoader = new DomainModelCompilerLoader(
@@ -58,7 +59,8 @@ public class RelationalSchemaGeneratorTest {
 
 		DomainModelWithSourceCode domainModel = domainModelCompilerLoader.load();
 
-		for (Klass klass : domainModel.getClasses()) {
+		for (Klass klass : domainModel.getClasses())
+		{
 			String tableName = CONVERTER.convert(klass.getName());
 
 			String ddlSourceCode = DdlGenerator.getDdl(klass);

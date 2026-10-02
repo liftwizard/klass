@@ -26,7 +26,8 @@ import cool.klass.model.meta.domain.api.value.literal.NullLiteral;
 import cool.klass.model.meta.domain.api.value.literal.StringLiteralValue;
 import cool.klass.model.meta.domain.api.value.literal.UserLiteral;
 
-public interface ExpressionValueVisitor {
+public interface ExpressionValueVisitor
+{
 	void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue);
 
 	void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue);

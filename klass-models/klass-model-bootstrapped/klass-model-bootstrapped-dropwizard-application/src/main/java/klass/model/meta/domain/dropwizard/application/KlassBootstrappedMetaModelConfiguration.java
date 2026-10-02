@@ -28,8 +28,8 @@ import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactoryPr
 
 public class KlassBootstrappedMetaModelConfiguration
 	extends AbstractKlassConfiguration
-	implements SinglePageRedirectFilterFactoryProvider, GraphQLFactoryProvider {
-
+	implements SinglePageRedirectFilterFactoryProvider, GraphQLFactoryProvider
+{
 	@Nonnull
 	private @Valid SinglePageRedirectFilterFactory singlePageRedirectFilterFactory =
 		new SinglePageRedirectFilterFactory();
@@ -39,24 +39,28 @@ public class KlassBootstrappedMetaModelConfiguration
 
 	@Override
 	@JsonProperty("singlePageRedirectFilter")
-	public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory() {
+	public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory()
+	{
 		return this.singlePageRedirectFilterFactory;
 	}
 
 	@JsonProperty("singlePageRedirectFilter")
-	public void setSinglePageRedirectFilterFactory(SinglePageRedirectFilterFactory singlePageRedirectFilterFactory) {
+	public void setSinglePageRedirectFilterFactory(SinglePageRedirectFilterFactory singlePageRedirectFilterFactory)
+	{
 		this.singlePageRedirectFilterFactory = singlePageRedirectFilterFactory;
 	}
 
 	@Override
 	@Nonnull
 	@JsonProperty("graphQL")
-	public GraphQLFactory getGraphQLFactory() {
+	public GraphQLFactory getGraphQLFactory()
+	{
 		return this.graphQLFactory;
 	}
 
 	@JsonProperty("graphQL")
-	public void setGraphQLFactory(@Nonnull GraphQLFactory factory) {
+	public void setGraphQLFactory(@Nonnull GraphQLFactory factory)
+	{
 		this.graphQLFactory = factory;
 	}
 }

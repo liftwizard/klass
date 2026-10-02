@@ -22,7 +22,9 @@ import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.source.KlassWithSourceCode;
 import cool.klass.model.meta.grammar.KlassParser.AssociationEndContext;
 
-public interface AssociationEndWithSourceCode extends AssociationEnd, ReferencePropertyWithSourceCode {
+public interface AssociationEndWithSourceCode
+	extends AssociationEnd, ReferencePropertyWithSourceCode
+{
 	@Override
 	AssociationEndContext getElementContext();
 

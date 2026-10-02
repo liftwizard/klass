@@ -25,28 +25,34 @@ import cool.klass.model.meta.domain.api.Classifier;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.property.Property;
 
-public class GraphQLReladomoFinderGenerator extends AbstractPerPackageGenerator {
-
-	public GraphQLReladomoFinderGenerator(@Nonnull DomainModel domainModel) {
+public class GraphQLReladomoFinderGenerator
+	extends AbstractPerPackageGenerator
+{
+	public GraphQLReladomoFinderGenerator(@Nonnull DomainModel domainModel)
+	{
 		super(domainModel);
 	}
 
 	@Nonnull
 	@Override
-	protected Path getPluginRelativePath(Path path) {
+	protected Path getPluginRelativePath(Path path)
+	{
 		return path.resolve("graphql").resolve("schema").resolve("finder");
 	}
 
 	@Nonnull
 	@Override
-	protected String getFileName() {
+	protected String getFileName()
+	{
 		return "GraphQLFinders.graphqls";
 	}
 
 	@Nonnull
 	@Override
-	protected String getPackageSourceCode(@Nonnull String fullyQualifiedPackage) {
-		String topLevelElementsCode = this.domainModel.getClassifiers()
+	protected String getPackageSourceCode(@Nonnull String fullyQualifiedPackage)
+	{
+		String topLevelElementsCode = this.domainModel
+			.getClassifiers()
 			.select((each) -> each.getPackageName().equals(fullyQualifiedPackage))
 			.collect(this::getSourceCode)
 			.makeString("");
@@ -57,7 +63,8 @@ public class GraphQLReladomoFinderGenerator extends AbstractPerPackageGenerator 
 		return sourceCode;
 	}
 
-	private String getSourceCode(@Nonnull Classifier classifier) {
+	private String getSourceCode(@Nonnull Classifier classifier)
+	{
 		String classifierName = classifier.getName();
 		return (
 			""
@@ -83,7 +90,8 @@ public class GraphQLReladomoFinderGenerator extends AbstractPerPackageGenerator 
 		);
 	}
 
-	private String getSourceCode(Property property) {
+	private String getSourceCode(Property property)
+	{
 		var visitor = new PropertySourceCodeVisitor();
 		property.visit(visitor);
 		return visitor.getSourceCode();

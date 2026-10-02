@@ -32,11 +32,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class QuestionResourceManualTest extends AbstractDropwizardAppTest {
-
+class QuestionResourceManualTest
+	extends AbstractDropwizardAppTest
+{
 	@Nonnull
 	@Override
-	protected LiftwizardAppExtension<?> getDropwizardAppExtension() {
+	protected LiftwizardAppExtension<?> getDropwizardAppExtension()
+	{
 		return new LiftwizardAppExtension<>(
 			StackOverflowApplication.class,
 			ResourceHelpers.resourceFilePath("config-test.json5")
@@ -45,13 +47,15 @@ class QuestionResourceManualTest extends AbstractDropwizardAppTest {
 
 	@Test
 	@ReladomoTestFile("test-data/existing-question.txt")
-	void get_smoke_test() {
+	void get_smoke_test()
+	{
 		Client client = this.getClient("get_smoke_test");
 
 		this.assertQuestion1Unchanged(client, "assertQuestion1Unchanged_get_smoke_test");
 	}
 
-	protected void assertQuestion1Unchanged(@Nonnull Client client, String testName) {
+	protected void assertQuestion1Unchanged(@Nonnull Client client, String testName)
+	{
 		Response response = client
 			.target("http://localhost:{port}/api/manual/question/{id}")
 			.resolveTemplate("port", this.appExtension.getLocalPort())
@@ -64,7 +68,8 @@ class QuestionResourceManualTest extends AbstractDropwizardAppTest {
 
 	@Test
 	@ReladomoTestFile("test-data/existing-question.txt")
-	void post_invalid_data() {
+	void post_invalid_data()
+	{
 		Client client = this.getClient("post_invalid_data");
 
 		String invalidJson = FileSlurper.slurp(
@@ -84,47 +89,44 @@ class QuestionResourceManualTest extends AbstractDropwizardAppTest {
 
 	@Test
 	@ReladomoTestFile("test-data/existing-question.txt")
-	void post_valid_data() {
+	void post_valid_data()
+	{
 		Client client = this.getClient("post_valid_data");
 
 		// <editor-fold desc="POST valid json, status: CREATED">
-		{
-			String validJson = FileSlurper.slurp(
-				this.getClass().getSimpleName() + ".create_data.json5",
-				this.getClass()
-			);
 
-			Response response = client
-				.target("http://localhost:{port}/api/manual/question/")
-				.resolveTemplate("port", this.appExtension.getLocalPort())
-				.request()
-				.header("Authorization", "Impersonation test user 1")
-				.post(Entity.json(validJson));
+		String validJson = FileSlurper.slurp(this.getClass().getSimpleName() + ".create_data.json5", this.getClass());
 
-			this.assertResponse("post_valid_data", Status.CREATED, response);
-			assertThat(response.getLocation().getPath()).isEqualTo("/api/manual/question/2");
-		}
+		Response createdResponse = client
+			.target("http://localhost:{port}/api/manual/question/")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.header("Authorization", "Impersonation test user 1")
+			.post(Entity.json(validJson));
+
+		this.assertResponse("post_valid_data", Status.CREATED, createdResponse);
+		assertThat(createdResponse.getLocation().getPath()).isEqualTo("/api/manual/question/2");
 		// </editor-fold>
 
 		this.assertQuestion1Unchanged(client, "assertQuestion1Unchanged_post_valid_data");
 
 		// <editor-fold desc="GET id: 2, status: ok">
-		{
-			Response response = client
-				.target("http://localhost:{port}/api/manual/question/{id}")
-				.resolveTemplate("port", this.appExtension.getLocalPort())
-				.resolveTemplate("id", 2)
-				.request()
-				.get();
 
-			this.assertResponse("post_valid_data_get", Status.OK, response);
-		}
+		Response createdQuestionResponse = client
+			.target("http://localhost:{port}/api/manual/question/{id}")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.resolveTemplate("id", 2)
+			.request()
+			.get();
+
+		this.assertResponse("post_valid_data_get", Status.OK, createdQuestionResponse);
 		// </editor-fold>
 	}
 
 	@Test
 	@ReladomoTestFile("test-data/existing-question.txt")
-	void put_invalid_id() {
+	void put_invalid_id()
+	{
 		Client client = this.getClient("put_invalid_id");
 
 		String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".invalid_id_data.json5", this.getClass());
@@ -144,7 +146,8 @@ class QuestionResourceManualTest extends AbstractDropwizardAppTest {
 
 	@Test
 	@ReladomoTestFile("test-data/existing-question.txt")
-	void put_conflict() {
+	void put_conflict()
+	{
 		Client client = this.getClient("put_conflict");
 
 		String validJson = FileSlurper.slurp(
@@ -168,27 +171,27 @@ class QuestionResourceManualTest extends AbstractDropwizardAppTest {
 
 	@Test
 	@ReladomoTestFile("test-data/existing-question.txt")
-	void put() {
+	void put()
+	{
 		Client client = this.getClient("put");
 
 		// <editor-fold desc="PUT id: 1, version: 2, status: NO_CONTENT">
-		{
-			String validJson = FileSlurper.slurp(
-				this.getClass().getSimpleName() + ".valid_versioned_put_data.json5",
-				this.getClass()
-			);
 
-			Response response = client
-				.target("http://localhost:{port}/api/manual/question/{id}")
-				.resolveTemplate("port", this.appExtension.getLocalPort())
-				.resolveTemplate("id", 1)
-				.queryParam("version", "2")
-				.request()
-				.header("Authorization", "Impersonation test user 1")
-				.put(Entity.json(validJson));
+		String validJson = FileSlurper.slurp(
+			this.getClass().getSimpleName() + ".valid_versioned_put_data.json5",
+			this.getClass()
+		);
 
-			this.assertResponse("put", Status.OK, response);
-		}
+		Response updateResponse = client
+			.target("http://localhost:{port}/api/manual/question/{id}")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.resolveTemplate("id", 1)
+			.queryParam("version", "2")
+			.request()
+			.header("Authorization", "Impersonation test user 1")
+			.put(Entity.json(validJson));
+
+		this.assertResponse("put", Status.OK, updateResponse);
 		// </editor-fold>
 
 		Response response = client
@@ -204,7 +207,8 @@ class QuestionResourceManualTest extends AbstractDropwizardAppTest {
 
 	@Test
 	@ReladomoTestFile("test-data/existing-question.txt")
-	void put_unchanged() {
+	void put_unchanged()
+	{
 		Client client = this.getClient("put_unchanged");
 
 		String jsonName = this.getClass().getSimpleName() + ".put_unchanged.json5";
@@ -225,28 +229,25 @@ class QuestionResourceManualTest extends AbstractDropwizardAppTest {
 	}
 
 	@Test
-	void restSet() {
+	void restSet()
+	{
 		Client client = this.getClient("restSet");
 
-		{
-			Response response = client
-				.target("http://localhost:{port}/api/manual/set")
-				.resolveTemplate("port", this.appExtension.getLocalPort())
-				.request()
-				.get();
+		Response setResponse = client
+			.target("http://localhost:{port}/api/manual/set")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.get();
 
-			this.assertResponse("restSet", Status.OK, response);
-		}
+		this.assertResponse("restSet", Status.OK, setResponse);
 
-		{
-			Response response = client
-				.target("http://localhost:{port}/api/manual/map")
-				.resolveTemplate("port", this.appExtension.getLocalPort())
-				.request()
-				.get();
+		Response mapResponse = client
+			.target("http://localhost:{port}/api/manual/map")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.get();
 
-			this.assertResponse("restMap", Status.OK, response);
-		}
+		this.assertResponse("restMap", Status.OK, mapResponse);
 	}
 	// TODO: Should PUT return the version number as an indicator that something changed? Or some other HTTP code?
 }

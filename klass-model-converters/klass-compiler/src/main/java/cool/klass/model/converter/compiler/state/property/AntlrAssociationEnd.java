@@ -42,8 +42,9 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
-public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
-
+public class AntlrAssociationEnd
+	extends AntlrClassReferenceProperty
+{
 	// <editor-fold desc="AMBIGUOUS">
 	public static final AntlrAssociationEnd AMBIGUOUS = new AntlrAssociationEnd(
 		new AssociationEndContext(AMBIGUOUS_PARENT, -1),
@@ -51,15 +52,18 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 		-1,
 		AMBIGUOUS_IDENTIFIER_CONTEXT,
 		AntlrAssociation.AMBIGUOUS
-	) {
+	)
+	{
 		@Nonnull
 		@Override
-		public AntlrClass getType() {
+		public AntlrClass getType()
+		{
 			return AntlrClass.AMBIGUOUS;
 		}
 
 		@Override
-		public String toString() {
+		public String toString()
+		{
 			return AntlrAssociationEnd.class.getSimpleName() + ".AMBIGUOUS";
 		}
 	};
@@ -72,15 +76,18 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 		-1,
 		NOT_FOUND_IDENTIFIER_CONTEXT,
 		AntlrAssociation.NOT_FOUND
-	) {
+	)
+	{
 		@Nonnull
 		@Override
-		public AntlrClass getType() {
+		public AntlrClass getType()
+		{
 			return AntlrClass.NOT_FOUND;
 		}
 
 		@Override
-		public String toString() {
+		public String toString()
+		{
 			return AntlrAssociationEnd.class.getSimpleName() + ".NOT_FOUND";
 		}
 	};
@@ -106,26 +113,31 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 		int ordinal,
 		@Nonnull IdentifierContext nameContext,
 		@Nonnull AntlrAssociation owningAssociation
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, ordinal, nameContext);
 		this.owningAssociation = Objects.requireNonNull(owningAssociation);
 	}
 
 	@Nonnull
 	@Override
-	public Optional<IAntlrElement> getSurroundingElement() {
+	public Optional<IAntlrElement> getSurroundingElement()
+	{
 		return Optional.of(this.owningAssociation);
 	}
 
 	@Nonnull
-	public AntlrAssociation getOwningAssociation() {
+	public AntlrAssociation getOwningAssociation()
+	{
 		return this.owningAssociation;
 	}
 
 	@Nonnull
 	@Override
-	public AssociationEndBuilder build() {
-		if (this.associationEnd != null) {
+	public AssociationEndBuilder build()
+	{
+		if (this.associationEnd != null)
+		{
 			throw new IllegalStateException();
 		}
 
@@ -154,7 +166,8 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 
 	// <editor-fold desc="Report Compiler Errors">
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		super.reportErrors(compilerAnnotationHolder);
 
 		this.orderBy.ifPresent((o) -> o.reportErrors(compilerAnnotationHolder));
@@ -168,8 +181,10 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 		this.reportForwardReference(compilerAnnotationHolder);
 	}
 
-	private void reportVersionEndUnowned(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.isVersion() && !this.isOwned()) {
+	private void reportVersionEndUnowned(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.isVersion() && !this.isOwned())
+		{
 			String message = String.format(
 				"Expected version association end '%s.%s' to be owned.",
 				this.getOwningClassifier().getName(),
@@ -179,8 +194,10 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 		}
 	}
 
-	private void reportNonVersionEnd(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.isVersion() && !this.getType().isVersion()) {
+	private void reportNonVersionEnd(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.isVersion() && !this.getType().isVersion())
+		{
 			String message = String.format(
 				"Expected version association end '%s.%s' to have version type, but %s has no version property.",
 				this.getOwningClassifier().getName(),
@@ -195,7 +212,8 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 			&& this.getType().isVersion()
 			&& !this.opposite.isCreatedBy()
 			&& !this.opposite.isLastUpdatedBy()
-		) {
+		)
+		{
 			String message = String.format(
 				"Association end '%s.%s' has version type %s, but is missing the version modifier.",
 				this.getOwningClassifier().getName(),
@@ -211,8 +229,10 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 		}
 	}
 
-	private void reportNonUserAuditEnd(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.isCreatedBy() && !this.getType().isUser()) {
+	private void reportNonUserAuditEnd(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.isCreatedBy() && !this.getType().isUser())
+		{
 			AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isCreatedBy);
 			String message = String.format(
 				"Expected createdBy association end '%s.%s' to have user type, but was %s.",
@@ -228,7 +248,8 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 				Lists.immutable.with(this.getElementContext().classReference(), modifier.getElementContext())
 			);
 		}
-		if (this.isLastUpdatedBy() && !this.getType().isUser()) {
+		if (this.isLastUpdatedBy() && !this.getType().isUser())
+		{
 			AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isLastUpdatedBy);
 			String message = String.format(
 				"Expected lastUpdatedBy association end '%s.%s' to have user type, but was %s.",
@@ -252,7 +273,8 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 		@Nonnull AntlrClassifier classifier,
 		@Nonnull String modifierString,
 		@Nonnull AnnotationSeverity severity
-	) {
+	)
+	{
 		AntlrModifier modifier = this.getModifiers().detectWith(AntlrModifier::is, modifierString);
 		String message = String.format(
 			"Multiple %s association ends point at '%s'.",
@@ -262,15 +284,19 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 		compilerAnnotationHolder.add("ERR_DUP_END", message, modifier, severity);
 	}
 
-	private void reportPluralName(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.multiplicity.isToMany()) {
+	private void reportPluralName(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.multiplicity.isToMany())
+		{
 			if (
-				this.classReference.getElementContext()
+				this.classReference
+					.getElementContext()
 					.identifier()
 					.getText()
 					.toLowerCase(Locale.ROOT)
 					.endsWith(this.getName().toLowerCase(Locale.ROOT))
-			) {
+			)
+			{
 				String message =
 					"Expected to-many association end '%s.%s' to have a plural name, but name exactly matched type association end type '%s'.".formatted(
 						this.getOwningClassifier().getName(),
@@ -282,22 +308,27 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 		}
 	}
 
-	private void reportDeclarationOrderTypes(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (!this.isToOneRequired()) {
+	private void reportDeclarationOrderTypes(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (!this.isToOneRequired())
+		{
 			return;
 		}
 
-		if (this.foreignKeys.isEmpty()) {
+		if (this.foreignKeys.isEmpty())
+		{
 			return;
 		}
 
-		if (this.isVersion()) {
+		if (this.isVersion())
+		{
 			// We reach here in the case of a version association end that is not owned
 			// This will trigger a different error: ERR_VER_OWN
 			return;
 		}
 
-		if (this.opposite.getType().isForwardReference(this.getType())) {
+		if (this.opposite.getType().isForwardReference(this.getType()))
+		{
 			String message = String.format(
 				"Association '%s' establishes that type '%s' requires type '%s', so it ought to be declared later in the source file. '%s' is declared on line %d and '%s' is declared on line %d in source file '%s'.",
 				this.owningAssociation.getName(),
@@ -313,8 +344,10 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 		}
 	}
 
-	private void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (!this.owningAssociation.isForwardReference(this.getType())) {
+	private void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (!this.owningAssociation.isForwardReference(this.getType()))
+		{
 			return;
 		}
 		String message = String.format(
@@ -333,46 +366,56 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 
 	@Nonnull
 	@Override
-	public AntlrClass getOwningClassifier() {
+	public AntlrClass getOwningClassifier()
+	{
 		return Objects.requireNonNull(this.owningClass);
 	}
 
-	public void setOwningClass(@Nonnull AntlrClass owningClass) {
-		if (this.owningClass != null) {
+	public void setOwningClass(@Nonnull AntlrClass owningClass)
+	{
+		if (this.owningClass != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.owningClass = Objects.requireNonNull(owningClass);
 	}
 
-	public boolean isVersioned() {
+	public boolean isVersioned()
+	{
 		return this.opposite.isVersion();
 	}
 
-	public AntlrAssociationEnd getOpposite() {
+	public AntlrAssociationEnd getOpposite()
+	{
 		return this.opposite;
 	}
 
-	public void setOpposite(@Nonnull AntlrAssociationEnd opposite) {
+	public void setOpposite(@Nonnull AntlrAssociationEnd opposite)
+	{
 		this.opposite = Objects.requireNonNull(opposite);
 	}
 
 	@Override
 	@Nonnull
-	public AssociationEndBuilder getElementBuilder() {
+	public AssociationEndBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.associationEnd);
 	}
 
 	@Nonnull
 	@Override
-	public AssociationEndContext getElementContext() {
+	public AssociationEndContext getElementContext()
+	{
 		return (AssociationEndContext) super.getElementContext();
 	}
 
-	public boolean hasForeignKeys() {
+	public boolean hasForeignKeys()
+	{
 		return this.foreignKeys.notEmpty();
 	}
 
-	public MutableOrderedMap<AntlrDataTypeProperty<?>, AntlrDataTypeProperty<?>> getForeignKeys() {
+	public MutableOrderedMap<AntlrDataTypeProperty<?>, AntlrDataTypeProperty<?>> getForeignKeys()
+	{
 		return this.foreignKeys;
 	}
 
@@ -380,27 +423,32 @@ public class AntlrAssociationEnd extends AntlrClassReferenceProperty {
 		@Nonnull AntlrDataTypeProperty<?> foreignKeyProperty,
 		@Nonnull AntlrDataTypeProperty<?> keyProperty,
 		@Nonnull ParserRuleContext foreignKeyReferenceContext
-	) {
+	)
+	{
 		this.foreignKeys.put(foreignKeyProperty, keyProperty);
 		this.foreignKeyReferenceContexts.put(foreignKeyProperty, foreignKeyReferenceContext);
 		foreignKeyProperty.setKeyMatchingThisForeignKey(this, keyProperty);
 		keyProperty.setForeignKeyMatchingThisKey(this, foreignKeyProperty);
 	}
 
-	public ParserRuleContext getForeignKeyReferenceContext(@Nonnull AntlrDataTypeProperty<?> foreignKeyProperty) {
+	public ParserRuleContext getForeignKeyReferenceContext(@Nonnull AntlrDataTypeProperty<?> foreignKeyProperty)
+	{
 		return this.foreignKeyReferenceContexts.get(foreignKeyProperty);
 	}
 
 	@Override
-	protected IdentifierContext getTypeIdentifier() {
+	protected IdentifierContext getTypeIdentifier()
+	{
 		return this.getElementContext().classReference().identifier();
 	}
 
-	public boolean isSourceEnd() {
+	public boolean isSourceEnd()
+	{
 		return this == this.owningAssociation.getSourceEnd();
 	}
 
-	public boolean isTargetEnd() {
+	public boolean isTargetEnd()
+	{
 		return this == this.owningAssociation.getTargetEnd();
 	}
 }

@@ -59,8 +59,9 @@ import org.eclipse.collections.api.map.MapIterable;
 import org.eclipse.collections.api.map.MutableMapIterable;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
-public final class DomainModelImpl implements DomainModelWithSourceCode {
-
+public final class DomainModelImpl
+	implements DomainModelWithSourceCode
+{
 	@Nonnull
 	private final ImmutableList<SourceCode> sourceCodes;
 
@@ -125,7 +126,8 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 		@Nonnull ImmutableList<Association> associations,
 		@Nonnull ImmutableList<Projection> projections,
 		@Nonnull ImmutableList<ServiceGroup> serviceGroups
-	) {
+	)
+	{
 		this.sourceCodes = Objects.requireNonNull(sourceCodes);
 		this.tokenCategoriesFromLexer = Objects.requireNonNull(tokenCategoriesFromLexer);
 		this.tokenCategoriesFromParser = Objects.requireNonNull(tokenCategoriesFromParser);
@@ -152,206 +154,246 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 	}
 
 	@Override
-	public ImmutableList<SourceCode> getSourceCodes() {
+	public ImmutableList<SourceCode> getSourceCodes()
+	{
 		return this.sourceCodes;
 	}
 
 	@Override
-	public Optional<TokenCategory> getTokenCategory(Token token) {
+	public Optional<TokenCategory> getTokenCategory(Token token)
+	{
 		TokenCategory lexerCategory = this.tokenCategoriesFromLexer.get(token);
 		TokenCategory parserCategory = this.tokenCategoriesFromParser.get(token);
-		if (lexerCategory != null && parserCategory != null) {
+		if (lexerCategory != null && parserCategory != null)
+		{
 			throw new AssertionError(token);
 		}
-		if (lexerCategory != null) {
+		if (lexerCategory != null)
+		{
 			return Optional.of(lexerCategory);
 		}
-		if (parserCategory != null) {
+		if (parserCategory != null)
+		{
 			return Optional.of(parserCategory);
 		}
 		return Optional.empty();
 	}
 
 	@Nonnull
-	public MapIterable<Token, TokenCategory> getTokenCategoriesFromLexer() {
+	public MapIterable<Token, TokenCategory> getTokenCategoriesFromLexer()
+	{
 		return this.tokenCategoriesFromLexer;
 	}
 
 	@Nonnull
-	public MapIterable<Token, TokenCategory> getTokenCategoriesFromParser() {
+	public MapIterable<Token, TokenCategory> getTokenCategoriesFromParser()
+	{
 		return this.tokenCategoriesFromParser;
 	}
 
 	@Override
 	@Nonnull
-	public Optional<ElementWithSourceCode> getElementByDeclaration(Token token) {
+	public Optional<ElementWithSourceCode> getElementByDeclaration(Token token)
+	{
 		return this.domainModelDeclarations.getElementByDeclaration(token);
 	}
 
 	@Override
 	@Nonnull
-	public Optional<ElementWithSourceCode> getElementByReference(Token token) {
+	public Optional<ElementWithSourceCode> getElementByReference(Token token)
+	{
 		return this.domainModelReferences.getElementByReference(token);
 	}
 
 	@Nonnull
-	public DomainModelReferences getDomainModelReferences() {
+	public DomainModelReferences getDomainModelReferences()
+	{
 		return this.domainModelReferences;
 	}
 
 	@Override
-	public Optional<Klass> getUserClass() {
+	public Optional<Klass> getUserClass()
+	{
 		return this.userClass;
 	}
 
 	@Override
 	@Nonnull
-	public ImmutableList<TopLevelElement> getTopLevelElements() {
+	public ImmutableList<TopLevelElement> getTopLevelElements()
+	{
 		return (ImmutableList<TopLevelElement>) (ImmutableList<?>) this.topLevelElements;
 	}
 
 	@Override
 	@Nonnull
-	public ImmutableList<Enumeration> getEnumerations() {
+	public ImmutableList<Enumeration> getEnumerations()
+	{
 		return this.enumerations;
 	}
 
 	@Override
 	@Nonnull
-	public ImmutableList<Classifier> getClassifiers() {
+	public ImmutableList<Classifier> getClassifiers()
+	{
 		return this.classifiers;
 	}
 
 	@Override
 	@Nonnull
-	public ImmutableList<Interface> getInterfaces() {
+	public ImmutableList<Interface> getInterfaces()
+	{
 		return this.interfaces;
 	}
 
 	@Override
 	@Nonnull
-	public ImmutableList<Klass> getClasses() {
+	public ImmutableList<Klass> getClasses()
+	{
 		return this.classes;
 	}
 
 	@Override
 	@Nonnull
-	public ImmutableList<Association> getAssociations() {
+	public ImmutableList<Association> getAssociations()
+	{
 		return this.associations;
 	}
 
 	@Override
 	@Nonnull
-	public ImmutableList<Projection> getProjections() {
+	public ImmutableList<Projection> getProjections()
+	{
 		return this.projections;
 	}
 
 	@Override
 	@Nonnull
-	public ImmutableList<ServiceGroup> getServiceGroups() {
+	public ImmutableList<ServiceGroup> getServiceGroups()
+	{
 		return this.serviceGroups;
 	}
 
 	@Nonnull
 	@Override
-	public Optional<TopLevelElement> findTopLevelElementByName(String name) {
+	public Optional<TopLevelElement> findTopLevelElementByName(String name)
+	{
 		return Optional.ofNullable(this.topLevelElementsByName.get(name));
 	}
 
 	@Nonnull
 	@Override
-	public TopLevelElementWithSourceCode getTopLevelElementByName(String name) {
-		return (TopLevelElementWithSourceCode) this.topLevelElementsByName.getIfAbsent(name, () -> {
-				throw new IllegalStateException("No TopLevelElement named '" + name + "'");
-			});
+	public TopLevelElementWithSourceCode getTopLevelElementByName(String name)
+	{
+		return (TopLevelElementWithSourceCode) this.topLevelElementsByName.getIfAbsent(name, () ->
+		{
+			throw new IllegalStateException("No TopLevelElement named '" + name + "'");
+		});
 	}
 
 	@Nonnull
 	@Override
-	public Optional<Enumeration> findEnumerationByName(String name) {
+	public Optional<Enumeration> findEnumerationByName(String name)
+	{
 		return Optional.ofNullable(this.enumerationsByName.get(name));
 	}
 
 	@Nonnull
 	@Override
-	public Enumeration getEnumerationByName(String name) {
-		return this.enumerationsByName.getIfAbsent(name, () -> {
-				throw new IllegalStateException("No Enumeration named '" + name + "'");
-			});
+	public Enumeration getEnumerationByName(String name)
+	{
+		return this.enumerationsByName.getIfAbsent(name, () ->
+		{
+			throw new IllegalStateException("No Enumeration named '" + name + "'");
+		});
 	}
 
 	@Nonnull
 	@Override
-	public Optional<Classifier> findClassifierByName(String name) {
+	public Optional<Classifier> findClassifierByName(String name)
+	{
 		return Optional.ofNullable(this.classifiersByName.get(name));
 	}
 
 	@Nonnull
 	@Override
-	public Classifier getClassifierByName(String name) {
-		return this.classifiersByName.getIfAbsent(name, () -> {
-				throw new IllegalStateException("No Classifier named '" + name + "'");
-			});
+	public Classifier getClassifierByName(String name)
+	{
+		return this.classifiersByName.getIfAbsent(name, () ->
+		{
+			throw new IllegalStateException("No Classifier named '" + name + "'");
+		});
 	}
 
 	@Nonnull
 	@Override
-	public Optional<Interface> findInterfaceByName(String name) {
+	public Optional<Interface> findInterfaceByName(String name)
+	{
 		return Optional.ofNullable(this.interfacesByName.get(name));
 	}
 
 	@Nonnull
 	@Override
-	public Interface getInterfaceByName(String name) {
-		return this.interfacesByName.getIfAbsent(name, () -> {
-				throw new IllegalStateException("No Interface named '" + name + "'");
-			});
+	public Interface getInterfaceByName(String name)
+	{
+		return this.interfacesByName.getIfAbsent(name, () ->
+		{
+			throw new IllegalStateException("No Interface named '" + name + "'");
+		});
 	}
 
 	@Nonnull
 	@Override
-	public Optional<Klass> findClassByName(String name) {
+	public Optional<Klass> findClassByName(String name)
+	{
 		return Optional.ofNullable(this.classesByName.get(name));
 	}
 
 	@Nonnull
 	@Override
-	public Klass getClassByName(String name) {
-		return this.classesByName.getIfAbsent(name, () -> {
-				throw new IllegalStateException("No Class named '" + name + "'");
-			});
+	public Klass getClassByName(String name)
+	{
+		return this.classesByName.getIfAbsent(name, () ->
+		{
+			throw new IllegalStateException("No Class named '" + name + "'");
+		});
 	}
 
 	@Nonnull
 	@Override
-	public Optional<Association> findAssociationByName(String name) {
+	public Optional<Association> findAssociationByName(String name)
+	{
 		return Optional.ofNullable(this.associationsByName.get(name));
 	}
 
 	@Nonnull
 	@Override
-	public Association getAssociationByName(String name) {
-		return this.associationsByName.getIfAbsent(name, () -> {
-				throw new IllegalStateException("No Association named '" + name + "'");
-			});
+	public Association getAssociationByName(String name)
+	{
+		return this.associationsByName.getIfAbsent(name, () ->
+		{
+			throw new IllegalStateException("No Association named '" + name + "'");
+		});
 	}
 
 	@Nonnull
 	@Override
-	public Optional<Projection> findProjectionByName(String name) {
+	public Optional<Projection> findProjectionByName(String name)
+	{
 		return Optional.ofNullable(this.projectionsByName.get(name));
 	}
 
 	@Nonnull
 	@Override
-	public Projection getProjectionByName(String name) {
-		return this.projectionsByName.getIfAbsent(name, () -> {
-				throw new IllegalStateException("No Projection named '" + name + "'");
-			});
+	public Projection getProjectionByName(String name)
+	{
+		return this.projectionsByName.getIfAbsent(name, () ->
+		{
+			throw new IllegalStateException("No Projection named '" + name + "'");
+		});
 	}
 
-	public static final class DomainModelBuilder {
-
+	public static final class DomainModelBuilder
+	{
 		@Nonnull
 		private final ImmutableList<SourceCodeBuilderImpl> sourceCodeBuilders;
 
@@ -389,7 +431,8 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 			@Nonnull ImmutableList<AssociationBuilder> associationBuilders,
 			@Nonnull ImmutableList<ProjectionBuilder> projectionBuilders,
 			@Nonnull ImmutableList<ServiceGroupBuilder> serviceGroupBuilders
-		) {
+		)
+		{
 			this.sourceCodeBuilders = Objects.requireNonNull(sourceCodeBuilders);
 			this.topLevelElementBuilders = Objects.requireNonNull(topLevelElementBuilders);
 			this.enumerationBuilders = Objects.requireNonNull(enumerationBuilders);
@@ -402,33 +445,34 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 		}
 
 		@Nonnull
-		public DomainModelImpl build() {
-			ImmutableList<SourceCode> sourceCodes = this.sourceCodeBuilders.<SourceCode>collect(
-				SourceCodeBuilderImpl::build
-			).toImmutable();
-			ImmutableList<Enumeration> enumerations = this.enumerationBuilders.<Enumeration>collect(
-				EnumerationBuilder::build
-			).toImmutable();
-			ImmutableList<Interface> interfaces = this.interfaceBuilders.<Interface>collect(
-				InterfaceBuilder::build
-			).toImmutable();
+		public DomainModelImpl build()
+		{
+			ImmutableList<SourceCode> sourceCodes = this.sourceCodeBuilders
+				.<SourceCode>collect(SourceCodeBuilderImpl::build)
+				.toImmutable();
+			ImmutableList<Enumeration> enumerations = this.enumerationBuilders
+				.<Enumeration>collect(EnumerationBuilder::build)
+				.toImmutable();
+			ImmutableList<Interface> interfaces = this.interfaceBuilders
+				.<Interface>collect(InterfaceBuilder::build)
+				.toImmutable();
 			ImmutableList<Klass> classes = this.classBuilders.<Klass>collect(KlassBuilder::build).toImmutable();
 			ImmutableList<Classifier> classifiers = this.classifierBuilders.collect(ClassifierBuilder::getElement);
-			ImmutableList<Association> associations = this.associationBuilders.<Association>collect(
-				AssociationBuilder::build
-			).toImmutable();
+			ImmutableList<Association> associations = this.associationBuilders
+				.<Association>collect(AssociationBuilder::build)
+				.toImmutable();
 			this.interfaceBuilders.each(InterfaceBuilder::build2);
 			this.classBuilders.each(KlassBuilder::build2);
 			this.interfaceBuilders.each(InterfaceBuilder::build3);
 			this.classBuilders.each(KlassBuilder::build3);
 
-			ImmutableList<Projection> projections = this.projectionBuilders.<Projection>collect(
-				ProjectionBuilder::build
-			).toImmutable();
+			ImmutableList<Projection> projections = this.projectionBuilders
+				.<Projection>collect(ProjectionBuilder::build)
+				.toImmutable();
 			this.projectionBuilders.each(AbstractProjectionParentBuilder::build2);
-			ImmutableList<ServiceGroup> serviceGroups = this.serviceGroupBuilders.<ServiceGroup>collect(
-				ServiceGroupBuilder::build
-			).toImmutable();
+			ImmutableList<ServiceGroup> serviceGroups = this.serviceGroupBuilders
+				.<ServiceGroup>collect(ServiceGroupBuilder::build)
+				.toImmutable();
 			ImmutableList<TopLevelElement> topLevelElements = this.topLevelElementBuilders.collect(
 				TopLevelElementBuilder::getElement
 			);
@@ -442,7 +486,8 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 				.keysView()
 				.select(tokenCategoriesFromParser::containsKey)
 				.toImmutableList();
-			if (duplicateTokens.notEmpty()) {
+			if (duplicateTokens.notEmpty())
+			{
 				throw new AssertionError(duplicateTokens);
 			}
 
@@ -468,7 +513,8 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 			);
 		}
 
-		private MapIterable<Token, TokenCategory> getTokenCategoriesFromLexer(ImmutableList<SourceCode> sourceCodes) {
+		private MapIterable<Token, TokenCategory> getTokenCategoriesFromLexer(ImmutableList<SourceCode> sourceCodes)
+		{
 			MutableMapIterable<Token, TokenCategory> tokenCategoriesFromLexer = OrderedMapAdapter.adapt(
 				new LinkedHashMap<>()
 			);
@@ -478,7 +524,8 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 			return tokenCategoriesFromLexer.asUnmodifiable();
 		}
 
-		private MapIterable<Token, TokenCategory> getTokenCategoriesFromParser(ImmutableList<SourceCode> sourceCodes) {
+		private MapIterable<Token, TokenCategory> getTokenCategoriesFromParser(ImmutableList<SourceCode> sourceCodes)
+		{
 			var listener = new ParserBasedTokenCategorizer();
 
 			sourceCodes
@@ -487,17 +534,21 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 			return listener.getTokenCategories();
 		}
 
-		private DomainModelDeclarations getDomainModelDeclarations(ImmutableList<TopLevelElement> topLevelElements) {
+		private DomainModelDeclarations getDomainModelDeclarations(ImmutableList<TopLevelElement> topLevelElements)
+		{
 			var domainModelDeclarations = new DomainModelDeclarations();
-			for (TopLevelElement topLevelElement : topLevelElements) {
+			for (TopLevelElement topLevelElement : topLevelElements)
+			{
 				topLevelElement.visit(new DomainModelDeclarationsTopLevelElementVisitor(domainModelDeclarations));
 			}
 			return domainModelDeclarations;
 		}
 
-		private DomainModelReferences getDomainModelReferences(ImmutableList<TopLevelElement> topLevelElements) {
+		private DomainModelReferences getDomainModelReferences(ImmutableList<TopLevelElement> topLevelElements)
+		{
 			var domainModelReferences = new DomainModelReferences();
-			for (TopLevelElement topLevelElement : topLevelElements) {
+			for (TopLevelElement topLevelElement : topLevelElements)
+			{
 				topLevelElement.visit(new DomainModelReferencesTopLevelElementVisitor(domainModelReferences));
 			}
 			return domainModelReferences;
