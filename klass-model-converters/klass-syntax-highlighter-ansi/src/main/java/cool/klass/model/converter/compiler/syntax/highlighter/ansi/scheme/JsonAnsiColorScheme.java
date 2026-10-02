@@ -286,7 +286,7 @@ public class JsonAnsiColorScheme implements AnsiColorScheme {
 	}
 
 	/**
-	 * Handle numeric color codes (e.g., 256-color terminal codes)
+	 * Handle numeric color codes (e.g., 256-color terminal codes).
 	 */
 	private static void applyColorNumber(Ansi ansi, Number colorValue, boolean isForeground) {
 		int colorCode = colorValue.intValue();
