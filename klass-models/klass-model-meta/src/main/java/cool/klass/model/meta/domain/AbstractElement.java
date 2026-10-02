@@ -37,7 +37,7 @@ public abstract class AbstractElement implements ElementWithSourceCode {
 	private final Optional<Element> macroElement;
 
 	/**
-	 * The type of sourceCode is null only for Elements that don't appear in source code, like PrimitiveType declarations
+	 * The type of sourceCode is null only for Elements that don't appear in source code, like PrimitiveType declarations.
 	 */
 	@Nullable
 	private final SourceCode sourceCode;
