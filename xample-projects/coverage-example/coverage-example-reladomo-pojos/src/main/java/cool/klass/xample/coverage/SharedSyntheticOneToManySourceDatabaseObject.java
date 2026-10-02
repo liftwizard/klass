@@ -17,4 +17,6 @@
 package cool.klass.xample.coverage;
 
 public class SharedSyntheticOneToManySourceDatabaseObject
-	extends SharedSyntheticOneToManySourceDatabaseObjectAbstract {}
+	extends SharedSyntheticOneToManySourceDatabaseObjectAbstract
+{
+}

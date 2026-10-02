@@ -18,20 +18,24 @@ package klass.model.meta.domain.dropwizard.test;
 
 import org.junit.jupiter.api.Test;
 
-class InterfaceResourceManualTest extends AbstractResourceTestCase {
-
+class InterfaceResourceManualTest
+	extends AbstractResourceTestCase
+{
 	@Test
-	void getAllMeta() {
+	void getAllMeta()
+	{
 		this.assertUrlReturns("getAllMeta", "/meta/interface");
 	}
 
 	@Test
-	void getByName() {
+	void getByName()
+	{
 		this.assertUrlReturns("getByName", "/meta/interface/NamedElement");
 	}
 
 	@Test
-	void getByNameElement() {
+	void getByNameElement()
+	{
 		this.assertUrlReturns("getByNameElement", "/meta/interface/Element");
 	}
 }

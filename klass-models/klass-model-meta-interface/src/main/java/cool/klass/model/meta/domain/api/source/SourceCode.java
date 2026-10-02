@@ -23,7 +23,8 @@ import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public interface SourceCode {
+public interface SourceCode
+{
 	@Nonnull
 	String getSourceName();
 
@@ -42,7 +43,8 @@ public interface SourceCode {
 	@Nonnull
 	Optional<SourceCode> getMacroSourceCode();
 
-	interface SourceCodeBuilder {
+	interface SourceCodeBuilder
+	{
 		SourceCode build();
 	}
 }

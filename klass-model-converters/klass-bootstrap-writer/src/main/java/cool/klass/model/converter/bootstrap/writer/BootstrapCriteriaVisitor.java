@@ -35,8 +35,9 @@ import cool.klass.model.meta.domain.api.value.ExpressionValue;
 import cool.klass.model.meta.domain.api.value.MemberReferencePath;
 import org.eclipse.collections.api.map.ImmutableMap;
 
-public class BootstrapCriteriaVisitor implements CriteriaVisitor {
-
+public class BootstrapCriteriaVisitor
+	implements CriteriaVisitor
+{
 	private final ImmutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter;
 	private final ImmutableMap<ExpressionValue, klass.model.meta.domain.ExpressionValue> bootstrappedExpressionValues;
 
@@ -45,7 +46,8 @@ public class BootstrapCriteriaVisitor implements CriteriaVisitor {
 	public BootstrapCriteriaVisitor(
 		ImmutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter,
 		ImmutableMap<ExpressionValue, klass.model.meta.domain.ExpressionValue> bootstrappedExpressionValues
-	) {
+	)
+	{
 		this.bootstrappedParametersByParameter = Objects.requireNonNull(bootstrappedParametersByParameter);
 		this.bootstrappedExpressionValues = Objects.requireNonNull(bootstrappedExpressionValues);
 	}
@@ -54,18 +56,21 @@ public class BootstrapCriteriaVisitor implements CriteriaVisitor {
 		ImmutableMap<Parameter, klass.model.meta.domain.Parameter> bootstrappedParametersByParameter,
 		ImmutableMap<ExpressionValue, klass.model.meta.domain.ExpressionValue> bootstrappedExpressionValues,
 		@Nonnull Criteria criteria
-	) {
+	)
+	{
 		var visitor = new BootstrapCriteriaVisitor(bootstrappedParametersByParameter, bootstrappedExpressionValues);
 		criteria.visit(visitor);
 		return visitor.getResult();
 	}
 
-	public klass.model.meta.domain.Criteria getResult() {
+	public klass.model.meta.domain.Criteria getResult()
+	{
 		return Objects.requireNonNull(this.bootstrappedCriteria);
 	}
 
 	@Override
-	public void visitAll(@Nonnull AllCriteria allCriteria) {
+	public void visitAll(@Nonnull AllCriteria allCriteria)
+	{
 		var bootstrappedCriteria = new klass.model.meta.domain.Criteria();
 
 		var bootstrappedAllCriteria = new klass.model.meta.domain.AllCriteria();
@@ -74,7 +79,8 @@ public class BootstrapCriteriaVisitor implements CriteriaVisitor {
 	}
 
 	@Override
-	public void visitAnd(@Nonnull AndCriteria andCriteria) {
+	public void visitAnd(@Nonnull AndCriteria andCriteria)
+	{
 		var bootstrappedBinaryCriteria = this.handleBinaryCriteria(andCriteria);
 
 		var bootstrappedAndCriteria = new klass.model.meta.domain.AndCriteria();
@@ -82,7 +88,8 @@ public class BootstrapCriteriaVisitor implements CriteriaVisitor {
 	}
 
 	@Override
-	public void visitOr(@Nonnull OrCriteria orCriteria) {
+	public void visitOr(@Nonnull OrCriteria orCriteria)
+	{
 		var bootstrappedBinaryCriteria = this.handleBinaryCriteria(orCriteria);
 
 		var bootstrappedAndCriteria = new klass.model.meta.domain.OrCriteria();
@@ -90,7 +97,8 @@ public class BootstrapCriteriaVisitor implements CriteriaVisitor {
 	}
 
 	@Nonnull
-	private klass.model.meta.domain.BinaryCriteria handleBinaryCriteria(@Nonnull BinaryCriteria binaryCriteria) {
+	private klass.model.meta.domain.BinaryCriteria handleBinaryCriteria(@Nonnull BinaryCriteria binaryCriteria)
+	{
 		var bootstrappedLeft = BootstrapCriteriaVisitor.convert(
 			this.bootstrappedParametersByParameter,
 			this.bootstrappedExpressionValues,
@@ -114,7 +122,8 @@ public class BootstrapCriteriaVisitor implements CriteriaVisitor {
 	}
 
 	@Override
-	public void visitOperator(@Nonnull OperatorCriteria operatorCriteria) {
+	public void visitOperator(@Nonnull OperatorCriteria operatorCriteria)
+	{
 		ExpressionValue sourceValue = operatorCriteria.getSourceValue();
 		ExpressionValue targetValue = operatorCriteria.getTargetValue();
 
@@ -136,7 +145,8 @@ public class BootstrapCriteriaVisitor implements CriteriaVisitor {
 	}
 
 	@Override
-	public void visitEdgePoint(@Nonnull EdgePointCriteria edgePointCriteria) {
+	public void visitEdgePoint(@Nonnull EdgePointCriteria edgePointCriteria)
+	{
 		var bootstrappedExpressionValue = new klass.model.meta.domain.ExpressionValue();
 		bootstrappedExpressionValue.insert();
 

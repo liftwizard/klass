@@ -35,14 +35,17 @@ import org.eclipse.collections.api.map.OrderedMap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
-public interface Classifier extends Type, ModifierOwner, TopLevelElement {
+public interface Classifier
+	extends Type, ModifierOwner, TopLevelElement
+{
 	boolean isAbstract();
 
 	@Nonnull
 	ImmutableList<Interface> getInterfaces();
 
 	@Nonnull
-	default ImmutableList<Modifier> getModifiers() {
+	default ImmutableList<Modifier> getModifiers()
+	{
 		Objects.requireNonNull(this.getDeclaredModifiers());
 
 		MutableSet<String> propertyNames = this.getDeclaredModifiers().collect(Modifier::getKeyword).toSet();
@@ -54,7 +57,8 @@ public interface Classifier extends Type, ModifierOwner, TopLevelElement {
 		return this.getDeclaredModifiers().newWithAll(inheritedProperties);
 	}
 
-	default ImmutableList<Modifier> getInheritedModifiers() {
+	default ImmutableList<Modifier> getInheritedModifiers()
+	{
 		return this.getInterfaces()
 			.flatCollect(Classifier::getModifiers)
 			.distinctBy(Modifier::getKeyword)
@@ -81,7 +85,8 @@ public interface Classifier extends Type, ModifierOwner, TopLevelElement {
 	Optional<DataTypeProperty> findDataTypePropertyByName(String name);
 
 	@Nonnull
-	default DataTypeProperty getDataTypePropertyByName(String name) {
+	default DataTypeProperty getDataTypePropertyByName(String name)
+	{
 		return this.findDataTypePropertyByName(name).orElseThrow(() ->
 			new IllegalStateException("No DataTypeProperty named '" + name + "' on " + this.getName())
 		);
@@ -93,54 +98,67 @@ public interface Classifier extends Type, ModifierOwner, TopLevelElement {
 
 	boolean isUniquelyOwned();
 
-	default boolean isTemporal() {
+	default boolean isTemporal()
+	{
 		return this.isSystemTemporal() || this.isValidTemporal();
 	}
 
-	default boolean isBitemporal() {
+	default boolean isBitemporal()
+	{
 		return this.isSystemTemporal() && this.isValidTemporal();
 	}
 
-	default boolean isSystemTemporal() {
+	default boolean isSystemTemporal()
+	{
 		return this.getDataTypeProperties().anySatisfy(DataTypeProperty::isSystemTemporal);
 	}
 
-	default boolean isValidTemporal() {
+	default boolean isValidTemporal()
+	{
 		return this.getDataTypeProperties().anySatisfy(DataTypeProperty::isValidTemporal);
 	}
 
-	default boolean isStrictSuperTypeOf(@Nonnull Classifier classifier) {
-		if (this == classifier) {
+	default boolean isStrictSuperTypeOf(@Nonnull Classifier classifier)
+	{
+		if (this == classifier)
+		{
 			return false;
 		}
 
 		ImmutableList<Interface> superInterfaces = classifier.getInterfaces();
-		if (superInterfaces.contains(this)) {
+		if (superInterfaces.contains(this))
+		{
 			return true;
 		}
 
 		return superInterfaces.anySatisfy(this::isStrictSuperTypeOf);
 	}
 
-	default boolean isSubTypeOf(Classifier classifier) {
-		if (this == classifier) {
+	default boolean isSubTypeOf(Classifier classifier)
+	{
+		if (this == classifier)
+		{
 			return true;
 		}
 
 		return this.isStrictSubTypeOf(classifier);
 	}
 
-	default boolean isStrictSubTypeOf(Classifier classifier) {
-		if (this == classifier) {
+	default boolean isStrictSubTypeOf(Classifier classifier)
+	{
+		if (this == classifier)
+		{
 			return false;
 		}
 
-		if (classifier instanceof Klass) {
+		if (classifier instanceof Klass)
+		{
 			return false;
 		}
 
 		ImmutableList<Interface> superInterfaces = this.getInterfaces();
-		if (superInterfaces.contains(classifier)) {
+		if (superInterfaces.contains(classifier))
+		{
 			return true;
 		}
 
@@ -148,15 +166,18 @@ public interface Classifier extends Type, ModifierOwner, TopLevelElement {
 	}
 
 	@Nonnull
-	default MutableOrderedMap<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> getForeignKeys() {
+	default MutableOrderedMap<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> getForeignKeys()
+	{
 		MutableOrderedMap<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> foreignKeyConstraints =
 			OrderedMapAdapter.adapt(new LinkedHashMap<>());
 
-		for (DataTypeProperty foreignKey : this.getDeclaredDataTypeProperties()) {
+		for (DataTypeProperty foreignKey : this.getDeclaredDataTypeProperties())
+		{
 			OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey =
 				foreignKey.getKeysMatchingThisForeignKey();
 
-			keysMatchingThisForeignKey.forEachKeyValue((associationEnd, key) -> {
+			keysMatchingThisForeignKey.forEachKeyValue((associationEnd, key) ->
+			{
 				MutableOrderedMap<DataTypeProperty, DataTypeProperty> dataTypeProperties =
 					foreignKeyConstraints.computeIfAbsent(associationEnd, (ignored) ->
 						OrderedMapAdapter.adapt(new LinkedHashMap<>())

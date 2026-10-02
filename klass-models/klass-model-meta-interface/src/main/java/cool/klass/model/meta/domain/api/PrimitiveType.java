@@ -32,124 +32,197 @@ import org.eclipse.collections.api.map.ImmutableMap;
 /**
  * Predefined native types.
  */
-public enum PrimitiveType implements Element, DataType, DataTypeGetter {
-	INTEGER("Integer", true, Integer.class, int.class) {
+public enum PrimitiveType
+	implements Element, DataType, DataTypeGetter
+
+{
+	INTEGER("Integer", true, Integer.class, int.class)
+	{
 		@Override
-		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
-			try {
+		public void visit(@Nonnull PrimitiveTypeVisitor visitor)
+		{
+			try
+			{
 				visitor.visitInteger();
-			} catch (RuntimeException e) {
+			}
+			catch (RuntimeException e)
+			{
 				throw e;
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				throw new RuntimeException(e);
 			}
 		}
 	},
-	LONG("Long", true, Long.class, long.class) {
+	LONG("Long", true, Long.class, long.class)
+	{
 		@Override
-		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
-			try {
+		public void visit(@Nonnull PrimitiveTypeVisitor visitor)
+		{
+			try
+			{
 				visitor.visitLong();
-			} catch (RuntimeException e) {
+			}
+			catch (RuntimeException e)
+			{
 				throw e;
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				throw new RuntimeException(e);
 			}
 		}
 	},
-	DOUBLE("Double", true, Double.class, double.class) {
+	DOUBLE("Double", true, Double.class, double.class)
+	{
 		@Override
-		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
-			try {
+		public void visit(@Nonnull PrimitiveTypeVisitor visitor)
+		{
+			try
+			{
 				visitor.visitDouble();
-			} catch (RuntimeException e) {
+			}
+			catch (RuntimeException e)
+			{
 				throw e;
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				throw new RuntimeException(e);
 			}
 		}
 	},
-	FLOAT("Float", true, Float.class, float.class) {
+	FLOAT("Float", true, Float.class, float.class)
+	{
 		@Override
-		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
-			try {
+		public void visit(@Nonnull PrimitiveTypeVisitor visitor)
+		{
+			try
+			{
 				visitor.visitFloat();
-			} catch (RuntimeException e) {
+			}
+			catch (RuntimeException e)
+			{
 				throw e;
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				throw new RuntimeException(e);
 			}
 		}
 	},
-	BOOLEAN("Boolean", false, Boolean.class, boolean.class) {
+	BOOLEAN("Boolean", false, Boolean.class, boolean.class)
+	{
 		@Override
-		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
-			try {
+		public void visit(@Nonnull PrimitiveTypeVisitor visitor)
+		{
+			try
+			{
 				visitor.visitBoolean();
-			} catch (RuntimeException e) {
+			}
+			catch (RuntimeException e)
+			{
 				throw e;
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				throw new RuntimeException(e);
 			}
 		}
 	},
-	STRING("String", false, String.class, String.class) {
+	STRING("String", false, String.class, String.class)
+	{
 		@Override
-		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
-			try {
+		public void visit(@Nonnull PrimitiveTypeVisitor visitor)
+		{
+			try
+			{
 				visitor.visitString();
-			} catch (RuntimeException e) {
+			}
+			catch (RuntimeException e)
+			{
 				throw e;
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				throw new RuntimeException(e);
 			}
 		}
 	},
-	INSTANT("Instant", false, Instant.class, Instant.class) {
+	INSTANT("Instant", false, Instant.class, Instant.class)
+	{
 		@Override
-		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
-			try {
+		public void visit(@Nonnull PrimitiveTypeVisitor visitor)
+		{
+			try
+			{
 				visitor.visitInstant();
-			} catch (RuntimeException e) {
+			}
+			catch (RuntimeException e)
+			{
 				throw e;
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				throw new RuntimeException(e);
 			}
 		}
 	},
 	// TODO: OffsetDateTime
-	LOCAL_DATE("LocalDate", false, LocalDate.class, LocalDate.class) {
+	LOCAL_DATE("LocalDate", false, LocalDate.class, LocalDate.class)
+	{
 		@Override
-		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
-			try {
+		public void visit(@Nonnull PrimitiveTypeVisitor visitor)
+		{
+			try
+			{
 				visitor.visitLocalDate();
-			} catch (RuntimeException e) {
+			}
+			catch (RuntimeException e)
+			{
 				throw e;
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				throw new RuntimeException(e);
 			}
 		}
 	},
-	TEMPORAL_INSTANT("TemporalInstant", false, Instant.class, Instant.class) {
+	TEMPORAL_INSTANT("TemporalInstant", false, Instant.class, Instant.class)
+	{
 		@Override
-		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
-			try {
+		public void visit(@Nonnull PrimitiveTypeVisitor visitor)
+		{
+			try
+			{
 				visitor.visitTemporalInstant();
-			} catch (RuntimeException e) {
+			}
+			catch (RuntimeException e)
+			{
 				throw e;
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				throw new RuntimeException(e);
 			}
 		}
 	},
-	TEMPORAL_RANGE("TemporalRange", false, Instant.class, Instant.class) {
+	TEMPORAL_RANGE("TemporalRange", false, Instant.class, Instant.class)
+	{
 		@Override
-		public void visit(@Nonnull PrimitiveTypeVisitor visitor) {
-			try {
+		public void visit(@Nonnull PrimitiveTypeVisitor visitor)
+		{
+			try
+			{
 				visitor.visitTemporalRange();
-			} catch (RuntimeException e) {
+			}
+			catch (RuntimeException e)
+			{
 				throw e;
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				throw new RuntimeException(e);
 			}
 		}
@@ -190,76 +263,91 @@ public enum PrimitiveType implements Element, DataType, DataTypeGetter {
 		boolean isNumeric,
 		@Nonnull Class<?> javaClass,
 		@Nonnull Class<?> primitiveJavaClass
-	) {
+	)
+	{
 		this.prettyName = Objects.requireNonNull(prettyName);
 		this.isNumeric = isNumeric;
 		this.javaClass = Objects.requireNonNull(javaClass);
 		this.primitiveJavaClass = Objects.requireNonNull(primitiveJavaClass);
 	}
 
-	public static PrimitiveType byPrettyName(String name) {
+	public static PrimitiveType byPrettyName(String name)
+	{
 		return Objects.requireNonNull(BY_PRETTY_NAME.get(name));
 	}
 
 	@Nonnull
-	public String getPrettyName() {
+	public String getPrettyName()
+	{
 		return this.prettyName;
 	}
 
 	@Override
-	public String getDataTypeName() {
+	public String getDataTypeName()
+	{
 		return this.getPrettyName();
 	}
 
 	@Nonnull
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return this.getPrettyName();
 	}
 
 	public abstract void visit(@Nonnull PrimitiveTypeVisitor visitor);
 
-	public boolean isTemporal() {
+	public boolean isTemporal()
+	{
 		return this.isTemporalRange() || this.isTemporalInstant();
 	}
 
-	public boolean isTemporalRange() {
+	public boolean isTemporalRange()
+	{
 		return this == TEMPORAL_RANGE;
 	}
 
-	public boolean isTemporalInstant() {
+	public boolean isTemporalInstant()
+	{
 		return this == TEMPORAL_INSTANT;
 	}
 
-	public boolean isId() {
+	public boolean isId()
+	{
 		return ID_PRIMITIVE_TYPES.contains(this);
 	}
 
-	public boolean isNumeric() {
+	public boolean isNumeric()
+	{
 		return this.isNumeric;
 	}
 
-	public Class<?> getJavaClass() {
+	public Class<?> getJavaClass()
+	{
 		return this.javaClass;
 	}
 
-	public Class<?> getPrimitiveJavaClass() {
+	public Class<?> getPrimitiveJavaClass()
+	{
 		return this.primitiveJavaClass;
 	}
 
 	@Nonnull
 	@Override
-	public PrimitiveType getType() {
+	public PrimitiveType getType()
+	{
 		return this;
 	}
 
 	@Override
-	public Optional<Element> getMacroElement() {
+	public Optional<Element> getMacroElement()
+	{
 		return Optional.empty();
 	}
 
 	@Override
-	public String getName() {
+	public String getName()
+	{
 		return this.getPrettyName();
 	}
 }

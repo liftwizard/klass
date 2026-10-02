@@ -24,65 +24,81 @@ import cool.klass.model.meta.domain.api.EnumerationLiteral;
 import cool.klass.model.meta.domain.api.property.EnumerationProperty;
 import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 
-public class AssertObjectMatchesDataTypePropertyVisitor implements DataTypePropertyVisitor {
-
+public class AssertObjectMatchesDataTypePropertyVisitor
+	implements DataTypePropertyVisitor
+{
 	private final Object object;
 
-	public AssertObjectMatchesDataTypePropertyVisitor(Object object) {
+	public AssertObjectMatchesDataTypePropertyVisitor(Object object)
+	{
 		this.object = Objects.requireNonNull(object);
 	}
 
 	@Override
-	public void visitEnumerationProperty(EnumerationProperty enumerationProperty) {
-		if (this.object instanceof EnumerationLiteral) {
+	public void visitEnumerationProperty(EnumerationProperty enumerationProperty)
+	{
+		if (this.object instanceof EnumerationLiteral)
+		{
 			return;
 		}
 		this.throwError("Enumeration Literal");
 	}
 
 	@Override
-	public void visitString(PrimitiveProperty primitiveProperty) {
-		if (this.object instanceof String) {
+	public void visitString(PrimitiveProperty primitiveProperty)
+	{
+		if (this.object instanceof String)
+		{
 			return;
 		}
 		this.throwError("String");
 	}
 
 	@Override
-	public void visitInteger(PrimitiveProperty primitiveProperty) {
-		if (this.object instanceof Integer) {
+	public void visitInteger(PrimitiveProperty primitiveProperty)
+	{
+		if (this.object instanceof Integer)
+		{
 			return;
 		}
 		this.throwError("Integer");
 	}
 
 	@Override
-	public void visitLong(PrimitiveProperty primitiveProperty) {
-		if (this.object instanceof Long) {
+	public void visitLong(PrimitiveProperty primitiveProperty)
+	{
+		if (this.object instanceof Long)
+		{
 			return;
 		}
 		this.throwError("Long");
 	}
 
 	@Override
-	public void visitDouble(PrimitiveProperty primitiveProperty) {
-		if (this.object instanceof Double) {
+	public void visitDouble(PrimitiveProperty primitiveProperty)
+	{
+		if (this.object instanceof Double)
+		{
 			return;
 		}
 		this.throwError("Double");
 	}
 
 	@Override
-	public void visitFloat(PrimitiveProperty primitiveProperty) {
-		if (this.object instanceof Float) {
+	public void visitFloat(PrimitiveProperty primitiveProperty)
+	{
+		if (this.object instanceof Float)
+		{
 			return;
 		}
 		this.throwError("Float");
 	}
 
 	@Override
-	public void visitBoolean(PrimitiveProperty primitiveProperty) {
-		if (this.object instanceof Boolean) {
+	public void visitBoolean(PrimitiveProperty primitiveProperty)
+	{
+		if (this.object instanceof Boolean)
+		{
 			return;
 		}
 
@@ -90,38 +106,47 @@ public class AssertObjectMatchesDataTypePropertyVisitor implements DataTypePrope
 	}
 
 	@Override
-	public void visitInstant(PrimitiveProperty primitiveProperty) {
-		if (this.object instanceof Instant) {
+	public void visitInstant(PrimitiveProperty primitiveProperty)
+	{
+		if (this.object instanceof Instant)
+		{
 			return;
 		}
 		this.throwError("Instant");
 	}
 
 	@Override
-	public void visitLocalDate(PrimitiveProperty primitiveProperty) {
-		if (this.object instanceof LocalDate) {
+	public void visitLocalDate(PrimitiveProperty primitiveProperty)
+	{
+		if (this.object instanceof LocalDate)
+		{
 			return;
 		}
 		this.throwError("LocalDate");
 	}
 
 	@Override
-	public void visitTemporalInstant(PrimitiveProperty primitiveProperty) {
-		if (this.object instanceof Instant) {
+	public void visitTemporalInstant(PrimitiveProperty primitiveProperty)
+	{
+		if (this.object instanceof Instant)
+		{
 			return;
 		}
 		this.throwError("Instant");
 	}
 
 	@Override
-	public void visitTemporalRange(PrimitiveProperty primitiveProperty) {
-		if (this.object instanceof Instant) {
+	public void visitTemporalRange(PrimitiveProperty primitiveProperty)
+	{
+		if (this.object instanceof Instant)
+		{
 			return;
 		}
 		this.throwError("Instant");
 	}
 
-	private void throwError(String expected) {
+	private void throwError(String expected)
+	{
 		String error = String.format(
 			"Expected %s but got object of type %s: %s",
 			expected,

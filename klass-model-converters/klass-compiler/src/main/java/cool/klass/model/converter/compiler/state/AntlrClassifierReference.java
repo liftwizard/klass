@@ -24,8 +24,9 @@ import javax.annotation.Nonnull;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.meta.grammar.KlassParser.ClassifierReferenceContext;
 
-public class AntlrClassifierReference extends AntlrElement {
-
+public class AntlrClassifierReference
+	extends AntlrElement
+{
 	@Nonnull
 	private final AntlrClassifierReferenceOwner classifierReferenceOwner;
 
@@ -37,7 +38,8 @@ public class AntlrClassifierReference extends AntlrElement {
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull AntlrClassifierReferenceOwner classifierReferenceOwner,
 		@Nonnull AntlrClassifier classifier
-	) {
+	)
+	{
 		super(classifierReferenceContext, compilationUnit);
 		this.classifierReferenceOwner = Objects.requireNonNull(classifierReferenceOwner);
 		this.classifier = Objects.requireNonNull(classifier);
@@ -45,12 +47,14 @@ public class AntlrClassifierReference extends AntlrElement {
 
 	@Nonnull
 	@Override
-	public Optional<IAntlrElement> getSurroundingElement() {
+	public Optional<IAntlrElement> getSurroundingElement()
+	{
 		return Optional.of(this.classifierReferenceOwner);
 	}
 
 	@Nonnull
-	public AntlrClassifier getClassifier() {
+	public AntlrClassifier getClassifier()
+	{
 		return this.classifier;
 	}
 }

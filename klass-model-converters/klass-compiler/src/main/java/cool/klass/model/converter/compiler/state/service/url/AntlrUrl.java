@@ -50,17 +50,20 @@ import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 import org.eclipse.collections.impl.tuple.Tuples;
 
-public class AntlrUrl extends AntlrElement {
-
+public class AntlrUrl
+	extends AntlrElement
+{
 	public static final AntlrUrl AMBIGUOUS = new AntlrUrl(
 		new UrlDeclarationContext(AMBIGUOUS_PARENT, -1),
 		Optional.empty(),
 		AntlrServiceGroup.AMBIGUOUS
 	);
 
-	private static final Object SENTINEL = new Object() {
+	private static final Object SENTINEL = new Object()
+	{
 		@Override
-		public String toString() {
+		public String toString()
+		{
 			return "SENTINEL";
 		}
 	};
@@ -85,77 +88,92 @@ public class AntlrUrl extends AntlrElement {
 		@Nonnull UrlDeclarationContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull AntlrServiceGroup serviceGroup
-	) {
+	)
+	{
 		super(elementContext, compilationUnit);
 		this.serviceGroup = Objects.requireNonNull(serviceGroup);
 	}
 
 	@Nonnull
 	@Override
-	public Optional<IAntlrElement> getSurroundingElement() {
+	public Optional<IAntlrElement> getSurroundingElement()
+	{
 		return Optional.of(this.serviceGroup);
 	}
 
 	@Override
-	public boolean isContext() {
+	public boolean isContext()
+	{
 		return true;
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore() {
+	public Pair<Token, Token> getContextBefore()
+	{
 		return Tuples.pair(this.getElementContext().getStart(), this.getElementContext().url().getStop());
 	}
 
 	@Nonnull
-	public AntlrServiceGroup getServiceGroup() {
+	public AntlrServiceGroup getServiceGroup()
+	{
 		return this.serviceGroup;
 	}
 
-	public MutableList<AntlrService> getServices() {
+	public MutableList<AntlrService> getServices()
+	{
 		return this.services.asUnmodifiable();
 	}
 
-	public AntlrService getServiceByContext(ServiceDeclarationContext ctx) {
+	public AntlrService getServiceByContext(ServiceDeclarationContext ctx)
+	{
 		return this.servicesByContext.get(ctx);
 	}
 
-	public int getNumPathSegments() {
+	public int getNumPathSegments()
+	{
 		return this.urlPathSegments.size();
 	}
 
-	public int getNumQueryParameters() {
+	public int getNumQueryParameters()
+	{
 		return this.queryParameters.getNumParameters();
 	}
 
-	public void enterUrlConstant(AntlrUrlConstant antlrUrlConstant) {
+	public void enterUrlConstant(AntlrUrlConstant antlrUrlConstant)
+	{
 		this.urlPathSegments.add(antlrUrlConstant);
 	}
 
-	public void enterPathParameterDeclaration(@Nonnull AntlrParameter pathParameter) {
+	public void enterPathParameterDeclaration(@Nonnull AntlrParameter pathParameter)
+	{
 		this.urlPathSegments.add(pathParameter);
 		this.urlParameters.enterParameterDeclaration(pathParameter);
 		this.pathParameters.enterParameterDeclaration(pathParameter);
 	}
 
-	public void enterQueryParameterDeclaration(@Nonnull AntlrParameter queryParameter) {
+	public void enterQueryParameterDeclaration(@Nonnull AntlrParameter queryParameter)
+	{
 		this.urlParameters.enterParameterDeclaration(queryParameter);
 		this.queryParameters.enterParameterDeclaration(queryParameter);
 	}
 
-	public void exitServiceDeclaration(@Nonnull AntlrService antlrService) {
+	public void exitServiceDeclaration(@Nonnull AntlrService antlrService)
+	{
 		this.services.add(antlrService);
 		this.servicesByVerb.compute(antlrService.getVerb().getVerb(), (name, builder) ->
 			builder == null ? antlrService : AntlrService.AMBIGUOUS
 		);
 
 		AntlrService duplicate = this.servicesByContext.put(antlrService.getElementContext(), antlrService);
-		if (duplicate != null) {
+		if (duplicate != null)
+		{
 			throw new AssertionError();
 		}
 	}
 
 	// <editor-fold desc="Report Compiler Errors">
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		this.reportDuplicateParameterErrors(compilerAnnotationHolder);
 		this.reportDuplicateVerbErrors(compilerAnnotationHolder);
 		this.reportNoVerbs(compilerAnnotationHolder);
@@ -164,33 +182,39 @@ public class AntlrUrl extends AntlrElement {
 		this.services.forEachWith(AntlrService::reportErrors, compilerAnnotationHolder);
 	}
 
-	private void reportDuplicateParameterErrors(CompilerAnnotationHolder compilerAnnotationHolder) {
-		ImmutableBag<String> duplicateNames = this.urlParameters.getParameters()
+	private void reportDuplicateParameterErrors(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		ImmutableBag<String> duplicateNames = this.urlParameters
+			.getParameters()
 			.collect(AntlrNamedElement::getName)
 			.toBag()
 			.selectByOccurrences((occurrences) -> occurrences > 1)
 			.toImmutable();
 
-		this.urlParameters.getParameters()
+		this.urlParameters
+			.getParameters()
 			.select((each) -> duplicateNames.contains(each.getName()))
 			.forEachWith(AntlrParameter::reportDuplicateParameterName, compilerAnnotationHolder);
 	}
 
-	private void reportDuplicateVerbErrors(CompilerAnnotationHolder compilerAnnotationHolder) {
-		ImmutableBag<Verb> duplicateVerbs = this.services.collect(AntlrService::getVerb)
+	private void reportDuplicateVerbErrors(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		ImmutableBag<Verb> duplicateVerbs = this.services
+			.collect(AntlrService::getVerb)
 			.collect(AntlrVerb::getVerb)
 			.toBag()
 			.selectByOccurrences((occurrences) -> occurrences > 1)
 			.toImmutable();
 
-		this.services.select((each) -> duplicateVerbs.contains(each.getVerb().getVerb())).forEachWith(
-			AntlrService::reportDuplicateVerb,
-			compilerAnnotationHolder
-		);
+		this.services
+			.select((each) -> duplicateVerbs.contains(each.getVerb().getVerb()))
+			.forEachWith(AntlrService::reportDuplicateVerb, compilerAnnotationHolder);
 	}
 
-	private void reportNoVerbs(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.services.isEmpty()) {
+	private void reportNoVerbs(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.services.isEmpty())
+		{
 			String message = String.format(
 				"Service url should declare at least one verb: '%s'.",
 				this.getElementContext().url().getText()
@@ -204,33 +228,41 @@ public class AntlrUrl extends AntlrElement {
 
 	@Nonnull
 	@Override
-	public UrlDeclarationContext getElementContext() {
+	public UrlDeclarationContext getElementContext()
+	{
 		return (UrlDeclarationContext) super.getElementContext();
 	}
 
 	@Nonnull
-	public OrderedMap<String, AntlrParameter> getFormalParametersByName() {
+	public OrderedMap<String, AntlrParameter> getFormalParametersByName()
+	{
 		return this.urlParameters.getParametersByName();
 	}
 
-	public ImmutableList<Object> getNormalizedPathSegments() {
+	public ImmutableList<Object> getNormalizedPathSegments()
+	{
 		return this.urlPathSegments.collect(this::toNormalized).toImmutable();
 	}
 
 	@Nonnull
-	private Object toNormalized(IAntlrElement element) {
-		if (element instanceof AntlrParameter) {
+	private Object toNormalized(IAntlrElement element)
+	{
+		if (element instanceof AntlrParameter)
+		{
 			return SENTINEL;
 		}
-		if (element instanceof AntlrUrlConstant urlConstant) {
+		if (element instanceof AntlrUrlConstant urlConstant)
+		{
 			return urlConstant.getName();
 		}
 		throw new AssertionError();
 	}
 
 	@Nonnull
-	public UrlBuilder build() {
-		if (this.elementBuilder != null) {
+	public UrlBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 
@@ -241,22 +273,25 @@ public class AntlrUrl extends AntlrElement {
 			this.serviceGroup.getElementBuilder()
 		);
 
-		ImmutableList<ElementBuilder<?>> pathSegments = this.urlPathSegments.<ElementBuilder<?>>collect(
-			this::buildPathSegment
-		).toImmutable();
+		ImmutableList<ElementBuilder<?>> pathSegments = this.urlPathSegments
+			.<ElementBuilder<?>>collect(this::buildPathSegment)
+			.toImmutable();
 		this.elementBuilder.setPathSegmentBuilders(pathSegments);
 
-		ImmutableList<ParameterBuilder> queryParameterBuilders = this.queryParameters.getParameters()
+		ImmutableList<ParameterBuilder> queryParameterBuilders = this.queryParameters
+			.getParameters()
 			.collect(AntlrParameter::build)
 			.toImmutable();
 		this.elementBuilder.setQueryParameterBuilders(queryParameterBuilders);
 
-		ImmutableList<ParameterBuilder> pathParameterBuilders = this.pathParameters.getParameters()
+		ImmutableList<ParameterBuilder> pathParameterBuilders = this.pathParameters
+			.getParameters()
 			.collect(AntlrParameter::getElementBuilder)
 			.toImmutable();
 		this.elementBuilder.setPathParameterBuilders(pathParameterBuilders);
 
-		ImmutableList<ParameterBuilder> parameterBuilders = this.urlParameters.getParameters()
+		ImmutableList<ParameterBuilder> parameterBuilders = this.urlParameters
+			.getParameters()
 			.collect(AntlrParameter::getElementBuilder)
 			.toImmutable();
 		this.elementBuilder.setParameterBuilders(parameterBuilders);
@@ -268,12 +303,15 @@ public class AntlrUrl extends AntlrElement {
 	}
 
 	@Nonnull
-	private ElementBuilder<?> buildPathSegment(IAntlrElement element) {
-		if (element instanceof AntlrUrlConstant antlrUrlConstant) {
+	private ElementBuilder<?> buildPathSegment(IAntlrElement element)
+	{
+		if (element instanceof AntlrUrlConstant antlrUrlConstant)
+		{
 			return antlrUrlConstant.build();
 		}
 
-		if (element instanceof AntlrParameter antlrParameter) {
+		if (element instanceof AntlrParameter antlrParameter)
+		{
 			return antlrParameter.build();
 		}
 
@@ -282,7 +320,8 @@ public class AntlrUrl extends AntlrElement {
 
 	@Override
 	@Nonnull
-	public UrlBuilder getElementBuilder() {
+	public UrlBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 }

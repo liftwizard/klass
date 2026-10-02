@@ -26,12 +26,13 @@ import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 
-public abstract class AbstractKlassDataGenerator {
-
+public abstract class AbstractKlassDataGenerator
+{
 	@Nonnull
 	protected final DataStore dataStore;
 
-	protected AbstractKlassDataGenerator(@Nonnull DataStore dataStore) {
+	protected AbstractKlassDataGenerator(@Nonnull DataStore dataStore)
+	{
 		this.dataStore = Objects.requireNonNull(dataStore);
 	}
 
@@ -39,7 +40,8 @@ public abstract class AbstractKlassDataGenerator {
 
 	protected abstract void generateIfRequired(Object persistentInstance, @Nonnull DataTypeProperty dataTypeProperty);
 
-	public void generateIfRequired(@Nonnull Klass klass) {
+	public void generateIfRequired(@Nonnull Klass klass)
+	{
 		Object persistentInstance = this.instantiate(klass);
 
 		klass
@@ -53,28 +55,33 @@ public abstract class AbstractKlassDataGenerator {
 	}
 
 	@Nonnull
-	private Object instantiate(@Nonnull Klass klass) {
+	private Object instantiate(@Nonnull Klass klass)
+	{
 		ImmutableList<DataTypeProperty> keyProperties = klass.getKeyProperties().reject(DataTypeProperty::isID);
 		ImmutableMap<DataTypeProperty, Object> keyValues = keyProperties.toImmutableMap(
 			(keyProperty) -> keyProperty,
 			this::getNonNullValue
 		);
 
-		if (klass.isValidTemporal()) {
+		if (klass.isValidTemporal())
+		{
 			throw new AssertionError();
 		}
 		return this.dataStore.instantiate(klass, keyValues);
 	}
 
-	protected final void generate(Object persistentInstance, @Nonnull DataTypeProperty dataTypeProperty) {
-		if (dataTypeProperty.isVersion()) {
+	protected final void generate(Object persistentInstance, @Nonnull DataTypeProperty dataTypeProperty)
+	{
+		if (dataTypeProperty.isVersion())
+		{
 			this.dataStore.setDataTypeProperty(persistentInstance, dataTypeProperty, 1);
 			return;
 		}
 
 		Object value = this.getNonNullValue(dataTypeProperty);
 		// Skip setting null values (e.g., for self-referential FKs to avoid self-loops)
-		if (value == null) {
+		if (value == null)
+		{
 			return;
 		}
 		this.dataStore.setDataTypeProperty(persistentInstance, dataTypeProperty, value);
