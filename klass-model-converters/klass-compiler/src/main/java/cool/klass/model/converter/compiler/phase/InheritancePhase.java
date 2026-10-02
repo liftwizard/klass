@@ -30,14 +30,17 @@ import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ImplementsDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.InterfaceReferenceContext;
 
-public class InheritancePhase extends AbstractCompilerPhase {
-
-	public InheritancePhase(@Nonnull CompilerState compilerState) {
+public class InheritancePhase
+	extends AbstractCompilerPhase
+{
+	public InheritancePhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Override
-	public void enterExtendsDeclaration(@Nonnull ExtendsDeclarationContext ctx) {
+	public void enterExtendsDeclaration(@Nonnull ExtendsDeclarationContext ctx)
+	{
 		super.enterExtendsDeclaration(ctx);
 
 		ClassReferenceContext classReferenceContext = ctx.classReference();
@@ -50,13 +53,15 @@ public class InheritancePhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void enterImplementsDeclaration(@Nonnull ImplementsDeclarationContext ctx) {
+	public void enterImplementsDeclaration(@Nonnull ImplementsDeclarationContext ctx)
+	{
 		super.enterImplementsDeclaration(ctx);
 
 		AntlrClassifier classifier = this.compilerState.getCompilerWalk().getClassifier();
 
 		List<InterfaceReferenceContext> interfaceReferenceContexts = ctx.interfaceReference();
-		for (InterfaceReferenceContext interfaceReferenceContext : interfaceReferenceContexts) {
+		for (InterfaceReferenceContext interfaceReferenceContext : interfaceReferenceContexts)
+		{
 			IdentifierContext identifier = interfaceReferenceContext.identifier();
 			String interfaceName = identifier.getText();
 			AntlrInterface iface = this.compilerState.getDomainModel().getInterfaceByName(interfaceName);

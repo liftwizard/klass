@@ -18,4 +18,7 @@ package cool.klass.model.converter.compiler.annotation.temporal;
 
 import cool.klass.model.converter.compiler.annotation.AbstractKlassCompilerErrorTestCase;
 
-public class RedundantTemporalModifiersErrorTest extends AbstractKlassCompilerErrorTestCase {}
+public class RedundantTemporalModifiersErrorTest
+	extends AbstractKlassCompilerErrorTestCase
+{
+}

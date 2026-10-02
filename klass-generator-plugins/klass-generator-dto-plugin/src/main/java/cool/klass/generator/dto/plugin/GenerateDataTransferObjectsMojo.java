@@ -34,8 +34,9 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
-public class GenerateDataTransferObjectsMojo extends AbstractGenerateMojo {
-
+public class GenerateDataTransferObjectsMojo
+	extends AbstractGenerateMojo
+{
 	@Parameter(
 		property = "outputDirectory",
 		defaultValue = "${project.build.directory}/generated-sources/data-transfer-objects"
@@ -43,21 +44,26 @@ public class GenerateDataTransferObjectsMojo extends AbstractGenerateMojo {
 	private File outputDirectory;
 
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.CLASSPATH;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
-		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
-				DomainModel domainModel = this.getDomainModel();
-				Path outputPath = this.outputDirectory.toPath();
-				var dataTransferObjectsGenerator = new DataTransferObjectsGenerator(domainModel);
-				dataTransferObjectsGenerator.writeDataTransferObjectFiles(outputPath);
-				return null;
-			});
+	public void execute()
+		throws MojoExecutionException
+	{
+		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () ->
+		{
+			DomainModel domainModel = this.getDomainModel();
+			Path outputPath = this.outputDirectory.toPath();
+			var dataTransferObjectsGenerator = new DataTransferObjectsGenerator(domainModel);
+			dataTransferObjectsGenerator.writeDataTransferObjectFiles(outputPath);
+			return null;
+		});
 
-		if (wasGenerated) {
+		if (wasGenerated)
+		{
 			this.getLog().info("Generated data transfer objects in: " + this.outputDirectory.getPath());
 		}
 

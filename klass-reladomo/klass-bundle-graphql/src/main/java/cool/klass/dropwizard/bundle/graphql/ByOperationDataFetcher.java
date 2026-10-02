@@ -35,8 +35,9 @@ import io.liftwizard.graphql.exception.LiftwizardGraphQLException;
 import io.liftwizard.model.reladomo.operation.compiler.ReladomoOperationCompiler;
 import org.eclipse.collections.api.factory.Lists;
 
-public class ByOperationDataFetcher implements DataFetcher<Object> {
-
+public class ByOperationDataFetcher
+	implements DataFetcher<Object>
+{
 	private final Klass klass;
 	private final ReladomoDataStore dataStore;
 	private final ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter;
@@ -47,7 +48,8 @@ public class ByOperationDataFetcher implements DataFetcher<Object> {
 		Klass klass,
 		ReladomoDataStore dataStore,
 		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
-	) {
+	)
+	{
 		this.klass = Objects.requireNonNull(klass);
 		this.dataStore = Objects.requireNonNull(dataStore);
 		this.reladomoTreeGraphqlConverter = Objects.requireNonNull(reladomoTreeGraphqlConverter);
@@ -56,7 +58,9 @@ public class ByOperationDataFetcher implements DataFetcher<Object> {
 	}
 
 	@Override
-	public Object get(DataFetchingEnvironment environment) throws Exception {
+	public Object get(DataFetchingEnvironment environment)
+		throws Exception
+	{
 		Map<String, Object> arguments = environment.getArguments();
 		var inputOperation = (String) arguments.get("operation");
 		Operation operation = this.compileOperation(this.finder, inputOperation);
@@ -74,11 +78,15 @@ public class ByOperationDataFetcher implements DataFetcher<Object> {
 		return serializerVisitor.getResult();
 	}
 
-	private Operation compileOperation(RelatedFinder<?> relatedFinder, String inputOperation) {
-		try {
+	private Operation compileOperation(RelatedFinder<?> relatedFinder, String inputOperation)
+	{
+		try
+		{
 			var compiler = new ReladomoOperationCompiler();
 			return compiler.compile(relatedFinder, inputOperation);
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e)
+		{
 			throw new LiftwizardGraphQLException(e.getMessage(), Lists.immutable.with(inputOperation), e);
 		}
 	}

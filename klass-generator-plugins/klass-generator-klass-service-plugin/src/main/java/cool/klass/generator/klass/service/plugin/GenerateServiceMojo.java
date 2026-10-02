@@ -33,18 +33,22 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
-public class GenerateServiceMojo extends AbstractGenerateMojo {
-
+public class GenerateServiceMojo
+	extends AbstractGenerateMojo
+{
 	@Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}/generated-sources/service")
 	private File outputDirectory;
 
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.CLASSPATH;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
+	public void execute()
+		throws MojoExecutionException
+	{
 		DomainModel domainModel = this.getDomainModel();
 		var generator = new KlassServiceGenerator(domainModel);
 		generator.writeFiles(this.outputDirectory.toPath());

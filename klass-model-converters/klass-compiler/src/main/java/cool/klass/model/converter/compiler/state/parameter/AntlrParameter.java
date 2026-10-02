@@ -45,8 +45,10 @@ import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.tuple.Pair;
 
 // TODO: Specific subclasses for the specific antlr context types
-public class AntlrParameter extends AntlrIdentifierElement implements AntlrMultiplicityOwner {
-
+public class AntlrParameter
+	extends AntlrIdentifierElement
+	implements AntlrMultiplicityOwner
+{
 	public static final AntlrParameter AMBIGUOUS = new AntlrParameter(
 		new ParserRuleContext(AMBIGUOUS_PARENT, -1),
 		Optional.empty(),
@@ -54,9 +56,11 @@ public class AntlrParameter extends AntlrIdentifierElement implements AntlrMulti
 		AMBIGUOUS_IDENTIFIER_CONTEXT,
 		AntlrEnumeration.AMBIGUOUS,
 		AntlrParameterizedProperty.AMBIGUOUS
-	) {
+	)
+	{
 		@Override
-		public String toString() {
+		public String toString()
+		{
 			return "Ambiguous parameter";
 		}
 	};
@@ -68,9 +72,11 @@ public class AntlrParameter extends AntlrIdentifierElement implements AntlrMulti
 		NOT_FOUND_IDENTIFIER_CONTEXT,
 		AntlrEnumeration.NOT_FOUND,
 		AntlrParameterizedProperty.AMBIGUOUS
-	) {
+	)
+	{
 		@Override
-		public String toString() {
+		public String toString()
+		{
 			return "Not found parameter";
 		}
 	};
@@ -97,7 +103,8 @@ public class AntlrParameter extends AntlrIdentifierElement implements AntlrMulti
 		@Nonnull IdentifierContext nameContext,
 		@Nonnull AntlrType type,
 		@Nonnull IAntlrElement parameterOwner
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, ordinal, nameContext);
 		this.type = Objects.requireNonNull(type);
 		this.parameterOwner = Objects.requireNonNull(parameterOwner);
@@ -105,54 +112,66 @@ public class AntlrParameter extends AntlrIdentifierElement implements AntlrMulti
 
 	@Nonnull
 	@Override
-	public Optional<IAntlrElement> getSurroundingElement() {
+	public Optional<IAntlrElement> getSurroundingElement()
+	{
 		return Optional.of(this.parameterOwner);
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore() {
+	public Pair<Token, Token> getContextBefore()
+	{
 		return this.getEntireContext();
 	}
 
 	@Override
-	protected Pattern getNamePattern() {
+	protected Pattern getNamePattern()
+	{
 		return MEMBER_NAME_PATTERN;
 	}
 
-	public int getNumModifiers() {
+	public int getNumModifiers()
+	{
 		return this.modifiers.size();
 	}
 
 	@Override
-	public void enterMultiplicity(@Nonnull AntlrMultiplicity multiplicity) {
-		if (this.multiplicity != null) {
+	public void enterMultiplicity(@Nonnull AntlrMultiplicity multiplicity)
+	{
+		if (this.multiplicity != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.multiplicity = Objects.requireNonNull(multiplicity);
 	}
 
-	public void enterModifier(AntlrModifier modifier) {
+	public void enterModifier(AntlrModifier modifier)
+	{
 		this.modifiers.add(modifier);
 	}
 
 	// <editor-fold desc="Report Compiler Errors">
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		this.reportNameErrors(compilerAnnotationHolder);
 		this.reportTypeErrors(compilerAnnotationHolder);
 	}
 
-	private void reportTypeErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.type != AntlrEnumeration.NOT_FOUND) {
+	private void reportTypeErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.type != AntlrEnumeration.NOT_FOUND)
+		{
 			return;
 		}
 
-		EnumerationReferenceContext offendingToken =
-			((EnumerationParameterDeclarationContext) this.getElementContext()).enumerationReference();
+		EnumerationReferenceContext offendingToken = (
+			(EnumerationParameterDeclarationContext) this.getElementContext()
+		).enumerationReference();
 		String message = String.format("Cannot find enumeration '%s'.", offendingToken.getText());
 		compilerAnnotationHolder.add("ERR_ENM_PAR", message, this, offendingToken);
 	}
 
-	public void reportDuplicateParameterName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportDuplicateParameterName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		String message = String.format("Duplicate parameter: '%s'.", this.getName());
 		compilerAnnotationHolder.add("ERR_DUP_PAR", message, this);
 	}
@@ -160,13 +179,16 @@ public class AntlrParameter extends AntlrIdentifierElement implements AntlrMulti
 	// </editor-fold>
 
 	@Nonnull
-	public AntlrType getType() {
+	public AntlrType getType()
+	{
 		return this.type;
 	}
 
 	@Nonnull
-	public ParameterBuilder build() {
-		if (this.elementBuilder != null) {
+	public ParameterBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.elementBuilder = new ParameterBuilder(
@@ -184,7 +206,8 @@ public class AntlrParameter extends AntlrIdentifierElement implements AntlrMulti
 
 	@Override
 	@Nonnull
-	public ParameterBuilder getElementBuilder() {
+	public ParameterBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 }

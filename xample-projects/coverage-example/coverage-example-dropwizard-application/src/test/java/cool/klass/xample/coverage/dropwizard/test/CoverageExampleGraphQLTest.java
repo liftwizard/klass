@@ -25,10 +25,12 @@ import io.liftwizard.junit.extension.match.FileSlurper;
 import org.eclipse.collections.api.factory.Maps;
 import org.junit.jupiter.api.Test;
 
-class CoverageExampleGraphQLTest extends AbstractCoverageTest {
-
+class CoverageExampleGraphQLTest
+	extends AbstractCoverageTest
+{
 	@Test
-	void graphqlSmokeTest() {
+	void graphqlSmokeTest()
+	{
 		Client client = this.getClient("graphqlSmokeTest");
 		String graphqlQueryName = this.getClass().getSimpleName() + ".graphqlSmokeTest.graphql";
 		String graphqlQuery = FileSlurper.slurp(graphqlQueryName, this.getClass());

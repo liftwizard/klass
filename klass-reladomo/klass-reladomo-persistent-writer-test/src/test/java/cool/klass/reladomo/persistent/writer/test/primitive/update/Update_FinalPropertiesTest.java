@@ -31,8 +31,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class Update_FinalPropertiesTest extends AbstractUpdateValidatorTest {
-
+public class Update_FinalPropertiesTest
+	extends AbstractUpdateValidatorTest
+{
 	@RegisterExtension
 	public final ReladomoExtensionBuilder reladomoTestExtension =
 		new ReladomoExtensionBuilder().setRuntimeConfigurationPath(
@@ -48,7 +49,8 @@ public class Update_FinalPropertiesTest extends AbstractUpdateValidatorTest {
 	private Object persistentInstance;
 
 	@BeforeEach
-	void setUp() {
+	void setUp()
+	{
 		Klass klass = this.getKlass();
 		DataTypeProperty keyProperty = klass.getDataTypePropertyByName("id");
 
@@ -58,24 +60,29 @@ public class Update_FinalPropertiesTest extends AbstractUpdateValidatorTest {
 	}
 
 	@Test
-	void validate_mutate_final() throws IOException {
+	void validate_mutate_final()
+		throws IOException
+	{
 		this.validate("validate_mutate_final", this.persistentInstance);
 	}
 
 	@Nonnull
 	@Override
-	protected Klass getKlass() {
+	protected Klass getKlass()
+	{
 		return this.domainModel.getClassByName("FinalProperties");
 	}
 
 	@Nonnull
 	@Override
-	protected OperationMode getMode() {
+	protected OperationMode getMode()
+	{
 		return OperationMode.REPLACE;
 	}
 
 	@Override
-	protected ImmutableMap<DataTypeProperty, Object> getPropertyDataFromUrl() {
+	protected ImmutableMap<DataTypeProperty, Object> getPropertyDataFromUrl()
+	{
 		DataTypeProperty dataTypeProperty = this.getKlass().getDataTypePropertyByName("id");
 		return Maps.immutable.with(dataTypeProperty, 1L);
 	}

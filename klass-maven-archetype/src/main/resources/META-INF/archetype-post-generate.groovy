@@ -28,7 +28,7 @@ def stripVmExtension(File dir) {
     dir.eachFileRecurse { file ->
         if (file.isFile() && file.name.endsWith('.vm')) {
             def newName = file.name[0..-4]  // Remove last 3 characters (.vm)
-            def newFile = new File(file.parentFile, newName)
+            def newFile = file.toPath().resolveSibling(newName).toFile()
             assert file.renameTo(newFile) : "Failed to rename ${file} to ${newFile}"
         }
     }

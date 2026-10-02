@@ -16,4 +16,7 @@
 
 package com.stackoverflow;
 
-public class QuestionDatabaseObject extends QuestionDatabaseObjectAbstract {}
+public class QuestionDatabaseObject
+	extends QuestionDatabaseObjectAbstract
+{
+}
