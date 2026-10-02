@@ -497,14 +497,16 @@ public class JavaConstantsMetaModelGenerator {
 
 	@Nonnull
 	private String getEnumerationLiteralsSourceCode(@Nonnull Enumeration enumeration) {
-		return enumeration
-			.getEnumerationLiterals()
-			.collect(this::getEnumerationLiteralSourceCode)
-			.makeString("\n")
-			// https://stackoverflow.com/questions/15888934/how-to-indent-a-multi-line-paragraph-being-written-to-the-console-in-java
-			// https://stackoverflow.com/a/15889069
-			// https://stackoverflow.com/questions/11125459/java-regex-negative-lookahead
-			.replaceAll("(?m)^(?!$)", "    ");
+		return (
+			enumeration
+				.getEnumerationLiterals()
+				.collect(this::getEnumerationLiteralSourceCode)
+				.makeString("\n")
+				// https://stackoverflow.com/questions/15888934/how-to-indent-a-multi-line-paragraph-being-written-to-the-console-in-java
+				// https://stackoverflow.com/a/15889069
+				// https://stackoverflow.com/questions/11125459/java-regex-negative-lookahead
+				.replaceAll("(?m)^(?!$)", "    ")
+		);
 	}
 
 	@Nonnull
@@ -1692,12 +1694,14 @@ public class JavaConstantsMetaModelGenerator {
 		@Nonnull ProjectionParent projectionParent,
 		String projectionParentName
 	) {
-		return projectionParent
-			.getChildren()
-			.collectWith(this::getProjectionChildSourceCode, projectionParentName)
-			.makeString("\n")
-			// https://stackoverflow.com/questions/15888934/how-to-indent-a-multi-line-paragraph-being-written-to-the-console-in-java
-			.replaceAll("(?m)^", "    ");
+		return (
+			projectionParent
+				.getChildren()
+				.collectWith(this::getProjectionChildSourceCode, projectionParentName)
+				.makeString("\n")
+				// https://stackoverflow.com/questions/15888934/how-to-indent-a-multi-line-paragraph-being-written-to-the-console-in-java
+				.replaceAll("(?m)^", "    ")
+		);
 	}
 
 	@Nonnull

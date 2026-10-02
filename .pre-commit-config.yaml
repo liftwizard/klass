@@ -29,10 +29,6 @@ repos:
             types: [file]
           - id: oxfmt
             name: vp fmt
-            # Formats json, json5, jsonc, yaml, markdown, html, css, and graphql via oxfmt.
-            # The Klass HTML generator emits oxfmt-canonical markup (e.g. single-quoted CSS
-            # in its inline <style>), so the generated golden fixtures are already formatted
-            # and oxfmt is a no-op on them. Nothing is excluded.
             entry: vp fmt --no-error-on-unmatched-pattern
             language: system
           - id: markdownlint-cli2
