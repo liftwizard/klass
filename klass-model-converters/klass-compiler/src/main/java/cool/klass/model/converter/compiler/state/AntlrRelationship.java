@@ -34,8 +34,9 @@ import cool.klass.model.meta.grammar.KlassParser.RelationshipContext;
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.tuple.Pair;
 
-public class AntlrRelationship extends AntlrElement {
-
+public class AntlrRelationship
+	extends AntlrElement
+{
 	private static final Converter<String, String> LOWER_CAMEL_TO_UPPER_CAMEL = CaseFormat.LOWER_CAMEL.converterTo(
 		CaseFormat.UPPER_CAMEL
 	);
@@ -52,68 +53,84 @@ public class AntlrRelationship extends AntlrElement {
 		@Nonnull RelationshipContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		AntlrAssociation association
-	) {
+	)
+	{
 		super(elementContext, compilationUnit);
 		this.association = Objects.requireNonNull(association);
 	}
 
 	@Nonnull
 	@Override
-	public RelationshipContext getElementContext() {
+	public RelationshipContext getElementContext()
+	{
 		return (RelationshipContext) super.getElementContext();
 	}
 
-	public void setCriteria(AntlrCriteria criteria) {
-		if (this.criteria != null) {
+	public void setCriteria(AntlrCriteria criteria)
+	{
+		if (this.criteria != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.criteria = Objects.requireNonNull(criteria);
 	}
 
-	public AntlrCriteria getCriteria() {
+	public AntlrCriteria getCriteria()
+	{
 		return this.criteria;
 	}
 
 	@Nonnull
 	@Override
-	public Optional<IAntlrElement> getSurroundingElement() {
+	public Optional<IAntlrElement> getSurroundingElement()
+	{
 		return Optional.ofNullable(this.association);
 	}
 
 	@Override
-	public boolean isContext() {
+	public boolean isContext()
+	{
 		return true;
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore() {
+	public Pair<Token, Token> getContextBefore()
+	{
 		return this.getEntireContext();
 	}
 
 	// <editor-fold desc="Report Compiler Errors">
-	public void reportErrors(CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		AntlrAssociationEnd sourceEnd = this.association.getSourceEnd();
 		AntlrAssociationEnd targetEnd = this.association.getTargetEnd();
 
-		if ((targetEnd.isToOne() && sourceEnd.isToMany()) || (sourceEnd.isToOne() && sourceEnd.isOwned())) {
+		if ((targetEnd.isToOne() && sourceEnd.isToMany()) || (sourceEnd.isToOne() && sourceEnd.isOwned()))
+		{
 			this.reportInferredEnd(
 				compilerAnnotationHolder,
 				sourceEnd,
 				AntlrRelationship::getSourceInferredRelationshipText
 			);
-		} else if ((sourceEnd.isToOne() && targetEnd.isToMany()) || (targetEnd.isToOne() && targetEnd.isOwned())) {
+		}
+		else if ((sourceEnd.isToOne() && targetEnd.isToMany()) || (targetEnd.isToOne() && targetEnd.isOwned()))
+		{
 			this.reportInferredEnd(
 				compilerAnnotationHolder,
 				targetEnd,
 				AntlrRelationship::getTargetInferredRelationshipText
 			);
-		} else if (sourceEnd.isToOne() && targetEnd.isToOneRequired()) {
+		}
+		else if (sourceEnd.isToOne() && targetEnd.isToOneRequired())
+		{
 			this.reportInferredEnd(
 				compilerAnnotationHolder,
 				sourceEnd,
 				AntlrRelationship::getSourceInferredRelationshipText
 			);
-		} else if (targetEnd.isToOne() && sourceEnd.isToOneRequired()) {
+		}
+		else if (targetEnd.isToOne() && sourceEnd.isToOneRequired())
+		{
 			this.reportInferredEnd(
 				compilerAnnotationHolder,
 				targetEnd,
@@ -128,8 +145,10 @@ public class AntlrRelationship extends AntlrElement {
 		CompilerAnnotationHolder compilerAnnotationHolder,
 		AntlrAssociationEnd associationEnd,
 		Function<AntlrAssociationEnd, String> sourceCodeTextFunction
-	) {
-		if (this.compilationUnit.flatMap(CompilationUnit::getMacroElement).isPresent()) {
+	)
+	{
+		if (this.compilationUnit.flatMap(CompilationUnit::getMacroElement).isPresent())
+		{
 			return;
 		}
 
@@ -140,7 +159,8 @@ public class AntlrRelationship extends AntlrElement {
 
 		String sourceCodeText = sourceCodeTextFunction.apply(associationEnd);
 
-		if (sourceCodeText.equals(sourceWithoutSpaceText)) {
+		if (sourceCodeText.equals(sourceWithoutSpaceText))
+		{
 			compilerAnnotationHolder.add(
 				"ERR_REL_INF",
 				"Relationship in association '%s' is inferred and can be removed.".formatted(
@@ -156,7 +176,8 @@ public class AntlrRelationship extends AntlrElement {
 	// </editor-fold>
 
 	// relationship this.otherTypeKey == OtherType.key
-	private static String getSourceInferredRelationshipText(AntlrAssociationEnd associationEnd) {
+	private static String getSourceInferredRelationshipText(AntlrAssociationEnd associationEnd)
+	{
 		AntlrClass oppositeType = associationEnd.getOpposite().getType();
 
 		return oppositeType
@@ -173,7 +194,8 @@ public class AntlrRelationship extends AntlrElement {
 	}
 
 	// relationship this.key == OtherType.thisTypeKey
-	private static String getTargetInferredRelationshipText(AntlrAssociationEnd associationEnd) {
+	private static String getTargetInferredRelationshipText(AntlrAssociationEnd associationEnd)
+	{
 		AntlrClass oppositeType = associationEnd.getOpposite().getType();
 
 		return oppositeType

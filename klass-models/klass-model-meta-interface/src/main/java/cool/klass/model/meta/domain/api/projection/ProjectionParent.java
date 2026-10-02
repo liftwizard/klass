@@ -25,25 +25,32 @@ import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public interface ProjectionParent extends ProjectionElement {
+public interface ProjectionParent
+	extends ProjectionElement
+{
 	@Nonnull
 	Classifier getClassifier();
 
-	default void visitChildren(ProjectionListener projectionListener) {
-		for (ProjectionElement projectionElement : this.getChildren()) {
+	default void visitChildren(ProjectionListener projectionListener)
+	{
+		for (ProjectionElement projectionElement : this.getChildren())
+		{
 			projectionElement.visit(projectionListener);
 		}
 	}
 
-	default ImmutableList<ProjectionReferenceProperty> getReferencePropertyChildren() {
+	default ImmutableList<ProjectionReferenceProperty> getReferencePropertyChildren()
+	{
 		return this.getChildren().selectInstancesOf(ProjectionReferenceProperty.class);
 	}
 
-	default ImmutableList<ReferenceProperty> getReferenceProperties() {
+	default ImmutableList<ReferenceProperty> getReferenceProperties()
+	{
 		return this.getReferencePropertyChildren().collect(ProjectionReferenceProperty::getProperty);
 	}
 
-	default ImmutableList<AssociationEnd> getAssociationEndsOutsideProjection() {
+	default ImmutableList<AssociationEnd> getAssociationEndsOutsideProjection()
+	{
 		ImmutableList<ReferenceProperty> referencePropertiesInProjection = this.getReferenceProperties();
 
 		ImmutableList<AssociationEnd> optionalReturnPath = Lists.immutable
@@ -53,8 +60,10 @@ public interface ProjectionParent extends ProjectionElement {
 			.selectInstancesOf(AssociationEnd.class)
 			.collect(AssociationEnd::getOpposite);
 
-		if (this.getClassifier() instanceof Klass) {
-			return ((Klass) this.getClassifier()).getAssociationEnds()
+		if (this.getClassifier() instanceof Klass)
+		{
+			return ((Klass) this.getClassifier())
+				.getAssociationEnds()
 				.reject(referencePropertiesInProjection::contains)
 				.reject(optionalReturnPath::contains);
 		}
@@ -62,7 +71,8 @@ public interface ProjectionParent extends ProjectionElement {
 		throw new AssertionError(this.getClassifier());
 	}
 
-	default boolean hasPolymorphicChildren() {
+	default boolean hasPolymorphicChildren()
+	{
 		return this.getChildren()
 			.asLazy()
 			.selectInstancesOf(ProjectionChild.class)

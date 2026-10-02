@@ -31,8 +31,9 @@ import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.DataFetchingFieldSelectionSet;
 import org.eclipse.collections.api.list.MutableList;
 
-public class AllDataFetcher implements DataFetcher<Object> {
-
+public class AllDataFetcher
+	implements DataFetcher<Object>
+{
 	private final Klass klass;
 	private final ReladomoDataStore dataStore;
 	private final ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter;
@@ -41,14 +42,17 @@ public class AllDataFetcher implements DataFetcher<Object> {
 		Klass klass,
 		ReladomoDataStore dataStore,
 		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
-	) {
+	)
+	{
 		this.klass = Objects.requireNonNull(klass);
 		this.dataStore = Objects.requireNonNull(dataStore);
 		this.reladomoTreeGraphqlConverter = Objects.requireNonNull(reladomoTreeGraphqlConverter);
 	}
 
 	@Override
-	public Object get(DataFetchingEnvironment environment) throws Exception {
+	public Object get(DataFetchingEnvironment environment)
+		throws Exception
+	{
 		List<Object> data = this.dataStore.findAll(this.klass);
 
 		DataFetchingFieldSelectionSet selectionSet = environment.getSelectionSet();

@@ -51,8 +51,9 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.list.mutable.ListAdapter;
 
-public class ExpressionValueVisitor extends KlassBaseVisitor<AntlrExpressionValue> {
-
+public class ExpressionValueVisitor
+	extends KlassBaseVisitor<AntlrExpressionValue>
+{
 	@Nonnull
 	private final CompilerState compilerState;
 
@@ -66,7 +67,8 @@ public class ExpressionValueVisitor extends KlassBaseVisitor<AntlrExpressionValu
 		@Nonnull CompilerState compilerState,
 		@Nonnull AntlrClassifier thisReference,
 		IAntlrElement expressionValueOwner
-	) {
+	)
+	{
 		this.compilerState = Objects.requireNonNull(compilerState);
 		this.thisReference = Objects.requireNonNull(thisReference);
 		this.expressionValueOwner = Objects.requireNonNull(expressionValueOwner);
@@ -74,13 +76,15 @@ public class ExpressionValueVisitor extends KlassBaseVisitor<AntlrExpressionValu
 
 	@Nonnull
 	@Override
-	public AntlrExpressionValue visitTerminal(TerminalNode node) {
+	public AntlrExpressionValue visitTerminal(TerminalNode node)
+	{
 		throw new AssertionError();
 	}
 
 	@Nonnull
 	@Override
-	public AntlrLiteralListValue visitLiteralList(@Nonnull LiteralListContext ctx) {
+	public AntlrLiteralListValue visitLiteralList(@Nonnull LiteralListContext ctx)
+	{
 		var literalListValue = new AntlrLiteralListValue(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
@@ -98,7 +102,8 @@ public class ExpressionValueVisitor extends KlassBaseVisitor<AntlrExpressionValu
 	private AbstractAntlrLiteralValue getAntlrLiteralValue(
 		@Nonnull LiteralContext literalCtx,
 		@Nonnull IAntlrElement expressionValueOwner
-	) {
+	)
+	{
 		// TODO: Recurse here using a different owner?
 		KlassVisitor<AbstractAntlrLiteralValue> visitor = new LiteralValueVisitor(
 			this.compilerState,
@@ -109,9 +114,11 @@ public class ExpressionValueVisitor extends KlassBaseVisitor<AntlrExpressionValu
 
 	@Nonnull
 	@Override
-	public AntlrExpressionValue visitNativeLiteral(@Nonnull NativeLiteralContext ctx) {
+	public AntlrExpressionValue visitNativeLiteral(@Nonnull NativeLiteralContext ctx)
+	{
 		String keyword = ctx.getText();
-		return switch (keyword) {
+		return switch (keyword)
+		{
 			case "user" -> new AntlrUserLiteral(
 				ctx,
 				Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
@@ -124,7 +131,8 @@ public class ExpressionValueVisitor extends KlassBaseVisitor<AntlrExpressionValu
 
 	@Nonnull
 	@Override
-	public AntlrParameterReference visitParameterReference(@Nonnull ParameterReferenceContext ctx) {
+	public AntlrParameterReference visitParameterReference(@Nonnull ParameterReferenceContext ctx)
+	{
 		IdentifierContext identifier = ctx.identifier();
 		String variableName = identifier.getText();
 		return new AntlrParameterReference(
@@ -137,12 +145,14 @@ public class ExpressionValueVisitor extends KlassBaseVisitor<AntlrExpressionValu
 
 	@Nonnull
 	@Override
-	public AntlrThisMemberReferencePath visitThisMemberReferencePath(@Nonnull ThisMemberReferencePathContext ctx) {
+	public AntlrThisMemberReferencePath visitThisMemberReferencePath(@Nonnull ThisMemberReferencePathContext ctx)
+	{
 		MemberReferenceContext memberReferenceContext = ctx.memberReference();
 
 		var currentClass = (AntlrClass) this.thisReference;
 		MutableList<AntlrAssociationEnd> associationEnds = Lists.mutable.empty();
-		for (AssociationEndReferenceContext associationEndReferenceContext : ctx.associationEndReference()) {
+		for (AssociationEndReferenceContext associationEndReferenceContext : ctx.associationEndReference())
+		{
 			// TODO: Or parameterizedPropertyName?
 			String associationEndName = associationEndReferenceContext.identifier().getText();
 			AntlrAssociationEnd associationEnd = currentClass.getAssociationEndByName(associationEndName);
@@ -165,7 +175,8 @@ public class ExpressionValueVisitor extends KlassBaseVisitor<AntlrExpressionValu
 
 	@Nonnull
 	@Override
-	public AntlrTypeMemberReferencePath visitTypeMemberReferencePath(@Nonnull TypeMemberReferencePathContext ctx) {
+	public AntlrTypeMemberReferencePath visitTypeMemberReferencePath(@Nonnull TypeMemberReferencePathContext ctx)
+	{
 		String className = ctx.classReference().identifier().getText();
 		AntlrClass klass = this.compilerState.getDomainModel().getClassByName(className);
 
@@ -173,7 +184,8 @@ public class ExpressionValueVisitor extends KlassBaseVisitor<AntlrExpressionValu
 
 		AntlrClass currentClass = klass;
 		MutableList<AntlrAssociationEnd> associationEnds = Lists.mutable.empty();
-		for (AssociationEndReferenceContext associationEndReferenceContext : ctx.associationEndReference()) {
+		for (AssociationEndReferenceContext associationEndReferenceContext : ctx.associationEndReference())
+		{
 			// TODO: Or parameterizedPropertyName?
 			String associationEndName = associationEndReferenceContext.identifier().getText();
 			AntlrAssociationEnd associationEnd = currentClass.getAssociationEndByName(associationEndName);
@@ -195,7 +207,8 @@ public class ExpressionValueVisitor extends KlassBaseVisitor<AntlrExpressionValu
 	}
 
 	@Override
-	public AbstractAntlrLiteralValue visitLiteral(LiteralContext ctx) {
+	public AbstractAntlrLiteralValue visitLiteral(LiteralContext ctx)
+	{
 		return this.getAntlrLiteralValue(ctx, this.expressionValueOwner);
 	}
 }

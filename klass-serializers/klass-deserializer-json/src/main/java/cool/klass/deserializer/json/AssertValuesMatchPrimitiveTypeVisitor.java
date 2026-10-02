@@ -29,8 +29,9 @@ import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.stack.MutableStack;
 
-public class AssertValuesMatchPrimitiveTypeVisitor implements PrimitiveTypeVisitor {
-
+public class AssertValuesMatchPrimitiveTypeVisitor
+	implements PrimitiveTypeVisitor
+{
 	@Nonnull
 	private final PrimitiveProperty primitiveProperty;
 
@@ -59,7 +60,8 @@ public class AssertValuesMatchPrimitiveTypeVisitor implements PrimitiveTypeVisit
 		@Nonnull MutableStack<String> contextStack,
 		String severity,
 		@Nonnull MutableList<String> annotations
-	) {
+	)
+	{
 		this.primitiveProperty = Objects.requireNonNull(primitiveProperty);
 		this.jsonDataTypeValue = Objects.requireNonNull(jsonDataTypeValue);
 		this.persistentValue = persistentValue;
@@ -70,8 +72,10 @@ public class AssertValuesMatchPrimitiveTypeVisitor implements PrimitiveTypeVisit
 	}
 
 	@Override
-	public void visitString() {
-		if (!this.jsonDataTypeValue.isTextual()) {
+	public void visitString()
+	{
+		if (!this.jsonDataTypeValue.isTextual())
+		{
 			return;
 		}
 
@@ -80,8 +84,10 @@ public class AssertValuesMatchPrimitiveTypeVisitor implements PrimitiveTypeVisit
 	}
 
 	@Override
-	public void visitInteger() {
-		if (!this.jsonDataTypeValue.isIntegralNumber() || !this.jsonDataTypeValue.canConvertToInt()) {
+	public void visitInteger()
+	{
+		if (!this.jsonDataTypeValue.isIntegralNumber() || !this.jsonDataTypeValue.canConvertToInt())
+		{
 			return;
 		}
 
@@ -90,8 +96,10 @@ public class AssertValuesMatchPrimitiveTypeVisitor implements PrimitiveTypeVisit
 	}
 
 	@Override
-	public void visitLong() {
-		if (!this.jsonDataTypeValue.isIntegralNumber() || !this.jsonDataTypeValue.canConvertToLong()) {
+	public void visitLong()
+	{
+		if (!this.jsonDataTypeValue.isIntegralNumber() || !this.jsonDataTypeValue.canConvertToLong())
+		{
 			return;
 		}
 
@@ -100,13 +108,15 @@ public class AssertValuesMatchPrimitiveTypeVisitor implements PrimitiveTypeVisit
 	}
 
 	@Override
-	public void visitDouble() {
+	public void visitDouble()
+	{
 		if (
 			!this.jsonDataTypeValue.isDouble()
 			&& !this.jsonDataTypeValue.isFloat()
 			&& !this.jsonDataTypeValue.isInt()
 			&& !this.jsonDataTypeValue.isLong()
-		) {
+		)
+		{
 			return;
 		}
 
@@ -115,14 +125,16 @@ public class AssertValuesMatchPrimitiveTypeVisitor implements PrimitiveTypeVisit
 	}
 
 	@Override
-	public void visitFloat() {
+	public void visitFloat()
+	{
 		if (
 			(!this.jsonDataTypeValue.isDouble()
 				&& !this.jsonDataTypeValue.isFloat()
 				&& !this.jsonDataTypeValue.isInt()
 				&& !this.jsonDataTypeValue.isLong())
 			|| !this.hasValidFloatString()
-		) {
+		)
+		{
 			return;
 		}
 
@@ -130,7 +142,8 @@ public class AssertValuesMatchPrimitiveTypeVisitor implements PrimitiveTypeVisit
 		this.assertValuesMatch(incomingValue);
 	}
 
-	private boolean hasValidFloatString() {
+	private boolean hasValidFloatString()
+	{
 		double doubleValue = this.jsonDataTypeValue.doubleValue();
 		float floatValue = this.jsonDataTypeValue.floatValue();
 		String doubleString = Double.toString(doubleValue);
@@ -139,8 +152,10 @@ public class AssertValuesMatchPrimitiveTypeVisitor implements PrimitiveTypeVisit
 	}
 
 	@Override
-	public void visitBoolean() {
-		if (!this.jsonDataTypeValue.isBoolean()) {
+	public void visitBoolean()
+	{
+		if (!this.jsonDataTypeValue.isBoolean())
+		{
 			return;
 		}
 
@@ -149,21 +164,26 @@ public class AssertValuesMatchPrimitiveTypeVisitor implements PrimitiveTypeVisit
 	}
 
 	@Override
-	public void visitInstant() {
+	public void visitInstant()
+	{
 		this.visitTemporal();
 	}
 
 	@Override
-	public void visitLocalDate() {
-		if (!this.jsonDataTypeValue.isTextual()) {
+	public void visitLocalDate()
+	{
+		if (!this.jsonDataTypeValue.isTextual())
+		{
 			return;
 		}
 
 		String text = this.jsonDataTypeValue.textValue();
-		if (text.equals("now")) {
+		if (text.equals("now"))
+		{
 			throw new RuntimeException("TODO: Support now as a value for dates.");
 		}
-		if (text.equals("infinity")) {
+		if (text.equals("infinity"))
+		{
 			throw new RuntimeException("TODO: Support infinity as a value for dates.");
 		}
 
@@ -172,40 +192,51 @@ public class AssertValuesMatchPrimitiveTypeVisitor implements PrimitiveTypeVisit
 	}
 
 	@Override
-	public void visitTemporalInstant() {
+	public void visitTemporalInstant()
+	{
 		this.visitTemporal();
 	}
 
 	@Override
-	public void visitTemporalRange() {
+	public void visitTemporalRange()
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitTemporalRange() not implemented yet"
 		);
 	}
 
-	private void visitTemporal() {
-		if (!this.jsonDataTypeValue.isTextual()) {
+	private void visitTemporal()
+	{
+		if (!this.jsonDataTypeValue.isTextual())
+		{
 			return;
 		}
 
 		String text = this.jsonDataTypeValue.textValue();
-		if (text.equals("now")) {
+		if (text.equals("now"))
+		{
 			throw new RuntimeException("TODO: Support now as a value for dates.");
 		}
-		if (text.equals("infinity")) {
+		if (text.equals("infinity"))
+		{
 			throw new RuntimeException("TODO: Support infinity as a value for dates.");
 		}
 
-		try {
+		try
+		{
 			Instant incomingValue = Instant.parse(text);
 			this.assertValuesMatch(incomingValue);
-		} catch (DateTimeParseException e) {
+		}
+		catch (DateTimeParseException e)
+		{
 			// Deliberately empty
 		}
 	}
 
-	private void assertValuesMatch(Object incomingValue) {
-		if (Objects.equals(this.persistentValue, incomingValue)) {
+	private void assertValuesMatch(Object incomingValue)
+	{
+		if (Objects.equals(this.persistentValue, incomingValue))
+		{
 			return;
 		}
 
@@ -224,7 +255,8 @@ public class AssertValuesMatchPrimitiveTypeVisitor implements PrimitiveTypeVisit
 		this.annotations.add(annotation);
 	}
 
-	private String getContextString() {
+	private String getContextString()
+	{
 		return this.contextStack.toList().asReversed().makeString(".");
 	}
 }

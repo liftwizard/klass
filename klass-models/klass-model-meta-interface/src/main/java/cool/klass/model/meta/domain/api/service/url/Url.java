@@ -24,7 +24,9 @@ import cool.klass.model.meta.domain.api.service.Service;
 import cool.klass.model.meta.domain.api.service.ServiceGroup;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public interface Url extends Element {
+public interface Url
+	extends Element
+{
 	@Nonnull
 	ServiceGroup getServiceGroup();
 
@@ -38,7 +40,8 @@ public interface Url extends Element {
 
 	ImmutableList<Service> getServices();
 
-	default String getUrlString() {
+	default String getUrlString()
+	{
 		return this.getUrlPathSegments().makeString("/", "/", "");
 	}
 }

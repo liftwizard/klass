@@ -18,25 +18,30 @@ package klass.model.meta.domain.dropwizard.test;
 
 import org.junit.jupiter.api.Test;
 
-class ServiceGroupResourceManualTest extends AbstractResourceTestCase {
-
+class ServiceGroupResourceManualTest
+	extends AbstractResourceTestCase
+{
 	@Test
-	void getAllMeta() {
+	void getAllMeta()
+	{
 		this.assertUrlReturns("getAllMeta", "/meta/serviceGroup");
 	}
 
 	@Test
-	void getByName() {
+	void getByName()
+	{
 		this.assertUrlReturns("getByName", "/meta/serviceGroup/ServiceGroupResource");
 	}
 
 	@Test
-	void getByNameKlassResource() {
+	void getByNameKlassResource()
+	{
 		this.assertUrlReturns("getByNameKlassResource", "/meta/serviceGroup/KlassResource");
 	}
 
 	@Test
-	void deleteByNameAndVerifyGone() {
+	void deleteByNameAndVerifyGone()
+	{
 		this.assertUrlDeletes("deleteByName", "/meta/serviceGroup/KlassResource");
 		this.assertUrlReturnsGone("getByNameAfterDelete", "/meta/serviceGroup/KlassResource");
 	}

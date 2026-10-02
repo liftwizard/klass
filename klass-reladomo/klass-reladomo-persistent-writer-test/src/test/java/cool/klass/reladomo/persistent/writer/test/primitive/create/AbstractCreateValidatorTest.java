@@ -36,8 +36,9 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public abstract class AbstractCreateValidatorTest extends AbstractValidatorTest {
-
+public abstract class AbstractCreateValidatorTest
+	extends AbstractValidatorTest
+{
 	@RegisterExtension
 	public final ReladomoExtensionBuilder reladomoTestExtension =
 		new ReladomoExtensionBuilder().setRuntimeConfigurationPath(
@@ -50,7 +51,8 @@ public abstract class AbstractCreateValidatorTest extends AbstractValidatorTest 
 	);
 
 	@Override
-	protected final void validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance) {
+	protected final void validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance)
+	{
 		Klass klass = this.getKlass();
 		ImmutableMap<DataTypeProperty, Object> propertyDataFromUrl = this.getPropertyDataFromUrl();
 		propertyDataFromUrl.forEachKey((property) -> assertThat(property.getOwningClassifier()).isSameAs(klass));

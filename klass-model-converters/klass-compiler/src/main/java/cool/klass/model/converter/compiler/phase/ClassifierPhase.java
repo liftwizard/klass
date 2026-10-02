@@ -32,8 +32,9 @@ import cool.klass.model.meta.grammar.KlassParser.ClassifierModifierContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.InterfaceDeclarationContext;
 
-public class ClassifierPhase extends AbstractCompilerPhase {
-
+public class ClassifierPhase
+	extends AbstractCompilerPhase
+{
 	@Nullable
 	private AntlrClassifier classifier;
 
@@ -43,12 +44,14 @@ public class ClassifierPhase extends AbstractCompilerPhase {
 	@Nullable
 	private AntlrClass klass;
 
-	public ClassifierPhase(@Nonnull CompilerState compilerState) {
+	public ClassifierPhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Override
-	public void enterInterfaceDeclaration(@Nonnull InterfaceDeclarationContext ctx) {
+	public void enterInterfaceDeclaration(@Nonnull InterfaceDeclarationContext ctx)
+	{
 		super.enterInterfaceDeclaration(ctx);
 
 		IdentifierContext identifier = ctx.interfaceHeader().identifier();
@@ -62,7 +65,8 @@ public class ClassifierPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitInterfaceDeclaration(@Nonnull InterfaceDeclarationContext ctx) {
+	public void exitInterfaceDeclaration(@Nonnull InterfaceDeclarationContext ctx)
+	{
 		this.compilerState.getDomainModel().exitInterfaceDeclaration(this.iface);
 		this.iface = null;
 		this.classifier = null;
@@ -70,7 +74,8 @@ public class ClassifierPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void enterClassDeclaration(@Nonnull ClassDeclarationContext ctx) {
+	public void enterClassDeclaration(@Nonnull ClassDeclarationContext ctx)
+	{
 		super.enterClassDeclaration(ctx);
 
 		String classOrUserKeyword = ctx.classHeader().classOrUser().getText();
@@ -86,7 +91,8 @@ public class ClassifierPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitClassDeclaration(@Nonnull ClassDeclarationContext ctx) {
+	public void exitClassDeclaration(@Nonnull ClassDeclarationContext ctx)
+	{
 		this.compilerState.getDomainModel().exitClassDeclaration(this.klass);
 		this.klass = null;
 		this.classifier = null;
@@ -94,13 +100,15 @@ public class ClassifierPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void enterAbstractDeclaration(@Nonnull AbstractDeclarationContext ctx) {
+	public void enterAbstractDeclaration(@Nonnull AbstractDeclarationContext ctx)
+	{
 		super.enterAbstractDeclaration(ctx);
 		this.klass.setAbstract(true);
 	}
 
 	@Override
-	public void enterClassifierModifier(@Nonnull ClassifierModifierContext ctx) {
+	public void enterClassifierModifier(@Nonnull ClassifierModifierContext ctx)
+	{
 		super.enterClassifierModifier(ctx);
 
 		int ordinal = this.classifier.getNumClassifierModifiers();

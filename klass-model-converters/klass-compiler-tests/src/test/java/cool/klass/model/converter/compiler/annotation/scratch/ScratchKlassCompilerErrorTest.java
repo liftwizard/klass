@@ -19,11 +19,13 @@ package cool.klass.model.converter.compiler.annotation.scratch;
 import cool.klass.model.converter.compiler.annotation.AbstractKlassCompilerErrorTestCase;
 import org.junit.jupiter.api.Test;
 
-class ScratchKlassCompilerErrorTest extends AbstractKlassCompilerErrorTestCase {
-
+class ScratchKlassCompilerErrorTest
+	extends AbstractKlassCompilerErrorTestCase
+{
 	@Test
 	@Override
-	public void smokeTest() {
+	public void smokeTest()
+	{
 		// TODO 2025-03-27:
 		this.assertCompilationSucceeds(true);
 	}

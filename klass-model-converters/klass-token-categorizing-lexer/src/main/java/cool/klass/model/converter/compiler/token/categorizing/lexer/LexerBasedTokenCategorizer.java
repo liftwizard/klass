@@ -26,13 +26,15 @@ import org.eclipse.collections.api.map.MapIterable;
 import org.eclipse.collections.api.map.MutableMapIterable;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
-public final class LexerBasedTokenCategorizer {
-
-	private LexerBasedTokenCategorizer() {
+public final class LexerBasedTokenCategorizer
+{
+	private LexerBasedTokenCategorizer()
+	{
 		throw new AssertionError("Suppress default constructor for noninstantiability");
 	}
 
-	public static MapIterable<Token, TokenCategory> findTokenCategoriesFromLexer(BufferedTokenStream tokenStream) {
+	public static MapIterable<Token, TokenCategory> findTokenCategoriesFromLexer(BufferedTokenStream tokenStream)
+	{
 		MutableMapIterable<Token, TokenCategory> tokenCategories = OrderedMapAdapter.adapt(new LinkedHashMap<>());
 		findTokenCategoriesFromLexer(tokenStream, tokenCategories);
 		return tokenCategories.asUnmodifiable();
@@ -41,8 +43,10 @@ public final class LexerBasedTokenCategorizer {
 	public static void findTokenCategoriesFromLexer(
 		BufferedTokenStream tokenStream,
 		MutableMapIterable<Token, TokenCategory> tokenCategories
-	) {
-		for (Token token : tokenStream.getTokens()) {
+	)
+	{
+		for (Token token : tokenStream.getTokens())
+		{
 			LexerBasedTokenCategorizer.findTokenCategoriesFromLexer(token, tokenCategories);
 		}
 	}
@@ -50,29 +54,36 @@ public final class LexerBasedTokenCategorizer {
 	private static void findTokenCategoriesFromLexer(
 		Token token,
 		MutableMapIterable<Token, TokenCategory> tokenCategories
-	) {
+	)
+	{
 		TokenCategory tokenCategory = LexerBasedTokenCategorizer.getTokenCategory(token);
-		if (tokenCategory == null) {
+		if (tokenCategory == null)
+		{
 			return;
 		}
 
 		TokenCategory duplicate = tokenCategories.put(token, tokenCategory);
-		if (duplicate != null) {
+		if (duplicate != null)
+		{
 			throw new AssertionError(token);
 		}
 	}
 
-	private static TokenCategory getTokenCategory(Token token) {
+	private static TokenCategory getTokenCategory(Token token)
+	{
 		int channel = token.getChannel();
-		if (channel == KlassLexer.COMMENTS_CHANNEL) {
+		if (channel == KlassLexer.COMMENTS_CHANNEL)
+		{
 			return TokenCategory.BLOCK_COMMENT;
 		}
-		if (channel == KlassLexer.LINE_COMMENTS_CHANNEL) {
+		if (channel == KlassLexer.LINE_COMMENTS_CHANNEL)
+		{
 			return TokenCategory.LINE_COMMENT;
 		}
 
 		int tokenType = token.getType();
-		return switch (tokenType) {
+		return switch (tokenType)
+		{
 			case KlassLexer.StringLiteral -> TokenCategory.STRING_LITERAL;
 			case KlassLexer.IntegerLiteral -> TokenCategory.INTEGER_LITERAL;
 			case KlassLexer.BooleanLiteral -> TokenCategory.BOOLEAN_LITERAL;

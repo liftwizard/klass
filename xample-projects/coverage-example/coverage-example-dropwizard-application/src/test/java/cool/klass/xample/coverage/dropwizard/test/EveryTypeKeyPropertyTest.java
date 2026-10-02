@@ -24,15 +24,18 @@ import javax.ws.rs.core.Response.Status;
 import io.liftwizard.junit.extension.match.FileSlurper;
 import org.junit.jupiter.api.Test;
 
-class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
-
+class EveryTypeKeyPropertyTest
+	extends AbstractCoverageTest
+{
 	@Test
-	void get() {
+	void get()
+	{
 		this.assertUrlReturns("get", "everyTypeKeyProperty");
 	}
 
 	@Test
-	void postSingle() {
+	void postSingle()
+	{
 		Client client = this.getClient("postSingle");
 		String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".postSingle.json5", this.getClass());
 
@@ -47,7 +50,8 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
 	}
 
 	@Test
-	void postSingleWithProjection() {
+	void postSingleWithProjection()
+	{
 		Client client = this.getClient("postSingleWithProjection");
 		String json = FileSlurper.slurp(
 			this.getClass().getSimpleName() + ".postSingleWithProjection.json5",
@@ -65,7 +69,8 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
 	}
 
 	@Test
-	void postMultiple() {
+	void postMultiple()
+	{
 		Client client = this.getClient("postMultiple");
 		String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".postMultiple.json5", this.getClass());
 
@@ -80,7 +85,8 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
 	}
 
 	@Test
-	void postMultipleWithProjection() {
+	void postMultipleWithProjection()
+	{
 		Client client = this.getClient("postMultipleWithProjection");
 		String json = FileSlurper.slurp(
 			this.getClass().getSimpleName() + ".postMultipleWithProjection.json5",
@@ -98,8 +104,10 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
 	}
 
 	@Test
-	void put() {
+	void put()
+	{
 		Client client = this.getClient("put");
+
 
 		{
 			Response response = client
@@ -112,6 +120,7 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
 
 			this.assertResponse("put1", Status.OK, response);
 		}
+
 
 		{
 			String jsonName = this.getClass().getSimpleName() + ".put.json5";
