@@ -23,8 +23,6 @@ import java.io.InputStreamReader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Converter;
@@ -37,6 +35,7 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
+import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 
 @Mojo(name = "generate-css", defaultPhase = LifecyclePhase.GENERATE_RESOURCES, threadSafe = true)
 public class GenerateCssMojo extends AbstractMojo {
@@ -79,9 +78,9 @@ public class GenerateCssMojo extends AbstractMojo {
 	private void generateCssFile(File cssFile) throws IOException, MojoExecutionException {
 		String headerContent = this.readCssTemplate();
 
-		String cssBuilder = Arrays.stream(TokenCategory.values())
-			.map(this::generateCssClass)
-			.collect(Collectors.joining("", headerContent, ""));
+		String cssBuilder = ArrayAdapter.adapt(TokenCategory.values())
+			.collect(this::generateCssClass)
+			.makeString(headerContent, "", "");
 
 		try (Writer writer = Files.newBufferedWriter(cssFile.toPath(), StandardCharsets.UTF_8)) {
 			writer.write(cssBuilder);
