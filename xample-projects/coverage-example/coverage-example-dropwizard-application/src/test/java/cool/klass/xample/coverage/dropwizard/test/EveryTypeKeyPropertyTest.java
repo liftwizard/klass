@@ -108,35 +108,29 @@ class EveryTypeKeyPropertyTest
 	{
 		Client client = this.getClient("put");
 
+		Response originalResponse = client
+			.target(
+				"http://localhost:{port}/api/everyTypeKeyProperty/EveryTypeKeyProperty keyString 1 ☝/1/1/1.0123456789/1.0123457/true/1999-12-31T23:59:00Z/1999-12-31"
+			)
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.get();
 
-		{
-			Response response = client
-				.target(
-					"http://localhost:{port}/api/everyTypeKeyProperty/EveryTypeKeyProperty keyString 1 ☝/1/1/1.0123456789/1.0123457/true/1999-12-31T23:59:00Z/1999-12-31"
-				)
-				.resolveTemplate("port", this.appExtension.getLocalPort())
-				.request()
-				.get();
+		this.assertResponse("put1", Status.OK, originalResponse);
 
-			this.assertResponse("put1", Status.OK, response);
-		}
+		String jsonName = this.getClass().getSimpleName() + ".put.json5";
+		String json = FileSlurper.slurp(jsonName, this.getClass());
 
+		Response updateResponse = client
+			.target(
+				"http://localhost:{port}/api/everyTypeKeyProperty/EveryTypeKeyProperty keyString 1 ☝/1/1/1.0123456789/1.0123457/true/1999-12-31T23:59:00Z/1999-12-31"
+			)
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.header("Authorization", "Impersonation User userId 1")
+			.put(Entity.json(json));
 
-		{
-			String jsonName = this.getClass().getSimpleName() + ".put.json5";
-			String json = FileSlurper.slurp(jsonName, this.getClass());
-
-			Response response = client
-				.target(
-					"http://localhost:{port}/api/everyTypeKeyProperty/EveryTypeKeyProperty keyString 1 ☝/1/1/1.0123456789/1.0123457/true/1999-12-31T23:59:00Z/1999-12-31"
-				)
-				.resolveTemplate("port", this.appExtension.getLocalPort())
-				.request()
-				.header("Authorization", "Impersonation User userId 1")
-				.put(Entity.json(json));
-
-			this.assertEmptyResponse(Status.NO_CONTENT, response);
-		}
+		this.assertEmptyResponse(Status.NO_CONTENT, updateResponse);
 
 		Response response = client
 			.target(

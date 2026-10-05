@@ -95,40 +95,34 @@ class QuestionResourceManualTest
 
 		// <editor-fold desc="POST valid json, status: CREATED">
 
+		String validJson = FileSlurper.slurp(
+			this.getClass().getSimpleName() + ".create_data.json5",
+			this.getClass()
+		);
 
-		{
-			String validJson = FileSlurper.slurp(
-				this.getClass().getSimpleName() + ".create_data.json5",
-				this.getClass()
-			);
+		Response createdResponse = client
+			.target("http://localhost:{port}/api/manual/question/")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.header("Authorization", "Impersonation test user 1")
+			.post(Entity.json(validJson));
 
-			Response response = client
-				.target("http://localhost:{port}/api/manual/question/")
-				.resolveTemplate("port", this.appExtension.getLocalPort())
-				.request()
-				.header("Authorization", "Impersonation test user 1")
-				.post(Entity.json(validJson));
-
-			this.assertResponse("post_valid_data", Status.CREATED, response);
-			assertThat(response.getLocation().getPath()).isEqualTo("/api/manual/question/2");
-		}
+		this.assertResponse("post_valid_data", Status.CREATED, createdResponse);
+		assertThat(createdResponse.getLocation().getPath()).isEqualTo("/api/manual/question/2");
 		// </editor-fold>
 
 		this.assertQuestion1Unchanged(client, "assertQuestion1Unchanged_post_valid_data");
 
 		// <editor-fold desc="GET id: 2, status: ok">
 
+		Response createdQuestionResponse = client
+			.target("http://localhost:{port}/api/manual/question/{id}")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.resolveTemplate("id", 2)
+			.request()
+			.get();
 
-		{
-			Response response = client
-				.target("http://localhost:{port}/api/manual/question/{id}")
-				.resolveTemplate("port", this.appExtension.getLocalPort())
-				.resolveTemplate("id", 2)
-				.request()
-				.get();
-
-			this.assertResponse("post_valid_data_get", Status.OK, response);
-		}
+		this.assertResponse("post_valid_data_get", Status.OK, createdQuestionResponse);
 		// </editor-fold>
 	}
 
@@ -186,24 +180,21 @@ class QuestionResourceManualTest
 
 		// <editor-fold desc="PUT id: 1, version: 2, status: NO_CONTENT">
 
+		String validJson = FileSlurper.slurp(
+			this.getClass().getSimpleName() + ".valid_versioned_put_data.json5",
+			this.getClass()
+		);
 
-		{
-			String validJson = FileSlurper.slurp(
-				this.getClass().getSimpleName() + ".valid_versioned_put_data.json5",
-				this.getClass()
-			);
+		Response updateResponse = client
+			.target("http://localhost:{port}/api/manual/question/{id}")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.resolveTemplate("id", 1)
+			.queryParam("version", "2")
+			.request()
+			.header("Authorization", "Impersonation test user 1")
+			.put(Entity.json(validJson));
 
-			Response response = client
-				.target("http://localhost:{port}/api/manual/question/{id}")
-				.resolveTemplate("port", this.appExtension.getLocalPort())
-				.resolveTemplate("id", 1)
-				.queryParam("version", "2")
-				.request()
-				.header("Authorization", "Impersonation test user 1")
-				.put(Entity.json(validJson));
-
-			this.assertResponse("put", Status.OK, response);
-		}
+		this.assertResponse("put", Status.OK, updateResponse);
 		// </editor-fold>
 
 		Response response = client
@@ -245,27 +236,21 @@ class QuestionResourceManualTest
 	{
 		Client client = this.getClient("restSet");
 
+		Response setResponse = client
+			.target("http://localhost:{port}/api/manual/set")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.get();
 
-		{
-			Response response = client
-				.target("http://localhost:{port}/api/manual/set")
-				.resolveTemplate("port", this.appExtension.getLocalPort())
-				.request()
-				.get();
+		this.assertResponse("restSet", Status.OK, setResponse);
 
-			this.assertResponse("restSet", Status.OK, response);
-		}
+		Response mapResponse = client
+			.target("http://localhost:{port}/api/manual/map")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.get();
 
-
-		{
-			Response response = client
-				.target("http://localhost:{port}/api/manual/map")
-				.resolveTemplate("port", this.appExtension.getLocalPort())
-				.request()
-				.get();
-
-			this.assertResponse("restMap", Status.OK, response);
-		}
+		this.assertResponse("restMap", Status.OK, mapResponse);
 	}
 	// TODO: Should PUT return the version number as an indicator that something changed? Or some other HTTP code?
 }
