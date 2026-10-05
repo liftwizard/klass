@@ -95,10 +95,7 @@ class QuestionResourceManualTest
 
 		// <editor-fold desc="POST valid json, status: CREATED">
 
-		String validJson = FileSlurper.slurp(
-			this.getClass().getSimpleName() + ".create_data.json5",
-			this.getClass()
-		);
+		String validJson = FileSlurper.slurp(this.getClass().getSimpleName() + ".create_data.json5", this.getClass());
 
 		Response createdResponse = client
 			.target("http://localhost:{port}/api/manual/question/")
