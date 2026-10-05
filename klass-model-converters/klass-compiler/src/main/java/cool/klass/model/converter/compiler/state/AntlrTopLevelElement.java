@@ -41,6 +41,8 @@ public interface AntlrTopLevelElement extends IAntlrElement {
 	}
 
 	/**
+	 * Returns the parser context bounded by the block's opening and closing braces.
+	 *
 	 * @return a context representing a block, where '{' and '}' are the start and stop tokens.
 	 * @throws UnsupportedOperationException unless overridden
 	 */
