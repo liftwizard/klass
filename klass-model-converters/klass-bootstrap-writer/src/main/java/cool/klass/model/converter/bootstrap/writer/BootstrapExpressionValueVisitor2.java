@@ -39,8 +39,9 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 
-public class BootstrapExpressionValueVisitor2 implements ExpressionValueVisitor {
-
+public class BootstrapExpressionValueVisitor2
+	implements ExpressionValueVisitor
+{
 	private final ImmutableMap<
 		ExpressionValue,
 		klass.model.meta.domain.ExpressionValue
@@ -54,24 +55,29 @@ public class BootstrapExpressionValueVisitor2 implements ExpressionValueVisitor 
 
 	public BootstrapExpressionValueVisitor2(
 		ImmutableMap<ExpressionValue, klass.model.meta.domain.ExpressionValue> expressionValuesByExpressionValue
-	) {
+	)
+	{
 		this.expressionValuesByExpressionValue = Objects.requireNonNull(expressionValuesByExpressionValue);
 	}
 
-	public MutableList<MemberReferencePath> getBootstrappedMemberReferencePaths() {
+	public MutableList<MemberReferencePath> getBootstrappedMemberReferencePaths()
+	{
 		return this.bootstrappedMemberReferencePaths;
 	}
 
-	public MutableList<klass.model.meta.domain.TypeMemberReferencePath> getBootstrappedTypeMemberReferencePaths() {
+	public MutableList<klass.model.meta.domain.TypeMemberReferencePath> getBootstrappedTypeMemberReferencePaths()
+	{
 		return this.bootstrappedTypeMemberReferencePaths;
 	}
 
-	public MutableList<klass.model.meta.domain.ThisMemberReferencePath> getBootstrappedThisMemberReferencePaths() {
+	public MutableList<klass.model.meta.domain.ThisMemberReferencePath> getBootstrappedThisMemberReferencePaths()
+	{
 		return this.bootstrappedThisMemberReferencePaths;
 	}
 
 	@Override
-	public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue) {
+	public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue)
+	{
 		var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(typeMemberExpressionValue);
 
 		Klass klass = typeMemberExpressionValue.getKlass();
@@ -88,13 +94,15 @@ public class BootstrapExpressionValueVisitor2 implements ExpressionValueVisitor 
 		this.bootstrappedTypeMemberReferencePaths.add(bootstrappedTypeMemberReferencePath);
 		bootstrappedTypeMemberReferencePath.setId(bootstrappedExpressionValue.getId());
 
-		if (typeMemberExpressionValue.getAssociationEnds().notEmpty()) {
+		if (typeMemberExpressionValue.getAssociationEnds().notEmpty())
+		{
 			throw new AssertionError("TODO");
 		}
 	}
 
 	@Override
-	public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue) {
+	public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue)
+	{
 		var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(thisMemberExpressionValue);
 
 		Klass klass = thisMemberExpressionValue.getKlass();
@@ -111,13 +119,15 @@ public class BootstrapExpressionValueVisitor2 implements ExpressionValueVisitor 
 		this.bootstrappedThisMemberReferencePaths.add(bootstrappedThisMemberReferencePath);
 		bootstrappedThisMemberReferencePath.setId(bootstrappedExpressionValue.getId());
 
-		if (thisMemberExpressionValue.getAssociationEnds().notEmpty()) {
+		if (thisMemberExpressionValue.getAssociationEnds().notEmpty())
+		{
 			throw new AssertionError("TODO");
 		}
 	}
 
 	@Override
-	public void visitParameterReference(@Nonnull ParameterReference parameterReference) {
+	public void visitParameterReference(@Nonnull ParameterReference parameterReference)
+	{
 		var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(parameterReference);
 
 		var bootstrappedParameterReference = new klass.model.meta.domain.ParameterReference();
@@ -126,47 +136,54 @@ public class BootstrapExpressionValueVisitor2 implements ExpressionValueVisitor 
 	}
 
 	@Override
-	public void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue) {
+	public void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitBooleanLiteral() not implemented yet"
 		);
 	}
 
 	@Override
-	public void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue) {
+	public void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitIntegerLiteral() not implemented yet"
 		);
 	}
 
 	@Override
-	public void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue) {
+	public void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitFloatingPointLiteral() not implemented yet"
 		);
 	}
 
 	@Override
-	public void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue) {
+	public void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitStringLiteral() not implemented yet"
 		);
 	}
 
 	@Override
-	public void visitLiteralList(@Nonnull LiteralListValue literalListValue) {
+	public void visitLiteralList(@Nonnull LiteralListValue literalListValue)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitLiteralList() not implemented yet"
 		);
 	}
 
 	@Override
-	public void visitUserLiteral(@Nonnull UserLiteral userLiteral) {
+	public void visitUserLiteral(@Nonnull UserLiteral userLiteral)
+	{
 		// No additional member reference paths for user literal
 	}
 
 	@Override
-	public void visitNullLiteral(@Nonnull NullLiteral nullLiteral) {
+	public void visitNullLiteral(@Nonnull NullLiteral nullLiteral)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitNullLiteral() not implemented yet"
 		);

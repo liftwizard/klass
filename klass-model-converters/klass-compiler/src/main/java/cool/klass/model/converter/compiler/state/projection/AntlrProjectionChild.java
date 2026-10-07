@@ -24,7 +24,9 @@ import cool.klass.model.converter.compiler.state.AntlrClassifier;
 import cool.klass.model.meta.domain.projection.AbstractProjectionElement.ProjectionChildBuilder;
 import cool.klass.model.meta.grammar.KlassParser.ClassifierReferenceContext;
 
-public interface AntlrProjectionChild extends AntlrProjectionElement {
+public interface AntlrProjectionChild
+	extends AntlrProjectionElement
+{
 	@Nonnull
 	@Override
 	ProjectionChildBuilder build();
@@ -36,8 +38,10 @@ public interface AntlrProjectionChild extends AntlrProjectionElement {
 		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
 		@Nullable ClassifierReferenceContext classifierReferenceContext,
 		boolean canResolveWithoutQualifier
-	) {
-		if (classifierReferenceContext == null || !canResolveWithoutQualifier) {
+	)
+	{
+		if (classifierReferenceContext == null || !canResolveWithoutQualifier)
+		{
 			return;
 		}
 

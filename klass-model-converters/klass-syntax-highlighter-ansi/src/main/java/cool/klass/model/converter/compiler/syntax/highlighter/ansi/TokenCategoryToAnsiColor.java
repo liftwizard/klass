@@ -20,439 +20,547 @@ import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiCo
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import org.fusesource.jansi.Ansi;
 
-public final class TokenCategoryToAnsiColor {
-
-	private TokenCategoryToAnsiColor() {
+public final class TokenCategoryToAnsiColor
+{
+	private TokenCategoryToAnsiColor()
+	{
 		throw new AssertionError("Suppress default constructor for noninstantiability");
 	}
 
-	public static void applyColor(TokenCategory tokenCategory, Ansi ansi, AnsiColorScheme colorScheme) {
-		switch (tokenCategory) {
+	public static void applyColor(TokenCategory tokenCategory, Ansi ansi, AnsiColorScheme colorScheme)
+	{
+		switch (tokenCategory)
+		{
 			case COMMENT:
 				throw new AssertionError("Comment categories will always be more specific.");
-			case BLOCK_COMMENT: {
+			case BLOCK_COMMENT:
+			{
 				colorScheme.blockComment(ansi);
 				return;
 			}
-			case LINE_COMMENT: {
+			case LINE_COMMENT:
+			{
 				colorScheme.lineComment(ansi);
 				return;
 			}
-			case KEYWORD: {
+			case KEYWORD:
+			{
 				colorScheme.keyword(ansi);
 				return;
 			}
-			case WORD_OPERATOR: {
+			case WORD_OPERATOR:
+			{
 				colorScheme.wordOperator(ansi);
 				return;
 			}
-			case OPERATOR_IN: {
+			case OPERATOR_IN:
+			{
 				colorScheme.operatorIn(ansi);
 				return;
 			}
-			case OPERATOR_STRING: {
+			case OPERATOR_STRING:
+			{
 				colorScheme.operatorString(ansi);
 				return;
 			}
-			case PACKAGE_KEYWORD: {
+			case PACKAGE_KEYWORD:
+			{
 				colorScheme.packageKeyword(ansi);
 				return;
 			}
-			case KEYWORD_ENUMERATION: {
+			case KEYWORD_ENUMERATION:
+			{
 				colorScheme.keywordEnumeration(ansi);
 				return;
 			}
-			case KEYWORD_INTERFACE: {
+			case KEYWORD_INTERFACE:
+			{
 				colorScheme.keywordInterface(ansi);
 				return;
 			}
-			case KEYWORD_USER: {
+			case KEYWORD_USER:
+			{
 				colorScheme.keywordUser(ansi);
 				return;
 			}
-			case KEYWORD_CLASS: {
+			case KEYWORD_CLASS:
+			{
 				colorScheme.keywordClass(ansi);
 				return;
 			}
-			case KEYWORD_PROJECTION: {
+			case KEYWORD_PROJECTION:
+			{
 				colorScheme.keywordProjection(ansi);
 				return;
 			}
-			case KEYWORD_SERVICE: {
+			case KEYWORD_SERVICE:
+			{
 				colorScheme.keywordService(ansi);
 				return;
 			}
-			case KEYWORD_ABSTRACT: {
+			case KEYWORD_ABSTRACT:
+			{
 				colorScheme.keywordAbstract(ansi);
 				return;
 			}
-			case KEYWORD_EXTENDS: {
+			case KEYWORD_EXTENDS:
+			{
 				colorScheme.keywordExtends(ansi);
 				return;
 			}
-			case KEYWORD_IMPLEMENTS: {
+			case KEYWORD_IMPLEMENTS:
+			{
 				colorScheme.keywordImplements(ansi);
 				return;
 			}
-			case KEYWORD_INHERITANCE_TYPE: {
+			case KEYWORD_INHERITANCE_TYPE:
+			{
 				colorScheme.keywordInheritanceType(ansi);
 				return;
 			}
-			case KEYWORD_ASSOCIATION: {
+			case KEYWORD_ASSOCIATION:
+			{
 				colorScheme.keywordAssociation(ansi);
 				return;
 			}
-			case KEYWORD_RELATIONSHIP: {
+			case KEYWORD_RELATIONSHIP:
+			{
 				colorScheme.keywordRelationship(ansi);
 				return;
 			}
-			case KEYWORD_ORDER_BY: {
+			case KEYWORD_ORDER_BY:
+			{
 				colorScheme.keywordOrderBy(ansi);
 				return;
 			}
-			case KEYWORD_ORDER_BY_DIRECTION: {
+			case KEYWORD_ORDER_BY_DIRECTION:
+			{
 				colorScheme.keywordOrderByDirection(ansi);
 				return;
 			}
-			case KEYWORD_ON: {
+			case KEYWORD_ON:
+			{
 				colorScheme.keywordOn(ansi);
 				return;
 			}
-			case KEYWORD_MULTIPLICITY: {
+			case KEYWORD_MULTIPLICITY:
+			{
 				colorScheme.keywordMultiplicity(ansi);
 				return;
 			}
-			case KEYWORD_MULTIPLICITY_CHOICE: {
+			case KEYWORD_MULTIPLICITY_CHOICE:
+			{
 				colorScheme.keywordMultiplicityChoice(ansi);
 				return;
 			}
-			case KEYWORD_SERVICE_CRITERIA: {
+			case KEYWORD_SERVICE_CRITERIA:
+			{
 				colorScheme.keywordServiceCriteria(ansi);
 				return;
 			}
-			case PRIMITIVE_TYPE: {
+			case PRIMITIVE_TYPE:
+			{
 				colorScheme.primitiveType(ansi);
 				return;
 			}
-			case VERB: {
+			case VERB:
+			{
 				colorScheme.verb(ansi);
 				return;
 			}
-			case VERB_GET: {
+			case VERB_GET:
+			{
 				colorScheme.verbGet(ansi);
 				return;
 			}
-			case VERB_POST: {
+			case VERB_POST:
+			{
 				colorScheme.verbPost(ansi);
 				return;
 			}
-			case VERB_PUT: {
+			case VERB_PUT:
+			{
 				colorScheme.verbPut(ansi);
 				return;
 			}
-			case VERB_PATCH: {
+			case VERB_PATCH:
+			{
 				colorScheme.verbPatch(ansi);
 				return;
 			}
-			case VERB_DELETE: {
+			case VERB_DELETE:
+			{
 				colorScheme.verbDelete(ansi);
 				return;
 			}
-			case MODIFIER: {
+			case MODIFIER:
+			{
 				colorScheme.modifier(ansi);
 				return;
 			}
-			case CLASSIFIER_MODIFIER: {
+			case CLASSIFIER_MODIFIER:
+			{
 				colorScheme.classifierModifier(ansi);
 				return;
 			}
-			case DATA_TYPE_PROPERTY_MODIFIER: {
+			case DATA_TYPE_PROPERTY_MODIFIER:
+			{
 				colorScheme.dataTypePropertyModifier(ansi);
 				return;
 			}
-			case ASSOCIATION_END_MODIFIER: {
+			case ASSOCIATION_END_MODIFIER:
+			{
 				colorScheme.associationEndModifier(ansi);
 				return;
 			}
-			case PARAMETERIZED_PROPERTY_MODIFIER: {
+			case PARAMETERIZED_PROPERTY_MODIFIER:
+			{
 				colorScheme.parameterizedPropertyModifier(ansi);
 				return;
 			}
-			case PARAMETER_MODIFIER: {
+			case PARAMETER_MODIFIER:
+			{
 				colorScheme.parameterModifier(ansi);
 				return;
 			}
-			case VALIDATION_MODIFIER: {
+			case VALIDATION_MODIFIER:
+			{
 				colorScheme.validationModifier(ansi);
 				return;
 			}
-			case SERVICE_CATEGORY_MODIFIER: {
+			case SERVICE_CATEGORY_MODIFIER:
+			{
 				colorScheme.serviceCategoryModifier(ansi);
 				return;
 			}
-			case IDENTIFIER: {
+			case IDENTIFIER:
+			{
 				colorScheme.identifier(ansi);
 				return;
 			}
-			case PACKAGE_NAME: {
+			case PACKAGE_NAME:
+			{
 				colorScheme.packageName(ansi);
 				return;
 			}
-			case TOP_LEVEL_ELEMENT_NAME: {
+			case TOP_LEVEL_ELEMENT_NAME:
+			{
 				colorScheme.topLevelElementName(ansi);
 				return;
 			}
-			case ENUMERATION_NAME: {
+			case ENUMERATION_NAME:
+			{
 				colorScheme.enumerationName(ansi);
 				return;
 			}
-			case CLASSIFIER_NAME: {
+			case CLASSIFIER_NAME:
+			{
 				colorScheme.classifierName(ansi);
 				return;
 			}
-			case INTERFACE_NAME: {
+			case INTERFACE_NAME:
+			{
 				colorScheme.interfaceName(ansi);
 				return;
 			}
-			case CLASS_NAME: {
+			case CLASS_NAME:
+			{
 				colorScheme.className(ansi);
 				return;
 			}
-			case ASSOCIATION_NAME: {
+			case ASSOCIATION_NAME:
+			{
 				colorScheme.associationName(ansi);
 				return;
 			}
-			case PROJECTION_NAME: {
+			case PROJECTION_NAME:
+			{
 				colorScheme.projectionName(ansi);
 				return;
 			}
-			case SERVICE_NAME: {
+			case SERVICE_NAME:
+			{
 				colorScheme.serviceName(ansi);
 				return;
 			}
-			case ENUMERATION_LITERAL_NAME: {
+			case ENUMERATION_LITERAL_NAME:
+			{
 				colorScheme.enumerationLiteralName(ansi);
 				return;
 			}
-			case PARAMETER_NAME: {
+			case PARAMETER_NAME:
+			{
 				colorScheme.parameterName(ansi);
 				return;
 			}
-			case PROPERTY_NAME: {
+			case PROPERTY_NAME:
+			{
 				colorScheme.propertyName(ansi);
 				return;
 			}
-			case DATA_TYPE_PROPERTY_NAME: {
+			case DATA_TYPE_PROPERTY_NAME:
+			{
 				colorScheme.dataTypePropertyName(ansi);
 				return;
 			}
-			case PRIMITIVE_PROPERTY_NAME: {
+			case PRIMITIVE_PROPERTY_NAME:
+			{
 				colorScheme.primitivePropertyName(ansi);
 				return;
 			}
-			case ENUMERATION_PROPERTY_NAME: {
+			case ENUMERATION_PROPERTY_NAME:
+			{
 				colorScheme.enumerationPropertyName(ansi);
 				return;
 			}
-			case REFERENCE_PROPERTY_NAME: {
+			case REFERENCE_PROPERTY_NAME:
+			{
 				colorScheme.referencePropertyName(ansi);
 				return;
 			}
-			case PARAMETERIZED_PROPERTY_NAME: {
+			case PARAMETERIZED_PROPERTY_NAME:
+			{
 				colorScheme.parameterizedPropertyName(ansi);
 				return;
 			}
-			case ASSOCIATION_END_NAME: {
+			case ASSOCIATION_END_NAME:
+			{
 				colorScheme.associationEndName(ansi);
 				return;
 			}
-			case ENUMERATION_REFERENCE: {
+			case ENUMERATION_REFERENCE:
+			{
 				colorScheme.enumerationReference(ansi);
 				return;
 			}
-			case CLASSIFIER_REFERENCE: {
+			case CLASSIFIER_REFERENCE:
+			{
 				colorScheme.classifierReference(ansi);
 				return;
 			}
-			case INTERFACE_REFERENCE: {
+			case INTERFACE_REFERENCE:
+			{
 				colorScheme.interfaceReference(ansi);
 				return;
 			}
-			case CLASS_REFERENCE: {
+			case CLASS_REFERENCE:
+			{
 				colorScheme.classReference(ansi);
 				return;
 			}
-			case PROJECTION_REFERENCE: {
+			case PROJECTION_REFERENCE:
+			{
 				colorScheme.projectionReference(ansi);
 				return;
 			}
-			case DATA_TYPE_PROPERTY_REFERENCE: {
+			case DATA_TYPE_PROPERTY_REFERENCE:
+			{
 				colorScheme.dataTypePropertyReference(ansi);
 				return;
 			}
-			case ASSOCIATION_END_REFERENCE: {
+			case ASSOCIATION_END_REFERENCE:
+			{
 				colorScheme.associationEndReference(ansi);
 				return;
 			}
-			case PARAMETERIZED_PROPERTY_REFERENCE: {
+			case PARAMETERIZED_PROPERTY_REFERENCE:
+			{
 				colorScheme.parameterizedPropertyReference(ansi);
 				return;
 			}
-			case PROPERTY_REFERENCE: {
+			case PROPERTY_REFERENCE:
+			{
 				colorScheme.propertyReference(ansi);
 				return;
 			}
-			case PARAMETER_REFERENCE: {
+			case PARAMETER_REFERENCE:
+			{
 				colorScheme.parameterReference(ansi);
 				return;
 			}
-			case LITERAL: {
+			case LITERAL:
+			{
 				colorScheme.literal(ansi);
 				return;
 			}
-			case LITERAL_THIS: {
+			case LITERAL_THIS:
+			{
 				colorScheme.literalThis(ansi);
 				return;
 			}
-			case LITERAL_NATIVE: {
+			case LITERAL_NATIVE:
+			{
 				colorScheme.literalNative(ansi);
 				return;
 			}
-			case STRING_LITERAL: {
+			case STRING_LITERAL:
+			{
 				colorScheme.stringLiteral(ansi);
 				return;
 			}
 			case INTEGER_LITERAL:
-			case ASTERISK_LITERAL: {
+			case ASTERISK_LITERAL:
+			{
 				colorScheme.integerLiteral(ansi);
 				return;
 			}
-			case BOOLEAN_LITERAL: {
+			case BOOLEAN_LITERAL:
+			{
 				colorScheme.booleanLiteral(ansi);
 				return;
 			}
-			case CHARACTER_LITERAL: {
+			case CHARACTER_LITERAL:
+			{
 				colorScheme.characterLiteral(ansi);
 				return;
 			}
-			case FLOATING_POINT_LITERAL: {
+			case FLOATING_POINT_LITERAL:
+			{
 				colorScheme.floatingPointLiteral(ansi);
 				return;
 			}
-			case PUNCTUATION: {
+			case PUNCTUATION:
+			{
 				colorScheme.punctuation(ansi);
 				return;
 			}
-			case COLON: {
+			case COLON:
+			{
 				colorScheme.colon(ansi);
 				return;
 			}
-			case SLASH: {
+			case SLASH:
+			{
 				colorScheme.slash(ansi);
 				return;
 			}
-			case QUESTION: {
+			case QUESTION:
+			{
 				colorScheme.question(ansi);
 				return;
 			}
-			case AMPERSAND: {
+			case AMPERSAND:
+			{
 				colorScheme.ampersand(ansi);
 				return;
 			}
-			case PAIRED_PUNCTUATION: {
+			case PAIRED_PUNCTUATION:
+			{
 				colorScheme.pairedPunctuation(ansi);
 				return;
 			}
 			case PARENTHESES:
 			case PARENTHESIS_LEFT:
-			case PARENTHESIS_RIGHT: {
+			case PARENTHESIS_RIGHT:
+			{
 				colorScheme.parentheses(ansi);
 				return;
 			}
 			case CURLY_BRACES:
 			case CURLY_LEFT:
-			case CURLY_RIGHT: {
+			case CURLY_RIGHT:
+			{
 				colorScheme.curlyBraces(ansi);
 				return;
 			}
 			case SQUARE_BRACKETS:
 			case SQUARE_BRACKET_LEFT:
-			case SQUARE_BRACKET_RIGHT: {
+			case SQUARE_BRACKET_RIGHT:
+			{
 				colorScheme.squareBrackets(ansi);
 				return;
 			}
-			case COMMA: {
+			case COMMA:
+			{
 				colorScheme.comma(ansi);
 				return;
 			}
-			case DOT: {
+			case DOT:
+			{
 				colorScheme.dot(ansi);
 				return;
 			}
-			case DOTDOT: {
+			case DOTDOT:
+			{
 				colorScheme.dotDot(ansi);
 				return;
 			}
-			case SEMICOLON: {
+			case SEMICOLON:
+			{
 				colorScheme.semi(ansi);
 				return;
 			}
-			case OPERATOR: {
+			case OPERATOR:
+			{
 				colorScheme.operator(ansi);
 				return;
 			}
-			case OPERATOR_EQUALS: {
+			case OPERATOR_EQUALS:
+			{
 				colorScheme.operatorEquals(ansi);
 				return;
 			}
-			case OPERATOR_NOT_EQUALS: {
+			case OPERATOR_NOT_EQUALS:
+			{
 				colorScheme.operatorNotEquals(ansi);
 				return;
 			}
-			case OPERATOR_LESS_THAN: {
+			case OPERATOR_LESS_THAN:
+			{
 				colorScheme.operatorLessThan(ansi);
 				return;
 			}
-			case OPERATOR_GREATER_THAN: {
+			case OPERATOR_GREATER_THAN:
+			{
 				colorScheme.operatorGreaterThan(ansi);
 				return;
 			}
-			case OPERATOR_LESS_THAN_OR_EQUAL: {
+			case OPERATOR_LESS_THAN_OR_EQUAL:
+			{
 				colorScheme.operatorLessThanOrEqual(ansi);
 				return;
 			}
-			case OPERATOR_GREATER_THAN_OR_EQUAL: {
+			case OPERATOR_GREATER_THAN_OR_EQUAL:
+			{
 				colorScheme.operatorGreaterThanOrEqual(ansi);
 				return;
 			}
-			case OPERATOR_AND: {
+			case OPERATOR_AND:
+			{
 				colorScheme.operatorAnd(ansi);
 				return;
 			}
-			case OPERATOR_OR: {
+			case OPERATOR_OR:
+			{
 				colorScheme.operatorOr(ansi);
 				return;
 			}
-			case URL_CONSTANT: {
+			case URL_CONSTANT:
+			{
 				colorScheme.urlConstant(ansi);
 				return;
 			}
-			case INVISIBLE_TOKEN: {
+			case INVISIBLE_TOKEN:
+			{
 				throw new AssertionError("Invisible token categories will always be more specific.");
 			}
-			case WHITESPACE: {
+			case WHITESPACE:
+			{
 				colorScheme.whitespace(ansi);
 				return;
 			}
-			case NEWLINE: {
+			case NEWLINE:
+			{
 				colorScheme.newline(ansi);
 				return;
 			}
-			case END_OF_FILE: {
+			case END_OF_FILE:
+			{
 				colorScheme.endOfFile(ansi);
 				return;
 			}
-			default: {
+			default:
+			{
 				throw new AssertionError(tokenCategory);
 			}
 		}

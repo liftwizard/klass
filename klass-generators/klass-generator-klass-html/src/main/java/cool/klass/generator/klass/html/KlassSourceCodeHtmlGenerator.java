@@ -46,15 +46,16 @@ import org.apache.commons.text.StringEscapeUtils;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.list.mutable.ListAdapter;
 
-public class KlassSourceCodeHtmlGenerator {
-
+public class KlassSourceCodeHtmlGenerator
+{
 	public static final Converter<String, String> CONVERTER = CaseFormat.UPPER_UNDERSCORE.converterTo(
 		CaseFormat.LOWER_HYPHEN
 	);
 
 	private final DomainModelWithSourceCode domainModel;
 
-	public KlassSourceCodeHtmlGenerator(DomainModelWithSourceCode domainModel) {
+	public KlassSourceCodeHtmlGenerator(DomainModelWithSourceCode domainModel)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 	}
 
@@ -63,28 +64,33 @@ public class KlassSourceCodeHtmlGenerator {
 		DomainModelWithSourceCode domainModel,
 		Optional<TopLevelElementWithSourceCode> topLevelElementToHighlight,
 		Optional<String> memberNameToHighlight
-	) {
+	)
+	{
 		Optional<TokenCategory> maybeTokenCategory = domainModel.getTokenCategory(token);
 		Optional<ElementWithSourceCode> maybeElementByReference = domainModel.getElementByReference(token);
 		Optional<ElementWithSourceCode> maybeElementByDeclaration = domainModel.getElementByDeclaration(token);
 
 		String escapedText = StringEscapeUtils.escapeHtml4(token.getText());
 
-		if (maybeTokenCategory.isEmpty() && maybeElementByReference.isEmpty() && maybeElementByDeclaration.isEmpty()) {
+		if (maybeTokenCategory.isEmpty() && maybeElementByReference.isEmpty() && maybeElementByDeclaration.isEmpty())
+		{
 			return escapedText;
 		}
 
-		if (maybeTokenCategory.isEmpty()) {
+		if (maybeTokenCategory.isEmpty())
+		{
 			throw new AssertionError(token);
 		}
 
 		TokenCategory tokenCategory = maybeTokenCategory.get();
 
-		if (maybeElementByReference.isEmpty() && maybeElementByDeclaration.isEmpty()) {
+		if (maybeElementByReference.isEmpty() && maybeElementByDeclaration.isEmpty())
+		{
 			return getSpan(escapedText, tokenCategory, false);
 		}
 
-		if (maybeElementByDeclaration.isPresent() && maybeElementByReference.isEmpty()) {
+		if (maybeElementByDeclaration.isPresent() && maybeElementByReference.isEmpty())
+		{
 			ElementWithSourceCode element = maybeElementByDeclaration.get();
 
 			String idForElement = KlassSourceCodeHtmlGenerator.getIdForElement(element);
@@ -106,7 +112,8 @@ public class KlassSourceCodeHtmlGenerator {
 			return getSpan(declarationAnchor, tokenCategory, shouldHighlight);
 		}
 
-		if (maybeElementByDeclaration.isEmpty() && maybeElementByReference.isPresent()) {
+		if (maybeElementByDeclaration.isEmpty() && maybeElementByReference.isPresent())
+		{
 			String linkForElement = KlassSourceCodeHtmlGenerator.getLinkForElement(maybeElementByReference.get());
 			String referenceAnchor = "<a href=\"%s\">%s</a>".formatted(linkForElement, escapedText);
 
@@ -116,7 +123,8 @@ public class KlassSourceCodeHtmlGenerator {
 		throw new AssertionError(token);
 	}
 
-	public static String getSourceCode(@Nonnull DomainModelWithSourceCode domainModel, @Nonnull SourceCode sourceCode) {
+	public static String getSourceCode(@Nonnull DomainModelWithSourceCode domainModel, @Nonnull SourceCode sourceCode)
+	{
 		return getSourceCode(domainModel, sourceCode, Optional.empty(), Optional.empty());
 	}
 
@@ -125,7 +133,8 @@ public class KlassSourceCodeHtmlGenerator {
 		@Nonnull SourceCode sourceCode,
 		@Nonnull Optional<TopLevelElementWithSourceCode> topLevelElementToHighlight,
 		@Nonnull Optional<String> memberNameToHighlight
-	) {
+	)
+	{
 		Objects.requireNonNull(domainModel);
 		Objects.requireNonNull(sourceCode);
 		Objects.requireNonNull(topLevelElementToHighlight);
@@ -139,6 +148,7 @@ public class KlassSourceCodeHtmlGenerator {
 			.collect((token) -> getSourceCode(token, domainModel, topLevelElementToHighlight, memberNameToHighlight))
 			.makeString("");
 
+		// @formatter:off
 		// language=HTML
 		var prefix = """
 			<html>
@@ -161,6 +171,7 @@ public class KlassSourceCodeHtmlGenerator {
 					</aside>
 					<pre>
 			""";
+		// @formatter:on
 		return prefix + body + "</pre>\n\t</body>\n</html>\n";
 	}
 
@@ -168,20 +179,25 @@ public class KlassSourceCodeHtmlGenerator {
 		ElementWithSourceCode element,
 		Optional<TopLevelElementWithSourceCode> topLevelElementToHighlight,
 		Optional<String> memberNameToHighlight
-	) {
-		if (element instanceof TopLevelElement && memberNameToHighlight.isPresent()) {
+	)
+	{
+		if (element instanceof TopLevelElement && memberNameToHighlight.isPresent())
+		{
 			return false;
 		}
-		if (memberNameToHighlight.isEmpty()) {
+		if (memberNameToHighlight.isEmpty())
+		{
 			return Optional.of(element).equals(topLevelElementToHighlight);
 		}
-		if (element instanceof Property property) {
+		if (element instanceof Property property)
+		{
 			return (
 				Optional.of(property.getName()).equals(memberNameToHighlight)
 				&& Optional.of(property.getOwningClassifier()).equals(topLevelElementToHighlight)
 			);
 		}
-		if (element instanceof EnumerationLiteral enumerationLiteral) {
+		if (element instanceof EnumerationLiteral enumerationLiteral)
+		{
 			return (
 				Optional.of(enumerationLiteral.getName()).equals(memberNameToHighlight)
 				&& Optional.of(enumerationLiteral.getType()).equals(topLevelElementToHighlight)
@@ -191,21 +207,24 @@ public class KlassSourceCodeHtmlGenerator {
 	}
 
 	@Nonnull
-	private static String getSpan(String text, TokenCategory tokenCategory, boolean matchesHighlight) {
+	private static String getSpan(String text, TokenCategory tokenCategory, boolean matchesHighlight)
+	{
 		String tokenCategoryName = tokenCategory.name();
 		String className = CONVERTER.convert(tokenCategoryName);
 		String highlightClassName = matchesHighlight ? " highlight" : "";
 		return "<span class='klass-" + className + highlightClassName + "'>" + text + "</span>";
 	}
 
-	private void writeHtmlFile(SourceCode sourceCode, Path outputPath) {
+	private void writeHtmlFile(SourceCode sourceCode, Path outputPath)
+	{
 		Path htmlOutputPath = KlassSourceCodeHtmlGenerator.getOutputPath(outputPath, sourceCode);
 		String sourceCodeText = getSourceCode(this.domainModel, sourceCode);
 		KlassSourceCodeHtmlGenerator.printStringToFile(htmlOutputPath, sourceCodeText);
 	}
 
 	@Nonnull
-	private static Path getOutputPath(@Nonnull Path outputPath, @Nonnull SourceCode sourceCode) {
+	private static Path getOutputPath(@Nonnull Path outputPath, @Nonnull SourceCode sourceCode)
+	{
 		Path parentPath = KlassSourceCodeHtmlGenerator.getParentPath(sourceCode);
 		Path absoluteParentPath = outputPath.resolve(parentPath);
 		Objects.requireNonNull(absoluteParentPath);
@@ -218,43 +237,55 @@ public class KlassSourceCodeHtmlGenerator {
 		return outputPath.resolve(fileName);
 	}
 
-	private static Path getParentPath(SourceCode sourceCode) {
+	private static Path getParentPath(SourceCode sourceCode)
+	{
 		return sourceCode
 			.getMacroSourceCode()
 			.map(KlassSourceCodeHtmlGenerator::getParentPath)
 			.orElseGet(() -> KlassSourceCodeHtmlGenerator.getRootParentPath(sourceCode));
 	}
 
-	private static Path getRootParentPath(SourceCode sourceCode) {
+	private static Path getRootParentPath(SourceCode sourceCode)
+	{
 		String sourceName = sourceCode.getSourceName();
 		var sourceFile = new File(sourceName);
 		return sourceFile.toPath().getParent();
 	}
 
-	private static void printStringToFile(@Nonnull Path path, String contents) {
-		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)) {
+	private static void printStringToFile(@Nonnull Path path, String contents)
+	{
+		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8))
+		{
 			printStream.print(contents);
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}
 
-	public void writeHtmlFiles(@Nonnull Path outputPath) {
-		this.domainModel.getSourceCodes()
+	public void writeHtmlFiles(@Nonnull Path outputPath)
+	{
+		this.domainModel
+			.getSourceCodes()
 			// TODO: Graft in macros
 			.select((sourceCode) -> sourceCode.getMacroSourceCode().isEmpty())
 			.forEachWith(this::writeHtmlFile, outputPath);
 	}
 
 	@Nullable
-	private static String getIdForElement(ElementWithSourceCode value) {
-		if (value instanceof TopLevelElement topLevelElement) {
+	private static String getIdForElement(ElementWithSourceCode value)
+	{
+		if (value instanceof TopLevelElement topLevelElement)
+		{
 			return StringEscapeUtils.escapeHtml4(topLevelElement.getName());
 		}
-		if (value instanceof Property property) {
+		if (value instanceof Property property)
+		{
 			return StringEscapeUtils.escapeHtml4(property.getOwningClassifier().getName() + "." + property.getName());
 		}
-		if (value instanceof EnumerationLiteral enumerationLiteral) {
+		if (value instanceof EnumerationLiteral enumerationLiteral)
+		{
 			return StringEscapeUtils.escapeHtml4(
 				enumerationLiteral.getType().getName() + "." + enumerationLiteral.getName()
 			);
@@ -263,18 +294,22 @@ public class KlassSourceCodeHtmlGenerator {
 	}
 
 	@Nonnull
-	private static String getLinkForElement(ElementWithSourceCode element) {
-		if (element instanceof TopLevelElement topLevelElement) {
+	private static String getLinkForElement(ElementWithSourceCode element)
+	{
+		if (element instanceof TopLevelElement topLevelElement)
+		{
 			return String.format("/api/meta/code/element/%s#%s", topLevelElement.getName(), topLevelElement.getName());
 		}
-		if (element instanceof Property property) {
+		if (element instanceof Property property)
+		{
 			return MessageFormat.format(
 				"/api/meta/code/element/{0}/{1}#{0}.{1}",
 				property.getOwningClassifier().getName(),
 				property.getName()
 			);
 		}
-		if (element instanceof EnumerationLiteral enumerationLiteral) {
+		if (element instanceof EnumerationLiteral enumerationLiteral)
+		{
 			return MessageFormat.format(
 				"/api/meta/code/element/{0}/{1}#{0}.{1}",
 				enumerationLiteral.getType().getName(),

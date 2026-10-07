@@ -20,19 +20,25 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class EnumerationPropertyList extends EnumerationPropertyListAbstract {
+public class EnumerationPropertyList
+	extends EnumerationPropertyListAbstract
+{
+	public EnumerationPropertyList()
+	{
+	}
 
-	public EnumerationPropertyList() {}
-
-	public EnumerationPropertyList(int initialSize) {
+	public EnumerationPropertyList(int initialSize)
+	{
 		super(initialSize);
 	}
 
-	public EnumerationPropertyList(Collection<?> c) {
+	public EnumerationPropertyList(Collection<?> c)
+	{
 		super(c);
 	}
 
-	public EnumerationPropertyList(Operation operation) {
+	public EnumerationPropertyList(Operation operation)
+	{
 		super(operation);
 	}
 }

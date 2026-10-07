@@ -23,11 +23,13 @@ import io.dropwizard.testing.ResourceHelpers;
 import io.liftwizard.dropwizard.testing.junit.AbstractDropwizardAppTest;
 import io.liftwizard.junit.extension.app.LiftwizardAppExtension;
 
-public abstract class AbstractStackOverflowApplicationTest extends AbstractDropwizardAppTest {
-
+public abstract class AbstractStackOverflowApplicationTest
+	extends AbstractDropwizardAppTest
+{
 	@Nonnull
 	@Override
-	protected LiftwizardAppExtension<?> getDropwizardAppExtension() {
+	protected LiftwizardAppExtension<?> getDropwizardAppExtension()
+	{
 		return new LiftwizardAppExtension<>(
 			StackOverflowApplication.class,
 			ResourceHelpers.resourceFilePath("config-test.json5")

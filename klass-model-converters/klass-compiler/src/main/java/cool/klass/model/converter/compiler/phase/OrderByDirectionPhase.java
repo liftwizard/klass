@@ -27,15 +27,18 @@ import cool.klass.model.converter.compiler.state.order.AntlrOrderByMemberReferen
 import cool.klass.model.meta.domain.api.order.OrderByDirection;
 import cool.klass.model.meta.grammar.KlassParser.OrderByDirectionContext;
 
-public class OrderByDirectionPhase extends AbstractCompilerPhase {
-
-	public OrderByDirectionPhase(@Nonnull CompilerState compilerState) {
+public class OrderByDirectionPhase
+	extends AbstractCompilerPhase
+{
+	public OrderByDirectionPhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Override
 	@OverridingMethodsMustInvokeSuper
-	public void enterOrderByDirection(@Nonnull OrderByDirectionContext ctx) {
+	public void enterOrderByDirection(@Nonnull OrderByDirectionContext ctx)
+	{
 		super.enterOrderByDirection(ctx);
 
 		var orderByDirection = new AntlrOrderByDirection(
@@ -44,20 +47,24 @@ public class OrderByDirectionPhase extends AbstractCompilerPhase {
 			OrderByDirectionPhase.getOrderByDirection(ctx)
 		);
 
-		AntlrOrderByMemberReferencePath orderByMemberReferencePath =
-			this.compilerState.getCompilerWalk().getOrderByMemberReferencePath();
+		AntlrOrderByMemberReferencePath orderByMemberReferencePath = this.compilerState
+			.getCompilerWalk()
+			.getOrderByMemberReferencePath();
 		orderByMemberReferencePath.enterOrderByDirection(orderByDirection);
 	}
 
 	@Nonnull
-	private static OrderByDirection getOrderByDirection(@Nonnull OrderByDirectionContext orderByDirectionContext) {
+	private static OrderByDirection getOrderByDirection(@Nonnull OrderByDirectionContext orderByDirectionContext)
+	{
 		String text = orderByDirectionContext.getText();
 
-		if ("ascending".equals(text)) {
+		if ("ascending".equals(text))
+		{
 			return OrderByDirection.ASCENDING;
 		}
 
-		if ("descending".equals(text)) {
+		if ("descending".equals(text))
+		{
 			return OrderByDirection.DESCENDING;
 		}
 

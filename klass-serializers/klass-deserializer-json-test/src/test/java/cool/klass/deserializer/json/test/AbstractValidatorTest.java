@@ -42,8 +42,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public abstract class AbstractValidatorTest {
-
+public abstract class AbstractValidatorTest
+{
 	@RegisterExtension
 	protected final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
@@ -57,7 +57,9 @@ public abstract class AbstractValidatorTest {
 
 	protected final DomainModel domainModel = AbstractValidatorTest.getDomainModel(this.objectMapper);
 
-	protected final void validate(String testName) throws IOException {
+	protected final void validate(String testName)
+		throws IOException
+	{
 		String incomingJsonName = this.getClass().getSimpleName() + '.' + testName + ".json5";
 		String incomingJson = FileSlurper.slurp(incomingJsonName, this.getClass());
 
@@ -66,7 +68,9 @@ public abstract class AbstractValidatorTest {
 		this.assertErrors(testName);
 	}
 
-	protected final void assertErrors(String testName) throws JsonProcessingException {
+	protected final void assertErrors(String testName)
+		throws JsonProcessingException
+	{
 		this.jsonMatchExtension.assertFileContents(
 			this.getClass().getSimpleName() + '.' + testName + ".errors.json",
 			this.objectMapper.writeValueAsString(this.actualErrors)
@@ -79,20 +83,23 @@ public abstract class AbstractValidatorTest {
 	}
 
 	@Nonnull
-	private static ObjectMapper getObjectMapper() {
+	private static ObjectMapper getObjectMapper()
+	{
 		ObjectMapper objectMapper = Jackson.newObjectMapper();
 		ObjectMapperConfig.configure(objectMapper);
 		return objectMapper;
 	}
 
-	private static DomainModel getDomainModel(ObjectMapper objectMapper) {
+	private static DomainModel getDomainModel(ObjectMapper objectMapper)
+	{
 		var domainModelCompilerFactory = new DomainModelCompilerFactory();
 		domainModelCompilerFactory.setSourcePackages(List.of("cool.klass.xample.coverage"));
 		domainModelCompilerFactory.setColorScheme("dark");
 		return domainModelCompilerFactory.createDomainModel(objectMapper);
 	}
 
-	protected final void performValidation(@Nonnull ObjectNode incomingInstance) {
+	protected final void performValidation(@Nonnull ObjectNode incomingInstance)
+	{
 		ObjectNodeTypeCheckingValidator.validate(this.actualErrors, incomingInstance, this.getKlass());
 
 		RequiredPropertiesValidator.validate(

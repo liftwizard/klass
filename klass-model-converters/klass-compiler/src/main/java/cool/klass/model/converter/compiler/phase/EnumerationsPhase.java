@@ -30,17 +30,20 @@ import cool.klass.model.meta.grammar.KlassParser.EnumerationPrettyNameContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import org.antlr.v4.runtime.RuleContext;
 
-public class EnumerationsPhase extends AbstractCompilerPhase {
-
+public class EnumerationsPhase
+	extends AbstractCompilerPhase
+{
 	@Nullable
 	private AntlrEnumeration enumeration;
 
-	public EnumerationsPhase(@Nonnull CompilerState compilerState) {
+	public EnumerationsPhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Override
-	public void enterEnumerationDeclaration(@Nonnull EnumerationDeclarationContext ctx) {
+	public void enterEnumerationDeclaration(@Nonnull EnumerationDeclarationContext ctx)
+	{
 		super.enterEnumerationDeclaration(ctx);
 
 		IdentifierContext identifier = ctx.identifier();
@@ -53,14 +56,16 @@ public class EnumerationsPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitEnumerationDeclaration(@Nonnull EnumerationDeclarationContext ctx) {
+	public void exitEnumerationDeclaration(@Nonnull EnumerationDeclarationContext ctx)
+	{
 		this.compilerState.getDomainModel().exitEnumerationDeclaration(this.enumeration);
 		this.enumeration = null;
 		super.exitEnumerationDeclaration(ctx);
 	}
 
 	@Override
-	public void enterEnumerationLiteral(@Nonnull EnumerationLiteralContext ctx) {
+	public void enterEnumerationLiteral(@Nonnull EnumerationLiteralContext ctx)
+	{
 		super.enterEnumerationLiteral(ctx);
 
 		Optional<EnumerationPrettyNameContext> prettyNameContext = Optional.ofNullable(ctx.enumerationPrettyName());
@@ -79,7 +84,8 @@ public class EnumerationsPhase extends AbstractCompilerPhase {
 	}
 
 	@Nonnull
-	private String trimQuotes(@Nonnull String text) {
+	private String trimQuotes(@Nonnull String text)
+	{
 		return text.substring(1, text.length() - 1);
 	}
 }

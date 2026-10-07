@@ -33,8 +33,9 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
-public class GenerateJsonViewsMojo extends AbstractGenerateMojo {
-
+public class GenerateJsonViewsMojo
+	extends AbstractGenerateMojo
+{
 	@Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}/generated-sources/json-views")
 	private File outputDirectory;
 
@@ -45,20 +46,25 @@ public class GenerateJsonViewsMojo extends AbstractGenerateMojo {
 	private String rootPackageName;
 
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.CLASSPATH;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
-		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
-				DomainModel domainModel = this.getDomainModel();
-				var jsonViewGenerator = new JsonViewGenerator(domainModel, this.rootPackageName, this.applicationName);
-				jsonViewGenerator.writeJsonViews(this.outputDirectory.toPath());
-				return null;
-			});
+	public void execute()
+		throws MojoExecutionException
+	{
+		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () ->
+		{
+			DomainModel domainModel = this.getDomainModel();
+			var jsonViewGenerator = new JsonViewGenerator(domainModel, this.rootPackageName, this.applicationName);
+			jsonViewGenerator.writeJsonViews(this.outputDirectory.toPath());
+			return null;
+		});
 
-		if (wasGenerated) {
+		if (wasGenerated)
+		{
 			this.getLog().info("Generated JSON views in: " + this.outputDirectory.getPath());
 		}
 

@@ -27,8 +27,9 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.fusesource.jansi.Ansi.Color;
 
-public class CauseCompilerAnnotation extends AbstractCompilerAnnotation {
-
+public class CauseCompilerAnnotation
+	extends AbstractCompilerAnnotation
+{
 	public CauseCompilerAnnotation(
 		@Nonnull CompilationUnit compilationUnit,
 		@Nonnull Optional<CauseCompilerAnnotation> macroCause,
@@ -37,7 +38,8 @@ public class CauseCompilerAnnotation extends AbstractCompilerAnnotation {
 		@Nonnull AnsiTokenColorizer ansiTokenColorizer,
 		@Nonnull AnnotationSeverity severity,
 		boolean enableIdeLinks
-	) {
+	)
+	{
 		super(
 			compilationUnit,
 			macroCause,
@@ -51,13 +53,15 @@ public class CauseCompilerAnnotation extends AbstractCompilerAnnotation {
 
 	@Nonnull
 	@Override
-	protected Color getCaretColor() {
+	protected Color getCaretColor()
+	{
 		return Color.GREEN;
 	}
 
 	@Nonnull
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		String contextString = this.getContextString();
 		String locationMessage = this.getOptionalLocationMessage();
 		String causeString = this.getCauseString();
@@ -74,7 +78,8 @@ public class CauseCompilerAnnotation extends AbstractCompilerAnnotation {
 	}
 
 	@Override
-	public String toGitHubAnnotation() {
+	public String toGitHubAnnotation()
+	{
 		return this.toString();
 	}
 }

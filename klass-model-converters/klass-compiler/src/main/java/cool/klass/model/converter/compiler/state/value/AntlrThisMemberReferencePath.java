@@ -39,8 +39,9 @@ import cool.klass.model.meta.grammar.KlassParser.ThisMemberReferencePathContext;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class AntlrThisMemberReferencePath extends AntlrMemberReferencePath {
-
+public class AntlrThisMemberReferencePath
+	extends AntlrMemberReferencePath
+{
 	private ThisMemberReferencePathBuilder elementBuilder;
 
 	public AntlrThisMemberReferencePath(
@@ -50,14 +51,17 @@ public class AntlrThisMemberReferencePath extends AntlrMemberReferencePath {
 		@Nonnull ImmutableList<AntlrAssociationEnd> associationEnds,
 		@Nonnull AntlrDataTypeProperty<?> dataTypeProperty,
 		@Nonnull IAntlrElement expressionValueOwner
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, klass, associationEnds, dataTypeProperty, expressionValueOwner);
 	}
 
 	@Nonnull
 	@Override
-	public ThisMemberReferencePathBuilder build() {
-		if (this.elementBuilder != null) {
+	public ThisMemberReferencePathBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		ImmutableList<AssociationEndBuilder> associationEndBuilders = this.associationEnd.collect(
@@ -77,24 +81,28 @@ public class AntlrThisMemberReferencePath extends AntlrMemberReferencePath {
 
 	@Nonnull
 	@Override
-	public ThisMemberReferencePathBuilder getElementBuilder() {
+	public ThisMemberReferencePathBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		List<AssociationEndReferenceContext> associationEndReferenceContexts =
 			this.getElementContext().associationEndReference();
 		AntlrClass currentClass = this.reportErrorsAssociationEnds(
 			compilerAnnotationHolder,
 			associationEndReferenceContexts
 		);
-		if (currentClass == null || currentClass == AntlrClass.AMBIGUOUS) {
+		if (currentClass == null || currentClass == AntlrClass.AMBIGUOUS)
+		{
 			// Covered by ERR_DUP_TOP
 			return;
 		}
 
-		if (this.dataTypeProperty == AntlrEnumerationProperty.NOT_FOUND) {
+		if (this.dataTypeProperty == AntlrEnumerationProperty.NOT_FOUND)
+		{
 			IdentifierContext identifier = this.getElementContext().memberReference().identifier();
 			String message = String.format("Cannot find member '%s.%s'.", currentClass.getName(), identifier.getText());
 			compilerAnnotationHolder.add("ERR_THS_MEM", message, this, identifier);
@@ -103,7 +111,8 @@ public class AntlrThisMemberReferencePath extends AntlrMemberReferencePath {
 
 	@Nonnull
 	@Override
-	public ImmutableList<AntlrType> getPossibleTypes() {
+	public ImmutableList<AntlrType> getPossibleTypes()
+	{
 		AntlrType type = this.dataTypeProperty.getType();
 		return type == AntlrEnumeration.NOT_FOUND || type == AntlrEnumeration.AMBIGUOUS
 			? Lists.immutable.empty()
@@ -111,13 +120,15 @@ public class AntlrThisMemberReferencePath extends AntlrMemberReferencePath {
 	}
 
 	@Override
-	public void visit(AntlrExpressionValueVisitor visitor) {
+	public void visit(AntlrExpressionValueVisitor visitor)
+	{
 		visitor.visitThisMember(this);
 	}
 
 	@Nonnull
 	@Override
-	public ThisMemberReferencePathContext getElementContext() {
+	public ThisMemberReferencePathContext getElementContext()
+	{
 		return (ThisMemberReferencePathContext) super.getElementContext();
 	}
 }
