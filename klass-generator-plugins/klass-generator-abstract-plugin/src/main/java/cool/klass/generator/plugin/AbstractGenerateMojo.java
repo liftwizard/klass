@@ -57,7 +57,6 @@ import org.eclipse.collections.api.map.ImmutableMap;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 import org.eclipse.collections.impl.list.mutable.ListAdapter;
 import org.eclipse.collections.impl.utility.ArrayIterate;
-import org.fusesource.jansi.AnsiConsole;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.reflections.util.ClasspathHelper;
@@ -225,8 +224,6 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 	}
 
 	private void logCompilerAnnotation(RootCompilerAnnotation compilerAnnotation) {
-		AnsiConsole.systemInstall();
-
 		if (compilerAnnotation.isError()) {
 			if (this.logGitHubAnnotations) {
 				this.getLog().info("\n" + compilerAnnotation.toGitHubAnnotation());
