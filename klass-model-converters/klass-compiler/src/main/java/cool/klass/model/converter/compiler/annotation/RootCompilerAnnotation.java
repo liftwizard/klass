@@ -88,12 +88,19 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
 		String locationMessage = this.getOptionalLocationMessage();
 		String causeString = this.getCauseString();
 		String ideUrlMessage = this.getIdeUrlMessage();
-		String severityColor = this.severity == AnnotationSeverity.ERROR ? "red" : "yellow";
 		String severityName = this.severity == AnnotationSeverity.ERROR ? "Error" : "Warning";
 
+		// Avoid Ansi.render(): Maven 3.10's org.fusesource.jansi compatibility shim ignores Ansi.isEnabled() there
+		String annotationCodeString = Ansi.ansi().fg(Color.MAGENTA).a(this.annotationCode).reset().toString();
+		String headlineString = Ansi.ansi()
+			.fg(this.getCaretColor())
+			.a(severityName + ": " + this.message)
+			.reset()
+			.toString();
+
 		var format = """
-			════════════════════════════════════════ @|magenta %s|@ ════════════════════════════════════════
-			@|%s %s: %s|@
+			════════════════════════════════════════ %s ════════════════════════════════════════
+			%s
 
 			At %s
 
@@ -101,20 +108,16 @@ public class RootCompilerAnnotation extends AbstractCompilerAnnotation implement
 			═════════════════════════════════════════════════════════════════════════════════════════════
 			""";
 
-		String ansi = String.format(
+		return String.format(
 			format,
-			this.annotationCode,
-			severityColor,
-			severityName,
-			this.message,
+			annotationCodeString,
+			headlineString,
 			this.getShortLocationString(),
 			contextString,
 			locationMessage,
 			causeString,
 			ideUrlMessage
 		);
-
-		return Ansi.ansi().render(ansi).toString();
 	}
 
 	@Nonnull
