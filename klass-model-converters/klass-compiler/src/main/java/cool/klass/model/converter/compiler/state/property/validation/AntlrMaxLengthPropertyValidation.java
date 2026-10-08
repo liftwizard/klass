@@ -27,8 +27,9 @@ import cool.klass.model.meta.domain.property.validation.MaxLengthPropertyValidat
 import cool.klass.model.meta.grammar.KlassParser.MaxLengthValidationContext;
 import cool.klass.model.meta.grammar.KlassParser.MaxLengthValidationKeywordContext;
 
-public class AntlrMaxLengthPropertyValidation extends AbstractAntlrNumericPropertyValidation {
-
+public class AntlrMaxLengthPropertyValidation
+	extends AbstractAntlrNumericPropertyValidation
+{
 	private MaxLengthPropertyValidationBuilder elementBuilder;
 
 	public AntlrMaxLengthPropertyValidation(
@@ -36,13 +37,16 @@ public class AntlrMaxLengthPropertyValidation extends AbstractAntlrNumericProper
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull AntlrDataTypeProperty<?> owningProperty,
 		int number
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, owningProperty, number);
 	}
 
 	@Override
-	public MaxLengthPropertyValidationBuilder build() {
-		if (this.elementBuilder != null) {
+	public MaxLengthPropertyValidationBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.elementBuilder = new MaxLengthPropertyValidationBuilder(
@@ -57,18 +61,21 @@ public class AntlrMaxLengthPropertyValidation extends AbstractAntlrNumericProper
 
 	@Nonnull
 	@Override
-	public MaxLengthPropertyValidationBuilder getElementBuilder() {
+	public MaxLengthPropertyValidationBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
 	@Nonnull
 	@Override
-	public MaxLengthValidationContext getElementContext() {
+	public MaxLengthValidationContext getElementContext()
+	{
 		return (MaxLengthValidationContext) super.getElementContext();
 	}
 
 	@Override
-	public MaxLengthValidationKeywordContext getKeywordToken() {
+	public MaxLengthValidationKeywordContext getKeywordToken()
+	{
 		return this.getElementContext().maxLengthValidationKeyword();
 	}
 }

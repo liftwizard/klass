@@ -23,20 +23,24 @@ import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import org.eclipse.collections.api.map.MutableOrderedMap;
 
-public final class FkGenerator {
-
-	private FkGenerator() {
+public final class FkGenerator
+{
+	private FkGenerator()
+	{
 		throw new AssertionError("Suppress default constructor for noninstantiability");
 	}
 
-	public static Optional<String> getFk(Klass klass) {
+	public static Optional<String> getFk(Klass klass)
+	{
 		MutableOrderedMap<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> foreignKeys =
 			klass.getForeignKeys();
-		if (foreignKeys.isEmpty()) {
+		if (foreignKeys.isEmpty())
+		{
 			return Optional.empty();
 		}
 
-		if (klass.isTemporal()) {
+		if (klass.isTemporal())
+		{
 			return Optional.empty();
 		}
 
@@ -51,7 +55,8 @@ public final class FkGenerator {
 		Klass klass,
 		AssociationEnd associationEnd,
 		MutableOrderedMap<DataTypeProperty, DataTypeProperty> dataTypeProperties
-	) {
+	)
+	{
 		String tableName = DdlGenerator.TABLE_NAME_CONVERTER.convert(klass.getName());
 		String constraintName =
 			tableName + "_FK_" + DdlGenerator.TABLE_NAME_CONVERTER.convert(associationEnd.getName());
@@ -72,14 +77,14 @@ public final class FkGenerator {
 
 		// language=SQL
 		var format = """
-			alter table %s add constraint %s foreign key (
-			    %s
-			)
-			references %s(
-			    %s
-			);
+		alter table %s add constraint %s foreign key (
+		    %s
+		)
+		references %s(
+		    %s
+		);
 
-			""";
+		""";
 
 		return format.formatted(
 			tableName,

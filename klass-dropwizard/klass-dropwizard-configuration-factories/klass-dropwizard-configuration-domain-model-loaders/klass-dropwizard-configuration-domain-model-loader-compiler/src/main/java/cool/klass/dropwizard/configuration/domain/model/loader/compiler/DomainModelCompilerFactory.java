@@ -43,8 +43,9 @@ import org.slf4j.LoggerFactory;
 
 @JsonTypeName("compiler")
 @AutoService(DomainModelFactory.class)
-public class DomainModelCompilerFactory implements DomainModelFactory {
-
+public class DomainModelCompilerFactory
+	implements DomainModelFactory
+{
 	private static final Logger LOGGER = LoggerFactory.getLogger(DomainModelCompilerFactory.class);
 
 	@NotEmpty
@@ -59,8 +60,10 @@ public class DomainModelCompilerFactory implements DomainModelFactory {
 
 	@Nonnull
 	@Override
-	public DomainModelWithSourceCode createDomainModel(ObjectMapper objectMapper) {
-		if (this.domainModel != null) {
+	public DomainModelWithSourceCode createDomainModel(ObjectMapper objectMapper)
+	{
+		if (this.domainModel != null)
+		{
 			return this.domainModel;
 		}
 		ImmutableList<String> klassSourcePackagesImmutable = Lists.immutable.withAll(this.sourcePackages);
@@ -80,44 +83,53 @@ public class DomainModelCompilerFactory implements DomainModelFactory {
 	}
 
 	@JsonProperty
-	public List<String> getSourcePackages() {
+	public List<String> getSourcePackages()
+	{
 		return Lists.mutable.withAll(this.sourcePackages);
 	}
 
 	@JsonProperty
-	public void setSourcePackages(List<String> sourcePackages) {
+	public void setSourcePackages(List<String> sourcePackages)
+	{
 		this.sourcePackages = sourcePackages;
 	}
 
 	@JsonProperty
-	public String getColorScheme() {
+	public String getColorScheme()
+	{
 		return this.colorScheme;
 	}
 
 	@JsonProperty
-	public void setColorScheme(String colorScheme) {
+	public void setColorScheme(String colorScheme)
+	{
 		this.colorScheme = colorScheme;
 	}
 
 	@JsonProperty("ideLinks")
-	public EnabledFactory getIdeLinksFactory() {
+	public EnabledFactory getIdeLinksFactory()
+	{
 		return this.ideLinksFactory;
 	}
 
 	@JsonProperty("ideLinks")
-	public void setIdeLinksFactory(EnabledFactory ideLinksFactory) {
+	public void setIdeLinksFactory(EnabledFactory ideLinksFactory)
+	{
 		this.ideLinksFactory = ideLinksFactory;
 	}
 
 	@ValidationMethod(message = "Invalid color scheme. Valid options include 'dark', 'light', 'dark-cube', 'dark-rgb'.")
 	@JsonIgnore
-	public boolean isColorSchemeValid() {
-		if (this.colorScheme == null) {
+	public boolean isColorSchemeValid()
+	{
+		if (this.colorScheme == null)
+		{
 			return false;
 		}
 
 		boolean exists = ColorSchemeProvider.existsByName(this.colorScheme);
-		if (!exists) {
+		if (!exists)
+		{
 			LOGGER.warn("Invalid color scheme '{}': color scheme not found", this.colorScheme);
 		}
 		return exists;

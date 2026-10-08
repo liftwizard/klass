@@ -38,16 +38,19 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 
-public class ReladomoConcreteClassGenerator {
-
+public class ReladomoConcreteClassGenerator
+{
 	private final DomainModel domainModel;
 
-	public ReladomoConcreteClassGenerator(DomainModel domainModel) {
+	public ReladomoConcreteClassGenerator(DomainModel domainModel)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 	}
 
-	public void writeConcreteClasses(@Nonnull Path path) {
-		for (Klass klass : this.domainModel.getClasses()) {
+	public void writeConcreteClasses(@Nonnull Path path)
+	{
+		for (Klass klass : this.domainModel.getClasses())
+		{
 			String packageName = klass.getPackageName();
 			String relativePath = packageName.replaceAll("\\.", "/");
 			Path parentPath = path.resolve(relativePath);
@@ -56,7 +59,8 @@ public class ReladomoConcreteClassGenerator {
 			String fileName = klass.getName() + ".java";
 			Path outputPath = parentPath.resolve(fileName);
 
-			if (outputPath.toFile().exists()) {
+			if (outputPath.toFile().exists())
+			{
 				continue;
 			}
 
@@ -65,15 +69,20 @@ public class ReladomoConcreteClassGenerator {
 		}
 	}
 
-	private static void createDirectories(Path dir) {
-		try {
+	private static void createDirectories(Path dir)
+	{
+		try
+		{
 			Files.createDirectories(dir);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}
 
-	public String getSourceCode(@Nonnull Klass klass) {
+	public String getSourceCode(@Nonnull Klass klass)
+	{
 		Objects.requireNonNull(klass);
 
 		String packageName = klass.getPackageName();
@@ -104,10 +113,12 @@ public class ReladomoConcreteClassGenerator {
 			+ "}\n";
 	}
 
-	private String getConstructors(@Nonnull Klass klass) {
+	private String getConstructors(@Nonnull Klass klass)
+	{
 		String className = klass.getName();
 
-		if (klass.isTemporal()) {
+		if (klass.isTemporal())
+		{
 			// language=JAVA
 			// prettier-ignore
 			return ""
@@ -122,7 +133,9 @@ public class ReladomoConcreteClassGenerator {
 				+ "    {\n"
 				+ "        this(UtcInfinityTimestamp.getDefaultInfinity());\n"
 				+ "    }\n";
-		} else {
+		}
+		else
+		{
 			// language=JAVA
 			// prettier-ignore
 			return ""
@@ -139,28 +152,34 @@ public class ReladomoConcreteClassGenerator {
 		@Nonnull Klass klass,
 		ImmutableList<PrimitiveProperty> derivedProperties,
 		boolean isTemporal
-	) {
+	)
+	{
 		boolean hasLocalDate = derivedProperties.anySatisfy((p) -> p.getType() == PrimitiveType.LOCAL_DATE);
 		boolean hasInstant = derivedProperties.anySatisfy((p) -> p.getType() == PrimitiveType.INSTANT);
 
 		MutableList<String> importLines = Lists.mutable.empty();
 
-		if (isTemporal) {
+		if (isTemporal)
+		{
 			importLines.add("\n");
 			importLines.add("import java.sql.Timestamp;\n");
 		}
 
-		if (hasInstant || hasLocalDate) {
+		if (hasInstant || hasLocalDate)
+		{
 			importLines.add("\n");
 		}
-		if (hasInstant) {
+		if (hasInstant)
+		{
 			importLines.add("import java.time.Instant;\n");
 		}
-		if (hasLocalDate) {
+		if (hasLocalDate)
+		{
 			importLines.add("import java.time.LocalDate;\n");
 		}
 
-		if (isTemporal) {
+		if (isTemporal)
+		{
 			importLines.add("\n");
 			importLines.add("import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;\n");
 		}
@@ -173,11 +192,13 @@ public class ReladomoConcreteClassGenerator {
 		return importLines.makeString("");
 	}
 
-	private String getDerivedPropertiesSourceCode(ImmutableList<PrimitiveProperty> derivedProperties) {
+	private String getDerivedPropertiesSourceCode(ImmutableList<PrimitiveProperty> derivedProperties)
+	{
 		return derivedProperties.collect(this::getDerivedPropertySourceCode).makeString("");
 	}
 
-	private String getDerivedPropertySourceCode(PrimitiveProperty derivedProperty) {
+	private String getDerivedPropertySourceCode(PrimitiveProperty derivedProperty)
+	{
 		String propertyName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, derivedProperty.getName());
 		PrimitiveType primitiveType = derivedProperty.getType();
 		String javaReturnType = primitiveType.getPrimitiveJavaClass().getSimpleName();
@@ -203,10 +224,14 @@ public class ReladomoConcreteClassGenerator {
 			+ "    }\n";
 	}
 
-	private void printStringToFile(@Nonnull Path path, String contents) {
-		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)) {
+	private void printStringToFile(@Nonnull Path path, String contents)
+	{
+		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8))
+		{
 			printStream.print(contents);
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}

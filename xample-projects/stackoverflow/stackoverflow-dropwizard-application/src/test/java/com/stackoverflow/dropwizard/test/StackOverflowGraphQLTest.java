@@ -26,11 +26,13 @@ import io.liftwizard.reladomo.test.extension.ReladomoTestFile;
 import org.eclipse.collections.api.factory.Maps;
 import org.junit.jupiter.api.Test;
 
-class StackOverflowGraphQLTest extends AbstractStackOverflowApplicationTest {
-
+class StackOverflowGraphQLTest
+	extends AbstractStackOverflowApplicationTest
+{
 	@Test
 	@ReladomoTestFile("test-data/existing-question.txt")
-	void smokeTest() {
+	void smokeTest()
+	{
 		Client client = this.getClient("graphqlSmokeTest");
 
 		String queryName = this.getClass().getSimpleName() + ".smokeTest.graphql";

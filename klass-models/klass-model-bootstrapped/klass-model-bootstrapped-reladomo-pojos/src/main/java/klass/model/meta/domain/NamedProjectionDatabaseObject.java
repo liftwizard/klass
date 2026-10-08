@@ -16,4 +16,7 @@
 
 package klass.model.meta.domain;
 
-public class NamedProjectionDatabaseObject extends NamedProjectionDatabaseObjectAbstract {}
+public class NamedProjectionDatabaseObject
+	extends NamedProjectionDatabaseObjectAbstract
+{
+}

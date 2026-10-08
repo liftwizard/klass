@@ -36,17 +36,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @AutoService(PrioritizedBundle.class)
-public class SampleDataGeneratorBundle implements PrioritizedBundle {
-
+public class SampleDataGeneratorBundle
+	implements PrioritizedBundle
+{
 	private static final Logger LOGGER = LoggerFactory.getLogger(SampleDataGeneratorBundle.class);
 
 	@Override
-	public int getPriority() {
+	public int getPriority()
+	{
 		return -1;
 	}
 
 	@Override
-	public void runWithMdc(@Nonnull Object configuration, @Nonnull Environment environment) {
+	public void runWithMdc(@Nonnull Object configuration, @Nonnull Environment environment)
+	{
 		SampleDataFactoryProvider sampleDataFactoryProvider = this.safeCastConfiguration(
 			SampleDataFactoryProvider.class,
 			configuration
@@ -61,7 +64,8 @@ public class SampleDataGeneratorBundle implements PrioritizedBundle {
 		);
 
 		SampleDataFactory sampleDataFactory = sampleDataFactoryProvider.getSampleDataFactory();
-		if (!sampleDataFactory.isEnabled()) {
+		if (!sampleDataFactory.isEnabled())
+		{
 			LOGGER.info("{} disabled.", this.getClass().getSimpleName());
 			return;
 		}

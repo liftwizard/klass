@@ -20,19 +20,25 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class RootProjectionList extends RootProjectionListAbstract {
+public class RootProjectionList
+	extends RootProjectionListAbstract
+{
+	public RootProjectionList()
+	{
+	}
 
-	public RootProjectionList() {}
-
-	public RootProjectionList(int initialSize) {
+	public RootProjectionList(int initialSize)
+	{
 		super(initialSize);
 	}
 
-	public RootProjectionList(Collection c) {
+	public RootProjectionList(Collection c)
+	{
 		super(c);
 	}
 
-	public RootProjectionList(Operation operation) {
+	public RootProjectionList(Operation operation)
+	{
 		super(operation);
 	}
 }

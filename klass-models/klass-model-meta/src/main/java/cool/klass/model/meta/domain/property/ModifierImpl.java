@@ -31,8 +31,10 @@ import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 
-public final class ModifierImpl extends AbstractOrdinalElement implements Modifier {
-
+public final class ModifierImpl
+	extends AbstractOrdinalElement
+	implements Modifier
+{
 	@Nonnull
 	private final ModifierOwner modifierOwner;
 
@@ -42,37 +44,44 @@ public final class ModifierImpl extends AbstractOrdinalElement implements Modifi
 		@Nullable SourceCode sourceCode,
 		int ordinal,
 		@Nonnull ModifierOwner modifierOwner
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode, ordinal);
 		this.modifierOwner = Objects.requireNonNull(modifierOwner);
 	}
 
-	public Token getKeywordToken() {
+	public Token getKeywordToken()
+	{
 		ParserRuleContext elementContext = this.getElementContext();
 		int childCount = elementContext.getChildCount();
-		if (childCount != 1) {
+		if (childCount != 1)
+		{
 			throw new AssertionError();
 		}
 		return elementContext.getStart();
 	}
 
 	@Override
-	public String getKeyword() {
+	public String getKeyword()
+	{
 		return this.getKeywordToken().getText();
 	}
 
 	@Override
-	public ModifierOwner getModifierOwner() {
+	public ModifierOwner getModifierOwner()
+	{
 		return this.modifierOwner;
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return this.getKeyword();
 	}
 
-	public static final class ModifierBuilder extends OrdinalElementBuilder<ModifierImpl> {
-
+	public static final class ModifierBuilder
+		extends OrdinalElementBuilder<ModifierImpl>
+	{
 		@Nonnull
 		private final ElementBuilder<?> surroundingElementBuilder;
 
@@ -82,14 +91,16 @@ public final class ModifierImpl extends AbstractOrdinalElement implements Modifi
 			@Nullable SourceCodeBuilder sourceCode,
 			int ordinal,
 			@Nonnull ElementBuilder<?> surroundingElementBuilder
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode, ordinal);
 			this.surroundingElementBuilder = Objects.requireNonNull(surroundingElementBuilder);
 		}
 
 		@Override
 		@Nonnull
-		protected ModifierImpl buildUnsafe() {
+		protected ModifierImpl buildUnsafe()
+		{
 			return new ModifierImpl(
 				this.elementContext,
 				this.macroElement.map(ElementBuilder::getElement),

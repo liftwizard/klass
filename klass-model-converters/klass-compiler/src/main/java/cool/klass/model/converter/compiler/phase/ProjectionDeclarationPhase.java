@@ -28,17 +28,20 @@ import cool.klass.model.converter.compiler.state.projection.AntlrProjection;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionDeclarationContext;
 
-public class ProjectionDeclarationPhase extends AbstractCompilerPhase {
-
+public class ProjectionDeclarationPhase
+	extends AbstractCompilerPhase
+{
 	@Nullable
 	private AntlrProjection projection;
 
-	public ProjectionDeclarationPhase(@Nonnull CompilerState compilerState) {
+	public ProjectionDeclarationPhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Override
-	public void enterProjectionDeclaration(@Nonnull ProjectionDeclarationContext ctx) {
+	public void enterProjectionDeclaration(@Nonnull ProjectionDeclarationContext ctx)
+	{
 		super.enterProjectionDeclaration(ctx);
 
 		String classifierName = ctx.classifierReference().identifier().getText();
@@ -57,7 +60,8 @@ public class ProjectionDeclarationPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitProjectionDeclaration(@Nonnull ProjectionDeclarationContext ctx) {
+	public void exitProjectionDeclaration(@Nonnull ProjectionDeclarationContext ctx)
+	{
 		this.compilerState.getDomainModel().exitProjectionDeclaration(this.projection);
 
 		super.exitProjectionDeclaration(ctx);

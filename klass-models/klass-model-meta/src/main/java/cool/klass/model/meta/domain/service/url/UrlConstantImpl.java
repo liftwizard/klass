@@ -28,8 +28,9 @@ import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import cool.klass.model.meta.grammar.KlassParser.UrlConstantContext;
 
-public final class UrlConstantImpl extends AbstractOrdinalElement {
-
+public final class UrlConstantImpl
+	extends AbstractOrdinalElement
+{
 	@Nonnull
 	private final String name;
 
@@ -39,29 +40,34 @@ public final class UrlConstantImpl extends AbstractOrdinalElement {
 		@Nullable SourceCode sourceCode,
 		int ordinal,
 		@Nonnull String name
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode, ordinal);
 		this.name = Objects.requireNonNull(name);
 	}
 
 	@Nonnull
 	@Override
-	public UrlConstantContext getElementContext() {
+	public UrlConstantContext getElementContext()
+	{
 		return (UrlConstantContext) super.getElementContext();
 	}
 
 	@Nonnull
-	public String getName() {
+	public String getName()
+	{
 		return this.name;
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return this.name;
 	}
 
-	public static final class UrlConstantBuilder extends OrdinalElementBuilder<UrlConstantImpl> {
-
+	public static final class UrlConstantBuilder
+		extends OrdinalElementBuilder<UrlConstantImpl>
+	{
 		@Nonnull
 		private final String name;
 
@@ -71,14 +77,16 @@ public final class UrlConstantImpl extends AbstractOrdinalElement {
 			@Nullable SourceCodeBuilder sourceCode,
 			int ordinal,
 			@Nonnull String name
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode, ordinal);
 			this.name = Objects.requireNonNull(name);
 		}
 
 		@Override
 		@Nonnull
-		protected UrlConstantImpl buildUnsafe() {
+		protected UrlConstantImpl buildUnsafe()
+		{
 			return new UrlConstantImpl(
 				(UrlConstantContext) this.elementContext,
 				this.macroElement.map(ElementBuilder::getElement),

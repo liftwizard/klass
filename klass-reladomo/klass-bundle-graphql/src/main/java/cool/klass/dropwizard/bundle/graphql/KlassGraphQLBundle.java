@@ -71,19 +71,22 @@ import org.slf4j.MDC.MDCCloseable;
 public class KlassGraphQLBundle<
 	T extends Configuration & GraphQLFactoryProvider & DomainModelFactoryProvider & DataStoreFactoryProvider
 >
-	extends GraphQLBundle<T> {
-
+	extends GraphQLBundle<T>
+{
 	private MetricRegistry metricRegistry;
 	private Environment environment;
 
 	@Override
-	public void initialize(@Nonnull Bootstrap<?> bootstrap) {
-		try (MDCCloseable mdc = MDC.putCloseable("liftwizard.bundle", this.getClass().getSimpleName())) {
+	public void initialize(@Nonnull Bootstrap<?> bootstrap)
+	{
+		try (MDCCloseable mdc = MDC.putCloseable("liftwizard.bundle", this.getClass().getSimpleName()))
+		{
 			this.initializeWithMdc(bootstrap);
 		}
 	}
 
-	private void initializeWithMdc(@Nonnull Bootstrap<?> bootstrap) {
+	private void initializeWithMdc(@Nonnull Bootstrap<?> bootstrap)
+	{
 		this.metricRegistry = bootstrap.getMetricRegistry();
 
 		bootstrap.addBundle(new AssetsBundle("/graphiql", "/graphiql", "index.htm", "graphiql"));
@@ -92,7 +95,9 @@ public class KlassGraphQLBundle<
 	}
 
 	@Override
-	public void run(T configuration, Environment environment) throws Exception {
+	public void run(T configuration, Environment environment)
+		throws Exception
+	{
 		this.environment = environment;
 
 		GraphQLFactory factory = this.getGraphQLFactory(configuration);
@@ -127,7 +132,8 @@ public class KlassGraphQLBundle<
 
 	@Nonnull
 	@Override
-	public GraphQLFactory getGraphQLFactory(@Nonnull T configuration) {
+	public GraphQLFactory getGraphQLFactory(@Nonnull T configuration)
+	{
 		// the RuntimeWiring must be configured prior to the run()
 		// methods being called so the schema is connected properly.
 		GraphQLFactory factory = configuration.getGraphQLFactory();
@@ -172,7 +178,8 @@ public class KlassGraphQLBundle<
 		DomainModel domainModel,
 		ReladomoDataStore dataStore,
 		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
-	) {
+	)
+	{
 		var queryTypeBuilder = new TypeRuntimeWiring.Builder();
 		queryTypeBuilder.typeName("Query");
 
@@ -189,7 +196,8 @@ public class KlassGraphQLBundle<
 		DomainModel domainModel,
 		ReladomoDataStore dataStore,
 		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
-	) {
+	)
+	{
 		domainModel
 			.getClasses()
 			.each((eachKlass) ->
@@ -202,13 +210,15 @@ public class KlassGraphQLBundle<
 		ReladomoDataStore dataStore,
 		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter,
 		Klass klass
-	) {
+	)
+	{
 		String propertyName = this.getPropertyName(klass);
 		var allDataFetcher = new AllDataFetcher(klass, dataStore, reladomoTreeGraphqlConverter);
 		queryTypeBuilder.dataFetcher(propertyName, allDataFetcher);
 	}
 
-	private String getPropertyName(Classifier classifier) {
+	private String getPropertyName(Classifier classifier)
+	{
 		String classifierName = classifier.getName();
 
 		String lowerUnderscore = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, classifierName);
@@ -219,15 +229,18 @@ public class KlassGraphQLBundle<
 			.makeString("");
 	}
 
-	private String capitalizeSplit(String eachSplit, int index, int splitsSize) {
+	private String capitalizeSplit(String eachSplit, int index, int splitsSize)
+	{
 		return this.getCapitalized(index, this.getPluralized(index, splitsSize, eachSplit));
 	}
 
-	private String getPluralized(int index, int splitsSize, String eachSplit) {
+	private String getPluralized(int index, int splitsSize, String eachSplit)
+	{
 		return index == splitsSize - 1 ? English.plural(eachSplit) : eachSplit;
 	}
 
-	private String getCapitalized(int index, String eachSplit) {
+	private String getCapitalized(int index, String eachSplit)
+	{
 		return index != 0 ? CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, eachSplit) : eachSplit;
 	}
 
@@ -236,7 +249,8 @@ public class KlassGraphQLBundle<
 		DomainModel domainModel,
 		ReladomoDataStore dataStore,
 		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
-	) {
+	)
+	{
 		domainModel
 			.getClasses()
 			.each((eachKlass) ->
@@ -249,7 +263,8 @@ public class KlassGraphQLBundle<
 		ReladomoDataStore dataStore,
 		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter,
 		Klass klass
-	) {
+	)
+	{
 		String propertyName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName());
 
 		var byKeyDataFetcher = new ByKeyDataFetcher(klass, dataStore, reladomoTreeGraphqlConverter);
@@ -261,7 +276,8 @@ public class KlassGraphQLBundle<
 		DomainModel domainModel,
 		ReladomoDataStore dataStore,
 		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
-	) {
+	)
+	{
 		domainModel
 			.getClasses()
 			.each((eachKlass) ->
@@ -274,7 +290,8 @@ public class KlassGraphQLBundle<
 		ReladomoDataStore dataStore,
 		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter,
 		Klass klass
-	) {
+	)
+	{
 		String propertyName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "ByOperation";
 
 		var byOperationDataFetcher = new ByOperationDataFetcher(klass, dataStore, reladomoTreeGraphqlConverter);
@@ -286,7 +303,8 @@ public class KlassGraphQLBundle<
 		DomainModel domainModel,
 		ReladomoDataStore dataStore,
 		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter
-	) {
+	)
+	{
 		domainModel
 			.getClasses()
 			.each((eachKlass) ->
@@ -299,14 +317,16 @@ public class KlassGraphQLBundle<
 		ReladomoDataStore dataStore,
 		ReladomoTreeGraphqlConverter reladomoTreeGraphqlConverter,
 		Klass klass
-	) {
+	)
+	{
 		String propertyName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, klass.getName()) + "ByFinder";
 
 		var byFinderDataFetcher = new ByFinderDataFetcher(klass, dataStore, reladomoTreeGraphqlConverter);
 		queryTypeBuilder.dataFetcher(propertyName, byFinderDataFetcher);
 	}
 
-	private TypeRuntimeWiring.Builder getTypeResolver(Klass klass) {
+	private TypeRuntimeWiring.Builder getTypeResolver(Klass klass)
+	{
 		var typeBuilder = new TypeRuntimeWiring.Builder();
 		typeBuilder.typeName(klass.getName());
 

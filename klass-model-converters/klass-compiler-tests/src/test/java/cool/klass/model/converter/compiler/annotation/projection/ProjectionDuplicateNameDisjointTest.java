@@ -19,11 +19,13 @@ package cool.klass.model.converter.compiler.annotation.projection;
 import cool.klass.model.converter.compiler.annotation.AbstractKlassCompilerErrorTestCase;
 import org.junit.jupiter.api.Test;
 
-class ProjectionDuplicateNameDisjointTest extends AbstractKlassCompilerErrorTestCase {
-
+class ProjectionDuplicateNameDisjointTest
+	extends AbstractKlassCompilerErrorTestCase
+{
 	@Override
 	@Test
-	public void smokeTest() {
+	public void smokeTest()
+	{
 		this.assertCompilationSucceeds(true);
 	}
 }

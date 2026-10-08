@@ -42,8 +42,10 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.tuple.Tuples;
 
-public class AntlrProjectionReferenceProperty extends AntlrProjectionParent implements AntlrProjectionChild {
-
+public class AntlrProjectionReferenceProperty
+	extends AntlrProjectionParent
+	implements AntlrProjectionChild
+{
 	@Nonnull
 	private final AntlrProjectionParent antlrProjectionParent;
 
@@ -64,7 +66,8 @@ public class AntlrProjectionReferenceProperty extends AntlrProjectionParent impl
 		@Nonnull AntlrProjectionParent antlrProjectionParent,
 		@Nonnull AntlrClassifier classifierState,
 		@Nonnull AntlrReferenceProperty<?> referenceProperty
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, ordinal, nameContext, classifier);
 		this.antlrProjectionParent = Objects.requireNonNull(antlrProjectionParent);
 		this.classifierState = Objects.requireNonNull(classifierState);
@@ -72,28 +75,33 @@ public class AntlrProjectionReferenceProperty extends AntlrProjectionParent impl
 	}
 
 	@Nonnull
-	public AntlrReferenceProperty<?> getProperty() {
+	public AntlrReferenceProperty<?> getProperty()
+	{
 		return this.referenceProperty;
 	}
 
 	@Nonnull
 	@Override
-	public AntlrClassifier getDeclaringClassifier() {
+	public AntlrClassifier getDeclaringClassifier()
+	{
 		return this.classifierState;
 	}
 
 	@Override
-	public boolean isContext() {
+	public boolean isContext()
+	{
 		return true;
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore() {
+	public Pair<Token, Token> getContextBefore()
+	{
 		return Tuples.pair(this.getElementContext().getStart(), this.getElementContext().projectionBlock().getStart());
 	}
 
 	@Override
-	public Pair<Token, Token> getContextAfter() {
+	public Pair<Token, Token> getContextAfter()
+	{
 		return Tuples.pair(
 			this.getElementContext().projectionBlock().getStop(),
 			this.getElementContext().PUNCTUATION_COMMA().getSymbol()
@@ -102,14 +110,17 @@ public class AntlrProjectionReferenceProperty extends AntlrProjectionParent impl
 
 	@Nonnull
 	@Override
-	public ProjectionReferencePropertyContext getElementContext() {
+	public ProjectionReferencePropertyContext getElementContext()
+	{
 		return (ProjectionReferencePropertyContext) super.getElementContext();
 	}
 
 	@Nonnull
 	@Override
-	public ProjectionReferencePropertyBuilder build() {
-		if (this.projectionReferencePropertyBuilder != null) {
+	public ProjectionReferencePropertyBuilder build()
+	{
+		if (this.projectionReferencePropertyBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 
@@ -124,45 +135,51 @@ public class AntlrProjectionReferenceProperty extends AntlrProjectionParent impl
 			this.referenceProperty.getElementBuilder()
 		);
 
-		ImmutableList<ProjectionChildBuilder> projectionMemberBuilders = this.children.collect(
-			AntlrProjectionChild::build
-		).toImmutable();
+		ImmutableList<ProjectionChildBuilder> projectionMemberBuilders = this.children
+			.collect(AntlrProjectionChild::build)
+			.toImmutable();
 
 		this.projectionReferencePropertyBuilder.setChildBuilders(projectionMemberBuilders);
 		return this.projectionReferencePropertyBuilder;
 	}
 
 	@Override
-	public void build2() {
+	public void build2()
+	{
 		this.children.forEach(AntlrProjectionElement::build2);
 	}
 
 	@Override
-	public void visit(@Nonnull AntlrProjectionVisitor visitor) {
+	public void visit(@Nonnull AntlrProjectionVisitor visitor)
+	{
 		visitor.visitReferenceProperty(this);
 	}
 
 	@Nonnull
 	@Override
-	public AbstractProjectionParentBuilder<? extends AbstractProjectionParent> getElementBuilder() {
+	public AbstractProjectionParentBuilder<? extends AbstractProjectionParent> getElementBuilder()
+	{
 		return Objects.requireNonNull(this.projectionReferencePropertyBuilder);
 	}
 
 	@Nonnull
 	@Override
-	public AntlrProjectionParent getParent() {
+	public AntlrProjectionParent getParent()
+	{
 		return this.antlrProjectionParent;
 	}
 
 	// <editor-fold desc="Report Compiler Errors">
 	@Override
-	public void reportDuplicateMemberName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportDuplicateMemberName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		String message = String.format("Duplicate member: '%s'.", this.getName());
 		compilerAnnotationHolder.add("ERR_DUP_PRJ", message, this);
 	}
 
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		super.reportErrors(compilerAnnotationHolder);
 
 		AntlrClassifier parentClassifier = this.antlrProjectionParent.getClassifier();
@@ -171,7 +188,8 @@ public class AntlrProjectionReferenceProperty extends AntlrProjectionParent impl
 			|| parentClassifier == AntlrClass.AMBIGUOUS
 			|| parentClassifier == AntlrClassifier.AMBIGUOUS
 			|| parentClassifier == AntlrClassifier.NOT_FOUND
-		) {
+		)
+		{
 			return;
 		}
 
@@ -179,17 +197,21 @@ public class AntlrProjectionReferenceProperty extends AntlrProjectionParent impl
 			this.referenceProperty == AntlrReferenceProperty.NOT_FOUND
 			|| this.referenceProperty == AntlrAssociationEnd.NOT_FOUND
 			|| this.referenceProperty == AntlrReferenceProperty.NOT_FOUND
-		) {
+		)
+		{
 			AntlrDataTypeProperty<?> dataTypeProperty = parentClassifier.getDataTypePropertyByName(this.getName());
 
-			if (dataTypeProperty == AntlrEnumerationProperty.NOT_FOUND) {
+			if (dataTypeProperty == AntlrEnumerationProperty.NOT_FOUND)
+			{
 				String message = String.format(
 					"Cannot find member '%s.%s'.",
 					parentClassifier.getName(),
 					this.getName()
 				);
 				compilerAnnotationHolder.add("ERR_PRP_NFD", message, this);
-			} else {
+			}
+			else
+			{
 				String message =
 					"Nested projection nodes require a reference property, but found a data type property '%s.%s' with type '%s'.".formatted(
 						parentClassifier.getName(),
@@ -206,19 +228,22 @@ public class AntlrProjectionReferenceProperty extends AntlrProjectionParent impl
 			this.referenceProperty == AntlrReferenceProperty.AMBIGUOUS
 			|| this.referenceProperty == AntlrAssociationEnd.AMBIGUOUS
 			|| this.referenceProperty == AntlrAssociationEndSignature.AMBIGUOUS
-		) {
+		)
+		{
 			return;
 		}
 
 		this.reportRedundantClassifierQualifier(compilerAnnotationHolder);
 		this.reportForwardReference(compilerAnnotationHolder);
 
-		for (AntlrProjectionChild child : this.children) {
+		for (AntlrProjectionChild child : this.children)
+		{
 			child.reportErrors(compilerAnnotationHolder);
 		}
 	}
 
-	private void reportRedundantClassifierQualifier(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	private void reportRedundantClassifierQualifier(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		AntlrClassifier parentClassifier = this.antlrProjectionParent.getClassifier();
 		AntlrReferenceProperty<?> parentResolvedProperty = parentClassifier.getReferencePropertyByName(this.getName());
 		this.reportRedundantClassifierQualifier(
@@ -228,8 +253,10 @@ public class AntlrProjectionReferenceProperty extends AntlrProjectionParent impl
 		);
 	}
 
-	private void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (!this.isForwardReference(this.referenceProperty)) {
+	private void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (!this.isForwardReference(this.referenceProperty))
+		{
 			return;
 		}
 
@@ -245,7 +272,8 @@ public class AntlrProjectionReferenceProperty extends AntlrProjectionParent impl
 	}
 
 	@Override
-	public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		// Intentionally blank. Reference to a named element that gets its name checked.
 	}
 
@@ -253,7 +281,8 @@ public class AntlrProjectionReferenceProperty extends AntlrProjectionParent impl
 
 	@Nonnull
 	@Override
-	protected Pattern getNamePattern() {
+	protected Pattern getNamePattern()
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".getNamePattern() not implemented yet"
 		);

@@ -29,8 +29,10 @@ import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.InterfaceDeclarationContext;
 
-public final class InterfaceImpl extends AbstractClassifier implements InterfaceWithSourceCode {
-
+public final class InterfaceImpl
+	extends AbstractClassifier
+	implements InterfaceWithSourceCode
+{
 	private InterfaceImpl(
 		@Nonnull InterfaceDeclarationContext elementContext,
 		@Nonnull Optional<Element> macroElement,
@@ -38,18 +40,21 @@ public final class InterfaceImpl extends AbstractClassifier implements Interface
 		int ordinal,
 		@Nonnull IdentifierContext nameContext,
 		@Nonnull String packageName
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode, ordinal, nameContext, packageName);
 	}
 
 	@Nonnull
 	@Override
-	public InterfaceDeclarationContext getElementContext() {
+	public InterfaceDeclarationContext getElementContext()
+	{
 		return (InterfaceDeclarationContext) super.getElementContext();
 	}
 
-	public static final class InterfaceBuilder extends ClassifierBuilder<InterfaceImpl> {
-
+	public static final class InterfaceBuilder
+		extends ClassifierBuilder<InterfaceImpl>
+	{
 		public InterfaceBuilder(
 			@Nonnull InterfaceDeclarationContext elementContext,
 			@Nonnull Optional<ElementBuilder<?>> macroElement,
@@ -57,13 +62,15 @@ public final class InterfaceImpl extends AbstractClassifier implements Interface
 			int ordinal,
 			@Nonnull IdentifierContext nameContext,
 			@Nonnull String packageName
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode, ordinal, nameContext, packageName);
 		}
 
 		@Override
 		@Nonnull
-		protected InterfaceImpl buildUnsafe() {
+		protected InterfaceImpl buildUnsafe()
+		{
 			return new InterfaceImpl(
 				(InterfaceDeclarationContext) this.elementContext,
 				this.macroElement.map(ElementBuilder::getElement),
@@ -75,7 +82,8 @@ public final class InterfaceImpl extends AbstractClassifier implements Interface
 		}
 
 		@Override
-		public InterfaceImpl getType() {
+		public InterfaceImpl getType()
+		{
 			return Objects.requireNonNull(this.element);
 		}
 	}

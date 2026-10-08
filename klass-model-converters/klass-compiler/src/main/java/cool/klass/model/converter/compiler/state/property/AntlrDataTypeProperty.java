@@ -59,8 +59,9 @@ import org.eclipse.collections.api.map.OrderedMap;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 import org.eclipse.collections.impl.tuple.Tuples;
 
-public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrProperty {
-
+public abstract class AntlrDataTypeProperty<T extends DataType>
+	extends AntlrProperty
+{
 	// <editor-fold desc="AMBIGUOUS">
 	public static final AntlrDataTypeProperty AMBIGUOUS = new AntlrDataTypeProperty(
 		new ClassDeclarationContext(AMBIGUOUS_PARENT, -1),
@@ -69,9 +70,11 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 		AMBIGUOUS_IDENTIFIER_CONTEXT,
 		AntlrClassifier.AMBIGUOUS,
 		false
-	) {
+	)
+	{
 		@Override
-		protected ParserRuleContext getTypeParserRuleContext() {
+		protected ParserRuleContext getTypeParserRuleContext()
+		{
 			throw new UnsupportedOperationException(
 				this.getClass().getSimpleName() + ".getTypeParserRuleContext() not implemented yet"
 			);
@@ -79,33 +82,38 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 
 		@Nonnull
 		@Override
-		public AntlrType getType() {
+		public AntlrType getType()
+		{
 			return AntlrEnumeration.AMBIGUOUS;
 		}
 
 		@Nonnull
 		@Override
-		public DataTypePropertyBuilder build() {
+		public DataTypePropertyBuilder build()
+		{
 			throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".build() not implemented yet");
 		}
 
 		@Nonnull
 		@Override
-		public DataTypePropertyBuilder getElementBuilder() {
+		public DataTypePropertyBuilder getElementBuilder()
+		{
 			throw new UnsupportedOperationException(
 				this.getClass().getSimpleName() + ".getElementBuilder() not implemented yet"
 			);
 		}
 
 		@Override
-		public String getTypeName() {
+		public String getTypeName()
+		{
 			throw new UnsupportedOperationException(
 				this.getClass().getSimpleName() + ".getTypeName() not implemented yet"
 			);
 		}
 
 		@Override
-		protected void reportInvalidIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		protected void reportInvalidIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+		{
 			throw new UnsupportedOperationException(
 				this.getClass().getSimpleName() + ".reportInvalidIdProperties() not implemented yet"
 			);
@@ -121,9 +129,11 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 		NOT_FOUND_IDENTIFIER_CONTEXT,
 		AntlrClassifier.NOT_FOUND,
 		false
-	) {
+	)
+	{
 		@Override
-		protected ParserRuleContext getTypeParserRuleContext() {
+		protected ParserRuleContext getTypeParserRuleContext()
+		{
 			throw new UnsupportedOperationException(
 				this.getClass().getSimpleName() + ".getTypeParserRuleContext() not implemented yet"
 			);
@@ -131,33 +141,38 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 
 		@Nonnull
 		@Override
-		public AntlrType getType() {
+		public AntlrType getType()
+		{
 			return AntlrEnumeration.NOT_FOUND;
 		}
 
 		@Nonnull
 		@Override
-		public DataTypePropertyBuilder build() {
+		public DataTypePropertyBuilder build()
+		{
 			throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".build() not implemented yet");
 		}
 
 		@Nonnull
 		@Override
-		public DataTypePropertyBuilder getElementBuilder() {
+		public DataTypePropertyBuilder getElementBuilder()
+		{
 			throw new UnsupportedOperationException(
 				this.getClass().getSimpleName() + ".getElementBuilder() not implemented yet"
 			);
 		}
 
 		@Override
-		public String getTypeName() {
+		public String getTypeName()
+		{
 			throw new UnsupportedOperationException(
 				this.getClass().getSimpleName() + ".getTypeName() not implemented yet"
 			);
 		}
 
 		@Override
-		protected void reportInvalidIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+		protected void reportInvalidIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+		{
 			throw new UnsupportedOperationException(
 				this.getClass().getSimpleName() + ".reportInvalidIdProperties() not implemented yet"
 			);
@@ -197,7 +212,8 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 		@Nonnull IdentifierContext nameContext,
 		@Nonnull AntlrClassifier owningClassifier,
 		boolean isOptional
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, ordinal, nameContext);
 		this.isOptional = isOptional;
 		this.owningClassifier = Objects.requireNonNull(owningClassifier);
@@ -205,126 +221,154 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 
 	@Nonnull
 	@Override
-	public Optional<IAntlrElement> getSurroundingElement() {
+	public Optional<IAntlrElement> getSurroundingElement()
+	{
 		return Optional.of(this.owningClassifier);
 	}
 
 	protected abstract ParserRuleContext getTypeParserRuleContext();
 
-	public boolean isKey() {
+	public boolean isKey()
+	{
 		return this.getModifiers().anySatisfy(AntlrModifier::isKey);
 	}
 
-	public boolean isId() {
+	public boolean isId()
+	{
 		return this.getModifiers().anySatisfy(AntlrModifier::isId);
 	}
 
-	public boolean isUserId() {
+	public boolean isUserId()
+	{
 		return this.getModifiers().anySatisfy(AntlrModifier::isUserId);
 	}
 
-	public boolean isAudit() {
+	public boolean isAudit()
+	{
 		return this.getModifiers().anySatisfy(AntlrModifier::isAudit);
 	}
 
-	public boolean isCreatedOn() {
+	public boolean isCreatedOn()
+	{
 		return this.getModifiers().anySatisfy(AntlrModifier::isCreatedOn);
 	}
 
-	public boolean isOptional() {
+	public boolean isOptional()
+	{
 		return this.isOptional;
 	}
 
-	public boolean isSystem() {
+	public boolean isSystem()
+	{
 		return this.getModifiers().anySatisfy(AntlrModifier::isSystem);
 	}
 
-	public boolean isValid() {
+	public boolean isValid()
+	{
 		return this.getModifiers().anySatisfy(AntlrModifier::isValid);
 	}
 
-	public boolean isValidRange() {
+	public boolean isValidRange()
+	{
 		return this.isValid() && !this.isFrom() && !this.isTo();
 	}
 
-	public boolean isValidFrom() {
+	public boolean isValidFrom()
+	{
 		return this.isValid() && this.isFrom();
 	}
 
-	public boolean isValidTo() {
+	public boolean isValidTo()
+	{
 		return this.isValid() && this.isTo();
 	}
 
-	public boolean isSystemRange() {
+	public boolean isSystemRange()
+	{
 		return this.isSystem() && !this.isFrom() && !this.isTo();
 	}
 
-	public boolean isSystemFrom() {
+	public boolean isSystemFrom()
+	{
 		return this.isSystem() && this.isFrom();
 	}
 
-	public boolean isSystemTo() {
+	public boolean isSystemTo()
+	{
 		return this.isSystem() && this.isTo();
 	}
 
-	public boolean isFrom() {
+	public boolean isFrom()
+	{
 		return this.getModifiers().anySatisfy(AntlrModifier::isFrom);
 	}
 
-	public boolean isTo() {
+	public boolean isTo()
+	{
 		return this.getModifiers().anySatisfy(AntlrModifier::isTo);
 	}
 
-	public void setKeyMatchingThisForeignKey(AntlrAssociationEnd associationEnd, AntlrDataTypeProperty<?> keyProperty) {
+	public void setKeyMatchingThisForeignKey(AntlrAssociationEnd associationEnd, AntlrDataTypeProperty<?> keyProperty)
+	{
 		this.keysMatchingThisForeignKey.computeIfAbsent(associationEnd, (k) -> Lists.mutable.empty()).add(keyProperty);
 	}
 
 	public void setForeignKeyMatchingThisKey(
 		AntlrAssociationEnd associationEnd,
 		AntlrDataTypeProperty<?> foreignKeyProperty
-	) {
-		this.foreignKeysMatchingThisKey.computeIfAbsent(associationEnd, (k) -> Lists.mutable.empty()).add(
-			foreignKeyProperty
-		);
+	)
+	{
+		this.foreignKeysMatchingThisKey
+			.computeIfAbsent(associationEnd, (k) -> Lists.mutable.empty())
+			.add(foreignKeyProperty);
 	}
 
-	public void addMinLengthValidation(AntlrMinLengthPropertyValidation minLengthValidation) {
+	public void addMinLengthValidation(AntlrMinLengthPropertyValidation minLengthValidation)
+	{
 		this.validations.add(minLengthValidation);
 		this.minLengthValidations.add(minLengthValidation);
 	}
 
-	public void addMaxLengthValidation(AntlrMaxLengthPropertyValidation maxLengthValidation) {
+	public void addMaxLengthValidation(AntlrMaxLengthPropertyValidation maxLengthValidation)
+	{
 		this.validations.add(maxLengthValidation);
 		this.maxLengthValidations.add(maxLengthValidation);
 	}
 
-	public void addMinValidation(AntlrMinPropertyValidation minValidation) {
+	public void addMinValidation(AntlrMinPropertyValidation minValidation)
+	{
 		this.validations.add(minValidation);
 		this.minValidations.add(minValidation);
 	}
 
-	public void addMaxValidation(AntlrMaxPropertyValidation maxValidation) {
+	public void addMaxValidation(AntlrMaxPropertyValidation maxValidation)
+	{
 		this.validations.add(maxValidation);
 		this.maxValidations.add(maxValidation);
 	}
 
-	public ListIterable<AbstractAntlrPropertyValidation> getValidations() {
+	public ListIterable<AbstractAntlrPropertyValidation> getValidations()
+	{
 		return this.validations;
 	}
 
-	public ListIterable<AntlrMinLengthPropertyValidation> getMinLengthValidations() {
+	public ListIterable<AntlrMinLengthPropertyValidation> getMinLengthValidations()
+	{
 		return this.minLengthValidations;
 	}
 
-	public ListIterable<AntlrMaxLengthPropertyValidation> getMaxLengthValidations() {
+	public ListIterable<AntlrMaxLengthPropertyValidation> getMaxLengthValidations()
+	{
 		return this.maxLengthValidations;
 	}
 
-	public ListIterable<AntlrMinPropertyValidation> getMinValidations() {
+	public ListIterable<AntlrMinPropertyValidation> getMinValidations()
+	{
 		return this.minValidations;
 	}
 
-	public ListIterable<AntlrMaxPropertyValidation> getMaxValidations() {
+	public ListIterable<AntlrMaxPropertyValidation> getMaxValidations()
+	{
 		return this.maxValidations;
 	}
 
@@ -334,11 +378,13 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 
 	@Nonnull
 	@Override
-	public AntlrClassifier getOwningClassifier() {
+	public AntlrClassifier getOwningClassifier()
+	{
 		return this.owningClassifier;
 	}
 
-	public ImmutableList<AntlrDataTypeProperty<?>> getOverriddenProperties() {
+	public ImmutableList<AntlrDataTypeProperty<?>> getOverriddenProperties()
+	{
 		return this.owningClassifier.getOverriddenDataTypeProperties(this.getName());
 	}
 
@@ -347,17 +393,20 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 	@Override
 	public abstract DataTypePropertyBuilder<T, ?, ?> build();
 
-	protected void buildValidations() {
-		Optional<MinLengthPropertyValidationBuilder> minLengthPropertyValidationBuilders =
-			this.minLengthValidations.collect(AntlrMinLengthPropertyValidation::build).detectOptional((x) -> true);
-		Optional<MaxLengthPropertyValidationBuilder> maxLengthPropertyValidationBuilders =
-			this.maxLengthValidations.collect(AntlrMaxLengthPropertyValidation::build).detectOptional((x) -> true);
-		Optional<MinPropertyValidationBuilder> minPropertyValidationBuilders = this.minValidations.collect(
-			AntlrMinPropertyValidation::build
-		).detectOptional((x) -> true);
-		Optional<MaxPropertyValidationBuilder> maxPropertyValidationBuilders = this.maxValidations.collect(
-			AntlrMaxPropertyValidation::build
-		).detectOptional((x) -> true);
+	protected void buildValidations()
+	{
+		Optional<MinLengthPropertyValidationBuilder> minLengthPropertyValidationBuilders = this.minLengthValidations
+			.collect(AntlrMinLengthPropertyValidation::build)
+			.detectOptional((x) -> true);
+		Optional<MaxLengthPropertyValidationBuilder> maxLengthPropertyValidationBuilders = this.maxLengthValidations
+			.collect(AntlrMaxLengthPropertyValidation::build)
+			.detectOptional((x) -> true);
+		Optional<MinPropertyValidationBuilder> minPropertyValidationBuilders = this.minValidations
+			.collect(AntlrMinPropertyValidation::build)
+			.detectOptional((x) -> true);
+		Optional<MaxPropertyValidationBuilder> maxPropertyValidationBuilders = this.maxValidations
+			.collect(AntlrMaxPropertyValidation::build)
+			.detectOptional((x) -> true);
 
 		MutableList<PropertyValidationBuilder<?>> propertyValidationBuilders = this.validations.collect(
 			AbstractAntlrPropertyValidation::getElementBuilder
@@ -370,7 +419,8 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 		this.getElementBuilder().setPropertyValidationBuilders(propertyValidationBuilders.toImmutable());
 	}
 
-	public void build2() {
+	public void build2()
+	{
 		MutableOrderedMap<AssociationEndBuilder, DataTypePropertyBuilder<?, ?, ?>> keysMatchingThisForeignKey =
 			this.keysMatchingThisForeignKey.collect((associationEnd, dataTypeProperties) ->
 				Tuples.pair(associationEnd.getElementBuilder(), dataTypeProperties.getOnly().getElementBuilder())
@@ -391,7 +441,8 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 	// <editor-fold desc="Report Compiler Errors">
 	@Override
 	@OverridingMethodsMustInvokeSuper
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		super.reportErrors(compilerAnnotationHolder);
 
 		this.reportDuplicateValidations(compilerAnnotationHolder);
@@ -403,7 +454,8 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 		// TODO: ☑ Check for nullable key properties
 	}
 
-	private void reportDuplicateValidations(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	private void reportDuplicateValidations(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		this.reportDuplicateValidations(compilerAnnotationHolder, this.minLengthValidations);
 		this.reportDuplicateValidations(compilerAnnotationHolder, this.maxLengthValidations);
 		this.reportDuplicateValidations(compilerAnnotationHolder, this.minValidations);
@@ -413,12 +465,15 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 	private void reportDuplicateValidations(
 		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
 		@Nonnull ListIterable<? extends AbstractAntlrPropertyValidation> validations
-	) {
-		if (validations.size() <= 1) {
+	)
+	{
+		if (validations.size() <= 1)
+		{
 			return;
 		}
 
-		for (AbstractAntlrPropertyValidation minLengthValidation : validations) {
+		for (AbstractAntlrPropertyValidation minLengthValidation : validations)
+		{
 			ParserRuleContext offendingToken = minLengthValidation.getElementContext();
 			String message = String.format("Duplicate validation '%s'.", offendingToken.getText());
 			compilerAnnotationHolder.add(
@@ -432,7 +487,8 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 
 	protected abstract void reportInvalidIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder);
 
-	private void reportInvalidForeignKeyProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
+	private void reportInvalidForeignKeyProperties(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		this.keysMatchingThisForeignKey.forEach((associationEnd, keyBuilders) ->
 			this.reportInvalidForeignKeyProperties(compilerAnnotationHolder, associationEnd, keyBuilders)
 		);
@@ -442,18 +498,22 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
 		@Nonnull AntlrAssociationEnd associationEnd,
 		@Nonnull ListIterable<AntlrDataTypeProperty<?>> keyBuilders
-	) {
-		if (keyBuilders.size() > 1) {
+	)
+	{
+		if (keyBuilders.size() > 1)
+		{
 			throw new AssertionError(
 				"TODO: Is it sometimes valid to have a single foreign key relate to many different primary keys on different types?"
 			);
 		}
 
-		if (!associationEnd.isToOne()) {
+		if (!associationEnd.isToOne())
+		{
 			throw new AssertionError(associationEnd);
 		}
 
-		if (associationEnd.isSourceEnd() && associationEnd.getOpposite().hasForeignKeys()) {
+		if (associationEnd.isSourceEnd() && associationEnd.getOpposite().hasForeignKeys())
+		{
 			AntlrAssociationEnd oppositeEnd = associationEnd.getOpposite();
 			AntlrDataTypeProperty<?> oppositeForeignKey = oppositeEnd.getForeignKeys().keysView().getFirst();
 			String message = String.format(
@@ -479,7 +539,8 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 			);
 		}
 
-		if (this.isOptional && associationEnd.isToOneRequired()) {
+		if (this.isOptional && associationEnd.isToOneRequired())
+		{
 			String message = String.format(
 				"Association end '%s.%s' has multiplicity [%s] so foreign key '%s.%s' ought to be required.",
 				associationEnd.getOwningClassifier().getName(),
@@ -492,7 +553,8 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 			compilerAnnotationHolder.add("ERR_FOR_MUL", message, associationEnd.getMultiplicity());
 		}
 
-		if (!this.isOptional && associationEnd.isToOneOptional()) {
+		if (!this.isOptional && associationEnd.isToOneOptional())
+		{
 			String message = String.format(
 				"Association end '%s.%s' has multiplicity [%s] so foreign key '%s.%s' ought to be optional.",
 				associationEnd.getOwningClassifier().getName(),
@@ -510,11 +572,13 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 			);
 		}
 
-		if (this.isCreatedBy() || this.isLastUpdatedBy()) {
+		if (this.isCreatedBy() || this.isLastUpdatedBy())
+		{
 			return;
 		}
 
-		if (!this.isFinal() && associationEnd.isFinal()) {
+		if (!this.isFinal() && associationEnd.isFinal())
+		{
 			String message = String.format(
 				"Association end '%s.%s' is final [%s] so foreign key '%s.%s' ought to be final.",
 				associationEnd.getOwningClassifier().getName(),
@@ -524,12 +588,14 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 				this.getName()
 			);
 			compilerAnnotationHolder.add("ERR_FOR_FIN", message, this);
-			for (AntlrModifier modifier : associationEnd.getModifiersByName("final")) {
+			for (AntlrModifier modifier : associationEnd.getModifiersByName("final"))
+			{
 				compilerAnnotationHolder.add("ERR_FOR_FIN", message, modifier);
 			}
 		}
 
-		if (this.isFinal() && !associationEnd.isFinal()) {
+		if (this.isFinal() && !associationEnd.isFinal())
+		{
 			String message = String.format(
 				"Association end '%s.%s' is not final [%s] but foreign key '%s.%s' is final. The two properties must match.",
 				associationEnd.getOwningClassifier().getName(),
@@ -539,15 +605,18 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 				this.getName()
 			);
 			ImmutableList<AntlrModifier> modifiers = this.getModifiersByName("final");
-			for (AntlrModifier modifier : modifiers) {
+			for (AntlrModifier modifier : modifiers)
+			{
 				compilerAnnotationHolder.add("ERR_FOR_FIN", message, modifier);
 			}
 			compilerAnnotationHolder.add("ERR_FOR_FIN", message, associationEnd);
 		}
 	}
 
-	private void reportInvalidUserIdProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (!this.isUserId() || this.isCreatedBy() || this.isLastUpdatedBy()) {
+	private void reportInvalidUserIdProperties(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (!this.isUserId() || this.isCreatedBy() || this.isLastUpdatedBy())
+		{
 			return;
 		}
 
@@ -555,7 +624,8 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 		if (
 			antlrType instanceof AntlrPrimitiveType primitiveType
 			&& primitiveType.getPrimitiveType() == PrimitiveType.STRING
-		) {
+		)
+		{
 			return;
 		}
 
@@ -575,8 +645,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 		);
 	}
 
-	private void reportInvalidVersionProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.getModifiers().noneSatisfy(AntlrModifier::isVersion)) {
+	private void reportInvalidVersionProperties(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.getModifiers().noneSatisfy(AntlrModifier::isVersion))
+		{
 			return;
 		}
 
@@ -584,7 +656,8 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 		if (
 			antlrType instanceof AntlrPrimitiveType primitiveType
 			&& ALLOWED_VERSION_TYPES.contains(primitiveType.getPrimitiveType())
-		) {
+		)
+		{
 			return;
 		}
 
@@ -605,9 +678,12 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 		);
 	}
 
-	private void reportInvalidTemporalProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.isValidRange() || this.isSystemRange()) {
-			if (this.getType() != AntlrPrimitiveType.TEMPORAL_RANGE) {
+	private void reportInvalidTemporalProperties(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.isValidRange() || this.isSystemRange())
+		{
+			if (this.getType() != AntlrPrimitiveType.TEMPORAL_RANGE)
+			{
 				ParserRuleContext offendingToken = this.getTypeParserRuleContext();
 				String message = String.format(
 					"Expected type '%s' for temporal property but found '%s'.",
@@ -625,8 +701,11 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 					Lists.immutable.with(offendingToken).newWithAll(modifierContexts)
 				);
 			}
-		} else if (this.isFrom() || this.isTo()) {
-			if (!this.isValid() && !this.isSystem()) {
+		}
+		else if (this.isFrom() || this.isTo())
+		{
+			if (!this.isValid() && !this.isSystem())
+			{
 				ImmutableList<AntlrModifier> modifiers = this.getModifiers()
 					.select((modifier) -> modifier.isFrom() || modifier.isTo())
 					.toImmutable();
@@ -641,7 +720,9 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 					this,
 					modifiers.collect(AntlrElement::getElementContext)
 				);
-			} else if (this.getType() != AntlrPrimitiveType.TEMPORAL_INSTANT) {
+			}
+			else if (this.getType() != AntlrPrimitiveType.TEMPORAL_INSTANT)
+			{
 				ParserRuleContext offendingToken = this.getTypeParserRuleContext();
 				String message = String.format(
 					"Expected type '%s' for temporal property but found '%s'.",
@@ -658,7 +739,9 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 					this,
 					Lists.immutable.with(offendingToken).newWithAll(modifierContexts)
 				);
-			} else if (this.isFrom() && this.isTo()) {
+			}
+			else if (this.isFrom() && this.isTo())
+			{
 				ImmutableList<AntlrModifier> modifiers = this.getModifiers()
 					.select((modifier) -> modifier.isFrom() || modifier.isTo())
 					.toImmutable();
@@ -670,11 +753,14 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 	}
 
 	@Override
-	protected void reportInvalidAuditProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
+	protected void reportInvalidAuditProperties(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		super.reportInvalidAuditProperties(compilerAnnotationHolder);
 
-		if (this.isUserId()) {
-			if (!this.isKey() && !this.isCreatedBy() && !this.isLastUpdatedBy()) {
+		if (this.isUserId())
+		{
+			if (!this.isKey() && !this.isCreatedBy() && !this.isLastUpdatedBy())
+			{
 				AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isUserId);
 				String message = String.format(
 					"Expected property '%s' with modifier '%s' to be a key, createdBy, or lastUpdatedBy.",
@@ -690,12 +776,14 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 			}
 		}
 
-		if (this.isCreatedBy() || this.isLastUpdatedBy()) {
+		if (this.isCreatedBy() || this.isLastUpdatedBy())
+		{
 			AntlrType antlrType = this.getType();
 			if (
 				!(antlrType instanceof AntlrPrimitiveType)
 				|| ((AntlrPrimitiveType) antlrType).getPrimitiveType() != PrimitiveType.STRING
-			) {
+			)
+			{
 				AntlrModifier modifier = this.getModifiers().detect(
 					(antlrModifier) -> antlrModifier.isCreatedBy() || antlrModifier.isLastUpdatedBy()
 				);
@@ -712,7 +800,9 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 					this,
 					Lists.immutable.with(modifier.getElementContext(), this.getTypeParserRuleContext())
 				);
-			} else if (!this.isUserId()) {
+			}
+			else if (!this.isUserId())
+			{
 				AntlrModifier modifier = this.getModifiers().detect(
 					(antlrModifier) -> antlrModifier.isCreatedBy() || antlrModifier.isLastUpdatedBy()
 				);
@@ -727,7 +817,9 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 					this,
 					Lists.immutable.with(modifier.getElementContext())
 				);
-			} else if (!this.isPrivate()) {
+			}
+			else if (!this.isPrivate())
+			{
 				AntlrModifier modifier = this.getModifiers().detect(
 					(antlrModifier) -> antlrModifier.isCreatedBy() || antlrModifier.isLastUpdatedBy()
 				);
@@ -745,12 +837,14 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 			}
 		}
 
-		if (this.isCreatedOn()) {
+		if (this.isCreatedOn())
+		{
 			AntlrType antlrType = this.getType();
 			if (
 				!(antlrType instanceof AntlrPrimitiveType)
 				|| ((AntlrPrimitiveType) antlrType).getPrimitiveType() != PrimitiveType.INSTANT
-			) {
+			)
+			{
 				AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isCreatedOn);
 				String message = String.format(
 					"Expected type '%s' but was '%s' for '%s' property '%s'.",
@@ -765,7 +859,9 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 					this,
 					Lists.immutable.with(modifier.getElementContext(), this.getTypeParserRuleContext())
 				);
-			} else if (!this.isFinal()) {
+			}
+			else if (!this.isFinal())
+			{
 				AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isCreatedOn);
 
 				String message = String.format("Expected createdOn property '%s' to be final.", this);
@@ -778,13 +874,16 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 			}
 		}
 
-		if (this.isCreatedBy() && this.isLastUpdatedBy()) {
+		if (this.isCreatedBy() && this.isLastUpdatedBy())
+		{
 			return;
 		}
 
-		if (this.isCreatedBy()) {
+		if (this.isCreatedBy())
+		{
 			AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isCreatedBy);
-			if (!this.getName().equals("createdById")) {
+			if (!this.getName().equals("createdById"))
+			{
 				String message = String.format("Expected createdBy property '%s' to be named 'createdById'.", this);
 				compilerAnnotationHolder.add(
 					"WRN_CRT_NAM",
@@ -796,9 +895,11 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 			}
 		}
 
-		if (this.isLastUpdatedBy()) {
+		if (this.isLastUpdatedBy())
+		{
 			AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isLastUpdatedBy);
-			if (!this.getName().equals("lastUpdatedById")) {
+			if (!this.getName().equals("lastUpdatedById"))
+			{
 				String message = String.format(
 					"Expected lastUpdatedBy property '%s' to be named 'lastUpdatedById'.",
 					this
@@ -814,7 +915,8 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 		}
 	}
 
-	public void reportIdPropertyWithKeyProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportIdPropertyWithKeyProperties(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		String message = String.format(
 			"Class '%s' may have id properties or non-id key properties, but not both. Found id property: %s.",
 			this.owningClassifier.getName(),
@@ -823,7 +925,8 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 		compilerAnnotationHolder.add("ERR_KEY_IDS", message, this);
 	}
 
-	public void reportKeyPropertyWithIdProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportKeyPropertyWithIdProperties(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		String message = String.format(
 			"Class '%s' may have id properties or non-id key properties, but not both. Found non-id key property: %s.",
 			this.owningClassifier.getName(),
@@ -832,9 +935,11 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 		compilerAnnotationHolder.add("ERR_KEY_IDS", message, this);
 	}
 
-	public void reportTransientIdProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportTransientIdProperties(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		ImmutableList<AntlrModifier> idModifiers = this.getModifiersByName("id");
-		if (idModifiers.isEmpty()) {
+		if (idModifiers.isEmpty())
+		{
 			return;
 		}
 
@@ -853,12 +958,14 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 	// </editor-fold>
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return String.format("%s.%s", this.owningClassifier.getName(), this.getShortString());
 	}
 
 	@Override
-	public String getShortString() {
+	public String getShortString()
+	{
 		MutableList<String> sourceCodeStrings = Lists.mutable.empty();
 
 		String typeSourceCode = this.getType().getName();
@@ -871,11 +978,13 @@ public abstract class AntlrDataTypeProperty<T extends DataType> extends AntlrPro
 		return String.format("%s: %s", this.getName(), sourceCodeStrings.makeString(" "));
 	}
 
-	public OrderedMap<AntlrAssociationEnd, MutableList<AntlrDataTypeProperty<?>>> getKeysMatchingThisForeignKey() {
+	public OrderedMap<AntlrAssociationEnd, MutableList<AntlrDataTypeProperty<?>>> getKeysMatchingThisForeignKey()
+	{
 		return Objects.requireNonNull(this.keysMatchingThisForeignKey);
 	}
 
-	public boolean isForeignKey() {
+	public boolean isForeignKey()
+	{
 		return this.keysMatchingThisForeignKey.notEmpty();
 	}
 }

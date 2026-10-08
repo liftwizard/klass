@@ -48,8 +48,8 @@ import org.eclipse.collections.impl.map.mutable.MapAdapter;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 import org.eclipse.collections.impl.utility.ListIterate;
 
-public abstract class PersistentSynchronizer {
-
+public abstract class PersistentSynchronizer
+{
 	@Nonnull
 	protected final MutationContext mutationContext;
 
@@ -63,7 +63,8 @@ public abstract class PersistentSynchronizer {
 		@Nonnull MutationContext mutationContext,
 		@Nonnull DataStore dataStore,
 		boolean inTransaction
-	) {
+	)
+	{
 		this.mutationContext = Objects.requireNonNull(mutationContext);
 		this.dataStore = Objects.requireNonNull(dataStore);
 		this.inTransaction = inTransaction;
@@ -73,8 +74,11 @@ public abstract class PersistentSynchronizer {
 
 	protected abstract boolean shouldWriteId();
 
-	public boolean synchronize(@Nonnull Klass klass, Object persistentInstance, @Nonnull ObjectNode incomingJson) {
-		Runnable noop = () -> {};
+	public boolean synchronize(@Nonnull Klass klass, Object persistentInstance, @Nonnull ObjectNode incomingJson)
+	{
+		Runnable noop = () ->
+		{
+		};
 		return this.synchronize(klass, persistentInstance, incomingJson, noop);
 	}
 
@@ -83,30 +87,36 @@ public abstract class PersistentSynchronizer {
 		Object persistentInstance,
 		@Nonnull ObjectNode incomingJson,
 		Runnable finalizer
-	) {
-		if (this.inTransaction) {
+	)
+	{
+		if (this.inTransaction)
+		{
 			throw new AssertionError();
 		}
 
-		return this.dataStore.runInTransaction((transaction) -> {
-				Instant transactionTime = this.mutationContext.getTransactionTime();
-				long transactionTimeMillis = transactionTime.toEpochMilli();
-				transaction.setSystemTime(transactionTimeMillis);
+		return this.dataStore.runInTransaction((transaction) ->
+		{
+			Instant transactionTime = this.mutationContext.getTransactionTime();
+			long transactionTimeMillis = transactionTime.toEpochMilli();
+			transaction.setSystemTime(transactionTimeMillis);
 
-				this.inTransaction = true;
-				try {
-					boolean result = this.synchronizeInTransaction(
-						klass,
-						Optional.empty(),
-						persistentInstance,
-						incomingJson
-					);
-					finalizer.run();
-					return result;
-				} finally {
-					this.inTransaction = false;
-				}
-			});
+			this.inTransaction = true;
+			try
+			{
+				boolean result = this.synchronizeInTransaction(
+					klass,
+					Optional.empty(),
+					persistentInstance,
+					incomingJson
+				);
+				finalizer.run();
+				return result;
+			}
+			finally
+			{
+				this.inTransaction = false;
+			}
+		});
 	}
 
 	// TODO: Get rid of this
@@ -114,15 +124,20 @@ public abstract class PersistentSynchronizer {
 		@Nonnull Klass klass,
 		Object persistentInstance,
 		@Nonnull ObjectNode incomingJson
-	) {
-		if (this.inTransaction) {
+	)
+	{
+		if (this.inTransaction)
+		{
 			throw new AssertionError();
 		}
 
 		this.inTransaction = true;
-		try {
+		try
+		{
 			this.synchronizeInTransaction(klass, Optional.empty(), persistentInstance, incomingJson);
-		} finally {
+		}
+		finally
+		{
 			this.inTransaction = false;
 		}
 	}
@@ -132,13 +147,16 @@ public abstract class PersistentSynchronizer {
 		@Nonnull Optional<AssociationEnd> pathHere,
 		Object persistentInstance,
 		@Nonnull ObjectNode incomingJson
-	) {
-		if (!this.inTransaction) {
+	)
+	{
+		if (!this.inTransaction)
+		{
 			throw new AssertionError();
 		}
 
 		var propertyMutationOccurred = false;
-		if (!this.isRestrictedFromWriting(klass)) {
+		if (!this.isRestrictedFromWriting(klass))
+		{
 			propertyMutationOccurred |= this.synchronizeDataTypeProperties(klass, persistentInstance, incomingJson);
 		}
 		boolean associatedMutationOccurred = this.synchronizeAssociationEnds(
@@ -151,7 +169,8 @@ public abstract class PersistentSynchronizer {
 
 		this.synchronizeUpdatedDataTypeProperties(klass, persistentInstance, propertyMutationOccurred);
 
-		if (mutationOccurred) {
+		if (mutationOccurred)
+		{
 			// TODO: Bump version number and version audit properties
 			klass
 				.getVersionProperty()
@@ -167,9 +186,11 @@ public abstract class PersistentSynchronizer {
 		boolean propertyMutationOccurred
 	);
 
-	protected void synchronizeUpdatedDataTypeProperties(Klass klass, Object persistentInstance) {
+	protected void synchronizeUpdatedDataTypeProperties(Klass klass, Object persistentInstance)
+	{
 		Optional<PrimitiveProperty> lastUpdatedByProperty = klass.getLastUpdatedByProperty();
-		lastUpdatedByProperty.ifPresent((primitiveProperty) -> {
+		lastUpdatedByProperty.ifPresent((primitiveProperty) ->
+		{
 			Optional<String> optionalUserId = this.mutationContext.getUserId();
 			String userId = optionalUserId.orElseThrow(() -> new AssertionError(primitiveProperty));
 			this.dataStore.setDataTypeProperty(persistentInstance, primitiveProperty, userId);
@@ -177,7 +198,8 @@ public abstract class PersistentSynchronizer {
 	}
 
 	// region DataTypeProperties
-	private boolean isRestrictedFromWriting(@Nonnull Klass klass) {
+	private boolean isRestrictedFromWriting(@Nonnull Klass klass)
+	{
 		return klass.isTransient() || klass.getVersionedProperty().isPresent();
 	}
 
@@ -185,7 +207,8 @@ public abstract class PersistentSynchronizer {
 		@Nonnull Klass klass,
 		Object persistentInstance,
 		@Nonnull ObjectNode incomingJson
-	) {
+	)
+	{
 		ImmutableList<DataTypeProperty> dataTypeProperties = klass.getDataTypeProperties();
 		ImmutableList<DataTypeProperty> simpleDataTypeProperties = dataTypeProperties.rejectWith(
 			this::shouldSkipDataTypeProperty,
@@ -195,7 +218,8 @@ public abstract class PersistentSynchronizer {
 		this.validateSetIdDataTypeProperties(klass, persistentInstance);
 
 		var mutationOccurred = false;
-		for (DataTypeProperty dataTypeProperty : simpleDataTypeProperties) {
+		for (DataTypeProperty dataTypeProperty : simpleDataTypeProperties)
+		{
 			mutationOccurred |= this.synchronizeDataTypeProperty(dataTypeProperty, persistentInstance, incomingJson);
 		}
 
@@ -212,14 +236,18 @@ public abstract class PersistentSynchronizer {
 		@Nonnull DataTypeProperty dataTypeProperty,
 		Object persistentInstance,
 		@Nonnull ObjectNode incomingJson
-	) {
-		Object newValue = this.mutationContext.getPropertyDataFromUrl().getIfAbsent(dataTypeProperty, () ->
-			JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(dataTypeProperty, incomingJson)
-		);
+	)
+	{
+		Object newValue = this.mutationContext
+			.getPropertyDataFromUrl()
+			.getIfAbsent(dataTypeProperty, () ->
+				JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(dataTypeProperty, incomingJson)
+			);
 		return this.dataStore.setDataTypeProperty(persistentInstance, dataTypeProperty, newValue);
 	}
 
-	private boolean shouldSkipDataTypeProperty(@Nonnull DataTypeProperty dataTypeProperty, @Nonnull Klass klass) {
+	private boolean shouldSkipDataTypeProperty(@Nonnull DataTypeProperty dataTypeProperty, @Nonnull Klass klass)
+	{
 		return (
 			dataTypeProperty.isForeignKey()
 			|| dataTypeProperty.isAudit()
@@ -239,7 +267,8 @@ public abstract class PersistentSynchronizer {
 		@Nonnull Optional<AssociationEnd> pathHere,
 		Object persistentInstance,
 		@Nonnull ObjectNode incomingObjectNode
-	) {
+	)
+	{
 		PartitionImmutableList<AssociationEnd> forwardOwnedAssociationEnds = klass
 			.getAssociationEnds()
 			.reject((associationEnd) -> pathHere.equals(Optional.of(associationEnd.getOpposite())))
@@ -248,29 +277,37 @@ public abstract class PersistentSynchronizer {
 			.partition(AssociationEnd::isOwned);
 
 		var mutationOccurred = false;
-		for (AssociationEnd associationEnd : forwardOwnedAssociationEnds.getSelected()) {
+		for (AssociationEnd associationEnd : forwardOwnedAssociationEnds.getSelected())
+		{
 			Multiplicity multiplicity = associationEnd.getMultiplicity();
 
 			JsonNode jsonNode = incomingObjectNode.path(associationEnd.getName());
-			if (multiplicity.isToOne()) {
+			if (multiplicity.isToOne())
+			{
 				mutationOccurred |= this.handleToOne(associationEnd, persistentInstance, jsonNode);
-			} else {
+			}
+			else
+			{
 				mutationOccurred |= this.handleToMany(associationEnd, persistentInstance, jsonNode);
 			}
 		}
 
-		for (AssociationEnd associationEnd : forwardOwnedAssociationEnds.getRejected()) {
+		for (AssociationEnd associationEnd : forwardOwnedAssociationEnds.getRejected())
+		{
 			Multiplicity multiplicity = associationEnd.getMultiplicity();
 			JsonNode jsonNode = incomingObjectNode.path(associationEnd.getName());
 
-			if (multiplicity.isToOne()) {
+			if (multiplicity.isToOne())
+			{
 				mutationOccurred |= this.handleToOneOutsideProjection(
 					associationEnd,
 					persistentInstance,
 					incomingObjectNode,
 					jsonNode
 				);
-			} else {
+			}
+			else
+			{
 				mutationOccurred |= this.handleToManyOutsideProjection(
 					associationEnd,
 					persistentInstance,
@@ -288,12 +325,14 @@ public abstract class PersistentSynchronizer {
 		@Nonnull AssociationEnd associationEnd,
 		Object persistentParentInstance,
 		@Nonnull JsonNode incomingChildInstance
-	) {
+	)
+	{
 		Object persistentChildInstance = this.dataStore.getToOne(persistentParentInstance, associationEnd);
 
 		if (
 			persistentChildInstance == null && !incomingChildInstance.isMissingNode() && !incomingChildInstance.isNull()
-		) {
+		)
+		{
 			MapIterable<DataTypeProperty, Object> keys = this.getKeysFromJsonNode(
 				incomingChildInstance,
 				associationEnd,
@@ -305,16 +344,20 @@ public abstract class PersistentSynchronizer {
 
 		if (
 			(persistentChildInstance != null && incomingChildInstance.isMissingNode()) || incomingChildInstance.isNull()
-		) {
-			if (incomingChildInstance.isMissingNode()) {
+		)
+		{
+			if (incomingChildInstance.isMissingNode())
+			{
 				return this.handleMissingToOne(associationEnd.getType(), persistentChildInstance);
 			}
-			if (incomingChildInstance.isNull()) {
+			if (incomingChildInstance.isNull())
+			{
 				return this.handleNullToOne(associationEnd.getType(), persistentChildInstance);
 			}
 		}
 
-		if (persistentChildInstance != null && incomingChildInstance != null) {
+		if (persistentChildInstance != null && incomingChildInstance != null)
+		{
 			PersistentSynchronizer synchronizer = this.determineNextMode(OperationMode.REPLACE);
 			return synchronizer.synchronizeInTransaction(
 				associationEnd.getType(),
@@ -327,12 +370,14 @@ public abstract class PersistentSynchronizer {
 		return false;
 	}
 
-	protected boolean handleMissingToOne(Klass klass, Object persistentChildInstance) {
+	protected boolean handleMissingToOne(Klass klass, Object persistentChildInstance)
+	{
 		this.deleteOrTerminate(klass, persistentChildInstance);
 		return true;
 	}
 
-	protected boolean handleNullToOne(Klass klass, Object persistentChildInstance) {
+	protected boolean handleNullToOne(Klass klass, Object persistentChildInstance)
+	{
 		this.deleteOrTerminate(klass, persistentChildInstance);
 		return true;
 	}
@@ -348,7 +393,8 @@ public abstract class PersistentSynchronizer {
 		@Nonnull Object persistentParentInstance,
 		@Nonnull JsonNode incomingChildInstance,
 		@Nonnull AssociationEnd associationEnd
-	) {
+	)
+	{
 		MapIterable<DataTypeProperty, Object> keys = this.getKeysFromJsonNode(
 			incomingChildInstance,
 			associationEnd,
@@ -362,7 +408,8 @@ public abstract class PersistentSynchronizer {
 		Object persistentParentInstance,
 		JsonNode incomingChildInstance,
 		MapIterable<DataTypeProperty, Object> keys
-	) {
+	)
+	{
 		Klass resultType = associationEnd.getType();
 		Object newInstance = this.dataStore.instantiate(resultType, keys);
 		PersistentSynchronizer synchronizer = this.determineNextMode(OperationMode.CREATE);
@@ -372,7 +419,8 @@ public abstract class PersistentSynchronizer {
 			newInstance,
 			(ObjectNode) incomingChildInstance
 		);
-		if (!mutationOccurred) {
+		if (!mutationOccurred)
+		{
 			// TODO: This is a workaround for a bug and should be revisited to see if it still applies in the happy path. The bug started with an association between Owner[1..1] and Details[1..1] owned. The database wound up corrupted with no row or Details. The incoming Details object is {}, because the key matches and no other properties are being patched.
 			// throw new AssertionError();
 		}
@@ -381,7 +429,8 @@ public abstract class PersistentSynchronizer {
 		this.dataStore.insert(newInstance);
 	}
 
-	private void deleteOrTerminate(Klass klass, @Nonnull Object persistentInstance) {
+	private void deleteOrTerminate(Klass klass, @Nonnull Object persistentInstance)
+	{
 		var reladomoPersistentDeleter = new PersistentDeleter(this.mutationContext, this.dataStore);
 		reladomoPersistentDeleter.deleteOrTerminate(klass, persistentInstance);
 	}
@@ -390,7 +439,8 @@ public abstract class PersistentSynchronizer {
 		@Nonnull AssociationEnd associationEnd,
 		Object persistentParentInstance,
 		@Nonnull JsonNode incomingChildInstances
-	) {
+	)
+	{
 		var mutationOccurred = false;
 		// TODO: Test null where an array goes
 
@@ -402,12 +452,14 @@ public abstract class PersistentSynchronizer {
 			this.indexIncomingJsonInstances(incomingInstancesForUpdate, associationEnd, persistentParentInstance);
 
 		List<Object> persistentChildInstances = this.dataStore.getToMany(persistentParentInstance, associationEnd);
-		for (Object persistentChildInstance : persistentChildInstances) {
+		for (Object persistentChildInstance : persistentChildInstances)
+		{
 			ImmutableMap<DataTypeProperty, Object> keys = this.getKeysFromPersistentInstance(
 				persistentChildInstance,
 				associationEnd.getType()
 			);
-			if (!incomingChildInstancesByKey.containsKey(keys)) {
+			if (!incomingChildInstancesByKey.containsKey(keys))
+			{
 				var reladomoPersistentDeleter = new PersistentDeleter(this.mutationContext, this.dataStore);
 				reladomoPersistentDeleter.deleteOrTerminate(associationEnd.getType(), persistentChildInstance);
 				mutationOccurred = true;
@@ -423,15 +475,18 @@ public abstract class PersistentSynchronizer {
 		MapIterable<MapIterable<DataTypeProperty, Object>, Object> persistentChildInstancesByKey =
 			this.indexPersistentInstances(nonTerminatedPersistentChildInstances, associationEnd.getType());
 
-		for (JsonNode incomingChildInstance : incomingChildInstances) {
+		for (JsonNode incomingChildInstance : incomingChildInstances)
+		{
 			Object persistentChildInstance = this.getPersistentChildInstance(
 				associationEnd,
 				persistentParentInstance,
 				persistentChildInstancesByKey,
 				incomingChildInstance
 			);
-			if (persistentChildInstance == null) {
-				if (!associationEnd.isOwned()) {
+			if (persistentChildInstance == null)
+			{
+				if (!associationEnd.isOwned())
+				{
 					throw new AssertionError();
 				}
 
@@ -455,7 +510,9 @@ public abstract class PersistentSynchronizer {
 
 				this.dataStore.insert(newInstance);
 				mutationOccurred = true;
-			} else {
+			}
+			else
+			{
 				PersistentSynchronizer synchronizer = this.determineNextMode(OperationMode.REPLACE);
 				mutationOccurred |= synchronizer.synchronizeInTransaction(
 					associationEnd.getType(),
@@ -475,8 +532,10 @@ public abstract class PersistentSynchronizer {
 		Object persistentParentInstance,
 		@Nonnull MapIterable<MapIterable<DataTypeProperty, Object>, Object> persistentChildInstancesByKey,
 		@Nonnull JsonNode incomingChildInstance
-	) {
-		if (this.jsonNodeNeedsIdInferredOnInsert(incomingChildInstance, associationEnd)) {
+	)
+	{
+		if (this.jsonNodeNeedsIdInferredOnInsert(incomingChildInstance, associationEnd))
+		{
 			return null;
 		}
 
@@ -494,8 +553,10 @@ public abstract class PersistentSynchronizer {
 		@Nonnull Object persistentParentInstance,
 		@Nonnull ObjectNode incomingParentNode,
 		@Nonnull JsonNode incomingChildInstances
-	) {
-		if (incomingChildInstances.isMissingNode()) {
+	)
+	{
+		if (incomingChildInstances.isMissingNode())
+		{
 			// Arguably this should only be the behavior of PATCH, but these instances aren't even owned, so it would be normal to not want to edit them.
 			return false;
 		}
@@ -508,12 +569,14 @@ public abstract class PersistentSynchronizer {
 			this.indexIncomingJsonInstances(incomingChildInstances, associationEnd, persistentParentInstance);
 
 		List<Object> persistentChildInstances = this.dataStore.getToMany(persistentParentInstance, associationEnd);
-		for (Object persistentChildInstance : persistentChildInstances) {
+		for (Object persistentChildInstance : persistentChildInstances)
+		{
 			MapIterable<DataTypeProperty, Object> keys = this.getKeysFromPersistentInstance(
 				persistentChildInstance,
 				associationEnd.getType()
 			);
-			if (!incomingChildInstancesByKey.containsKey(keys)) {
+			if (!incomingChildInstancesByKey.containsKey(keys))
+			{
 				throw new AssertionError();
 				// ReladomoPersistentDeleter reladomoPersistentDeleter = new ReladomoPersistentDeleter(this.dataStore);
 				// reladomoPersistentDeleter.deleteOrTerminate(persistentChildInstance, associationEnd);
@@ -523,7 +586,8 @@ public abstract class PersistentSynchronizer {
 		MapIterable<MapIterable<DataTypeProperty, Object>, Object> persistentChildInstancesByKey =
 			this.indexPersistentInstances(persistentChildInstances, associationEnd.getType());
 
-		for (JsonNode incomingChildInstance : incomingChildInstances) {
+		for (JsonNode incomingChildInstance : incomingChildInstances)
+		{
 			MapIterable<DataTypeProperty, Object> keys = this.getKeysFromJsonNode(
 				incomingChildInstance,
 				associationEnd,
@@ -531,13 +595,15 @@ public abstract class PersistentSynchronizer {
 			);
 
 			Object persistentChildInstance = persistentChildInstancesByKey.get(keys);
-			if (persistentChildInstance == null) {
+			if (persistentChildInstance == null)
+			{
 				/*
                 Klass  resultType  = associationEnd.getType();
                 Object newInstance = this.dataStore.instantiate(resultType, keys);
                 */
 
-				if (associationEnd.isOwned()) {
+				if (associationEnd.isOwned())
+				{
 					throw new AssertionError("TODO: handle owned");
 					// this.dataStore.generateAndSetId(newInstance, resultType);
 					// // TODO: This is the backwards order from how I used to do it
@@ -546,10 +612,14 @@ public abstract class PersistentSynchronizer {
 					// OperationMode nextMode = this.determineNextMode(mode, OperationMode.CREATE);
 					// this.synchronize(newInstance, (ObjectNode) incomingChildInstance, associationEnd, nextMode);
 					// this.dataStore.insert(newInstance);
-				} else {
+				}
+				else
+				{
 					throw new AssertionError("TODO: handle not owned");
 				}
-			} else {
+			}
+			else
+			{
 				PersistentSynchronizer synchronizer = this.determineNextMode(OperationMode.REPLACE);
 				mutationOccurred = synchronizer.synchronizeInTransaction(
 					associationEnd.getType(),
@@ -568,11 +638,13 @@ public abstract class PersistentSynchronizer {
 		@Nonnull Iterable<JsonNode> incomingInstances,
 		@Nonnull AssociationEnd associationEnd,
 		Object persistentParentInstance
-	) {
+	)
+	{
 		MutableOrderedMap<MapIterable<DataTypeProperty, Object>, JsonNode> result = OrderedMapAdapter.adapt(
 			new LinkedHashMap<>()
 		);
-		for (JsonNode incomingInstance : incomingInstances) {
+		for (JsonNode incomingInstance : incomingInstances)
+		{
 			MapIterable<DataTypeProperty, Object> keys = this.getKeysFromJsonNode(
 				incomingInstance,
 				associationEnd,
@@ -586,7 +658,8 @@ public abstract class PersistentSynchronizer {
 	protected ImmutableMap<DataTypeProperty, Object> getKeysFromPersistentInstance(
 		Object persistentInstance,
 		@Nonnull Klass klass
-	) {
+	)
+	{
 		return klass
 			.getKeyProperties()
 			.toImmutableMap(
@@ -598,13 +671,15 @@ public abstract class PersistentSynchronizer {
 	@Nonnull
 	protected abstract PersistentSynchronizer determineNextMode(OperationMode nextMode);
 
-	private boolean hasReferencePropertyDependentOnDataTypeProperty(Klass klass, DataTypeProperty dataTypeProperty) {
+	private boolean hasReferencePropertyDependentOnDataTypeProperty(Klass klass, DataTypeProperty dataTypeProperty)
+	{
 		return false;
 	}
 
 	private ImmutableList<DataTypeProperty> getNonDerivedDataTypeProperties(
 		ImmutableList<DataTypeProperty> dataTypeProperties
-	) {
+	)
+	{
 		return dataTypeProperties;
 	}
 
@@ -612,7 +687,9 @@ public abstract class PersistentSynchronizer {
 		Object persistentInstance,
 		ObjectNode incomingJson,
 		Klass klass
-	) {}
+	)
+	{
+	}
 
 	// endregion
 
@@ -621,7 +698,8 @@ public abstract class PersistentSynchronizer {
 		@Nonnull JsonNode jsonNode,
 		@Nonnull AssociationEnd associationEnd,
 		Object persistentParentInstance
-	) {
+	)
+	{
 		OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey =
 			keyProperty.getKeysMatchingThisForeignKey();
 
@@ -629,10 +707,13 @@ public abstract class PersistentSynchronizer {
 
 		DataTypeProperty oppositeForeignKey = keysMatchingThisForeignKey.get(opposite);
 
-		if (oppositeForeignKey != null) {
-			Object result = this.mutationContext.getPropertyDataFromUrl().getIfAbsent(oppositeForeignKey, () ->
-				this.dataStore.getDataTypeProperty(persistentParentInstance, oppositeForeignKey)
-			);
+		if (oppositeForeignKey != null)
+		{
+			Object result = this.mutationContext
+				.getPropertyDataFromUrl()
+				.getIfAbsent(oppositeForeignKey, () ->
+					this.dataStore.getDataTypeProperty(persistentParentInstance, oppositeForeignKey)
+				);
 
 			return Objects.requireNonNull(result);
 		}
@@ -641,24 +722,29 @@ public abstract class PersistentSynchronizer {
 	}
 
 	@Nonnull
-	protected static Object extractKeyFromJson(@Nonnull DataTypeProperty keyProperty, @Nonnull JsonNode jsonNode) {
+	protected static Object extractKeyFromJson(@Nonnull DataTypeProperty keyProperty, @Nonnull JsonNode jsonNode)
+	{
 		OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey =
 			keyProperty.getKeysMatchingThisForeignKey();
 
-		if (keysMatchingThisForeignKey.notEmpty()) {
-			if (keysMatchingThisForeignKey.size() != 1) {
+		if (keysMatchingThisForeignKey.notEmpty())
+		{
+			if (keysMatchingThisForeignKey.size() != 1)
+			{
 				throw new AssertionError();
 			}
 
 			Pair<AssociationEnd, DataTypeProperty> pair = keysMatchingThisForeignKey.keyValuesView().getOnly();
 
 			JsonNode childNode = jsonNode.path(pair.getOne().getName());
-			if (childNode instanceof ObjectNode objectNode) {
+			if (childNode instanceof ObjectNode objectNode)
+			{
 				return JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(pair.getTwo(), objectNode);
 			}
 
 			// Leniently allow a foreign key to be used in incoming json, instead of a nested object with a primary key
-			if (jsonNode.has(keyProperty.getName()) && !keyProperty.isPrivate()) {
+			if (jsonNode.has(keyProperty.getName()) && !keyProperty.isPrivate())
+			{
 				return JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(keyProperty, (ObjectNode) jsonNode);
 			}
 
@@ -672,7 +758,8 @@ public abstract class PersistentSynchronizer {
 	private MapIterable<MapIterable<DataTypeProperty, Object>, Object> indexPersistentInstances(
 		@Nonnull List<Object> persistentInstances,
 		@Nonnull Klass klass
-	) {
+	)
+	{
 		MutableOrderedMap<MapIterable<DataTypeProperty, Object>, Object> result = OrderedMapAdapter.adapt(
 			new LinkedHashMap<>()
 		);
@@ -686,7 +773,8 @@ public abstract class PersistentSynchronizer {
 		return result.asUnmodifiable();
 	}
 
-	private boolean jsonNodeNeedsIdInferredOnInsert(JsonNode jsonNode, @Nonnull AssociationEnd associationEnd) {
+	private boolean jsonNodeNeedsIdInferredOnInsert(JsonNode jsonNode, @Nonnull AssociationEnd associationEnd)
+	{
 		return associationEnd
 			.getType()
 			.getKeyProperties()
@@ -697,18 +785,22 @@ public abstract class PersistentSynchronizer {
 		@Nonnull DataTypeProperty keyProperty,
 		JsonNode jsonNode,
 		@Nonnull AssociationEnd associationEnd
-	) {
+	)
+	{
 		OrderedMap<AssociationEnd, DataTypeProperty> keyMatchingThisForeignKey =
 			keyProperty.getKeysMatchingThisForeignKey();
 
 		AssociationEnd opposite = associationEnd.getOpposite();
 
-		if (keyMatchingThisForeignKey.containsKey(opposite)) {
+		if (keyMatchingThisForeignKey.containsKey(opposite))
+		{
 			return false;
 		}
 
-		if (keyMatchingThisForeignKey.notEmpty()) {
-			if (keyMatchingThisForeignKey.size() != 1) {
+		if (keyMatchingThisForeignKey.notEmpty())
+		{
+			if (keyMatchingThisForeignKey.size() != 1)
+			{
 				throw new AssertionError();
 			}
 
@@ -722,14 +814,17 @@ public abstract class PersistentSynchronizer {
 		@Nonnull JsonNode jsonNode,
 		@Nonnull AssociationEnd associationEnd,
 		Object persistentParentInstance
-	) {
+	)
+	{
 		MutableMap<DataTypeProperty, Object> result = MapAdapter.adapt(new LinkedHashMap<>());
 
-		for (DataTypeProperty keyProperty : associationEnd.getType().getKeyProperties()) {
+		for (DataTypeProperty keyProperty : associationEnd.getType().getKeyProperties())
+		{
 			if (
 				!jsonNode.has(keyProperty.getName())
 				&& this.jsonNodeNeedsIdInferredOnInsert(keyProperty, jsonNode, associationEnd)
-			) {
+			)
+			{
 				continue;
 			}
 
