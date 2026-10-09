@@ -5,8 +5,6 @@ repos:
           - id: check-yaml
             args: ["--allow-multiple-documents"]
           - id: check-json
-            # Exclude JSONC files (JSON with Comments) as they need comment support
-            exclude: "biome\\.jsonc"
           - id: check-toml
           - id: check-xml
           - id: end-of-file-fixer
