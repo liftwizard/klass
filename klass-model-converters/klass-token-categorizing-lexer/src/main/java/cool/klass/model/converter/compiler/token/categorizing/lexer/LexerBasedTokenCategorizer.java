@@ -28,6 +28,8 @@ import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
 public final class LexerBasedTokenCategorizer
 {
+	private static final TokenCategory[] TOKEN_CATEGORIES_BY_TYPE = buildTokenCategoriesByType();
+
 	private LexerBasedTokenCategorizer()
 	{
 		throw new AssertionError("Suppress default constructor for noninstantiability");
@@ -87,11 +89,26 @@ public final class LexerBasedTokenCategorizer
 			return TokenCategory.END_OF_FILE;
 		}
 
-		String symbolicName = KlassLexer.VOCABULARY.getSymbolicName(tokenType);
-		if (symbolicName == null)
+		return TOKEN_CATEGORIES_BY_TYPE[tokenType];
+	}
+
+	private static TokenCategory[] buildTokenCategoriesByType()
+	{
+		int maxTokenType = KlassLexer.VOCABULARY.getMaxTokenType();
+		TokenCategory[] result = new TokenCategory[maxTokenType + 1];
+		for (var tokenType = 0; tokenType <= maxTokenType; tokenType++)
 		{
-			return null;
+			String symbolicName = KlassLexer.VOCABULARY.getSymbolicName(tokenType);
+			if (symbolicName != null)
+			{
+				result[tokenType] = LexerBasedTokenCategorizer.getTokenCategoryBySymbolicName(symbolicName);
+			}
 		}
+		return result;
+	}
+
+	private static TokenCategory getTokenCategoryBySymbolicName(String symbolicName)
+	{
 		return switch (symbolicName)
 		{
 			case "StringLiteral" -> TokenCategory.STRING_LITERAL;
