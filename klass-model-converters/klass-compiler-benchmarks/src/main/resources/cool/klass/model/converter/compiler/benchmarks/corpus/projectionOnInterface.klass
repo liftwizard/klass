@@ -1,0 +1,112 @@
+package dummy
+
+class OwningClass
+{
+    id: Long key;
+}
+
+class OwnedClass
+{
+    id: Long key;
+    ownerId: Long private;
+}
+
+interface OwningInterface
+{
+    id: Long key;
+    ownedInterfaces: OwnedInterface[0..*];
+}
+
+interface OwnedInterface
+{
+    id: Long key;
+    owningInterface: OwningInterface[1..1];
+}
+
+association OwningClassOwnsOwnedClasses
+{
+    owningClass: OwningClass[1..1];
+    ownedClasses: OwnedClass[0..*] owned;
+
+    relationship this.id == OwnedClass.ownerId
+}
+
+projection OwningClassSummaryProjection on OwningClass
+{
+    id: "OwningClass Id",
+}
+
+projection OwnedClassSummaryProjection on OwnedClass
+{
+    id: "OwnedClass Id",
+}
+
+projection OwningInterfaceSummaryProjection on OwningInterface
+{
+    id: "OwningInterface Id",
+}
+
+projection OwnedInterfaceSummaryProjection on OwnedInterface
+{
+    id: "OwnedInterface Id",
+}
+
+projection OwningClassProjection on OwningClass
+{
+    id          : "OwningClass Id",
+    ownedClasses:
+    {
+        id: "OwnedClass Id",
+    },
+}
+
+projection OwnedClassProjection on OwnedClass
+{
+    id         : "OwnedClass Id",
+    owningClass:
+    {
+        id: "OwningClass Id",
+    },
+}
+
+projection OwningInterfaceProjection on OwningInterface
+{
+    id             : "OwningInterface Id",
+    ownedInterfaces:
+    {
+        id: "OwnedInterface Id",
+    },
+}
+
+projection OwnedInterfaceProjection on OwnedInterface
+{
+    id             : "OwnedInterface Id",
+    owningInterface:
+    {
+        id: "OwningInterface Id",
+    },
+}
+
+projection OwningClassDetailedProjection on OwningClass
+{
+    id          : "OwningClass Id",
+    ownedClasses: OwnedClassSummaryProjection,
+}
+
+projection OwnedClassDetailedProjection on OwnedClass
+{
+    id         : "OwnedClass Id",
+    owningClass: OwningClassSummaryProjection,
+}
+
+projection OwningInterfaceDetailedProjection on OwningInterface
+{
+    id             : "OwningInterface Id",
+    ownedInterfaces: OwnedInterfaceSummaryProjection,
+}
+
+projection OwnedInterfaceDetailedProjection on OwnedInterface
+{
+    id             : "OwnedInterface Id",
+    owningInterface: OwningInterfaceSummaryProjection,
+}

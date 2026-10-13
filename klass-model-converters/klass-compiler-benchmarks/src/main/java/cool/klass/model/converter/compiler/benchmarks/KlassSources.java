@@ -21,10 +21,29 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 
+import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.list.ImmutableList;
+
 final class KlassSources {
 
 	static final String STACKOVERFLOW = "/com/stackoverflow/stackoverflow.klass";
 	static final String COVERAGE_EXAMPLE = "/cool/klass/xample/coverage/coverage-example.klass";
+	static final String META = "/klass/model/meta/domain/meta.klass";
+
+	private static final String CORPUS = "/cool/klass/model/converter/compiler/benchmarks/corpus/";
+
+	/**
+	 * Every Klass model in the repository that compiles without errors.
+	 */
+	static final ImmutableList<String> ALL = Lists.immutable.with(
+		META,
+		CORPUS + "factorio-prints.klass",
+		COVERAGE_EXAMPLE,
+		STACKOVERFLOW,
+		CORPUS + "projectionOnInterface.klass",
+		CORPUS + "emoji.klass",
+		CORPUS + "reladomo-to-many-abstract.klass"
+	);
 
 	private KlassSources() {
 		throw new AssertionError("Suppress default constructor for noninstantiability");

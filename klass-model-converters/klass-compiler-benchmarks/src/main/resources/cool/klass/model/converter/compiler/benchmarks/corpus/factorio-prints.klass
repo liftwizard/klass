@@ -1,0 +1,1171 @@
+package com.factorioprints
+
+class DataImportTimestamp
+    systemTemporal
+{
+    name: String key;
+    timestamp: Instant;
+}
+
+class ModPack
+    systemTemporal
+{
+    name: String key maxLength(64);
+    description: String maxLength(256);
+}
+
+class FactorioItem
+    systemTemporal
+{
+    name: String key maxLength(64);
+    modPackName: String key maxLength(64);
+
+    type: String maxLength(64);
+    label: String maxLength(64);
+    description: String maxLength(1024);
+
+    // TODO: Figure out the real max length
+    iconEncodedData: String? maxLength(1024);
+}
+
+association FactorioItemHasModPack
+{
+    factorioItems: FactorioItem[0..*];
+    // TODO: make this required?
+    modPack: ModPack[0..1];
+}
+
+// TODO: Are Imgur images mutable?
+class ImgurImage
+    systemTemporal
+{
+    imgurId: String key;
+    imgurType: String;
+    deleteHash: String?;
+    height: Integer;
+    width: Integer;
+}
+
+// 'user' is just a special class that represents logged in users
+// There must only be a single user class in the model, it must have a single key, and the key must be of type String. Other properties must be nullable
+user FirebaseUser
+    read
+    systemTemporal
+    versioned
+{
+    userId: String id key userId maxLength(256);
+    displayName: String maxLength(256);
+    providerDisplayName: String? maxLength(256);
+    email: String? maxLength(1024);
+    emailVerified: Boolean;
+    photoURL: String? maxLength(2048);
+    providerId: String? maxLength(256);
+}
+
+class DisqusUser
+    read
+    systemTemporal
+{
+    username    : String key maxLength(256);
+    name        : String maxLength(256);
+    anonymous   : Boolean;
+    //protected String  name;
+    //protected String  email;
+    //protected String  link;
+    //protected String  username;
+    //protected Boolean isAnonymous;
+    //protected String  id;
+}
+
+enumeration UserRole
+{
+    ADMIN("administrator"),
+    USER("user"),
+}
+
+class UserEntitlement
+    systemTemporal
+{
+    userId      : String private key maxLength(256);
+    userRole    : UserRole key maxLength(64);
+}
+
+association UserHasEntitlements
+{
+    firebaseUser: FirebaseUser[1..1];
+    entitlements: UserEntitlement[0..*] private;
+
+    relationship this.userId == UserEntitlement.userId
+}
+
+// TODO: This was called BlueprintData but that clashes with generated code. Validate that for each type T, there is no other type named TData
+class BlueprintString
+{
+    sha            : String key minLength(40) maxLength(40);
+    createdById    : String createdBy userId final private;
+    createdOn      : Instant createdOn final;
+    blueprintString: String maxLength(33_554_432);
+}
+
+class FactorioGameVersion
+{
+    versionNumber: Long key;
+    version1: Long;
+    version2: Long;
+    version3: Long;
+    version4: Long;
+    versionString: String;
+}
+
+class BlueprintGameData
+{
+    sha: String key private minLength(40) maxLength(40);
+    position: String key maxLength(256);
+    versionNumber: Long?;
+    version1: Long?;
+    version2: Long?;
+    version3: Long?;
+    version4: Long?;
+    versionString: String?;
+    label: String? maxLength(1024);
+    itemType: String?;
+}
+
+association BlueprintGameDataHasFactorioGameVersion
+{
+    blueprintGameDatas: BlueprintGameData[0..*];
+    factorioGameVersion: FactorioGameVersion[0..1];
+
+    relationship this.versionNumber == FactorioGameVersion.versionNumber
+}
+
+association BlueprintStringHasCreatedBy
+{
+    blueprintStringCreatedBy: BlueprintString[0..*];
+    createdBy: FirebaseUser[1..1] createdBy final;
+
+    relationship this.createdById == FirebaseUser.userId
+}
+
+association BlueprintStringHasGameData
+{
+    blueprintString: BlueprintString[1..1];
+    gameDatas  : BlueprintGameData[0..*] owned;
+
+    relationship this.sha == BlueprintGameData.sha
+}
+
+class BlueprintGameDataIcon
+{
+    sha: String key private minLength(40) maxLength(40);
+    position: String key maxLength(256);
+    index: Integer key;
+    signalName: String maxLength(256);
+    signalType: String maxLength(256);
+}
+
+association BlueprintGameDataHasIcons
+{
+    blueprintGameData: BlueprintGameData[1..1];
+    icons: BlueprintGameDataIcon[0..*] owned;
+
+    relationship this.sha == BlueprintGameDataIcon.sha && this.position == BlueprintGameDataIcon.position
+}
+
+class BlueprintStringMod
+{
+    blueprintStringSha: String key private minLength(40) maxLength(40);
+    modPackName: String key maxLength(64);
+}
+
+association BlueprintStringModHasBlueprintString
+{
+    blueprintString: BlueprintString[1..1];
+    blueprintStringMods: BlueprintStringMod[0..*] owned;
+}
+
+association BlueprintStringModHasMod
+{
+    blueprintStringMods: BlueprintStringMod[0..*];
+    modPack: ModPack[1..1];
+}
+
+class BlueprintGameDataRecipe
+{
+    sha: String key private minLength(40) maxLength(40);
+    position: String key private maxLength(256);
+    recipe: String key maxLength(256);
+    count: Integer;
+}
+
+association BlueprintGameDataHasRecipe
+{
+    blueprintGameData: BlueprintGameData[1..1];
+    recipes: BlueprintGameDataRecipe[0..*] owned;
+
+    relationship this.sha == BlueprintGameDataRecipe.sha && this.position == BlueprintGameDataRecipe.position
+}
+
+class BlueprintGameDataEntity
+{
+    sha: String key private minLength(40) maxLength(40);
+    position: String key private maxLength(256);
+    entity: String key maxLength(256);
+    count: Integer;
+}
+
+association BlueprintGameDataHasEntity
+{
+    blueprintGameData: BlueprintGameData[1..1];
+    entities: BlueprintGameDataEntity[0..*] owned;
+
+    relationship this.sha == BlueprintGameDataEntity.sha && this.position == BlueprintGameDataEntity.position
+}
+
+class RecipeModMapping
+    systemTemporal
+{
+    // Allows for multiple mods to provide the same recipe
+    recipeName: String key private maxLength(256);
+    mod: String key maxLength(256);
+}
+
+class EntityModMapping
+    systemTemporal
+{
+    // Allows for multiple mods to provide the same entity
+    entityName: String key private maxLength(256);
+    mod: String key maxLength(256);
+}
+
+association RecipeHasModMapping
+{
+    modMappings: RecipeModMapping[0..*];
+    recipe: BlueprintGameDataRecipe[0..1];
+
+    relationship this.recipeName == BlueprintGameDataRecipe.recipe
+}
+
+association EntityHasModMapping
+{
+    modMappings: EntityModMapping[0..*];
+    entity: BlueprintGameDataEntity[0..1];
+
+    relationship this.entityName == BlueprintGameDataEntity.entity
+}
+
+association BlueprintGameDataEntityHasFactorioItems
+{
+    blueprintGameDataEntity: BlueprintGameDataEntity[0..1];
+    factorioItems: FactorioItem[0..*];
+
+    relationship this.entity == FactorioItem.name
+}
+
+association BlueprintGameDataRecipeHasFactorioItems
+{
+    blueprintGameDataRecipe: BlueprintGameDataRecipe[0..1];
+    factorioItems: FactorioItem[0..*];
+
+    relationship this.recipe == FactorioItem.name
+}
+
+class Blueprint
+    systemTemporal
+    versioned
+    audited
+{
+    key                : String id key maxLength(256);
+    imgurImageId       : String private maxLength(256);
+    blueprintStringSha : String private minLength(40) maxLength(40);
+
+    // Overridden to make them not private. Should they just be public by default?
+    createdById            : String createdBy userId final private;
+    lastUpdatedById        : String lastUpdatedBy userId private;
+
+    title              : String maxLength(512);
+    descriptionMarkdown: String maxLength(131_072);
+}
+
+class BlueprintVoteSummary
+    systemTemporal
+{
+    key                : String id key maxLength(256);
+    // TODO: Better support for derived properties
+    numberOfUpvotes    : Integer;
+}
+
+association BlueprintHasBlueprintVoteSummary
+{
+    blueprint: Blueprint[1..1];
+    voteSummary  : BlueprintVoteSummary[0..1];
+
+    relationship this.key == BlueprintVoteSummary.key
+}
+
+association BlueprintHasString
+{
+    blueprints: Blueprint[0..*];
+    blueprintString: BlueprintString[1..1];
+}
+
+// TODO 2022-06-12: Change to be modeled similar to ImgurImage. Should the key be fileName, firebaseImageUrl, or something synthetic?
+class BlueprintPrivateData
+    systemTemporal
+{
+    key                 : String key private maxLength(256);
+    firebaseImageUrl    : String? maxLength(512);
+    thumbnailData       : String? maxLength(262_144);
+    fileName            : String? maxLength(256);
+}
+
+association BlueprintHasBlueprintPrivateData
+{
+    blueprint           : Blueprint[1..1];
+    privateData         : BlueprintPrivateData[1..1] owned private;
+
+    relationship this.key == BlueprintPrivateData.key
+}
+
+association BlueprintHasAuthoredBy
+{
+    blueprintAuthoredBy: Blueprint[0..*];
+    // TODO 2023-02-06: This property should be not only final but also readonly.
+    // Or it could be a parameterized property.
+    // createdById is used for two relationships, and we expect it to be set only as an audit property
+    // Alternately, we could change the validators and synchronizers to not allow writing to a relationship with an audit property
+    // Then this could become required again
+    author: FirebaseUser[0..1] final;
+
+    relationship this.createdById == FirebaseUser.userId
+}
+
+association BlueprintHasImgurImageModMappings
+{
+    blueprint: Blueprint[0..1];
+    imgurImage: ImgurImage[1..1];
+
+    relationship this.imgurImageId == ImgurImage.imgurId
+}
+
+class Comment
+    systemTemporal
+    versioned
+    audited
+{
+    id                  : Long id key;
+    replyToId           : Long? private;
+    blueprintKey: String private maxLength(256);
+    text                : String maxLength(32_768);
+    deleted             : Boolean;
+}
+
+class DisqusComment
+    systemTemporal
+{
+    id                  : Long id key;
+    replyToId           : Long? private;
+    authorName          : String? private;
+    createdOn           : Instant? createdOn final;
+
+    // TODO 2023-12-03: Why isn't blueprintKey considered a foreign key? Is it because of the unusual relationship relationship this.key == DisqusComment.blueprintKey && DisqusComment.replyToId == null
+    blueprintKey        : String private maxLength(256);
+    text                : String maxLength(32_768);
+    deleted             : Boolean;
+}
+
+association DisqusCommentHasAuthor
+{
+    comments            : DisqusComment[0..*];
+    author              : DisqusUser[0..1];
+
+    relationship this.authorName == DisqusUser.username
+}
+
+association BlueprintHasTopLevelComments
+{
+    blueprint           : Blueprint[0..1];
+    comments            : Comment[0..*];
+
+    relationship this.key == Comment.blueprintKey
+            && Comment.replyToId == null
+}
+
+association BlueprintHasTopLevelDisqusComments
+{
+    blueprint           : Blueprint[0..1];
+    disqusComments      : DisqusComment[0..*];
+
+    relationship this.key == DisqusComment.blueprintKey
+            && DisqusComment.replyToId == null
+}
+
+association CommentHasReplies
+{
+    replyTo             : Comment[0..1];
+    replies             : Comment[0..*];
+
+    relationship this.id == Comment.replyToId
+}
+
+association DisqusCommentHasReplies
+{
+    replyTo: DisqusComment[0..1];
+    replies: DisqusComment[0..*];
+
+    relationship this.id == DisqusComment.replyToId
+}
+
+enumeration VoteDirection
+{
+    UP("up"),
+    DOWN("down"),
+}
+
+class Vote
+    systemTemporal
+{
+    userId : String key private userId maxLength(256);
+    blueprintKey: String private key maxLength(256);
+    direction   : VoteDirection;
+}
+
+association FirebaseUserHasFavorites
+{
+    votes       : Vote[0..*];
+    firebaseUser: FirebaseUser[1..1];
+
+    relationship this.userId == FirebaseUser.userId
+}
+
+association FavoritesHaveBlueprint
+{
+    votes       : Vote[0..*];
+    blueprint   : Blueprint[1..1];
+}
+
+enumeration TagCategory
+{
+    BELT("belt"),
+    CIRCUIT("circuit"),
+    COMBAT("combat"),
+    GENERAL("general"),
+    MODERATION("moderation"),
+    MODS("mods"),
+    POWER("power"),
+    PRODUCTION("production"),
+    TRAIN("train"),
+    VERSION("version"),
+}
+
+class Tag
+    systemTemporal
+{
+    category            : TagCategory key;
+    name                : String key maxLength(64);
+    ordinal             : Integer min(1) max(1000);
+}
+
+class BlueprintTag
+    systemTemporal
+{
+    blueprintKey        : String key private maxLength(256);
+    tagCategory         : TagCategory key maxLength(64);
+    tagName             : String key maxLength(64);
+}
+
+association BlueprintHasBlueprintTags
+{
+    blueprint           : Blueprint[1..1];
+    tags                : BlueprintTag[0..*] owned;
+}
+
+association BlueprintTagHasTag
+{
+    blueprintTags       : BlueprintTag[0..*];
+    tag                 : Tag[1..1];
+}
+
+class CommentVote
+    systemTemporal
+{
+    userId              : String key private userId;
+    commentId           : Long private key;
+    direction           : VoteDirection;
+}
+
+association FirebaseUserHasCommentVotes
+{
+    commentVotes        : CommentVote[0..*];
+    user                : FirebaseUser[1..1];
+
+    relationship this.userId == FirebaseUser.userId
+}
+
+association CommentVotesHaveComment
+{
+    votes               : CommentVote[0..*];
+    comment             : Comment[1..1];
+}
+
+projection ModPackProjection on ModPack
+{
+    name: "ModPack name",
+    description: "ModPack description",
+    systemFrom: "ModPack systemFrom",
+    systemTo: "ModPack systemTo",
+}
+
+projection FactorioItemProjection on FactorioItem
+{
+    name: "FactorioItem name",
+    iconEncodedData: "FactorioItem iconEncodedData",
+    systemFrom: "FactorioItem systemFrom",
+    systemTo: "FactorioItem systemTo",
+    modPack: ModPackProjection,
+}
+
+projection ImgurImageProjection on ImgurImage
+{
+    imgurId: "ImgurImage imgurId",
+    imgurType: "ImgurImage imgurType",
+    height: "ImgurImage height",
+    width: "ImgurImage width",
+    systemFrom: "ImgurImage systemFrom",
+    systemTo: "ImgurImage systemTo",
+}
+
+projection ImgurImageSummaryProjection on ImgurImage
+{
+    imgurId   : "Imgur image id",
+    imgurType : "Imgur image type",
+}
+
+projection FirebaseUserDetailedProjection on FirebaseUser
+{
+    userId: "FirebaseUser userId",
+    displayName: "FirebaseUser displayName",
+    providerDisplayName: "FirebaseUser providerDisplayName",
+    email: "FirebaseUser email",
+    emailVerified: "FirebaseUser emailVerified",
+    photoURL: "FirebaseUser photoURL",
+    providerId: "FirebaseUser providerId",
+    systemFrom: "FirebaseUser systemFrom",
+    systemTo: "FirebaseUser systemTo",
+    version: FirebaseUserVersionProjection,
+}
+
+projection UserIdProjection on FirebaseUser
+{
+    userId             : "FirebaseUser id",
+}
+
+projection FirebaseUserProjection on FirebaseUser
+{
+    userId             : "FirebaseUser id",
+    displayName        : "FirebaseUser displayName",
+    systemFrom         : "FirebaseUser systemFrom",
+    systemTo           : "FirebaseUser systemTo",
+}
+
+projection FirebaseUserSummaryProjection on FirebaseUser
+{
+    userId             : "FirebaseUser id",
+    displayName        : "FirebaseUser display name",
+    providerDisplayName: "FirebaseUser provider display name",
+    photoURL           : "FirebaseUser photo url",
+    providerId         : "FirebaseUser provider id",
+}
+
+projection DisqusUserProjection on DisqusUser
+{
+    username: "DisqusUser username",
+    name: "DisqusUser name",
+    anonymous: "DisqusUser anonymous",
+    systemFrom: "DisqusUser systemFrom",
+    systemTo: "DisqusUser systemTo",
+}
+
+projection UserEntitlementProjection on UserEntitlement
+{
+    userRole: "UserEntitlement userRole",
+    systemFrom: "UserEntitlement systemFrom",
+    systemTo: "UserEntitlement systemTo",
+}
+
+projection BlueprintStringProjection on BlueprintString
+{
+    sha: "BlueprintString sha",
+    blueprintString: "BlueprintString blueprintString",
+    createdOn: "BlueprintString createdOn",
+    createdBy: FirebaseUserProjection,
+    gameDatas: BlueprintGameDataProjection,
+}
+
+projection BlueprintStringSummaryProjection on BlueprintString
+{
+    blueprintString: "BlueprintString blueprintString",
+}
+
+projection BlueprintShaProjection on BlueprintString
+{
+    sha: "BlueprintString sha",
+    createdOn: "BlueprintString createdOn",
+    createdBy: UserIdProjection,
+}
+
+projection FactorioGameVersionProjection on FactorioGameVersion
+{
+    versionNumber: "FactorioGameVersion versionNumber",
+    version1: "FactorioGameVersion version1",
+    version2: "FactorioGameVersion version2",
+    version3: "FactorioGameVersion version3",
+    version4: "FactorioGameVersion version4",
+    versionString: "FactorioGameVersion versionString",
+}
+
+projection BlueprintGameDataProjection on BlueprintGameData
+{
+    position: "BlueprintGameData position",
+    versionNumber: "BlueprintGameData versionNumber",
+    version1: "BlueprintGameData version1",
+    version2: "BlueprintGameData version2",
+    version3: "BlueprintGameData version3",
+    version4: "BlueprintGameData version4",
+    versionString: "BlueprintGameData versionString",
+    label: "BlueprintGameData label",
+    itemType: "BlueprintGameData itemType",
+    icons: BlueprintGameDataIconProjection,
+    recipes: BlueprintGameDataRecipeProjection,
+    entities: BlueprintGameDataEntityProjection,
+    factorioGameVersion: FactorioGameVersionProjection,
+}
+
+projection BlueprintGameDataIconProjection on BlueprintGameDataIcon
+{
+    index: "BlueprintGameDataIcon index",
+    signalName: "BlueprintGameDataIcon signalName",
+    signalType: "BlueprintGameDataIcon signalType",
+}
+
+projection BlueprintGameDataRecipeProjection on BlueprintGameDataRecipe
+{
+    recipe: "BlueprintGameDataRecipe recipe",
+    count: "BlueprintGameDataRecipe count",
+}
+
+projection BlueprintGameDataEntityProjection on BlueprintGameDataEntity
+{
+    entity: "BlueprintGameDataEntity entity",
+    count: "BlueprintGameDataEntity count",
+}
+
+projection RecipeModMappingProjection on RecipeModMapping
+{
+    mod: "RecipeModMapping mod",
+    systemFrom: "RecipeModMapping systemFrom",
+    systemTo: "RecipeModMapping systemTo",
+}
+
+projection EntityModMappingProjection on EntityModMapping
+{
+    mod: "EntityModMapping mod",
+    systemFrom: "EntityModMapping systemFrom",
+    systemTo: "EntityModMapping systemTo",
+}
+
+projection BlueprintVoteSummaryProjection on BlueprintVoteSummary
+{
+    numberOfUpvotes: "BlueprintVoteSummary numberOfUpvotes",
+    systemFrom: "BlueprintVoteSummary systemFrom",
+    systemTo: "BlueprintVoteSummary systemTo",
+}
+
+projection BlueprintProjection on Blueprint
+{
+    key                : "Blueprint key",
+    systemFrom         : "Blueprint systemFrom",
+    systemTo           : "Blueprint systemTo",
+    version            : BlueprintVersionProjection,
+    title              : "Blueprint title",
+    voteSummary        : BlueprintVoteSummaryProjection,
+    blueprintString    : {
+        sha            : "BlueprintString sha",
+        blueprintString: "BlueprintString blueprintString",
+        createdOn      : "BlueprintString createdOn",
+        createdBy      : UserIdProjection,
+    },
+    imgurImage         : ImgurImageProjection,
+    descriptionMarkdown: "Blueprint descriptionMarkdown",
+    tags               : BlueprintTagProjection,
+}
+
+// Same as BlueprintProjection without blueprintString
+projection BlueprintDetailsProjection on Blueprint
+{
+    key                : "Blueprint key",
+    version            : {
+        number: "BlueprintVersion number",
+        systemFrom: "BlueprintVersion systemFrom",
+        createdOn: "BlueprintVersion createdOn",
+        createdBy: {
+            userId             : "FirebaseUser id",
+            displayName        : "FirebaseUser displayName",
+        },
+    },
+    title              : "Blueprint title",
+    author             : {
+        userId             : "FirebaseUser id",
+        displayName        : "FirebaseUser displayName",
+    },
+    voteSummary        : {
+        numberOfUpvotes: "BlueprintVoteSummary numberOfUpvotes",
+    },
+    blueprintString    : {
+        sha: "BlueprintString sha",
+    },
+    imgurImage         : {
+        imgurId: "ImgurImage imgurId",
+        imgurType: "ImgurImage imgurType",
+    },
+    descriptionMarkdown: "Blueprint descriptionMarkdown",
+    tags               : {
+        tagCategory: "BlueprintTag category",
+        tagName    : "BlueprintTag name",
+        tag: {
+            category: "Tag category",
+            name: "Tag name",
+        },
+    },
+}
+
+projection BlueprintSummaryProjection on Blueprint
+{
+    key              : "Blueprint key",
+    title            : "Blueprint title",
+    voteSummary:
+    {
+        numberOfUpvotes: "Blueprint upvotes",
+    },
+    // numberOfDownvotes: "Blueprint downvotes",
+    imgurImage       : ImgurImageSummaryProjection,
+    // systemFrom       : "Blueprint system from",
+}
+
+projection BlueprintKeyProjection on Blueprint
+{
+    key                : "Blueprint key",
+}
+
+projection BlueprintPrivateDataProjection on BlueprintPrivateData
+{
+    firebaseImageUrl: "BlueprintPrivateData firebaseImageUrl",
+    thumbnailData: "BlueprintPrivateData thumbnailData",
+    fileName: "BlueprintPrivateData fileName",
+    systemFrom: "BlueprintPrivateData systemFrom",
+    systemTo: "BlueprintPrivateData systemTo",
+}
+
+projection CommentProjection on Comment
+{
+    id: "Comment id",
+    text: "Comment text",
+    deleted: "Comment deleted",
+    systemFrom: "Comment systemFrom",
+    systemTo: "Comment systemTo",
+    createdOn: "Comment createdOn",
+    replies: CommentProjection,
+    version: CommentVersionProjection,
+    createdBy: FirebaseUserProjection,
+    lastUpdatedBy: FirebaseUserProjection,
+}
+
+projection DisqusCommentProjection on DisqusComment
+{
+    id: "DisqusComment id",
+    text: "DisqusComment text",
+    deleted: "DisqusComment deleted",
+    createdOn: "DisqusComment createdOn",
+    systemFrom: "DisqusComment systemFrom",
+    systemTo: "DisqusComment systemTo",
+    author: DisqusUserProjection,
+    replies: DisqusCommentProjection,
+}
+
+projection VoteProjection on Vote
+{
+    direction: "Vote direction",
+    systemFrom: "Vote systemFrom",
+    systemTo: "Vote systemTo",
+}
+
+projection TagProjection on Tag
+{
+    category: "Tag category",
+    name: "Tag name",
+    ordinal: "Tag ordinal",
+    systemFrom: "Tag systemFrom",
+    systemTo: "Tag systemTo",
+}
+
+projection BlueprintTagProjection on BlueprintTag
+{
+    tagCategory: "BlueprintTag category",
+    tagName    : "BlueprintTag name",
+    systemFrom: "BlueprintTag systemFrom",
+    systemTo: "BlueprintTag systemTo",
+    tag: TagProjection,
+}
+
+projection CommentVoteProjection on CommentVote
+{
+    direction: "CommentVote direction",
+    systemFrom: "CommentVote systemFrom",
+    systemTo: "CommentVote systemTo",
+    user: FirebaseUserProjection,
+    comment: CommentProjection,
+}
+
+projection FirebaseUserVersionProjection on FirebaseUserVersion
+{
+    number: "FirebaseUserVersion number",
+    systemFrom: "FirebaseUserVersion systemFrom",
+    systemTo: "FirebaseUserVersion systemTo",
+}
+
+projection BlueprintVersionProjection on BlueprintVersion
+{
+    number: "BlueprintVersion number",
+    systemFrom: "BlueprintVersion systemFrom",
+    systemTo: "BlueprintVersion systemTo",
+    createdOn: "BlueprintVersion createdOn",
+    createdBy: UserIdProjection,
+    lastUpdatedBy: UserIdProjection,
+}
+
+projection CommentVersionProjection on CommentVersion
+{
+    number: "CommentVersion number",
+    systemFrom: "CommentVersion systemFrom",
+    systemTo: "CommentVersion systemTo",
+    createdOn: "CommentVersion createdOn",
+    createdBy: FirebaseUserProjection,
+    lastUpdatedBy: FirebaseUserProjection,
+}
+
+service BlueprintResource on Blueprint
+{
+    /generated/blueprint
+        POST
+        {
+            multiplicity: one;
+        }
+    /generated/blueprint/{key: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            projection  : BlueprintProjection;
+        }
+        PUT
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            authorize   : this.createdById == user;
+            // TODO: entitlements on user
+            // || user == UserEntitlement.userId && UserEntitlement.userRole == UserRole.ADMIN;
+        }
+        PATCH
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            authorize   : this.createdById == user;
+            // TODO: entitlements on user
+            // || user == UserEntitlement.userId && UserEntitlement.userRole == UserRole.ADMIN;
+        }
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            authorize   : this.createdById == user;
+            // TODO: entitlements on user
+            // || user == UserEntitlement.userId && UserEntitlement.userRole == UserRole.ADMIN;
+        }
+    /generated/blueprint/{key: String[1..1]}/history
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.key == key && this.system equalsEdgePoint;
+            projection  : BlueprintProjection;
+            orderBy: this.systemFrom descending;
+        }
+    /generated/blueprintSummaries
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : BlueprintSummaryProjection;
+            orderBy: this.systemFrom descending;
+        }
+}
+
+/*
+service BlueprintResource on Blueprint
+{
+    // TODO: POST should be rejected here since the type has no id property
+    /blueprint
+        PUT
+        {
+            multiplicity: one;
+            projection  : BlueprintProjection;
+        }
+    /blueprint/{key: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            projection  : BlueprintProjection;
+        }
+        POST
+        {
+            multiplicity: one;
+            projection  : BlueprintProjection;
+        }
+        PUT
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            authorize   : this.createdById == user;
+            // TODO: entitlements on user
+            // || user == UserEntitlement.userId && UserEntitlement.userRole == UserRole.ADMIN;
+            projection  : BlueprintProjection;
+        }
+        DELETE
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            authorize   : this.createdById == user;
+            // TODO: entitlements on user
+            // || user == UserEntitlement.userId && UserEntitlement.userRole == UserRole.ADMIN;
+            projection  : BlueprintProjection;
+        }
+    /blueprint/{key: String[1..1]}/asOf/{asOf: Instant[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.key == key && this.system == asOf;
+            projection  : BlueprintProjection;
+        }
+    /blueprint/{key: String[1..1]}/version/{number: Integer[1..1] version}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.key == key && this.version.number == number && this.version.system equalsEdgePoint;
+            projection  : BlueprintProjection;
+        }
+    /blueprint/{key: String[1..1]}/history
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.key == key && this.system equalsEdgePoint;
+            projection  : BlueprintProjection;
+            orderBy: this.systemFrom descending;
+        }
+    /blueprintSummary/{key: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            projection  : BlueprintSummaryProjection;
+        }
+    /blueprintSummaries
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : BlueprintSummaryProjection;
+            orderBy: this.systemFrom descending;
+        }
+    /blueprintSummaries/since/{systemFrom: Instant[1..1]}
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.version.systemFrom > systemFrom || this.votes.systemFrom > systemFrom;
+            projection  : BlueprintSummaryProjection;
+            orderBy: this.systemFrom descending;
+        }
+    /blueprintSummaries/deleted/since/{systemTo: Instant[1..1]}
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.version.systemTo > systemTo;
+            projection  : BlueprintKeyProjection;
+            orderBy: this.systemFrom descending;
+        }
+    /blueprintSummaries/favorite?{tags: String[1..*]}&{title: String[0..1]}
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.tags.tag.name in tags && this.title contains title;
+            projection  : BlueprintSummaryProjection;
+            orderBy: this.systemFrom descending;
+            // TODO 2022-12-21: Support chained properties in orderBy
+            // orderBy: this.voteSummary.numberOfUpvotes descending;
+        }
+    /blueprintSummaries/filtered?{tags: String[1..*]}&{title: String[0..1]}
+        GET
+        {
+            multiplicity: many;
+            // TODO: Compiler error for cardinality mismatch
+            // criteria    : this.tags.tag.name == tags && this.title contains title;
+            criteria    : this.tags.tag.name in tags && this.title contains title;
+            projection  : BlueprintSummaryProjection;
+            orderBy: this.systemFrom descending;
+        }
+    /user/{authorId: String[1..1]}/blueprintSummaries
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.createdById == authorId;
+            projection  : BlueprintKeyProjection;
+            orderBy: this.systemFrom descending;
+        }
+    /user/{authorId: String[1..1]}/blueprintSummaries/since/{systemFrom: Instant[1..1]}
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.createdById == authorId && (this.version.systemFrom > systemFrom || this.votes.systemFrom > systemFrom);
+            projection  : BlueprintKeyProjection;
+            orderBy: this.systemFrom descending;
+        }
+    /user/{authorId: String[1..1]}/blueprintSummaries/deleted/since/{systemTo: Instant[1..1]}
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.createdById == authorId && this.version.systemTo > systemTo;
+            projection  : BlueprintKeyProjection;
+            orderBy: this.systemFrom descending;
+        }
+    /user/{userId: String[1..1]}/favorites
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.votes.userId == userId; // TODO && this.votes.direction == VoteDirection.UP;
+            projection  : BlueprintKeyProjection;
+            orderBy: this.systemFrom descending;
+        }
+    /user/{userId: String[1..1]}/favorites/since/{systemFrom: Instant[1..1]}
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.votes.userId == userId && (this.version.systemFrom > systemFrom || this.votes.systemFrom > systemFrom); // TODO && this.votes.direction == VoteDirection.UP;
+            projection  : BlueprintKeyProjection;
+            orderBy: this.systemFrom descending;
+        }
+    /user/{userId: String[1..1]}/favorites/deleted/since/{systemTo: Instant[1..1]}
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.votes.userId == userId && this.version.systemTo > systemTo; // TODO && this.votes.direction == VoteDirection.UP;
+            projection  : BlueprintKeyProjection;
+            orderBy: this.systemFrom descending;
+        }
+}
+
+service ImgurImageResource on ImgurImage
+{
+    /imgurImage/{imgurId: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.imgurId == imgurId;
+            projection  : ImgurImageProjection;
+        }
+    /imgurImage
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : ImgurImageProjection;
+        }
+        POST
+        {
+            multiplicity: one;
+        }
+}
+
+service TagResource on Tag
+{
+    /tags
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : TagProjection;
+            orderBy     : this.category ascending, this.name ascending;
+        }
+}
+
+Moved to BlueprintStringResource
+service BlueprintStringResource on BlueprintString
+{
+    /blueprintStringByKey/{key: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.blueprints.key == key;
+            projection  : BlueprintStringSummaryProjection;
+        }
+    /blueprintStringBySha/{sha: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.sha == sha;
+            projection  : BlueprintStringSummaryProjection;
+        }
+        POST
+        {
+            multiplicity: one;
+        }
+}
+*/
+
+service FirebaseUserResource on FirebaseUser
+{
+    /user/{userId: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria: this.userId == userId;
+            projection: FirebaseUserProjection;
+        }
+}
+
+service FactorioGameVersionResource on FactorioGameVersion
+{
+    /factorioGameVersion/{versionNumber: Long[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.versionNumber == versionNumber;
+            projection  : FactorioGameVersionProjection;
+        }
+    /factorioGameVersion
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : FactorioGameVersionProjection;
+        }
+}
+
+service ModPackResource on ModPack
+{
+    /modPack
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : ModPackProjection;
+        }
+}

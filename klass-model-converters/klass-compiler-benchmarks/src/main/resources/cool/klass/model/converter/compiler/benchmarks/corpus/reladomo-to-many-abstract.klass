@@ -1,0 +1,92 @@
+package com.repro.reladomo.tomanyabstract
+
+// 'user' is just a special class that represents logged in users
+// There must only be a single user class in the model, it must have a single key, and the key must be of type String. Other properties must be nullable
+user User
+    read
+    systemTemporal
+{
+    userId   : String key userId;
+    firstName: String?;
+    lastName : String?;
+    email    : String?;
+}
+
+projection UserReadProjection on User
+{
+    userId   : "User id",
+    firstName: "User first name",
+    lastName : "User last name",
+    email    : "User email",
+}
+
+service UserResource on User
+{
+    /user/{userId: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.userId == userId;
+            projection  : UserReadProjection;
+        }
+    /user
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : UserReadProjection;
+        }
+}
+
+class Book
+{
+    title                  : String key;
+}
+
+class AbstractChapter
+    abstract
+{
+    bookTitle              : String key;
+    chapterNumber          : Integer key;
+    text                   : String;
+}
+
+class ChapterWithQuote
+    extends AbstractChapter
+{
+    quote                  : String;
+}
+
+class ChapterWithIllustration
+    extends AbstractChapter
+{
+    illustrationUrl        : String;
+}
+
+association ContainerHasItems
+{
+    book                   : Book[1..1];
+    chapters               : AbstractChapter[0..*] owned
+        orderBy: this.chapterNumber;
+}
+
+projection BookReadProjection on Book
+{
+    title   : "Book title",
+    chapters:
+    {
+        chapterNumber: "Chapter number",
+        text         : "Chapter text",
+    },
+}
+
+service BookResource on Book
+{
+    /book
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : BookReadProjection;
+        }
+}
