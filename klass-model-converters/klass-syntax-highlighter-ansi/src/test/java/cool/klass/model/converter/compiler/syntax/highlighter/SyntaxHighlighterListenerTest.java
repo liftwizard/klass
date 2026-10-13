@@ -39,6 +39,8 @@ import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.MapIterable;
 import org.fusesource.jansi.Ansi;
 import org.junit.jupiter.api.Test;
@@ -87,7 +89,9 @@ class SyntaxHighlighterListenerTest
 	@Test
 	void lexerTokenCategories()
 	{
-		CodePointCharStream charStream = CharStreams.fromString("String name == \"Alice\"\n");
+		CodePointCharStream charStream = CharStreams.fromString(
+			"id: Long[0..1]; // note\n/* doc */ (x != 42 && true) { \"Alice\", 'c' }\n"
+		);
 		var lexer = new KlassLexer(charStream);
 		var tokenStream = new CommonTokenStream(lexer);
 		tokenStream.fill();
@@ -96,14 +100,49 @@ class SyntaxHighlighterListenerTest
 			tokenStream
 		);
 
-		assertThat(tokenCategories.valuesView()).containsExactly(
-			TokenCategory.WHITESPACE,
-			TokenCategory.WHITESPACE,
-			TokenCategory.OPERATOR_EQUALS,
-			TokenCategory.WHITESPACE,
-			TokenCategory.STRING_LITERAL,
-			TokenCategory.NEWLINE,
-			TokenCategory.END_OF_FILE
+		ImmutableList<String> actual = tokenCategories
+			.keyValuesView()
+			.collect((pair) -> pair.getOne().getText().replace("\n", "\\n") + " -> " + pair.getTwo())
+			.toList()
+			.toImmutable();
+
+		assertThat(actual).isEqualTo(
+			Lists.immutable.with(
+				": -> COLON",
+				"  -> WHITESPACE",
+				"[ -> SQUARE_BRACKET_LEFT",
+				"0 -> INTEGER_LITERAL",
+				".. -> DOTDOT",
+				"1 -> INTEGER_LITERAL",
+				"] -> SQUARE_BRACKET_RIGHT",
+				"; -> SEMICOLON",
+				"  -> WHITESPACE",
+				"// note -> LINE_COMMENT",
+				"\\n -> NEWLINE",
+				"/* doc */ -> BLOCK_COMMENT",
+				"  -> WHITESPACE",
+				"( -> PARENTHESIS_LEFT",
+				"  -> WHITESPACE",
+				"!= -> OPERATOR_NOT_EQUALS",
+				"  -> WHITESPACE",
+				"42 -> INTEGER_LITERAL",
+				"  -> WHITESPACE",
+				"&& -> OPERATOR_AND",
+				"  -> WHITESPACE",
+				"true -> BOOLEAN_LITERAL",
+				") -> PARENTHESIS_RIGHT",
+				"  -> WHITESPACE",
+				"{ -> CURLY_LEFT",
+				"  -> WHITESPACE",
+				"\"Alice\" -> STRING_LITERAL",
+				", -> COMMA",
+				"  -> WHITESPACE",
+				"'c' -> CHARACTER_LITERAL",
+				"  -> WHITESPACE",
+				"} -> CURLY_RIGHT",
+				"\\n -> NEWLINE",
+				"<EOF> -> END_OF_FILE"
+			)
 		);
 	}
 
