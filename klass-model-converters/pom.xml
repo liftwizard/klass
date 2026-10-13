@@ -32,6 +32,7 @@
         <module>klass-bootstrap-writer</module>
         <module>klass-compiler</module>
         <module>klass-compiler-benchmarks</module>
+        <module>klass-compiler-test-models</module>
         <module>klass-compiler-tests</module>
         <module>klass-grammar</module>
         <module>klass-syntax-highlighter-ansi</module>

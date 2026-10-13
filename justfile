@@ -44,6 +44,7 @@ echo_command := env('ECHO_COMMAND', "echo")
 coverage_example_app := "xample-projects/coverage-example/coverage-example-dropwizard-application"
 coverage_example_config := coverage_example_app / "config-local.json5"
 coverage_example_main := "cool.klass.xample.coverage.dropwizard.application.CoverageExampleApplication"
+benchmarks_module := "klass-model-converters/klass-compiler-benchmarks"
 
 # Run coverage-example app and open swagger UI
 [group('run')]
@@ -60,3 +61,8 @@ run-coverage-example:
 
     # Run the application (foreground, so Ctrl+C stops it)
     just _run "mvn -f {{ ANSI_YELLOW }}{{ coverage_example_app }}/pom.xml{{ ANSI_DEFAULT }} exec:java -Dexec.mainClass=\"{{ ANSI_YELLOW }}{{ coverage_example_main }}{{ ANSI_DEFAULT }}\" -Dexec.args=\"server {{ ANSI_YELLOW }}{{ coverage_example_config }}{{ ANSI_DEFAULT }}\""
+
+# Run the whole-corpus compile benchmark under a JMH profiler (jfr, async, gc, ...)
+[group('run')]
+bench-profile PROFILER="jfr":
+    just _run "mvn -f {{ ANSI_YELLOW }}{{ benchmarks_module }}/pom.xml{{ ANSI_DEFAULT }} exec:java -Dexec.mainClass=\"org.openjdk.jmh.Main\" -Dexec.args=\"KlassCorpusBenchmark -prof {{ ANSI_YELLOW }}{{ PROFILER }}{{ ANSI_DEFAULT }}\""
