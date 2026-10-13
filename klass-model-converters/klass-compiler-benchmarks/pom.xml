@@ -90,6 +90,13 @@
         <!-- The .klass sources compiled by the benchmarks -->
         <dependency>
             <groupId>cool.klass</groupId>
+            <artifactId>klass-compiler-test-models</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
             <artifactId>klass-model-bootstrapped-domain-model</artifactId>
             <version>${project.version}</version>
             <scope>runtime</scope>
