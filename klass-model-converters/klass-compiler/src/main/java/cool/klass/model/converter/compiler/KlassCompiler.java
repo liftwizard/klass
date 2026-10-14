@@ -189,8 +189,9 @@ public class KlassCompiler
 		ImmutableList<CompilationUnit> compilationUnits
 	)
 	{
+		long numTokens = compilationUnits.sumOfInt((compilationUnit) -> compilationUnit.getTokenStream().size());
 		MutableMapIterable<Token, TokenCategory> tokenCategoriesFromLexer = OrderedMapAdapter.adapt(
-			new LinkedHashMap<>()
+			LinkedHashMap.newLinkedHashMap(Math.toIntExact(numTokens))
 		);
 		compilationUnits
 			.collect(CompilationUnit::getTokenStream)
