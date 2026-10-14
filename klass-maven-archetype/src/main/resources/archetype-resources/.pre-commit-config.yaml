@@ -29,9 +29,6 @@ repos:
         types: [file]
       - id: oxfmt
         name: vp fmt
-        # Formats json, json5, yaml, markdown, and more via oxfmt.
-        # Runs on all changed files; the flag makes oxfmt skip file types it
-        # does not format instead of erroring when none in the batch match
         entry: vp fmt --no-error-on-unmatched-pattern
         language: system
       - id: markdownlint-cli2
