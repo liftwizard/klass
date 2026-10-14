@@ -36,11 +36,6 @@ public class KlassBootstrappedMetaModelApplication extends AbstractKlassBootstra
 	}
 
 	@Override
-	protected void initializeCommands(@Nonnull Bootstrap<KlassBootstrappedMetaModelConfiguration> bootstrap) {
-		super.initializeCommands(bootstrap);
-	}
-
-	@Override
 	protected void initializeBundles(@Nonnull Bootstrap<KlassBootstrappedMetaModelConfiguration> bootstrap) {
 		super.initializeBundles(bootstrap);
 
