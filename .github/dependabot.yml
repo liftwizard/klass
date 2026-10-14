@@ -8,6 +8,34 @@ updates:
       timezone: America/New_York
     open-pull-requests-limit: 99
     target-branch: main
+    cooldown:
+      default-days: 1
+    groups:
+      openrewrite:
+        patterns:
+          - "org.openrewrite*"
+      jackson:
+        patterns:
+          - "com.fasterxml.jackson*"
+      error-prone:
+        patterns:
+          - "com.google.errorprone*"
+          - "tech.picnic.error-prone-support*"
+      junit:
+        patterns:
+          - "org.junit*"
+      dropwizard:
+        patterns:
+          - "io.dropwizard*"
+      slf4j:
+        patterns:
+          - "org.slf4j*"
+      logback:
+        patterns:
+          - "ch.qos.logback*"
+      logstash-logback:
+        patterns:
+          - "net.logstash.logback*"
     ignore:
       - dependency-name: "com.google.auto.service:auto-service"
   - package-ecosystem: "github-actions"
@@ -18,3 +46,5 @@ updates:
       timezone: America/New_York
     open-pull-requests-limit: 99
     target-branch: main
+    cooldown:
+      default-days: 1
