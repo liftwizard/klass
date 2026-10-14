@@ -2,7 +2,7 @@
 [group('test')]
 setup-git-test:
     # Combined
-    git test add --forget --test default                      'just clean _check-local-modifications mvn'
+    git test add --forget --test default                      'just --global-justfile _check-local-modifications && (should-skip-commit || just verify) && just --global-justfile _check-local-modifications'
     # Individual
     # git test add --forget --test compile                      'just clean _check-local-modifications compile'
     # git test add --forget --test test                         'just clean _check-local-modifications test'
