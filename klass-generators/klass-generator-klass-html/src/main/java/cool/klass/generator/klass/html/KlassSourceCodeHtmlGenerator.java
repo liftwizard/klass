@@ -148,6 +148,8 @@ public class KlassSourceCodeHtmlGenerator
 			.collect((token) -> getSourceCode(token, domainModel, topLevelElementToHighlight, memberNameToHighlight))
 			.makeString("");
 
+		// Prettier would close the <pre> that the body and suffix below continue.
+		// prettier-ignore
 		// language=HTML
 		var prefix = """
 		<html>
