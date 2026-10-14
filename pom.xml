@@ -92,7 +92,6 @@
     </ciManagement>
 
     <properties>
-
         <project.build.outputTimestamp>2026-01-13T13:03:03Z</project.build.outputTimestamp>
 
         <maven.compiler.source>21</maven.compiler.source>
