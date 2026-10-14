@@ -389,7 +389,7 @@ public class RequiredPropertiesValidator {
 	}
 
 	public void handleToMany(@Nonnull AssociationEnd associationEnd, JsonNode jsonNode) {
-		if (!(jsonNode instanceof ArrayNode arrayNode)) {
+		if (!(jsonNode instanceof ArrayNode)) {
 			return;
 		}
 

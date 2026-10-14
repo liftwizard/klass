@@ -40,7 +40,7 @@ public abstract class AntlrElement implements IAntlrElement {
 
 	// TODO: Consider creating a "native" source file with native declarations of PrimitiveTypes
 	/**
-	 * The type of compilationUnit is Optional because some Elements, specifically PrimitiveTypes are not declared in SourceCode
+	 * The type of compilationUnit is Optional because some Elements, specifically PrimitiveTypes are not declared in SourceCode.
 	 */
 	@Nonnull
 	protected final Optional<CompilationUnit> compilationUnit;
