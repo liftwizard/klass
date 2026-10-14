@@ -143,11 +143,6 @@ service ExampleClassResource on ExampleClass
     // empty
 }
 
-enumeration String
-{
-    DUMMY,
-}
-
 enumeration ID
 {
     DUMMY,
