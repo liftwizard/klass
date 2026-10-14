@@ -39,12 +39,6 @@ public class KlassBootstrappedMetaModelApplication
 	}
 
 	@Override
-	public Class<KlassBootstrappedMetaModelConfiguration> getConfigurationClass()
-	{
-		return super.getConfigurationClass();
-	}
-
-	@Override
 	protected void initializeCommands(@Nonnull Bootstrap<KlassBootstrappedMetaModelConfiguration> bootstrap)
 	{
 		super.initializeCommands(bootstrap);

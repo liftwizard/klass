@@ -92,8 +92,6 @@
     </ciManagement>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <project.build.outputTimestamp>2026-01-13T13:03:03Z</project.build.outputTimestamp>
 
