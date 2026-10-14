@@ -12,7 +12,8 @@ import ".just/maven.just"
 import ".just/git.just"
 import ".just/git-test.just"
 
-# `just --list--unsorted`
+# `just --list --unsorted`
+[group('default')]
 default:
     @just --list --unsorted
 
@@ -28,8 +29,11 @@ markdownlint:
     markdownlint-cli2 --fix
 
 # Run all formatting tools for pre-commit
-precommit: mvn
+verify: mvn
     uv tool run pre-commit run --all-files
+
+# Deprecated alias for `verify`
+precommit: verify
 
 # Override this with a command called `woof` which notifies you in whatever ways you prefer.
 # My `woof` command uses `echo`, `say`, and sends a Pushover notification.
