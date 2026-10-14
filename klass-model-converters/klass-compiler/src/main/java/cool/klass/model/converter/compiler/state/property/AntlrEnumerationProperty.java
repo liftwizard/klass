@@ -35,8 +35,9 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;
 
-public class AntlrEnumerationProperty extends AntlrDataTypeProperty<EnumerationImpl> {
-
+public class AntlrEnumerationProperty
+	extends AntlrDataTypeProperty<EnumerationImpl>
+{
 	// <editor-fold desc="AMBIGUOUS">
 	public static final AntlrEnumerationProperty AMBIGUOUS = new AntlrEnumerationProperty(
 		new EnumerationPropertyContext(AMBIGUOUS_PARENT, -1),
@@ -46,9 +47,11 @@ public class AntlrEnumerationProperty extends AntlrDataTypeProperty<EnumerationI
 		AntlrClassifier.AMBIGUOUS,
 		false,
 		AntlrEnumeration.AMBIGUOUS
-	) {
+	)
+	{
 		@Override
-		public String toString() {
+		public String toString()
+		{
 			return "AntlrEnumerationProperty.AMBIGUOUS";
 		}
 	};
@@ -63,9 +66,11 @@ public class AntlrEnumerationProperty extends AntlrDataTypeProperty<EnumerationI
 		AntlrClassifier.NOT_FOUND,
 		false,
 		AntlrEnumeration.NOT_FOUND
-	) {
+	)
+	{
 		@Override
-		public String toString() {
+		public String toString()
+		{
 			return "AntlrEnumerationProperty.NOT_FOUND";
 		}
 	};
@@ -86,26 +91,31 @@ public class AntlrEnumerationProperty extends AntlrDataTypeProperty<EnumerationI
 		@Nonnull AntlrClassifier owningClassifier,
 		boolean isOptional,
 		@Nonnull AntlrEnumeration enumeration
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, ordinal, nameContext, owningClassifier, isOptional);
 		this.enumeration = Objects.requireNonNull(enumeration);
 	}
 
 	@Nonnull
 	@Override
-	public AntlrEnumeration getType() {
+	public AntlrEnumeration getType()
+	{
 		return this.enumeration;
 	}
 
 	@Override
-	protected ParserRuleContext getTypeParserRuleContext() {
+	protected ParserRuleContext getTypeParserRuleContext()
+	{
 		return this.getElementContext().enumerationReference();
 	}
 
 	@Nonnull
 	@Override
-	public EnumerationPropertyBuilder build() {
-		if (this.elementBuilder != null) {
+	public EnumerationPropertyBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 
@@ -132,26 +142,31 @@ public class AntlrEnumerationProperty extends AntlrDataTypeProperty<EnumerationI
 
 	@Nonnull
 	@Override
-	public EnumerationPropertyBuilder getElementBuilder() {
+	public EnumerationPropertyBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
 	@Override
-	public String getTypeName() {
+	public String getTypeName()
+	{
 		return this.getElementContext().enumerationReference().getText();
 	}
 
 	// <editor-fold desc="Report Compiler Errors">
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		super.reportErrors(compilerAnnotationHolder);
 
 		this.reportTypeNotFound(compilerAnnotationHolder);
 		this.reportForwardReference(compilerAnnotationHolder);
 	}
 
-	private void reportTypeNotFound(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.enumeration != AntlrEnumeration.NOT_FOUND) {
+	private void reportTypeNotFound(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.enumeration != AntlrEnumeration.NOT_FOUND)
+		{
 			return;
 		}
 
@@ -160,8 +175,10 @@ public class AntlrEnumerationProperty extends AntlrDataTypeProperty<EnumerationI
 		compilerAnnotationHolder.add("ERR_ENM_PRP", message, this, offendingToken);
 	}
 
-	private void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (!this.isForwardReference(this.enumeration)) {
+	private void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (!this.isForwardReference(this.enumeration))
+		{
 			return;
 		}
 
@@ -177,9 +194,11 @@ public class AntlrEnumerationProperty extends AntlrDataTypeProperty<EnumerationI
 	}
 
 	@Override
-	protected void reportInvalidIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	protected void reportInvalidIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		ListIterable<AntlrModifier> idModifiers = this.getModifiersByName("id");
-		for (AntlrModifier idModifier : idModifiers) {
+		for (AntlrModifier idModifier : idModifiers)
+		{
 			var message = "Enumeration properties may not be auto-generated ids.";
 			compilerAnnotationHolder.add("ERR_ENM_IDP", message, this, idModifier.getElementContext());
 		}
@@ -189,7 +208,8 @@ public class AntlrEnumerationProperty extends AntlrDataTypeProperty<EnumerationI
 
 	@Nonnull
 	@Override
-	public EnumerationPropertyContext getElementContext() {
+	public EnumerationPropertyContext getElementContext()
+	{
 		return (EnumerationPropertyContext) super.getElementContext();
 	}
 }

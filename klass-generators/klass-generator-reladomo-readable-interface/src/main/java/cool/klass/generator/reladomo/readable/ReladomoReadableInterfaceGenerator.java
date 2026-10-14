@@ -36,16 +36,19 @@ import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import cool.klass.reladomo.primitive.visitor.PrimitiveToReladomoTypeVisitor;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class ReladomoReadableInterfaceGenerator {
-
+public class ReladomoReadableInterfaceGenerator
+{
 	private final DomainModel domainModel;
 
-	public ReladomoReadableInterfaceGenerator(DomainModel domainModel) {
+	public ReladomoReadableInterfaceGenerator(DomainModel domainModel)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 	}
 
-	public void writeReadableInterfaces(@Nonnull Path path) {
-		for (Klass klass : this.domainModel.getClasses()) {
+	public void writeReadableInterfaces(@Nonnull Path path)
+	{
+		for (Klass klass : this.domainModel.getClasses())
+		{
 			String sourceCode = this.getSourceCode(klass);
 			String packageName = klass.getPackageName() + ".reladomo.readable";
 			String relativePath = packageName.replaceAll("\\.", "/");
@@ -59,15 +62,20 @@ public class ReladomoReadableInterfaceGenerator {
 		}
 	}
 
-	private static void createDirectories(Path dir) {
-		try {
+	private static void createDirectories(Path dir)
+	{
+		try
+		{
 			Files.createDirectories(dir);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}
 
-	public String getSourceCode(@Nonnull Klass klass) {
+	public String getSourceCode(@Nonnull Klass klass)
+	{
 		Objects.requireNonNull(klass);
 
 		String packageName = klass.getPackageName();
@@ -103,11 +111,13 @@ public class ReladomoReadableInterfaceGenerator {
 		);
 	}
 
-	private String getPropertiesSourceCode(ImmutableList<PrimitiveProperty> properties) {
+	private String getPropertiesSourceCode(ImmutableList<PrimitiveProperty> properties)
+	{
 		return properties.collect(this::getPropertySourceCode).makeString("\n");
 	}
 
-	private String getPropertySourceCode(PrimitiveProperty property) {
+	private String getPropertySourceCode(PrimitiveProperty property)
+	{
 		ImmutableList<String> propertyModifierNames = property.getModifiers().collect(Modifier::getKeyword);
 
 		String comment = propertyModifierNames.isEmpty() ? "" : propertyModifierNames.makeString("    // ", ", ", "\n");
@@ -123,10 +133,14 @@ public class ReladomoReadableInterfaceGenerator {
 		return String.format("%s%s    %s %s%s();%n", comment, nonNull, javaReturnType, prefix, propertyName);
 	}
 
-	private void printStringToFile(@Nonnull Path path, String contents) {
-		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)) {
+	private void printStringToFile(@Nonnull Path path, String contents)
+	{
+		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8))
+		{
 			printStream.print(contents);
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}

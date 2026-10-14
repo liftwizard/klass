@@ -79,8 +79,9 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 // TODO: Refactor this whole thing to use generated getters/setters instead of Reladomo Attribute
-public class ReladomoDataStore implements DataStore {
-
+public class ReladomoDataStore
+	implements DataStore
+{
 	private static final Marker MARKER = MarkerFactory.getMarker("reladomo transaction stats");
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReladomoDataStore.class);
 
@@ -102,45 +103,50 @@ public class ReladomoDataStore implements DataStore {
 		OrderedMapAdapter.adapt(new LinkedHashMap<>());
 	private final MutableOrderedMap<Property, Method> memoizedGetters = OrderedMapAdapter.adapt(new LinkedHashMap<>());
 
-	public ReladomoDataStore(@Nonnull Supplier<UUID> uuidSupplier, int retryCount) {
+	public ReladomoDataStore(@Nonnull Supplier<UUID> uuidSupplier, int retryCount)
+	{
 		this.uuidSupplier = Objects.requireNonNull(uuidSupplier);
 		this.retryCount = retryCount;
 	}
 
 	@Override
-	public <Result> Result runInTransaction(@Nonnull TransactionalCommand<Result> transactionalCommand) {
-		return MithraManagerProvider.getMithraManager().executeTransactionalCommand(
-				(transaction) -> {
-					try {
-						Transaction transactionAdapter = new TransactionAdapter(transaction);
-						return transactionalCommand.run(transactionAdapter);
-					} finally {
-						ReladomoDataStore.logTransactionalStats(transaction);
-					}
-				},
-				this.retryCount
-			);
+	public <Result> Result runInTransaction(@Nonnull TransactionalCommand<Result> transactionalCommand)
+	{
+		return MithraManagerProvider.getMithraManager().executeTransactionalCommand((transaction) ->
+		{
+			try
+			{
+				Transaction transactionAdapter = new TransactionAdapter(transaction);
+				return transactionalCommand.run(transactionAdapter);
+			}
+			finally
+			{
+				ReladomoDataStore.logTransactionalStats(transaction);
+			}
+		}, this.retryCount);
 	}
 
 	@Override
-	public void runInTransaction(@Nonnull Runnable runnable) {
-		MithraManagerProvider.getMithraManager().executeTransactionalCommand(
-				(tx) -> {
-					runnable.run();
-					return null;
-				},
-				this.retryCount
-			);
+	public void runInTransaction(@Nonnull Runnable runnable)
+	{
+		MithraManagerProvider.getMithraManager().executeTransactionalCommand((tx) ->
+		{
+			runnable.run();
+			return null;
+		}, this.retryCount);
 	}
 
 	@Override
-	public List<Object> findAll(Klass klass) {
+	public List<Object> findAll(Klass klass)
+	{
 		RelatedFinder finder = this.getRelatedFinder(klass);
 		return finder.findMany(finder.all());
 	}
 
-	private static void logTransactionalStats(MithraTransaction reladomoTransaction) {
-		if (MithraManagerProvider.getMithraManager().getCurrentTransaction() != reladomoTransaction) {
+	private static void logTransactionalStats(MithraTransaction reladomoTransaction)
+	{
+		if (MithraManagerProvider.getMithraManager().getCurrentTransaction() != reladomoTransaction)
+		{
 			throw new AssertionError();
 		}
 
@@ -162,23 +168,28 @@ public class ReladomoDataStore implements DataStore {
 	}
 
 	@Override
-	public Object findByKey(@Nonnull Klass klass, @Nonnull MapIterable<DataTypeProperty, Object> keys) {
+	public Object findByKey(@Nonnull Klass klass, @Nonnull MapIterable<DataTypeProperty, Object> keys)
+	{
 		Operation operation = this.getFindByKeyOperation(klass, keys);
 		RelatedFinder<?> finder = this.getRelatedFinder(klass);
 		return finder.findOne(operation);
 	}
 
 	@Override
-	public List<Object> findByKeyReturningList(Klass klass, MapIterable<DataTypeProperty, Object> keys) {
+	public List<Object> findByKeyReturningList(Klass klass, MapIterable<DataTypeProperty, Object> keys)
+	{
 		Operation operation = this.getFindByKeyOperation(klass, keys);
 		RelatedFinder<?> finder = this.getRelatedFinder(klass);
 		return (List<Object>) finder.findMany(operation);
 	}
 
 	@Nonnull
-	private Operation getFindByKeyOperation(@Nonnull Klass klass, @Nonnull MapIterable<DataTypeProperty, Object> keys) {
-		keys.forEachKeyValue((keyProperty, keyValue) -> {
-			if (keyProperty.getOwningClassifier() != klass) {
+	private Operation getFindByKeyOperation(@Nonnull Klass klass, @Nonnull MapIterable<DataTypeProperty, Object> keys)
+	{
+		keys.forEachKeyValue((keyProperty, keyValue) ->
+		{
+			if (keyProperty.getOwningClassifier() != klass)
+			{
 				String message =
 					"Expected key property '%s' to be owned by the given class: '%s' but got '%s'.".formatted(
 						keyProperty,
@@ -189,7 +200,8 @@ public class ReladomoDataStore implements DataStore {
 			}
 		});
 		ImmutableList<DataTypeProperty> keyProperties = klass.getKeyProperties();
-		if (keyProperties.size() != keys.size()) {
+		if (keyProperties.size() != keys.size())
+		{
 			String error = String.format(
 				"Expected keys for properties %s but got the wrong number of keys %s",
 				keyProperties,
@@ -199,13 +211,16 @@ public class ReladomoDataStore implements DataStore {
 		}
 
 		RelatedFinder<?> finder = this.getRelatedFinder(klass);
-		ImmutableList<Operation> operations = keyProperties.collect((keyProperty) -> {
+		ImmutableList<Operation> operations = keyProperties.collect((keyProperty) ->
+		{
 			Object key = keys.get(keyProperty);
-			if (!keys.containsKey(keyProperty)) {
+			if (!keys.containsKey(keyProperty))
+			{
 				String detailMessage = "Expected key for property: " + keyProperty;
 				throw new AssertionError(detailMessage);
 			}
-			if (key == null) {
+			if (key == null)
+			{
 				String detailMessage = "Expected non-null key for property: " + keyProperty;
 				throw new AssertionError(detailMessage);
 			}
@@ -216,11 +231,8 @@ public class ReladomoDataStore implements DataStore {
 		return operation;
 	}
 
-	private Operation getOperation(
-		@Nonnull RelatedFinder<?> finder,
-		@Nonnull DataTypeProperty keyProperty,
-		Object key
-	) {
+	private Operation getOperation(@Nonnull RelatedFinder<?> finder, @Nonnull DataTypeProperty keyProperty, Object key)
+	{
 		this.assertObjectMatchesType(keyProperty, key);
 
 		Attribute attribute = finder.getAttributeByName(keyProperty.getName());
@@ -229,13 +241,15 @@ public class ReladomoDataStore implements DataStore {
 		return visitor.getResult();
 	}
 
-	private void assertObjectMatchesType(DataTypeProperty property, Object object) {
+	private void assertObjectMatchesType(DataTypeProperty property, Object object)
+	{
 		property.visit(new AssertObjectMatchesDataTypePropertyVisitor(object));
 	}
 
 	@Nonnull
 	@Override
-	public Object instantiate(@Nonnull Klass klass, @Nonnull MapIterable<DataTypeProperty, Object> keys) {
+	public Object instantiate(@Nonnull Klass klass, @Nonnull MapIterable<DataTypeProperty, Object> keys)
+	{
 		keys.each(Objects::requireNonNull);
 
 		Object newInstance = this.instantiateNewInstance(klass);
@@ -244,31 +258,45 @@ public class ReladomoDataStore implements DataStore {
 	}
 
 	@Nonnull
-	private Object instantiateNewInstance(@Nonnull Klass klass) {
-		try {
+	private Object instantiateNewInstance(@Nonnull Klass klass)
+	{
+		try
+		{
 			Class<?> aClass = Class.forName(klass.getFullyQualifiedName());
 			Class<?>[] parameterTypes = klass.isSystemTemporal()
-				? new Class<?>[] { Timestamp.class }
+				? new Class<?>[]
+					{
+						Timestamp.class,
+					}
 				: new Class<?>[] {};
 			Constructor<?> constructor = aClass.getConstructor(parameterTypes);
 			Object[] constructorArgs = klass.isSystemTemporal()
-				? new Object[] { UtcInfinityTimestamp.getDefaultInfinity() }
+				? new Object[]
+					{
+						UtcInfinityTimestamp.getDefaultInfinity(),
+					}
 				: new Object[] {};
 			return constructor.newInstance(constructorArgs);
-		} catch (ReflectiveOperationException e) {
+		}
+		catch (ReflectiveOperationException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}
 
 	@Nonnull
-	private Object instantiateNewInstance(@Nonnull Klass klass, @Nonnull Instant validTime) {
-		try {
+	private Object instantiateNewInstance(@Nonnull Klass klass, @Nonnull Instant validTime)
+	{
+		try
+		{
 			Class<?> aClass = Class.forName(klass.getFullyQualifiedName());
 			Constructor<?> constructor = aClass.getConstructor(Timestamp.class, Timestamp.class);
 			Timestamp timestamp = Timestamp.valueOf(LocalDateTime.ofInstant(validTime, ZoneOffset.UTC));
 			// TODO: One of these would be infinity, forgot which one
 			return constructor.newInstance(timestamp, timestamp);
-		} catch (ReflectiveOperationException e) {
+		}
+		catch (ReflectiveOperationException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}
@@ -277,14 +305,16 @@ public class ReladomoDataStore implements DataStore {
 		@Nonnull Klass klass,
 		@Nonnull Object newInstance,
 		@Nonnull MapIterable<DataTypeProperty, Object> keys
-	) {
+	)
+	{
 		this.generateAndSetId(newInstance, klass);
 
 		ImmutableList<DataTypeProperty> keyProperties = klass
 			.getKeyProperties()
 			.reject(DataTypeProperty::isID)
 			.reject(DataTypeProperty::isAudit);
-		if (keyProperties.size() != keys.size()) {
+		if (keyProperties.size() != keys.size())
+		{
 			String error = String.format(
 				"Expected one key for each key property in %s but got %s",
 				keyProperties,
@@ -292,46 +322,59 @@ public class ReladomoDataStore implements DataStore {
 			);
 			throw new IllegalArgumentException(error);
 		}
-		for (DataTypeProperty keyProperty : keyProperties) {
+		for (DataTypeProperty keyProperty : keyProperties)
+		{
 			Object key = keys.get(keyProperty);
 			Objects.requireNonNull(key, () -> "Expected non-null key for property: " + keyProperty);
 			this.setDataTypeProperty(newInstance, keyProperty, key);
 		}
 	}
 
-	private void generateAndSetId(@Nonnull Object persistentInstance, @Nonnull Klass klass) {
+	private void generateAndSetId(@Nonnull Object persistentInstance, @Nonnull Klass klass)
+	{
 		ImmutableList<DataTypeProperty> idProperties = klass.getDataTypeProperties().select(DataTypeProperty::isID);
-		if (idProperties.isEmpty()) {
+		if (idProperties.isEmpty())
+		{
 			return;
 		}
 
 		var idProperty = (PrimitiveProperty) idProperties.getOnly();
 
-		if (idProperty.getType().isNumeric()) {
-			try {
+		if (idProperty.getType().isNumeric())
+		{
+			try
+			{
 				Method generateAndSetIdMethod = this.getGenerateAndSetIdMethod(
 					persistentInstance.getClass(),
 					idProperty
 				);
 				generateAndSetIdMethod.invoke(persistentInstance);
-			} catch (ReflectiveOperationException e) {
+			}
+			catch (ReflectiveOperationException e)
+			{
 				throw new RuntimeException(e);
 			}
-		} else if (idProperty.getType() == PrimitiveType.STRING) {
+		}
+		else if (idProperty.getType() == PrimitiveType.STRING)
+		{
 			Objects.requireNonNull(this.uuidSupplier);
 			UUID uuid = this.uuidSupplier.get();
 			String uuidString = uuid.toString();
 			this.setDataTypeProperty(persistentInstance, idProperty, uuidString);
-		} else {
+		}
+		else
+		{
 			throw new AssertionError(idProperty);
 		}
 	}
 
 	@Nonnull
 	private Method getGenerateAndSetIdMethod(Class<?> klass, PrimitiveProperty idProperty)
-		throws NoSuchMethodException {
+		throws NoSuchMethodException
+	{
 		Pair<Class<?>, PrimitiveProperty> key = Tuples.pair(klass, idProperty);
-		if (this.memoizedGenerateAndSetIdMethods.containsKey(key)) {
+		if (this.memoizedGenerateAndSetIdMethods.containsKey(key))
+		{
 			return this.memoizedGenerateAndSetIdMethods.get(key);
 		}
 		String methodName = "generateAndSet" + LOWER_TO_UPPER_CAMEL.convert(idProperty.getName());
@@ -342,16 +385,19 @@ public class ReladomoDataStore implements DataStore {
 
 	@Nullable
 	@Override
-	public Object getDataTypeProperty(@Nonnull Object persistentInstance, @Nonnull DataTypeProperty dataTypeProperty) {
+	public Object getDataTypeProperty(@Nonnull Object persistentInstance, @Nonnull DataTypeProperty dataTypeProperty)
+	{
 		Objects.requireNonNull(persistentInstance);
 
-		if (!(persistentInstance instanceof MithraObject)) {
+		if (!(persistentInstance instanceof MithraObject))
+		{
 			String detailMessage = "Expected MithraObject but got " + persistentInstance.getClass().getCanonicalName();
 			throw new AssertionError(detailMessage);
 		}
 
 		// TODO: Code generate accessors to avoid reflection
-		if (dataTypeProperty.isDerived()) {
+		if (dataTypeProperty.isDerived())
+		{
 			return this.getPropertyReflectively(persistentInstance, dataTypeProperty);
 		}
 
@@ -359,7 +405,8 @@ public class ReladomoDataStore implements DataStore {
 		if (
 			owningClassifier instanceof Klass
 			&& !Objects.equals(owningClassifier.getName(), persistentInstance.getClass().getSimpleName())
-		) {
+		)
+		{
 			String detailMessage = "Expected %s but got %s".formatted(
 				owningClassifier.getName(),
 				persistentInstance.getClass().getSimpleName()
@@ -370,15 +417,18 @@ public class ReladomoDataStore implements DataStore {
 		RelatedFinder<?> finder = this.getRelatedFinder((MithraObject) persistentInstance);
 		String attributeName = dataTypeProperty.getName();
 		Attribute attribute = finder.getAttributeByName(attributeName);
-		if (attribute == null) {
+		if (attribute == null)
+		{
 			String detailMessage =
 				"Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find attribute: "
 				+ attributeName;
 			throw new AssertionError(detailMessage);
 		}
 
-		if (attribute.isAttributeNull(persistentInstance)) {
-			if (dataTypeProperty.isOptional()) {
+		if (attribute.isAttributeNull(persistentInstance))
+		{
+			if (dataTypeProperty.isOptional())
+			{
 				return null;
 			}
 
@@ -388,17 +438,21 @@ public class ReladomoDataStore implements DataStore {
 
 		Object result = attribute.valueOf(persistentInstance);
 
-		if (dataTypeProperty.getType() == PrimitiveType.LOCAL_DATE) {
+		if (dataTypeProperty.getType() == PrimitiveType.LOCAL_DATE)
+		{
 			return ((Date) result).toLocalDate();
 		}
 
-		if (dataTypeProperty.getType() == PrimitiveType.INSTANT) {
+		if (dataTypeProperty.getType() == PrimitiveType.INSTANT)
+		{
 			return ((Timestamp) result).toInstant();
 		}
 
-		if (dataTypeProperty.isTemporalRange()) {
+		if (dataTypeProperty.isTemporalRange())
+		{
 			Timestamp infinity = ((AsOfAttribute<?>) attribute).getInfinityDate();
-			if (infinity.equals(result)) {
+			if (infinity.equals(result))
+			{
 				return null;
 			}
 			// TODO: Consider handling here the case where validTo == systemTo + 1 day, but really means infinity
@@ -406,9 +460,11 @@ public class ReladomoDataStore implements DataStore {
 			return ((Timestamp) result).toInstant();
 		}
 
-		if (dataTypeProperty.isTemporalInstant()) {
+		if (dataTypeProperty.isTemporalInstant())
+		{
 			Timestamp infinity = ((TimestampAttribute<?>) attribute).getAsOfAttributeInfinity();
-			if (infinity.equals(result)) {
+			if (infinity.equals(result))
+			{
 				return null;
 			}
 			// TODO: Consider handling here the case where validTo == systemTo + 1 day, but really means infinity
@@ -416,7 +472,8 @@ public class ReladomoDataStore implements DataStore {
 			return ((Timestamp) result).toInstant();
 		}
 
-		if (dataTypeProperty instanceof EnumerationProperty enumerationProperty) {
+		if (dataTypeProperty instanceof EnumerationProperty enumerationProperty)
+		{
 			var prettyName = (String) result;
 			Enumeration enumeration = enumerationProperty.getType();
 
@@ -436,38 +493,46 @@ public class ReladomoDataStore implements DataStore {
 	private Object getDataTypePropertyLenient(
 		@Nonnull Object persistentInstance,
 		@Nonnull DataTypeProperty dataTypeProperty
-	) {
-		if (dataTypeProperty.isDerived()) {
+	)
+	{
+		if (dataTypeProperty.isDerived())
+		{
 			return this.getPropertyReflectively(persistentInstance, dataTypeProperty);
 		}
 
 		RelatedFinder<?> finder = this.getRelatedFinder((MithraObject) persistentInstance);
 		Attribute attribute = finder.getAttributeByName(dataTypeProperty.getName());
-		if (attribute == null) {
+		if (attribute == null)
+		{
 			String detailMessage =
 				"Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find: "
 				+ dataTypeProperty;
 			throw new AssertionError(detailMessage);
 		}
 
-		if (attribute.isAttributeNull(persistentInstance)) {
+		if (attribute.isAttributeNull(persistentInstance))
+		{
 			return null;
 		}
 
 		Object result = attribute.valueOf(persistentInstance);
 
-		if (dataTypeProperty.getType() == PrimitiveType.LOCAL_DATE) {
+		if (dataTypeProperty.getType() == PrimitiveType.LOCAL_DATE)
+		{
 			return ((Date) result).toLocalDate();
 		}
 
-		if (dataTypeProperty.getType() == PrimitiveType.INSTANT) {
+		if (dataTypeProperty.getType() == PrimitiveType.INSTANT)
+		{
 			return ((Timestamp) result).toInstant();
 		}
 
 		boolean isTemporal = dataTypeProperty.isTemporal();
-		if (isTemporal) {
+		if (isTemporal)
+		{
 			Timestamp infinity = ((TimestampAttribute<?>) attribute).getAsOfAttributeInfinity();
-			if (infinity.equals(result)) {
+			if (infinity.equals(result))
+			{
 				return null;
 			}
 			// TODO: Consider handling here the case where validTo == systemTo + 1 day, but really means infinity
@@ -475,7 +540,8 @@ public class ReladomoDataStore implements DataStore {
 			return ((Timestamp) result).toInstant();
 		}
 
-		if (dataTypeProperty instanceof EnumerationProperty enumerationProperty) {
+		if (dataTypeProperty instanceof EnumerationProperty enumerationProperty)
+		{
 			var prettyName = (String) result;
 			Enumeration enumeration = enumerationProperty.getType();
 
@@ -489,18 +555,25 @@ public class ReladomoDataStore implements DataStore {
 		return result;
 	}
 
-	private Object getPropertyReflectively(@Nonnull Object persistentInstance, @Nonnull Property property) {
-		try {
+	private Object getPropertyReflectively(@Nonnull Object persistentInstance, @Nonnull Property property)
+	{
+		try
+		{
 			Method method = this.getMethod(property);
 			return method.invoke(persistentInstance);
-		} catch (ReflectiveOperationException e) {
+		}
+		catch (ReflectiveOperationException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}
 
 	@Nonnull
-	private Method getMethod(@Nonnull Property property) throws ClassNotFoundException, NoSuchMethodException {
-		if (this.memoizedGetters.containsKey(property)) {
+	private Method getMethod(@Nonnull Property property)
+		throws ClassNotFoundException, NoSuchMethodException
+	{
+		if (this.memoizedGetters.containsKey(property))
+		{
 			return this.memoizedGetters.get(property);
 		}
 		Classifier owningClassifier = property.getOwningClassifier();
@@ -513,7 +586,8 @@ public class ReladomoDataStore implements DataStore {
 	}
 
 	@Nonnull
-	private String getMethodName(Property property) {
+	private String getMethodName(Property property)
+	{
 		String prefix = property.getType() == PrimitiveType.BOOLEAN ? "is" : "get";
 		String suffix = LOWER_TO_UPPER_CAMEL.convert(property.getName());
 		return prefix + suffix;
@@ -524,22 +598,27 @@ public class ReladomoDataStore implements DataStore {
 		@Nonnull Object persistentInstance,
 		@Nonnull DataTypeProperty dataTypeProperty,
 		@Nullable Object newValue
-	) {
-		if (dataTypeProperty.isDerived()) {
+	)
+	{
+		if (dataTypeProperty.isDerived())
+		{
 			String detailMessage = "May not set derived property: " + dataTypeProperty;
 			throw new AssertionError(detailMessage);
 		}
 
 		Object oldValue = this.getDataTypePropertyLenient(persistentInstance, dataTypeProperty);
-		if (Objects.equals(oldValue, newValue)) {
+		if (Objects.equals(oldValue, newValue))
+		{
 			return false;
 		}
 
 		RelatedFinder<?> finder = this.getRelatedFinder((MithraObject) persistentInstance);
 		Attribute attribute = finder.getAttributeByName(dataTypeProperty.getName());
 
-		if (newValue == null) {
-			if (dataTypeProperty.isRequired()) {
+		if (newValue == null)
+		{
+			if (dataTypeProperty.isRequired())
+			{
 				String message = String.format(
 					"May not set required property to null: '%s.%s'",
 					dataTypeProperty.getOwningClassifier().getName(),
@@ -548,15 +627,23 @@ public class ReladomoDataStore implements DataStore {
 				throw new IllegalStateException(message);
 			}
 			attribute.setValueNull(persistentInstance);
-		} else if (dataTypeProperty instanceof EnumerationProperty) {
+		}
+		else if (dataTypeProperty instanceof EnumerationProperty)
+		{
 			attribute.setValue(persistentInstance, ((EnumerationLiteral) newValue).getPrettyName());
-		} else if (dataTypeProperty.getType() == PrimitiveType.LOCAL_DATE) {
+		}
+		else if (dataTypeProperty.getType() == PrimitiveType.LOCAL_DATE)
+		{
 			Timestamp timestamp = Timestamp.valueOf(((LocalDate) newValue).atStartOfDay());
 			attribute.setValue(persistentInstance, timestamp);
-		} else if (dataTypeProperty.getType() == PrimitiveType.INSTANT) {
+		}
+		else if (dataTypeProperty.getType() == PrimitiveType.INSTANT)
+		{
 			Timestamp timestamp = Timestamp.from((Instant) newValue);
 			attribute.setValue(persistentInstance, timestamp);
-		} else {
+		}
+		else
+		{
 			attribute.setValue(persistentInstance, newValue);
 		}
 
@@ -564,26 +651,31 @@ public class ReladomoDataStore implements DataStore {
 	}
 
 	@Override
-	public Object getToOne(Object persistentSourceInstance, @Nonnull ReferenceProperty referenceProperty) {
-		if (!referenceProperty.getMultiplicity().isToOne()) {
+	public Object getToOne(Object persistentSourceInstance, @Nonnull ReferenceProperty referenceProperty)
+	{
+		if (!referenceProperty.getMultiplicity().isToOne())
+		{
 			String detailMessage = "Expected to-one property but got " + referenceProperty;
 			throw new AssertionError(detailMessage);
 		}
 
 		Object result = this.get(persistentSourceInstance, referenceProperty);
-		if (result instanceof List<?> list) {
+		if (result instanceof List<?> list)
+		{
 			String detailMessage = "Expected single object but got " + list.size();
 			throw new AssertionError(detailMessage);
 		}
 		return result;
 	}
 
-	public Object get(Object persistentSourceInstance, @Nonnull ReferenceProperty referenceProperty) {
+	public Object get(Object persistentSourceInstance, @Nonnull ReferenceProperty referenceProperty)
+	{
 		RelatedFinder<?> finder = this.getRelatedFinder(referenceProperty.getOwningClassifier());
 		String referencePropertyName = referenceProperty.getName();
 		var relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(referencePropertyName);
 
-		if (relationshipFinder == null) {
+		if (relationshipFinder == null)
+		{
 			String detailMessage =
 				"Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property "
 				+ referenceProperty;
@@ -595,14 +687,17 @@ public class ReladomoDataStore implements DataStore {
 
 	@Nonnull
 	@Override
-	public List<Object> getToMany(Object persistentSourceInstance, @Nonnull ReferenceProperty referenceProperty) {
-		if (!referenceProperty.getMultiplicity().isToMany()) {
+	public List<Object> getToMany(Object persistentSourceInstance, @Nonnull ReferenceProperty referenceProperty)
+	{
+		if (!referenceProperty.getMultiplicity().isToMany())
+		{
 			String detailMessage = "Expected to-many property but got " + referenceProperty;
 			throw new AssertionError(detailMessage);
 		}
 
 		Object result = this.get(persistentSourceInstance, referenceProperty);
-		if (!(result instanceof List)) {
+		if (!(result instanceof List))
+		{
 			String detailMessage = "Expected list but got " + result.getClass().getCanonicalName();
 			throw new AssertionError(detailMessage);
 		}
@@ -615,7 +710,8 @@ public class ReladomoDataStore implements DataStore {
 		@Nonnull Object persistentSourceInstance,
 		@Nonnull AssociationEnd associationEnd,
 		@Nonnull Object persistentTargetInstance
-	) {
+	)
+	{
 		Objects.requireNonNull(persistentTargetInstance);
 
 		var mutationOccurred = false;
@@ -625,12 +721,14 @@ public class ReladomoDataStore implements DataStore {
 		ImmutableList<DataTypeProperty> targetDataTypeProperties = associationEnd
 			.getOwningClassifier()
 			.getDataTypeProperties();
-		for (DataTypeProperty targetDataTypeProperty : targetDataTypeProperties) {
+		for (DataTypeProperty targetDataTypeProperty : targetDataTypeProperties)
+		{
 			OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey =
 				targetDataTypeProperty.getKeysMatchingThisForeignKey();
 
 			DataTypeProperty keyInRelatedObject = keysMatchingThisForeignKey.getIfAbsentValue(associationEnd, null);
-			if (keyInRelatedObject == null) {
+			if (keyInRelatedObject == null)
+			{
 				continue;
 			}
 
@@ -645,8 +743,10 @@ public class ReladomoDataStore implements DataStore {
 	}
 
 	@Override
-	public void insert(Object persistentInstance) {
-		if (!(persistentInstance instanceof MithraTransactionalObject)) {
+	public void insert(Object persistentInstance)
+	{
+		if (!(persistentInstance instanceof MithraTransactionalObject))
+		{
 			String detailMessage =
 				"Expected MithraTransactionalObject but got " + persistentInstance.getClass().getCanonicalName();
 			throw new AssertionError(detailMessage);
@@ -656,12 +756,18 @@ public class ReladomoDataStore implements DataStore {
 	}
 
 	@Override
-	public void deleteOrTerminate(@Nonnull Object persistentInstance) {
-		if (persistentInstance instanceof MithraDatedTransactionalObject transactionalObject) {
+	public void deleteOrTerminate(@Nonnull Object persistentInstance)
+	{
+		if (persistentInstance instanceof MithraDatedTransactionalObject transactionalObject)
+		{
 			transactionalObject.terminate();
-		} else if (persistentInstance instanceof MithraTransactionalObject transactionalObject) {
+		}
+		else if (persistentInstance instanceof MithraTransactionalObject transactionalObject)
+		{
 			transactionalObject.cascadeDelete();
-		} else {
+		}
+		else
+		{
 			String detailMessage =
 				"Unexpected persistent instance type: " + persistentInstance.getClass().getCanonicalName();
 			throw new AssertionError(detailMessage);
@@ -669,24 +775,31 @@ public class ReladomoDataStore implements DataStore {
 	}
 
 	@Override
-	public void purgeAll(@Nonnull Klass klass) {
-		if (klass.isAbstract()) {
+	public void purgeAll(@Nonnull Klass klass)
+	{
+		if (klass.isAbstract())
+		{
 			return;
 		}
 
 		RelatedFinder<?> relatedFinder = this.getRelatedFinder(klass);
-		if (klass.isSystemTemporal()) {
+		if (klass.isSystemTemporal())
+		{
 			this.purgeAll(relatedFinder);
-		} else {
+		}
+		else
+		{
 			this.deleteAll(relatedFinder);
 		}
 	}
 
-	private void purgeAll(RelatedFinder<?> relatedFinder) {
+	private void purgeAll(RelatedFinder<?> relatedFinder)
+	{
 		throw new UnsupportedOperationException(this.getClass().getSimpleName() + ".purgeAll() not implemented yet");
 	}
 
-	private void deleteAll(@Nonnull RelatedFinder<?> finder) {
+	private void deleteAll(@Nonnull RelatedFinder<?> finder)
+	{
 		Operation operation = finder.all();
 		MithraList<?> mithraList = finder.findMany(operation);
 		var transactionalDomainList = (TransactionalDomainList<?>) mithraList;
@@ -694,39 +807,46 @@ public class ReladomoDataStore implements DataStore {
 	}
 
 	@Override
-	public boolean isInstanceOf(@Nonnull Object persistentInstance, @Nonnull Classifier classifier) {
-		try {
+	public boolean isInstanceOf(@Nonnull Object persistentInstance, @Nonnull Classifier classifier)
+	{
+		try
+		{
 			Class<?> persistentInstanceClass = persistentInstance.getClass();
 			Class<?> domainModelClass = Class.forName(classifier.getPackageName() + "." + classifier.getName());
 			return domainModelClass.isAssignableFrom(persistentInstanceClass);
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}
 
 	@Override
-	public Klass getMostSpecificSubclass(Object persistentInstance, Klass klass) {
-		if (!(persistentInstance instanceof MithraObject)) {
+	public Klass getMostSpecificSubclass(Object persistentInstance, Klass klass)
+	{
+		if (!(persistentInstance instanceof MithraObject))
+		{
 			String detailMessage = "Expected MithraObject but got " + persistentInstance.getClass().getCanonicalName();
 			throw new AssertionError(detailMessage);
 		}
 
-		ImmutableList<Klass> potentialSubClasses = klass
-			.getSubClasses()
-			.select((subClass) -> {
-				MithraObject subClassPersistentInstance = this.getSubClassPersistentInstance(
-					klass,
-					subClass,
-					(MithraObject) persistentInstance
-				);
-				return subClassPersistentInstance != null;
-			});
+		ImmutableList<Klass> potentialSubClasses = klass.getSubClasses().select((subClass) ->
+		{
+			MithraObject subClassPersistentInstance = this.getSubClassPersistentInstance(
+				klass,
+				subClass,
+				(MithraObject) persistentInstance
+			);
+			return subClassPersistentInstance != null;
+		});
 
-		if (potentialSubClasses.isEmpty()) {
+		if (potentialSubClasses.isEmpty())
+		{
 			return klass;
 		}
 
-		if (potentialSubClasses.size() == 1) {
+		if (potentialSubClasses.size() == 1)
+		{
 			Klass onlySubClass = potentialSubClasses.getOnly();
 			MithraObject subClassPersistentInstance = this.getSubClassPersistentInstance(
 				klass,
@@ -742,14 +862,16 @@ public class ReladomoDataStore implements DataStore {
 		throw new AssertionError(detailMessage);
 	}
 
-	public MithraObject getSubClassPersistentInstance(Klass klass, Klass subClass, MithraObject persistentInstance) {
+	public MithraObject getSubClassPersistentInstance(Klass klass, Klass subClass, MithraObject persistentInstance)
+	{
 		RelatedFinder<?> finder = this.getRelatedFinder(klass);
 
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(subClass.getName()) + "SubClass";
 
 		var relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(relationshipName);
 
-		if (relationshipFinder == null) {
+		if (relationshipFinder == null)
+		{
 			String detailMessage =
 				"Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property "
 				+ relationshipName;
@@ -761,14 +883,16 @@ public class ReladomoDataStore implements DataStore {
 	}
 
 	@Override
-	public Object getSuperClass(Object persistentInstance, Klass klass) {
+	public Object getSuperClass(Object persistentInstance, Klass klass)
+	{
 		RelatedFinder<?> finder = this.getRelatedFinder(klass);
 
 		String relationshipName = UPPER_TO_LOWER_CAMEL.convert(klass.getSuperClass().get().getName()) + "SuperClass";
 
 		var relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(relationshipName);
 
-		if (relationshipFinder == null) {
+		if (relationshipFinder == null)
+		{
 			String detailMessage =
 				"Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property "
 				+ relationshipName;
@@ -786,8 +910,10 @@ public class ReladomoDataStore implements DataStore {
 	}
 
 	@Override
-	public Object getSubClass(Object persistentInstance, Klass superClass, Klass subClass) {
-		if (!subClass.isStrictSubTypeOf(superClass)) {
+	public Object getSubClass(Object persistentInstance, Klass superClass, Klass subClass)
+	{
+		if (!subClass.isStrictSubTypeOf(superClass))
+		{
 			throw new AssertionError("Expected " + subClass + " to be a strict subtype of " + superClass);
 		}
 
@@ -797,7 +923,8 @@ public class ReladomoDataStore implements DataStore {
 
 		var relationshipFinder = (AbstractRelatedFinder) finder.getRelationshipFinderByName(relationshipName);
 
-		if (relationshipFinder == null) {
+		if (relationshipFinder == null)
+		{
 			String detailMessage =
 				"Domain model and generated code are out of sync. Try rerunning a full clean build. Could not find relationship for property "
 				+ relationshipName;
@@ -816,24 +943,30 @@ public class ReladomoDataStore implements DataStore {
 		return result;
 	}
 
-	private RelatedFinder<?> getRelatedFinder(@Nonnull MithraObject mithraObject) {
+	private RelatedFinder<?> getRelatedFinder(@Nonnull MithraObject mithraObject)
+	{
 		return mithraObject.zGetPortal().getFinder();
 	}
 
 	@Nonnull
-	public AbstractRelatedFinder getRelatedFinder(@Nonnull Classifier classifier) {
-		if (this.memoizedRelatedFinders.containsKey(classifier)) {
+	public AbstractRelatedFinder getRelatedFinder(@Nonnull Classifier classifier)
+	{
+		if (this.memoizedRelatedFinders.containsKey(classifier))
+		{
 			return this.memoizedRelatedFinders.get(classifier);
 		}
 
-		try {
+		try
+		{
 			String finderName = classifier.getFullyQualifiedName() + "Finder";
 			Class<?> finderClass = Class.forName(finderName);
 			Method getFinderMethod = finderClass.getMethod("getFinderInstance");
 			var result = (AbstractRelatedFinder) getFinderMethod.invoke(null);
 			this.memoizedRelatedFinders.put(classifier, result);
 			return result;
-		} catch (@Nonnull ReflectiveOperationException | IllegalArgumentException | SecurityException e) {
+		}
+		catch (@Nonnull ReflectiveOperationException | IllegalArgumentException | SecurityException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}

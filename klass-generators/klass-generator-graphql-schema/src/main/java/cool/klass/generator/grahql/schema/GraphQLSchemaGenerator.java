@@ -25,30 +25,36 @@ import cool.klass.model.meta.domain.api.Classifier;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.TopLevelElement;
 
-public class GraphQLSchemaGenerator extends AbstractPerPackageGenerator {
-
-	public GraphQLSchemaGenerator(@Nonnull DomainModel domainModel) {
+public class GraphQLSchemaGenerator
+	extends AbstractPerPackageGenerator
+{
+	public GraphQLSchemaGenerator(@Nonnull DomainModel domainModel)
+	{
 		super(domainModel);
 	}
 
 	@Nonnull
 	@Override
-	protected Path getPluginRelativePath(Path path) {
+	protected Path getPluginRelativePath(Path path)
+	{
 		return path.resolve("graphql").resolve("schema");
 	}
 
 	@Nonnull
 	@Override
-	protected String getFileName() {
+	protected String getFileName()
+	{
 		return "GraphQLSchema.graphqls";
 	}
 
 	@Nonnull
 	@Override
-	protected String getPackageSourceCode(@Nonnull String fullyQualifiedPackage) {
+	protected String getPackageSourceCode(@Nonnull String fullyQualifiedPackage)
+	{
 		String orderBySourceCode = this.domainModel.getClassifiers().collect(this::getOrderBySourceCode).makeString("");
 
-		String topLevelElementsCode = this.domainModel.getTopLevelElements()
+		String topLevelElementsCode = this.domainModel
+			.getTopLevelElements()
 			.collect(this::getSourceCode)
 			.makeString("");
 
@@ -66,7 +72,8 @@ public class GraphQLSchemaGenerator extends AbstractPerPackageGenerator {
 		return sourceCode;
 	}
 
-	private String getOrderBySourceCode(Classifier classifier) {
+	private String getOrderBySourceCode(Classifier classifier)
+	{
 		// language=GraphQL
 		return (
 			"input _"
@@ -80,7 +87,8 @@ public class GraphQLSchemaGenerator extends AbstractPerPackageGenerator {
 		);
 	}
 
-	private String getSourceCode(@Nonnull TopLevelElement topLevelElement) {
+	private String getSourceCode(@Nonnull TopLevelElement topLevelElement)
+	{
 		var visitor = new GraphQLElementToSchemaSourceVisitor();
 		topLevelElement.visit(visitor);
 		return visitor.getSourceCode();

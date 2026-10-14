@@ -45,22 +45,26 @@ import cool.klass.model.meta.grammar.KlassParser.EnumerationReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertyContext;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class DomainModelReferencesPropertyVisitor implements PropertyVisitor {
-
+public class DomainModelReferencesPropertyVisitor
+	implements PropertyVisitor
+{
 	@Nonnull
 	private final DomainModelReferences domainModelReferences;
 
-	public DomainModelReferencesPropertyVisitor(@Nonnull DomainModelReferences domainModelReferences) {
+	public DomainModelReferencesPropertyVisitor(@Nonnull DomainModelReferences domainModelReferences)
+	{
 		this.domainModelReferences = Objects.requireNonNull(domainModelReferences);
 	}
 
 	@Override
-	public void visitPrimitiveProperty(PrimitiveProperty primitiveProperty) {
+	public void visitPrimitiveProperty(PrimitiveProperty primitiveProperty)
+	{
 		// Deliberately empty
 	}
 
 	@Override
-	public void visitEnumerationProperty(EnumerationProperty enumerationProperty) {
+	public void visitEnumerationProperty(EnumerationProperty enumerationProperty)
+	{
 		var elementWithSourceCode = (EnumerationPropertyWithSourceCode) enumerationProperty;
 		EnumerationPropertyContext elementContext = elementWithSourceCode.getElementContext();
 		EnumerationReferenceContext reference = elementContext.enumerationReference();
@@ -70,7 +74,8 @@ public class DomainModelReferencesPropertyVisitor implements PropertyVisitor {
 	}
 
 	@Override
-	public void visitAssociationEnd(AssociationEnd associationEnd) {
+	public void visitAssociationEnd(AssociationEnd associationEnd)
+	{
 		var elementWithSourceCode = (AssociationEndWithSourceCode) associationEnd;
 		AssociationEndContext elementContext = elementWithSourceCode.getElementContext();
 		ClassReferenceContext reference = elementContext.classReference();
@@ -82,7 +87,8 @@ public class DomainModelReferencesPropertyVisitor implements PropertyVisitor {
 	}
 
 	@Override
-	public void visitAssociationEndSignature(AssociationEndSignature associationEndSignature) {
+	public void visitAssociationEndSignature(AssociationEndSignature associationEndSignature)
+	{
 		var elementWithSourceCode = (AssociationEndSignatureWithSourceCode) associationEndSignature;
 		AssociationEndSignatureContext elementContext = elementWithSourceCode.getElementContext();
 		ClassifierReferenceContext reference = elementContext.classifierReference();
@@ -94,7 +100,8 @@ public class DomainModelReferencesPropertyVisitor implements PropertyVisitor {
 	}
 
 	@Override
-	public void visitParameterizedProperty(ParameterizedProperty parameterizedProperty) {
+	public void visitParameterizedProperty(ParameterizedProperty parameterizedProperty)
+	{
 		var elementWithSourceCode = (ParameterizedPropertyWithSourceCode) parameterizedProperty;
 		ParameterizedPropertyContext elementContext = elementWithSourceCode.getElementContext();
 		ClassReferenceContext reference = elementContext.classReference();
@@ -105,10 +112,12 @@ public class DomainModelReferencesPropertyVisitor implements PropertyVisitor {
 		parameterizedProperty.getOrderBy().ifPresent(this::visitOrderBy);
 	}
 
-	public void visitOrderBy(OrderBy orderBy) {
+	public void visitOrderBy(OrderBy orderBy)
+	{
 		ImmutableList<OrderByMemberReferencePath> orderByMemberReferencePaths =
 			orderBy.getOrderByMemberReferencePaths();
-		for (OrderByMemberReferencePath orderByMemberReferencePath : orderByMemberReferencePaths) {
+		for (OrderByMemberReferencePath orderByMemberReferencePath : orderByMemberReferencePaths)
+		{
 			ThisMemberReferencePath thisMemberReferencePath = orderByMemberReferencePath.getThisMemberReferencePath();
 			thisMemberReferencePath.visit(new DomainModelReferencesExpressionValueVisitor(this.domainModelReferences));
 		}

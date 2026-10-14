@@ -34,51 +34,60 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.stack.MutableStack;
 
-public class GatherProjectionSelfReferencesVisitor implements ProjectionListener {
-
+public class GatherProjectionSelfReferencesVisitor
+	implements ProjectionListener
+{
 	private final MutableStack<String> context = Stacks.mutable.empty();
 	private final MutableList<String> results = Lists.mutable.empty();
 	private final Projection originalProjection;
 
-	public GatherProjectionSelfReferencesVisitor(Projection originalProjection) {
+	public GatherProjectionSelfReferencesVisitor(Projection originalProjection)
+	{
 		this.originalProjection = Objects.requireNonNull(originalProjection);
 	}
 
-	public ImmutableList<String> getResults() {
+	public ImmutableList<String> getResults()
+	{
 		return this.results.toImmutable();
 	}
 
 	@Override
-	public void enterProjection(Projection projection) {
+	public void enterProjection(Projection projection)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".enterProjection() not implemented yet"
 		);
 	}
 
 	@Override
-	public void exitProjection(Projection projection) {
+	public void exitProjection(Projection projection)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".exitProjection() not implemented yet"
 		);
 	}
 
 	@Override
-	public void enterProjectionReferenceProperty(@Nonnull ProjectionReferenceProperty projectionReferenceProperty) {
+	public void enterProjectionReferenceProperty(@Nonnull ProjectionReferenceProperty projectionReferenceProperty)
+	{
 		this.context.push(projectionReferenceProperty.getName());
 		projectionReferenceProperty.getChildren().forEachWith(ProjectionElement::visit, this);
 	}
 
 	@Override
-	public void exitProjectionReferenceProperty(ProjectionReferenceProperty projectionReferenceProperty) {
+	public void exitProjectionReferenceProperty(ProjectionReferenceProperty projectionReferenceProperty)
+	{
 		this.context.pop();
 	}
 
 	@Override
 	public void enterProjectionProjectionReference(
 		@Nonnull ProjectionProjectionReference projectionProjectionReference
-	) {
+	)
+	{
 		this.context.push(projectionProjectionReference.getName());
-		if (projectionProjectionReference.getProjection() != this.originalProjection) {
+		if (projectionProjectionReference.getProjection() != this.originalProjection)
+		{
 			return;
 		}
 
@@ -101,17 +110,20 @@ public class GatherProjectionSelfReferencesVisitor implements ProjectionListener
 	}
 
 	@Override
-	public void exitProjectionProjectionReference(ProjectionProjectionReference projectionProjectionReference) {
+	public void exitProjectionProjectionReference(ProjectionProjectionReference projectionProjectionReference)
+	{
 		this.context.pop();
 	}
 
 	@Override
-	public void enterProjectionDataTypeProperty(ProjectionDataTypeProperty projectionDataTypeProperty) {
+	public void enterProjectionDataTypeProperty(ProjectionDataTypeProperty projectionDataTypeProperty)
+	{
 		// Deliberately empty
 	}
 
 	@Override
-	public void exitProjectionDataTypeProperty(ProjectionDataTypeProperty projectionDataTypeProperty) {
+	public void exitProjectionDataTypeProperty(ProjectionDataTypeProperty projectionDataTypeProperty)
+	{
 		// Deliberately empty
 	}
 }

@@ -28,8 +28,10 @@ import cool.klass.model.meta.domain.api.source.SourceCode;
 import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public abstract class AbstractBinaryCriteria extends AbstractCriteria implements BinaryCriteria {
-
+public abstract class AbstractBinaryCriteria
+	extends AbstractCriteria
+	implements BinaryCriteria
+{
 	@Nonnull
 	protected final AbstractCriteria left;
 
@@ -42,7 +44,8 @@ public abstract class AbstractBinaryCriteria extends AbstractCriteria implements
 		@Nullable SourceCode sourceCode,
 		@Nonnull AbstractCriteria left,
 		@Nonnull AbstractCriteria right
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode);
 		this.left = Objects.requireNonNull(left);
 		this.right = Objects.requireNonNull(right);
@@ -50,19 +53,21 @@ public abstract class AbstractBinaryCriteria extends AbstractCriteria implements
 
 	@Override
 	@Nonnull
-	public AbstractCriteria getLeft() {
+	public AbstractCriteria getLeft()
+	{
 		return this.left;
 	}
 
 	@Override
 	@Nonnull
-	public AbstractCriteria getRight() {
+	public AbstractCriteria getRight()
+	{
 		return this.right;
 	}
 
 	public abstract static class AbstractBinaryCriteriaBuilder<BuiltElement extends AbstractBinaryCriteria>
-		extends AbstractCriteriaBuilder<BuiltElement> {
-
+		extends AbstractCriteriaBuilder<BuiltElement>
+	{
 		@Nonnull
 		protected final AbstractCriteriaBuilder<?> left;
 
@@ -75,7 +80,8 @@ public abstract class AbstractBinaryCriteria extends AbstractCriteria implements
 			@Nullable SourceCodeBuilder sourceCode,
 			@Nonnull AbstractCriteriaBuilder<?> left,
 			@Nonnull AbstractCriteriaBuilder<?> right
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode);
 			this.left = Objects.requireNonNull(left);
 			this.right = Objects.requireNonNull(right);

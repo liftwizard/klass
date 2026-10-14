@@ -28,29 +28,34 @@ import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.meta.domain.service.url.UrlConstantImpl.UrlConstantBuilder;
 import cool.klass.model.meta.grammar.KlassParser.UrlConstantContext;
 
-public class AntlrUrlConstant extends AntlrOrdinalElement {
-
+public class AntlrUrlConstant
+	extends AntlrOrdinalElement
+{
 	private UrlConstantBuilder elementBuilder;
 
 	public AntlrUrlConstant(
 		@Nonnull UrlConstantContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		int ordinal
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, ordinal);
 	}
 
 	@Nonnull
 	@Override
-	public Optional<IAntlrElement> getSurroundingElement() {
+	public Optional<IAntlrElement> getSurroundingElement()
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".getSurroundingContext() not implemented yet"
 		);
 	}
 
 	@Nonnull
-	public UrlConstantBuilder build() {
-		if (this.elementBuilder != null) {
+	public UrlConstantBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 
@@ -66,15 +71,18 @@ public class AntlrUrlConstant extends AntlrOrdinalElement {
 
 	@Override
 	@Nonnull
-	public UrlConstantBuilder getElementBuilder() {
+	public UrlConstantBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
-	public String getName() {
+	public String getName()
+	{
 		return this.elementContext.getText();
 	}
 
-	public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		// URLs can contain almost anything. The parser is already more strict than any error checking that needs to happen here.
 		// https://stackoverflow.com/questions/7109143/what-characters-are-valid-in-a-url
 	}

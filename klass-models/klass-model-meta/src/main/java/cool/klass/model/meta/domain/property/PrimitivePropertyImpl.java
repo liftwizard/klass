@@ -33,8 +33,8 @@ import cool.klass.model.meta.grammar.KlassParser.PrimitivePropertyContext;
 
 public final class PrimitivePropertyImpl
 	extends AbstractDataTypeProperty<PrimitiveType>
-	implements PrimitivePropertyWithSourceCode {
-
+	implements PrimitivePropertyWithSourceCode
+{
 	private PrimitivePropertyImpl(
 		@Nonnull PrimitivePropertyContext elementContext,
 		@Nonnull Optional<Element> macroElement,
@@ -44,7 +44,8 @@ public final class PrimitivePropertyImpl
 		@Nonnull PrimitiveType primitiveType,
 		@Nonnull AbstractClassifier owningClassifier,
 		boolean isOptional
-	) {
+	)
+	{
 		super(
 			elementContext,
 			macroElement,
@@ -59,13 +60,14 @@ public final class PrimitivePropertyImpl
 
 	@Nonnull
 	@Override
-	public PrimitivePropertyContext getElementContext() {
+	public PrimitivePropertyContext getElementContext()
+	{
 		return (PrimitivePropertyContext) super.getElementContext();
 	}
 
 	public static final class PrimitivePropertyBuilder
-		extends DataTypePropertyBuilder<PrimitiveType, PrimitiveType, PrimitivePropertyImpl> {
-
+		extends DataTypePropertyBuilder<PrimitiveType, PrimitiveType, PrimitivePropertyImpl>
+	{
 		public PrimitivePropertyBuilder(
 			@Nonnull PrimitivePropertyContext elementContext,
 			@Nonnull Optional<ElementBuilder<?>> macroElement,
@@ -75,7 +77,8 @@ public final class PrimitivePropertyImpl
 			@Nonnull PrimitiveType primitiveType,
 			@Nonnull ClassifierBuilder<?> owningClassifierBuilder,
 			boolean isOptional
-		) {
+		)
+		{
 			super(
 				elementContext,
 				macroElement,
@@ -90,7 +93,8 @@ public final class PrimitivePropertyImpl
 
 		@Override
 		@Nonnull
-		protected PrimitivePropertyImpl buildUnsafe() {
+		protected PrimitivePropertyImpl buildUnsafe()
+		{
 			return new PrimitivePropertyImpl(
 				(PrimitivePropertyContext) this.elementContext,
 				this.macroElement.map(ElementBuilder::getElement),

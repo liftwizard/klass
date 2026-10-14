@@ -20,19 +20,25 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class OwnedSyntheticOneToManySourceList extends OwnedSyntheticOneToManySourceListAbstract {
+public class OwnedSyntheticOneToManySourceList
+	extends OwnedSyntheticOneToManySourceListAbstract
+{
+	public OwnedSyntheticOneToManySourceList()
+	{
+	}
 
-	public OwnedSyntheticOneToManySourceList() {}
-
-	public OwnedSyntheticOneToManySourceList(int initialSize) {
+	public OwnedSyntheticOneToManySourceList(int initialSize)
+	{
 		super(initialSize);
 	}
 
-	public OwnedSyntheticOneToManySourceList(Collection c) {
+	public OwnedSyntheticOneToManySourceList(Collection c)
+	{
 		super(c);
 	}
 
-	public OwnedSyntheticOneToManySourceList(Operation operation) {
+	public OwnedSyntheticOneToManySourceList(Operation operation)
+	{
 		super(operation);
 	}
 }

@@ -26,18 +26,21 @@ import io.dropwizard.testing.ResourceHelpers;
 import io.liftwizard.dropwizard.testing.junit.AbstractDropwizardAppTest;
 import io.liftwizard.junit.extension.app.LiftwizardAppExtension;
 
-public abstract class AbstractCoverageTest extends AbstractDropwizardAppTest {
-
+public abstract class AbstractCoverageTest
+	extends AbstractDropwizardAppTest
+{
 	@Nonnull
 	@Override
-	protected LiftwizardAppExtension<?> getDropwizardAppExtension() {
+	protected LiftwizardAppExtension<?> getDropwizardAppExtension()
+	{
 		return new LiftwizardAppExtension<>(
 			CoverageExampleApplication.class,
 			ResourceHelpers.resourceFilePath("config-test.json5")
 		);
 	}
 
-	protected void assertUrlReturns(@Nonnull String testName, @Nonnull String url) {
+	protected void assertUrlReturns(@Nonnull String testName, @Nonnull String url)
+	{
 		Client client = this.getClient(testName);
 		Response response = client
 			.target("http://localhost:{port}/api/" + url)

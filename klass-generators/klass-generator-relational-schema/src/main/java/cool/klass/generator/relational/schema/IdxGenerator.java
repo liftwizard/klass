@@ -25,13 +25,15 @@ import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.MutableOrderedMap;
 
-public final class IdxGenerator {
-
-	private IdxGenerator() {
+public final class IdxGenerator
+{
+	private IdxGenerator()
+	{
 		throw new AssertionError("Suppress default constructor for noninstantiability");
 	}
 
-	public static String getIdx(Klass klass) {
+	public static String getIdx(Klass klass)
+	{
 		String tableName = DdlGenerator.getTableName(klass);
 		String constraintName = tableName + "_PK";
 
@@ -60,7 +62,8 @@ public final class IdxGenerator {
 		MutableOrderedMap<DataTypeProperty, DataTypeProperty> dataTypeProperties,
 		Klass klass,
 		String tableName
-	) {
+	)
+	{
 		String constraintName =
 			tableName + "_IDX_" + DdlGenerator.TABLE_NAME_CONVERTER.convert(associationEnd.getName());
 
@@ -72,7 +75,8 @@ public final class IdxGenerator {
 			.concatenate(toProperties)
 			.toImmutableList();
 
-		if (isPrefixList(allKeyProperties, getAllKeyProperties(klass))) {
+		if (isPrefixList(allKeyProperties, getAllKeyProperties(klass)))
+		{
 			return "";
 		}
 
@@ -84,8 +88,10 @@ public final class IdxGenerator {
 		return "create index %s on %s(%s);%n".formatted(constraintName, tableName, foreignKeyColumnNames);
 	}
 
-	private static boolean isPrefixList(ImmutableList<DataTypeProperty> list1, ImmutableList<DataTypeProperty> list2) {
-		if (list1.size() > list2.size()) {
+	private static boolean isPrefixList(ImmutableList<DataTypeProperty> list1, ImmutableList<DataTypeProperty> list2)
+	{
+		if (list1.size() > list2.size())
+		{
 			return false;
 		}
 
@@ -93,14 +99,16 @@ public final class IdxGenerator {
 	}
 
 	@Nonnull
-	private static String getPrimaryKeyColumnNames(Klass klass) {
+	private static String getPrimaryKeyColumnNames(Klass klass)
+	{
 		return getAllKeyProperties(klass)
 			.collect(NamedElement::getName)
 			.collect(DdlGenerator.COLUMN_NAME_CONVERTER::convert)
 			.makeString(", ");
 	}
 
-	private static ImmutableList<DataTypeProperty> getAllKeyProperties(Klass klass) {
+	private static ImmutableList<DataTypeProperty> getAllKeyProperties(Klass klass)
+	{
 		ImmutableList<DataTypeProperty> toProperties = klass.getDataTypeProperties().select(DataTypeProperty::isTo);
 		return klass.getKeyProperties().newWithAll(toProperties);
 	}

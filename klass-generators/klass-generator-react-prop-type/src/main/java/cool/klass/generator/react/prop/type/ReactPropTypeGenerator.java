@@ -30,30 +30,35 @@ import cool.klass.model.meta.domain.api.projection.Projection;
 
 // TODO: Refactor out the commonality between the several Generators
 
-public class ReactPropTypeGenerator {
-
+public class ReactPropTypeGenerator
+{
 	@Nonnull
 	private final DomainModel domainModel;
 
-	public ReactPropTypeGenerator(@Nonnull DomainModel domainModel) {
+	public ReactPropTypeGenerator(@Nonnull DomainModel domainModel)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 	}
 
-	public void writePropTypes(@Nonnull Path outputPath) {
-		for (Projection projection : this.domainModel.getProjections()) {
+	public void writePropTypes(@Nonnull Path outputPath)
+	{
+		for (Projection projection : this.domainModel.getProjections())
+		{
 			Path propTypeOutputPath = this.getPropTypeOutputPath(outputPath, projection);
 			this.printStringToFile(propTypeOutputPath, this.getPropTypeSourceCode(projection));
 		}
 	}
 
-	private String getPropTypeSourceCode(@Nonnull Projection projection) {
+	private String getPropTypeSourceCode(@Nonnull Projection projection)
+	{
 		var visitor = new PropTypeSourceCodeProjectionVisitor(projection, 0);
 		projection.visit(visitor);
 		return visitor.getResult();
 	}
 
 	@Nonnull
-	private Path getPropTypeOutputPath(@Nonnull Path outputPath, @Nonnull Projection packageableElement) {
+	private Path getPropTypeOutputPath(@Nonnull Path outputPath, @Nonnull Projection packageableElement)
+	{
 		String packageRelativePath = packageableElement.getPackageName().replaceAll("\\.", "/");
 		Path outputDirectory = outputPath.resolve(packageRelativePath).resolve("react").resolve("proptype");
 		outputDirectory.toFile().mkdirs();
@@ -61,10 +66,14 @@ public class ReactPropTypeGenerator {
 		return outputDirectory.resolve(fileName);
 	}
 
-	private void printStringToFile(@Nonnull Path path, String contents) {
-		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)) {
+	private void printStringToFile(@Nonnull Path path, String contents)
+	{
+		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8))
+		{
 			printStream.print(contents);
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}

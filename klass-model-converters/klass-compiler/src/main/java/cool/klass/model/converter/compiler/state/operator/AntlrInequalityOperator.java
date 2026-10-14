@@ -29,22 +29,26 @@ import cool.klass.model.meta.grammar.KlassParser.CriteriaOperatorContext;
 import cool.klass.model.meta.grammar.KlassParser.InequalityOperatorContext;
 import org.eclipse.collections.api.list.ListIterable;
 
-public class AntlrInequalityOperator extends AntlrOperator {
-
+public class AntlrInequalityOperator
+	extends AntlrOperator
+{
 	private InequalityOperatorBuilder elementBuilder;
 
 	public AntlrInequalityOperator(
 		@Nonnull InequalityOperatorContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull String operatorText
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, operatorText);
 	}
 
 	@Nonnull
 	@Override
-	public InequalityOperatorBuilder build() {
-		if (this.elementBuilder != null) {
+	public InequalityOperatorBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.elementBuilder = new InequalityOperatorBuilder(
@@ -58,7 +62,8 @@ public class AntlrInequalityOperator extends AntlrOperator {
 
 	@Nonnull
 	@Override
-	public InequalityOperatorBuilder getElementBuilder() {
+	public InequalityOperatorBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
@@ -67,16 +72,20 @@ public class AntlrInequalityOperator extends AntlrOperator {
 		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
 		@Nonnull ListIterable<AntlrType> sourceTypes,
 		@Nonnull ListIterable<AntlrType> targetTypes
-	) {
-		if (sourceTypes.isEmpty() || targetTypes.isEmpty()) {
+	)
+	{
+		if (sourceTypes.isEmpty() || targetTypes.isEmpty())
+		{
 			return;
 		}
 
-		if (sourceTypes.equals(targetTypes)) {
+		if (sourceTypes.equals(targetTypes))
+		{
 			return;
 		}
 
-		if (sourceTypes.size() == 1 && targetTypes.contains(sourceTypes.getOnly())) {
+		if (sourceTypes.size() == 1 && targetTypes.contains(sourceTypes.getOnly()))
+		{
 			return;
 		}
 

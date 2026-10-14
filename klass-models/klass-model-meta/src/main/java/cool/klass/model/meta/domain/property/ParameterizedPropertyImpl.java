@@ -35,8 +35,8 @@ import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertyContext;
 // TODO: Super class for reference-type-property?
 public final class ParameterizedPropertyImpl
 	extends ReferencePropertyImpl<KlassImpl>
-	implements ParameterizedPropertyWithSourceCode {
-
+	implements ParameterizedPropertyWithSourceCode
+{
 	// @Nonnull
 	// private final ImmutableList<ParameterizedPropertyModifier> parameterizedPropertyModifiers;
 
@@ -49,25 +49,28 @@ public final class ParameterizedPropertyImpl
 		@Nonnull KlassImpl type,
 		@Nonnull KlassImpl owningClass,
 		@Nonnull Multiplicity multiplicity
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode, ordinal, nameContext, type, owningClass, multiplicity);
 	}
 
 	@Nonnull
 	@Override
-	public ParameterizedPropertyContext getElementContext() {
+	public ParameterizedPropertyContext getElementContext()
+	{
 		return (ParameterizedPropertyContext) super.getElementContext();
 	}
 
 	@Nonnull
 	@Override
-	public Klass getOwningClassifier() {
+	public Klass getOwningClassifier()
+	{
 		return (Klass) super.getOwningClassifier();
 	}
 
 	public static final class ParameterizedPropertyBuilder
-		extends ReferencePropertyBuilder<KlassImpl, KlassBuilder, ParameterizedPropertyImpl> {
-
+		extends ReferencePropertyBuilder<KlassImpl, KlassBuilder, ParameterizedPropertyImpl>
+	{
 		public ParameterizedPropertyBuilder(
 			@Nonnull ParameterizedPropertyContext elementContext,
 			@Nonnull Optional<ElementBuilder<?>> macroElement,
@@ -77,7 +80,8 @@ public final class ParameterizedPropertyImpl
 			@Nonnull KlassBuilder type,
 			@Nonnull KlassBuilder owningClassBuilder,
 			@Nonnull Multiplicity multiplicity
-		) {
+		)
+		{
 			super(
 				elementContext,
 				macroElement,
@@ -92,7 +96,8 @@ public final class ParameterizedPropertyImpl
 
 		@Override
 		@Nonnull
-		protected ParameterizedPropertyImpl buildUnsafe() {
+		protected ParameterizedPropertyImpl buildUnsafe()
+		{
 			return new ParameterizedPropertyImpl(
 				(ParameterizedPropertyContext) this.elementContext,
 				this.macroElement.map(ElementBuilder::getElement),

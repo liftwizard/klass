@@ -35,8 +35,9 @@ import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public abstract class AntlrMemberReferencePath extends AntlrExpressionValue {
-
+public abstract class AntlrMemberReferencePath
+	extends AntlrExpressionValue
+{
 	@Nonnull
 	protected final AntlrClass klass;
 
@@ -53,7 +54,8 @@ public abstract class AntlrMemberReferencePath extends AntlrExpressionValue {
 		@Nonnull ImmutableList<AntlrAssociationEnd> associationEnd,
 		@Nonnull AntlrDataTypeProperty<?> dataTypeProperty,
 		@Nonnull IAntlrElement expressionValueOwner
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, expressionValueOwner);
 		this.klass = Objects.requireNonNull(klass);
 		this.associationEnd = Objects.requireNonNull(associationEnd);
@@ -61,17 +63,20 @@ public abstract class AntlrMemberReferencePath extends AntlrExpressionValue {
 	}
 
 	@Nonnull
-	public AntlrClass getKlass() {
+	public AntlrClass getKlass()
+	{
 		return this.klass;
 	}
 
 	@Nonnull
-	public ImmutableList<AntlrAssociationEnd> getAssociationEnds() {
+	public ImmutableList<AntlrAssociationEnd> getAssociationEnds()
+	{
 		return this.associationEnd;
 	}
 
 	@Nonnull
-	public AntlrDataTypeProperty<?> getDataTypeProperty() {
+	public AntlrDataTypeProperty<?> getDataTypeProperty()
+	{
 		return this.dataTypeProperty;
 	}
 
@@ -83,11 +88,14 @@ public abstract class AntlrMemberReferencePath extends AntlrExpressionValue {
 	protected AntlrClass reportErrorsAssociationEnds(
 		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
 		@Nonnull List<AssociationEndReferenceContext> associationEndReferenceContexts
-	) {
+	)
+	{
 		AntlrClass currentClass = this.klass;
-		for (var i = 0; i < this.associationEnd.size(); i++) {
+		for (var i = 0; i < this.associationEnd.size(); i++)
+		{
 			AntlrAssociationEnd associationEnd = this.associationEnd.get(i);
-			if (associationEnd == AntlrAssociationEnd.NOT_FOUND) {
+			if (associationEnd == AntlrAssociationEnd.NOT_FOUND)
+			{
 				IdentifierContext identifier = associationEndReferenceContexts.get(i).identifier();
 				String message = String.format(
 					"Cannot find member '%s.%s'.",
