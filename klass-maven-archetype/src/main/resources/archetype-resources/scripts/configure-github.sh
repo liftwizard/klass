@@ -81,6 +81,7 @@ CURRENT_PROTECTION=$(gh api "repos/${REPO}/branches/${BRANCH}/protection" 2>/dev
 BP_CONTEXTS=$(echo "$CURRENT_PROTECTION" | jq -c '.required_status_checks.contexts // []')
 BP_STRICT=$(echo "$CURRENT_PROTECTION" | jq -r '.required_status_checks.strict // false')
 BP_LINEAR_HISTORY=$(echo "$CURRENT_PROTECTION" | jq -r '.required_linear_history.enabled // false')
+BP_ALLOW_FORCE_PUSHES=$(echo "$CURRENT_PROTECTION" | jq -r '.allow_force_pushes.enabled // false')
 
 UPDATE_PROTECTION=false
 
@@ -119,8 +120,9 @@ if [[ "$BP_CONTEXTS" != '["All checks"]' ]]; then
     fi
 fi
 
-check_protection_bool "BP_STRICT"          "true"  "require branches to be up to date"
-check_protection_bool "BP_LINEAR_HISTORY"  "true"  "require linear history"
+check_protection_bool "BP_STRICT"             "true"  "require branches to be up to date"
+check_protection_bool "BP_LINEAR_HISTORY"     "true"  "require linear history"
+check_protection_bool "BP_ALLOW_FORCE_PUSHES" "true"  "allow force pushes (for admins)"
 
 # Apply branch protection changes if any
 if [[ "$UPDATE_PROTECTION" == "true" ]]; then
@@ -137,7 +139,8 @@ if [[ "$UPDATE_PROTECTION" == "true" ]]; then
   "enforce_admins": $BP_ENFORCE_ADMINS,
   "required_pull_request_reviews": $BP_REVIEWS,
   "restrictions": $BP_RESTRICTIONS,
-  "required_linear_history": $BP_LINEAR_HISTORY
+  "required_linear_history": $BP_LINEAR_HISTORY,
+  "allow_force_pushes": $BP_ALLOW_FORCE_PUSHES
 }
 EOF
     echo "  Branch protection updated."
@@ -155,8 +158,13 @@ echo ""
 check_security_setting() {
     local endpoint="$1"
     local description="$2"
+    local jq_filter="${3:-}"
     local current
-    current=$(gh api "repos/${REPO}/$endpoint" --silent && echo "true" || echo "false")
+    if [[ -n "$jq_filter" ]]; then
+        current=$(gh api "repos/${REPO}/$endpoint" --jq "$jq_filter" 2>/dev/null || echo "false")
+    else
+        current=$(gh api "repos/${REPO}/$endpoint" --silent && echo "true" || echo "false")
+    fi
 
     if [[ "$current" == "true" ]]; then
         return
@@ -168,8 +176,66 @@ check_security_setting() {
     fi
 }
 
+# vulnerability-alerts returns 204 when enabled and 404 when disabled;
+# automated-security-fixes always returns 200 with an "enabled" field.
 check_security_setting "vulnerability-alerts"      "vulnerability alerts"
-check_security_setting "automated-security-fixes"  "automated security fixes (Dependabot)"
+check_security_setting "automated-security-fixes"  "automated security fixes (Dependabot)" ".enabled"
+
+echo ""
+
+# ============================================================================
+# Actions Workflow Permissions
+# ============================================================================
+
+echo "=== Actions Workflow Permissions ==="
+echo ""
+
+WORKFLOW_PERMS=$(gh api "repos/${REPO}/actions/permissions/workflow")
+DEFAULT_PERMS=$(echo "$WORKFLOW_PERMS" | jq -r '.default_workflow_permissions')
+CAN_APPROVE=$(echo "$WORKFLOW_PERMS" | jq -r '.can_approve_pull_request_reviews')
+
+if [[ "$DEFAULT_PERMS" != "read" ]]; then
+    if confirm "Reset default workflow token permissions to read-only? (currently: $DEFAULT_PERMS; workflows needing write should declare a permissions: block)"; then
+        gh api "repos/${REPO}/actions/permissions/workflow" --method PUT --field default_workflow_permissions=read > /dev/null
+        echo "  Updated."
+    fi
+fi
+
+if [[ "$CAN_APPROVE" == "true" ]]; then
+    if confirm "Disallow Actions from approving pull request reviews? (currently allowed)"; then
+        gh api "repos/${REPO}/actions/permissions/workflow" --method PUT --field can_approve_pull_request_reviews=false > /dev/null
+        echo "  Updated."
+    fi
+fi
+
+echo ""
+
+# ============================================================================
+# Secrets Audit
+# ============================================================================
+
+echo "=== Secrets Audit ==="
+echo ""
+
+# Warn about secrets referenced by workflows that don't exist on the repo.
+# Secrets can't be restored by script (e.g. after repo recreation), but the gap
+# should be surfaced.
+WORKFLOWS_DIR="$(git rev-parse --show-toplevel)/.github/workflows"
+REFERENCED_SECRETS=$(grep -rhoE 'secrets\.[A-Za-z_][A-Za-z0-9_]*' "$WORKFLOWS_DIR" 2>/dev/null | sed 's/^secrets\.//' | sort -u | grep -vx 'GITHUB_TOKEN' || true)
+EXISTING_SECRETS=$(gh api "repos/${REPO}/actions/secrets" --jq '.secrets[].name' 2>/dev/null || true)
+
+if [[ -z "$REFERENCED_SECRETS" ]]; then
+    echo "  No secrets referenced by workflows."
+else
+    MISSING=false
+    while IFS= read -r secret; do
+        if ! grep -qx "$secret" <<< "$EXISTING_SECRETS"; then
+            echo "  WARNING: workflows reference secrets.$secret but no such repo secret exists"
+            MISSING=true
+        fi
+    done <<< "$REFERENCED_SECRETS"
+    [[ "$MISSING" == "false" ]] && echo "  All referenced secrets exist."
+fi
 
 echo ""
 
