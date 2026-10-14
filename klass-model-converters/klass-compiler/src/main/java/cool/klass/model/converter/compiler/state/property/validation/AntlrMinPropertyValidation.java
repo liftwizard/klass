@@ -27,8 +27,9 @@ import cool.klass.model.meta.domain.property.validation.MinPropertyValidationImp
 import cool.klass.model.meta.grammar.KlassParser.MinValidationContext;
 import cool.klass.model.meta.grammar.KlassParser.MinValidationKeywordContext;
 
-public class AntlrMinPropertyValidation extends AbstractAntlrNumericPropertyValidation {
-
+public class AntlrMinPropertyValidation
+	extends AbstractAntlrNumericPropertyValidation
+{
 	private MinPropertyValidationBuilder elementBuilder;
 
 	public AntlrMinPropertyValidation(
@@ -36,13 +37,16 @@ public class AntlrMinPropertyValidation extends AbstractAntlrNumericPropertyVali
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull AntlrDataTypeProperty<?> owningProperty,
 		int number
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, owningProperty, number);
 	}
 
 	@Override
-	public MinPropertyValidationBuilder build() {
-		if (this.elementBuilder != null) {
+	public MinPropertyValidationBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.elementBuilder = new MinPropertyValidationBuilder(
@@ -57,18 +61,21 @@ public class AntlrMinPropertyValidation extends AbstractAntlrNumericPropertyVali
 
 	@Nonnull
 	@Override
-	public MinPropertyValidationBuilder getElementBuilder() {
+	public MinPropertyValidationBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
 	@Nonnull
 	@Override
-	public MinValidationContext getElementContext() {
+	public MinValidationContext getElementContext()
+	{
 		return (MinValidationContext) super.getElementContext();
 	}
 
 	@Override
-	public MinValidationKeywordContext getKeywordToken() {
+	public MinValidationKeywordContext getKeywordToken()
+	{
 		return this.getElementContext().minValidationKeyword();
 	}
 }

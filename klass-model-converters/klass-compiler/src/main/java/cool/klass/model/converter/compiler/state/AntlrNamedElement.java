@@ -28,8 +28,9 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public abstract class AntlrNamedElement extends AntlrOrdinalElement {
-
+public abstract class AntlrNamedElement
+	extends AntlrOrdinalElement
+{
 	protected static final Pattern PACKAGE_NAME_PATTERN = Pattern.compile("^[a-z]+(\\.[a-z][a-z0-9]*)*$");
 	protected static final Pattern TYPE_NAME_PATTERN = Pattern.compile("^[A-Z][a-zA-Z0-9]*$");
 	protected static final Pattern MEMBER_NAME_PATTERN = Pattern.compile("^[a-z][a-zA-Z0-9]*$");
@@ -103,26 +104,31 @@ public abstract class AntlrNamedElement extends AntlrOrdinalElement {
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		int ordinal,
 		@Nonnull ParserRuleContext nameContext
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, ordinal);
 		this.nameContext = Objects.requireNonNull(nameContext);
 	}
 
 	@Nonnull
-	public ParserRuleContext getNameContext() {
+	public ParserRuleContext getNameContext()
+	{
 		return this.nameContext;
 	}
 
 	@Nonnull
-	public String getName() {
+	public String getName()
+	{
 		return this.nameContext.getText();
 	}
 
 	// TODO: 💡 Some name errors should really just be warnings. Rename CompilerError to CompilerAnnotation and implement severity.
-	public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		this.reportKeywordCollision(compilerAnnotationHolder);
 
-		if (!this.getNamePattern().matcher(this.getName()).matches()) {
+		if (!this.getNamePattern().matcher(this.getName()).matches())
+		{
 			String message = String.format(
 				"Name must match pattern %s but was '%s'.",
 				this.getNamePattern(),
@@ -135,25 +141,30 @@ public abstract class AntlrNamedElement extends AntlrOrdinalElement {
 	protected abstract Pattern getNamePattern();
 
 	// TODO: ⬇ Potentially refine a smaller list of keywords that clash with associations/projections/services and a separate name pattern
-	protected void reportKeywordCollision(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (JAVA_KEYWORDS.contains(this.getName())) {
+	protected void reportKeywordCollision(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (JAVA_KEYWORDS.contains(this.getName()))
+		{
 			String message = String.format("'%s' is a reserved Java keyword.", this.getName());
 			compilerAnnotationHolder.add("ERR_NME_KEY", message, this);
 		}
 
-		if (JAVA_LITERALS.contains(this.getName())) {
+		if (JAVA_LITERALS.contains(this.getName()))
+		{
 			String message = String.format("'%s' is a reserved Java literal.", this.getName());
 			compilerAnnotationHolder.add("ERR_NME_LIT", message, this);
 		}
 
-		if (SQL_KEYWORDS.contains(this.getName())) {
+		if (SQL_KEYWORDS.contains(this.getName()))
+		{
 			String message = String.format("'%s' is a reserved SQL keyword.", this.getName());
 			compilerAnnotationHolder.add("ERR_SQL_KEY", message, this);
 		}
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return this.getName();
 	}
 }

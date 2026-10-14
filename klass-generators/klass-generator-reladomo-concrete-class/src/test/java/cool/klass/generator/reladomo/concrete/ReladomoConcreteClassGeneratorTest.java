@@ -29,15 +29,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public class ReladomoConcreteClassGeneratorTest {
-
+public class ReladomoConcreteClassGeneratorTest
+{
 	public static final String FULLY_QUALIFIED_PACKAGE = "cool.klass.generator.reladomo.concrete";
 
 	@RegisterExtension
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
 	@Test
-	void smokeTest() {
+	void smokeTest()
+	{
 		ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
 
 		var domainModelCompilerLoader = new DomainModelCompilerLoader(

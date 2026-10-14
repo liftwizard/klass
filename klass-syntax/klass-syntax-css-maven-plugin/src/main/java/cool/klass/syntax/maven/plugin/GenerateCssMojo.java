@@ -39,8 +39,9 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 @Mojo(name = "generate-css", defaultPhase = LifecyclePhase.GENERATE_RESOURCES, threadSafe = true)
-public class GenerateCssMojo extends AbstractMojo {
-
+public class GenerateCssMojo
+	extends AbstractMojo
+{
 	private static final String CSS_TEMPLATE_PATH = "/klass-syntax-header.css";
 	private static final Converter<String, String> CONVERTER = CaseFormat.UPPER_UNDERSCORE.converterTo(
 		CaseFormat.LOWER_HYPHEN
@@ -56,11 +57,15 @@ public class GenerateCssMojo extends AbstractMojo {
 	private File outputDirectory;
 
 	@Override
-	public void execute() throws MojoExecutionException {
+	public void execute()
+		throws MojoExecutionException
+	{
 		this.getLog().info("Generating CSS for token categories");
 
-		if (!this.outputDirectory.exists()) {
-			if (!this.outputDirectory.mkdirs()) {
+		if (!this.outputDirectory.exists())
+		{
+			if (!this.outputDirectory.mkdirs())
+			{
 				throw new MojoExecutionException(
 					"Failed to create output directory: " + this.outputDirectory.getAbsolutePath()
 				);
@@ -68,40 +73,52 @@ public class GenerateCssMojo extends AbstractMojo {
 		}
 
 		var cssFile = new File(this.outputDirectory, "klass-syntax.css");
-		try {
+		try
+		{
 			this.generateCssFile(cssFile);
 			this.addResourceDirectory();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			throw new MojoExecutionException("Error generating CSS file", e);
 		}
 	}
 
-	private void generateCssFile(File cssFile) throws IOException, MojoExecutionException {
+	private void generateCssFile(File cssFile)
+		throws IOException, MojoExecutionException
+	{
 		String headerContent = this.readCssTemplate();
 
 		String cssBuilder = Arrays.stream(TokenCategory.values())
 			.map(this::generateCssClass)
 			.collect(Collectors.joining("", headerContent, ""));
 
-		try (Writer writer = Files.newBufferedWriter(cssFile.toPath(), StandardCharsets.UTF_8)) {
+		try (Writer writer = Files.newBufferedWriter(cssFile.toPath(), StandardCharsets.UTF_8))
+		{
 			writer.write(cssBuilder);
 		}
 
 		this.getLog().info("Generated CSS file: " + cssFile.getAbsolutePath());
 	}
 
-	private String readCssTemplate() throws IOException, MojoExecutionException {
-		try (InputStream inputStream = this.getClass().getResourceAsStream(CSS_TEMPLATE_PATH)) {
-			if (inputStream == null) {
+	private String readCssTemplate()
+		throws IOException, MojoExecutionException
+	{
+		try (InputStream inputStream = this.getClass().getResourceAsStream(CSS_TEMPLATE_PATH))
+		{
+			if (inputStream == null)
+			{
 				throw new MojoExecutionException("CSS template file not found on classpath: " + CSS_TEMPLATE_PATH);
 			}
-			try (var reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
+			try (var reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8))
+			{
 				return CharStreams.toString(reader);
 			}
 		}
 	}
 
-	private void addResourceDirectory() {
+	private void addResourceDirectory()
+	{
 		var resource = new Resource();
 		resource.setDirectory(this.outputDirectory.getAbsolutePath());
 		this.mavenProject.addResource(resource);
@@ -109,21 +126,24 @@ public class GenerateCssMojo extends AbstractMojo {
 		this.getLog().info("Added resource directory: " + this.outputDirectory.getAbsolutePath());
 	}
 
-	private String generateCssClass(TokenCategory tokenCategory) {
+	private String generateCssClass(TokenCategory tokenCategory)
+	{
 		return ".klass-%s {%n    color: %s;%n}%n".formatted(
 			this.getTokenCategoryName(tokenCategory),
 			this.getCssVar(tokenCategory)
 		);
 	}
 
-	private String getCssVar(TokenCategory tokenCategory) {
+	private String getCssVar(TokenCategory tokenCategory)
+	{
 		TokenCategory parentCategory = tokenCategory.getParentCategory();
 		String fallbackCssVar = parentCategory == null ? "--color-foreground" : this.getCssVar(parentCategory);
 
 		return String.format("var(--klass-color-%s, %s)", this.getTokenCategoryName(tokenCategory), fallbackCssVar);
 	}
 
-	private String getTokenCategoryName(TokenCategory tokenCategory) {
+	private String getTokenCategoryName(TokenCategory tokenCategory)
+	{
 		return CONVERTER.convert(tokenCategory.name());
 	}
 }

@@ -40,8 +40,9 @@ import klass.model.meta.domain.OperatorCriteriaList;
 import klass.model.meta.domain.OrCriteriaList;
 import org.eclipse.collections.api.map.ImmutableMap;
 
-public class BootstrapCriteriaVisitor2 implements CriteriaVisitor {
-
+public class BootstrapCriteriaVisitor2
+	implements CriteriaVisitor
+{
 	private final ImmutableMap<Criteria, klass.model.meta.domain.Criteria> criteriaByCriteria;
 	private final ImmutableMap<
 		ExpressionValue,
@@ -58,37 +59,45 @@ public class BootstrapCriteriaVisitor2 implements CriteriaVisitor {
 	public BootstrapCriteriaVisitor2(
 		ImmutableMap<Criteria, klass.model.meta.domain.Criteria> criteriaByCriteria,
 		ImmutableMap<ExpressionValue, klass.model.meta.domain.ExpressionValue> expressionValuesByExpressionValue
-	) {
+	)
+	{
 		this.criteriaByCriteria = Objects.requireNonNull(criteriaByCriteria);
 		this.expressionValuesByExpressionValue = expressionValuesByExpressionValue;
 	}
 
-	public AllCriteriaList getAllCriteria() {
+	public AllCriteriaList getAllCriteria()
+	{
 		return this.allCriteria;
 	}
 
-	public EdgePointCriteriaList getEdgePointCriteria() {
+	public EdgePointCriteriaList getEdgePointCriteria()
+	{
 		return this.edgePointCriteria;
 	}
 
-	public OperatorCriteriaList getOperatorCriteria() {
+	public OperatorCriteriaList getOperatorCriteria()
+	{
 		return this.operatorCriteria;
 	}
 
-	public BinaryCriteriaList getBinaryCriteria() {
+	public BinaryCriteriaList getBinaryCriteria()
+	{
 		return this.binaryCriteria;
 	}
 
-	public AndCriteriaList getAndCriteria() {
+	public AndCriteriaList getAndCriteria()
+	{
 		return this.andCriteria;
 	}
 
-	public OrCriteriaList getOrCriteria() {
+	public OrCriteriaList getOrCriteria()
+	{
 		return this.orCriteria;
 	}
 
 	@Override
-	public void visitAll(@Nonnull AllCriteria allCriteria) {
+	public void visitAll(@Nonnull AllCriteria allCriteria)
+	{
 		var bootstrappedCriteria = this.criteriaByCriteria.get(allCriteria);
 
 		var bootstrappedAllCriteria = new klass.model.meta.domain.AllCriteria();
@@ -97,7 +106,8 @@ public class BootstrapCriteriaVisitor2 implements CriteriaVisitor {
 	}
 
 	@Override
-	public void visitOperator(@Nonnull OperatorCriteria operatorCriteria) {
+	public void visitOperator(@Nonnull OperatorCriteria operatorCriteria)
+	{
 		ExpressionValue sourceValue = operatorCriteria.getSourceValue();
 		ExpressionValue targetValue = operatorCriteria.getTargetValue();
 
@@ -119,7 +129,8 @@ public class BootstrapCriteriaVisitor2 implements CriteriaVisitor {
 	}
 
 	@Override
-	public void visitEdgePoint(@Nonnull EdgePointCriteria edgePointCriteria) {
+	public void visitEdgePoint(@Nonnull EdgePointCriteria edgePointCriteria)
+	{
 		var bootstrappedExpressionValue = new klass.model.meta.domain.ExpressionValue();
 		bootstrappedExpressionValue.insert();
 
@@ -144,7 +155,8 @@ public class BootstrapCriteriaVisitor2 implements CriteriaVisitor {
 	}
 
 	@Override
-	public void visitAnd(@Nonnull AndCriteria andCriteria) {
+	public void visitAnd(@Nonnull AndCriteria andCriteria)
+	{
 		var bootstrappedCriteria = this.handleBinaryCriteria(andCriteria);
 
 		var bootstrappedAndCriteria = new klass.model.meta.domain.AndCriteria();
@@ -156,7 +168,8 @@ public class BootstrapCriteriaVisitor2 implements CriteriaVisitor {
 	}
 
 	@Override
-	public void visitOr(@Nonnull OrCriteria orCriteria) {
+	public void visitOr(@Nonnull OrCriteria orCriteria)
+	{
 		var bootstrappedCriteria = this.handleBinaryCriteria(orCriteria);
 
 		var bootstrappedOrCriteria = new klass.model.meta.domain.OrCriteria();
@@ -168,7 +181,8 @@ public class BootstrapCriteriaVisitor2 implements CriteriaVisitor {
 	}
 
 	@Nonnull
-	private klass.model.meta.domain.Criteria handleBinaryCriteria(@Nonnull BinaryCriteria binaryCriteria) {
+	private klass.model.meta.domain.Criteria handleBinaryCriteria(@Nonnull BinaryCriteria binaryCriteria)
+	{
 		var bootstrappedCriteria = this.criteriaByCriteria.get(binaryCriteria);
 		var bootstrappedLeftCriteria = this.criteriaByCriteria.get(binaryCriteria.getLeft());
 		var bootstrappedRightCriteria = this.criteriaByCriteria.get(binaryCriteria.getRight());

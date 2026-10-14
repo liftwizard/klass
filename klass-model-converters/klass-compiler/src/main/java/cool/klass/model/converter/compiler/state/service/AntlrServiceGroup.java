@@ -44,8 +44,10 @@ import org.eclipse.collections.impl.bag.strategy.mutable.HashBagWithHashingStrat
 import org.eclipse.collections.impl.block.factory.HashingStrategies;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
-public class AntlrServiceGroup extends AntlrPackageableElement implements AntlrTopLevelElement {
-
+public class AntlrServiceGroup
+	extends AntlrPackageableElement
+	implements AntlrTopLevelElement
+{
 	public static final AntlrServiceGroup AMBIGUOUS = new AntlrServiceGroup(
 		new ServiceGroupDeclarationContext(AMBIGUOUS_PARENT, -1),
 		AntlrCompilationUnit.AMBIGUOUS,
@@ -70,7 +72,8 @@ public class AntlrServiceGroup extends AntlrPackageableElement implements AntlrT
 		int ordinal,
 		@Nonnull IdentifierContext nameContext,
 		@Nonnull AntlrClass klass
-	) {
+	)
+	{
 		super(elementContext, compilationUnitState, ordinal, nameContext);
 		this.klass = Objects.requireNonNull(klass);
 	}
@@ -78,56 +81,68 @@ public class AntlrServiceGroup extends AntlrPackageableElement implements AntlrT
 	// TODO: Should this be a Classifier rather than a Class?
 	// TODO: If so, there should also be an error for PUT/POST on an interface
 	@Nonnull
-	public AntlrClass getKlass() {
+	public AntlrClass getKlass()
+	{
 		return this.klass;
 	}
 
-	public AntlrUrl getUrlByContext(UrlDeclarationContext ctx) {
+	public AntlrUrl getUrlByContext(UrlDeclarationContext ctx)
+	{
 		return this.urlsByContext.get(ctx);
 	}
 
-	public void enterUrlDeclaration(@Nonnull AntlrUrl url) {
+	public void enterUrlDeclaration(@Nonnull AntlrUrl url)
+	{
 		AntlrUrl duplicate = this.urlsByContext.put(url.getElementContext(), url);
-		if (duplicate != null) {
+		if (duplicate != null)
+		{
 			throw new AssertionError();
 		}
 
 		this.urls.add(url);
 	}
 
-	public ListIterable<AntlrUrl> getUrls() {
+	public ListIterable<AntlrUrl> getUrls()
+	{
 		return this.urls.asUnmodifiable();
 	}
 
 	@Nonnull
 	@Override
-	public ServiceGroupDeclarationContext getElementContext() {
+	public ServiceGroupDeclarationContext getElementContext()
+	{
 		return (ServiceGroupDeclarationContext) super.getElementContext();
 	}
 
 	// <editor-fold desc="Report Compiler Errors">
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		this.reportNoUrls(compilerAnnotationHolder);
 		this.reportDuplicateUrls(compilerAnnotationHolder);
 		this.reportForwardReference(compilerAnnotationHolder);
 
-		for (AntlrUrl url : this.urls) {
+		for (AntlrUrl url : this.urls)
+		{
 			url.reportErrors(compilerAnnotationHolder);
 		}
 
-		if (this.klass == AntlrClass.NOT_FOUND) {
+		if (this.klass == AntlrClass.NOT_FOUND)
+		{
 			this.reportTypeNotFound(compilerAnnotationHolder);
 		}
 	}
 
 	@Override
-	public void reportDuplicateTopLevelName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportDuplicateTopLevelName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		// Deliberately empty
 	}
 
-	private void reportTypeNotFound(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.klass != AntlrClass.NOT_FOUND) {
+	private void reportTypeNotFound(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.klass != AntlrClass.NOT_FOUND)
+		{
 			return;
 		}
 
@@ -140,7 +155,8 @@ public class AntlrServiceGroup extends AntlrPackageableElement implements AntlrT
 		);
 	}
 
-	private void reportDuplicateUrls(CompilerAnnotationHolder compilerAnnotationHolder) {
+	private void reportDuplicateUrls(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		var antlrUrls = new HashBagWithHashingStrategy<AntlrUrl>(
 			HashingStrategies.fromFunction(AntlrUrl::getNormalizedPathSegments)
 		);
@@ -149,11 +165,13 @@ public class AntlrServiceGroup extends AntlrPackageableElement implements AntlrT
 
 		MutableBag<AntlrUrl> duplicateUrlMatches = antlrUrls.selectByOccurrences((occurrences) -> occurrences > 1);
 		MutableList<AntlrUrl> duplicateUrls = this.urls.select(duplicateUrlMatches::contains);
-		if (duplicateUrls.isEmpty()) {
+		if (duplicateUrls.isEmpty())
+		{
 			return;
 		}
 
-		for (AntlrUrl url : duplicateUrls) {
+		for (AntlrUrl url : duplicateUrls)
+		{
 			String message = String.format(
 				"Duplicate URL: '%s' in service group for class '%s'.",
 				url.getElementContext().url().getText(),
@@ -164,8 +182,10 @@ public class AntlrServiceGroup extends AntlrPackageableElement implements AntlrT
 		}
 	}
 
-	private void reportNoUrls(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.urls.isEmpty()) {
+	private void reportNoUrls(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.urls.isEmpty())
+		{
 			String message = String.format(
 				"Service group should declare at least one url: '%s'.",
 				this.getElementContext().classReference().getText()
@@ -175,7 +195,8 @@ public class AntlrServiceGroup extends AntlrPackageableElement implements AntlrT
 		}
 	}
 
-	public void reportDuplicateServiceGroupClass(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportDuplicateServiceGroupClass(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		String message = String.format(
 			"Multiple service groups for class: '%s.%s'.",
 			this.klass.getPackageName(),
@@ -184,8 +205,10 @@ public class AntlrServiceGroup extends AntlrPackageableElement implements AntlrT
 		compilerAnnotationHolder.add("ERR_DUP_SVC", message, this);
 	}
 
-	private void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (!this.isForwardReference(this.klass)) {
+	private void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (!this.isForwardReference(this.klass))
+		{
 			return;
 		}
 
@@ -202,8 +225,10 @@ public class AntlrServiceGroup extends AntlrPackageableElement implements AntlrT
 
 	// </editor-fold>
 
-	public ServiceGroupBuilder build() {
-		if (this.serviceGroupBuilder != null) {
+	public ServiceGroupBuilder build()
+	{
+		if (this.serviceGroupBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 
@@ -224,13 +249,15 @@ public class AntlrServiceGroup extends AntlrPackageableElement implements AntlrT
 	}
 
 	@Override
-	public ServiceGroupBlockContext getBlockContext() {
+	public ServiceGroupBlockContext getBlockContext()
+	{
 		return this.getElementContext().serviceGroupBlock();
 	}
 
 	@Nonnull
 	@Override
-	public ServiceGroupBuilder getElementBuilder() {
+	public ServiceGroupBuilder getElementBuilder()
+	{
 		return this.serviceGroupBuilder;
 	}
 }

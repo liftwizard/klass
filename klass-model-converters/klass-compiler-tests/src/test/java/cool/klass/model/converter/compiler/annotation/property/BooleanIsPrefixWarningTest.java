@@ -19,11 +19,13 @@ package cool.klass.model.converter.compiler.annotation.property;
 import cool.klass.model.converter.compiler.annotation.AbstractKlassCompilerErrorTestCase;
 import org.junit.jupiter.api.Test;
 
-class BooleanIsPrefixWarningTest extends AbstractKlassCompilerErrorTestCase {
-
+class BooleanIsPrefixWarningTest
+	extends AbstractKlassCompilerErrorTestCase
+{
 	@Test
 	@Override
-	public void smokeTest() {
+	public void smokeTest()
+	{
 		this.assertCompilationSucceeds(true);
 	}
 }

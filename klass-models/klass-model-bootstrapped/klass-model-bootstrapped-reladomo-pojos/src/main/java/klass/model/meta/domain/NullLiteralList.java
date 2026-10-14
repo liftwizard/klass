@@ -20,19 +20,25 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class NullLiteralList extends NullLiteralListAbstract {
+public class NullLiteralList
+	extends NullLiteralListAbstract
+{
+	public NullLiteralList()
+	{
+	}
 
-	public NullLiteralList() {}
-
-	public NullLiteralList(int initialSize) {
+	public NullLiteralList(int initialSize)
+	{
 		super(initialSize);
 	}
 
-	public NullLiteralList(Collection c) {
+	public NullLiteralList(Collection c)
+	{
 		super(c);
 	}
 
-	public NullLiteralList(Operation operation) {
+	public NullLiteralList(Operation operation)
+	{
 		super(operation);
 	}
 }

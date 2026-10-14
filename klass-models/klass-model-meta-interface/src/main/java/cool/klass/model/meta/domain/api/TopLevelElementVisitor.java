@@ -19,7 +19,8 @@ package cool.klass.model.meta.domain.api;
 import cool.klass.model.meta.domain.api.projection.Projection;
 import cool.klass.model.meta.domain.api.service.ServiceGroup;
 
-public interface TopLevelElementVisitor {
+public interface TopLevelElementVisitor
+{
 	void visitEnumeration(Enumeration enumeration);
 
 	void visitInterface(Interface anInterface);

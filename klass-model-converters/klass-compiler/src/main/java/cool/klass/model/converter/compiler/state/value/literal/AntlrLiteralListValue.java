@@ -32,8 +32,9 @@ import cool.klass.model.meta.domain.value.literal.LiteralListValueImpl.LiteralLi
 import cool.klass.model.meta.grammar.KlassParser.LiteralListContext;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class AntlrLiteralListValue extends AbstractAntlrLiteralValue {
-
+public class AntlrLiteralListValue
+	extends AbstractAntlrLiteralValue
+{
 	private ImmutableList<AbstractAntlrLiteralValue> literals;
 	private LiteralListValueBuilder elementBuilder;
 
@@ -41,12 +42,15 @@ public class AntlrLiteralListValue extends AbstractAntlrLiteralValue {
 		@Nonnull LiteralListContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull IAntlrElement expressionValueOwner
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, expressionValueOwner);
 	}
 
-	public void setLiterals(ImmutableList<AbstractAntlrLiteralValue> literals) {
-		if (this.literals != null) {
+	public void setLiterals(ImmutableList<AbstractAntlrLiteralValue> literals)
+	{
+		if (this.literals != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.literals = Objects.requireNonNull(literals);
@@ -54,8 +58,10 @@ public class AntlrLiteralListValue extends AbstractAntlrLiteralValue {
 
 	@Nonnull
 	@Override
-	public LiteralListValueBuilder build() {
-		if (this.elementBuilder != null) {
+	public LiteralListValueBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.elementBuilder = new LiteralListValueBuilder(
@@ -65,9 +71,9 @@ public class AntlrLiteralListValue extends AbstractAntlrLiteralValue {
 			this.getInferredType().getTypeGetter()
 		);
 
-		ImmutableList<AbstractLiteralValueBuilder<?>> literalValueBuilders = this.literals.<
-			AbstractLiteralValueBuilder<?>
-		>collect(AbstractAntlrLiteralValue::build).toImmutable();
+		ImmutableList<AbstractLiteralValueBuilder<?>> literalValueBuilders = this.literals
+			.<AbstractLiteralValueBuilder<?>>collect(AbstractAntlrLiteralValue::build)
+			.toImmutable();
 		this.elementBuilder.setLiteralValueBuilders(literalValueBuilders);
 
 		return this.elementBuilder;
@@ -75,13 +81,16 @@ public class AntlrLiteralListValue extends AbstractAntlrLiteralValue {
 
 	@Nonnull
 	@Override
-	public LiteralListValueBuilder getElementBuilder() {
+	public LiteralListValueBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.getPossibleTypes().isEmpty()) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.getPossibleTypes().isEmpty())
+		{
 			// TODO: Cover this with a test
 
 			compilerAnnotationHolder.add("ERR_LIT_LST", "Literal list with heterogeneous values.", this);
@@ -90,8 +99,10 @@ public class AntlrLiteralListValue extends AbstractAntlrLiteralValue {
 
 	@Nonnull
 	@Override
-	public ImmutableList<AntlrType> getPossibleTypes() {
-		return this.literals.flatCollect(AntlrExpressionValue::getPossibleTypes)
+	public ImmutableList<AntlrType> getPossibleTypes()
+	{
+		return this.literals
+			.flatCollect(AntlrExpressionValue::getPossibleTypes)
 			.toBag()
 			.selectByOccurrences((occurrences) -> occurrences == this.literals.size())
 			.toList()
@@ -100,7 +111,8 @@ public class AntlrLiteralListValue extends AbstractAntlrLiteralValue {
 	}
 
 	@Override
-	public void visit(AntlrExpressionValueVisitor visitor) {
+	public void visit(AntlrExpressionValueVisitor visitor)
+	{
 		visitor.visitLiteralList(this);
 	}
 }

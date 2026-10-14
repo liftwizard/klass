@@ -43,8 +43,9 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;
 import org.eclipse.collections.api.map.OrderedMap;
 
-public class OperatorAntlrCriteria extends AntlrCriteria {
-
+public class OperatorAntlrCriteria
+	extends AntlrCriteria
+{
 	@Nonnull
 	private final AntlrOperator operator;
 
@@ -57,36 +58,44 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull IAntlrElement criteriaOwner,
 		@Nonnull AntlrOperator operator
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, criteriaOwner);
 		this.operator = Objects.requireNonNull(operator);
 	}
 
 	@Nonnull
 	@Override
-	public CriteriaOperatorContext getElementContext() {
+	public CriteriaOperatorContext getElementContext()
+	{
 		return (CriteriaOperatorContext) super.getElementContext();
 	}
 
 	@Nullable
-	public AntlrExpressionValue getSourceValue() {
+	public AntlrExpressionValue getSourceValue()
+	{
 		return Objects.requireNonNull(this.sourceValue);
 	}
 
-	public void setSourceValue(@Nonnull AntlrExpressionValue sourceValue) {
-		if (this.sourceValue != null) {
+	public void setSourceValue(@Nonnull AntlrExpressionValue sourceValue)
+	{
+		if (this.sourceValue != null)
+		{
 			throw new IllegalArgumentException(this.sourceValue.toString());
 		}
 		this.sourceValue = Objects.requireNonNull(sourceValue);
 	}
 
 	@Nullable
-	public AntlrExpressionValue getTargetValue() {
+	public AntlrExpressionValue getTargetValue()
+	{
 		return Objects.requireNonNull(this.targetValue);
 	}
 
-	public void setTargetValue(@Nonnull AntlrExpressionValue targetValue) {
-		if (this.targetValue != null) {
+	public void setTargetValue(@Nonnull AntlrExpressionValue targetValue)
+	{
+		if (this.targetValue != null)
+		{
 			throw new IllegalArgumentException(this.targetValue.toString());
 		}
 		this.targetValue = Objects.requireNonNull(targetValue);
@@ -94,8 +103,10 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
 
 	@Nonnull
 	@Override
-	public OperatorCriteriaBuilder build() {
-		if (this.elementBuilder != null) {
+	public OperatorCriteriaBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException("Element builder already set: " + this.elementBuilder);
 		}
 		// TODO: Refactor to build the parent before the children
@@ -112,12 +123,14 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
 
 	@Nonnull
 	@Override
-	public OperatorCriteriaBuilder getElementBuilder() {
+	public OperatorCriteriaBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		this.sourceValue.reportErrors(compilerAnnotationHolder);
 		this.targetValue.reportErrors(compilerAnnotationHolder);
 		ListIterable<AntlrType> sourceTypes = this.sourceValue.getPossibleTypes();
@@ -126,24 +139,30 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
 	}
 
 	@Override
-	public void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName) {
+	public void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName)
+	{
 		this.sourceValue.resolveServiceVariables(formalParametersByName);
 		this.targetValue.resolveServiceVariables(formalParametersByName);
 	}
 
 	@Override
-	public void resolveTypes() {
+	public void resolveTypes()
+	{
 		ImmutableList<AntlrType> sourcePossibleTypes = this.sourceValue.getPossibleTypes();
 		ImmutableList<AntlrType> targetPossibleTypes = this.targetValue.getPossibleTypes();
 
-		if (this.sourceValue instanceof AbstractAntlrLiteralValue literalValue) {
-			if (targetPossibleTypes.size() != 1) {
+		if (this.sourceValue instanceof AbstractAntlrLiteralValue literalValue)
+		{
+			if (targetPossibleTypes.size() != 1)
+			{
 				return;
 			}
 			literalValue.setInferredType(targetPossibleTypes.getOnly());
 		}
-		if (this.targetValue instanceof AbstractAntlrLiteralValue literalValue) {
-			if (sourcePossibleTypes.size() != 1) {
+		if (this.targetValue instanceof AbstractAntlrLiteralValue literalValue)
+		{
+			if (sourcePossibleTypes.size() != 1)
+			{
 				return;
 			}
 			literalValue.setInferredType(sourcePossibleTypes.getOnly());
@@ -151,7 +170,8 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
 	}
 
 	@Override
-	public void addForeignKeys() {
+	public void addForeignKeys()
+	{
 		AntlrAssociation association = this.getSurroundingElement(AntlrAssociation.class).get();
 
 		AntlrAssociationEnd sourceEnd = association.getSourceEnd();
@@ -163,7 +183,8 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
 		AntlrDataTypeProperty<?> thisDataTypeProperty = thisMemberReferencePath.getDataTypeProperty();
 		AntlrDataTypeProperty<?> typeDataTypeProperty = typeMemberReferencePath.getDataTypeProperty();
 
-		if (sourceEnd.isToMany() && targetEnd.isToMany()) {
+		if (sourceEnd.isToMany() && targetEnd.isToMany())
+		{
 			throw new AssertionError("TODO: Support many-to-many associations");
 		}
 
@@ -173,16 +194,19 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
 			typeDataTypeProperty
 		);
 
-		if (endWithForeignKeys == null) {
+		if (endWithForeignKeys == null)
+		{
 			return;
 		}
 
 		AntlrClass typeWithForeignKeys = endWithForeignKeys.getOwningClassifier();
-		if (typeWithForeignKeys == AntlrClass.NOT_FOUND || typeWithForeignKeys == AntlrClass.AMBIGUOUS) {
+		if (typeWithForeignKeys == AntlrClass.NOT_FOUND || typeWithForeignKeys == AntlrClass.AMBIGUOUS)
+		{
 			return;
 		}
 
-		if (!endWithForeignKeys.isToOne()) {
+		if (!endWithForeignKeys.isToOne())
+		{
 			throw new AssertionError();
 		}
 
@@ -203,7 +227,8 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
 	}
 
 	@Override
-	public void visit(AntlrCriteriaVisitor visitor) {
+	public void visit(AntlrCriteriaVisitor visitor)
+	{
 		visitor.visitOperator(this);
 	}
 
@@ -212,15 +237,18 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
 		@Nonnull AntlrAssociation association,
 		@Nonnull AntlrDataTypeProperty<?> thisDataTypeProperty,
 		@Nonnull AntlrDataTypeProperty<?> typeDataTypeProperty
-	) {
+	)
+	{
 		AntlrAssociationEnd sourceEnd = association.getSourceEnd();
 		AntlrAssociationEnd targetEnd = association.getTargetEnd();
 
-		if (targetEnd.isToMany()) {
+		if (targetEnd.isToMany())
+		{
 			return sourceEnd;
 		}
 
-		if (sourceEnd.isToMany()) {
+		if (sourceEnd.isToMany())
+		{
 			return targetEnd;
 		}
 
@@ -232,27 +260,34 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
 		//     relationship this.queryCriteriaId == Criteria.id
 		// }
 
-		if (thisDataTypeProperty.isKey() && !typeDataTypeProperty.isKey()) {
+		if (thisDataTypeProperty.isKey() && !typeDataTypeProperty.isKey())
+		{
 			return sourceEnd;
 		}
 
-		if (typeDataTypeProperty.isKey() && !thisDataTypeProperty.isKey()) {
+		if (typeDataTypeProperty.isKey() && !thisDataTypeProperty.isKey())
+		{
 			return targetEnd;
 		}
 
-		if (sourceEnd.isToOneRequired() && targetEnd.isToOneOptional()) {
+		if (sourceEnd.isToOneRequired() && targetEnd.isToOneOptional())
+		{
 			return sourceEnd;
 		}
 
-		if (targetEnd.isToOneRequired() && sourceEnd.isToOneOptional()) {
+		if (targetEnd.isToOneRequired() && sourceEnd.isToOneOptional())
+		{
 			return targetEnd;
 		}
 
-		if (sourceEnd.isToOne() && targetEnd.isToOne()) {
-			if (sourceEnd.isOwned() && !targetEnd.isOwned()) {
+		if (sourceEnd.isToOne() && targetEnd.isToOne())
+		{
+			if (sourceEnd.isOwned() && !targetEnd.isOwned())
+			{
 				return targetEnd;
 			}
-			if (!sourceEnd.isOwned() && targetEnd.isOwned()) {
+			if (!sourceEnd.isOwned() && targetEnd.isOwned())
+			{
 				return sourceEnd;
 			}
 		}
@@ -261,12 +296,15 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
 	}
 
 	@Nonnull
-	private AntlrThisMemberReferencePath getThisMemberReferencePath() {
-		if (this.sourceValue instanceof AntlrThisMemberReferencePath memberReferencePath) {
+	private AntlrThisMemberReferencePath getThisMemberReferencePath()
+	{
+		if (this.sourceValue instanceof AntlrThisMemberReferencePath memberReferencePath)
+		{
 			return memberReferencePath;
 		}
 
-		if (this.targetValue instanceof AntlrThisMemberReferencePath memberReferencePath) {
+		if (this.targetValue instanceof AntlrThisMemberReferencePath memberReferencePath)
+		{
 			return memberReferencePath;
 		}
 
@@ -274,12 +312,15 @@ public class OperatorAntlrCriteria extends AntlrCriteria {
 	}
 
 	@Nonnull
-	private AntlrTypeMemberReferencePath getTypeMemberReferencePath() {
-		if (this.sourceValue instanceof AntlrTypeMemberReferencePath memberReferencePath) {
+	private AntlrTypeMemberReferencePath getTypeMemberReferencePath()
+	{
+		if (this.sourceValue instanceof AntlrTypeMemberReferencePath memberReferencePath)
+		{
 			return memberReferencePath;
 		}
 
-		if (this.targetValue instanceof AntlrTypeMemberReferencePath memberReferencePath) {
+		if (this.targetValue instanceof AntlrTypeMemberReferencePath memberReferencePath)
+		{
 			return memberReferencePath;
 		}
 
