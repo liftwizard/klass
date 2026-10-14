@@ -7,6 +7,8 @@ node = "24.21.0"
 pre-commit = "4.6.2"
 rust = "1.98.1"
 "npm:markdownlint-cli2" = "0.23.3"
+"npm:prettier" = "3.9.10"
+"npm:prettier-java-next-line" = { version = "2.11.0", allow_low_downloads = true }
 "npm:strip-ansi-cli" = "4.0.0"
 "npm:vite-plus" = "0.3.3"
 
