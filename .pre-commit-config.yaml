@@ -37,7 +37,7 @@ repos:
         language: system
       - id: markdownlint-cli2
         name: markdownlint-cli2
-        entry: markdownlint-cli2
+        entry: markdownlint-cli2 --no-globs
         language: system
         types: [markdown]
 
