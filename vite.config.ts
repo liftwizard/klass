@@ -1,5 +1,3 @@
-// Formatting config for `vp fmt` (oxfmt). Plain object export so no
-// node_modules are needed; vite-plus is provided globally via mise.
 export default {
 	fmt: {
 		useTabs: true,
