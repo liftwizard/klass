@@ -67,57 +67,46 @@ public class GraphQLQueryToOperationConverterTest
 		// language=GraphQL
 		var query = """
 		{
-		  propertiesOptionalByFinder(
-		    operation: {
-		      optionalBoolean: { eq: true }
-		      optionalLong: { eq: 1 }
-		      optionalFloat: { eq: 1.0 }
-		      optionalDouble: { eq: 1.0 }
-		      optionalInteger: { eq: 1 }
-		      optionalString: { lower: { startsWith: "a" } }
-		      version: { number: { eq: 1 } }
-		    }
-		    orderBy: [
-		      {
-		        attribute: {
-		          optionalBoolean: {}
-		          optionalLong: {}
-		          optionalFloat: {}
-		          optionalDouble: {}
-		        }
-		        direction: DESCENDING
-		      }
-		      {
-		        attribute: {
-		          optionalInteger: {}
-		          optionalString: {}
-		          version: { number: {} }
-		        }
-		      }
-		    ]
-		  ) {
-		    propertiesOptionalId
-		    optionalString
-		    optionalInteger
-		    optionalLong
-		    optionalDouble
-		    optionalFloat
-		    optionalBoolean
-		    optionalInstant
-		    optionalLocalDate
-		    systemFrom
-		    systemTo
-		    createdBy {
-		        userId
-		    }
-		    createdOn
-		    lastUpdatedBy {
-		        userId
-		    }
-		    version {
-		      number
-		    }
-		  }
+			propertiesOptionalByFinder(
+				operation: {
+					optionalBoolean: {eq: true}
+					optionalLong: {eq: 1}
+					optionalFloat: {eq: 1.0}
+					optionalDouble: {eq: 1.0}
+					optionalInteger: {eq: 1}
+					optionalString: {lower: {startsWith: "a"}}
+					version: {number: {eq: 1}}
+				}
+				orderBy: [
+					{
+						attribute: {optionalBoolean: {}, optionalLong: {}, optionalFloat: {}, optionalDouble: {}}
+						direction: DESCENDING
+					}
+					{attribute: {optionalInteger: {}, optionalString: {}, version: {number: {}}}}
+				]
+			) {
+				propertiesOptionalId
+				optionalString
+				optionalInteger
+				optionalLong
+				optionalDouble
+				optionalFloat
+				optionalBoolean
+				optionalInstant
+				optionalLocalDate
+				systemFrom
+				systemTo
+				createdBy {
+					userId
+				}
+				createdOn
+				lastUpdatedBy {
+					userId
+				}
+				version {
+					number
+				}
+			}
 		}
 		""";
 
