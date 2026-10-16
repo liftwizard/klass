@@ -21,6 +21,7 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
@@ -98,6 +99,10 @@ public abstract class AntlrNamedElement extends AntlrOrdinalElement {
 	@Nonnull
 	protected final ParserRuleContext nameContext;
 
+	// Cached because ParserRuleContext.getText() rebuilds the string from the tokens on every call
+	@Nullable
+	private String name;
+
 	protected AntlrNamedElement(
 		@Nonnull ParserRuleContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
@@ -115,7 +120,10 @@ public abstract class AntlrNamedElement extends AntlrOrdinalElement {
 
 	@Nonnull
 	public String getName() {
-		return this.nameContext.getText();
+		if (this.name == null) {
+			this.name = this.nameContext.getText();
+		}
+		return this.name;
 	}
 
 	// TODO: 💡 Some name errors should really just be warnings. Rename CompilerError to CompilerAnnotation and implement severity.

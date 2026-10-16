@@ -36,6 +36,10 @@ public final class ModifierImpl extends AbstractOrdinalElement implements Modifi
 	@Nonnull
 	private final ModifierOwner modifierOwner;
 
+	// Cached because Token.getText() copies the text out of the char stream on every call
+	@Nonnull
+	private final String keyword;
+
 	public ModifierImpl(
 		@Nonnull ParserRuleContext elementContext,
 		@Nonnull Optional<Element> macroElement,
@@ -45,6 +49,7 @@ public final class ModifierImpl extends AbstractOrdinalElement implements Modifi
 	) {
 		super(elementContext, macroElement, sourceCode, ordinal);
 		this.modifierOwner = Objects.requireNonNull(modifierOwner);
+		this.keyword = this.getKeywordToken().getText();
 	}
 
 	public Token getKeywordToken() {
@@ -58,7 +63,7 @@ public final class ModifierImpl extends AbstractOrdinalElement implements Modifi
 
 	@Override
 	public String getKeyword() {
-		return this.getKeywordToken().getText();
+		return this.keyword;
 	}
 
 	@Override
