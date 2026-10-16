@@ -34,6 +34,10 @@ public abstract class AbstractNamedElement extends AbstractOrdinalElement implem
 	@Nonnull
 	private final ParserRuleContext nameContext;
 
+	// Cached because ParserRuleContext.getText() rebuilds the string from the tokens on every call
+	@Nonnull
+	private final String name;
+
 	protected AbstractNamedElement(
 		@Nonnull ParserRuleContext elementContext,
 		@Nonnull Optional<Element> macroElement,
@@ -43,6 +47,7 @@ public abstract class AbstractNamedElement extends AbstractOrdinalElement implem
 	) {
 		super(elementContext, macroElement, sourceCode, ordinal);
 		this.nameContext = Objects.requireNonNull(nameContext);
+		this.name = nameContext.getText();
 	}
 
 	@Nonnull
@@ -59,7 +64,7 @@ public abstract class AbstractNamedElement extends AbstractOrdinalElement implem
 	@Override
 	@Nonnull
 	public final String getName() {
-		return this.nameContext.getText();
+		return this.name;
 	}
 
 	@Override
