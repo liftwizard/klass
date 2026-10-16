@@ -40,6 +40,7 @@ import cool.klass.model.converter.compiler.state.service.AntlrService;
 import cool.klass.model.converter.compiler.state.service.AntlrServiceCriteria;
 import cool.klass.model.converter.compiler.state.service.AntlrServiceGroup;
 import cool.klass.model.converter.compiler.state.service.url.AntlrUrl;
+import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import cool.klass.model.meta.domain.AbstractClassifier.ClassifierBuilder;
 import cool.klass.model.meta.domain.AssociationImpl.AssociationBuilder;
 import cool.klass.model.meta.domain.DomainModelImpl.DomainModelBuilder;
@@ -60,10 +61,12 @@ import cool.klass.model.meta.grammar.KlassParser.ProjectionDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceGroupDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.TopLevelDeclarationContext;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.bag.ImmutableBag;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
+import org.eclipse.collections.api.map.MapIterable;
 import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.impl.factory.Sets;
@@ -654,7 +657,11 @@ public class AntlrDomainModel {
 	// </editor-fold>
 
 	@Nonnull
-	public DomainModelBuilder build(ImmutableList<CompilationUnit> compilationUnits) {
+	public DomainModelBuilder build(
+		ImmutableList<CompilationUnit> compilationUnits,
+		MapIterable<Token, TokenCategory> tokenCategoriesFromLexer,
+		MapIterable<Token, TokenCategory> tokenCategoriesFromParser
+	) {
 		ImmutableList<SourceCodeBuilderImpl> sourceCodeBuilders = compilationUnits.collect(CompilationUnit::build);
 		ImmutableList<EnumerationBuilder> enumerationBuilders = this.enumerations.collect(
 			AntlrEnumeration::build
@@ -697,7 +704,9 @@ public class AntlrDomainModel {
 			classBuilders,
 			associationBuilders,
 			projectionBuilders,
-			serviceGroupBuilders
+			serviceGroupBuilders,
+			tokenCategoriesFromLexer,
+			tokenCategoriesFromParser
 		);
 	}
 }
