@@ -14,7 +14,7 @@ rules:
   commas: enable
   comments:
     level: warning
-    # SHA-pinned 'uses:' lines use a single space before '#' version comment
+    # oxfmt (vp fmt) normalizes inline comments to a single space before '#'
     min-spaces-from-content: 1
   comments-indentation:
     level: warning

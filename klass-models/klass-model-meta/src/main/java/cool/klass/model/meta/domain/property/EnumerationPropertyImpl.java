@@ -34,8 +34,8 @@ import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 
 public final class EnumerationPropertyImpl
 	extends AbstractDataTypeProperty<EnumerationImpl>
-	implements EnumerationPropertyWithSourceCode {
-
+	implements EnumerationPropertyWithSourceCode
+{
 	private EnumerationPropertyImpl(
 		@Nonnull EnumerationPropertyContext elementContext,
 		@Nonnull Optional<Element> macroElement,
@@ -45,7 +45,8 @@ public final class EnumerationPropertyImpl
 		@Nonnull EnumerationImpl enumeration,
 		@Nonnull AbstractClassifier owningClassifier,
 		boolean isOptional
-	) {
+	)
+	{
 		super(
 			elementContext,
 			macroElement,
@@ -60,13 +61,14 @@ public final class EnumerationPropertyImpl
 
 	@Nonnull
 	@Override
-	public EnumerationPropertyContext getElementContext() {
+	public EnumerationPropertyContext getElementContext()
+	{
 		return (EnumerationPropertyContext) super.getElementContext();
 	}
 
 	public static final class EnumerationPropertyBuilder
-		extends DataTypePropertyBuilder<EnumerationImpl, EnumerationBuilder, EnumerationPropertyImpl> {
-
+		extends DataTypePropertyBuilder<EnumerationImpl, EnumerationBuilder, EnumerationPropertyImpl>
+	{
 		public EnumerationPropertyBuilder(
 			@Nonnull EnumerationPropertyContext elementContext,
 			@Nonnull Optional<ElementBuilder<?>> macroElement,
@@ -76,7 +78,8 @@ public final class EnumerationPropertyImpl
 			@Nonnull EnumerationBuilder enumerationBuilder,
 			@Nonnull ClassifierBuilder<?> owningClassifierBuilder,
 			boolean isOptional
-		) {
+		)
+		{
 			super(
 				elementContext,
 				macroElement,
@@ -91,7 +94,8 @@ public final class EnumerationPropertyImpl
 
 		@Override
 		@Nonnull
-		protected EnumerationPropertyImpl buildUnsafe() {
+		protected EnumerationPropertyImpl buildUnsafe()
+		{
 			return new EnumerationPropertyImpl(
 				(EnumerationPropertyContext) this.elementContext,
 				this.macroElement.map(ElementBuilder::getElement),

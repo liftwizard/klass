@@ -50,15 +50,17 @@ import cool.klass.serialization.jackson.jsonview.KlassJsonView;
 import cool.klass.serialization.jackson.model.data.property.SerializeValueToJsonFieldPrimitiveTypeVisitor;
 import org.eclipse.collections.api.map.MutableMap;
 
-public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
-
+public class ReladomoJsonViewSerializer
+	extends JsonSerializer<MithraObject>
+{
 	@Nonnull
 	private final DomainModel domainModel;
 
 	@Nonnull
 	private final DataStore dataStore;
 
-	public ReladomoJsonViewSerializer(@Nonnull DomainModel domainModel, @Nonnull DataStore dataStore) {
+	public ReladomoJsonViewSerializer(@Nonnull DomainModel domainModel, @Nonnull DataStore dataStore)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 		this.dataStore = Objects.requireNonNull(dataStore);
 	}
@@ -68,7 +70,9 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
 		@Nonnull MithraObject mithraObject,
 		@Nonnull JsonGenerator jsonGenerator,
 		@Nonnull SerializerProvider serializers
-	) throws IOException {
+	)
+		throws IOException
+	{
 		Class<?> activeViewClass = serializers.getActiveView();
 		Objects.requireNonNull(activeViewClass, () ->
 			String.format(
@@ -77,36 +81,41 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
 			)
 		);
 
-		if (!KlassJsonView.class.isAssignableFrom(activeViewClass)) {
+		if (!KlassJsonView.class.isAssignableFrom(activeViewClass))
+		{
 			throw new IllegalStateException(activeViewClass.getCanonicalName());
 		}
 
 		KlassJsonView klassJsonView = this.instantiate(activeViewClass);
 		String projectionName = klassJsonView.getProjectionName();
-		Projection projection = this.domainModel.findProjectionByName(projectionName).orElseThrow(() ->
-			new IllegalStateException(
-				String.format(
-					"Could not find projection '%s' in the DomainModel at runtime. "
-					+ "Code generation used @JsonView(%s) which references this projection. "
-					+ "Ensure the runtime DomainModel's sourcePackages include all packages used during code generation.",
-					projectionName,
-					activeViewClass.getCanonicalName()
+		Projection projection = this.domainModel
+			.findProjectionByName(projectionName)
+			.orElseThrow(() ->
+				new IllegalStateException(
+					String.format(
+						"Could not find projection '%s' in the DomainModel at runtime. "
+							+ "Code generation used @JsonView(%s) which references this projection. "
+							+ "Ensure the runtime DomainModel's sourcePackages include all packages used during code generation.",
+						projectionName,
+						activeViewClass.getCanonicalName()
+					)
 				)
-			)
-		);
+			);
 
 		String className = mithraObject.getClass().getSimpleName();
-		Klass klass = this.domainModel.findClassByName(className).orElseThrow(() ->
-			new IllegalStateException(
-				String.format(
-					"Could not find class '%s' in the DomainModel at runtime. "
-					+ "Code generation produced a MithraObject of type %s but the runtime DomainModel does not contain this class. "
-					+ "Ensure the runtime DomainModel's sourcePackages include all packages used during code generation.",
-					className,
-					mithraObject.getClass().getCanonicalName()
+		Klass klass = this.domainModel
+			.findClassByName(className)
+			.orElseThrow(() ->
+				new IllegalStateException(
+					String.format(
+						"Could not find class '%s' in the DomainModel at runtime. "
+							+ "Code generation produced a MithraObject of type %s but the runtime DomainModel does not contain this class. "
+							+ "Ensure the runtime DomainModel's sourcePackages include all packages used during code generation.",
+						className,
+						mithraObject.getClass().getCanonicalName()
+					)
 				)
-			)
-		);
+			);
 
 		var reladomoProjectionConverter = new ReladomoProjectionConverter();
 		RootReladomoNode projectionReladomoNode = reladomoProjectionConverter.getRootReladomoNode(klass, projection);
@@ -120,18 +129,24 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
 		@Nonnull MithraObject mithraObject,
 		@Nonnull JsonGenerator jsonGenerator,
 		@Nonnull ProjectionElementReladomoNode projectionReladomoNode
-	) throws IOException {
+	)
+		throws IOException
+	{
 		jsonGenerator.writeStartObject();
-		try {
+		try
+		{
 			boolean hasPolymorphicChildren = projectionReladomoNode.hasPolymorphicChildren();
-			if (hasPolymorphicChildren) {
+			if (hasPolymorphicChildren)
+			{
 				var type = (Klass) projectionReladomoNode.getType();
 				Klass mostSpecificSubclass = this.dataStore.getMostSpecificSubclass(mithraObject, type);
 				jsonGenerator.writeStringField("__typename", mostSpecificSubclass.getFullyQualifiedName());
 			}
 
 			this.handleObjectMembers(mithraObject, jsonGenerator, projectionReladomoNode);
-		} finally {
+		}
+		finally
+		{
 			jsonGenerator.writeEndObject();
 		}
 	}
@@ -140,61 +155,80 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
 		@Nonnull MithraObject mithraObject,
 		@Nonnull JsonGenerator jsonGenerator,
 		@Nonnull ProjectionElementReladomoNode projectionReladomoNode
-	) throws IOException {
+	)
+		throws IOException
+	{
 		Objects.requireNonNull(mithraObject);
 
 		// TODO: Use listener?
 		MutableMap<String, ProjectionElementReladomoNode> children = projectionReladomoNode.getChildren();
-		for (ProjectionElementReladomoNode projectionElementReladomoNode : children) {
+		for (ProjectionElementReladomoNode projectionElementReladomoNode : children)
+		{
 			if (
 				projectionElementReladomoNode
-				instanceof ProjectionDataTypePropertyReladomoNode projectionDataTypePropertyReladomoNode
-			) {
+					instanceof ProjectionDataTypePropertyReladomoNode projectionDataTypePropertyReladomoNode
+			)
+			{
 				this.handleProjectionPrimitiveMember(
 					jsonGenerator,
 					mithraObject,
 					projectionDataTypePropertyReladomoNode
 				);
-			} else if (
+			}
+			else if (
 				projectionElementReladomoNode
-				instanceof ProjectionWithReferencePropertyReladomoNode projectionWithReferencePropertyReladomoNode
-			) {
+					instanceof ProjectionWithReferencePropertyReladomoNode projectionWithReferencePropertyReladomoNode
+			)
+			{
 				this.handleProjectionWithReferenceProperty(
 					jsonGenerator,
 					mithraObject,
 					projectionWithReferencePropertyReladomoNode
 				);
-			} else if (projectionElementReladomoNode instanceof SuperClassReladomoNode superClassReladomoNode) {
+			}
+			else if (projectionElementReladomoNode instanceof SuperClassReladomoNode superClassReladomoNode)
+			{
 				Classifier owningClassifier = superClassReladomoNode.getOwningClassifier();
 				Classifier type = superClassReladomoNode.getType();
-				if (((Klass) owningClassifier).getSuperClass().get() != type) {
+				if (((Klass) owningClassifier).getSuperClass().get() != type)
+				{
 					throw new AssertionError("Expected superclass of " + owningClassifier + " to be " + type);
 				}
 				Object superClass = this.dataStore.getSuperClass(mithraObject, (Klass) owningClassifier);
 				this.handleObjectMembers((MithraObject) superClass, jsonGenerator, superClassReladomoNode);
-			} else if (projectionElementReladomoNode instanceof SubClassReladomoNode subClassReladomoNode) {
+			}
+			else if (projectionElementReladomoNode instanceof SubClassReladomoNode subClassReladomoNode)
+			{
 				Classifier owningClassifier = subClassReladomoNode.getOwningClassifier();
 				Classifier type = subClassReladomoNode.getType();
-				if (((Klass) type).getSuperClass().get() != owningClassifier) {
+				if (((Klass) type).getSuperClass().get() != owningClassifier)
+				{
 					throw new AssertionError("Expected subclass of " + owningClassifier + " to be " + type);
 				}
 				Object subClass = this.dataStore.getSubClass(mithraObject, (Klass) owningClassifier, (Klass) type);
 				// TODO: There are two separate concepts of definite subclasses and polymorphic projections.
 				// In other words, we should know in advance whether null is ok here.
-				if (subClass != null) {
+				if (subClass != null)
+				{
 					this.handleObjectMembers((MithraObject) subClass, jsonGenerator, subClassReladomoNode);
 				}
-			} else {
+			}
+			else
+			{
 				throw new AssertionError(projectionElementReladomoNode.getClass().getSimpleName());
 			}
 		}
 	}
 
 	@Nonnull
-	private KlassJsonView instantiate(@Nonnull Class<?> activeViewClass) {
-		try {
+	private KlassJsonView instantiate(@Nonnull Class<?> activeViewClass)
+	{
+		try
+		{
 			return activeViewClass.asSubclass(KlassJsonView.class).newInstance();
-		} catch (ReflectiveOperationException e) {
+		}
+		catch (ReflectiveOperationException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}
@@ -203,7 +237,9 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
 		@Nonnull JsonGenerator jsonGenerator,
 		@Nonnull MithraObject mithraObject,
 		@Nonnull ProjectionDataTypePropertyReladomoNode projectionDataTypePropertyReladomoNode
-	) throws IOException {
+	)
+		throws IOException
+	{
 		Objects.requireNonNull(mithraObject);
 
 		DataTypeProperty property = projectionDataTypePropertyReladomoNode.getProperty();
@@ -211,19 +247,22 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
 		DataType dataType = projectionDataTypePropertyReladomoNode.getType();
 
 		Object dataTypeValue = this.dataStore.getDataTypeProperty(mithraObject, property);
-		if (dataTypeValue == null) {
+		if (dataTypeValue == null)
+		{
 			// TODO: Make this configurable
 			jsonGenerator.writeNullField(propertyName);
 			return;
 		}
 
-		if (dataType instanceof Enumeration) {
+		if (dataType instanceof Enumeration)
+		{
 			var enumerationLiteral = (EnumerationLiteral) dataTypeValue;
 			jsonGenerator.writeStringField(propertyName, enumerationLiteral.getPrettyName());
 			return;
 		}
 
-		if (dataType instanceof PrimitiveType primitiveType) {
+		if (dataType instanceof PrimitiveType primitiveType)
+		{
 			PrimitiveTypeVisitor visitor = new SerializeValueToJsonFieldPrimitiveTypeVisitor(
 				jsonGenerator,
 				propertyName,
@@ -240,18 +279,22 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
 		@Nonnull JsonGenerator jsonGenerator,
 		MithraObject mithraObject,
 		@Nonnull ProjectionWithReferencePropertyReladomoNode projectionWithReferencePropertyReladomoNode
-	) throws IOException {
+	)
+		throws IOException
+	{
 		ReferenceProperty referenceProperty = projectionWithReferencePropertyReladomoNode.getReferenceProperty();
 		Multiplicity multiplicity = referenceProperty.getMultiplicity();
 		String associationEndName = referenceProperty.getName();
 
-		if (multiplicity.isToMany()) {
+		if (multiplicity.isToMany())
+		{
 			Object value = this.dataStore.getToMany(mithraObject, referenceProperty);
 			var mithraList = (MithraList<MithraObject>) Objects.requireNonNull(value);
 
 			// TODO: Add configuration to disable serialization of empty lists
 			jsonGenerator.writeArrayFieldStart(associationEndName);
-			try {
+			try
+			{
 				mithraList.forEachWithCursor((eachChildValue) ->
 					this.recurse(
 						(MithraObject) eachChildValue,
@@ -259,13 +302,18 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
 						projectionWithReferencePropertyReladomoNode
 					)
 				);
-			} finally {
+			}
+			finally
+			{
 				jsonGenerator.writeEndArray();
 			}
-		} else {
+		}
+		else
+		{
 			Object value = this.dataStore.getToOne(mithraObject, referenceProperty);
 			// TODO: Add configuration to disable serialization of null values
-			if (value == null) {
+			if (value == null)
+			{
 				// Should only happen for to-one optional relationships
 				jsonGenerator.writeNullField(associationEndName);
 				return;
@@ -280,10 +328,14 @@ public class ReladomoJsonViewSerializer extends JsonSerializer<MithraObject> {
 		@Nonnull MithraObject eachChildValue,
 		@Nonnull JsonGenerator jsonGenerator,
 		@Nonnull ProjectionElementReladomoNode projectionReladomoNode
-	) {
-		try {
+	)
+	{
+		try
+		{
 			this.serialize(eachChildValue, jsonGenerator, projectionReladomoNode);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			throw new RuntimeException(e);
 		}
 		return true;

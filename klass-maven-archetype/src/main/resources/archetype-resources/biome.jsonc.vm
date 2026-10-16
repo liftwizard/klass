@@ -1,2 +1,0 @@
-## Named .template.jsonc to avoid biome detecting it as a nested configuration file.
-#include("biome.template.jsonc")

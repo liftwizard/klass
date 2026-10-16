@@ -83,8 +83,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Path("/manual")
-public class QuestionResourceManual {
-
+public class QuestionResourceManual
+{
 	private static final Logger LOGGER = LoggerFactory.getLogger(QuestionResourceManual.class);
 
 	@Nonnull
@@ -96,11 +96,8 @@ public class QuestionResourceManual {
 	@Nonnull
 	private final Clock clock;
 
-	public QuestionResourceManual(
-		@Nonnull DomainModel domainModel,
-		@Nonnull DataStore dataStore,
-		@Nonnull Clock clock
-	) {
+	public QuestionResourceManual(@Nonnull DomainModel domainModel, @Nonnull DataStore dataStore, @Nonnull Clock clock)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 		this.dataStore = Objects.requireNonNull(dataStore);
 		this.clock = Objects.requireNonNull(clock);
@@ -112,15 +109,17 @@ public class QuestionResourceManual {
 	@GET
 	@Path("/question/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response method0(@PathParam("id") Long id, @Nullable @QueryParam("version") Integer version) {
+	public Response method0(@PathParam("id") Long id, @Nullable @QueryParam("version") Integer version)
+	{
 		// Question
 
 		// this.id == id
 		Operation queryOperation = QuestionFinder.id().eq(id);
 		// this.system equalsEdgePoint && this.version.number == version
-		Operation versionOperation = version == null
-			? QuestionFinder.all()
-			: QuestionFinder.system().equalsEdgePoint().and(QuestionFinder.version().number().eq(version));
+		Operation versionOperation =
+			version == null
+				? QuestionFinder.all()
+				: QuestionFinder.system().equalsEdgePoint().and(QuestionFinder.version().number().eq(version));
 
 		Operation operation = queryOperation.and(versionOperation);
 		QuestionList result = QuestionFinder.findMany(operation);
@@ -129,7 +128,8 @@ public class QuestionResourceManual {
 		result.deepFetch(QuestionFinder.tags().tag());
 		result.deepFetch(QuestionFinder.version());
 
-		if (result.isEmpty()) {
+		if (result.isEmpty())
+		{
 			throw new ClientErrorException("Url valid, data not found.", Status.GONE);
 		}
 
@@ -157,7 +157,8 @@ public class QuestionResourceManual {
 		@Nonnull @QueryParam("version") Optional<Integer> optionalVersion,
 		@Nonnull @NotNull ObjectNode incomingInstance,
 		@Nonnull @Auth Principal principal
-	) {
+	)
+	{
 		Klass klass = this.domainModel.getClassByName("Question");
 
 		MutableList<String> errors = Lists.mutable.empty();
@@ -165,7 +166,8 @@ public class QuestionResourceManual {
 		ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, klass);
 		RequiredPropertiesValidator.validate(errors, warnings, klass, incomingInstance, OperationMode.REPLACE);
 
-		if (errors.notEmpty()) {
+		if (errors.notEmpty())
+		{
 			Response response = Response.status(Status.BAD_REQUEST).entity(errors).build();
 			throw new BadRequestException("Incoming data failed validation.", response);
 		}
@@ -176,14 +178,16 @@ public class QuestionResourceManual {
 		result.deepFetch(QuestionFinder.tags().tag());
 		result.deepFetch(QuestionFinder.version());
 
-		if (result.isEmpty()) {
+		if (result.isEmpty())
+		{
 			throw new ClientErrorException("Url valid, data not found.", Status.GONE);
 		}
 
 		// this.version.number == version
 		Operation conflictOperation = QuestionFinder.version().number().eq(optionalVersion.get());
 		boolean hasConflict = !result.asEcList().allSatisfy(conflictOperation::matches);
-		if (hasConflict) {
+		if (hasConflict)
+		{
 			throw new ClientErrorException(Status.CONFLICT);
 		}
 
@@ -209,7 +213,8 @@ public class QuestionResourceManual {
 			errors,
 			warnings
 		);
-		if (errors.notEmpty()) {
+		if (errors.notEmpty())
+		{
 			Response response = Response.status(Status.BAD_REQUEST).entity(errors).build();
 			throw new BadRequestException("Incoming data failed validation.", response);
 		}
@@ -239,7 +244,8 @@ public class QuestionResourceManual {
 		@PathParam("id") Long id,
 		@QueryParam("version") Integer version,
 		@Nonnull @Context SecurityContext securityContext
-	) {
+	)
+	{
 		// Question
 
 		String userPrincipalName = securityContext.getUserPrincipal().getName();
@@ -254,14 +260,17 @@ public class QuestionResourceManual {
 		// Deep fetch using projection QuestionWriteProjection
 
 		boolean isAuthorized = !result.asEcList().allSatisfy(authorizeOperation::matches);
-		if (!isAuthorized) {
+		if (!isAuthorized)
+		{
 			throw new ForbiddenException();
 		}
 		boolean hasConflict = !result.asEcList().allSatisfy(conflictOperation::matches);
-		if (!hasConflict) {
+		if (!hasConflict)
+		{
 			throw new ClientErrorException(Status.CONFLICT);
 		}
-		if (result.isEmpty()) {
+		if (result.isEmpty())
+		{
 			throw new ClientErrorException("Url valid, data not found.", Status.GONE);
 		}
 
@@ -286,7 +295,8 @@ public class QuestionResourceManual {
 	@GET
 	@Path("/question/in")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getQuestionsById(@Nonnull @QueryParam("ids") Set<Long> ids) {
+	public Response getQuestionsById(@Nonnull @QueryParam("ids") Set<Long> ids)
+	{
 		// Question
 
 		// this.id in ids
@@ -318,7 +328,8 @@ public class QuestionResourceManual {
 	@GET
 	@Path("/question/firstTwo")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getFirstTwoQuestions() {
+	public Response getFirstTwoQuestions()
+	{
 		// Question
 
 		// this.id in (1, 2)
@@ -348,7 +359,8 @@ public class QuestionResourceManual {
 	@GET
 	@Path("/question/{id}/version/{version}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getQuestionByIdAndVersion(@PathParam("id") Long id, @PathParam("version") Integer version) {
+	public Response getQuestionByIdAndVersion(@PathParam("id") Long id, @PathParam("version") Integer version)
+	{
 		Operation queryOperation = QuestionFinder.id()
 			.eq(id)
 			.and(QuestionFinder.system().equalsEdgePoint())
@@ -369,7 +381,8 @@ public class QuestionResourceManual {
         boolean isValidated  = !result.asEcList().allSatisfy(validateOperation::matches);
         boolean hasConflict  = !result.asEcList().allSatisfy(conflictOperation::matches);
         */
-		if (result.isEmpty()) {
+		if (result.isEmpty())
+		{
 			throw new ClientErrorException("Url valid, data not found.", Status.GONE);
 		}
 
@@ -396,7 +409,8 @@ public class QuestionResourceManual {
 		@PathParam("id") Long id,
 		@QueryParam("version") Integer version,
 		@Nonnull @Context SecurityContext securityContext
-	) {
+	)
+	{
 		/*
         String    userPrincipalName  = securityContext.getUserPrincipal().getName();
         */
@@ -415,7 +429,8 @@ public class QuestionResourceManual {
         boolean isValidated  = !result.asEcList().allSatisfy(validateOperation::matches);
         boolean hasConflict  = !result.asEcList().allSatisfy(conflictOperation::matches);
         */
-		if (result.isEmpty()) {
+		if (result.isEmpty())
+		{
 			throw new ClientErrorException("Url valid, data not found.", Status.GONE);
 		}
 
@@ -441,14 +456,16 @@ public class QuestionResourceManual {
 		@Nonnull ObjectNode incomingInstance,
 		@Nonnull @Context UriInfo uriInfo,
 		@Nonnull @Auth Principal principal
-	) {
+	)
+	{
 		Klass klass = this.domainModel.getClassByName("Question");
 
 		MutableList<String> errors = Lists.mutable.empty();
 		MutableList<String> warnings = Lists.mutable.empty();
 		ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, klass);
 		RequiredPropertiesValidator.validate(errors, warnings, klass, incomingInstance, OperationMode.CREATE);
-		if (errors.notEmpty()) {
+		if (errors.notEmpty())
+		{
 			Response response = Response.status(Status.BAD_REQUEST).entity(errors).build();
 			throw new BadRequestException("Incoming data failed validation.", response);
 		}
@@ -469,26 +486,29 @@ public class QuestionResourceManual {
 			errors,
 			warnings
 		);
-		if (errors.notEmpty()) {
+		if (errors.notEmpty())
+		{
 			Response response = Response.status(Status.BAD_REQUEST).entity(errors).build();
 			throw new BadRequestException("Incoming data failed validation.", response);
 		}
-		if (warnings.notEmpty()) {
+		if (warnings.notEmpty())
+		{
 			LOGGER.info("warnings = {}", warnings.makeString("\n", "\n", "\n"));
 			warnings.clear();
 		}
 
-		Question persistentInstance = MithraManagerProvider.getMithraManager().executeTransactionalCommand((tx) -> {
-				tx.setProcessingStartTime(transactionInstant.toEpochMilli());
+		Question persistentInstance = MithraManagerProvider.getMithraManager().executeTransactionalCommand((tx) ->
+		{
+			tx.setProcessingStartTime(transactionInstant.toEpochMilli());
 
-				var question = new Question();
-				question.generateAndSetId();
+			var question = new Question();
+			question.generateAndSetId();
 
-				var creator = new PersistentCreator(mutationContext, this.dataStore);
-				creator.synchronize(klass, question, incomingInstance);
-				question.insert();
-				return question;
-			});
+			var creator = new PersistentCreator(mutationContext, this.dataStore);
+			creator.synchronize(klass, question, incomingInstance);
+			question.insert();
+			return question;
+		});
 
 		UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
 		uriBuilder.path(Long.toString(persistentInstance.getId()));
@@ -510,7 +530,8 @@ public class QuestionResourceManual {
 	@GET
 	@Path("/question")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response method6() {
+	public Response method6()
+	{
 		// Question
 
 		// this.title startsWith "Why do"
@@ -539,7 +560,8 @@ public class QuestionResourceManual {
 	@GET
 	@Path("/user/{userId}/questions")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response method7(@PathParam("userId") String userId) {
+	public Response method7(@PathParam("userId") String userId)
+	{
 		// Question
 
 		// this.createdById == userId
@@ -565,7 +587,8 @@ public class QuestionResourceManual {
 	@GET
 	@Path("/set")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Set<String> setService() {
+	public Set<String> setService()
+	{
 		return Sets.mutable.empty();
 	}
 
@@ -574,7 +597,8 @@ public class QuestionResourceManual {
 	@GET
 	@Path("/map")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Map<String, Set<String>> mapService() {
+	public Map<String, Set<String>> mapService()
+	{
 		return Maps.mutable.empty();
 	}
 }

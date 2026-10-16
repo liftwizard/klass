@@ -36,8 +36,9 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
-public class GenerateReladomoRuntimeConfigurationMojo extends AbstractGenerateMojo {
-
+public class GenerateReladomoRuntimeConfigurationMojo
+	extends AbstractGenerateMojo
+{
 	@Parameter(
 		property = "outputDirectory",
 		defaultValue = "${project.build.directory}/generated-test-resources/reladomo-runtime-configuration"
@@ -68,13 +69,17 @@ public class GenerateReladomoRuntimeConfigurationMojo extends AbstractGenerateMo
 	private String cacheType;
 
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.CLASSPATH;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
-		if (!this.outputDirectory.exists()) {
+	public void execute()
+		throws MojoExecutionException
+	{
+		if (!this.outputDirectory.exists())
+		{
 			this.outputDirectory.mkdirs();
 		}
 
@@ -82,7 +87,8 @@ public class GenerateReladomoRuntimeConfigurationMojo extends AbstractGenerateMo
 
 		Path outputPath = this.outputDirectory.toPath();
 		Path path = outputPath.resolve(this.outputFilename);
-		try {
+		try
+		{
 			var reladomoRuntimeConfigurationGenerator = new ReladomoRuntimeConfigurationGenerator(
 				domainModel,
 				this.connectionManagerClassName,
@@ -91,7 +97,9 @@ public class GenerateReladomoRuntimeConfigurationMojo extends AbstractGenerateMo
 				this.cacheType
 			);
 			reladomoRuntimeConfigurationGenerator.writeRuntimeConfigFile(path);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 
@@ -99,9 +107,12 @@ public class GenerateReladomoRuntimeConfigurationMojo extends AbstractGenerateMo
 		resource.setDirectory(this.outputDirectory.getAbsolutePath());
 		// TODO: Should be based on the output path
 		resource.setTargetPath("reladomo-runtime-configuration");
-		if (this.isTest) {
+		if (this.isTest)
+		{
 			this.mavenProject.addTestResource(resource);
-		} else {
+		}
+		else
+		{
 			this.mavenProject.addResource(resource);
 		}
 	}

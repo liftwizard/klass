@@ -25,4 +25,6 @@ import org.eclipse.collections.api.list.ImmutableList;
 public record CompilationResult(
 	ImmutableList<RootCompilerAnnotation> compilerAnnotations,
 	Optional<DomainModelWithSourceCode> domainModelWithSourceCode
-) {}
+)
+{
+}
