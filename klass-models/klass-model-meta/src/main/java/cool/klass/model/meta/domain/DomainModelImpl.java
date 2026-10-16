@@ -16,15 +16,12 @@
 
 package cool.klass.model.meta.domain;
 
-import java.util.LinkedHashMap;
 import java.util.Objects;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
-import cool.klass.model.converter.compiler.token.categorizing.lexer.LexerBasedTokenCategorizer;
-import cool.klass.model.converter.compiler.token.categorizing.parser.ParserBasedTokenCategorizer;
 import cool.klass.model.meta.domain.AbstractClassifier.ClassifierBuilder;
 import cool.klass.model.meta.domain.AssociationImpl.AssociationBuilder;
 import cool.klass.model.meta.domain.EnumerationImpl.EnumerationBuilder;
@@ -56,8 +53,6 @@ import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.eclipse.collections.api.map.MapIterable;
-import org.eclipse.collections.api.map.MutableMapIterable;
-import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
 public final class DomainModelImpl implements DomainModelWithSourceCode {
 
@@ -379,6 +374,12 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 		@Nonnull
 		private final ImmutableList<ServiceGroupBuilder> serviceGroupBuilders;
 
+		@Nonnull
+		private final MapIterable<Token, TokenCategory> tokenCategoriesFromLexer;
+
+		@Nonnull
+		private final MapIterable<Token, TokenCategory> tokenCategoriesFromParser;
+
 		public DomainModelBuilder(
 			@Nonnull ImmutableList<SourceCodeBuilderImpl> sourceCodeBuilders,
 			@Nonnull ImmutableList<TopLevelElementBuilder> topLevelElementBuilders,
@@ -388,7 +389,9 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 			@Nonnull ImmutableList<KlassBuilder> classBuilders,
 			@Nonnull ImmutableList<AssociationBuilder> associationBuilders,
 			@Nonnull ImmutableList<ProjectionBuilder> projectionBuilders,
-			@Nonnull ImmutableList<ServiceGroupBuilder> serviceGroupBuilders
+			@Nonnull ImmutableList<ServiceGroupBuilder> serviceGroupBuilders,
+			@Nonnull MapIterable<Token, TokenCategory> tokenCategoriesFromLexer,
+			@Nonnull MapIterable<Token, TokenCategory> tokenCategoriesFromParser
 		) {
 			this.sourceCodeBuilders = Objects.requireNonNull(sourceCodeBuilders);
 			this.topLevelElementBuilders = Objects.requireNonNull(topLevelElementBuilders);
@@ -399,6 +402,8 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 			this.associationBuilders = Objects.requireNonNull(associationBuilders);
 			this.projectionBuilders = Objects.requireNonNull(projectionBuilders);
 			this.serviceGroupBuilders = Objects.requireNonNull(serviceGroupBuilders);
+			this.tokenCategoriesFromLexer = Objects.requireNonNull(tokenCategoriesFromLexer);
+			this.tokenCategoriesFromParser = Objects.requireNonNull(tokenCategoriesFromParser);
 		}
 
 		@Nonnull
@@ -433,14 +438,8 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 				TopLevelElementBuilder::getElement
 			);
 
-			MapIterable<Token, TokenCategory> tokenCategoriesFromLexer = this.getTokenCategoriesFromLexer(sourceCodes);
-			MapIterable<Token, TokenCategory> tokenCategoriesFromParser = this.getTokenCategoriesFromParser(
-				sourceCodes
-			);
-
-			ImmutableList<Token> duplicateTokens = tokenCategoriesFromLexer
-				.keysView()
-				.select(tokenCategoriesFromParser::containsKey)
+			ImmutableList<Token> duplicateTokens = this.tokenCategoriesFromLexer.keysView()
+				.select(this.tokenCategoriesFromParser::containsKey)
 				.toImmutableList();
 			if (duplicateTokens.notEmpty()) {
 				throw new AssertionError(duplicateTokens);
@@ -453,8 +452,8 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 
 			return new DomainModelImpl(
 				sourceCodes,
-				tokenCategoriesFromLexer,
-				tokenCategoriesFromParser,
+				this.tokenCategoriesFromLexer,
+				this.tokenCategoriesFromParser,
 				domainModelDeclarations,
 				domainModelReferences,
 				topLevelElements,
@@ -466,25 +465,6 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 				projections,
 				serviceGroups
 			);
-		}
-
-		private MapIterable<Token, TokenCategory> getTokenCategoriesFromLexer(ImmutableList<SourceCode> sourceCodes) {
-			MutableMapIterable<Token, TokenCategory> tokenCategoriesFromLexer = OrderedMapAdapter.adapt(
-				new LinkedHashMap<>()
-			);
-			sourceCodes
-				.collect(SourceCode::getTokenStream)
-				.forEachWith(LexerBasedTokenCategorizer::findTokenCategoriesFromLexer, tokenCategoriesFromLexer);
-			return tokenCategoriesFromLexer.asUnmodifiable();
-		}
-
-		private MapIterable<Token, TokenCategory> getTokenCategoriesFromParser(ImmutableList<SourceCode> sourceCodes) {
-			var listener = new ParserBasedTokenCategorizer();
-
-			sourceCodes
-				.collect(SourceCode::getParserContext)
-				.forEachWith(ParserBasedTokenCategorizer::findTokenCategoriesFromParser, listener);
-			return listener.getTokenCategories();
 		}
 
 		private DomainModelDeclarations getDomainModelDeclarations(ImmutableList<TopLevelElement> topLevelElements) {
