@@ -20,6 +20,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
@@ -59,6 +60,10 @@ public class AntlrModifier extends AntlrOrdinalElement {
 	private final AntlrNamedElement surroundingElement;
 	private ModifierBuilder elementBuilder;
 
+	// Cached because Token.getText() copies the text out of the char stream on every call
+	@Nullable
+	private String keyword;
+
 	public AntlrModifier(
 		@Nonnull ParserRuleContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
@@ -85,7 +90,10 @@ public class AntlrModifier extends AntlrOrdinalElement {
 	}
 
 	public String getKeyword() {
-		return this.getKeywordToken().getText();
+		if (this.keyword == null) {
+			this.keyword = this.getKeywordToken().getText();
+		}
+		return this.keyword;
 	}
 
 	public boolean is(String name) {
