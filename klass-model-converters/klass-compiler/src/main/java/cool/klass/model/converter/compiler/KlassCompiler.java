@@ -186,7 +186,11 @@ public class KlassCompiler {
 		this.compilerState.reportErrors();
 		ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilerAnnotationHolder.getCompilerAnnotations();
 
-		return this.compilerState.getCompilationResult(compilerAnnotations);
+		return this.compilerState.getCompilationResult(
+			compilerAnnotations,
+			tokenCategoriesFromLexer,
+			tokenCategoriesFromParser
+		);
 	}
 
 	private MapIterable<Token, TokenCategory> getTokenCategoriesFromLexer(
