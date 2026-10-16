@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import com.google.common.base.Stopwatch;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
+import cool.klass.model.converter.compiler.parser.RuleOnlyParseTreeWalker;
 import cool.klass.model.converter.compiler.phase.AssociationPhase;
 import cool.klass.model.converter.compiler.phase.AuditAssociationInferencePhase;
 import cool.klass.model.converter.compiler.phase.AuditPropertyInferencePhase;
@@ -60,7 +61,6 @@ import cool.klass.model.converter.compiler.token.categorizing.lexer.LexerBasedTo
 import cool.klass.model.converter.compiler.token.categorizing.parser.ParserBasedTokenCategorizer;
 import cool.klass.model.meta.grammar.KlassListener;
 import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.MapIterable;
@@ -130,7 +130,7 @@ public class KlassCompiler {
 			.getCompilationUnits()
 			.toImmutable();
 
-		var parseTreeWalker = new ParseTreeWalker();
+		var parseTreeWalker = new RuleOnlyParseTreeWalker();
 		for (CompilationUnit compilationUnit : immutableCompilationUnits) {
 			try {
 				this.compilerState.getCompilerWalk().assertEmpty();
@@ -206,9 +206,11 @@ public class KlassCompiler {
 	) {
 		var listener = new ParserBasedTokenCategorizer();
 
-		compilationUnits
-			.collect(CompilationUnit::getParserContext)
-			.forEachWith(ParserBasedTokenCategorizer::findTokenCategoriesFromParser, listener);
+		// The categorizer only listens to rule events, so it can skip terminals like the compiler phases do
+		var parseTreeWalker = new RuleOnlyParseTreeWalker();
+		for (CompilationUnit compilationUnit : compilationUnits) {
+			parseTreeWalker.walk(listener, compilationUnit.getParserContext());
+		}
 		return listener.getTokenCategories();
 	}
 }
