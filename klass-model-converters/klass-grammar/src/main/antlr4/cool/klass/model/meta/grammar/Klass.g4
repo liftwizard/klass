@@ -240,8 +240,6 @@ keywordValidAsIdentifier
     | 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
     | serviceCategoryModifier
     | inOperator | stringOperator
-    // TODO: Split these primitive type keywords out, since they're really only ok as enumeration literals
-    | primitiveType
     ;
 
 literal
