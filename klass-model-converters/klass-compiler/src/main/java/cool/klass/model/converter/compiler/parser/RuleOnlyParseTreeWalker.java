@@ -43,7 +43,7 @@ public final class RuleOnlyParseTreeWalker extends ParseTreeWalker {
 		List<ParseTree> children = ctx.children;
 		if (children != null) {
 			int numChildren = children.size();
-			for (int i = 0; i < numChildren; i++) {
+			for (var i = 0; i < numChildren; i++) {
 				this.walk(listener, children.get(i));
 			}
 		}
