@@ -52,11 +52,12 @@ import org.slf4j.LoggerFactory;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(LogMarkerTestExtension.class)
-class SyntaxHighlighterListenerTest {
-
+class SyntaxHighlighterListenerTest
+{
 	private static final Logger LOGGER = LoggerFactory.getLogger(SyntaxHighlighterListenerTest.class);
 
-	private static final BaseErrorListener THROWING_ERROR_LISTENER = new BaseErrorListener() {
+	private static final BaseErrorListener THROWING_ERROR_LISTENER = new BaseErrorListener()
+	{
 		@Override
 		public void syntaxError(
 			Recognizer<?, ?> recognizer,
@@ -65,12 +66,14 @@ class SyntaxHighlighterListenerTest {
 			int charPositionInLine,
 			String msg,
 			RecognitionException e
-		) {
+		)
+		{
 			throw new ParseCancellationException("line " + line + ":" + charPositionInLine + " " + msg);
 		}
 	};
 
-	private static Stream<Arguments> colorSchemeProvider() {
+	private static Stream<Arguments> colorSchemeProvider()
+	{
 		return Stream.of(
 			Arguments.of("light"),
 			Arguments.of("light-rgb"),
@@ -82,7 +85,8 @@ class SyntaxHighlighterListenerTest {
 	}
 
 	@Test
-	void lexerTokenCategories() {
+	void lexerTokenCategories()
+	{
 		CodePointCharStream charStream = CharStreams.fromString("String name == \"Alice\"\n");
 		var lexer = new KlassLexer(charStream);
 		var tokenStream = new CommonTokenStream(lexer);
@@ -105,7 +109,8 @@ class SyntaxHighlighterListenerTest {
 
 	@ParameterizedTest
 	@MethodSource("colorSchemeProvider")
-	void colorScheme(String schemeName) {
+	void colorScheme(String schemeName)
+	{
 		AnsiColorScheme colorScheme = ColorSchemeProvider.getByName(schemeName);
 		Stopwatch lexerStopwatch = Stopwatch.createStarted();
 		String sourceCodeText = FileSlurper.slurp("/com/stackoverflow/stackoverflow.klass", this.getClass());

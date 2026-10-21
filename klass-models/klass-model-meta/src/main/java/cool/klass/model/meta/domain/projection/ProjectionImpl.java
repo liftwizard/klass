@@ -32,8 +32,10 @@ import cool.klass.model.meta.domain.api.source.projection.ProjectionWithSourceCo
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionDeclarationContext;
 
-public final class ProjectionImpl extends AbstractProjectionParent implements ProjectionWithSourceCode {
-
+public final class ProjectionImpl
+	extends AbstractProjectionParent
+	implements ProjectionWithSourceCode
+{
 	@Nonnull
 	private final String packageName;
 
@@ -48,7 +50,8 @@ public final class ProjectionImpl extends AbstractProjectionParent implements Pr
 		@Nonnull IdentifierContext nameContext,
 		@Nonnull String packageName,
 		@Nonnull AbstractClassifier classifier
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode, ordinal, nameContext);
 		this.packageName = Objects.requireNonNull(packageName);
 		this.classifier = Objects.requireNonNull(classifier);
@@ -56,31 +59,35 @@ public final class ProjectionImpl extends AbstractProjectionParent implements Pr
 
 	@Nonnull
 	@Override
-	public ProjectionDeclarationContext getElementContext() {
+	public ProjectionDeclarationContext getElementContext()
+	{
 		return (ProjectionDeclarationContext) super.getElementContext();
 	}
 
 	@Override
-	public Optional<ProjectionParent> getParent() {
+	public Optional<ProjectionParent> getParent()
+	{
 		return Optional.empty();
 	}
 
 	@Override
 	@Nonnull
-	public AbstractClassifier getClassifier() {
+	public AbstractClassifier getClassifier()
+	{
 		return this.classifier;
 	}
 
 	@Nonnull
 	@Override
-	public String getPackageName() {
+	public String getPackageName()
+	{
 		return this.packageName;
 	}
 
 	public static final class ProjectionBuilder
 		extends AbstractProjectionParentBuilder<ProjectionImpl>
-		implements TopLevelElementBuilderWithSourceCode {
-
+		implements TopLevelElementBuilderWithSourceCode
+	{
 		@Nonnull
 		private final String packageName;
 
@@ -95,7 +102,8 @@ public final class ProjectionImpl extends AbstractProjectionParent implements Pr
 			@Nonnull IdentifierContext nameContext,
 			@Nonnull String packageName,
 			@Nonnull ClassifierBuilder<?> classifierBuilder
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode, ordinal, nameContext);
 			this.packageName = Objects.requireNonNull(packageName);
 			this.classifierBuilder = Objects.requireNonNull(classifierBuilder);
@@ -103,7 +111,8 @@ public final class ProjectionImpl extends AbstractProjectionParent implements Pr
 
 		@Override
 		@Nonnull
-		protected ProjectionImpl buildUnsafe() {
+		protected ProjectionImpl buildUnsafe()
+		{
 			return new ProjectionImpl(
 				(ProjectionDeclarationContext) this.elementContext,
 				this.macroElement.map(ElementBuilder::getElement),

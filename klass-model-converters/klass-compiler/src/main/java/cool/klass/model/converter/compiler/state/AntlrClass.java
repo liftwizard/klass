@@ -56,8 +56,9 @@ import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
-public class AntlrClass extends AntlrClassifier {
-
+public class AntlrClass
+	extends AntlrClassifier
+{
 	// <editor-fold desc="AMBIGUOUS">
 	public static final AntlrClass AMBIGUOUS = new AntlrClass(
 		new ClassDeclarationContext(AMBIGUOUS_PARENT, -1),
@@ -65,28 +66,33 @@ public class AntlrClass extends AntlrClassifier {
 		-1,
 		AMBIGUOUS_IDENTIFIER_CONTEXT,
 		false
-	) {
+	)
+	{
 		@Override
-		public String toString() {
+		public String toString()
+		{
 			return AntlrClass.class.getSimpleName() + ".AMBIGUOUS";
 		}
 
 		@Override
-		public void enterDataTypeProperty(@Nonnull AntlrDataTypeProperty<?> antlrDataTypeProperty) {
+		public void enterDataTypeProperty(@Nonnull AntlrDataTypeProperty<?> antlrDataTypeProperty)
+		{
 			throw new UnsupportedOperationException(
 				this.getClass().getSimpleName() + ".enterDataTypeProperty() not implemented yet"
 			);
 		}
 
 		@Override
-		public void enterAssociationEnd(@Nonnull AntlrAssociationEnd antlrAssociationEnd) {
+		public void enterAssociationEnd(@Nonnull AntlrAssociationEnd antlrAssociationEnd)
+		{
 			throw new UnsupportedOperationException(
 				this.getClass().getSimpleName() + ".enterAssociationEnd() not implemented yet"
 			);
 		}
 
 		@Override
-		public void enterParameterizedProperty(@Nonnull AntlrParameterizedProperty parameterizedProperty) {
+		public void enterParameterizedProperty(@Nonnull AntlrParameterizedProperty parameterizedProperty)
+		{
 			throw new UnsupportedOperationException(
 				this.getClass().getSimpleName() + ".enterParameterizedProperty() not implemented yet"
 			);
@@ -101,28 +107,33 @@ public class AntlrClass extends AntlrClassifier {
 		-1,
 		NOT_FOUND_IDENTIFIER_CONTEXT,
 		false
-	) {
+	)
+	{
 		@Override
-		public String toString() {
+		public String toString()
+		{
 			return AntlrClass.class.getSimpleName() + ".NOT_FOUND";
 		}
 
 		@Override
-		public void enterDataTypeProperty(@Nonnull AntlrDataTypeProperty<?> antlrDataTypeProperty) {
+		public void enterDataTypeProperty(@Nonnull AntlrDataTypeProperty<?> antlrDataTypeProperty)
+		{
 			throw new UnsupportedOperationException(
 				this.getClass().getSimpleName() + ".enterDataTypeProperty() not implemented yet"
 			);
 		}
 
 		@Override
-		public void enterAssociationEnd(@Nonnull AntlrAssociationEnd antlrAssociationEnd) {
+		public void enterAssociationEnd(@Nonnull AntlrAssociationEnd antlrAssociationEnd)
+		{
 			throw new UnsupportedOperationException(
 				this.getClass().getSimpleName() + ".enterAssociationEnd() not implemented yet"
 			);
 		}
 
 		@Override
-		public void enterParameterizedProperty(@Nonnull AntlrParameterizedProperty parameterizedProperty) {
+		public void enterParameterizedProperty(@Nonnull AntlrParameterizedProperty parameterizedProperty)
+		{
 			throw new UnsupportedOperationException(
 				this.getClass().getSimpleName() + ".enterParameterizedProperty() not implemented yet"
 			);
@@ -164,29 +175,32 @@ public class AntlrClass extends AntlrClassifier {
 		int ordinal,
 		@Nonnull IdentifierContext nameContext,
 		boolean isUser
-	) {
+	)
+	{
 		super(elementContext, compilationUnitState, ordinal, nameContext);
 		this.isUser = isUser;
 	}
 
-	public boolean isUser() {
+	public boolean isUser()
+	{
 		return this.isUser;
 	}
 
-	public ListIterable<AntlrAssociationEnd> getDeclaredAssociationEnds() {
+	public ListIterable<AntlrAssociationEnd> getDeclaredAssociationEnds()
+	{
 		return this.declaredAssociationEnds.asUnmodifiable();
 	}
 
 	@Override
-	protected ImmutableList<AntlrProperty> getInheritedProperties(@Nonnull MutableList<AntlrClassifier> visited) {
-		ImmutableList<AntlrProperty> superClassProperties = this.superClass.map((antlrClass) ->
-			antlrClass.getAllProperties(visited)
-		).orElseGet(Lists.immutable::empty);
+	protected ImmutableList<AntlrProperty> getInheritedProperties(@Nonnull MutableList<AntlrClassifier> visited)
+	{
+		ImmutableList<AntlrProperty> superClassProperties = this.superClass
+			.map((antlrClass) -> antlrClass.getAllProperties(visited))
+			.orElseGet(Lists.immutable::empty);
 
-		ImmutableList<AntlrProperty> interfaceProperties = this.declaredInterfaces.flatCollectWith(
-			AntlrClassifier::getAllProperties,
-			visited
-		).toImmutable();
+		ImmutableList<AntlrProperty> interfaceProperties = this.declaredInterfaces
+			.flatCollectWith(AntlrClassifier::getAllProperties, visited)
+			.toImmutable();
 
 		return superClassProperties.newWithAll(interfaceProperties).distinctBy(AntlrNamedElement::getName);
 	}
@@ -194,53 +208,58 @@ public class AntlrClass extends AntlrClassifier {
 	@Override
 	protected ImmutableList<AntlrDataTypeProperty<?>> getInheritedDataTypeProperties(
 		@Nonnull MutableList<AntlrClassifier> visited
-	) {
-		ImmutableList<AntlrDataTypeProperty<?>> superClassProperties = this.superClass.map((antlrClass) ->
-			antlrClass.getAllDataTypeProperties(visited)
-		).orElseGet(Lists.immutable::empty);
+	)
+	{
+		ImmutableList<AntlrDataTypeProperty<?>> superClassProperties = this.superClass
+			.map((antlrClass) -> antlrClass.getAllDataTypeProperties(visited))
+			.orElseGet(Lists.immutable::empty);
 
-		ImmutableList<AntlrDataTypeProperty<?>> interfaceProperties = this.declaredInterfaces.flatCollectWith(
-			AntlrClassifier::getAllDataTypeProperties,
-			visited
-		).toImmutable();
+		ImmutableList<AntlrDataTypeProperty<?>> interfaceProperties = this.declaredInterfaces
+			.flatCollectWith(AntlrClassifier::getAllDataTypeProperties, visited)
+			.toImmutable();
 
 		return superClassProperties.newWithAll(interfaceProperties).distinctBy(AntlrNamedElement::getName);
 	}
 
 	@Override
-	protected ImmutableList<AntlrModifier> getInheritedModifiers(@Nonnull MutableList<AntlrClassifier> visited) {
-		ImmutableList<AntlrModifier> superClassModifiers = this.superClass.map((antlrClass) ->
-			antlrClass.getAllModifiers(visited)
-		).orElseGet(Lists.immutable::empty);
+	protected ImmutableList<AntlrModifier> getInheritedModifiers(@Nonnull MutableList<AntlrClassifier> visited)
+	{
+		ImmutableList<AntlrModifier> superClassModifiers = this.superClass
+			.map((antlrClass) -> antlrClass.getAllModifiers(visited))
+			.orElseGet(Lists.immutable::empty);
 
-		ImmutableList<AntlrModifier> interfaceModifiers = this.declaredInterfaces.flatCollectWith(
-			AntlrClassifier::getAllModifiers,
-			visited
-		).toImmutable();
+		ImmutableList<AntlrModifier> interfaceModifiers = this.declaredInterfaces
+			.flatCollectWith(AntlrClassifier::getAllModifiers, visited)
+			.toImmutable();
 
 		return superClassModifiers.newWithAll(interfaceModifiers).distinctBy(AntlrModifier::getKeyword);
 	}
 
 	@Override
-	public AntlrReferenceProperty<?> getReferencePropertyByName(@Nonnull String name) {
+	public AntlrReferenceProperty<?> getReferencePropertyByName(@Nonnull String name)
+	{
 		AntlrReferenceProperty<?> declaredProperty = this.declaredReferencePropertiesByName.get(name);
-		if (declaredProperty != null) {
+		if (declaredProperty != null)
+		{
 			return declaredProperty;
 		}
 
 		Optional<AntlrReferenceProperty<?>> superClassProperty = this.superClass.map((superClass) ->
 			superClass.getReferencePropertyByName(name)
 		);
-		if (superClassProperty.isPresent()) {
+		if (superClassProperty.isPresent())
+		{
 			return superClassProperty.get();
 		}
 
-		return this.declaredInterfaces.asLazy()
+		return this.declaredInterfaces
+			.asLazy()
 			.collectWith(AntlrInterface::getReferencePropertyByName, name)
 			.detectIfNone(Objects::nonNull, () -> AntlrReferenceProperty.NOT_FOUND);
 	}
 
-	public void enterAssociationEnd(@Nonnull AntlrAssociationEnd antlrAssociationEnd) {
+	public void enterAssociationEnd(@Nonnull AntlrAssociationEnd antlrAssociationEnd)
+	{
 		this.declaredProperties.add(antlrAssociationEnd);
 		this.declaredAssociationEnds.add(antlrAssociationEnd);
 		this.declaredAssociationEndsByName.compute(antlrAssociationEnd.getName(), (name, builder) ->
@@ -255,12 +274,14 @@ public class AntlrClass extends AntlrClassifier {
 			antlrAssociationEnd.getElementContext(),
 			antlrAssociationEnd
 		);
-		if (duplicate2 != null) {
+		if (duplicate2 != null)
+		{
 			throw new AssertionError();
 		}
 	}
 
-	public void enterParameterizedProperty(@Nonnull AntlrParameterizedProperty parameterizedProperty) {
+	public void enterParameterizedProperty(@Nonnull AntlrParameterizedProperty parameterizedProperty)
+	{
 		// this.properties.add(parameterizedProperty);
 		this.declaredParameterizedProperties.add(parameterizedProperty);
 		this.declaredParameterizedPropertiesByName.compute(parameterizedProperty.getName(), (name, builder) ->
@@ -271,7 +292,8 @@ public class AntlrClass extends AntlrClassifier {
 			parameterizedProperty.getElementContext(),
 			parameterizedProperty
 		);
-		if (duplicate1 != null) {
+		if (duplicate1 != null)
+		{
 			throw new AssertionError();
 		}
 		/*
@@ -291,20 +313,25 @@ public class AntlrClass extends AntlrClassifier {
         */
 	}
 
-	public AntlrParameterizedProperty getParameterizedPropertyByContext(ParameterizedPropertyContext ctx) {
+	public AntlrParameterizedProperty getParameterizedPropertyByContext(ParameterizedPropertyContext ctx)
+	{
 		return this.declaredParameterizedPropertiesByContext.get(ctx);
 	}
 
-	public boolean isAbstract() {
+	public boolean isAbstract()
+	{
 		return this.isAbstract;
 	}
 
-	public void setAbstract(boolean isAbstract) {
+	public void setAbstract(boolean isAbstract)
+	{
 		this.isAbstract = isAbstract;
 	}
 
-	public void enterExtendsDeclaration(@Nonnull AntlrClass superClass) {
-		if (this.superClass.isPresent()) {
+	public void enterExtendsDeclaration(@Nonnull AntlrClass superClass)
+	{
+		if (this.superClass.isPresent())
+		{
 			throw new AssertionError();
 		}
 		this.superClass = Optional.of(superClass);
@@ -313,21 +340,26 @@ public class AntlrClass extends AntlrClassifier {
 
 	@Nonnull
 	@Override
-	public KlassBuilder getElementBuilder() {
+	public KlassBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.klassBuilder);
 	}
 
 	@Override
-	public boolean implementsInterface(AntlrInterface iface) {
-		if (super.implementsInterface(iface)) {
+	public boolean implementsInterface(AntlrInterface iface)
+	{
+		if (super.implementsInterface(iface))
+		{
 			return true;
 		}
 
 		return this.superClass.map((klass) -> klass.implementsInterface(iface)).orElse(false);
 	}
 
-	public KlassBuilder build1() {
-		if (this.klassBuilder != null) {
+	public KlassBuilder build1()
+	{
+		if (this.klassBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 
@@ -343,49 +375,50 @@ public class AntlrClass extends AntlrClassifier {
 			this.isTransient()
 		);
 
-		ImmutableList<ModifierBuilder> declaredModifiers = this.declaredModifiers.collect(
-			AntlrModifier::build
-		).toImmutable();
+		ImmutableList<ModifierBuilder> declaredModifiers = this.declaredModifiers
+			.collect(AntlrModifier::build)
+			.toImmutable();
 		this.klassBuilder.setDeclaredModifiers(declaredModifiers);
 
-		ImmutableList<DataTypePropertyBuilder<?, ?, ?>> declaredDataTypeProperties = this.declaredDataTypeProperties.<
-			DataTypePropertyBuilder<?, ?, ?>
-		>collect(AntlrDataTypeProperty::build).toImmutable();
+		ImmutableList<DataTypePropertyBuilder<?, ?, ?>> declaredDataTypeProperties = this.declaredDataTypeProperties
+			.<DataTypePropertyBuilder<?, ?, ?>>collect(AntlrDataTypeProperty::build)
+			.toImmutable();
 
 		this.klassBuilder.setDeclaredDataTypeProperties(declaredDataTypeProperties);
 		return this.klassBuilder;
 	}
 
-	public void build2() {
-		if (this.klassBuilder == null) {
+	public void build2()
+	{
+		if (this.klassBuilder == null)
+		{
 			throw new IllegalStateException();
 		}
 
-		ImmutableList<AssociationEndBuilder> declaredAssociationEnds = this.declaredAssociationEnds.collect(
-			AntlrAssociationEnd::getElementBuilder
-		).toImmutable();
+		ImmutableList<AssociationEndBuilder> declaredAssociationEnds = this.declaredAssociationEnds
+			.collect(AntlrAssociationEnd::getElementBuilder)
+			.toImmutable();
 		this.klassBuilder.setDeclaredAssociationEnds(declaredAssociationEnds);
 
 		ImmutableList<AssociationEndSignatureBuilder> declaredAssociationEndSignatures =
 			this.declaredAssociationEndSignatures.collect(AntlrAssociationEndSignature::build).toImmutable();
 		this.klassBuilder.setDeclaredAssociationEndSignatures(declaredAssociationEndSignatures);
 
-		ImmutableList<ReferencePropertyBuilder<?, ?, ?>> declaredReferenceProperties =
-			this.declaredReferenceProperties.<ReferencePropertyBuilder<?, ?, ?>>collect(
-				AntlrReferenceProperty::getElementBuilder
-			).toImmutable();
+		ImmutableList<ReferencePropertyBuilder<?, ?, ?>> declaredReferenceProperties = this.declaredReferenceProperties
+			.<ReferencePropertyBuilder<?, ?, ?>>collect(AntlrReferenceProperty::getElementBuilder)
+			.toImmutable();
 		this.klassBuilder.setDeclaredReferenceProperties(declaredReferenceProperties);
 
-		ImmutableList<PropertyBuilder<?, ?, ?>> declaredProperties = this.declaredProperties.<
-			PropertyBuilder<?, ?, ?>
-		>collect(AntlrProperty::getElementBuilder).toImmutable();
+		ImmutableList<PropertyBuilder<?, ?, ?>> declaredProperties = this.declaredProperties
+			.<PropertyBuilder<?, ?, ?>>collect(AntlrProperty::getElementBuilder)
+			.toImmutable();
 		this.klassBuilder.setDeclaredProperties(declaredProperties);
 
 		this.declaredDataTypeProperties.each(AntlrDataTypeProperty::build2);
 
-		ImmutableList<InterfaceBuilder> declaredInterfaces = this.declaredInterfaces.collect(
-			AntlrInterface::getElementBuilder
-		).toImmutable();
+		ImmutableList<InterfaceBuilder> declaredInterfaces = this.declaredInterfaces
+			.collect(AntlrInterface::getElementBuilder)
+			.toImmutable();
 		this.klassBuilder.setDeclaredInterfaces(declaredInterfaces);
 
 		Optional<KlassBuilder> superClass = this.superClass.map(AntlrClass::getElementBuilder);
@@ -397,11 +430,13 @@ public class AntlrClass extends AntlrClassifier {
 
 	// <editor-fold desc="Report Compiler Errors">
 	@Override
-	public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		super.reportNameErrors(compilerAnnotationHolder);
 		this.reportKeywordCollision(compilerAnnotationHolder);
 
-		if (RELADOMO_TYPES.contains(this.getName())) {
+		if (RELADOMO_TYPES.contains(this.getName()))
+		{
 			String message = String.format("'%s' is a Reladomo type.", this.getName());
 			compilerAnnotationHolder.add("ERR_REL_NME", message, this);
 		}
@@ -416,10 +451,12 @@ public class AntlrClass extends AntlrClassifier {
 	}
 
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		super.reportErrors(compilerAnnotationHolder);
 
-		if (this.isUser) {
+		if (this.isUser)
+		{
 			this.reportMultiplePropertiesWithModifiers(
 				compilerAnnotationHolder,
 				this.declaredDataTypeProperties,
@@ -442,45 +479,55 @@ public class AntlrClass extends AntlrClassifier {
 		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
 		@Nonnull String modifier,
 		@Nonnull AnnotationSeverity severity
-	) {
+	)
+	{
 		MutableList<AntlrAssociationEnd> associationEnds = this.declaredAssociationEnds.select((associationEnd) ->
 			associationEnd.getOpposite().getModifiers().anySatisfyWith(AntlrModifier::is, modifier)
 		);
-		if (associationEnds.size() <= 1) {
+		if (associationEnds.size() <= 1)
+		{
 			return;
 		}
 
-		for (AntlrAssociationEnd associationEnd : associationEnds) {
+		for (AntlrAssociationEnd associationEnd : associationEnds)
+		{
 			associationEnd
 				.getOpposite()
 				.reportDuplicateOppositeWithModifier(compilerAnnotationHolder, this, modifier, severity);
 		}
 	}
 
-	private void reportVersionErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	private void reportVersionErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		if (
 			this.declaredReferenceProperties.anySatisfy(AntlrReferenceProperty::isVersion)
 			&& this.declaredAssociationEnds.anySatisfy(AntlrAssociationEnd::isVersioned)
-		) {
+		)
+		{
 			String message = String.format("Class '%s' is a version and has a version.", this.getName());
 			compilerAnnotationHolder.add("ERR_VER_VER", message, this);
 		}
 	}
 
-	private void reportMissingKeyProperty(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (!this.hasKeyProperty() && !this.hasIDProperty()) {
+	private void reportMissingKeyProperty(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (!this.hasKeyProperty() && !this.hasIDProperty())
+		{
 			String message = String.format("Class '%s' must have at least one key property.", this.getName());
 			compilerAnnotationHolder.add("ERR_CLS_KEY", message, this);
 		}
 	}
 
-	public void reportDuplicateUserClass(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportDuplicateUserClass(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		String message = String.format("Only one 'user' class is allowed. Found '%s'.", this.getName());
 		compilerAnnotationHolder.add("ERR_DUP_USR", message, this, this.nameContext);
 	}
 
-	private void reportSuperClassNotFound(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.superClass.equals(Optional.of(AntlrClass.NOT_FOUND))) {
+	private void reportSuperClassNotFound(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.superClass.equals(Optional.of(AntlrClass.NOT_FOUND)))
+		{
 			ClassReferenceContext offendingToken = this.getElementContext()
 				.classHeader()
 				.extendsDeclaration()
@@ -490,16 +537,19 @@ public class AntlrClass extends AntlrClassifier {
 		}
 	}
 
-	private void reportExtendsConcrete(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	private void reportExtendsConcrete(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		if (
 			this.superClass.isEmpty()
 			|| this.superClass.equals(Optional.of(NOT_FOUND))
 			|| this.superClass.equals(Optional.of(AMBIGUOUS))
-		) {
+		)
+		{
 			return;
 		}
 
-		if (!this.superClass.get().isAbstract) {
+		if (!this.superClass.get().isAbstract)
+		{
 			ClassReferenceContext offendingToken = this.getElementContext()
 				.classHeader()
 				.extendsDeclaration()
@@ -509,8 +559,10 @@ public class AntlrClass extends AntlrClassifier {
 		}
 	}
 
-	private void reportTransientInheritance(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.isTransient() || this.superClass.isEmpty() || !this.superClass.get().isTransient()) {
+	private void reportTransientInheritance(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.isTransient() || this.superClass.isEmpty() || !this.superClass.get().isTransient())
+		{
 			return;
 		}
 
@@ -525,40 +577,48 @@ public class AntlrClass extends AntlrClassifier {
 		compilerAnnotationHolder.add("ERR_EXT_TNS", message, this, offendingToken);
 	}
 
-	private void reportTransientIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (!this.isTransient()) {
+	private void reportTransientIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (!this.isTransient())
+		{
 			return;
 		}
 
-		this.declaredDataTypeProperties.select(AntlrDataTypeProperty::isId).forEachWith(
-			AntlrDataTypeProperty::reportTransientIdProperties,
-			compilerAnnotationHolder
-		);
+		this.declaredDataTypeProperties
+			.select(AntlrDataTypeProperty::isId)
+			.forEachWith(AntlrDataTypeProperty::reportTransientIdProperties, compilerAnnotationHolder);
 	}
 
 	@Override
-	protected void reportCircularInheritance(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.hasCircularInheritance()) {
+	protected void reportCircularInheritance(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.hasCircularInheritance())
+		{
 			ClassReferenceContext offendingToken = this.getElementContext()
 				.classHeader()
 				.extendsDeclaration()
 				.classReference();
 			String message = String.format("Circular inheritance '%s'.", offendingToken.getText());
 			compilerAnnotationHolder.add("ERR_EXT_SLF", message, this, offendingToken);
-		} else {
+		}
+		else
+		{
 			this.reportForwardReference(compilerAnnotationHolder);
 		}
 	}
 
 	@Override
-	protected void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder) {
+	protected void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		super.reportForwardReference(compilerAnnotationHolder);
-		if (this.superClass.isEmpty()) {
+		if (this.superClass.isEmpty())
+		{
 			return;
 		}
 
 		AntlrClass klass = this.superClass.get();
-		if (this.isForwardReference(klass)) {
+		if (this.isForwardReference(klass))
+		{
 			String message = String.format(
 				"Class '%s' is declared on line %d and has a forward reference to super class '%s' which is declared later in the source file '%s' on line %d.",
 				this.getName(),
@@ -578,28 +638,35 @@ public class AntlrClass extends AntlrClassifier {
 
 	// </editor-fold>
 
-	private boolean hasIDProperty() {
+	private boolean hasIDProperty()
+	{
 		return this.getAllDataTypeProperties().anySatisfy(AntlrDataTypeProperty::isId);
 	}
 
-	private boolean hasKeyProperty() {
+	private boolean hasKeyProperty()
+	{
 		return this.getAllDataTypeProperties().anySatisfy(AntlrDataTypeProperty::isKey);
 	}
 
-	private boolean hasCircularInheritance() {
+	private boolean hasCircularInheritance()
+	{
 		return this.superClass.isPresent() && this.superClass.get().extendsClass(this, Sets.mutable.empty());
 	}
 
-	private boolean extendsClass(@Nonnull AntlrClass antlrClass, @Nonnull MutableSet<AntlrClass> visitedClasses) {
-		if (this.superClass.isEmpty()) {
+	private boolean extendsClass(@Nonnull AntlrClass antlrClass, @Nonnull MutableSet<AntlrClass> visitedClasses)
+	{
+		if (this.superClass.isEmpty())
+		{
 			return false;
 		}
 
-		if (this.superClass.equals(Optional.of(antlrClass))) {
+		if (this.superClass.equals(Optional.of(antlrClass)))
+		{
 			return true;
 		}
 
-		if (visitedClasses.contains(this)) {
+		if (visitedClasses.contains(this))
+		{
 			return false;
 		}
 
@@ -608,7 +675,8 @@ public class AntlrClass extends AntlrClassifier {
 	}
 
 	@Override
-	protected boolean isInterfaceRedundant(int index, @Nonnull AntlrInterface iface) {
+	protected boolean isInterfaceRedundant(int index, @Nonnull AntlrInterface iface)
+	{
 		return (
 			(this.superClass.isPresent() && this.superClass.get().implementsInterface(iface))
 			|| this.interfaceNotAtIndexImplements(index, iface)
@@ -616,19 +684,22 @@ public class AntlrClass extends AntlrClassifier {
 	}
 
 	@Override
-	protected InterfaceReferenceContext getOffendingInterfaceReference(int index) {
+	protected InterfaceReferenceContext getOffendingInterfaceReference(int index)
+	{
 		return this.getElementContext().classHeader().implementsDeclaration().interfaceReference().get(index);
 	}
 
 	@Override
-	public ImmutableBag<String> getDuplicateMemberNames() {
+	public ImmutableBag<String> getDuplicateMemberNames()
+	{
 		return this.getDeclaredMemberNames()
 			.toBag()
 			.selectByOccurrences((occurrences) -> occurrences > 1)
 			.toImmutable();
 	}
 
-	private ImmutableList<String> getDeclaredMemberNames() {
+	private ImmutableList<String> getDeclaredMemberNames()
+	{
 		MutableList<String> topLevelNames = Lists.mutable.empty();
 		this.getAllDataTypeProperties().collect(AntlrProperty::getName, topLevelNames);
 		this.declaredParameterizedProperties.collect(AntlrNamedElement::getName, topLevelNames);
@@ -637,17 +708,21 @@ public class AntlrClass extends AntlrClassifier {
 		return topLevelNames.toImmutable();
 	}
 
-	public boolean isSubClassOf(AntlrClass klass) {
-		if (this == klass) {
+	public boolean isSubClassOf(AntlrClass klass)
+	{
+		if (this == klass)
+		{
 			return false;
 		}
 
-		if (this.superClass.isEmpty()) {
+		if (this.superClass.isEmpty())
+		{
 			return false;
 		}
 
 		AntlrClass superClass = this.superClass.get();
-		if (superClass == klass) {
+		if (superClass == klass)
+		{
 			return true;
 		}
 
@@ -655,30 +730,37 @@ public class AntlrClass extends AntlrClassifier {
 	}
 
 	@Override
-	public Optional<AntlrClass> getSuperClass() {
+	public Optional<AntlrClass> getSuperClass()
+	{
 		return this.superClass;
 	}
 
 	@Nonnull
 	@Override
-	public ClassDeclarationContext getElementContext() {
+	public ClassDeclarationContext getElementContext()
+	{
 		return (ClassDeclarationContext) super.getElementContext();
 	}
 
 	@Override
-	public ClassBlockContext getBlockContext() {
+	public ClassBlockContext getBlockContext()
+	{
 		return this.getElementContext().classBlock();
 	}
 
 	@Override
-	public AntlrDataTypeProperty<?> getDataTypePropertyByName(String name) {
-		if (this.declaredDataTypePropertiesByName.containsKey(name)) {
+	public AntlrDataTypeProperty<?> getDataTypePropertyByName(String name)
+	{
+		if (this.declaredDataTypePropertiesByName.containsKey(name))
+		{
 			return this.declaredDataTypePropertiesByName.get(name);
 		}
 
-		if (this.superClass.isPresent()) {
+		if (this.superClass.isPresent())
+		{
 			AntlrDataTypeProperty<?> superClassProperty = this.superClass.get().getDataTypePropertyByName(name);
-			if (superClassProperty != AntlrEnumerationProperty.NOT_FOUND) {
+			if (superClassProperty != AntlrEnumerationProperty.NOT_FOUND)
+			{
 				return superClassProperty;
 			}
 		}
@@ -686,24 +768,30 @@ public class AntlrClass extends AntlrClassifier {
 		return this.getInterfaceDataTypePropertyByName(name);
 	}
 
-	public AntlrAssociationEnd getAssociationEndByName(String name) {
-		if (this.declaredAssociationEndsByName.containsKey(name)) {
+	public AntlrAssociationEnd getAssociationEndByName(String name)
+	{
+		if (this.declaredAssociationEndsByName.containsKey(name))
+		{
 			return this.declaredAssociationEndsByName.get(name);
 		}
 
-		return this.superClass.map((superClass) -> superClass.getAssociationEndByName(name)).orElse(
-			AntlrAssociationEnd.NOT_FOUND
-		);
+		return this.superClass
+			.map((superClass) -> superClass.getAssociationEndByName(name))
+			.orElse(AntlrAssociationEnd.NOT_FOUND);
 	}
 
-	public AntlrModifier getModifierByName(String name) {
-		if (this.declaredModifiersByName.containsKey(name)) {
+	public AntlrModifier getModifierByName(String name)
+	{
+		if (this.declaredModifiersByName.containsKey(name))
+		{
 			return this.declaredModifiersByName.get(name);
 		}
 
-		if (this.superClass.isPresent()) {
+		if (this.superClass.isPresent())
+		{
 			AntlrModifier superClassProperty = this.superClass.get().getModifierByName(name);
-			if (superClassProperty != AntlrModifier.NOT_FOUND) {
+			if (superClassProperty != AntlrModifier.NOT_FOUND)
+			{
 				return superClassProperty;
 			}
 		}
@@ -713,13 +801,15 @@ public class AntlrClass extends AntlrClassifier {
 
 	@Nonnull
 	@Override
-	public KlassBuilder getTypeGetter() {
+	public KlassBuilder getTypeGetter()
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".getTypeBuilder() not implemented yet"
 		);
 	}
 
-	public boolean isVersion() {
+	public boolean isVersion()
+	{
 		return this.declaredDataTypeProperties.anySatisfy(AntlrDataTypeProperty::isVersion);
 	}
 }

@@ -34,18 +34,21 @@ import klass.model.meta.domain.dropwizard.application.KlassBootstrappedMetaModel
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public abstract class AbstractResourceTestCase extends AbstractDropwizardAppTest {
-
+public abstract class AbstractResourceTestCase
+	extends AbstractDropwizardAppTest
+{
 	@Nonnull
 	@Override
-	protected LiftwizardAppExtension<?> getDropwizardAppExtension() {
+	protected LiftwizardAppExtension<?> getDropwizardAppExtension()
+	{
 		return new LiftwizardAppExtension<>(
 			KlassBootstrappedMetaModelApplication.class,
 			ResourceHelpers.resourceFilePath("config-test.json5")
 		);
 	}
 
-	protected void assertUrlReturns(@Nonnull String testName, @Nonnull String url) {
+	protected void assertUrlReturns(@Nonnull String testName, @Nonnull String url)
+	{
 		Class<?> klass = this.getClass();
 		String clientName = klass.getPackage().getName() + '.' + klass.getSimpleName() + '.' + testName;
 		Client client = this.getClient(clientName);
@@ -54,7 +57,8 @@ public abstract class AbstractResourceTestCase extends AbstractDropwizardAppTest
 		this.assertUrlReturns(client, url, resourceClassPathLocation);
 	}
 
-	protected void assertUrlReturns(Client client, @Nonnull String url, String resourceClassPathLocation) {
+	protected void assertUrlReturns(Client client, @Nonnull String url, String resourceClassPathLocation)
+	{
 		Response response = client
 			.target("http://localhost:{port}/api/" + url)
 			.resolveTemplate("port", this.appExtension.getLocalPort())
@@ -67,7 +71,8 @@ public abstract class AbstractResourceTestCase extends AbstractDropwizardAppTest
 		this.jsonMatchExtension.assertFileContents(resourceClassPathLocation, jsonResponse);
 	}
 
-	protected void assertUrlWrites(@Nonnull String testName, @Nonnull String url) {
+	protected void assertUrlWrites(@Nonnull String testName, @Nonnull String url)
+	{
 		Class<?> klass = this.getClass();
 		String clientName = klass.getPackage().getName() + '.' + klass.getSimpleName() + '.' + testName;
 		Client client = this.getClient(clientName);
@@ -76,7 +81,8 @@ public abstract class AbstractResourceTestCase extends AbstractDropwizardAppTest
 		this.assertUrlWrites(client, url, resourceClassPathLocation);
 	}
 
-	protected void assertUrlWrites(Client client, @Nonnull String url, String resourceClassPathLocation) {
+	protected void assertUrlWrites(Client client, @Nonnull String url, String resourceClassPathLocation)
+	{
 		InputStream inputStream = this.getClass().getResourceAsStream(resourceClassPathLocation);
 		Objects.requireNonNull(inputStream, () -> resourceClassPathLocation + " not found.");
 		String expectedStringFromFile = FileSlurper.slurp(inputStream, StandardCharsets.UTF_8);
@@ -92,7 +98,8 @@ public abstract class AbstractResourceTestCase extends AbstractDropwizardAppTest
 		assertEquals("", jsonResponse);
 	}
 
-	protected void assertUrlDeletes(@Nonnull String testName, @Nonnull String url) {
+	protected void assertUrlDeletes(@Nonnull String testName, @Nonnull String url)
+	{
 		Class<?> klass = this.getClass();
 		String clientName = klass.getPackage().getName() + '.' + klass.getSimpleName() + '.' + testName;
 		Client client = this.getClient(clientName);
@@ -107,7 +114,8 @@ public abstract class AbstractResourceTestCase extends AbstractDropwizardAppTest
 		assertEquals(Status.NO_CONTENT.getStatusCode(), response.getStatus());
 	}
 
-	protected void assertUrlReturnsGone(@Nonnull String testName, @Nonnull String url) {
+	protected void assertUrlReturnsGone(@Nonnull String testName, @Nonnull String url)
+	{
 		Class<?> klass = this.getClass();
 		String clientName = klass.getPackage().getName() + '.' + klass.getSimpleName() + '.' + testName;
 		Client client = this.getClient(clientName);

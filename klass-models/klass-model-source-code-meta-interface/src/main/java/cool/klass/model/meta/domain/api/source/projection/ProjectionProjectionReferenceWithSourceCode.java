@@ -25,7 +25,8 @@ import cool.klass.model.meta.domain.api.source.property.ReferencePropertyWithSou
 import cool.klass.model.meta.grammar.KlassParser.ProjectionProjectionReferenceContext;
 
 public interface ProjectionProjectionReferenceWithSourceCode
-	extends ProjectionProjectionReference, NamedElementWithSourceCode {
+	extends ProjectionProjectionReference, NamedElementWithSourceCode
+{
 	@Override
 	ProjectionProjectionReferenceContext getElementContext();
 
@@ -34,7 +35,8 @@ public interface ProjectionProjectionReferenceWithSourceCode
 
 	@Nonnull
 	@Override
-	default ClassifierWithSourceCode getClassifier() {
+	default ClassifierWithSourceCode getClassifier()
+	{
 		return this.getProjection().getClassifier();
 	}
 

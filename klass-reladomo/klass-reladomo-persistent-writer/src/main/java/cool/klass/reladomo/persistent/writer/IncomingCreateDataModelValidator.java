@@ -47,8 +47,8 @@ import org.eclipse.collections.api.stack.MutableStack;
 import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.map.mutable.MapAdapter;
 
-public class IncomingCreateDataModelValidator {
-
+public class IncomingCreateDataModelValidator
+{
 	@Nonnull
 	protected final DataStore dataStore;
 
@@ -91,7 +91,8 @@ public class IncomingCreateDataModelValidator {
 		@Nonnull MutableStack<String> contextStack,
 		@Nonnull Optional<AssociationEnd> pathHere,
 		boolean isRoot
-	) {
+	)
+	{
 		this.dataStore = Objects.requireNonNull(dataStore);
 		this.userKlass = userKlass;
 		this.klass = Objects.requireNonNull(klass);
@@ -112,7 +113,8 @@ public class IncomingCreateDataModelValidator {
 		@Nonnull ObjectNode objectNode,
 		@Nonnull MutableList<String> errors,
 		@Nonnull MutableList<String> warnings
-	) {
+	)
+	{
 		var validator = new IncomingCreateDataModelValidator(
 			dataStore,
 			userKlass,
@@ -128,66 +130,93 @@ public class IncomingCreateDataModelValidator {
 		validator.validate();
 	}
 
-	public void validate() {
-		if (this.isRoot) {
+	public void validate()
+	{
+		if (this.isRoot)
+		{
 			this.contextStack.push(this.klass.getName());
 		}
-		try {
+		try
+		{
 			this.handleDataTypePropertiesInsideProjection();
 			this.handleAssociationEnds();
-		} finally {
-			if (this.isRoot) {
+		}
+		finally
+		{
+			if (this.isRoot)
+			{
 				this.contextStack.pop();
 			}
 		}
 	}
 
 	// region DataTypeProperties
-	private void handleDataTypePropertiesInsideProjection() {
+	private void handleDataTypePropertiesInsideProjection()
+	{
 		ImmutableList<DataTypeProperty> dataTypeProperties = this.klass.getDataTypeProperties();
-		for (DataTypeProperty dataTypeProperty : dataTypeProperties) {
+		for (DataTypeProperty dataTypeProperty : dataTypeProperties)
+		{
 			this.handleDataTypePropertyInsideProjection(dataTypeProperty);
 		}
 	}
 
-	private void handleDataTypePropertyInsideProjection(@Nonnull DataTypeProperty dataTypeProperty) {
-		if (dataTypeProperty.isID()) {
+	private void handleDataTypePropertyInsideProjection(@Nonnull DataTypeProperty dataTypeProperty)
+	{
+		if (dataTypeProperty.isID())
+		{
 			// TODO: inside the projection, only check for matching, and only in update mode
 			// this.handleIdProperty(dataTypeProperty);
 			this.handleKeyProperty(dataTypeProperty);
-		} else if (dataTypeProperty.isKey()) {
-			if (this.klass == this.userKlass) {
+		}
+		else if (dataTypeProperty.isKey())
+		{
+			if (this.klass == this.userKlass)
+			{
 				this.handleAuditProperty(dataTypeProperty);
-			} else {
+			}
+			else
+			{
 				this.handleKeyProperty(dataTypeProperty);
 			}
-		} else if (dataTypeProperty.isTemporal()) {
+		}
+		else if (dataTypeProperty.isTemporal())
+		{
 			return;
 		}
 
-		if (dataTypeProperty.isCreatedBy() || dataTypeProperty.isLastUpdatedBy()) {
-			if (dataTypeProperty.isForeignKey()) {
+		if (dataTypeProperty.isCreatedBy() || dataTypeProperty.isLastUpdatedBy())
+		{
+			if (dataTypeProperty.isForeignKey())
+			{
 				return;
 			}
 			this.handleAuditProperty(dataTypeProperty);
-		} else if (dataTypeProperty.isCreatedOn()) {
+		}
+		else if (dataTypeProperty.isCreatedOn())
+		{
 			// Ignored
-		} else if (dataTypeProperty.isVersion()) {
+		}
+		else if (dataTypeProperty.isVersion())
+		{
 			this.handleVersionProperty(dataTypeProperty);
 		}
 	}
 
-	private void handleKeyProperty(@Nonnull DataTypeProperty dataTypeProperty) {
+	private void handleKeyProperty(@Nonnull DataTypeProperty dataTypeProperty)
+	{
 		this.contextStack.push(dataTypeProperty.getName());
 
-		try {
+		try
+		{
 			JsonNode jsonDataTypeValue = this.objectNode.path(dataTypeProperty.getName());
-			if (jsonDataTypeValue.isMissingNode()) {
+			if (jsonDataTypeValue.isMissingNode())
+			{
 				return;
 			}
 
 			ImmutableMap<DataTypeProperty, Object> propertyDataFromUrl = this.mutationContext.getPropertyDataFromUrl();
-			if (!propertyDataFromUrl.containsKey(dataTypeProperty)) {
+			if (!propertyDataFromUrl.containsKey(dataTypeProperty))
+			{
 				return;
 			}
 
@@ -202,26 +231,33 @@ public class IncomingCreateDataModelValidator {
 				this.errors
 			);
 			dataTypeProperty.visit(visitor);
-		} finally {
+		}
+		finally
+		{
 			this.contextStack.pop();
 		}
 	}
 
-	private void handleAuditProperty(@Nonnull DataTypeProperty dataTypeProperty) {
+	private void handleAuditProperty(@Nonnull DataTypeProperty dataTypeProperty)
+	{
 		this.contextStack.push(dataTypeProperty.getName());
 
-		try {
+		try
+		{
 			JsonNode jsonDataTypeValue = this.objectNode.path(dataTypeProperty.getName());
-			if (jsonDataTypeValue.isMissingNode() || !jsonDataTypeValue.isTextual()) {
+			if (jsonDataTypeValue.isMissingNode() || !jsonDataTypeValue.isTextual())
+			{
 				return;
 			}
 
 			Optional<String> maybeUserId = this.mutationContext.getUserId();
-			if (maybeUserId.isEmpty()) {
+			if (maybeUserId.isEmpty())
+			{
 				return;
 			}
 
-			if (maybeUserId.get().equals(jsonDataTypeValue.asText())) {
+			if (maybeUserId.get().equals(jsonDataTypeValue.asText()))
+			{
 				return;
 			}
 
@@ -233,25 +269,32 @@ public class IncomingCreateDataModelValidator {
 					jsonDataTypeValue.asText()
 				);
 			this.warnings.add(warning);
-		} finally {
+		}
+		finally
+		{
 			this.contextStack.pop();
 		}
 	}
 
-	private void handleVersionProperty(@Nonnull DataTypeProperty dataTypeProperty) {
+	private void handleVersionProperty(@Nonnull DataTypeProperty dataTypeProperty)
+	{
 		this.contextStack.push(dataTypeProperty.getName());
 
-		try {
+		try
+		{
 			JsonNode jsonDataTypeValue = this.objectNode.path(dataTypeProperty.getName());
-			if (jsonDataTypeValue.isMissingNode()) {
+			if (jsonDataTypeValue.isMissingNode())
+			{
 				return;
 			}
 
-			if (!jsonDataTypeValue.isIntegralNumber()) {
+			if (!jsonDataTypeValue.isIntegralNumber())
+			{
 				return;
 			}
 
-			if (jsonDataTypeValue.asInt() == 1) {
+			if (jsonDataTypeValue.asInt() == 1)
+			{
 				return;
 			}
 
@@ -261,49 +304,63 @@ public class IncomingCreateDataModelValidator {
 				jsonDataTypeValue.asText()
 			);
 			this.errors.add(error);
-		} finally {
+		}
+		finally
+		{
 			this.contextStack.pop();
 		}
 	}
 
-	public String getContextString() {
+	public String getContextString()
+	{
 		return this.contextStack.toList().asReversed().makeString(".");
 	}
 
 	// endregion
 
 	// region AssociationEnds
-	private void handleAssociationEnds() {
-		for (AssociationEnd associationEnd : this.klass.getAssociationEnds()) {
+	private void handleAssociationEnds()
+	{
+		for (AssociationEnd associationEnd : this.klass.getAssociationEnds())
+		{
 			this.handleAssociationEnd(associationEnd);
 		}
 	}
 
-	private void handleAssociationEnd(@Nonnull AssociationEnd associationEnd) {
-		if (this.isBackward(associationEnd)) {
+	private void handleAssociationEnd(@Nonnull AssociationEnd associationEnd)
+	{
+		if (this.isBackward(associationEnd))
+		{
 			return;
 		}
 
-		if (associationEnd.isVersion()) {
+		if (associationEnd.isVersion())
+		{
 			this.handleVersionAssociationEnd(associationEnd);
 			return;
 		}
-		if (associationEnd.isCreatedBy() || associationEnd.isLastUpdatedBy()) {
+		if (associationEnd.isCreatedBy() || associationEnd.isLastUpdatedBy())
+		{
 			this.handleAuditByAssociationEnd(associationEnd);
 			return;
 		}
 
-		if (associationEnd.isOwned()) {
+		if (associationEnd.isOwned())
+		{
 			this.handleOwnedAssociationEnd(associationEnd);
-		} else {
+		}
+		else
+		{
 			this.handleOutsideProjectionReferenceProperty(associationEnd);
 		}
 	}
 
-	private void handleVersionAssociationEnd(AssociationEnd associationEnd) {
+	private void handleVersionAssociationEnd(AssociationEnd associationEnd)
+	{
 		JsonNode childJsonNode = this.objectNode.path(associationEnd.getName());
 
-		if (childJsonNode.isMissingNode() || childJsonNode.isNull() || !childJsonNode.isObject()) {
+		if (childJsonNode.isMissingNode() || childJsonNode.isNull() || !childJsonNode.isObject())
+		{
 			return;
 		}
 
@@ -317,7 +374,8 @@ public class IncomingCreateDataModelValidator {
                 this.objectNode);
         */
 
-		try {
+		try
+		{
 			var childObjectNode = (ObjectNode) childJsonNode;
 			var validator = new IncomingCreateDataModelValidator(
 				this.dataStore,
@@ -332,14 +390,18 @@ public class IncomingCreateDataModelValidator {
 				false
 			);
 			validator.validate();
-		} finally {
+		}
+		finally
+		{
 			this.contextStack.pop();
 		}
 	}
 
-	private void handleAuditByAssociationEnd(@Nonnull AssociationEnd associationEnd) {
+	private void handleAuditByAssociationEnd(@Nonnull AssociationEnd associationEnd)
+	{
 		JsonNode jsonNode = this.objectNode.path(associationEnd.getName());
-		if (jsonNode.isMissingNode() || jsonNode.isNull()) {
+		if (jsonNode.isMissingNode() || jsonNode.isNull())
+		{
 			return;
 		}
 
@@ -347,7 +409,8 @@ public class IncomingCreateDataModelValidator {
 		this.contextStack.push(associationEndName);
 
 		Optional<String> userId = this.mutationContext.getUserId();
-		if (userId.isEmpty() || this.userKlass == null) {
+		if (userId.isEmpty() || this.userKlass == null)
+		{
 			return;
 		}
 
@@ -355,7 +418,8 @@ public class IncomingCreateDataModelValidator {
 		ImmutableMap<DataTypeProperty, Object> userKeys = Maps.immutable.with(userIdProperty, userId.get());
 		Object userPersistentInstance = this.dataStore.findByKey(this.userKlass, userKeys);
 
-		if (userPersistentInstance == null) {
+		if (userPersistentInstance == null)
+		{
 			String error = String.format(
 				"Error at %s. Couldn't find user with key %s.",
 				this.getContextString(),
@@ -365,7 +429,8 @@ public class IncomingCreateDataModelValidator {
 			return;
 		}
 
-		try {
+		try
+		{
 			// TODO: Support a IncomingLastUpdatedByDataModelValidator which allows the current user to be substituted in for lastUpdatedBy.
 			var validator = new IncomingCreateDataModelValidator(
 				this.dataStore,
@@ -380,33 +445,44 @@ public class IncomingCreateDataModelValidator {
 				false
 			);
 			validator.validate();
-		} finally {
+		}
+		finally
+		{
 			this.contextStack.pop();
 		}
 	}
 
-	private void handleOutsideProjectionReferenceProperty(@Nonnull AssociationEnd associationEnd) {
+	private void handleOutsideProjectionReferenceProperty(@Nonnull AssociationEnd associationEnd)
+	{
 		Multiplicity multiplicity = associationEnd.getMultiplicity();
 		JsonNode childJsonNode = this.objectNode.path(associationEnd.getName());
 
-		if (multiplicity.isToOne()) {
+		if (multiplicity.isToOne())
+		{
 			this.handleToOneOutsideProjection(associationEnd, childJsonNode, this.objectNode);
-		} else {
+		}
+		else
+		{
 			this.handleToManyOutsideProjection(associationEnd, childJsonNode, this.objectNode);
 		}
 	}
 
-	private void handleOwnedAssociationEnd(@Nonnull AssociationEnd associationEnd) {
+	private void handleOwnedAssociationEnd(@Nonnull AssociationEnd associationEnd)
+	{
 		Multiplicity multiplicity = associationEnd.getMultiplicity();
 
-		if (multiplicity.isToOne()) {
+		if (multiplicity.isToOne())
+		{
 			this.handleOwnedToOne(associationEnd);
-		} else {
+		}
+		else
+		{
 			this.handleOwnedToMany(associationEnd);
 		}
 	}
 
-	private boolean isBackward(@Nonnull AssociationEnd associationEnd) {
+	private boolean isBackward(@Nonnull AssociationEnd associationEnd)
+	{
 		return this.pathHere.equals(Optional.of(associationEnd.getOpposite()));
 	}
 
@@ -414,32 +490,39 @@ public class IncomingCreateDataModelValidator {
 		@Nonnull AssociationEnd associationEnd,
 		@Nonnull JsonNode childJsonNode,
 		@Nonnull ObjectNode parentJsonNode
-	) {
-		if (associationEnd.isOwned()) {
+	)
+	{
+		if (associationEnd.isOwned())
+		{
 			throw new AssertionError(
 				"Assumption is that all owned association ends are inside projection, all unowned are outside projection"
 			);
 		}
 
-		if (childJsonNode.isMissingNode() || childJsonNode.isNull()) {
+		if (childJsonNode.isMissingNode() || childJsonNode.isNull())
+		{
 			return;
 		}
 
-		if (!associationEnd.hasRealKeys()) {
+		if (!associationEnd.hasRealKeys())
+		{
 			return;
 		}
 
 		String associationEndName = associationEnd.getName();
 		this.contextStack.push(associationEndName);
 
-		try {
-			if ((childJsonNode.isMissingNode() || childJsonNode.isNull()) && associationEnd.isRequired()) {
+		try
+		{
+			if ((childJsonNode.isMissingNode() || childJsonNode.isNull()) && associationEnd.isRequired())
+			{
 				// TODO: Check for non-private foreign key properties
 				// TODO: Can we remove this?
 				return;
 			}
 
-			if (childJsonNode.isMissingNode() && !associationEnd.isRequired()) {
+			if (childJsonNode.isMissingNode() && !associationEnd.isRequired())
+			{
 				// TODO: Can we remove this?
 				return;
 			}
@@ -449,12 +532,14 @@ public class IncomingCreateDataModelValidator {
 				associationEnd,
 				parentJsonNode
 			);
-			if (keys.contains(null)) {
+			if (keys.contains(null))
+			{
 				return;
 			}
 
 			Object childPersistentInstanceWithKey = this.findExistingChildPersistentInstance(associationEnd, keys);
-			if (childPersistentInstanceWithKey == null) {
+			if (childPersistentInstanceWithKey == null)
+			{
 				String keysString = keys
 					.keyValuesView()
 					.collect((keyValue) -> keyValue.getOne().getName() + ": " + keyValue.getTwo())
@@ -468,7 +553,9 @@ public class IncomingCreateDataModelValidator {
 				);
 
 				this.errors.add(error);
-			} else {
+			}
+			else
+			{
 				// validate that present properties match, if they are temporal, version, created on, created by
 				var childObjectNode = (ObjectNode) childJsonNode;
 				// TODO: Add isInProject == false
@@ -486,7 +573,9 @@ public class IncomingCreateDataModelValidator {
 				);
 				validator.validate();
 			}
-		} finally {
+		}
+		finally
+		{
 			this.contextStack.pop();
 		}
 	}
@@ -494,7 +583,8 @@ public class IncomingCreateDataModelValidator {
 	protected Object findExistingChildPersistentInstance(
 		@Nonnull AssociationEnd associationEnd,
 		MapIterable<DataTypeProperty, Object> keys
-	) {
+	)
+	{
 		/*
         if (!(this instanceof PersistentCreator) && !(this instanceof PersistentReplacer))
         {
@@ -509,15 +599,18 @@ public class IncomingCreateDataModelValidator {
 		@Nonnull AssociationEnd associationEnd,
 		@Nonnull JsonNode childrenJsonNodes,
 		@Nonnull JsonNode parentJsonNode
-	) {
-		for (JsonNode childJsonNode : childrenJsonNodes) {
+	)
+	{
+		for (JsonNode childJsonNode : childrenJsonNodes)
+		{
 			this.getKeysFromJsonNode(childJsonNode, associationEnd, parentJsonNode);
 
 			throw new AssertionError(associationEnd);
 		}
 	}
 
-	public void handleOwnedToOne(@Nonnull AssociationEnd associationEnd) {
+	public void handleOwnedToOne(@Nonnull AssociationEnd associationEnd)
+	{
 		JsonNode childJsonNode = this.objectNode.path(associationEnd.getName());
 
 		String associationEndName = associationEnd.getName();
@@ -530,8 +623,10 @@ public class IncomingCreateDataModelValidator {
                 this.objectNode);
         */
 
-		try {
-			if (!(childJsonNode instanceof ObjectNode)) {
+		try
+		{
+			if (!(childJsonNode instanceof ObjectNode))
+			{
 				String error = String.format(
 					"Error at '%s'. Expected JSON object for owned association end '%s' but got %s.",
 					this.getContextString(),
@@ -554,12 +649,15 @@ public class IncomingCreateDataModelValidator {
 				false
 			);
 			validator.validate();
-		} finally {
+		}
+		finally
+		{
 			this.contextStack.pop();
 		}
 	}
 
-	public void handleOwnedToMany(@Nonnull AssociationEnd associationEnd) {
+	public void handleOwnedToMany(@Nonnull AssociationEnd associationEnd)
+	{
 		JsonNode incomingChildInstances = this.objectNode.path(associationEnd.getName());
 
 		// TODO: Figure out how to recurse without checking key
@@ -578,12 +676,14 @@ public class IncomingCreateDataModelValidator {
                 this.objectNode);
         */
 
-		for (var index = 0; index < incomingChildInstances.size(); index++) {
+		for (var index = 0; index < incomingChildInstances.size(); index++)
+		{
 			String contextString = String.format("%s[%d]", associationEnd.getName(), index);
 
 			this.contextStack.push(contextString);
 
-			try {
+			try
+			{
 				JsonNode childJsonNode = incomingChildInstances.path(index);
 
 				/*
@@ -621,7 +721,9 @@ public class IncomingCreateDataModelValidator {
                             (ObjectNode) childPersistentInstance);
                 }
                 */
-			} finally {
+			}
+			finally
+			{
 				this.contextStack.pop();
 			}
 		}
@@ -630,7 +732,8 @@ public class IncomingCreateDataModelValidator {
 	private ImmutableList<JsonNode> filterIncomingInstancesForUpdate(
 		JsonNode incomingChildInstances,
 		AssociationEnd associationEnd
-	) {
+	)
+	{
 		return Lists.immutable
 			.withAll(incomingChildInstances)
 			.rejectWith(this::jsonNodeNeedsIdInferredOnInsert, associationEnd);
@@ -639,7 +742,8 @@ public class IncomingCreateDataModelValidator {
 	private ImmutableList<JsonNode> filterIncomingInstancesForInsert(
 		JsonNode incomingChildInstances,
 		AssociationEnd associationEnd
-	) {
+	)
+	{
 		return Lists.immutable
 			.withAll(incomingChildInstances)
 			.selectWith(this::jsonNodeNeedsIdInferredOnInsert, associationEnd);
@@ -647,7 +751,8 @@ public class IncomingCreateDataModelValidator {
 
 	// endregion
 
-	private boolean jsonNodeNeedsIdInferredOnInsert(JsonNode jsonNode, @Nonnull AssociationEnd associationEnd) {
+	private boolean jsonNodeNeedsIdInferredOnInsert(JsonNode jsonNode, @Nonnull AssociationEnd associationEnd)
+	{
 		return associationEnd
 			.getType()
 			.getKeyProperties()
@@ -658,18 +763,22 @@ public class IncomingCreateDataModelValidator {
 		@Nonnull DataTypeProperty keyProperty,
 		JsonNode jsonNode,
 		@Nonnull AssociationEnd associationEnd
-	) {
+	)
+	{
 		OrderedMap<AssociationEnd, DataTypeProperty> keyMatchingThisForeignKey =
 			keyProperty.getKeysMatchingThisForeignKey();
 
 		AssociationEnd opposite = associationEnd.getOpposite();
 
-		if (keyMatchingThisForeignKey.containsKey(opposite)) {
+		if (keyMatchingThisForeignKey.containsKey(opposite))
+		{
 			return false;
 		}
 
-		if (keyMatchingThisForeignKey.notEmpty()) {
-			if (keyMatchingThisForeignKey.size() != 1) {
+		if (keyMatchingThisForeignKey.notEmpty())
+		{
+			if (keyMatchingThisForeignKey.size() != 1)
+			{
 				throw new AssertionError();
 			}
 
@@ -683,13 +792,15 @@ public class IncomingCreateDataModelValidator {
 		@Nonnull JsonNode jsonNode,
 		@Nonnull AssociationEnd associationEnd,
 		@Nonnull JsonNode parentJsonNode
-	) {
+	)
+	{
 		MutableMap<DataTypeProperty, Object> result = MapAdapter.adapt(new LinkedHashMap<>());
 
 		Klass type = associationEnd.getType();
 		ImmutableList<DataTypeProperty> keyProperties = type.getKeyProperties();
 		ImmutableList<DataTypeProperty> nonForeignKeyProperties = keyProperties.reject(DataTypeProperty::isForeignKey);
-		for (DataTypeProperty keyProperty : nonForeignKeyProperties) {
+		for (DataTypeProperty keyProperty : nonForeignKeyProperties)
+		{
 			result.put(keyProperty, this.getKeyFromJsonNode(keyProperty, jsonNode, associationEnd, parentJsonNode));
 		}
 		return result.toImmutable();
@@ -700,7 +811,8 @@ public class IncomingCreateDataModelValidator {
 		@Nonnull JsonNode jsonNode,
 		@Nonnull AssociationEnd associationEnd,
 		@Nonnull JsonNode parentJsonNode
-	) {
+	)
+	{
 		OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey =
 			keyProperty.getKeysMatchingThisForeignKey();
 
@@ -708,14 +820,17 @@ public class IncomingCreateDataModelValidator {
 
 		DataTypeProperty oppositeForeignKey = keysMatchingThisForeignKey.get(opposite);
 
-		if (oppositeForeignKey != null) {
+		if (oppositeForeignKey != null)
+		{
 			String oppositeForeignKeyName = oppositeForeignKey.getName();
 			Object result = parentJsonNode.path(oppositeForeignKeyName);
 			return Objects.requireNonNull(result);
 		}
 
-		if (keysMatchingThisForeignKey.notEmpty()) {
-			if (keysMatchingThisForeignKey.size() != 1) {
+		if (keysMatchingThisForeignKey.notEmpty())
+		{
+			if (keysMatchingThisForeignKey.size() != 1)
+			{
 				throw new AssertionError();
 			}
 
@@ -729,10 +844,12 @@ public class IncomingCreateDataModelValidator {
 			return Objects.requireNonNull(result);
 		}
 
-		if (jsonNode instanceof ObjectNode objectNode) {
+		if (jsonNode instanceof ObjectNode objectNode)
+		{
 			Object result = JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(keyProperty, objectNode);
 
-			if (result == null) {
+			if (result == null)
+			{
 				String error = String.format(
 					"Error at %s. Expected value for key property '%s.%s: %s%s' but value was %s.",
 					this.getContextString(),

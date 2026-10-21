@@ -40,27 +40,34 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(LogMarkerTestExtension.class)
-class LiquibaseMigrationRollbackTest {
-
+class LiquibaseMigrationRollbackTest
+{
 	private static final String MIGRATIONS_FILE =
 		"cool/klass/xample/coverage/liquibase/schema/migrations-initial-schema.xml";
 
 	@Test
-	void everyMigrationHasRollback() throws Exception {
+	void everyMigrationHasRollback()
+		throws Exception
+	{
 		Scope.child(Attr.ui, new LoggerUIService(), this::verifyMigrationsHaveRollback);
 	}
 
-	private void verifyMigrationsHaveRollback() throws SQLException, LiquibaseException {
-		try (Connection connection = H2InMemoryConnectionManager.getInstance().getConnection()) {
+	private void verifyMigrationsHaveRollback()
+		throws SQLException, LiquibaseException
+	{
+		try (Connection connection = H2InMemoryConnectionManager.getInstance().getConnection())
+		{
 			Database database = this.createDatabase(connection);
 
-			try (Liquibase liquibase = this.openLiquibase(database)) {
+			try (Liquibase liquibase = this.openLiquibase(database))
+			{
 				liquibase.dropAll();
 
 				List<ChangeSet> changeSets = liquibase.getDatabaseChangeLog().getChangeSets();
 				assertThat(changeSets).isNotEmpty();
 
-				for (ChangeSet changeSet : changeSets) {
+				for (ChangeSet changeSet : changeSets)
+				{
 					String changeSetId = changeSet.getId();
 					String changeSetTag = "tag-" + changeSetId;
 
@@ -74,13 +81,17 @@ class LiquibaseMigrationRollbackTest {
 		}
 	}
 
-	private Liquibase openLiquibase(Database database) throws LiquibaseException {
+	private Liquibase openLiquibase(Database database)
+		throws LiquibaseException
+	{
 		var liquibase = new Liquibase(MIGRATIONS_FILE, new ClassLoaderResourceAccessor(), database);
 		liquibase.setShowSummaryOutput(UpdateSummaryOutputEnum.LOG);
 		return liquibase;
 	}
 
-	private Database createDatabase(Connection connection) throws LiquibaseException {
+	private Database createDatabase(Connection connection)
+		throws LiquibaseException
+	{
 		DatabaseConnection jdbcConnection = new JdbcConnection(connection);
 
 		Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(jdbcConnection);

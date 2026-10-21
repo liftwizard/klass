@@ -20,7 +20,8 @@ import javax.annotation.Nonnull;
 
 import cool.klass.model.meta.grammar.KlassParser.ParameterDeclarationContext;
 
-public interface AntlrParameterOwner {
+public interface AntlrParameterOwner
+{
 	int getNumParameters();
 
 	void enterParameterDeclaration(@Nonnull AntlrParameter parameter);

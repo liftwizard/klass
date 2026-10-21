@@ -56,69 +56,59 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public class GraphQLQueryToOperationConverterTest {
-
+public class GraphQLQueryToOperationConverterTest
+{
 	@RegisterExtension
 	public final ErrorCollectorExtension errorCollector = new ErrorCollectorExtension();
 
 	@Test
-	void convertQueries() {
+	void convertQueries()
+	{
 		// language=GraphQL
 		var query = """
-			{
-			  propertiesOptionalByFinder(
-			    operation: {
-			      optionalBoolean: { eq: true }
-			      optionalLong: { eq: 1 }
-			      optionalFloat: { eq: 1.0 }
-			      optionalDouble: { eq: 1.0 }
-			      optionalInteger: { eq: 1 }
-			      optionalString: { lower: { startsWith: "a" } }
-			      version: { number: { eq: 1 } }
-			    }
-			    orderBy: [
-			      {
-			        attribute: {
-			          optionalBoolean: {}
-			          optionalLong: {}
-			          optionalFloat: {}
-			          optionalDouble: {}
-			        }
-			        direction: DESCENDING
-			      }
-			      {
-			        attribute: {
-			          optionalInteger: {}
-			          optionalString: {}
-			          version: { number: {} }
-			        }
-			      }
-			    ]
-			  ) {
-			    propertiesOptionalId
-			    optionalString
-			    optionalInteger
-			    optionalLong
-			    optionalDouble
-			    optionalFloat
-			    optionalBoolean
-			    optionalInstant
-			    optionalLocalDate
-			    systemFrom
-			    systemTo
-			    createdBy {
-			        userId
-			    }
-			    createdOn
-			    lastUpdatedBy {
-			        userId
-			    }
-			    version {
-			      number
-			    }
-			  }
+		{
+			propertiesOptionalByFinder(
+				operation: {
+					optionalBoolean: {eq: true}
+					optionalLong: {eq: 1}
+					optionalFloat: {eq: 1.0}
+					optionalDouble: {eq: 1.0}
+					optionalInteger: {eq: 1}
+					optionalString: {lower: {startsWith: "a"}}
+					version: {number: {eq: 1}}
+				}
+				orderBy: [
+					{
+						attribute: {optionalBoolean: {}, optionalLong: {}, optionalFloat: {}, optionalDouble: {}}
+						direction: DESCENDING
+					}
+					{attribute: {optionalInteger: {}, optionalString: {}, version: {number: {}}}}
+				]
+			) {
+				propertiesOptionalId
+				optionalString
+				optionalInteger
+				optionalLong
+				optionalDouble
+				optionalFloat
+				optionalBoolean
+				optionalInstant
+				optionalLocalDate
+				systemFrom
+				systemTo
+				createdBy {
+					userId
+				}
+				createdOn
+				lastUpdatedBy {
+					userId
+				}
+				version {
+					number
+				}
 			}
-			""";
+		}
+		""";
 
 		this.assertCompiles(query);
 	}
@@ -126,7 +116,8 @@ public class GraphQLQueryToOperationConverterTest {
 	// TODO invalidDateFormat
 
 	@Test
-	void nullityOperation() {
+	void nullityOperation()
+	{
 		this.assertCompiles(
 			"{ propertiesOptionalByFinder(operation: { optionalBoolean: { eq: null } }) { propertiesOptionalId } }"
 		);
@@ -185,7 +176,8 @@ public class GraphQLQueryToOperationConverterTest {
 	}
 
 	@Test
-	void equalsEdgePointOperation() {
+	void equalsEdgePointOperation()
+	{
 		this.assertCompiles(
 			"{ propertiesOptionalByFinder(operation: { system: { equalsEdgePoint: {} } }) { propertiesOptionalId } }"
 		);
@@ -194,7 +186,8 @@ public class GraphQLQueryToOperationConverterTest {
 	// TODO numberFormats()
 
 	@Test
-	void equalityOperation() {
+	void equalityOperation()
+	{
 		this.assertCompiles(
 			"{ propertiesOptionalByFinder(operation: { optionalBoolean: { eq: true } }) { propertiesOptionalId } }"
 		);
@@ -250,7 +243,8 @@ public class GraphQLQueryToOperationConverterTest {
 	}
 
 	@Test
-	void inequalityOperation() {
+	void inequalityOperation()
+	{
 		this.assertCompiles(
 			"{ propertiesOptionalByFinder(operation: { optionalInteger: { greaterThan: 4 } }) { propertiesOptionalId } }"
 		);
@@ -341,7 +335,8 @@ public class GraphQLQueryToOperationConverterTest {
 	}
 
 	@Test
-	void stringLikeOperations() {
+	void stringLikeOperations()
+	{
 		this.assertCompiles(
 			"{ propertiesOptionalByFinder(operation: { optionalString: { endsWith: \"Value\" } }) { propertiesOptionalId } }"
 		);
@@ -370,7 +365,8 @@ public class GraphQLQueryToOperationConverterTest {
 	}
 
 	@Test
-	void stringDerivedAttributes() {
+	void stringDerivedAttributes()
+	{
 		this.assertCompiles(
 			"{ propertiesOptionalByFinder(operation: { optionalString: { lower: { eq: \"Value\" } } }) { propertiesOptionalId } }"
 		);
@@ -378,14 +374,16 @@ public class GraphQLQueryToOperationConverterTest {
 	}
 
 	@Test
-	void numberDerivedAttributes() {
+	void numberDerivedAttributes()
+	{
 		this.assertCompiles(
 			"{ propertiesOptionalByFinder(operation: { optionalInteger: { abs: { eq: 1 } } }) { propertiesOptionalId } }"
 		);
 	}
 
 	@Test
-	void instantDerivedAttributes() {
+	void instantDerivedAttributes()
+	{
 		this.assertCompiles(
 			"{ propertiesOptionalByFinder(operation: { optionalInstant: { year: { eq: 1999 } } }) { propertiesOptionalId } }"
 		);
@@ -408,7 +406,8 @@ public class GraphQLQueryToOperationConverterTest {
 	}
 
 	@Test
-	void inOperation() {
+	void inOperation()
+	{
 		this.assertCompiles(
 			"{ propertiesOptionalByFinder(operation: { optionalBoolean: { in: [true, false] } }) { propertiesOptionalId } }"
 		);
@@ -461,7 +460,8 @@ public class GraphQLQueryToOperationConverterTest {
 	}
 
 	@Test
-	void relationshipNavigation() {
+	void relationshipNavigation()
+	{
 		this.assertCompiles(
 			"{ ownedNaturalOneToManySourceByFinder(operation: { targets: { exists: {} } }) { value } }"
 		);
@@ -481,7 +481,8 @@ public class GraphQLQueryToOperationConverterTest {
 	}
 
 	@Test
-	void conjunctionOperations() {
+	void conjunctionOperations()
+	{
 		this.assertCompiles(
 			"{ propertiesOptionalByFinder(operation: { AND: [{ optionalBoolean: { eq: true } }, { optionalInteger: { eq: 4 } }] }) { propertiesOptionalId } }"
 		);
@@ -490,7 +491,8 @@ public class GraphQLQueryToOperationConverterTest {
 		);
 	}
 
-	private void assertCompiles(String query) {
+	private void assertCompiles(String query)
+	{
 		RuntimeWiring runtimeWiring = this.getRuntimeWiring();
 
 		TypeDefinitionRegistry typeRegistry = this.getRegistry();
@@ -511,7 +513,8 @@ public class GraphQLQueryToOperationConverterTest {
 		assertThat(errors).as(Iterate.makeString(errors)).isEmpty();
 	}
 
-	private RuntimeWiring getRuntimeWiring() {
+	private RuntimeWiring getRuntimeWiring()
+	{
 		RuntimeWiring.Builder builder = RuntimeWiring.newRuntimeWiring();
 		builder
 			.scalar(GraphQLTemporalScalar.INSTANT_INSTANCE)
@@ -539,7 +542,8 @@ public class GraphQLQueryToOperationConverterTest {
 	}
 
 	@Nonnull
-	private TypeDefinitionRegistry getRegistry() {
+	private TypeDefinitionRegistry getRegistry()
+	{
 		ImmutableList<String> fileNames = Lists.immutable.with(
 			"/io/liftwizard/graphql/schema/query/QuerySchema.graphqls",
 			"/io/liftwizard/graphql/schema/attribute/ReladomoAttribute.graphqls",
@@ -557,21 +561,25 @@ public class GraphQLQueryToOperationConverterTest {
 		return typeDefinitionRegistry.orElseThrow();
 	}
 
-	private TypeDefinitionRegistry getRegistry(String resourceName) {
+	private TypeDefinitionRegistry getRegistry(String resourceName)
+	{
 		InputStream result = this.getClass().getResourceAsStream(resourceName);
 		Objects.requireNonNull(result, resourceName);
 		var schemaParser = new SchemaParser();
 		return schemaParser.parse(result);
 	}
 
-	private static final class FakeReladomoFinderDataFetcher<T> extends ReladomoFinderDataFetcher<T> {
-
-		private FakeReladomoFinderDataFetcher(AbstractRelatedFinder<T, ?, ?, ?, ?> finder) {
+	private static final class FakeReladomoFinderDataFetcher<T>
+		extends ReladomoFinderDataFetcher<T>
+	{
+		private FakeReladomoFinderDataFetcher(AbstractRelatedFinder<T, ?, ?, ?, ?> finder)
+		{
 			super(finder);
 		}
 
 		@Override
-		public List<T> get(DataFetchingEnvironment environment) {
+		public List<T> get(DataFetchingEnvironment environment)
+		{
 			Map<String, Object> arguments = environment.getArguments();
 			Object inputOperation = arguments.get("operation");
 			Object inputOrderBy = arguments.get("orderBy");
@@ -580,7 +588,8 @@ public class GraphQLQueryToOperationConverterTest {
 			var inputOrderByList = (List<Map<String, ?>>) inputOrderBy;
 			Optional<OrderBy> orderBy = this.getOrderBys(inputOrderByList);
 			assertThat(operation).isNotNull();
-			if (!inputOrderByList.isEmpty()) {
+			if (!inputOrderByList.isEmpty())
+			{
 				assertThat(orderBy).isPresent();
 			}
 			return Lists.mutable.empty();

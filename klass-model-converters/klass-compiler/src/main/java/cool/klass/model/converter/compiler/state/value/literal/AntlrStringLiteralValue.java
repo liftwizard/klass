@@ -32,8 +32,9 @@ import cool.klass.model.meta.grammar.KlassParser.StringLiteralContext;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public final class AntlrStringLiteralValue extends AbstractAntlrLiteralValue {
-
+public final class AntlrStringLiteralValue
+	extends AbstractAntlrLiteralValue
+{
 	private final String value;
 	private StringLiteralValueBuilder elementBuilder;
 
@@ -42,18 +43,23 @@ public final class AntlrStringLiteralValue extends AbstractAntlrLiteralValue {
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull String value,
 		@Nonnull IAntlrElement expressionValueOwner
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, expressionValueOwner);
 		this.value = Objects.requireNonNull(value);
 	}
 
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {}
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+	}
 
 	@Nonnull
 	@Override
-	public StringLiteralValueBuilder build() {
-		if (this.elementBuilder != null) {
+	public StringLiteralValueBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.elementBuilder = new StringLiteralValueBuilder(
@@ -67,18 +73,21 @@ public final class AntlrStringLiteralValue extends AbstractAntlrLiteralValue {
 
 	@Nonnull
 	@Override
-	public StringLiteralValueBuilder getElementBuilder() {
+	public StringLiteralValueBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
 	@Nonnull
 	@Override
-	public ImmutableList<AntlrType> getPossibleTypes() {
+	public ImmutableList<AntlrType> getPossibleTypes()
+	{
 		return Lists.immutable.with(AntlrPrimitiveType.STRING);
 	}
 
 	@Override
-	public void visit(AntlrExpressionValueVisitor visitor) {
+	public void visit(AntlrExpressionValueVisitor visitor)
+	{
 		visitor.visitStringLiteral(this);
 	}
 }

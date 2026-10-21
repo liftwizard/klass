@@ -28,8 +28,8 @@ import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactoryPr
 
 public class CoverageExampleConfiguration
 	extends AbstractKlassConfiguration
-	implements GraphQLFactoryProvider, SinglePageRedirectFilterFactoryProvider {
-
+	implements GraphQLFactoryProvider, SinglePageRedirectFilterFactoryProvider
+{
 	@Nonnull
 	private @Valid GraphQLFactory graphQL = new GraphQLFactory();
 
@@ -38,23 +38,27 @@ public class CoverageExampleConfiguration
 	@Override
 	@Nonnull
 	@JsonProperty("graphQL")
-	public GraphQLFactory getGraphQLFactory() {
+	public GraphQLFactory getGraphQLFactory()
+	{
 		return this.graphQL;
 	}
 
 	@JsonProperty("graphQL")
-	public void setGraphQLFactory(@Nonnull GraphQLFactory factory) {
+	public void setGraphQLFactory(@Nonnull GraphQLFactory factory)
+	{
 		this.graphQL = factory;
 	}
 
 	@Override
 	@JsonProperty("singlePageRedirectFilter")
-	public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory() {
+	public SinglePageRedirectFilterFactory getSinglePageRedirectFilterFactory()
+	{
 		return this.singlePageRedirectFilterFactory;
 	}
 
 	@JsonProperty("singlePageRedirectFilter")
-	public void setSinglePageRedirectFilterFactory(SinglePageRedirectFilterFactory singlePageRedirectFilterFactory) {
+	public void setSinglePageRedirectFilterFactory(SinglePageRedirectFilterFactory singlePageRedirectFilterFactory)
+	{
 		this.singlePageRedirectFilterFactory = singlePageRedirectFilterFactory;
 	}
 }
