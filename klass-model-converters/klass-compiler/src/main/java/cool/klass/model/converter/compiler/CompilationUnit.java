@@ -31,6 +31,7 @@ import javax.annotation.Nonnull;
 
 import com.google.common.base.Splitter;
 import cool.klass.model.converter.compiler.parser.ThrowingErrorListener;
+import cool.klass.model.converter.compiler.parser.TwoStageParsing;
 import cool.klass.model.converter.compiler.phase.AbstractCompilerPhase;
 import cool.klass.model.converter.compiler.state.AntlrElement;
 import cool.klass.model.meta.domain.AbstractElement.ElementBuilder;
@@ -226,7 +227,7 @@ public final class CompilationUnit {
 		KlassLexer lexer = CompilationUnit.getKlassLexer(errorListener, charStream);
 		var tokenStream = new CommonTokenStream(lexer);
 		KlassParser parser = CompilationUnit.getParser(errorListener, tokenStream);
-		ParserRuleContext parserRuleContext = parserRule.apply(parser);
+		ParserRuleContext parserRuleContext = TwoStageParsing.parse(parser, errorListener, parserRule);
 		return new CompilationUnit(ordinal, macroElement, sourceName, sourceCodeText, tokenStream, parserRuleContext);
 	}
 
