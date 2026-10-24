@@ -438,13 +438,6 @@ public final class DomainModelImpl implements DomainModelWithSourceCode {
 				TopLevelElementBuilder::getElement
 			);
 
-			ImmutableList<Token> duplicateTokens = this.tokenCategoriesFromLexer.keysView()
-				.select(this.tokenCategoriesFromParser::containsKey)
-				.toImmutableList();
-			if (duplicateTokens.notEmpty()) {
-				throw new AssertionError(duplicateTokens);
-			}
-
 			DomainModelDeclarations domainModelDeclarations = this.getDomainModelDeclarations(topLevelElements);
 			DomainModelReferences domainModelReferences = this.getDomainModelReferences(topLevelElements);
 
