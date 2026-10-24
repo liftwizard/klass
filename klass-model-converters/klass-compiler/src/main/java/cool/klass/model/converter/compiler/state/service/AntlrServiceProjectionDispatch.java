@@ -34,8 +34,9 @@ import cool.klass.model.meta.grammar.KlassParser.ServiceProjectionDispatchContex
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.tuple.Pair;
 
-public class AntlrServiceProjectionDispatch extends AntlrElement {
-
+public class AntlrServiceProjectionDispatch
+	extends AntlrElement
+{
 	@Nonnull
 	private final AntlrService service;
 
@@ -49,7 +50,8 @@ public class AntlrServiceProjectionDispatch extends AntlrElement {
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull AntlrService service,
 		@Nonnull AntlrProjection projection
-	) {
+	)
+	{
 		super(elementContext, compilationUnit);
 		this.service = Objects.requireNonNull(service);
 		this.projection = Objects.requireNonNull(projection);
@@ -57,28 +59,34 @@ public class AntlrServiceProjectionDispatch extends AntlrElement {
 
 	@Nonnull
 	@Override
-	public Optional<IAntlrElement> getSurroundingElement() {
+	public Optional<IAntlrElement> getSurroundingElement()
+	{
 		return Optional.of(this.service);
 	}
 
 	@Override
-	public boolean isContext() {
+	public boolean isContext()
+	{
 		return true;
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore() {
+	public Pair<Token, Token> getContextBefore()
+	{
 		return this.getEntireContext();
 	}
 
 	@Nonnull
-	public AntlrProjection getProjection() {
+	public AntlrProjection getProjection()
+	{
 		return this.projection;
 	}
 
 	// <editor-fold desc="Report Compiler Errors">
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.projection == AntlrProjection.NOT_FOUND) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.projection == AntlrProjection.NOT_FOUND)
+		{
 			ProjectionReferenceContext reference = this.getElementContext().projectionReference();
 
 			compilerAnnotationHolder.add(
@@ -90,24 +98,29 @@ public class AntlrServiceProjectionDispatch extends AntlrElement {
 		}
 
 		AntlrClassifier projectionClassifier = this.projection.getClassifier();
-		if (projectionClassifier == AntlrClass.NOT_FOUND || projectionClassifier == AntlrClass.AMBIGUOUS) {
+		if (projectionClassifier == AntlrClass.NOT_FOUND || projectionClassifier == AntlrClass.AMBIGUOUS)
+		{
 			throw new AssertionError();
 		}
 
-		if (projectionClassifier == AntlrClassifier.NOT_FOUND || projectionClassifier == AntlrClassifier.AMBIGUOUS) {
+		if (projectionClassifier == AntlrClassifier.NOT_FOUND || projectionClassifier == AntlrClassifier.AMBIGUOUS)
+		{
 			return;
 		}
 
 		AntlrClass serviceGroupKlass = this.service.getUrl().getServiceGroup().getKlass();
-		if (serviceGroupKlass == AntlrClass.AMBIGUOUS || serviceGroupKlass == AntlrClass.NOT_FOUND) {
+		if (serviceGroupKlass == AntlrClass.AMBIGUOUS || serviceGroupKlass == AntlrClass.NOT_FOUND)
+		{
 			return;
 		}
 
-		if (serviceGroupKlass == AntlrClassifier.NOT_FOUND || serviceGroupKlass == AntlrClassifier.AMBIGUOUS) {
+		if (serviceGroupKlass == AntlrClassifier.NOT_FOUND || serviceGroupKlass == AntlrClassifier.AMBIGUOUS)
+		{
 			throw new AssertionError();
 		}
 
-		if (serviceGroupKlass != projectionClassifier && !serviceGroupKlass.isSubTypeOf(projectionClassifier)) {
+		if (serviceGroupKlass != projectionClassifier && !serviceGroupKlass.isSubTypeOf(projectionClassifier))
+		{
 			String error = String.format(
 				"Expected projection referencing '%s' but projection '%s' references '%s'.",
 				serviceGroupKlass.getName(),
@@ -120,8 +133,10 @@ public class AntlrServiceProjectionDispatch extends AntlrElement {
 		this.reportForwardReference(compilerAnnotationHolder);
 	}
 
-	private void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (!this.isForwardReference(this.projection)) {
+	private void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (!this.isForwardReference(this.projection))
+		{
 			return;
 		}
 
@@ -140,13 +155,16 @@ public class AntlrServiceProjectionDispatch extends AntlrElement {
 
 	@Nonnull
 	@Override
-	public ServiceProjectionDispatchContext getElementContext() {
+	public ServiceProjectionDispatchContext getElementContext()
+	{
 		return (ServiceProjectionDispatchContext) super.getElementContext();
 	}
 
 	@Nonnull
-	public ServiceProjectionDispatchBuilder build() {
-		if (this.elementBuilder != null) {
+	public ServiceProjectionDispatchBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.elementBuilder = new ServiceProjectionDispatchBuilder(
@@ -160,7 +178,8 @@ public class AntlrServiceProjectionDispatch extends AntlrElement {
 
 	@Override
 	@Nonnull
-	public ServiceProjectionDispatchBuilder getElementBuilder() {
+	public ServiceProjectionDispatchBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 }

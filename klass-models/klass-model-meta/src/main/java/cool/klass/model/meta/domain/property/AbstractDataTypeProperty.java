@@ -55,8 +55,8 @@ import org.eclipse.collections.impl.tuple.Tuples;
 // TODO: The generic type here is inconvenient. Replace it with a bunch of overrides of the getType method
 public abstract class AbstractDataTypeProperty<T extends DataType>
 	extends AbstractProperty<T>
-	implements DataTypePropertyWithSourceCode {
-
+	implements DataTypePropertyWithSourceCode
+{
 	private final boolean optional;
 
 	private ImmutableList<Modifier> modifiers;
@@ -87,92 +87,114 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 		@Nonnull T dataType,
 		@Nonnull AbstractClassifier owningClassifier,
 		boolean isOptional
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode, ordinal, nameContext, dataType, owningClassifier);
 		this.optional = isOptional;
 	}
 
 	@Override
 	@Nonnull
-	public ImmutableList<Modifier> getModifiers() {
+	public ImmutableList<Modifier> getModifiers()
+	{
 		return Objects.requireNonNull(this.modifiers);
 	}
 
-	private void setModifiers(ImmutableList<Modifier> modifiers) {
-		if (this.modifiers != null) {
+	private void setModifiers(ImmutableList<Modifier> modifiers)
+	{
+		if (this.modifiers != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.modifiers = Objects.requireNonNull(modifiers);
 	}
 
 	@Override
-	public Optional<MinLengthPropertyValidation> getMinLengthPropertyValidation() {
+	public Optional<MinLengthPropertyValidation> getMinLengthPropertyValidation()
+	{
 		return Objects.requireNonNull(this.minLengthPropertyValidation);
 	}
 
 	@Override
-	public Optional<MaxLengthPropertyValidation> getMaxLengthPropertyValidation() {
+	public Optional<MaxLengthPropertyValidation> getMaxLengthPropertyValidation()
+	{
 		return Objects.requireNonNull(this.maxLengthPropertyValidation);
 	}
 
 	@Override
-	public Optional<MinPropertyValidation> getMinPropertyValidation() {
+	public Optional<MinPropertyValidation> getMinPropertyValidation()
+	{
 		return Objects.requireNonNull(this.minPropertyValidation);
 	}
 
 	@Override
-	public Optional<MaxPropertyValidation> getMaxPropertyValidation() {
+	public Optional<MaxPropertyValidation> getMaxPropertyValidation()
+	{
 		return Objects.requireNonNull(this.maxPropertyValidation);
 	}
 
-	private void setMinLengthPropertyValidation(Optional<MinLengthPropertyValidation> minLengthPropertyValidations) {
-		if (this.minLengthPropertyValidation.isPresent()) {
+	private void setMinLengthPropertyValidation(Optional<MinLengthPropertyValidation> minLengthPropertyValidations)
+	{
+		if (this.minLengthPropertyValidation.isPresent())
+		{
 			throw new IllegalStateException();
 		}
 		this.minLengthPropertyValidation = Objects.requireNonNull(minLengthPropertyValidations);
 	}
 
-	private void setMaxLengthPropertyValidation(Optional<MaxLengthPropertyValidation> maxLengthPropertyValidations) {
-		if (this.maxLengthPropertyValidation.isPresent()) {
+	private void setMaxLengthPropertyValidation(Optional<MaxLengthPropertyValidation> maxLengthPropertyValidations)
+	{
+		if (this.maxLengthPropertyValidation.isPresent())
+		{
 			throw new IllegalStateException();
 		}
 		this.maxLengthPropertyValidation = Objects.requireNonNull(maxLengthPropertyValidations);
 	}
 
-	private void setMinPropertyValidation(Optional<MinPropertyValidation> minPropertyValidations) {
-		if (this.minPropertyValidation.isPresent()) {
+	private void setMinPropertyValidation(Optional<MinPropertyValidation> minPropertyValidations)
+	{
+		if (this.minPropertyValidation.isPresent())
+		{
 			throw new IllegalStateException();
 		}
 		this.minPropertyValidation = Objects.requireNonNull(minPropertyValidations);
 	}
 
-	private void setMaxPropertyValidation(Optional<MaxPropertyValidation> maxPropertyValidations) {
-		if (this.maxPropertyValidation.isPresent()) {
+	private void setMaxPropertyValidation(Optional<MaxPropertyValidation> maxPropertyValidations)
+	{
+		if (this.maxPropertyValidation.isPresent())
+		{
 			throw new IllegalStateException();
 		}
 		this.maxPropertyValidation = Objects.requireNonNull(maxPropertyValidations);
 	}
 
-	private void setPropertyValidations(ImmutableList<PropertyValidation> propertyValidations) {
-		if (this.propertyValidations != null) {
+	private void setPropertyValidations(ImmutableList<PropertyValidation> propertyValidations)
+	{
+		if (this.propertyValidations != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.propertyValidations = Objects.requireNonNull(propertyValidations);
 	}
 
 	@Override
-	public boolean isOptional() {
+	public boolean isOptional()
+	{
 		return this.optional;
 	}
 
 	@Override
-	public boolean isForeignKey() {
+	public boolean isForeignKey()
+	{
 		return this.keysMatchingThisForeignKey.notEmpty();
 	}
 
 	@Override
-	public boolean isForeignKeyToSelf() {
-		if (!this.isForeignKey()) {
+	public boolean isForeignKeyToSelf()
+	{
+		if (!this.isForeignKey())
+		{
 			return false;
 		}
 
@@ -180,35 +202,38 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 	}
 
 	@Override
-	public OrderedMap<AssociationEnd, DataTypeProperty> getKeysMatchingThisForeignKey() {
+	public OrderedMap<AssociationEnd, DataTypeProperty> getKeysMatchingThisForeignKey()
+	{
 		return Objects.requireNonNull(this.keysMatchingThisForeignKey);
 	}
 
-	private void setKeysMatchingThisForeignKey(
-		OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey
-	) {
-		if (this.keysMatchingThisForeignKey != null) {
+	private void setKeysMatchingThisForeignKey(OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey)
+	{
+		if (this.keysMatchingThisForeignKey != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.keysMatchingThisForeignKey = Objects.requireNonNull(keysMatchingThisForeignKey);
 	}
 
 	@Override
-	public OrderedMap<AssociationEnd, DataTypeProperty> getForeignKeysMatchingThisKey() {
+	public OrderedMap<AssociationEnd, DataTypeProperty> getForeignKeysMatchingThisKey()
+	{
 		return Objects.requireNonNull(this.foreignKeysMatchingThisKey);
 	}
 
-	private void setForeignKeysMatchingThisKey(
-		OrderedMap<AssociationEnd, DataTypeProperty> foreignKeysMatchingThisKey
-	) {
-		if (this.foreignKeysMatchingThisKey != null) {
+	private void setForeignKeysMatchingThisKey(OrderedMap<AssociationEnd, DataTypeProperty> foreignKeysMatchingThisKey)
+	{
+		if (this.foreignKeysMatchingThisKey != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.foreignKeysMatchingThisKey = Objects.requireNonNull(foreignKeysMatchingThisKey);
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		String isOptionalString = this.optional ? "?" : "";
 		String propertyModifiersString = this.getModifiers().isEmpty()
 			? ""
@@ -221,8 +246,8 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 		TG extends DataTypeGetter,
 		BuiltElement extends AbstractDataTypeProperty<T>
 	>
-		extends PropertyBuilder<T, TG, BuiltElement> {
-
+		extends PropertyBuilder<T, TG, BuiltElement>
+	{
 		protected final boolean isOptional;
 
 		protected MutableOrderedMap<
@@ -251,15 +276,18 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 			@Nonnull TG typeBuilder,
 			@Nonnull ClassifierBuilder<?> owningClassifierBuilder,
 			boolean isOptional
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode, ordinal, nameContext, typeBuilder, owningClassifierBuilder);
 			this.isOptional = isOptional;
 		}
 
 		public void setKeyBuildersMatchingThisForeignKey(
 			MutableOrderedMap<AssociationEndBuilder, DataTypePropertyBuilder<?, ?, ?>> keyBuildersMatchingThisForeignKey
-		) {
-			if (this.keyBuildersMatchingThisForeignKey != null) {
+		)
+		{
+			if (this.keyBuildersMatchingThisForeignKey != null)
+			{
 				throw new IllegalStateException();
 			}
 			this.keyBuildersMatchingThisForeignKey = Objects.requireNonNull(keyBuildersMatchingThisForeignKey);
@@ -267,8 +295,10 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 
 		public void setForeignKeyBuildersMatchingThisKey(
 			MutableOrderedMap<AssociationEndBuilder, DataTypePropertyBuilder<?, ?, ?>> foreignKeyBuildersMatchingThisKey
-		) {
-			if (this.foreignKeyBuildersMatchingThisKey != null) {
+		)
+		{
+			if (this.foreignKeyBuildersMatchingThisKey != null)
+			{
 				throw new IllegalStateException();
 			}
 			this.foreignKeyBuildersMatchingThisKey = Objects.requireNonNull(foreignKeyBuildersMatchingThisKey);
@@ -276,40 +306,47 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 
 		public void setMinLengthPropertyValidationBuilder(
 			Optional<MinLengthPropertyValidationBuilder> minLengthPropertyValidationBuilder
-		) {
+		)
+		{
 			this.minLengthPropertyValidationBuilder = Objects.requireNonNull(minLengthPropertyValidationBuilder);
 		}
 
 		public void setMaxLengthPropertyValidationBuilder(
 			Optional<MaxLengthPropertyValidationBuilder> maxLengthPropertyValidationBuilder
-		) {
+		)
+		{
 			this.maxLengthPropertyValidationBuilder = Objects.requireNonNull(maxLengthPropertyValidationBuilder);
 		}
 
 		public void setMinPropertyValidationBuilder(
 			Optional<MinPropertyValidationBuilder> minPropertyValidationBuilder
-		) {
+		)
+		{
 			this.minPropertyValidationBuilder = Objects.requireNonNull(minPropertyValidationBuilder);
 		}
 
 		public void setMaxPropertyValidationBuilder(
 			Optional<MaxPropertyValidationBuilder> maxPropertyValidationBuilder
-		) {
+		)
+		{
 			this.maxPropertyValidationBuilder = Objects.requireNonNull(maxPropertyValidationBuilder);
 		}
 
 		public void setPropertyValidationBuilders(
 			ImmutableList<PropertyValidationBuilder<?>> propertyValidationBuilders
-		) {
+		)
+		{
 			this.propertyValidationBuilders = Objects.requireNonNull(propertyValidationBuilders);
 		}
 
-		public void setModifierBuilders(ImmutableList<ModifierBuilder> modifierBuilders) {
+		public void setModifierBuilders(ImmutableList<ModifierBuilder> modifierBuilders)
+		{
 			this.modifierBuilders = modifierBuilders;
 		}
 
 		@Override
-		protected void buildChildren() {
+		protected void buildChildren()
+		{
 			AbstractDataTypeProperty<T> property = this.getElement();
 
 			ImmutableList<Modifier> modifiers = this.modifierBuilders.collect(ModifierBuilder::build);
@@ -337,7 +374,8 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 			property.setPropertyValidations(propertyValidations);
 		}
 
-		public final void build2() {
+		public final void build2()
+		{
 			MutableOrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey =
 				this.keyBuildersMatchingThisForeignKey.collect((associationEndBuilder, dataTypePropertyBuilder) ->
 					Tuples.pair(associationEndBuilder.getElement(), dataTypePropertyBuilder.getElement())

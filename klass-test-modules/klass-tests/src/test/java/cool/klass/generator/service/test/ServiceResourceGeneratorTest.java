@@ -37,13 +37,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 @ExtendWith(LogMarkerTestExtension.class)
-class ServiceResourceGeneratorTest {
-
+class ServiceResourceGeneratorTest
+{
 	@RegisterExtension
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
 	@Test
-	void stackOverflow() {
+	void stackOverflow()
+	{
 		String sourceCodeText = FileSlurper.slurp("/com/stackoverflow/stackoverflow.klass", this.getClass());
 
 		CompilationUnit compilationUnit = CompilationUnit.createFromText(
@@ -55,10 +56,13 @@ class ServiceResourceGeneratorTest {
 		var compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("dark"));
 		CompilationResult compilationResult = compiler.compile();
 
-		if (compilationResult.domainModelWithSourceCode().isEmpty()) {
+		if (compilationResult.domainModelWithSourceCode().isEmpty())
+		{
 			String message = compilationResult.compilerAnnotations().makeString("\n");
 			fail(message);
-		} else {
+		}
+		else
+		{
 			DomainModelWithSourceCode domainModel = compilationResult.domainModelWithSourceCode().get();
 			assertThat(domainModel).isNotNull();
 
@@ -69,7 +73,8 @@ class ServiceResourceGeneratorTest {
 			);
 
 			ImmutableList<ServiceGroup> serviceGroups = domainModel.getServiceGroups();
-			for (ServiceGroup serviceGroup : serviceGroups) {
+			for (ServiceGroup serviceGroup : serviceGroups)
+			{
 				String serviceGroupSourceCode = serviceResourceGenerator.getServiceGroupSourceCode(serviceGroup);
 				String resourceName = serviceGroup.getKlass().getName() + "Resource.java";
 

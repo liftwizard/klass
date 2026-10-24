@@ -21,7 +21,7 @@
     <parent>
         <groupId>io.liftwizard</groupId>
         <artifactId>liftwizard-profile-parent</artifactId>
-        <version>2.1.43</version>
+        <version>2.1.50</version>
     </parent>
 
     <groupId>cool.klass</groupId>
@@ -92,9 +92,6 @@
     </ciManagement>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
         <project.build.outputTimestamp>2026-01-13T13:03:03Z</project.build.outputTimestamp>
 
         <maven.compiler.source>21</maven.compiler.source>
@@ -200,6 +197,10 @@
                             <artifactId>rewrite-maven-plugin</artifactId>
                             <version>6.46.1</version>
                             <configuration>
+                                <exclusions combine.children="append">
+                                    <!-- Java recipes like UseVarForConstructors also rewrite Groovy scripts -->
+                                    <exclusion>**/*.groovy</exclusion>
+                                </exclusions>
                                 <activeRecipes combine.children="append">
                                     <recipe>cool.klass.UpdateCopyrightYear</recipe>
                                 </activeRecipes>

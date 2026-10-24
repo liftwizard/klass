@@ -11,7 +11,7 @@
 	// Default: true
 	semi: true,
 
-	// Use single quotes instead of double quotes
+	// Use double quotes by leaving singleQuote disabled
 	// Default: false
 	singleQuote: false,
 
@@ -24,6 +24,11 @@
 	// Default: true
 	bracketSpacing: false,
 
+	// Put opening braces on their own line
+	// Default: "next-line" in prettier-next-line and prettier-java-next-line
+	// Options: "next-line" | "same-line"
+	braceStyle: "next-line",
+
 	// Include parentheses around a sole arrow function parameter
 	// Default: "always"
 	// Options: "avoid" | "always"
@@ -33,36 +38,21 @@
 	// Default: 80
 	printWidth: 120,
 
-	// Change when properties in objects are quoted
-	// Default: "as-needed"
-	// Options: "as-needed" | "consistent" | "preserve"
-	quoteProps: "as-needed",
-
-	// Use single quotes in JSX
-	// Default: false
-	jsxSingleQuote: false,
-
-	// Put the > of a multi-line JSX element at the end of the last line
-	// Default: false
-	bracketSameLine: false,
-
-	// How to wrap prose in markdown
-	// Default: "preserve"
-	// Options: "always" | "never" | "preserve"
-	proseWrap: "preserve",
-
-	// How to handle whitespace in HTML
-	// Default: "css"
-	// Options: "css" | "strict" | "ignore"
-	htmlWhitespaceSensitivity: "css",
-
-	// Line ending style
-	// Default: "lf"
-	// Options: "lf" | "crlf" | "cr" | "auto"
-	endOfLine: "lf",
-
-	// Experimental: Put binary operators at the start of lines when wrapping
-	// This is an experimental feature that may be removed in future versions
-	// Options: "end" (default) | "start"
+	// prettier-plugin-java: Position of binary operators in wrapped lines
+	// Default: "end"
+	// Options: "start" | "end"
 	experimentalOperatorPosition: "start",
+
+	// prettier-java-next-line: Import groups in Spotless's importOrder format
+	importOrder: "java,javax,,#java|#javax,#",
+
+	overrides: [
+		{
+			files: [".yamllint.yaml", "**/*.yaml", "**/*.yml"],
+			options: {
+				tabWidth: 2,
+				useTabs: false,
+			},
+		},
+	],
 }

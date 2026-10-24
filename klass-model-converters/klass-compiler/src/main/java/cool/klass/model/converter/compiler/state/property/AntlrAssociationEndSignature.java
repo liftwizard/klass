@@ -37,8 +37,8 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public class AntlrAssociationEndSignature
 	extends AntlrReferenceProperty<AntlrClassifier>
-	implements AntlrClassifierReferenceOwner {
-
+	implements AntlrClassifierReferenceOwner
+{
 	public static final AntlrAssociationEndSignature AMBIGUOUS = new AntlrAssociationEndSignature(
 		new AssociationEndSignatureContext(AMBIGUOUS_PARENT, -1),
 		Optional.empty(),
@@ -60,21 +60,25 @@ public class AntlrAssociationEndSignature
 		int ordinal,
 		@Nonnull IdentifierContext nameContext,
 		@Nonnull AntlrClassifier owningClassifier
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, ordinal, nameContext);
 		this.owningClassifier = Objects.requireNonNull(owningClassifier);
 	}
 
 	@Nonnull
 	@Override
-	public Optional<IAntlrElement> getSurroundingElement() {
+	public Optional<IAntlrElement> getSurroundingElement()
+	{
 		return Optional.of(this.owningClassifier);
 	}
 
 	@Nonnull
 	@Override
-	public AssociationEndSignatureBuilder build() {
-		if (this.associationEndSignatureBuilder != null) {
+	public AssociationEndSignatureBuilder build()
+	{
+		if (this.associationEndSignatureBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 
@@ -103,10 +107,12 @@ public class AntlrAssociationEndSignature
 	}
 
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		super.reportErrors(compilerAnnotationHolder);
 
-		if (this.orderBy != null) {
+		if (this.orderBy != null)
+		{
 			this.orderBy.ifPresent((o) -> o.reportErrors(compilerAnnotationHolder));
 		}
 
@@ -115,36 +121,43 @@ public class AntlrAssociationEndSignature
 
 	@Nonnull
 	@Override
-	public AntlrClassifier getOwningClassifier() {
+	public AntlrClassifier getOwningClassifier()
+	{
 		return Objects.requireNonNull(this.owningClassifier);
 	}
 
 	@Override
 	@Nonnull
-	public AssociationEndSignatureBuilder getElementBuilder() {
+	public AssociationEndSignatureBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.associationEndSignatureBuilder);
 	}
 
 	@Override
-	protected IdentifierContext getTypeIdentifier() {
+	protected IdentifierContext getTypeIdentifier()
+	{
 		return this.getElementContext().classifierReference().identifier();
 	}
 
 	@Nonnull
 	@Override
-	public AssociationEndSignatureContext getElementContext() {
+	public AssociationEndSignatureContext getElementContext()
+	{
 		return (AssociationEndSignatureContext) super.getElementContext();
 	}
 
 	@Nonnull
 	@Override
-	public AntlrClassifier getType() {
+	public AntlrClassifier getType()
+	{
 		return this.classifierReference.getClassifier();
 	}
 
 	@Override
-	public void enterClassifierReference(@Nonnull AntlrClassifierReference classifierReference) {
-		if (this.classifierReference != null) {
+	public void enterClassifierReference(@Nonnull AntlrClassifierReference classifierReference)
+	{
+		if (this.classifierReference != null)
+		{
 			throw new AssertionError();
 		}
 		this.classifierReference = Objects.requireNonNull(classifierReference);

@@ -30,31 +30,37 @@ import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
 import cool.klass.model.converter.compiler.state.value.AntlrExpressionValue;
 import cool.klass.model.converter.compiler.state.value.AntlrMemberReferencePath;
 
-public class ReferencedPropertiesCriteriaVisitor implements AntlrCriteriaVisitor {
-
+public class ReferencedPropertiesCriteriaVisitor
+	implements AntlrCriteriaVisitor
+{
 	private final ReferencedPropertiesExpressionValueVisitor expressionValueVisitor =
 		new ReferencedPropertiesExpressionValueVisitor();
 
-	public Set<AntlrAssociationEnd> getAssociationEndsReferencedByCriteria() {
+	public Set<AntlrAssociationEnd> getAssociationEndsReferencedByCriteria()
+	{
 		return this.expressionValueVisitor.getAssociationEndsReferencedByCriteria();
 	}
 
-	public Set<AntlrDataTypeProperty<?>> getDataTypePropertiesReferencedByCriteria() {
+	public Set<AntlrDataTypeProperty<?>> getDataTypePropertiesReferencedByCriteria()
+	{
 		return this.expressionValueVisitor.getDataTypePropertiesReferencedByCriteria();
 	}
 
-	public Set<AntlrParameter> getParametersReferencedByCriteria() {
+	public Set<AntlrParameter> getParametersReferencedByCriteria()
+	{
 		return this.expressionValueVisitor.getParametersReferencedByCriteria();
 	}
 
 	@Override
-	public void visitEdgePoint(EdgePointAntlrCriteria edgePointCriteria) {
+	public void visitEdgePoint(EdgePointAntlrCriteria edgePointCriteria)
+	{
 		AntlrMemberReferencePath memberExpressionValue = edgePointCriteria.getMemberExpressionValue();
 		memberExpressionValue.visit(this.expressionValueVisitor);
 	}
 
 	@Override
-	public void visitOperator(OperatorAntlrCriteria operatorCriteria) {
+	public void visitOperator(OperatorAntlrCriteria operatorCriteria)
+	{
 		AntlrExpressionValue sourceValue = operatorCriteria.getSourceValue();
 		AntlrExpressionValue targetValue = operatorCriteria.getTargetValue();
 		sourceValue.visit(this.expressionValueVisitor);
@@ -62,11 +68,17 @@ public class ReferencedPropertiesCriteriaVisitor implements AntlrCriteriaVisitor
 	}
 
 	@Override
-	public void visitAll(AllAntlrCriteria allCriteria) {}
+	public void visitAll(AllAntlrCriteria allCriteria)
+	{
+	}
 
 	@Override
-	public void visitAnd(AntlrAndCriteria andCriteria) {}
+	public void visitAnd(AntlrAndCriteria andCriteria)
+	{
+	}
 
 	@Override
-	public void visitOr(AntlrOrCriteria orCriteria) {}
+	public void visitOr(AntlrOrCriteria orCriteria)
+	{
+	}
 }

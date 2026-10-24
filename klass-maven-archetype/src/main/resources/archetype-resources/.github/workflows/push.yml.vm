@@ -1,36 +1,43 @@
 # Jobs that run on push to main, after pull requests are merged. Jobs here can be a subset of the jobs that run on merge_group. These jobs should never fail since the jobs in merge_group already passed.
 
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
 
 concurrency:
-    group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-    cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 env:
-    GROUP_ID: "${packageInPathFormat}"
+  GROUP_ID: "${packageInPathFormat}"
+
+permissions:
+  contents: read
 
 jobs:
-    maven:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v6
+  maven:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
-            - uses: actions/cache@v5
-              with:
-                  key: maven-${{ hashFiles('**/pom.xml') }}
-                  path: ~/.m2/repository
-                  restore-keys: |
-                      maven-
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          path: ~/.m2/repository
+          restore-keys: |
+            maven-
 
-            - uses: twosigma/maven-cache-cleaner@v1
+      - uses: twosigma/maven-cache-cleaner@8cc87ff622d543e1aad4085cbf5c05236b2d16d9 # v2.3.0
 
-            - uses: jdx/mise-action@v3
+      - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
-            - run: just mvn
+      - run: just mvn
 
-            # Remove any jars we may have created before actions/cache caches .m2
-            - name: "Clean Maven cache"
-              run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
+      # Remove any jars we may have created before actions/cache caches .m2
+      - name: "Clean Maven cache"
+        run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}

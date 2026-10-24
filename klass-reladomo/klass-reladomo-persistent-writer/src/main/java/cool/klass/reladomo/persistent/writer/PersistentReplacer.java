@@ -27,9 +27,11 @@ import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import org.eclipse.collections.api.map.MapIterable;
 
-public class PersistentReplacer extends PersistentSynchronizer {
-
-	public PersistentReplacer(@Nonnull MutationContext mutationContext, @Nonnull DataStore dataStore) {
+public class PersistentReplacer
+	extends PersistentSynchronizer
+{
+	public PersistentReplacer(@Nonnull MutationContext mutationContext, @Nonnull DataStore dataStore)
+	{
 		this(mutationContext, dataStore, false);
 	}
 
@@ -37,17 +39,20 @@ public class PersistentReplacer extends PersistentSynchronizer {
 		@Nonnull MutationContext mutationContext,
 		@Nonnull DataStore dataStore,
 		boolean inTransaction
-	) {
+	)
+	{
 		super(mutationContext, dataStore, inTransaction);
 	}
 
 	@Override
-	protected boolean shouldWriteKey() {
+	protected boolean shouldWriteKey()
+	{
 		return false;
 	}
 
 	@Override
-	protected boolean shouldWriteId() {
+	protected boolean shouldWriteId()
+	{
 		return true;
 	}
 
@@ -56,24 +61,29 @@ public class PersistentReplacer extends PersistentSynchronizer {
 		@Nonnull Klass klass,
 		Object persistentInstance,
 		boolean propertyMutationOccurred
-	) {
-		if (propertyMutationOccurred) {
+	)
+	{
+		if (propertyMutationOccurred)
+		{
 			this.synchronizeUpdatedDataTypeProperties(klass, persistentInstance);
 		}
 	}
 
 	@Override
-	protected void validateSetIdDataTypeProperties(Klass klass, Object persistentInstance) {
+	protected void validateSetIdDataTypeProperties(Klass klass, Object persistentInstance)
+	{
 		// Deliberately empty for update operation
 	}
 
 	@Override
-	protected void synchronizeCreatedDataTypeProperties(Klass klass, Object persistentInstance) {
+	protected void synchronizeCreatedDataTypeProperties(Klass klass, Object persistentInstance)
+	{
 		// Deliberately empty for update operation
 	}
 
 	@Override
-	protected void handleVersion(@Nonnull AssociationEnd associationEnd, Object persistentInstance) {
+	protected void handleVersion(@Nonnull AssociationEnd associationEnd, Object persistentInstance)
+	{
 		Object versionPersistentInstance = this.dataStore.getToOne(persistentInstance, associationEnd);
 		DataTypeProperty versionProperty = associationEnd
 			.getType()
@@ -90,14 +100,17 @@ public class PersistentReplacer extends PersistentSynchronizer {
 		@Nonnull Object persistentParentInstance,
 		@Nonnull ObjectNode incomingParentNode,
 		@Nonnull JsonNode incomingChildInstance
-	) {
-		if (associationEnd.isOwned()) {
+	)
+	{
+		if (associationEnd.isOwned())
+		{
 			throw new AssertionError(
 				"Assumption is that all owned association ends are inside projection, all unowned are outside projection"
 			);
 		}
 
-		if (incomingChildInstance.isMissingNode() || incomingChildInstance.isNull()) {
+		if (incomingChildInstance.isMissingNode() || incomingChildInstance.isNull())
+		{
 			return this.dataStore.setToOne(persistentParentInstance, associationEnd, null);
 		}
 
@@ -108,7 +121,8 @@ public class PersistentReplacer extends PersistentSynchronizer {
 			incomingChildInstance,
 			associationEnd
 		);
-		if (childPersistentInstanceWithKey == null) {
+		if (childPersistentInstanceWithKey == null)
+		{
 			MapIterable<DataTypeProperty, Object> keys = this.getKeysFromJsonNode(
 				incomingChildInstance,
 				associationEnd,
@@ -120,11 +134,13 @@ public class PersistentReplacer extends PersistentSynchronizer {
 			throw new IllegalStateException(error);
 		}
 
-		if (childPersistentInstanceAssociated == childPersistentInstanceWithKey) {
+		if (childPersistentInstanceAssociated == childPersistentInstanceWithKey)
+		{
 			return false;
 		}
 
-		if (associationEnd.isFinal()) {
+		if (associationEnd.isFinal())
+		{
 			throw new AssertionError();
 		}
 
@@ -133,12 +149,15 @@ public class PersistentReplacer extends PersistentSynchronizer {
 
 	@Nonnull
 	@Override
-	protected PersistentSynchronizer determineNextMode(OperationMode nextMode) {
-		if (nextMode == OperationMode.CREATE) {
+	protected PersistentSynchronizer determineNextMode(OperationMode nextMode)
+	{
+		if (nextMode == OperationMode.CREATE)
+		{
 			return new PersistentCreator(this.mutationContext, this.dataStore, this.inTransaction);
 		}
 
-		if (nextMode == OperationMode.REPLACE) {
+		if (nextMode == OperationMode.REPLACE)
+		{
 			return new PersistentReplacer(this.mutationContext, this.dataStore, this.inTransaction);
 		}
 

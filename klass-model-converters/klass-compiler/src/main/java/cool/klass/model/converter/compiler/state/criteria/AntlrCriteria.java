@@ -30,8 +30,9 @@ import cool.klass.model.meta.domain.criteria.AbstractCriteria.AbstractCriteriaBu
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.map.OrderedMap;
 
-public abstract class AntlrCriteria extends AntlrElement {
-
+public abstract class AntlrCriteria
+	extends AntlrElement
+{
 	@Nonnull
 	private final IAntlrElement criteriaOwner;
 
@@ -39,14 +40,16 @@ public abstract class AntlrCriteria extends AntlrElement {
 		@Nonnull ParserRuleContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull IAntlrElement criteriaOwner
-	) {
+	)
+	{
 		super(elementContext, compilationUnit);
 		this.criteriaOwner = Objects.requireNonNull(criteriaOwner);
 	}
 
 	@Nonnull
 	@Override
-	public Optional<IAntlrElement> getSurroundingElement() {
+	public Optional<IAntlrElement> getSurroundingElement()
+	{
 		return Optional.of(this.criteriaOwner);
 	}
 
@@ -63,7 +66,8 @@ public abstract class AntlrCriteria extends AntlrElement {
 
 	public abstract void resolveTypes();
 
-	public void addForeignKeys() {
+	public void addForeignKeys()
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".addForeignKeys() not implemented yet"
 		);

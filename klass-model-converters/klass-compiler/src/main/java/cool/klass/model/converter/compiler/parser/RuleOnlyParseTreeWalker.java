@@ -30,20 +30,25 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
  * {@code enterEveryRule}, or {@code exitEveryRule}. Compiler phases don't listen to those events, and dispatching
  * them through every phase's delegation chain costs about as much as the rule events themselves.
  */
-public final class RuleOnlyParseTreeWalker extends ParseTreeWalker {
-
+public final class RuleOnlyParseTreeWalker
+	extends ParseTreeWalker
+{
 	@Override
-	public void walk(ParseTreeListener listener, ParseTree tree) {
-		if (!(tree instanceof ParserRuleContext ctx)) {
+	public void walk(ParseTreeListener listener, ParseTree tree)
+	{
+		if (!(tree instanceof ParserRuleContext ctx))
+		{
 			return;
 		}
 
 		ctx.enterRule(listener);
 		// Read children after enterRule, which may add an in-place macro expansion as a new child
 		List<ParseTree> children = ctx.children;
-		if (children != null) {
+		if (children != null)
+		{
 			int numChildren = children.size();
-			for (int i = 0; i < numChildren; i++) {
+			for (var i = 0; i < numChildren; i++)
+			{
 				this.walk(listener, children.get(i));
 			}
 		}

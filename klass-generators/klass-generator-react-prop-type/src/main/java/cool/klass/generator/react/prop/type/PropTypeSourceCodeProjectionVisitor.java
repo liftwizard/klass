@@ -33,29 +33,34 @@ import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.set.ImmutableSet;
 
-public class PropTypeSourceCodeProjectionVisitor implements ProjectionVisitor {
-
+public class PropTypeSourceCodeProjectionVisitor
+	implements ProjectionVisitor
+{
 	private final Projection originalProjection;
 	private final int indentLevel;
 	private String result;
 
-	public PropTypeSourceCodeProjectionVisitor(@Nonnull Projection originalProjection, int indentLevel) {
+	public PropTypeSourceCodeProjectionVisitor(@Nonnull Projection originalProjection, int indentLevel)
+	{
 		this.originalProjection = Objects.requireNonNull(originalProjection);
 		this.indentLevel = indentLevel;
 	}
 
-	private String getPropTypeSourceCode(@Nonnull ProjectionElement projectionElement) {
+	private String getPropTypeSourceCode(@Nonnull ProjectionElement projectionElement)
+	{
 		var visitor = new PropTypeSourceCodeProjectionVisitor(this.originalProjection, this.indentLevel + 1);
 		projectionElement.visit(visitor);
 		return visitor.getResult();
 	}
 
-	public String getResult() {
+	public String getResult()
+	{
 		return Objects.requireNonNull(this.result);
 	}
 
 	@Override
-	public void visitProjection(@Nonnull Projection projection) {
+	public void visitProjection(@Nonnull Projection projection)
+	{
 		var visitor = new GatherProjectionReferencesVisitor(projection);
 		projection.getChildren().forEachWith(ProjectionElement::visit, visitor);
 		ImmutableSet<Projection> referencedProjections = visitor.getReferencedProjections();
@@ -95,7 +100,8 @@ public class PropTypeSourceCodeProjectionVisitor implements ProjectionVisitor {
 	}
 
 	@Override
-	public void visitProjectionReferenceProperty(@Nonnull ProjectionReferenceProperty projectionReferenceProperty) {
+	public void visitProjectionReferenceProperty(@Nonnull ProjectionReferenceProperty projectionReferenceProperty)
+	{
 		String childrenSourceCode = projectionReferenceProperty
 			.getChildren()
 			.collect(this::getPropTypeSourceCode)
@@ -117,8 +123,10 @@ public class PropTypeSourceCodeProjectionVisitor implements ProjectionVisitor {
 	@Override
 	public void visitProjectionProjectionReference(
 		@Nonnull ProjectionProjectionReference projectionProjectionReference
-	) {
-		if (projectionProjectionReference.getProjection() == this.originalProjection) {
+	)
+	{
+		if (projectionProjectionReference.getProjection() == this.originalProjection)
+		{
 			this.result = "";
 			return;
 		}
@@ -136,7 +144,8 @@ public class PropTypeSourceCodeProjectionVisitor implements ProjectionVisitor {
 	}
 
 	@Override
-	public void visitProjectionDataTypeProperty(@Nonnull ProjectionDataTypeProperty projectionDataTypeProperty) {
+	public void visitProjectionDataTypeProperty(@Nonnull ProjectionDataTypeProperty projectionDataTypeProperty)
+	{
 		DataTypeProperty property = projectionDataTypeProperty.getProperty();
 		boolean isNullableInfinity = property.isTemporalRange() || (property.isTemporalInstant() && property.isTo());
 
@@ -157,7 +166,8 @@ public class PropTypeSourceCodeProjectionVisitor implements ProjectionVisitor {
 	}
 
 	@Nonnull
-	public static String getIndent(int indentLevel) {
+	public static String getIndent(int indentLevel)
+	{
 		return new String(new char[indentLevel]).replace("\0", "    ");
 	}
 }

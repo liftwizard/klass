@@ -32,25 +32,31 @@ import cool.klass.model.meta.grammar.KlassParser.NullLiteralContext;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class AntlrNullLiteral extends AbstractAntlrLiteralValue {
-
+public class AntlrNullLiteral
+	extends AbstractAntlrLiteralValue
+{
 	private NullLiteralBuilder elementBuilder;
 
 	public AntlrNullLiteral(
 		@Nonnull NullLiteralContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull IAntlrElement expressionValueOwner
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, expressionValueOwner);
 	}
 
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {}
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+	}
 
 	@Nonnull
 	@Override
-	public NullLiteralBuilder build() {
-		if (this.elementBuilder != null) {
+	public NullLiteralBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.elementBuilder = new NullLiteralBuilder(
@@ -63,13 +69,15 @@ public class AntlrNullLiteral extends AbstractAntlrLiteralValue {
 
 	@Nonnull
 	@Override
-	public NullLiteralBuilder getElementBuilder() {
+	public NullLiteralBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
 	@Nonnull
 	@Override
-	public ImmutableList<AntlrType> getPossibleTypes() {
+	public ImmutableList<AntlrType> getPossibleTypes()
+	{
 		return Lists.immutable.with(
 			AntlrPrimitiveType.STRING,
 			AntlrPrimitiveType.INTEGER,
@@ -83,7 +91,8 @@ public class AntlrNullLiteral extends AbstractAntlrLiteralValue {
 	}
 
 	@Override
-	public void visit(AntlrExpressionValueVisitor visitor) {
+	public void visit(AntlrExpressionValueVisitor visitor)
+	{
 		visitor.visitNullLiteral(this);
 	}
 }

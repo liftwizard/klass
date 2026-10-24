@@ -43,27 +43,30 @@ import cool.klass.model.meta.domain.api.value.literal.UserLiteral;
 import cool.klass.model.meta.domain.api.visitor.PrimitiveToJavaTypeVisitor;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class OperationExpressionValueVisitor implements ExpressionValueVisitor {
-
+public class OperationExpressionValueVisitor
+	implements ExpressionValueVisitor
+{
 	private final String finderName;
 	private final StringBuilder stringBuilder;
 
-	public OperationExpressionValueVisitor(@Nonnull String finderName, @Nonnull StringBuilder stringBuilder) {
+	public OperationExpressionValueVisitor(@Nonnull String finderName, @Nonnull StringBuilder stringBuilder)
+	{
 		this.finderName = Objects.requireNonNull(finderName);
 		this.stringBuilder = Objects.requireNonNull(stringBuilder);
 	}
 
 	@Override
-	public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue) {
+	public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue)
+	{
 		ImmutableList<AssociationEnd> associationEnds = typeMemberExpressionValue.getAssociationEnds();
 
 		String associationEndsString = associationEnds.isEmpty()
 			? ""
 			: "."
-			+ associationEnds
-				.collect(NamedElement::getName)
-				.collect((string) -> string + "()")
-				.makeString(".");
+				+ associationEnds
+					.collect(NamedElement::getName)
+					.collect((string) -> string + "()")
+					.makeString(".");
 
 		String attribute = String.format(
 			"%sFinder%s.%s()",
@@ -75,16 +78,17 @@ public class OperationExpressionValueVisitor implements ExpressionValueVisitor {
 	}
 
 	@Override
-	public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue) {
+	public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue)
+	{
 		ImmutableList<AssociationEnd> associationEnds = thisMemberExpressionValue.getAssociationEnds();
 
 		String associationEndsString = associationEnds.isEmpty()
 			? ""
 			: "."
-			+ associationEnds
-				.collect(NamedElement::getName)
-				.collect((string) -> string + "()")
-				.makeString(".");
+				+ associationEnds
+					.collect(NamedElement::getName)
+					.collect((string) -> string + "()")
+					.makeString(".");
 
 		String attribute = String.format(
 			"%s%s.%s()",
@@ -96,18 +100,21 @@ public class OperationExpressionValueVisitor implements ExpressionValueVisitor {
 	}
 
 	@Override
-	public void visitParameterReference(@Nonnull ParameterReference parameterReference) {
+	public void visitParameterReference(@Nonnull ParameterReference parameterReference)
+	{
 		Parameter parameter = parameterReference.getParameter();
 		DataType dataType = parameter.getType();
 		Multiplicity multiplicity = parameter.getMultiplicity();
 
-		if (dataType instanceof Enumeration) {
+		if (dataType instanceof Enumeration)
+		{
 			this.stringBuilder.append(parameter.getName());
 			return;
 		}
 
 		var primitiveType = (PrimitiveType) dataType;
-		if (multiplicity.isToOne()) {
+		if (multiplicity.isToOne())
+		{
 			primitiveType.visit(new ReladomoPrimitiveVisitor(this.stringBuilder, parameter.getName()));
 			return;
 		}
@@ -116,29 +123,34 @@ public class OperationExpressionValueVisitor implements ExpressionValueVisitor {
 	}
 
 	@Override
-	public void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue) {
+	public void visitBooleanLiteral(@Nonnull BooleanLiteralValue booleanLiteralValue)
+	{
 		this.stringBuilder.append(booleanLiteralValue.getValue());
 	}
 
 	@Override
-	public void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue) {
+	public void visitIntegerLiteral(@Nonnull IntegerLiteralValue integerLiteralValue)
+	{
 		this.stringBuilder.append(integerLiteralValue.getValue());
 	}
 
 	@Override
-	public void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue) {
+	public void visitFloatingPointLiteral(@Nonnull FloatingPointLiteralValue floatingPointLiteralValue)
+	{
 		this.stringBuilder.append(floatingPointLiteralValue.getValue());
 	}
 
 	@Override
-	public void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue) {
+	public void visitStringLiteral(@Nonnull StringLiteralValue stringLiteralValue)
+	{
 		this.stringBuilder.append('"');
 		this.stringBuilder.append(stringLiteralValue.getValue());
 		this.stringBuilder.append('"');
 	}
 
 	@Override
-	public void visitLiteralList(@Nonnull LiteralListValue literalListValue) {
+	public void visitLiteralList(@Nonnull LiteralListValue literalListValue)
+	{
 		Type type = literalListValue.getType();
 		this.stringBuilder.append(this.getType(type));
 		this.stringBuilder.append("Sets.immutable.with(");
@@ -146,25 +158,30 @@ public class OperationExpressionValueVisitor implements ExpressionValueVisitor {
 		this.stringBuilder.append(")");
 	}
 
-	private String getType(Type type) {
-		if (type instanceof PrimitiveType primitiveType) {
+	private String getType(Type type)
+	{
+		if (type instanceof PrimitiveType primitiveType)
+		{
 			return PrimitiveToJavaTypeVisitor.getJavaType(primitiveType);
 		}
 		throw new AssertionError();
 	}
 
 	@Override
-	public void visitUserLiteral(@Nonnull UserLiteral userLiteral) {
+	public void visitUserLiteral(@Nonnull UserLiteral userLiteral)
+	{
 		this.stringBuilder.append("userPrincipalName");
 	}
 
 	@Override
-	public void visitNullLiteral(@Nonnull NullLiteral nullLiteral) {
+	public void visitNullLiteral(@Nonnull NullLiteral nullLiteral)
+	{
 		this.stringBuilder.append("null");
 	}
 
 	@Nonnull
-	private String getLiteralString(@Nonnull LiteralValue literalValue) {
+	private String getLiteralString(@Nonnull LiteralValue literalValue)
+	{
 		var stringBuilder = new StringBuilder();
 		literalValue.visit(new OperationExpressionValueVisitor(this.finderName, stringBuilder));
 		return stringBuilder.toString();

@@ -16,4 +16,7 @@
 
 package com.stackoverflow;
 
-public interface Document extends DocumentAbstract {}
+public interface Document
+	extends DocumentAbstract
+{
+}

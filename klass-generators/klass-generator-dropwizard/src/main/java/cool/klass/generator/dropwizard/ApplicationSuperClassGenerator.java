@@ -29,8 +29,8 @@ import javax.annotation.Nonnull;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.service.ServiceGroup;
 
-public class ApplicationSuperClassGenerator {
-
+public class ApplicationSuperClassGenerator
+{
 	@Nonnull
 	private final DomainModel domainModel;
 
@@ -50,7 +50,8 @@ public class ApplicationSuperClassGenerator {
 		@Nonnull DomainModel domainModel,
 		@Nonnull String rootPackageName,
 		@Nonnull String applicationName
-	) {
+	)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 		this.rootPackageName = Objects.requireNonNull(rootPackageName);
 		this.applicationName = Objects.requireNonNull(applicationName);
@@ -58,7 +59,9 @@ public class ApplicationSuperClassGenerator {
 		this.relativePath = this.packageName.replaceAll("\\.", "/");
 	}
 
-	public void writeAbstractApplicationFile(@Nonnull Path outputPath) throws IOException {
+	public void writeAbstractApplicationFile(@Nonnull Path outputPath)
+		throws IOException
+	{
 		Path path = outputPath.resolve(this.relativePath);
 		path.toFile().mkdirs();
 		Path javaPath = path.resolve("Abstract" + this.applicationName + "Application.java");
@@ -126,27 +129,34 @@ public class ApplicationSuperClassGenerator {
 		this.printStringToFile(javaPath, sourceCode);
 	}
 
-	private String getResourceImports() {
+	private String getResourceImports()
+	{
 		return this.domainModel.getServiceGroups().collect(this::getResourceImport).makeString("");
 	}
 
-	private String getRegisterResourcesSourceCode() {
+	private String getRegisterResourcesSourceCode()
+	{
 		return this.domainModel.getServiceGroups().collect(this::getRegisterResourceSourceCode).makeString("");
 	}
 
-	private String getResourceImport(ServiceGroup serviceGroup) {
+	private String getResourceImport(ServiceGroup serviceGroup)
+	{
 		return String.format("import %s.service.resource.%s;%n", serviceGroup.getPackageName(), serviceGroup.getName());
 	}
 
-	private String getRegisterResourceSourceCode(@Nonnull ServiceGroup serviceGroup) {
+	private String getRegisterResourceSourceCode(@Nonnull ServiceGroup serviceGroup)
+	{
 		return String.format(
 			"        environment.jersey().register(new %s(domainModel, dataStore, clock));%n",
 			serviceGroup.getName()
 		);
 	}
 
-	private void printStringToFile(@Nonnull Path path, String contents) throws FileNotFoundException {
-		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)) {
+	private void printStringToFile(@Nonnull Path path, String contents)
+		throws FileNotFoundException
+	{
+		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8))
+		{
 			printStream.print(contents);
 		}
 	}

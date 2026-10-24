@@ -42,8 +42,9 @@ import cool.klass.model.meta.grammar.KlassParser.UrlConstantContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlDeclarationContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public class UrlParameterPhase extends AbstractCompilerPhase {
-
+public class UrlParameterPhase
+	extends AbstractCompilerPhase
+{
 	@Nullable
 	private Boolean inQueryParameterList;
 
@@ -53,24 +54,28 @@ public class UrlParameterPhase extends AbstractCompilerPhase {
 	@Nullable
 	private AntlrMultiplicityOwner multiplicityOwner;
 
-	public UrlParameterPhase(@Nonnull CompilerState compilerState) {
+	public UrlParameterPhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Override
-	public void enterUrlDeclaration(@Nonnull UrlDeclarationContext ctx) {
+	public void enterUrlDeclaration(@Nonnull UrlDeclarationContext ctx)
+	{
 		super.enterUrlDeclaration(ctx);
 		this.inQueryParameterList = false;
 	}
 
 	@Override
-	public void exitUrlDeclaration(@Nonnull UrlDeclarationContext ctx) {
+	public void exitUrlDeclaration(@Nonnull UrlDeclarationContext ctx)
+	{
 		this.inQueryParameterList = null;
 		super.exitUrlDeclaration(ctx);
 	}
 
 	@Override
-	public void enterUrlConstant(@Nonnull UrlConstantContext ctx) {
+	public void enterUrlConstant(@Nonnull UrlConstantContext ctx)
+	{
 		super.enterUrlConstant(ctx);
 
 		AntlrUrl url = this.compilerState.getCompilerWalk().getUrl();
@@ -83,16 +88,19 @@ public class UrlParameterPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void enterQueryParameterList(@Nonnull QueryParameterListContext ctx) {
+	public void enterQueryParameterList(@Nonnull QueryParameterListContext ctx)
+	{
 		super.enterQueryParameterList(ctx);
 		this.inQueryParameterList = true;
 	}
 
 	@Override
-	public void enterPrimitiveParameterDeclaration(@Nonnull PrimitiveParameterDeclarationContext ctx) {
+	public void enterPrimitiveParameterDeclaration(@Nonnull PrimitiveParameterDeclarationContext ctx)
+	{
 		super.enterPrimitiveParameterDeclaration(ctx);
 
-		if (this.compilerState.getCompilerWalk().getUrl() == null) {
+		if (this.compilerState.getCompilerWalk().getUrl() == null)
+		{
 			return;
 		}
 
@@ -104,7 +112,8 @@ public class UrlParameterPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitPrimitiveParameterDeclaration(@Nonnull PrimitiveParameterDeclarationContext ctx) {
+	public void exitPrimitiveParameterDeclaration(@Nonnull PrimitiveParameterDeclarationContext ctx)
+	{
 		this.parameter = null;
 		this.multiplicityOwner = null;
 
@@ -112,10 +121,12 @@ public class UrlParameterPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void enterEnumerationParameterDeclaration(@Nonnull EnumerationParameterDeclarationContext ctx) {
+	public void enterEnumerationParameterDeclaration(@Nonnull EnumerationParameterDeclarationContext ctx)
+	{
 		super.enterEnumerationParameterDeclaration(ctx);
 
-		if (this.compilerState.getCompilerWalk().getUrl() == null) {
+		if (this.compilerState.getCompilerWalk().getUrl() == null)
+		{
 			return;
 		}
 
@@ -126,7 +137,8 @@ public class UrlParameterPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitEnumerationParameterDeclaration(@Nonnull EnumerationParameterDeclarationContext ctx) {
+	public void exitEnumerationParameterDeclaration(@Nonnull EnumerationParameterDeclarationContext ctx)
+	{
 		this.parameter = null;
 		this.multiplicityOwner = null;
 
@@ -134,7 +146,8 @@ public class UrlParameterPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void enterParameterModifier(@Nonnull ParameterModifierContext ctx) {
+	public void enterParameterModifier(@Nonnull ParameterModifierContext ctx)
+	{
 		super.enterParameterModifier(ctx);
 
 		// TODO: Check if parameter is non null?
@@ -152,8 +165,10 @@ public class UrlParameterPhase extends AbstractCompilerPhase {
 		@Nonnull ParserRuleContext ctx,
 		@Nonnull AntlrType type,
 		@Nonnull IdentifierContext identifierContext
-	) {
-		if (this.parameter != null) {
+	)
+	{
+		if (this.parameter != null)
+		{
 			throw new AssertionError();
 		}
 
@@ -170,18 +185,23 @@ public class UrlParameterPhase extends AbstractCompilerPhase {
 		);
 		this.multiplicityOwner = this.parameter;
 
-		if (this.inQueryParameterList) {
+		if (this.inQueryParameterList)
+		{
 			url.enterQueryParameterDeclaration(this.parameter);
-		} else {
+		}
+		else
+		{
 			url.enterPathParameterDeclaration(this.parameter);
 		}
 	}
 
 	@Override
-	public void enterMultiplicity(@Nonnull MultiplicityContext ctx) {
+	public void enterMultiplicity(@Nonnull MultiplicityContext ctx)
+	{
 		super.enterMultiplicity(ctx);
 
-		if (this.multiplicityOwner != null) {
+		if (this.multiplicityOwner != null)
+		{
 			var multiplicity = new AntlrMultiplicity(
 				ctx,
 				Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),

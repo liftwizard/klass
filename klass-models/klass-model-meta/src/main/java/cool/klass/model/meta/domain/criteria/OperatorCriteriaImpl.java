@@ -32,8 +32,10 @@ import cool.klass.model.meta.domain.value.AbstractExpressionValue;
 import cool.klass.model.meta.domain.value.AbstractExpressionValue.AbstractExpressionValueBuilder;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaOperatorContext;
 
-public final class OperatorCriteriaImpl extends AbstractCriteria implements OperatorCriteria {
-
+public final class OperatorCriteriaImpl
+	extends AbstractCriteria
+	implements OperatorCriteria
+{
 	@Nonnull
 	private final AbstractOperator operator;
 
@@ -50,7 +52,8 @@ public final class OperatorCriteriaImpl extends AbstractCriteria implements Oper
 		@Nonnull AbstractOperator operator,
 		@Nonnull AbstractExpressionValue sourceValue,
 		@Nonnull AbstractExpressionValue targetValue
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode);
 		this.operator = Objects.requireNonNull(operator);
 		this.sourceValue = Objects.requireNonNull(sourceValue);
@@ -59,30 +62,35 @@ public final class OperatorCriteriaImpl extends AbstractCriteria implements Oper
 
 	@Nonnull
 	@Override
-	public CriteriaOperatorContext getElementContext() {
+	public CriteriaOperatorContext getElementContext()
+	{
 		return (CriteriaOperatorContext) super.getElementContext();
 	}
 
 	@Override
 	@Nonnull
-	public AbstractOperator getOperator() {
+	public AbstractOperator getOperator()
+	{
 		return this.operator;
 	}
 
 	@Override
 	@Nonnull
-	public AbstractExpressionValue getSourceValue() {
+	public AbstractExpressionValue getSourceValue()
+	{
 		return this.sourceValue;
 	}
 
 	@Override
 	@Nonnull
-	public AbstractExpressionValue getTargetValue() {
+	public AbstractExpressionValue getTargetValue()
+	{
 		return this.targetValue;
 	}
 
-	public static final class OperatorCriteriaBuilder extends AbstractCriteriaBuilder<OperatorCriteriaImpl> {
-
+	public static final class OperatorCriteriaBuilder
+		extends AbstractCriteriaBuilder<OperatorCriteriaImpl>
+	{
 		@Nonnull
 		private final AbstractOperatorBuilder<?> operator;
 
@@ -99,7 +107,8 @@ public final class OperatorCriteriaImpl extends AbstractCriteria implements Oper
 			@Nonnull AbstractOperatorBuilder<?> operator,
 			@Nonnull AbstractExpressionValueBuilder<?> sourceValue,
 			@Nonnull AbstractExpressionValueBuilder<?> targetValue
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode);
 			this.operator = Objects.requireNonNull(operator);
 			this.sourceValue = Objects.requireNonNull(sourceValue);
@@ -108,7 +117,8 @@ public final class OperatorCriteriaImpl extends AbstractCriteria implements Oper
 
 		@Override
 		@Nonnull
-		protected OperatorCriteriaImpl buildUnsafe() {
+		protected OperatorCriteriaImpl buildUnsafe()
+		{
 			return new OperatorCriteriaImpl(
 				(CriteriaOperatorContext) this.elementContext,
 				this.macroElement.map(ElementBuilder::getElement),
@@ -120,7 +130,8 @@ public final class OperatorCriteriaImpl extends AbstractCriteria implements Oper
 		}
 
 		@Override
-		public String toString() {
+		public String toString()
+		{
 			return (
 				"OperatorCriteriaBuilder{"
 				+ "operator="

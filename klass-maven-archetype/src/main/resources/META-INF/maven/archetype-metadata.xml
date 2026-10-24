@@ -110,8 +110,10 @@
         <fileSet>
             <directory></directory>
             <includes>
+                <include>.markdownlint-cli2.jsonc</include>
                 <include>.markdownlint.jsonc</include>
                 <include>.pre-commit-config.yaml</include>
+                <include>.prettierignore</include>
                 <include>.prettierrc.json5</include>
                 <include>.tool-versions</include>
                 <include>.yamllint.yaml</include>
@@ -121,18 +123,16 @@
                 <include>mvnw.cmd</include>
                 <include>mvnw</include>
                 <include>spotbugs-exclude.xml</include>
+                <include>vite.config.ts</include>
             </includes>
         </fileSet>
 
         <fileSet filtered="true">
             <directory></directory>
             <includes>
-                <include>biome.jsonc.vm</include>
                 <include>justfile.vm</include>
+                <include>package.json.vm</include>
             </includes>
-            <excludes>
-                <exclude>biome.template.jsonc</exclude>
-            </excludes>
         </fileSet>
     </fileSets>
 
@@ -348,6 +348,13 @@
         </module>
         <!--endregion-->
 
+        <!--region ${rootArtifactId}-reladomo-readable-interfaces-->
+        <module
+                id="${rootArtifactId}-reladomo-readable-interfaces"
+                dir="__rootArtifactId__-reladomo-readable-interfaces"
+                name="${rootArtifactId}-reladomo-readable-interfaces">
+        </module>
+        <!--endregion-->
         <!--region ${rootArtifactId}-reladomo-pojos-->
         <module
                 id="${rootArtifactId}-reladomo-pojos"

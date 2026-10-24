@@ -38,8 +38,9 @@ import cool.klass.model.meta.grammar.KlassParser.ServiceProjectionDispatchContex
 import cool.klass.model.meta.grammar.KlassParser.UrlDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.VerbContext;
 
-public class ServicePhase extends AbstractCompilerPhase {
-
+public class ServicePhase
+	extends AbstractCompilerPhase
+{
 	@Nullable
 	private AntlrServiceGroup serviceGroup;
 
@@ -49,12 +50,14 @@ public class ServicePhase extends AbstractCompilerPhase {
 	@Nullable
 	private AntlrService service;
 
-	public ServicePhase(@Nonnull CompilerState compilerState) {
+	public ServicePhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Override
-	public void enterServiceGroupDeclaration(@Nonnull ServiceGroupDeclarationContext ctx) {
+	public void enterServiceGroupDeclaration(@Nonnull ServiceGroupDeclarationContext ctx)
+	{
 		super.enterServiceGroupDeclaration(ctx);
 
 		IdentifierContext nameContext = ctx.identifier();
@@ -71,14 +74,16 @@ public class ServicePhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitServiceGroupDeclaration(@Nonnull ServiceGroupDeclarationContext ctx) {
+	public void exitServiceGroupDeclaration(@Nonnull ServiceGroupDeclarationContext ctx)
+	{
 		this.compilerState.getDomainModel().exitServiceGroupDeclaration(this.serviceGroup);
 		this.serviceGroup = null;
 		super.exitServiceGroupDeclaration(ctx);
 	}
 
 	@Override
-	public void enterUrlDeclaration(@Nonnull UrlDeclarationContext ctx) {
+	public void enterUrlDeclaration(@Nonnull UrlDeclarationContext ctx)
+	{
 		super.enterUrlDeclaration(ctx);
 		this.url = new AntlrUrl(
 			ctx,
@@ -89,13 +94,15 @@ public class ServicePhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitUrlDeclaration(@Nonnull UrlDeclarationContext ctx) {
+	public void exitUrlDeclaration(@Nonnull UrlDeclarationContext ctx)
+	{
 		this.url = null;
 		super.exitUrlDeclaration(ctx);
 	}
 
 	@Override
-	public void enterServiceDeclaration(@Nonnull ServiceDeclarationContext ctx) {
+	public void enterServiceDeclaration(@Nonnull ServiceDeclarationContext ctx)
+	{
 		super.enterServiceDeclaration(ctx);
 		VerbContext verb = ctx.verb();
 		var antlrVerb = new AntlrVerb(
@@ -113,21 +120,24 @@ public class ServicePhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitServiceDeclaration(@Nonnull ServiceDeclarationContext ctx) {
+	public void exitServiceDeclaration(@Nonnull ServiceDeclarationContext ctx)
+	{
 		this.url.exitServiceDeclaration(this.service);
 		this.service = null;
 		super.exitServiceDeclaration(ctx);
 	}
 
 	@Override
-	public void enterServiceProjectionDispatch(@Nonnull ServiceProjectionDispatchContext ctx) {
+	public void enterServiceProjectionDispatch(@Nonnull ServiceProjectionDispatchContext ctx)
+	{
 		super.enterServiceProjectionDispatch(ctx);
 		ProjectionReferenceContext projectionReferenceContext = ctx.projectionReference();
 
 		String projectionName = projectionReferenceContext.identifier().getText();
 		AntlrProjection projection = this.compilerState.getDomainModel().getProjectionByName(projectionName);
 
-		if (ctx.argumentList() != null && !ctx.argumentList().argument().isEmpty()) {
+		if (ctx.argumentList() != null && !ctx.argumentList().argument().isEmpty())
+		{
 			throw new AssertionError();
 		}
 

@@ -33,8 +33,9 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
-public class GenerateReladomoMergeHooksMojo extends AbstractGenerateMojo {
-
+public class GenerateReladomoMergeHooksMojo
+	extends AbstractGenerateMojo
+{
 	@Parameter(
 		property = "outputDirectory",
 		defaultValue = "${project.build.directory}/generated-sources/reladomo-merge-hooks"
@@ -42,13 +43,17 @@ public class GenerateReladomoMergeHooksMojo extends AbstractGenerateMojo {
 	private File outputDirectory;
 
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.CLASSPATH;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
-		if (!this.outputDirectory.exists()) {
+	public void execute()
+		throws MojoExecutionException
+	{
+		if (!this.outputDirectory.exists())
+		{
 			this.outputDirectory.mkdirs();
 		}
 

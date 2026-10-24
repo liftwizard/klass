@@ -28,14 +28,17 @@ import cool.klass.model.meta.grammar.KlassParser.CriteriaExpressionContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceCriteriaDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceCriteriaKeywordContext;
 
-public class ServiceCriteriaPhase extends AbstractCompilerPhase {
-
-	public ServiceCriteriaPhase(@Nonnull CompilerState compilerState) {
+public class ServiceCriteriaPhase
+	extends AbstractCompilerPhase
+{
+	public ServiceCriteriaPhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Override
-	public void enterServiceCriteriaDeclaration(@Nonnull ServiceCriteriaDeclarationContext ctx) {
+	public void enterServiceCriteriaDeclaration(@Nonnull ServiceCriteriaDeclarationContext ctx)
+	{
 		super.enterServiceCriteriaDeclaration(ctx);
 
 		ServiceCriteriaKeywordContext serviceCriteriaKeywordContext = ctx.serviceCriteriaKeyword();
