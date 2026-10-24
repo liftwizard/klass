@@ -173,6 +173,14 @@ public class KlassCompiler {
 			compilationUnits
 		);
 
+		ImmutableList<Token> duplicateTokens = tokenCategoriesFromLexer
+			.keysView()
+			.select(tokenCategoriesFromParser::containsKey)
+			.toImmutableList();
+		if (duplicateTokens.notEmpty()) {
+			throw new AssertionError(duplicateTokens);
+		}
+
 		CompilerAnnotationHolder compilerAnnotationHolder = this.compilerState.getCompilerAnnotationHolder();
 
 		var ansiTokenColorizer = new AnsiTokenColorizer(
