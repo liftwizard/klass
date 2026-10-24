@@ -41,7 +41,7 @@ public interface AntlrTopLevelElement extends IAntlrElement {
 	}
 
 	/**
-	 * @return a context representing a block, where '{' and '}' are the start and stop tokens.
+	 * {@return a context representing a block, where the opening and closing braces are the start and stop tokens}
 	 * @throws UnsupportedOperationException unless overridden
 	 */
 	default ParserRuleContext getBlockContext() {
