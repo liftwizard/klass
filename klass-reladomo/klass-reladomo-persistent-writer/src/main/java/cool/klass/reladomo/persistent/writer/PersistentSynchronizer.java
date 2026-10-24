@@ -366,7 +366,8 @@ public abstract class PersistentSynchronizer {
 		Klass resultType = associationEnd.getType();
 		Object newInstance = this.dataStore.instantiate(resultType, keys);
 		PersistentSynchronizer synchronizer = this.determineNextMode(OperationMode.CREATE);
-		// TODO: This is a workaround for a bug and should be revisited to see if it still applies in the happy path. The bug started with an association between Owner[1..1] and Details[1..1] owned. The database wound up corrupted with no row or Details. The incoming Details object is {}, because the key matches and no other properties are being patched.
+		// TODO: Assert that a mutation occurred, using the boolean returned by synchronizeInTransaction.
+		// The assertion is disabled as a workaround for a bug and should be revisited to see if it still applies in the happy path. The bug started with an association between Owner[1..1] and Details[1..1] owned. The database wound up corrupted with no row or Details. The incoming Details object is {}, because the key matches and no other properties are being patched.
 		// throw new AssertionError();
 		synchronizer.synchronizeInTransaction(
 			resultType,
