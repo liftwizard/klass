@@ -16,7 +16,7 @@
 
 package cool.klass.model.converter.compiler.parser;
 
-import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
@@ -26,8 +26,6 @@ import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 public class ThrowingErrorListener extends BaseErrorListener {
-
-	private static final Pattern NEWLINE_PATTERN = Pattern.compile("\\r?\\n");
 
 	private final String sourceName;
 	private final String sourceCodeText;
@@ -66,12 +64,11 @@ public class ThrowingErrorListener extends BaseErrorListener {
 	}
 
 	private String getSourceLine(int line) {
-		// Split lazily, since most source code parses without errors
-		String[] lines = NEWLINE_PATTERN.split(this.sourceCodeText);
-		if (line == 1) {
-			return lines[0];
-		}
-
-		return lines[line - 2] + "\n" + lines[line - 1];
+		// Stream lazily and stop at the offending line, since most source code parses without errors
+		int firstLine = Math.max(1, line - 1);
+		return this.sourceCodeText.lines()
+			.skip(firstLine - 1)
+			.limit(line - firstLine + 1)
+			.collect(Collectors.joining("\n"));
 	}
 }
