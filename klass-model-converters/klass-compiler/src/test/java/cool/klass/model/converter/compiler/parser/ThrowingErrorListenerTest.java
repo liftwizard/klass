@@ -16,6 +16,8 @@
 
 package cool.klass.model.converter.compiler.parser;
 
+import org.antlr.v4.runtime.CommonToken;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.junit.jupiter.api.Test;
 
@@ -49,6 +51,28 @@ class ThrowingErrorListenerTest {
 
 		assertThatThrownBy(() -> listener.syntaxError(null, null, 4, 0, "bad token", null))
 			.isInstanceOf(ParseCancellationException.class)
-			.hasMessage("(example.klass:4) bad token dir/example.klass[4:0]%nthird".formatted());
+			.hasMessage("(example.klass:4) bad token dir/example.klass[4:0]%nthird\n".formatted());
+	}
+
+	@Test
+	void syntaxErrorTreatsOnlyLineFeedsAsLineBreaksLikeAntlr() {
+		var listener = new ThrowingErrorListener("dir/example.klass", "a\rb\nc\n");
+
+		assertThatThrownBy(() -> listener.syntaxError(null, null, 2, 0, "bad token", null))
+			.isInstanceOf(ParseCancellationException.class)
+			.hasMessage("(example.klass:2) bad token dir/example.klass[2:0]%na\rb\nc".formatted());
+	}
+
+	@Test
+	void syntaxErrorFindsLineFromOffendingTokenCodePointOffset() {
+		String sourceCodeText = "\uD83D\uDE00\nsecond\nthird\n";
+		var listener = new ThrowingErrorListener("dir/example.klass", sourceCodeText);
+		// The emoji is one code point but two chars, so "third" starts at code point 9 and char 10
+		Token offendingToken = new CommonToken(1, "third");
+		((CommonToken) offendingToken).setStartIndex(9);
+
+		assertThatThrownBy(() -> listener.syntaxError(null, offendingToken, 3, 0, "bad token", null))
+			.isInstanceOf(ParseCancellationException.class)
+			.hasMessage("(example.klass:3) bad token dir/example.klass[3:0]%nsecond\nthird".formatted());
 	}
 }
