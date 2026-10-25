@@ -42,7 +42,9 @@ class ThrowingErrorListenerTest {
 
 		assertThatThrownBy(() -> listener.syntaxError(null, null, 3, 0, "bad token", null))
 			.isInstanceOf(ParseCancellationException.class)
-			.hasMessage("(example.klass:3) bad token dir/example.klass[3:0]" + System.lineSeparator() + "second\nthird");
+			.hasMessage(
+				"(example.klass:3) bad token dir/example.klass[3:0]" + System.lineSeparator() + "second\nthird"
+			);
 	}
 
 	@Test
@@ -73,7 +75,9 @@ class ThrowingErrorListenerTest {
 
 		assertThatThrownBy(() -> listener.syntaxError(null, offendingToken, 3, 0, "bad token", null))
 			.isInstanceOf(ParseCancellationException.class)
-			.hasMessage("(example.klass:3) bad token dir/example.klass[3:0]" + System.lineSeparator() + "second\nthird");
+			.hasMessage(
+				"(example.klass:3) bad token dir/example.klass[3:0]" + System.lineSeparator() + "second\nthird"
+			);
 	}
 
 	@Test
