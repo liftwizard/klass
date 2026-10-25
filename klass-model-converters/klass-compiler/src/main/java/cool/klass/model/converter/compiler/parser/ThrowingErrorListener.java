@@ -16,13 +16,12 @@
 
 package cool.klass.model.converter.compiler.parser;
 
-import java.util.stream.Collectors;
-
 import javax.annotation.Nonnull;
 
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 public class ThrowingErrorListener extends BaseErrorListener {
@@ -44,7 +43,7 @@ public class ThrowingErrorListener extends BaseErrorListener {
 		String msg,
 		RecognitionException e
 	) {
-		String sourceLine = this.getSourceLine(line);
+		String sourceLine = this.getSourceLine(offendingSymbol, line);
 		String error = String.format(
 			"(%s:%d) %s %s[%d:%d]%n%s",
 			this.getFilenameWithoutDirectory(),
@@ -63,12 +62,38 @@ public class ThrowingErrorListener extends BaseErrorListener {
 		return this.sourceName.substring(this.sourceName.lastIndexOf('/') + 1);
 	}
 
-	private String getSourceLine(int line) {
-		// Stream lazily and stop at the offending line, since most source code parses without errors
-		int firstLine = Math.max(1, line - 1);
-		return this.sourceCodeText.lines()
-			.skip(firstLine - 1)
-			.limit(line - firstLine + 1)
-			.collect(Collectors.joining("\n"));
+	private String getSourceLine(Object offendingSymbol, int line) {
+		// Find line boundaries with indexOf instead of splitting, since this only runs on a syntax error
+		int offendingLineStart = this.getOffendingLineStart(offendingSymbol, line);
+		int sourceLineStart = offendingLineStart == 0 ? 0 : this.getLineStart(offendingLineStart - 1);
+		int lineFeedIndex = this.sourceCodeText.indexOf('\n', offendingLineStart);
+		int sourceLineEnd = lineFeedIndex == -1 ? this.sourceCodeText.length() : lineFeedIndex;
+		if (sourceLineEnd > offendingLineStart && this.sourceCodeText.charAt(sourceLineEnd - 1) == '\r') {
+			sourceLineEnd--;
+		}
+		return this.sourceCodeText.substring(sourceLineStart, sourceLineEnd).replace("\r\n", "\n");
+	}
+
+	private int getOffendingLineStart(Object offendingSymbol, int line) {
+		// Parser errors carry the offending token, whose start index counts code points rather than chars
+		if (offendingSymbol instanceof Token token && token.getStartIndex() >= 0) {
+			int charIndex = this.sourceCodeText.offsetByCodePoints(0, token.getStartIndex());
+			return this.getLineStart(charIndex);
+		}
+
+		// Lexer errors and tokens conjured during error recovery have no offset, so count line feeds like ANTLR does
+		int lineStart = 0;
+		for (int i = 1; i < line; i++) {
+			int lineFeedIndex = this.sourceCodeText.indexOf('\n', lineStart);
+			if (lineFeedIndex == -1) {
+				return this.sourceCodeText.length();
+			}
+			lineStart = lineFeedIndex + 1;
+		}
+		return lineStart;
+	}
+
+	private int getLineStart(int charIndex) {
+		return this.sourceCodeText.lastIndexOf('\n', charIndex - 1) + 1;
 	}
 }
