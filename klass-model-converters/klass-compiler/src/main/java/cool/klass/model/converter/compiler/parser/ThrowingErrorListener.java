@@ -103,8 +103,8 @@ public class ThrowingErrorListener extends BaseErrorListener {
 
 	private int getLineStartFromLineNumber(int line) {
 		// Lexer errors have no offending token, so count line feeds like ANTLR does
-		int lineStart = 0;
-		for (int i = 1; i < line; i++) {
+		var lineStart = 0;
+		for (var i = 1; i < line; i++) {
 			int lineFeedIndex = this.sourceCodeText.indexOf('\n', lineStart);
 			if (lineFeedIndex == -1) {
 				return this.sourceCodeText.length();
