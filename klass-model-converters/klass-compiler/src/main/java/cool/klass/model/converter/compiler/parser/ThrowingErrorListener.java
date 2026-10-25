@@ -75,13 +75,21 @@ public class ThrowingErrorListener extends BaseErrorListener {
 	}
 
 	private int getOffendingLineStart(Object offendingSymbol, int line) {
-		// Parser errors carry the offending token, whose start index counts code points rather than chars
+		// Tokens conjured during error recovery have no offset
 		if (offendingSymbol instanceof Token token && token.getStartIndex() >= 0) {
-			int charIndex = this.sourceCodeText.offsetByCodePoints(0, token.getStartIndex());
-			return this.getLineStart(charIndex);
+			return this.getLineStartFromToken(token);
 		}
+		return this.getLineStartFromLineNumber(line);
+	}
 
-		// Lexer errors and tokens conjured during error recovery have no offset, so count line feeds like ANTLR does
+	private int getLineStartFromToken(Token token) {
+		// Parser errors carry the offending token, whose start index counts code points rather than chars
+		int charIndex = this.sourceCodeText.offsetByCodePoints(0, token.getStartIndex());
+		return this.getLineStart(charIndex);
+	}
+
+	private int getLineStartFromLineNumber(int line) {
+		// Lexer errors have no offending token, so count line feeds like ANTLR does
 		int lineStart = 0;
 		for (int i = 1; i < line; i++) {
 			int lineFeedIndex = this.sourceCodeText.indexOf('\n', lineStart);
