@@ -38,17 +38,21 @@ import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
-public class AntlrAssociation extends AntlrPackageableElement implements AntlrTopLevelElement {
-
+public class AntlrAssociation
+	extends AntlrPackageableElement
+	implements AntlrTopLevelElement
+{
 	// <editor-fold desc="AMBIGUOUS">
 	public static final AntlrAssociation AMBIGUOUS = new AntlrAssociation(
 		new AssociationDeclarationContext(AMBIGUOUS_PARENT, -1),
 		AntlrCompilationUnit.AMBIGUOUS,
 		-1,
 		AMBIGUOUS_IDENTIFIER_CONTEXT
-	) {
+	)
+	{
 		@Override
-		public void enterAssociationEnd(@Nonnull AntlrAssociationEnd associationEnd) {
+		public void enterAssociationEnd(@Nonnull AntlrAssociationEnd associationEnd)
+		{
 			throw new UnsupportedOperationException(
 				this.getClass().getSimpleName() + ".enterAssociationEnd() not implemented yet"
 			);
@@ -62,9 +66,11 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
 		AntlrCompilationUnit.NOT_FOUND,
 		-1,
 		NOT_FOUND_IDENTIFIER_CONTEXT
-	) {
+	)
+	{
 		@Override
-		public void enterAssociationEnd(@Nonnull AntlrAssociationEnd associationEnd) {
+		public void enterAssociationEnd(@Nonnull AntlrAssociationEnd associationEnd)
+		{
 			throw new UnsupportedOperationException(
 				this.getClass().getSimpleName() + ".enterAssociationEnd() not implemented yet"
 			);
@@ -85,12 +91,15 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
 		@Nonnull AntlrCompilationUnit compilationUnitState,
 		int ordinal,
 		@Nonnull IdentifierContext nameContext
-	) {
+	)
+	{
 		super(elementContext, compilationUnitState, ordinal, nameContext);
 	}
 
-	public void visitCriteria(AntlrCriteriaVisitor criteriaVisitor) {
-		if (this.relationship == null) {
+	public void visitCriteria(AntlrCriteriaVisitor criteriaVisitor)
+	{
+		if (this.relationship == null)
+		{
 			return;
 		}
 		this.relationship.getCriteria().visit(criteriaVisitor);
@@ -98,42 +107,51 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
 
 	@Nonnull
 	@Override
-	public AssociationDeclarationContext getElementContext() {
+	public AssociationDeclarationContext getElementContext()
+	{
 		return (AssociationDeclarationContext) this.elementContext;
 	}
 
 	@Override
-	public AssociationBlockContext getBlockContext() {
+	public AssociationBlockContext getBlockContext()
+	{
 		return this.getElementContext().associationBlock();
 	}
 
-	public MutableList<AntlrAssociationEnd> getAssociationEnds() {
+	public MutableList<AntlrAssociationEnd> getAssociationEnds()
+	{
 		return this.associationEnds.asUnmodifiable();
 	}
 
-	public int getNumAssociationEnds() {
+	public int getNumAssociationEnds()
+	{
 		return this.associationEnds.size();
 	}
 
-	public AntlrAssociationEnd getAssociationEndByContext(AssociationEndContext ctx) {
+	public AntlrAssociationEnd getAssociationEndByContext(AssociationEndContext ctx)
+	{
 		return this.associationEndsByContext.get(ctx);
 	}
 
-	public void enterAssociationEnd(@Nonnull AntlrAssociationEnd associationEnd) {
+	public void enterAssociationEnd(@Nonnull AntlrAssociationEnd associationEnd)
+	{
 		AntlrAssociationEnd duplicate = this.associationEndsByContext.put(
 			associationEnd.getElementContext(),
 			associationEnd
 		);
-		if (duplicate != null) {
+		if (duplicate != null)
+		{
 			throw new AssertionError();
 		}
 
 		this.associationEnds.add(associationEnd);
 	}
 
-	public void exitAssociationDeclaration() {
+	public void exitAssociationDeclaration()
+	{
 		int numAssociationEnds = this.associationEnds.size();
-		if (numAssociationEnds != 2) {
+		if (numAssociationEnds != 2)
+		{
 			throw new AssertionError(numAssociationEnds);
 		}
 
@@ -146,22 +164,27 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
 		this.getSourceEnd().setOwningClass(targetType);
 		this.getTargetEnd().setOwningClass(sourceType);
 
-		if (sourceType != AntlrClass.NOT_FOUND && sourceType != AntlrClass.AMBIGUOUS) {
+		if (sourceType != AntlrClass.NOT_FOUND && sourceType != AntlrClass.AMBIGUOUS)
+		{
 			sourceType.enterAssociationEnd(this.getTargetEnd());
 		}
 
-		if (targetType != AntlrClass.NOT_FOUND && targetType != AntlrClass.AMBIGUOUS) {
+		if (targetType != AntlrClass.NOT_FOUND && targetType != AntlrClass.AMBIGUOUS)
+		{
 			targetType.enterAssociationEnd(this.getSourceEnd());
 		}
 	}
 
-	public AssociationBuilder build() {
-		if (this.associationBuilder != null) {
+	public AssociationBuilder build()
+	{
+		if (this.associationBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 
 		int numAssociationEnds = this.associationEnds.size();
-		if (numAssociationEnds != 2) {
+		if (numAssociationEnds != 2)
+		{
 			throw new AssertionError(numAssociationEnds);
 		}
 
@@ -174,9 +197,9 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
 			this.getPackageName()
 		);
 
-		ImmutableList<AssociationEndBuilder> associationEndBuilders = this.associationEnds.collect(
-			AntlrAssociationEnd::build
-		).toImmutable();
+		ImmutableList<AssociationEndBuilder> associationEndBuilders = this.associationEnds
+			.collect(AntlrAssociationEnd::build)
+			.toImmutable();
 
 		this.associationBuilder.setAssociationEndBuilders(associationEndBuilders);
 
@@ -188,14 +211,17 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
 
 	@Nonnull
 	@Override
-	public AssociationBuilder getElementBuilder() {
+	public AssociationBuilder getElementBuilder()
+	{
 		return this.associationBuilder;
 	}
 
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		int numAssociationEnds = this.associationEnds.size();
-		if (numAssociationEnds != 2) {
+		if (numAssociationEnds != 2)
+		{
 			String message = String.format(
 				"Association '%s' should have 2 ends. Found %d",
 				this.getName(),
@@ -205,7 +231,8 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
 			return;
 		}
 
-		if (this.getSourceEnd().isOwned() && this.getTargetEnd().isOwned()) {
+		if (this.getSourceEnd().isOwned() && this.getTargetEnd().isOwned())
+		{
 			String message = String.format(
 				"Both association ends are owned in '%s'. At most one end may be owned.",
 				this.getName()
@@ -223,7 +250,9 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
 					.distinct(),
 				Lists.immutable.with(sourceOwnedModifier.getElementContext(), targetOwnedModifier.getElementContext())
 			);
-		} else if (this.getSourceEnd().isToMany() && this.getTargetEnd().isToOne() && this.getTargetEnd().isOwned()) {
+		}
+		else if (this.getSourceEnd().isToMany() && this.getTargetEnd().isToOne() && this.getTargetEnd().isOwned())
+		{
 			String message = String.format(
 				"Association end '%s.%s' is owned, but is on the to-one end of a many-to-one association.",
 				this.getTargetEnd().getOwningClassifier().getName(),
@@ -239,7 +268,9 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
 					this.getElementContext().associationBlock().associationBody().associationEnd(1).multiplicity()
 				)
 			);
-		} else if (this.getSourceEnd().isToOne() && this.getTargetEnd().isToMany() && this.getSourceEnd().isOwned()) {
+		}
+		else if (this.getSourceEnd().isToOne() && this.getTargetEnd().isToMany() && this.getSourceEnd().isOwned())
+		{
 			String message = String.format(
 				"Association end '%s.%s' is owned, but is on the to-one end of a one-to-many association.",
 				this.getSourceEnd().getOwningClassifier().getName(),
@@ -255,13 +286,15 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
 					this.getElementContext().associationBlock().associationBody().associationEnd(0).multiplicity()
 				)
 			);
-		} else if (
+		}
+		else if (
 			this.getSourceEnd().isToOne()
 			&& this.getTargetEnd().isToOne()
 			&& this.getSourceEnd().isToOneRequired() == this.getTargetEnd().isToOneRequired()
 			&& !this.getSourceEnd().isOwned()
 			&& !this.getTargetEnd().isOwned()
-		) {
+		)
+		{
 			String message = String.format(
 				"Association '%s' is perfectly symmetrical, so foreign keys cannot be inferred. To break the symmetry, make one end owned, or make one end required and the other end optional.",
 				this.getName()
@@ -284,7 +317,8 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
 		if (
 			this.getSourceEnd().getType() == AntlrClass.NOT_FOUND
 			|| this.getTargetEnd().getType() == AntlrClass.NOT_FOUND
-		) {
+		)
+		{
 			this.getSourceEnd().reportTypeNotFound(compilerAnnotationHolder);
 			this.getTargetEnd().reportTypeNotFound(compilerAnnotationHolder);
 
@@ -294,38 +328,48 @@ public class AntlrAssociation extends AntlrPackageableElement implements AntlrTo
 		if (
 			this.getSourceEnd().getType() == AntlrClass.AMBIGUOUS
 			|| this.getTargetEnd().getType() == AntlrClass.AMBIGUOUS
-		) {
+		)
+		{
 			return;
 		}
 
-		if (this.relationship == null) {
+		if (this.relationship == null)
+		{
 			String message = String.format("Association '%s' has no relationship", this.getName());
 			compilerAnnotationHolder.add("ERR_ASO_REL", message, this);
-		} else {
+		}
+		else
+		{
 			this.relationship.reportErrors(compilerAnnotationHolder);
 		}
 	}
 
-	public AntlrRelationship getRelationship() {
+	public AntlrRelationship getRelationship()
+	{
 		return Objects.requireNonNull(this.relationship);
 	}
 
-	public void setRelationship(@Nonnull AntlrRelationship relationship) {
-		if (this.relationship != null) {
+	public void setRelationship(@Nonnull AntlrRelationship relationship)
+	{
+		if (this.relationship != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.relationship = Objects.requireNonNull(relationship);
 	}
 
-	public AntlrAssociationEnd getSourceEnd() {
+	public AntlrAssociationEnd getSourceEnd()
+	{
 		return this.associationEnds.getFirst();
 	}
 
-	public AntlrAssociationEnd getTargetEnd() {
+	public AntlrAssociationEnd getTargetEnd()
+	{
 		return this.associationEnds.get(1);
 	}
 
-	public boolean isManyToMany() {
+	public boolean isManyToMany()
+	{
 		return this.getSourceEnd().isToMany() && this.getTargetEnd().isToMany();
 	}
 }

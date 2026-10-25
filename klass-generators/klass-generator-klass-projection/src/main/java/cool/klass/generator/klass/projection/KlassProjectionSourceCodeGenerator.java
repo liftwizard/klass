@@ -27,14 +27,16 @@ import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public final class KlassProjectionSourceCodeGenerator {
-
-	private KlassProjectionSourceCodeGenerator() {
+public final class KlassProjectionSourceCodeGenerator
+{
+	private KlassProjectionSourceCodeGenerator()
+	{
 		throw new AssertionError("Suppress default constructor for noninstantiability");
 	}
 
 	@Nonnull
-	public static String getPackageSourceCode(DomainModel domainModel, String fullyQualifiedPackage) {
+	public static String getPackageSourceCode(DomainModel domainModel, String fullyQualifiedPackage)
+	{
 		String sourceCode = domainModel
 			.getClassifiers()
 			.select((c) -> c.getPackageName().equals(fullyQualifiedPackage))
@@ -57,14 +59,14 @@ public final class KlassProjectionSourceCodeGenerator {
 		);
 	}
 
-	private static String getClassifierSourceCode(Classifier classifier) {
+	private static String getClassifierSourceCode(Classifier classifier)
+	{
 		String dataTypePropertiesSourceCode = getDataTypePropertiesSourceCode(classifier, false).makeString("");
 
 		String referencePropertiesSourceCode = getReferencePropertiesSourceCode(classifier, false).makeString("");
 
-		ImmutableList<Klass> subClasses = classifier instanceof Klass klass
-			? klass.getSubClassChain()
-			: Lists.immutable.empty();
+		ImmutableList<Klass> subClasses =
+			classifier instanceof Klass klass ? klass.getSubClassChain() : Lists.immutable.empty();
 
 		String subClassesSourceCode = subClasses
 			.collect(KlassProjectionSourceCodeGenerator::getSubClassSourceCode)
@@ -74,7 +76,8 @@ public final class KlassProjectionSourceCodeGenerator {
 			dataTypePropertiesSourceCode.isEmpty()
 			&& referencePropertiesSourceCode.isEmpty()
 			&& subClassesSourceCode.isEmpty()
-		) {
+		)
+		{
 			return "";
 		}
 
@@ -93,19 +96,22 @@ public final class KlassProjectionSourceCodeGenerator {
 	}
 
 	@Nonnull
-	private static String getSubClassSourceCode(Klass subClass) {
+	private static String getSubClassSourceCode(Klass subClass)
+	{
 		String dataTypePropertiesSourceCode = getDataTypePropertiesSourceCode(subClass, true).makeString("");
 
 		String referencePropertiesSourceCode = getReferencePropertiesSourceCode(subClass, true).makeString("");
 
-		if (dataTypePropertiesSourceCode.isEmpty() && referencePropertiesSourceCode.isEmpty()) {
+		if (dataTypePropertiesSourceCode.isEmpty() && referencePropertiesSourceCode.isEmpty())
+		{
 			return "";
 		}
 
 		return dataTypePropertiesSourceCode + referencePropertiesSourceCode;
 	}
 
-	private static ImmutableList<String> getDataTypePropertiesSourceCode(Classifier classifier, boolean subClassMode) {
+	private static ImmutableList<String> getDataTypePropertiesSourceCode(Classifier classifier, boolean subClassMode)
+	{
 		ImmutableList<DataTypeProperty> dataTypeProperties = subClassMode
 			? classifier.getDeclaredDataTypeProperties()
 			: classifier.getDataTypeProperties();
@@ -116,7 +122,8 @@ public final class KlassProjectionSourceCodeGenerator {
 			.collectWith(KlassProjectionSourceCodeGenerator::getDataTypePropertySourceCode, subClassMode);
 	}
 
-	private static String getDataTypePropertySourceCode(DataTypeProperty dataTypeProperty, boolean subClassMode) {
+	private static String getDataTypePropertySourceCode(DataTypeProperty dataTypeProperty, boolean subClassMode)
+	{
 		String prefix = subClassMode ? dataTypeProperty.getOwningClassifier().getName() + "." : "";
 		return String.format(
 			"    %s%s: \"%s %s\",%n",
@@ -127,7 +134,8 @@ public final class KlassProjectionSourceCodeGenerator {
 		);
 	}
 
-	private static ImmutableList<String> getReferencePropertiesSourceCode(Classifier classifier, boolean subClassMode) {
+	private static ImmutableList<String> getReferencePropertiesSourceCode(Classifier classifier, boolean subClassMode)
+	{
 		ImmutableList<ReferenceProperty> properties = subClassMode
 			? classifier.getDeclaredReferenceProperties()
 			: classifier.getReferenceProperties();
@@ -138,8 +146,10 @@ public final class KlassProjectionSourceCodeGenerator {
 			.collectWith(KlassProjectionSourceCodeGenerator::getReferencePropertySourceCode, subClassMode);
 	}
 
-	private static String getReferencePropertySourceCode(ReferenceProperty referenceProperty, boolean subClassMode) {
-		if (referenceProperty.isOwned() || isOneRequiredToOneOptional(referenceProperty)) {
+	private static String getReferencePropertySourceCode(ReferenceProperty referenceProperty, boolean subClassMode)
+	{
+		if (referenceProperty.isOwned() || isOneRequiredToOneOptional(referenceProperty))
+		{
 			String prefix = subClassMode ? referenceProperty.getOwningClassifier().getName() + "." : "";
 			return String.format(
 				"    %s%s: %sProjection,%n",
@@ -158,7 +168,8 @@ public final class KlassProjectionSourceCodeGenerator {
 			.reject((property) -> property.isForeignKey() && !property.isForeignKeyToSelf())
 			.collectWith(KlassProjectionSourceCodeGenerator::getDataTypePropertySourceCode, subClassMode);
 
-		if (keyPropertiesSourceCode.isEmpty()) {
+		if (keyPropertiesSourceCode.isEmpty())
+		{
 			return "";
 		}
 
@@ -170,7 +181,8 @@ public final class KlassProjectionSourceCodeGenerator {
 		return result;
 	}
 
-	private static boolean isOneRequiredToOneOptional(ReferenceProperty referenceProperty) {
+	private static boolean isOneRequiredToOneOptional(ReferenceProperty referenceProperty)
+	{
 		return (
 			referenceProperty instanceof AssociationEnd associationEnd
 			&& associationEnd.getMultiplicity().isToOne()
@@ -180,7 +192,8 @@ public final class KlassProjectionSourceCodeGenerator {
 		);
 	}
 
-	private static boolean includeInProjection(ReferenceProperty referenceProperty) {
+	private static boolean includeInProjection(ReferenceProperty referenceProperty)
+	{
 		return (
 			!(referenceProperty instanceof AssociationEnd associationEnd)
 			|| associationEnd.getOwningAssociation().getTargetAssociationEnd() == associationEnd

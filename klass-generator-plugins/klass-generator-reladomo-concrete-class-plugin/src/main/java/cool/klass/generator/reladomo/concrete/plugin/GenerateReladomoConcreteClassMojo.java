@@ -33,24 +33,31 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
-public class GenerateReladomoConcreteClassMojo extends AbstractGenerateMojo {
-
+public class GenerateReladomoConcreteClassMojo
+	extends AbstractGenerateMojo
+{
 	@Parameter(property = "outputDirectory", defaultValue = "${project.build.sourceDirectory}")
 	private File outputDirectory;
 
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.CLASSPATH;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
+	public void execute()
+		throws MojoExecutionException
+	{
 		DomainModel domainModel = this.getDomainModel();
 
 		var generator = new ReladomoConcreteClassGenerator(domainModel);
-		try {
+		try
+		{
 			generator.writeConcreteClasses(this.outputDirectory.toPath());
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e)
+		{
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}

@@ -30,8 +30,9 @@ import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.Interval;
 
-public abstract class AntlrElement implements IAntlrElement {
-
+public abstract class AntlrElement
+	implements IAntlrElement
+{
 	public static final ParserRuleContext AMBIGUOUS_PARENT = new ParserRuleContext();
 	public static final ParserRuleContext NOT_FOUND_PARENT = new ParserRuleContext();
 
@@ -48,15 +49,18 @@ public abstract class AntlrElement implements IAntlrElement {
 	protected AntlrElement(
 		@Nonnull ParserRuleContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit
-	) {
+	)
+	{
 		this.elementContext = Objects.requireNonNull(elementContext);
 		this.compilationUnit = Objects.requireNonNull(compilationUnit);
 
 		compilationUnit.ifPresent((cu) -> AntlrElement.assertContextContains(cu.getParserContext(), elementContext));
 	}
 
-	private static void assertContextContains(ParserRuleContext parentContext, ParserRuleContext childContext) {
-		if (parentContext == childContext) {
+	private static void assertContextContains(ParserRuleContext parentContext, ParserRuleContext childContext)
+	{
+		if (parentContext == childContext)
+		{
 			return;
 		}
 
@@ -75,7 +79,8 @@ public abstract class AntlrElement implements IAntlrElement {
 	 * @throws AssertionError if the parserRuleContext is not a sentinel but looks too much like a sentinel
 	 */
 	@SuppressWarnings("unused")
-	public static String getSourceTextLenient(ParserRuleContext parserRuleContext) {
+	public static String getSourceTextLenient(ParserRuleContext parserRuleContext)
+	{
 		Objects.requireNonNull(parserRuleContext);
 
 		Token start = parserRuleContext.getStart();
@@ -92,26 +97,34 @@ public abstract class AntlrElement implements IAntlrElement {
 			|| payload != parserRuleContext
 			|| ruleContext != parserRuleContext
 			|| childCount == 0
-		) {
-			if (start != null) {
+		)
+		{
+			if (start != null)
+			{
 				throw new AssertionError();
 			}
-			if (stop != null) {
+			if (stop != null)
+			{
 				throw new AssertionError();
 			}
-			if (payload != parserRuleContext) {
+			if (payload != parserRuleContext)
+			{
 				throw new AssertionError();
 			}
-			if (ruleContext != parserRuleContext) {
+			if (ruleContext != parserRuleContext)
+			{
 				throw new AssertionError();
 			}
-			if (childCount != 0) {
+			if (childCount != 0)
+			{
 				throw new AssertionError();
 			}
-			if (parent == AMBIGUOUS_PARENT) {
+			if (parent == AMBIGUOUS_PARENT)
+			{
 				return "AMBIGUOUS";
 			}
-			if (parent == NOT_FOUND_PARENT) {
+			if (parent == NOT_FOUND_PARENT)
+			{
 				return "NOT_FOUND";
 			}
 
@@ -124,7 +137,8 @@ public abstract class AntlrElement implements IAntlrElement {
 		return start.getInputStream().getText(interval);
 	}
 
-	protected static String getSourceText(ParserRuleContext parserRuleContext) {
+	protected static String getSourceText(ParserRuleContext parserRuleContext)
+	{
 		Objects.requireNonNull(parserRuleContext.getStart());
 		Objects.requireNonNull(parserRuleContext.getStop());
 		int startIndex = parserRuleContext.getStart().getStartIndex();
@@ -135,12 +149,14 @@ public abstract class AntlrElement implements IAntlrElement {
 
 	@Override
 	@Nonnull
-	public ParserRuleContext getElementContext() {
+	public ParserRuleContext getElementContext()
+	{
 		return this.elementContext;
 	}
 
 	@Nonnull
-	public ElementBuilder<?> getElementBuilder() {
+	public ElementBuilder<?> getElementBuilder()
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".getElementBuilder() not implemented yet"
 		);
@@ -148,30 +164,36 @@ public abstract class AntlrElement implements IAntlrElement {
 
 	@Override
 	@Nonnull
-	public Optional<AntlrElement> getMacroElement() {
+	public Optional<AntlrElement> getMacroElement()
+	{
 		return this.compilationUnit.flatMap(CompilationUnit::getMacroElement);
 	}
 
-	public boolean hasMacro() {
+	public boolean hasMacro()
+	{
 		return this.getMacroElement().isPresent();
 	}
 
 	@Nonnull
-	protected Optional<ElementBuilder<?>> getMacroElementBuilder() {
+	protected Optional<ElementBuilder<?>> getMacroElementBuilder()
+	{
 		return this.getMacroElement().map((antlrElement) -> Objects.requireNonNull(antlrElement.getElementBuilder()));
 	}
 
-	protected SourceCodeBuilder getSourceCodeBuilder() {
+	protected SourceCodeBuilder getSourceCodeBuilder()
+	{
 		return this.compilationUnit.map(CompilationUnit::build).orElseThrow();
 	}
 
 	@Nonnull
 	@Override
-	public Optional<CompilationUnit> getCompilationUnit() {
+	public Optional<CompilationUnit> getCompilationUnit()
+	{
 		return this.compilationUnit;
 	}
 
-	public boolean isInSameCompilationUnit(AntlrElement other) {
+	public boolean isInSameCompilationUnit(AntlrElement other)
+	{
 		return (
 			this.compilationUnit.isPresent()
 			&& other.compilationUnit.isPresent()
@@ -179,16 +201,18 @@ public abstract class AntlrElement implements IAntlrElement {
 		);
 	}
 
-	public boolean isForwardReference(AntlrElement other) {
+	public boolean isForwardReference(AntlrElement other)
+	{
 		return (
 			this.isInSameCompilationUnit(other)
 			&& this.getElementContext().getStart().getStartIndex()
-			< other.getElementContext().getStart().getStartIndex()
+				< other.getElementContext().getStart().getStartIndex()
 		);
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return AntlrElement.getSourceText(this.getElementContext());
 	}
 }

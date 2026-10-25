@@ -36,8 +36,10 @@ import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertyContext;
 
-public class AntlrParameterizedProperty extends AntlrClassReferenceProperty implements AntlrParameterOwner {
-
+public class AntlrParameterizedProperty
+	extends AntlrClassReferenceProperty
+	implements AntlrParameterOwner
+{
 	public static final AntlrParameterizedProperty AMBIGUOUS = new AntlrParameterizedProperty(
 		new ParameterizedPropertyContext(AMBIGUOUS_PARENT, -1),
 		Optional.empty(),
@@ -72,45 +74,54 @@ public class AntlrParameterizedProperty extends AntlrClassReferenceProperty impl
 		int ordinal,
 		@Nonnull IdentifierContext nameContext,
 		@Nonnull AntlrClass owningClass
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, ordinal, nameContext);
 		this.owningClass = Objects.requireNonNull(owningClass);
 	}
 
 	@Nonnull
 	@Override
-	public ParameterizedPropertyContext getElementContext() {
+	public ParameterizedPropertyContext getElementContext()
+	{
 		return (ParameterizedPropertyContext) super.getElementContext();
 	}
 
 	@Nonnull
 	@Override
-	public Optional<IAntlrElement> getSurroundingElement() {
+	public Optional<IAntlrElement> getSurroundingElement()
+	{
 		return Optional.of(this.owningClass);
 	}
 
 	@Override
-	public int getNumParameters() {
+	public int getNumParameters()
+	{
 		return this.parameterHolder.getNumParameters();
 	}
 
 	@Override
-	public void enterParameterDeclaration(@Nonnull AntlrParameter parameter) {
+	public void enterParameterDeclaration(@Nonnull AntlrParameter parameter)
+	{
 		this.parameterHolder.enterParameterDeclaration(parameter);
 	}
 
 	@Override
-	public AntlrParameter getParameterByContext(@Nonnull ParameterDeclarationContext ctx) {
+	public AntlrParameter getParameterByContext(@Nonnull ParameterDeclarationContext ctx)
+	{
 		return this.parameterHolder.getParameterByContext(ctx);
 	}
 
 	@Nonnull
-	public AntlrCriteria getCriteria() {
+	public AntlrCriteria getCriteria()
+	{
 		return Objects.requireNonNull(this.criteria);
 	}
 
-	public void setCriteria(@Nonnull AntlrCriteria criteria) {
-		if (this.criteria != null) {
+	public void setCriteria(@Nonnull AntlrCriteria criteria)
+	{
+		if (this.criteria != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.criteria = Objects.requireNonNull(criteria);
@@ -118,8 +129,10 @@ public class AntlrParameterizedProperty extends AntlrClassReferenceProperty impl
 
 	@Nonnull
 	@Override
-	public ParameterizedPropertyBuilder build() {
-		if (this.parameterizedPropertyBuilder != null) {
+	public ParameterizedPropertyBuilder build()
+	{
+		if (this.parameterizedPropertyBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 
@@ -147,27 +160,32 @@ public class AntlrParameterizedProperty extends AntlrClassReferenceProperty impl
 
 	@Nonnull
 	@Override
-	public ParameterizedPropertyBuilder getElementBuilder() {
+	public ParameterizedPropertyBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.parameterizedPropertyBuilder);
 	}
 
 	@Override
-	protected IdentifierContext getTypeIdentifier() {
+	protected IdentifierContext getTypeIdentifier()
+	{
 		return this.getElementContext().classReference().identifier();
 	}
 
 	@Nonnull
 	@Override
-	public AntlrClass getOwningClassifier() {
+	public AntlrClass getOwningClassifier()
+	{
 		return Objects.requireNonNull(this.owningClass);
 	}
 
 	// <editor-fold desc="Report Compiler Errors">
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		super.reportErrors(compilerAnnotationHolder);
 
-		if (this.orderBy != null) {
+		if (this.orderBy != null)
+		{
 			this.orderBy.ifPresent((o) -> o.reportErrors(compilerAnnotationHolder));
 		}
 
@@ -175,7 +193,8 @@ public class AntlrParameterizedProperty extends AntlrClassReferenceProperty impl
 	}
 
 	@Override
-	public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportNameErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		super.reportNameErrors(compilerAnnotationHolder);
 		this.parameterHolder.reportNameErrors(compilerAnnotationHolder);
 	}

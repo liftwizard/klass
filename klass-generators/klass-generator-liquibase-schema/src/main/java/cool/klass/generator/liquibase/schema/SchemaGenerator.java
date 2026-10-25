@@ -20,13 +20,15 @@ import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public final class SchemaGenerator {
-
-	private SchemaGenerator() {
+public final class SchemaGenerator
+{
+	private SchemaGenerator()
+	{
 		throw new AssertionError("Suppress default constructor for noninstantiability");
 	}
 
-	public static String getSourceCode(DomainModel domainModel, String fullyQualifiedPackage) {
+	public static String getSourceCode(DomainModel domainModel, String fullyQualifiedPackage)
+	{
 		ImmutableList<Klass> classes = domainModel
 			.getClasses()
 			.select((each) -> each.getPackageName().equals(fullyQualifiedPackage));
@@ -52,15 +54,18 @@ public final class SchemaGenerator {
 		);
 	}
 
-	public static String getTableSourceCode(Klass klass, int index) {
+	public static String getTableSourceCode(Klass klass, int index)
+	{
 		return TableGenerator.getTable(klass, index + 1);
 	}
 
-	public static String getIndexSourceCode(Klass klass, int index) {
+	public static String getIndexSourceCode(Klass klass, int index)
+	{
 		return IndexGenerator.getIndex(klass, index + 1);
 	}
 
-	public static String getForeignKeySourceCode(Klass klass, int index) {
+	public static String getForeignKeySourceCode(Klass klass, int index)
+	{
 		return ForeignKeyGenerator.getForeignKeys(klass, index + 1).orElse("");
 	}
 }

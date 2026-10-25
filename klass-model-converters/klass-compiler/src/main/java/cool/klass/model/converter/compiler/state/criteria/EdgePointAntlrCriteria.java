@@ -34,8 +34,9 @@ import cool.klass.model.meta.grammar.KlassParser.CriteriaEdgePointContext;
 import org.eclipse.collections.api.list.ListIterable;
 import org.eclipse.collections.api.map.OrderedMap;
 
-public class EdgePointAntlrCriteria extends AntlrCriteria {
-
+public class EdgePointAntlrCriteria
+	extends AntlrCriteria
+{
 	@Nullable
 	private AntlrMemberReferencePath memberExpressionValue;
 
@@ -45,23 +46,28 @@ public class EdgePointAntlrCriteria extends AntlrCriteria {
 		@Nonnull CriteriaEdgePointContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull IAntlrElement criteriaOwner
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, criteriaOwner);
 	}
 
 	@Nonnull
 	@Override
-	public CriteriaEdgePointContext getElementContext() {
+	public CriteriaEdgePointContext getElementContext()
+	{
 		return (CriteriaEdgePointContext) super.getElementContext();
 	}
 
 	@Nonnull
-	public AntlrMemberReferencePath getMemberExpressionValue() {
+	public AntlrMemberReferencePath getMemberExpressionValue()
+	{
 		return Objects.requireNonNull(this.memberExpressionValue);
 	}
 
-	public void setMemberExpressionValue(@Nullable AntlrMemberReferencePath memberExpressionValue) {
-		if (this.memberExpressionValue != null) {
+	public void setMemberExpressionValue(@Nullable AntlrMemberReferencePath memberExpressionValue)
+	{
+		if (this.memberExpressionValue != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.memberExpressionValue = Objects.requireNonNull(memberExpressionValue);
@@ -69,8 +75,10 @@ public class EdgePointAntlrCriteria extends AntlrCriteria {
 
 	@Nonnull
 	@Override
-	public EdgePointCriteriaBuilder build() {
-		if (this.elementBuilder != null) {
+	public EdgePointCriteriaBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.elementBuilder = new EdgePointCriteriaBuilder(
@@ -84,15 +92,18 @@ public class EdgePointAntlrCriteria extends AntlrCriteria {
 
 	@Nonnull
 	@Override
-	public EdgePointCriteriaBuilder getElementBuilder() {
+	public EdgePointCriteriaBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		this.memberExpressionValue.reportErrors(compilerAnnotationHolder);
 		ListIterable<AntlrType> possibleTypes = this.memberExpressionValue.getPossibleTypes();
-		if (possibleTypes.anySatisfy((each) -> each.getTypeGetter() == PrimitiveType.TEMPORAL_RANGE)) {
+		if (possibleTypes.anySatisfy((each) -> each.getTypeGetter() == PrimitiveType.TEMPORAL_RANGE))
+		{
 			return;
 		}
 
@@ -102,17 +113,20 @@ public class EdgePointAntlrCriteria extends AntlrCriteria {
 	}
 
 	@Override
-	public void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName) {
+	public void resolveServiceVariables(@Nonnull OrderedMap<String, AntlrParameter> formalParametersByName)
+	{
 		// Intentionally blank
 	}
 
 	@Override
-	public void resolveTypes() {
+	public void resolveTypes()
+	{
 		// Intentionally blank
 	}
 
 	@Override
-	public void visit(AntlrCriteriaVisitor visitor) {
+	public void visit(AntlrCriteriaVisitor visitor)
+	{
 		visitor.visitEdgePoint(this);
 	}
 }

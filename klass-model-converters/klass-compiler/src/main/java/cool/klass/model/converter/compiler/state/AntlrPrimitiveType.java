@@ -28,8 +28,10 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 
-public final class AntlrPrimitiveType extends AntlrElement implements AntlrType {
-
+public final class AntlrPrimitiveType
+	extends AntlrElement
+	implements AntlrType
+{
 	public static final AntlrPrimitiveType INTEGER = new AntlrPrimitiveType(PrimitiveType.INTEGER);
 	public static final AntlrPrimitiveType LONG = new AntlrPrimitiveType(PrimitiveType.LONG);
 	public static final AntlrPrimitiveType DOUBLE = new AntlrPrimitiveType(PrimitiveType.DOUBLE);
@@ -62,54 +64,64 @@ public final class AntlrPrimitiveType extends AntlrElement implements AntlrType 
 
 	private final PrimitiveType primitiveType;
 
-	private AntlrPrimitiveType(PrimitiveType primitiveType) {
+	private AntlrPrimitiveType(PrimitiveType primitiveType)
+	{
 		super(new ParserRuleContext(), Optional.empty());
 		this.primitiveType = primitiveType;
 	}
 
-	public static AntlrPrimitiveType valueOf(PrimitiveType type) {
+	public static AntlrPrimitiveType valueOf(PrimitiveType type)
+	{
 		return Objects.requireNonNull(BY_TYPE.get(type));
 	}
 
 	@Nonnull
 	@Override
-	public Optional<IAntlrElement> getSurroundingElement() {
+	public Optional<IAntlrElement> getSurroundingElement()
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".getSurroundingContext() not implemented yet"
 		);
 	}
 
 	@Override
-	public String getName() {
+	public String getName()
+	{
 		return this.primitiveType.getPrettyName();
 	}
 
 	@Nonnull
-	public PrimitiveType getPrimitiveType() {
+	public PrimitiveType getPrimitiveType()
+	{
 		return Objects.requireNonNull(this.primitiveType);
 	}
 
 	@Nonnull
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		Objects.requireNonNull(this.primitiveType);
 		return this.primitiveType.toString();
 	}
 
 	@Override
-	public PrimitiveType getTypeGetter() {
+	public PrimitiveType getTypeGetter()
+	{
 		return this.primitiveType;
 	}
 
 	@Nonnull
 	@Override
-	public PrimitiveTypeBuilder getElementBuilder() {
+	public PrimitiveTypeBuilder getElementBuilder()
+	{
 		return new PrimitiveTypeBuilder(this.getElementContext(), this.getMacroElementBuilder(), this.primitiveType);
 	}
 
 	@Override
-	public ImmutableList<AntlrType> getPotentialWiderTypes() {
-		return switch (this.primitiveType) {
+	public ImmutableList<AntlrType> getPotentialWiderTypes()
+	{
+		return switch (this.primitiveType)
+		{
 			case INTEGER -> Lists.immutable.with(INTEGER, LONG, FLOAT, DOUBLE);
 			case LONG -> Lists.immutable.with(LONG, DOUBLE);
 			case DOUBLE -> Lists.immutable.with(DOUBLE);

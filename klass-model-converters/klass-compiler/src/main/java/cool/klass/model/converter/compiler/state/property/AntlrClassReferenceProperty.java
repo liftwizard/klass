@@ -30,8 +30,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 
 public abstract class AntlrClassReferenceProperty
 	extends AntlrReferenceProperty<AntlrClass>
-	implements AntlrClassReferenceOwner {
-
+	implements AntlrClassReferenceOwner
+{
 	protected AntlrClassReference classReference;
 
 	protected AntlrClassReferenceProperty(
@@ -39,13 +39,16 @@ public abstract class AntlrClassReferenceProperty
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		int ordinal,
 		@Nonnull IdentifierContext nameContext
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, ordinal, nameContext);
 	}
 
 	@Override
-	public void enterClassReference(@Nonnull AntlrClassReference classReference) {
-		if (this.classReference != null) {
+	public void enterClassReference(@Nonnull AntlrClassReference classReference)
+	{
+		if (this.classReference != null)
+		{
 			throw new AssertionError();
 		}
 
@@ -54,7 +57,8 @@ public abstract class AntlrClassReferenceProperty
 
 	@Nonnull
 	@Override
-	public AntlrClass getType() {
+	public AntlrClass getType()
+	{
 		return this.classReference.getKlass();
 	}
 }

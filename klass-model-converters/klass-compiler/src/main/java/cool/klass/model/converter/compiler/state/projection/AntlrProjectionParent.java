@@ -38,8 +38,9 @@ import org.eclipse.collections.api.multimap.list.MutableListMultimap;
 import org.eclipse.collections.api.set.ImmutableSet;
 import org.eclipse.collections.api.set.MutableSet;
 
-public abstract class AntlrProjectionParent extends AntlrIdentifierElement {
-
+public abstract class AntlrProjectionParent
+	extends AntlrIdentifierElement
+{
 	@Nonnull
 	protected final AntlrClassifier classifier;
 
@@ -51,7 +52,8 @@ public abstract class AntlrProjectionParent extends AntlrIdentifierElement {
 		int ordinal,
 		@Nonnull IdentifierContext nameContext,
 		@Nonnull AntlrClassifier classifier
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, ordinal, nameContext);
 		this.classifier = Objects.requireNonNull(classifier);
 	}
@@ -60,39 +62,49 @@ public abstract class AntlrProjectionParent extends AntlrIdentifierElement {
 	@Nonnull
 	public abstract AbstractProjectionParentBuilder<? extends AbstractProjectionParent> getElementBuilder();
 
-	public MutableList<AntlrProjectionChild> getChildren() {
+	public MutableList<AntlrProjectionChild> getChildren()
+	{
 		return this.children.asUnmodifiable();
 	}
 
 	@Nonnull
-	public AntlrClassifier getClassifier() {
+	public AntlrClassifier getClassifier()
+	{
 		return this.classifier;
 	}
 
-	public int getNumChildren() {
+	public int getNumChildren()
+	{
 		return this.children.size();
 	}
 
-	public void enterAntlrProjectionMember(@Nonnull AntlrProjectionChild child) {
+	public void enterAntlrProjectionMember(@Nonnull AntlrProjectionChild child)
+	{
 		this.children.add(child);
 	}
 
-	protected ImmutableSet<AntlrProjectionChild> getDuplicateMembers() {
+	protected ImmutableSet<AntlrProjectionChild> getDuplicateMembers()
+	{
 		MutableSet<AntlrProjectionChild> duplicates = Sets.mutable.empty();
 		MutableListMultimap<String, AntlrProjectionChild> byName = this.children.groupBy(
 			AntlrProjectionElement::getName
 		);
 
-		byName.forEachKeyMultiValues((name, members) -> {
+		byName.forEachKeyMultiValues((name, members) ->
+		{
 			MutableList<AntlrProjectionChild> list = Lists.mutable.withAll(members);
-			if (list.size() < 2) {
+			if (list.size() < 2)
+			{
 				return;
 			}
-			for (var i = 0; i < list.size(); i++) {
-				for (int j = i + 1; j < list.size(); j++) {
+			for (var i = 0; i < list.size(); i++)
+			{
+				for (int j = i + 1; j < list.size(); j++)
+				{
 					AntlrClassifier classA = list.get(i).getDeclaringClassifier();
 					AntlrClassifier classB = list.get(j).getDeclaringClassifier();
-					if (areOverlappingClassifiers(classA, classB)) {
+					if (areOverlappingClassifiers(classA, classB))
+					{
 						duplicates.add(list.get(i));
 						duplicates.add(list.get(j));
 					}
@@ -102,21 +114,26 @@ public abstract class AntlrProjectionParent extends AntlrIdentifierElement {
 		return duplicates.toImmutable();
 	}
 
-	private static boolean areOverlappingClassifiers(AntlrClassifier a, AntlrClassifier b) {
+	private static boolean areOverlappingClassifiers(AntlrClassifier a, AntlrClassifier b)
+	{
 		if (
 			!(a instanceof AntlrClass || a instanceof AntlrInterface)
 			|| !(b instanceof AntlrClass || b instanceof AntlrInterface)
-		) {
+		)
+		{
 			return true;
 		}
 		return a.isSubTypeOf(b) || b.isSubTypeOf(a);
 	}
 
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		ImmutableSet<AntlrProjectionChild> duplicateMembers = this.getDuplicateMembers();
 
-		for (AntlrProjectionChild projectionMember : this.children) {
-			if (duplicateMembers.contains(projectionMember)) {
+		for (AntlrProjectionChild projectionMember : this.children)
+		{
+			if (duplicateMembers.contains(projectionMember))
+			{
 				projectionMember.reportDuplicateMemberName(compilerAnnotationHolder);
 			}
 		}

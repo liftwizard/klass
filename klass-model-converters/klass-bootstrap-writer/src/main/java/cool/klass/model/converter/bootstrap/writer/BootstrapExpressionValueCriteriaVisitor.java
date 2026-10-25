@@ -30,31 +30,38 @@ import cool.klass.model.meta.domain.api.value.ExpressionValue;
 import cool.klass.model.meta.domain.api.value.ExpressionValueVisitor;
 import cool.klass.model.meta.domain.api.value.MemberReferencePath;
 
-public class BootstrapExpressionValueCriteriaVisitor implements CriteriaVisitor {
-
+public class BootstrapExpressionValueCriteriaVisitor
+	implements CriteriaVisitor
+{
 	private final ExpressionValueVisitor expressionValueVisitor;
 
-	public BootstrapExpressionValueCriteriaVisitor(ExpressionValueVisitor expressionValueVisitor) {
+	public BootstrapExpressionValueCriteriaVisitor(ExpressionValueVisitor expressionValueVisitor)
+	{
 		this.expressionValueVisitor = Objects.requireNonNull(expressionValueVisitor);
 	}
 
 	@Override
-	public void visitAll(@Nonnull AllCriteria allCriteria) {}
+	public void visitAll(@Nonnull AllCriteria allCriteria)
+	{
+	}
 
 	@Override
-	public void visitAnd(@Nonnull AndCriteria andCriteria) {
+	public void visitAnd(@Nonnull AndCriteria andCriteria)
+	{
 		andCriteria.getLeft().visit(this);
 		andCriteria.getRight().visit(this);
 	}
 
 	@Override
-	public void visitOr(@Nonnull OrCriteria orCriteria) {
+	public void visitOr(@Nonnull OrCriteria orCriteria)
+	{
 		orCriteria.getLeft().visit(this);
 		orCriteria.getRight().visit(this);
 	}
 
 	@Override
-	public void visitOperator(@Nonnull OperatorCriteria operatorCriteria) {
+	public void visitOperator(@Nonnull OperatorCriteria operatorCriteria)
+	{
 		ExpressionValue sourceValue = operatorCriteria.getSourceValue();
 		ExpressionValue targetValue = operatorCriteria.getTargetValue();
 
@@ -63,7 +70,8 @@ public class BootstrapExpressionValueCriteriaVisitor implements CriteriaVisitor 
 	}
 
 	@Override
-	public void visitEdgePoint(@Nonnull EdgePointCriteria edgePointCriteria) {
+	public void visitEdgePoint(@Nonnull EdgePointCriteria edgePointCriteria)
+	{
 		MemberReferencePath memberExpressionValue = edgePointCriteria.getMemberExpressionValue();
 		memberExpressionValue.visit(this.expressionValueVisitor);
 	}

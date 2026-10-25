@@ -55,8 +55,9 @@ import cool.klass.model.meta.grammar.KlassParser.MinValidationContext;
 import cool.klass.model.meta.grammar.KlassParser.MultiplicityContext;
 import cool.klass.model.meta.grammar.KlassParser.PrimitivePropertyContext;
 
-public class PropertyPhase extends AbstractCompilerPhase {
-
+public class PropertyPhase
+	extends AbstractCompilerPhase
+{
 	@Nullable
 	private AntlrDataTypeProperty<?> dataTypeProperty;
 
@@ -69,21 +70,26 @@ public class PropertyPhase extends AbstractCompilerPhase {
 	@Nullable
 	private AntlrMultiplicityOwner multiplicityOwner;
 
-	public PropertyPhase(@Nonnull CompilerState compilerState) {
+	public PropertyPhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Override
-	public void enterAssociationEndSignature(@Nonnull AssociationEndSignatureContext ctx) {
+	public void enterAssociationEndSignature(@Nonnull AssociationEndSignatureContext ctx)
+	{
 		super.enterAssociationEndSignature(ctx);
 
-		if (this.associationEndSignature != null) {
+		if (this.associationEndSignature != null)
+		{
 			throw new IllegalStateException();
 		}
-		if (this.classifierReferenceOwner != null) {
+		if (this.classifierReferenceOwner != null)
+		{
 			throw new IllegalStateException();
 		}
-		if (this.multiplicityOwner != null) {
+		if (this.multiplicityOwner != null)
+		{
 			throw new IllegalStateException();
 		}
 
@@ -101,7 +107,8 @@ public class PropertyPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitAssociationEndSignature(@Nonnull AssociationEndSignatureContext ctx) {
+	public void exitAssociationEndSignature(@Nonnull AssociationEndSignatureContext ctx)
+	{
 		Objects.requireNonNull(this.associationEndSignature);
 		this.associationEndSignature = null;
 		this.classifierReferenceOwner = null;
@@ -110,7 +117,8 @@ public class PropertyPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void enterPrimitiveProperty(@Nonnull PrimitivePropertyContext ctx) {
+	public void enterPrimitiveProperty(@Nonnull PrimitivePropertyContext ctx)
+	{
 		super.enterPrimitiveProperty(ctx);
 
 		boolean isOptional = ctx.optionalMarker() != null;
@@ -118,7 +126,8 @@ public class PropertyPhase extends AbstractCompilerPhase {
 		PrimitiveType primitiveType = PrimitiveType.byPrettyName(primitiveTypeName);
 		AntlrPrimitiveType primitiveTypeState = AntlrPrimitiveType.valueOf(primitiveType);
 
-		if (this.dataTypeProperty != null) {
+		if (this.dataTypeProperty != null)
+		{
 			throw new IllegalStateException();
 		}
 
@@ -137,14 +146,16 @@ public class PropertyPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitPrimitiveProperty(@Nonnull PrimitivePropertyContext ctx) {
+	public void exitPrimitiveProperty(@Nonnull PrimitivePropertyContext ctx)
+	{
 		Objects.requireNonNull(this.dataTypeProperty);
 		this.dataTypeProperty = null;
 		super.exitPrimitiveProperty(ctx);
 	}
 
 	@Override
-	public void enterEnumerationProperty(@Nonnull EnumerationPropertyContext ctx) {
+	public void enterEnumerationProperty(@Nonnull EnumerationPropertyContext ctx)
+	{
 		super.enterEnumerationProperty(ctx);
 
 		boolean isOptional = ctx.optionalMarker() != null;
@@ -152,7 +163,8 @@ public class PropertyPhase extends AbstractCompilerPhase {
 		String enumerationName = ctx.enumerationReference().getText();
 		AntlrEnumeration enumeration = domainModel.getEnumerationByName(enumerationName);
 
-		if (this.dataTypeProperty != null) {
+		if (this.dataTypeProperty != null)
+		{
 			throw new IllegalStateException();
 		}
 		CompilerWalkState compilerWalk = this.compilerState.getCompilerWalk();
@@ -170,7 +182,8 @@ public class PropertyPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void exitEnumerationProperty(@Nonnull EnumerationPropertyContext ctx) {
+	public void exitEnumerationProperty(@Nonnull EnumerationPropertyContext ctx)
+	{
 		Objects.requireNonNull(this.dataTypeProperty);
 		this.dataTypeProperty = null;
 
@@ -178,7 +191,8 @@ public class PropertyPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void enterMinLengthValidation(@Nonnull MinLengthValidationContext ctx) {
+	public void enterMinLengthValidation(@Nonnull MinLengthValidationContext ctx)
+	{
 		super.enterMinLengthValidation(ctx);
 
 		IntegerLiteralContext integerLiteralContext = ctx.integerValidationParameter().integerLiteral();
@@ -193,7 +207,8 @@ public class PropertyPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void enterMaxLengthValidation(@Nonnull MaxLengthValidationContext ctx) {
+	public void enterMaxLengthValidation(@Nonnull MaxLengthValidationContext ctx)
+	{
 		super.enterMaxLengthValidation(ctx);
 
 		IntegerLiteralContext integerLiteralContext = ctx.integerValidationParameter().integerLiteral();
@@ -208,7 +223,8 @@ public class PropertyPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void enterMinValidation(@Nonnull MinValidationContext ctx) {
+	public void enterMinValidation(@Nonnull MinValidationContext ctx)
+	{
 		super.enterMinValidation(ctx);
 
 		IntegerLiteralContext integerLiteralContext = ctx.integerValidationParameter().integerLiteral();
@@ -223,7 +239,8 @@ public class PropertyPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void enterMaxValidation(@Nonnull MaxValidationContext ctx) {
+	public void enterMaxValidation(@Nonnull MaxValidationContext ctx)
+	{
 		super.enterMaxValidation(ctx);
 
 		IntegerLiteralContext integerLiteralContext = ctx.integerValidationParameter().integerLiteral();
@@ -238,10 +255,12 @@ public class PropertyPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void enterMultiplicity(@Nonnull MultiplicityContext ctx) {
+	public void enterMultiplicity(@Nonnull MultiplicityContext ctx)
+	{
 		super.enterMultiplicity(ctx);
 
-		if (this.multiplicityOwner == null) {
+		if (this.multiplicityOwner == null)
+		{
 			return;
 		}
 
@@ -255,7 +274,8 @@ public class PropertyPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void enterDataTypePropertyModifier(DataTypePropertyModifierContext ctx) {
+	public void enterDataTypePropertyModifier(DataTypePropertyModifierContext ctx)
+	{
 		super.enterDataTypePropertyModifier(ctx);
 		var modifier = new AntlrModifier(
 			ctx,
@@ -267,10 +287,12 @@ public class PropertyPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void enterAssociationEndModifier(@Nonnull AssociationEndModifierContext ctx) {
+	public void enterAssociationEndModifier(@Nonnull AssociationEndModifierContext ctx)
+	{
 		super.enterAssociationEndModifier(ctx);
 
-		if (this.associationEndSignature == null) {
+		if (this.associationEndSignature == null)
+		{
 			return;
 		}
 
@@ -284,10 +306,12 @@ public class PropertyPhase extends AbstractCompilerPhase {
 	}
 
 	@Override
-	public void enterClassifierReference(@Nonnull ClassifierReferenceContext ctx) {
+	public void enterClassifierReference(@Nonnull ClassifierReferenceContext ctx)
+	{
 		super.enterClassifierReference(ctx);
 
-		if (this.classifierReferenceOwner == null) {
+		if (this.classifierReferenceOwner == null)
+		{
 			return;
 		}
 
@@ -304,14 +328,16 @@ public class PropertyPhase extends AbstractCompilerPhase {
 		this.classifierReferenceOwner.enterClassifierReference(classifierReference);
 	}
 
-	private int getIntegerFromLiteral(@Nonnull IntegerLiteralContext integerLiteralContext) {
+	private int getIntegerFromLiteral(@Nonnull IntegerLiteralContext integerLiteralContext)
+	{
 		String integerText = integerLiteralContext.getText();
 		String withoutUnderscores = integerText.replaceAll("_", "");
 		return Integer.decode(withoutUnderscores);
 	}
 
 	@Nullable
-	private AntlrClassifier getClassifier() {
+	private AntlrClassifier getClassifier()
+	{
 		return this.compilerState.getCompilerWalk().getClassifier();
 	}
 }

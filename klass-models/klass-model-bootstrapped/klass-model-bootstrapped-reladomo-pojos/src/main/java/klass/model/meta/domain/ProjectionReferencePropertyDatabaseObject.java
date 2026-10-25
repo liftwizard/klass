@@ -16,4 +16,7 @@
 
 package klass.model.meta.domain;
 
-public class ProjectionReferencePropertyDatabaseObject extends ProjectionReferencePropertyDatabaseObjectAbstract {}
+public class ProjectionReferencePropertyDatabaseObject
+	extends ProjectionReferencePropertyDatabaseObjectAbstract
+{
+}

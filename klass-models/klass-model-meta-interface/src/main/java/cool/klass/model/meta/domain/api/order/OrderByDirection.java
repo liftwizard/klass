@@ -24,7 +24,8 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 
-public enum OrderByDirection {
+public enum OrderByDirection
+{
 	ASCENDING("ascending"),
 	DESCENDING("descending");
 
@@ -40,22 +41,26 @@ public enum OrderByDirection {
 	@Nonnull
 	private final String prettyName;
 
-	OrderByDirection(@Nonnull String prettyName) {
+	OrderByDirection(@Nonnull String prettyName)
+	{
 		this.prettyName = prettyName;
 	}
 
-	public static OrderByDirection byPrettyName(String name) {
+	public static OrderByDirection byPrettyName(String name)
+	{
 		return Objects.requireNonNull(BY_PRETTY_NAME.get(name));
 	}
 
 	@Nonnull
-	public String getPrettyName() {
+	public String getPrettyName()
+	{
 		return this.prettyName;
 	}
 
 	@Nonnull
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return this.getPrettyName();
 	}
 }

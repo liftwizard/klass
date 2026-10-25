@@ -46,8 +46,9 @@ import cool.klass.model.meta.grammar.KlassParser.RelationshipContext;
 import cool.klass.model.meta.grammar.KlassVisitor;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public class ParameterizedPropertyPhase extends ReferencePropertyPhase {
-
+public class ParameterizedPropertyPhase
+	extends ReferencePropertyPhase
+{
 	@Nullable
 	private AntlrParameterizedProperty parameterizedProperty;
 
@@ -61,27 +62,34 @@ public class ParameterizedPropertyPhase extends ReferencePropertyPhase {
 	@Nullable
 	private AntlrParameterOwner parameterOwner;
 
-	public ParameterizedPropertyPhase(@Nonnull CompilerState compilerState) {
+	public ParameterizedPropertyPhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Override
-	public void enterParameterizedProperty(@Nonnull ParameterizedPropertyContext ctx) {
+	public void enterParameterizedProperty(@Nonnull ParameterizedPropertyContext ctx)
+	{
 		super.enterParameterizedProperty(ctx);
 
-		if (this.parameterizedProperty != null) {
+		if (this.parameterizedProperty != null)
+		{
 			throw new IllegalStateException();
 		}
-		if (this.parameterOwner != null) {
+		if (this.parameterOwner != null)
+		{
 			throw new IllegalStateException();
 		}
-		if (this.criteriaOwner != null) {
+		if (this.criteriaOwner != null)
+		{
 			throw new IllegalStateException();
 		}
-		if (this.classReferenceOwner != null) {
+		if (this.classReferenceOwner != null)
+		{
 			throw new IllegalStateException();
 		}
-		if (this.multiplicityOwner != null) {
+		if (this.multiplicityOwner != null)
+		{
 			throw new IllegalStateException();
 		}
 
@@ -116,7 +124,8 @@ public class ParameterizedPropertyPhase extends ReferencePropertyPhase {
 	}
 
 	@Override
-	public void exitParameterizedProperty(@Nonnull ParameterizedPropertyContext ctx) {
+	public void exitParameterizedProperty(@Nonnull ParameterizedPropertyContext ctx)
+	{
 		this.parameterizedProperty = null;
 		this.parameterOwner = null;
 		this.criteriaOwner = null;
@@ -128,10 +137,12 @@ public class ParameterizedPropertyPhase extends ReferencePropertyPhase {
 
 	// TODO: Should probably be moved to its own phase for consistency
 	@Override
-	public void enterRelationship(@Nonnull RelationshipContext ctx) {
+	public void enterRelationship(@Nonnull RelationshipContext ctx)
+	{
 		super.enterRelationship(ctx);
 
-		if (this.parameterizedProperty == null) {
+		if (this.parameterizedProperty == null)
+		{
 			return;
 		}
 
@@ -141,10 +152,12 @@ public class ParameterizedPropertyPhase extends ReferencePropertyPhase {
 	}
 
 	@Override
-	public void enterPrimitiveParameterDeclaration(@Nonnull PrimitiveParameterDeclarationContext ctx) {
+	public void enterPrimitiveParameterDeclaration(@Nonnull PrimitiveParameterDeclarationContext ctx)
+	{
 		super.enterPrimitiveParameterDeclaration(ctx);
 
-		if (this.parameterizedProperty == null) {
+		if (this.parameterizedProperty == null)
+		{
 			return;
 		}
 
@@ -156,7 +169,8 @@ public class ParameterizedPropertyPhase extends ReferencePropertyPhase {
 	}
 
 	@Override
-	public void exitPrimitiveParameterDeclaration(@Nonnull PrimitiveParameterDeclarationContext ctx) {
+	public void exitPrimitiveParameterDeclaration(@Nonnull PrimitiveParameterDeclarationContext ctx)
+	{
 		this.parameter = null;
 		this.multiplicityOwner = null;
 
@@ -164,10 +178,12 @@ public class ParameterizedPropertyPhase extends ReferencePropertyPhase {
 	}
 
 	@Override
-	public void enterEnumerationParameterDeclaration(@Nonnull EnumerationParameterDeclarationContext ctx) {
+	public void enterEnumerationParameterDeclaration(@Nonnull EnumerationParameterDeclarationContext ctx)
+	{
 		super.enterEnumerationParameterDeclaration(ctx);
 
-		if (this.parameterizedProperty == null) {
+		if (this.parameterizedProperty == null)
+		{
 			return;
 		}
 
@@ -178,7 +194,8 @@ public class ParameterizedPropertyPhase extends ReferencePropertyPhase {
 	}
 
 	@Override
-	public void exitEnumerationParameterDeclaration(@Nonnull EnumerationParameterDeclarationContext ctx) {
+	public void exitEnumerationParameterDeclaration(@Nonnull EnumerationParameterDeclarationContext ctx)
+	{
 		this.parameter = null;
 		this.multiplicityOwner = null;
 
@@ -186,7 +203,8 @@ public class ParameterizedPropertyPhase extends ReferencePropertyPhase {
 	}
 
 	@Override
-	public void enterParameterDeclarationList(@Nonnull ParameterDeclarationListContext ctx) {
+	public void enterParameterDeclarationList(@Nonnull ParameterDeclarationListContext ctx)
+	{
 		super.enterParameterDeclarationList(ctx);
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".enterParameterDeclarationList() not implemented yet"
@@ -194,7 +212,8 @@ public class ParameterizedPropertyPhase extends ReferencePropertyPhase {
 	}
 
 	@Override
-	public void exitParameterDeclarationList(@Nonnull ParameterDeclarationListContext ctx) {
+	public void exitParameterDeclarationList(@Nonnull ParameterDeclarationListContext ctx)
+	{
 		super.exitParameterDeclarationList(ctx);
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".exitParameterDeclarationList() not implemented yet"
@@ -202,9 +221,11 @@ public class ParameterizedPropertyPhase extends ReferencePropertyPhase {
 	}
 
 	@Override
-	public void enterParameterModifier(@Nonnull ParameterModifierContext ctx) {
+	public void enterParameterModifier(@Nonnull ParameterModifierContext ctx)
+	{
 		super.enterParameterModifier(ctx);
-		if (this.parameterizedProperty == null && this.parameter == null) {
+		if (this.parameterizedProperty == null && this.parameter == null)
+		{
 			return;
 		}
 
@@ -222,8 +243,10 @@ public class ParameterizedPropertyPhase extends ReferencePropertyPhase {
 		@Nonnull ParserRuleContext ctx,
 		@Nonnull AntlrType typeState,
 		@Nonnull IdentifierContext identifierContext
-	) {
-		if (this.parameter != null) {
+	)
+	{
+		if (this.parameter != null)
+		{
 			throw new IllegalStateException();
 		}
 

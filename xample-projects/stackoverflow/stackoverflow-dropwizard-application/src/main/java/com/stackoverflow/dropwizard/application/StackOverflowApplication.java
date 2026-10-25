@@ -34,24 +34,30 @@ import io.dropwizard.setup.Environment;
 import io.liftwizard.dropwizard.bundle.httplogging.JerseyHttpLoggingBundle;
 import io.liftwizard.servlet.logging.mdc.StructuredArgumentsMDCLogger;
 
-public class StackOverflowApplication extends AbstractStackOverflowApplication {
-
-	public static void main(String[] args) throws Exception {
+public class StackOverflowApplication
+	extends AbstractStackOverflowApplication
+{
+	public static void main(String[] args)
+		throws Exception
+	{
 		new StackOverflowApplication().run(args);
 	}
 
 	@Override
-	public void initialize(@Nonnull Bootstrap<StackOverflowConfiguration> bootstrap) {
+	public void initialize(@Nonnull Bootstrap<StackOverflowConfiguration> bootstrap)
+	{
 		super.initialize(bootstrap);
 	}
 
 	@Override
-	protected void initializeCommands(@Nonnull Bootstrap<StackOverflowConfiguration> bootstrap) {
+	protected void initializeCommands(@Nonnull Bootstrap<StackOverflowConfiguration> bootstrap)
+	{
 		super.initializeCommands(bootstrap);
 	}
 
 	@Override
-	protected void initializeBundles(@Nonnull Bootstrap<StackOverflowConfiguration> bootstrap) {
+	protected void initializeBundles(@Nonnull Bootstrap<StackOverflowConfiguration> bootstrap)
+	{
 		super.initializeBundles(bootstrap);
 
 		var structuredLogger = new StructuredArgumentsMDCLogger(bootstrap.getObjectMapper());
@@ -59,9 +65,11 @@ public class StackOverflowApplication extends AbstractStackOverflowApplication {
 		bootstrap.addBundle(new KlassGraphQLBundle<>());
 
 		bootstrap.addBundle(
-			new MigrationsBundle<>() {
+			new MigrationsBundle<>()
+			{
 				@Override
-				public DataSourceFactory getDataSourceFactory(StackOverflowConfiguration configuration) {
+				public DataSourceFactory getDataSourceFactory(StackOverflowConfiguration configuration)
+				{
 					return configuration.getNamedDataSourcesFactory().getNamedDataSourceFactoryByName("h2-tcp");
 				}
 			}
@@ -69,7 +77,8 @@ public class StackOverflowApplication extends AbstractStackOverflowApplication {
 	}
 
 	@Override
-	protected void registerJacksonModules(@Nonnull Environment environment) {
+	protected void registerJacksonModules(@Nonnull Environment environment)
+	{
 		super.registerJacksonModules(environment);
 
 		environment.getObjectMapper().registerModule(new KlassMetaModelJacksonModule());
@@ -77,7 +86,8 @@ public class StackOverflowApplication extends AbstractStackOverflowApplication {
 
 	@Override
 	public void run(@Nonnull StackOverflowConfiguration configuration, @Nonnull Environment environment)
-		throws Exception {
+		throws Exception
+	{
 		super.run(configuration, environment);
 
 		ObjectMapper objectMapper = environment.getObjectMapper();
