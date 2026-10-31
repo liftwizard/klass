@@ -21,16 +21,17 @@ import javax.annotation.Nonnull;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 public class ThrowingErrorListener extends BaseErrorListener {
 
 	private final String sourceName;
-	private final String[] lines;
+	private final String sourceCodeText;
 
-	public ThrowingErrorListener(String sourceName, String[] lines) {
+	public ThrowingErrorListener(String sourceName, String sourceCodeText) {
 		this.sourceName = sourceName;
-		this.lines = lines;
+		this.sourceCodeText = sourceCodeText;
 	}
 
 	@Override
@@ -42,7 +43,7 @@ public class ThrowingErrorListener extends BaseErrorListener {
 		String msg,
 		RecognitionException e
 	) {
-		String sourceLine = this.getSourceLine(line);
+		String sourceLine = this.getSourceLine(offendingSymbol, line);
 		String error = String.format(
 			"(%s:%d) %s %s[%d:%d]%n%s",
 			this.getFilenameWithoutDirectory(),
@@ -61,11 +62,68 @@ public class ThrowingErrorListener extends BaseErrorListener {
 		return this.sourceName.substring(this.sourceName.lastIndexOf('/') + 1);
 	}
 
-	private String getSourceLine(int line) {
-		if (line == 1) {
-			return this.lines[0];
+	private String getSourceLine(Object offendingSymbol, int line) {
+		// Find line boundaries with indexOf instead of splitting, since this only runs on a syntax error
+		int offendingLineStart = this.getOffendingLineStart(offendingSymbol, line);
+		int offendingLineEnd = this.getLineEnd(offendingLineStart);
+		if (this.sourceCodeText.substring(offendingLineStart, offendingLineEnd).isBlank()) {
+			// Errors at the end of the file land on the blank line after the last line of code
+			return this.getLastLineWithCode(offendingLineStart);
 		}
 
-		return this.lines[line - 2] + "\n" + this.lines[line - 1];
+		int sourceLineStart = offendingLineStart == 0 ? 0 : this.getLineStart(offendingLineStart - 1);
+		return this.sourceCodeText.substring(sourceLineStart, offendingLineEnd).replace("\r\n", "\n");
+	}
+
+	private String getLastLineWithCode(int blankLineStart) {
+		int lineStart = blankLineStart;
+		while (lineStart > 0) {
+			lineStart = this.getLineStart(lineStart - 1);
+			String sourceLine = this.sourceCodeText.substring(lineStart, this.getLineEnd(lineStart));
+			if (!sourceLine.isBlank()) {
+				return sourceLine;
+			}
+		}
+		return "";
+	}
+
+	private int getOffendingLineStart(Object offendingSymbol, int line) {
+		// Tokens conjured during error recovery have no offset
+		if (offendingSymbol instanceof Token token && token.getStartIndex() >= 0) {
+			return this.getLineStartFromToken(token);
+		}
+		return this.getLineStartFromLineNumber(line);
+	}
+
+	private int getLineStartFromToken(Token token) {
+		// Parser errors carry the offending token, whose start index counts code points rather than chars
+		int charIndex = this.sourceCodeText.offsetByCodePoints(0, token.getStartIndex());
+		return this.getLineStart(charIndex);
+	}
+
+	private int getLineStartFromLineNumber(int line) {
+		// Lexer errors have no offending token, so count line feeds like ANTLR does
+		var lineStart = 0;
+		for (var i = 1; i < line; i++) {
+			int lineFeedIndex = this.sourceCodeText.indexOf('\n', lineStart);
+			if (lineFeedIndex == -1) {
+				return this.sourceCodeText.length();
+			}
+			lineStart = lineFeedIndex + 1;
+		}
+		return lineStart;
+	}
+
+	private int getLineStart(int charIndex) {
+		return this.sourceCodeText.lastIndexOf('\n', charIndex - 1) + 1;
+	}
+
+	private int getLineEnd(int lineStart) {
+		int lineFeedIndex = this.sourceCodeText.indexOf('\n', lineStart);
+		int lineEnd = lineFeedIndex == -1 ? this.sourceCodeText.length() : lineFeedIndex;
+		if (lineEnd > lineStart && this.sourceCodeText.charAt(lineEnd - 1) == '\r') {
+			return lineEnd - 1;
+		}
+		return lineEnd;
 	}
 }
