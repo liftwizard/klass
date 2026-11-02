@@ -53,7 +53,7 @@ class ThrowingErrorListenerTest {
 
 		assertThatThrownBy(() -> listener.syntaxError(null, null, 4, 0, "bad token", null))
 			.isInstanceOf(ParseCancellationException.class)
-			.hasMessage("(example.klass:4) bad token dir/example.klass[4:0]" + System.lineSeparator() + "third\n");
+			.hasMessage("(example.klass:4) bad token dir/example.klass[4:0]" + System.lineSeparator() + "third");
 	}
 
 	@Test
@@ -78,5 +78,14 @@ class ThrowingErrorListenerTest {
 			.hasMessage(
 				"(example.klass:3) bad token dir/example.klass[3:0]" + System.lineSeparator() + "second\nthird"
 			);
+	}
+
+	@Test
+	void syntaxErrorAtEndOfFileAfterBlankLinesShowsLastLineWithCode() {
+		var listener = new ThrowingErrorListener("dir/example.klass", "first\nsecond\r\n\n  \r\n\n");
+
+		assertThatThrownBy(() -> listener.syntaxError(null, null, 6, 0, "bad token", null))
+			.isInstanceOf(ParseCancellationException.class)
+			.hasMessage("(example.klass:6) bad token dir/example.klass[6:0]" + System.lineSeparator() + "second");
 	}
 }

@@ -65,13 +65,26 @@ public class ThrowingErrorListener extends BaseErrorListener {
 	private String getSourceLine(Object offendingSymbol, int line) {
 		// Find line boundaries with indexOf instead of splitting, since this only runs on a syntax error
 		int offendingLineStart = this.getOffendingLineStart(offendingSymbol, line);
-		int sourceLineStart = offendingLineStart == 0 ? 0 : this.getLineStart(offendingLineStart - 1);
-		int lineFeedIndex = this.sourceCodeText.indexOf('\n', offendingLineStart);
-		int sourceLineEnd = lineFeedIndex == -1 ? this.sourceCodeText.length() : lineFeedIndex;
-		if (sourceLineEnd > offendingLineStart && this.sourceCodeText.charAt(sourceLineEnd - 1) == '\r') {
-			sourceLineEnd--;
+		int offendingLineEnd = this.getLineEnd(offendingLineStart);
+		if (this.sourceCodeText.substring(offendingLineStart, offendingLineEnd).isBlank()) {
+			// Errors at the end of the file land on the blank line after the last line of code
+			return this.getLastLineWithCode(offendingLineStart);
 		}
-		return this.sourceCodeText.substring(sourceLineStart, sourceLineEnd).replace("\r\n", "\n");
+
+		int sourceLineStart = offendingLineStart == 0 ? 0 : this.getLineStart(offendingLineStart - 1);
+		return this.sourceCodeText.substring(sourceLineStart, offendingLineEnd).replace("\r\n", "\n");
+	}
+
+	private String getLastLineWithCode(int blankLineStart) {
+		int lineStart = blankLineStart;
+		while (lineStart > 0) {
+			lineStart = this.getLineStart(lineStart - 1);
+			String sourceLine = this.sourceCodeText.substring(lineStart, this.getLineEnd(lineStart));
+			if (!sourceLine.isBlank()) {
+				return sourceLine;
+			}
+		}
+		return "";
 	}
 
 	private int getOffendingLineStart(Object offendingSymbol, int line) {
@@ -103,5 +116,14 @@ public class ThrowingErrorListener extends BaseErrorListener {
 
 	private int getLineStart(int charIndex) {
 		return this.sourceCodeText.lastIndexOf('\n', charIndex - 1) + 1;
+	}
+
+	private int getLineEnd(int lineStart) {
+		int lineFeedIndex = this.sourceCodeText.indexOf('\n', lineStart);
+		int lineEnd = lineFeedIndex == -1 ? this.sourceCodeText.length() : lineFeedIndex;
+		if (lineEnd > lineStart && this.sourceCodeText.charAt(lineEnd - 1) == '\r') {
+			return lineEnd - 1;
+		}
+		return lineEnd;
 	}
 }
