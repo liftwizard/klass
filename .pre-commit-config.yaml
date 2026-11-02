@@ -29,12 +29,7 @@ repos:
         types: [file]
       - id: oxfmt
         name: oxfmt-next-line
-        # Formats json, json5, jsonc, yaml, markdown, html, css, and graphql via oxfmt.
-        # The Klass HTML generator emits oxfmt-canonical markup (e.g. double-quoted CSS
-        # in its inline <style>), so the generated golden fixtures are already formatted
-        # and oxfmt is a no-op on them. The GraphQL fragment generator puts braces at the
-        # end of the line, so its golden fixtures are excluded in .oxfmtrc.json's ignorePatterns,
-        # along with the nested Maven archetype, which keeps its own formatter config.
+        # Formats json, json5, jsonc, yaml, markdown, html, css, and graphql via oxfmt. The Klass HTML generator emits oxfmt-canonical markup (e.g. double-quoted CSS in its inline <style>), so the generated golden fixtures are already formatted and oxfmt is a no-op on them. The GraphQL fragment generator likewise puts opening braces on their own line. Only the nested Maven archetype is excluded, in .oxfmtrc.json's ignorePatterns, because it keeps its own formatter config.
         entry: oxfmt-next-line --no-error-on-unmatched-pattern
         language: system
         # Show "Finished in Xms on N files" so every run proves formatting happened.

@@ -10,10 +10,7 @@
 	"bracketSpacing": false,
 	"trailingComma": "all",
 	"arrowParens": "always",
-	"ignorePatterns": [
-		"klass-maven-archetype/src/main/resources/archetype-resources/**",
-		"xample-projects/coverage-example/coverage-example-graphql-fragment/src/test/resources/**/*.graphql"
-	],
+	"ignorePatterns": ["klass-maven-archetype/src/main/resources/archetype-resources/**"],
 	"overrides": [
 		{
 			"files": [".yamllint.yaml", "**/*.yaml", "**/*.yml"],
