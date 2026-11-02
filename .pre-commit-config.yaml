@@ -28,13 +28,17 @@ repos:
         files: '(?i)(^|/)\.?justfile$|\.just$'
         types: [file]
       - id: oxfmt
-        name: vp fmt
+        name: oxfmt-next-line
         # Formats json, json5, jsonc, yaml, markdown, html, css, and graphql via oxfmt.
         # The Klass HTML generator emits oxfmt-canonical markup (e.g. double-quoted CSS
         # in its inline <style>), so the generated golden fixtures are already formatted
-        # and oxfmt is a no-op on them. Nothing is excluded.
-        entry: vp fmt --no-error-on-unmatched-pattern
+        # and oxfmt is a no-op on them. The GraphQL fragment generator puts braces at the
+        # end of the line, so its golden fixtures are excluded in .oxfmtrc.json's ignorePatterns,
+        # along with the nested Maven archetype, which keeps its own formatter config.
+        entry: oxfmt-next-line --no-error-on-unmatched-pattern
         language: system
+        # Show "Finished in Xms on N files" so every run proves formatting happened.
+        verbose: true
       - id: markdownlint-cli2
         name: markdownlint-cli2
         entry: markdownlint-cli2 --no-globs

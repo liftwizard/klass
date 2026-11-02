@@ -537,7 +537,7 @@ jobs:
         run: |
           just test
 
-          vp fmt --no-error-on-unmatched-pattern .
+          oxfmt-next-line --no-error-on-unmatched-pattern .
 
           if [[ -n $(git status --porcelain) ]]; then
             FIX_BRANCH="fix-${{ github.event.pull_request.number }}-liftwizard-file-match-rerecord"
