@@ -44,7 +44,7 @@ public class ClassWithDerivedProperty extends ClassWithDerivedPropertyAbstract {
 	}
 
 	public Float getDerivedRequiredFloat() {
-		return 1.0f;
+		return 1.0F;
 	}
 
 	public Boolean isDerivedRequiredBoolean() {
@@ -76,7 +76,7 @@ public class ClassWithDerivedProperty extends ClassWithDerivedPropertyAbstract {
 	}
 
 	public Float getDerivedOptionalFloat() {
-		return 1.0f;
+		return 1.0F;
 	}
 
 	public Boolean isDerivedOptionalBoolean() {

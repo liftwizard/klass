@@ -170,12 +170,12 @@ public abstract class AbstractDataTypePropertyVisitor implements DataTypePropert
 			// Self-referential associations: first record is root (null), subsequent records reference earlier records
 			if (this.isSelfReferentialForeignKey(primitiveProperty)) {
 				Integer parentIndex = this.getSelfReferentialParentIndex();
-				this.result = parentIndex == null ? null : (float) parentIndex + 0.01234567f;
+				this.result = parentIndex == null ? null : (float) parentIndex + 0.01234567F;
 				return;
 			}
-			this.result = (float) this.getIndex() + 0.01234567f;
+			this.result = (float) this.getIndex() + 0.01234567F;
 		} else {
-			this.result = (float) this.getNumber(primitiveProperty) + 0.01234567f;
+			this.result = (float) this.getNumber(primitiveProperty) + 0.01234567F;
 		}
 	}
 

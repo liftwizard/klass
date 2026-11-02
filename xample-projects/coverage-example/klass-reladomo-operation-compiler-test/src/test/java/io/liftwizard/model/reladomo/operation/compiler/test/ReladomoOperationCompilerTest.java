@@ -227,7 +227,7 @@ public class ReladomoOperationCompilerTest {
 		this.assertCompiles("this.optionalBoolean = true", FINDER.optionalBoolean().eq(true));
 		this.assertCompiles("this.optionalInteger = 4", FINDER.optionalInteger().eq(4));
 		this.assertCompiles("this.optionalLong = 5", FINDER.optionalLong().eq(5L));
-		this.assertCompiles("this.optionalFloat = 6.6", FINDER.optionalFloat().eq(6.6f));
+		this.assertCompiles("this.optionalFloat = 6.6", FINDER.optionalFloat().eq(6.6F));
 		this.assertCompiles("this.optionalDouble = 7.7", FINDER.optionalDouble().eq(7.7));
 		this.assertCompiles(
 			"this.optionalLocalDate = \"2010-12-31\"",
@@ -243,7 +243,7 @@ public class ReladomoOperationCompilerTest {
 		this.assertCompiles("this.optionalBoolean != true", FINDER.optionalBoolean().notEq(true));
 		this.assertCompiles("this.optionalInteger != 4", FINDER.optionalInteger().notEq(4));
 		this.assertCompiles("this.optionalLong != 5", FINDER.optionalLong().notEq(5L));
-		this.assertCompiles("this.optionalFloat != 6.6", FINDER.optionalFloat().notEq(6.6f));
+		this.assertCompiles("this.optionalFloat != 6.6", FINDER.optionalFloat().notEq(6.6F));
 		this.assertCompiles("this.optionalDouble != 7.7", FINDER.optionalDouble().notEq(7.7));
 		this.assertCompiles(
 			"this.optionalLocalDate != \"2010-12-31\"",
@@ -279,7 +279,7 @@ public class ReladomoOperationCompilerTest {
 	void inequalityOperation() {
 		this.assertCompiles("this.optionalInteger > 4", FINDER.optionalInteger().greaterThan(4));
 		this.assertCompiles("this.optionalLong > 5", FINDER.optionalLong().greaterThan(5L));
-		this.assertCompiles("this.optionalFloat > 6.6", FINDER.optionalFloat().greaterThan(6.6f));
+		this.assertCompiles("this.optionalFloat > 6.6", FINDER.optionalFloat().greaterThan(6.6F));
 		this.assertCompiles("this.optionalDouble > 7.7", FINDER.optionalDouble().greaterThan(7.7));
 		this.assertCompiles(
 			"this.optionalLocalDate > \"2010-12-31\"",
@@ -293,7 +293,7 @@ public class ReladomoOperationCompilerTest {
 
 		this.assertCompiles("this.optionalInteger >= 4", FINDER.optionalInteger().greaterThanEquals(4));
 		this.assertCompiles("this.optionalLong >= 5", FINDER.optionalLong().greaterThanEquals(5L));
-		this.assertCompiles("this.optionalFloat >= 6.6", FINDER.optionalFloat().greaterThanEquals(6.6f));
+		this.assertCompiles("this.optionalFloat >= 6.6", FINDER.optionalFloat().greaterThanEquals(6.6F));
 		this.assertCompiles("this.optionalDouble >= 7.7", FINDER.optionalDouble().greaterThanEquals(7.7));
 		this.assertCompiles(
 			"this.optionalLocalDate >= \"2010-12-31\"",
@@ -307,7 +307,7 @@ public class ReladomoOperationCompilerTest {
 
 		this.assertCompiles("this.optionalInteger < 4", FINDER.optionalInteger().lessThan(4));
 		this.assertCompiles("this.optionalLong < 5", FINDER.optionalLong().lessThan(5L));
-		this.assertCompiles("this.optionalFloat < 6.6", FINDER.optionalFloat().lessThan(6.6f));
+		this.assertCompiles("this.optionalFloat < 6.6", FINDER.optionalFloat().lessThan(6.6F));
 		this.assertCompiles("this.optionalDouble < 7.7", FINDER.optionalDouble().lessThan(7.7));
 		this.assertCompiles(
 			"this.optionalLocalDate < \"2010-12-31\"",
@@ -321,7 +321,7 @@ public class ReladomoOperationCompilerTest {
 
 		this.assertCompiles("this.optionalInteger <= 4", FINDER.optionalInteger().lessThanEquals(4));
 		this.assertCompiles("this.optionalLong <= 5", FINDER.optionalLong().lessThanEquals(5L));
-		this.assertCompiles("this.optionalFloat <= 6.6", FINDER.optionalFloat().lessThanEquals(6.6f));
+		this.assertCompiles("this.optionalFloat <= 6.6", FINDER.optionalFloat().lessThanEquals(6.6F));
 		this.assertCompiles("this.optionalDouble <= 7.7", FINDER.optionalDouble().lessThanEquals(7.7));
 		this.assertCompiles(
 			"this.optionalLocalDate <= \"2010-12-31\"",
@@ -398,7 +398,7 @@ public class ReladomoOperationCompilerTest {
 		this.assertCompiles("this.optionalLong in [5, 6]", FINDER.optionalLong().in(LongSets.mutable.with(5L, 6L)));
 		this.assertCompiles(
 			"this.optionalFloat in [6.6, 7.7]",
-			FINDER.optionalFloat().in(FloatSets.mutable.with(6.6f, 7.7f))
+			FINDER.optionalFloat().in(FloatSets.mutable.with(6.6F, 7.7F))
 		);
 		this.assertCompiles(
 			"this.optionalDouble in [7.7, 8.8]",
@@ -427,7 +427,7 @@ public class ReladomoOperationCompilerTest {
 		);
 		this.assertCompiles(
 			"this.optionalFloat not in [6.6, 7.7]",
-			FINDER.optionalFloat().notIn(FloatSets.mutable.with(6.6f, 7.7f))
+			FINDER.optionalFloat().notIn(FloatSets.mutable.with(6.6F, 7.7F))
 		);
 		this.assertCompiles(
 			"this.optionalDouble not in [7.7, 8.8]",
