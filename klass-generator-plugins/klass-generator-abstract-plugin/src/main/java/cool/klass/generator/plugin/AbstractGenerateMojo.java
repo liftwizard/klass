@@ -389,7 +389,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 			byte[] hashBytes = digest.digest();
 			var hexString = new StringBuilder();
 			for (byte b : hashBytes) {
-				String hex = Integer.toHexString(0xff & b);
+				String hex = Integer.toHexString(0xFF & b);
 				if (hex.length() == 1) {
 					hexString.append('0');
 				}
