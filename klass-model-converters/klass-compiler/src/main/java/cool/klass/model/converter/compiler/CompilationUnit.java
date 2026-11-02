@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
 
@@ -51,8 +50,6 @@ import org.slf4j.LoggerFactory;
 public final class CompilationUnit {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CompilationUnit.class);
-
-	private static final Pattern NEWLINE_PATTERN = Pattern.compile("\\r?\\n");
 
 	private final int ordinal;
 
@@ -220,8 +217,7 @@ public final class CompilationUnit {
 		@Nonnull String sourceCodeText,
 		@Nonnull Function<? super KlassParser, ? extends ParserRuleContext> parserRule
 	) {
-		String[] lines = NEWLINE_PATTERN.split(sourceCodeText);
-		ANTLRErrorListener errorListener = new ThrowingErrorListener(sourceName, lines);
+		ANTLRErrorListener errorListener = new ThrowingErrorListener(sourceName, sourceCodeText);
 		CodePointCharStream charStream = CharStreams.fromString(sourceCodeText, sourceName);
 		KlassLexer lexer = CompilationUnit.getKlassLexer(errorListener, charStream);
 		var tokenStream = new CommonTokenStream(lexer);
