@@ -1,11 +1,13 @@
 {
-	"_metadata": {
+	"_metadata":
+	{
 		"criteria": "Question.id = 1",
 		"multiplicity": "1..1",
 		"projection": "com.stackoverflow.QuestionReadProjection",
 		"transactionTimestamp": "9999-12-01T23:59:00Z"
 	},
-	"_data": {
+	"_data":
+	{
 		"id": 1,
 		"systemFrom": "2001-01-01T23:59:59Z",
 		"systemTo": null,
@@ -19,7 +21,8 @@
 			{
 				"systemFrom": "1999-12-31T23:59:59.999Z",
 				"systemTo": null,
-				"tag": {
+				"tag":
+				{
 					"name": "test tag 1",
 					"systemFrom": "1999-12-31T23:59:59.999Z",
 					"systemTo": null
@@ -28,35 +31,41 @@
 			{
 				"systemFrom": "2001-01-01T23:59:59Z",
 				"systemTo": null,
-				"tag": {
+				"tag":
+				{
 					"name": "test tag 3",
 					"systemFrom": "1999-12-31T23:59:59.999Z",
 					"systemTo": null
 				}
 			}
 		],
-		"version": {
+		"version":
+		{
 			"systemFrom": "2001-01-01T23:59:59Z",
 			"systemTo": null,
 			"createdOn": "1999-12-31T23:59:59.999Z",
 			"number": 3,
-			"createdBy": {
+			"createdBy":
+			{
 				"userId": "test user 1",
 				"systemFrom": "1999-12-31T23:59:59.999Z",
 				"systemTo": null
 			},
-			"lastUpdatedBy": {
+			"lastUpdatedBy":
+			{
 				"userId": "test user 1",
 				"systemFrom": "1999-12-31T23:59:59.999Z",
 				"systemTo": null
 			}
 		},
-		"createdBy": {
+		"createdBy":
+		{
 			"userId": "test user 1",
 			"systemFrom": "1999-12-31T23:59:59.999Z",
 			"systemTo": null
 		},
-		"lastUpdatedBy": {
+		"lastUpdatedBy":
+		{
 			"userId": "test user 1",
 			"systemFrom": "1999-12-31T23:59:59.999Z",
 			"systemTo": null

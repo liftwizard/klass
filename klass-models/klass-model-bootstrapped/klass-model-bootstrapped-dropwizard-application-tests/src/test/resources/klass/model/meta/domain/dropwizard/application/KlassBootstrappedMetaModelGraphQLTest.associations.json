@@ -1,5 +1,6 @@
 {
-	"data": {
+	"data":
+	{
 		"associations": [
 			{
 				"name": "EnumerationHasLiterals",
@@ -9,7 +10,8 @@
 						"name": "enumeration",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Enumeration"
 						},
 						"associationEndModifiers": [],
@@ -19,7 +21,8 @@
 						"name": "enumerationLiterals",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "EnumerationLiteral"
 						},
 						"associationEndModifiers": [
@@ -30,14 +33,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 187
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 1
 				}
@@ -50,7 +55,8 @@
 						"name": "subClassifier",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Classifier"
 						},
 						"associationEndModifiers": [],
@@ -60,7 +66,8 @@
 						"name": "superInterfaces",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ClassifierInterfaceMapping"
 						},
 						"associationEndModifiers": [
@@ -71,14 +78,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 188
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 2
 				}
@@ -91,7 +100,8 @@
 						"name": "subClassifiers",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ClassifierInterfaceMapping"
 						},
 						"associationEndModifiers": [],
@@ -101,14 +111,16 @@
 						"name": "superInterface",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Interface"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 3
 				}
@@ -121,7 +133,8 @@
 						"name": "owningClassifier",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Classifier"
 						},
 						"associationEndModifiers": [],
@@ -131,7 +144,8 @@
 						"name": "classifierModifiers",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ClassifierModifier"
 						},
 						"associationEndModifiers": [
@@ -142,14 +156,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 189
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 4
 				}
@@ -162,7 +178,8 @@
 						"name": "subClasses",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Klass"
 						},
 						"associationEndModifiers": [],
@@ -172,14 +189,16 @@
 						"name": "superClass",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Klass"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 5
 				}
@@ -192,7 +211,8 @@
 						"name": "enumerationProperties",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "EnumerationProperty"
 						},
 						"associationEndModifiers": [],
@@ -202,14 +222,16 @@
 						"name": "enumeration",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Enumeration"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 6
 				}
@@ -222,7 +244,8 @@
 						"name": "owningClassifier",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Classifier"
 						},
 						"associationEndModifiers": [],
@@ -232,7 +255,8 @@
 						"name": "dataTypeProperties",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "DataTypeProperty"
 						},
 						"associationEndModifiers": [
@@ -243,14 +267,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 190
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 7
 				}
@@ -263,7 +289,8 @@
 						"name": "dataTypeProperty",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "DataTypeProperty"
 						},
 						"associationEndModifiers": [],
@@ -273,7 +300,8 @@
 						"name": "minLengthValidation",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "MinLengthPropertyValidation"
 						},
 						"associationEndModifiers": [
@@ -284,7 +312,8 @@
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "AndCriteria",
 					"id": 8
 				}
@@ -297,7 +326,8 @@
 						"name": "dataTypeProperty",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "DataTypeProperty"
 						},
 						"associationEndModifiers": [],
@@ -307,7 +337,8 @@
 						"name": "maxLengthValidation",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "MaxLengthPropertyValidation"
 						},
 						"associationEndModifiers": [
@@ -318,7 +349,8 @@
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "AndCriteria",
 					"id": 11
 				}
@@ -331,7 +363,8 @@
 						"name": "primitiveProperty",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "PrimitiveProperty"
 						},
 						"associationEndModifiers": [],
@@ -341,7 +374,8 @@
 						"name": "minValidation",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "MinPropertyValidation"
 						},
 						"associationEndModifiers": [
@@ -352,7 +386,8 @@
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "AndCriteria",
 					"id": 14
 				}
@@ -365,7 +400,8 @@
 						"name": "primitiveProperty",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "PrimitiveProperty"
 						},
 						"associationEndModifiers": [],
@@ -375,7 +411,8 @@
 						"name": "maxValidation",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "MaxPropertyValidation"
 						},
 						"associationEndModifiers": [
@@ -386,7 +423,8 @@
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "AndCriteria",
 					"id": 17
 				}
@@ -399,7 +437,8 @@
 						"name": "dataTypeProperty",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "DataTypeProperty"
 						},
 						"associationEndModifiers": [],
@@ -409,7 +448,8 @@
 						"name": "propertyModifiers",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "PropertyModifier"
 						},
 						"associationEndModifiers": [
@@ -420,14 +460,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 191
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "AndCriteria",
 					"id": 20
 				}
@@ -440,7 +482,8 @@
 						"name": "parameterReferences",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ParameterReference"
 						},
 						"associationEndModifiers": [],
@@ -450,14 +493,16 @@
 						"name": "parameter",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Parameter"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 23
 				}
@@ -470,7 +515,8 @@
 						"name": "owningAssociation",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Association"
 						},
 						"associationEndModifiers": [],
@@ -480,7 +526,8 @@
 						"name": "associationEnds",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "AssociationEnd"
 						},
 						"associationEndModifiers": [
@@ -491,14 +538,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 192
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 24
 				}
@@ -511,7 +560,8 @@
 						"name": "owningClass",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Klass"
 						},
 						"associationEndModifiers": [],
@@ -521,14 +571,16 @@
 						"name": "associationEnds",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "AssociationEnd"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 25
 				}
@@ -541,7 +593,8 @@
 						"name": "associationEndsResultTypeOf",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "AssociationEnd"
 						},
 						"associationEndModifiers": [],
@@ -551,14 +604,16 @@
 						"name": "resultType",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Klass"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 26
 				}
@@ -571,7 +626,8 @@
 						"name": "associationEnd",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "AssociationEnd"
 						},
 						"associationEndModifiers": [],
@@ -581,7 +637,8 @@
 						"name": "associationEndModifiers",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "AssociationEndModifier"
 						},
 						"associationEndModifiers": [
@@ -592,14 +649,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 193
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "AndCriteria",
 					"id": 27
 				}
@@ -612,7 +671,8 @@
 						"name": "association",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Association"
 						},
 						"associationEndModifiers": [],
@@ -622,7 +682,8 @@
 						"name": "criteria",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Criteria"
 						},
 						"associationEndModifiers": [
@@ -633,7 +694,8 @@
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 30
 				}
@@ -646,7 +708,8 @@
 						"name": "operatorCriteriaSourceOf",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "OperatorCriteria"
 						},
 						"associationEndModifiers": [],
@@ -656,7 +719,8 @@
 						"name": "sourceExpressionValue",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ExpressionValue"
 						},
 						"associationEndModifiers": [
@@ -667,7 +731,8 @@
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 31
 				}
@@ -680,7 +745,8 @@
 						"name": "operatorCriteriaTargetOf",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "OperatorCriteria"
 						},
 						"associationEndModifiers": [],
@@ -690,7 +756,8 @@
 						"name": "targetExpressionValue",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ExpressionValue"
 						},
 						"associationEndModifiers": [
@@ -701,7 +768,8 @@
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 32
 				}
@@ -714,7 +782,8 @@
 						"name": "edgePointCriteria",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "EdgePointCriteria"
 						},
 						"associationEndModifiers": [],
@@ -724,14 +793,16 @@
 						"name": "memberReferencePath",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "MemberReferencePath"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 33
 				}
@@ -744,7 +815,8 @@
 						"name": "enumerationParameters",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "EnumerationParameter"
 						},
 						"associationEndModifiers": [],
@@ -754,14 +826,16 @@
 						"name": "enumeration",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Enumeration"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 34
 				}
@@ -774,7 +848,8 @@
 						"name": "memberReferencePaths",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "MemberReferencePath"
 						},
 						"associationEndModifiers": [],
@@ -784,14 +859,16 @@
 						"name": "klass",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Klass"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 35
 				}
@@ -804,7 +881,8 @@
 						"name": "memberReferencePath",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "MemberReferencePath"
 						},
 						"associationEndModifiers": [],
@@ -814,7 +892,8 @@
 						"name": "associationEnds",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "MemberReferencePathAssociationEndMapping"
 						},
 						"associationEndModifiers": [
@@ -825,14 +904,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 194
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 36
 				}
@@ -845,7 +926,8 @@
 						"name": "memberReferencePaths",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "MemberReferencePathAssociationEndMapping"
 						},
 						"associationEndModifiers": [],
@@ -855,14 +937,16 @@
 						"name": "associationEnd",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "AssociationEnd"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "AndCriteria",
 					"id": 37
 				}
@@ -875,7 +959,8 @@
 						"name": "memberReferencePaths",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "MemberReferencePath"
 						},
 						"associationEndModifiers": [],
@@ -885,14 +970,16 @@
 						"name": "dataTypeProperty",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "DataTypeProperty"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "AndCriteria",
 					"id": 40
 				}
@@ -905,7 +992,8 @@
 						"name": "ownerOfLeftCriteria",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "BinaryCriteria"
 						},
 						"associationEndModifiers": [],
@@ -915,7 +1003,8 @@
 						"name": "left",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Criteria"
 						},
 						"associationEndModifiers": [
@@ -926,7 +1015,8 @@
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 43
 				}
@@ -939,7 +1029,8 @@
 						"name": "ownerOfRightCriteria",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "BinaryCriteria"
 						},
 						"associationEndModifiers": [],
@@ -949,7 +1040,8 @@
 						"name": "right",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Criteria"
 						},
 						"associationEndModifiers": [
@@ -960,7 +1052,8 @@
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 44
 				}
@@ -973,7 +1066,8 @@
 						"name": "owningClass",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Klass"
 						},
 						"associationEndModifiers": [],
@@ -983,7 +1077,8 @@
 						"name": "parameterizedProperties",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ParameterizedProperty"
 						},
 						"associationEndModifiers": [
@@ -994,14 +1089,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 195
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 45
 				}
@@ -1014,7 +1111,8 @@
 						"name": "associationEnd",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "AssociationEnd"
 						},
 						"associationEndModifiers": [],
@@ -1024,7 +1122,8 @@
 						"name": "orderBys",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "AssociationEndOrderBy"
 						},
 						"associationEndModifiers": [
@@ -1035,14 +1134,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 196
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "AndCriteria",
 					"id": 46
 				}
@@ -1055,7 +1156,8 @@
 						"name": "associationEndOrderBy",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "AssociationEndOrderBy"
 						},
 						"associationEndModifiers": [],
@@ -1065,14 +1167,16 @@
 						"name": "thisMemberReferencePath",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ThisMemberReferencePath"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 49
 				}
@@ -1085,7 +1189,8 @@
 						"name": "parameterizedPropertiesResultTypeOf",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ParameterizedProperty"
 						},
 						"associationEndModifiers": [],
@@ -1095,14 +1200,16 @@
 						"name": "resultType",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Klass"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 50
 				}
@@ -1115,7 +1222,8 @@
 						"name": "parameterizedProperty",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ParameterizedProperty"
 						},
 						"associationEndModifiers": [],
@@ -1125,7 +1233,8 @@
 						"name": "parameterizedPropertyOrderings",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ParameterizedPropertyOrdering"
 						},
 						"associationEndModifiers": [
@@ -1136,14 +1245,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 197
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "AndCriteria",
 					"id": 51
 				}
@@ -1156,7 +1267,8 @@
 						"name": "parameterizedProperty",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ParameterizedProperty"
 						},
 						"associationEndModifiers": [],
@@ -1166,7 +1278,8 @@
 						"name": "parameters",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ParameterizedPropertyParameter"
 						},
 						"associationEndModifiers": [
@@ -1177,14 +1290,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 198
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "AndCriteria",
 					"id": 54
 				}
@@ -1197,7 +1312,8 @@
 						"name": "namedProjection",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "NamedProjection"
 						},
 						"associationEndModifiers": [],
@@ -1207,7 +1323,8 @@
 						"name": "rootProjection",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "RootProjection"
 						},
 						"associationEndModifiers": [
@@ -1218,7 +1335,8 @@
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 57
 				}
@@ -1231,7 +1349,8 @@
 						"name": "parent",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ProjectionElement"
 						},
 						"associationEndModifiers": [],
@@ -1241,7 +1360,8 @@
 						"name": "children",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ProjectionElement"
 						},
 						"associationEndModifiers": [
@@ -1252,14 +1372,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 199
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 58
 				}
@@ -1272,7 +1394,8 @@
 						"name": "projectionsWithAssociationEnd",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ProjectionWithAssociationEnd"
 						},
 						"associationEndModifiers": [],
@@ -1282,14 +1405,16 @@
 						"name": "associationEnd",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "AssociationEnd"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "AndCriteria",
 					"id": 59
 				}
@@ -1302,7 +1427,8 @@
 						"name": "projectionDataTypeProperties",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ProjectionDataTypeProperty"
 						},
 						"associationEndModifiers": [],
@@ -1312,14 +1438,16 @@
 						"name": "dataTypeProperty",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "DataTypeProperty"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "AndCriteria",
 					"id": 62
 				}
@@ -1332,7 +1460,8 @@
 						"name": "projections",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "RootProjection"
 						},
 						"associationEndModifiers": [],
@@ -1342,14 +1471,16 @@
 						"name": "classifier",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Classifier"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 65
 				}
@@ -1362,7 +1493,8 @@
 						"name": "projectionProjectionReferences",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ProjectionProjectionReference"
 						},
 						"associationEndModifiers": [],
@@ -1372,14 +1504,16 @@
 						"name": "projection",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "NamedProjection"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 66
 				}
@@ -1392,7 +1526,8 @@
 						"name": "serviceGroups",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ServiceGroup"
 						},
 						"associationEndModifiers": [],
@@ -1402,14 +1537,16 @@
 						"name": "owningClass",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Klass"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 67
 				}
@@ -1422,7 +1559,8 @@
 						"name": "url",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Url"
 						},
 						"associationEndModifiers": [],
@@ -1432,7 +1570,8 @@
 						"name": "parameters",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "UrlParameter"
 						},
 						"associationEndModifiers": [
@@ -1443,14 +1582,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 200
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "AndCriteria",
 					"id": 68
 				}
@@ -1463,7 +1604,8 @@
 						"name": "urlParameter",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "UrlParameter"
 						},
 						"associationEndModifiers": [],
@@ -1473,7 +1615,8 @@
 						"name": "parameter",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Parameter"
 						},
 						"associationEndModifiers": [
@@ -1484,7 +1627,8 @@
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 71
 				}
@@ -1497,7 +1641,8 @@
 						"name": "serviceGroup",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ServiceGroup"
 						},
 						"associationEndModifiers": [],
@@ -1507,7 +1652,8 @@
 						"name": "urls",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Url"
 						},
 						"associationEndModifiers": [
@@ -1518,14 +1664,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 201
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 72
 				}
@@ -1538,7 +1686,8 @@
 						"name": "url",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Url"
 						},
 						"associationEndModifiers": [],
@@ -1548,7 +1697,8 @@
 						"name": "services",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Service"
 						},
 						"associationEndModifiers": [
@@ -1559,14 +1709,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 202
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "AndCriteria",
 					"id": 73
 				}
@@ -1579,7 +1731,8 @@
 						"name": "services",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Service"
 						},
 						"associationEndModifiers": [],
@@ -1589,14 +1742,16 @@
 						"name": "projection",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "NamedProjection"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 76
 				}
@@ -1609,7 +1764,8 @@
 						"name": "queryService",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Service"
 						},
 						"associationEndModifiers": [],
@@ -1619,7 +1775,8 @@
 						"name": "queryCriteria",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Criteria"
 						},
 						"associationEndModifiers": [
@@ -1630,7 +1787,8 @@
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 77
 				}
@@ -1643,7 +1801,8 @@
 						"name": "authorizeService",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Service"
 						},
 						"associationEndModifiers": [],
@@ -1653,7 +1812,8 @@
 						"name": "authorizeCriteria",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Criteria"
 						},
 						"associationEndModifiers": [
@@ -1664,7 +1824,8 @@
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 78
 				}
@@ -1677,7 +1838,8 @@
 						"name": "validateService",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Service"
 						},
 						"associationEndModifiers": [],
@@ -1687,7 +1849,8 @@
 						"name": "validateCriteria",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Criteria"
 						},
 						"associationEndModifiers": [
@@ -1698,7 +1861,8 @@
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 79
 				}
@@ -1711,7 +1875,8 @@
 						"name": "conflictService",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Service"
 						},
 						"associationEndModifiers": [],
@@ -1721,7 +1886,8 @@
 						"name": "conflictCriteria",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Criteria"
 						},
 						"associationEndModifiers": [
@@ -1732,7 +1898,8 @@
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 80
 				}
@@ -1745,7 +1912,8 @@
 						"name": "service",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "Service"
 						},
 						"associationEndModifiers": [],
@@ -1755,7 +1923,8 @@
 						"name": "orderBys",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ServiceOrderBy"
 						},
 						"associationEndModifiers": [
@@ -1766,14 +1935,16 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath": {
+								"thisMemberReferencePath":
+								{
 									"id": 203
 								}
 							}
 						]
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "AndCriteria",
 					"id": 81
 				}
@@ -1786,7 +1957,8 @@
 						"name": "serviceOrderBy",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ServiceOrderBy"
 						},
 						"associationEndModifiers": [],
@@ -1796,14 +1968,16 @@
 						"name": "thisMemberReferencePath",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType": {
+						"resultType":
+						{
 							"name": "ThisMemberReferencePath"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria": {
+				"criteria":
+				{
 					"__typename": "OperatorCriteria",
 					"id": 86
 				}

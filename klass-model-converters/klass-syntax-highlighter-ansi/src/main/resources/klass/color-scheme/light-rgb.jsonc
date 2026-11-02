@@ -4,7 +4,8 @@
 	"rules": [
 		{
 			"name": "background",
-			"style": {
+			"style":
+			{
 				"background": "#ffffff",
 			},
 		},
@@ -22,349 +23,407 @@
 		},
 		{
 			"name": "blockComment",
-			"style": {
+			"style":
+			{
 				"foreground": "#8c8c8c",
 			},
 		},
 		{
 			"name": "lineComment",
-			"style": {
+			"style":
+			{
 				"foreground": "#8c8c8c",
 			},
 		},
 		{
 			"name": "keyword",
-			"style": {
+			"style":
+			{
 				"foreground": "#0033b3",
 			},
 		},
 		{
 			"name": "packageKeyword",
-			"style": {
+			"style":
+			{
 				"foreground": "#0033b3",
 			},
 		},
 		{
 			"name": "primitiveType",
-			"style": {
+			"style":
+			{
 				"foreground": "#0033b3",
 			},
 		},
 		{
 			"name": "verb",
-			"style": {
+			"style":
+			{
 				"foreground": "#00627a",
 			},
 		},
 		{
 			"name": "modifier",
-			"style": {
+			"style":
+			{
 				"foreground": "#0033b3",
 			},
 		},
 		{
 			"name": "classifierModifier",
-			"style": {
+			"style":
+			{
 				"foreground": "#0033b3",
 			},
 		},
 		{
 			"name": "dataTypePropertyModifier",
-			"style": {
+			"style":
+			{
 				"foreground": "#0033b3",
 			},
 		},
 		{
 			"name": "associationEndModifier",
-			"style": {
+			"style":
+			{
 				"foreground": "#0033b3",
 			},
 		},
 		{
 			"name": "parameterizedPropertyModifier",
-			"style": {
+			"style":
+			{
 				"foreground": "#0033b3",
 			},
 		},
 		{
 			"name": "parameterModifier",
-			"style": {
+			"style":
+			{
 				"foreground": "#0033b3",
 			},
 		},
 		{
 			"name": "validationModifier",
-			"style": {
+			"style":
+			{
 				"foreground": "#0033b3",
 			},
 		},
 		{
 			"name": "serviceCategoryModifier",
-			"style": {
+			"style":
+			{
 				"foreground": "#0033b3",
 			},
 		},
 		{
 			"name": "identifier",
-			"style": {
+			"style":
+			{
 				"foreground": "#00aa00",
 			},
 		},
 		{
 			"name": "packageName",
-			"style": {
+			"style":
+			{
 				"foreground": "#805900",
 			},
 		},
 		{
 			"name": "topLevelElementName",
-			"style": {
+			"style":
+			{
 				"foreground": "#00aa00",
 			},
 		},
 		{
 			"name": "enumerationLiteralName",
-			"style": {
+			"style":
+			{
 				"foreground": "#871094",
 			},
 		},
 		{
 			"name": "parameterName",
-			"style": {
+			"style":
+			{
 				"foreground": "#ff8800",
 			},
 		},
 		{
 			"name": "propertyName",
-			"style": {
+			"style":
+			{
 				"foreground": "#871094",
 			},
 		},
 		{
 			"name": "urlConstant",
-			"style": {
+			"style":
+			{
 				"foreground": "#006dcc",
 			},
 		},
 		{
 			"name": "enumerationName",
-			"style": {
+			"style":
+			{
 				"foreground": "#aa0000",
 			},
 		},
 		{
 			"name": "classifierName",
-			"style": {
+			"style":
+			{
 				"foreground": "#aa0000",
 			},
 		},
 		{
 			"name": "associationName",
-			"style": {
+			"style":
+			{
 				"foreground": "#080808",
 			},
 		},
 		{
 			"name": "projectionName",
-			"style": {
+			"style":
+			{
 				"foreground": "#080808",
 			},
 		},
 		{
 			"name": "serviceName",
-			"style": {
+			"style":
+			{
 				"foreground": "#080808",
 			},
 		},
 		{
 			"name": "className",
-			"style": {
+			"style":
+			{
 				"foreground": "#aa0000",
 			},
 		},
 		{
 			"name": "interfaceName",
-			"style": {
+			"style":
+			{
 				"foreground": "#0000aa",
 			},
 		},
 		{
 			"name": "dataTypePropertyName",
-			"style": {
+			"style":
+			{
 				"foreground": "#871094",
 			},
 		},
 		{
 			"name": "referencePropertyName",
-			"style": {
+			"style":
+			{
 				"foreground": "#871094",
 			},
 		},
 		{
 			"name": "primitivePropertyName",
-			"style": {
+			"style":
+			{
 				"foreground": "#871094",
 			},
 		},
 		{
 			"name": "enumerationPropertyName",
-			"style": {
+			"style":
+			{
 				"foreground": "#871094",
 			},
 		},
 		{
 			"name": "parameterizedPropertyName",
-			"style": {
+			"style":
+			{
 				"foreground": "#871094",
 			},
 		},
 		{
 			"name": "associationEndName",
-			"style": {
+			"style":
+			{
 				"foreground": "#871094",
 			},
 		},
 		{
 			"name": "enumerationReference",
-			"style": {
+			"style":
+			{
 				"foreground": "#aa0000",
 			},
 		},
 		{
 			"name": "classifierReference",
-			"style": {
+			"style":
+			{
 				"foreground": "#aa0000",
 			},
 		},
 		{
 			"name": "interfaceReference",
-			"style": {
+			"style":
+			{
 				"foreground": "#0000aa",
 			},
 		},
 		{
 			"name": "classReference",
-			"style": {
+			"style":
+			{
 				"foreground": "#aa0000",
 			},
 		},
 		{
 			"name": "projectionReference",
-			"style": {
+			"style":
+			{
 				"foreground": "#080808",
 			},
 		},
 		{
 			"name": "dataTypePropertyReference",
-			"style": {
+			"style":
+			{
 				"foreground": "#871094",
 			},
 		},
 		{
 			"name": "associationEndReference",
-			"style": {
+			"style":
+			{
 				"foreground": "#871094",
 			},
 		},
 		{
 			"name": "parameterizedPropertyReference",
-			"style": {
+			"style":
+			{
 				"foreground": "#871094",
 			},
 		},
 		{
 			"name": "propertyReference",
-			"style": {
+			"style":
+			{
 				"foreground": "#871094",
 			},
 		},
 		{
 			"name": "parameterReference",
-			"style": {
+			"style":
+			{
 				"foreground": "#ff8800",
 			},
 		},
 		{
 			"name": "literal",
-			"style": {
+			"style":
+			{
 				"foreground": "#1750eb",
 			},
 		},
 		{
 			"name": "stringLiteral",
-			"style": {
+			"style":
+			{
 				"foreground": "#067d17",
 			},
 		},
 		{
 			"name": "integerLiteral",
-			"style": {
+			"style":
+			{
 				"foreground": "#1750eb",
 			},
 		},
 		{
 			"name": "booleanLiteral",
-			"style": {
+			"style":
+			{
 				"foreground": "#0033b3",
 			},
 		},
 		{
 			"name": "characterLiteral",
-			"style": {
+			"style":
+			{
 				"foreground": "#067d17",
 			},
 		},
 		{
 			"name": "floatingPointLiteral",
-			"style": {
+			"style":
+			{
 				"foreground": "#1750eb",
 			},
 		},
 		{
 			"name": "literalThis",
-			"style": {
+			"style":
+			{
 				"foreground": "#0033b3",
 			},
 		},
 		{
 			"name": "literalNative",
-			"style": {
+			"style":
+			{
 				"foreground": "#0033b3",
 			},
 		},
 		{
 			"name": "punctuation",
-			"style": {
+			"style":
+			{
 				"foreground": "#080808",
 			},
 		},
 		{
 			"name": "comma",
-			"style": {
+			"style":
+			{
 				"foreground": "#ff15b4",
 			},
 		},
 		{
 			"name": "dot",
-			"style": {
+			"style":
+			{
 				"foreground": "#080808",
 			},
 		},
 		{
 			"name": "dotDot",
-			"style": {
+			"style":
+			{
 				"foreground": "#080808",
 			},
 		},
 		{
 			"name": "semi",
-			"style": {
+			"style":
+			{
 				"foreground": "#cccccc",
 			},
 		},
 		{
 			"name": "operator",
-			"style": {
+			"style":
+			{
 				"foreground": "#080808",
 			},
 		},

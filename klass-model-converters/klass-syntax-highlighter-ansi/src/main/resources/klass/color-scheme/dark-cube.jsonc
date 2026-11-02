@@ -4,25 +4,29 @@
 	"rules": [
 		{
 			"name": "foreground",
-			"style": {
+			"style":
+			{
 				"foreground": 255,
 			},
 		},
 		{
 			"name": "background",
-			"style": {
+			"style":
+			{
 				"background": "BLACK",
 			},
 		},
 		{
 			"name": "blockComment",
-			"style": {
+			"style":
+			{
 				"foreground": 246,
 			},
 		},
 		{
 			"name": "lineComment",
-			"style": {
+			"style":
+			{
 				"foreground": 242,
 			},
 		},
@@ -30,135 +34,156 @@
 		/* Keywords */
 		{
 			"name": "keyword",
-			"style": {
+			"style":
+			{
 				"foreground": 166,
 			},
 		},
 		{
 			"name": "packageKeyword",
-			"style": {
+			"style":
+			{
 				"foreground": 173,
 			},
 		},
 		{
 			"name": "keywordEnumeration",
-			"style": {
+			"style":
+			{
 				"foreground": 214,
 				"background": 52,
 			},
 		},
 		{
 			"name": "keywordInterface",
-			"style": {
+			"style":
+			{
 				"foreground": 177,
 				"background": 53,
 			},
 		},
 		{
 			"name": "keywordUser",
-			"style": {
+			"style":
+			{
 				"foreground": 227,
 				"background": 53,
 			},
 		},
 		{
 			"name": "keywordClass",
-			"style": {
+			"style":
+			{
 				"foreground": 208,
 				"background": 52,
 			},
 		},
 		{
 			"name": "keywordProjection",
-			"style": {
+			"style":
+			{
 				"foreground": 215,
 				"background": 54,
 			},
 		},
 		{
 			"name": "keywordService",
-			"style": {
+			"style":
+			{
 				"foreground": 209,
 				"background": 54,
 			},
 		},
 		{
 			"name": "keywordAbstract",
-			"style": {
+			"style":
+			{
 				"foreground": 167,
 			},
 		},
 		{
 			"name": "keywordExtends",
-			"style": {
+			"style":
+			{
 				"foreground": 168,
 			},
 		},
 		{
 			"name": "keywordImplements",
-			"style": {
+			"style":
+			{
 				"foreground": 169,
 			},
 		},
 		{
 			"name": "keywordInheritanceType",
-			"style": {
+			"style":
+			{
 				"foreground": 174,
 			},
 		},
 		{
 			"name": "keywordAssociation",
-			"style": {
+			"style":
+			{
 				"foreground": 175,
 				"background": 53,
 			},
 		},
 		{
 			"name": "keywordRelationship",
-			"style": {
+			"style":
+			{
 				"foreground": 176,
 			},
 		},
 		{
 			"name": "keywordOrderBy",
-			"style": {
+			"style":
+			{
 				"foreground": 172,
 			},
 		},
 		{
 			"name": "keywordOrderByDirection",
-			"style": {
+			"style":
+			{
 				"foreground": 178,
 			},
 		},
 		{
 			"name": "keywordOn",
-			"style": {
+			"style":
+			{
 				"foreground": 179,
 			},
 		},
 		{
 			"name": "keywordMultiplicity",
-			"style": {
+			"style":
+			{
 				"foreground": 180,
 			},
 		},
 		{
 			"name": "keywordMultiplicityChoice",
-			"style": {
+			"style":
+			{
 				"foreground": 181,
 			},
 		},
 		{
 			"name": "keywordServiceCriteria",
-			"style": {
+			"style":
+			{
 				"foreground": 210,
 				"background": 55,
 			},
 		},
 		{
 			"name": "primitiveType",
-			"style": {
+			"style":
+			{
 				"foreground": 172,
 			},
 		},
@@ -166,41 +191,47 @@
 		/* Verbs */
 		{
 			"name": "verb",
-			"style": {
+			"style":
+			{
 				"foreground": 106,
 			},
 		},
 		{
 			"name": "verbGet",
-			"style": {
+			"style":
+			{
 				"foreground": 35,
 				"background": 22,
 			},
 		},
 		{
 			"name": "verbPost",
-			"style": {
+			"style":
+			{
 				"foreground": 83,
 				"background": 22,
 			},
 		},
 		{
 			"name": "verbPut",
-			"style": {
+			"style":
+			{
 				"foreground": 47,
 				"background": 22,
 			},
 		},
 		{
 			"name": "verbPatch",
-			"style": {
+			"style":
+			{
 				"foreground": 154,
 				"background": 22,
 			},
 		},
 		{
 			"name": "verbDelete",
-			"style": {
+			"style":
+			{
 				"foreground": 196,
 				"background": 52,
 			},
@@ -209,49 +240,57 @@
 		/* Modifiers */
 		{
 			"name": "modifier",
-			"style": {
+			"style":
+			{
 				"foreground": 108,
 			},
 		},
 		{
 			"name": "classifierModifier",
-			"style": {
+			"style":
+			{
 				"foreground": 114,
 			},
 		},
 		{
 			"name": "dataTypePropertyModifier",
-			"style": {
+			"style":
+			{
 				"foreground": 115,
 			},
 		},
 		{
 			"name": "associationEndModifier",
-			"style": {
+			"style":
+			{
 				"foreground": 78,
 			},
 		},
 		{
 			"name": "parameterizedPropertyModifier",
-			"style": {
+			"style":
+			{
 				"foreground": 79,
 			},
 		},
 		{
 			"name": "parameterModifier",
-			"style": {
+			"style":
+			{
 				"foreground": 73,
 			},
 		},
 		{
 			"name": "validationModifier",
-			"style": {
+			"style":
+			{
 				"foreground": 107,
 			},
 		},
 		{
 			"name": "serviceCategoryModifier",
-			"style": {
+			"style":
+			{
 				"foreground": 72,
 			},
 		},
@@ -259,121 +298,141 @@
 		/* Identifiers */
 		{
 			"name": "identifier",
-			"style": {
+			"style":
+			{
 				"foreground": 162,
 			},
 		},
 		{
 			"name": "packageName",
-			"style": {
+			"style":
+			{
 				"foreground": 141,
 			},
 		},
 		{
 			"name": "topLevelElementName",
-			"style": {
+			"style":
+			{
 				"foreground": 163,
 			},
 		},
 		{
 			"name": "enumerationLiteralName",
-			"style": {
+			"style":
+			{
 				"foreground": 219,
 			},
 		},
 		{
 			"name": "parameterName",
-			"style": {
+			"style":
+			{
 				"foreground": 183,
 			},
 		},
 		{
 			"name": "propertyName",
-			"style": {
+			"style":
+			{
 				"foreground": 134,
 			},
 		},
 		{
 			"name": "urlConstant",
-			"style": {
+			"style":
+			{
 				"foreground": 75,
 			},
 		},
 		{
 			"name": "enumerationName",
-			"style": {
+			"style":
+			{
 				"foreground": 169,
 			},
 		},
 		{
 			"name": "classifierName",
-			"style": {
+			"style":
+			{
 				"foreground": 170,
 			},
 		},
 		{
 			"name": "associationName",
-			"style": {
+			"style":
+			{
 				"foreground": 217,
 			},
 		},
 		{
 			"name": "projectionName",
-			"style": {
+			"style":
+			{
 				"foreground": 218,
 			},
 		},
 		{
 			"name": "serviceName",
-			"style": {
+			"style":
+			{
 				"foreground": 213,
 			},
 		},
 		{
 			"name": "className",
-			"style": {
+			"style":
+			{
 				"foreground": 205,
 			},
 		},
 		{
 			"name": "interfaceName",
-			"style": {
+			"style":
+			{
 				"foreground": 176,
 			},
 		},
 		{
 			"name": "dataTypePropertyName",
-			"style": {
+			"style":
+			{
 				"foreground": 142,
 			},
 		},
 		{
 			"name": "referencePropertyName",
-			"style": {
+			"style":
+			{
 				"foreground": 143,
 			},
 		},
 		{
 			"name": "primitivePropertyName",
-			"style": {
+			"style":
+			{
 				"foreground": 148,
 			},
 		},
 		{
 			"name": "enumerationPropertyName",
-			"style": {
+			"style":
+			{
 				"foreground": 149,
 			},
 		},
 		{
 			"name": "parameterizedPropertyName",
-			"style": {
+			"style":
+			{
 				"foreground": 144,
 			},
 		},
 		{
 			"name": "associationEndName",
-			"style": {
+			"style":
+			{
 				"foreground": 150,
 			},
 		},
@@ -381,61 +440,71 @@
 		/* References */
 		{
 			"name": "enumerationReference",
-			"style": {
+			"style":
+			{
 				"foreground": 175,
 			},
 		},
 		{
 			"name": "classifierReference",
-			"style": {
+			"style":
+			{
 				"foreground": 206,
 			},
 		},
 		{
 			"name": "interfaceReference",
-			"style": {
+			"style":
+			{
 				"foreground": 177,
 			},
 		},
 		{
 			"name": "classReference",
-			"style": {
+			"style":
+			{
 				"foreground": 212,
 			},
 		},
 		{
 			"name": "projectionReference",
-			"style": {
+			"style":
+			{
 				"foreground": 214,
 			},
 		},
 		{
 			"name": "dataTypePropertyReference",
-			"style": {
+			"style":
+			{
 				"foreground": 135,
 			},
 		},
 		{
 			"name": "associationEndReference",
-			"style": {
+			"style":
+			{
 				"foreground": 156,
 			},
 		},
 		{
 			"name": "parameterizedPropertyReference",
-			"style": {
+			"style":
+			{
 				"foreground": 137,
 			},
 		},
 		{
 			"name": "propertyReference",
-			"style": {
+			"style":
+			{
 				"foreground": 140,
 			},
 		},
 		{
 			"name": "parameterReference",
-			"style": {
+			"style":
+			{
 				"foreground": 189,
 			},
 		},
@@ -443,49 +512,57 @@
 		/* Literals */
 		{
 			"name": "literal",
-			"style": {
+			"style":
+			{
 				"foreground": 74,
 			},
 		},
 		{
 			"name": "stringLiteral",
-			"style": {
+			"style":
+			{
 				"foreground": 68,
 			},
 		},
 		{
 			"name": "integerLiteral",
-			"style": {
+			"style":
+			{
 				"foreground": 44,
 			},
 		},
 		{
 			"name": "booleanLiteral",
-			"style": {
+			"style":
+			{
 				"foreground": 38,
 			},
 		},
 		{
 			"name": "characterLiteral",
-			"style": {
+			"style":
+			{
 				"foreground": 37,
 			},
 		},
 		{
 			"name": "floatingPointLiteral",
-			"style": {
+			"style":
+			{
 				"foreground": 43,
 			},
 		},
 		{
 			"name": "literalThis",
-			"style": {
+			"style":
+			{
 				"foreground": 50,
 			},
 		},
 		{
 			"name": "literalNative",
-			"style": {
+			"style":
+			{
 				"foreground": 80,
 			},
 		},
@@ -493,94 +570,109 @@
 		/* Punctuation */
 		{
 			"name": "punctuation",
-			"style": {
+			"style":
+			{
 				"foreground": 251,
 			},
 		},
 		{
 			"name": "whitespace",
-			"style": {
+			"style":
+			{
 				"foreground": 238,
 			},
 		},
 		{
 			"name": "newline",
-			"style": {
+			"style":
+			{
 				"foreground": 240,
 			},
 		},
 		{
 			"name": "colon",
-			"style": {
+			"style":
+			{
 				"foreground": 255,
 			},
 		},
 		{
 			"name": "slash",
-			"style": {
+			"style":
+			{
 				"foreground": 249,
 			},
 		},
 		{
 			"name": "question",
-			"style": {
+			"style":
+			{
 				"foreground": 250,
 			},
 		},
 		{
 			"name": "ampersand",
-			"style": {
+			"style":
+			{
 				"foreground": 247,
 			},
 		},
 		{
 			"name": "pairedPunctuation",
-			"style": {
+			"style":
+			{
 				"foreground": 248,
 			},
 		},
 		{
 			"name": "parentheses",
-			"style": {
+			"style":
+			{
 				"foreground": 253,
 				"background": 233,
 			},
 		},
 		{
 			"name": "curlyBraces",
-			"style": {
+			"style":
+			{
 				"foreground": 252,
 				"background": 234,
 			},
 		},
 		{
 			"name": "squareBrackets",
-			"style": {
+			"style":
+			{
 				"foreground": 254,
 				"background": 235,
 			},
 		},
 		{
 			"name": "comma",
-			"style": {
+			"style":
+			{
 				"foreground": 253,
 			},
 		},
 		{
 			"name": "dot",
-			"style": {
+			"style":
+			{
 				"foreground": 252,
 			},
 		},
 		{
 			"name": "dotDot",
-			"style": {
+			"style":
+			{
 				"foreground": 248,
 			},
 		},
 		{
 			"name": "semi",
-			"style": {
+			"style":
+			{
 				"foreground": 254,
 			},
 		},
@@ -588,73 +680,85 @@
 		/* Operators */
 		{
 			"name": "operator",
-			"style": {
+			"style":
+			{
 				"foreground": 201,
 			},
 		},
 		{
 			"name": "wordOperator",
-			"style": {
+			"style":
+			{
 				"foreground": 203,
 			},
 		},
 		{
 			"name": "operatorIn",
-			"style": {
+			"style":
+			{
 				"foreground": 202,
 			},
 		},
 		{
 			"name": "operatorString",
-			"style": {
+			"style":
+			{
 				"foreground": 204,
 			},
 		},
 		{
 			"name": "operatorEquals",
-			"style": {
+			"style":
+			{
 				"foreground": 197,
 			},
 		},
 		{
 			"name": "operatorNotEquals",
-			"style": {
+			"style":
+			{
 				"foreground": 198,
 			},
 		},
 		{
 			"name": "operatorLessThan",
-			"style": {
+			"style":
+			{
 				"foreground": 199,
 			},
 		},
 		{
 			"name": "operatorGreaterThan",
-			"style": {
+			"style":
+			{
 				"foreground": 200,
 			},
 		},
 		{
 			"name": "operatorLessThanOrEqual",
-			"style": {
+			"style":
+			{
 				"foreground": 205,
 			},
 		},
 		{
 			"name": "operatorGreaterThanOrEqual",
-			"style": {
+			"style":
+			{
 				"foreground": 206,
 			},
 		},
 		{
 			"name": "operatorAnd",
-			"style": {
+			"style":
+			{
 				"foreground": 207,
 			},
 		},
 		{
 			"name": "operatorOr",
-			"style": {
+			"style":
+			{
 				"foreground": 208,
 			},
 		},

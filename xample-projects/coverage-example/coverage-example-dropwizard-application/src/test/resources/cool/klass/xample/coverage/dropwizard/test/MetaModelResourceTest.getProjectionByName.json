@@ -1,7 +1,8 @@
 {
 	"name": "UserProjection",
 	"packageName": "cool.klass.xample.coverage",
-	"rootProjection": {
+	"rootProjection":
+	{
 		"id": 31,
 		"name": "UserProjection",
 		"children": [
@@ -10,8 +11,10 @@
 				"id": 216,
 				"name": "userId",
 				"children": [],
-				"dataTypeProperty": {
-					"owningClassifier": {
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
 						"name": "User"
 					},
 					"name": "userId"
@@ -22,8 +25,10 @@
 				"id": 217,
 				"name": "systemFrom",
 				"children": [],
-				"dataTypeProperty": {
-					"owningClassifier": {
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
 						"name": "User"
 					},
 					"name": "systemFrom"
@@ -34,8 +39,10 @@
 				"id": 218,
 				"name": "systemTo",
 				"children": [],
-				"dataTypeProperty": {
-					"owningClassifier": {
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
 						"name": "User"
 					},
 					"name": "systemTo"
@@ -46,8 +53,10 @@
 				"id": 219,
 				"name": "firstName",
 				"children": [],
-				"dataTypeProperty": {
-					"owningClassifier": {
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
 						"name": "User"
 					},
 					"name": "firstName"
@@ -58,8 +67,10 @@
 				"id": 220,
 				"name": "lastName",
 				"children": [],
-				"dataTypeProperty": {
-					"owningClassifier": {
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
 						"name": "User"
 					},
 					"name": "lastName"
@@ -70,15 +81,18 @@
 				"id": 221,
 				"name": "email",
 				"children": [],
-				"dataTypeProperty": {
-					"owningClassifier": {
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
 						"name": "User"
 					},
 					"name": "email"
 				}
 			}
 		],
-		"classifier": {
+		"classifier":
+		{
 			"name": "User"
 		}
 	}

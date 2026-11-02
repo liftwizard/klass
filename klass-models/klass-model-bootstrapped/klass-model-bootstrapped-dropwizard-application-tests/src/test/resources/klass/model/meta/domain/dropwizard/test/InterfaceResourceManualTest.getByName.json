@@ -3,7 +3,8 @@
 	"packageName": "klass.model.meta.domain",
 	"superInterfaces": [
 		{
-			"superInterface": {
+			"superInterface":
+			{
 				"name": "Element"
 			}
 		}
@@ -15,7 +16,8 @@
 			"name": "name",
 			"optional": false,
 			"minLengthValidation": null,
-			"maxLengthValidation": {
+			"maxLengthValidation":
+			{
 				"number": 256
 			},
 			"propertyModifiers": [

@@ -9,7 +9,8 @@
 			"name": "superClassName",
 			"optional": true,
 			"minLengthValidation": null,
-			"maxLengthValidation": {
+			"maxLengthValidation":
+			{
 				"number": 256
 			},
 			"propertyModifiers": [
@@ -34,7 +35,8 @@
 		}
 	],
 	"abstractClass": false,
-	"superClass": {
+	"superClass":
+	{
 		"name": "Classifier"
 	},
 	"associationEnds": [

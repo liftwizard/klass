@@ -1,7 +1,9 @@
 {
-	logging: {
+	logging:
+	{
 		level: "DEBUG",
-		loggers: {
+		loggers:
+		{
 			"com.gs.fw.common.mithra.batch.sqllogs": "INFO",
 			"com.gs.fw.common.mithra.connectionmanager": "INFO",
 			"com.gs.fw.common.mithra.sqllogs": "DEBUG",
@@ -24,23 +26,29 @@
 			},
 		],
 	},
-	clock: {
+	clock:
+	{
 		type: "system",
 	},
-	klass: {
-		domainModel: {
+	klass:
+	{
+		domainModel:
+		{
 			type: "compiler",
 			sourcePackages: ["klass.model.meta.domain"],
 			colorScheme: "dark",
 		},
-		dataStore: {
+		dataStore:
+		{
 			type: "reladomo",
-			uuid: {
+			uuid:
+			{
 				type: "system",
 			},
 		},
 	},
-	configLogging: {
+	configLogging:
+	{
 		enabled: true,
 	},
 	dataSources: [
@@ -51,7 +59,8 @@
 			user: "sa",
 			password: "",
 			url: "jdbc:p6spy:h2:file:./target/h2db/klass-bootstrapped-h2;NON_KEYWORDS=USER;query_timeout=600000",
-			properties: {
+			properties:
+			{
 				charSet: "UTF-8",
 			},
 			logValidationErrors: true,

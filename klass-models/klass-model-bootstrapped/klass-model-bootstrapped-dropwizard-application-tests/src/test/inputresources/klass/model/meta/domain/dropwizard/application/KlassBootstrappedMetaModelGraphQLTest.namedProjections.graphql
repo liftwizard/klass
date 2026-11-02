@@ -1,13 +1,17 @@
-fragment NamedProjectionFragment on NamedProjection {
+fragment NamedProjectionFragment on NamedProjection
+{
 	name
 	packageName
-	rootProjection {
+	rootProjection
+	{
 		id
 	}
 }
 
-query {
-	namedProjections {
+query
+{
+	namedProjections
+	{
 		...NamedProjectionFragment
 	}
 }

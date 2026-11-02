@@ -15,7 +15,8 @@
 	createdById: "test user 1",
 	createdOn: "1999-12-31T23:59:59.999Z",
 	lastUpdatedById: "test user 1",
-	version: {
+	version:
+	{
 		propertiesOptionalId: 1,
 		number: 1,
 		system: "1999-12-31T23:59:59.999Z",

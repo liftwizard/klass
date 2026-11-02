@@ -1,91 +1,118 @@
-fragment ClassifierInterfaceMappingFragment on ClassifierInterfaceMapping {
-	superInterface {
+fragment ClassifierInterfaceMappingFragment on ClassifierInterfaceMapping
+{
+	superInterface
+	{
 		name
 	}
 }
 
-fragment DataTypePropertyFragment on DataTypeProperty {
+fragment DataTypePropertyFragment on DataTypeProperty
+{
 	__typename
 	name
 	optional
-	minLengthValidation {
+	minLengthValidation
+	{
 		...MinLengthPropertyValidationFragment
 	}
-	maxLengthValidation {
+	maxLengthValidation
+	{
 		...MaxLengthPropertyValidationFragment
 	}
-	propertyModifiers {
+	propertyModifiers
+	{
 		keyword
 	}
-	... on PrimitiveProperty {
+	... on PrimitiveProperty
+	{
 		primitiveType
-		minValidation {
+		minValidation
+		{
 			...MinPropertyValidationFragment
 		}
-		maxValidation {
+		maxValidation
+		{
 			...MaxPropertyValidationFragment
 		}
 	}
-	... on EnumerationProperty {
-		enumeration {
+	... on EnumerationProperty
+	{
+		enumeration
+		{
 			name
 		}
 	}
 }
 
-fragment MinLengthPropertyValidationFragment on MinLengthPropertyValidation {
+fragment MinLengthPropertyValidationFragment on MinLengthPropertyValidation
+{
 	number
 }
 
-fragment MaxLengthPropertyValidationFragment on MaxLengthPropertyValidation {
+fragment MaxLengthPropertyValidationFragment on MaxLengthPropertyValidation
+{
 	number
 }
 
-fragment MinPropertyValidationFragment on MinPropertyValidation {
+fragment MinPropertyValidationFragment on MinPropertyValidation
+{
 	number
 }
 
-fragment MaxPropertyValidationFragment on MaxPropertyValidation {
+fragment MaxPropertyValidationFragment on MaxPropertyValidation
+{
 	number
 }
 
-fragment KlassFragment on Klass {
+fragment KlassFragment on Klass
+{
 	name
 	packageName
 	abstractClass
-	superInterfaces {
+	superInterfaces
+	{
 		...ClassifierInterfaceMappingFragment
 	}
-	classifierModifiers {
+	classifierModifiers
+	{
 		keyword
 	}
-	dataTypeProperties {
+	dataTypeProperties
+	{
 		...DataTypePropertyFragment
 	}
-	superClass {
+	superClass
+	{
 		name
 	}
-	parameterizedProperties {
+	parameterizedProperties
+	{
 		...ParameterizedPropertyFragment
 	}
 }
 
-fragment ParameterizedPropertyFragment on ParameterizedProperty {
+fragment ParameterizedPropertyFragment on ParameterizedProperty
+{
 	name
 	multiplicity
-	resultType {
+	resultType
+	{
 		name
 	}
-	parameterizedPropertyOrderings {
+	parameterizedPropertyOrderings
+	{
 		ordinal
 	}
-	parameters {
+	parameters
+	{
 		name
 	}
 }
 
-query {
-	klasses {
+query
+{
+	klasses
+	{
 		...KlassFragment
 	}
 }

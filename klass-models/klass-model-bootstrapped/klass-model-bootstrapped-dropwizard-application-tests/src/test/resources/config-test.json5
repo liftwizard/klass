@@ -1,6 +1,7 @@
 // klass-models/klass-model-bootstrapped/klass-model-bootstrapped-dropwizard-application/src/test/resources/config-test.json5
 {
-	server: {
+	server:
+	{
 		detailedJsonProcessingExceptionMapper: true,
 		applicationConnectors: [
 			{
@@ -17,7 +18,8 @@
 			},
 		],
 		rootPath: "/api/*",
-		requestLog: {
+		requestLog:
+		{
 			appenders: [
 				{
 					type: "console",
@@ -25,9 +27,11 @@
 			],
 		},
 	},
-	logging: {
+	logging:
+	{
 		level: "DEBUG",
-		loggers: {
+		loggers:
+		{
 			"com.gs.fw.common.mithra.batch.sqllogs": "INFO",
 			"com.gs.fw.common.mithra.connectionmanager": "INFO",
 			"com.gs.fw.common.mithra.sqllogs": "DEBUG",
@@ -51,25 +55,31 @@
 			},
 		],
 	},
-	clock: {
+	clock:
+	{
 		type: "fixed",
 		instant: "2000-12-31T23:59:59Z",
 	},
-	klass: {
-		domainModel: {
+	klass:
+	{
+		domainModel:
+		{
 			type: "compiler",
 			sourcePackages: ["klass.model.meta.domain"],
 			colorScheme: "dark",
 		},
-		dataStore: {
+		dataStore:
+		{
 			type: "reladomo",
-			uuid: {
+			uuid:
+			{
 				type: "seed",
 				seed: "test seed",
 			},
 		},
 	},
-	configLogging: {
+	configLogging:
+	{
 		enabled: true,
 	},
 	authFilters: [
@@ -79,12 +89,14 @@
 			prefix: "Impersonation",
 		},
 	],
-	h2: {
+	h2:
+	{
 		enabled: false,
 		webPort: 8072,
 		tcpPort: 9072,
 	},
-	cors: {
+	cors:
+	{
 		enabled: false,
 	},
 	dataSources: [
@@ -95,7 +107,8 @@
 			user: "sa",
 			password: "",
 			url: "jdbc:p6spy:h2:mem:;NON_KEYWORDS=USER",
-			properties: {
+			properties:
+			{
 				charSet: "UTF-8",
 			},
 			logValidationErrors: true,
@@ -108,7 +121,8 @@
 			user: "sa",
 			password: "",
 			url: "jdbc:p6spy:h2:mem:klass-bootstrapped-h2;DB_CLOSE_DELAY=-1;NON_KEYWORDS=USER",
-			properties: {
+			properties:
+			{
 				charSet: "UTF-8",
 			},
 			logValidationErrors: true,
@@ -121,7 +135,8 @@
 			user: "sa",
 			password: "",
 			url: "jdbc:p6spy:h2:file:./target/h2db/klass-bootstrapped-h2;NON_KEYWORDS=USER",
-			properties: {
+			properties:
+			{
 				charSet: "UTF-8",
 			},
 			logValidationErrors: true,
@@ -129,10 +144,12 @@
 		},
 	],
 	ddlExecutors: [],
-	sampleData: {
+	sampleData:
+	{
 		enabled: false,
 	},
-	reladomo: {
+	reladomo:
+	{
 		runtimeConfigurationPaths: ["reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml"],
 	},
 	connectionManagers: [
@@ -155,11 +172,13 @@
 			schemaName: "klass-bootstrapped-h2",
 		},
 	],
-	jerseyHttpLogging: {
+	jerseyHttpLogging:
+	{
 		enabled: true,
 		maxEntitySize: "1 kilobyte",
 	},
-	liquibase: {
+	liquibase:
+	{
 		enabled: true,
 		dropEntireSchemaOnStartupAndShutdown: true,
 		dataSourceMigrations: [
@@ -172,10 +191,12 @@
 		],
 		dryRun: false,
 	},
-	bootstrap: {
+	bootstrap:
+	{
 		enabled: true,
 	},
-	graphQL: {
+	graphQL:
+	{
 		enableTracing: false,
 		queryCache: "maximumSize=10000",
 		schemaFiles: [

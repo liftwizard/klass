@@ -22,7 +22,8 @@
 		}
 	],
 	"abstractClass": false,
-	"superClass": {
+	"superClass":
+	{
 		"name": "PackageableElement"
 	},
 	"associationEnds": [

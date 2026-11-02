@@ -15,7 +15,8 @@
 	createdById: {},
 	createdOn: {},
 	lastUpdatedById: {},
-	version: {
+	version:
+	{
 		propertiesOptionalId: {},
 		number: {},
 		system: {},

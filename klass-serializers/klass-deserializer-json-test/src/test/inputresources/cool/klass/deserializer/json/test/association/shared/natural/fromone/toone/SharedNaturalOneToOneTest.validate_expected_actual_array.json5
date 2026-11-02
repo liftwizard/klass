@@ -2,7 +2,8 @@
 	key: [],
 	targetKey: [],
 	value: [],
-	target: {
+	target:
+	{
 		key: [],
 		sourceKey: [],
 		value: [],

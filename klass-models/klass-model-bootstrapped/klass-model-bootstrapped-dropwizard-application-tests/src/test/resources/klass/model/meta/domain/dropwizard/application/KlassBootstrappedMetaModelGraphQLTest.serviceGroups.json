@@ -1,10 +1,12 @@
 {
-	"data": {
+	"data":
+	{
 		"serviceGroups": [
 			{
 				"name": "PackageableElementResource",
 				"packageName": "klass.model.meta.domain",
-				"owningClass": {
+				"owningClass":
+				{
 					"name": "PackageableElement"
 				},
 				"urls": [
@@ -13,7 +15,8 @@
 						"parameters": [
 							{
 								"type": "PATH",
-								"parameter": {
+								"parameter":
+								{
 									"__typename": "PrimitiveParameter",
 									"id": 1,
 									"name": "name",
@@ -26,10 +29,12 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "ONE",
-								"projection": {
+								"projection":
+								{
 									"name": "PackageableElementProjection"
 								},
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 87
 								},
 								"authorizeCriteria": null,
@@ -41,7 +46,8 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 88
 								},
 								"authorizeCriteria": null,
@@ -53,7 +59,8 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 89
 								},
 								"authorizeCriteria": null,
@@ -70,10 +77,12 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
-								"projection": {
+								"projection":
+								{
 									"name": "PackageableElementProjection"
 								},
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 90
 								},
 								"authorizeCriteria": null,
@@ -85,7 +94,8 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 91
 								},
 								"authorizeCriteria": null,
@@ -97,7 +107,8 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 92
 								},
 								"authorizeCriteria": null,
@@ -112,7 +123,8 @@
 			{
 				"name": "EnumerationResource",
 				"packageName": "klass.model.meta.domain",
-				"owningClass": {
+				"owningClass":
+				{
 					"name": "Enumeration"
 				},
 				"urls": [
@@ -121,7 +133,8 @@
 						"parameters": [
 							{
 								"type": "PATH",
-								"parameter": {
+								"parameter":
+								{
 									"__typename": "PrimitiveParameter",
 									"id": 2,
 									"name": "name",
@@ -134,10 +147,12 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "ONE",
-								"projection": {
+								"projection":
+								{
 									"name": "EnumerationProjection"
 								},
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 93
 								},
 								"authorizeCriteria": null,
@@ -149,7 +164,8 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 94
 								},
 								"authorizeCriteria": null,
@@ -161,7 +177,8 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 95
 								},
 								"authorizeCriteria": null,
@@ -178,10 +195,12 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
-								"projection": {
+								"projection":
+								{
 									"name": "EnumerationProjection"
 								},
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 96
 								},
 								"authorizeCriteria": null,
@@ -193,7 +212,8 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 97
 								},
 								"authorizeCriteria": null,
@@ -205,7 +225,8 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 98
 								},
 								"authorizeCriteria": null,
@@ -220,7 +241,8 @@
 			{
 				"name": "InterfaceResource",
 				"packageName": "klass.model.meta.domain",
-				"owningClass": {
+				"owningClass":
+				{
 					"name": "Interface"
 				},
 				"urls": [
@@ -229,7 +251,8 @@
 						"parameters": [
 							{
 								"type": "PATH",
-								"parameter": {
+								"parameter":
+								{
 									"__typename": "PrimitiveParameter",
 									"id": 3,
 									"name": "name",
@@ -242,10 +265,12 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "ONE",
-								"projection": {
+								"projection":
+								{
 									"name": "InterfaceProjection"
 								},
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 99
 								},
 								"authorizeCriteria": null,
@@ -257,7 +282,8 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 100
 								},
 								"authorizeCriteria": null,
@@ -269,7 +295,8 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 101
 								},
 								"authorizeCriteria": null,
@@ -286,10 +313,12 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
-								"projection": {
+								"projection":
+								{
 									"name": "InterfaceProjection"
 								},
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 102
 								},
 								"authorizeCriteria": null,
@@ -301,7 +330,8 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 103
 								},
 								"authorizeCriteria": null,
@@ -313,7 +343,8 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 104
 								},
 								"authorizeCriteria": null,
@@ -328,7 +359,8 @@
 			{
 				"name": "KlassResource",
 				"packageName": "klass.model.meta.domain",
-				"owningClass": {
+				"owningClass":
+				{
 					"name": "Klass"
 				},
 				"urls": [
@@ -337,7 +369,8 @@
 						"parameters": [
 							{
 								"type": "PATH",
-								"parameter": {
+								"parameter":
+								{
 									"__typename": "PrimitiveParameter",
 									"id": 4,
 									"name": "name",
@@ -350,10 +383,12 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "ONE",
-								"projection": {
+								"projection":
+								{
 									"name": "KlassProjection"
 								},
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 105
 								},
 								"authorizeCriteria": null,
@@ -365,7 +400,8 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 106
 								},
 								"authorizeCriteria": null,
@@ -377,7 +413,8 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 107
 								},
 								"authorizeCriteria": null,
@@ -394,10 +431,12 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
-								"projection": {
+								"projection":
+								{
 									"name": "KlassProjection"
 								},
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 108
 								},
 								"authorizeCriteria": null,
@@ -409,7 +448,8 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 109
 								},
 								"authorizeCriteria": null,
@@ -421,7 +461,8 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 110
 								},
 								"authorizeCriteria": null,
@@ -436,7 +477,8 @@
 			{
 				"name": "ClassifierResource",
 				"packageName": "klass.model.meta.domain",
-				"owningClass": {
+				"owningClass":
+				{
 					"name": "Classifier"
 				},
 				"urls": [
@@ -445,7 +487,8 @@
 						"parameters": [
 							{
 								"type": "PATH",
-								"parameter": {
+								"parameter":
+								{
 									"__typename": "PrimitiveParameter",
 									"id": 5,
 									"name": "name",
@@ -458,10 +501,12 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "ONE",
-								"projection": {
+								"projection":
+								{
 									"name": "ClassifierProjection"
 								},
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 111
 								},
 								"authorizeCriteria": null,
@@ -473,7 +518,8 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 112
 								},
 								"authorizeCriteria": null,
@@ -485,7 +531,8 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 113
 								},
 								"authorizeCriteria": null,
@@ -502,10 +549,12 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
-								"projection": {
+								"projection":
+								{
 									"name": "ClassifierProjection"
 								},
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 114
 								},
 								"authorizeCriteria": null,
@@ -517,7 +566,8 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 115
 								},
 								"authorizeCriteria": null,
@@ -529,7 +579,8 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 116
 								},
 								"authorizeCriteria": null,
@@ -544,7 +595,8 @@
 			{
 				"name": "AssociationResource",
 				"packageName": "klass.model.meta.domain",
-				"owningClass": {
+				"owningClass":
+				{
 					"name": "Association"
 				},
 				"urls": [
@@ -553,7 +605,8 @@
 						"parameters": [
 							{
 								"type": "PATH",
-								"parameter": {
+								"parameter":
+								{
 									"__typename": "PrimitiveParameter",
 									"id": 6,
 									"name": "name",
@@ -566,10 +619,12 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "ONE",
-								"projection": {
+								"projection":
+								{
 									"name": "AssociationProjection"
 								},
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 117
 								},
 								"authorizeCriteria": null,
@@ -581,7 +636,8 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 118
 								},
 								"authorizeCriteria": null,
@@ -593,7 +649,8 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 119
 								},
 								"authorizeCriteria": null,
@@ -610,10 +667,12 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
-								"projection": {
+								"projection":
+								{
 									"name": "AssociationProjection"
 								},
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 120
 								},
 								"authorizeCriteria": null,
@@ -625,7 +684,8 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 121
 								},
 								"authorizeCriteria": null,
@@ -637,7 +697,8 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 122
 								},
 								"authorizeCriteria": null,
@@ -652,7 +713,8 @@
 			{
 				"name": "NamedProjectionResource",
 				"packageName": "klass.model.meta.domain",
-				"owningClass": {
+				"owningClass":
+				{
 					"name": "NamedProjection"
 				},
 				"urls": [
@@ -661,7 +723,8 @@
 						"parameters": [
 							{
 								"type": "PATH",
-								"parameter": {
+								"parameter":
+								{
 									"__typename": "PrimitiveParameter",
 									"id": 7,
 									"name": "name",
@@ -674,10 +737,12 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "ONE",
-								"projection": {
+								"projection":
+								{
 									"name": "NamedProjectionProjection"
 								},
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 123
 								},
 								"authorizeCriteria": null,
@@ -689,7 +754,8 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 124
 								},
 								"authorizeCriteria": null,
@@ -701,7 +767,8 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 125
 								},
 								"authorizeCriteria": null,
@@ -718,10 +785,12 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
-								"projection": {
+								"projection":
+								{
 									"name": "NamedProjectionProjection"
 								},
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 126
 								},
 								"authorizeCriteria": null,
@@ -733,7 +802,8 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 127
 								},
 								"authorizeCriteria": null,
@@ -745,7 +815,8 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 128
 								},
 								"authorizeCriteria": null,
@@ -760,7 +831,8 @@
 			{
 				"name": "ServiceGroupResource",
 				"packageName": "klass.model.meta.domain",
-				"owningClass": {
+				"owningClass":
+				{
 					"name": "ServiceGroup"
 				},
 				"urls": [
@@ -769,7 +841,8 @@
 						"parameters": [
 							{
 								"type": "PATH",
-								"parameter": {
+								"parameter":
+								{
 									"__typename": "PrimitiveParameter",
 									"id": 8,
 									"name": "name",
@@ -782,10 +855,12 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "ONE",
-								"projection": {
+								"projection":
+								{
 									"name": "ServiceGroupProjection"
 								},
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 129
 								},
 								"authorizeCriteria": null,
@@ -797,7 +872,8 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 130
 								},
 								"authorizeCriteria": null,
@@ -809,7 +885,8 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 131
 								},
 								"authorizeCriteria": null,
@@ -826,10 +903,12 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
-								"projection": {
+								"projection":
+								{
 									"name": "ServiceGroupProjection"
 								},
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 132
 								},
 								"authorizeCriteria": null,
@@ -841,7 +920,8 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 133
 								},
 								"authorizeCriteria": null,
@@ -853,7 +933,8 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria": {
+								"queryCriteria":
+								{
 									"id": 134
 								},
 								"authorizeCriteria": null,

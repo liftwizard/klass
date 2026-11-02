@@ -16,14 +16,16 @@
 			tag: [],
 		},
 		{
-			name: {
+			name:
+			{
 				name: {},
 			},
 			tag: {},
 		},
 		"oops",
 	],
-	version: {
+	version:
+	{
 		number: 20000000000,
 	},
 }

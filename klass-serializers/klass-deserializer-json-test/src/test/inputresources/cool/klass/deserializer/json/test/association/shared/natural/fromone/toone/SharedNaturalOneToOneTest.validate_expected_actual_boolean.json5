@@ -2,7 +2,8 @@
 	key: true,
 	targetKey: true,
 	value: true,
-	target: {
+	target:
+	{
 		key: true,
 		sourceKey: true,
 		value: true,

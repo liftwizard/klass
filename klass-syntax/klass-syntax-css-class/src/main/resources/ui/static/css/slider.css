@@ -1,5 +1,6 @@
 /* Float aside in upper right */
-aside {
+aside
+{
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -7,7 +8,8 @@ aside {
 	margin: 1rem;
 }
 
-dark-mode-toggle.slider::part(toggleLabel) {
+dark-mode-toggle.slider::part(toggleLabel)
+{
 	display: inline-block;
 	position: relative;
 	height: calc(var(--dark-mode-toggle-icon-size, 1rem) * 2);
@@ -17,7 +19,8 @@ dark-mode-toggle.slider::part(toggleLabel) {
 	transition: 0.4s;
 }
 
-dark-mode-toggle.slider::part(toggleLabel)::before {
+dark-mode-toggle.slider::part(toggleLabel)::before
+{
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -40,11 +43,13 @@ dark-mode-toggle.slider::part(toggleLabel)::before {
 	box-sizing: border-box;
 }
 
-dark-mode-toggle.slider[mode="dark"]::part(toggleLabel) {
+dark-mode-toggle.slider[mode="dark"]::part(toggleLabel)
+{
 	background-color: #4e5255;
 }
 
-dark-mode-toggle.slider[mode="dark"]::part(toggleLabel)::before {
+dark-mode-toggle.slider[mode="dark"]::part(toggleLabel)::before
+{
 	left: calc(100% - var(--dark-mode-toggle-icon-size, 1rem) * 1.75);
 	border-color: #000;
 	background-color: #ccc;
@@ -55,7 +60,8 @@ dark-mode-toggle.slider[mode="dark"]::part(toggleLabel)::before {
 	box-shadow: 0 0.5px hsl(0deg 0% 100% / 16%);
 }
 
-dark-mode-toggle.slider::part(toggleLabel)::after {
+dark-mode-toggle.slider::part(toggleLabel)::after
+{
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -75,7 +81,8 @@ dark-mode-toggle.slider::part(toggleLabel)::after {
 	opacity: 0.5;
 }
 
-dark-mode-toggle.slider[mode="dark"]::part(toggleLabel)::after {
+dark-mode-toggle.slider[mode="dark"]::part(toggleLabel)::after
+{
 	left: calc(var(--dark-mode-toggle-icon-size, 1rem) * 0.25);
 	background-image: var(--dark-mode-toggle-light-icon, url("sun.svg"));
 	filter: var(--dark-mode-toggle-icon-filter, invert(100%));

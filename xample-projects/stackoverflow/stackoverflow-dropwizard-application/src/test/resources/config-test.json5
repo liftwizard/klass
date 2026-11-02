@@ -1,5 +1,6 @@
 {
-	server: {
+	server:
+	{
 		detailedJsonProcessingExceptionMapper: true,
 		applicationConnectors: [
 			{
@@ -16,7 +17,8 @@
 			},
 		],
 		rootPath: "/api/*",
-		requestLog: {
+		requestLog:
+		{
 			appenders: [
 				{
 					type: "buffered",
@@ -40,9 +42,11 @@
 			],
 		},
 	},
-	logging: {
+	logging:
+	{
 		level: "INFO",
-		loggers: {
+		loggers:
+		{
 			"com.stackoverflow": "DEBUG",
 			"com.gs.fw.common.mithra.batch.sqllogs": "INFO",
 			"com.gs.fw.common.mithra.connectionmanager": "INFO",
@@ -66,26 +70,32 @@
 			},
 		],
 	},
-	clock: {
+	clock:
+	{
 		type: "incrementing",
 		instant: "2000-12-31T23:59:59Z",
 		incrementAmount: "1 day",
 	},
-	klass: {
-		domainModel: {
+	klass:
+	{
+		domainModel:
+		{
 			type: "compiler",
 			sourcePackages: ["com.stackoverflow"],
 			colorScheme: "dark",
 		},
-		dataStore: {
+		dataStore:
+		{
 			type: "reladomo",
-			uuid: {
+			uuid:
+			{
 				type: "seed",
 				seed: "test seed",
 			},
 		},
 	},
-	configLogging: {
+	configLogging:
+	{
 		enabled: true,
 	},
 	authFilters: [
@@ -95,12 +105,14 @@
 			prefix: "Impersonation",
 		},
 	],
-	h2: {
+	h2:
+	{
 		enabled: false,
 		webPort: 8066,
 		tcpPort: 9066,
 	},
-	cors: {
+	cors:
+	{
 		enabled: false,
 	},
 	dataSources: [
@@ -111,7 +123,8 @@
 			user: "sa",
 			password: "",
 			url: "jdbc:p6spy:h2:mem:;NON_KEYWORDS=USER",
-			properties: {
+			properties:
+			{
 				charSet: "UTF-8",
 			},
 			logValidationErrors: true,
@@ -124,7 +137,8 @@
 			user: "sa",
 			password: "",
 			url: "jdbc:p6spy:h2:mem:stackoverflow-h2;DB_CLOSE_DELAY=-1;NON_KEYWORDS=USER",
-			properties: {
+			properties:
+			{
 				charSet: "UTF-8",
 			},
 			logValidationErrors: true,
@@ -137,7 +151,8 @@
 			user: "sa",
 			password: "",
 			url: "jdbc:p6spy:h2:file:./target/h2db/stackoverflow-h2;NON_KEYWORDS=USER",
-			properties: {
+			properties:
+			{
 				charSet: "UTF-8",
 			},
 			logValidationErrors: true,
@@ -145,10 +160,12 @@
 		},
 	],
 	ddlExecutors: [],
-	sampleData: {
+	sampleData:
+	{
 		enabled: false,
 	},
-	reladomo: {
+	reladomo:
+	{
 		runtimeConfigurationPaths: ["reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml"],
 	},
 	connectionManagers: [
@@ -172,11 +189,13 @@
 		},
 	],
 	timeZone: "system",
-	jerseyHttpLogging: {
+	jerseyHttpLogging:
+	{
 		enabled: true,
 		maxEntitySize: "1 kilobyte",
 	},
-	liquibase: {
+	liquibase:
+	{
 		enabled: true,
 		dropEntireSchemaOnStartupAndShutdown: true,
 		dataSourceMigrations: [
@@ -189,10 +208,12 @@
 		],
 		dryRun: false,
 	},
-	bootstrap: {
+	bootstrap:
+	{
 		enabled: false,
 	},
-	graphQL: {
+	graphQL:
+	{
 		enableTracing: false,
 		queryCache: "maximumSize=10000",
 		schemaFiles: [

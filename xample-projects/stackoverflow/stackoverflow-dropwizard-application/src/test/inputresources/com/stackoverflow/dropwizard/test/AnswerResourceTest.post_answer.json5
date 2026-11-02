@@ -1,7 +1,8 @@
 {
 	body: "This is a test answer",
 	deleted: false,
-	question: {
+	question:
+	{
 		id: 1,
 	},
 }

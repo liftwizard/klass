@@ -1,8 +1,10 @@
 {
-	server: {
+	server:
+	{
 		detailedJsonProcessingExceptionMapper: true,
 		rootPath: "/api/*",
-		requestLog: {
+		requestLog:
+		{
 			appenders: [
 				{
 					type: "console",
@@ -25,9 +27,11 @@
 			],
 		},
 	},
-	logging: {
+	logging:
+	{
 		level: "INFO",
-		loggers: {
+		loggers:
+		{
 			"com.gs.fw.common.mithra.batch.sqllogs": "DEBUG",
 			"com.gs.fw.common.mithra.connectionmanager": "INFO",
 			"com.gs.fw.common.mithra.sqllogs": "DEBUG",
@@ -45,32 +49,40 @@
 			},
 		],
 	},
-	clock: {
+	clock:
+	{
 		type: "system",
 	},
-	klass: {
-		domainModel: {
+	klass:
+	{
+		domainModel:
+		{
 			type: "compiler",
 			sourcePackages: ["klass.model.meta.domain", "com.stackoverflow"],
 			colorScheme: "dark",
 		},
-		dataStore: {
+		dataStore:
+		{
 			type: "reladomo",
-			uuid: {
+			uuid:
+			{
 				type: "system",
 			},
 		},
 	},
-	configLogging: {
+	configLogging:
+	{
 		enabled: true,
 	},
 	authFilters: [],
-	h2: {
+	h2:
+	{
 		enabled: true,
 		webPort: 8065,
 		tcpPort: 9065,
 	},
-	cors: {
+	cors:
+	{
 		enabled: false,
 	},
 	dataSources: [
@@ -81,7 +93,8 @@
 			user: "sa",
 			password: "",
 			url: "jdbc:p6spy:h2:mem:;NON_KEYWORDS=USER",
-			properties: {
+			properties:
+			{
 				charSet: "UTF-8",
 			},
 			logValidationErrors: true,
@@ -94,7 +107,8 @@
 			user: "sa",
 			password: "",
 			url: "jdbc:p6spy:h2:tcp://localhost:9065/stackoverflow-h2;NON_KEYWORDS=USER",
-			properties: {
+			properties:
+			{
 				charSet: "UTF-8",
 			},
 			logValidationErrors: true,
@@ -107,7 +121,8 @@
 			user: "sa",
 			password: "",
 			url: "jdbc:p6spy:h2:file:./target/h2db/stackoverflow-h2;NON_KEYWORDS=USER",
-			properties: {
+			properties:
+			{
 				charSet: "UTF-8",
 			},
 			logValidationErrors: true,
@@ -119,7 +134,8 @@
 			dataSourceName: "h2-tcp",
 		},
 	],
-	reladomo: {
+	reladomo:
+	{
 		runtimeConfigurationPaths: ["reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml"],
 	},
 	connectionManagers: [
@@ -142,14 +158,17 @@
 			schemaName: "stackoverflow-h2",
 		},
 	],
-	jerseyHttpLogging: {
+	jerseyHttpLogging:
+	{
 		enabled: true,
 		maxEntitySize: "1 kilobyte",
 	},
-	bootstrap: {
+	bootstrap:
+	{
 		enabled: false,
 	},
-	graphQL: {
+	graphQL:
+	{
 		enableTracing: false,
 		queryCache: "maximumSize=10000",
 		schemaFiles: [
