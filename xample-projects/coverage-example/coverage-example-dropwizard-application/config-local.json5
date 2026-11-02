@@ -1,5 +1,6 @@
 {
-	server: {
+	server:
+	{
 		detailedJsonProcessingExceptionMapper: true,
 		applicationConnectors: [
 			{
@@ -15,9 +16,11 @@
 		],
 		rootPath: "/api/*",
 	},
-	logging: {
+	logging:
+	{
 		level: "INFO",
-		loggers: {
+		loggers:
+		{
 			"cool.klass.xample.coverage": "DEBUG",
 			"io.liftwizard": "DEBUG",
 		},
@@ -27,23 +30,29 @@
 			},
 		],
 	},
-	clock: {
+	clock:
+	{
 		type: "system",
 	},
-	klass: {
-		domainModel: {
+	klass:
+	{
+		domainModel:
+		{
 			type: "compiler",
 			sourcePackages: ["cool.klass.xample.coverage"],
 			colorScheme: "dark",
 		},
-		dataStore: {
+		dataStore:
+		{
 			type: "reladomo",
-			uuid: {
+			uuid:
+			{
 				type: "system",
 			},
 		},
 	},
-	configLogging: {
+	configLogging:
+	{
 		enabled: true,
 	},
 	authFilters: [
@@ -53,12 +62,14 @@
 			prefix: "Impersonation",
 		},
 	],
-	h2: {
+	h2:
+	{
 		enabled: true,
 		webPort: 8078,
 		tcpPort: 9078,
 	},
-	cors: {
+	cors:
+	{
 		enabled: true,
 	},
 	dataSources: [
@@ -69,7 +80,8 @@
 			user: "sa",
 			password: "",
 			url: "jdbc:p6spy:h2:tcp://localhost:9078/coverage-example-h2;NON_KEYWORDS=USER",
-			properties: {
+			properties:
+			{
 				charSet: "UTF-8",
 			},
 			logValidationErrors: true,
@@ -77,10 +89,12 @@
 		},
 	],
 	ddlExecutors: [],
-	sampleData: {
+	sampleData:
+	{
 		enabled: true,
 	},
-	reladomo: {
+	reladomo:
+	{
 		runtimeConfigurationPaths: ["reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml"],
 	},
 	connectionManagers: [
@@ -91,11 +105,13 @@
 			schemaName: "coverage-example-h2",
 		},
 	],
-	jerseyHttpLogging: {
+	jerseyHttpLogging:
+	{
 		enabled: true,
 		maxEntitySize: "1 kilobyte",
 	},
-	liquibase: {
+	liquibase:
+	{
 		enabled: true,
 		dropEntireSchemaOnStartupAndShutdown: true,
 		dataSourceMigrations: [
@@ -108,10 +124,12 @@
 		],
 		dryRun: false,
 	},
-	bootstrap: {
+	bootstrap:
+	{
 		enabled: true,
 	},
-	graphQL: {
+	graphQL:
+	{
 		enableTracing: false,
 		queryCache: "maximumSize=10000",
 		schemaFiles: [

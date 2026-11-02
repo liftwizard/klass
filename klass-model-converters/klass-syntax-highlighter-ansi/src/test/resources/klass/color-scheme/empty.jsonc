@@ -4,13 +4,15 @@
 	"rules": [
 		{
 			"name": "background",
-			"style": {
+			"style":
+			{
 				"background": "BLACK",
 			},
 		},
 		{
 			"name": "foreground",
-			"style": {
+			"style":
+			{
 				"foreground": "WHITE",
 			},
 		},

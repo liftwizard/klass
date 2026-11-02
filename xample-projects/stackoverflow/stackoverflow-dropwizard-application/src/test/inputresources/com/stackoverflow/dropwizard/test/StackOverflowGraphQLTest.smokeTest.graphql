@@ -1,35 +1,44 @@
-query {
-	question(id: 1) {
+query
+{
+	question(id: 1)
+	{
 		id
 		systemFrom
 		systemTo
-		createdBy {
+		createdBy
+		{
 			userId
 		}
 		createdOn
-		lastUpdatedBy {
+		lastUpdatedBy
+		{
 			userId
 		}
 		body
 		title
 		status
 		deleted
-		tags {
-			tag {
+		tags
+		{
+			tag
+			{
 				name
 				systemFrom
 				systemTo
-				createdBy {
+				createdBy
+				{
 					userId
 				}
 				createdOn
-				lastUpdatedBy {
+				lastUpdatedBy
+				{
 					userId
 				}
 				description
 			}
 		}
-		version {
+		version
+		{
 			number
 		}
 	}

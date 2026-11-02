@@ -4,7 +4,8 @@
 		{
 			key: "key 1",
 			value: "value 1",
-			source: {
+			source:
+			{
 				key: "key",
 				value: "value",
 			},
@@ -12,7 +13,8 @@
 		{
 			key: "key 2",
 			value: "value 2",
-			source: {
+			source:
+			{
 				key: "key",
 				value: "value",
 			},

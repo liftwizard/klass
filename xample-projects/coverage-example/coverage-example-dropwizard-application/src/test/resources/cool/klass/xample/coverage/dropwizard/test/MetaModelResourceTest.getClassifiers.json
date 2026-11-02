@@ -13,7 +13,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "Element"
 				}
 			}
@@ -25,7 +26,8 @@
 				"name": "name",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -60,7 +62,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "NamedElement"
 				}
 			}
@@ -72,7 +75,8 @@
 				"name": "packageName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 100000
 				},
 				"propertyModifiers": [],
@@ -94,7 +98,8 @@
 		"classifierModifiers": [],
 		"dataTypeProperties": [],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "PackageableElement"
 		},
 		"associationEnds": [
@@ -116,7 +121,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "NamedElement"
 				}
 			}
@@ -128,7 +134,8 @@
 				"name": "enumerationName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -145,7 +152,8 @@
 				"name": "prettyName",
 				"optional": true,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [],
@@ -171,7 +179,8 @@
 		"classifierModifiers": [],
 		"dataTypeProperties": [],
 		"abstractClass": true,
-		"superClass": {
+		"superClass":
+		{
 			"name": "PackageableElement"
 		},
 		"associationEnds": [
@@ -198,7 +207,8 @@
 		"classifierModifiers": [],
 		"dataTypeProperties": [],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "Classifier"
 		},
 		"associationEnds": [
@@ -220,7 +230,8 @@
 				"name": "classifierName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -240,7 +251,8 @@
 				"name": "interfaceName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -289,7 +301,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "Element"
 				}
 			}
@@ -301,7 +314,8 @@
 				"name": "classifierName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -318,7 +332,8 @@
 				"name": "keyword",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -367,7 +382,8 @@
 				"name": "superClassName",
 				"optional": true,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -392,7 +408,8 @@
 			}
 		],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "Classifier"
 		},
 		"associationEnds": [
@@ -429,7 +446,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "NamedElement"
 				}
 			}
@@ -441,7 +459,8 @@
 				"name": "classifierName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -501,17 +520,20 @@
 				"name": "primitiveType",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [],
-				"enumeration": {
+				"enumeration":
+				{
 					"name": "PrimitiveType"
 				}
 			}
 		],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "DataTypeProperty"
 		},
 		"associationEnds": [
@@ -536,7 +558,8 @@
 				"name": "enumerationName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -550,7 +573,8 @@
 			}
 		],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "DataTypeProperty"
 		},
 		"associationEnds": [
@@ -566,7 +590,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "Element"
 				}
 			}
@@ -578,7 +603,8 @@
 				"name": "classifierName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -595,7 +621,8 @@
 				"name": "propertyName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -626,7 +653,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "NumericPropertyValidation"
 				}
 			}
@@ -648,7 +676,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "NumericPropertyValidation"
 				}
 			}
@@ -670,7 +699,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "NumericPropertyValidation"
 				}
 			}
@@ -692,7 +722,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "NumericPropertyValidation"
 				}
 			}
@@ -714,7 +745,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "Element"
 				}
 			}
@@ -726,7 +758,8 @@
 				"name": "classifierName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -743,7 +776,8 @@
 				"name": "propertyName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -760,7 +794,8 @@
 				"name": "keyword",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -803,7 +838,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "NamedElement"
 				}
 			}
@@ -833,7 +869,8 @@
 				"name": "name",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [],
@@ -846,11 +883,13 @@
 				"name": "multiplicity",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [],
-				"enumeration": {
+				"enumeration":
+				{
 					"name": "Multiplicity"
 				}
 			}
@@ -879,7 +918,8 @@
 				"name": "enumerationName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -893,7 +933,8 @@
 			}
 		],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "Parameter"
 		},
 		"associationEnds": [
@@ -915,17 +956,20 @@
 				"name": "primitiveType",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [],
-				"enumeration": {
+				"enumeration":
+				{
 					"name": "PrimitiveType"
 				}
 			}
 		],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "Parameter"
 		},
 		"associationEnds": [],
@@ -977,7 +1021,8 @@
 		"classifierModifiers": [],
 		"dataTypeProperties": [],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "ExpressionValue"
 		},
 		"associationEnds": [],
@@ -991,7 +1036,8 @@
 		"classifierModifiers": [],
 		"dataTypeProperties": [],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "ExpressionValue"
 		},
 		"associationEnds": [],
@@ -1021,7 +1067,8 @@
 			}
 		],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "ExpressionValue"
 		},
 		"associationEnds": [
@@ -1043,7 +1090,8 @@
 				"name": "className",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -1060,7 +1108,8 @@
 				"name": "propertyClassName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -1077,7 +1126,8 @@
 				"name": "propertyName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -1091,7 +1141,8 @@
 			}
 		],
 		"abstractClass": true,
-		"superClass": {
+		"superClass":
+		{
 			"name": "ExpressionValue"
 		},
 		"associationEnds": [
@@ -1116,7 +1167,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "Element"
 				}
 			}
@@ -1192,7 +1244,8 @@
 		"classifierModifiers": [],
 		"dataTypeProperties": [],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "Criteria"
 		},
 		"associationEnds": [],
@@ -1237,7 +1290,8 @@
 			}
 		],
 		"abstractClass": true,
-		"superClass": {
+		"superClass":
+		{
 			"name": "Criteria"
 		},
 		"associationEnds": [
@@ -1258,7 +1312,8 @@
 		"classifierModifiers": [],
 		"dataTypeProperties": [],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "BinaryCriteria"
 		},
 		"associationEnds": [],
@@ -1272,7 +1327,8 @@
 		"classifierModifiers": [],
 		"dataTypeProperties": [],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "BinaryCriteria"
 		},
 		"associationEnds": [],
@@ -1320,17 +1376,20 @@
 				"name": "operator",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [],
-				"enumeration": {
+				"enumeration":
+				{
 					"name": "Operator"
 				}
 			}
 		],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "Criteria"
 		},
 		"associationEnds": [
@@ -1367,7 +1426,8 @@
 			}
 		],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "Criteria"
 		},
 		"associationEnds": [
@@ -1401,7 +1461,8 @@
 			}
 		],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "PackageableElement"
 		},
 		"associationEnds": [
@@ -1420,7 +1481,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "NamedElement"
 				}
 			}
@@ -1432,7 +1494,8 @@
 				"name": "owningClassName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -1452,7 +1515,8 @@
 				"name": "associationName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [],
@@ -1465,7 +1529,8 @@
 				"name": "resultTypeName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -1482,11 +1547,13 @@
 				"name": "direction",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [],
-				"enumeration": {
+				"enumeration":
+				{
 					"name": "AssociationEndDirection"
 				}
 			},
@@ -1495,11 +1562,13 @@
 				"name": "multiplicity",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [],
-				"enumeration": {
+				"enumeration":
+				{
 					"name": "Multiplicity"
 				}
 			}
@@ -1537,7 +1606,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "Element"
 				}
 			}
@@ -1549,7 +1619,8 @@
 				"name": "owningClassName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -1566,7 +1637,8 @@
 				"name": "associationEndName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -1583,7 +1655,8 @@
 				"name": "keyword",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -1650,7 +1723,8 @@
 				"name": "associationOwningClassName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -1670,7 +1744,8 @@
 				"name": "associationEndName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -1721,7 +1796,8 @@
 		"classifierModifiers": [],
 		"dataTypeProperties": [],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "MemberReferencePath"
 		},
 		"associationEnds": [
@@ -1742,7 +1818,8 @@
 		"classifierModifiers": [],
 		"dataTypeProperties": [],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "MemberReferencePath"
 		},
 		"associationEnds": [],
@@ -1754,7 +1831,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "NamedElement"
 				}
 			}
@@ -1766,7 +1844,8 @@
 				"name": "owningClassName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -1786,7 +1865,8 @@
 				"name": "resultTypeName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -1803,11 +1883,13 @@
 				"name": "multiplicity",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [],
-				"enumeration": {
+				"enumeration":
+				{
 					"name": "Multiplicity"
 				}
 			}
@@ -1842,7 +1924,8 @@
 				"name": "associationEndClassName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -1862,7 +1945,8 @@
 				"name": "associationEndName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -1900,11 +1984,13 @@
 				"name": "orderByDirection",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [],
-				"enumeration": {
+				"enumeration":
+				{
 					"name": "OrderByDirection"
 				}
 			},
@@ -1948,7 +2034,8 @@
 				"name": "owningClassName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -1968,7 +2055,8 @@
 				"name": "name",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2007,7 +2095,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "NamedElement"
 				}
 			}
@@ -2019,7 +2108,8 @@
 				"name": "classifierName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2039,7 +2129,8 @@
 				"name": "parameterizedPropertyName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2082,7 +2173,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "NamedElement"
 				}
 			}
@@ -2127,7 +2219,8 @@
 				"name": "name",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [],
@@ -2160,7 +2253,8 @@
 				"name": "classifierName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2177,7 +2271,8 @@
 				"name": "namedProjectionName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2191,7 +2286,8 @@
 			}
 		],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "ProjectionElement"
 		},
 		"associationEnds": [
@@ -2212,7 +2308,8 @@
 		"classifierModifiers": [],
 		"dataTypeProperties": [],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "PackageableElement"
 		},
 		"associationEnds": [
@@ -2240,7 +2337,8 @@
 				"name": "associationEndClass",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2257,7 +2355,8 @@
 				"name": "associationEndName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2271,7 +2370,8 @@
 			}
 		],
 		"abstractClass": true,
-		"superClass": {
+		"superClass":
+		{
 			"name": "ProjectionElement"
 		},
 		"associationEnds": [
@@ -2289,7 +2389,8 @@
 		"classifierModifiers": [],
 		"dataTypeProperties": [],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "ProjectionWithAssociationEnd"
 		},
 		"associationEnds": [],
@@ -2307,7 +2408,8 @@
 				"name": "projectionName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2321,7 +2423,8 @@
 			}
 		],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "ProjectionWithAssociationEnd"
 		},
 		"associationEnds": [
@@ -2343,7 +2446,8 @@
 				"name": "propertyClassifierName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2360,7 +2464,8 @@
 				"name": "propertyName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2374,7 +2479,8 @@
 			}
 		],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "ProjectionElement"
 		},
 		"associationEnds": [
@@ -2396,7 +2502,8 @@
 				"name": "className",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2410,7 +2517,8 @@
 			}
 		],
 		"abstractClass": false,
-		"superClass": {
+		"superClass":
+		{
 			"name": "PackageableElement"
 		},
 		"associationEnds": [
@@ -2429,7 +2537,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "Element"
 				}
 			}
@@ -2441,7 +2550,8 @@
 				"name": "serviceGroupName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2458,7 +2568,8 @@
 				"name": "url",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 8192
 				},
 				"propertyModifiers": [
@@ -2507,7 +2618,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "Element"
 				}
 			}
@@ -2519,7 +2631,8 @@
 				"name": "serviceGroupName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2539,7 +2652,8 @@
 				"name": "urlString",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 8192
 				},
 				"propertyModifiers": [
@@ -2579,7 +2693,8 @@
 				"minLengthValidation": null,
 				"maxLengthValidation": null,
 				"propertyModifiers": [],
-				"enumeration": {
+				"enumeration":
+				{
 					"name": "UrlParameterType"
 				}
 			},
@@ -2617,7 +2732,8 @@
 		"packageName": "klass.model.meta.domain",
 		"superInterfaces": [
 			{
-				"superInterface": {
+				"superInterface":
+				{
 					"name": "Element"
 				}
 			}
@@ -2629,7 +2745,8 @@
 				"name": "serviceGroupName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2646,7 +2763,8 @@
 				"name": "urlString",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 8192
 				},
 				"propertyModifiers": [
@@ -2663,7 +2781,8 @@
 				"name": "verb",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2671,7 +2790,8 @@
 						"keyword": "key"
 					}
 				],
-				"enumeration": {
+				"enumeration":
+				{
 					"name": "Verb"
 				}
 			},
@@ -2680,7 +2800,8 @@
 				"name": "projectionName",
 				"optional": true,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2757,11 +2878,13 @@
 				"name": "serviceMultiplicity",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [],
-				"enumeration": {
+				"enumeration":
+				{
 					"name": "ServiceMultiplicity"
 				}
 			},
@@ -2820,7 +2943,8 @@
 				"name": "serviceGroupName",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 256
 				},
 				"propertyModifiers": [
@@ -2840,7 +2964,8 @@
 				"name": "serviceUrlString",
 				"optional": false,
 				"minLengthValidation": null,
-				"maxLengthValidation": {
+				"maxLengthValidation":
+				{
 					"number": 8192
 				},
 				"propertyModifiers": [
@@ -2869,7 +2994,8 @@
 						"keyword": "private"
 					}
 				],
-				"enumeration": {
+				"enumeration":
+				{
 					"name": "Verb"
 				}
 			},
@@ -2898,7 +3024,8 @@
 				"minLengthValidation": null,
 				"maxLengthValidation": null,
 				"propertyModifiers": [],
-				"enumeration": {
+				"enumeration":
+				{
 					"name": "OrderByDirection"
 				}
 			},

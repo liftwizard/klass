@@ -22,7 +22,8 @@
 				"data": "EveryTypeForeignKeyProperty data 1 ☝"
 			}
 		],
-		"version": {
+		"version":
+		{
 			"number": 1
 		}
 	},
@@ -49,7 +50,8 @@
 				"data": "EveryTypeForeignKeyProperty data 2 ✌"
 			}
 		],
-		"version": {
+		"version":
+		{
 			"number": 1
 		}
 	}

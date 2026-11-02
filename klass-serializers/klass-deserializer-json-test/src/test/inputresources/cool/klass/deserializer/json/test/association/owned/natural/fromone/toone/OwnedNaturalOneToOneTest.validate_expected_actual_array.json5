@@ -1,7 +1,8 @@
 {
 	key: [],
 	value: [],
-	target: {
+	target:
+	{
 		key: [],
 		sourceKey: [],
 		value: [],

@@ -1,34 +1,45 @@
-fragment ExpressionValueFragment on ExpressionValue {
+fragment ExpressionValueFragment on ExpressionValue
+{
 	__typename
 	id
-	... on ParameterReference {
-		parameter {
+	... on ParameterReference
+	{
+		parameter
+		{
 			__typename
 			id
 		}
 	}
-	... on MemberReferencePath {
-		klass {
+	... on MemberReferencePath
+	{
+		klass
+		{
 			name
 		}
-		associationEnds {
+		associationEnds
+		{
 			...MemberReferencePathAssociationEndMappingFragment
 		}
-		dataTypeProperty {
+		dataTypeProperty
+		{
 			__typename
 			name
 		}
 	}
 }
 
-fragment MemberReferencePathAssociationEndMappingFragment on MemberReferencePathAssociationEndMapping {
-	associationEnd {
+fragment MemberReferencePathAssociationEndMappingFragment on MemberReferencePathAssociationEndMapping
+{
+	associationEnd
+	{
 		name
 	}
 }
 
-query {
-	expressionValues {
+query
+{
+	expressionValues
+	{
 		...ExpressionValueFragment
 	}
 }

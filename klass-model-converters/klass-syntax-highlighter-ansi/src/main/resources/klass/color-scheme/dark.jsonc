@@ -4,13 +4,15 @@
 	"rules": [
 		{
 			"name": "foreground",
-			"style": {
+			"style":
+			{
 				"foreground": "WHITE",
 			},
 		},
 		{
 			"name": "background",
-			"style": {
+			"style":
+			{
 				"background": "BLACK",
 			},
 		},
@@ -28,61 +30,71 @@
 		},
 		{
 			"name": "blockComment",
-			"style": {
+			"style":
+			{
 				"foreground": "WHITE",
 			},
 		},
 		{
 			"name": "keyword",
-			"style": {
+			"style":
+			{
 				"foreground": "MAGENTA",
 			},
 		},
 		{
 			"name": "verb",
-			"style": {
+			"style":
+			{
 				"foreground": "GREEN",
 			},
 		},
 		{
 			"name": "modifier",
-			"style": {
+			"style":
+			{
 				"foreground": "GREEN",
 			},
 		},
 		{
 			"name": "identifier",
-			"style": {
+			"style":
+			{
 				"foreground": "DEFAULT",
 			},
 		},
 		{
 			"name": "literal",
-			"style": {
+			"style":
+			{
 				"foreground": "BLUE",
 			},
 		},
 		{
 			"name": "literalThis",
-			"style": {
+			"style":
+			{
 				"foreground": "GREEN",
 			},
 		},
 		{
 			"name": "literalNative",
-			"style": {
+			"style":
+			{
 				"foreground": "GREEN",
 			},
 		},
 		{
 			"name": "punctuation",
-			"style": {
+			"style":
+			{
 				"foreground": "CYAN",
 			},
 		},
 		{
 			"name": "operator",
-			"style": {
+			"style":
+			{
 				"foreground": "MAGENTA",
 			},
 		},

@@ -1,8 +1,10 @@
 {
-	server: {
+	server:
+	{
 		detailedJsonProcessingExceptionMapper: true,
 		rootPath: "/api/*",
-		requestLog: {
+		requestLog:
+		{
 			appenders: [
 				{
 					type: "console",
@@ -46,9 +48,11 @@
 			],
 		},
 	},
-	logging: {
+	logging:
+	{
 		level: "DEBUG",
-		loggers: {
+		loggers:
+		{
 			"com.gs.fw.common.mithra.batch.sqllogs": "INFO",
 			"com.gs.fw.common.mithra.connectionmanager": "INFO",
 			"com.gs.fw.common.mithra.sqllogs": "INFO",
@@ -83,7 +87,8 @@
 				currentLogFilename: "./logs/logstash.jsonl",
 				archivedLogFilenamePattern: "./logs/logstash-%d.jsonl",
 				includeCallerData: true,
-				encoder: {
+				encoder:
+				{
 					includeContext: true,
 					includeMdc: true,
 					includeStructuredArguments: true,
@@ -94,26 +99,33 @@
 			},
 		],
 	},
-	clock: {
+	clock:
+	{
 		type: "system",
 	},
-	klass: {
-		domainModel: {
+	klass:
+	{
+		domainModel:
+		{
 			type: "compiler",
 			sourcePackages: ["klass.model.meta.domain", "cool.klass.xample.coverage"],
 			colorScheme: "dark",
 		},
-		dataStore: {
+		dataStore:
+		{
 			type: "reladomo",
-			uuid: {
+			uuid:
+			{
 				type: "system",
 			},
 		},
 	},
-	configLogging: {
+	configLogging:
+	{
 		enabled: true,
 	},
-	h2: {
+	h2:
+	{
 		enabled: true,
 		webPort: 8079,
 		tcpPort: 9079,
@@ -126,7 +138,8 @@
 			user: "sa",
 			password: "",
 			url: "jdbc:p6spy:h2:tcp://localhost:9079/coverage-example-h2;NON_KEYWORDS=USER",
-			properties: {
+			properties:
+			{
 				charSet: "UTF-8",
 			},
 			logValidationErrors: true,
@@ -134,7 +147,8 @@
 		},
 	],
 	ddlExecutors: [],
-	reladomo: {
+	reladomo:
+	{
 		runtimeConfigurationPaths: ["reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml"],
 	},
 	connectionManagers: [
@@ -145,18 +159,22 @@
 			schemaName: "coverage-example-h2",
 		},
 	],
-	jerseyHttpLogging: {
+	jerseyHttpLogging:
+	{
 		enabled: true,
 	},
-	sampleData: {
+	sampleData:
+	{
 		enabled: true,
 		dataInstant: "1999-12-31T23:59:00Z",
 		skippedPackages: ["klass.model.meta.domain"],
 	},
-	bootstrap: {
+	bootstrap:
+	{
 		enabled: true,
 	},
-	liquibase: {
+	liquibase:
+	{
 		enabled: true,
 		dropEntireSchemaOnStartupAndShutdown: true,
 		dataSourceMigrations: [
@@ -169,7 +187,8 @@
 		],
 		dryRun: false,
 	},
-	graphQL: {
+	graphQL:
+	{
 		enableTracing: false,
 		queryCache: "maximumSize=10000",
 		schemaFiles: [
@@ -180,7 +199,8 @@
 			"cool/klass/xample/coverage/graphql/schema/GraphQLSchema.graphqls",
 		],
 	},
-	singlePageRedirectFilter: {
+	singlePageRedirectFilter:
+	{
 		enabled: false,
 	},
 	timeZone: "UTC",

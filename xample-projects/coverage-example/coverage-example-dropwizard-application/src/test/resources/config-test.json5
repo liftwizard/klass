@@ -1,5 +1,6 @@
 {
-	server: {
+	server:
+	{
 		detailedJsonProcessingExceptionMapper: true,
 		applicationConnectors: [
 			{
@@ -16,7 +17,8 @@
 			},
 		],
 		rootPath: "/api/*",
-		requestLog: {
+		requestLog:
+		{
 			appenders: [
 				{
 					type: "console",
@@ -60,9 +62,11 @@
 			],
 		},
 	},
-	logging: {
+	logging:
+	{
 		level: "INFO",
-		loggers: {
+		loggers:
+		{
 			"cool.klass.xample.coverage": "DEBUG",
 			"com.gs.fw.common.mithra.batch.sqllogs": "INFO",
 			"com.gs.fw.common.mithra.connectionmanager": "INFO",
@@ -89,7 +93,8 @@
 				currentLogFilename: "./logs/logstash.jsonl",
 				archivedLogFilenamePattern: "./logs/logstash-%d.jsonl",
 				includeCallerData: true,
-				encoder: {
+				encoder:
+				{
 					includeContext: true,
 					includeMdc: true,
 					includeStructuredArguments: true,
@@ -101,26 +106,32 @@
 			},
 		],
 	},
-	clock: {
+	clock:
+	{
 		type: "incrementing",
 		instant: "2000-12-31T23:59:59Z",
 		incrementAmount: "1 day",
 	},
-	klass: {
-		domainModel: {
+	klass:
+	{
+		domainModel:
+		{
 			type: "compiler",
 			sourcePackages: ["klass.model.meta.domain", "cool.klass.xample.coverage"],
 			colorScheme: "dark",
 		},
-		dataStore: {
+		dataStore:
+		{
 			type: "reladomo",
-			uuid: {
+			uuid:
+			{
 				type: "seed",
 				seed: "test seed",
 			},
 		},
 	},
-	configLogging: {
+	configLogging:
+	{
 		enabled: true,
 	},
 	authFilters: [
@@ -130,12 +141,14 @@
 			prefix: "Impersonation",
 		},
 	],
-	h2: {
+	h2:
+	{
 		enabled: false,
 		webPort: 8078,
 		tcpPort: 9078,
 	},
-	cors: {
+	cors:
+	{
 		enabled: false,
 	},
 	dataSources: [
@@ -146,7 +159,8 @@
 			user: "sa",
 			password: "",
 			url: "jdbc:p6spy:h2:mem:;NON_KEYWORDS=USER",
-			properties: {
+			properties:
+			{
 				charSet: "UTF-8",
 			},
 			logValidationErrors: true,
@@ -159,7 +173,8 @@
 			user: "sa",
 			password: "",
 			url: "jdbc:p6spy:h2:mem:coverage-example-h2;DB_CLOSE_DELAY=-1;NON_KEYWORDS=USER",
-			properties: {
+			properties:
+			{
 				charSet: "UTF-8",
 			},
 			logValidationErrors: true,
@@ -172,7 +187,8 @@
 			user: "sa",
 			password: "",
 			url: "jdbc:p6spy:h2:file:./target/h2db/coverage-example-h2;NON_KEYWORDS=USER",
-			properties: {
+			properties:
+			{
 				charSet: "UTF-8",
 			},
 			logValidationErrors: true,
@@ -180,10 +196,12 @@
 		},
 	],
 	ddlExecutors: [],
-	sampleData: {
+	sampleData:
+	{
 		enabled: true,
 	},
-	reladomo: {
+	reladomo:
+	{
 		runtimeConfigurationPaths: ["reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml"],
 	},
 	connectionManagers: [
@@ -206,11 +224,13 @@
 			schemaName: "coverage-example-h2",
 		},
 	],
-	jerseyHttpLogging: {
+	jerseyHttpLogging:
+	{
 		enabled: true,
 		maxEntitySize: "1 kilobyte",
 	},
-	liquibase: {
+	liquibase:
+	{
 		enabled: true,
 		dropEntireSchemaOnStartupAndShutdown: true,
 		dataSourceMigrations: [
@@ -223,10 +243,12 @@
 		],
 		dryRun: false,
 	},
-	bootstrap: {
+	bootstrap:
+	{
 		enabled: true,
 	},
-	graphQL: {
+	graphQL:
+	{
 		enableTracing: false,
 		queryCache: "maximumSize=10000",
 		schemaFiles: [

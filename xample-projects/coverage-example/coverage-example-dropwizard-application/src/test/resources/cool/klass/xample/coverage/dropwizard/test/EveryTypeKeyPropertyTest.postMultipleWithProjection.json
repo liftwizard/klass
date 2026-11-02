@@ -1,5 +1,6 @@
 {
-	"_metadata": {
+	"_metadata":
+	{
 		"multiplicity": "1..*",
 		"projection": "cool.klass.xample.coverage.EveryTypeKeyPropertyProjection",
 		"transactionTimestamp": "2001-01-01T23:59:59Z"

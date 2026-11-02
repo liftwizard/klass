@@ -1,43 +1,55 @@
-fragment AssociationEndModifierFragment on AssociationEndModifier {
+fragment AssociationEndModifierFragment on AssociationEndModifier
+{
 	keyword
 }
 
-fragment AssociationEndFragment on AssociationEnd {
+fragment AssociationEndFragment on AssociationEnd
+{
 	name
 	direction
 	multiplicity
-	resultType {
+	resultType
+	{
 		name
 	}
-	associationEndModifiers {
+	associationEndModifiers
+	{
 		...AssociationEndModifierFragment
 	}
-	orderBys {
+	orderBys
+	{
 		...AssociationEndOrderByFragment
 	}
 }
 
-fragment AssociationEndOrderByFragment on AssociationEndOrderBy {
+fragment AssociationEndOrderByFragment on AssociationEndOrderBy
+{
 	orderByDirection
-	thisMemberReferencePath {
+	thisMemberReferencePath
+	{
 		id
 	}
 }
 
-fragment AssociationFragment on Association {
+fragment AssociationFragment on Association
+{
 	name
 	packageName
-	associationEnds {
+	associationEnds
+	{
 		...AssociationEndFragment
 	}
-	criteria {
+	criteria
+	{
 		__typename
 		id
 	}
 }
 
-query {
-	associations {
+query
+{
+	associations
+	{
 		...AssociationFragment
 	}
 }

@@ -1,216 +1,281 @@
-fragment PackageableElementFragment on PackageableElement {
+fragment PackageableElementFragment on PackageableElement
+{
 	__typename
 	name
 	packageName
-	... on Enumeration {
-		enumerationLiterals {
+	... on Enumeration
+	{
+		enumerationLiterals
+		{
 			...EnumerationLiteralFragment
 		}
 	}
-	... on Classifier {
-		superInterfaces {
+	... on Classifier
+	{
+		superInterfaces
+		{
 			...ClassifierInterfaceMappingFragment
 		}
-		classifierModifiers {
+		classifierModifiers
+		{
 			keyword
 		}
-		dataTypeProperties {
+		dataTypeProperties
+		{
 			...DataTypePropertyFragment
 		}
 	}
-	... on Klass {
+	... on Klass
+	{
 		abstractClass
-		superClass {
+		superClass
+		{
 			name
 		}
-		parameterizedProperties {
+		parameterizedProperties
+		{
 			...ParameterizedPropertyFragment
 		}
 	}
-	... on Association {
-		associationEnds {
+	... on Association
+	{
+		associationEnds
+		{
 			...AssociationEndFragment
 		}
-		criteria {
+		criteria
+		{
 			__typename
 			id
 		}
 	}
-	... on NamedProjection {
-		rootProjection {
+	... on NamedProjection
+	{
+		rootProjection
+		{
 			id
 		}
 	}
-	... on ServiceGroup {
-		owningClass {
+	... on ServiceGroup
+	{
+		owningClass
+		{
 			name
 		}
-		urls {
+		urls
+		{
 			...UrlFragment
 		}
 	}
 }
 
-fragment EnumerationLiteralFragment on EnumerationLiteral {
+fragment EnumerationLiteralFragment on EnumerationLiteral
+{
 	name
 	prettyName
 }
 
-fragment ClassifierInterfaceMappingFragment on ClassifierInterfaceMapping {
-	superInterface {
+fragment ClassifierInterfaceMappingFragment on ClassifierInterfaceMapping
+{
+	superInterface
+	{
 		name
 	}
 }
 
-fragment DataTypePropertyFragment on DataTypeProperty {
+fragment DataTypePropertyFragment on DataTypeProperty
+{
 	__typename
 	name
 	optional
-	minLengthValidation {
+	minLengthValidation
+	{
 		...MinLengthPropertyValidationFragment
 	}
-	maxLengthValidation {
+	maxLengthValidation
+	{
 		...MaxLengthPropertyValidationFragment
 	}
-	propertyModifiers {
+	propertyModifiers
+	{
 		keyword
 	}
-	... on PrimitiveProperty {
+	... on PrimitiveProperty
+	{
 		primitiveType
-		minValidation {
+		minValidation
+		{
 			...MinPropertyValidationFragment
 		}
-		maxValidation {
+		maxValidation
+		{
 			...MaxPropertyValidationFragment
 		}
 	}
-	... on EnumerationProperty {
-		enumeration {
+	... on EnumerationProperty
+	{
+		enumeration
+		{
 			name
 		}
 	}
 }
 
-fragment MinLengthPropertyValidationFragment on MinLengthPropertyValidation {
+fragment MinLengthPropertyValidationFragment on MinLengthPropertyValidation
+{
 	number
 }
 
-fragment MaxLengthPropertyValidationFragment on MaxLengthPropertyValidation {
+fragment MaxLengthPropertyValidationFragment on MaxLengthPropertyValidation
+{
 	number
 }
 
-fragment MinPropertyValidationFragment on MinPropertyValidation {
+fragment MinPropertyValidationFragment on MinPropertyValidation
+{
 	number
 }
 
-fragment MaxPropertyValidationFragment on MaxPropertyValidation {
+fragment MaxPropertyValidationFragment on MaxPropertyValidation
+{
 	number
 }
 
-fragment AssociationEndFragment on AssociationEnd {
+fragment AssociationEndFragment on AssociationEnd
+{
 	name
 	direction
 	multiplicity
-	resultType {
+	resultType
+	{
 		name
 	}
-	associationEndModifiers {
+	associationEndModifiers
+	{
 		...AssociationEndModifierFragment
 	}
-	orderBys {
+	orderBys
+	{
 		...AssociationEndOrderByFragment
 	}
 }
 
-fragment AssociationEndOrderByFragment on AssociationEndOrderBy {
+fragment AssociationEndOrderByFragment on AssociationEndOrderBy
+{
 	orderByDirection
-	thisMemberReferencePath {
+	thisMemberReferencePath
+	{
 		id
 	}
 }
 
-fragment AssociationEndModifierFragment on AssociationEndModifier {
+fragment AssociationEndModifierFragment on AssociationEndModifier
+{
 	keyword
 }
 
-fragment ParameterizedPropertyFragment on ParameterizedProperty {
+fragment ParameterizedPropertyFragment on ParameterizedProperty
+{
 	name
 	multiplicity
-	resultType {
+	resultType
+	{
 		name
 	}
-	parameterizedPropertyOrderings {
+	parameterizedPropertyOrderings
+	{
 		ordinal
 	}
-	parameters {
+	parameters
+	{
 		name
 	}
 }
 
-fragment UrlFragment on Url {
+fragment UrlFragment on Url
+{
 	url
-	parameters {
+	parameters
+	{
 		...UrlParameterFragment
 	}
-	services {
+	services
+	{
 		...ServiceFragment
 	}
 }
 
-fragment UrlParameterFragment on UrlParameter {
+fragment UrlParameterFragment on UrlParameter
+{
 	type
-	parameter {
+	parameter
+	{
 		...ParameterFragment
 	}
 }
 
-fragment ParameterFragment on Parameter {
+fragment ParameterFragment on Parameter
+{
 	__typename
 	id
 	name
 	multiplicity
-	... on EnumerationParameter {
-		enumeration {
+	... on EnumerationParameter
+	{
+		enumeration
+		{
 			name
 		}
 	}
-	... on PrimitiveParameter {
+	... on PrimitiveParameter
+	{
 		primitiveType
 	}
 }
 
-fragment ServiceFragment on Service {
+fragment ServiceFragment on Service
+{
 	verb
 	serviceMultiplicity
-	projection {
+	projection
+	{
 		name
 	}
-	queryCriteria {
+	queryCriteria
+	{
 		id
 	}
-	authorizeCriteria {
+	authorizeCriteria
+	{
 		id
 	}
-	validateCriteria {
+	validateCriteria
+	{
 		id
 	}
-	conflictCriteria {
+	conflictCriteria
+	{
 		id
 	}
-	orderBys {
+	orderBys
+	{
 		...ServiceOrderByFragment
 	}
 }
 
-fragment ServiceOrderByFragment on ServiceOrderBy {
+fragment ServiceOrderByFragment on ServiceOrderBy
+{
 	orderByDirection
-	thisMemberReferencePath {
+	thisMemberReferencePath
+	{
 		id
 	}
 }
 
-query {
-	packageableElements {
+query
+{
+	packageableElements
+	{
 		...PackageableElementFragment
 	}
 }

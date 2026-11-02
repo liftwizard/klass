@@ -1,5 +1,7 @@
-query {
-	everyTypeKeyProperties {
+query
+{
+	everyTypeKeyProperties
+	{
 		keyString
 		keyInteger
 		keyLong
@@ -8,7 +10,8 @@ query {
 		keyBoolean
 		keyInstant
 		keyLocalDate
-		everyTypeForeignKeyProperties {
+		everyTypeForeignKeyProperties
+		{
 			id
 			foreignKeyString
 			foreignKeyInteger
@@ -20,11 +23,13 @@ query {
 			foreignKeyLocalDate
 			data
 		}
-		version {
+		version
+		{
 			number
 		}
 	}
-	propertiesOptionals {
+	propertiesOptionals
+	{
 		propertiesOptionalId
 		optionalLong
 		optionalInteger
@@ -34,16 +39,19 @@ query {
 		optionalBoolean
 		systemFrom
 		systemTo
-		lastUpdatedBy {
+		lastUpdatedBy
+		{
 			userId
 			email
 		}
 		createdOn
-		createdBy {
+		createdBy
+		{
 			userId
 			email
 		}
-		version {
+		version
+		{
 			number
 		}
 	}

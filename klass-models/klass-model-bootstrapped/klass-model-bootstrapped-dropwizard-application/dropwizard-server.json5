@@ -1,8 +1,10 @@
 {
-	server: {
+	server:
+	{
 		detailedJsonProcessingExceptionMapper: true,
 		rootPath: "/api/*",
-		requestLog: {
+		requestLog:
+		{
 			appenders: [
 				{
 					type: "console",
@@ -10,9 +12,11 @@
 			],
 		},
 	},
-	logging: {
+	logging:
+	{
 		level: "DEBUG",
-		loggers: {
+		loggers:
+		{
 			"com.gs.fw.common.mithra.batch.sqllogs": "INFO",
 			"com.gs.fw.common.mithra.connectionmanager": "INFO",
 			"com.gs.fw.common.mithra.sqllogs": "INFO",
@@ -54,7 +58,8 @@
 				currentLogFilename: "./logs/logstash.jsonl",
 				archivedLogFilenamePattern: "./logs/logstash-%d.jsonl",
 				includeCallerData: true,
-				encoder: {
+				encoder:
+				{
 					includeContext: true,
 					includeMdc: true,
 					includeStructuredArguments: true,
@@ -65,26 +70,33 @@
 			},
 		],
 	},
-	clock: {
+	clock:
+	{
 		type: "system",
 	},
-	klass: {
-		domainModel: {
+	klass:
+	{
+		domainModel:
+		{
 			type: "compiler",
 			sourcePackages: ["klass.model.meta.domain"],
 			colorScheme: "dark",
 		},
-		dataStore: {
+		dataStore:
+		{
 			type: "reladomo",
-			uuid: {
+			uuid:
+			{
 				type: "system",
 			},
 		},
 	},
-	configLogging: {
+	configLogging:
+	{
 		enabled: true,
 	},
-	h2: {
+	h2:
+	{
 		enabled: true,
 		webPort: 8064,
 		tcpPort: 9064,
@@ -97,7 +109,8 @@
 			user: "sa",
 			password: "",
 			url: "jdbc:p6spy:h2:tcp://localhost:9064/klass-bootstrapped-h2;NON_KEYWORDS=USER",
-			properties: {
+			properties:
+			{
 				charSet: "UTF-8",
 			},
 			logValidationErrors: true,
@@ -105,7 +118,8 @@
 		},
 	],
 	ddlExecutors: [],
-	reladomo: {
+	reladomo:
+	{
 		runtimeConfigurationPaths: ["reladomo-runtime-configuration/ReladomoRuntimeConfiguration.xml"],
 	},
 	connectionManagers: [
@@ -116,16 +130,20 @@
 			schemaName: "klass-bootstrapped-h2",
 		},
 	],
-	jerseyHttpLogging: {
+	jerseyHttpLogging:
+	{
 		enabled: true,
 	},
-	sampleData: {
+	sampleData:
+	{
 		enabled: false,
 	},
-	bootstrap: {
+	bootstrap:
+	{
 		enabled: true,
 	},
-	liquibase: {
+	liquibase:
+	{
 		enabled: true,
 		dropEntireSchemaOnStartupAndShutdown: true,
 		dataSourceMigrations: [
@@ -138,7 +156,8 @@
 		],
 		dryRun: false,
 	},
-	graphQL: {
+	graphQL:
+	{
 		enableTracing: false,
 		queryCache: "maximumSize=10000",
 		schemaFiles: [
@@ -149,7 +168,8 @@
 			"klass/model/meta/domain/graphql/schema/GraphQLSchema.graphqls",
 		],
 	},
-	singlePageRedirectFilter: {
+	singlePageRedirectFilter:
+	{
 		enabled: true,
 		redirectPage: "/index.html",
 		cacheControlHeader: "public, max-age=86400",

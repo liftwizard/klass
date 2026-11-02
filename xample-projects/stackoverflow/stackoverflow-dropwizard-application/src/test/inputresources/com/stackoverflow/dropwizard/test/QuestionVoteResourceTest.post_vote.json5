@@ -1,6 +1,7 @@
 {
 	direction: "up",
-	question: {
+	question:
+	{
 		id: 1,
 	},
 }

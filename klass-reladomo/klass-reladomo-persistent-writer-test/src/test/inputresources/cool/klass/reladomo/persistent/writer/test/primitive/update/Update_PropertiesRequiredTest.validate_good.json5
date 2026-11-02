@@ -8,7 +8,8 @@
 	requiredBoolean: true,
 	requiredInstant: "1999-12-31T23:59:00Z",
 	requiredLocalDate: "1999-12-31",
-	version: {
+	version:
+	{
 		number: 1,
 	},
 }

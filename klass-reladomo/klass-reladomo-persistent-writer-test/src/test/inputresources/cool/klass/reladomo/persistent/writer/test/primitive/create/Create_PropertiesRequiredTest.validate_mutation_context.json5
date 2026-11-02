@@ -12,12 +12,14 @@
 	requiredInstant: "1999-12-31T23:59:00Z",
 	requiredLocalDate: "1999-12-31",
 	requiredDerived: "PropertiesRequired requiredDerived 1 ☝",
-	version: {
+	version:
+	{
 		systemFrom: "2000-01-01T00:00:00Z",
 		systemTo: null,
 		createdOn: "2000-01-01T00:00:00Z",
 		number: 1,
-		createdBy: {
+		createdBy:
+		{
 			userId: "different user",
 			systemFrom: "2000-01-01T00:00:00Z",
 			systemTo: null,
@@ -25,7 +27,8 @@
 			lastName: "different user",
 			email: "different user",
 		},
-		lastUpdatedBy: {
+		lastUpdatedBy:
+		{
 			userId: "different user",
 			systemFrom: "2000-01-01T00:00:00Z",
 			systemTo: null,
@@ -34,7 +37,8 @@
 			email: "different user",
 		},
 	},
-	createdBy: {
+	createdBy:
+	{
 		userId: "different user",
 		systemFrom: "2000-01-01T00:00:00Z",
 		systemTo: null,
@@ -42,7 +46,8 @@
 		lastName: "different user",
 		email: "different user",
 	},
-	lastUpdatedBy: {
+	lastUpdatedBy:
+	{
 		userId: "different user",
 		systemFrom: "2000-01-01T00:00:00Z",
 		systemTo: null,

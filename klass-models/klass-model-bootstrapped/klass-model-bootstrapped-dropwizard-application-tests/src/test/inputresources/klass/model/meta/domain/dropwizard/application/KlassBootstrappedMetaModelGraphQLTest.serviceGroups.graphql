@@ -1,78 +1,101 @@
-fragment ServiceGroupFragment on ServiceGroup {
+fragment ServiceGroupFragment on ServiceGroup
+{
 	name
 	packageName
-	owningClass {
+	owningClass
+	{
 		name
 	}
-	urls {
+	urls
+	{
 		...UrlFragment
 	}
 }
 
-fragment UrlFragment on Url {
+fragment UrlFragment on Url
+{
 	url
-	parameters {
+	parameters
+	{
 		...UrlParameterFragment
 	}
-	services {
+	services
+	{
 		...ServiceFragment
 	}
 }
 
-fragment UrlParameterFragment on UrlParameter {
+fragment UrlParameterFragment on UrlParameter
+{
 	type
-	parameter {
+	parameter
+	{
 		...ParameterFragment
 	}
 }
 
-fragment ParameterFragment on Parameter {
+fragment ParameterFragment on Parameter
+{
 	__typename
 	id
 	name
 	multiplicity
-	... on EnumerationParameter {
-		enumeration {
+	... on EnumerationParameter
+	{
+		enumeration
+		{
 			name
 		}
 	}
-	... on PrimitiveParameter {
+	... on PrimitiveParameter
+	{
 		primitiveType
 	}
 }
 
-fragment ServiceFragment on Service {
+fragment ServiceFragment on Service
+{
 	verb
 	serviceMultiplicity
-	projection {
+	projection
+	{
 		name
 	}
-	queryCriteria {
+	queryCriteria
+	{
 		id
 	}
-	authorizeCriteria {
+	authorizeCriteria
+	{
 		id
 	}
-	validateCriteria {
+	validateCriteria
+	{
 		id
 	}
-	conflictCriteria {
+	conflictCriteria
+	{
 		id
 	}
-	orderBys {
+	orderBys
+	{
 		...ServiceOrderByFragment
 	}
 }
 
-fragment ServiceOrderByFragment on ServiceOrderBy {
+fragment ServiceOrderByFragment on ServiceOrderBy
+{
 	orderByDirection
-	thisMemberReferencePath {
+	thisMemberReferencePath
+	{
 		id
 	}
 }
 
-query {
-	serviceGroups {
+query
+{
+	serviceGroups
+	{
 		...ServiceGroupFragment
 	}
 }

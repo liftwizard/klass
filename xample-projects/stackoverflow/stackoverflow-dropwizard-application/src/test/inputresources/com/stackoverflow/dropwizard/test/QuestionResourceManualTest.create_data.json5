@@ -6,12 +6,14 @@
 	answers: [],
 	tags: [
 		{
-			tag: {
+			tag:
+			{
 				name: "test tag 1",
 			},
 		},
 		{
-			tag: {
+			tag:
+			{
 				name: "test tag 2",
 			},
 		},

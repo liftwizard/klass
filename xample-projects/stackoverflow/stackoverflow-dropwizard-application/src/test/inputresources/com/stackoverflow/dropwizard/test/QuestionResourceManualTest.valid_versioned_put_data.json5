@@ -12,7 +12,8 @@
 		{
 			systemFrom: "1999-12-31T23:59:59.999Z",
 			systemTo: null,
-			tag: {
+			tag:
+			{
 				name: "test tag 1",
 				systemFrom: "1999-12-31T23:59:59.999Z",
 				systemTo: null,
@@ -21,35 +22,41 @@
 		{
 			systemFrom: "1999-12-31T23:59:59.999Z",
 			systemTo: null,
-			tag: {
+			tag:
+			{
 				name: "test tag 3",
 				systemFrom: "1999-12-31T23:59:59.999Z",
 				systemTo: null,
 			},
 		},
 	],
-	version: {
+	version:
+	{
 		systemFrom: "1999-12-31T23:59:59.999Z",
 		systemTo: null,
 		createdOn: "1999-12-31T23:59:59.999Z",
 		number: 2,
-		createdBy: {
+		createdBy:
+		{
 			userId: "test user 1",
 			systemFrom: "1999-12-31T23:59:59.999Z",
 			systemTo: null,
 		},
-		lastUpdatedBy: {
+		lastUpdatedBy:
+		{
 			userId: "test user 1",
 			systemFrom: "1999-12-31T23:59:59.999Z",
 			systemTo: null,
 		},
 	},
-	createdBy: {
+	createdBy:
+	{
 		userId: "test user 1",
 		systemFrom: "1999-12-31T23:59:59.999Z",
 		systemTo: null,
 	},
-	lastUpdatedBy: {
+	lastUpdatedBy:
+	{
 		userId: "test user 1",
 		systemFrom: "1999-12-31T23:59:59.999Z",
 		systemTo: null,
