@@ -79,7 +79,7 @@ public final class GraphQLFragmentSourceCodeGenerator {
 			+ classifier.getName()
 			+ "Fragment on "
 			+ classifier.getName()
-			+ " {\n"
+			+ "\n{\n"
 			+ typeNameSourceCode
 			+ dataTypePropertiesSourceCode
 			+ referencePropertiesSourceCode
@@ -101,7 +101,7 @@ public final class GraphQLFragmentSourceCodeGenerator {
 		return (
 			"\t... on "
 			+ subClass.getName()
-			+ " {\n"
+			+ "\n\t{\n"
 			+ dataTypePropertiesSourceCode
 			+ referencePropertiesSourceCode
 			+ "\t}\n"
@@ -141,7 +141,9 @@ public final class GraphQLFragmentSourceCodeGenerator {
 			indentation
 			+ "\t"
 			+ referenceProperty.getName()
-			+ " {\n"
+			+ "\n"
+			+ indentation
+			+ "\t{\n"
 			+ GraphQLFragmentSourceCodeGenerator.getReferencePropertyBody(referenceProperty, subClassMode)
 			+ indentation
 			+ "\t}\n"
