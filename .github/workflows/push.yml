@@ -41,3 +41,20 @@ jobs:
       # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
+
+  # Builds the source-available OpenRewrite recipes on main so that every branch can restore them from the cache.
+  openrewrite-recipes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: jdx/mise-action@6612f0ef07ed2a736cd1e00a94a065522dd41195 # v5.2.5
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - uses: liftwizard/liftwizard/.github/actions/openrewrite-recipes@9ca133dcf21424bae3a86f965ee01c54f3c08ad4 # main
+        with:
+          codegenome-username: ${{ secrets.CODEGENOME_USERNAME }}
+          codegenome-token: ${{ secrets.CODEGENOME_TOKEN }}
