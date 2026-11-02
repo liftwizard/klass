@@ -1,0 +1,34 @@
+{
+	"braceStyle": "next-line",
+	"useTabs": true,
+	"tabWidth": 4,
+	"printWidth": 120,
+	"proseWrap": "never",
+	"embeddedLanguageFormatting": "off",
+	"semi": true,
+	"singleQuote": false,
+	"bracketSpacing": false,
+	"trailingComma": "all",
+	"arrowParens": "always",
+	"ignorePatterns": [
+		"klass-maven-archetype/src/main/resources/archetype-resources/**",
+		"xample-projects/coverage-example/coverage-example-graphql-fragment/src/test/resources/**/*.graphql"
+	],
+	"overrides": [
+		{
+			"files": [".yamllint.yaml", "**/*.yaml", "**/*.yml"],
+			"options":
+			{
+				"useTabs": false,
+				"tabWidth": 2
+			}
+		},
+		{
+			"files": ["**/*.md"],
+			"options":
+			{
+				"printWidth": 320
+			}
+		}
+	]
+}
