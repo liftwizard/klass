@@ -6,6 +6,7 @@ JUSTFILE_BRANCH
 # Project-specific
 _book
 spy.log
+surefire-cds.jsa
 
 # IntelliJ IDEA javac argument files created when using "Shorten command line" with @argfile
 javac.*.args
