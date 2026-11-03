@@ -63,13 +63,7 @@ public abstract class AbstractCreateValidatorTest extends AbstractValidatorTest 
 
 		ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, klass);
 
-		RequiredPropertiesValidator.validate(
-			errors,
-			warnings,
-			klass,
-			incomingInstance,
-			this.getMode()
-		);
+		RequiredPropertiesValidator.validate(errors, warnings, klass, incomingInstance, this.getMode());
 
 		var mutationContext = new MutationContext(
 			Optional.of("test user 1"),

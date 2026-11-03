@@ -97,13 +97,7 @@ public abstract class AbstractValidatorTest {
 
 		ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, this.getKlass());
 
-		RequiredPropertiesValidator.validate(
-			errors,
-			warnings,
-			this.getKlass(),
-			incomingInstance,
-			this.getMode()
-		);
+		RequiredPropertiesValidator.validate(errors, warnings, this.getKlass(), incomingInstance, this.getMode());
 
 		return new ValidationResult(errors.toImmutable(), warnings.toImmutable());
 	}
