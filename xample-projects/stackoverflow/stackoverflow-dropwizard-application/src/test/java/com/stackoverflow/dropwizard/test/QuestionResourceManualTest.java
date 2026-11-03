@@ -45,7 +45,18 @@ class QuestionResourceManualTest extends AbstractDropwizardAppTest {
 
 	@Test
 	@ReladomoTestFile("test-data/existing-question.txt")
-	void get_smoke_test() {
+	void readsThenWrites() {
+		this.get_smoke_test();
+		this.restSet();
+		this.post_invalid_data();
+		this.put_invalid_id();
+		this.put_conflict();
+		this.put_unchanged();
+		this.post_valid_data();
+		this.put();
+	}
+
+	private void get_smoke_test() {
 		Client client = this.getClient("get_smoke_test");
 
 		this.assertQuestion1Unchanged(client, "assertQuestion1Unchanged_get_smoke_test");
@@ -62,9 +73,7 @@ class QuestionResourceManualTest extends AbstractDropwizardAppTest {
 		this.assertResponse(testName, Status.OK, response);
 	}
 
-	@Test
-	@ReladomoTestFile("test-data/existing-question.txt")
-	void post_invalid_data() {
+	private void post_invalid_data() {
 		Client client = this.getClient("post_invalid_data");
 
 		String invalidJson = FileSlurper.slurp(
@@ -82,9 +91,7 @@ class QuestionResourceManualTest extends AbstractDropwizardAppTest {
 		this.assertResponse("post_invalid_data", Status.BAD_REQUEST, response);
 	}
 
-	@Test
-	@ReladomoTestFile("test-data/existing-question.txt")
-	void post_valid_data() {
+	private void post_valid_data() {
 		Client client = this.getClient("post_valid_data");
 
 		// <editor-fold desc="POST valid json, status: CREATED">
@@ -122,9 +129,7 @@ class QuestionResourceManualTest extends AbstractDropwizardAppTest {
 		// </editor-fold>
 	}
 
-	@Test
-	@ReladomoTestFile("test-data/existing-question.txt")
-	void put_invalid_id() {
+	private void put_invalid_id() {
 		Client client = this.getClient("put_invalid_id");
 
 		String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".invalid_id_data.json5", this.getClass());
@@ -142,9 +147,7 @@ class QuestionResourceManualTest extends AbstractDropwizardAppTest {
 		this.assertQuestion1Unchanged(client, "assertQuestion1Unchanged_put_invalid_id");
 	}
 
-	@Test
-	@ReladomoTestFile("test-data/existing-question.txt")
-	void put_conflict() {
+	private void put_conflict() {
 		Client client = this.getClient("put_conflict");
 
 		String validJson = FileSlurper.slurp(
@@ -166,9 +169,7 @@ class QuestionResourceManualTest extends AbstractDropwizardAppTest {
 		this.assertQuestion1Unchanged(client, "assertQuestion1Unchanged_put_conflict");
 	}
 
-	@Test
-	@ReladomoTestFile("test-data/existing-question.txt")
-	void put() {
+	private void put() {
 		Client client = this.getClient("put");
 
 		// <editor-fold desc="PUT id: 1, version: 2, status: NO_CONTENT">
@@ -202,9 +203,7 @@ class QuestionResourceManualTest extends AbstractDropwizardAppTest {
 		// TODO: PUT with owned children, with all four cases of unchanged, created, updated, deleted
 	}
 
-	@Test
-	@ReladomoTestFile("test-data/existing-question.txt")
-	void put_unchanged() {
+	private void put_unchanged() {
 		Client client = this.getClient("put_unchanged");
 
 		String jsonName = this.getClass().getSimpleName() + ".put_unchanged.json5";
@@ -224,8 +223,7 @@ class QuestionResourceManualTest extends AbstractDropwizardAppTest {
 		this.assertQuestion1Unchanged(client, "assertQuestion1Unchanged_put_unchanged");
 	}
 
-	@Test
-	void restSet() {
+	private void restSet() {
 		Client client = this.getClient("restSet");
 
 		{
