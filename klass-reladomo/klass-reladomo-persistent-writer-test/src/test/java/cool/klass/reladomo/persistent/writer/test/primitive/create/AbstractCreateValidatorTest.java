@@ -31,6 +31,8 @@ import cool.klass.reladomo.persistent.writer.MutationContext;
 import cool.klass.reladomo.persistent.writer.test.AbstractValidatorTest;
 import io.liftwizard.reladomo.csv.test.extension.CsvTestDataExtension;
 import io.liftwizard.reladomo.test.extension.ReladomoExtensionBuilder;
+import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -49,21 +51,19 @@ public abstract class AbstractCreateValidatorTest extends AbstractValidatorTest 
 		"test-data/cool.klass.xample.coverage.User.csv"
 	);
 
+	@Nonnull
 	@Override
-	protected final void validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance) {
+	protected final ValidationResult validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance) {
 		Klass klass = this.getKlass();
 		ImmutableMap<DataTypeProperty, Object> propertyDataFromUrl = this.getPropertyDataFromUrl();
 		propertyDataFromUrl.forEachKey((property) -> assertThat(property.getOwningClassifier()).isSameAs(klass));
 
-		ObjectNodeTypeCheckingValidator.validate(this.actualErrors, incomingInstance, klass);
+		MutableList<String> errors = Lists.mutable.empty();
+		MutableList<String> warnings = Lists.mutable.empty();
 
-		RequiredPropertiesValidator.validate(
-			this.actualErrors,
-			this.actualWarnings,
-			klass,
-			incomingInstance,
-			this.getMode()
-		);
+		ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, klass);
+
+		RequiredPropertiesValidator.validate(errors, warnings, klass, incomingInstance, this.getMode());
 
 		var mutationContext = new MutationContext(
 			Optional.of("test user 1"),
@@ -77,8 +77,10 @@ public abstract class AbstractCreateValidatorTest extends AbstractValidatorTest 
 			klass,
 			mutationContext,
 			incomingInstance,
-			this.actualErrors,
-			this.actualWarnings
+			errors,
+			warnings
 		);
+
+		return new ValidationResult(errors.toImmutable(), warnings.toImmutable());
 	}
 }
