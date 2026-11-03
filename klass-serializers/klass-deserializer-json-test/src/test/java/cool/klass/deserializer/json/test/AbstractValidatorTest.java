@@ -58,6 +58,9 @@ public abstract class AbstractValidatorTest {
 	protected final DomainModel domainModel = AbstractValidatorTest.getDomainModel(this.objectMapper);
 
 	protected final void validate(String testName) throws IOException {
+		this.actualErrors.clear();
+		this.actualWarnings.clear();
+
 		String incomingJsonName = this.getClass().getSimpleName() + '.' + testName + ".json5";
 		String incomingJson = FileSlurper.slurp(incomingJsonName, this.getClass());
 
