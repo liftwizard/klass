@@ -31,6 +31,14 @@ repos:
         name: vp fmt
         entry: vp fmt --no-error-on-unmatched-pattern
         language: system
+      - id: prettier-java
+        name: prettier-java-next-line
+        # Prettier resolves plugins from the working directory, so load the mise-installed plugin by path.
+        entry: sh -c 'prettier --plugin "$(mise where npm:prettier-java-next-line)/node_modules/prettier-java-next-line/dist/index.mjs" --write "$@"' --
+        language: system
+        types: [java]
+        # IntelliJ file templates are not valid Java.
+        exclude: ^\.idea/
       - id: markdownlint-cli2
         name: markdownlint-cli2
         entry: markdownlint-cli2 --no-globs
