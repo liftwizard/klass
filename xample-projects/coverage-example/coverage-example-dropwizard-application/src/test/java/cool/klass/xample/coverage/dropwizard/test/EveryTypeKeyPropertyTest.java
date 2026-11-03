@@ -27,12 +27,20 @@ import org.junit.jupiter.api.Test;
 class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
 
 	@Test
-	void get() {
+	void getPutThenPost() {
+		this.get();
+		this.put();
+		this.postSingleWithProjection();
+		this.postMultiple();
+		this.postMultipleWithProjection();
+		this.postSingle();
+	}
+
+	private void get() {
 		this.assertUrlReturns("get", "everyTypeKeyProperty");
 	}
 
-	@Test
-	void postSingle() {
+	private void postSingle() {
 		Client client = this.getClient("postSingle");
 		String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".postSingle.json5", this.getClass());
 
@@ -46,8 +54,7 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
 		this.assertEmptyResponse(Status.NO_CONTENT, response);
 	}
 
-	@Test
-	void postSingleWithProjection() {
+	private void postSingleWithProjection() {
 		Client client = this.getClient("postSingleWithProjection");
 		String json = FileSlurper.slurp(
 			this.getClass().getSimpleName() + ".postSingleWithProjection.json5",
@@ -64,8 +71,7 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
 		this.assertResponse("postSingleWithProjection", Status.CREATED, response);
 	}
 
-	@Test
-	void postMultiple() {
+	private void postMultiple() {
 		Client client = this.getClient("postMultiple");
 		String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".postMultiple.json5", this.getClass());
 
@@ -79,8 +85,7 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
 		this.assertEmptyResponse(Status.NO_CONTENT, response);
 	}
 
-	@Test
-	void postMultipleWithProjection() {
+	private void postMultipleWithProjection() {
 		Client client = this.getClient("postMultipleWithProjection");
 		String json = FileSlurper.slurp(
 			this.getClass().getSimpleName() + ".postMultipleWithProjection.json5",
@@ -97,8 +102,7 @@ class EveryTypeKeyPropertyTest extends AbstractCoverageTest {
 		this.assertResponse("postMultipleWithProjection", Status.CREATED, response);
 	}
 
-	@Test
-	void put() {
+	private void put() {
 		Client client = this.getClient("put");
 
 		{

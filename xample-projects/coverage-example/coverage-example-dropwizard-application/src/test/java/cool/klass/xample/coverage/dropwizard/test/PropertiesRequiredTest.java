@@ -27,17 +27,21 @@ import org.junit.jupiter.api.Test;
 class PropertiesRequiredTest extends AbstractCoverageTest {
 
 	@Test
-	void getFirst() {
+	void getThenPut() {
+		this.getFirst();
+		this.getSecond();
+		this.putFirst();
+	}
+
+	private void getFirst() {
 		this.assertUrlReturns("getFirst", "propertiesRequired/1");
 	}
 
-	@Test
-	void getSecond() {
+	private void getSecond() {
 		this.assertUrlReturns("getSecond", "propertiesRequired/2");
 	}
 
-	@Test
-	void putFirst() {
+	private void putFirst() {
 		Client client = this.getClient("putFirst");
 		String jsonName = this.getClass().getSimpleName() + ".putFirst.json5";
 		String json = FileSlurper.slurp(jsonName, this.getClass());

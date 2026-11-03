@@ -25,9 +25,28 @@ import org.junit.jupiter.api.Test;
 
 class MetaModelResourceTest extends AbstractCoverageTest {
 
-	// PackageableElement tests
 	@Test
-	void getPackageableElements() {
+	void readOnlyEndpoints() {
+		this.getPackageableElements();
+		this.getPackageableElementByName();
+		this.getClasses();
+		this.getClassByName();
+		this.getEnumerations();
+		this.getEnumerationByName();
+		this.getAssociations();
+		this.getAssociationByName();
+		this.getClassifiers();
+		this.getClassifierByName();
+		this.getInterfaces();
+		this.getInterfaceByName();
+		this.getProjections();
+		this.getProjectionByName();
+		this.getServiceGroups();
+		this.getServiceGroupByName();
+	}
+
+	// PackageableElement tests
+	private void getPackageableElements() {
 		Client client = this.getClient("getPackageableElements");
 
 		Response response = client
@@ -39,8 +58,7 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 		this.assertResponse("getPackageableElements", Status.OK, response);
 	}
 
-	@Test
-	void getPackageableElementByName() {
+	private void getPackageableElementByName() {
 		Client client = this.getClient("getPackageableElementByName");
 
 		Response response = client
@@ -54,8 +72,7 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 	}
 
 	// Class tests
-	@Test
-	void getClasses() {
+	private void getClasses() {
 		Client client = this.getClient("getClasses");
 
 		Response response = client
@@ -67,8 +84,7 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 		this.assertResponse("getClasses", Status.OK, response);
 	}
 
-	@Test
-	void getClassByName() {
+	private void getClassByName() {
 		Client client = this.getClient("getClassByName");
 
 		Response response = client
@@ -82,8 +98,7 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 	}
 
 	// Enumeration tests
-	@Test
-	void getEnumerations() {
+	private void getEnumerations() {
 		Client client = this.getClient("getEnumerations");
 
 		Response response = client
@@ -95,8 +110,7 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 		this.assertResponse("getEnumerations", Status.OK, response);
 	}
 
-	@Test
-	void getEnumerationByName() {
+	private void getEnumerationByName() {
 		Client client = this.getClient("getEnumerationByName");
 
 		Response response = client
@@ -110,8 +124,7 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 	}
 
 	// Association tests
-	@Test
-	void getAssociations() {
+	private void getAssociations() {
 		Client client = this.getClient("getAssociations");
 
 		Response response = client
@@ -123,8 +136,7 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 		this.assertResponse("getAssociations", Status.OK, response);
 	}
 
-	@Test
-	void getAssociationByName() {
+	private void getAssociationByName() {
 		Client client = this.getClient("getAssociationByName");
 
 		Response response = client
@@ -138,8 +150,7 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 	}
 
 	// Classifier tests
-	@Test
-	void getClassifiers() {
+	private void getClassifiers() {
 		Client client = this.getClient("getClassifiers");
 
 		Response response = client
@@ -151,8 +162,7 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 		this.assertResponse("getClassifiers", Status.OK, response);
 	}
 
-	@Test
-	void getClassifierByName() {
+	private void getClassifierByName() {
 		Client client = this.getClient("getClassifierByName");
 
 		Response response = client
@@ -166,8 +176,7 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 	}
 
 	// Interface tests
-	@Test
-	void getInterfaces() {
+	private void getInterfaces() {
 		Client client = this.getClient("getInterfaces");
 
 		Response response = client
@@ -179,8 +188,7 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 		this.assertResponse("getInterfaces", Status.OK, response);
 	}
 
-	@Test
-	void getInterfaceByName() {
+	private void getInterfaceByName() {
 		Client client = this.getClient("getInterfaceByName");
 
 		Response response = client
@@ -194,8 +202,7 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 	}
 
 	// Projection tests
-	@Test
-	void getProjections() {
+	private void getProjections() {
 		Client client = this.getClient("getProjections");
 
 		Response response = client
@@ -207,8 +214,7 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 		this.assertResponse("getProjections", Status.OK, response);
 	}
 
-	@Test
-	void getProjectionByName() {
+	private void getProjectionByName() {
 		Client client = this.getClient("getProjectionByName");
 
 		Response response = client
@@ -222,8 +228,7 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 	}
 
 	// ServiceGroup tests
-	@Test
-	void getServiceGroups() {
+	private void getServiceGroups() {
 		Client client = this.getClient("getServiceGroups");
 
 		Response response = client
@@ -235,8 +240,7 @@ class MetaModelResourceTest extends AbstractCoverageTest {
 		this.assertResponse("getServiceGroups", Status.OK, response);
 	}
 
-	@Test
-	void getServiceGroupByName() {
+	private void getServiceGroupByName() {
 		Client client = this.getClient("getServiceGroupByName");
 
 		Response response = client
