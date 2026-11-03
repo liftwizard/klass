@@ -4,7 +4,7 @@
 		"criteria": "Question.id = 1",
 		"multiplicity": "1..1",
 		"projection": "com.stackoverflow.QuestionReadProjection",
-		"transactionTimestamp": "2001-01-01T23:59:59Z"
+		"transactionTimestamp": "2001-01-18T23:59:59Z"
 	},
 	"_data":
 	{

@@ -23,13 +23,50 @@ import javax.ws.rs.core.Response.Status;
 
 import io.liftwizard.junit.extension.match.FileSlurper;
 import io.liftwizard.reladomo.test.extension.ReladomoTestFile;
+import org.eclipse.collections.api.factory.Maps;
 import org.junit.jupiter.api.Test;
 
-class AnswerResourceTest extends AbstractStackOverflowApplicationTest {
+class StackOverflowApplicationTest extends AbstractStackOverflowApplicationTest {
 
 	@Test
 	@ReladomoTestFile("test-data/existing-question.txt")
-	void post_answer() {
+	void graphQLThenVoteThenAnswer() {
+		this.smokeTest();
+		this.post_vote();
+		this.post_answer();
+	}
+
+	private void smokeTest() {
+		Client client = this.getClient("graphqlSmokeTest");
+
+		String queryName = this.getClass().getSimpleName() + ".smokeTest.graphql";
+		String query = FileSlurper.slurp(queryName, this.getClass());
+
+		Response response = client
+			.target("http://localhost:{port}/graphql")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.post(Entity.json(Maps.mutable.with("query", query)));
+
+		this.assertResponse("graphqlSmokeTest", Status.OK, response);
+	}
+
+	private void post_vote() {
+		Client client = this.getClient("post_vote");
+
+		String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".post_vote.json5", this.getClass());
+
+		Response response = client
+			.target("http://localhost:{port}/api/vote")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.header("Authorization", "Impersonation test user 1")
+			.post(Entity.json(json));
+
+		this.assertResponse("post_vote", Status.CREATED, response);
+	}
+
+	private void post_answer() {
 		Client client = this.getClient("post_answer");
 
 		String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".post_answer.json5", this.getClass());

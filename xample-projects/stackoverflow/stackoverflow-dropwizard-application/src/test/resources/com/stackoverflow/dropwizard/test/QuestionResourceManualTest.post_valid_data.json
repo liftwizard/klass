@@ -4,14 +4,14 @@
 		"criteria": "Question.id = 2",
 		"multiplicity": "1..1",
 		"projection": "com.stackoverflow.QuestionReadProjection",
-		"transactionTimestamp": "2001-01-01T23:59:59Z"
+		"transactionTimestamp": "2001-01-23T23:59:59Z"
 	},
 	"_data":
 	{
 		"id": 2,
-		"systemFrom": "2001-01-01T23:59:59Z",
+		"systemFrom": "2001-01-23T23:59:59Z",
 		"systemTo": null,
-		"createdOn": "2001-01-01T23:59:59Z",
+		"createdOn": "2001-01-23T23:59:59Z",
 		"title": "original title",
 		"body": "original body",
 		"status": "Open",
@@ -19,7 +19,7 @@
 		"answers": [],
 		"tags": [
 			{
-				"systemFrom": "2001-01-01T23:59:59Z",
+				"systemFrom": "2001-01-23T23:59:59Z",
 				"systemTo": null,
 				"tag":
 				{
@@ -29,7 +29,7 @@
 				}
 			},
 			{
-				"systemFrom": "2001-01-01T23:59:59Z",
+				"systemFrom": "2001-01-23T23:59:59Z",
 				"systemTo": null,
 				"tag":
 				{
@@ -41,9 +41,9 @@
 		],
 		"version":
 		{
-			"systemFrom": "2001-01-01T23:59:59Z",
+			"systemFrom": "2001-01-23T23:59:59Z",
 			"systemTo": null,
-			"createdOn": "2001-01-01T23:59:59Z",
+			"createdOn": "2001-01-23T23:59:59Z",
 			"number": 1,
 			"createdBy":
 			{
