@@ -21,17 +21,9 @@ import org.junit.jupiter.api.Test;
 class ClassifierResourceManualTest extends AbstractResourceTestCase {
 
 	@Test
-	void getAllMeta() {
+	void getEndpoints() {
 		this.assertUrlReturns("getAllMeta", "/meta/classifier");
-	}
-
-	@Test
-	void getByName() {
 		this.assertUrlReturns("getByName", "/meta/classifier/Klass");
-	}
-
-	@Test
-	void getByNameInterface() {
 		this.assertUrlReturns("getByNameInterface", "/meta/classifier/NamedElement");
 	}
 }

@@ -21,17 +21,9 @@ import org.junit.jupiter.api.Test;
 class InterfaceResourceManualTest extends AbstractResourceTestCase {
 
 	@Test
-	void getAllMeta() {
+	void getEndpoints() {
 		this.assertUrlReturns("getAllMeta", "/meta/interface");
-	}
-
-	@Test
-	void getByName() {
 		this.assertUrlReturns("getByName", "/meta/interface/NamedElement");
-	}
-
-	@Test
-	void getByNameElement() {
 		this.assertUrlReturns("getByNameElement", "/meta/interface/Element");
 	}
 }

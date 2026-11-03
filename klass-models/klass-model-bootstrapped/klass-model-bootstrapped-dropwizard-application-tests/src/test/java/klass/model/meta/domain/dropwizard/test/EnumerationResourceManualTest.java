@@ -21,22 +21,10 @@ import org.junit.jupiter.api.Test;
 class EnumerationResourceManualTest extends AbstractResourceTestCase {
 
 	@Test
-	void getAllMeta() {
+	void getEndpoints() {
 		this.assertUrlReturns("getAllMeta", "/meta/enumeration");
-	}
-
-	@Test
-	void getByName() {
 		this.assertUrlReturns("getByName", "/meta/enumeration/PrimitiveType");
-	}
-
-	@Test
-	void getByNameVerb() {
 		this.assertUrlReturns("getByNameVerb", "/meta/enumeration/Verb");
-	}
-
-	@Test
-	void getByNameMultiplicity() {
 		this.assertUrlReturns("getByNameMultiplicity", "/meta/enumeration/Multiplicity");
 	}
 }
