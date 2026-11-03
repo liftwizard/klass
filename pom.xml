@@ -168,6 +168,17 @@
             </plugin>
             <!--endregion Phase 7: compile-->
 
+            <!--region Phase 15: test-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <argLine>-XX:-OmitStackTraceInFastThrow -XX:TieredStopAtLevel=1 @{argLine}</argLine>
+                </configuration>
+            </plugin>
+            <!--endregion Phase 15: test-->
+
             <!--region Phase 23: deploy-->
             <plugin>
                 <groupId>org.sonatype.central</groupId>
