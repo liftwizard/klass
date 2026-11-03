@@ -63,7 +63,10 @@ class KlassBootstrappedMetaModelManualTest extends AbstractResourceTestCase {
 
 		this.assertUrlReturns("association.getAllMeta", "/meta/association");
 		this.assertUrlReturns("association.getByName", "/meta/association/ClassHasSuperClass");
-		this.assertUrlReturns("association.getByNameEnumerationHasLiterals", "/meta/association/EnumerationHasLiterals");
+		this.assertUrlReturns(
+			"association.getByNameEnumerationHasLiterals",
+			"/meta/association/EnumerationHasLiterals"
+		);
 		this.assertUrlReturns(
 			"association.getByNameDataTypePropertyHasModifiers",
 			"/meta/association/DataTypePropertyHasModifiers"
