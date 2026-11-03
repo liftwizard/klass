@@ -21,22 +21,10 @@ import org.junit.jupiter.api.Test;
 class AssociationResourceManualTest extends AbstractResourceTestCase {
 
 	@Test
-	void getAllMeta() {
+	void getEndpoints() {
 		this.assertUrlReturns("getAllMeta", "/meta/association");
-	}
-
-	@Test
-	void getByName() {
 		this.assertUrlReturns("getByName", "/meta/association/ClassHasSuperClass");
-	}
-
-	@Test
-	void getByNameEnumerationHasLiterals() {
 		this.assertUrlReturns("getByNameEnumerationHasLiterals", "/meta/association/EnumerationHasLiterals");
-	}
-
-	@Test
-	void getByNameDataTypePropertyHasModifiers() {
 		this.assertUrlReturns(
 			"getByNameDataTypePropertyHasModifiers",
 			"/meta/association/DataTypePropertyHasModifiers"

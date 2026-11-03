@@ -28,52 +28,16 @@ import org.junit.jupiter.api.Test;
 class KlassBootstrappedMetaModelGraphQLTest extends AbstractKlassBootstrappedMetaModelApplicationTest {
 
 	@Test
-	void packageableElements() {
+	void allQueries() {
 		this.assertGraphQL("packageableElements");
-	}
-
-	@Test
-	void enumerations() {
 		this.assertGraphQL("enumerations");
-	}
-
-	@Test
-	void interfaces() {
 		this.assertGraphQL("interfaces");
-	}
-
-	@Test
-	void classes() {
 		this.assertGraphQL("classes");
-	}
-
-	@Test
-	void associations() {
 		this.assertGraphQL("associations");
-	}
-
-	@Test
-	void projectionElements() {
 		this.assertGraphQL("projectionElements");
-	}
-
-	@Test
-	void namedProjections() {
 		this.assertGraphQL("namedProjections");
-	}
-
-	@Test
-	void expressionValue() {
 		this.assertGraphQL("expressionValue");
-	}
-
-	@Test
-	void criteria() {
 		this.assertGraphQL("criteria");
-	}
-
-	@Test
-	void serviceGroups() {
 		this.assertGraphQL("serviceGroups");
 	}
 

@@ -21,17 +21,9 @@ import org.junit.jupiter.api.Test;
 class PackageableElementResourceManualTest extends AbstractResourceTestCase {
 
 	@Test
-	void getAllMeta() {
+	void getEndpoints() {
 		this.assertUrlReturns("getAllMeta", "/meta/packageableElement");
-	}
-
-	@Test
-	void getByName() {
 		this.assertUrlReturns("getByName", "/meta/packageableElement/Association");
-	}
-
-	@Test
-	void getByNameEnumeration() {
 		this.assertUrlReturns("getByNameEnumeration", "/meta/packageableElement/Enumeration");
 	}
 }
