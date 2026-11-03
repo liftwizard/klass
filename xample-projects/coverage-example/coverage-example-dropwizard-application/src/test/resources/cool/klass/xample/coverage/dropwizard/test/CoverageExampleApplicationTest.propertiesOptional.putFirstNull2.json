@@ -1,6 +1,6 @@
 {
 	"propertiesOptionalId": 1,
-	"systemFrom": "2001-01-10T23:59:59Z",
+	"systemFrom": "2001-02-23T23:59:59Z",
 	"systemTo": null,
 	"createdOn": "1999-12-31T23:59:00Z",
 	"optionalString": null,
@@ -14,7 +14,7 @@
 	"optionalDerived": "cool.klass.xample.coverage.PropertiesOptional.getOptionalDerived",
 	"version":
 	{
-		"systemFrom": "2001-01-10T23:59:59Z",
+		"systemFrom": "2001-02-23T23:59:59Z",
 		"systemTo": null,
 		"createdOn": "1999-12-31T23:59:00Z",
 		"number": 2,
