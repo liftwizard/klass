@@ -27,16 +27,22 @@ import cool.klass.deserializer.json.type.ObjectNodeTypeCheckingValidator;
 import cool.klass.reladomo.persistent.writer.IncomingUpdateDataModelValidator;
 import cool.klass.reladomo.persistent.writer.MutationContext;
 import cool.klass.reladomo.persistent.writer.test.AbstractValidatorTest;
+import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.list.MutableList;
 
 public abstract class AbstractUpdateValidatorTest extends AbstractValidatorTest {
 
+	@Nonnull
 	@Override
-	protected final void validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance) {
-		ObjectNodeTypeCheckingValidator.validate(this.actualErrors, incomingInstance, this.getKlass());
+	protected final ValidationResult validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance) {
+		MutableList<String> errors = Lists.mutable.empty();
+		MutableList<String> warnings = Lists.mutable.empty();
+
+		ObjectNodeTypeCheckingValidator.validate(errors, incomingInstance, this.getKlass());
 
 		RequiredPropertiesValidator.validate(
-			this.actualErrors,
-			this.actualWarnings,
+			errors,
+			warnings,
 			this.getKlass(),
 			incomingInstance,
 			this.getMode()
@@ -55,8 +61,10 @@ public abstract class AbstractUpdateValidatorTest extends AbstractValidatorTest 
 			mutationContext,
 			persistentInstance,
 			incomingInstance,
-			this.actualErrors,
-			this.actualWarnings
+			errors,
+			warnings
 		);
+
+		return new ValidationResult(errors.toImmutable(), warnings.toImmutable());
 	}
 }
