@@ -17,22 +17,36 @@
 package cool.klass.xample.coverage.dropwizard.test;
 
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.liftwizard.junit.extension.match.FileSlurper;
+import io.liftwizard.junit.extension.match.file.FileMatchExtension;
+import org.eclipse.collections.api.factory.Maps;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class SwaggerSpecResourceTest extends AbstractCoverageTest {
+class ReadOnlySmokeTest extends AbstractCoverageTest {
+
+	@RegisterExtension
+	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
 	@Test
-	void swagger_spec_is_served() throws Exception {
+	void readOnlyEndpoints() throws Exception {
+		this.swagger_spec_is_served();
+		this.smoke_test();
+		this.graphqlSmokeTest();
+	}
+
+	private void swagger_spec_is_served() throws Exception {
 		Client client = this.getClient("swagger_spec_is_served");
 
 		Response response = client
@@ -58,5 +72,38 @@ class SwaggerSpecResourceTest extends AbstractCoverageTest {
 
 		// Verify it's Swagger 2.0 format
 		assertEquals("2.0", swaggerSpec.get("swagger").asText(), "Should be Swagger 2.0");
+	}
+
+	private void smoke_test() {
+		Client client = this.getClient("smoke_test");
+
+		Response response = client
+			.target("http://localhost:{port}/api/meta/code/element/{topLevelElementName}")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.resolveTemplate("topLevelElementName", "User")
+			.request(MediaType.TEXT_HTML_TYPE)
+			.header("Authorization", "Impersonation User ID")
+			.get();
+
+		this.assertResponseStatus(response, Status.OK);
+		String responseHtml = response.readEntity(String.class);
+		// assertEquals(responseHtml, expected, responseHtml);
+
+		String expectedStringClasspathLocation = this.getClass().getCanonicalName() + "#smoke_test.html";
+		this.fileMatchExtension.assertFileContents(expectedStringClasspathLocation, responseHtml);
+	}
+
+	private void graphqlSmokeTest() {
+		Client client = this.getClient("graphqlSmokeTest");
+		String graphqlQueryName = this.getClass().getSimpleName() + ".graphqlSmokeTest.graphql";
+		String graphqlQuery = FileSlurper.slurp(graphqlQueryName, this.getClass());
+
+		Response response = client
+			.target("http://localhost:{port}/graphql")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.post(Entity.json(Maps.mutable.with("query", graphqlQuery)));
+
+		this.assertResponse("graphqlSmokeTest", Status.OK, response);
 	}
 }
