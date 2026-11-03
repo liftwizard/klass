@@ -38,9 +38,8 @@ import io.liftwizard.junit.extension.match.FileSlurper;
 import io.liftwizard.junit.extension.match.file.FileMatchExtension;
 import io.liftwizard.junit.extension.match.json.JsonMatchExtension;
 import io.liftwizard.serialization.jackson.config.ObjectMapperConfig;
-import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.factory.Maps;
-import org.eclipse.collections.api.list.MutableList;
+import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -60,8 +59,6 @@ public abstract class AbstractValidatorTest {
 		"cool/klass/reladomo/persistent/writer/test/migrations.xml"
 	);
 
-	protected final MutableList<String> actualErrors = Lists.mutable.empty();
-	protected final MutableList<String> actualWarnings = Lists.mutable.empty();
 	protected final ReladomoDataStore reladomoDataStore = this.getReladomoDataStore();
 	protected final ObjectMapper objectMapper = AbstractValidatorTest.getObjectMapper();
 	protected final DomainModel domainModel = AbstractValidatorTest.getDomainModel(this.objectMapper);
@@ -71,27 +68,25 @@ public abstract class AbstractValidatorTest {
 	}
 
 	protected void validate(String testName, Object persistentInstance) throws JsonProcessingException {
-		this.actualErrors.clear();
-		this.actualWarnings.clear();
-
 		String incomingJsonName = this.getClass().getSimpleName() + '.' + testName + ".json5";
 		String incomingJson = FileSlurper.slurp(incomingJsonName, this.getClass());
 
 		var incomingInstance = (ObjectNode) this.objectMapper.readTree(incomingJson);
-		this.validate(incomingInstance, persistentInstance);
+		ValidationResult result = this.validate(incomingInstance, persistentInstance);
 
 		this.jsonMatchExtension.assertFileContents(
 			this.getClass().getSimpleName() + '.' + testName + ".errors.json",
-			this.objectMapper.writeValueAsString(this.actualErrors)
+			this.objectMapper.writeValueAsString(result.errors())
 		);
 
 		this.jsonMatchExtension.assertFileContents(
 			this.getClass().getSimpleName() + '.' + testName + ".warnings.json",
-			this.objectMapper.writeValueAsString(this.actualWarnings)
+			this.objectMapper.writeValueAsString(result.warnings())
 		);
 	}
 
-	protected abstract void validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance);
+	@Nonnull
+	protected abstract ValidationResult validate(@Nonnull ObjectNode incomingInstance, Object persistentInstance);
 
 	@Nonnull
 	private static ObjectMapper getObjectMapper() {
@@ -123,4 +118,6 @@ public abstract class AbstractValidatorTest {
 	protected ImmutableMap<DataTypeProperty, Object> getPropertyDataFromUrl() {
 		return Maps.immutable.empty();
 	}
+
+	public record ValidationResult(ImmutableList<String> errors, ImmutableList<String> warnings) {}
 }
