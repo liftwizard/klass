@@ -1,6 +1,2 @@
-*.graphqls
-**/*.jsonc
-**/*.json
-**/*.just
-**/pom.xml
-.prettierignore
+# Minified CSS must stay minified.
+*-min.css
