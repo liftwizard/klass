@@ -329,7 +329,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
-      - uses: liftwizard/liftwizard/.github/actions/openrewrite-recipes@9ca133dcf21424bae3a86f965ee01c54f3c08ad4 # main
+      - uses: liftwizard/liftwizard/.github/actions/openrewrite-recipes@a476a849e33865ebe8e2b5f5cf0a64b8152bda4c # main
         with:
           codegenome-username: ${{ secrets.CODEGENOME_USERNAME }}
           codegenome-token: ${{ secrets.CODEGENOME_TOKEN }}
