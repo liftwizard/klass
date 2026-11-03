@@ -130,7 +130,7 @@ class CoverageExampleApplicationTest extends AbstractCoverageTest {
 	}
 
 	private void graphqlSmokeTest() {
-		String testName = "readOnlySmoke.graphqlSmokeTest";
+		var testName = "readOnlySmoke.graphqlSmokeTest";
 		Client client = this.getClient(testName);
 		String graphqlQuery = this.slurp(testName + ".graphql");
 
