@@ -3,7 +3,7 @@
 	{
 		"multiplicity": "1..*",
 		"projection": "cool.klass.xample.coverage.EveryTypeKeyPropertyProjection",
-		"transactionTimestamp": "2001-01-16T23:59:59Z"
+		"transactionTimestamp": "2001-03-18T23:59:59Z"
 	},
 	"_data": [
 		{
