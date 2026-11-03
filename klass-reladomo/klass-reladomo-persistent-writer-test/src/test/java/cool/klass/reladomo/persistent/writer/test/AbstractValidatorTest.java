@@ -71,6 +71,9 @@ public abstract class AbstractValidatorTest {
 	}
 
 	protected void validate(String testName, Object persistentInstance) throws JsonProcessingException {
+		this.actualErrors.clear();
+		this.actualWarnings.clear();
+
 		String incomingJsonName = this.getClass().getSimpleName() + '.' + testName + ".json5";
 		String incomingJson = FileSlurper.slurp(incomingJsonName, this.getClass());
 

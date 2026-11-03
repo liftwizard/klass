@@ -23,7 +23,6 @@ import javax.annotation.Nonnull;
 import cool.klass.deserializer.json.OperationMode;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
-import cool.klass.reladomo.persistent.writer.test.primitive.PrimitiveValidatorTest;
 import io.liftwizard.reladomo.csv.test.extension.CsvTestDataExtension;
 import io.liftwizard.reladomo.test.extension.ReladomoExtensionBuilder;
 import org.eclipse.collections.api.factory.Maps;
@@ -32,7 +31,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-public class Update_PropertiesOptionalTest extends AbstractUpdateValidatorTest implements PrimitiveValidatorTest {
+public class Update_PropertiesOptionalTest extends AbstractUpdateValidatorTest {
 
 	@RegisterExtension
 	public final ReladomoExtensionBuilder reladomoTestExtension =
@@ -59,62 +58,17 @@ public class Update_PropertiesOptionalTest extends AbstractUpdateValidatorTest i
 		this.persistentInstance = this.reladomoDataStore.findByKey(klass, keys);
 	}
 
-	@Override
 	@Test
-	public void validate_good() throws IOException {
+	void validateAllCases() throws IOException {
 		this.validate("validate_good", this.persistentInstance);
-	}
-
-	@Test
-	@Override
-	public void validate_mutation_context() throws IOException {
 		this.validate("validate_mutation_context", this.persistentInstance);
-	}
-
-	@Test
-	void validate_wrong_version() throws IOException {
 		this.validate("validate_wrong_version", this.persistentInstance);
-	}
-
-	@Override
-	@Test
-	public void validate_extra_properties() throws IOException {
 		this.validate("validate_extra_properties", this.persistentInstance);
-	}
-
-	@Override
-	@Test
-	public void validate_expected_primitive_actual_missing() throws IOException {
 		this.validate("validate_expected_primitive_actual_missing", this.persistentInstance);
-	}
-
-	@Override
-	@Test
-	public void validate_expected_primitive_actual_array() throws IOException {
 		this.validate("validate_expected_primitive_actual_array", this.persistentInstance);
-	}
-
-	@Override
-	@Test
-	public void validate_expected_primitive_actual_object() throws IOException {
 		this.validate("validate_expected_primitive_actual_object", this.persistentInstance);
-	}
-
-	@Override
-	@Test
-	public void validate_expected_primitive_actual_null() throws IOException {
 		this.validate("validate_expected_primitive_actual_null", this.persistentInstance);
-	}
-
-	@Override
-	@Test
-	public void validate_expected_primitive_actual_string() throws IOException {
 		this.validate("validate_expected_primitive_actual_string", this.persistentInstance);
-	}
-
-	@Test
-	@Override
-	public void validate_version_expected_primitive_actual_object() throws IOException {
 		this.validate("validate_version_expected_primitive_actual_object", this.persistentInstance);
 	}
 
