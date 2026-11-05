@@ -1,8 +1,7 @@
 {
 	"name": "ProjectionElementProjection",
 	"packageName": "klass.model.meta.domain",
-	"rootProjection":
-	{
+	"rootProjection": {
 		"id": 8,
 		"name": "ProjectionElementProjection",
 		"children": [
@@ -11,10 +10,8 @@
 				"id": 66,
 				"name": "id",
 				"children": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ProjectionElement"
 					},
 					"name": "id"
@@ -25,10 +22,8 @@
 				"id": 67,
 				"name": "name",
 				"children": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ProjectionElement"
 					},
 					"name": "name"
@@ -39,16 +34,13 @@
 				"id": 68,
 				"name": "children",
 				"children": [],
-				"associationEnd":
-				{
-					"owningClass":
-					{
+				"associationEnd": {
+					"owningClass": {
 						"name": "ProjectionElement"
 					},
 					"name": "children"
 				},
-				"projection":
-				{
+				"projection": {
 					"name": "ProjectionElementProjection"
 				}
 			},
@@ -62,20 +54,16 @@
 						"id": 70,
 						"name": "name",
 						"children": [],
-						"dataTypeProperty":
-						{
-							"owningClassifier":
-							{
+						"dataTypeProperty": {
+							"owningClassifier": {
 								"name": "NamedElement"
 							},
 							"name": "name"
 						}
 					}
 				],
-				"associationEnd":
-				{
-					"owningClass":
-					{
+				"associationEnd": {
+					"owningClass": {
 						"name": "RootProjection"
 					},
 					"name": "classifier"
@@ -96,20 +84,16 @@
 								"id": 73,
 								"name": "name",
 								"children": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							}
 						],
-						"associationEnd":
-						{
-							"owningClass":
-							{
+						"associationEnd": {
+							"owningClass": {
 								"name": "AssociationEnd"
 							},
 							"name": "owningClass"
@@ -120,20 +104,16 @@
 						"id": 74,
 						"name": "name",
 						"children": [],
-						"dataTypeProperty":
-						{
-							"owningClassifier":
-							{
+						"dataTypeProperty": {
+							"owningClassifier": {
 								"name": "NamedElement"
 							},
 							"name": "name"
 						}
 					}
 				],
-				"associationEnd":
-				{
-					"owningClass":
-					{
+				"associationEnd": {
+					"owningClass": {
 						"name": "ProjectionWithAssociationEnd"
 					},
 					"name": "associationEnd"
@@ -149,20 +129,16 @@
 						"id": 76,
 						"name": "name",
 						"children": [],
-						"dataTypeProperty":
-						{
-							"owningClassifier":
-							{
+						"dataTypeProperty": {
+							"owningClassifier": {
 								"name": "NamedElement"
 							},
 							"name": "name"
 						}
 					}
 				],
-				"associationEnd":
-				{
-					"owningClass":
-					{
+				"associationEnd": {
+					"owningClass": {
 						"name": "ProjectionProjectionReference"
 					},
 					"name": "projection"
@@ -183,20 +159,16 @@
 								"id": 79,
 								"name": "name",
 								"children": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							}
 						],
-						"associationEnd":
-						{
-							"owningClass":
-							{
+						"associationEnd": {
+							"owningClass": {
 								"name": "DataTypeProperty"
 							},
 							"name": "owningClassifier"
@@ -207,28 +179,23 @@
 						"id": 80,
 						"name": "name",
 						"children": [],
-						"dataTypeProperty":
-						{
-							"owningClassifier":
-							{
+						"dataTypeProperty": {
+							"owningClassifier": {
 								"name": "NamedElement"
 							},
 							"name": "name"
 						}
 					}
 				],
-				"associationEnd":
-				{
-					"owningClass":
-					{
+				"associationEnd": {
+					"owningClass": {
 						"name": "ProjectionDataTypeProperty"
 					},
 					"name": "dataTypeProperty"
 				}
 			}
 		],
-		"classifier":
-		{
+		"classifier": {
 			"name": "ProjectionElement"
 		}
 	}

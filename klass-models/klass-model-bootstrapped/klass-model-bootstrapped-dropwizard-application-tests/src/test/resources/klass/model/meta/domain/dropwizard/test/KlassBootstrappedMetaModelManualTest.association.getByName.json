@@ -6,8 +6,7 @@
 			"name": "subClasses",
 			"direction": "source",
 			"multiplicity": "0..*",
-			"resultType":
-			{
+			"resultType": {
 				"name": "Klass"
 			},
 			"associationEndModifiers": [],
@@ -17,49 +16,39 @@
 			"name": "superClass",
 			"direction": "target",
 			"multiplicity": "0..1",
-			"resultType":
-			{
+			"resultType": {
 				"name": "Klass"
 			},
 			"associationEndModifiers": [],
 			"orderBys": []
 		}
 	],
-	"criteria":
-	{
+	"criteria": {
 		"__typename": "klass.model.meta.domain.OperatorCriteria",
 		"operator": "==",
-		"sourceExpressionValue":
-		{
+		"sourceExpressionValue": {
 			"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 			"id": 9,
-			"klass":
-			{
+			"klass": {
 				"name": "Klass"
 			},
 			"associationEnds": [],
-			"dataTypeProperty":
-			{
-				"owningClassifier":
-				{
+			"dataTypeProperty": {
+				"owningClassifier": {
 					"name": "Klass"
 				},
 				"name": "superClassName"
 			}
 		},
-		"targetExpressionValue":
-		{
+		"targetExpressionValue": {
 			"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 			"id": 10,
-			"klass":
-			{
+			"klass": {
 				"name": "Klass"
 			},
 			"associationEnds": [],
-			"dataTypeProperty":
-			{
-				"owningClassifier":
-				{
+			"dataTypeProperty": {
+				"owningClassifier": {
 					"name": "NamedElement"
 				},
 				"name": "name"

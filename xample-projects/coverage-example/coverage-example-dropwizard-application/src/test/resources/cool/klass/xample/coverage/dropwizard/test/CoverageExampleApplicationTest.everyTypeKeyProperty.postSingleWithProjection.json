@@ -1,12 +1,10 @@
 {
-	"_metadata":
-	{
+	"_metadata": {
 		"multiplicity": "1..1",
 		"projection": "cool.klass.xample.coverage.EveryTypeKeyPropertyProjection",
 		"transactionTimestamp": "2001-03-12T23:59:59Z"
 	},
-	"_data":
-	{
+	"_data": {
 		"keyString": "EveryTypeKeyProperty keyString 2",
 		"keyInteger": 2,
 		"keyLong": 200000000000,

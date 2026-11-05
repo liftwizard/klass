@@ -1,18 +1,15 @@
 {
-	"_metadata":
-	{
+	"_metadata": {
 		"multiplicity": "1..1",
 		"projection": "com.stackoverflow.QuestionVoteProjection",
 		"transactionTimestamp": "2001-02-06T23:59:59Z"
 	},
-	"_data":
-	{
+	"_data": {
 		"direction": "up",
 		"systemFrom": "2001-02-06T23:59:59Z",
 		"systemTo": null,
 		"createdOn": "2001-02-06T23:59:59Z",
-		"createdBy":
-		{
+		"createdBy": {
 			"userId": "test user 1",
 			"systemFrom": "1999-12-31T23:59:59.999Z",
 			"systemTo": null

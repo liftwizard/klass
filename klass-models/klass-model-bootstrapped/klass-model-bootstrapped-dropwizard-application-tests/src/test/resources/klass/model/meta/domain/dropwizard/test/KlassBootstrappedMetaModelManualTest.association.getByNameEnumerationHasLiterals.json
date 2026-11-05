@@ -6,8 +6,7 @@
 			"name": "enumeration",
 			"direction": "source",
 			"multiplicity": "1..1",
-			"resultType":
-			{
+			"resultType": {
 				"name": "Enumeration"
 			},
 			"associationEndModifiers": [],
@@ -17,8 +16,7 @@
 			"name": "enumerationLiterals",
 			"direction": "target",
 			"multiplicity": "1..*",
-			"resultType":
-			{
+			"resultType": {
 				"name": "EnumerationLiteral"
 			},
 			"associationEndModifiers": [
@@ -29,49 +27,39 @@
 			"orderBys": [
 				{
 					"orderByDirection": "ascending",
-					"thisMemberReferencePath":
-					{
+					"thisMemberReferencePath": {
 						"id": 187
 					}
 				}
 			]
 		}
 	],
-	"criteria":
-	{
+	"criteria": {
 		"__typename": "klass.model.meta.domain.OperatorCriteria",
 		"operator": "==",
-		"sourceExpressionValue":
-		{
+		"sourceExpressionValue": {
 			"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 			"id": 1,
-			"klass":
-			{
+			"klass": {
 				"name": "Enumeration"
 			},
 			"associationEnds": [],
-			"dataTypeProperty":
-			{
-				"owningClassifier":
-				{
+			"dataTypeProperty": {
+				"owningClassifier": {
 					"name": "NamedElement"
 				},
 				"name": "name"
 			}
 		},
-		"targetExpressionValue":
-		{
+		"targetExpressionValue": {
 			"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 			"id": 2,
-			"klass":
-			{
+			"klass": {
 				"name": "EnumerationLiteral"
 			},
 			"associationEnds": [],
-			"dataTypeProperty":
-			{
-				"owningClassifier":
-				{
+			"dataTypeProperty": {
+				"owningClassifier": {
 					"name": "EnumerationLiteral"
 				},
 				"name": "enumerationName"

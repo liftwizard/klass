@@ -1,6 +1,5 @@
 {
-	"data":
-	{
+	"data": {
 		"everyTypeKeyProperties": [
 			{
 				"keyString": "EveryTypeKeyProperty keyString 1 ☝",
@@ -25,8 +24,7 @@
 						"data": "EveryTypeForeignKeyProperty data 1 ☝"
 					}
 				],
-				"version":
-				{
+				"version": {
 					"number": 1
 				}
 			},
@@ -53,8 +51,7 @@
 						"data": "EveryTypeForeignKeyProperty data 2 ✌"
 					}
 				],
-				"version":
-				{
+				"version": {
 					"number": 1
 				}
 			}
@@ -70,19 +67,16 @@
 				"optionalBoolean": true,
 				"systemFrom": "1999-12-31T23:59:00Z",
 				"systemTo": null,
-				"lastUpdatedBy":
-				{
+				"lastUpdatedBy": {
 					"userId": "User userId 1",
 					"email": "User email 1 ☝"
 				},
 				"createdOn": "1999-12-31T23:59:00Z",
-				"createdBy":
-				{
+				"createdBy": {
 					"userId": "User userId 1",
 					"email": "User email 1 ☝"
 				},
-				"version":
-				{
+				"version": {
 					"number": 1
 				}
 			},
@@ -96,19 +90,16 @@
 				"optionalBoolean": null,
 				"systemFrom": "1999-12-31T23:59:00Z",
 				"systemTo": null,
-				"lastUpdatedBy":
-				{
+				"lastUpdatedBy": {
 					"userId": "User userId 2",
 					"email": null
 				},
 				"createdOn": "2000-01-01T00:00:00Z",
-				"createdBy":
-				{
+				"createdBy": {
 					"userId": "User userId 2",
 					"email": null
 				},
-				"version":
-				{
+				"version": {
 					"number": 1
 				}
 			}

@@ -2,8 +2,7 @@
 	{
 		"name": "PackageableElementResource",
 		"packageName": "klass.model.meta.domain",
-		"owningClass":
-		{
+		"owningClass": {
 			"name": "PackageableElement"
 		},
 		"urls": [
@@ -12,8 +11,7 @@
 				"parameters": [
 					{
 						"type": "path",
-						"parameter":
-						{
+						"parameter": {
 							"__typename": "klass.model.meta.domain.PrimitiveParameter",
 							"id": 1,
 							"name": "name",
@@ -26,38 +24,30 @@
 					{
 						"verb": "GET",
 						"serviceMultiplicity": "one",
-						"projection":
-						{
+						"projection": {
 							"name": "PackageableElementProjection"
 						},
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 139,
-								"klass":
-								{
+								"klass": {
 									"name": "PackageableElement"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 140,
-								"parameter":
-								{
+								"parameter": {
 									"id": 1,
 									"name": "name"
 								}
@@ -72,34 +62,27 @@
 						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 141,
-								"klass":
-								{
+								"klass": {
 									"name": "PackageableElement"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 142,
-								"parameter":
-								{
+								"parameter": {
 									"id": 1,
 									"name": "name"
 								}
@@ -114,34 +97,27 @@
 						"verb": "DELETE",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 143,
-								"klass":
-								{
+								"klass": {
 									"name": "PackageableElement"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 144,
-								"parameter":
-								{
+								"parameter": {
 									"id": 1,
 									"name": "name"
 								}
@@ -161,12 +137,10 @@
 					{
 						"verb": "GET",
 						"serviceMultiplicity": "many",
-						"projection":
-						{
+						"projection": {
 							"name": "PackageableElementProjection"
 						},
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -178,8 +152,7 @@
 						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -191,8 +164,7 @@
 						"verb": "DELETE",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -207,8 +179,7 @@
 	{
 		"name": "EnumerationResource",
 		"packageName": "klass.model.meta.domain",
-		"owningClass":
-		{
+		"owningClass": {
 			"name": "Enumeration"
 		},
 		"urls": [
@@ -217,8 +188,7 @@
 				"parameters": [
 					{
 						"type": "path",
-						"parameter":
-						{
+						"parameter": {
 							"__typename": "klass.model.meta.domain.PrimitiveParameter",
 							"id": 2,
 							"name": "name",
@@ -231,38 +201,30 @@
 					{
 						"verb": "GET",
 						"serviceMultiplicity": "one",
-						"projection":
-						{
+						"projection": {
 							"name": "EnumerationProjection"
 						},
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 145,
-								"klass":
-								{
+								"klass": {
 									"name": "Enumeration"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 146,
-								"parameter":
-								{
+								"parameter": {
 									"id": 2,
 									"name": "name"
 								}
@@ -277,34 +239,27 @@
 						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 147,
-								"klass":
-								{
+								"klass": {
 									"name": "Enumeration"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 148,
-								"parameter":
-								{
+								"parameter": {
 									"id": 2,
 									"name": "name"
 								}
@@ -319,34 +274,27 @@
 						"verb": "DELETE",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 149,
-								"klass":
-								{
+								"klass": {
 									"name": "Enumeration"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 150,
-								"parameter":
-								{
+								"parameter": {
 									"id": 2,
 									"name": "name"
 								}
@@ -366,12 +314,10 @@
 					{
 						"verb": "GET",
 						"serviceMultiplicity": "many",
-						"projection":
-						{
+						"projection": {
 							"name": "EnumerationProjection"
 						},
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -383,8 +329,7 @@
 						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -396,8 +341,7 @@
 						"verb": "DELETE",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -412,8 +356,7 @@
 	{
 		"name": "InterfaceResource",
 		"packageName": "klass.model.meta.domain",
-		"owningClass":
-		{
+		"owningClass": {
 			"name": "Interface"
 		},
 		"urls": [
@@ -422,8 +365,7 @@
 				"parameters": [
 					{
 						"type": "path",
-						"parameter":
-						{
+						"parameter": {
 							"__typename": "klass.model.meta.domain.PrimitiveParameter",
 							"id": 3,
 							"name": "name",
@@ -436,38 +378,30 @@
 					{
 						"verb": "GET",
 						"serviceMultiplicity": "one",
-						"projection":
-						{
+						"projection": {
 							"name": "InterfaceProjection"
 						},
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 151,
-								"klass":
-								{
+								"klass": {
 									"name": "Interface"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 152,
-								"parameter":
-								{
+								"parameter": {
 									"id": 3,
 									"name": "name"
 								}
@@ -482,34 +416,27 @@
 						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 153,
-								"klass":
-								{
+								"klass": {
 									"name": "Interface"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 154,
-								"parameter":
-								{
+								"parameter": {
 									"id": 3,
 									"name": "name"
 								}
@@ -524,34 +451,27 @@
 						"verb": "DELETE",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 155,
-								"klass":
-								{
+								"klass": {
 									"name": "Interface"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 156,
-								"parameter":
-								{
+								"parameter": {
 									"id": 3,
 									"name": "name"
 								}
@@ -571,12 +491,10 @@
 					{
 						"verb": "GET",
 						"serviceMultiplicity": "many",
-						"projection":
-						{
+						"projection": {
 							"name": "InterfaceProjection"
 						},
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -588,8 +506,7 @@
 						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -601,8 +518,7 @@
 						"verb": "DELETE",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -617,8 +533,7 @@
 	{
 		"name": "KlassResource",
 		"packageName": "klass.model.meta.domain",
-		"owningClass":
-		{
+		"owningClass": {
 			"name": "Klass"
 		},
 		"urls": [
@@ -627,8 +542,7 @@
 				"parameters": [
 					{
 						"type": "path",
-						"parameter":
-						{
+						"parameter": {
 							"__typename": "klass.model.meta.domain.PrimitiveParameter",
 							"id": 4,
 							"name": "name",
@@ -641,38 +555,30 @@
 					{
 						"verb": "GET",
 						"serviceMultiplicity": "one",
-						"projection":
-						{
+						"projection": {
 							"name": "KlassProjection"
 						},
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 157,
-								"klass":
-								{
+								"klass": {
 									"name": "Klass"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 158,
-								"parameter":
-								{
+								"parameter": {
 									"id": 4,
 									"name": "name"
 								}
@@ -687,34 +593,27 @@
 						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 159,
-								"klass":
-								{
+								"klass": {
 									"name": "Klass"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 160,
-								"parameter":
-								{
+								"parameter": {
 									"id": 4,
 									"name": "name"
 								}
@@ -729,34 +628,27 @@
 						"verb": "DELETE",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 161,
-								"klass":
-								{
+								"klass": {
 									"name": "Klass"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 162,
-								"parameter":
-								{
+								"parameter": {
 									"id": 4,
 									"name": "name"
 								}
@@ -776,12 +668,10 @@
 					{
 						"verb": "GET",
 						"serviceMultiplicity": "many",
-						"projection":
-						{
+						"projection": {
 							"name": "KlassProjection"
 						},
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -793,8 +683,7 @@
 						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -806,8 +695,7 @@
 						"verb": "DELETE",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -822,8 +710,7 @@
 	{
 		"name": "ClassifierResource",
 		"packageName": "klass.model.meta.domain",
-		"owningClass":
-		{
+		"owningClass": {
 			"name": "Classifier"
 		},
 		"urls": [
@@ -832,8 +719,7 @@
 				"parameters": [
 					{
 						"type": "path",
-						"parameter":
-						{
+						"parameter": {
 							"__typename": "klass.model.meta.domain.PrimitiveParameter",
 							"id": 5,
 							"name": "name",
@@ -846,38 +732,30 @@
 					{
 						"verb": "GET",
 						"serviceMultiplicity": "one",
-						"projection":
-						{
+						"projection": {
 							"name": "ClassifierProjection"
 						},
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 163,
-								"klass":
-								{
+								"klass": {
 									"name": "Classifier"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 164,
-								"parameter":
-								{
+								"parameter": {
 									"id": 5,
 									"name": "name"
 								}
@@ -892,34 +770,27 @@
 						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 165,
-								"klass":
-								{
+								"klass": {
 									"name": "Classifier"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 166,
-								"parameter":
-								{
+								"parameter": {
 									"id": 5,
 									"name": "name"
 								}
@@ -934,34 +805,27 @@
 						"verb": "DELETE",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 167,
-								"klass":
-								{
+								"klass": {
 									"name": "Classifier"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 168,
-								"parameter":
-								{
+								"parameter": {
 									"id": 5,
 									"name": "name"
 								}
@@ -981,12 +845,10 @@
 					{
 						"verb": "GET",
 						"serviceMultiplicity": "many",
-						"projection":
-						{
+						"projection": {
 							"name": "ClassifierProjection"
 						},
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -998,8 +860,7 @@
 						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -1011,8 +872,7 @@
 						"verb": "DELETE",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -1027,8 +887,7 @@
 	{
 		"name": "AssociationResource",
 		"packageName": "klass.model.meta.domain",
-		"owningClass":
-		{
+		"owningClass": {
 			"name": "Association"
 		},
 		"urls": [
@@ -1037,8 +896,7 @@
 				"parameters": [
 					{
 						"type": "path",
-						"parameter":
-						{
+						"parameter": {
 							"__typename": "klass.model.meta.domain.PrimitiveParameter",
 							"id": 6,
 							"name": "name",
@@ -1051,38 +909,30 @@
 					{
 						"verb": "GET",
 						"serviceMultiplicity": "one",
-						"projection":
-						{
+						"projection": {
 							"name": "AssociationProjection"
 						},
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 169,
-								"klass":
-								{
+								"klass": {
 									"name": "Association"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 170,
-								"parameter":
-								{
+								"parameter": {
 									"id": 6,
 									"name": "name"
 								}
@@ -1097,34 +947,27 @@
 						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 171,
-								"klass":
-								{
+								"klass": {
 									"name": "Association"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 172,
-								"parameter":
-								{
+								"parameter": {
 									"id": 6,
 									"name": "name"
 								}
@@ -1139,34 +982,27 @@
 						"verb": "DELETE",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 173,
-								"klass":
-								{
+								"klass": {
 									"name": "Association"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 174,
-								"parameter":
-								{
+								"parameter": {
 									"id": 6,
 									"name": "name"
 								}
@@ -1186,12 +1022,10 @@
 					{
 						"verb": "GET",
 						"serviceMultiplicity": "many",
-						"projection":
-						{
+						"projection": {
 							"name": "AssociationProjection"
 						},
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -1203,8 +1037,7 @@
 						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -1216,8 +1049,7 @@
 						"verb": "DELETE",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -1232,8 +1064,7 @@
 	{
 		"name": "NamedProjectionResource",
 		"packageName": "klass.model.meta.domain",
-		"owningClass":
-		{
+		"owningClass": {
 			"name": "NamedProjection"
 		},
 		"urls": [
@@ -1242,8 +1073,7 @@
 				"parameters": [
 					{
 						"type": "path",
-						"parameter":
-						{
+						"parameter": {
 							"__typename": "klass.model.meta.domain.PrimitiveParameter",
 							"id": 7,
 							"name": "name",
@@ -1256,38 +1086,30 @@
 					{
 						"verb": "GET",
 						"serviceMultiplicity": "one",
-						"projection":
-						{
+						"projection": {
 							"name": "NamedProjectionProjection"
 						},
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 175,
-								"klass":
-								{
+								"klass": {
 									"name": "NamedProjection"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 176,
-								"parameter":
-								{
+								"parameter": {
 									"id": 7,
 									"name": "name"
 								}
@@ -1302,34 +1124,27 @@
 						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 177,
-								"klass":
-								{
+								"klass": {
 									"name": "NamedProjection"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 178,
-								"parameter":
-								{
+								"parameter": {
 									"id": 7,
 									"name": "name"
 								}
@@ -1344,34 +1159,27 @@
 						"verb": "DELETE",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 179,
-								"klass":
-								{
+								"klass": {
 									"name": "NamedProjection"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 180,
-								"parameter":
-								{
+								"parameter": {
 									"id": 7,
 									"name": "name"
 								}
@@ -1391,12 +1199,10 @@
 					{
 						"verb": "GET",
 						"serviceMultiplicity": "many",
-						"projection":
-						{
+						"projection": {
 							"name": "NamedProjectionProjection"
 						},
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -1408,8 +1214,7 @@
 						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -1421,8 +1226,7 @@
 						"verb": "DELETE",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -1437,8 +1241,7 @@
 	{
 		"name": "ServiceGroupResource",
 		"packageName": "klass.model.meta.domain",
-		"owningClass":
-		{
+		"owningClass": {
 			"name": "ServiceGroup"
 		},
 		"urls": [
@@ -1447,8 +1250,7 @@
 				"parameters": [
 					{
 						"type": "path",
-						"parameter":
-						{
+						"parameter": {
 							"__typename": "klass.model.meta.domain.PrimitiveParameter",
 							"id": 8,
 							"name": "name",
@@ -1461,38 +1263,30 @@
 					{
 						"verb": "GET",
 						"serviceMultiplicity": "one",
-						"projection":
-						{
+						"projection": {
 							"name": "ServiceGroupProjection"
 						},
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 181,
-								"klass":
-								{
+								"klass": {
 									"name": "ServiceGroup"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 182,
-								"parameter":
-								{
+								"parameter": {
 									"id": 8,
 									"name": "name"
 								}
@@ -1507,34 +1301,27 @@
 						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 183,
-								"klass":
-								{
+								"klass": {
 									"name": "ServiceGroup"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 184,
-								"parameter":
-								{
+								"parameter": {
 									"id": 8,
 									"name": "name"
 								}
@@ -1549,34 +1336,27 @@
 						"verb": "DELETE",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 185,
-								"klass":
-								{
+								"klass": {
 									"name": "ServiceGroup"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "NamedElement"
 									},
 									"name": "name"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 186,
-								"parameter":
-								{
+								"parameter": {
 									"id": 8,
 									"name": "name"
 								}
@@ -1596,12 +1376,10 @@
 					{
 						"verb": "GET",
 						"serviceMultiplicity": "many",
-						"projection":
-						{
+						"projection": {
 							"name": "ServiceGroupProjection"
 						},
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -1613,8 +1391,7 @@
 						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,
@@ -1626,8 +1403,7 @@
 						"verb": "DELETE",
 						"serviceMultiplicity": "one",
 						"projection": null,
-						"queryCriteria":
-						{
+						"queryCriteria": {
 							"__typename": "klass.model.meta.domain.AllCriteria"
 						},
 						"authorizeCriteria": null,

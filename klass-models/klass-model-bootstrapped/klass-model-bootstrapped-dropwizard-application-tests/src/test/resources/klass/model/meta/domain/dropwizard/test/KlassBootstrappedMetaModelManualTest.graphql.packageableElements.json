@@ -1,6 +1,5 @@
 {
-	"data":
-	{
+	"data": {
 		"packageableElements": [
 			{
 				"__typename": "Enumeration",
@@ -220,8 +219,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "Element"
 						}
 					}
@@ -233,8 +231,7 @@
 						"name": "name",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -269,8 +266,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "NamedElement"
 						}
 					}
@@ -282,8 +278,7 @@
 						"name": "packageName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 100000
 						},
 						"propertyModifiers": [],
@@ -304,8 +299,7 @@
 				"classifierModifiers": [],
 				"dataTypeProperties": [],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "PackageableElement"
 				},
 				"parameterizedProperties": []
@@ -316,8 +310,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "NamedElement"
 						}
 					}
@@ -329,8 +322,7 @@
 						"name": "enumerationName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -347,8 +339,7 @@
 						"name": "prettyName",
 						"optional": true,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [],
@@ -369,8 +360,7 @@
 				"classifierModifiers": [],
 				"dataTypeProperties": [],
 				"abstractClass": true,
-				"superClass":
-				{
+				"superClass": {
 					"name": "PackageableElement"
 				},
 				"parameterizedProperties": []
@@ -383,8 +373,7 @@
 				"classifierModifiers": [],
 				"dataTypeProperties": [],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "Classifier"
 				},
 				"parameterizedProperties": []
@@ -401,8 +390,7 @@
 						"name": "classifierName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -422,8 +410,7 @@
 						"name": "interfaceName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -464,8 +451,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "Element"
 						}
 					}
@@ -477,8 +463,7 @@
 						"name": "classifierName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -495,8 +480,7 @@
 						"name": "keyword",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -540,8 +524,7 @@
 						"name": "superClassName",
 						"optional": true,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -566,8 +549,7 @@
 					}
 				],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "Classifier"
 				},
 				"parameterizedProperties": []
@@ -578,8 +560,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "NamedElement"
 						}
 					}
@@ -591,8 +572,7 @@
 						"name": "classifierName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -632,20 +612,17 @@
 						"name": "primitiveType",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [],
-						"enumeration":
-						{
+						"enumeration": {
 							"name": "PrimitiveType"
 						}
 					}
 				],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "DataTypeProperty"
 				},
 				"parameterizedProperties": []
@@ -662,8 +639,7 @@
 						"name": "enumerationName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -677,8 +653,7 @@
 					}
 				],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "DataTypeProperty"
 				},
 				"parameterizedProperties": []
@@ -689,8 +664,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "Element"
 						}
 					}
@@ -702,8 +676,7 @@
 						"name": "classifierName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -720,8 +693,7 @@
 						"name": "propertyName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -752,8 +724,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "NumericPropertyValidation"
 						}
 					}
@@ -770,8 +741,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "NumericPropertyValidation"
 						}
 					}
@@ -788,8 +758,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "NumericPropertyValidation"
 						}
 					}
@@ -806,8 +775,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "NumericPropertyValidation"
 						}
 					}
@@ -824,8 +792,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "Element"
 						}
 					}
@@ -837,8 +804,7 @@
 						"name": "classifierName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -855,8 +821,7 @@
 						"name": "propertyName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -873,8 +838,7 @@
 						"name": "keyword",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -912,8 +876,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "NamedElement"
 						}
 					}
@@ -943,8 +906,7 @@
 						"name": "name",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [],
@@ -957,13 +919,11 @@
 						"name": "multiplicity",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [],
-						"enumeration":
-						{
+						"enumeration": {
 							"name": "Multiplicity"
 						}
 					}
@@ -984,8 +944,7 @@
 						"name": "enumerationName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -999,8 +958,7 @@
 					}
 				],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "Parameter"
 				},
 				"parameterizedProperties": []
@@ -1017,20 +975,17 @@
 						"name": "primitiveType",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [],
-						"enumeration":
-						{
+						"enumeration": {
 							"name": "PrimitiveType"
 						}
 					}
 				],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "Parameter"
 				},
 				"parameterizedProperties": []
@@ -1073,8 +1028,7 @@
 				"classifierModifiers": [],
 				"dataTypeProperties": [],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "ExpressionValue"
 				},
 				"parameterizedProperties": []
@@ -1087,8 +1041,7 @@
 				"classifierModifiers": [],
 				"dataTypeProperties": [],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "ExpressionValue"
 				},
 				"parameterizedProperties": []
@@ -1117,8 +1070,7 @@
 					}
 				],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "ExpressionValue"
 				},
 				"parameterizedProperties": []
@@ -1135,8 +1087,7 @@
 						"name": "className",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -1153,8 +1104,7 @@
 						"name": "propertyClassName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -1171,8 +1121,7 @@
 						"name": "propertyName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -1186,8 +1135,7 @@
 					}
 				],
 				"abstractClass": true,
-				"superClass":
-				{
+				"superClass": {
 					"name": "ExpressionValue"
 				},
 				"parameterizedProperties": []
@@ -1198,8 +1146,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "Element"
 						}
 					}
@@ -1252,8 +1199,7 @@
 				"classifierModifiers": [],
 				"dataTypeProperties": [],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "Criteria"
 				},
 				"parameterizedProperties": []
@@ -1297,8 +1243,7 @@
 					}
 				],
 				"abstractClass": true,
-				"superClass":
-				{
+				"superClass": {
 					"name": "Criteria"
 				},
 				"parameterizedProperties": []
@@ -1311,8 +1256,7 @@
 				"classifierModifiers": [],
 				"dataTypeProperties": [],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "BinaryCriteria"
 				},
 				"parameterizedProperties": []
@@ -1325,8 +1269,7 @@
 				"classifierModifiers": [],
 				"dataTypeProperties": [],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "BinaryCriteria"
 				},
 				"parameterizedProperties": []
@@ -1373,20 +1316,17 @@
 						"name": "operator",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [],
-						"enumeration":
-						{
+						"enumeration": {
 							"name": "Operator"
 						}
 					}
 				],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "Criteria"
 				},
 				"parameterizedProperties": []
@@ -1415,8 +1355,7 @@
 					}
 				],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "Criteria"
 				},
 				"parameterizedProperties": []
@@ -1445,8 +1384,7 @@
 					}
 				],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "PackageableElement"
 				},
 				"parameterizedProperties": []
@@ -1457,8 +1395,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "NamedElement"
 						}
 					}
@@ -1470,8 +1407,7 @@
 						"name": "owningClassName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -1491,8 +1427,7 @@
 						"name": "associationName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [],
@@ -1505,8 +1440,7 @@
 						"name": "resultTypeName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -1523,13 +1457,11 @@
 						"name": "direction",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [],
-						"enumeration":
-						{
+						"enumeration": {
 							"name": "AssociationEndDirection"
 						}
 					},
@@ -1538,13 +1470,11 @@
 						"name": "multiplicity",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [],
-						"enumeration":
-						{
+						"enumeration": {
 							"name": "Multiplicity"
 						}
 					}
@@ -1559,8 +1489,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "Element"
 						}
 					}
@@ -1572,8 +1501,7 @@
 						"name": "owningClassName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -1590,8 +1518,7 @@
 						"name": "associationEndName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -1608,8 +1535,7 @@
 						"name": "keyword",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -1671,8 +1597,7 @@
 						"name": "associationOwningClassName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -1692,8 +1617,7 @@
 						"name": "associationEndName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -1736,8 +1660,7 @@
 				"classifierModifiers": [],
 				"dataTypeProperties": [],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "MemberReferencePath"
 				},
 				"parameterizedProperties": []
@@ -1750,8 +1673,7 @@
 				"classifierModifiers": [],
 				"dataTypeProperties": [],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "MemberReferencePath"
 				},
 				"parameterizedProperties": []
@@ -1762,8 +1684,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "NamedElement"
 						}
 					}
@@ -1775,8 +1696,7 @@
 						"name": "owningClassName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -1796,8 +1716,7 @@
 						"name": "resultTypeName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -1814,13 +1733,11 @@
 						"name": "multiplicity",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [],
-						"enumeration":
-						{
+						"enumeration": {
 							"name": "Multiplicity"
 						}
 					}
@@ -1841,8 +1758,7 @@
 						"name": "associationEndClassName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -1862,8 +1778,7 @@
 						"name": "associationEndName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -1901,13 +1816,11 @@
 						"name": "orderByDirection",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [],
-						"enumeration":
-						{
+						"enumeration": {
 							"name": "OrderByDirection"
 						}
 					},
@@ -1943,8 +1856,7 @@
 						"name": "owningClassName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -1964,8 +1876,7 @@
 						"name": "name",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -1999,8 +1910,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "NamedElement"
 						}
 					}
@@ -2012,8 +1922,7 @@
 						"name": "classifierName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -2033,8 +1942,7 @@
 						"name": "parameterizedPropertyName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -2072,8 +1980,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "NamedElement"
 						}
 					}
@@ -2118,8 +2025,7 @@
 						"name": "name",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [],
@@ -2144,8 +2050,7 @@
 						"name": "classifierName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -2162,8 +2067,7 @@
 						"name": "namedProjectionName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -2177,8 +2081,7 @@
 					}
 				],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "ProjectionElement"
 				},
 				"parameterizedProperties": []
@@ -2191,8 +2094,7 @@
 				"classifierModifiers": [],
 				"dataTypeProperties": [],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "PackageableElement"
 				},
 				"parameterizedProperties": []
@@ -2209,8 +2111,7 @@
 						"name": "associationEndClass",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -2227,8 +2128,7 @@
 						"name": "associationEndName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -2242,8 +2142,7 @@
 					}
 				],
 				"abstractClass": true,
-				"superClass":
-				{
+				"superClass": {
 					"name": "ProjectionElement"
 				},
 				"parameterizedProperties": []
@@ -2256,8 +2155,7 @@
 				"classifierModifiers": [],
 				"dataTypeProperties": [],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "ProjectionWithAssociationEnd"
 				},
 				"parameterizedProperties": []
@@ -2274,8 +2172,7 @@
 						"name": "projectionName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -2289,8 +2186,7 @@
 					}
 				],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "ProjectionWithAssociationEnd"
 				},
 				"parameterizedProperties": []
@@ -2307,8 +2203,7 @@
 						"name": "propertyClassifierName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -2325,8 +2220,7 @@
 						"name": "propertyName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -2340,8 +2234,7 @@
 					}
 				],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "ProjectionElement"
 				},
 				"parameterizedProperties": []
@@ -2358,8 +2251,7 @@
 						"name": "className",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -2373,8 +2265,7 @@
 					}
 				],
 				"abstractClass": false,
-				"superClass":
-				{
+				"superClass": {
 					"name": "PackageableElement"
 				},
 				"parameterizedProperties": []
@@ -2385,8 +2276,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "Element"
 						}
 					}
@@ -2398,8 +2288,7 @@
 						"name": "serviceGroupName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -2416,8 +2305,7 @@
 						"name": "url",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 8192
 						},
 						"propertyModifiers": [
@@ -2455,8 +2343,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "Element"
 						}
 					}
@@ -2468,8 +2355,7 @@
 						"name": "serviceGroupName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -2489,8 +2375,7 @@
 						"name": "urlString",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 8192
 						},
 						"propertyModifiers": [
@@ -2530,8 +2415,7 @@
 						"minLengthValidation": null,
 						"maxLengthValidation": null,
 						"propertyModifiers": [],
-						"enumeration":
-						{
+						"enumeration": {
 							"name": "UrlParameterType"
 						}
 					},
@@ -2561,8 +2445,7 @@
 				"packageName": "klass.model.meta.domain",
 				"superInterfaces": [
 					{
-						"superInterface":
-						{
+						"superInterface": {
 							"name": "Element"
 						}
 					}
@@ -2574,8 +2457,7 @@
 						"name": "serviceGroupName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -2592,8 +2474,7 @@
 						"name": "urlString",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 8192
 						},
 						"propertyModifiers": [
@@ -2610,8 +2491,7 @@
 						"name": "verb",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -2619,8 +2499,7 @@
 								"keyword": "key"
 							}
 						],
-						"enumeration":
-						{
+						"enumeration": {
 							"name": "Verb"
 						}
 					},
@@ -2629,8 +2508,7 @@
 						"name": "projectionName",
 						"optional": true,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -2707,13 +2585,11 @@
 						"name": "serviceMultiplicity",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [],
-						"enumeration":
-						{
+						"enumeration": {
 							"name": "ServiceMultiplicity"
 						}
 					},
@@ -2749,8 +2625,7 @@
 						"name": "serviceGroupName",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 256
 						},
 						"propertyModifiers": [
@@ -2770,8 +2645,7 @@
 						"name": "serviceUrlString",
 						"optional": false,
 						"minLengthValidation": null,
-						"maxLengthValidation":
-						{
+						"maxLengthValidation": {
 							"number": 8192
 						},
 						"propertyModifiers": [
@@ -2800,8 +2674,7 @@
 								"keyword": "private"
 							}
 						],
-						"enumeration":
-						{
+						"enumeration": {
 							"name": "Verb"
 						}
 					},
@@ -2830,8 +2703,7 @@
 						"minLengthValidation": null,
 						"maxLengthValidation": null,
 						"propertyModifiers": [],
-						"enumeration":
-						{
+						"enumeration": {
 							"name": "OrderByDirection"
 						}
 					},
@@ -2864,8 +2736,7 @@
 						"name": "enumeration",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Enumeration"
 						},
 						"associationEndModifiers": [],
@@ -2875,8 +2746,7 @@
 						"name": "enumerationLiterals",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "EnumerationLiteral"
 						},
 						"associationEndModifiers": [
@@ -2887,16 +2757,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 187
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 1
 				}
@@ -2910,8 +2778,7 @@
 						"name": "subClassifier",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Classifier"
 						},
 						"associationEndModifiers": [],
@@ -2921,8 +2788,7 @@
 						"name": "superInterfaces",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ClassifierInterfaceMapping"
 						},
 						"associationEndModifiers": [
@@ -2933,16 +2799,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 188
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 2
 				}
@@ -2956,8 +2820,7 @@
 						"name": "subClassifiers",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ClassifierInterfaceMapping"
 						},
 						"associationEndModifiers": [],
@@ -2967,16 +2830,14 @@
 						"name": "superInterface",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Interface"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 3
 				}
@@ -2990,8 +2851,7 @@
 						"name": "owningClassifier",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Classifier"
 						},
 						"associationEndModifiers": [],
@@ -3001,8 +2861,7 @@
 						"name": "classifierModifiers",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ClassifierModifier"
 						},
 						"associationEndModifiers": [
@@ -3013,16 +2872,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 189
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 4
 				}
@@ -3036,8 +2893,7 @@
 						"name": "subClasses",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Klass"
 						},
 						"associationEndModifiers": [],
@@ -3047,16 +2903,14 @@
 						"name": "superClass",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Klass"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 5
 				}
@@ -3070,8 +2924,7 @@
 						"name": "enumerationProperties",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "EnumerationProperty"
 						},
 						"associationEndModifiers": [],
@@ -3081,16 +2934,14 @@
 						"name": "enumeration",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Enumeration"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 6
 				}
@@ -3104,8 +2955,7 @@
 						"name": "owningClassifier",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Classifier"
 						},
 						"associationEndModifiers": [],
@@ -3115,8 +2965,7 @@
 						"name": "dataTypeProperties",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "DataTypeProperty"
 						},
 						"associationEndModifiers": [
@@ -3127,16 +2976,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 190
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 7
 				}
@@ -3150,8 +2997,7 @@
 						"name": "dataTypeProperty",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "DataTypeProperty"
 						},
 						"associationEndModifiers": [],
@@ -3161,8 +3007,7 @@
 						"name": "minLengthValidation",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "MinLengthPropertyValidation"
 						},
 						"associationEndModifiers": [
@@ -3173,8 +3018,7 @@
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "AndCriteria",
 					"id": 8
 				}
@@ -3188,8 +3032,7 @@
 						"name": "dataTypeProperty",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "DataTypeProperty"
 						},
 						"associationEndModifiers": [],
@@ -3199,8 +3042,7 @@
 						"name": "maxLengthValidation",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "MaxLengthPropertyValidation"
 						},
 						"associationEndModifiers": [
@@ -3211,8 +3053,7 @@
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "AndCriteria",
 					"id": 11
 				}
@@ -3226,8 +3067,7 @@
 						"name": "primitiveProperty",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "PrimitiveProperty"
 						},
 						"associationEndModifiers": [],
@@ -3237,8 +3077,7 @@
 						"name": "minValidation",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "MinPropertyValidation"
 						},
 						"associationEndModifiers": [
@@ -3249,8 +3088,7 @@
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "AndCriteria",
 					"id": 14
 				}
@@ -3264,8 +3102,7 @@
 						"name": "primitiveProperty",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "PrimitiveProperty"
 						},
 						"associationEndModifiers": [],
@@ -3275,8 +3112,7 @@
 						"name": "maxValidation",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "MaxPropertyValidation"
 						},
 						"associationEndModifiers": [
@@ -3287,8 +3123,7 @@
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "AndCriteria",
 					"id": 17
 				}
@@ -3302,8 +3137,7 @@
 						"name": "dataTypeProperty",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "DataTypeProperty"
 						},
 						"associationEndModifiers": [],
@@ -3313,8 +3147,7 @@
 						"name": "propertyModifiers",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "PropertyModifier"
 						},
 						"associationEndModifiers": [
@@ -3325,16 +3158,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 191
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "AndCriteria",
 					"id": 20
 				}
@@ -3348,8 +3179,7 @@
 						"name": "parameterReferences",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ParameterReference"
 						},
 						"associationEndModifiers": [],
@@ -3359,16 +3189,14 @@
 						"name": "parameter",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Parameter"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 23
 				}
@@ -3382,8 +3210,7 @@
 						"name": "owningAssociation",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Association"
 						},
 						"associationEndModifiers": [],
@@ -3393,8 +3220,7 @@
 						"name": "associationEnds",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "AssociationEnd"
 						},
 						"associationEndModifiers": [
@@ -3405,16 +3231,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 192
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 24
 				}
@@ -3428,8 +3252,7 @@
 						"name": "owningClass",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Klass"
 						},
 						"associationEndModifiers": [],
@@ -3439,16 +3262,14 @@
 						"name": "associationEnds",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "AssociationEnd"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 25
 				}
@@ -3462,8 +3283,7 @@
 						"name": "associationEndsResultTypeOf",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "AssociationEnd"
 						},
 						"associationEndModifiers": [],
@@ -3473,16 +3293,14 @@
 						"name": "resultType",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Klass"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 26
 				}
@@ -3496,8 +3314,7 @@
 						"name": "associationEnd",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "AssociationEnd"
 						},
 						"associationEndModifiers": [],
@@ -3507,8 +3324,7 @@
 						"name": "associationEndModifiers",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "AssociationEndModifier"
 						},
 						"associationEndModifiers": [
@@ -3519,16 +3335,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 193
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "AndCriteria",
 					"id": 27
 				}
@@ -3542,8 +3356,7 @@
 						"name": "association",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Association"
 						},
 						"associationEndModifiers": [],
@@ -3553,8 +3366,7 @@
 						"name": "criteria",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Criteria"
 						},
 						"associationEndModifiers": [
@@ -3565,8 +3377,7 @@
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 30
 				}
@@ -3580,8 +3391,7 @@
 						"name": "operatorCriteriaSourceOf",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "OperatorCriteria"
 						},
 						"associationEndModifiers": [],
@@ -3591,8 +3401,7 @@
 						"name": "sourceExpressionValue",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ExpressionValue"
 						},
 						"associationEndModifiers": [
@@ -3603,8 +3412,7 @@
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 31
 				}
@@ -3618,8 +3426,7 @@
 						"name": "operatorCriteriaTargetOf",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "OperatorCriteria"
 						},
 						"associationEndModifiers": [],
@@ -3629,8 +3436,7 @@
 						"name": "targetExpressionValue",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ExpressionValue"
 						},
 						"associationEndModifiers": [
@@ -3641,8 +3447,7 @@
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 32
 				}
@@ -3656,8 +3461,7 @@
 						"name": "edgePointCriteria",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "EdgePointCriteria"
 						},
 						"associationEndModifiers": [],
@@ -3667,16 +3471,14 @@
 						"name": "memberReferencePath",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "MemberReferencePath"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 33
 				}
@@ -3690,8 +3492,7 @@
 						"name": "enumerationParameters",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "EnumerationParameter"
 						},
 						"associationEndModifiers": [],
@@ -3701,16 +3502,14 @@
 						"name": "enumeration",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Enumeration"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 34
 				}
@@ -3724,8 +3523,7 @@
 						"name": "memberReferencePaths",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "MemberReferencePath"
 						},
 						"associationEndModifiers": [],
@@ -3735,16 +3533,14 @@
 						"name": "klass",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Klass"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 35
 				}
@@ -3758,8 +3554,7 @@
 						"name": "memberReferencePath",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "MemberReferencePath"
 						},
 						"associationEndModifiers": [],
@@ -3769,8 +3564,7 @@
 						"name": "associationEnds",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "MemberReferencePathAssociationEndMapping"
 						},
 						"associationEndModifiers": [
@@ -3781,16 +3575,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 194
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 36
 				}
@@ -3804,8 +3596,7 @@
 						"name": "memberReferencePaths",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "MemberReferencePathAssociationEndMapping"
 						},
 						"associationEndModifiers": [],
@@ -3815,16 +3606,14 @@
 						"name": "associationEnd",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "AssociationEnd"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "AndCriteria",
 					"id": 37
 				}
@@ -3838,8 +3627,7 @@
 						"name": "memberReferencePaths",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "MemberReferencePath"
 						},
 						"associationEndModifiers": [],
@@ -3849,16 +3637,14 @@
 						"name": "dataTypeProperty",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "DataTypeProperty"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "AndCriteria",
 					"id": 40
 				}
@@ -3872,8 +3658,7 @@
 						"name": "ownerOfLeftCriteria",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "BinaryCriteria"
 						},
 						"associationEndModifiers": [],
@@ -3883,8 +3668,7 @@
 						"name": "left",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Criteria"
 						},
 						"associationEndModifiers": [
@@ -3895,8 +3679,7 @@
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 43
 				}
@@ -3910,8 +3693,7 @@
 						"name": "ownerOfRightCriteria",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "BinaryCriteria"
 						},
 						"associationEndModifiers": [],
@@ -3921,8 +3703,7 @@
 						"name": "right",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Criteria"
 						},
 						"associationEndModifiers": [
@@ -3933,8 +3714,7 @@
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 44
 				}
@@ -3948,8 +3728,7 @@
 						"name": "owningClass",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Klass"
 						},
 						"associationEndModifiers": [],
@@ -3959,8 +3738,7 @@
 						"name": "parameterizedProperties",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ParameterizedProperty"
 						},
 						"associationEndModifiers": [
@@ -3971,16 +3749,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 195
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 45
 				}
@@ -3994,8 +3770,7 @@
 						"name": "associationEnd",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "AssociationEnd"
 						},
 						"associationEndModifiers": [],
@@ -4005,8 +3780,7 @@
 						"name": "orderBys",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "AssociationEndOrderBy"
 						},
 						"associationEndModifiers": [
@@ -4017,16 +3791,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 196
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "AndCriteria",
 					"id": 46
 				}
@@ -4040,8 +3812,7 @@
 						"name": "associationEndOrderBy",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "AssociationEndOrderBy"
 						},
 						"associationEndModifiers": [],
@@ -4051,16 +3822,14 @@
 						"name": "thisMemberReferencePath",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ThisMemberReferencePath"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 49
 				}
@@ -4074,8 +3843,7 @@
 						"name": "parameterizedPropertiesResultTypeOf",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ParameterizedProperty"
 						},
 						"associationEndModifiers": [],
@@ -4085,16 +3853,14 @@
 						"name": "resultType",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Klass"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 50
 				}
@@ -4108,8 +3874,7 @@
 						"name": "parameterizedProperty",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ParameterizedProperty"
 						},
 						"associationEndModifiers": [],
@@ -4119,8 +3884,7 @@
 						"name": "parameterizedPropertyOrderings",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ParameterizedPropertyOrdering"
 						},
 						"associationEndModifiers": [
@@ -4131,16 +3895,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 197
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "AndCriteria",
 					"id": 51
 				}
@@ -4154,8 +3916,7 @@
 						"name": "parameterizedProperty",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ParameterizedProperty"
 						},
 						"associationEndModifiers": [],
@@ -4165,8 +3926,7 @@
 						"name": "parameters",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ParameterizedPropertyParameter"
 						},
 						"associationEndModifiers": [
@@ -4177,16 +3937,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 198
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "AndCriteria",
 					"id": 54
 				}
@@ -4200,8 +3958,7 @@
 						"name": "namedProjection",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "NamedProjection"
 						},
 						"associationEndModifiers": [],
@@ -4211,8 +3968,7 @@
 						"name": "rootProjection",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "RootProjection"
 						},
 						"associationEndModifiers": [
@@ -4223,8 +3979,7 @@
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 57
 				}
@@ -4238,8 +3993,7 @@
 						"name": "parent",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ProjectionElement"
 						},
 						"associationEndModifiers": [],
@@ -4249,8 +4003,7 @@
 						"name": "children",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ProjectionElement"
 						},
 						"associationEndModifiers": [
@@ -4261,16 +4014,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 199
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 58
 				}
@@ -4284,8 +4035,7 @@
 						"name": "projectionsWithAssociationEnd",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ProjectionWithAssociationEnd"
 						},
 						"associationEndModifiers": [],
@@ -4295,16 +4045,14 @@
 						"name": "associationEnd",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "AssociationEnd"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "AndCriteria",
 					"id": 59
 				}
@@ -4318,8 +4066,7 @@
 						"name": "projectionDataTypeProperties",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ProjectionDataTypeProperty"
 						},
 						"associationEndModifiers": [],
@@ -4329,16 +4076,14 @@
 						"name": "dataTypeProperty",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "DataTypeProperty"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "AndCriteria",
 					"id": 62
 				}
@@ -4352,8 +4097,7 @@
 						"name": "projections",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "RootProjection"
 						},
 						"associationEndModifiers": [],
@@ -4363,16 +4107,14 @@
 						"name": "classifier",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Classifier"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 65
 				}
@@ -4386,8 +4128,7 @@
 						"name": "projectionProjectionReferences",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ProjectionProjectionReference"
 						},
 						"associationEndModifiers": [],
@@ -4397,16 +4138,14 @@
 						"name": "projection",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "NamedProjection"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 66
 				}
@@ -4420,8 +4159,7 @@
 						"name": "serviceGroups",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ServiceGroup"
 						},
 						"associationEndModifiers": [],
@@ -4431,16 +4169,14 @@
 						"name": "owningClass",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Klass"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 67
 				}
@@ -4454,8 +4190,7 @@
 						"name": "url",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Url"
 						},
 						"associationEndModifiers": [],
@@ -4465,8 +4200,7 @@
 						"name": "parameters",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "UrlParameter"
 						},
 						"associationEndModifiers": [
@@ -4477,16 +4211,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 200
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "AndCriteria",
 					"id": 68
 				}
@@ -4500,8 +4232,7 @@
 						"name": "urlParameter",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "UrlParameter"
 						},
 						"associationEndModifiers": [],
@@ -4511,8 +4242,7 @@
 						"name": "parameter",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Parameter"
 						},
 						"associationEndModifiers": [
@@ -4523,8 +4253,7 @@
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 71
 				}
@@ -4538,8 +4267,7 @@
 						"name": "serviceGroup",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ServiceGroup"
 						},
 						"associationEndModifiers": [],
@@ -4549,8 +4277,7 @@
 						"name": "urls",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Url"
 						},
 						"associationEndModifiers": [
@@ -4561,16 +4288,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 201
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 72
 				}
@@ -4584,8 +4309,7 @@
 						"name": "url",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Url"
 						},
 						"associationEndModifiers": [],
@@ -4595,8 +4319,7 @@
 						"name": "services",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Service"
 						},
 						"associationEndModifiers": [
@@ -4607,16 +4330,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 202
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "AndCriteria",
 					"id": 73
 				}
@@ -4630,8 +4351,7 @@
 						"name": "services",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Service"
 						},
 						"associationEndModifiers": [],
@@ -4641,16 +4361,14 @@
 						"name": "projection",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "NamedProjection"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 76
 				}
@@ -4664,8 +4382,7 @@
 						"name": "queryService",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Service"
 						},
 						"associationEndModifiers": [],
@@ -4675,8 +4392,7 @@
 						"name": "queryCriteria",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Criteria"
 						},
 						"associationEndModifiers": [
@@ -4687,8 +4403,7 @@
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 77
 				}
@@ -4702,8 +4417,7 @@
 						"name": "authorizeService",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Service"
 						},
 						"associationEndModifiers": [],
@@ -4713,8 +4427,7 @@
 						"name": "authorizeCriteria",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Criteria"
 						},
 						"associationEndModifiers": [
@@ -4725,8 +4438,7 @@
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 78
 				}
@@ -4740,8 +4452,7 @@
 						"name": "validateService",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Service"
 						},
 						"associationEndModifiers": [],
@@ -4751,8 +4462,7 @@
 						"name": "validateCriteria",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Criteria"
 						},
 						"associationEndModifiers": [
@@ -4763,8 +4473,7 @@
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 79
 				}
@@ -4778,8 +4487,7 @@
 						"name": "conflictService",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Service"
 						},
 						"associationEndModifiers": [],
@@ -4789,8 +4497,7 @@
 						"name": "conflictCriteria",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Criteria"
 						},
 						"associationEndModifiers": [
@@ -4801,8 +4508,7 @@
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 80
 				}
@@ -4816,8 +4522,7 @@
 						"name": "service",
 						"direction": "SOURCE",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "Service"
 						},
 						"associationEndModifiers": [],
@@ -4827,8 +4532,7 @@
 						"name": "orderBys",
 						"direction": "TARGET",
 						"multiplicity": "ZERO_TO_MANY",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ServiceOrderBy"
 						},
 						"associationEndModifiers": [
@@ -4839,16 +4543,14 @@
 						"orderBys": [
 							{
 								"orderByDirection": "ASCENDING",
-								"thisMemberReferencePath":
-								{
+								"thisMemberReferencePath": {
 									"id": 203
 								}
 							}
 						]
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "AndCriteria",
 					"id": 81
 				}
@@ -4862,8 +4564,7 @@
 						"name": "serviceOrderBy",
 						"direction": "SOURCE",
 						"multiplicity": "ZERO_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ServiceOrderBy"
 						},
 						"associationEndModifiers": [],
@@ -4873,16 +4574,14 @@
 						"name": "thisMemberReferencePath",
 						"direction": "TARGET",
 						"multiplicity": "ONE_TO_ONE",
-						"resultType":
-						{
+						"resultType": {
 							"name": "ThisMemberReferencePath"
 						},
 						"associationEndModifiers": [],
 						"orderBys": []
 					}
 				],
-				"criteria":
-				{
+				"criteria": {
 					"__typename": "OperatorCriteria",
 					"id": 86
 				}
@@ -4891,8 +4590,7 @@
 				"__typename": "NamedProjection",
 				"name": "EnumerationLiteralProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 1
 				}
 			},
@@ -4900,8 +4598,7 @@
 				"__typename": "NamedProjection",
 				"name": "EnumerationProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 2
 				}
 			},
@@ -4909,8 +4606,7 @@
 				"__typename": "NamedProjection",
 				"name": "PackageableElementProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 3
 				}
 			},
@@ -4918,8 +4614,7 @@
 				"__typename": "NamedProjection",
 				"name": "ClassifierModifierProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 4
 				}
 			},
@@ -4927,8 +4622,7 @@
 				"__typename": "NamedProjection",
 				"name": "ClassifierInterfaceMappingProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 5
 				}
 			},
@@ -4936,8 +4630,7 @@
 				"__typename": "NamedProjection",
 				"name": "ParameterizedPropertyProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 6
 				}
 			},
@@ -4945,8 +4638,7 @@
 				"__typename": "NamedProjection",
 				"name": "ParameterizedPropertyOrderingProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 7
 				}
 			},
@@ -4954,8 +4646,7 @@
 				"__typename": "NamedProjection",
 				"name": "ProjectionElementProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 8
 				}
 			},
@@ -4963,8 +4654,7 @@
 				"__typename": "NamedProjection",
 				"name": "NamedProjectionProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 9
 				}
 			},
@@ -4972,8 +4662,7 @@
 				"__typename": "NamedProjection",
 				"name": "ServiceGroupProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 10
 				}
 			},
@@ -4981,8 +4670,7 @@
 				"__typename": "NamedProjection",
 				"name": "UrlProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 11
 				}
 			},
@@ -4990,8 +4678,7 @@
 				"__typename": "NamedProjection",
 				"name": "ParameterProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 12
 				}
 			},
@@ -4999,8 +4686,7 @@
 				"__typename": "NamedProjection",
 				"name": "UrlParameterProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 13
 				}
 			},
@@ -5008,8 +4694,7 @@
 				"__typename": "NamedProjection",
 				"name": "ServiceProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 14
 				}
 			},
@@ -5017,8 +4702,7 @@
 				"__typename": "NamedProjection",
 				"name": "ServiceOrderByProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 15
 				}
 			},
@@ -5026,8 +4710,7 @@
 				"__typename": "NamedProjection",
 				"name": "InterfaceProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 16
 				}
 			},
@@ -5035,8 +4718,7 @@
 				"__typename": "NamedProjection",
 				"name": "NumericPropertyValidationProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 17
 				}
 			},
@@ -5044,8 +4726,7 @@
 				"__typename": "NamedProjection",
 				"name": "DataTypePropertyProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 18
 				}
 			},
@@ -5053,8 +4734,7 @@
 				"__typename": "NamedProjection",
 				"name": "KlassProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 19
 				}
 			},
@@ -5062,8 +4742,7 @@
 				"__typename": "NamedProjection",
 				"name": "ClassifierProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 20
 				}
 			},
@@ -5071,8 +4750,7 @@
 				"__typename": "NamedProjection",
 				"name": "ThisMemberReferencePathProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 21
 				}
 			},
@@ -5080,8 +4758,7 @@
 				"__typename": "NamedProjection",
 				"name": "AssociationEndModifierProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 22
 				}
 			},
@@ -5089,8 +4766,7 @@
 				"__typename": "NamedProjection",
 				"name": "AssociationEndOrderByProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 23
 				}
 			},
@@ -5098,8 +4774,7 @@
 				"__typename": "NamedProjection",
 				"name": "AssociationEndProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 24
 				}
 			},
@@ -5107,8 +4782,7 @@
 				"__typename": "NamedProjection",
 				"name": "MemberReferencePathAssociationEndMappingProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 25
 				}
 			},
@@ -5116,8 +4790,7 @@
 				"__typename": "NamedProjection",
 				"name": "ExpressionValueProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 26
 				}
 			},
@@ -5125,8 +4798,7 @@
 				"__typename": "NamedProjection",
 				"name": "MemberReferencePathProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 27
 				}
 			},
@@ -5134,8 +4806,7 @@
 				"__typename": "NamedProjection",
 				"name": "CriteriaProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 28
 				}
 			},
@@ -5143,8 +4814,7 @@
 				"__typename": "NamedProjection",
 				"name": "AssociationProjection",
 				"packageName": "klass.model.meta.domain",
-				"rootProjection":
-				{
+				"rootProjection": {
 					"id": 29
 				}
 			},
@@ -5152,8 +4822,7 @@
 				"__typename": "ServiceGroup",
 				"name": "PackageableElementResource",
 				"packageName": "klass.model.meta.domain",
-				"owningClass":
-				{
+				"owningClass": {
 					"name": "PackageableElement"
 				},
 				"urls": [
@@ -5162,8 +4831,7 @@
 						"parameters": [
 							{
 								"type": "PATH",
-								"parameter":
-								{
+								"parameter": {
 									"__typename": "PrimitiveParameter",
 									"id": 1,
 									"name": "name",
@@ -5176,12 +4844,10 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "ONE",
-								"projection":
-								{
+								"projection": {
 									"name": "PackageableElementProjection"
 								},
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 87
 								},
 								"authorizeCriteria": null,
@@ -5193,8 +4859,7 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 88
 								},
 								"authorizeCriteria": null,
@@ -5206,8 +4871,7 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 89
 								},
 								"authorizeCriteria": null,
@@ -5224,12 +4888,10 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
-								"projection":
-								{
+								"projection": {
 									"name": "PackageableElementProjection"
 								},
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 90
 								},
 								"authorizeCriteria": null,
@@ -5241,8 +4903,7 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 91
 								},
 								"authorizeCriteria": null,
@@ -5254,8 +4915,7 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 92
 								},
 								"authorizeCriteria": null,
@@ -5271,8 +4931,7 @@
 				"__typename": "ServiceGroup",
 				"name": "EnumerationResource",
 				"packageName": "klass.model.meta.domain",
-				"owningClass":
-				{
+				"owningClass": {
 					"name": "Enumeration"
 				},
 				"urls": [
@@ -5281,8 +4940,7 @@
 						"parameters": [
 							{
 								"type": "PATH",
-								"parameter":
-								{
+								"parameter": {
 									"__typename": "PrimitiveParameter",
 									"id": 2,
 									"name": "name",
@@ -5295,12 +4953,10 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "ONE",
-								"projection":
-								{
+								"projection": {
 									"name": "EnumerationProjection"
 								},
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 93
 								},
 								"authorizeCriteria": null,
@@ -5312,8 +4968,7 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 94
 								},
 								"authorizeCriteria": null,
@@ -5325,8 +4980,7 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 95
 								},
 								"authorizeCriteria": null,
@@ -5343,12 +4997,10 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
-								"projection":
-								{
+								"projection": {
 									"name": "EnumerationProjection"
 								},
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 96
 								},
 								"authorizeCriteria": null,
@@ -5360,8 +5012,7 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 97
 								},
 								"authorizeCriteria": null,
@@ -5373,8 +5024,7 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 98
 								},
 								"authorizeCriteria": null,
@@ -5390,8 +5040,7 @@
 				"__typename": "ServiceGroup",
 				"name": "InterfaceResource",
 				"packageName": "klass.model.meta.domain",
-				"owningClass":
-				{
+				"owningClass": {
 					"name": "Interface"
 				},
 				"urls": [
@@ -5400,8 +5049,7 @@
 						"parameters": [
 							{
 								"type": "PATH",
-								"parameter":
-								{
+								"parameter": {
 									"__typename": "PrimitiveParameter",
 									"id": 3,
 									"name": "name",
@@ -5414,12 +5062,10 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "ONE",
-								"projection":
-								{
+								"projection": {
 									"name": "InterfaceProjection"
 								},
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 99
 								},
 								"authorizeCriteria": null,
@@ -5431,8 +5077,7 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 100
 								},
 								"authorizeCriteria": null,
@@ -5444,8 +5089,7 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 101
 								},
 								"authorizeCriteria": null,
@@ -5462,12 +5106,10 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
-								"projection":
-								{
+								"projection": {
 									"name": "InterfaceProjection"
 								},
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 102
 								},
 								"authorizeCriteria": null,
@@ -5479,8 +5121,7 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 103
 								},
 								"authorizeCriteria": null,
@@ -5492,8 +5133,7 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 104
 								},
 								"authorizeCriteria": null,
@@ -5509,8 +5149,7 @@
 				"__typename": "ServiceGroup",
 				"name": "KlassResource",
 				"packageName": "klass.model.meta.domain",
-				"owningClass":
-				{
+				"owningClass": {
 					"name": "Klass"
 				},
 				"urls": [
@@ -5519,8 +5158,7 @@
 						"parameters": [
 							{
 								"type": "PATH",
-								"parameter":
-								{
+								"parameter": {
 									"__typename": "PrimitiveParameter",
 									"id": 4,
 									"name": "name",
@@ -5533,12 +5171,10 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "ONE",
-								"projection":
-								{
+								"projection": {
 									"name": "KlassProjection"
 								},
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 105
 								},
 								"authorizeCriteria": null,
@@ -5550,8 +5186,7 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 106
 								},
 								"authorizeCriteria": null,
@@ -5563,8 +5198,7 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 107
 								},
 								"authorizeCriteria": null,
@@ -5581,12 +5215,10 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
-								"projection":
-								{
+								"projection": {
 									"name": "KlassProjection"
 								},
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 108
 								},
 								"authorizeCriteria": null,
@@ -5598,8 +5230,7 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 109
 								},
 								"authorizeCriteria": null,
@@ -5611,8 +5242,7 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 110
 								},
 								"authorizeCriteria": null,
@@ -5628,8 +5258,7 @@
 				"__typename": "ServiceGroup",
 				"name": "ClassifierResource",
 				"packageName": "klass.model.meta.domain",
-				"owningClass":
-				{
+				"owningClass": {
 					"name": "Classifier"
 				},
 				"urls": [
@@ -5638,8 +5267,7 @@
 						"parameters": [
 							{
 								"type": "PATH",
-								"parameter":
-								{
+								"parameter": {
 									"__typename": "PrimitiveParameter",
 									"id": 5,
 									"name": "name",
@@ -5652,12 +5280,10 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "ONE",
-								"projection":
-								{
+								"projection": {
 									"name": "ClassifierProjection"
 								},
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 111
 								},
 								"authorizeCriteria": null,
@@ -5669,8 +5295,7 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 112
 								},
 								"authorizeCriteria": null,
@@ -5682,8 +5307,7 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 113
 								},
 								"authorizeCriteria": null,
@@ -5700,12 +5324,10 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
-								"projection":
-								{
+								"projection": {
 									"name": "ClassifierProjection"
 								},
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 114
 								},
 								"authorizeCriteria": null,
@@ -5717,8 +5339,7 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 115
 								},
 								"authorizeCriteria": null,
@@ -5730,8 +5351,7 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 116
 								},
 								"authorizeCriteria": null,
@@ -5747,8 +5367,7 @@
 				"__typename": "ServiceGroup",
 				"name": "AssociationResource",
 				"packageName": "klass.model.meta.domain",
-				"owningClass":
-				{
+				"owningClass": {
 					"name": "Association"
 				},
 				"urls": [
@@ -5757,8 +5376,7 @@
 						"parameters": [
 							{
 								"type": "PATH",
-								"parameter":
-								{
+								"parameter": {
 									"__typename": "PrimitiveParameter",
 									"id": 6,
 									"name": "name",
@@ -5771,12 +5389,10 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "ONE",
-								"projection":
-								{
+								"projection": {
 									"name": "AssociationProjection"
 								},
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 117
 								},
 								"authorizeCriteria": null,
@@ -5788,8 +5404,7 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 118
 								},
 								"authorizeCriteria": null,
@@ -5801,8 +5416,7 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 119
 								},
 								"authorizeCriteria": null,
@@ -5819,12 +5433,10 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
-								"projection":
-								{
+								"projection": {
 									"name": "AssociationProjection"
 								},
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 120
 								},
 								"authorizeCriteria": null,
@@ -5836,8 +5448,7 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 121
 								},
 								"authorizeCriteria": null,
@@ -5849,8 +5460,7 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 122
 								},
 								"authorizeCriteria": null,
@@ -5866,8 +5476,7 @@
 				"__typename": "ServiceGroup",
 				"name": "NamedProjectionResource",
 				"packageName": "klass.model.meta.domain",
-				"owningClass":
-				{
+				"owningClass": {
 					"name": "NamedProjection"
 				},
 				"urls": [
@@ -5876,8 +5485,7 @@
 						"parameters": [
 							{
 								"type": "PATH",
-								"parameter":
-								{
+								"parameter": {
 									"__typename": "PrimitiveParameter",
 									"id": 7,
 									"name": "name",
@@ -5890,12 +5498,10 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "ONE",
-								"projection":
-								{
+								"projection": {
 									"name": "NamedProjectionProjection"
 								},
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 123
 								},
 								"authorizeCriteria": null,
@@ -5907,8 +5513,7 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 124
 								},
 								"authorizeCriteria": null,
@@ -5920,8 +5525,7 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 125
 								},
 								"authorizeCriteria": null,
@@ -5938,12 +5542,10 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
-								"projection":
-								{
+								"projection": {
 									"name": "NamedProjectionProjection"
 								},
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 126
 								},
 								"authorizeCriteria": null,
@@ -5955,8 +5557,7 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 127
 								},
 								"authorizeCriteria": null,
@@ -5968,8 +5569,7 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 128
 								},
 								"authorizeCriteria": null,
@@ -5985,8 +5585,7 @@
 				"__typename": "ServiceGroup",
 				"name": "ServiceGroupResource",
 				"packageName": "klass.model.meta.domain",
-				"owningClass":
-				{
+				"owningClass": {
 					"name": "ServiceGroup"
 				},
 				"urls": [
@@ -5995,8 +5594,7 @@
 						"parameters": [
 							{
 								"type": "PATH",
-								"parameter":
-								{
+								"parameter": {
 									"__typename": "PrimitiveParameter",
 									"id": 8,
 									"name": "name",
@@ -6009,12 +5607,10 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "ONE",
-								"projection":
-								{
+								"projection": {
 									"name": "ServiceGroupProjection"
 								},
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 129
 								},
 								"authorizeCriteria": null,
@@ -6026,8 +5622,7 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 130
 								},
 								"authorizeCriteria": null,
@@ -6039,8 +5634,7 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 131
 								},
 								"authorizeCriteria": null,
@@ -6057,12 +5651,10 @@
 							{
 								"verb": "GET",
 								"serviceMultiplicity": "MANY",
-								"projection":
-								{
+								"projection": {
 									"name": "ServiceGroupProjection"
 								},
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 132
 								},
 								"authorizeCriteria": null,
@@ -6074,8 +5666,7 @@
 								"verb": "PUT",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 133
 								},
 								"authorizeCriteria": null,
@@ -6087,8 +5678,7 @@
 								"verb": "DELETE",
 								"serviceMultiplicity": "ONE",
 								"projection": null,
-								"queryCriteria":
-								{
+								"queryCriteria": {
 									"id": 134
 								},
 								"authorizeCriteria": null,

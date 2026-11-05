@@ -12,14 +12,12 @@
 	"optionalInstant": null,
 	"optionalLocalDate": null,
 	"optionalDerived": "cool.klass.xample.coverage.PropertiesOptional.getOptionalDerived",
-	"version":
-	{
+	"version": {
 		"systemFrom": "1999-12-31T23:59:00Z",
 		"systemTo": null,
 		"createdOn": "2000-01-01T00:00:00Z",
 		"number": 1,
-		"createdBy":
-		{
+		"createdBy": {
 			"userId": "User userId 2",
 			"systemFrom": "1999-12-31T23:59:00Z",
 			"systemTo": null,
@@ -27,8 +25,7 @@
 			"lastName": null,
 			"email": null
 		},
-		"lastUpdatedBy":
-		{
+		"lastUpdatedBy": {
 			"userId": "User userId 2",
 			"systemFrom": "1999-12-31T23:59:00Z",
 			"systemTo": null,
@@ -37,8 +34,7 @@
 			"email": null
 		}
 	},
-	"createdBy":
-	{
+	"createdBy": {
 		"userId": "User userId 2",
 		"systemFrom": "1999-12-31T23:59:00Z",
 		"systemTo": null,
@@ -46,8 +42,7 @@
 		"lastName": null,
 		"email": null
 	},
-	"lastUpdatedBy":
-	{
+	"lastUpdatedBy": {
 		"userId": "User userId 2",
 		"systemFrom": "1999-12-31T23:59:00Z",
 		"systemTo": null,

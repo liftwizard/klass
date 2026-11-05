@@ -7,8 +7,7 @@
 				"name": "enumeration",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Enumeration"
 				},
 				"associationEndModifiers": [],
@@ -18,8 +17,7 @@
 				"name": "enumerationLiterals",
 				"direction": "target",
 				"multiplicity": "1..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "EnumerationLiteral"
 				},
 				"associationEndModifiers": [
@@ -30,49 +28,39 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 387
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 1,
-				"klass":
-				{
+				"klass": {
 					"name": "Enumeration"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 2,
-				"klass":
-				{
+				"klass": {
 					"name": "EnumerationLiteral"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "EnumerationLiteral"
 					},
 					"name": "enumerationName"
@@ -88,8 +76,7 @@
 				"name": "subClassifier",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Classifier"
 				},
 				"associationEndModifiers": [],
@@ -99,8 +86,7 @@
 				"name": "superInterfaces",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ClassifierInterfaceMapping"
 				},
 				"associationEndModifiers": [
@@ -111,49 +97,39 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 388
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 3,
-				"klass":
-				{
+				"klass": {
 					"name": "Classifier"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 4,
-				"klass":
-				{
+				"klass": {
 					"name": "ClassifierInterfaceMapping"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ClassifierInterfaceMapping"
 					},
 					"name": "classifierName"
@@ -169,8 +145,7 @@
 				"name": "subClassifiers",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ClassifierInterfaceMapping"
 				},
 				"associationEndModifiers": [],
@@ -180,49 +155,39 @@
 				"name": "superInterface",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Interface"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 5,
-				"klass":
-				{
+				"klass": {
 					"name": "ClassifierInterfaceMapping"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ClassifierInterfaceMapping"
 					},
 					"name": "interfaceName"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 6,
-				"klass":
-				{
+				"klass": {
 					"name": "Interface"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
@@ -238,8 +203,7 @@
 				"name": "owningClassifier",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Classifier"
 				},
 				"associationEndModifiers": [],
@@ -249,8 +213,7 @@
 				"name": "classifierModifiers",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ClassifierModifier"
 				},
 				"associationEndModifiers": [
@@ -261,49 +224,39 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 389
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 7,
-				"klass":
-				{
+				"klass": {
 					"name": "Classifier"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 8,
-				"klass":
-				{
+				"klass": {
 					"name": "ClassifierModifier"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ClassifierModifier"
 					},
 					"name": "classifierName"
@@ -319,8 +272,7 @@
 				"name": "subClasses",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Klass"
 				},
 				"associationEndModifiers": [],
@@ -330,49 +282,39 @@
 				"name": "superClass",
 				"direction": "target",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Klass"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 9,
-				"klass":
-				{
+				"klass": {
 					"name": "Klass"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Klass"
 					},
 					"name": "superClassName"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 10,
-				"klass":
-				{
+				"klass": {
 					"name": "Klass"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
@@ -388,8 +330,7 @@
 				"name": "enumerationProperties",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "EnumerationProperty"
 				},
 				"associationEndModifiers": [],
@@ -399,49 +340,39 @@
 				"name": "enumeration",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Enumeration"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 11,
-				"klass":
-				{
+				"klass": {
 					"name": "EnumerationProperty"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "EnumerationProperty"
 					},
 					"name": "enumerationName"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 12,
-				"klass":
-				{
+				"klass": {
 					"name": "Enumeration"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
@@ -457,8 +388,7 @@
 				"name": "owningClassifier",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Classifier"
 				},
 				"associationEndModifiers": [],
@@ -468,8 +398,7 @@
 				"name": "dataTypeProperties",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "DataTypeProperty"
 				},
 				"associationEndModifiers": [
@@ -480,49 +409,39 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 390
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 13,
-				"klass":
-				{
+				"klass": {
 					"name": "Classifier"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 14,
-				"klass":
-				{
+				"klass": {
 					"name": "DataTypeProperty"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "DataTypeProperty"
 					},
 					"name": "classifierName"
@@ -538,8 +457,7 @@
 				"name": "dataTypeProperty",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "DataTypeProperty"
 				},
 				"associationEndModifiers": [],
@@ -549,8 +467,7 @@
 				"name": "minLengthValidation",
 				"direction": "target",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "MinLengthPropertyValidation"
 				},
 				"associationEndModifiers": [
@@ -561,85 +478,66 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 15,
-					"klass":
-					{
+					"klass": {
 						"name": "DataTypeProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "DataTypeProperty"
 						},
 						"name": "classifierName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 16,
-					"klass":
-					{
+					"klass": {
 						"name": "MinLengthPropertyValidation"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NumericPropertyValidation"
 						},
 						"name": "classifierName"
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 17,
-					"klass":
-					{
+					"klass": {
 						"name": "DataTypeProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NamedElement"
 						},
 						"name": "name"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 18,
-					"klass":
-					{
+					"klass": {
 						"name": "MinLengthPropertyValidation"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NumericPropertyValidation"
 						},
 						"name": "propertyName"
@@ -656,8 +554,7 @@
 				"name": "dataTypeProperty",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "DataTypeProperty"
 				},
 				"associationEndModifiers": [],
@@ -667,8 +564,7 @@
 				"name": "maxLengthValidation",
 				"direction": "target",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "MaxLengthPropertyValidation"
 				},
 				"associationEndModifiers": [
@@ -679,85 +575,66 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 19,
-					"klass":
-					{
+					"klass": {
 						"name": "DataTypeProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "DataTypeProperty"
 						},
 						"name": "classifierName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 20,
-					"klass":
-					{
+					"klass": {
 						"name": "MaxLengthPropertyValidation"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NumericPropertyValidation"
 						},
 						"name": "classifierName"
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 21,
-					"klass":
-					{
+					"klass": {
 						"name": "DataTypeProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NamedElement"
 						},
 						"name": "name"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 22,
-					"klass":
-					{
+					"klass": {
 						"name": "MaxLengthPropertyValidation"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NumericPropertyValidation"
 						},
 						"name": "propertyName"
@@ -774,8 +651,7 @@
 				"name": "primitiveProperty",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "PrimitiveProperty"
 				},
 				"associationEndModifiers": [],
@@ -785,8 +661,7 @@
 				"name": "minValidation",
 				"direction": "target",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "MinPropertyValidation"
 				},
 				"associationEndModifiers": [
@@ -797,85 +672,66 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 23,
-					"klass":
-					{
+					"klass": {
 						"name": "PrimitiveProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "DataTypeProperty"
 						},
 						"name": "classifierName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 24,
-					"klass":
-					{
+					"klass": {
 						"name": "MinPropertyValidation"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NumericPropertyValidation"
 						},
 						"name": "classifierName"
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 25,
-					"klass":
-					{
+					"klass": {
 						"name": "PrimitiveProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NamedElement"
 						},
 						"name": "name"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 26,
-					"klass":
-					{
+					"klass": {
 						"name": "MinPropertyValidation"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NumericPropertyValidation"
 						},
 						"name": "propertyName"
@@ -892,8 +748,7 @@
 				"name": "primitiveProperty",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "PrimitiveProperty"
 				},
 				"associationEndModifiers": [],
@@ -903,8 +758,7 @@
 				"name": "maxValidation",
 				"direction": "target",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "MaxPropertyValidation"
 				},
 				"associationEndModifiers": [
@@ -915,85 +769,66 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 27,
-					"klass":
-					{
+					"klass": {
 						"name": "PrimitiveProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "DataTypeProperty"
 						},
 						"name": "classifierName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 28,
-					"klass":
-					{
+					"klass": {
 						"name": "MaxPropertyValidation"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NumericPropertyValidation"
 						},
 						"name": "classifierName"
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 29,
-					"klass":
-					{
+					"klass": {
 						"name": "PrimitiveProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NamedElement"
 						},
 						"name": "name"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 30,
-					"klass":
-					{
+					"klass": {
 						"name": "MaxPropertyValidation"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NumericPropertyValidation"
 						},
 						"name": "propertyName"
@@ -1010,8 +845,7 @@
 				"name": "dataTypeProperty",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "DataTypeProperty"
 				},
 				"associationEndModifiers": [],
@@ -1021,8 +855,7 @@
 				"name": "propertyModifiers",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "PropertyModifier"
 				},
 				"associationEndModifiers": [
@@ -1033,93 +866,73 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 391
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 31,
-					"klass":
-					{
+					"klass": {
 						"name": "DataTypeProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "DataTypeProperty"
 						},
 						"name": "classifierName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 32,
-					"klass":
-					{
+					"klass": {
 						"name": "PropertyModifier"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "PropertyModifier"
 						},
 						"name": "classifierName"
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 33,
-					"klass":
-					{
+					"klass": {
 						"name": "DataTypeProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NamedElement"
 						},
 						"name": "name"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 34,
-					"klass":
-					{
+					"klass": {
 						"name": "PropertyModifier"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "PropertyModifier"
 						},
 						"name": "propertyName"
@@ -1136,8 +949,7 @@
 				"name": "parameterReferences",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ParameterReference"
 				},
 				"associationEndModifiers": [],
@@ -1147,49 +959,39 @@
 				"name": "parameter",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Parameter"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 35,
-				"klass":
-				{
+				"klass": {
 					"name": "ParameterReference"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ParameterReference"
 					},
 					"name": "parameterId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 36,
-				"klass":
-				{
+				"klass": {
 					"name": "Parameter"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Parameter"
 					},
 					"name": "id"
@@ -1205,8 +1007,7 @@
 				"name": "owningAssociation",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Association"
 				},
 				"associationEndModifiers": [],
@@ -1216,8 +1017,7 @@
 				"name": "associationEnds",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "AssociationEnd"
 				},
 				"associationEndModifiers": [
@@ -1228,49 +1028,39 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 392
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 37,
-				"klass":
-				{
+				"klass": {
 					"name": "Association"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 38,
-				"klass":
-				{
+				"klass": {
 					"name": "AssociationEnd"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "AssociationEnd"
 					},
 					"name": "associationName"
@@ -1286,8 +1076,7 @@
 				"name": "owningClass",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Klass"
 				},
 				"associationEndModifiers": [],
@@ -1297,49 +1086,39 @@
 				"name": "associationEnds",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "AssociationEnd"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 39,
-				"klass":
-				{
+				"klass": {
 					"name": "Klass"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 40,
-				"klass":
-				{
+				"klass": {
 					"name": "AssociationEnd"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "AssociationEnd"
 					},
 					"name": "owningClassName"
@@ -1355,8 +1134,7 @@
 				"name": "associationEndsResultTypeOf",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "AssociationEnd"
 				},
 				"associationEndModifiers": [],
@@ -1366,49 +1144,39 @@
 				"name": "resultType",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Klass"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 41,
-				"klass":
-				{
+				"klass": {
 					"name": "AssociationEnd"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "AssociationEnd"
 					},
 					"name": "resultTypeName"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 42,
-				"klass":
-				{
+				"klass": {
 					"name": "Klass"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
@@ -1424,8 +1192,7 @@
 				"name": "associationEnd",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "AssociationEnd"
 				},
 				"associationEndModifiers": [],
@@ -1435,8 +1202,7 @@
 				"name": "associationEndModifiers",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "AssociationEndModifier"
 				},
 				"associationEndModifiers": [
@@ -1447,93 +1213,73 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 393
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 43,
-					"klass":
-					{
+					"klass": {
 						"name": "AssociationEnd"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "AssociationEnd"
 						},
 						"name": "owningClassName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 44,
-					"klass":
-					{
+					"klass": {
 						"name": "AssociationEndModifier"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "AssociationEndModifier"
 						},
 						"name": "owningClassName"
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 45,
-					"klass":
-					{
+					"klass": {
 						"name": "AssociationEnd"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NamedElement"
 						},
 						"name": "name"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 46,
-					"klass":
-					{
+					"klass": {
 						"name": "AssociationEndModifier"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "AssociationEndModifier"
 						},
 						"name": "associationEndName"
@@ -1550,8 +1296,7 @@
 				"name": "association",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Association"
 				},
 				"associationEndModifiers": [],
@@ -1561,8 +1306,7 @@
 				"name": "criteria",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Criteria"
 				},
 				"associationEndModifiers": [
@@ -1573,41 +1317,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 47,
-				"klass":
-				{
+				"klass": {
 					"name": "Association"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Association"
 					},
 					"name": "criteriaId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 48,
-				"klass":
-				{
+				"klass": {
 					"name": "Criteria"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Criteria"
 					},
 					"name": "id"
@@ -1623,8 +1358,7 @@
 				"name": "operatorCriteriaSourceOf",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "OperatorCriteria"
 				},
 				"associationEndModifiers": [],
@@ -1634,8 +1368,7 @@
 				"name": "sourceExpressionValue",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ExpressionValue"
 				},
 				"associationEndModifiers": [
@@ -1646,41 +1379,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 49,
-				"klass":
-				{
+				"klass": {
 					"name": "OperatorCriteria"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "OperatorCriteria"
 					},
 					"name": "sourceExpressionId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 50,
-				"klass":
-				{
+				"klass": {
 					"name": "ExpressionValue"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ExpressionValue"
 					},
 					"name": "id"
@@ -1696,8 +1420,7 @@
 				"name": "operatorCriteriaTargetOf",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "OperatorCriteria"
 				},
 				"associationEndModifiers": [],
@@ -1707,8 +1430,7 @@
 				"name": "targetExpressionValue",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ExpressionValue"
 				},
 				"associationEndModifiers": [
@@ -1719,41 +1441,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 51,
-				"klass":
-				{
+				"klass": {
 					"name": "OperatorCriteria"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "OperatorCriteria"
 					},
 					"name": "targetExpressionId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 52,
-				"klass":
-				{
+				"klass": {
 					"name": "ExpressionValue"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ExpressionValue"
 					},
 					"name": "id"
@@ -1769,8 +1482,7 @@
 				"name": "edgePointCriteria",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "EdgePointCriteria"
 				},
 				"associationEndModifiers": [],
@@ -1780,49 +1492,39 @@
 				"name": "memberReferencePath",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "MemberReferencePath"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 53,
-				"klass":
-				{
+				"klass": {
 					"name": "EdgePointCriteria"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "EdgePointCriteria"
 					},
 					"name": "memberReferencePathId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 54,
-				"klass":
-				{
+				"klass": {
 					"name": "MemberReferencePath"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ExpressionValue"
 					},
 					"name": "id"
@@ -1838,8 +1540,7 @@
 				"name": "enumerationParameters",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "EnumerationParameter"
 				},
 				"associationEndModifiers": [],
@@ -1849,49 +1550,39 @@
 				"name": "enumeration",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Enumeration"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 55,
-				"klass":
-				{
+				"klass": {
 					"name": "EnumerationParameter"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "EnumerationParameter"
 					},
 					"name": "enumerationName"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 56,
-				"klass":
-				{
+				"klass": {
 					"name": "Enumeration"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
@@ -1907,8 +1598,7 @@
 				"name": "memberReferencePaths",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "MemberReferencePath"
 				},
 				"associationEndModifiers": [],
@@ -1918,49 +1608,39 @@
 				"name": "klass",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Klass"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 57,
-				"klass":
-				{
+				"klass": {
 					"name": "MemberReferencePath"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "MemberReferencePath"
 					},
 					"name": "className"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 58,
-				"klass":
-				{
+				"klass": {
 					"name": "Klass"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
@@ -1976,8 +1656,7 @@
 				"name": "memberReferencePath",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "MemberReferencePath"
 				},
 				"associationEndModifiers": [],
@@ -1987,8 +1666,7 @@
 				"name": "associationEnds",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "MemberReferencePathAssociationEndMapping"
 				},
 				"associationEndModifiers": [
@@ -1999,49 +1677,39 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 394
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 59,
-				"klass":
-				{
+				"klass": {
 					"name": "MemberReferencePath"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ExpressionValue"
 					},
 					"name": "id"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 60,
-				"klass":
-				{
+				"klass": {
 					"name": "MemberReferencePathAssociationEndMapping"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "MemberReferencePathAssociationEndMapping"
 					},
 					"name": "memberReferencePathId"
@@ -2057,8 +1725,7 @@
 				"name": "memberReferencePaths",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "MemberReferencePathAssociationEndMapping"
 				},
 				"associationEndModifiers": [],
@@ -2068,93 +1735,73 @@
 				"name": "associationEnd",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "AssociationEnd"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 61,
-					"klass":
-					{
+					"klass": {
 						"name": "MemberReferencePathAssociationEndMapping"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "MemberReferencePathAssociationEndMapping"
 						},
 						"name": "associationOwningClassName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 62,
-					"klass":
-					{
+					"klass": {
 						"name": "AssociationEnd"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "AssociationEnd"
 						},
 						"name": "owningClassName"
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 63,
-					"klass":
-					{
+					"klass": {
 						"name": "MemberReferencePathAssociationEndMapping"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "MemberReferencePathAssociationEndMapping"
 						},
 						"name": "associationEndName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 64,
-					"klass":
-					{
+					"klass": {
 						"name": "AssociationEnd"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NamedElement"
 						},
 						"name": "name"
@@ -2171,8 +1818,7 @@
 				"name": "memberReferencePaths",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "MemberReferencePath"
 				},
 				"associationEndModifiers": [],
@@ -2182,93 +1828,73 @@
 				"name": "dataTypeProperty",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "DataTypeProperty"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 65,
-					"klass":
-					{
+					"klass": {
 						"name": "MemberReferencePath"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "MemberReferencePath"
 						},
 						"name": "propertyClassName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 66,
-					"klass":
-					{
+					"klass": {
 						"name": "DataTypeProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "DataTypeProperty"
 						},
 						"name": "classifierName"
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 67,
-					"klass":
-					{
+					"klass": {
 						"name": "MemberReferencePath"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "MemberReferencePath"
 						},
 						"name": "propertyName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 68,
-					"klass":
-					{
+					"klass": {
 						"name": "DataTypeProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NamedElement"
 						},
 						"name": "name"
@@ -2285,8 +1911,7 @@
 				"name": "ownerOfLeftCriteria",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "BinaryCriteria"
 				},
 				"associationEndModifiers": [],
@@ -2296,8 +1921,7 @@
 				"name": "left",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Criteria"
 				},
 				"associationEndModifiers": [
@@ -2308,41 +1932,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 69,
-				"klass":
-				{
+				"klass": {
 					"name": "BinaryCriteria"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "BinaryCriteria"
 					},
 					"name": "leftId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 70,
-				"klass":
-				{
+				"klass": {
 					"name": "Criteria"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Criteria"
 					},
 					"name": "id"
@@ -2358,8 +1973,7 @@
 				"name": "ownerOfRightCriteria",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "BinaryCriteria"
 				},
 				"associationEndModifiers": [],
@@ -2369,8 +1983,7 @@
 				"name": "right",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Criteria"
 				},
 				"associationEndModifiers": [
@@ -2381,41 +1994,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 71,
-				"klass":
-				{
+				"klass": {
 					"name": "BinaryCriteria"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "BinaryCriteria"
 					},
 					"name": "rightId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 72,
-				"klass":
-				{
+				"klass": {
 					"name": "Criteria"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Criteria"
 					},
 					"name": "id"
@@ -2431,8 +2035,7 @@
 				"name": "owningClass",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Klass"
 				},
 				"associationEndModifiers": [],
@@ -2442,8 +2045,7 @@
 				"name": "parameterizedProperties",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ParameterizedProperty"
 				},
 				"associationEndModifiers": [
@@ -2454,49 +2056,39 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 395
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 73,
-				"klass":
-				{
+				"klass": {
 					"name": "Klass"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 74,
-				"klass":
-				{
+				"klass": {
 					"name": "ParameterizedProperty"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ParameterizedProperty"
 					},
 					"name": "owningClassName"
@@ -2512,8 +2104,7 @@
 				"name": "associationEnd",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "AssociationEnd"
 				},
 				"associationEndModifiers": [],
@@ -2523,8 +2114,7 @@
 				"name": "orderBys",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "AssociationEndOrderBy"
 				},
 				"associationEndModifiers": [
@@ -2535,93 +2125,73 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 396
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 75,
-					"klass":
-					{
+					"klass": {
 						"name": "AssociationEnd"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "AssociationEnd"
 						},
 						"name": "owningClassName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 76,
-					"klass":
-					{
+					"klass": {
 						"name": "AssociationEndOrderBy"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "AssociationEndOrderBy"
 						},
 						"name": "associationEndClassName"
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 77,
-					"klass":
-					{
+					"klass": {
 						"name": "AssociationEnd"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NamedElement"
 						},
 						"name": "name"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 78,
-					"klass":
-					{
+					"klass": {
 						"name": "AssociationEndOrderBy"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "AssociationEndOrderBy"
 						},
 						"name": "associationEndName"
@@ -2638,8 +2208,7 @@
 				"name": "associationEndOrderBy",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "AssociationEndOrderBy"
 				},
 				"associationEndModifiers": [],
@@ -2649,49 +2218,39 @@
 				"name": "thisMemberReferencePath",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ThisMemberReferencePath"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 79,
-				"klass":
-				{
+				"klass": {
 					"name": "AssociationEndOrderBy"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "AssociationEndOrderBy"
 					},
 					"name": "thisMemberReferencePathId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 80,
-				"klass":
-				{
+				"klass": {
 					"name": "ThisMemberReferencePath"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ExpressionValue"
 					},
 					"name": "id"
@@ -2707,8 +2266,7 @@
 				"name": "parameterizedPropertiesResultTypeOf",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ParameterizedProperty"
 				},
 				"associationEndModifiers": [],
@@ -2718,49 +2276,39 @@
 				"name": "resultType",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Klass"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 81,
-				"klass":
-				{
+				"klass": {
 					"name": "ParameterizedProperty"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ParameterizedProperty"
 					},
 					"name": "resultTypeName"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 82,
-				"klass":
-				{
+				"klass": {
 					"name": "Klass"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
@@ -2776,8 +2324,7 @@
 				"name": "parameterizedProperty",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ParameterizedProperty"
 				},
 				"associationEndModifiers": [],
@@ -2787,8 +2334,7 @@
 				"name": "parameterizedPropertyOrderings",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ParameterizedPropertyOrdering"
 				},
 				"associationEndModifiers": [
@@ -2799,93 +2345,73 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 397
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 83,
-					"klass":
-					{
+					"klass": {
 						"name": "ParameterizedProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "ParameterizedProperty"
 						},
 						"name": "owningClassName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 84,
-					"klass":
-					{
+					"klass": {
 						"name": "ParameterizedPropertyOrdering"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "ParameterizedPropertyOrdering"
 						},
 						"name": "owningClassName"
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 85,
-					"klass":
-					{
+					"klass": {
 						"name": "ParameterizedProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NamedElement"
 						},
 						"name": "name"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 86,
-					"klass":
-					{
+					"klass": {
 						"name": "ParameterizedPropertyOrdering"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "ParameterizedPropertyOrdering"
 						},
 						"name": "name"
@@ -2902,8 +2428,7 @@
 				"name": "parameterizedProperty",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ParameterizedProperty"
 				},
 				"associationEndModifiers": [],
@@ -2913,8 +2438,7 @@
 				"name": "parameters",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ParameterizedPropertyParameter"
 				},
 				"associationEndModifiers": [
@@ -2925,93 +2449,73 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 398
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 87,
-					"klass":
-					{
+					"klass": {
 						"name": "ParameterizedProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "ParameterizedProperty"
 						},
 						"name": "owningClassName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 88,
-					"klass":
-					{
+					"klass": {
 						"name": "ParameterizedPropertyParameter"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "ParameterizedPropertyParameter"
 						},
 						"name": "classifierName"
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 89,
-					"klass":
-					{
+					"klass": {
 						"name": "ParameterizedProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NamedElement"
 						},
 						"name": "name"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 90,
-					"klass":
-					{
+					"klass": {
 						"name": "ParameterizedPropertyParameter"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "ParameterizedPropertyParameter"
 						},
 						"name": "parameterizedPropertyName"
@@ -3028,8 +2532,7 @@
 				"name": "namedProjection",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "NamedProjection"
 				},
 				"associationEndModifiers": [],
@@ -3039,8 +2542,7 @@
 				"name": "rootProjection",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "RootProjection"
 				},
 				"associationEndModifiers": [
@@ -3051,41 +2553,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 91,
-				"klass":
-				{
+				"klass": {
 					"name": "NamedProjection"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 92,
-				"klass":
-				{
+				"klass": {
 					"name": "RootProjection"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "RootProjection"
 					},
 					"name": "namedProjectionName"
@@ -3101,8 +2594,7 @@
 				"name": "parent",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ProjectionElement"
 				},
 				"associationEndModifiers": [],
@@ -3112,8 +2604,7 @@
 				"name": "children",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ProjectionElement"
 				},
 				"associationEndModifiers": [
@@ -3124,49 +2615,39 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 399
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 93,
-				"klass":
-				{
+				"klass": {
 					"name": "ProjectionElement"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ProjectionElement"
 					},
 					"name": "id"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 94,
-				"klass":
-				{
+				"klass": {
 					"name": "ProjectionElement"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ProjectionElement"
 					},
 					"name": "parentId"
@@ -3182,8 +2663,7 @@
 				"name": "projectionsWithAssociationEnd",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ProjectionWithAssociationEnd"
 				},
 				"associationEndModifiers": [],
@@ -3193,93 +2673,73 @@
 				"name": "associationEnd",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "AssociationEnd"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 95,
-					"klass":
-					{
+					"klass": {
 						"name": "ProjectionWithAssociationEnd"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "ProjectionWithAssociationEnd"
 						},
 						"name": "associationEndClass"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 96,
-					"klass":
-					{
+					"klass": {
 						"name": "AssociationEnd"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "AssociationEnd"
 						},
 						"name": "owningClassName"
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 97,
-					"klass":
-					{
+					"klass": {
 						"name": "ProjectionWithAssociationEnd"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "ProjectionWithAssociationEnd"
 						},
 						"name": "associationEndName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 98,
-					"klass":
-					{
+					"klass": {
 						"name": "AssociationEnd"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NamedElement"
 						},
 						"name": "name"
@@ -3296,8 +2756,7 @@
 				"name": "projectionDataTypeProperties",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ProjectionDataTypeProperty"
 				},
 				"associationEndModifiers": [],
@@ -3307,93 +2766,73 @@
 				"name": "dataTypeProperty",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "DataTypeProperty"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 99,
-					"klass":
-					{
+					"klass": {
 						"name": "ProjectionDataTypeProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "ProjectionDataTypeProperty"
 						},
 						"name": "propertyClassifierName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 100,
-					"klass":
-					{
+					"klass": {
 						"name": "DataTypeProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "DataTypeProperty"
 						},
 						"name": "classifierName"
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 101,
-					"klass":
-					{
+					"klass": {
 						"name": "ProjectionDataTypeProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "ProjectionDataTypeProperty"
 						},
 						"name": "propertyName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 102,
-					"klass":
-					{
+					"klass": {
 						"name": "DataTypeProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "NamedElement"
 						},
 						"name": "name"
@@ -3410,8 +2849,7 @@
 				"name": "projections",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "RootProjection"
 				},
 				"associationEndModifiers": [],
@@ -3421,49 +2859,39 @@
 				"name": "classifier",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Classifier"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 103,
-				"klass":
-				{
+				"klass": {
 					"name": "RootProjection"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "RootProjection"
 					},
 					"name": "classifierName"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 104,
-				"klass":
-				{
+				"klass": {
 					"name": "Classifier"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
@@ -3479,8 +2907,7 @@
 				"name": "projectionProjectionReferences",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ProjectionProjectionReference"
 				},
 				"associationEndModifiers": [],
@@ -3490,49 +2917,39 @@
 				"name": "projection",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "NamedProjection"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 105,
-				"klass":
-				{
+				"klass": {
 					"name": "ProjectionProjectionReference"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ProjectionProjectionReference"
 					},
 					"name": "projectionName"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 106,
-				"klass":
-				{
+				"klass": {
 					"name": "NamedProjection"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
@@ -3548,8 +2965,7 @@
 				"name": "serviceGroups",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ServiceGroup"
 				},
 				"associationEndModifiers": [],
@@ -3559,49 +2975,39 @@
 				"name": "owningClass",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Klass"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 107,
-				"klass":
-				{
+				"klass": {
 					"name": "ServiceGroup"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ServiceGroup"
 					},
 					"name": "className"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 108,
-				"klass":
-				{
+				"klass": {
 					"name": "Klass"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
@@ -3617,8 +3023,7 @@
 				"name": "url",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Url"
 				},
 				"associationEndModifiers": [],
@@ -3628,8 +3033,7 @@
 				"name": "parameters",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "UrlParameter"
 				},
 				"associationEndModifiers": [
@@ -3640,93 +3044,73 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 400
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 109,
-					"klass":
-					{
+					"klass": {
 						"name": "Url"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "Url"
 						},
 						"name": "serviceGroupName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 110,
-					"klass":
-					{
+					"klass": {
 						"name": "UrlParameter"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "UrlParameter"
 						},
 						"name": "serviceGroupName"
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 111,
-					"klass":
-					{
+					"klass": {
 						"name": "Url"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "Url"
 						},
 						"name": "url"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 112,
-					"klass":
-					{
+					"klass": {
 						"name": "UrlParameter"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "UrlParameter"
 						},
 						"name": "urlString"
@@ -3743,8 +3127,7 @@
 				"name": "urlParameter",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "UrlParameter"
 				},
 				"associationEndModifiers": [],
@@ -3754,8 +3137,7 @@
 				"name": "parameter",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Parameter"
 				},
 				"associationEndModifiers": [
@@ -3766,41 +3148,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 113,
-				"klass":
-				{
+				"klass": {
 					"name": "UrlParameter"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "UrlParameter"
 					},
 					"name": "parameterId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 114,
-				"klass":
-				{
+				"klass": {
 					"name": "Parameter"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Parameter"
 					},
 					"name": "id"
@@ -3816,8 +3189,7 @@
 				"name": "serviceGroup",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ServiceGroup"
 				},
 				"associationEndModifiers": [],
@@ -3827,8 +3199,7 @@
 				"name": "urls",
 				"direction": "target",
 				"multiplicity": "1..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Url"
 				},
 				"associationEndModifiers": [
@@ -3839,49 +3210,39 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 401
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 115,
-				"klass":
-				{
+				"klass": {
 					"name": "ServiceGroup"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 116,
-				"klass":
-				{
+				"klass": {
 					"name": "Url"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Url"
 					},
 					"name": "serviceGroupName"
@@ -3897,8 +3258,7 @@
 				"name": "url",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Url"
 				},
 				"associationEndModifiers": [],
@@ -3908,8 +3268,7 @@
 				"name": "services",
 				"direction": "target",
 				"multiplicity": "1..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Service"
 				},
 				"associationEndModifiers": [
@@ -3920,93 +3279,73 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 402
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 117,
-					"klass":
-					{
+					"klass": {
 						"name": "Url"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "Url"
 						},
 						"name": "serviceGroupName"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 118,
-					"klass":
-					{
+					"klass": {
 						"name": "Service"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "Service"
 						},
 						"name": "serviceGroupName"
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 119,
-					"klass":
-					{
+					"klass": {
 						"name": "Url"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "Url"
 						},
 						"name": "url"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 120,
-					"klass":
-					{
+					"klass": {
 						"name": "Service"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "Service"
 						},
 						"name": "urlString"
@@ -4023,8 +3362,7 @@
 				"name": "services",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Service"
 				},
 				"associationEndModifiers": [],
@@ -4034,49 +3372,39 @@
 				"name": "projection",
 				"direction": "target",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "NamedProjection"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 121,
-				"klass":
-				{
+				"klass": {
 					"name": "Service"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Service"
 					},
 					"name": "projectionName"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 122,
-				"klass":
-				{
+				"klass": {
 					"name": "NamedProjection"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
@@ -4092,8 +3420,7 @@
 				"name": "queryService",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Service"
 				},
 				"associationEndModifiers": [],
@@ -4103,8 +3430,7 @@
 				"name": "queryCriteria",
 				"direction": "target",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Criteria"
 				},
 				"associationEndModifiers": [
@@ -4115,41 +3441,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 123,
-				"klass":
-				{
+				"klass": {
 					"name": "Service"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Service"
 					},
 					"name": "queryCriteriaId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 124,
-				"klass":
-				{
+				"klass": {
 					"name": "Criteria"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Criteria"
 					},
 					"name": "id"
@@ -4165,8 +3482,7 @@
 				"name": "authorizeService",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Service"
 				},
 				"associationEndModifiers": [],
@@ -4176,8 +3492,7 @@
 				"name": "authorizeCriteria",
 				"direction": "target",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Criteria"
 				},
 				"associationEndModifiers": [
@@ -4188,41 +3503,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 125,
-				"klass":
-				{
+				"klass": {
 					"name": "Service"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Service"
 					},
 					"name": "authorizeCriteriaId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 126,
-				"klass":
-				{
+				"klass": {
 					"name": "Criteria"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Criteria"
 					},
 					"name": "id"
@@ -4238,8 +3544,7 @@
 				"name": "validateService",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Service"
 				},
 				"associationEndModifiers": [],
@@ -4249,8 +3554,7 @@
 				"name": "validateCriteria",
 				"direction": "target",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Criteria"
 				},
 				"associationEndModifiers": [
@@ -4261,41 +3565,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 127,
-				"klass":
-				{
+				"klass": {
 					"name": "Service"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Service"
 					},
 					"name": "validateCriteriaId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 128,
-				"klass":
-				{
+				"klass": {
 					"name": "Criteria"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Criteria"
 					},
 					"name": "id"
@@ -4311,8 +3606,7 @@
 				"name": "conflictService",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Service"
 				},
 				"associationEndModifiers": [],
@@ -4322,8 +3616,7 @@
 				"name": "conflictCriteria",
 				"direction": "target",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Criteria"
 				},
 				"associationEndModifiers": [
@@ -4334,41 +3627,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 129,
-				"klass":
-				{
+				"klass": {
 					"name": "Service"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Service"
 					},
 					"name": "conflictCriteriaId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 130,
-				"klass":
-				{
+				"klass": {
 					"name": "Criteria"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "Criteria"
 					},
 					"name": "id"
@@ -4384,8 +3668,7 @@
 				"name": "service",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "Service"
 				},
 				"associationEndModifiers": [],
@@ -4395,8 +3678,7 @@
 				"name": "orderBys",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ServiceOrderBy"
 				},
 				"associationEndModifiers": [
@@ -4407,96 +3689,75 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 403
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.AndCriteria",
-				"left":
-				{
+				"left": {
 					"__typename": "klass.model.meta.domain.OperatorCriteria",
 					"operator": "==",
-					"sourceExpressionValue":
-					{
+					"sourceExpressionValue": {
 						"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 						"id": 131,
-						"klass":
-						{
+						"klass": {
 							"name": "Service"
 						},
 						"associationEnds": [],
-						"dataTypeProperty":
-						{
-							"owningClassifier":
-							{
+						"dataTypeProperty": {
+							"owningClassifier": {
 								"name": "Service"
 							},
 							"name": "serviceGroupName"
 						}
 					},
-					"targetExpressionValue":
-					{
+					"targetExpressionValue": {
 						"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 						"id": 132,
-						"klass":
-						{
+						"klass": {
 							"name": "ServiceOrderBy"
 						},
 						"associationEnds": [],
-						"dataTypeProperty":
-						{
-							"owningClassifier":
-							{
+						"dataTypeProperty": {
+							"owningClassifier": {
 								"name": "ServiceOrderBy"
 							},
 							"name": "serviceGroupName"
 						}
 					}
 				},
-				"right":
-				{
+				"right": {
 					"__typename": "klass.model.meta.domain.OperatorCriteria",
 					"operator": "==",
-					"sourceExpressionValue":
-					{
+					"sourceExpressionValue": {
 						"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 						"id": 133,
-						"klass":
-						{
+						"klass": {
 							"name": "Service"
 						},
 						"associationEnds": [],
-						"dataTypeProperty":
-						{
-							"owningClassifier":
-							{
+						"dataTypeProperty": {
+							"owningClassifier": {
 								"name": "Service"
 							},
 							"name": "urlString"
 						}
 					},
-					"targetExpressionValue":
-					{
+					"targetExpressionValue": {
 						"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 						"id": 134,
-						"klass":
-						{
+						"klass": {
 							"name": "ServiceOrderBy"
 						},
 						"associationEnds": [],
-						"dataTypeProperty":
-						{
-							"owningClassifier":
-							{
+						"dataTypeProperty": {
+							"owningClassifier": {
 								"name": "ServiceOrderBy"
 							},
 							"name": "serviceUrlString"
@@ -4504,41 +3765,32 @@
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 135,
-					"klass":
-					{
+					"klass": {
 						"name": "Service"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "Service"
 						},
 						"name": "verb"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 136,
-					"klass":
-					{
+					"klass": {
 						"name": "ServiceOrderBy"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "ServiceOrderBy"
 						},
 						"name": "serviceVerb"
@@ -4555,8 +3807,7 @@
 				"name": "serviceOrderBy",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ServiceOrderBy"
 				},
 				"associationEndModifiers": [],
@@ -4566,49 +3817,39 @@
 				"name": "thisMemberReferencePath",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ThisMemberReferencePath"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 137,
-				"klass":
-				{
+				"klass": {
 					"name": "ServiceOrderBy"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ServiceOrderBy"
 					},
 					"name": "thisMemberReferencePathId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 138,
-				"klass":
-				{
+				"klass": {
 					"name": "ThisMemberReferencePath"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ExpressionValue"
 					},
 					"name": "id"
@@ -4624,8 +3865,7 @@
 				"name": "everyTypeKeyProperty",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "EveryTypeKeyProperty"
 				},
 				"associationEndModifiers": [],
@@ -4635,8 +3875,7 @@
 				"name": "everyTypeForeignKeyProperties",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "EveryTypeForeignKeyProperty"
 				},
 				"associationEndModifiers": [
@@ -4647,103 +3886,78 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.AndCriteria",
-				"left":
-				{
+				"left": {
 					"__typename": "klass.model.meta.domain.AndCriteria",
-					"left":
-					{
+					"left": {
 						"__typename": "klass.model.meta.domain.AndCriteria",
-						"left":
-						{
+						"left": {
 							"__typename": "klass.model.meta.domain.AndCriteria",
-							"left":
-							{
+							"left": {
 								"__typename": "klass.model.meta.domain.AndCriteria",
-								"left":
-								{
+								"left": {
 									"__typename": "klass.model.meta.domain.AndCriteria",
-									"left":
-									{
+									"left": {
 										"__typename": "klass.model.meta.domain.OperatorCriteria",
 										"operator": "==",
-										"sourceExpressionValue":
-										{
+										"sourceExpressionValue": {
 											"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 											"id": 139,
-											"klass":
-											{
+											"klass": {
 												"name": "EveryTypeKeyProperty"
 											},
 											"associationEnds": [],
-											"dataTypeProperty":
-											{
-												"owningClassifier":
-												{
+											"dataTypeProperty": {
+												"owningClassifier": {
 													"name": "EveryTypeKeyProperty"
 												},
 												"name": "keyString"
 											}
 										},
-										"targetExpressionValue":
-										{
+										"targetExpressionValue": {
 											"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 											"id": 140,
-											"klass":
-											{
+											"klass": {
 												"name": "EveryTypeForeignKeyProperty"
 											},
 											"associationEnds": [],
-											"dataTypeProperty":
-											{
-												"owningClassifier":
-												{
+											"dataTypeProperty": {
+												"owningClassifier": {
 													"name": "EveryTypeForeignKeyProperty"
 												},
 												"name": "foreignKeyString"
 											}
 										}
 									},
-									"right":
-									{
+									"right": {
 										"__typename": "klass.model.meta.domain.OperatorCriteria",
 										"operator": "==",
-										"sourceExpressionValue":
-										{
+										"sourceExpressionValue": {
 											"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 											"id": 141,
-											"klass":
-											{
+											"klass": {
 												"name": "EveryTypeKeyProperty"
 											},
 											"associationEnds": [],
-											"dataTypeProperty":
-											{
-												"owningClassifier":
-												{
+											"dataTypeProperty": {
+												"owningClassifier": {
 													"name": "EveryTypeKeyProperty"
 												},
 												"name": "keyInteger"
 											}
 										},
-										"targetExpressionValue":
-										{
+										"targetExpressionValue": {
 											"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 											"id": 142,
-											"klass":
-											{
+											"klass": {
 												"name": "EveryTypeForeignKeyProperty"
 											},
 											"associationEnds": [],
-											"dataTypeProperty":
-											{
-												"owningClassifier":
-												{
+											"dataTypeProperty": {
+												"owningClassifier": {
 													"name": "EveryTypeForeignKeyProperty"
 												},
 												"name": "foreignKeyInteger"
@@ -4751,41 +3965,32 @@
 										}
 									}
 								},
-								"right":
-								{
+								"right": {
 									"__typename": "klass.model.meta.domain.OperatorCriteria",
 									"operator": "==",
-									"sourceExpressionValue":
-									{
+									"sourceExpressionValue": {
 										"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 										"id": 143,
-										"klass":
-										{
+										"klass": {
 											"name": "EveryTypeKeyProperty"
 										},
 										"associationEnds": [],
-										"dataTypeProperty":
-										{
-											"owningClassifier":
-											{
+										"dataTypeProperty": {
+											"owningClassifier": {
 												"name": "EveryTypeKeyProperty"
 											},
 											"name": "keyLong"
 										}
 									},
-									"targetExpressionValue":
-									{
+									"targetExpressionValue": {
 										"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 										"id": 144,
-										"klass":
-										{
+										"klass": {
 											"name": "EveryTypeForeignKeyProperty"
 										},
 										"associationEnds": [],
-										"dataTypeProperty":
-										{
-											"owningClassifier":
-											{
+										"dataTypeProperty": {
+											"owningClassifier": {
 												"name": "EveryTypeForeignKeyProperty"
 											},
 											"name": "foreignKeyLong"
@@ -4793,41 +3998,32 @@
 									}
 								}
 							},
-							"right":
-							{
+							"right": {
 								"__typename": "klass.model.meta.domain.OperatorCriteria",
 								"operator": "==",
-								"sourceExpressionValue":
-								{
+								"sourceExpressionValue": {
 									"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 									"id": 145,
-									"klass":
-									{
+									"klass": {
 										"name": "EveryTypeKeyProperty"
 									},
 									"associationEnds": [],
-									"dataTypeProperty":
-									{
-										"owningClassifier":
-										{
+									"dataTypeProperty": {
+										"owningClassifier": {
 											"name": "EveryTypeKeyProperty"
 										},
 										"name": "keyDouble"
 									}
 								},
-								"targetExpressionValue":
-								{
+								"targetExpressionValue": {
 									"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 									"id": 146,
-									"klass":
-									{
+									"klass": {
 										"name": "EveryTypeForeignKeyProperty"
 									},
 									"associationEnds": [],
-									"dataTypeProperty":
-									{
-										"owningClassifier":
-										{
+									"dataTypeProperty": {
+										"owningClassifier": {
 											"name": "EveryTypeForeignKeyProperty"
 										},
 										"name": "foreignKeyDouble"
@@ -4835,41 +4031,32 @@
 								}
 							}
 						},
-						"right":
-						{
+						"right": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 147,
-								"klass":
-								{
+								"klass": {
 									"name": "EveryTypeKeyProperty"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "EveryTypeKeyProperty"
 									},
 									"name": "keyFloat"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 								"id": 148,
-								"klass":
-								{
+								"klass": {
 									"name": "EveryTypeForeignKeyProperty"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "EveryTypeForeignKeyProperty"
 									},
 									"name": "foreignKeyFloat"
@@ -4877,41 +4064,32 @@
 							}
 						}
 					},
-					"right":
-					{
+					"right": {
 						"__typename": "klass.model.meta.domain.OperatorCriteria",
 						"operator": "==",
-						"sourceExpressionValue":
-						{
+						"sourceExpressionValue": {
 							"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 							"id": 149,
-							"klass":
-							{
+							"klass": {
 								"name": "EveryTypeKeyProperty"
 							},
 							"associationEnds": [],
-							"dataTypeProperty":
-							{
-								"owningClassifier":
-								{
+							"dataTypeProperty": {
+								"owningClassifier": {
 									"name": "EveryTypeKeyProperty"
 								},
 								"name": "keyBoolean"
 							}
 						},
-						"targetExpressionValue":
-						{
+						"targetExpressionValue": {
 							"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 							"id": 150,
-							"klass":
-							{
+							"klass": {
 								"name": "EveryTypeForeignKeyProperty"
 							},
 							"associationEnds": [],
-							"dataTypeProperty":
-							{
-								"owningClassifier":
-								{
+							"dataTypeProperty": {
+								"owningClassifier": {
 									"name": "EveryTypeForeignKeyProperty"
 								},
 								"name": "foreignKeyBoolean"
@@ -4919,41 +4097,32 @@
 						}
 					}
 				},
-				"right":
-				{
+				"right": {
 					"__typename": "klass.model.meta.domain.OperatorCriteria",
 					"operator": "==",
-					"sourceExpressionValue":
-					{
+					"sourceExpressionValue": {
 						"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 						"id": 151,
-						"klass":
-						{
+						"klass": {
 							"name": "EveryTypeKeyProperty"
 						},
 						"associationEnds": [],
-						"dataTypeProperty":
-						{
-							"owningClassifier":
-							{
+						"dataTypeProperty": {
+							"owningClassifier": {
 								"name": "EveryTypeKeyProperty"
 							},
 							"name": "keyInstant"
 						}
 					},
-					"targetExpressionValue":
-					{
+					"targetExpressionValue": {
 						"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 						"id": 152,
-						"klass":
-						{
+						"klass": {
 							"name": "EveryTypeForeignKeyProperty"
 						},
 						"associationEnds": [],
-						"dataTypeProperty":
-						{
-							"owningClassifier":
-							{
+						"dataTypeProperty": {
+							"owningClassifier": {
 								"name": "EveryTypeForeignKeyProperty"
 							},
 							"name": "foreignKeyInstant"
@@ -4961,41 +4130,32 @@
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 153,
-					"klass":
-					{
+					"klass": {
 						"name": "EveryTypeKeyProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "EveryTypeKeyProperty"
 						},
 						"name": "keyLocalDate"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 154,
-					"klass":
-					{
+					"klass": {
 						"name": "EveryTypeForeignKeyProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "EveryTypeForeignKeyProperty"
 						},
 						"name": "foreignKeyLocalDate"
@@ -5012,8 +4172,7 @@
 				"name": "source",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "OwnedNaturalOneToManySource"
 				},
 				"associationEndModifiers": [],
@@ -5023,8 +4182,7 @@
 				"name": "targets",
 				"direction": "target",
 				"multiplicity": "1..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "OwnedNaturalOneToManyTarget"
 				},
 				"associationEndModifiers": [
@@ -5035,41 +4193,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 155,
-				"klass":
-				{
+				"klass": {
 					"name": "OwnedNaturalOneToManySource"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "OwnedNaturalOneToManySource"
 					},
 					"name": "key"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 156,
-				"klass":
-				{
+				"klass": {
 					"name": "OwnedNaturalOneToManyTarget"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "OwnedNaturalOneToManyTarget"
 					},
 					"name": "sourceKey"
@@ -5085,8 +4234,7 @@
 				"name": "source",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "OwnedNaturalOneToOneSource"
 				},
 				"associationEndModifiers": [],
@@ -5096,8 +4244,7 @@
 				"name": "target",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "OwnedNaturalOneToOneTarget"
 				},
 				"associationEndModifiers": [
@@ -5108,41 +4255,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 157,
-				"klass":
-				{
+				"klass": {
 					"name": "OwnedNaturalOneToOneSource"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "OwnedNaturalOneToOneSource"
 					},
 					"name": "key"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 158,
-				"klass":
-				{
+				"klass": {
 					"name": "OwnedNaturalOneToOneTarget"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "OwnedNaturalOneToOneTarget"
 					},
 					"name": "sourceKey"
@@ -5158,8 +4296,7 @@
 				"name": "source",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "OwnedNaturalOneToManySelf"
 				},
 				"associationEndModifiers": [],
@@ -5169,8 +4306,7 @@
 				"name": "target",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "OwnedNaturalOneToManySelf"
 				},
 				"associationEndModifiers": [
@@ -5181,41 +4317,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 159,
-				"klass":
-				{
+				"klass": {
 					"name": "OwnedNaturalOneToManySelf"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "OwnedNaturalOneToManySelf"
 					},
 					"name": "key"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 160,
-				"klass":
-				{
+				"klass": {
 					"name": "OwnedNaturalOneToManySelf"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "OwnedNaturalOneToManySelf"
 					},
 					"name": "sourceKey"
@@ -5231,8 +4358,7 @@
 				"name": "source",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "OwnedSyntheticOneToManySource"
 				},
 				"associationEndModifiers": [],
@@ -5242,8 +4368,7 @@
 				"name": "targets",
 				"direction": "target",
 				"multiplicity": "1..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "OwnedSyntheticOneToManyTarget"
 				},
 				"associationEndModifiers": [
@@ -5254,41 +4379,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 161,
-				"klass":
-				{
+				"klass": {
 					"name": "OwnedSyntheticOneToManySource"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "OwnedSyntheticOneToManySource"
 					},
 					"name": "id"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 162,
-				"klass":
-				{
+				"klass": {
 					"name": "OwnedSyntheticOneToManyTarget"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "OwnedSyntheticOneToManyTarget"
 					},
 					"name": "sourceId"
@@ -5304,8 +4420,7 @@
 				"name": "source",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "OwnedSyntheticOneToOneSource"
 				},
 				"associationEndModifiers": [],
@@ -5315,8 +4430,7 @@
 				"name": "target",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "OwnedSyntheticOneToOneTarget"
 				},
 				"associationEndModifiers": [
@@ -5327,41 +4441,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 163,
-				"klass":
-				{
+				"klass": {
 					"name": "OwnedSyntheticOneToOneSource"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "OwnedSyntheticOneToOneSource"
 					},
 					"name": "id"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 164,
-				"klass":
-				{
+				"klass": {
 					"name": "OwnedSyntheticOneToOneTarget"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "OwnedSyntheticOneToOneTarget"
 					},
 					"name": "sourceId"
@@ -5377,8 +4482,7 @@
 				"name": "source",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "OwnedSyntheticOneToManySelf"
 				},
 				"associationEndModifiers": [],
@@ -5388,8 +4492,7 @@
 				"name": "target",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "OwnedSyntheticOneToManySelf"
 				},
 				"associationEndModifiers": [
@@ -5400,41 +4503,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 165,
-				"klass":
-				{
+				"klass": {
 					"name": "OwnedSyntheticOneToManySelf"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "OwnedSyntheticOneToManySelf"
 					},
 					"name": "id"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 166,
-				"klass":
-				{
+				"klass": {
 					"name": "OwnedSyntheticOneToManySelf"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "OwnedSyntheticOneToManySelf"
 					},
 					"name": "sourceId"
@@ -5450,8 +4544,7 @@
 				"name": "sources",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "SharedNaturalManyToOneSource"
 				},
 				"associationEndModifiers": [],
@@ -5461,49 +4554,39 @@
 				"name": "target",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "SharedNaturalManyToOneTarget"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 167,
-				"klass":
-				{
+				"klass": {
 					"name": "SharedNaturalManyToOneSource"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "SharedNaturalManyToOneSource"
 					},
 					"name": "targetKey"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 168,
-				"klass":
-				{
+				"klass": {
 					"name": "SharedNaturalManyToOneTarget"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "SharedNaturalManyToOneTarget"
 					},
 					"name": "key"
@@ -5519,8 +4602,7 @@
 				"name": "source",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "SharedNaturalOneToManySource"
 				},
 				"associationEndModifiers": [],
@@ -5530,49 +4612,39 @@
 				"name": "targets",
 				"direction": "target",
 				"multiplicity": "1..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "SharedNaturalOneToManyTarget"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 169,
-				"klass":
-				{
+				"klass": {
 					"name": "SharedNaturalOneToManySource"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "SharedNaturalOneToManySource"
 					},
 					"name": "key"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 170,
-				"klass":
-				{
+				"klass": {
 					"name": "SharedNaturalOneToManyTarget"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "SharedNaturalOneToManyTarget"
 					},
 					"name": "sourceKey"
@@ -5588,8 +4660,7 @@
 				"name": "source",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "SharedNaturalOneToOneSource"
 				},
 				"associationEndModifiers": [],
@@ -5599,49 +4670,39 @@
 				"name": "target",
 				"direction": "target",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "SharedNaturalOneToOneTarget"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 171,
-				"klass":
-				{
+				"klass": {
 					"name": "SharedNaturalOneToOneSource"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "SharedNaturalOneToOneSource"
 					},
 					"name": "key"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 172,
-				"klass":
-				{
+				"klass": {
 					"name": "SharedNaturalOneToOneTarget"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "SharedNaturalOneToOneTarget"
 					},
 					"name": "sourceKey"
@@ -5657,8 +4718,7 @@
 				"name": "source",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "SharedNaturalOneToManySelf"
 				},
 				"associationEndModifiers": [],
@@ -5668,49 +4728,39 @@
 				"name": "target",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "SharedNaturalOneToManySelf"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 173,
-				"klass":
-				{
+				"klass": {
 					"name": "SharedNaturalOneToManySelf"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "SharedNaturalOneToManySelf"
 					},
 					"name": "key"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 174,
-				"klass":
-				{
+				"klass": {
 					"name": "SharedNaturalOneToManySelf"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "SharedNaturalOneToManySelf"
 					},
 					"name": "sourceKey"
@@ -5726,8 +4776,7 @@
 				"name": "source",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "SharedSyntheticOneToManySource"
 				},
 				"associationEndModifiers": [],
@@ -5737,49 +4786,39 @@
 				"name": "targets",
 				"direction": "target",
 				"multiplicity": "1..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "SharedSyntheticOneToManyTarget"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 175,
-				"klass":
-				{
+				"klass": {
 					"name": "SharedSyntheticOneToManySource"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "SharedSyntheticOneToManySource"
 					},
 					"name": "id"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 176,
-				"klass":
-				{
+				"klass": {
 					"name": "SharedSyntheticOneToManyTarget"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "SharedSyntheticOneToManyTarget"
 					},
 					"name": "sourceId"
@@ -5795,8 +4834,7 @@
 				"name": "source",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "SharedSyntheticOneToOneSource"
 				},
 				"associationEndModifiers": [],
@@ -5806,49 +4844,39 @@
 				"name": "target",
 				"direction": "target",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "SharedSyntheticOneToOneTarget"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 177,
-				"klass":
-				{
+				"klass": {
 					"name": "SharedSyntheticOneToOneSource"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "SharedSyntheticOneToOneSource"
 					},
 					"name": "id"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 178,
-				"klass":
-				{
+				"klass": {
 					"name": "SharedSyntheticOneToOneTarget"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "SharedSyntheticOneToOneTarget"
 					},
 					"name": "sourceId"
@@ -5864,8 +4892,7 @@
 				"name": "source",
 				"direction": "source",
 				"multiplicity": "0..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "SharedSyntheticOneToManySelf"
 				},
 				"associationEndModifiers": [],
@@ -5875,49 +4902,39 @@
 				"name": "target",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "SharedSyntheticOneToManySelf"
 				},
 				"associationEndModifiers": [],
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 179,
-				"klass":
-				{
+				"klass": {
 					"name": "SharedSyntheticOneToManySelf"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "SharedSyntheticOneToManySelf"
 					},
 					"name": "id"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 180,
-				"klass":
-				{
+				"klass": {
 					"name": "SharedSyntheticOneToManySelf"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "SharedSyntheticOneToManySelf"
 					},
 					"name": "sourceId"
@@ -5933,8 +4950,7 @@
 				"name": "classOwningClassWithDerivedProperty",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ClassOwningClassWithDerivedProperty"
 				},
 				"associationEndModifiers": [],
@@ -5944,8 +4960,7 @@
 				"name": "classWithDerivedProperties",
 				"direction": "target",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "ClassWithDerivedProperty"
 				},
 				"associationEndModifiers": [
@@ -5956,154 +4971,129 @@
 				"orderBys": [
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 404
 						}
 					},
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 405
 						}
 					},
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 406
 						}
 					},
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 407
 						}
 					},
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 408
 						}
 					},
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 409
 						}
 					},
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 410
 						}
 					},
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 411
 						}
 					},
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 412
 						}
 					},
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 413
 						}
 					},
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 414
 						}
 					},
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 415
 						}
 					},
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 416
 						}
 					},
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 417
 						}
 					},
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 418
 						}
 					},
 					{
 						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
+						"thisMemberReferencePath": {
 							"id": 419
 						}
 					}
 				]
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 181,
-				"klass":
-				{
+				"klass": {
 					"name": "ClassOwningClassWithDerivedProperty"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ClassOwningClassWithDerivedProperty"
 					},
 					"name": "key"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 182,
-				"klass":
-				{
+				"klass": {
 					"name": "ClassWithDerivedProperty"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "ClassWithDerivedProperty"
 					},
 					"name": "classOwningClassWithDerivedPropertyKey"
@@ -6119,8 +5109,7 @@
 				"name": "user",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "User"
 				},
 				"associationEndModifiers": [],
@@ -6130,8 +5119,7 @@
 				"name": "version",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "UserVersion"
 				},
 				"associationEndModifiers": [
@@ -6145,41 +5133,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 183,
-				"klass":
-				{
+				"klass": {
 					"name": "User"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "User"
 					},
 					"name": "userId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 184,
-				"klass":
-				{
+				"klass": {
 					"name": "UserVersion"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "UserVersion"
 					},
 					"name": "userId"
@@ -6195,8 +5174,7 @@
 				"name": "propertiesRequired",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "PropertiesRequired"
 				},
 				"associationEndModifiers": [],
@@ -6206,8 +5184,7 @@
 				"name": "version",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "PropertiesRequiredVersion"
 				},
 				"associationEndModifiers": [
@@ -6221,41 +5198,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 185,
-				"klass":
-				{
+				"klass": {
 					"name": "PropertiesRequired"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "PropertiesRequired"
 					},
 					"name": "propertiesRequiredId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 186,
-				"klass":
-				{
+				"klass": {
 					"name": "PropertiesRequiredVersion"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "PropertiesRequiredVersion"
 					},
 					"name": "propertiesRequiredId"
@@ -6271,8 +5239,7 @@
 				"name": "propertiesOptional",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "PropertiesOptional"
 				},
 				"associationEndModifiers": [],
@@ -6282,8 +5249,7 @@
 				"name": "version",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "PropertiesOptionalVersion"
 				},
 				"associationEndModifiers": [
@@ -6297,41 +5263,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 187,
-				"klass":
-				{
+				"klass": {
 					"name": "PropertiesOptional"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "PropertiesOptional"
 					},
 					"name": "propertiesOptionalId"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 188,
-				"klass":
-				{
+				"klass": {
 					"name": "PropertiesOptionalVersion"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "PropertiesOptionalVersion"
 					},
 					"name": "propertiesOptionalId"
@@ -6347,8 +5304,7 @@
 				"name": "everyTypeKeyProperty",
 				"direction": "source",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "EveryTypeKeyProperty"
 				},
 				"associationEndModifiers": [],
@@ -6358,8 +5314,7 @@
 				"name": "version",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "EveryTypeKeyPropertyVersion"
 				},
 				"associationEndModifiers": [
@@ -6373,103 +5328,78 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.AndCriteria",
-			"left":
-			{
+			"left": {
 				"__typename": "klass.model.meta.domain.AndCriteria",
-				"left":
-				{
+				"left": {
 					"__typename": "klass.model.meta.domain.AndCriteria",
-					"left":
-					{
+					"left": {
 						"__typename": "klass.model.meta.domain.AndCriteria",
-						"left":
-						{
+						"left": {
 							"__typename": "klass.model.meta.domain.AndCriteria",
-							"left":
-							{
+							"left": {
 								"__typename": "klass.model.meta.domain.AndCriteria",
-								"left":
-								{
+								"left": {
 									"__typename": "klass.model.meta.domain.AndCriteria",
-									"left":
-									{
+									"left": {
 										"__typename": "klass.model.meta.domain.OperatorCriteria",
 										"operator": "==",
-										"sourceExpressionValue":
-										{
+										"sourceExpressionValue": {
 											"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 											"id": 189,
-											"klass":
-											{
+											"klass": {
 												"name": "EveryTypeKeyProperty"
 											},
 											"associationEnds": [],
-											"dataTypeProperty":
-											{
-												"owningClassifier":
-												{
+											"dataTypeProperty": {
+												"owningClassifier": {
 													"name": "EveryTypeKeyProperty"
 												},
 												"name": "keyString"
 											}
 										},
-										"targetExpressionValue":
-										{
+										"targetExpressionValue": {
 											"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 											"id": 190,
-											"klass":
-											{
+											"klass": {
 												"name": "EveryTypeKeyPropertyVersion"
 											},
 											"associationEnds": [],
-											"dataTypeProperty":
-											{
-												"owningClassifier":
-												{
+											"dataTypeProperty": {
+												"owningClassifier": {
 													"name": "EveryTypeKeyPropertyVersion"
 												},
 												"name": "keyString"
 											}
 										}
 									},
-									"right":
-									{
+									"right": {
 										"__typename": "klass.model.meta.domain.OperatorCriteria",
 										"operator": "==",
-										"sourceExpressionValue":
-										{
+										"sourceExpressionValue": {
 											"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 											"id": 191,
-											"klass":
-											{
+											"klass": {
 												"name": "EveryTypeKeyProperty"
 											},
 											"associationEnds": [],
-											"dataTypeProperty":
-											{
-												"owningClassifier":
-												{
+											"dataTypeProperty": {
+												"owningClassifier": {
 													"name": "EveryTypeKeyProperty"
 												},
 												"name": "keyInteger"
 											}
 										},
-										"targetExpressionValue":
-										{
+										"targetExpressionValue": {
 											"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 											"id": 192,
-											"klass":
-											{
+											"klass": {
 												"name": "EveryTypeKeyPropertyVersion"
 											},
 											"associationEnds": [],
-											"dataTypeProperty":
-											{
-												"owningClassifier":
-												{
+											"dataTypeProperty": {
+												"owningClassifier": {
 													"name": "EveryTypeKeyPropertyVersion"
 												},
 												"name": "keyInteger"
@@ -6477,41 +5407,32 @@
 										}
 									}
 								},
-								"right":
-								{
+								"right": {
 									"__typename": "klass.model.meta.domain.OperatorCriteria",
 									"operator": "==",
-									"sourceExpressionValue":
-									{
+									"sourceExpressionValue": {
 										"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 										"id": 193,
-										"klass":
-										{
+										"klass": {
 											"name": "EveryTypeKeyProperty"
 										},
 										"associationEnds": [],
-										"dataTypeProperty":
-										{
-											"owningClassifier":
-											{
+										"dataTypeProperty": {
+											"owningClassifier": {
 												"name": "EveryTypeKeyProperty"
 											},
 											"name": "keyLong"
 										}
 									},
-									"targetExpressionValue":
-									{
+									"targetExpressionValue": {
 										"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 										"id": 194,
-										"klass":
-										{
+										"klass": {
 											"name": "EveryTypeKeyPropertyVersion"
 										},
 										"associationEnds": [],
-										"dataTypeProperty":
-										{
-											"owningClassifier":
-											{
+										"dataTypeProperty": {
+											"owningClassifier": {
 												"name": "EveryTypeKeyPropertyVersion"
 											},
 											"name": "keyLong"
@@ -6519,41 +5440,32 @@
 									}
 								}
 							},
-							"right":
-							{
+							"right": {
 								"__typename": "klass.model.meta.domain.OperatorCriteria",
 								"operator": "==",
-								"sourceExpressionValue":
-								{
+								"sourceExpressionValue": {
 									"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 									"id": 195,
-									"klass":
-									{
+									"klass": {
 										"name": "EveryTypeKeyProperty"
 									},
 									"associationEnds": [],
-									"dataTypeProperty":
-									{
-										"owningClassifier":
-										{
+									"dataTypeProperty": {
+										"owningClassifier": {
 											"name": "EveryTypeKeyProperty"
 										},
 										"name": "keyDouble"
 									}
 								},
-								"targetExpressionValue":
-								{
+								"targetExpressionValue": {
 									"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 									"id": 196,
-									"klass":
-									{
+									"klass": {
 										"name": "EveryTypeKeyPropertyVersion"
 									},
 									"associationEnds": [],
-									"dataTypeProperty":
-									{
-										"owningClassifier":
-										{
+									"dataTypeProperty": {
+										"owningClassifier": {
 											"name": "EveryTypeKeyPropertyVersion"
 										},
 										"name": "keyDouble"
@@ -6561,41 +5473,32 @@
 								}
 							}
 						},
-						"right":
-						{
+						"right": {
 							"__typename": "klass.model.meta.domain.OperatorCriteria",
 							"operator": "==",
-							"sourceExpressionValue":
-							{
+							"sourceExpressionValue": {
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 197,
-								"klass":
-								{
+								"klass": {
 									"name": "EveryTypeKeyProperty"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "EveryTypeKeyProperty"
 									},
 									"name": "keyFloat"
 								}
 							},
-							"targetExpressionValue":
-							{
+							"targetExpressionValue": {
 								"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 								"id": 198,
-								"klass":
-								{
+								"klass": {
 									"name": "EveryTypeKeyPropertyVersion"
 								},
 								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
+								"dataTypeProperty": {
+									"owningClassifier": {
 										"name": "EveryTypeKeyPropertyVersion"
 									},
 									"name": "keyFloat"
@@ -6603,41 +5506,32 @@
 							}
 						}
 					},
-					"right":
-					{
+					"right": {
 						"__typename": "klass.model.meta.domain.OperatorCriteria",
 						"operator": "==",
-						"sourceExpressionValue":
-						{
+						"sourceExpressionValue": {
 							"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 							"id": 199,
-							"klass":
-							{
+							"klass": {
 								"name": "EveryTypeKeyProperty"
 							},
 							"associationEnds": [],
-							"dataTypeProperty":
-							{
-								"owningClassifier":
-								{
+							"dataTypeProperty": {
+								"owningClassifier": {
 									"name": "EveryTypeKeyProperty"
 								},
 								"name": "keyBoolean"
 							}
 						},
-						"targetExpressionValue":
-						{
+						"targetExpressionValue": {
 							"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 							"id": 200,
-							"klass":
-							{
+							"klass": {
 								"name": "EveryTypeKeyPropertyVersion"
 							},
 							"associationEnds": [],
-							"dataTypeProperty":
-							{
-								"owningClassifier":
-								{
+							"dataTypeProperty": {
+								"owningClassifier": {
 									"name": "EveryTypeKeyPropertyVersion"
 								},
 								"name": "keyBoolean"
@@ -6645,41 +5539,32 @@
 						}
 					}
 				},
-				"right":
-				{
+				"right": {
 					"__typename": "klass.model.meta.domain.OperatorCriteria",
 					"operator": "==",
-					"sourceExpressionValue":
-					{
+					"sourceExpressionValue": {
 						"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 						"id": 201,
-						"klass":
-						{
+						"klass": {
 							"name": "EveryTypeKeyProperty"
 						},
 						"associationEnds": [],
-						"dataTypeProperty":
-						{
-							"owningClassifier":
-							{
+						"dataTypeProperty": {
+							"owningClassifier": {
 								"name": "EveryTypeKeyProperty"
 							},
 							"name": "keyInstant"
 						}
 					},
-					"targetExpressionValue":
-					{
+					"targetExpressionValue": {
 						"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 						"id": 202,
-						"klass":
-						{
+						"klass": {
 							"name": "EveryTypeKeyPropertyVersion"
 						},
 						"associationEnds": [],
-						"dataTypeProperty":
-						{
-							"owningClassifier":
-							{
+						"dataTypeProperty": {
+							"owningClassifier": {
 								"name": "EveryTypeKeyPropertyVersion"
 							},
 							"name": "keyInstant"
@@ -6687,41 +5572,32 @@
 					}
 				}
 			},
-			"right":
-			{
+			"right": {
 				"__typename": "klass.model.meta.domain.OperatorCriteria",
 				"operator": "==",
-				"sourceExpressionValue":
-				{
+				"sourceExpressionValue": {
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 					"id": 203,
-					"klass":
-					{
+					"klass": {
 						"name": "EveryTypeKeyProperty"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "EveryTypeKeyProperty"
 						},
 						"name": "keyLocalDate"
 					}
 				},
-				"targetExpressionValue":
-				{
+				"targetExpressionValue": {
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 					"id": 204,
-					"klass":
-					{
+					"klass": {
 						"name": "EveryTypeKeyPropertyVersion"
 					},
 					"associationEnds": [],
-					"dataTypeProperty":
-					{
-						"owningClassifier":
-						{
+					"dataTypeProperty": {
+						"owningClassifier": {
 							"name": "EveryTypeKeyPropertyVersion"
 						},
 						"name": "keyLocalDate"
@@ -6738,8 +5614,7 @@
 				"name": "propertiesRequiredCreatedBy",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "PropertiesRequired"
 				},
 				"associationEndModifiers": [],
@@ -6749,8 +5624,7 @@
 				"name": "createdBy",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "User"
 				},
 				"associationEndModifiers": [
@@ -6764,41 +5638,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 205,
-				"klass":
-				{
+				"klass": {
 					"name": "PropertiesRequired"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "PropertiesRequired"
 					},
 					"name": "createdById"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 206,
-				"klass":
-				{
+				"klass": {
 					"name": "User"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "User"
 					},
 					"name": "userId"
@@ -6814,8 +5679,7 @@
 				"name": "propertiesRequiredLastUpdatedBy",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "PropertiesRequired"
 				},
 				"associationEndModifiers": [],
@@ -6825,8 +5689,7 @@
 				"name": "lastUpdatedBy",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "User"
 				},
 				"associationEndModifiers": [
@@ -6837,41 +5700,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 207,
-				"klass":
-				{
+				"klass": {
 					"name": "PropertiesRequired"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "PropertiesRequired"
 					},
 					"name": "lastUpdatedById"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 208,
-				"klass":
-				{
+				"klass": {
 					"name": "User"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "User"
 					},
 					"name": "userId"
@@ -6887,8 +5741,7 @@
 				"name": "propertiesOptionalCreatedBy",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "PropertiesOptional"
 				},
 				"associationEndModifiers": [],
@@ -6898,8 +5751,7 @@
 				"name": "createdBy",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "User"
 				},
 				"associationEndModifiers": [
@@ -6913,41 +5765,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 209,
-				"klass":
-				{
+				"klass": {
 					"name": "PropertiesOptional"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "PropertiesOptional"
 					},
 					"name": "createdById"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 210,
-				"klass":
-				{
+				"klass": {
 					"name": "User"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "User"
 					},
 					"name": "userId"
@@ -6963,8 +5806,7 @@
 				"name": "propertiesOptionalLastUpdatedBy",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "PropertiesOptional"
 				},
 				"associationEndModifiers": [],
@@ -6974,8 +5816,7 @@
 				"name": "lastUpdatedBy",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "User"
 				},
 				"associationEndModifiers": [
@@ -6986,41 +5827,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 211,
-				"klass":
-				{
+				"klass": {
 					"name": "PropertiesOptional"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "PropertiesOptional"
 					},
 					"name": "lastUpdatedById"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 212,
-				"klass":
-				{
+				"klass": {
 					"name": "User"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "User"
 					},
 					"name": "userId"
@@ -7036,8 +5868,7 @@
 				"name": "everyTypeKeyPropertyCreatedBy",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "EveryTypeKeyProperty"
 				},
 				"associationEndModifiers": [],
@@ -7047,8 +5878,7 @@
 				"name": "createdBy",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "User"
 				},
 				"associationEndModifiers": [
@@ -7062,41 +5892,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 213,
-				"klass":
-				{
+				"klass": {
 					"name": "EveryTypeKeyProperty"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "EveryTypeKeyProperty"
 					},
 					"name": "createdById"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 214,
-				"klass":
-				{
+				"klass": {
 					"name": "User"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "User"
 					},
 					"name": "userId"
@@ -7112,8 +5933,7 @@
 				"name": "everyTypeKeyPropertyLastUpdatedBy",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "EveryTypeKeyProperty"
 				},
 				"associationEndModifiers": [],
@@ -7123,8 +5943,7 @@
 				"name": "lastUpdatedBy",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "User"
 				},
 				"associationEndModifiers": [
@@ -7135,41 +5954,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 215,
-				"klass":
-				{
+				"klass": {
 					"name": "EveryTypeKeyProperty"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "EveryTypeKeyProperty"
 					},
 					"name": "lastUpdatedById"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 216,
-				"klass":
-				{
+				"klass": {
 					"name": "User"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "User"
 					},
 					"name": "userId"
@@ -7185,8 +5995,7 @@
 				"name": "propertiesRequiredVersionCreatedBy",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "PropertiesRequiredVersion"
 				},
 				"associationEndModifiers": [],
@@ -7196,8 +6005,7 @@
 				"name": "createdBy",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "User"
 				},
 				"associationEndModifiers": [
@@ -7211,41 +6019,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 217,
-				"klass":
-				{
+				"klass": {
 					"name": "PropertiesRequiredVersion"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "PropertiesRequiredVersion"
 					},
 					"name": "createdById"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 218,
-				"klass":
-				{
+				"klass": {
 					"name": "User"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "User"
 					},
 					"name": "userId"
@@ -7261,8 +6060,7 @@
 				"name": "propertiesRequiredVersionLastUpdatedBy",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "PropertiesRequiredVersion"
 				},
 				"associationEndModifiers": [],
@@ -7272,8 +6070,7 @@
 				"name": "lastUpdatedBy",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "User"
 				},
 				"associationEndModifiers": [
@@ -7284,41 +6081,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 219,
-				"klass":
-				{
+				"klass": {
 					"name": "PropertiesRequiredVersion"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "PropertiesRequiredVersion"
 					},
 					"name": "lastUpdatedById"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 220,
-				"klass":
-				{
+				"klass": {
 					"name": "User"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "User"
 					},
 					"name": "userId"
@@ -7334,8 +6122,7 @@
 				"name": "propertiesOptionalVersionCreatedBy",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "PropertiesOptionalVersion"
 				},
 				"associationEndModifiers": [],
@@ -7345,8 +6132,7 @@
 				"name": "createdBy",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "User"
 				},
 				"associationEndModifiers": [
@@ -7360,41 +6146,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 221,
-				"klass":
-				{
+				"klass": {
 					"name": "PropertiesOptionalVersion"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "PropertiesOptionalVersion"
 					},
 					"name": "createdById"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 222,
-				"klass":
-				{
+				"klass": {
 					"name": "User"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "User"
 					},
 					"name": "userId"
@@ -7410,8 +6187,7 @@
 				"name": "propertiesOptionalVersionLastUpdatedBy",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "PropertiesOptionalVersion"
 				},
 				"associationEndModifiers": [],
@@ -7421,8 +6197,7 @@
 				"name": "lastUpdatedBy",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "User"
 				},
 				"associationEndModifiers": [
@@ -7433,41 +6208,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 223,
-				"klass":
-				{
+				"klass": {
 					"name": "PropertiesOptionalVersion"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "PropertiesOptionalVersion"
 					},
 					"name": "lastUpdatedById"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 224,
-				"klass":
-				{
+				"klass": {
 					"name": "User"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "User"
 					},
 					"name": "userId"
@@ -7483,8 +6249,7 @@
 				"name": "everyTypeKeyPropertyVersionCreatedBy",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "EveryTypeKeyPropertyVersion"
 				},
 				"associationEndModifiers": [],
@@ -7494,8 +6259,7 @@
 				"name": "createdBy",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "User"
 				},
 				"associationEndModifiers": [
@@ -7509,41 +6273,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 225,
-				"klass":
-				{
+				"klass": {
 					"name": "EveryTypeKeyPropertyVersion"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "EveryTypeKeyPropertyVersion"
 					},
 					"name": "createdById"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 226,
-				"klass":
-				{
+				"klass": {
 					"name": "User"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "User"
 					},
 					"name": "userId"
@@ -7559,8 +6314,7 @@
 				"name": "everyTypeKeyPropertyVersionLastUpdatedBy",
 				"direction": "source",
 				"multiplicity": "0..*",
-				"resultType":
-				{
+				"resultType": {
 					"name": "EveryTypeKeyPropertyVersion"
 				},
 				"associationEndModifiers": [],
@@ -7570,8 +6324,7 @@
 				"name": "lastUpdatedBy",
 				"direction": "target",
 				"multiplicity": "1..1",
-				"resultType":
-				{
+				"resultType": {
 					"name": "User"
 				},
 				"associationEndModifiers": [
@@ -7582,41 +6335,32 @@
 				"orderBys": []
 			}
 		],
-		"criteria":
-		{
+		"criteria": {
 			"__typename": "klass.model.meta.domain.OperatorCriteria",
 			"operator": "==",
-			"sourceExpressionValue":
-			{
+			"sourceExpressionValue": {
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 				"id": 227,
-				"klass":
-				{
+				"klass": {
 					"name": "EveryTypeKeyPropertyVersion"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "EveryTypeKeyPropertyVersion"
 					},
 					"name": "lastUpdatedById"
 				}
 			},
-			"targetExpressionValue":
-			{
+			"targetExpressionValue": {
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
 				"id": 228,
-				"klass":
-				{
+				"klass": {
 					"name": "User"
 				},
 				"associationEnds": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "User"
 					},
 					"name": "userId"

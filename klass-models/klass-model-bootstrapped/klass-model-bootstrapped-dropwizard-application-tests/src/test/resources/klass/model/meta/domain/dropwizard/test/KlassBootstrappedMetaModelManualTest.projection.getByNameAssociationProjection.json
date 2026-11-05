@@ -1,8 +1,7 @@
 {
 	"name": "AssociationProjection",
 	"packageName": "klass.model.meta.domain",
-	"rootProjection":
-	{
+	"rootProjection": {
 		"id": 29,
 		"name": "AssociationProjection",
 		"children": [
@@ -11,10 +10,8 @@
 				"id": 199,
 				"name": "name",
 				"children": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "NamedElement"
 					},
 					"name": "name"
@@ -25,10 +22,8 @@
 				"id": 200,
 				"name": "packageName",
 				"children": [],
-				"dataTypeProperty":
-				{
-					"owningClassifier":
-					{
+				"dataTypeProperty": {
+					"owningClassifier": {
 						"name": "PackageableElement"
 					},
 					"name": "packageName"
@@ -39,16 +34,13 @@
 				"id": 201,
 				"name": "associationEnds",
 				"children": [],
-				"associationEnd":
-				{
-					"owningClass":
-					{
+				"associationEnd": {
+					"owningClass": {
 						"name": "Association"
 					},
 					"name": "associationEnds"
 				},
-				"projection":
-				{
+				"projection": {
 					"name": "AssociationEndProjection"
 				}
 			},
@@ -57,22 +49,18 @@
 				"id": 202,
 				"name": "criteria",
 				"children": [],
-				"associationEnd":
-				{
-					"owningClass":
-					{
+				"associationEnd": {
+					"owningClass": {
 						"name": "Association"
 					},
 					"name": "criteria"
 				},
-				"projection":
-				{
+				"projection": {
 					"name": "CriteriaProjection"
 				}
 			}
 		],
-		"classifier":
-		{
+		"classifier": {
 			"name": "Association"
 		}
 	}

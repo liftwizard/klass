@@ -10,7 +10,10 @@
 	"bracketSpacing": false,
 	"trailingComma": "all",
 	"arrowParens": "always",
-	"ignorePatterns": ["klass-maven-archetype/src/main/resources/archetype-resources/**"],
+	"ignorePatterns": [
+		"klass-maven-archetype/src/main/resources/archetype-resources/**",
+		"**/src/test/resources/**/*.json"
+	],
 	"overrides": [
 		{
 			"files": [".yamllint.yaml", "**/*.yaml", "**/*.yml"],

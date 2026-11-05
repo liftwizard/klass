@@ -5,8 +5,7 @@
 	"classifierModifiers": [],
 	"dataTypeProperties": [],
 	"abstractClass": true,
-	"superClass":
-	{
+	"superClass": {
 		"name": "PackageableElement"
 	},
 	"associationEnds": [
