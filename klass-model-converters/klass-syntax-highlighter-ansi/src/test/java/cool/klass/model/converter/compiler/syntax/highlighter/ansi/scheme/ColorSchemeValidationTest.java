@@ -33,12 +33,13 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class ColorSchemeValidationTest {
-
+class ColorSchemeValidationTest
+{
 	private final Validator validator = Validators.newValidator();
 
 	@Test
-	void validScheme() {
+	void validScheme()
+	{
 		var json = """
 			{
 			  "name": "test",
@@ -62,7 +63,8 @@ class ColorSchemeValidationTest {
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -72,7 +74,8 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void missingName() {
+	void missingName()
+	{
 		var json = """
 			{
 			  "name": "",
@@ -90,7 +93,8 @@ class ColorSchemeValidationTest {
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -102,7 +106,8 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void missingDescription() {
+	void missingDescription()
+	{
 		var json = """
 			{
 			  "name": "test",
@@ -120,7 +125,8 @@ class ColorSchemeValidationTest {
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -132,7 +138,8 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void emptyRules() {
+	void emptyRules()
+	{
 		var json = """
 			{
 			  "name": "test",
@@ -143,7 +150,8 @@ class ColorSchemeValidationTest {
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -158,7 +166,8 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void noBackgroundRule() {
+	void noBackgroundRule()
+	{
 		var json = """
 			{
 			  "name": "test",
@@ -176,7 +185,8 @@ class ColorSchemeValidationTest {
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -188,7 +198,8 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void invalidColorName() {
+	void invalidColorName()
+	{
 		var json = """
 			{
 			  "name": "test",
@@ -212,7 +223,8 @@ class ColorSchemeValidationTest {
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -230,7 +242,8 @@ class ColorSchemeValidationTest {
 		assertThat(ruleViolations).as("Rule itself should be valid since name is present").isEmpty();
 
 		// Style settings should have the validation error
-		List<String> actualStyleViolationMessages = this.validator.validate(definition.rules().get(1).style())
+		List<String> actualStyleViolationMessages = this.validator
+			.validate(definition.rules().get(1).style())
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -242,7 +255,8 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void invalidHexColor() {
+	void invalidHexColor()
+	{
 		var json = """
 			{
 			  "name": "test",
@@ -266,7 +280,8 @@ class ColorSchemeValidationTest {
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -278,7 +293,8 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void invalidNumericColor() {
+	void invalidNumericColor()
+	{
 		var json = """
 			{
 			  "name": "test",
@@ -302,7 +318,8 @@ class ColorSchemeValidationTest {
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -314,7 +331,8 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void invalidRuleName() {
+	void invalidRuleName()
+	{
 		var json = """
 			{
 			  "name": "test",
@@ -338,7 +356,8 @@ class ColorSchemeValidationTest {
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -350,7 +369,8 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void multipleInvalidRuleNames() {
+	void multipleInvalidRuleNames()
+	{
 		var json = """
 			{
 			  "name": "test",
@@ -380,7 +400,8 @@ class ColorSchemeValidationTest {
 
 		ColorSchemeDefinition definition = this.parseAndValidate(json);
 
-		List<String> actualViolationMessages = this.validator.validate(definition)
+		List<String> actualViolationMessages = this.validator
+			.validate(definition)
 			.stream()
 			.map(ConstraintViolation::getMessage)
 			.sorted()
@@ -392,7 +413,8 @@ class ColorSchemeValidationTest {
 	}
 
 	@Test
-	void invalidJson() {
+	void invalidJson()
+	{
 		var json = """
 			{
 			  "name": "",
@@ -417,11 +439,15 @@ class ColorSchemeValidationTest {
 			.hasMessageContaining("Unrecognized field \"t\"");
 	}
 
-	private ColorSchemeDefinition parseAndValidate(String json) {
-		try {
+	private ColorSchemeDefinition parseAndValidate(String json)
+	{
+		try
+		{
 			ObjectMapper objectMapper = ObjectMapperConfig.configure(new ObjectMapper());
 			return objectMapper.readValue(json, ColorSchemeDefinition.class);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			throw new RuntimeException("Failed to parse JSON", e);
 		}
 	}

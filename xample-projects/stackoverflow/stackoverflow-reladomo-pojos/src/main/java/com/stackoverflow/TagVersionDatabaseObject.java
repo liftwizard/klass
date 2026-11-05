@@ -16,4 +16,7 @@
 
 package com.stackoverflow;
 
-public class TagVersionDatabaseObject extends TagVersionDatabaseObjectAbstract {}
+public class TagVersionDatabaseObject
+	extends TagVersionDatabaseObjectAbstract
+{
+}

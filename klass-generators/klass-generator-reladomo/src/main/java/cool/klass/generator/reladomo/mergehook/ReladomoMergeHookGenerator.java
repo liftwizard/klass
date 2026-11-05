@@ -34,8 +34,8 @@ import cool.klass.model.meta.domain.api.PrimitiveType;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 
 // TODO: Consider moving this into its own module.
-public class ReladomoMergeHookGenerator {
-
+public class ReladomoMergeHookGenerator
+{
 	private static final Converter<String, String> LOWER_CAMEL_TO_UPPER_CAMEL = CaseFormat.LOWER_CAMEL.converterTo(
 		CaseFormat.UPPER_CAMEL
 	);
@@ -43,25 +43,30 @@ public class ReladomoMergeHookGenerator {
 	@Nonnull
 	private final DomainModel domainModel;
 
-	public ReladomoMergeHookGenerator(@Nonnull DomainModel domainModel) {
+	public ReladomoMergeHookGenerator(@Nonnull DomainModel domainModel)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 	}
 
-	public void writeMergeHookFiles(@Nonnull Path outputPath) {
-		this.domainModel.getClasses()
+	public void writeMergeHookFiles(@Nonnull Path outputPath)
+	{
+		this.domainModel
+			.getClasses()
 			.reject(Klass::isAbstract)
 			.select(Klass::isVersioned)
 			.forEachWith(this::writeMergeHookFile, outputPath);
 	}
 
-	private void writeMergeHookFile(@Nonnull Klass klass, @Nonnull Path outputPath) {
+	private void writeMergeHookFile(@Nonnull Klass klass, @Nonnull Path outputPath)
+	{
 		Path mergeHookOutputPath = this.getMergeHookOutputPath(outputPath, klass);
 		String classSourceCode = this.getMergeHookSourceCode(klass);
 		this.printStringToFile(mergeHookOutputPath, classSourceCode);
 	}
 
 	@Nonnull
-	private Path getMergeHookOutputPath(@Nonnull Path outputPath, @Nonnull PackageableElement packageableElement) {
+	private Path getMergeHookOutputPath(@Nonnull Path outputPath, @Nonnull PackageableElement packageableElement)
+	{
 		String packageRelativePath = packageableElement.getPackageName().replaceAll("\\.", "/");
 		Path mergeHookDirectory = outputPath
 			.resolve(packageRelativePath)
@@ -73,16 +78,21 @@ public class ReladomoMergeHookGenerator {
 		return mergeHookDirectory.resolve(fileName);
 	}
 
-	private void printStringToFile(@Nonnull Path path, String contents) {
-		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)) {
+	private void printStringToFile(@Nonnull Path path, String contents)
+	{
+		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8))
+		{
 			printStream.print(contents);
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e)
+		{
 			throw new RuntimeException(e);
 		}
 	}
 
 	@Nonnull
-	private String getMergeHookSourceCode(@Nonnull Klass klass) {
+	private String getMergeHookSourceCode(@Nonnull Klass klass)
+	{
 		Klass versionClass = klass.getVersionProperty().get().getType();
 
 		String setKeyPropertiesSourceCode = klass
@@ -90,17 +100,17 @@ public class ReladomoMergeHookGenerator {
 			.collect(this::getKeyPropertySourceCode)
 			.makeString("");
 
-		String setAuditPropertiesOnCreateSourceCode = klass.isAudited()
-			? """
-			        version.setCreatedOn(newObject.getCreatedOn());
-			        version.setCreatedById(newObject.getCreatedById());
-			        version.setLastUpdatedById(newObject.getLastUpdatedById());
+		String setAuditPropertiesOnCreateSourceCode = klass.isAudited() ?
 			"""
-			: "";
+				        version.setCreatedOn(newObject.getCreatedOn());
+				        version.setCreatedById(newObject.getCreatedById());
+				        version.setLastUpdatedById(newObject.getLastUpdatedById());
+				""" :
+			"";
 
-		String setAuditPropertiesOnUpdateSourceCode = klass.isAudited()
-			? "        existingVersion.setLastUpdatedById(incoming.getLastUpdatedById());\n"
-			: "";
+		String setAuditPropertiesOnUpdateSourceCode = klass.isAudited() ?
+			"        existingVersion.setLastUpdatedById(incoming.getLastUpdatedById());\n" :
+			"";
 
 		// @formatter:off
 		// language=JAVA
@@ -156,7 +166,8 @@ public class ReladomoMergeHookGenerator {
 		return sourceCode;
 	}
 
-	private String getKeyPropertySourceCode(DataTypeProperty keyProperty) {
+	private String getKeyPropertySourceCode(DataTypeProperty keyProperty)
+	{
 		String name = LOWER_CAMEL_TO_UPPER_CAMEL.convert(keyProperty.getName());
 		String prefix = keyProperty.getType() == PrimitiveType.BOOLEAN ? "is" : "get";
 		return "        version.set" + name + "(newObject." + prefix + name + "());\n";

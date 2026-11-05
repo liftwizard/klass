@@ -25,7 +25,8 @@ import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableMap;
 import org.eclipse.collections.api.stack.MutableStack;
 
-public interface ProjectionElementReladomoNode {
+public interface ProjectionElementReladomoNode
+{
 	String getName();
 
 	Classifier getOwningClassifier();
@@ -40,23 +41,27 @@ public interface ProjectionElementReladomoNode {
 
 	void setProjection(RootReladomoNode rootReladomoNode);
 
-	default String getShortString() {
+	default String getShortString()
+	{
 		return '.' + this.getName() + "()";
 	}
 
-	default String getNodeString() {
-		String suffix = this.getRootReladomoNode() == null
-			? ""
-			: " <- " + this.getRootReladomoNode().getProjection().getName();
+	default String getNodeString()
+	{
+		String suffix =
+			this.getRootReladomoNode() == null ? "" : " <- " + this.getRootReladomoNode().getProjection().getName();
 		return this.getOwningClassifier().getName() + this.getShortString() + ": " + this.getType().getName() + suffix;
 	}
 
-	default boolean isLeaf() {
+	default boolean isLeaf()
+	{
 		return this.getChildren().allSatisfy(ProjectionDataTypePropertyReladomoNode.class::isInstance);
 	}
 
-	default ImmutableList<String> getDeepFetchStrings() {
-		if (this.isLeaf()) {
+	default ImmutableList<String> getDeepFetchStrings()
+	{
+		if (this.isLeaf())
+		{
 			return Lists.immutable.empty();
 		}
 		MutableList<String> result = Lists.mutable.empty();
@@ -65,9 +70,12 @@ public interface ProjectionElementReladomoNode {
 		return result.toImmutable();
 	}
 
-	private void getDeepFetchStrings(MutableList<String> result, MutableStack<String> stack) {
-		if (this instanceof ProjectionDataTypePropertyReladomoNode) {
-			if (stack.size() > 1) {
+	private void getDeepFetchStrings(MutableList<String> result, MutableStack<String> stack)
+	{
+		if (this instanceof ProjectionDataTypePropertyReladomoNode)
+		{
+			if (stack.size() > 1)
+			{
 				String string = stack.toList().asReversed().makeString("");
 				result.add(string);
 			}
@@ -75,22 +83,28 @@ public interface ProjectionElementReladomoNode {
 		}
 
 		stack.push(this.getShortString());
-		if (this.isLeaf() || this.getRootReladomoNode() != null) {
+		if (this.isLeaf() || this.getRootReladomoNode() != null)
+		{
 			String string = stack.toList().asReversed().makeString("");
 			result.add(string);
-		} else {
-			for (ProjectionElementReladomoNode child : this.getChildren()) {
+		}
+		else
+		{
+			for (ProjectionElementReladomoNode child : this.getChildren())
+			{
 				child.getDeepFetchStrings(result, stack);
 			}
 		}
 		stack.pop();
 	}
 
-	default boolean hasPolymorphicChildren() {
+	default boolean hasPolymorphicChildren()
+	{
 		return this.getChildren().anySatisfy(SubClassReladomoNode.class::isInstance);
 	}
 
-	default String toString(String indent) {
+	default String toString(String indent)
+	{
 		var stringBuilder = new StringBuilder();
 		stringBuilder.append(indent);
 		stringBuilder.append(this.getNodeString());
@@ -102,8 +116,10 @@ public interface ProjectionElementReladomoNode {
 		return stringBuilder.toString();
 	}
 
-	default void toStringChildren(StringBuilder result, String childIndent) {
-		if (this.getRootReladomoNode() != null) {
+	default void toStringChildren(StringBuilder result, String childIndent)
+	{
+		if (this.getRootReladomoNode() != null)
+		{
 			return;
 		}
 		this.getChildren()

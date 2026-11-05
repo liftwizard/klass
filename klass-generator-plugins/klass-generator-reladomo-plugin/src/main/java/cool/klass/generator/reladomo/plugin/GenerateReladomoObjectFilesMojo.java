@@ -38,19 +38,24 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
-public class GenerateReladomoObjectFilesMojo extends AbstractGenerateMojo {
-
+public class GenerateReladomoObjectFilesMojo
+	extends AbstractGenerateMojo
+{
 	@Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}/generated-resources/reladomo")
 	private File outputDirectory;
 
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.CLASSPATH;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
-		if (!this.outputDirectory.exists()) {
+	public void execute()
+		throws MojoExecutionException
+	{
+		if (!this.outputDirectory.exists())
+		{
 			this.outputDirectory.mkdirs();
 		}
 
@@ -59,10 +64,13 @@ public class GenerateReladomoObjectFilesMojo extends AbstractGenerateMojo {
 
 		var reladomoObjectFileGenerator = new ReladomoObjectFileGenerator(domainModel);
 		var reladomoInterfaceFileGenerator = new ReladomoInterfaceFileGenerator(domainModel);
-		try {
+		try
+		{
 			reladomoObjectFileGenerator.writeObjectFiles(outputPath);
 			reladomoInterfaceFileGenerator.writeObjectFiles(outputPath);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 

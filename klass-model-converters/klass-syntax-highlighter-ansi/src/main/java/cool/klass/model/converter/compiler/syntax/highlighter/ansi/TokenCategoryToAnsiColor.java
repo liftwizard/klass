@@ -20,14 +20,17 @@ import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiCo
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import org.fusesource.jansi.Ansi;
 
-public final class TokenCategoryToAnsiColor {
-
-	private TokenCategoryToAnsiColor() {
+public final class TokenCategoryToAnsiColor
+{
+	private TokenCategoryToAnsiColor()
+	{
 		throw new AssertionError("Suppress default constructor for noninstantiability");
 	}
 
-	public static void applyColor(TokenCategory tokenCategory, Ansi ansi, AnsiColorScheme colorScheme) {
-		switch (tokenCategory) {
+	public static void applyColor(TokenCategory tokenCategory, Ansi ansi, AnsiColorScheme colorScheme)
+	{
+		switch (tokenCategory)
+		{
 			case COMMENT:
 				throw new AssertionError("Comment categories will always be more specific.");
 			case BLOCK_COMMENT: {

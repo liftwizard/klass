@@ -19,35 +19,40 @@ package cool.klass.serialization.jackson.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.liftwizard.logging.slf4j.mdc.MultiMDCCloseable;
 
-public class KlassResponsePagination {
-
+public class KlassResponsePagination
+{
 	private final int pageSize;
 	private final int numberOfPages;
 	private final int pageNumber;
 
-	public KlassResponsePagination(int pageSize, int numberOfPages, int pageNumber) {
+	public KlassResponsePagination(int pageSize, int numberOfPages, int pageNumber)
+	{
 		this.pageSize = pageSize;
 		this.numberOfPages = numberOfPages;
 		this.pageNumber = pageNumber;
 	}
 
 	@JsonProperty
-	public int getPageSize() {
+	public int getPageSize()
+	{
 		return this.pageSize;
 	}
 
 	@JsonProperty
-	public int getNumberOfPages() {
+	public int getNumberOfPages()
+	{
 		return this.numberOfPages;
 	}
 
 	@JsonProperty
-	public int getPageNumber() {
+	public int getPageNumber()
+	{
 		return this.pageNumber;
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return String.format(
 			"{pageSize:%d,numberOfPages:%d,pageNumber:%d}",
 			this.pageSize,
@@ -56,7 +61,8 @@ public class KlassResponsePagination {
 		);
 	}
 
-	public void withMDC(MultiMDCCloseable mdc) {
+	public void withMDC(MultiMDCCloseable mdc)
+	{
 		mdc.put("klass.response.pagination.pageSize", String.valueOf(this.pageSize));
 		mdc.put("klass.response.pagination.numberOfPages", String.valueOf(this.numberOfPages));
 		mdc.put("klass.response.pagination.pageNumber", String.valueOf(this.pageNumber));

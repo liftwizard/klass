@@ -24,4 +24,6 @@ public record ColorSchemeRule(
 	@NotBlank(message = "Rule name is required") String name,
 
 	@NotNull(message = "Style settings are required") @Valid StyleSettings style
-) {}
+)
+{
+}

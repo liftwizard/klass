@@ -36,7 +36,9 @@ import org.eclipse.collections.api.list.ImmutableList;
  * {@link #getProjections()}
  * {@link #getServiceGroups()}
  */
-public interface DomainModelWithSourceCode extends DomainModel {
+public interface DomainModelWithSourceCode
+	extends DomainModel
+{
 	@Override
 	TopLevelElementWithSourceCode getTopLevelElementByName(String topLevelElementName);
 

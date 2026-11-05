@@ -24,7 +24,8 @@ import cool.klass.model.meta.domain.api.projection.Projection;
 import cool.klass.model.meta.domain.api.service.ServiceGroup;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public interface DomainModel {
+public interface DomainModel
+{
 	Optional<Klass> getUserClass();
 
 	@Nonnull

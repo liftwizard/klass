@@ -16,4 +16,7 @@
 
 package klass.model.meta.domain;
 
-public class EnumerationLiteralDatabaseObject extends EnumerationLiteralDatabaseObjectAbstract {}
+public class EnumerationLiteralDatabaseObject
+	extends EnumerationLiteralDatabaseObjectAbstract
+{
+}

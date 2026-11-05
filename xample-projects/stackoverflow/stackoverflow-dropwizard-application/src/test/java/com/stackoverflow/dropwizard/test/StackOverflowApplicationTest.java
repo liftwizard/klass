@@ -29,11 +29,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class StackOverflowApplicationTest extends AbstractStackOverflowApplicationTest {
-
+class StackOverflowApplicationTest
+	extends AbstractStackOverflowApplicationTest
+{
 	@Test
 	@ReladomoTestFile("test-data/existing-question.txt")
-	void readsThenWrites() {
+	void readsThenWrites()
+	{
 		this.smokeTest();
 		this.get_smoke_test();
 		this.restSet();
@@ -47,7 +49,8 @@ class StackOverflowApplicationTest extends AbstractStackOverflowApplicationTest 
 		this.post_answer();
 	}
 
-	private void smokeTest() {
+	private void smokeTest()
+	{
 		Client client = this.getClient("graphqlSmokeTest");
 
 		String queryName = this.getClass().getSimpleName() + ".smokeTest.graphql";
@@ -62,7 +65,8 @@ class StackOverflowApplicationTest extends AbstractStackOverflowApplicationTest 
 		this.assertResponse("graphqlSmokeTest", Status.OK, response);
 	}
 
-	private void post_vote() {
+	private void post_vote()
+	{
 		Client client = this.getClient("post_vote");
 
 		String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".post_vote.json5", this.getClass());
@@ -77,7 +81,8 @@ class StackOverflowApplicationTest extends AbstractStackOverflowApplicationTest 
 		this.assertResponse("post_vote", Status.CREATED, response);
 	}
 
-	private void post_answer() {
+	private void post_answer()
+	{
 		Client client = this.getClient("post_answer");
 
 		String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".post_answer.json5", this.getClass());
@@ -102,13 +107,15 @@ class StackOverflowApplicationTest extends AbstractStackOverflowApplicationTest 
 		this.assertResponse("post_answer_get", Status.OK, getResponse);
 	}
 
-	private void get_smoke_test() {
+	private void get_smoke_test()
+	{
 		Client client = this.getClient("get_smoke_test");
 
 		this.assertQuestion1Unchanged(client, "assertQuestion1Unchanged_get_smoke_test");
 	}
 
-	protected void assertQuestion1Unchanged(@Nonnull Client client, String testName) {
+	protected void assertQuestion1Unchanged(@Nonnull Client client, String testName)
+	{
 		Response response = client
 			.target("http://localhost:{port}/api/manual/question/{id}")
 			.resolveTemplate("port", this.appExtension.getLocalPort())
@@ -119,7 +126,8 @@ class StackOverflowApplicationTest extends AbstractStackOverflowApplicationTest 
 		this.assertResponse(testName, Status.OK, response);
 	}
 
-	private void post_invalid_data() {
+	private void post_invalid_data()
+	{
 		Client client = this.getClient("post_invalid_data");
 
 		String invalidJson = FileSlurper.slurp(
@@ -137,7 +145,8 @@ class StackOverflowApplicationTest extends AbstractStackOverflowApplicationTest 
 		this.assertResponse("post_invalid_data", Status.BAD_REQUEST, response);
 	}
 
-	private void post_valid_data() {
+	private void post_valid_data()
+	{
 		Client client = this.getClient("post_valid_data");
 
 		// <editor-fold desc="POST valid json, status: CREATED">
@@ -175,7 +184,8 @@ class StackOverflowApplicationTest extends AbstractStackOverflowApplicationTest 
 		// </editor-fold>
 	}
 
-	private void put_invalid_id() {
+	private void put_invalid_id()
+	{
 		Client client = this.getClient("put_invalid_id");
 
 		String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".invalid_id_data.json5", this.getClass());
@@ -193,7 +203,8 @@ class StackOverflowApplicationTest extends AbstractStackOverflowApplicationTest 
 		this.assertQuestion1Unchanged(client, "assertQuestion1Unchanged_put_invalid_id");
 	}
 
-	private void put_conflict() {
+	private void put_conflict()
+	{
 		Client client = this.getClient("put_conflict");
 
 		String validJson = FileSlurper.slurp(
@@ -215,7 +226,8 @@ class StackOverflowApplicationTest extends AbstractStackOverflowApplicationTest 
 		this.assertQuestion1Unchanged(client, "assertQuestion1Unchanged_put_conflict");
 	}
 
-	private void put() {
+	private void put()
+	{
 		Client client = this.getClient("put");
 
 		// <editor-fold desc="PUT id: 1, version: 2, status: NO_CONTENT">
@@ -249,7 +261,8 @@ class StackOverflowApplicationTest extends AbstractStackOverflowApplicationTest 
 		// TODO: PUT with owned children, with all four cases of unchanged, created, updated, deleted
 	}
 
-	private void put_unchanged() {
+	private void put_unchanged()
+	{
 		Client client = this.getClient("put_unchanged");
 
 		String jsonName = this.getClass().getSimpleName() + ".put_unchanged.json5";
@@ -269,7 +282,8 @@ class StackOverflowApplicationTest extends AbstractStackOverflowApplicationTest 
 		this.assertQuestion1Unchanged(client, "assertQuestion1Unchanged_put_unchanged");
 	}
 
-	private void restSet() {
+	private void restSet()
+	{
 		Client client = this.getClient("restSet");
 
 		{

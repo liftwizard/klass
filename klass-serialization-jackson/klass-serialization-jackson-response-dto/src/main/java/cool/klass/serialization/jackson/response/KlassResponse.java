@@ -28,8 +28,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.liftwizard.logging.slf4j.mdc.MultiMDCCloseable;
 
 @JsonPropertyOrder({ "_metadata", "_data" })
-public class KlassResponse {
-
+public class KlassResponse
+{
 	@Nonnull
 	private final KlassResponseMetadata metadata;
 
@@ -37,39 +37,48 @@ public class KlassResponse {
 	private final Object data;
 
 	@JsonCreator
-	public KlassResponse(@Nonnull KlassResponseMetadata metadata, Object data) {
+	public KlassResponse(@Nonnull KlassResponseMetadata metadata, Object data)
+	{
 		this.metadata = Objects.requireNonNull(metadata);
 		this.data = data;
 
-		if (metadata.getMultiplicity().isToMany() && !(data instanceof List)) {
+		if (metadata.getMultiplicity().isToMany() && !(data instanceof List))
+		{
 			throw new IllegalStateException(metadata.getCriteria().toString());
 		}
 	}
 
 	@Nonnull
 	@JsonProperty("_metadata")
-	public KlassResponseMetadata getMetadata() {
+	public KlassResponseMetadata getMetadata()
+	{
 		return this.metadata;
 	}
 
 	@Nullable
 	@JsonProperty("_data")
-	public Object getData() {
+	public Object getData()
+	{
 		return this.data;
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return String.format("{\"_metadata\":%s,\"_data\":%s}", this.metadata, this.data);
 	}
 
-	public void withMDC(MultiMDCCloseable mdc) {
+	public void withMDC(MultiMDCCloseable mdc)
+	{
 		this.metadata.withMDC(mdc);
 
-		if (this.data instanceof List<?> list) {
+		if (this.data instanceof List<?> list)
+		{
 			int size = list.size();
 			mdc.put("klass.response.data.size", String.valueOf(size));
-		} else if (this.data != null) {
+		}
+		else if (this.data != null)
+		{
 			mdc.put("klass.response.data.type", this.data.getClass().getCanonicalName());
 		}
 	}

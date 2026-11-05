@@ -37,13 +37,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 @ExtendWith(LogMarkerTestExtension.class)
-class ReladomoReadableInterfaceGeneratorTest {
-
+class ReladomoReadableInterfaceGeneratorTest
+{
 	@RegisterExtension
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
 	@Test
-	void smokeTest() {
+	void smokeTest()
+	{
 		String klassSourceCodeName = this.getClass().getSimpleName() + ".smokeTest.klass";
 
 		String klassSourceCode = FileSlurper.slurp(klassSourceCodeName, this.getClass());
@@ -57,11 +58,14 @@ class ReladomoReadableInterfaceGeneratorTest {
 		var compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("dark"));
 		CompilationResult compilationResult = compiler.compile();
 
-		if (compilationResult.domainModelWithSourceCode().isEmpty()) {
+		if (compilationResult.domainModelWithSourceCode().isEmpty())
+		{
 			ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
 			String message = compilerAnnotations.makeString("\n");
 			fail(message);
-		} else {
+		}
+		else
+		{
 			DomainModelWithSourceCode domainModel = compilationResult.domainModelWithSourceCode().get();
 			assertThat(domainModel).isNotNull();
 

@@ -34,34 +34,40 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(LogMarkerTestExtension.class)
-class KlassCompilerTest {
-
+class KlassCompilerTest
+{
 	@Test
-	void stackOverflow() {
+	void stackOverflow()
+	{
 		this.assertNoCompilerErrors("/com/stackoverflow/stackoverflow.klass");
 	}
 
 	@Test
-	void factorioPrints() {
+	void factorioPrints()
+	{
 		this.assertNoCompilerErrors("factorio-prints.klass");
 	}
 
 	@Test
-	void emoji() {
+	void emoji()
+	{
 		this.assertNoCompilerErrors("emoji.klass");
 	}
 
 	@Test
-	void projectionOnInterface() {
+	void projectionOnInterface()
+	{
 		this.assertNoCompilerErrors("projectionOnInterface.klass");
 	}
 
 	@Test
-	void coverageExample() {
+	void coverageExample()
+	{
 		this.assertNoCompilerErrors("/cool/klass/xample/coverage/coverage-example.klass");
 	}
 
-	private void assertNoCompilerErrors(@Nonnull String sourceCodeName) {
+	private void assertNoCompilerErrors(@Nonnull String sourceCodeName)
+	{
 		String sourceCodeText = FileSlurper.slurp(sourceCodeName, this.getClass());
 		CompilationUnit compilationUnit = CompilationUnit.createFromText(
 			0,

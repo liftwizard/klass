@@ -30,15 +30,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 @ExtendWith(LogMarkerTestExtension.class)
-public class KlassFragmentGeneratorTest {
-
+public class KlassFragmentGeneratorTest
+{
 	public static final String FULLY_QUALIFIED_PACKAGE = "cool.klass.xample.coverage";
 
 	@RegisterExtension
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
 	@Test
-	void smokeTest() {
+	void smokeTest()
+	{
 		ImmutableList<String> klassSourcePackages = Lists.immutable.with(FULLY_QUALIFIED_PACKAGE);
 
 		var domainModelCompilerLoader = new DomainModelCompilerLoader(
@@ -57,7 +58,8 @@ public class KlassFragmentGeneratorTest {
 			.distinct()
 			.toImmutableList();
 
-		for (String packageName : packageNames) {
+		for (String packageName : packageNames)
+		{
 			String sourceCode = GraphQLFragmentSourceCodeGenerator.getPackageSourceCode(domainModel, packageName);
 
 			String resourceClassPathLocation = packageName + ".graphql";

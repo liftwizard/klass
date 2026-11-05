@@ -39,8 +39,10 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 
-public final class KlassImpl extends AbstractClassifier implements KlassWithSourceCode {
-
+public final class KlassImpl
+	extends AbstractClassifier
+	implements KlassWithSourceCode
+{
 	private final boolean isAbstract;
 	private final boolean isUser;
 	private final boolean isTransient;
@@ -69,7 +71,8 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
 		boolean isAbstract,
 		boolean isUser,
 		boolean isTransient
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode, ordinal, nameContext, packageName);
 		this.isAbstract = isAbstract;
 		this.isUser = isUser;
@@ -78,39 +81,47 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
 
 	@Nonnull
 	@Override
-	public ClassDeclarationContext getElementContext() {
+	public ClassDeclarationContext getElementContext()
+	{
 		return (ClassDeclarationContext) super.getElementContext();
 	}
 
 	@Override
 	@Nonnull
-	public Optional<AssociationEnd> getVersionProperty() {
+	public Optional<AssociationEnd> getVersionProperty()
+	{
 		return this.versionProperty;
 	}
 
 	@Override
 	@Nonnull
-	public Optional<AssociationEnd> getVersionedProperty() {
+	public Optional<AssociationEnd> getVersionedProperty()
+	{
 		return this.versionedProperty;
 	}
 
 	@Override
-	public boolean isAbstract() {
+	public boolean isAbstract()
+	{
 		return this.isAbstract;
 	}
 
 	@Override
-	public boolean isUser() {
+	public boolean isUser()
+	{
 		return this.isUser;
 	}
 
 	@Override
-	public boolean isTransient() {
+	public boolean isTransient()
+	{
 		return this.isTransient;
 	}
 
-	private void setDeclaredAssociationEnds(ImmutableList<AssociationEnd> declaredAssociationEnds) {
-		if (this.declaredAssociationEnds != null) {
+	private void setDeclaredAssociationEnds(ImmutableList<AssociationEnd> declaredAssociationEnds)
+	{
+		if (this.declaredAssociationEnds != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.declaredAssociationEnds = Objects.requireNonNull(declaredAssociationEnds);
@@ -118,18 +129,22 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
 	}
 
 	@Override
-	public ImmutableList<AssociationEnd> getDeclaredAssociationEnds() {
+	public ImmutableList<AssociationEnd> getDeclaredAssociationEnds()
+	{
 		return Objects.requireNonNull(this.declaredAssociationEnds);
 	}
 
 	@Nonnull
 	@Override
-	public Optional<AssociationEnd> findDeclaredAssociationEndByName(String name) {
+	public Optional<AssociationEnd> findDeclaredAssociationEndByName(String name)
+	{
 		return Optional.ofNullable(this.declaredAssociationEndsByName.get(name));
 	}
 
-	private void setAssociationEnds(ImmutableList<AssociationEnd> associationEnds) {
-		if (this.associationEnds != null) {
+	private void setAssociationEnds(ImmutableList<AssociationEnd> associationEnds)
+	{
+		if (this.associationEnds != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.associationEnds = Objects.requireNonNull(associationEnds);
@@ -140,43 +155,52 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
 	}
 
 	@Override
-	public ImmutableList<AssociationEnd> getAssociationEnds() {
+	public ImmutableList<AssociationEnd> getAssociationEnds()
+	{
 		return Objects.requireNonNull(this.associationEnds);
 	}
 
 	@Nonnull
 	@Override
-	public Optional<AssociationEnd> findAssociationEndByName(String name) {
+	public Optional<AssociationEnd> findAssociationEndByName(String name)
+	{
 		return Optional.ofNullable(this.associationEndsByName.get(name));
 	}
 
 	@Override
 	@Nonnull
-	public Optional<Klass> getSuperClass() {
+	public Optional<Klass> getSuperClass()
+	{
 		return this.superClass;
 	}
 
-	private void setSuperClass(Optional<Klass> superClass) {
-		if (this.superClass != null) {
+	private void setSuperClass(Optional<Klass> superClass)
+	{
+		if (this.superClass != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.superClass = Objects.requireNonNull(superClass);
 	}
 
 	@Override
-	public ImmutableList<Klass> getSubClasses() {
+	public ImmutableList<Klass> getSubClasses()
+	{
 		return Objects.requireNonNull(this.subClasses);
 	}
 
-	public void setSubClasses(ImmutableList<Klass> subClasses) {
-		if (this.subClasses != null) {
+	public void setSubClasses(ImmutableList<Klass> subClasses)
+	{
+		if (this.subClasses != null)
+		{
 			throw new IllegalStateException();
 		}
 		this.subClasses = Objects.requireNonNull(subClasses);
 	}
 
-	public static final class KlassBuilder extends ClassifierBuilder<KlassImpl> {
-
+	public static final class KlassBuilder
+		extends ClassifierBuilder<KlassImpl>
+	{
 		private final boolean isAbstract;
 		private final boolean isUser;
 		private final boolean isTransient;
@@ -197,15 +221,18 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
 			boolean isAbstract,
 			boolean isUser,
 			boolean isTransient
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode, ordinal, nameContext, packageName);
 			this.isAbstract = isAbstract;
 			this.isUser = isUser;
 			this.isTransient = isTransient;
 		}
 
-		public void setDeclaredAssociationEnds(@Nonnull ImmutableList<AssociationEndBuilder> declaredAssociationEnds) {
-			if (this.declaredAssociationEnds != null) {
+		public void setDeclaredAssociationEnds(@Nonnull ImmutableList<AssociationEndBuilder> declaredAssociationEnds)
+		{
+			if (this.declaredAssociationEnds != null)
+			{
 				throw new IllegalStateException();
 			}
 			this.declaredAssociationEnds = Objects.requireNonNull(declaredAssociationEnds);
@@ -213,7 +240,8 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
 
 		@Override
 		@Nonnull
-		protected KlassImpl buildUnsafe() {
+		protected KlassImpl buildUnsafe()
+		{
 			return new KlassImpl(
 				(ClassDeclarationContext) this.elementContext,
 				this.macroElement.map(ElementBuilder::getElement),
@@ -227,27 +255,32 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
 			);
 		}
 
-		public void setSuperClass(@Nonnull Optional<KlassBuilder> superClass) {
-			if (this.superClass != null) {
+		public void setSuperClass(@Nonnull Optional<KlassBuilder> superClass)
+		{
+			if (this.superClass != null)
+			{
 				throw new IllegalStateException();
 			}
 			this.superClass = Objects.requireNonNull(superClass);
 		}
 
-		public void setSubClassBuilders(ImmutableList<KlassBuilder> subClasses) {
-			if (this.subClasses != null) {
+		public void setSubClassBuilders(ImmutableList<KlassBuilder> subClasses)
+		{
+			if (this.subClasses != null)
+			{
 				throw new IllegalStateException();
 			}
 			this.subClasses = Objects.requireNonNull(subClasses);
 		}
 
 		@Override
-		public void build2() {
+		public void build2()
+		{
 			super.build2();
 
-			ImmutableList<AssociationEnd> declaredAssociationEnds = this.declaredAssociationEnds.<
-				AssociationEnd
-			>collect(AssociationEndBuilder::getElement).toImmutable();
+			ImmutableList<AssociationEnd> declaredAssociationEnds = this.declaredAssociationEnds
+				.<AssociationEnd>collect(AssociationEndBuilder::getElement)
+				.toImmutable();
 			this.element.setDeclaredAssociationEnds(declaredAssociationEnds);
 
 			Optional<Klass> maybeSuperClass = this.superClass.map(ElementBuilder::getElement);
@@ -267,18 +300,19 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
 		}
 
 		@Override
-		protected ImmutableList<DataTypeProperty> getDataTypeProperties() {
+		protected ImmutableList<DataTypeProperty> getDataTypeProperties()
+		{
 			ImmutableList<DataTypeProperty> declaredDataTypeProperties = this.declaredDataTypeProperties.collect(
 				(property) -> property.getElement()
 			);
 
-			ImmutableList<DataTypeProperty> interfaceProperties = this.declaredInterfaces.collect(
-					ElementBuilder::getElement
-				)
+			ImmutableList<DataTypeProperty> interfaceProperties = this.declaredInterfaces
+				.collect(ElementBuilder::getElement)
 				.flatCollect(Classifier::getDataTypeProperties)
 				.toImmutable();
 
-			ImmutableList<DataTypeProperty> superClassProperties = this.superClass.map(ElementBuilder::getElement)
+			ImmutableList<DataTypeProperty> superClassProperties = this.superClass
+				.map(ElementBuilder::getElement)
 				.map(Classifier::getDataTypeProperties)
 				.orElseGet(Lists.immutable::empty);
 
@@ -295,18 +329,18 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
 		}
 
 		@Override
-		protected ImmutableList<ReferenceProperty> getReferenceProperties() {
+		protected ImmutableList<ReferenceProperty> getReferenceProperties()
+		{
 			ImmutableList<ReferenceProperty> declaredReferenceProperties = this.declaredReferenceProperties.collect(
 				(property) -> property.getElement()
 			);
 
-			ImmutableList<ReferenceProperty> superClassProperties = this.superClass.map(
-				KlassBuilder::getReferenceProperties
-			).orElseGet(Lists.immutable::empty);
+			ImmutableList<ReferenceProperty> superClassProperties = this.superClass
+				.map(KlassBuilder::getReferenceProperties)
+				.orElseGet(Lists.immutable::empty);
 
-			ImmutableList<ReferenceProperty> interfaceProperties = this.declaredInterfaces.collect(
-					ElementBuilder::getElement
-				)
+			ImmutableList<ReferenceProperty> interfaceProperties = this.declaredInterfaces
+				.collect(ElementBuilder::getElement)
 				.flatCollect(Classifier::getReferenceProperties)
 				.toImmutable();
 
@@ -323,7 +357,8 @@ public final class KlassImpl extends AbstractClassifier implements KlassWithSour
 		}
 
 		@Override
-		public KlassImpl getType() {
+		public KlassImpl getType()
+		{
 			return Objects.requireNonNull(this.element);
 		}
 	}

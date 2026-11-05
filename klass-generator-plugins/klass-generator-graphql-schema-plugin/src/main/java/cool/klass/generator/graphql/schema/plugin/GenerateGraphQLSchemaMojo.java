@@ -34,8 +34,9 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
-public class GenerateGraphQLSchemaMojo extends AbstractGenerateMojo {
-
+public class GenerateGraphQLSchemaMojo
+	extends AbstractGenerateMojo
+{
 	@Parameter(
 		property = "outputDirectory",
 		defaultValue = "${project.build.directory}/generated-resources/graphql-schema"
@@ -43,21 +44,26 @@ public class GenerateGraphQLSchemaMojo extends AbstractGenerateMojo {
 	private File outputDirectory;
 
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.CLASSPATH;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
-		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
-				DomainModel domainModel = this.getDomainModel();
+	public void execute()
+		throws MojoExecutionException
+	{
+		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () ->
+		{
+			DomainModel domainModel = this.getDomainModel();
 
-				var generator = new GraphQLSchemaGenerator(domainModel);
-				generator.writeFiles(this.outputDirectory.toPath());
-				return null;
-			});
+			var generator = new GraphQLSchemaGenerator(domainModel);
+			generator.writeFiles(this.outputDirectory.toPath());
+			return null;
+		});
 
-		if (wasGenerated) {
+		if (wasGenerated)
+		{
 			this.getLog().info("Generated GraphQL schema in: " + this.outputDirectory.getPath());
 		}
 

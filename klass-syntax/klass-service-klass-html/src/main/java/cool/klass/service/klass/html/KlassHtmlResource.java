@@ -43,12 +43,13 @@ import cool.klass.model.meta.domain.api.source.TopLevelElementWithSourceCode;
 import org.eclipse.collections.api.list.ImmutableList;
 
 @Path("/")
-public class KlassHtmlResource {
-
+public class KlassHtmlResource
+{
 	@Nonnull
 	private final DomainModelWithSourceCode domainModel;
 
-	public KlassHtmlResource(@Nonnull DomainModelWithSourceCode domainModel) {
+	public KlassHtmlResource(@Nonnull DomainModelWithSourceCode domainModel)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 	}
 
@@ -57,11 +58,14 @@ public class KlassHtmlResource {
 	@GET
 	@Path("/meta/code/element/{topLevelElementName}")
 	@Produces(MediaType.TEXT_HTML)
-	public String topLevelElementNameSourceCode(@PathParam("topLevelElementName") String topLevelElementName) {
-		var topLevelElement = (TopLevelElementWithSourceCode) this.domainModel.findTopLevelElementByName(
-				topLevelElementName
-			).orElseThrow(() -> {
-				String message = this.domainModel.getTopLevelElements()
+	public String topLevelElementNameSourceCode(@PathParam("topLevelElementName") String topLevelElementName)
+	{
+		var topLevelElement = (TopLevelElementWithSourceCode) this.domainModel
+			.findTopLevelElementByName(topLevelElementName)
+			.orElseThrow(() ->
+			{
+				String message = this.domainModel
+					.getTopLevelElements()
 					.selectInstancesOf(NamedElementWithSourceCode.class)
 					.collect(NamedElementWithSourceCode::getName)
 					.toString();
@@ -69,7 +73,8 @@ public class KlassHtmlResource {
 			});
 
 		Optional<SourceCode> sourceCode = getSourceCodeObject(topLevelElement, null);
-		if (sourceCode.isEmpty()) {
+		if (sourceCode.isEmpty())
+		{
 			throw new BadRequestException();
 		}
 		return KlassSourceCodeHtmlGenerator.getSourceCode(
@@ -88,11 +93,14 @@ public class KlassHtmlResource {
 	public String topLevelElementNameSourceCode(
 		@PathParam("topLevelElementName") String topLevelElementName,
 		@PathParam("memberName") String memberName
-	) {
-		var topLevelElement = (TopLevelElementWithSourceCode) this.domainModel.findTopLevelElementByName(
-				topLevelElementName
-			).orElseThrow(() -> {
-				String message = this.domainModel.getTopLevelElements()
+	)
+	{
+		var topLevelElement = (TopLevelElementWithSourceCode) this.domainModel
+			.findTopLevelElementByName(topLevelElementName)
+			.orElseThrow(() ->
+			{
+				String message = this.domainModel
+					.getTopLevelElements()
 					.selectInstancesOf(NamedElementWithSourceCode.class)
 					.collect(NamedElementWithSourceCode::getName)
 					.toString();
@@ -100,7 +108,8 @@ public class KlassHtmlResource {
 			});
 
 		Optional<SourceCode> sourceCode = getSourceCodeObject(topLevelElement, memberName);
-		if (sourceCode.isEmpty()) {
+		if (sourceCode.isEmpty())
+		{
 			throw new BadRequestException();
 		}
 		return KlassSourceCodeHtmlGenerator.getSourceCode(
@@ -115,29 +124,37 @@ public class KlassHtmlResource {
 	private static Optional<SourceCode> getSourceCodeObject(
 		TopLevelElementWithSourceCode topLevelElement,
 		String memberName
-	) {
-		if (memberName == null) {
+	)
+	{
+		if (memberName == null)
+		{
 			return Optional.of(topLevelElement.getSourceCodeObject());
 		}
 
-		if (topLevelElement instanceof KlassWithSourceCode klass) {
+		if (topLevelElement instanceof KlassWithSourceCode klass)
+		{
 			Optional<Property> property = klass.findPropertyByName(memberName);
-			if (property.isEmpty()) {
+			if (property.isEmpty())
+			{
 				return Optional.empty();
 			}
-			if (property.get() instanceof ElementWithSourceCode elementWithSourceCode) {
+			if (property.get() instanceof ElementWithSourceCode elementWithSourceCode)
+			{
 				return Optional.of(elementWithSourceCode.getSourceCodeObject());
 			}
 		}
 
-		if (topLevelElement instanceof EnumerationWithSourceCode enumeration) {
+		if (topLevelElement instanceof EnumerationWithSourceCode enumeration)
+		{
 			Optional<EnumerationLiteral> enumerationLiteral = enumeration
 				.getEnumerationLiterals()
 				.detectOptional((each) -> each.getName().equals(memberName));
-			if (enumerationLiteral.isEmpty()) {
+			if (enumerationLiteral.isEmpty())
+			{
 				return Optional.empty();
 			}
-			if (enumerationLiteral.get() instanceof ElementWithSourceCode elementWithSourceCode) {
+			if (enumerationLiteral.get() instanceof ElementWithSourceCode elementWithSourceCode)
+			{
 				return Optional.of(elementWithSourceCode.getSourceCodeObject());
 			}
 		}
@@ -150,12 +167,14 @@ public class KlassHtmlResource {
 	@GET
 	@Path("/meta/code/file/{fileName}.html")
 	@Produces(MediaType.TEXT_HTML)
-	public String fileSourceCode(@PathParam("fileName") String fileName) {
-		ImmutableList<SourceCode> sourceCodes = this.domainModel.getSourceCodes().select((each) ->
-			each.getSourceName().equals(fileName)
-		);
+	public String fileSourceCode(@PathParam("fileName") String fileName)
+	{
+		ImmutableList<SourceCode> sourceCodes = this.domainModel
+			.getSourceCodes()
+			.select((each) -> each.getSourceName().equals(fileName));
 
-		if (sourceCodes.size() != 1) {
+		if (sourceCodes.size() != 1)
+		{
 			throw new NotFoundException(
 				this.domainModel.getSourceCodes().collect(SourceCode::getSourceName).toString()
 			);

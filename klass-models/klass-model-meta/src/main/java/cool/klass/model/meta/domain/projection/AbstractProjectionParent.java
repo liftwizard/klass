@@ -34,8 +34,8 @@ import org.eclipse.collections.api.list.ImmutableList;
 
 public abstract class AbstractProjectionParent
 	extends AbstractIdentifierElement
-	implements AbstractProjectionElement, ProjectionParent {
-
+	implements AbstractProjectionElement, ProjectionParent
+{
 	private ImmutableList<ProjectionChild> children;
 
 	protected AbstractProjectionParent(
@@ -44,23 +44,26 @@ public abstract class AbstractProjectionParent
 		@Nullable SourceCode sourceCode,
 		int ordinal,
 		@Nonnull IdentifierContext nameContext
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode, ordinal, nameContext);
 	}
 
 	@Override
-	public ImmutableList<? extends ProjectionChild> getChildren() {
+	public ImmutableList<? extends ProjectionChild> getChildren()
+	{
 		return Objects.requireNonNull(this.children);
 	}
 
-	protected void setChildren(@Nonnull ImmutableList<ProjectionChild> children) {
+	protected void setChildren(@Nonnull ImmutableList<ProjectionChild> children)
+	{
 		this.children = Objects.requireNonNull(children);
 	}
 
 	public abstract static class AbstractProjectionParentBuilder<BuiltElement extends AbstractProjectionParent>
 		extends IdentifierElementBuilder<BuiltElement>
-		implements ProjectionElementBuilder {
-
+		implements ProjectionElementBuilder
+	{
 		protected ImmutableList<ProjectionChildBuilder> childBuilders;
 
 		protected AbstractProjectionParentBuilder(
@@ -69,22 +72,26 @@ public abstract class AbstractProjectionParent
 			@Nullable SourceCodeBuilder sourceCode,
 			int ordinal,
 			@Nonnull IdentifierContext nameContext
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode, ordinal, nameContext);
 		}
 
-		public void setChildBuilders(@Nonnull ImmutableList<ProjectionChildBuilder> projectionChildrenBuilders) {
+		public void setChildBuilders(@Nonnull ImmutableList<ProjectionChildBuilder> projectionChildrenBuilders)
+		{
 			this.childBuilders = Objects.requireNonNull(projectionChildrenBuilders);
 		}
 
 		@Override
-		protected void buildChildren() {
+		protected void buildChildren()
+		{
 			ImmutableList<ProjectionChild> children = this.childBuilders.collect(ProjectionChildBuilder::build);
 			this.getElement().setChildren(children);
 		}
 
 		@Override
-		public void build2() {
+		public void build2()
+		{
 			this.childBuilders.each(ProjectionElementBuilder::build2);
 		}
 	}

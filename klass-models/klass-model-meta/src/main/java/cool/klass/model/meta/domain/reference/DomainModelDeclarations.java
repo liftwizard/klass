@@ -51,13 +51,14 @@ import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.map.MutableMapIterable;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
-public class DomainModelDeclarations {
-
+public class DomainModelDeclarations
+{
 	private final MutableMapIterable<Token, ElementWithSourceCode> elementsByDeclaration = OrderedMapAdapter.adapt(
 		new LinkedHashMap<>()
 	);
 
-	public Optional<ElementWithSourceCode> getElementByDeclaration(@Nonnull Token token) {
+	public Optional<ElementWithSourceCode> getElementByDeclaration(@Nonnull Token token)
+	{
 		Objects.requireNonNull(token);
 		return Optional.ofNullable(this.elementsByDeclaration.get(token));
 	}
@@ -65,7 +66,8 @@ public class DomainModelDeclarations {
 	public void addEnumerationDeclaration(
 		@Nonnull EnumerationDeclarationContext declaration,
 		@Nonnull EnumerationWithSourceCode element
-	) {
+	)
+	{
 		Objects.requireNonNull(element);
 		Token token = declaration.identifier().getStart();
 		this.elementsByDeclaration.put(token, element);
@@ -74,7 +76,8 @@ public class DomainModelDeclarations {
 	public void addEnumerationLiteralDeclaration(
 		@Nonnull EnumerationLiteralContext declaration,
 		@Nonnull EnumerationLiteralWithSourceCode element
-	) {
+	)
+	{
 		Objects.requireNonNull(element);
 		Token token = declaration.identifier().getStart();
 		this.elementsByDeclaration.put(token, element);
@@ -83,16 +86,15 @@ public class DomainModelDeclarations {
 	public void addInterfaceDeclaration(
 		@Nonnull InterfaceDeclarationContext declaration,
 		@Nonnull InterfaceWithSourceCode element
-	) {
+	)
+	{
 		Objects.requireNonNull(element);
 		Token token = declaration.interfaceHeader().identifier().getStart();
 		this.elementsByDeclaration.put(token, element);
 	}
 
-	public void addKlassDeclaration(
-		@Nonnull ClassDeclarationContext declaration,
-		@Nonnull KlassWithSourceCode element
-	) {
+	public void addKlassDeclaration(@Nonnull ClassDeclarationContext declaration, @Nonnull KlassWithSourceCode element)
+	{
 		Objects.requireNonNull(element);
 		Token token = declaration.classHeader().identifier().getStart();
 		this.elementsByDeclaration.put(token, element);
@@ -101,7 +103,8 @@ public class DomainModelDeclarations {
 	public void addPrimitivePropertyDeclaration(
 		@Nonnull PrimitivePropertyContext declaration,
 		@Nonnull PrimitivePropertyWithSourceCode element
-	) {
+	)
+	{
 		Objects.requireNonNull(element);
 		Token token = declaration.identifier().getStart();
 		this.elementsByDeclaration.put(token, element);
@@ -110,7 +113,8 @@ public class DomainModelDeclarations {
 	public void addEnumerationPropertyDeclaration(
 		@Nonnull EnumerationPropertyContext declaration,
 		@Nonnull EnumerationPropertyWithSourceCode element
-	) {
+	)
+	{
 		Objects.requireNonNull(element);
 		Token token = declaration.identifier().getStart();
 		this.elementsByDeclaration.put(token, element);
@@ -119,7 +123,8 @@ public class DomainModelDeclarations {
 	public void addAssociationEndDeclaration(
 		@Nonnull AssociationEndContext declaration,
 		@Nonnull AssociationEndWithSourceCode element
-	) {
+	)
+	{
 		Objects.requireNonNull(element);
 		Token token = declaration.identifier().getStart();
 		this.elementsByDeclaration.put(token, element);
@@ -128,7 +133,8 @@ public class DomainModelDeclarations {
 	public void addAssociationEndSignatureDeclaration(
 		@Nonnull AssociationEndSignatureContext declaration,
 		@Nonnull AssociationEndSignatureWithSourceCode element
-	) {
+	)
+	{
 		Objects.requireNonNull(element);
 		Token token = declaration.identifier().getStart();
 		this.elementsByDeclaration.put(token, element);
@@ -137,7 +143,8 @@ public class DomainModelDeclarations {
 	public void addAssociationDeclaration(
 		@Nonnull AssociationDeclarationContext declaration,
 		@Nonnull AssociationWithSourceCode element
-	) {
+	)
+	{
 		Objects.requireNonNull(element);
 		Token token = declaration.identifier().getStart();
 		this.elementsByDeclaration.put(token, element);
@@ -146,7 +153,8 @@ public class DomainModelDeclarations {
 	public void addProjectionDeclaration(
 		@Nonnull ProjectionDeclarationContext declaration,
 		@Nonnull ProjectionWithSourceCode element
-	) {
+	)
+	{
 		Objects.requireNonNull(element);
 		Token token = declaration.identifier().getStart();
 		this.elementsByDeclaration.put(token, element);
@@ -155,7 +163,8 @@ public class DomainModelDeclarations {
 	public void addParameterizedPropertyDeclaration(
 		@Nonnull ParameterizedPropertyContext declaration,
 		@Nonnull ParameterizedPropertyWithSourceCode element
-	) {
+	)
+	{
 		Objects.requireNonNull(element);
 		Token token = declaration.identifier().getStart();
 		this.elementsByDeclaration.put(token, element);
@@ -164,7 +173,8 @@ public class DomainModelDeclarations {
 	public void addServiceGroupDeclaration(
 		@Nonnull ServiceGroupDeclarationContext declaration,
 		@Nonnull ServiceGroupWithSourceCode element
-	) {
+	)
+	{
 		Objects.requireNonNull(element);
 		Token token = declaration.identifier().getStart();
 		this.elementsByDeclaration.put(token, element);

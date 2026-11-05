@@ -21,17 +21,21 @@ import javax.annotation.Nonnull;
 import cool.klass.model.meta.domain.api.Classifier;
 import cool.klass.model.meta.domain.api.property.Property;
 
-public interface ProjectionChild extends ProjectionElement {
+public interface ProjectionChild
+	extends ProjectionElement
+{
 	@Nonnull
 	Classifier getDeclaredClassifier();
 
 	@Nonnull
 	Property getProperty();
 
-	default boolean isPolymorphic() {
+	default boolean isPolymorphic()
+	{
 		Classifier projectionParentClassifier = this.getParent().get().getClassifier();
 		Classifier propertyOwner = this.getProperty().getOwningClassifier();
-		if (projectionParentClassifier == propertyOwner) {
+		if (projectionParentClassifier == propertyOwner)
+		{
 			return false;
 		}
 

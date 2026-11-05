@@ -37,22 +37,25 @@ import cool.klass.model.meta.grammar.KlassParser.IntegerLiteralContext;
 import cool.klass.model.meta.grammar.KlassParser.NullLiteralContext;
 import cool.klass.model.meta.grammar.KlassParser.StringLiteralContext;
 
-public class LiteralValueVisitor extends KlassBaseVisitor<AbstractAntlrLiteralValue> {
-
+public class LiteralValueVisitor
+	extends KlassBaseVisitor<AbstractAntlrLiteralValue>
+{
 	@Nonnull
 	private final CompilerState compilerState;
 
 	@Nonnull
 	private final IAntlrElement expressionValueOwner;
 
-	public LiteralValueVisitor(@Nonnull CompilerState compilerState, @Nonnull IAntlrElement expressionValueOwner) {
+	public LiteralValueVisitor(@Nonnull CompilerState compilerState, @Nonnull IAntlrElement expressionValueOwner)
+	{
 		this.compilerState = Objects.requireNonNull(compilerState);
 		this.expressionValueOwner = Objects.requireNonNull(expressionValueOwner);
 	}
 
 	@Nonnull
 	@Override
-	public AntlrIntegerLiteralValue visitIntegerLiteral(@Nonnull IntegerLiteralContext ctx) {
+	public AntlrIntegerLiteralValue visitIntegerLiteral(@Nonnull IntegerLiteralContext ctx)
+	{
 		long value = Long.parseLong(ctx.getText());
 		return new AntlrIntegerLiteralValue(
 			ctx,
@@ -64,7 +67,8 @@ public class LiteralValueVisitor extends KlassBaseVisitor<AbstractAntlrLiteralVa
 
 	@Nonnull
 	@Override
-	public AntlrFloatingPointLiteralValue visitFloatingPointLiteral(FloatingPointLiteralContext ctx) {
+	public AntlrFloatingPointLiteralValue visitFloatingPointLiteral(FloatingPointLiteralContext ctx)
+	{
 		double value = Double.parseDouble(ctx.getText());
 		return new AntlrFloatingPointLiteralValue(
 			ctx,
@@ -76,7 +80,8 @@ public class LiteralValueVisitor extends KlassBaseVisitor<AbstractAntlrLiteralVa
 
 	@Nonnull
 	@Override
-	public AntlrBooleanLiteralValue visitBooleanLiteral(BooleanLiteralContext ctx) {
+	public AntlrBooleanLiteralValue visitBooleanLiteral(BooleanLiteralContext ctx)
+	{
 		boolean value = Boolean.parseBoolean(ctx.getText());
 		return new AntlrBooleanLiteralValue(
 			ctx,
@@ -88,7 +93,8 @@ public class LiteralValueVisitor extends KlassBaseVisitor<AbstractAntlrLiteralVa
 
 	@Nonnull
 	@Override
-	public AbstractAntlrLiteralValue visitCharacterLiteral(CharacterLiteralContext ctx) {
+	public AbstractAntlrLiteralValue visitCharacterLiteral(CharacterLiteralContext ctx)
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitCharacterLiteral() not implemented yet"
 		);
@@ -96,7 +102,8 @@ public class LiteralValueVisitor extends KlassBaseVisitor<AbstractAntlrLiteralVa
 
 	@Nonnull
 	@Override
-	public AntlrStringLiteralValue visitStringLiteral(@Nonnull StringLiteralContext ctx) {
+	public AntlrStringLiteralValue visitStringLiteral(@Nonnull StringLiteralContext ctx)
+	{
 		String quotedText = ctx.getText();
 		String text = quotedText.substring(1, quotedText.length() - 1);
 		return new AntlrStringLiteralValue(
@@ -109,7 +116,8 @@ public class LiteralValueVisitor extends KlassBaseVisitor<AbstractAntlrLiteralVa
 
 	@Nonnull
 	@Override
-	public AntlrNullLiteral visitNullLiteral(@Nonnull NullLiteralContext ctx) {
+	public AntlrNullLiteral visitNullLiteral(@Nonnull NullLiteralContext ctx)
+	{
 		return new AntlrNullLiteral(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),

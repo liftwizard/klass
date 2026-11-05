@@ -28,45 +28,54 @@ import org.eclipse.collections.api.factory.Sets;
 import org.eclipse.collections.api.set.ImmutableSet;
 import org.eclipse.collections.api.set.MutableSet;
 
-public class GatherProjectionReferencesVisitor implements ProjectionVisitor {
-
+public class GatherProjectionReferencesVisitor
+	implements ProjectionVisitor
+{
 	private final Projection originalProjection;
 	private final MutableSet<Projection> referencedProjections = Sets.mutable.empty();
 
-	public GatherProjectionReferencesVisitor(Projection projection) {
+	public GatherProjectionReferencesVisitor(Projection projection)
+	{
 		this.originalProjection = projection;
 	}
 
-	public ImmutableSet<Projection> getReferencedProjections() {
+	public ImmutableSet<Projection> getReferencedProjections()
+	{
 		return this.referencedProjections.toImmutable();
 	}
 
 	@Override
-	public void visitProjection(@Nonnull Projection projection) {
-		if (projection == this.originalProjection) {
+	public void visitProjection(@Nonnull Projection projection)
+	{
+		if (projection == this.originalProjection)
+		{
 			return;
 		}
 
 		boolean added = this.referencedProjections.add(projection);
-		if (added) {
+		if (added)
+		{
 			projection.getChildren().forEachWith(ProjectionElement::visit, this);
 		}
 	}
 
 	@Override
-	public void visitProjectionReferenceProperty(@Nonnull ProjectionReferenceProperty projectionReferenceProperty) {
+	public void visitProjectionReferenceProperty(@Nonnull ProjectionReferenceProperty projectionReferenceProperty)
+	{
 		projectionReferenceProperty.getChildren().forEachWith(ProjectionElement::visit, this);
 	}
 
 	@Override
 	public void visitProjectionProjectionReference(
 		@Nonnull ProjectionProjectionReference projectionProjectionReference
-	) {
+	)
+	{
 		projectionProjectionReference.getProjection().visit(this);
 	}
 
 	@Override
-	public void visitProjectionDataTypeProperty(ProjectionDataTypeProperty projectionDataTypeProperty) {
+	public void visitProjectionDataTypeProperty(ProjectionDataTypeProperty projectionDataTypeProperty)
+	{
 		// Deliberately empty
 	}
 }

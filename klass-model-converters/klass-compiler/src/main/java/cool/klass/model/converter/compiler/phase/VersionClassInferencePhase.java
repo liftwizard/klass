@@ -30,23 +30,28 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;
 
-public class VersionClassInferencePhase extends AbstractCompilerPhase {
-
-	public VersionClassInferencePhase(@Nonnull CompilerState compilerState) {
+public class VersionClassInferencePhase
+	extends AbstractCompilerPhase
+{
+	public VersionClassInferencePhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Nonnull
 	@Override
-	public String getName() {
+	public String getName()
+	{
 		return "Version class";
 	}
 
 	@Override
-	public void enterClassifierModifier(@Nonnull ClassifierModifierContext ctx) {
+	public void enterClassifierModifier(@Nonnull ClassifierModifierContext ctx)
+	{
 		super.enterClassifierModifier(ctx);
 		String modifierText = ctx.getText();
-		if (!"versioned".equals(modifierText)) {
+		if (!"versioned".equals(modifierText))
+		{
 			return;
 		}
 
@@ -71,7 +76,8 @@ public class VersionClassInferencePhase extends AbstractCompilerPhase {
 	}
 
 	@Nonnull
-	private String getSourceCode() {
+	private String getSourceCode()
+	{
 		AntlrClass klass = this.compilerState.getCompilerWalk().getKlass();
 		String propertySourceCode = klass
 			.getAllDataTypeProperties()
@@ -86,29 +92,30 @@ public class VersionClassInferencePhase extends AbstractCompilerPhase {
 		// TODO: If main class is transient, version should also be transient, so copy classifier modifiers
 		// language=Klass
 		return (
-			"package "
-			+ klass.getPackageName()
-			+ "\n"
-			+ "\n"
-			+ "class "
-			+ klass.getName()
-			+ "Version systemTemporal"
-			+ auditedSourceCode
-			+ "\n"
-			+ "{\n"
-			+ propertySourceCode
-			+ "    number: Integer version;\n"
-			+ "}\n"
+			"package " +
+			klass.getPackageName() +
+			"\n" +
+			"\n" +
+			"class " +
+			klass.getName() +
+			"Version systemTemporal" +
+			auditedSourceCode +
+			"\n" +
+			"{\n" +
+			propertySourceCode +
+			"    number: Integer version;\n" +
+			"}\n"
 		);
 	}
 
-	private String getSourceCode(@Nonnull AntlrDataTypeProperty<?> dataTypeProperty) {
+	private String getSourceCode(@Nonnull AntlrDataTypeProperty<?> dataTypeProperty)
+	{
 		String isOptionalString = dataTypeProperty.isOptional() ? "?" : "";
 
 		ListIterable<AntlrModifier> modifiers = dataTypeProperty.getModifiers().reject(AntlrModifier::isId);
-		String modifierSourceCode = modifiers.isEmpty()
-			? ""
-			: modifiers.collect(AntlrModifier::getKeyword).makeString(" ", " ", "");
+		String modifierSourceCode = modifiers.isEmpty() ?
+			"" :
+			modifiers.collect(AntlrModifier::getKeyword).makeString(" ", " ", "");
 
 		ListIterable<AbstractAntlrPropertyValidation> validations = dataTypeProperty.getValidations();
 		String validationSourceCode = validations.isEmpty() ? "" : validations.makeString(" ", " ", "");

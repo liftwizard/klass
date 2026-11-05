@@ -31,8 +31,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 
 public abstract class AbstractNumericPropertyValidation
 	extends AbstractPropertyValidation
-	implements NumericPropertyValidation {
-
+	implements NumericPropertyValidation
+{
 	private final int number;
 
 	protected AbstractNumericPropertyValidation(
@@ -41,21 +41,21 @@ public abstract class AbstractNumericPropertyValidation
 		@Nullable SourceCode sourceCode,
 		@Nonnull AbstractDataTypeProperty<?> owningProperty,
 		int number
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode, owningProperty);
 		this.number = number;
 	}
 
 	@Override
-	public int getNumber() {
+	public int getNumber()
+	{
 		return this.number;
 	}
 
-	public abstract static class NumericPropertyValidationBuilder<
-		BuiltElement extends AbstractNumericPropertyValidation
-	>
-		extends PropertyValidationBuilder<BuiltElement> {
-
+	public abstract static class NumericPropertyValidationBuilder<BuiltElement extends AbstractNumericPropertyValidation>
+		extends PropertyValidationBuilder<BuiltElement>
+	{
 		protected final int number;
 
 		protected NumericPropertyValidationBuilder(
@@ -64,7 +64,8 @@ public abstract class AbstractNumericPropertyValidation
 			@Nullable SourceCodeBuilder sourceCode,
 			@Nonnull DataTypePropertyBuilder<?, ?, ?> propertyBuilder,
 			int number
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode, propertyBuilder);
 			this.number = number;
 		}

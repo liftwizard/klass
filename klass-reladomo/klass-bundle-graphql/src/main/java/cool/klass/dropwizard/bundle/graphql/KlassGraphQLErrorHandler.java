@@ -18,4 +18,7 @@ package cool.klass.dropwizard.bundle.graphql;
 
 import graphql.kickstart.execution.error.DefaultGraphQLErrorHandler;
 
-public class KlassGraphQLErrorHandler extends DefaultGraphQLErrorHandler {}
+public class KlassGraphQLErrorHandler
+	extends DefaultGraphQLErrorHandler
+{
+}

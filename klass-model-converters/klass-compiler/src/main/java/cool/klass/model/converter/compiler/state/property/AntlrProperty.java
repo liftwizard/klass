@@ -44,8 +44,9 @@ import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
-public abstract class AntlrProperty extends AntlrIdentifierElement {
-
+public abstract class AntlrProperty
+	extends AntlrIdentifierElement
+{
 	@Nonnull
 	private final MutableList<AntlrModifier> modifiers = Lists.mutable.empty();
 
@@ -61,12 +62,14 @@ public abstract class AntlrProperty extends AntlrIdentifierElement {
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		int ordinal,
 		@Nonnull IdentifierContext nameContext
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, ordinal, nameContext);
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore() {
+	public Pair<Token, Token> getContextBefore()
+	{
 		return this.getEntireContext();
 	}
 
@@ -83,81 +86,98 @@ public abstract class AntlrProperty extends AntlrIdentifierElement {
 	@Nonnull
 	public abstract AntlrClassifier getOwningClassifier();
 
-	public boolean isVersion() {
+	public boolean isVersion()
+	{
 		return this.getModifiers().anySatisfy(AntlrModifier::isVersion);
 	}
 
-	public boolean isPrivate() {
+	public boolean isPrivate()
+	{
 		return this.getModifiers().anySatisfy(AntlrModifier::isPrivate);
 	}
 
-	public boolean isCreatedBy() {
+	public boolean isCreatedBy()
+	{
 		return this.getModifiers().anySatisfy(AntlrModifier::isCreatedBy);
 	}
 
-	public boolean isFinal() {
+	public boolean isFinal()
+	{
 		return this.getModifiers().anySatisfy(AntlrModifier::isFinal);
 	}
 
-	public boolean isLastUpdatedBy() {
+	public boolean isLastUpdatedBy()
+	{
 		return this.getModifiers().anySatisfy(AntlrModifier::isLastUpdatedBy);
 	}
 
-	public boolean isDerived() {
+	public boolean isDerived()
+	{
 		return this.getModifiers().anySatisfy(AntlrModifier::isDerived);
 	}
 
-	public int getNumModifiers() {
+	public int getNumModifiers()
+	{
 		return this.modifiers.size();
 	}
 
 	@Nonnull
-	public ListIterable<AntlrModifier> getModifiers() {
+	public ListIterable<AntlrModifier> getModifiers()
+	{
 		return this.modifiers.asUnmodifiable();
 	}
 
-	public void enterModifier(@Nonnull AntlrModifier modifier) {
+	public void enterModifier(@Nonnull AntlrModifier modifier)
+	{
 		Objects.requireNonNull(modifier);
 		this.modifiers.add(modifier);
 		this.modifiersByName.getIfAbsentPut(modifier.getKeyword(), Lists.mutable::empty).add(modifier);
 
 		AntlrModifier duplicate = this.modifiersByContext.put(modifier.getElementContext(), modifier);
-		if (duplicate != null) {
+		if (duplicate != null)
+		{
 			throw new AssertionError();
 		}
 	}
 
-	public ImmutableList<AntlrModifier> getModifiersByName(String modifierName) {
+	public ImmutableList<AntlrModifier> getModifiersByName(String modifierName)
+	{
 		MutableList<AntlrModifier> result = this.modifiersByName.get(modifierName);
 		return result == null ? Lists.immutable.empty() : result.toImmutable();
 	}
 
 	// <editor-fold desc="Report Compiler Errors">
 	@OverridingMethodsMustInvokeSuper
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		this.reportDuplicateModifiers(compilerAnnotationHolder);
 		this.reportDuplicateAuditModifiers(compilerAnnotationHolder);
 		this.reportInvalidAuditProperties(compilerAnnotationHolder);
 		this.reportDerivedPrivateProperty(compilerAnnotationHolder);
 	}
 
-	private void reportDuplicateModifiers(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	private void reportDuplicateModifiers(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		MutableBag<String> duplicateModifiers = this.getModifiers()
 			.asLazy()
 			.collect(AntlrModifier::getKeyword)
 			.toBag()
 			.selectDuplicates();
 
-		for (AntlrModifier modifier : this.getModifiers()) {
-			if (duplicateModifiers.contains(modifier.getKeyword())) {
+		for (AntlrModifier modifier : this.getModifiers())
+		{
+			if (duplicateModifiers.contains(modifier.getKeyword()))
+			{
 				String message = String.format("Duplicate modifier '%s'.", modifier.getKeyword());
 				compilerAnnotationHolder.add("ERR_DUP_MOD", message, modifier);
 			}
 		}
 	}
 
-	protected void reportDuplicateAuditModifiers(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.isCreatedBy() && this.isLastUpdatedBy()) {
+	protected void reportDuplicateAuditModifiers(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.isCreatedBy() && this.isLastUpdatedBy())
+		{
 			ImmutableList<AntlrModifier> modifiers = this.getModifiers()
 				.select((modifier) -> modifier.isCreatedBy() || modifier.isLastUpdatedBy())
 				.toImmutable();
@@ -168,12 +188,15 @@ public abstract class AntlrProperty extends AntlrIdentifierElement {
 	}
 
 	@OverridingMethodsMustInvokeSuper
-	protected void reportInvalidAuditProperties(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.isCreatedBy() && this.isLastUpdatedBy()) {
+	protected void reportInvalidAuditProperties(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.isCreatedBy() && this.isLastUpdatedBy())
+		{
 			return;
 		}
 
-		if (this.isCreatedBy() && !this.isFinal()) {
+		if (this.isCreatedBy() && !this.isFinal())
+		{
 			AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isCreatedBy);
 
 			String message = String.format("Expected createdBy property '%s' to be final.", this);
@@ -185,7 +208,8 @@ public abstract class AntlrProperty extends AntlrIdentifierElement {
 			);
 		}
 
-		if (this.isLastUpdatedBy() && this.isFinal()) {
+		if (this.isLastUpdatedBy() && this.isFinal())
+		{
 			ImmutableList<ParserRuleContext> parserRuleContexts = this.getModifiers()
 				.select((antlrModifier) -> antlrModifier.isLastUpdatedBy() || antlrModifier.isFinal())
 				.collect(AntlrElement::getElementContext)
@@ -195,7 +219,8 @@ public abstract class AntlrProperty extends AntlrIdentifierElement {
 		}
 	}
 
-	public final void reportDuplicateMemberName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public final void reportDuplicateMemberName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		String message = String.format(
 			"Duplicate member: '%s.%s'.",
 			this.getOwningClassifier().getName(),
@@ -206,14 +231,16 @@ public abstract class AntlrProperty extends AntlrIdentifierElement {
 	}
 
 	@OverridingMethodsMustInvokeSuper
-	public void reportAuditErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportAuditErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		this.reportAuditErrors(compilerAnnotationHolder, this.modifiers, this);
 	}
 
 	public void reportDuplicatePropertyWithModifiers(
 		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
 		ImmutableList<String> modifierStrings
-	) {
+	)
+	{
 		ImmutableList<AntlrModifier> modifiers = modifierStrings.flatCollect(this::getModifiersByName);
 
 		String message = String.format(
@@ -225,7 +252,8 @@ public abstract class AntlrProperty extends AntlrIdentifierElement {
 		compilerAnnotationHolder.add("ERR_PRP_MOD", message, this, modifiers.collect(AntlrElement::getElementContext));
 	}
 
-	public void reportUnreferencedPrivateProperty(CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportUnreferencedPrivateProperty(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		boolean isAudit = this.isCreatedBy() || this.isLastUpdatedBy();
 		String prefix = isAudit ? "Audit" : "Private";
 		var severity = isAudit ? AnnotationSeverity.ERROR : AnnotationSeverity.WARNING;
@@ -236,7 +264,8 @@ public abstract class AntlrProperty extends AntlrIdentifierElement {
 		CompilerAnnotationHolder compilerAnnotationHolder,
 		String prefix,
 		AnnotationSeverity severity
-	) {
+	)
+	{
 		String message = "%s property '%s.%s' is not referenced in any criteria.".formatted(
 			prefix,
 			this.getOwningClassifier().getName(),
@@ -245,8 +274,10 @@ public abstract class AntlrProperty extends AntlrIdentifierElement {
 		compilerAnnotationHolder.add("ERR_PRP_REF", message, this, severity);
 	}
 
-	public void reportDerivedPrivateProperty(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.isDerived() && this.isPrivate()) {
+	public void reportDerivedPrivateProperty(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.isDerived() && this.isPrivate())
+		{
 			AntlrModifier derivedModifier = this.getModifiers().detect(AntlrModifier::isDerived);
 			AntlrModifier privateModifier = this.getModifiers().detect(AntlrModifier::isPrivate);
 
@@ -266,16 +297,19 @@ public abstract class AntlrProperty extends AntlrIdentifierElement {
 	// </editor-fold>
 
 	@Override
-	protected Pattern getNamePattern() {
+	protected Pattern getNamePattern()
+	{
 		return MEMBER_NAME_PATTERN;
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return String.format("%s.%s", this.getOwningClassifier().getName(), this.getShortString());
 	}
 
-	public String getShortString() {
+	public String getShortString()
+	{
 		MutableList<String> sourceCodeStrings = Lists.mutable.empty();
 
 		String typeSourceCode = this.getType().getName();
@@ -287,7 +321,8 @@ public abstract class AntlrProperty extends AntlrIdentifierElement {
 	}
 
 	@Override
-	public boolean isContext() {
+	public boolean isContext()
+	{
 		return true;
 	}
 

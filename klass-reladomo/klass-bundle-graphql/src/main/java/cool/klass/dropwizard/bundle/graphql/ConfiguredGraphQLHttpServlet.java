@@ -21,16 +21,19 @@ import java.util.Objects;
 import graphql.kickstart.servlet.GraphQLConfiguration;
 import graphql.kickstart.servlet.GraphQLHttpServlet;
 
-public class ConfiguredGraphQLHttpServlet extends GraphQLHttpServlet {
-
+public class ConfiguredGraphQLHttpServlet
+	extends GraphQLHttpServlet
+{
 	private final GraphQLConfiguration config;
 
-	public ConfiguredGraphQLHttpServlet(GraphQLConfiguration config) {
+	public ConfiguredGraphQLHttpServlet(GraphQLConfiguration config)
+	{
 		this.config = Objects.requireNonNull(config);
 	}
 
 	@Override
-	protected GraphQLConfiguration getConfiguration() {
+	protected GraphQLConfiguration getConfiguration()
+	{
 		return this.config;
 	}
 }

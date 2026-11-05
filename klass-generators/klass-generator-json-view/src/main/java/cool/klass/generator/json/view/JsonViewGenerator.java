@@ -30,8 +30,8 @@ import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.projection.Projection;
 
 // TODO: Refactor out the commonality between the several Generators
-public class JsonViewGenerator {
-
+public class JsonViewGenerator
+{
 	@Nonnull
 	private final DomainModel domainModel;
 
@@ -45,21 +45,26 @@ public class JsonViewGenerator {
 		@Nonnull DomainModel domainModel,
 		@Nonnull String rootPackageName,
 		@Nonnull String applicationName
-	) {
+	)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 		this.rootPackageName = Objects.requireNonNull(rootPackageName);
 		this.applicationName = Objects.requireNonNull(applicationName);
 	}
 
-	public void writeJsonViews(@Nonnull Path outputPath) throws IOException {
-		for (Projection projection : this.domainModel.getProjections()) {
+	public void writeJsonViews(@Nonnull Path outputPath)
+		throws IOException
+	{
+		for (Projection projection : this.domainModel.getProjections())
+		{
 			Path jsonViewOutputPath = this.getJsonViewOutputPath(outputPath, projection);
 			this.printStringToFile(jsonViewOutputPath, this.getJsonViewSourceCode(projection));
 		}
 	}
 
 	@Nonnull
-	private Path getJsonViewOutputPath(@Nonnull Path outputPath, @Nonnull Projection packageableElement) {
+	private Path getJsonViewOutputPath(@Nonnull Path outputPath, @Nonnull Projection packageableElement)
+	{
 		String packageRelativePath = packageableElement.getPackageName().replaceAll("\\.", "/");
 		Path outputDirectory = outputPath.resolve(packageRelativePath).resolve("json").resolve("view");
 		outputDirectory.toFile().mkdirs();
@@ -67,14 +72,18 @@ public class JsonViewGenerator {
 		return outputDirectory.resolve(fileName);
 	}
 
-	private void printStringToFile(@Nonnull Path path, String contents) throws FileNotFoundException {
-		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)) {
+	private void printStringToFile(@Nonnull Path path, String contents)
+		throws FileNotFoundException
+	{
+		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8))
+		{
 			printStream.print(contents);
 		}
 	}
 
 	@Nonnull
-	private String getJsonViewSourceCode(@Nonnull Projection projection) {
+	private String getJsonViewSourceCode(@Nonnull Projection projection)
+	{
 		// @formatter:off
 		// language=JAVA
 		return ""

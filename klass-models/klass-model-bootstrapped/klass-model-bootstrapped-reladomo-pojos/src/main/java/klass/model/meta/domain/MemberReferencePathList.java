@@ -20,19 +20,25 @@ import java.util.Collection;
 
 import com.gs.fw.finder.Operation;
 
-public class MemberReferencePathList extends MemberReferencePathListAbstract {
+public class MemberReferencePathList
+	extends MemberReferencePathListAbstract
+{
+	public MemberReferencePathList()
+	{
+	}
 
-	public MemberReferencePathList() {}
-
-	public MemberReferencePathList(int initialSize) {
+	public MemberReferencePathList(int initialSize)
+	{
 		super(initialSize);
 	}
 
-	public MemberReferencePathList(Collection c) {
+	public MemberReferencePathList(Collection c)
+	{
 		super(c);
 	}
 
-	public MemberReferencePathList(Operation operation) {
+	public MemberReferencePathList(Operation operation)
+	{
 		super(operation);
 	}
 }
