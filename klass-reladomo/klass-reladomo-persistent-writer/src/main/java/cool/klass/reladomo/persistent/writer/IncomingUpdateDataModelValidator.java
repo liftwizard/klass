@@ -51,8 +51,8 @@ import org.eclipse.collections.impl.list.mutable.ListAdapter;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 import org.eclipse.collections.impl.utility.ListIterate;
 
-public class IncomingUpdateDataModelValidator {
-
+public class IncomingUpdateDataModelValidator
+{
 	@Nonnull
 	protected final DataStore dataStore;
 
@@ -101,7 +101,8 @@ public class IncomingUpdateDataModelValidator {
 		@Nonnull Optional<AssociationEnd> pathHere,
 		boolean isRoot,
 		boolean isInProjection
-	) {
+	)
+	{
 		this.dataStore = Objects.requireNonNull(dataStore);
 		this.userKlass = userKlass;
 		this.klass = Objects.requireNonNull(klass);
@@ -125,7 +126,8 @@ public class IncomingUpdateDataModelValidator {
 		@Nonnull ObjectNode objectNode,
 		@Nonnull MutableList<String> errors,
 		@Nonnull MutableList<String> warnings
-	) {
+	)
+	{
 		var validator = new IncomingUpdateDataModelValidator(
 			dataStore,
 			userKlass,
@@ -143,58 +145,83 @@ public class IncomingUpdateDataModelValidator {
 		validator.validate();
 	}
 
-	public void validate() {
-		if (this.isRoot) {
+	public void validate()
+	{
+		if (this.isRoot)
+		{
 			this.contextStack.push(this.klass.getName());
 		}
-		try {
+		try
+		{
 			this.handleDataTypePropertiesInsideProjection();
 			this.handleAssociationEnds();
-		} finally {
-			if (this.isRoot) {
+		}
+		finally
+		{
+			if (this.isRoot)
+			{
 				this.contextStack.pop();
 			}
 		}
 	}
 
 	// region DataTypeProperties
-	private void handleDataTypePropertiesInsideProjection() {
+	private void handleDataTypePropertiesInsideProjection()
+	{
 		ImmutableList<DataTypeProperty> dataTypeProperties = this.klass.getDataTypeProperties();
-		for (DataTypeProperty dataTypeProperty : dataTypeProperties) {
+		for (DataTypeProperty dataTypeProperty : dataTypeProperties)
+		{
 			this.handleDataTypePropertyInsideProjection(dataTypeProperty);
 		}
 	}
 
-	private void handleDataTypePropertyInsideProjection(@Nonnull DataTypeProperty dataTypeProperty) {
-		if (dataTypeProperty.isKey()) {
+	private void handleDataTypePropertyInsideProjection(@Nonnull DataTypeProperty dataTypeProperty)
+	{
+		if (dataTypeProperty.isKey())
+		{
 			this.handleKeyProperty(dataTypeProperty);
-		} else if (dataTypeProperty.isTemporalInstant()) {
+		}
+		else if (dataTypeProperty.isTemporalInstant())
+		{
 			this.checkPropertyMatchesIfPresent(dataTypeProperty, "temporal");
-		} else if (dataTypeProperty.isCreatedBy() || dataTypeProperty.isLastUpdatedBy()) {
-			if (dataTypeProperty.isForeignKey()) {
+		}
+		else if (dataTypeProperty.isCreatedBy() || dataTypeProperty.isLastUpdatedBy())
+		{
+			if (dataTypeProperty.isForeignKey())
+			{
 				return;
 			}
 			this.handleAuditProperty(dataTypeProperty);
-		} else if (dataTypeProperty.isCreatedOn()) {
+		}
+		else if (dataTypeProperty.isCreatedOn())
+		{
 			this.checkPropertyMatchesIfPresent(dataTypeProperty, "created on");
-		} else if (dataTypeProperty.isVersion()) {
+		}
+		else if (dataTypeProperty.isVersion())
+		{
 			this.checkPropertyMatchesIfPresent(dataTypeProperty, "version");
-		} else if (dataTypeProperty.isFinal()) {
+		}
+		else if (dataTypeProperty.isFinal())
+		{
 			this.checkPropertyMatchesIfPresent(dataTypeProperty, "final");
 		}
 	}
 
-	private void handleKeyProperty(@Nonnull DataTypeProperty dataTypeProperty) {
+	private void handleKeyProperty(@Nonnull DataTypeProperty dataTypeProperty)
+	{
 		this.contextStack.push(dataTypeProperty.getName());
 
-		try {
+		try
+		{
 			JsonNode jsonDataTypeValue = this.objectNode.path(dataTypeProperty.getName());
-			if (jsonDataTypeValue.isMissingNode()) {
+			if (jsonDataTypeValue.isMissingNode())
+			{
 				return;
 			}
 
 			ImmutableMap<DataTypeProperty, Object> propertyDataFromUrl = this.mutationContext.getPropertyDataFromUrl();
-			if (!propertyDataFromUrl.containsKey(dataTypeProperty)) {
+			if (!propertyDataFromUrl.containsKey(dataTypeProperty))
+			{
 				return;
 			}
 
@@ -209,31 +236,40 @@ public class IncomingUpdateDataModelValidator {
 				this.errors
 			);
 			dataTypeProperty.visit(visitor);
-		} finally {
+		}
+		finally
+		{
 			this.contextStack.pop();
 		}
 	}
 
-	private void handleAuditProperty(@Nonnull DataTypeProperty dataTypeProperty) {
+	private void handleAuditProperty(@Nonnull DataTypeProperty dataTypeProperty)
+	{
 		this.checkPropertyMatchesIfPresent(dataTypeProperty, "user id");
 	}
 
 	private void checkPropertyMatchesIfPresent(
 		@Nonnull DataTypeProperty dataTypeProperty,
 		@Nonnull String propertyKind
-	) {
+	)
+	{
 		this.contextStack.push(dataTypeProperty.getName());
 
-		try {
+		try
+		{
 			this.checkPropertyMatches(dataTypeProperty, propertyKind);
-		} finally {
+		}
+		finally
+		{
 			this.contextStack.pop();
 		}
 	}
 
-	private void checkPropertyMatches(@Nonnull DataTypeProperty property, @Nonnull String propertyKind) {
+	private void checkPropertyMatches(@Nonnull DataTypeProperty property, @Nonnull String propertyKind)
+	{
 		JsonNode jsonDataTypeValue = this.objectNode.path(property.getName());
-		if (jsonDataTypeValue.isMissingNode()) {
+		if (jsonDataTypeValue.isMissingNode())
+		{
 			return;
 		}
 
@@ -249,36 +285,46 @@ public class IncomingUpdateDataModelValidator {
 		property.visit(visitor);
 	}
 
-	public String getContextString() {
+	public String getContextString()
+	{
 		return this.contextStack.toList().asReversed().makeString(".");
 	}
 
 	// endregion
 
 	// region AssociationEnds
-	private void handleAssociationEnds() {
-		for (AssociationEnd associationEnd : this.klass.getAssociationEnds()) {
+	private void handleAssociationEnds()
+	{
+		for (AssociationEnd associationEnd : this.klass.getAssociationEnds())
+		{
 			this.handleAssociationEnd(associationEnd);
 		}
 	}
 
-	private void handleAssociationEnd(@Nonnull AssociationEnd associationEnd) {
-		if (this.isBackward(associationEnd)) {
+	private void handleAssociationEnd(@Nonnull AssociationEnd associationEnd)
+	{
+		if (this.isBackward(associationEnd))
+		{
 			return;
 		}
 
-		if (associationEnd.isVersion()) {
+		if (associationEnd.isVersion())
+		{
 			this.handleVersionAssociationEnd(associationEnd);
 			return;
 		}
-		if (associationEnd.isCreatedBy() || associationEnd.isLastUpdatedBy()) {
+		if (associationEnd.isCreatedBy() || associationEnd.isLastUpdatedBy())
+		{
 			this.handleAuditByAssociationEnd(associationEnd);
 			return;
 		}
 
-		if (associationEnd.isOwned()) {
+		if (associationEnd.isOwned())
+		{
 			this.handleOwnedAssociationEnd(associationEnd);
-		} else {
+		}
+		else
+		{
 			this.handleOutsideProjectionReferenceProperty(associationEnd);
 		}
 	}
@@ -287,7 +333,8 @@ public class IncomingUpdateDataModelValidator {
 		@Nonnull AssociationEnd associationEnd,
 		@Nonnull ObjectNode objectNode,
 		@Nonnull Object persistentInstance
-	) {
+	)
+	{
 		var validator = new IncomingUpdateDataModelValidator(
 			this.dataStore,
 			this.userKlass,
@@ -306,9 +353,11 @@ public class IncomingUpdateDataModelValidator {
 		validator.validate();
 	}
 
-	private void handleAuditByAssociationEnd(@Nonnull AssociationEnd associationEnd) {
+	private void handleAuditByAssociationEnd(@Nonnull AssociationEnd associationEnd)
+	{
 		JsonNode jsonNode = this.objectNode.path(associationEnd.getName());
-		if (jsonNode.isMissingNode() || jsonNode.isNull()) {
+		if (jsonNode.isMissingNode() || jsonNode.isNull())
+		{
 			return;
 		}
 
@@ -316,7 +365,8 @@ public class IncomingUpdateDataModelValidator {
 		this.contextStack.push(associationEndName);
 
 		Optional<String> userId = this.mutationContext.getUserId();
-		if (userId.isEmpty() || this.userKlass == null) {
+		if (userId.isEmpty() || this.userKlass == null)
+		{
 			return;
 		}
 
@@ -324,7 +374,8 @@ public class IncomingUpdateDataModelValidator {
 		ImmutableMap<DataTypeProperty, Object> userKeys = Maps.immutable.with(userIdProperty, userId.get());
 		Object userPersistentInstance = this.dataStore.findByKey(this.userKlass, userKeys);
 
-		if (userPersistentInstance == null) {
+		if (userPersistentInstance == null)
+		{
 			String error = String.format(
 				"Error at %s. Couldn't find user with key %s.",
 				this.getContextString(),
@@ -334,7 +385,8 @@ public class IncomingUpdateDataModelValidator {
 			return;
 		}
 
-		try {
+		try
+		{
 			// TODO: Support a IncomingLastUpdatedByDataModelValidator which allows the current user to be substituted in for lastUpdatedBy.
 			var validator = new IncomingCreateDataModelValidator(
 				this.dataStore,
@@ -349,67 +401,88 @@ public class IncomingUpdateDataModelValidator {
 				false
 			);
 			validator.validate();
-		} finally {
+		}
+		finally
+		{
 			this.contextStack.pop();
 		}
 	}
 
-	private void handleOwnedAssociationEnd(@Nonnull AssociationEnd associationEnd) {
+	private void handleOwnedAssociationEnd(@Nonnull AssociationEnd associationEnd)
+	{
 		Multiplicity multiplicity = associationEnd.getMultiplicity();
 
-		if (multiplicity.isToOne()) {
+		if (multiplicity.isToOne())
+		{
 			this.handleOwnedToOne(associationEnd);
-		} else {
+		}
+		else
+		{
 			this.handleOwnedToMany(associationEnd);
 		}
 	}
 
-	private void handleOutsideProjectionReferenceProperty(@Nonnull AssociationEnd associationEnd) {
+	private void handleOutsideProjectionReferenceProperty(@Nonnull AssociationEnd associationEnd)
+	{
 		Multiplicity multiplicity = associationEnd.getMultiplicity();
 		JsonNode childJsonNode = this.objectNode.path(associationEnd.getName());
 
-		if (childJsonNode.isMissingNode() || childJsonNode.isNull()) {
+		if (childJsonNode.isMissingNode() || childJsonNode.isNull())
+		{
 			return;
 		}
 
-		if (multiplicity.isToOne()) {
+		if (multiplicity.isToOne())
+		{
 			this.handleToOneOutsideProjection(associationEnd, childJsonNode);
-		} else {
+		}
+		else
+		{
 			this.handleToManyOutsideProjection(associationEnd, childJsonNode);
 		}
 	}
 
-	private void handleVersionAssociationEnd(@Nonnull AssociationEnd associationEnd) {
+	private void handleVersionAssociationEnd(@Nonnull AssociationEnd associationEnd)
+	{
 		this.contextStack.push(associationEnd.getName());
-		try {
+		try
+		{
 			JsonNode jsonNode = this.objectNode.path(associationEnd.getName());
 
-			if (this.persistentInstance == null) {
+			if (this.persistentInstance == null)
+			{
 				this.handleWarnIfPresent(associationEnd, "version");
 				return;
 			}
 
-			if (jsonNode.isMissingNode() || jsonNode.isNull()) {
-				if (this.isInProjection && this.klass.getKeyProperties().noneSatisfy(DataTypeProperty::isID)) {
+			if (jsonNode.isMissingNode() || jsonNode.isNull())
+			{
+				if (this.isInProjection && this.klass.getKeyProperties().noneSatisfy(DataTypeProperty::isID))
+				{
 					this.handleErrorIfAbsent(associationEnd, "version");
 				}
 				return;
 			}
 
 			Object childPersistentInstance = this.dataStore.getToOne(this.persistentInstance, associationEnd);
-			if (!(jsonNode instanceof ObjectNode objectNode)) {
+			if (!(jsonNode instanceof ObjectNode objectNode))
+			{
 				return;
 			}
 
 			this.handleAssociationEnd(associationEnd, objectNode, childPersistentInstance);
-		} finally {
+		}
+		finally
+		{
 			this.contextStack.pop();
 		}
 	}
 
-	private void handleErrorIfAbsent(@Nonnull AssociationEnd associationEnd, String propertyKind) {
+	private void handleErrorIfAbsent(@Nonnull AssociationEnd associationEnd, String propertyKind)
+	{
 		JsonNode jsonNode = this.objectNode.path(associationEnd.getName());
-		if (!jsonNode.isMissingNode() && !jsonNode.isNull()) {
+		if (!jsonNode.isMissingNode() && !jsonNode.isNull())
+		{
 			return;
 		}
 
@@ -426,9 +499,11 @@ public class IncomingUpdateDataModelValidator {
 		this.errors.add(error);
 	}
 
-	private void handleWarnIfPresent(@Nonnull AssociationEnd property, String propertyKind) {
+	private void handleWarnIfPresent(@Nonnull AssociationEnd property, String propertyKind)
+	{
 		JsonNode jsonNode = this.objectNode.path(property.getName());
-		if (jsonNode.isMissingNode()) {
+		if (jsonNode.isMissingNode())
+		{
 			return;
 		}
 
@@ -447,31 +522,39 @@ public class IncomingUpdateDataModelValidator {
 		this.warnings.add(warning);
 	}
 
-	private boolean isBackward(@Nonnull AssociationEnd associationEnd) {
+	private boolean isBackward(@Nonnull AssociationEnd associationEnd)
+	{
 		return this.pathHere.equals(Optional.of(associationEnd.getOpposite()));
 	}
 
-	public void handleOwnedToOne(@Nonnull AssociationEnd associationEnd) {
+	public void handleOwnedToOne(@Nonnull AssociationEnd associationEnd)
+	{
 		JsonNode childJsonNode = this.objectNode.path(associationEnd.getName());
 
 		String associationEndName = associationEnd.getName();
 		this.contextStack.push(associationEndName);
 
-		try {
-			if (childJsonNode instanceof ObjectNode childObjectNode) {
+		try
+		{
+			if (childJsonNode instanceof ObjectNode childObjectNode)
+			{
 				Object childPersistentInstance = this.dataStore.getToOne(this.persistentInstance, associationEnd);
-				if (childPersistentInstance == null) {
+				if (childPersistentInstance == null)
+				{
 					// TODO: This is a workaround for a bug and should be revisited to see if it still applies in the happy path. The bug started with an association between Owner[1..1] and Details[1..1] owned. The database wound up corrupted with no row or Details. Here we're trying to validate the incoming Details json against the childPersistentInstance which is null. It's possible that this situation comes up with a nullable Details object as well.
 					return;
 				}
 				this.handleAssociationEnd(associationEnd, childObjectNode, childPersistentInstance);
 			}
-		} finally {
+		}
+		finally
+		{
 			this.contextStack.pop();
 		}
 	}
 
-	public void handleOwnedToMany(@Nonnull AssociationEnd associationEnd) {
+	public void handleOwnedToMany(@Nonnull AssociationEnd associationEnd)
+	{
 		JsonNode incomingChildInstances = this.objectNode.path(associationEnd.getName());
 
 		// TODO: Figure out how to recurse without checking key
@@ -494,14 +577,17 @@ public class IncomingUpdateDataModelValidator {
 		MapIterable<ImmutableList<Object>, Object> persistentChildInstancesByKey =
 			this.getPersistentChildInstancesByKey(incomingChildInstancesByKey, associationEnd);
 
-		for (var index = 0; index < incomingChildInstances.size(); index++) {
+		for (var index = 0; index < incomingChildInstances.size(); index++)
+		{
 			String contextString = String.format("%s[%d]", associationEnd.getName(), index);
 
 			this.contextStack.push(contextString);
 
-			try {
+			try
+			{
 				JsonNode childJsonNode = incomingChildInstances.path(index);
-				if (this.jsonNodeNeedsIdInferredOnInsert(childJsonNode, associationEnd)) {
+				if (this.jsonNodeNeedsIdInferredOnInsert(childJsonNode, associationEnd))
+				{
 					continue;
 				}
 
@@ -511,7 +597,8 @@ public class IncomingUpdateDataModelValidator {
 					this.objectNode
 				);
 				Object childPersistentInstance = persistentChildInstancesByKey.get(keysFromJsonNode);
-				if (childPersistentInstance == null) {
+				if (childPersistentInstance == null)
+				{
 					// recurse in create mode
 					var validator = new IncomingCreateDataModelValidator(
 						this.dataStore,
@@ -526,33 +613,45 @@ public class IncomingUpdateDataModelValidator {
 						false
 					);
 					validator.validate();
-				} else {
+				}
+				else
+				{
 					this.handleAssociationEnd(associationEnd, (ObjectNode) childJsonNode, childPersistentInstance);
 				}
-			} finally {
+			}
+			finally
+			{
 				this.contextStack.pop();
 			}
 		}
 	}
 
-	public void handleToOneOutsideProjection(@Nonnull AssociationEnd associationEnd, JsonNode jsonNode) {
+	public void handleToOneOutsideProjection(@Nonnull AssociationEnd associationEnd, JsonNode jsonNode)
+	{
 		this.contextStack.push(associationEnd.getName());
-		try {
-			if (jsonNode instanceof ObjectNode objectNode) {
+		try
+		{
+			if (jsonNode instanceof ObjectNode objectNode)
+			{
 				Object childPersistentInstance = this.dataStore.getToOne(this.persistentInstance, associationEnd);
-				if (childPersistentInstance == null) {
+				if (childPersistentInstance == null)
+				{
 					// TODO: This is a workaround for a bug and should be revisited to see if it still applies in the happy path. The bug started with an association between Owner[1..1] and Details[1..1] owned. The database wound up corrupted with no row or Details. Here we're trying to validate the incoming Details json against the childPersistentInstance which is null. It's possible that this situation comes up with a nullable Details object as well.
 					return;
 				}
 				this.handleAssociationEnd(associationEnd, objectNode, childPersistentInstance);
 			}
-		} finally {
+		}
+		finally
+		{
 			this.contextStack.pop();
 		}
 	}
 
-	public void handleToManyOutsideProjection(@Nonnull AssociationEnd associationEnd, JsonNode incomingChildInstances) {
-		if (!(incomingChildInstances instanceof ArrayNode)) {
+	public void handleToManyOutsideProjection(@Nonnull AssociationEnd associationEnd, JsonNode incomingChildInstances)
+	{
+		if (!(incomingChildInstances instanceof ArrayNode))
+		{
 			this.emitNonArrayError(associationEnd, incomingChildInstances);
 			return;
 		}
@@ -577,13 +676,16 @@ public class IncomingUpdateDataModelValidator {
 		MapIterable<ImmutableList<Object>, Object> persistentChildInstancesByKey =
 			this.getPersistentChildInstancesByKey(incomingChildInstancesByKey, associationEnd);
 
-		for (var index = 0; index < incomingChildInstances.size(); index++) {
+		for (var index = 0; index < incomingChildInstances.size(); index++)
+		{
 			String contextString = String.format("%s[%d]", associationEnd.getName(), index);
 			this.contextStack.push(contextString);
 
-			try {
+			try
+			{
 				JsonNode childJsonNode = incomingChildInstances.path(index);
-				if (this.jsonNodeNeedsIdInferredOnInsert(childJsonNode, associationEnd)) {
+				if (this.jsonNodeNeedsIdInferredOnInsert(childJsonNode, associationEnd))
+				{
 					continue;
 				}
 
@@ -593,7 +695,8 @@ public class IncomingUpdateDataModelValidator {
 					this.objectNode
 				);
 				Object childPersistentInstance = persistentChildInstancesByKey.get(keysFromJsonNode);
-				if (childPersistentInstance == null) {
+				if (childPersistentInstance == null)
+				{
 					// recurse in create mode
 					var validator = new IncomingCreateDataModelValidator(
 						this.dataStore,
@@ -608,10 +711,14 @@ public class IncomingUpdateDataModelValidator {
 						false
 					);
 					validator.validate();
-				} else {
+				}
+				else
+				{
 					this.handleAssociationEnd(associationEnd, (ObjectNode) childJsonNode, childPersistentInstance);
 				}
-			} finally {
+			}
+			finally
+			{
 				this.contextStack.pop();
 			}
 		}
@@ -621,7 +728,8 @@ public class IncomingUpdateDataModelValidator {
 	private MapIterable<ImmutableList<Object>, Object> getPersistentChildInstancesByKey(
 		@Nonnull MapIterable<ImmutableList<Object>, JsonNode> incomingChildInstancesByKey,
 		@Nonnull AssociationEnd associationEnd
-	) {
+	)
+	{
 		List<Object> persistentChildInstances = this.dataStore.getToMany(this.persistentInstance, associationEnd);
 		MutableList<Object> nonTerminatedPersistentChildInstances = ListAdapter.adapt(persistentChildInstances).reject(
 			(persistentChildInstance) ->
@@ -633,7 +741,8 @@ public class IncomingUpdateDataModelValidator {
 	private ImmutableList<JsonNode> filterIncomingInstancesForUpdate(
 		JsonNode incomingChildInstances,
 		AssociationEnd associationEnd
-	) {
+	)
+	{
 		return Lists.immutable
 			.withAll(incomingChildInstances)
 			.rejectWith(this::jsonNodeNeedsIdInferredOnInsert, associationEnd);
@@ -642,7 +751,8 @@ public class IncomingUpdateDataModelValidator {
 	private ImmutableList<JsonNode> filterIncomingInstancesForInsert(
 		JsonNode incomingChildInstances,
 		AssociationEnd associationEnd
-	) {
+	)
+	{
 		return Lists.immutable
 			.withAll(incomingChildInstances)
 			.selectWith(this::jsonNodeNeedsIdInferredOnInsert, associationEnd);
@@ -652,18 +762,21 @@ public class IncomingUpdateDataModelValidator {
 		Object persistentChildInstance,
 		@Nonnull Klass klass,
 		@Nonnull MapIterable<ImmutableList<Object>, JsonNode> incomingChildInstancesByKey
-	) {
+	)
+	{
 		ImmutableList<Object> keys = this.getKeysFromPersistentInstance(persistentChildInstance, klass);
 		return !incomingChildInstancesByKey.containsKey(keys);
 	}
 
-	protected ImmutableList<Object> getKeysFromPersistentInstance(Object persistentInstance, @Nonnull Klass klass) {
+	protected ImmutableList<Object> getKeysFromPersistentInstance(Object persistentInstance, @Nonnull Klass klass)
+	{
 		return klass
 			.getKeyProperties()
 			.collect((keyProperty) -> this.dataStore.getDataTypeProperty(persistentInstance, keyProperty));
 	}
 
-	private void emitNonArrayError(@Nonnull AssociationEnd associationEnd, @Nonnull JsonNode incomingChildInstances) {
+	private void emitNonArrayError(@Nonnull AssociationEnd associationEnd, @Nonnull JsonNode incomingChildInstances)
+	{
 		this.contextStack.push(associationEnd.getName());
 		String error = String.format(
 			"Error at %s. Expected json array but value was %s.",
@@ -678,7 +791,8 @@ public class IncomingUpdateDataModelValidator {
 	private MapIterable<ImmutableList<Object>, Object> indexPersistentInstances(
 		@Nonnull List<Object> persistentInstances,
 		@Nonnull Klass klass
-	) {
+	)
+	{
 		MutableOrderedMap<ImmutableList<Object>, Object> result = ListIterate.groupByUniqueKey(
 			persistentInstances,
 			(persistentInstance) -> this.getKeysFromPersistentInstance(persistentInstance, klass),
@@ -691,19 +805,23 @@ public class IncomingUpdateDataModelValidator {
 	private MapIterable<ImmutableList<Object>, JsonNode> indexIncomingJsonInstances(
 		@Nonnull Iterable<JsonNode> incomingInstances,
 		@Nonnull AssociationEnd associationEnd
-	) {
+	)
+	{
 		MutableOrderedMap<ImmutableList<Object>, JsonNode> result = OrderedMapAdapter.adapt(new LinkedHashMap<>());
-		for (JsonNode incomingInstance : incomingInstances) {
+		for (JsonNode incomingInstance : incomingInstances)
+		{
 			ImmutableList<Object> keys = this.getKeysFromJsonNode(incomingInstance, associationEnd, this.objectNode);
 			JsonNode duplicateJsonNode = result.put(keys, incomingInstance);
-			if (duplicateJsonNode != null) {
+			if (duplicateJsonNode != null)
+			{
 				throw new AssertionError("TODO: Test an array of owned children with duplicates with the same key.");
 			}
 		}
 		return result.asUnmodifiable();
 	}
 
-	private boolean jsonNodeNeedsIdInferredOnInsert(JsonNode jsonNode, @Nonnull AssociationEnd associationEnd) {
+	private boolean jsonNodeNeedsIdInferredOnInsert(JsonNode jsonNode, @Nonnull AssociationEnd associationEnd)
+	{
 		return associationEnd
 			.getType()
 			.getKeyProperties()
@@ -714,18 +832,22 @@ public class IncomingUpdateDataModelValidator {
 		@Nonnull DataTypeProperty keyProperty,
 		JsonNode jsonNode,
 		@Nonnull AssociationEnd associationEnd
-	) {
+	)
+	{
 		OrderedMap<AssociationEnd, DataTypeProperty> keyMatchingThisForeignKey =
 			keyProperty.getKeysMatchingThisForeignKey();
 
 		AssociationEnd opposite = associationEnd.getOpposite();
 
-		if (keyMatchingThisForeignKey.containsKey(opposite)) {
+		if (keyMatchingThisForeignKey.containsKey(opposite))
+		{
 			return false;
 		}
 
-		if (keyMatchingThisForeignKey.notEmpty()) {
-			if (keyMatchingThisForeignKey.size() != 1) {
+		if (keyMatchingThisForeignKey.notEmpty())
+		{
+			if (keyMatchingThisForeignKey.size() != 1)
+			{
 				throw new AssertionError();
 			}
 
@@ -739,7 +861,8 @@ public class IncomingUpdateDataModelValidator {
 		@Nonnull JsonNode jsonNode,
 		@Nonnull AssociationEnd associationEnd,
 		@Nonnull JsonNode parentJsonNode
-	) {
+	)
+	{
 		Klass type = associationEnd.getType();
 		ImmutableList<DataTypeProperty> keyProperties = type.getKeyProperties();
 		return keyProperties.collect((keyProperty) ->
@@ -752,7 +875,8 @@ public class IncomingUpdateDataModelValidator {
 		@Nonnull JsonNode jsonNode,
 		@Nonnull AssociationEnd associationEnd,
 		@Nonnull JsonNode parentJsonNode
-	) {
+	)
+	{
 		OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey =
 			keyProperty.getKeysMatchingThisForeignKey();
 
@@ -760,13 +884,16 @@ public class IncomingUpdateDataModelValidator {
 
 		DataTypeProperty oppositeForeignKeys = keysMatchingThisForeignKey.get(opposite);
 
-		if (oppositeForeignKeys != null) {
+		if (oppositeForeignKeys != null)
+		{
 			Object result = this.dataStore.getDataTypeProperty(this.persistentInstance, oppositeForeignKeys);
 			return Objects.requireNonNull(result);
 		}
 
-		if (keysMatchingThisForeignKey.notEmpty()) {
-			if (keysMatchingThisForeignKey.size() != 1) {
+		if (keysMatchingThisForeignKey.notEmpty())
+		{
+			if (keysMatchingThisForeignKey.size() != 1)
+			{
 				throw new AssertionError();
 			}
 
@@ -775,11 +902,13 @@ public class IncomingUpdateDataModelValidator {
 			AssociationEnd foreignKeyAssociation = pair.getOne();
 			String foreignKeyAssociationName = foreignKeyAssociation.getName();
 			JsonNode childNode = jsonNode.path(foreignKeyAssociationName);
-			if (childNode instanceof ObjectNode objectNode) {
+			if (childNode instanceof ObjectNode objectNode)
+			{
 				Object result = JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(pair.getTwo(), objectNode);
 				return Objects.requireNonNull(result);
 			}
-			if (childNode.isMissingNode()) {
+			if (childNode.isMissingNode())
+			{
 				Object result = JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(
 					keyProperty,
 					(ObjectNode) jsonNode
@@ -789,7 +918,8 @@ public class IncomingUpdateDataModelValidator {
 			throw new AssertionError(childNode.getClass().getCanonicalName());
 		}
 
-		if (jsonNode instanceof ObjectNode objectNode) {
+		if (jsonNode instanceof ObjectNode objectNode)
+		{
 			Object result = JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(keyProperty, objectNode);
 			return Objects.requireNonNull(result);
 		}

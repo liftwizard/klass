@@ -36,8 +36,9 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
-public class GenerateSwaggerSpecMojo extends AbstractGenerateMojo {
-
+public class GenerateSwaggerSpecMojo
+	extends AbstractGenerateMojo
+{
 	@Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}/generated-resources/swagger")
 	private File outputDirectory;
 
@@ -45,22 +46,27 @@ public class GenerateSwaggerSpecMojo extends AbstractGenerateMojo {
 	private String applicationName;
 
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.CLASSPATH;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
-		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
-				DomainModel domainModel = this.getDomainModel();
-				ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+	public void execute()
+		throws MojoExecutionException
+	{
+		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () ->
+		{
+			DomainModel domainModel = this.getDomainModel();
+			ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
-				var generator = new SwaggerSpecGenerator(objectMapper, domainModel, this.applicationName);
-				generator.writeFiles(this.outputDirectory.toPath());
-				return null;
-			});
+			var generator = new SwaggerSpecGenerator(objectMapper, domainModel, this.applicationName);
+			generator.writeFiles(this.outputDirectory.toPath());
+			return null;
+		});
 
-		if (wasGenerated) {
+		if (wasGenerated)
+		{
 			this.getLog().info("Generated Swagger specification in: " + this.outputDirectory.getPath());
 		}
 

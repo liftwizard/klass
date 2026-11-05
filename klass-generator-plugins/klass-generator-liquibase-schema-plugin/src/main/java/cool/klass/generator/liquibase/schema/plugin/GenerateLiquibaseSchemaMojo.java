@@ -35,8 +35,9 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
-public class GenerateLiquibaseSchemaMojo extends AbstractGenerateMojo {
-
+public class GenerateLiquibaseSchemaMojo
+	extends AbstractGenerateMojo
+{
 	@Parameter(
 		property = "outputDirectory",
 		defaultValue = "${project.build.directory}/generated-resources/liquibase-schema"
@@ -47,26 +48,34 @@ public class GenerateLiquibaseSchemaMojo extends AbstractGenerateMojo {
 	private final String fileName = "migrations-initial-schema.xml";
 
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.CLASSPATH;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
-		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () -> {
-				DomainModel domainModel = this.getDomainModel();
-				Path outputPath = this.outputDirectory.toPath();
+	public void execute()
+		throws MojoExecutionException
+	{
+		boolean wasGenerated = this.executeWithCaching(this.outputDirectory, () ->
+		{
+			DomainModel domainModel = this.getDomainModel();
+			Path outputPath = this.outputDirectory.toPath();
 
-				var generator = new LiquibaseSchemaGenerator(domainModel, this.fileName);
-				try {
-					generator.writeFiles(outputPath);
-				} catch (RuntimeException e) {
-					throw new MojoExecutionException(e.getMessage(), e);
-				}
-				return null;
-			});
+			var generator = new LiquibaseSchemaGenerator(domainModel, this.fileName);
+			try
+			{
+				generator.writeFiles(outputPath);
+			}
+			catch (RuntimeException e)
+			{
+				throw new MojoExecutionException(e.getMessage(), e);
+			}
+			return null;
+		});
 
-		if (wasGenerated) {
+		if (wasGenerated)
+		{
 			this.getLog().info("Generated Liquibase schema in: " + this.outputDirectory.getPath());
 		}
 

@@ -33,18 +33,22 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
-public class GenerateHtmlMojo extends AbstractGenerateMojo {
-
+public class GenerateHtmlMojo
+	extends AbstractGenerateMojo
+{
 	@Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}/generated-sources/html")
 	private File outputDirectory;
 
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.CLASSPATH;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
+	public void execute()
+		throws MojoExecutionException
+	{
 		DomainModelWithSourceCode domainModel = this.getDomainModel();
 
 		var generator = new KlassSourceCodeHtmlGenerator(domainModel);

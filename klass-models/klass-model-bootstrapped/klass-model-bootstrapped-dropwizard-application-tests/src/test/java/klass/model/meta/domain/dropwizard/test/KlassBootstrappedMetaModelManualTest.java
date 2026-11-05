@@ -25,10 +25,12 @@ import io.liftwizard.junit.extension.match.FileSlurper;
 import org.eclipse.collections.api.factory.Maps;
 import org.junit.jupiter.api.Test;
 
-class KlassBootstrappedMetaModelManualTest extends AbstractResourceTestCase {
-
+class KlassBootstrappedMetaModelManualTest
+	extends AbstractResourceTestCase
+{
 	@Test
-	void readsThenDelete() {
+	void readsThenDelete()
+	{
 		this.assertGraphQL("graphql.packageableElements");
 		this.assertGraphQL("graphql.enumerations");
 		this.assertGraphQL("graphql.interfaces");
@@ -84,7 +86,8 @@ class KlassBootstrappedMetaModelManualTest extends AbstractResourceTestCase {
 		this.assertUrlReturnsGone("serviceGroup.getByNameAfterDelete", "/meta/serviceGroup/KlassResource");
 	}
 
-	private void assertGraphQL(String testName) {
+	private void assertGraphQL(String testName)
+	{
 		Client client = this.getClient(testName);
 
 		Class<?> callingClass = this.getClass();

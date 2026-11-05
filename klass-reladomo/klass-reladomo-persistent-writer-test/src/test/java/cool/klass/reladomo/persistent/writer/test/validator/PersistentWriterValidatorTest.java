@@ -56,8 +56,8 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PersistentWriterValidatorTest {
-
+class PersistentWriterValidatorTest
+{
 	@RegisterExtension
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
@@ -92,7 +92,9 @@ class PersistentWriterValidatorTest {
 	private final DomainModel domainModel = PersistentWriterValidatorTest.getDomainModel(this.objectMapper);
 
 	@Test
-	void validateAllCases() throws JsonProcessingException {
+	void validateAllCases()
+		throws JsonProcessingException
+	{
 		ValidationCase createPropertiesOptional = this.createCase(
 			"Create_PropertiesOptional",
 			"PropertiesOptional",
@@ -177,14 +179,16 @@ class PersistentWriterValidatorTest {
 	}
 
 	@Nonnull
-	private ValidationCase createCase(String caseName, String className, String keyPropertyName) {
+	private ValidationCase createCase(String caseName, String className, String keyPropertyName)
+	{
 		Klass klass = this.domainModel.getClassByName(className);
 		DataTypeProperty keyProperty = klass.getDataTypePropertyByName(keyPropertyName);
 		return new ValidationCase(caseName, klass, OperationMode.CREATE, Maps.immutable.with(keyProperty, 1L), null);
 	}
 
 	@Nonnull
-	private ValidationCase updateCase(String caseName, String className, String keyPropertyName) {
+	private ValidationCase updateCase(String caseName, String className, String keyPropertyName)
+	{
 		Klass klass = this.domainModel.getClassByName(className);
 		DataTypeProperty keyProperty = klass.getDataTypePropertyByName(keyPropertyName);
 		ImmutableMap<DataTypeProperty, Object> keys = Maps.immutable.with(keyProperty, 1L);
@@ -192,7 +196,9 @@ class PersistentWriterValidatorTest {
 		return new ValidationCase(caseName, klass, OperationMode.REPLACE, keys, persistentInstance);
 	}
 
-	private void validate(ValidationCase validationCase, String testName) throws JsonProcessingException {
+	private void validate(ValidationCase validationCase, String testName)
+		throws JsonProcessingException
+	{
 		String prefix = this.getClass().getSimpleName() + '.' + validationCase.name() + '.' + testName;
 		String incomingJson = FileSlurper.slurp(prefix + ".json5", this.getClass());
 		var incomingInstance = (ObjectNode) this.objectMapper.readTree(incomingJson);
@@ -211,7 +217,8 @@ class PersistentWriterValidatorTest {
 	}
 
 	@Nonnull
-	private ValidationResult performValidation(ValidationCase validationCase, @Nonnull ObjectNode incomingInstance) {
+	private ValidationResult performValidation(ValidationCase validationCase, @Nonnull ObjectNode incomingInstance)
+	{
 		Klass klass = validationCase.klass();
 		ImmutableMap<DataTypeProperty, Object> propertyDataFromUrl = validationCase.propertyDataFromUrl();
 		propertyDataFromUrl.forEachKey((property) -> assertThat(property.getOwningClassifier()).isSameAs(klass));
@@ -230,7 +237,8 @@ class PersistentWriterValidatorTest {
 		);
 
 		Klass userClass = this.domainModel.getUserClass().get();
-		if (validationCase.mode() == OperationMode.CREATE) {
+		if (validationCase.mode() == OperationMode.CREATE)
+		{
 			IncomingCreateDataModelValidator.validate(
 				this.reladomoDataStore,
 				userClass,
@@ -240,7 +248,9 @@ class PersistentWriterValidatorTest {
 				errors,
 				warnings
 			);
-		} else {
+		}
+		else
+		{
 			IncomingUpdateDataModelValidator.validate(
 				this.reladomoDataStore,
 				userClass,
@@ -257,20 +267,23 @@ class PersistentWriterValidatorTest {
 	}
 
 	@Nonnull
-	private static ObjectMapper getObjectMapper() {
+	private static ObjectMapper getObjectMapper()
+	{
 		ObjectMapper objectMapper = Jackson.newObjectMapper();
 		ObjectMapperConfig.configure(objectMapper);
 		return objectMapper;
 	}
 
 	@Nonnull
-	private static ReladomoDataStore getReladomoDataStore() {
+	private static ReladomoDataStore getReladomoDataStore()
+	{
 		String seed = IncomingCreateDataModelValidator.class.getSimpleName();
 		var uuidSupplier = new SeedUUIDSupplier(seed);
 		return new ReladomoDataStore(uuidSupplier, 1);
 	}
 
-	private static DomainModel getDomainModel(ObjectMapper objectMapper) {
+	private static DomainModel getDomainModel(ObjectMapper objectMapper)
+	{
 		var domainModelCompilerFactory = new DomainModelCompilerFactory();
 		domainModelCompilerFactory.setSourcePackages(List.of("cool.klass.xample.coverage"));
 		domainModelCompilerFactory.setColorScheme("dark");
@@ -283,7 +296,11 @@ class PersistentWriterValidatorTest {
 		OperationMode mode,
 		ImmutableMap<DataTypeProperty, Object> propertyDataFromUrl,
 		Object persistentInstance
-	) {}
+	)
+	{
+	}
 
-	private record ValidationResult(ImmutableList<String> errors, ImmutableList<String> warnings) {}
+	private record ValidationResult(ImmutableList<String> errors, ImmutableList<String> warnings)
+	{
+	}
 }

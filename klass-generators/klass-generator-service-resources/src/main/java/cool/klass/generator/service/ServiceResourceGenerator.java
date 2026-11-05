@@ -61,8 +61,8 @@ import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.tuple.primitive.ObjectBooleanPair;
 import org.eclipse.collections.impl.tuple.primitive.PrimitiveTuples;
 
-public class ServiceResourceGenerator {
-
+public class ServiceResourceGenerator
+{
 	private static final Converter<String, String> UPPER_TO_LOWER_CAMEL = CaseFormat.UPPER_CAMEL.converterTo(
 		CaseFormat.LOWER_CAMEL
 	);
@@ -80,14 +80,18 @@ public class ServiceResourceGenerator {
 		@Nonnull DomainModel domainModel,
 		@Nonnull String applicationName,
 		@Nonnull String rootPackageName
-	) {
+	)
+	{
 		this.domainModel = Objects.requireNonNull(domainModel);
 		this.applicationName = Objects.requireNonNull(applicationName);
 		this.rootPackageName = Objects.requireNonNull(rootPackageName);
 	}
 
-	public void writeServiceResourceFiles(@Nonnull Path outputPath) throws IOException {
-		for (ServiceGroup serviceGroup : this.domainModel.getServiceGroups()) {
+	public void writeServiceResourceFiles(@Nonnull Path outputPath)
+		throws IOException
+	{
+		for (ServiceGroup serviceGroup : this.domainModel.getServiceGroups())
+		{
 			// TODO: Instead of inferring a resource name, change the DSL to include it in the declaration, like this:
 			// service QuestionResource on Question
 
@@ -101,14 +105,18 @@ public class ServiceResourceGenerator {
 		}
 	}
 
-	private void printStringToFile(@Nonnull Path path, String contents) throws FileNotFoundException {
-		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8)) {
+	private void printStringToFile(@Nonnull Path path, String contents)
+		throws FileNotFoundException
+	{
+		try (var printStream = new PrintStream(new FileOutputStream(path.toFile()), true, StandardCharsets.UTF_8))
+		{
 			printStream.print(contents);
 		}
 	}
 
 	@Nonnull
-	public String getServiceGroupSourceCode(@Nonnull ServiceGroup serviceGroup) {
+	public String getServiceGroupSourceCode(@Nonnull ServiceGroup serviceGroup)
+	{
 		Klass klass = serviceGroup.getKlass();
 		String packageName = serviceGroup.getPackageName() + ".service.resource";
 		String serviceResourceName = serviceGroup.getName();
@@ -119,9 +127,9 @@ public class ServiceResourceGenerator {
 			.collectWithIndex(this::getServiceSourceCode)
 			.makeString("\n");
 
-		String jsr310Import = serviceGroup.getUrls().anySatisfy(this::hasDropwizardParamWrapper)
-			? "import io.dropwizard.jersey.jsr310.*;\n"
-			: "";
+		String jsr310Import = serviceGroup.getUrls().anySatisfy(this::hasDropwizardParamWrapper) ?
+			"import io.dropwizard.jersey.jsr310.*;\n" :
+			"";
 
 		ImmutableList<Verb> verbs = serviceGroup
 			.getUrls()
@@ -130,10 +138,10 @@ public class ServiceResourceGenerator {
 			.collect(Service::getVerb)
 			.toImmutableList();
 		boolean hasWriteServices =
-			verbs.contains(Verb.POST)
-			|| verbs.contains(Verb.PUT)
-			|| verbs.contains(Verb.PATCH)
-			|| verbs.contains(Verb.DELETE);
+			verbs.contains(Verb.POST) ||
+			verbs.contains(Verb.PUT) ||
+			verbs.contains(Verb.PATCH) ||
+			verbs.contains(Verb.DELETE);
 
 		ImmutableList<Service> allServices = serviceGroup
 			.getUrls()
@@ -159,22 +167,22 @@ public class ServiceResourceGenerator {
 
 		String arrayNodeImport = hasPostWithMany ? "import com.fasterxml.jackson.databind.node.ArrayNode;\n" : "";
 
-		String writeImports = hasWriteServices
-			? """
-			import javax.validation.constraints.NotNull;
-			import com.fasterxml.jackson.databind.node.ObjectNode;
-			import cool.klass.deserializer.json.*;
-			import cool.klass.deserializer.json.type.*;
-			import cool.klass.reladomo.persistent.writer.*;
+		String writeImports = hasWriteServices ?
 			"""
-			: "";
+				import javax.validation.constraints.NotNull;
+				import com.fasterxml.jackson.databind.node.ObjectNode;
+				import cool.klass.deserializer.json.*;
+				import cool.klass.deserializer.json.type.*;
+				import cool.klass.reladomo.persistent.writer.*;
+				""" :
+			"";
 
-		String projectionImports = hasPostWithProjection
-			? """
-			import cool.klass.model.meta.domain.api.projection.Projection;
-			import cool.klass.serialization.jackson.response.KlassResponseBuilder;
+		String projectionImports = hasPostWithProjection ?
 			"""
-			: "";
+				import cool.klass.model.meta.domain.api.projection.Projection;
+				import cool.klass.serialization.jackson.response.KlassResponseBuilder;
+				""" :
+			"";
 
 		// @formatter:off
 		// language=JAVA
@@ -248,42 +256,51 @@ public class ServiceResourceGenerator {
 		// @formatter:on
 	}
 
-	private boolean hasDropwizardParamWrapper(@Nonnull Url url) {
+	private boolean hasDropwizardParamWrapper(@Nonnull Url url)
+	{
 		return url.getParameters().anySatisfy(this::hasDropwizardParamWrapper);
 	}
 
-	private boolean hasDropwizardParamWrapper(@Nonnull Parameter parameter) {
+	private boolean hasDropwizardParamWrapper(@Nonnull Parameter parameter)
+	{
 		DataType dataType = parameter.getType();
-		if (!(dataType instanceof PrimitiveType)) {
+		if (!(dataType instanceof PrimitiveType))
+		{
 			return false;
 		}
 
 		return (
-			((PrimitiveType) dataType).isTemporal()
-			|| dataType == PrimitiveType.LOCAL_DATE
-			|| dataType == PrimitiveType.INSTANT
+			((PrimitiveType) dataType).isTemporal() ||
+			dataType == PrimitiveType.LOCAL_DATE ||
+			dataType == PrimitiveType.INSTANT
 		);
 	}
 
 	@Nonnull
-	private String getServiceSourceCode(@Nonnull Service service, int index) {
-		if (service.getVerb() == Verb.GET) {
+	private String getServiceSourceCode(@Nonnull Service service, int index)
+	{
+		if (service.getVerb() == Verb.GET)
+		{
 			return this.getGetSourceCode(service, index);
 		}
 
-		if (service.getVerb() == Verb.POST) {
+		if (service.getVerb() == Verb.POST)
+		{
 			return this.getPostSourceCode(service, index);
 		}
 
-		if (service.getVerb() == Verb.PUT) {
+		if (service.getVerb() == Verb.PUT)
+		{
 			return this.getWriteSourceCode(service, index, "OperationMode.REPLACE");
 		}
 
-		if (service.getVerb() == Verb.PATCH) {
+		if (service.getVerb() == Verb.PATCH)
+		{
 			return this.getWriteSourceCode(service, index, "OperationMode.PATCH");
 		}
 
-		if (service.getVerb() == Verb.DELETE) {
+		if (service.getVerb() == Verb.DELETE)
+		{
 			return this.getDeleteSourceCode(service, index);
 		}
 
@@ -291,7 +308,8 @@ public class ServiceResourceGenerator {
 	}
 
 	@Nonnull
-	private String getGetSourceCode(@Nonnull Service service, int index) {
+	private String getGetSourceCode(@Nonnull Service service, int index)
+	{
 		Url url = service.getUrl();
 
 		ServiceGroup serviceGroup = url.getServiceGroup();
@@ -305,14 +323,13 @@ public class ServiceResourceGenerator {
 
 		Klass klass = serviceGroup.getKlass();
 		String klassName = this.getKlassName(klass);
-		String returnType = service.getServiceMultiplicity() == ServiceMultiplicity.ONE
-			? klassName
-			: "List<" + klassName + ">";
+		String returnType =
+			service.getServiceMultiplicity() == ServiceMultiplicity.ONE ? klassName : "List<" + klassName + ">";
 		String returnStatement = this.getReturnStatement(service.getServiceMultiplicity());
 
-		String queryParametersString = queryParameters.isEmpty()
-			? ""
-			: queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
+		String queryParametersString = queryParameters.isEmpty() ?
+			"" :
+			queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
 
 		boolean hasAuthorizeCriteria = service.isAuthorizeClauseRequired();
 
@@ -325,13 +342,13 @@ public class ServiceResourceGenerator {
 		ImmutableList<String> parameterStrings1 = pathParameters
 			.newWithAll(queryParameters)
 			.collectWith(this::getParameterSourceCode, parameterIndent);
-		ImmutableList<String> parameterStrings = hasAuthorizeCriteria
-			? parameterStrings1.newWith(parameterIndent + "@Nonnull @Auth Principal principal")
-			: parameterStrings1;
+		ImmutableList<String> parameterStrings = hasAuthorizeCriteria ?
+			parameterStrings1.newWith(parameterIndent + "@Nonnull @Auth Principal principal") :
+			parameterStrings1;
 
-		String userPrincipalNameLocalVariable = hasAuthorizeCriteria
-			? "        String    userPrincipalName  = principal.getName();\n"
-			: "";
+		String userPrincipalNameLocalVariable = hasAuthorizeCriteria ?
+			"        String    userPrincipalName  = principal.getName();\n" :
+			"";
 
 		String parametersSourceCode = parameterStrings.makeString(",\n");
 
@@ -413,16 +430,19 @@ public class ServiceResourceGenerator {
 		// @formatter:on
 	}
 
-	private String getKlassName(Klass klass) {
+	private String getKlassName(Klass klass)
+	{
 		String klassName = klass.getName();
-		if (klassName.equals("Klass")) {
+		if (klassName.equals("Klass"))
+		{
 			return klass.getFullyQualifiedName();
 		}
 		return klassName;
 	}
 
 	@Nonnull
-	private String getPostSourceCode(Service service, int index) {
+	private String getPostSourceCode(Service service, int index)
+	{
 		Url url = service.getUrl();
 		ServiceGroup serviceGroup = url.getServiceGroup();
 
@@ -433,9 +453,9 @@ public class ServiceResourceGenerator {
 			.getQueryParameters()
 			.collectWith(PrimitiveTuples::pair, false);
 
-		String queryParametersString = queryParameters.isEmpty()
-			? ""
-			: queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
+		String queryParametersString = queryParameters.isEmpty() ?
+			"" :
+			queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
 
 		boolean hasAuthorizeCriteria = service.isAuthorizeClauseRequired();
 		Klass klass = serviceGroup.getKlass();
@@ -444,15 +464,14 @@ public class ServiceResourceGenerator {
 
 		ServiceMultiplicity serviceMultiplicity = service.getServiceMultiplicity();
 
-		String incomingInstanceParameterType = serviceMultiplicity == ServiceMultiplicity.ONE
-			? "ObjectNode"
-			: "ArrayNode";
-		String incomingInstanceParameterName = serviceMultiplicity == ServiceMultiplicity.ONE
-			? "incomingInstance"
-			: "incomingInstances";
+		String incomingInstanceParameterType =
+			serviceMultiplicity == ServiceMultiplicity.ONE ? "ObjectNode" : "ArrayNode";
+		String incomingInstanceParameterName =
+			serviceMultiplicity == ServiceMultiplicity.ONE ? "incomingInstance" : "incomingInstances";
 
 		int numParameters = service.getNumParameters() + 2; // +1 for ObjectNode/ArrayNode, +1 for UriInfo
-		if (needsSecurityContext) {
+		if (needsSecurityContext)
+		{
 			numParameters++;
 		}
 
@@ -473,13 +492,14 @@ public class ServiceResourceGenerator {
 		parameterStrings.add(incomingInstanceSourceCode);
 		parameterStrings.add(parameterIndent + "@Nonnull @Context UriInfo uriInfo");
 
-		if (needsSecurityContext) {
+		if (needsSecurityContext)
+		{
 			parameterStrings.add(parameterIndent + "@Nonnull @Auth Principal principal");
 		}
 
-		String userPrincipalNameLocalVariable = needsSecurityContext
-			? "        String    userPrincipalName  = principal.getName();\n"
-			: "";
+		String userPrincipalNameLocalVariable = needsSecurityContext ?
+			"        String    userPrincipalName  = principal.getName();\n" :
+			"";
 
 		String parametersSourceCode = parameterStrings.makeString(",\n");
 
@@ -533,9 +553,8 @@ public class ServiceResourceGenerator {
 
 		String manyResponseCode = getManyResponseCode(projectionDispatch);
 
-		String effectiveResponseCode = serviceMultiplicity == ServiceMultiplicity.MANY
-			? manyResponseCode
-			: responseCode;
+		String effectiveResponseCode =
+			serviceMultiplicity == ServiceMultiplicity.MANY ? manyResponseCode : responseCode;
 
 		// @formatter:off
 		// language=JAVA
@@ -560,8 +579,10 @@ public class ServiceResourceGenerator {
 		Optional<ServiceProjectionDispatch> projectionDispatch,
 		ServiceGroup serviceGroup,
 		String klassName
-	) {
-		if (projectionDispatch.isEmpty()) {
+	)
+	{
+		if (projectionDispatch.isEmpty())
+		{
 			return "        return Response.noContent().build();\n";
 		}
 
@@ -599,39 +620,42 @@ public class ServiceResourceGenerator {
 		// @formatter:on
 	}
 
-	private static String getErrorListInitialization() {
+	private static String getErrorListInitialization()
+	{
 		return (
-			""
-			+ "        MutableList<String> errors = Lists.mutable.empty();\n"
-			+ "        MutableList<String> warnings = Lists.mutable.empty();\n"
+			"" +
+			"        MutableList<String> errors = Lists.mutable.empty();\n" +
+			"        MutableList<String> warnings = Lists.mutable.empty();\n"
 		);
 	}
 
-	private static String getErrorCheckAndThrow() {
+	private static String getErrorCheckAndThrow()
+	{
 		return (
-			""
-			+ "        if (errors.notEmpty())\n"
-			+ "        {\n"
-			+ "            Response response = Response\n"
-			+ "                    .status(Status.BAD_REQUEST)\n"
-			+ "                    .entity(errors)\n"
-			+ "                    .build();\n"
-			+ "            throw new BadRequestException(\"Incoming data failed validation.\", response);\n"
-			+ "        }\n"
-			+ "\n"
-			+ "        // Note: warnings are logged but do not cause request failure\n"
-			+ "        // TODO: Consider returning warnings in response headers\n"
+			"" +
+			"        if (errors.notEmpty())\n" +
+			"        {\n" +
+			"            Response response = Response\n" +
+			"                    .status(Status.BAD_REQUEST)\n" +
+			"                    .entity(errors)\n" +
+			"                    .build();\n" +
+			"            throw new BadRequestException(\"Incoming data failed validation.\", response);\n" +
+			"        }\n" +
+			"\n" +
+			"        // Note: warnings are logged but do not cause request failure\n" +
+			"        // TODO: Consider returning warnings in response headers\n"
 		);
 	}
 
-	private static String getMutationContextSetup(boolean needsSecurityContext) {
+	private static String getMutationContextSetup(boolean needsSecurityContext)
+	{
 		return (
-			""
-			+ "        Instant transactionInstant = Instant.now(this.clock);\n"
-			+ (needsSecurityContext
-					? "        MutationContext mutationContext = new MutationContext(Optional.of(userPrincipalName), transactionInstant, Maps.immutable.empty());\n"
-					: "        MutationContext mutationContext = new MutationContext(Optional.empty(), transactionInstant, Maps.immutable.empty());\n")
-			+ "        PersistentCreator creator = new PersistentCreator(mutationContext, this.dataStore);\n"
+			"" +
+			"        Instant transactionInstant = Instant.now(this.clock);\n" +
+			(needsSecurityContext ?
+				"        MutationContext mutationContext = new MutationContext(Optional.of(userPrincipalName), transactionInstant, Maps.immutable.empty());\n" :
+				"        MutationContext mutationContext = new MutationContext(Optional.empty(), transactionInstant, Maps.immutable.empty());\n") +
+			"        PersistentCreator creator = new PersistentCreator(mutationContext, this.dataStore);\n"
 		);
 	}
 
@@ -643,17 +667,18 @@ public class ServiceResourceGenerator {
 		String authorizePredicateSourceCode,
 		String validatePredicateSourceCode,
 		String conflictPredicateSourceCode
-	) {
+	)
+	{
 		return (
-			""
-			+ userPrincipalNameLocalVariable
-			+ authorizeOperationSourceCode
-			+ validateOperationSourceCode
-			+ conflictOperationSourceCode
-			+ "\n"
-			+ authorizePredicateSourceCode
-			+ validatePredicateSourceCode
-			+ conflictPredicateSourceCode
+			"" +
+			userPrincipalNameLocalVariable +
+			authorizeOperationSourceCode +
+			validateOperationSourceCode +
+			conflictOperationSourceCode +
+			"\n" +
+			authorizePredicateSourceCode +
+			validatePredicateSourceCode +
+			conflictPredicateSourceCode
 		);
 	}
 
@@ -668,7 +693,8 @@ public class ServiceResourceGenerator {
 		String validatePredicateSourceCode,
 		String conflictPredicateSourceCode,
 		boolean needsSecurityContext
-	) {
+	)
+	{
 		String operationsAndPredicates = getOperationsAndPredicates(
 			userPrincipalNameLocalVariable,
 			authorizeOperationSourceCode,
@@ -679,130 +705,134 @@ public class ServiceResourceGenerator {
 			conflictPredicateSourceCode
 		);
 
-		if (serviceMultiplicity == ServiceMultiplicity.ONE) {
+		if (serviceMultiplicity == ServiceMultiplicity.ONE)
+		{
 			return (
-				""
-				+ getErrorListInitialization()
-				+ "        ObjectNodeTypeCheckingValidator.validate(errors, "
-				+ incomingInstanceParameterName
-				+ ", klass);\n"
-				+ "        RequiredPropertiesValidator.validate(\n"
-				+ "                errors,\n"
-				+ "                warnings,\n"
-				+ "                klass,\n"
-				+ "                "
-				+ incomingInstanceParameterName
-				+ ",\n"
-				+ "                OperationMode.CREATE);\n"
-				+ "\n"
-				+ getErrorCheckAndThrow()
-				+ "\n"
-				+ operationsAndPredicates
-				+ "\n"
-				+ "        // Create the instance inside a transaction\n"
-				+ getMutationContextSetup(needsSecurityContext)
-				+ "        MapIterable<DataTypeProperty, Object> resolvedKeys = creator.resolveKeysForCreate(klass, "
-				+ incomingInstanceParameterName
-				+ ");\n"
-				+ "        ObjectNode finalIncomingInstance = "
-				+ incomingInstanceParameterName
-				+ ";\n"
-				+ "        Object persistentInstance = this.dataStore.runInTransaction(transaction -> {\n"
-				+ "            Object instance = this.dataStore.instantiate(klass, resolvedKeys);\n"
-				+ "            creator.synchronize(klass, instance, finalIncomingInstance);\n"
-				+ "            this.dataStore.insert(instance);\n"
-				+ "            return instance;\n"
-				+ "        });\n"
+				"" +
+				getErrorListInitialization() +
+				"        ObjectNodeTypeCheckingValidator.validate(errors, " +
+				incomingInstanceParameterName +
+				", klass);\n" +
+				"        RequiredPropertiesValidator.validate(\n" +
+				"                errors,\n" +
+				"                warnings,\n" +
+				"                klass,\n" +
+				"                " +
+				incomingInstanceParameterName +
+				",\n" +
+				"                OperationMode.CREATE);\n" +
+				"\n" +
+				getErrorCheckAndThrow() +
+				"\n" +
+				operationsAndPredicates +
+				"\n" +
+				"        // Create the instance inside a transaction\n" +
+				getMutationContextSetup(needsSecurityContext) +
+				"        MapIterable<DataTypeProperty, Object> resolvedKeys = creator.resolveKeysForCreate(klass, " +
+				incomingInstanceParameterName +
+				");\n" +
+				"        ObjectNode finalIncomingInstance = " +
+				incomingInstanceParameterName +
+				";\n" +
+				"        Object persistentInstance = this.dataStore.runInTransaction(transaction -> {\n" +
+				"            Object instance = this.dataStore.instantiate(klass, resolvedKeys);\n" +
+				"            creator.synchronize(klass, instance, finalIncomingInstance);\n" +
+				"            this.dataStore.insert(instance);\n" +
+				"            return instance;\n" +
+				"        });\n"
 			);
 		}
 
 		String singularName = incomingInstanceParameterName.replaceAll("s$", "");
 		return (
-			""
-			+ getErrorListInitialization()
-			+ "\n"
-			+ "        // Validate all instances\n"
-			+ "        for (int i = 0; i < "
-			+ incomingInstanceParameterName
-			+ ".size(); i++)\n"
-			+ "        {\n"
-			+ "            ObjectNode "
-			+ singularName
-			+ " = (ObjectNode) "
-			+ incomingInstanceParameterName
-			+ ".get(i);\n"
-			+ "            ObjectNodeTypeCheckingValidator.validate(errors, "
-			+ singularName
-			+ ", klass);\n"
-			+ "            RequiredPropertiesValidator.validate(\n"
-			+ "                    errors,\n"
-			+ "                    warnings,\n"
-			+ "                    klass,\n"
-			+ "                    "
-			+ singularName
-			+ ",\n"
-			+ "                    OperationMode.CREATE);\n"
-			+ "        }\n"
-			+ "\n"
-			+ getErrorCheckAndThrow()
-			+ "\n"
-			+ operationsAndPredicates
-			+ "\n"
-			+ "        // Create all instances inside a transaction\n"
-			+ getMutationContextSetup(needsSecurityContext)
-			+ "        ArrayNode finalIncomingInstances = "
-			+ incomingInstanceParameterName
-			+ ";\n"
-			+ "        MutableList<Object> persistentInstances = this.dataStore.runInTransaction(transaction -> {\n"
-			+ "            MutableList<Object> instances = Lists.mutable.empty();\n"
-			+ "            for (int i = 0; i < finalIncomingInstances.size(); i++)\n"
-			+ "            {\n"
-			+ "                ObjectNode "
-			+ singularName
-			+ " = (ObjectNode) finalIncomingInstances.get(i);\n"
-			+ "\n"
-			+ "                MapIterable<DataTypeProperty, Object> keys = creator.resolveKeysForCreate(klass, "
-			+ singularName
-			+ ");\n"
-			+ "                Object instance = this.dataStore.instantiate(klass, keys);\n"
-			+ "                creator.synchronize(klass, instance, "
-			+ singularName
-			+ ");\n"
-			+ "                this.dataStore.insert(instance);\n"
-			+ "                instances.add(instance);\n"
-			+ "            }\n"
-			+ "            return instances;\n"
-			+ "        });\n"
+			"" +
+			getErrorListInitialization() +
+			"\n" +
+			"        // Validate all instances\n" +
+			"        for (int i = 0; i < " +
+			incomingInstanceParameterName +
+			".size(); i++)\n" +
+			"        {\n" +
+			"            ObjectNode " +
+			singularName +
+			" = (ObjectNode) " +
+			incomingInstanceParameterName +
+			".get(i);\n" +
+			"            ObjectNodeTypeCheckingValidator.validate(errors, " +
+			singularName +
+			", klass);\n" +
+			"            RequiredPropertiesValidator.validate(\n" +
+			"                    errors,\n" +
+			"                    warnings,\n" +
+			"                    klass,\n" +
+			"                    " +
+			singularName +
+			",\n" +
+			"                    OperationMode.CREATE);\n" +
+			"        }\n" +
+			"\n" +
+			getErrorCheckAndThrow() +
+			"\n" +
+			operationsAndPredicates +
+			"\n" +
+			"        // Create all instances inside a transaction\n" +
+			getMutationContextSetup(needsSecurityContext) +
+			"        ArrayNode finalIncomingInstances = " +
+			incomingInstanceParameterName +
+			";\n" +
+			"        MutableList<Object> persistentInstances = this.dataStore.runInTransaction(transaction -> {\n" +
+			"            MutableList<Object> instances = Lists.mutable.empty();\n" +
+			"            for (int i = 0; i < finalIncomingInstances.size(); i++)\n" +
+			"            {\n" +
+			"                ObjectNode " +
+			singularName +
+			" = (ObjectNode) finalIncomingInstances.get(i);\n" +
+			"\n" +
+			"                MapIterable<DataTypeProperty, Object> keys = creator.resolveKeysForCreate(klass, " +
+			singularName +
+			");\n" +
+			"                Object instance = this.dataStore.instantiate(klass, keys);\n" +
+			"                creator.synchronize(klass, instance, " +
+			singularName +
+			");\n" +
+			"                this.dataStore.insert(instance);\n" +
+			"                instances.add(instance);\n" +
+			"            }\n" +
+			"            return instances;\n" +
+			"        });\n"
 		);
 	}
 
-	private static String getManyResponseCode(Optional<ServiceProjectionDispatch> projectionDispatch) {
-		if (projectionDispatch.isEmpty()) {
+	private static String getManyResponseCode(Optional<ServiceProjectionDispatch> projectionDispatch)
+	{
+		if (projectionDispatch.isEmpty())
+		{
 			return "        return Response.noContent().build();\n";
 		}
 
 		Projection projection = projectionDispatch.get().getProjection();
 		String projectionName = projection.getName();
 		return (
-			""
-			+ "        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();\n"
-			+ "\n"
-			+ "        Projection projection = this.domainModel.getProjectionByName(\""
-			+ projectionName
-			+ "\");\n"
-			+ "\n"
-			+ "        var responseBuilder = new KlassResponseBuilder(\n"
-			+ "                persistentInstances,\n"
-			+ "                projection,\n"
-			+ "                Multiplicity.ONE_TO_MANY,\n"
-			+ "                transactionInstant);\n"
-			+ "\n"
-			+ "        return Response.created(uriBuilder.build()).entity(responseBuilder.build()).build();\n"
+			"" +
+			"        UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();\n" +
+			"\n" +
+			"        Projection projection = this.domainModel.getProjectionByName(\"" +
+			projectionName +
+			"\");\n" +
+			"\n" +
+			"        var responseBuilder = new KlassResponseBuilder(\n" +
+			"                persistentInstances,\n" +
+			"                projection,\n" +
+			"                Multiplicity.ONE_TO_MANY,\n" +
+			"                transactionInstant);\n" +
+			"\n" +
+			"        return Response.created(uriBuilder.build()).entity(responseBuilder.build()).build();\n"
 		);
 	}
 
 	@Nonnull
-	private String getDeleteSourceCode(@Nonnull Service service, int index) {
+	private String getDeleteSourceCode(@Nonnull Service service, int index)
+	{
 		Url url = service.getUrl();
 
 		ServiceGroup serviceGroup = url.getServiceGroup();
@@ -814,16 +844,17 @@ public class ServiceResourceGenerator {
 			.getQueryParameters()
 			.collectWith(PrimitiveTuples::pair, false);
 
-		String queryParametersString = queryParameters.isEmpty()
-			? ""
-			: queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
+		String queryParametersString = queryParameters.isEmpty() ?
+			"" :
+			queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
 
 		boolean hasAuthorizeCriteria = service.isAuthorizeClauseRequired();
 		Klass klass = serviceGroup.getKlass();
 		boolean needsSecurityContext = hasAuthorizeCriteria || klass.isAudited();
 
 		int numParameters = service.getNumParameters();
-		if (needsSecurityContext) {
+		if (needsSecurityContext)
+		{
 			numParameters++;
 		}
 		boolean lineWrapParameters = numParameters > 1;
@@ -837,13 +868,14 @@ public class ServiceResourceGenerator {
 
 		MutableList<String> parameterStrings = urlParameterStrings.toList();
 
-		if (needsSecurityContext) {
+		if (needsSecurityContext)
+		{
 			parameterStrings.add(parameterIndent + "@Nonnull @Auth Principal principal");
 		}
 
-		String userPrincipalNameLocalVariable = needsSecurityContext
-			? "        String    userPrincipalName  = principal.getName();\n"
-			: "";
+		String userPrincipalNameLocalVariable = needsSecurityContext ?
+			"        String    userPrincipalName  = principal.getName();\n" :
+			"";
 
 		String parametersSourceCode = parameterStrings.makeString(",\n");
 
@@ -940,7 +972,8 @@ public class ServiceResourceGenerator {
 	}
 
 	@Nonnull
-	private String getWriteSourceCode(@Nonnull Service service, int index, String operationMode) {
+	private String getWriteSourceCode(@Nonnull Service service, int index, String operationMode)
+	{
 		Url url = service.getUrl();
 
 		ServiceGroup serviceGroup = url.getServiceGroup();
@@ -952,16 +985,17 @@ public class ServiceResourceGenerator {
 			.getQueryParameters()
 			.collectWith(PrimitiveTuples::pair, false);
 
-		String queryParametersString = queryParameters.isEmpty()
-			? ""
-			: queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
+		String queryParametersString = queryParameters.isEmpty() ?
+			"" :
+			queryParameters.collect(ObjectBooleanPair::getOne).makeString(" // ?", "&", "");
 
 		boolean hasAuthorizeCriteria = service.isAuthorizeClauseRequired();
 		Klass klass = serviceGroup.getKlass();
 		boolean needsSecurityContext = hasAuthorizeCriteria || klass.isAudited();
 
 		int numParameters = service.getNumParameters() + 1;
-		if (needsSecurityContext) {
+		if (needsSecurityContext)
+		{
 			numParameters++;
 		}
 
@@ -974,17 +1008,16 @@ public class ServiceResourceGenerator {
 
 		MutableList<String> parameterStrings = urlParameterStrings.toList();
 
-		if (needsSecurityContext) {
+		if (needsSecurityContext)
+		{
 			parameterStrings.add(parameterIndent + "@Nonnull @Auth Principal principal");
 		}
 
 		ServiceMultiplicity serviceMultiplicity = service.getServiceMultiplicity();
-		String incomingInstanceParameterType = serviceMultiplicity == ServiceMultiplicity.ONE
-			? "ObjectNode"
-			: "ArrayNode";
-		String incomingInstanceParameterName = serviceMultiplicity == ServiceMultiplicity.ONE
-			? "incomingInstance"
-			: "incomingInstances";
+		String incomingInstanceParameterType =
+			serviceMultiplicity == ServiceMultiplicity.ONE ? "ObjectNode" : "ArrayNode";
+		String incomingInstanceParameterName =
+			serviceMultiplicity == ServiceMultiplicity.ONE ? "incomingInstance" : "incomingInstances";
 		String incomingInstanceSourceCode = "%s@Nonnull @NotNull %s %s".formatted(
 			parameterIndent,
 			incomingInstanceParameterType,
@@ -992,9 +1025,9 @@ public class ServiceResourceGenerator {
 		);
 		parameterStrings.add(incomingInstanceSourceCode);
 
-		String userPrincipalNameLocalVariable = needsSecurityContext
-			? "        String    userPrincipalName  = principal.getName();\n"
-			: "";
+		String userPrincipalNameLocalVariable = needsSecurityContext ?
+			"        String    userPrincipalName  = principal.getName();\n" :
+			"";
 
 		String parametersSourceCode = parameterStrings.makeString(",\n");
 
@@ -1140,8 +1173,10 @@ public class ServiceResourceGenerator {
 	}
 
 	@Nonnull
-	private String getReturnStatement(ServiceMultiplicity serviceMultiplicity) {
-		if (serviceMultiplicity == ServiceMultiplicity.MANY) {
+	private String getReturnStatement(ServiceMultiplicity serviceMultiplicity)
+	{
+		if (serviceMultiplicity == ServiceMultiplicity.MANY)
+		{
 			return "        return result;\n";
 		}
 
@@ -1157,7 +1192,8 @@ public class ServiceResourceGenerator {
 		// @formatter:on
 	}
 
-	private String getParameterSourceCode(@Nonnull ObjectBooleanPair<Parameter> pair, String indent) {
+	private String getParameterSourceCode(@Nonnull ObjectBooleanPair<Parameter> pair, String indent)
+	{
 		Parameter parameter = pair.getOne();
 		boolean isPathParameter = pair.getTwo();
 
@@ -1166,9 +1202,9 @@ public class ServiceResourceGenerator {
 		String nullableAnnotation = parameter.getMultiplicity() == Multiplicity.ZERO_TO_ONE ? "@Nullable " : "";
 
 		DataType parameterType = parameter.getType();
-		String typeString = parameter.getMultiplicity().isToMany()
-			? "Set<" + this.getParameterType(parameterType) + ">"
-			: this.getParameterType(parameterType);
+		String typeString = parameter.getMultiplicity().isToMany() ?
+			"Set<" + this.getParameterType(parameterType) + ">" :
+			this.getParameterType(parameterType);
 
 		return String.format(
 			"%s%s@%s(\"%s\") %s %s",
@@ -1182,19 +1218,22 @@ public class ServiceResourceGenerator {
 	}
 
 	@Nonnull
-	private String getOperation(String finderName, @Nonnull Optional<Criteria> optionalCriteria, String criteriaName) {
+	private String getOperation(String finderName, @Nonnull Optional<Criteria> optionalCriteria, String criteriaName)
+	{
 		return optionalCriteria.map((criteria) -> this.getOperation(finderName, criteria, criteriaName)).orElse("");
 	}
 
 	@Nonnull
-	private String getOperation(String finderName, @Nonnull Criteria criteria, String criteriaName) {
+	private String getOperation(String finderName, @Nonnull Criteria criteria, String criteriaName)
+	{
 		String operation = this.getOperation(finderName, criteria);
 		String paddedOperationName = String.format("%-18s", criteriaName + "Operation");
 		return "        Operation " + paddedOperationName + " = " + operation + ";\n";
 	}
 
 	@Nonnull
-	private String getOperation(String finderName, @Nonnull Criteria criteria) {
+	private String getOperation(String finderName, @Nonnull Criteria criteria)
+	{
 		var stringBuilder = new StringBuilder();
 		criteria.visit(new OperationCriteriaVisitor(finderName, stringBuilder));
 		return stringBuilder.toString();
@@ -1205,30 +1244,32 @@ public class ServiceResourceGenerator {
 		String finderName,
 		@Nonnull Optional<Criteria> optionalCriteria,
 		String criteriaName
-	) {
+	)
+	{
 		return optionalCriteria
 			.map((criteria) -> this.getOptionalOperation(finderName, criteria, criteriaName))
 			.orElse("");
 	}
 
 	@Nonnull
-	private String getOptionalOperation(String finderName, @Nonnull Criteria criteria, String criteriaName) {
+	private String getOptionalOperation(String finderName, @Nonnull Criteria criteria, String criteriaName)
+	{
 		String operation = this.getOperation(finderName, criteria);
 		String paddedOperationName = String.format("%-18s", criteriaName + "Operation");
 
 		return (
-			""
-			+ "        Operation "
-			+ paddedOperationName
-			+ " = "
-			+ criteriaName
-			+ " == null\n"
-			+ "                ? "
-			+ finderName
-			+ ".all()\n"
-			+ "                : "
-			+ operation
-			+ ";\n"
+			"" +
+			"        Operation " +
+			paddedOperationName +
+			" = " +
+			criteriaName +
+			" == null\n" +
+			"                ? " +
+			finderName +
+			".all()\n" +
+			"                : " +
+			operation +
+			";\n"
 		);
 	}
 
@@ -1237,14 +1278,16 @@ public class ServiceResourceGenerator {
 		String criteriaName,
 		String flagName,
 		String exceptionName
-	) {
+	)
+	{
 		return optionalCriteria
 			.map((criteria) -> this.checkPredicate(criteriaName, flagName, exceptionName))
 			.orElse("");
 	}
 
 	@Nonnull
-	private String checkPredicate(String criteriaName, String flagName, String exceptionName) {
+	private String checkPredicate(String criteriaName, String flagName, String exceptionName)
+	{
 		// @formatter:off
 		return ""
 				+ "        boolean " + flagName + " = result.asEcList().allSatisfy(" + criteriaName + "Operation::matches);\n"
@@ -1256,8 +1299,10 @@ public class ServiceResourceGenerator {
 	}
 
 	@Nonnull
-	private String getExecuteOperationSourceCode(@Nonnull Optional<Criteria> queryCriteria, String klassName) {
-		if (queryCriteria.isEmpty()) {
+	private String getExecuteOperationSourceCode(@Nonnull Optional<Criteria> queryCriteria, String klassName)
+	{
+		if (queryCriteria.isEmpty())
+		{
 			return "";
 		}
 
@@ -1265,22 +1310,28 @@ public class ServiceResourceGenerator {
 	}
 
 	@Nonnull
-	private String getOrderBysSourceCode(@Nonnull OrderBy orderBy) {
+	private String getOrderBysSourceCode(@Nonnull OrderBy orderBy)
+	{
 		ImmutableList<String> orderBySourceCodeClauses = orderBy
 			.getOrderByMemberReferencePaths()
 			.reject((each) -> each.getThisMemberReferencePath().getProperty().isDerived())
 			.collect(this::getOrderBySourceCode);
 
-		if (orderBySourceCodeClauses.isEmpty()) {
+		if (orderBySourceCodeClauses.isEmpty())
+		{
 			return "";
 		}
 
 		var stringBuilder = new StringBuilder();
-		for (var i = 0; i < orderBySourceCodeClauses.size(); i++) {
+		for (var i = 0; i < orderBySourceCodeClauses.size(); i++)
+		{
 			String orderBySourceCodeClause = orderBySourceCodeClauses.get(i);
-			if (i == 0) {
+			if (i == 0)
+			{
 				stringBuilder.append(orderBySourceCodeClause);
-			} else {
+			}
+			else
+			{
 				stringBuilder.append(".and(");
 				stringBuilder.append(orderBySourceCodeClause);
 				stringBuilder.append(")");
@@ -1291,15 +1342,18 @@ public class ServiceResourceGenerator {
 	}
 
 	@Nonnull
-	private String getOrderBySourceCode(@Nonnull OrderByMemberReferencePath orderByMemberReferencePath) {
+	private String getOrderBySourceCode(@Nonnull OrderByMemberReferencePath orderByMemberReferencePath)
+	{
 		return (
-			this.getThisMemberReferencePathSourceCode(orderByMemberReferencePath.getThisMemberReferencePath())
-			+ this.getOrderByDirectionDeclarationSourceCode(orderByMemberReferencePath.getOrderByDirectionDeclaration())
+			this.getThisMemberReferencePathSourceCode(orderByMemberReferencePath.getThisMemberReferencePath()) +
+			this.getOrderByDirectionDeclarationSourceCode(orderByMemberReferencePath.getOrderByDirectionDeclaration())
 		);
 	}
 
-	private String getThisMemberReferencePathSourceCode(@Nonnull ThisMemberReferencePath thisMemberReferencePath) {
-		if (thisMemberReferencePath.getAssociationEnds().notEmpty()) {
+	private String getThisMemberReferencePathSourceCode(@Nonnull ThisMemberReferencePath thisMemberReferencePath)
+	{
+		if (thisMemberReferencePath.getAssociationEnds().notEmpty())
+		{
 			throw new AssertionError();
 		}
 
@@ -1313,10 +1367,12 @@ public class ServiceResourceGenerator {
 		return result;
 	}
 
-	private ImmutableList<Klass> getSuperClassPath(Klass klass, Classifier owningClassifier) {
+	private ImmutableList<Klass> getSuperClassPath(Klass klass, Classifier owningClassifier)
+	{
 		MutableList<Klass> result = Lists.mutable.empty();
 		Klass currentKlass = klass;
-		while (currentKlass != owningClassifier && currentKlass != null) {
+		while (currentKlass != owningClassifier && currentKlass != null)
+		{
 			Optional<Klass> superClass = currentKlass.getSuperClass();
 			superClass.ifPresent(result::add);
 			currentKlass = superClass.orElse(null);
@@ -1327,21 +1383,26 @@ public class ServiceResourceGenerator {
 	@Nonnull
 	private String getOrderByDirectionDeclarationSourceCode(
 		@Nonnull OrderByDirectionDeclaration orderByDirectionDeclaration
-	) {
+	)
+	{
 		OrderByDirection orderByDirection = orderByDirectionDeclaration.getOrderByDirection();
-		return switch (orderByDirection) {
+		return switch (orderByDirection)
+		{
 			case ASCENDING -> ".ascendingOrderBy()";
 			case DESCENDING -> ".descendingOrderBy()";
 			default -> throw new AssertionError();
 		};
 	}
 
-	private String getParameterType(DataType dataType) {
-		if (dataType instanceof Enumeration) {
+	private String getParameterType(DataType dataType)
+	{
+		if (dataType instanceof Enumeration)
+		{
 			return "String";
 			// return ((Enumeration) dataType).getName();
 		}
-		if (dataType instanceof PrimitiveType primitiveType) {
+		if (dataType instanceof PrimitiveType primitiveType)
+		{
 			return PrimitiveToJavaParameterTypeVisitor.getJavaType(primitiveType);
 		}
 		throw new AssertionError();

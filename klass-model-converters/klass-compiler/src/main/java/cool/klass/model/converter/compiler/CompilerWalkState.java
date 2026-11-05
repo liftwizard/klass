@@ -67,8 +67,8 @@ import cool.klass.model.meta.grammar.KlassParser.ServiceGroupDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.TopLevelDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlDeclarationContext;
 
-public class CompilerWalkState {
-
+public class CompilerWalkState
+{
 	private final AntlrDomainModel domainModel;
 
 	@Nullable
@@ -145,302 +145,386 @@ public class CompilerWalkState {
 
 	private int numClassifierMembers;
 
-	public CompilerWalkState(AntlrDomainModel domainModel) {
+	public CompilerWalkState(AntlrDomainModel domainModel)
+	{
 		this.domainModel = domainModel;
 	}
 
-	private static void assertNull(@Nullable Object object) {
-		if (object != null) {
+	private static void assertNull(@Nullable Object object)
+	{
+		if (object != null)
+		{
 			throw new IllegalStateException("Expected null but was " + object);
 		}
 	}
 
-	private static void assertZero(int number) {
-		if (number != 0) {
+	private static void assertZero(int number)
+	{
+		if (number != 0)
+		{
 			throw new IllegalStateException("Expected 0 but was " + number);
 		}
 	}
 
 	@Nullable
-	public String getPackageName() {
+	public String getPackageName()
+	{
 		return this.packageName;
 	}
 
 	@Nullable
-	public PackageNameContext getPackageNameContext() {
+	public PackageNameContext getPackageNameContext()
+	{
 		return this.packageNameContext;
 	}
 
 	@Nullable
-	public AntlrClassifier getClassifier() {
+	public AntlrClassifier getClassifier()
+	{
 		return this.classifier;
 	}
 
 	@Nullable
-	public AntlrInterface getInterface() {
+	public AntlrInterface getInterface()
+	{
 		return this.iface;
 	}
 
 	@Nullable
-	public AntlrClass getKlass() {
+	public AntlrClass getKlass()
+	{
 		return this.klass;
 	}
 
 	@Nullable
-	public AntlrAssociation getAssociation() {
+	public AntlrAssociation getAssociation()
+	{
 		return this.association;
 	}
 
 	@Nullable
-	public AntlrAssociationEnd getAssociationEnd() {
+	public AntlrAssociationEnd getAssociationEnd()
+	{
 		return this.associationEnd;
 	}
 
 	@Nullable
-	public AntlrServiceGroup getServiceGroup() {
+	public AntlrServiceGroup getServiceGroup()
+	{
 		return this.serviceGroup;
 	}
 
 	@Nullable
-	public AntlrUrl getUrl() {
+	public AntlrUrl getUrl()
+	{
 		return this.url;
 	}
 
 	@Nullable
-	public AntlrProjection getProjection() {
+	public AntlrProjection getProjection()
+	{
 		return this.projection;
 	}
 
 	@Nullable
-	public AntlrService getService() {
+	public AntlrService getService()
+	{
 		return this.service;
 	}
 
 	@Nullable
-	public AntlrOrderBy getOrderBy() {
+	public AntlrOrderBy getOrderBy()
+	{
 		return this.orderBy;
 	}
 
 	@Nullable
-	public AntlrOrderByMemberReferencePath getOrderByMemberReferencePath() {
+	public AntlrOrderByMemberReferencePath getOrderByMemberReferencePath()
+	{
 		return this.orderByMemberReferencePath;
 	}
 
 	@Nullable
-	public AntlrOrderByOwner getOrderByOwner() {
+	public AntlrOrderByOwner getOrderByOwner()
+	{
 		return this.orderByOwner;
 	}
 
 	@Nullable
-	public AntlrClassifier getThisReference() {
+	public AntlrClassifier getThisReference()
+	{
 		return this.thisReference;
 	}
 
 	@Nullable
-	public AntlrModifier getClassifierModifier() {
+	public AntlrModifier getClassifierModifier()
+	{
 		return this.classifierModifier;
 	}
 
 	@Nullable
-	public AntlrParameterOwner getParameterOwner() {
+	public AntlrParameterOwner getParameterOwner()
+	{
 		return this.parameterOwner;
 	}
 
-	public int getNumClassifierMembers() {
+	public int getNumClassifierMembers()
+	{
 		return this.numClassifierMembers;
 	}
 
 	@Nonnull
-	public CompilationUnit getCurrentCompilationUnit() {
+	public CompilationUnit getCurrentCompilationUnit()
+	{
 		return Objects.requireNonNull(this.currentCompilationUnit);
 	}
 
 	@Nullable
-	public AntlrCompilationUnit getCompilationUnit() {
+	public AntlrCompilationUnit getCompilationUnit()
+	{
 		return Objects.requireNonNull(this.compilationUnit);
 	}
 
-	public void enterCompilationUnit(CompilationUnit currentCompilationUnit) {
+	public void enterCompilationUnit(CompilationUnit currentCompilationUnit)
+	{
 		this.currentCompilationUnit = currentCompilationUnit;
 
-		if (this.compilationUnit == null) {
+		if (this.compilationUnit == null)
+		{
 			return;
 		}
 
-		if (this.compilationUnit.getElementContext() != this.currentCompilationUnit.getParserContext()) {
+		if (this.compilationUnit.getElementContext() != this.currentCompilationUnit.getParserContext())
+		{
 			throw new AssertionError();
 		}
 	}
 
-	public void exitCompilationUnit() {
+	public void exitCompilationUnit()
+	{
 		this.currentCompilationUnit = null;
 		this.packageName = null;
 		this.packageNameContext = null;
 	}
 
-	public void withInPlaceCompilationUnit(CompilationUnit compilationUnit, Runnable runnable) {
+	public void withInPlaceCompilationUnit(CompilationUnit compilationUnit, Runnable runnable)
+	{
 		CompilationUnit oldCompilationUnit = this.currentCompilationUnit;
-		try {
+		try
+		{
 			this.currentCompilationUnit = compilationUnit;
 			runnable.run();
-		} finally {
+		}
+		finally
+		{
 			this.currentCompilationUnit = oldCompilationUnit;
 		}
 	}
 
-	public void assertEmpty() {
-		if (this.packageNameContext != null) {
+	public void assertEmpty()
+	{
+		if (this.packageNameContext != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.packageName != null) {
+		if (this.packageName != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.enumeration != null) {
+		if (this.enumeration != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.classifier != null) {
+		if (this.classifier != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.iface != null) {
+		if (this.iface != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.klass != null) {
+		if (this.klass != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.association != null) {
+		if (this.association != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.associationEnd != null) {
+		if (this.associationEnd != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.parameterizedProperty != null) {
+		if (this.parameterizedProperty != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.parameter != null) {
+		if (this.parameter != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.projection != null) {
+		if (this.projection != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.serviceGroup != null) {
+		if (this.serviceGroup != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.url != null) {
+		if (this.url != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.service != null) {
+		if (this.service != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.orderBy != null) {
+		if (this.orderBy != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.orderByMemberReferencePath != null) {
+		if (this.orderByMemberReferencePath != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.thisReference != null) {
+		if (this.thisReference != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.orderByOwner != null) {
+		if (this.orderByOwner != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.classifierModifier != null) {
+		if (this.classifierModifier != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.parameterOwner != null) {
+		if (this.parameterOwner != null)
+		{
 			throw new AssertionError();
 		}
-		if (this.numClassifierMembers != 0) {
+		if (this.numClassifierMembers != 0)
+		{
 			throw new AssertionError();
 		}
 	}
 
-	public void assertEquals(@Nonnull CompilerWalkState other) {
-		if (!Objects.equals(this.domainModel, other.domainModel)) {
+	public void assertEquals(@Nonnull CompilerWalkState other)
+	{
+		if (!Objects.equals(this.domainModel, other.domainModel))
+		{
 			throw new AssertionError();
 		}
-		if (this.compilationUnit != other.compilationUnit) {
+		if (this.compilationUnit != other.compilationUnit)
+		{
 			throw new AssertionError();
 		}
-		if (this.currentCompilationUnit != other.currentCompilationUnit) {
+		if (this.currentCompilationUnit != other.currentCompilationUnit)
+		{
 			throw new AssertionError();
 		}
-		if (!Objects.equals(this.packageName, other.packageName)) {
+		if (!Objects.equals(this.packageName, other.packageName))
+		{
 			throw new AssertionError();
 		}
-		if (this.topLevelDeclaration != other.topLevelDeclaration) {
+		if (this.topLevelDeclaration != other.topLevelDeclaration)
+		{
 			throw new AssertionError();
 		}
-		if (this.enumeration != other.enumeration) {
+		if (this.enumeration != other.enumeration)
+		{
 			throw new AssertionError();
 		}
-		if (this.classifier != other.classifier) {
+		if (this.classifier != other.classifier)
+		{
 			throw new AssertionError();
 		}
-		if (this.iface != other.iface) {
+		if (this.iface != other.iface)
+		{
 			throw new AssertionError();
 		}
-		if (this.klass != other.klass) {
+		if (this.klass != other.klass)
+		{
 			throw new AssertionError();
 		}
-		if (this.association != other.association) {
+		if (this.association != other.association)
+		{
 			throw new AssertionError();
 		}
-		if (this.associationEnd != other.associationEnd) {
+		if (this.associationEnd != other.associationEnd)
+		{
 			throw new AssertionError();
 		}
-		if (this.associationEndSignature != other.associationEndSignature) {
+		if (this.associationEndSignature != other.associationEndSignature)
+		{
 			throw new AssertionError();
 		}
-		if (this.parameterizedProperty != other.parameterizedProperty) {
+		if (this.parameterizedProperty != other.parameterizedProperty)
+		{
 			throw new AssertionError();
 		}
-		if (this.parameter != other.parameter) {
+		if (this.parameter != other.parameter)
+		{
 			throw new AssertionError();
 		}
-		if (this.projection != other.projection) {
+		if (this.projection != other.projection)
+		{
 			throw new AssertionError();
 		}
-		if (this.serviceGroup != other.serviceGroup) {
+		if (this.serviceGroup != other.serviceGroup)
+		{
 			throw new AssertionError();
 		}
-		if (this.url != other.url) {
+		if (this.url != other.url)
+		{
 			throw new AssertionError();
 		}
-		if (this.service != other.service) {
+		if (this.service != other.service)
+		{
 			throw new AssertionError();
 		}
-		if (this.orderBy != other.orderBy) {
+		if (this.orderBy != other.orderBy)
+		{
 			throw new AssertionError();
 		}
-		if (this.orderByMemberReferencePath != other.orderByMemberReferencePath) {
+		if (this.orderByMemberReferencePath != other.orderByMemberReferencePath)
+		{
 			throw new AssertionError();
 		}
-		if (this.thisReference != other.thisReference) {
+		if (this.thisReference != other.thisReference)
+		{
 			throw new AssertionError();
 		}
-		if (this.orderByOwner != other.orderByOwner) {
+		if (this.orderByOwner != other.orderByOwner)
+		{
 			throw new AssertionError();
 		}
-		if (this.classifierModifier != other.classifierModifier) {
+		if (this.classifierModifier != other.classifierModifier)
+		{
 			throw new AssertionError();
 		}
-		if (this.parameterOwner != other.parameterOwner) {
+		if (this.parameterOwner != other.parameterOwner)
+		{
 			throw new AssertionError();
 		}
-		if (this.numClassifierMembers != other.numClassifierMembers) {
+		if (this.numClassifierMembers != other.numClassifierMembers)
+		{
 			throw new AssertionError();
 		}
 	}
 
 	@Nonnull
-	public KlassListener asListener() {
+	public KlassListener asListener()
+	{
 		return new ListenerView();
 	}
 
-	public class ListenerView extends KlassBaseListener {
-
+	public class ListenerView
+		extends KlassBaseListener
+	{
 		@Override
-		public void enterCompilationUnit(CompilationUnitContext ctx) {
+		public void enterCompilationUnit(CompilationUnitContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.compilationUnit);
 			CompilerWalkState.this.compilationUnit = CompilerWalkState.this.domainModel.getCompilationUnitByContext(
 				ctx
@@ -448,18 +532,21 @@ public class CompilerWalkState {
 		}
 
 		@Override
-		public void exitCompilationUnit(CompilationUnitContext ctx) {
+		public void exitCompilationUnit(CompilationUnitContext ctx)
+		{
 			CompilerWalkState.this.compilationUnit = null;
 		}
 
 		@Override
-		public void enterPackageDeclaration(@Nonnull PackageDeclarationContext packageContext) {
+		public void enterPackageDeclaration(@Nonnull PackageDeclarationContext packageContext)
+		{
 			CompilerWalkState.this.packageNameContext = packageContext.packageName();
 			CompilerWalkState.this.packageName = CompilerWalkState.this.packageNameContext.getText();
 		}
 
 		@Override
-		public void enterTopLevelDeclaration(@Nonnull TopLevelDeclarationContext ctx) {
+		public void enterTopLevelDeclaration(@Nonnull TopLevelDeclarationContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.topLevelDeclaration);
 			CompilerWalkState.this.topLevelDeclaration = CompilerWalkState.this.domainModel.getTopLevelElementByContext(
 				ctx
@@ -467,12 +554,14 @@ public class CompilerWalkState {
 		}
 
 		@Override
-		public void exitTopLevelDeclaration(@Nonnull TopLevelDeclarationContext ctx) {
+		public void exitTopLevelDeclaration(@Nonnull TopLevelDeclarationContext ctx)
+		{
 			CompilerWalkState.this.topLevelDeclaration = null;
 		}
 
 		@Override
-		public void enterInterfaceDeclaration(@Nonnull InterfaceDeclarationContext ctx) {
+		public void enterInterfaceDeclaration(@Nonnull InterfaceDeclarationContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.classifier);
 			CompilerWalkState.assertNull(CompilerWalkState.this.iface);
 			CompilerWalkState.assertNull(CompilerWalkState.this.thisReference);
@@ -486,7 +575,8 @@ public class CompilerWalkState {
 		}
 
 		@Override
-		public void exitInterfaceDeclaration(@Nonnull InterfaceDeclarationContext ctx) {
+		public void exitInterfaceDeclaration(@Nonnull InterfaceDeclarationContext ctx)
+		{
 			CompilerWalkState.this.classifier = null;
 			CompilerWalkState.this.iface = null;
 			CompilerWalkState.this.thisReference = null;
@@ -494,7 +584,8 @@ public class CompilerWalkState {
 		}
 
 		@Override
-		public void enterClassDeclaration(@Nonnull ClassDeclarationContext ctx) {
+		public void enterClassDeclaration(@Nonnull ClassDeclarationContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.classifier);
 			CompilerWalkState.assertNull(CompilerWalkState.this.klass);
 			CompilerWalkState.assertNull(CompilerWalkState.this.thisReference);
@@ -508,7 +599,8 @@ public class CompilerWalkState {
 		}
 
 		@Override
-		public void exitClassDeclaration(@Nonnull ClassDeclarationContext ctx) {
+		public void exitClassDeclaration(@Nonnull ClassDeclarationContext ctx)
+		{
 			CompilerWalkState.this.classifier = null;
 			CompilerWalkState.this.klass = null;
 			CompilerWalkState.this.thisReference = null;
@@ -516,39 +608,46 @@ public class CompilerWalkState {
 		}
 
 		@Override
-		public void enterEnumerationDeclaration(@Nonnull EnumerationDeclarationContext ctx) {
+		public void enterEnumerationDeclaration(@Nonnull EnumerationDeclarationContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.enumeration);
 			CompilerWalkState.this.enumeration = CompilerWalkState.this.domainModel.getEnumerationByContext(ctx);
 		}
 
 		@Override
-		public void exitEnumerationDeclaration(@Nonnull EnumerationDeclarationContext ctx) {
+		public void exitEnumerationDeclaration(@Nonnull EnumerationDeclarationContext ctx)
+		{
 			CompilerWalkState.this.enumeration = null;
 		}
 
 		@Override
-		public void enterAssociationDeclaration(@Nonnull AssociationDeclarationContext ctx) {
+		public void enterAssociationDeclaration(@Nonnull AssociationDeclarationContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.association);
 			CompilerWalkState.this.association = CompilerWalkState.this.domainModel.getAssociationByContext(ctx);
 		}
 
 		@Override
-		public void exitAssociationDeclaration(@Nonnull AssociationDeclarationContext ctx) {
+		public void exitAssociationDeclaration(@Nonnull AssociationDeclarationContext ctx)
+		{
 			CompilerWalkState.this.association = null;
 		}
 
 		@Override
-		public void enterAssociationEnd(@Nonnull AssociationEndContext ctx) {
+		public void enterAssociationEnd(@Nonnull AssociationEndContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.associationEnd);
 			CompilerWalkState.assertNull(CompilerWalkState.this.thisReference);
 			CompilerWalkState.assertNull(CompilerWalkState.this.orderByOwner);
 
-			if (CompilerWalkState.this.association == null) {
+			if (CompilerWalkState.this.association == null)
+			{
 				return;
 			}
 
 			CompilerWalkState.this.associationEnd = CompilerWalkState.this.association.getAssociationEndByContext(ctx);
-			if (CompilerWalkState.this.associationEnd == null) {
+			if (CompilerWalkState.this.associationEnd == null)
+			{
 				return;
 			}
 			CompilerWalkState.this.orderByOwner = CompilerWalkState.this.associationEnd;
@@ -556,136 +655,161 @@ public class CompilerWalkState {
 		}
 
 		@Override
-		public void exitAssociationEnd(@Nonnull AssociationEndContext ctx) {
+		public void exitAssociationEnd(@Nonnull AssociationEndContext ctx)
+		{
 			CompilerWalkState.this.associationEnd = null;
 			CompilerWalkState.this.orderByOwner = null;
 			CompilerWalkState.this.thisReference = null;
 		}
 
 		@Override
-		public void enterAssociationEndSignature(@Nonnull AssociationEndSignatureContext ctx) {
+		public void enterAssociationEndSignature(@Nonnull AssociationEndSignatureContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.associationEndSignature);
 			CompilerWalkState.assertNull(CompilerWalkState.this.orderByOwner);
 
-			if (CompilerWalkState.this.classifier == null) {
+			if (CompilerWalkState.this.classifier == null)
+			{
 				return;
 			}
 
 			CompilerWalkState.this.associationEndSignature =
 				CompilerWalkState.this.classifier.getDeclaredAssociationEndSignatureByContext(ctx);
-			if (CompilerWalkState.this.associationEndSignature == null) {
+			if (CompilerWalkState.this.associationEndSignature == null)
+			{
 				return;
 			}
 			CompilerWalkState.this.orderByOwner = CompilerWalkState.this.associationEndSignature;
 		}
 
 		@Override
-		public void exitAssociationEndSignature(@Nonnull AssociationEndSignatureContext ctx) {
+		public void exitAssociationEndSignature(@Nonnull AssociationEndSignatureContext ctx)
+		{
 			CompilerWalkState.this.associationEndSignature = null;
 			CompilerWalkState.this.orderByOwner = null;
 		}
 
 		@Override
-		public void enterRelationship(@Nonnull RelationshipContext ctx) {
+		public void enterRelationship(@Nonnull RelationshipContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.thisReference);
 
-			if (CompilerWalkState.this.association == null) {
+			if (CompilerWalkState.this.association == null)
+			{
 				return;
 			}
 
-			CompilerWalkState.this.thisReference = CompilerWalkState.this.association.getAssociationEnds()
+			CompilerWalkState.this.thisReference = CompilerWalkState.this.association
+				.getAssociationEnds()
 				.getFirstOptional()
 				.map(AntlrAssociationEnd::getType)
 				.orElse(AntlrClass.NOT_FOUND);
 		}
 
 		@Override
-		public void exitRelationship(@Nonnull RelationshipContext ctx) {
+		public void exitRelationship(@Nonnull RelationshipContext ctx)
+		{
 			CompilerWalkState.this.thisReference = null;
 		}
 
 		@Override
-		public void enterProjectionDeclaration(@Nonnull ProjectionDeclarationContext ctx) {
+		public void enterProjectionDeclaration(@Nonnull ProjectionDeclarationContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.projection);
 
 			CompilerWalkState.this.projection = CompilerWalkState.this.domainModel.getProjectionByContext(ctx);
 		}
 
 		@Override
-		public void exitProjectionDeclaration(@Nonnull ProjectionDeclarationContext ctx) {
+		public void exitProjectionDeclaration(@Nonnull ProjectionDeclarationContext ctx)
+		{
 			CompilerWalkState.this.projection = null;
 		}
 
 		@Override
-		public void enterServiceGroupDeclaration(@Nonnull ServiceGroupDeclarationContext ctx) {
+		public void enterServiceGroupDeclaration(@Nonnull ServiceGroupDeclarationContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.serviceGroup);
 			CompilerWalkState.assertNull(CompilerWalkState.this.thisReference);
 
 			CompilerWalkState.this.serviceGroup = CompilerWalkState.this.domainModel.getServiceGroupByContext(ctx);
-			if (CompilerWalkState.this.serviceGroup == null) {
+			if (CompilerWalkState.this.serviceGroup == null)
+			{
 				return;
 			}
 			CompilerWalkState.this.thisReference = CompilerWalkState.this.serviceGroup.getKlass();
 		}
 
 		@Override
-		public void exitServiceGroupDeclaration(@Nonnull ServiceGroupDeclarationContext ctx) {
+		public void exitServiceGroupDeclaration(@Nonnull ServiceGroupDeclarationContext ctx)
+		{
 			CompilerWalkState.this.serviceGroup = null;
 			CompilerWalkState.this.thisReference = null;
 		}
 
 		@Override
-		public void enterUrlDeclaration(@Nonnull UrlDeclarationContext ctx) {
+		public void enterUrlDeclaration(@Nonnull UrlDeclarationContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.url);
-			if (CompilerWalkState.this.serviceGroup == null) {
+			if (CompilerWalkState.this.serviceGroup == null)
+			{
 				return;
 			}
 			CompilerWalkState.this.url = CompilerWalkState.this.serviceGroup.getUrlByContext(ctx);
 		}
 
 		@Override
-		public void exitUrlDeclaration(@Nonnull UrlDeclarationContext ctx) {
+		public void exitUrlDeclaration(@Nonnull UrlDeclarationContext ctx)
+		{
 			CompilerWalkState.this.url = null;
 		}
 
 		@Override
-		public void enterServiceDeclaration(@Nonnull ServiceDeclarationContext ctx) {
+		public void enterServiceDeclaration(@Nonnull ServiceDeclarationContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.service);
 			CompilerWalkState.assertNull(CompilerWalkState.this.orderByOwner);
 
-			if (CompilerWalkState.this.url == null) {
+			if (CompilerWalkState.this.url == null)
+			{
 				return;
 			}
 			CompilerWalkState.this.service = CompilerWalkState.this.url.getServiceByContext(ctx);
-			if (CompilerWalkState.this.service == null) {
+			if (CompilerWalkState.this.service == null)
+			{
 				return;
 			}
 			CompilerWalkState.this.orderByOwner = CompilerWalkState.this.service;
 		}
 
 		@Override
-		public void exitServiceDeclaration(@Nonnull ServiceDeclarationContext ctx) {
+		public void exitServiceDeclaration(@Nonnull ServiceDeclarationContext ctx)
+		{
 			CompilerWalkState.this.service = null;
 			CompilerWalkState.this.orderByOwner = null;
 		}
 
 		@Override
-		public void enterInterfaceMember(InterfaceMemberContext ctx) {
+		public void enterInterfaceMember(InterfaceMemberContext ctx)
+		{
 			CompilerWalkState.this.numClassifierMembers++;
 		}
 
 		@Override
-		public void enterClassMember(ClassMemberContext ctx) {
+		public void enterClassMember(ClassMemberContext ctx)
+		{
 			CompilerWalkState.this.numClassifierMembers++;
 		}
 
 		@Override
-		public void enterParameterizedProperty(@Nonnull ParameterizedPropertyContext ctx) {
+		public void enterParameterizedProperty(@Nonnull ParameterizedPropertyContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.parameterizedProperty);
 			CompilerWalkState.assertNull(CompilerWalkState.this.orderByOwner);
 			CompilerWalkState.assertNull(CompilerWalkState.this.parameterOwner);
 
-			if (CompilerWalkState.this.klass == null) {
+			if (CompilerWalkState.this.klass == null)
+			{
 				return;
 			}
 			CompilerWalkState.this.parameterizedProperty =
@@ -695,17 +819,20 @@ public class CompilerWalkState {
 		}
 
 		@Override
-		public void exitParameterizedProperty(@Nonnull ParameterizedPropertyContext ctx) {
+		public void exitParameterizedProperty(@Nonnull ParameterizedPropertyContext ctx)
+		{
 			CompilerWalkState.this.parameterizedProperty = null;
 			CompilerWalkState.this.orderByOwner = null;
 			CompilerWalkState.this.parameterOwner = null;
 		}
 
 		@Override
-		public void enterParameterDeclaration(@Nonnull ParameterDeclarationContext ctx) {
+		public void enterParameterDeclaration(@Nonnull ParameterDeclarationContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.parameter);
 
-			if (CompilerWalkState.this.parameterOwner == null) {
+			if (CompilerWalkState.this.parameterOwner == null)
+			{
 				return;
 			}
 
@@ -713,15 +840,18 @@ public class CompilerWalkState {
 		}
 
 		@Override
-		public void exitParameterDeclaration(@Nonnull ParameterDeclarationContext ctx) {
+		public void exitParameterDeclaration(@Nonnull ParameterDeclarationContext ctx)
+		{
 			CompilerWalkState.this.parameter = null;
 		}
 
 		@Override
-		public void enterClassifierModifier(@Nonnull ClassifierModifierContext ctx) {
+		public void enterClassifierModifier(@Nonnull ClassifierModifierContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.classifierModifier);
 
-			if (CompilerWalkState.this.classifier == null) {
+			if (CompilerWalkState.this.classifier == null)
+			{
 				return;
 			}
 
@@ -731,33 +861,39 @@ public class CompilerWalkState {
 		}
 
 		@Override
-		public void exitClassifierModifier(@Nonnull ClassifierModifierContext ctx) {
+		public void exitClassifierModifier(@Nonnull ClassifierModifierContext ctx)
+		{
 			CompilerWalkState.this.classifierModifier = null;
 		}
 
 		@Override
-		public void enterOrderByDeclaration(OrderByDeclarationContext ctx) {
+		public void enterOrderByDeclaration(OrderByDeclarationContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.orderBy);
 
-			if (CompilerWalkState.this.orderByOwner == null) {
+			if (CompilerWalkState.this.orderByOwner == null)
+			{
 				return;
 			}
 
-			CompilerWalkState.this.orderByOwner.getOrderBy().ifPresent((antlrOrderBy) ->
-				CompilerWalkState.this.orderBy = antlrOrderBy
-			);
+			CompilerWalkState.this.orderByOwner
+				.getOrderBy()
+				.ifPresent((antlrOrderBy) -> CompilerWalkState.this.orderBy = antlrOrderBy);
 		}
 
 		@Override
-		public void exitOrderByDeclaration(OrderByDeclarationContext ctx) {
+		public void exitOrderByDeclaration(OrderByDeclarationContext ctx)
+		{
 			CompilerWalkState.this.orderBy = null;
 		}
 
 		@Override
-		public void enterOrderByMemberReferencePath(OrderByMemberReferencePathContext ctx) {
+		public void enterOrderByMemberReferencePath(OrderByMemberReferencePathContext ctx)
+		{
 			CompilerWalkState.assertNull(CompilerWalkState.this.orderByMemberReferencePath);
 
-			if (CompilerWalkState.this.orderBy == null) {
+			if (CompilerWalkState.this.orderBy == null)
+			{
 				return;
 			}
 
@@ -767,7 +903,8 @@ public class CompilerWalkState {
 		}
 
 		@Override
-		public void exitOrderByMemberReferencePath(OrderByMemberReferencePathContext ctx) {
+		public void exitOrderByMemberReferencePath(OrderByMemberReferencePathContext ctx)
+		{
 			CompilerWalkState.this.orderByMemberReferencePath = null;
 		}
 	}

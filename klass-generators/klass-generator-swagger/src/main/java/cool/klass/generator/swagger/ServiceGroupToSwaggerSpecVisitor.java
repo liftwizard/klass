@@ -70,16 +70,19 @@ import io.swagger.models.properties.StringProperty;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.MutableList;
 
-public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor {
-
+public class ServiceGroupToSwaggerSpecVisitor
+	implements TopLevelElementVisitor
+{
 	private final Swagger swagger;
 
-	public ServiceGroupToSwaggerSpecVisitor(@Nonnull Swagger swagger) {
+	public ServiceGroupToSwaggerSpecVisitor(@Nonnull Swagger swagger)
+	{
 		this.swagger = Objects.requireNonNull(swagger);
 	}
 
 	@Override
-	public void visitEnumeration(Enumeration enumeration) {
+	public void visitEnumeration(Enumeration enumeration)
+	{
 		Model enumModel = new ModelImpl()
 			.type("string")
 			._enum(enumeration.getEnumerationLiterals().collect(NamedElement::getName).castToList());
@@ -87,44 +90,56 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 	}
 
 	@Override
-	public void visitInterface(Interface anInterface) {}
+	public void visitInterface(Interface anInterface)
+	{
+	}
 
 	@Override
-	public void visitKlass(Klass klass) {
+	public void visitKlass(Klass klass)
+	{
 		Model model = this.createKlassModel(klass);
 		this.swagger.addDefinition(klass.getName(), model);
 	}
 
 	@Override
-	public void visitAssociation(Association association) {}
+	public void visitAssociation(Association association)
+	{
+	}
 
 	@Override
-	public void visitProjection(Projection projection) {
+	public void visitProjection(Projection projection)
+	{
 		Model model = this.createProjectionModel(projection);
 		this.swagger.addDefinition(projection.getName(), model);
 	}
 
 	@Override
-	public void visitServiceGroup(ServiceGroup serviceGroup) {
-		for (Url url : serviceGroup.getUrls()) {
+	public void visitServiceGroup(ServiceGroup serviceGroup)
+	{
+		for (Url url : serviceGroup.getUrls())
+		{
 			this.processUrl(url);
 		}
 	}
 
-	private void processUrl(Url url) {
+	private void processUrl(Url url)
+	{
 		String pathString = this.convertUrlToSwaggerPath(url);
 		Path path = this.swagger.getPath(pathString);
-		if (path == null) {
+		if (path == null)
+		{
 			path = new Path();
 			this.swagger.path(pathString, path);
 		}
 
-		for (Service service : url.getServices()) {
+		for (Service service : url.getServices())
+		{
 			this.processService(path, service);
 		}
 	}
 
-	private void processService(Path path, Service service) {
+	private void processService(Path path, Service service)
+	{
 		var operation = new Operation();
 
 		Klass klass = service.getUrl().getServiceGroup().getKlass();
@@ -134,15 +149,18 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 		operation.description(this.generateOperationDescription(service));
 		operation.operationId(this.generateOperationId(service));
 
-		for (Parameter parameter : service.getUrl().getPathParameters()) {
+		for (Parameter parameter : service.getUrl().getPathParameters())
+		{
 			operation.addParameter(this.toSerializableParameter(new PathParameter(), parameter));
 		}
 
-		for (Parameter parameter : service.getUrl().getQueryParameters()) {
+		for (Parameter parameter : service.getUrl().getQueryParameters())
+		{
 			operation.addParameter(this.toSerializableParameter(new QueryParameter(), parameter));
 		}
 
-		if (service.getVerb() == Verb.POST || service.getVerb() == Verb.PUT || service.getVerb() == Verb.PATCH) {
+		if (service.getVerb() == Verb.POST || service.getVerb() == Verb.PUT || service.getVerb() == Verb.PATCH)
+		{
 			var bodyParam = new BodyParameter();
 			bodyParam.setName("body");
 			bodyParam.setRequired(true);
@@ -161,7 +179,8 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 	private <T extends AbstractSerializableParameter<T>> T toSerializableParameter(
 		T swaggerParameter,
 		Parameter parameter
-	) {
+	)
+	{
 		swaggerParameter.setName(parameter.getName());
 		swaggerParameter.setRequired(parameter.getMultiplicity().isRequired());
 		swaggerParameter.setType(this.getSwaggerType(parameter.getType()));
@@ -169,7 +188,8 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 		return swaggerParameter;
 	}
 
-	private String generateOperationSummary(Service service) {
+	private String generateOperationSummary(Service service)
+	{
 		Klass klass = service.getUrl().getServiceGroup().getKlass();
 		String verbName = service.getVerb().name();
 		boolean isMany = service.getServiceMultiplicity() == ServiceMultiplicity.MANY;
@@ -177,26 +197,31 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 		return verbName + " " + (isMany ? klass.getName() + " list" : klass.getName());
 	}
 
-	private String generateOperationDescription(Service service) {
+	private String generateOperationDescription(Service service)
+	{
 		var desc = new StringBuilder();
 		desc.append(this.generateOperationSummary(service));
 
-		if (service.getAuthorizeCriteria().isPresent()) {
+		if (service.getAuthorizeCriteria().isPresent())
+		{
 			desc.append("\n\nRequires authorization.");
 		}
 
 		return desc.toString();
 	}
 
-	private String generateOperationId(Service service) {
+	private String generateOperationId(Service service)
+	{
 		Klass klass = service.getUrl().getServiceGroup().getKlass();
 		String verbName = service.getVerb().name().toLowerCase(Locale.ROOT);
 		String klassName = klass.getName();
 		boolean isMany = service.getServiceMultiplicity() == ServiceMultiplicity.MANY;
 
 		// Generate unique operation ID like: getUserById, getUserList, createUser, etc.
-		if (service.getVerb() == Verb.GET) {
-			if (isMany) {
+		if (service.getVerb() == Verb.GET)
+		{
+			if (isMany)
+			{
 				return verbName + klassName + "List";
 			}
 			return verbName + klassName + "ById";
@@ -205,53 +230,68 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 		return verbName + klassName;
 	}
 
-	private void addResponses(Operation operation, Service service) {
+	private void addResponses(Operation operation, Service service)
+	{
 		var successResponse = new Response();
 
-		if (service.getProjectionDispatch().isPresent()) {
+		if (service.getProjectionDispatch().isPresent())
+		{
 			Projection projection = service.getProjectionDispatch().get().getProjection();
 
-			if (service.getServiceMultiplicity() == ServiceMultiplicity.MANY) {
+			if (service.getServiceMultiplicity() == ServiceMultiplicity.MANY)
+			{
 				var arrayModel = new ArrayModel();
 				arrayModel.setItems(new RefProperty(projection.getName()));
 				successResponse.setResponseSchema(arrayModel);
 				successResponse.setDescription("Success - returns list of " + projection.getName());
-			} else {
+			}
+			else
+			{
 				var refModel = new RefModel(projection.getName());
 				successResponse.setResponseSchema(refModel);
 				successResponse.setDescription("Success - returns " + projection.getName());
 			}
-		} else {
+		}
+		else
+		{
 			successResponse.setDescription("Success");
 		}
 
-		if (service.getVerb() == Verb.POST) {
+		if (service.getVerb() == Verb.POST)
+		{
 			operation.addResponse("201", successResponse);
-		} else {
+		}
+		else
+		{
 			operation.addResponse("200", successResponse);
 		}
 
 		operation.addResponse("400", new Response().description("Bad Request"));
 
-		if (service.getAuthorizeCriteria().isPresent()) {
+		if (service.getAuthorizeCriteria().isPresent())
+		{
 			operation.addResponse("403", new Response().description("Forbidden"));
 		}
 
 		operation.addResponse("404", new Response().description("Not Found"));
 
-		if (service.getConflictCriteria().isPresent()) {
+		if (service.getConflictCriteria().isPresent())
+		{
 			operation.addResponse("409", new Response().description("Conflict"));
 		}
 
 		operation.addResponse("500", new Response().description("Internal Server Error"));
 	}
 
-	private String convertUrlToSwaggerPath(Url url) {
+	private String convertUrlToSwaggerPath(Url url)
+	{
 		return url
 			.getUrlPathSegments()
-			.collect((segment) -> {
+			.collect((segment) ->
+			{
 				String segmentString = segment.toString();
-				if (segmentString.contains(":")) {
+				if (segmentString.contains(":"))
+				{
 					String paramName = segmentString.substring(1, segmentString.indexOf(':')).trim();
 					return "/{" + paramName + "}";
 				}
@@ -260,8 +300,10 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 			.makeString("");
 	}
 
-	private HttpMethod convertVerbToHttpMethod(Verb verb) {
-		return switch (verb) {
+	private HttpMethod convertVerbToHttpMethod(Verb verb)
+	{
+		return switch (verb)
+		{
 			case GET -> HttpMethod.GET;
 			case POST -> HttpMethod.POST;
 			case PUT -> HttpMethod.PUT;
@@ -270,7 +312,8 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 		};
 	}
 
-	private Model createProjectionModel(Projection projection) {
+	private Model createProjectionModel(Projection projection)
+	{
 		var model = new ModelImpl();
 		model.setType("object");
 
@@ -288,22 +331,30 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 		Iterable<? extends ProjectionChild> children,
 		Map<String, Property> properties,
 		MutableList<String> requiredPropertyNames
-	) {
-		for (ProjectionChild child : children) {
-			if (child instanceof ProjectionDataTypeProperty dataTypeProperty) {
+	)
+	{
+		for (ProjectionChild child : children)
+		{
+			if (child instanceof ProjectionDataTypeProperty dataTypeProperty)
+			{
 				DataTypeProperty property = dataTypeProperty.getProperty();
 				Property swaggerProperty = this.createPropertyFromDataType(property.getType());
 
 				properties.put(property.getName(), swaggerProperty);
 
-				if (property.isRequired()) {
+				if (property.isRequired())
+				{
 					requiredPropertyNames.add(property.getName());
 				}
-			} else if (child instanceof ProjectionProjectionReference projectionRef) {
+			}
+			else if (child instanceof ProjectionProjectionReference projectionRef)
+			{
 				String projectionName = projectionRef.getProjection().getName();
 				Property refProperty = new RefProperty(projectionName);
 				properties.put(child.getName(), refProperty);
-			} else if (child instanceof ProjectionReferenceProperty referenceProperty) {
+			}
+			else if (child instanceof ProjectionReferenceProperty referenceProperty)
+			{
 				Map<String, Property> nestedProperties = new LinkedHashMap<>();
 				MutableList<String> nestedRequired = Lists.mutable.empty();
 
@@ -316,19 +367,22 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 		}
 	}
 
-	private Model createKlassModel(Klass klass) {
+	private Model createKlassModel(Klass klass)
+	{
 		var model = new ModelImpl();
 		model.setType("object");
 
 		Map<String, Property> properties = new LinkedHashMap<>();
 		MutableList<String> requiredPropertyNames = Lists.mutable.empty();
 
-		for (DataTypeProperty property : klass.getDataTypeProperties()) {
+		for (DataTypeProperty property : klass.getDataTypeProperties())
+		{
 			Property swaggerProperty = this.createPropertyFromDataType(property.getType());
 
 			properties.put(property.getName(), swaggerProperty);
 
-			if (property.isRequired()) {
+			if (property.isRequired())
+			{
 				requiredPropertyNames.add(property.getName());
 			}
 		}
@@ -338,9 +392,12 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 		return model;
 	}
 
-	private Property createPropertyFromDataType(DataType dataType) {
-		if (dataType instanceof PrimitiveType primitiveType) {
-			return switch (primitiveType) {
+	private Property createPropertyFromDataType(DataType dataType)
+	{
+		if (dataType instanceof PrimitiveType primitiveType)
+		{
+			return switch (primitiveType)
+			{
 				case INTEGER -> new IntegerProperty();
 				case LONG -> new LongProperty();
 				case DOUBLE -> new DoubleProperty();
@@ -354,7 +411,8 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 			};
 		}
 
-		if (dataType instanceof Enumeration enumeration) {
+		if (dataType instanceof Enumeration enumeration)
+		{
 			var stringProperty = new StringProperty();
 			stringProperty._enum(enumeration.getEnumerationLiterals().collect(NamedElement::getName).castToList());
 			return stringProperty;
@@ -363,9 +421,12 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 		throw new UnsupportedOperationException("Unsupported data type: " + dataType.getClass().getSimpleName());
 	}
 
-	private String getSwaggerType(DataType dataType) {
-		if (dataType instanceof PrimitiveType primitiveType) {
-			return switch (primitiveType) {
+	private String getSwaggerType(DataType dataType)
+	{
+		if (dataType instanceof PrimitiveType primitiveType)
+		{
+			return switch (primitiveType)
+			{
 				case INTEGER, LONG -> "integer";
 				case DOUBLE, FLOAT -> "number";
 				case BOOLEAN -> "boolean";
@@ -376,9 +437,12 @@ public class ServiceGroupToSwaggerSpecVisitor implements TopLevelElementVisitor 
 		return "string"; // Default for enums and other types
 	}
 
-	private String getSwaggerFormat(DataType dataType) {
-		if (dataType instanceof PrimitiveType primitiveType) {
-			return switch (primitiveType) {
+	private String getSwaggerFormat(DataType dataType)
+	{
+		if (dataType instanceof PrimitiveType primitiveType)
+		{
+			return switch (primitiveType)
+			{
 				case INTEGER -> "int32";
 				case LONG -> "int64";
 				case DOUBLE -> "double";

@@ -36,8 +36,9 @@ import cool.klass.model.meta.grammar.KlassParser.PrimitiveTypeContext;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;
 
-public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType> {
-
+public class AntlrPrimitiveProperty
+	extends AntlrDataTypeProperty<PrimitiveType>
+{
 	public static final AntlrPrimitiveProperty AMBIGUOUS = new AntlrPrimitiveProperty(
 		new PrimitivePropertyContext(AMBIGUOUS_PARENT, -1),
 		Optional.empty(),
@@ -61,26 +62,31 @@ public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType>
 		@Nonnull AntlrClassifier owningClassifier,
 		boolean isOptional,
 		@Nonnull AntlrPrimitiveType primitiveType
-	) {
+	)
+	{
 		super(elementContext, compilationUnit, ordinal, nameContext, owningClassifier, isOptional);
 		this.antlrPrimitiveType = Objects.requireNonNull(primitiveType);
 	}
 
 	@Nonnull
 	@Override
-	public AntlrPrimitiveType getType() {
+	public AntlrPrimitiveType getType()
+	{
 		return this.antlrPrimitiveType;
 	}
 
 	@Override
-	protected PrimitiveTypeContext getTypeParserRuleContext() {
+	protected PrimitiveTypeContext getTypeParserRuleContext()
+	{
 		return this.getElementContext().primitiveType();
 	}
 
 	@Nonnull
 	@Override
-	public PrimitivePropertyBuilder build() {
-		if (this.elementBuilder != null) {
+	public PrimitivePropertyBuilder build()
+	{
+		if (this.elementBuilder != null)
+		{
 			throw new IllegalStateException();
 		}
 
@@ -105,24 +111,28 @@ public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType>
 
 	@Nonnull
 	@Override
-	public PrimitivePropertyContext getElementContext() {
+	public PrimitivePropertyContext getElementContext()
+	{
 		return (PrimitivePropertyContext) super.getElementContext();
 	}
 
 	@Nonnull
 	@Override
-	public PrimitivePropertyBuilder getElementBuilder() {
+	public PrimitivePropertyBuilder getElementBuilder()
+	{
 		return Objects.requireNonNull(this.elementBuilder);
 	}
 
 	@Override
-	public String getTypeName() {
+	public String getTypeName()
+	{
 		return this.getElementContext().primitiveType().getText();
 	}
 
 	// <editor-fold desc="Report Compiler Errors">
 	@Override
-	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	public void reportErrors(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		super.reportErrors(compilerAnnotationHolder);
 
 		this.reportInvalidTemporalMultiplicity(compilerAnnotationHolder);
@@ -133,33 +143,42 @@ public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType>
 	}
 
 	@Override
-	protected void reportInvalidIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	protected void reportInvalidIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		PrimitiveType primitiveType = this.antlrPrimitiveType.getPrimitiveType();
-		if (primitiveType.isId()) {
+		if (primitiveType.isId())
+		{
 			this.reportNonKeyIdProperty(compilerAnnotationHolder);
 			this.reportOverriddenIdProperty(compilerAnnotationHolder);
-		} else {
+		}
+		else
+		{
 			this.reportInvalidTypeIdProperty(compilerAnnotationHolder);
 		}
 	}
 
-	private void reportNonKeyIdProperty(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (this.isKey()) {
+	private void reportNonKeyIdProperty(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.isKey())
+		{
 			return;
 		}
 
 		ListIterable<AntlrModifier> idModifiers = this.getModifiersByName("id");
-		for (AntlrModifier idModifier : idModifiers) {
+		for (AntlrModifier idModifier : idModifiers)
+		{
 			var message = "Properties with the 'id' modifier must also have the 'key' modifier.";
 			compilerAnnotationHolder.add("ERR_NKY_IDP", message, idModifier);
 		}
 	}
 
-	private void reportInvalidTypeIdProperty(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	private void reportInvalidTypeIdProperty(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		PrimitiveType primitiveType = this.antlrPrimitiveType.getPrimitiveType();
 
 		ListIterable<AntlrModifier> idModifiers = this.getModifiersByName("id");
-		for (AntlrModifier idModifier : idModifiers) {
+		for (AntlrModifier idModifier : idModifiers)
+		{
 			String message = String.format(
 				"Primitive properties with type %s may not be auto-generated ids. Only types %s may be id properties.",
 				primitiveType.getPrettyName(),
@@ -169,22 +188,27 @@ public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType>
 		}
 	}
 
-	private void reportOverriddenIdProperty(CompilerAnnotationHolder compilerAnnotationHolder) {
-		if (!(this.owningClassifier instanceof AntlrClass owningClass)) {
+	private void reportOverriddenIdProperty(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (!(this.owningClassifier instanceof AntlrClass owningClass))
+		{
 			return;
 		}
 
-		if (owningClass.getSuperClass().isEmpty()) {
+		if (owningClass.getSuperClass().isEmpty())
+		{
 			return;
 		}
 
 		AntlrClass superClass = owningClass.getSuperClass().get();
 		AntlrDataTypeProperty<?> overriddenProperty = superClass.getDataTypePropertyByName(this.getName());
-		if (overriddenProperty == AntlrEnumerationProperty.NOT_FOUND) {
+		if (overriddenProperty == AntlrEnumerationProperty.NOT_FOUND)
+		{
 			return;
 		}
 
-		if (!(overriddenProperty.getOwningClassifier() instanceof AntlrClass overriddenPropertyOwningClass)) {
+		if (!(overriddenProperty.getOwningClassifier() instanceof AntlrClass overriddenPropertyOwningClass))
+		{
 			return;
 		}
 
@@ -195,24 +219,32 @@ public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType>
 				overriddenPropertyOwningClass.getName()
 			);
 		ListIterable<AntlrModifier> idModifiers = this.getModifiersByName("id");
-		if (idModifiers.notEmpty()) {
-			for (AntlrModifier idModifier : idModifiers) {
+		if (idModifiers.notEmpty())
+		{
+			for (AntlrModifier idModifier : idModifiers)
+			{
 				compilerAnnotationHolder.add("ERR_OVR_IDP", message, idModifier);
 			}
-		} else {
-			if (overriddenProperty.isId()) {
+		}
+		else
+		{
+			if (overriddenProperty.isId())
+			{
 				compilerAnnotationHolder.add("ERR_OVR_IDP", message, this);
 			}
 		}
 	}
 
-	private void reportInvalidTemporalMultiplicity(CompilerAnnotationHolder compilerAnnotationHolder) {
+	private void reportInvalidTemporalMultiplicity(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		PrimitiveType primitiveType = this.antlrPrimitiveType.getPrimitiveType();
-		if (!primitiveType.isTemporal()) {
+		if (!primitiveType.isTemporal())
+		{
 			return;
 		}
 
-		if (this.isOptional) {
+		if (this.isOptional)
+		{
 			return;
 		}
 
@@ -223,13 +255,16 @@ public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType>
 		compilerAnnotationHolder.add("ERR_REQ_TMP", message, this, this.getTypeParserRuleContext());
 	}
 
-	private void reportInvalidTemporalVisibility(CompilerAnnotationHolder compilerAnnotationHolder) {
+	private void reportInvalidTemporalVisibility(CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		PrimitiveType primitiveType = this.antlrPrimitiveType.getPrimitiveType();
-		if (primitiveType != PrimitiveType.TEMPORAL_RANGE) {
+		if (primitiveType != PrimitiveType.TEMPORAL_RANGE)
+		{
 			return;
 		}
 
-		if (this.isPrivate()) {
+		if (this.isPrivate())
+		{
 			return;
 		}
 
@@ -240,9 +275,11 @@ public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType>
 		compilerAnnotationHolder.add("ERR_REQ_PRV", message, this, this.getTypeParserRuleContext());
 	}
 
-	private void reportInvalidStringValidations(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	private void reportInvalidStringValidations(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		PrimitiveType primitiveType = this.antlrPrimitiveType.getPrimitiveType();
-		if (primitiveType == PrimitiveType.STRING) {
+		if (primitiveType == PrimitiveType.STRING)
+		{
 			return;
 		}
 
@@ -250,9 +287,11 @@ public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType>
 		this.maxLengthValidations.each((each) -> each.reportInvalidType(compilerAnnotationHolder, primitiveType));
 	}
 
-	private void reportInvalidNumericValidations(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	private void reportInvalidNumericValidations(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		PrimitiveType primitiveType = this.antlrPrimitiveType.getPrimitiveType();
-		if (primitiveType.isNumeric()) {
+		if (primitiveType.isNumeric())
+		{
 			return;
 		}
 
@@ -260,19 +299,23 @@ public class AntlrPrimitiveProperty extends AntlrDataTypeProperty<PrimitiveType>
 		this.maxValidations.each((each) -> each.reportInvalidType(compilerAnnotationHolder, primitiveType));
 	}
 
-	private void reportBooleanPropertyWithIsPrefix(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder) {
+	private void reportBooleanPropertyWithIsPrefix(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
 		PrimitiveType primitiveType = this.antlrPrimitiveType.getPrimitiveType();
-		if (primitiveType != PrimitiveType.BOOLEAN) {
+		if (primitiveType != PrimitiveType.BOOLEAN)
+		{
 			return;
 		}
 
 		String propertyName = this.getName();
-		if (!propertyName.startsWith("is") || propertyName.length() <= 2) {
+		if (!propertyName.startsWith("is") || propertyName.length() <= 2)
+		{
 			return;
 		}
 
 		char thirdChar = propertyName.charAt(2);
-		if (!Character.isUpperCase(thirdChar)) {
+		if (!Character.isUpperCase(thirdChar))
+		{
 			return;
 		}
 

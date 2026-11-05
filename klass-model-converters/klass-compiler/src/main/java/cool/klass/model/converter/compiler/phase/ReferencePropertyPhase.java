@@ -31,20 +31,24 @@ import cool.klass.model.converter.compiler.state.AntlrMultiplicityOwner;
 import cool.klass.model.meta.grammar.KlassParser.ClassReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.MultiplicityContext;
 
-public class ReferencePropertyPhase extends AbstractCompilerPhase {
-
+public class ReferencePropertyPhase
+	extends AbstractCompilerPhase
+{
 	@Nullable
 	protected AntlrClassReferenceOwner classReferenceOwner;
 
 	@Nullable
 	protected AntlrMultiplicityOwner multiplicityOwner;
 
-	public ReferencePropertyPhase(CompilerState compilerState) {
+	public ReferencePropertyPhase(CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
-	public void handleClassReference(@Nonnull ClassReferenceContext ctx) {
-		if (this.classReferenceOwner == null) {
+	public void handleClassReference(@Nonnull ClassReferenceContext ctx)
+	{
+		if (this.classReferenceOwner == null)
+		{
 			return;
 		}
 
@@ -62,8 +66,10 @@ public class ReferencePropertyPhase extends AbstractCompilerPhase {
 		this.classReferenceOwner.enterClassReference(classReference);
 	}
 
-	public void handleMultiplicity(@Nonnull MultiplicityContext ctx) {
-		if (this.multiplicityOwner == null) {
+	public void handleMultiplicity(@Nonnull MultiplicityContext ctx)
+	{
+		if (this.multiplicityOwner == null)
+		{
 			return;
 		}
 

@@ -34,8 +34,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class CoverageExampleApplicationTest extends AbstractCoverageTest {
-
+class CoverageExampleApplicationTest
+	extends AbstractCoverageTest
+{
 	private static final String EVERY_TYPE_KEY_PROPERTY_URL =
 		"http://localhost:{port}/api/everyTypeKeyProperty/EveryTypeKeyProperty keyString 1 ☝/1/1/1.0123456789/1.0123457/true/1999-12-31T23:59:00Z/1999-12-31";
 
@@ -43,7 +44,9 @@ class CoverageExampleApplicationTest extends AbstractCoverageTest {
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
 	@Test
-	void readsThenWrites() throws Exception {
+	void readsThenWrites()
+		throws Exception
+	{
 		this.swaggerSpecIsServed();
 		this.sourceCodeSmokeTest();
 		this.graphqlSmokeTest();
@@ -83,7 +86,9 @@ class CoverageExampleApplicationTest extends AbstractCoverageTest {
 		this.everyTypeKeyPropertyPostWithoutBody("postSingle", "single");
 	}
 
-	private void swaggerSpecIsServed() throws Exception {
+	private void swaggerSpecIsServed()
+		throws Exception
+	{
 		Client client = this.getClient("readOnlySmoke.swagger_spec_is_served");
 
 		Response response = client
@@ -111,7 +116,8 @@ class CoverageExampleApplicationTest extends AbstractCoverageTest {
 		assertEquals("2.0", swaggerSpec.get("swagger").asText(), "Should be Swagger 2.0");
 	}
 
-	private void sourceCodeSmokeTest() {
+	private void sourceCodeSmokeTest()
+	{
 		Client client = this.getClient("readOnlySmoke.smoke_test");
 
 		Response response = client
@@ -129,7 +135,8 @@ class CoverageExampleApplicationTest extends AbstractCoverageTest {
 		this.fileMatchExtension.assertFileContents(expectedStringClasspathLocation, responseHtml);
 	}
 
-	private void graphqlSmokeTest() {
+	private void graphqlSmokeTest()
+	{
 		var testName = "readOnlySmoke.graphqlSmokeTest";
 		Client client = this.getClient(testName);
 		String graphqlQuery = this.slurp(testName + ".graphql");
@@ -143,7 +150,8 @@ class CoverageExampleApplicationTest extends AbstractCoverageTest {
 		this.assertResponse(testName, Status.OK, response);
 	}
 
-	private void assertMetaUrlReturns(String testName, String path) {
+	private void assertMetaUrlReturns(String testName, String path)
+	{
 		Client client = this.getClient(testName);
 
 		Response response = client
@@ -155,7 +163,8 @@ class CoverageExampleApplicationTest extends AbstractCoverageTest {
 		this.assertResponse(testName, Status.OK, response);
 	}
 
-	private void propertiesOptionalPutFirst() {
+	private void propertiesOptionalPutFirst()
+	{
 		Client client = this.getClient("propertiesOptional.putFirst");
 
 		Response putResponse = this.putPropertiesById(
@@ -180,7 +189,8 @@ class CoverageExampleApplicationTest extends AbstractCoverageTest {
 		this.assertResponse("propertiesOptional.putFirstNull2", Status.OK, getNullResponse);
 	}
 
-	private void propertiesRequiredPutFirst() {
+	private void propertiesRequiredPutFirst()
+	{
 		Client client = this.getClient("propertiesRequired.putFirst");
 
 		Response putResponse = this.putPropertiesById(
@@ -194,7 +204,8 @@ class CoverageExampleApplicationTest extends AbstractCoverageTest {
 		this.assertResponse("propertiesRequired.putFirst2", Status.OK, getResponse);
 	}
 
-	private Response putPropertiesById(Client client, String resource, String json) {
+	private Response putPropertiesById(Client client, String resource, String json)
+	{
 		return client
 			.target("http://localhost:{port}/api/" + resource + "/{id}")
 			.resolveTemplate("port", this.appExtension.getLocalPort())
@@ -204,7 +215,8 @@ class CoverageExampleApplicationTest extends AbstractCoverageTest {
 			.put(Entity.json(json));
 	}
 
-	private Response getPropertiesById(Client client, String resource) {
+	private Response getPropertiesById(Client client, String resource)
+	{
 		return client
 			.target("http://localhost:{port}/api/" + resource + "/{id}")
 			.resolveTemplate("port", this.appExtension.getLocalPort())
@@ -213,7 +225,8 @@ class CoverageExampleApplicationTest extends AbstractCoverageTest {
 			.get();
 	}
 
-	private void everyTypeKeyPropertyPut() {
+	private void everyTypeKeyPropertyPut()
+	{
 		Client client = this.getClient("everyTypeKeyProperty.put");
 
 		Response getBeforeResponse = client
@@ -239,19 +252,22 @@ class CoverageExampleApplicationTest extends AbstractCoverageTest {
 		this.assertResponse("everyTypeKeyProperty.put3", Status.OK, getAfterResponse);
 	}
 
-	private void everyTypeKeyPropertyPostWithProjection(String name, String path) {
+	private void everyTypeKeyPropertyPostWithProjection(String name, String path)
+	{
 		String testName = "everyTypeKeyProperty." + name;
 		Response response = this.everyTypeKeyPropertyPost(testName, path);
 		this.assertResponse(testName, Status.CREATED, response);
 	}
 
-	private void everyTypeKeyPropertyPostWithoutBody(String name, String path) {
+	private void everyTypeKeyPropertyPostWithoutBody(String name, String path)
+	{
 		String testName = "everyTypeKeyProperty." + name;
 		Response response = this.everyTypeKeyPropertyPost(testName, path);
 		this.assertEmptyResponse(Status.NO_CONTENT, response);
 	}
 
-	private Response everyTypeKeyPropertyPost(String testName, String path) {
+	private Response everyTypeKeyPropertyPost(String testName, String path)
+	{
 		return this.getClient(testName)
 			.target("http://localhost:{port}/api/everyTypeKeyProperty/" + path)
 			.resolveTemplate("port", this.appExtension.getLocalPort())
@@ -260,7 +276,8 @@ class CoverageExampleApplicationTest extends AbstractCoverageTest {
 			.post(Entity.json(this.slurp(testName + ".json5")));
 	}
 
-	private String slurp(String suffix) {
+	private String slurp(String suffix)
+	{
 		return FileSlurper.slurp(this.getClass().getSimpleName() + '.' + suffix, this.getClass());
 	}
 }

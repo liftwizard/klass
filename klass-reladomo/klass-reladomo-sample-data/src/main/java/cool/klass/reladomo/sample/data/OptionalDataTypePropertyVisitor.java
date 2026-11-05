@@ -20,8 +20,9 @@ import java.time.LocalDateTime;
 
 import javax.annotation.Nonnull;
 
-public class OptionalDataTypePropertyVisitor extends AbstractDataTypePropertyVisitor {
-
+public class OptionalDataTypePropertyVisitor
+	extends AbstractDataTypePropertyVisitor
+{
 	private static final LocalDateTime LOCAL_DATE_TIME = LocalDateTime.of(2000, 1, 1, 0, 0);
 
 	/**
@@ -32,35 +33,41 @@ public class OptionalDataTypePropertyVisitor extends AbstractDataTypePropertyVis
 
 	@Nonnull
 	@Override
-	protected String getEmoji() {
+	protected String getEmoji()
+	{
 		return "✌";
 	}
 
 	@Override
-	protected int getIndex() {
+	protected int getIndex()
+	{
 		return 2;
 	}
 
 	@Override
-	protected Integer getSelfReferentialParentIndex() {
+	protected Integer getSelfReferentialParentIndex()
+	{
 		// Child node references the first (root) record
 		return 1;
 	}
 
 	@Override
-	protected LocalDateTime getSelfReferentialParentLocalDateTime() {
+	protected LocalDateTime getSelfReferentialParentLocalDateTime()
+	{
 		// Return the parent record's LocalDateTime (from RequiredDataTypePropertyVisitor)
 		return PARENT_LOCAL_DATE_TIME;
 	}
 
 	@Override
-	protected boolean getBoolean() {
+	protected boolean getBoolean()
+	{
 		return false;
 	}
 
 	@Nonnull
 	@Override
-	protected LocalDateTime getLocalDateTime() {
+	protected LocalDateTime getLocalDateTime()
+	{
 		return LOCAL_DATE_TIME;
 	}
 }

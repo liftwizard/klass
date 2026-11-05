@@ -30,17 +30,20 @@ import org.slf4j.LoggerFactory;
  * Dropwizard bundle that serves ReDoc API documentation UI.
  */
 @AutoService(PrioritizedBundle.class)
-public class ReDocBundle implements PrioritizedBundle {
-
+public class ReDocBundle
+	implements PrioritizedBundle
+{
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReDocBundle.class);
 
 	@Override
-	public int getPriority() {
+	public int getPriority()
+	{
 		return 0;
 	}
 
 	@Override
-	public void initializeWithMdc(@Nonnull Bootstrap<?> bootstrap) {
+	public void initializeWithMdc(@Nonnull Bootstrap<?> bootstrap)
+	{
 		LOGGER.info("Initializing {}.", this.getClass().getSimpleName());
 
 		bootstrap.addBundle(
@@ -51,7 +54,8 @@ public class ReDocBundle implements PrioritizedBundle {
 	}
 
 	@Override
-	public void runWithMdc(@Nonnull Object configuration, @Nonnull Environment environment) {
+	public void runWithMdc(@Nonnull Object configuration, @Nonnull Environment environment)
+	{
 		LOGGER.info("Running {}.", this.getClass().getSimpleName());
 	}
 }

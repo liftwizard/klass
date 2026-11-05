@@ -33,8 +33,9 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.RUNTIME
 )
-public class GenerateReladomoReadableInterfaceMojo extends AbstractGenerateMojo {
-
+public class GenerateReladomoReadableInterfaceMojo
+	extends AbstractGenerateMojo
+{
 	@Parameter(
 		property = "outputDirectory",
 		defaultValue = "${project.build.directory}/generated-sources/reladomo-readable-interfaces"
@@ -42,22 +43,29 @@ public class GenerateReladomoReadableInterfaceMojo extends AbstractGenerateMojo 
 	private File outputDirectory;
 
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.CLASSPATH;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
-		if (!this.outputDirectory.exists()) {
+	public void execute()
+		throws MojoExecutionException
+	{
+		if (!this.outputDirectory.exists())
+		{
 			this.outputDirectory.mkdirs();
 		}
 
 		DomainModel domainModel = this.getDomainModel();
 
-		try {
+		try
+		{
 			var generator = new ReladomoReadableInterfaceGenerator(domainModel);
 			generator.writeReadableInterfaces(this.outputDirectory.toPath());
-		} catch (RuntimeException e) {
+		}
+		catch (RuntimeException e)
+		{
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 

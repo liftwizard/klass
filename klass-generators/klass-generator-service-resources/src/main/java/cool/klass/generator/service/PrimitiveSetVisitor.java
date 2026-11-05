@@ -20,79 +20,91 @@ import java.util.Objects;
 
 import cool.klass.model.meta.domain.api.visitor.PrimitiveTypeVisitor;
 
-public class PrimitiveSetVisitor implements PrimitiveTypeVisitor {
-
+public class PrimitiveSetVisitor
+	implements PrimitiveTypeVisitor
+{
 	private final StringBuilder stringBuilder;
 	private final String parameterName;
 
-	public PrimitiveSetVisitor(StringBuilder stringBuilder, String parameterName) {
+	public PrimitiveSetVisitor(StringBuilder stringBuilder, String parameterName)
+	{
 		this.stringBuilder = Objects.requireNonNull(stringBuilder);
 		this.parameterName = Objects.requireNonNull(parameterName);
 	}
 
 	@Override
-	public void visitString() {
+	public void visitString()
+	{
 		this.stringBuilder.append(this.parameterName);
 	}
 
 	@Override
-	public void visitInteger() {
+	public void visitInteger()
+	{
 		this.stringBuilder.append("SetAdapter.adapt(");
 		this.stringBuilder.append(this.parameterName);
 		this.stringBuilder.append(").collectInt(x -> x, IntSets.mutable.empty())");
 	}
 
 	@Override
-	public void visitLong() {
+	public void visitLong()
+	{
 		this.stringBuilder.append("SetAdapter.adapt(");
 		this.stringBuilder.append(this.parameterName);
 		this.stringBuilder.append(").collectLong(x -> x, LongSets.mutable.empty())");
 	}
 
 	@Override
-	public void visitDouble() {
+	public void visitDouble()
+	{
 		this.stringBuilder.append("SetAdapter.adapt(");
 		this.stringBuilder.append(this.parameterName);
 		this.stringBuilder.append(").collectDouble(x -> x, DoubleSets.mutable.empty())");
 	}
 
 	@Override
-	public void visitFloat() {
+	public void visitFloat()
+	{
 		this.stringBuilder.append("SetAdapter.adapt(");
 		this.stringBuilder.append(this.parameterName);
 		this.stringBuilder.append(").collectFloat(x -> x, FloatSets.mutable.empty())");
 	}
 
 	@Override
-	public void visitBoolean() {
+	public void visitBoolean()
+	{
 		this.stringBuilder.append("SetAdapter.adapt(");
 		this.stringBuilder.append(this.parameterName);
 		this.stringBuilder.append(").collectBoolean(x -> x, BooleanSets.mutable.empty())");
 	}
 
 	@Override
-	public void visitInstant() {
+	public void visitInstant()
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitInstant() not implemented yet"
 		);
 	}
 
 	@Override
-	public void visitLocalDate() {
+	public void visitLocalDate()
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitLocalDate() not implemented yet"
 		);
 	}
 
 	@Override
-	public void visitTemporalInstant() {
+	public void visitTemporalInstant()
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitTemporalInstant() not implemented yet"
 		);
 	}
 
 	@Override
-	public void visitTemporalRange() {
+	public void visitTemporalRange()
+	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".visitTemporalRange() not implemented yet"
 		);

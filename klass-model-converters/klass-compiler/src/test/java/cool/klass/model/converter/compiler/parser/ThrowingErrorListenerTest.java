@@ -23,12 +23,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class ThrowingErrorListenerTest {
-
+class ThrowingErrorListenerTest
+{
 	private static final String SOURCE_CODE_TEXT = "first\r\nsecond\nthird\n";
 
 	@Test
-	void syntaxErrorOnFirstLine() {
+	void syntaxErrorOnFirstLine()
+	{
 		var listener = new ThrowingErrorListener("dir/example.klass", SOURCE_CODE_TEXT);
 
 		assertThatThrownBy(() -> listener.syntaxError(null, null, 1, 2, "bad token", null))
@@ -37,7 +38,8 @@ class ThrowingErrorListenerTest {
 	}
 
 	@Test
-	void syntaxErrorOnLaterLineIncludesPreviousLine() {
+	void syntaxErrorOnLaterLineIncludesPreviousLine()
+	{
 		var listener = new ThrowingErrorListener("dir/example.klass", SOURCE_CODE_TEXT);
 
 		assertThatThrownBy(() -> listener.syntaxError(null, null, 3, 0, "bad token", null))
@@ -48,7 +50,8 @@ class ThrowingErrorListenerTest {
 	}
 
 	@Test
-	void syntaxErrorAtEndOfFileAfterTrailingNewline() {
+	void syntaxErrorAtEndOfFileAfterTrailingNewline()
+	{
 		var listener = new ThrowingErrorListener("dir/example.klass", SOURCE_CODE_TEXT);
 
 		assertThatThrownBy(() -> listener.syntaxError(null, null, 4, 0, "bad token", null))
@@ -57,7 +60,8 @@ class ThrowingErrorListenerTest {
 	}
 
 	@Test
-	void syntaxErrorTreatsOnlyLineFeedsAsLineBreaksLikeAntlr() {
+	void syntaxErrorTreatsOnlyLineFeedsAsLineBreaksLikeAntlr()
+	{
 		var listener = new ThrowingErrorListener("dir/example.klass", "a\rb\nc\n");
 
 		assertThatThrownBy(() -> listener.syntaxError(null, null, 2, 0, "bad token", null))
@@ -66,7 +70,8 @@ class ThrowingErrorListenerTest {
 	}
 
 	@Test
-	void syntaxErrorFindsLineFromOffendingTokenCodePointOffset() {
+	void syntaxErrorFindsLineFromOffendingTokenCodePointOffset()
+	{
 		var sourceCodeText = "😀\nsecond\nthird\n";
 		var listener = new ThrowingErrorListener("dir/example.klass", sourceCodeText);
 		// The emoji is one code point but two chars, so "third" starts at code point 9 and char 10
@@ -81,7 +86,8 @@ class ThrowingErrorListenerTest {
 	}
 
 	@Test
-	void syntaxErrorAtEndOfFileAfterBlankLinesShowsLastLineWithCode() {
+	void syntaxErrorAtEndOfFileAfterBlankLinesShowsLastLineWithCode()
+	{
 		var listener = new ThrowingErrorListener("dir/example.klass", "first\nsecond\r\n\n  \r\n\n");
 
 		assertThatThrownBy(() -> listener.syntaxError(null, null, 6, 0, "bad token", null))

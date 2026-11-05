@@ -27,8 +27,10 @@ import cool.klass.model.meta.domain.api.source.SourceCode.SourceCodeBuilder;
 import cool.klass.model.meta.domain.api.value.literal.IntegerLiteralValue;
 import cool.klass.model.meta.grammar.KlassParser.IntegerLiteralContext;
 
-public final class IntegerLiteralValueImpl extends AbstractLiteralValue implements IntegerLiteralValue {
-
+public final class IntegerLiteralValueImpl
+	extends AbstractLiteralValue
+	implements IntegerLiteralValue
+{
 	private final long value;
 
 	private IntegerLiteralValueImpl(
@@ -36,24 +38,28 @@ public final class IntegerLiteralValueImpl extends AbstractLiteralValue implemen
 		@Nonnull Optional<Element> macroElement,
 		@Nullable SourceCode sourceCode,
 		long value
-	) {
+	)
+	{
 		super(elementContext, macroElement, sourceCode);
 		this.value = value;
 	}
 
 	@Nonnull
 	@Override
-	public IntegerLiteralContext getElementContext() {
+	public IntegerLiteralContext getElementContext()
+	{
 		return (IntegerLiteralContext) super.getElementContext();
 	}
 
 	@Override
-	public long getValue() {
+	public long getValue()
+	{
 		return this.value;
 	}
 
-	public static final class IntegerLiteralValueBuilder extends AbstractLiteralValueBuilder<IntegerLiteralValueImpl> {
-
+	public static final class IntegerLiteralValueBuilder
+		extends AbstractLiteralValueBuilder<IntegerLiteralValueImpl>
+	{
 		private final long value;
 
 		public IntegerLiteralValueBuilder(
@@ -61,14 +67,16 @@ public final class IntegerLiteralValueImpl extends AbstractLiteralValue implemen
 			@Nonnull Optional<ElementBuilder<?>> macroElement,
 			@Nullable SourceCodeBuilder sourceCode,
 			long value
-		) {
+		)
+		{
 			super(elementContext, macroElement, sourceCode);
 			this.value = value;
 		}
 
 		@Override
 		@Nonnull
-		protected IntegerLiteralValueImpl buildUnsafe() {
+		protected IntegerLiteralValueImpl buildUnsafe()
+		{
 			return new IntegerLiteralValueImpl(
 				(IntegerLiteralContext) this.elementContext,
 				this.macroElement.map(ElementBuilder::getElement),

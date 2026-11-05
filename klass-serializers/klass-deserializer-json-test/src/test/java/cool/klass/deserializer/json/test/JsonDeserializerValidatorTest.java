@@ -43,8 +43,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 @ExtendWith(LogMarkerTestExtension.class)
-class JsonDeserializerValidatorTest {
-
+class JsonDeserializerValidatorTest
+{
 	@RegisterExtension
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
@@ -55,7 +55,9 @@ class JsonDeserializerValidatorTest {
 	private final DomainModel domainModel = JsonDeserializerValidatorTest.getDomainModel(this.objectMapper);
 
 	@Test
-	void validateAllCases() throws IOException {
+	void validateAllCases()
+		throws IOException
+	{
 		this.validatePrimitiveCases("PropertiesOptional");
 		this.validatePrimitiveCases("PropertiesRequired");
 
@@ -116,7 +118,9 @@ class JsonDeserializerValidatorTest {
 		this.validate(sharedNaturalOneToOne, "validate_expected_actual_boolean");
 	}
 
-	private void validatePrimitiveCases(String className) throws IOException {
+	private void validatePrimitiveCases(String className)
+		throws IOException
+	{
 		var validationCase = new ValidationCase(className, this.domainModel.getClassByName(className));
 		this.validate(validationCase, "validate_good");
 		this.validate(validationCase, "validate_extra_properties");
@@ -128,11 +132,14 @@ class JsonDeserializerValidatorTest {
 	}
 
 	@Nonnull
-	private ValidationCase validationCase(String name) {
+	private ValidationCase validationCase(String name)
+	{
 		return new ValidationCase(name, this.domainModel.getClassByName(name + "Source"));
 	}
 
-	private void validate(ValidationCase validationCase, String testName) throws IOException {
+	private void validate(ValidationCase validationCase, String testName)
+		throws IOException
+	{
 		String prefix = this.getClass().getSimpleName() + '.' + validationCase.name() + '.' + testName;
 		String incomingJson = FileSlurper.slurp(prefix + ".json5", this.getClass());
 		var incomingInstance = (ObjectNode) this.objectMapper.readTree(incomingJson);
@@ -154,7 +161,8 @@ class JsonDeserializerValidatorTest {
 	}
 
 	@Nonnull
-	private static ValidationResult performValidation(Klass klass, @Nonnull ObjectNode incomingInstance) {
+	private static ValidationResult performValidation(Klass klass, @Nonnull ObjectNode incomingInstance)
+	{
 		MutableList<String> errors = Lists.mutable.empty();
 		MutableList<String> warnings = Lists.mutable.empty();
 
@@ -165,20 +173,26 @@ class JsonDeserializerValidatorTest {
 	}
 
 	@Nonnull
-	private static ObjectMapper getObjectMapper() {
+	private static ObjectMapper getObjectMapper()
+	{
 		ObjectMapper objectMapper = Jackson.newObjectMapper();
 		ObjectMapperConfig.configure(objectMapper);
 		return objectMapper;
 	}
 
-	private static DomainModel getDomainModel(ObjectMapper objectMapper) {
+	private static DomainModel getDomainModel(ObjectMapper objectMapper)
+	{
 		var domainModelCompilerFactory = new DomainModelCompilerFactory();
 		domainModelCompilerFactory.setSourcePackages(List.of("cool.klass.xample.coverage"));
 		domainModelCompilerFactory.setColorScheme("dark");
 		return domainModelCompilerFactory.createDomainModel(objectMapper);
 	}
 
-	private record ValidationCase(String name, Klass klass) {}
+	private record ValidationCase(String name, Klass klass)
+	{
+	}
 
-	private record ValidationResult(ImmutableList<String> errors, ImmutableList<String> warnings) {}
+	private record ValidationResult(ImmutableList<String> errors, ImmutableList<String> warnings)
+	{
+	}
 }

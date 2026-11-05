@@ -31,8 +31,9 @@ import cool.klass.model.meta.domain.property.validation.AbstractPropertyValidati
 import org.antlr.v4.runtime.ParserRuleContext;
 
 // TODO: Property validations should have ordinal
-public abstract class AbstractAntlrPropertyValidation extends AntlrElement {
-
+public abstract class AbstractAntlrPropertyValidation
+	extends AntlrElement
+{
 	@Nonnull
 	protected final AntlrDataTypeProperty<?> owningProperty;
 
@@ -40,14 +41,16 @@ public abstract class AbstractAntlrPropertyValidation extends AntlrElement {
 		@Nonnull ParserRuleContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
 		@Nonnull AntlrDataTypeProperty<?> owningProperty
-	) {
+	)
+	{
 		super(elementContext, compilationUnit);
 		this.owningProperty = Objects.requireNonNull(owningProperty);
 	}
 
 	@Nonnull
 	@Override
-	public Optional<IAntlrElement> getSurroundingElement() {
+	public Optional<IAntlrElement> getSurroundingElement()
+	{
 		return Optional.of(this.owningProperty);
 	}
 
@@ -60,7 +63,8 @@ public abstract class AbstractAntlrPropertyValidation extends AntlrElement {
 	public void reportInvalidType(
 		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
 		@Nonnull PrimitiveType primitiveType
-	) {
+	)
+	{
 		ParserRuleContext offendingToken = this.getKeywordToken();
 		String message = String.format(
 			"Invalid validation '%s' for type %s.",

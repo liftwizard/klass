@@ -34,30 +34,37 @@ import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 
 // TODO: Only put audit properties onto version types
-public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
-
-	public AuditAssociationInferencePhase(@Nonnull CompilerState compilerState) {
+public class AuditAssociationInferencePhase
+	extends AbstractCompilerPhase
+{
+	public AuditAssociationInferencePhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Nonnull
 	@Override
-	public String getName() {
+	public String getName()
+	{
 		return "Audit association";
 	}
 
 	@Override
-	public void enterClassifierModifier(@Nonnull ClassifierModifierContext ctx) {
+	public void enterClassifierModifier(@Nonnull ClassifierModifierContext ctx)
+	{
 		super.enterClassifierModifier(ctx);
 
 		String modifierText = ctx.getText();
-		if ("audited".equals(modifierText)) {
+		if ("audited".equals(modifierText))
+		{
 			this.addAuditProperties();
 		}
 	}
 
-	private boolean hasAuditReferenceProperty(Predicate<? super AntlrReferenceProperty> predicate) {
-		return this.compilerState.getCompilerWalk()
+	private boolean hasAuditReferenceProperty(Predicate<? super AntlrReferenceProperty> predicate)
+	{
+		return this.compilerState
+			.getCompilerWalk()
 			.getKlass()
 			.getAllProperties()
 			.selectInstancesOf(AntlrReferenceProperty.class)
@@ -65,29 +72,34 @@ public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
 			.anySatisfy(predicate);
 	}
 
-	private boolean hasAuditDataTypeProperty(Predicate<? super AntlrDataTypeProperty> predicate) {
+	private boolean hasAuditDataTypeProperty(Predicate<? super AntlrDataTypeProperty> predicate)
+	{
 		return this.compilerState.getCompilerWalk().getKlass().getAllDataTypeProperties().count(predicate) == 1;
 	}
 
-	private void addAuditProperties() {
+	private void addAuditProperties()
+	{
 		Optional<AntlrClass> maybeUserClass = this.compilerState.getDomainModel().getUserClass();
-		if (maybeUserClass.isEmpty()) {
+		if (maybeUserClass.isEmpty())
+		{
 			return;
 		}
 		AntlrClass userClass = maybeUserClass.get();
 		int userIdProperties = userClass.getAllDataTypeProperties().count(AntlrDataTypeProperty::isUserId);
-		if (userIdProperties != 1) {
+		if (userIdProperties != 1)
+		{
 			return;
 		}
 
 		boolean needsCreatedBy =
-			!this.hasAuditReferenceProperty(AntlrReferenceProperty::isCreatedBy)
-			&& this.hasAuditDataTypeProperty(AntlrDataTypeProperty::isCreatedBy);
+			!this.hasAuditReferenceProperty(AntlrReferenceProperty::isCreatedBy) &&
+			this.hasAuditDataTypeProperty(AntlrDataTypeProperty::isCreatedBy);
 		boolean needsLastUpdatedBy =
-			!this.hasAuditReferenceProperty(AntlrReferenceProperty::isLastUpdatedBy)
-			&& this.hasAuditDataTypeProperty(AntlrDataTypeProperty::isLastUpdatedBy);
+			!this.hasAuditReferenceProperty(AntlrReferenceProperty::isLastUpdatedBy) &&
+			this.hasAuditDataTypeProperty(AntlrDataTypeProperty::isLastUpdatedBy);
 
-		if (!needsCreatedBy && !needsLastUpdatedBy) {
+		if (!needsCreatedBy && !needsLastUpdatedBy)
+		{
 			return;
 		}
 
@@ -95,11 +107,13 @@ public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
 		AntlrClass klass = this.compilerState.getCompilerWalk().getKlass();
 		stringBuilder.append("package ").append(klass.getPackageName()).append("\n");
 
-		if (needsCreatedBy) {
+		if (needsCreatedBy)
+		{
 			String sourceCode = this.getSourceCode(userClass, "createdBy", AntlrDataTypeProperty::isCreatedBy, true);
 			stringBuilder.append(sourceCode);
 		}
-		if (needsLastUpdatedBy) {
+		if (needsLastUpdatedBy)
+		{
 			String sourceCode = this.getSourceCode(
 				userClass,
 				"lastUpdatedBy",
@@ -112,7 +126,8 @@ public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
 		this.runCompilerMacro(stringBuilder.toString());
 	}
 
-	private void runCompilerMacro(String sourceCode) {
+	private void runCompilerMacro(String sourceCode)
+	{
 		AntlrModifier classifierModifierState = this.compilerState.getCompilerWalk().getClassifierModifier();
 
 		ImmutableList<ParseTreeListener> compilerPhases = Lists.immutable.with(
@@ -136,7 +151,8 @@ public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
 		String modifier,
 		Predicate<? super AntlrDataTypeProperty> predicate,
 		boolean isFinal
-	) {
+	)
+	{
 		String suffix = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, modifier);
 
 		AntlrClass klass = this.compilerState.getCompilerWalk().getKlass();
@@ -154,36 +170,36 @@ public class AuditAssociationInferencePhase extends AbstractCompilerPhase {
 
 		// language=Klass
 		return (
-			"\n"
-			+ "association "
-			+ className
-			+ "Has"
-			+ suffix
-			+ "\n"
-			+ "{\n"
-			+ "    "
-			+ associationEndName
-			+ suffix
-			+ ": "
-			+ className
-			+ "[0..*];\n"
-			+ "    "
-			+ modifier
-			+ ": "
-			+ userClass.getName()
-			+ "[1..1] "
-			+ modifier
-			+ finalModifier
-			+ ";\n"
-			+ "\n"
-			+ "    relationship this."
-			+ auditProperty.getName()
-			+ " == "
-			+ userClass.getName()
-			+ "."
-			+ userIdPropertyName
-			+ "\n"
-			+ "}\n"
+			"\n" +
+			"association " +
+			className +
+			"Has" +
+			suffix +
+			"\n" +
+			"{\n" +
+			"    " +
+			associationEndName +
+			suffix +
+			": " +
+			className +
+			"[0..*];\n" +
+			"    " +
+			modifier +
+			": " +
+			userClass.getName() +
+			"[1..1] " +
+			modifier +
+			finalModifier +
+			";\n" +
+			"\n" +
+			"    relationship this." +
+			auditProperty.getName() +
+			" == " +
+			userClass.getName() +
+			"." +
+			userIdPropertyName +
+			"\n" +
+			"}\n"
 		);
 	}
 }

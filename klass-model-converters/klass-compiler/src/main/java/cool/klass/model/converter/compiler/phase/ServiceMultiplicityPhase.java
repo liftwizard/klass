@@ -27,14 +27,17 @@ import cool.klass.model.meta.domain.api.service.ServiceMultiplicity;
 import cool.klass.model.meta.grammar.KlassParser.ServiceMultiplicityContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceMultiplicityDeclarationContext;
 
-public class ServiceMultiplicityPhase extends AbstractCompilerPhase {
-
-	public ServiceMultiplicityPhase(@Nonnull CompilerState compilerState) {
+public class ServiceMultiplicityPhase
+	extends AbstractCompilerPhase
+{
+	public ServiceMultiplicityPhase(@Nonnull CompilerState compilerState)
+	{
 		super(compilerState);
 	}
 
 	@Override
-	public void enterServiceMultiplicityDeclaration(ServiceMultiplicityDeclarationContext ctx) {
+	public void enterServiceMultiplicityDeclaration(ServiceMultiplicityDeclarationContext ctx)
+	{
 		super.enterServiceMultiplicityDeclaration(ctx);
 		ServiceMultiplicityContext multiplicityContext = ctx.serviceMultiplicity();
 
@@ -49,11 +52,14 @@ public class ServiceMultiplicityPhase extends AbstractCompilerPhase {
 	}
 
 	@Nonnull
-	private ServiceMultiplicity getServiceMultiplicity(@Nonnull ServiceMultiplicityContext serviceMultiplicityContext) {
-		if (serviceMultiplicityContext.one != null) {
+	private ServiceMultiplicity getServiceMultiplicity(@Nonnull ServiceMultiplicityContext serviceMultiplicityContext)
+	{
+		if (serviceMultiplicityContext.one != null)
+		{
 			return ServiceMultiplicity.ONE;
 		}
-		if (serviceMultiplicityContext.many != null) {
+		if (serviceMultiplicityContext.many != null)
+		{
 			return ServiceMultiplicity.MANY;
 		}
 		throw new AssertionError();

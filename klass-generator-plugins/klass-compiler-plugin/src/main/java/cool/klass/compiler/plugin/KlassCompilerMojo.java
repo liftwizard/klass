@@ -31,15 +31,19 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 	threadSafe = true,
 	requiresDependencyResolution = ResolutionScope.TEST
 )
-public class KlassCompilerMojo extends AbstractGenerateMojo {
-
+public class KlassCompilerMojo
+	extends AbstractGenerateMojo
+{
 	@Override
-	protected InputSource getInputSource() {
+	protected InputSource getInputSource()
+	{
 		return InputSource.FILESYSTEM;
 	}
 
 	@Override
-	public void execute() throws MojoExecutionException {
+	public void execute()
+		throws MojoExecutionException
+	{
 		this.getDomainModelFromFiles();
 	}
 }

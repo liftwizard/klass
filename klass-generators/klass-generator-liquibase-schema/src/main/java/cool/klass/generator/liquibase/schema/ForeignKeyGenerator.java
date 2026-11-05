@@ -25,17 +25,20 @@ import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.api.tuple.Pair;
 
-public final class ForeignKeyGenerator {
-
-	private ForeignKeyGenerator() {
+public final class ForeignKeyGenerator
+{
+	private ForeignKeyGenerator()
+	{
 		throw new AssertionError("Suppress default constructor for noninstantiability");
 	}
 
-	public static Optional<String> getForeignKeys(Klass klass, int ordinal) {
+	public static Optional<String> getForeignKeys(Klass klass, int ordinal)
+	{
 		MutableOrderedMap<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> foreignKeys = klass
 			.getForeignKeys()
 			.reject((key, value) -> key.getOwningClassifier().isTemporal() || key.getType().isTemporal());
-		if (foreignKeys.isEmpty()) {
+		if (foreignKeys.isEmpty())
+		{
 			return Optional.empty();
 		}
 
@@ -50,12 +53,13 @@ public final class ForeignKeyGenerator {
 
 	private static boolean isSelfToOneOptional(
 		Pair<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> pair
-	) {
+	)
+	{
 		AssociationEnd associationEnd = pair.getOne();
 		boolean result =
-			associationEnd.isToSelf()
-			&& associationEnd.getMultiplicity().isToOne()
-			&& !associationEnd.getMultiplicity().isRequired();
+			associationEnd.isToSelf() &&
+			associationEnd.getMultiplicity().isToOne() &&
+			!associationEnd.getMultiplicity().isRequired();
 		return result;
 	}
 
@@ -63,7 +67,8 @@ public final class ForeignKeyGenerator {
 		AssociationEnd associationEnd,
 		MutableOrderedMap<DataTypeProperty, DataTypeProperty> dataTypeProperties,
 		int ordinal
-	) {
+	)
+	{
 		String tableName = TableGenerator.TABLE_NAME_CONVERTER.convert(associationEnd.getOwningClassifier().getName());
 		String constraintName =
 			tableName + "_FK_" + TableGenerator.COLUMN_NAME_CONVERTER.convert(associationEnd.getName());
