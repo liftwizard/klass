@@ -29,6 +29,7 @@
 
     <modules>
         <module>klass-generator-dropwizard</module>
+        <module>klass-generator-drizzle-schema</module>
         <module>klass-generator-dto</module>
         <module>klass-generator-graphql-fragment</module>
         <module>klass-generator-graphql-reladomo-finder</module>

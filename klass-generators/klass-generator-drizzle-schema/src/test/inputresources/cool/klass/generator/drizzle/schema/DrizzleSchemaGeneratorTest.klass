@@ -1,0 +1,95 @@
+package cool.klass.generator.drizzle.schema
+
+user Account
+    systemTemporal
+{
+    userId     : String key userId;
+    displayName: String?;
+}
+
+enumeration QuestionStatus
+{
+    DRAFT("draft"),
+    PUBLISHED("published"),
+}
+
+class Question
+    systemTemporal
+    versioned
+    audited
+{
+    id         : Long id key;
+    title      : String maxLength(256);
+    body       : String?;
+    status     : QuestionStatus;
+    score      : Integer;
+    rating     : Double?;
+    weight     : Float?;
+    published  : Boolean;
+    publishedOn: Instant?;
+    dueDate    : LocalDate?;
+}
+
+class Tag
+    systemTemporal
+{
+    name: String key;
+}
+
+class QuestionTag
+    systemTemporal
+{
+    questionId: Long key private;
+    tagName   : String key;
+}
+
+association QuestionHasTags
+{
+    question: Question[1..1];
+    tags    : QuestionTag[0..*] owned;
+
+    relationship this.id == QuestionTag.questionId
+}
+
+association QuestionTagHasTag
+{
+    questionTags: QuestionTag[0..*];
+    tag         : Tag[1..1];
+
+    relationship this.tagName == Tag.name
+}
+
+// Content-addressed, so not temporal
+class ContentBlob
+{
+    sha       : String key;
+    position  : String key;
+    questionId: Long? private;
+    content   : String;
+    createdOn : Instant;
+}
+
+class ContentBlobPart
+{
+    sha     : String key private;
+    position: String key private;
+    index   : Integer key;
+    content : String;
+}
+
+association ContentBlobHasParts
+{
+    blob : ContentBlob[1..1];
+    parts: ContentBlobPart[0..*] owned;
+
+    relationship this.sha == ContentBlobPart.sha
+        && this.position == ContentBlobPart.position
+}
+
+association QuestionHasContentBlobs
+{
+    question    : Question[0..1];
+    contentBlobs: ContentBlob[0..*];
+
+    relationship this.id == ContentBlob.questionId
+}
