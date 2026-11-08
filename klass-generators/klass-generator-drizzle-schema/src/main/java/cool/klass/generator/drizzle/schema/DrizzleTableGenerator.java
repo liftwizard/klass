@@ -17,6 +17,7 @@
 package cool.klass.generator.drizzle.schema;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
@@ -28,6 +29,7 @@ import cool.klass.model.meta.domain.api.NamedElement;
 import cool.klass.model.meta.domain.api.PrimitiveType;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import cool.klass.model.meta.domain.api.property.PrimitiveProperty;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
@@ -197,35 +199,30 @@ public final class DrizzleTableGenerator
 			result.add("\t\tuniqueIndex(\"" + indexName + "\").on(" + getColumnReferences(uniqueProperties) + ")");
 		}
 
-		ImmutableList<String> foreignKeyIndexes = getForeignKeyIndexes(
-			klass,
-			tableName,
-			toProperties,
-			primaryKeyProperties
-		);
-		if (foreignKeyIndexes.notEmpty())
+		ImmutableList<String> indexes = getIndexes(klass, tableName, toProperties, primaryKeyProperties);
+		if (indexes.notEmpty())
 		{
 			sqliteCoreImports.add("index");
 		}
-		result.addAllIterable(foreignKeyIndexes);
+		result.addAllIterable(indexes);
 
 		return result.toImmutable();
 	}
 
 	/**
 	 * Mirrors the Liquibase IndexGenerator: one index per foreign key, on the foreign key columns followed by the
-	 * {@code to} columns. Redundant indexes are dropped because every index costs rows written on each insert:
+	 * {@code to} columns, plus a recency index on system-temporal tables. Redundant indexes are dropped because every index costs rows written on each insert:
 	 * an index whose columns are a prefix of the primary key is already served by the primary key index, and when
 	 * several indexes have identical columns only the first by name is kept.
 	 */
-	private static ImmutableList<String> getForeignKeyIndexes(
+	private static ImmutableList<String> getIndexes(
 		Klass klass,
 		String tableName,
 		ImmutableList<DataTypeProperty> toProperties,
 		ImmutableList<DataTypeProperty> primaryKeyProperties
 	)
 	{
-		MutableList<IndexDefinition> indexes = Lists.mutable.empty();
+		MutableList<IndexDefinition> candidates = Lists.mutable.empty();
 		for (Pair<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> pair : klass
 			.getForeignKeys()
 			.keyValuesView())
@@ -236,13 +233,15 @@ public final class DrizzleTableGenerator
 				.asLazy()
 				.concatenate(toProperties)
 				.toImmutableList();
-			if (isPrefixList(indexProperties, primaryKeyProperties))
-			{
-				continue;
-			}
 			String indexName = tableName + "_idx_" + COLUMN_NAME_CONVERTER.convert(pair.getOne().getName());
-			indexes.add(new IndexDefinition(indexName, indexProperties));
+			candidates.add(new IndexDefinition(indexName, indexProperties));
 		}
+
+		getRecencyIndex(klass, tableName).ifPresent(candidates::add);
+
+		MutableList<IndexDefinition> indexes = candidates.reject((each) ->
+			isPrefixList(each.columns(), primaryKeyProperties)
+		);
 
 		MutableSet<String> keptIndexNames = indexes
 			.groupBy(IndexDefinition::columns)
@@ -254,6 +253,22 @@ public final class DrizzleTableGenerator
 			.select((each) -> keptIndexNames.contains(each.name()))
 			.collect((each) -> "\t\tindex(\"" + each.name() + "\").on(" + getColumnReferences(each.columns()) + ")")
 			.toImmutable();
+	}
+
+	/**
+	 * An index on (system_to, system_from) serves "current rows ordered by recency" and the global watermark query
+	 * {@code WHERE system_to = sentinel AND system_from > ?} without scanning and sorting the whole table.
+	 */
+	private static Optional<IndexDefinition> getRecencyIndex(Klass klass, String tableName)
+	{
+		Optional<PrimitiveProperty> systemTo = klass.getSystemToProperty();
+		Optional<PrimitiveProperty> systemFrom = klass.getSystemFromProperty();
+		if (!klass.isSystemTemporal() || systemTo.isEmpty() || systemFrom.isEmpty())
+		{
+			return Optional.empty();
+		}
+		ImmutableList<DataTypeProperty> columns = Lists.immutable.with(systemTo.get(), systemFrom.get());
+		return Optional.of(new IndexDefinition(tableName + "_idx_system_to_from", columns));
 	}
 
 	private record IndexDefinition(String name, ImmutableList<DataTypeProperty> columns)

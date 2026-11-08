@@ -30,6 +30,7 @@ export const account = sqliteTable(
 			},
 		),
 		uniqueIndex("account_system_from_idx").on(table.userId, table.systemFrom),
+		index("account_idx_system_to_from").on(table.systemTo, table.systemFrom),
 	],
 );
 
@@ -98,6 +99,7 @@ export const question = sqliteTable(
 		uniqueIndex("question_system_from_idx").on(table.id, table.systemFrom),
 		index("question_idx_author").on(table.createdById, table.systemTo),
 		index("question_idx_last_updated_by").on(table.lastUpdatedById, table.systemTo),
+		index("question_idx_system_to_from").on(table.systemTo, table.systemFrom),
 	],
 );
 
@@ -127,6 +129,7 @@ export const tag = sqliteTable(
 			},
 		),
 		uniqueIndex("tag_system_from_idx").on(table.name, table.systemFrom),
+		index("tag_idx_system_to_from").on(table.systemTo, table.systemFrom),
 	],
 );
 
@@ -161,6 +164,7 @@ export const questionTag = sqliteTable(
 		uniqueIndex("question_tag_system_from_idx").on(table.questionId, table.tagName, table.systemFrom),
 		index("question_tag_idx_question").on(table.questionId, table.systemTo),
 		index("question_tag_idx_tag").on(table.tagName, table.systemTo),
+		index("question_tag_idx_system_to_from").on(table.systemTo, table.systemFrom),
 	],
 );
 
@@ -249,5 +253,6 @@ export const questionVersion = sqliteTable(
 		uniqueIndex("question_version_system_from_idx").on(table.id, table.systemFrom),
 		index("question_version_idx_created_by").on(table.createdById, table.systemTo),
 		index("question_version_idx_last_updated_by").on(table.lastUpdatedById, table.systemTo),
+		index("question_version_idx_system_to_from").on(table.systemTo, table.systemFrom),
 	],
 );
