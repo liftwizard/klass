@@ -33,6 +33,7 @@ export const account = sqliteTable(
 	],
 );
 
+// Relationship author: question (created_by_id) -> account (user_id)
 // Relationship createdBy: question (created_by_id) -> account (user_id)
 // Relationship lastUpdatedBy: question (last_updated_by_id) -> account (user_id)
 export const question = sqliteTable(
@@ -75,6 +76,18 @@ export const question = sqliteTable(
 				mode: "virtual",
 			},
 		),
+		createdOnText: text("created_on_text").generatedAlwaysAs(
+			sql`strftime('%Y-%m-%d %H:%M:%f', created_on / 1000.0, 'unixepoch')`,
+			{
+				mode: "virtual",
+			},
+		),
+		publishedOnText: text("published_on_text").generatedAlwaysAs(
+			sql`strftime('%Y-%m-%d %H:%M:%f', published_on / 1000.0, 'unixepoch')`,
+			{
+				mode: "virtual",
+			},
+		),
 	},
 	(table) => [
 		primaryKey(
@@ -83,7 +96,7 @@ export const question = sqliteTable(
 			},
 		),
 		uniqueIndex("question_system_from_idx").on(table.id, table.systemFrom),
-		index("question_idx_created_by").on(table.createdById, table.systemTo),
+		index("question_idx_author").on(table.createdById, table.systemTo),
 		index("question_idx_last_updated_by").on(table.lastUpdatedById, table.systemTo),
 	],
 );
@@ -160,6 +173,12 @@ export const contentBlob = sqliteTable(
 		questionId: integer("question_id"),
 		content: text("content").notNull(),
 		createdOn: integer("created_on").notNull(),
+		createdOnText: text("created_on_text").generatedAlwaysAs(
+			sql`strftime('%Y-%m-%d %H:%M:%f', created_on / 1000.0, 'unixepoch')`,
+			{
+				mode: "virtual",
+			},
+		),
 	},
 	(table) => [
 		primaryKey(
@@ -210,6 +229,12 @@ export const questionVersion = sqliteTable(
 		),
 		systemToText: text("system_to_text").generatedAlwaysAs(
 			sql`strftime('%Y-%m-%d %H:%M:%f', system_to / 1000.0, 'unixepoch')`,
+			{
+				mode: "virtual",
+			},
+		),
+		createdOnText: text("created_on_text").generatedAlwaysAs(
+			sql`strftime('%Y-%m-%d %H:%M:%f', created_on / 1000.0, 'unixepoch')`,
 			{
 				mode: "virtual",
 			},

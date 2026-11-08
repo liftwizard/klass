@@ -25,12 +25,14 @@ import com.google.common.base.Converter;
 import cool.klass.model.meta.domain.api.Classifier;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.NamedElement;
+import cool.klass.model.meta.domain.api.PrimitiveType;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableOrderedMap;
+import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.set.sorted.MutableSortedSet;
 import org.eclipse.collections.api.tuple.Pair;
 
@@ -74,7 +76,7 @@ public final class DrizzleTableGenerator
 
 		String columns = properties.collect((property) -> getColumn(property, sqliteCoreImports)).makeString("");
 		String generatedColumns = properties
-			.select(DataTypeProperty::isTemporalInstant)
+			.select(DrizzleTableGenerator::isEpochMillis)
 			.collect((property) -> getGeneratedTextColumn(property, sqliteCoreImports))
 			.makeString("");
 
@@ -128,6 +130,14 @@ public final class DrizzleTableGenerator
 		String defaultValue = property.isTo() ? ".default(" + FAR_FUTURE_EPOCH_MILLIS + ")" : "";
 
 		return "\t\t" + property.getName() + ": " + columnBuilder + nullability + defaultValue + ",\n";
+	}
+
+	/**
+	 * Instants and temporal instants are stored as epoch milliseconds, and each gets a human-readable text column.
+	 */
+	private static boolean isEpochMillis(DataTypeProperty property)
+	{
+		return property.getType() == PrimitiveType.INSTANT || property.getType() == PrimitiveType.TEMPORAL_INSTANT;
 	}
 
 	private static String getGeneratedTextColumn(DataTypeProperty property, MutableSortedSet<String> sqliteCoreImports)
@@ -204,7 +214,9 @@ public final class DrizzleTableGenerator
 
 	/**
 	 * Mirrors the Liquibase IndexGenerator: one index per foreign key, on the foreign key columns followed by the
-	 * {@code to} columns, skipped when it is a prefix of the primary key.
+	 * {@code to} columns. Redundant indexes are dropped because every index costs rows written on each insert:
+	 * an index whose columns are a prefix of the primary key is already served by the primary key index, and when
+	 * several indexes have identical columns only the first by name is kept.
 	 */
 	private static ImmutableList<String> getForeignKeyIndexes(
 		Klass klass,
@@ -213,7 +225,7 @@ public final class DrizzleTableGenerator
 		ImmutableList<DataTypeProperty> primaryKeyProperties
 	)
 	{
-		MutableList<String> result = Lists.mutable.empty();
+		MutableList<IndexDefinition> indexes = Lists.mutable.empty();
 		for (Pair<AssociationEnd, MutableOrderedMap<DataTypeProperty, DataTypeProperty>> pair : klass
 			.getForeignKeys()
 			.keyValuesView())
@@ -229,15 +241,23 @@ public final class DrizzleTableGenerator
 				continue;
 			}
 			String indexName = tableName + "_idx_" + COLUMN_NAME_CONVERTER.convert(pair.getOne().getName());
-			result.add("\t\tindex(\"" + indexName + "\").on(" + getColumnReferences(indexProperties) + ")");
+			indexes.add(new IndexDefinition(indexName, indexProperties));
 		}
 
-		if (!result.equals(result.distinct()))
-		{
-			throw new AssertionError("Duplicate foreign key index detected for " + tableName + ". Indexes: " + result);
-		}
+		MutableSet<String> keptIndexNames = indexes
+			.groupBy(IndexDefinition::columns)
+			.keyMultiValuePairsView()
+			.collect((each) -> each.getTwo().collect(IndexDefinition::name).min())
+			.toSet();
 
-		return result.toImmutable();
+		return indexes
+			.select((each) -> keptIndexNames.contains(each.name()))
+			.collect((each) -> "\t\tindex(\"" + each.name() + "\").on(" + getColumnReferences(each.columns()) + ")")
+			.toImmutable();
+	}
+
+	private record IndexDefinition(String name, ImmutableList<DataTypeProperty> columns)
+	{
 	}
 
 	private static boolean isPrefixList(ImmutableList<DataTypeProperty> list1, ImmutableList<DataTypeProperty> list2)
