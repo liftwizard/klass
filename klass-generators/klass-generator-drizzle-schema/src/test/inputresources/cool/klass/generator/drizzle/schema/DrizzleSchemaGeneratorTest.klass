@@ -19,6 +19,7 @@ class Question
     audited
 {
     id         : Long id key;
+    createdById: String createdBy userId final private;
     title      : String maxLength(256);
     body       : String?;
     status     : QuestionStatus;
@@ -28,6 +29,15 @@ class Question
     published  : Boolean;
     publishedOn: Instant?;
     dueDate    : LocalDate?;
+}
+
+// Same column as the inferred createdBy audit relationship, so its index is an exact duplicate
+association QuestionHasAuthor
+{
+    questionsAuthored: Question[0..*];
+    author           : Account[0..1] final;
+
+    relationship this.createdById == Account.userId
 }
 
 class Tag
@@ -69,6 +79,7 @@ class ContentBlob
     createdOn : Instant;
 }
 
+// The blob relationship's columns (sha, position) are a prefix of the primary key, so it gets no index
 class ContentBlobPart
 {
     sha     : String key private;
