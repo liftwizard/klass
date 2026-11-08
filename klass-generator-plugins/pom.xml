@@ -32,6 +32,7 @@
         <module>klass-compiler-plugin</module>
         <module>klass-generator-abstract-plugin</module>
         <module>klass-generator-dropwizard-plugin</module>
+        <module>klass-generator-drizzle-schema-plugin</module>
         <module>klass-generator-dto-plugin</module>
         <module>klass-generator-graphql-fragment-plugin</module>
         <module>klass-generator-graphql-reladomo-finder-plugin</module>
