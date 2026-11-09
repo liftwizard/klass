@@ -111,4 +111,19 @@ public interface Modifier
 	{
 		return this.is("userId");
 	}
+
+	default boolean isDigest()
+	{
+		return this.is("digest");
+	}
+
+	default boolean isDigested()
+	{
+		return this.is("digested");
+	}
+
+	default boolean isObjectStorage()
+	{
+		return this.is("objectStorage");
+	}
 }

@@ -155,7 +155,7 @@ primitiveType: 'Boolean' | 'Integer' | 'Long' | 'Double' | 'Float' | 'String' | 
 // modifiers
 classifierModifier: 'systemTemporal' | 'validTemporal' | 'bitemporal' | 'versioned' | 'audited' | 'transient'
     | identifier {notifyErrorListeners("Unrecognized Classifier modifier: " + _input.LT(-1).getText());};
-dataTypePropertyModifier: 'key' | 'private' | 'userId' | 'id' | 'valid' | 'system' | 'from' | 'to' | 'createdBy' | 'createdOn' | 'lastUpdatedBy' | 'version' | 'derived' | 'final'
+dataTypePropertyModifier: 'key' | 'private' | 'userId' | 'id' | 'valid' | 'system' | 'from' | 'to' | 'createdBy' | 'createdOn' | 'lastUpdatedBy' | 'version' | 'derived' | 'final' | 'digest' | 'digested' | 'objectStorage'
     | identifier {notifyErrorListeners("Unrecognized DataTypeProperty modifier: " + _input.LT(-1).getText());};
 associationEndModifier: 'owned' | 'final' | 'version' | 'private' | 'createdBy' | 'lastUpdatedBy'
     | identifier {notifyErrorListeners("Unrecognized AssociationEnd modifier: " + _input.LT(-1).getText());};
@@ -230,7 +230,7 @@ keywordValidAsIdentifier
     // classifierModifier
     | 'systemTemporal' | 'validTemporal' | 'bitemporal' | 'versioned' | 'audited' | 'transient'
     // dataTypePropertyModifier
-    | 'key' | 'private' | 'userId' | 'id' | 'valid' | 'system' | 'from' | 'to' | 'createdBy' | 'createdOn' | 'lastUpdatedBy' | 'version' | 'derived'
+    | 'key' | 'private' | 'userId' | 'id' | 'valid' | 'system' | 'from' | 'to' | 'createdBy' | 'createdOn' | 'lastUpdatedBy' | 'version' | 'derived' | 'digest' | 'digested' | 'objectStorage'
     // associationEndModifier
     | 'owned' | 'final' | 'version'
     // parameterizedPropertyModifier

@@ -49,6 +49,12 @@ class KlassCompilerTest
 	}
 
 	@Test
+	void digest()
+	{
+		this.assertNoCompilerErrors("digest.klass");
+	}
+
+	@Test
 	void emoji()
 	{
 		this.assertNoCompilerErrors("emoji.klass");
