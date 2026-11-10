@@ -21,12 +21,14 @@ import java.util.Objects;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.AnnotationSeverity;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrAssociation;
+import cool.klass.model.converter.compiler.state.AntlrClass;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
 import cool.klass.model.converter.compiler.state.AntlrElement;
 import cool.klass.model.converter.compiler.state.AntlrEnumeration;
@@ -47,7 +49,9 @@ import cool.klass.model.meta.domain.property.validation.MaxLengthPropertyValidat
 import cool.klass.model.meta.domain.property.validation.MaxPropertyValidationImpl.MaxPropertyValidationBuilder;
 import cool.klass.model.meta.domain.property.validation.MinLengthPropertyValidationImpl.MinLengthPropertyValidationBuilder;
 import cool.klass.model.meta.domain.property.validation.MinPropertyValidationImpl.MinPropertyValidationBuilder;
+import cool.klass.model.meta.grammar.KlassParser.AssociationEndReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ClassDeclarationContext;
+import cool.klass.model.meta.grammar.KlassParser.DerivationContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.factory.Lists;
@@ -205,6 +209,9 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 		MutableList<AntlrDataTypeProperty<?>>
 	> foreignKeysMatchingThisKey = OrderedMapAdapter.adapt(new LinkedHashMap<>());
 
+	@Nullable
+	private DerivationContext derivationContext;
+
 	protected AntlrDataTypeProperty(
 		@Nonnull ParserRuleContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
@@ -323,6 +330,20 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 			.add(foreignKeyProperty);
 	}
 
+	public void enterDerivation(@Nonnull DerivationContext derivationContext)
+	{
+		if (this.derivationContext != null)
+		{
+			throw new IllegalStateException();
+		}
+		this.derivationContext = Objects.requireNonNull(derivationContext);
+	}
+
+	public boolean hasDerivation()
+	{
+		return this.derivationContext != null;
+	}
+
 	public void addMinLengthValidation(AntlrMinLengthPropertyValidation minLengthValidation)
 	{
 		this.validations.add(minLengthValidation);
@@ -417,6 +438,11 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 		this.getElementBuilder().setMinPropertyValidationBuilder(minPropertyValidationBuilders);
 		this.getElementBuilder().setMaxPropertyValidationBuilder(maxPropertyValidationBuilders);
 		this.getElementBuilder().setPropertyValidationBuilders(propertyValidationBuilders.toImmutable());
+
+		Optional<String> derivationAssociationEndName = Optional.ofNullable(this.derivationContext).map((context) ->
+			context.associationEndReference().getText()
+		);
+		this.getElementBuilder().setDerivationAssociationEndName(derivationAssociationEndName);
 	}
 
 	public void build2()
@@ -451,7 +477,82 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 		this.reportInvalidUserIdProperties(compilerAnnotationHolder);
 		this.reportInvalidVersionProperties(compilerAnnotationHolder);
 		this.reportInvalidTemporalProperties(compilerAnnotationHolder);
+		this.reportInvalidDerivation(compilerAnnotationHolder);
 		// TODO: ☑ Check for nullable key properties
+	}
+
+	private void reportInvalidDerivation(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.derivationContext == null)
+		{
+			return;
+		}
+
+		if (!this.isDerived())
+		{
+			String message = String.format(
+				"Property '%s' has a derivation, so it must be declared with the 'derived' modifier.",
+				this.getName()
+			);
+			compilerAnnotationHolder.add("ERR_DRV_MOD", message, this, this.derivationContext);
+		}
+
+		String functionName = this.derivationContext.derivationFunction().getText();
+		if (!this.isCountType())
+		{
+			String message = String.format(
+				"Derivation '%s' produces a number, so property '%s' must have type Integer or Long, but its type is %s.",
+				functionName,
+				this.getName(),
+				this.getTypeName()
+			);
+			compilerAnnotationHolder.add("ERR_DRV_TYP", message, this, this.getTypeParserRuleContext());
+		}
+
+		if (this.isOptional)
+		{
+			String message = String.format(
+				"Derivation '%s' always produces a value, so property '%s' may not be optional.",
+				functionName,
+				this.getName()
+			);
+			compilerAnnotationHolder.add("ERR_DRV_OPT", message, this, this.derivationContext);
+		}
+
+		AssociationEndReferenceContext associationEndReference = this.derivationContext.associationEndReference();
+		String associationEndName = associationEndReference.getText();
+		AntlrAssociationEnd associationEnd =
+			this.owningClassifier instanceof AntlrClass owningClass ?
+				owningClass.getAssociationEndByName(associationEndName) :
+				AntlrAssociationEnd.NOT_FOUND;
+		if (associationEnd == AntlrAssociationEnd.NOT_FOUND || associationEnd == AntlrAssociationEnd.AMBIGUOUS)
+		{
+			String message = String.format(
+				"Cannot find association end '%s' on class '%s' to derive property '%s'.",
+				associationEndName,
+				this.owningClassifier.getName(),
+				this.getName()
+			);
+			compilerAnnotationHolder.add("ERR_DRV_END", message, this, associationEndReference);
+			return;
+		}
+
+		if (!associationEnd.isToMany())
+		{
+			String message = String.format(
+				"Derivation '%s' requires a to-many association end, but '%s.%s' has multiplicity %s.",
+				functionName,
+				this.owningClassifier.getName(),
+				associationEndName,
+				associationEnd.getMultiplicity().getMultiplicity().getPrettyName()
+			);
+			compilerAnnotationHolder.add("ERR_DRV_MUL", message, this, associationEndReference);
+		}
+	}
+
+	protected boolean isCountType()
+	{
+		return false;
 	}
 
 	private void reportDuplicateValidations(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)

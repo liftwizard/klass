@@ -179,6 +179,15 @@ public interface DataTypeProperty
 		return this.getModifiers().anySatisfy(Modifier::isDerived);
 	}
 
+	/**
+	 * How the database computes this derived property. Empty for stored properties, and for derived properties that are computed by hand-written code.
+	 */
+	@Nonnull
+	default Optional<Derivation> getDerivation()
+	{
+		return Optional.empty();
+	}
+
 	default boolean isUserId()
 	{
 		return this.getModifiers().anySatisfy(Modifier::isUserId);
