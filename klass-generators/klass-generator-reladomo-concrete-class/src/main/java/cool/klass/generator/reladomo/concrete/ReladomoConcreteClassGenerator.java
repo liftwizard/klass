@@ -90,7 +90,7 @@ public class ReladomoConcreteClassGenerator
 		ImmutableList<PrimitiveProperty> derivedProperties = klass
 			.getProperties()
 			.selectInstancesOf(PrimitiveProperty.class)
-			.select(Property::isDerived);
+			.select(Property::isComputed);
 
 		String derivedPropertiesSourceCode = this.getDerivedPropertiesSourceCode(derivedProperties);
 		String additionalImports = this.getAdditionalImports(klass, derivedProperties, klass.isTemporal());

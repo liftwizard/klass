@@ -151,7 +151,7 @@ public class RequiredPropertiesValidator
 			Severity severity = dataTypeProperty.isPrivate() ? Severity.ERROR : Severity.WARNING;
 			this.handleIfPresent(dataTypeProperty, "foreign key", severity);
 		}
-		else if (dataTypeProperty.isDerived())
+		else if (dataTypeProperty.isComputed())
 		{
 			this.handleIfPresent(dataTypeProperty, "derived", Severity.WARNING);
 		}
@@ -170,7 +170,7 @@ public class RequiredPropertiesValidator
 		{
 			this.handleIfPresent(dataTypeProperty, "private", Severity.ERROR);
 		}
-		else if (dataTypeProperty.isDerived())
+		else if (dataTypeProperty.isComputed())
 		{
 			this.handleIfPresent(dataTypeProperty, "derived", Severity.WARNING);
 		}

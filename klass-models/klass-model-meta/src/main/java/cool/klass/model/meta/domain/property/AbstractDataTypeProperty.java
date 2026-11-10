@@ -28,6 +28,8 @@ import cool.klass.model.meta.domain.api.DataType;
 import cool.klass.model.meta.domain.api.DataType.DataTypeGetter;
 import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.modifier.Modifier;
+import cool.klass.model.meta.domain.api.property.AggregateFunction;
+import cool.klass.model.meta.domain.api.property.Aggregation;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.meta.domain.api.property.validation.MaxLengthPropertyValidation;
@@ -77,6 +79,9 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 	private Optional<MaxPropertyValidation> maxPropertyValidation = Optional.empty();
 
 	private ImmutableList<PropertyValidation> propertyValidations;
+
+	@Nonnull
+	private Optional<Aggregation> aggregation = Optional.empty();
 
 	protected AbstractDataTypeProperty(
 		@Nonnull ParserRuleContext elementContext,
@@ -167,6 +172,22 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 			throw new IllegalStateException();
 		}
 		this.maxPropertyValidation = Objects.requireNonNull(maxPropertyValidations);
+	}
+
+	@Nonnull
+	@Override
+	public Optional<Aggregation> getAggregation()
+	{
+		return this.aggregation;
+	}
+
+	private void setAggregation(@Nonnull Optional<Aggregation> aggregation)
+	{
+		if (this.aggregation.isPresent())
+		{
+			throw new IllegalStateException();
+		}
+		this.aggregation = Objects.requireNonNull(aggregation);
 	}
 
 	private void setPropertyValidations(ImmutableList<PropertyValidation> propertyValidations)
@@ -267,6 +288,9 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 		private Optional<MaxPropertyValidationBuilder> maxPropertyValidationBuilder;
 		private ImmutableList<PropertyValidationBuilder<?>> propertyValidationBuilders;
 
+		@Nonnull
+		private Optional<AggregationDeclaration> aggregationDeclaration = Optional.empty();
+
 		protected DataTypePropertyBuilder(
 			@Nonnull ParserRuleContext elementContext,
 			@Nonnull Optional<ElementBuilder<?>> macroElement,
@@ -335,6 +359,11 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 			this.propertyValidationBuilders = Objects.requireNonNull(propertyValidationBuilders);
 		}
 
+		public void setAggregationDeclaration(@Nonnull Optional<AggregationDeclaration> aggregationDeclaration)
+		{
+			this.aggregationDeclaration = Objects.requireNonNull(aggregationDeclaration);
+		}
+
 		public void setModifierBuilders(ImmutableList<ModifierBuilder> modifierBuilders)
 		{
 			this.modifierBuilders = modifierBuilders;
@@ -368,6 +397,27 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 			property.setMinPropertyValidation(minPropertyValidation);
 			property.setMaxPropertyValidation(maxPropertyValidation);
 			property.setPropertyValidations(propertyValidations);
+			property.setAggregation(
+				this.aggregationDeclaration.map((declaration) ->
+					new AggregationImpl(
+						property,
+						declaration.function(),
+						declaration.associationEndName(),
+						declaration.aggregatedPropertyName()
+					)
+				)
+			);
+		}
+
+		/**
+		 * The parsed aggregation of a property, like {@code sum(this.votes.score)}, kept by name until association ends are built.
+		 */
+		public record AggregationDeclaration(
+			@Nonnull AggregateFunction function,
+			@Nonnull String associationEndName,
+			@Nonnull Optional<String> aggregatedPropertyName
+		)
+		{
 		}
 
 		public final void build2()

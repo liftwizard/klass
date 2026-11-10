@@ -70,7 +70,7 @@ public final class DdlGenerator
 	{
 		return klass
 			.getDataTypeProperties()
-			.reject(DataTypeProperty::isDerived)
+			.reject(DataTypeProperty::isComputed)
 			.reject(DataTypeProperty::isTemporalRange)
 			.collect(DdlGenerator::getPropertySourceCode)
 			.makeString(",\n");

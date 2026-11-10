@@ -251,7 +251,7 @@ public abstract class PersistentSynchronizer
 			dataTypeProperty.isForeignKey() ||
 			dataTypeProperty.isAudit() ||
 			dataTypeProperty.isTemporal() ||
-			dataTypeProperty.isDerived() ||
+			dataTypeProperty.isComputed() ||
 			(dataTypeProperty.isKey() && !this.shouldWriteKey()) ||
 			(dataTypeProperty.isID() && !this.shouldWriteId())
 		);

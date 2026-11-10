@@ -179,6 +179,29 @@ public interface DataTypeProperty
 		return this.getModifiers().anySatisfy(Modifier::isDerived);
 	}
 
+	/**
+	 * {@return true for a property the database computes from the rows of a to-many association end, like {@code numberOfVotes: Long { count(this.votes) }}}
+	 */
+	default boolean isAggregate()
+	{
+		return this.getAggregation().isPresent();
+	}
+
+	@Override
+	default boolean isComputed()
+	{
+		return this.isDerived() || this.isAggregate();
+	}
+
+	/**
+	 * How the database computes this aggregate property. Empty for stored properties and for derived properties.
+	 */
+	@Nonnull
+	default Optional<Aggregation> getAggregation()
+	{
+		return Optional.empty();
+	}
+
 	default boolean isUserId()
 	{
 		return this.getModifiers().anySatisfy(Modifier::isUserId);

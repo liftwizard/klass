@@ -48,7 +48,7 @@ public abstract class AbstractKlassDataGenerator
 			.getDataTypeProperties()
 			.reject(DataTypeProperty::isKey)
 			.reject(DataTypeProperty::isSystem)
-			.reject(DataTypeProperty::isDerived)
+			.reject(DataTypeProperty::isComputed)
 			.each((dataTypeProperty) -> this.generateIfRequired(persistentInstance, dataTypeProperty));
 
 		this.dataStore.insert(persistentInstance);

@@ -1,0 +1,17 @@
+════════════════════════════════════════ [35mERR_AGG_END[m ════════════════════════════════════════
+[31mError: Cannot find association end 'missing' on class 'Question' to aggregate into property 'missingEnd'.[m
+
+At (InvalidAggregationErrorTest.klass:9:35)
+
+[39m 1║ [35mpackage [39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mproperty
+[39m 3║ [35mclass [39mQuestion
+[39m 4║ [36m{
+[39m 9║     [39mmissingEnd[36m: [35mLong [36m{ [35mcount[36m([32mthis[36m.[39mmissing[36m) [36m}
+[39m  ║ [31m                                  ^^^^^^^
+[39m10║ [36m}
+[m
+[36mLocation:  [mInvalidAggregationErrorTest.klass:9:35[m
+[36mFile:      [mInvalidAggregationErrorTest.klass[m
+[36mLine:      [m9[m
+[36mCharacter: [m35
+═════════════════════════════════════════════════════════════════════════════════════════════
