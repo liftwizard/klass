@@ -33,6 +33,7 @@ import com.gs.fw.common.mithra.mithraruntime.MithraRuntimeMarshaller;
 import com.gs.fw.common.mithra.mithraruntime.PropertyType;
 import com.gs.fw.common.mithra.mithraruntime.PureObjectsType;
 import cool.klass.generator.reladomo.AbstractReladomoGenerator;
+import cool.klass.generator.reladomo.objectfile.ReladomoObjectFileGenerator;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.PackageableElement;
@@ -178,7 +179,10 @@ public class ReladomoRuntimeConfigurationGenerator
 		MithraObjectConfigurationType objectSequenceObjectConfigurationType =
 			ReladomoRuntimeConfigurationGenerator.createObjectSequenceObjectConfigurationType();
 
-		return Lists.immutable.with(objectSequenceObjectConfigurationType).newWithAll(objectConfigurationTypes);
+		return Lists.immutable
+			.with(objectSequenceObjectConfigurationType)
+			.newWithAll(objectConfigurationTypes)
+			.newWithAll(this.getDerivedObjectConfigurationTypes());
 	}
 
 	private ImmutableList<MithraObjectConfigurationType> getObjectConfigurationTypes()
@@ -189,6 +193,17 @@ public class ReladomoRuntimeConfigurationGenerator
 			.reject(Klass::isTransient)
 			.collect(PackageableElement::getFullyQualifiedName)
 			.collectWith(ReladomoRuntimeConfigurationGenerator::createMithraObjectConfigurationType, this.cacheType);
+	}
+
+	// The view of database-derived properties changes whenever the rows it reads change.
+	// Reladomo does not know that, so the objects that map to the view are never cached.
+	private ImmutableList<MithraObjectConfigurationType> getDerivedObjectConfigurationTypes()
+	{
+		return this.domainModel
+			.getClasses()
+			.select((klass) -> klass.getDatabaseDerivedProperties().notEmpty())
+			.collect((klass) -> klass.getPackageName() + "." + ReladomoObjectFileGenerator.getDerivedObjectName(klass))
+			.collectWith(ReladomoRuntimeConfigurationGenerator::createMithraObjectConfigurationType, CacheType.NONE);
 	}
 
 	@Nonnull
