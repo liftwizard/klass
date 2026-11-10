@@ -244,9 +244,7 @@ public class ReladomoTreeObjectToDTOSerializerListener
 	}
 
 	@Override
-	public Optional<Integer> enterReferenceProperty(
-		ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode
-	)
+	public Optional<Integer> enterReferenceProperty(ReferencePropertyReladomoTreeNode referencePropertyReladomoTreeNode)
 	{
 		ReferenceProperty referenceProperty = referencePropertyReladomoTreeNode.getReferenceProperty();
 		this.contextStack.push(referenceProperty);

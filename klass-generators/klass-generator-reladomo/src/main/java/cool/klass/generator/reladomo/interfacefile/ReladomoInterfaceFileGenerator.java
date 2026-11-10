@@ -118,9 +118,7 @@ public class ReladomoInterfaceFileGenerator
 		return mithraInterface;
 	}
 
-	private List<RelationshipInterfaceType> convertRelationships(
-		@Nonnull ImmutableList<AssociationEnd> associationEnds
-	)
+	private List<RelationshipInterfaceType> convertRelationships(@Nonnull ImmutableList<AssociationEnd> associationEnds)
 	{
 		return associationEnds
 			.select(

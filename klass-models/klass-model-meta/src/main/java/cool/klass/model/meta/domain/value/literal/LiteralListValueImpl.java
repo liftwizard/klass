@@ -101,9 +101,7 @@ public final class LiteralListValueImpl
 			this.typeBuilder = Objects.requireNonNull(typeBuilder);
 		}
 
-		public void setLiteralValueBuilders(
-			@Nonnull ImmutableList<AbstractLiteralValueBuilder<?>> literalValueBuilders
-		)
+		public void setLiteralValueBuilders(@Nonnull ImmutableList<AbstractLiteralValueBuilder<?>> literalValueBuilders)
 		{
 			if (this.literalValueBuilders != null)
 			{

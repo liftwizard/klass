@@ -189,7 +189,6 @@ public abstract class AbstractKlassCompilerErrorTestCase
 		String filename
 	)
 		implements Comparable<CompilerAnnotationKey>
-
 	{
 		private static final Comparator<Iterable<Integer>> LEXICOGRAPHICAL = Comparators.lexicographical(
 			Comparator.<Integer>naturalOrder()

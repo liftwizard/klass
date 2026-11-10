@@ -248,10 +248,7 @@ public class IncomingUpdateDataModelValidator
 		this.checkPropertyMatchesIfPresent(dataTypeProperty, "user id");
 	}
 
-	private void checkPropertyMatchesIfPresent(
-		@Nonnull DataTypeProperty dataTypeProperty,
-		@Nonnull String propertyKind
-	)
+	private void checkPropertyMatchesIfPresent(@Nonnull DataTypeProperty dataTypeProperty, @Nonnull String propertyKind)
 	{
 		this.contextStack.push(dataTypeProperty.getName());
 

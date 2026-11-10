@@ -121,9 +121,7 @@ public class PropTypeSourceCodeProjectionVisitor
 	}
 
 	@Override
-	public void visitProjectionProjectionReference(
-		@Nonnull ProjectionProjectionReference projectionProjectionReference
-	)
+	public void visitProjectionProjectionReference(@Nonnull ProjectionProjectionReference projectionProjectionReference)
 	{
 		if (projectionProjectionReference.getProjection() == this.originalProjection)
 		{

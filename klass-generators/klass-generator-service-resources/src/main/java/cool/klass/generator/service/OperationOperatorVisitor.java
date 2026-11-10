@@ -47,23 +47,28 @@ public class OperationOperatorVisitor
 	{
 		switch (inequalityOperator.getOperatorText())
 		{
-			case "<": {
+			case "<":
+			{
 				this.stringBuilder.append(".lessThan(");
 				break;
 			}
-			case ">": {
+			case ">":
+			{
 				this.stringBuilder.append(".greaterThan(");
 				break;
 			}
-			case "<=": {
+			case "<=":
+			{
 				this.stringBuilder.append(".lessThanEquals(");
 				break;
 			}
-			case ">=": {
+			case ">=":
+			{
 				this.stringBuilder.append(".greaterThanEquals(");
 				break;
 			}
-			default: {
+			default:
+			{
 				throw new AssertionError();
 			}
 		}
