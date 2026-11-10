@@ -29,6 +29,7 @@ KEYWORD_EXTENDS           : 'extends';
 KEYWORD_IMPLEMENTS        : 'implements';
 KEYWORD_ALL               : 'all';
 KEYWORD_EQUALS_EDGE_POINT : 'equalsEdgePoint';
+KEYWORD_COUNT             : 'count';
 
 PRIMITIVE_TYPE_BOOLEAN          : 'Boolean';
 PRIMITIVE_TYPE_INTEGER          : 'Integer';
@@ -113,6 +114,7 @@ OPERATOR_STARTS_WITH           : 'startsWith';
 OPERATOR_ENDS_WITH             : 'endsWith';
 OPERATOR_AND                   : '&&';
 OPERATOR_OR                    : '||';
+OPERATOR_ASSIGN                : '=';
 
 // Channels
 WHITESPACE  : [ \t\u000C]+  -> channel(1000);

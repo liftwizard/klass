@@ -38,6 +38,8 @@ import cool.klass.model.meta.grammar.KlassParser.CriteriaEdgePointContext;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaNativeContext;
 import cool.klass.model.meta.grammar.KlassParser.DataTypePropertyModifierContext;
 import cool.klass.model.meta.grammar.KlassParser.DataTypePropertyValidationContext;
+import cool.klass.model.meta.grammar.KlassParser.DerivationContext;
+import cool.klass.model.meta.grammar.KlassParser.DerivationFunctionContext;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationLiteralContext;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationParameterDeclarationContext;
@@ -469,6 +471,18 @@ public class ParserBasedTokenCategorizer
 	public void enterCriteriaNative(CriteriaNativeContext ctx)
 	{
 		this.put(ctx.KEYWORD_NATIVE().getSymbol(), TokenCategory.KEYWORD);
+	}
+
+	@Override
+	public void enterDerivation(DerivationContext ctx)
+	{
+		this.put(ctx.LITERAL_THIS().getSymbol(), TokenCategory.LITERAL_THIS);
+	}
+
+	@Override
+	public void enterDerivationFunction(DerivationFunctionContext ctx)
+	{
+		this.put(ctx.getStart(), TokenCategory.KEYWORD);
 	}
 
 	@Override

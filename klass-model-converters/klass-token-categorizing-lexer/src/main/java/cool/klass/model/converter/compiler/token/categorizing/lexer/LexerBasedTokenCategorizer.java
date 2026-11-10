@@ -122,6 +122,7 @@ public final class LexerBasedTokenCategorizer
 			case "OPERATOR_GREATER_THAN_OR_EQUAL" -> TokenCategory.OPERATOR_GREATER_THAN_OR_EQUAL;
 			case "OPERATOR_AND" -> TokenCategory.OPERATOR_AND;
 			case "OPERATOR_OR" -> TokenCategory.OPERATOR_OR;
+			case "OPERATOR_ASSIGN" -> TokenCategory.OPERATOR;
 			case "WHITESPACE" -> TokenCategory.WHITESPACE;
 			case "NEWLINE" -> TokenCategory.NEWLINE;
 			// Let parser categorize UrlIdentifiers based on context
