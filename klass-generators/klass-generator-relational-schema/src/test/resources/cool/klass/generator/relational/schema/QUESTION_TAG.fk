@@ -1,0 +1,6 @@
+alter table QUESTION_TAG add constraint QUESTION_TAG_FK_QUESTION foreign key (
+    question_id
+)
+references QUESTION(
+    id
+);

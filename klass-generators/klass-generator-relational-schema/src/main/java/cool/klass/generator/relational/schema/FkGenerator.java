@@ -47,7 +47,7 @@ public final class FkGenerator
 		String result = foreignKeys
 			.keyValuesView()
 			.collect((keyValuePair) -> getFk(klass, keyValuePair.getOne(), keyValuePair.getTwo()))
-			.makeString("");
+			.makeString("\n");
 		return Optional.of(result);
 	}
 
@@ -83,7 +83,6 @@ public final class FkGenerator
 			references %s(
 			    %s
 			);
-
 			""";
 
 		return format.formatted(

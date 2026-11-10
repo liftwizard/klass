@@ -22,3 +22,37 @@ class ClassWithDerivedProperty
     derivedOptionalInstant     : Instant   ? derived;
     derivedOptionalLocalDate   : LocalDate ? derived;
 }
+
+class Question
+    systemTemporal
+{
+    id: Long key;
+    title: String;
+    numberOfVotes: Long derived = count(this.votes);
+    numberOfTags: Integer derived = count(this.tags);
+}
+
+class QuestionVote
+    systemTemporal
+{
+    questionId: Long key;
+    userId: String key;
+}
+
+class QuestionTag
+{
+    questionId: Long key;
+    name: String key;
+}
+
+association QuestionHasVotes
+{
+    question: Question[1..1];
+    votes: QuestionVote[0..*];
+}
+
+association QuestionHasTags
+{
+    question: Question[1..1];
+    tags: QuestionTag[0..*];
+}

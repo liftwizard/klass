@@ -1,0 +1,1 @@
+alter table QUESTION add constraint QUESTION_PK primary key (id, system_to);

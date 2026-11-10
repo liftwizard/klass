@@ -67,6 +67,15 @@ public interface Klass
 
 	ImmutableList<AssociationEnd> getAssociationEnds();
 
+	/**
+	 * The derived properties declared on this class that the database computes, like {@code numberOfVotes: Long derived = count(this.votes);}.
+	 */
+	@Nonnull
+	default ImmutableList<DataTypeProperty> getDatabaseDerivedProperties()
+	{
+		return this.getDeclaredDataTypeProperties().select((each) -> each.getDerivation().isPresent());
+	}
+
 	@Nonnull
 	Optional<AssociationEnd> findAssociationEndByName(String name);
 

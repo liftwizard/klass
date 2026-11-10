@@ -1,0 +1,2 @@
+alter table QUESTION_VOTE add constraint QUESTION_VOTE_PK primary key (question_id, user_id, system_to);
+create index QUESTION_VOTE_IDX_QUESTION on QUESTION_VOTE(question_id, system_to);

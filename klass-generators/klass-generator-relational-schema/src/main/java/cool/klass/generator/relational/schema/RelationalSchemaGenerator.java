@@ -77,6 +77,13 @@ public class RelationalSchemaGenerator
 				Optional<String> sourceCode = FkGenerator.getFk(klass);
 				sourceCode.ifPresent((s) -> this.printStringToFile(fkOutputPath, s));
 			}
+
+			Path viewOutputPath = parentPath.resolve(ViewGenerator.getViewName(klass) + ".view");
+			if (!viewOutputPath.toFile().exists())
+			{
+				Optional<String> sourceCode = ViewGenerator.getView(klass);
+				sourceCode.ifPresent((s) -> this.printStringToFile(viewOutputPath, s));
+			}
 		}
 	}
 
