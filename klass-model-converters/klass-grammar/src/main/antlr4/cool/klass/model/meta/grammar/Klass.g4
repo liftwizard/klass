@@ -103,13 +103,19 @@ verb: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 interfaceMember: dataTypeProperty | parameterizedPropertySignature | associationEndSignature;
 classMember: dataTypeProperty | parameterizedProperty | associationEndSignature;
 dataTypeProperty: primitiveProperty | enumerationProperty;
-primitiveProperty: identifier ':' primitiveType optionalMarker? dataTypePropertyModifier* dataTypePropertyValidation* ';'
+primitiveProperty: identifier ':' primitiveType optionalMarker? dataTypePropertyModifier* dataTypePropertyValidation* aggregation
+    | identifier ':' primitiveType optionalMarker? dataTypePropertyModifier* dataTypePropertyValidation* ';'
     | identifier ':' primitiveType optionalMarker? dataTypePropertyModifier* dataTypePropertyValidation* {notifyErrorListeners("Missing semi-colon after primitive property declaration.");};
-enumerationProperty: identifier ':' enumerationReference optionalMarker? dataTypePropertyModifier* dataTypePropertyValidation* ';'
+enumerationProperty: identifier ':' enumerationReference optionalMarker? dataTypePropertyModifier* dataTypePropertyValidation* aggregation
+    | identifier ':' enumerationReference optionalMarker? dataTypePropertyModifier* dataTypePropertyValidation* ';'
     | identifier ':' enumerationReference optionalMarker? dataTypePropertyModifier* dataTypePropertyValidation* {notifyErrorListeners("Missing semi-colon after enumeration property declaration.");};
 parameterizedProperty: identifier '(' (parameterDeclaration (',' parameterDeclaration)*)? ')' ':' classReference multiplicity parameterizedPropertyModifier* orderByDeclaration? '{' criteriaExpression '}';
 parameterizedPropertySignature: identifier '(' (parameterDeclaration (',' parameterDeclaration)*)? ')' ':' classifierReference multiplicity parameterizedPropertyModifier* ';';
 optionalMarker: '?';
+
+// aggregate property computed by the database from the rows of a to-many association end
+aggregation: '{' aggregateFunction '(' 'this' '.' associationEndReference ('.' memberReference)? ')' '}';
+aggregateFunction: 'count' | 'exists' | 'notExists' | 'sum' | 'average' | 'min' | 'max';
 
 dataTypePropertyValidation
     : minLengthValidation
@@ -226,6 +232,7 @@ keywordValidAsIdentifier
     | 'native'
     | 'relationship'
     | 'multiplicity' | 'orderBy'
+    | aggregateFunction
     | 'criteria' | 'authorize' | 'validate' | 'conflict'
     // classifierModifier
     | 'systemTemporal' | 'validTemporal' | 'bitemporal' | 'versioned' | 'audited' | 'transient'

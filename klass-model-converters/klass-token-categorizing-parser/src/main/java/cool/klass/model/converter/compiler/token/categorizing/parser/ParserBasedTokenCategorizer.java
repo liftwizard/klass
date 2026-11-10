@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import cool.klass.model.meta.grammar.KlassBaseListener;
 import cool.klass.model.meta.grammar.KlassParser.AbstractDeclarationContext;
+import cool.klass.model.meta.grammar.KlassParser.AggregationContext;
 import cool.klass.model.meta.grammar.KlassParser.AssociationDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.AssociationEndContext;
 import cool.klass.model.meta.grammar.KlassParser.AssociationEndModifierContext;
@@ -469,6 +470,13 @@ public class ParserBasedTokenCategorizer
 	public void enterCriteriaNative(CriteriaNativeContext ctx)
 	{
 		this.put(ctx.KEYWORD_NATIVE().getSymbol(), TokenCategory.KEYWORD);
+	}
+
+	@Override
+	public void enterAggregation(AggregationContext ctx)
+	{
+		this.put(ctx.aggregateFunction().getStart(), TokenCategory.KEYWORD);
+		this.put(ctx.LITERAL_THIS().getSymbol(), TokenCategory.LITERAL_THIS);
 	}
 
 	@Override

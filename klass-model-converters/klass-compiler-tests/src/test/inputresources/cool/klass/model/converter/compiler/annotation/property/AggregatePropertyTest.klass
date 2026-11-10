@@ -1,0 +1,49 @@
+package cool.klass.model.converter.compiler.annotation.property
+
+class Question
+{
+    id: Long key;
+    title: String;
+    numberOfVotes: Long { count(this.votes) }
+    numberOfAnswers: Integer { count(this.answers) }
+    hasVotes: Boolean { exists(this.votes) }
+    hasNoAnswers: Boolean { notExists(this.answers) }
+    totalScore: Long { sum(this.votes.score) }
+    averageScore: Double? { average(this.votes.score) }
+    lowestScore: Long? { min(this.votes.score) }
+    highestScore: Long? { max(this.votes.score) }
+    firstAnswerTitle: String? { min(this.answers.title) }
+
+    // The new function names are still valid property names
+    count: Integer;
+    exists: Boolean;
+    notExists: Boolean;
+    sum: Long;
+    average: Double;
+}
+
+class Vote
+{
+    questionId: Long key;
+    userId: String key;
+    score: Long;
+}
+
+class Answer
+{
+    id: Long key;
+    questionId: Long;
+    title: String;
+}
+
+association QuestionHasVotes
+{
+    question: Question[1..1];
+    votes: Vote[0..*];
+}
+
+association QuestionHasAnswers
+{
+    question: Question[1..1];
+    answers: Answer[0..*];
+}

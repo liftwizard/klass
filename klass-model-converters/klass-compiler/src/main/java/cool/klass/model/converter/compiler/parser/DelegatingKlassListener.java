@@ -20,6 +20,8 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import cool.klass.model.meta.grammar.KlassListener;
 import cool.klass.model.meta.grammar.KlassParser.AbstractDeclarationContext;
+import cool.klass.model.meta.grammar.KlassParser.AggregateFunctionContext;
+import cool.klass.model.meta.grammar.KlassParser.AggregationContext;
 import cool.klass.model.meta.grammar.KlassParser.ArgumentContext;
 import cool.klass.model.meta.grammar.KlassParser.ArgumentListContext;
 import cool.klass.model.meta.grammar.KlassParser.AssociationBlockContext;
@@ -1098,6 +1100,34 @@ public class DelegatingKlassListener
 	public void exitDataTypePropertyValidation(DataTypePropertyValidationContext ctx)
 	{
 		this.getDelegate().exitDataTypePropertyValidation(ctx);
+	}
+
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void enterAggregation(AggregationContext ctx)
+	{
+		this.getDelegate().enterAggregation(ctx);
+	}
+
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void exitAggregation(AggregationContext ctx)
+	{
+		this.getDelegate().exitAggregation(ctx);
+	}
+
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void enterAggregateFunction(AggregateFunctionContext ctx)
+	{
+		this.getDelegate().enterAggregateFunction(ctx);
+	}
+
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void exitAggregateFunction(AggregateFunctionContext ctx)
+	{
+		this.getDelegate().exitAggregateFunction(ctx);
 	}
 
 	@Override
