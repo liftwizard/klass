@@ -29,6 +29,11 @@ KEYWORD_EXTENDS           : 'extends';
 KEYWORD_IMPLEMENTS        : 'implements';
 KEYWORD_ALL               : 'all';
 KEYWORD_EQUALS_EDGE_POINT : 'equalsEdgePoint';
+KEYWORD_COUNT             : 'count';
+KEYWORD_EXISTS            : 'exists';
+KEYWORD_NOT_EXISTS        : 'notExists';
+KEYWORD_SUM               : 'sum';
+KEYWORD_AVERAGE           : 'average';
 
 PRIMITIVE_TYPE_BOOLEAN          : 'Boolean';
 PRIMITIVE_TYPE_INTEGER          : 'Integer';
