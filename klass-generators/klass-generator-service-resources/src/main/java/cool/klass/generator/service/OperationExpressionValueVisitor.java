@@ -28,6 +28,7 @@ import cool.klass.model.meta.domain.api.PrimitiveType;
 import cool.klass.model.meta.domain.api.Type;
 import cool.klass.model.meta.domain.api.parameter.Parameter;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
+import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.meta.domain.api.value.ExpressionValueVisitor;
 import cool.klass.model.meta.domain.api.value.ParameterReference;
 import cool.klass.model.meta.domain.api.value.ThisMemberReferencePath;
@@ -69,9 +70,10 @@ public class OperationExpressionValueVisitor
 				.makeString(".");
 
 		String attribute = String.format(
-			"%sFinder%s.%s()",
+			"%sFinder%s%s.%s()",
 			typeMemberExpressionValue.getKlass().getName(),
 			associationEndsString,
+			getDerivedString(typeMemberExpressionValue.getProperty()),
 			typeMemberExpressionValue.getProperty().getName()
 		);
 		this.stringBuilder.append(attribute);
@@ -91,12 +93,19 @@ public class OperationExpressionValueVisitor
 				.makeString(".");
 
 		String attribute = String.format(
-			"%s%s.%s()",
+			"%s%s%s.%s()",
 			this.finderName,
 			associationEndsString,
+			getDerivedString(thisMemberExpressionValue.getProperty()),
 			thisMemberExpressionValue.getProperty().getName()
 		);
 		this.stringBuilder.append(attribute);
+	}
+
+	// Database-derived properties are attributes of the read-only object that maps to the view of derived properties
+	private static String getDerivedString(@Nonnull DataTypeProperty property)
+	{
+		return property.getDerivation().isPresent() ? ".derived()" : "";
 	}
 
 	@Override
