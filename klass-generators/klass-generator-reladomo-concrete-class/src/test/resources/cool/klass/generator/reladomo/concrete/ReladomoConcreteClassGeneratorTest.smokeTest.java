@@ -129,4 +129,13 @@ public class ClassWithDerivedProperty
         // TODO implement derived property: derivedOptionalLocalDate
         return LocalDate.parse("1999-12-31");
     }
+
+    @Override
+    public long getDerivedCount()
+    {
+        // The database computes this property in a view, so it is read from the database, not from Reladomo's cache.
+        // Objects that are not in the database yet have no row in the view.
+        ClassWithDerivedPropertyDerived derived = ClassWithDerivedPropertyDerivedFinder.findOneBypassCache(ClassWithDerivedPropertyDerivedFinder.key().eq(this.getKey()));
+        return derived == null ? 0 : derived.getDerivedCount();
+    }
 }
