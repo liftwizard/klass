@@ -1,0 +1,152 @@
+package cool.klass.model.converter.compiler.annotation.property
+
+class Question
+{
+    id: Long key;
+    markedDerived: Long derived { count(this.votes) }
+    wrongType: String { count(this.votes) }
+    optional: Long? { count(this.votes) }
+    missingEnd: Long { count(this.missing) }
+}
+
+class Vote
+{
+    questionId: Long key;
+    userId: String key;
+    toOne: Long { count(this.question) }
+}
+
+association QuestionHasVotes
+{
+    question: Question[1..1];
+    votes: Vote[0..*];
+}
+
+class TransientQuestion
+    transient
+{
+    id: Long key;
+    numberOfVotes: Long { count(this.votes) }
+}
+
+class TransientQuestionVote
+    transient
+{
+    transientQuestionId: Long key;
+    userId: String key;
+}
+
+association TransientQuestionHasVotes
+{
+    question: TransientQuestion[1..1];
+    votes: TransientQuestionVote[0..*];
+}
+
+class AbstractQuestion abstract
+{
+    id: Long key;
+    numberOfVotes: Long { count(this.votes) }
+}
+
+class AbstractQuestionVote
+{
+    abstractQuestionId: Long key;
+    userId: String key;
+}
+
+association AbstractQuestionHasVotes
+{
+    question: AbstractQuestion[1..1];
+    votes: AbstractQuestionVote[0..*];
+}
+
+class Poll
+{
+    id: Long key;
+    numberOfUpVotes: Long { count(this.upVotes) }
+}
+
+class PollVote
+{
+    pollId: Long key;
+    userId: String key;
+    direction: String;
+}
+
+association PollHasUpVotes
+{
+    poll: Poll[1..1];
+    upVotes: PollVote[0..*];
+
+    relationship this.id == PollVote.pollId && PollVote.direction == "up"
+}
+
+class KeylessQuestion
+{
+    title: String;
+    numberOfVotes: Long { count(this.votes) }
+}
+
+class KeylessQuestionVote
+{
+    questionTitle: String key;
+    userId: String key;
+}
+
+association KeylessQuestionHasVotes
+{
+    question: KeylessQuestion[1..1];
+    votes: KeylessQuestionVote[0..*];
+
+    relationship this.title == KeylessQuestionVote.questionTitle
+}
+
+class PrivateQuestion
+{
+    id: Long key;
+    numberOfVotes: Long private { count(this.votes) }
+}
+
+class PrivateQuestionVote
+{
+    privateQuestionId: Long key;
+    userId: String key;
+}
+
+association PrivateQuestionHasVotes
+{
+    question: PrivateQuestion[1..1];
+    votes: PrivateQuestionVote[0..*];
+}
+
+class Scoreboard
+{
+    id: Long key;
+    countWithProperty: Long { count(this.scores.points) }
+    sumWithoutProperty: Long { sum(this.scores) }
+    missingProperty: Long { sum(this.scores.missing) }
+    computedProperty: Long { sum(this.scores.doubledPoints) }
+    sumOfString: String { sum(this.scores.label) }
+    maxOfBoolean: Boolean? { max(this.scores.counted) }
+    existsAsLong: Long { exists(this.scores) }
+    averageAsLong: Long? { average(this.scores.points) }
+    sumWrongType: Integer { sum(this.scores.points) }
+    requiredMin: Long { min(this.scores.points) }
+    optionalSum: Long? { sum(this.scores.points) }
+}
+
+class Score
+{
+    scoreboardId: Long key;
+    name: String key;
+    points: Long;
+    label: String;
+    counted: Boolean;
+    doubledPoints: Long derived;
+}
+
+association ScoreboardHasScores
+{
+    scoreboard: Scoreboard[1..1];
+    scores: Score[0..*];
+}

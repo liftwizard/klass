@@ -30,7 +30,18 @@ public interface Property
 
 	boolean isRequired();
 
+	/**
+	 * {@return true for a property computed by hand-written Java code, marked with the 'derived' modifier}
+	 */
 	boolean isDerived();
+
+	/**
+	 * {@return true for a property that is not stored but computed when read, either by hand-written code (derived) or by the database (an aggregate property)}
+	 */
+	default boolean isComputed()
+	{
+		return this.isDerived();
+	}
 
 	boolean isPrivate();
 

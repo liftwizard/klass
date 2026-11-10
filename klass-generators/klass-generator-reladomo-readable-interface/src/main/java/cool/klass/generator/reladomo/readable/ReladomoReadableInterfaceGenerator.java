@@ -125,7 +125,7 @@ public class ReladomoReadableInterfaceGenerator
 		String nonNull = property.isRequired() ? "    @Nonnull\n" : "";
 		String propertyName = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_CAMEL, property.getName());
 		PrimitiveType primitiveType = property.getType();
-		String javaReturnType = property.isDerived() ?
+		String javaReturnType = property.isComputed() ?
 			primitiveType.getPrimitiveJavaClass().getSimpleName() :
 			PrimitiveToReladomoTypeVisitor.getJavaType(primitiveType);
 		String prefix = primitiveType == PrimitiveType.BOOLEAN ? "is" : "get";

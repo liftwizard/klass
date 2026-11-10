@@ -42,6 +42,7 @@ import cool.klass.model.converter.compiler.state.property.validation.AntlrMaxPro
 import cool.klass.model.converter.compiler.state.property.validation.AntlrMinLengthPropertyValidation;
 import cool.klass.model.converter.compiler.state.property.validation.AntlrMinPropertyValidation;
 import cool.klass.model.meta.domain.api.PrimitiveType;
+import cool.klass.model.meta.grammar.KlassParser.AggregationContext;
 import cool.klass.model.meta.grammar.KlassParser.AssociationEndModifierContext;
 import cool.klass.model.meta.grammar.KlassParser.AssociationEndSignatureContext;
 import cool.klass.model.meta.grammar.KlassParser.ClassifierReferenceContext;
@@ -188,6 +189,13 @@ public class PropertyPhase
 		this.dataTypeProperty = null;
 
 		super.exitEnumerationProperty(ctx);
+	}
+
+	@Override
+	public void enterAggregation(@Nonnull AggregationContext ctx)
+	{
+		super.enterAggregation(ctx);
+		this.dataTypeProperty.enterAggregation(ctx);
 	}
 
 	@Override

@@ -70,7 +70,7 @@ public final class TableGenerator
 	private static String getPropertiesSourceCode(@Nonnull Klass klass, String tableName)
 	{
 		return getDataTypeProperties(klass)
-			.reject(DataTypeProperty::isDerived)
+			.reject(DataTypeProperty::isComputed)
 			.reject(DataTypeProperty::isTemporalRange)
 			.collect((dataTypeProperty) -> getPropertySourceCode(dataTypeProperty, tableName))
 			.makeString("\n");

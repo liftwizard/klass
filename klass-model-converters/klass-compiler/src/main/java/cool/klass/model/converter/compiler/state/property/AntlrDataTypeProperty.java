@@ -21,12 +21,14 @@ import java.util.Objects;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.AnnotationSeverity;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrAssociation;
+import cool.klass.model.converter.compiler.state.AntlrClass;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
 import cool.klass.model.converter.compiler.state.AntlrElement;
 import cool.klass.model.converter.compiler.state.AntlrEnumeration;
@@ -40,15 +42,20 @@ import cool.klass.model.converter.compiler.state.property.validation.AntlrMinLen
 import cool.klass.model.converter.compiler.state.property.validation.AntlrMinPropertyValidation;
 import cool.klass.model.meta.domain.api.DataType;
 import cool.klass.model.meta.domain.api.PrimitiveType;
+import cool.klass.model.meta.domain.api.property.AggregateFunction;
 import cool.klass.model.meta.domain.property.AbstractDataTypeProperty.DataTypePropertyBuilder;
+import cool.klass.model.meta.domain.property.AbstractDataTypeProperty.DataTypePropertyBuilder.AggregationDeclaration;
 import cool.klass.model.meta.domain.property.AssociationEndImpl.AssociationEndBuilder;
 import cool.klass.model.meta.domain.property.validation.AbstractPropertyValidation.PropertyValidationBuilder;
 import cool.klass.model.meta.domain.property.validation.MaxLengthPropertyValidationImpl.MaxLengthPropertyValidationBuilder;
 import cool.klass.model.meta.domain.property.validation.MaxPropertyValidationImpl.MaxPropertyValidationBuilder;
 import cool.klass.model.meta.domain.property.validation.MinLengthPropertyValidationImpl.MinLengthPropertyValidationBuilder;
 import cool.klass.model.meta.domain.property.validation.MinPropertyValidationImpl.MinPropertyValidationBuilder;
+import cool.klass.model.meta.grammar.KlassParser.AggregationContext;
+import cool.klass.model.meta.grammar.KlassParser.AssociationEndReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ClassDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
+import cool.klass.model.meta.grammar.KlassParser.MemberReferenceContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
@@ -205,6 +212,9 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 		MutableList<AntlrDataTypeProperty<?>>
 	> foreignKeysMatchingThisKey = OrderedMapAdapter.adapt(new LinkedHashMap<>());
 
+	@Nullable
+	private AggregationContext aggregationContext;
+
 	protected AntlrDataTypeProperty(
 		@Nonnull ParserRuleContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
@@ -323,6 +333,20 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 			.add(foreignKeyProperty);
 	}
 
+	public void enterAggregation(@Nonnull AggregationContext aggregationContext)
+	{
+		if (this.aggregationContext != null)
+		{
+			throw new IllegalStateException();
+		}
+		this.aggregationContext = Objects.requireNonNull(aggregationContext);
+	}
+
+	public boolean hasAggregation()
+	{
+		return this.aggregationContext != null;
+	}
+
 	public void addMinLengthValidation(AntlrMinLengthPropertyValidation minLengthValidation)
 	{
 		this.validations.add(minLengthValidation);
@@ -417,6 +441,16 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 		this.getElementBuilder().setMinPropertyValidationBuilder(minPropertyValidationBuilders);
 		this.getElementBuilder().setMaxPropertyValidationBuilder(maxPropertyValidationBuilders);
 		this.getElementBuilder().setPropertyValidationBuilders(propertyValidationBuilders.toImmutable());
+
+		Optional<AggregationDeclaration> aggregationDeclaration = Optional.ofNullable(this.aggregationContext).map(
+			(context) ->
+				new AggregationDeclaration(
+					this.getAggregateFunction(),
+					context.associationEndReference().getText(),
+					Optional.ofNullable(context.memberReference()).map(MemberReferenceContext::getText)
+				)
+		);
+		this.getElementBuilder().setAggregationDeclaration(aggregationDeclaration);
 	}
 
 	public void build2()
@@ -451,7 +485,297 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 		this.reportInvalidUserIdProperties(compilerAnnotationHolder);
 		this.reportInvalidVersionProperties(compilerAnnotationHolder);
 		this.reportInvalidTemporalProperties(compilerAnnotationHolder);
+		this.reportInvalidAggregation(compilerAnnotationHolder);
 		// TODO: ☑ Check for nullable key properties
+	}
+
+	private void reportInvalidAggregation(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		if (this.aggregationContext == null)
+		{
+			return;
+		}
+
+		if (this.isDerived())
+		{
+			AntlrModifier derivedModifier = this.getModifiers().detect(AntlrModifier::isDerived);
+			String message = String.format(
+				"Property '%s' has a body, so the database computes it. Remove the 'derived' modifier, which marks properties computed in Java.",
+				this.getName()
+			);
+			compilerAnnotationHolder.add("ERR_AGG_MOD", message, this, derivedModifier.getElementContext());
+		}
+		// A private property marked 'derived' is reported by reportDerivedPrivateProperty()
+		else if (this.isPrivate())
+		{
+			AntlrModifier privateModifier = this.getModifiers().detect(AntlrModifier::isPrivate);
+			String message = String.format(
+				"Aggregate property '%s' may not be private. Remove the 'private' modifier.",
+				this
+			);
+			compilerAnnotationHolder.add(
+				"ERR_AGG_PRI",
+				message,
+				this,
+				Lists.immutable.with(privateModifier.getElementContext(), this.aggregationContext)
+			);
+		}
+
+		AggregateFunction function = this.getAggregateFunction();
+		String functionName = function.getPrettyName();
+
+		if (this.owningClassifier instanceof AntlrClass owningClass && owningClass.isTransient())
+		{
+			String message = String.format(
+				"Aggregation '%s' is computed by the database, but class '%s' is transient, so property '%s' has no table to compute it from.",
+				functionName,
+				owningClass.getName(),
+				this.getName()
+			);
+			compilerAnnotationHolder.add("ERR_AGG_TNS", message, this, this.aggregationContext);
+		}
+
+		if (this.owningClassifier instanceof AntlrClass owningClass && owningClass.isAbstract())
+		{
+			String message = String.format(
+				"Aggregation '%s' is not supported on abstract class '%s'. Declare property '%s' on each concrete subclass instead.",
+				functionName,
+				owningClass.getName(),
+				this.getName()
+			);
+			compilerAnnotationHolder.add("ERR_AGG_ABS", message, this, this.aggregationContext);
+		}
+
+		this.reportInvalidAggregateOptionality(compilerAnnotationHolder, function);
+
+		AssociationEndReferenceContext associationEndReference = this.aggregationContext.associationEndReference();
+		String associationEndName = associationEndReference.getText();
+		AntlrAssociationEnd associationEnd =
+			this.owningClassifier instanceof AntlrClass owningClass ?
+				owningClass.getAssociationEndByName(associationEndName) :
+				AntlrAssociationEnd.NOT_FOUND;
+		if (associationEnd == AntlrAssociationEnd.NOT_FOUND || associationEnd == AntlrAssociationEnd.AMBIGUOUS)
+		{
+			String message = String.format(
+				"Cannot find association end '%s' on class '%s' to aggregate into property '%s'.",
+				associationEndName,
+				this.owningClassifier.getName(),
+				this.getName()
+			);
+			compilerAnnotationHolder.add("ERR_AGG_END", message, this, associationEndReference);
+			return;
+		}
+
+		if (!associationEnd.isToMany())
+		{
+			String message = String.format(
+				"Aggregation '%s' requires a to-many association end, but '%s.%s' has multiplicity %s.",
+				functionName,
+				this.owningClassifier.getName(),
+				associationEndName,
+				associationEnd.getMultiplicity().getMultiplicity().getPrettyName()
+			);
+			compilerAnnotationHolder.add("ERR_AGG_MUL", message, this, associationEndReference);
+			return;
+		}
+
+		if (!associationEnd.getOpposite().hasForeignKeys())
+		{
+			String message = String.format(
+				"Aggregation '%s' joins '%s' to '%s' on foreign keys, but the relationship of association end '%s.%s' has none. The relationship must only equate properties of the two classes.",
+				functionName,
+				associationEnd.getType().getName(),
+				this.owningClassifier.getName(),
+				this.owningClassifier.getName(),
+				associationEndName
+			);
+			compilerAnnotationHolder.add("ERR_AGG_FKY", message, this, associationEndReference);
+		}
+
+		MemberReferenceContext memberReference = this.aggregationContext.memberReference();
+		if (!function.aggregatesProperty())
+		{
+			if (memberReference != null)
+			{
+				String message = String.format(
+					"Aggregation '%s' %s the rows of '%s.%s', so it takes no property. Remove '.%s'.",
+					functionName,
+					function == AggregateFunction.COUNT ? "counts" : "tests",
+					this.owningClassifier.getName(),
+					associationEndName,
+					memberReference.getText()
+				);
+				compilerAnnotationHolder.add("ERR_AGG_PTH", message, this, memberReference);
+			}
+			this.reportInvalidAggregateType(compilerAnnotationHolder, function, Optional.empty());
+			return;
+		}
+
+		if (memberReference == null)
+		{
+			String message = String.format(
+				"Aggregation '%s' reads a property of the rows of '%s.%s'. Name it, like '%s(this.%s.<property>)'.",
+				functionName,
+				this.owningClassifier.getName(),
+				associationEndName,
+				functionName,
+				associationEndName
+			);
+			compilerAnnotationHolder.add("ERR_AGG_PTH", message, this, associationEndReference);
+			return;
+		}
+
+		String aggregatedPropertyName = memberReference.getText();
+		AntlrClass aggregatedClass = associationEnd.getType();
+		AntlrDataTypeProperty<?> aggregatedProperty = aggregatedClass.getDataTypePropertyByName(aggregatedPropertyName);
+		if (
+			aggregatedProperty == AntlrEnumerationProperty.NOT_FOUND ||
+			aggregatedProperty == AntlrPrimitiveProperty.AMBIGUOUS
+		)
+		{
+			String message = String.format(
+				"Cannot find property '%s' on class '%s' to aggregate into property '%s'.",
+				aggregatedPropertyName,
+				aggregatedClass.getName(),
+				this.getName()
+			);
+			compilerAnnotationHolder.add("ERR_AGG_PRP", message, this, memberReference);
+			return;
+		}
+
+		if (aggregatedProperty.isDerived() || aggregatedProperty.hasAggregation())
+		{
+			String message = String.format(
+				"Aggregation '%s' reads property '%s.%s' in the database, but that property is computed, not stored.",
+				functionName,
+				aggregatedClass.getName(),
+				aggregatedPropertyName
+			);
+			compilerAnnotationHolder.add("ERR_AGG_CMP", message, this, memberReference);
+			return;
+		}
+
+		this.reportInvalidAggregateType(compilerAnnotationHolder, function, Optional.of(aggregatedProperty));
+	}
+
+	private void reportInvalidAggregateOptionality(
+		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
+		@Nonnull AggregateFunction function
+	)
+	{
+		if (function.isNullWhenEmpty() && !this.isOptional)
+		{
+			String message = String.format(
+				"Aggregation '%s' produces null when there are no rows, so property '%s' must be optional. Add '?' after its type.",
+				function.getPrettyName(),
+				this.getName()
+			);
+			compilerAnnotationHolder.add("ERR_AGG_OPT", message, this, this.getTypeParserRuleContext());
+		}
+		else if (!function.isNullWhenEmpty() && this.isOptional)
+		{
+			String message = String.format(
+				"Aggregation '%s' always produces a value, so property '%s' may not be optional.",
+				function.getPrettyName(),
+				this.getName()
+			);
+			compilerAnnotationHolder.add("ERR_AGG_OPT", message, this, this.aggregationContext);
+		}
+	}
+
+	private void reportInvalidAggregateType(
+		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
+		@Nonnull AggregateFunction function,
+		@Nonnull Optional<AntlrDataTypeProperty<?>> aggregatedProperty
+	)
+	{
+		Optional<PrimitiveType> aggregatedType = aggregatedProperty.flatMap(AntlrDataTypeProperty::getPrimitiveType);
+		if (aggregatedProperty.isPresent() && !AntlrDataTypeProperty.canAggregate(function, aggregatedType))
+		{
+			String message = String.format(
+				"Aggregation '%s' needs %s, but property '%s.%s' has type %s.",
+				function.getPrettyName(),
+				function == AggregateFunction.SUM || function == AggregateFunction.AVERAGE ?
+					"a number: Integer, Long, Float or Double" :
+					"an ordered type: a number, String, Instant or LocalDate",
+				aggregatedProperty.get().getOwningClassifier().getName(),
+				aggregatedProperty.get().getName(),
+				aggregatedProperty.get().getTypeName()
+			);
+			compilerAnnotationHolder.add("ERR_AGG_ARG", message, this, this.aggregationContext.memberReference());
+			return;
+		}
+
+		ImmutableList<PrimitiveType> expectedTypes = AntlrDataTypeProperty.getAggregateTypes(function, aggregatedType);
+		Optional<PrimitiveType> actualType = this.getPrimitiveType();
+		if (actualType.isPresent() && expectedTypes.contains(actualType.get()))
+		{
+			return;
+		}
+
+		String message = String.format(
+			"Aggregation '%s' produces %s, so property '%s' must have type %s, but its type is %s.",
+			function.getPrettyName(),
+			expectedTypes.size() == 1 ? "a " + expectedTypes.getOnly().getPrettyName() : "a number",
+			this.getName(),
+			expectedTypes.collect(PrimitiveType::getPrettyName).makeString(" or "),
+			this.getTypeName()
+		);
+		compilerAnnotationHolder.add("ERR_AGG_TYP", message, this, this.getTypeParserRuleContext());
+	}
+
+	private static boolean canAggregate(
+		@Nonnull AggregateFunction function,
+		@Nonnull Optional<PrimitiveType> aggregatedType
+	)
+	{
+		if (aggregatedType.isEmpty())
+		{
+			return false;
+		}
+		PrimitiveType type = aggregatedType.get();
+		return switch (function)
+		{
+			case SUM, AVERAGE -> type.isNumeric();
+			case MIN, MAX -> type.isNumeric() ||
+				type == PrimitiveType.STRING ||
+				type == PrimitiveType.INSTANT ||
+				type == PrimitiveType.LOCAL_DATE;
+			case COUNT, EXISTS, NOT_EXISTS -> throw new AssertionError(function);
+		};
+	}
+
+	/**
+	 * {@return the types an aggregate property may declare for a function: count is a whole number, exists and notExists are booleans, average is a Double, and sum, min and max keep the type of the property they read}
+	 */
+	@Nonnull
+	private static ImmutableList<PrimitiveType> getAggregateTypes(
+		@Nonnull AggregateFunction function,
+		@Nonnull Optional<PrimitiveType> aggregatedType
+	)
+	{
+		return switch (function)
+		{
+			case COUNT -> Lists.immutable.with(PrimitiveType.INTEGER, PrimitiveType.LONG);
+			case EXISTS, NOT_EXISTS -> Lists.immutable.with(PrimitiveType.BOOLEAN);
+			case AVERAGE -> Lists.immutable.with(PrimitiveType.DOUBLE);
+			case SUM, MIN, MAX -> Lists.immutable.with(aggregatedType.orElseThrow());
+		};
+	}
+
+	@Nonnull
+	public AggregateFunction getAggregateFunction()
+	{
+		return AggregateFunction.byPrettyName(this.aggregationContext.aggregateFunction().getText());
+	}
+
+	/**
+	 * {@return the primitive type of a primitive property, or empty for an enumeration property}
+	 */
+	@Nonnull
+	protected Optional<PrimitiveType> getPrimitiveType()
+	{
+		return Optional.empty();
 	}
 
 	private void reportDuplicateValidations(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)

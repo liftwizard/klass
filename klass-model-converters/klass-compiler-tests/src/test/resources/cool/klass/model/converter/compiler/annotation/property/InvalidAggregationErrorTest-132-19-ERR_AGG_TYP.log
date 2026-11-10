@@ -1,0 +1,17 @@
+════════════════════════════════════════ [35mERR_AGG_TYP[m ════════════════════════════════════════
+[31mError: Aggregation 'average' produces a Double, so property 'averageAsLong' must have type Double, but its type is Long.[m
+
+At (InvalidAggregationErrorTest.klass:132:20)
+
+[39m  1║ [35mpackage [39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mproperty
+[39m122║ [35mclass [39mScoreboard
+[39m123║ [36m{
+[39m132║     [39maverageAsLong[36m: [35mLong[36m? [36m{ [35maverage[36m([32mthis[36m.[39mscores[36m.[39mpoints[36m) [36m}
+[39m   ║ [31m                   ^^^^
+[39m136║ [36m}
+[m
+[36mLocation:  [mInvalidAggregationErrorTest.klass:132:20[m
+[36mFile:      [mInvalidAggregationErrorTest.klass[m
+[36mLine:      [m132[m
+[36mCharacter: [m20
+═════════════════════════════════════════════════════════════════════════════════════════════

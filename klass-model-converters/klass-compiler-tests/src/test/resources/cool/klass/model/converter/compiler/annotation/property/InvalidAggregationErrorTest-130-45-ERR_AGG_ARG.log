@@ -1,0 +1,17 @@
+════════════════════════════════════════ [35mERR_AGG_ARG[m ════════════════════════════════════════
+[31mError: Aggregation 'max' needs an ordered type: a number, String, Instant or LocalDate, but property 'Score.counted' has type Boolean.[m
+
+At (InvalidAggregationErrorTest.klass:130:46)
+
+[39m  1║ [35mpackage [39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mproperty
+[39m122║ [35mclass [39mScoreboard
+[39m123║ [36m{
+[39m130║     [39mmaxOfBoolean[36m: [35mBoolean[36m? [36m{ [35mmax[36m([32mthis[36m.[39mscores[36m.[39mcounted[36m) [36m}
+[39m   ║ [31m                                             ^^^^^^^
+[39m136║ [36m}
+[m
+[36mLocation:  [mInvalidAggregationErrorTest.klass:130:46[m
+[36mFile:      [mInvalidAggregationErrorTest.klass[m
+[36mLine:      [m130[m
+[36mCharacter: [m46
+═════════════════════════════════════════════════════════════════════════════════════════════

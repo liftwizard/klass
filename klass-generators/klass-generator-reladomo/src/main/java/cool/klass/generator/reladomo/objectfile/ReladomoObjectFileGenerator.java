@@ -165,7 +165,7 @@ public class ReladomoObjectFileGenerator
 
 		ImmutableList<AttributeType> attributeTypes = this.getDataTypeProperties(klass)
 			.reject(DataTypeProperty::isTemporal)
-			.reject(DataTypeProperty::isDerived)
+			.reject(DataTypeProperty::isComputed)
 			.collect((dataTypeProperty) -> this.convertToAttributeType(klass, dataTypeProperty));
 
 		mithraObject.setAsOfAttributes(asOfAttributeTypes.castToList());
@@ -347,7 +347,7 @@ public class ReladomoObjectFileGenerator
 		ThisMemberReferencePath thisMemberReferencePath = orderByMemberReferencePath.getThisMemberReferencePath();
 		DataTypeProperty property = thisMemberReferencePath.getProperty();
 
-		if (property.isDerived())
+		if (property.isComputed())
 		{
 			return false;
 		}
