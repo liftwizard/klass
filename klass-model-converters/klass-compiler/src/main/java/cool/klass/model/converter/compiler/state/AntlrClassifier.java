@@ -515,9 +515,7 @@ public abstract class AntlrClassifier
 		}
 	}
 
-	private void reportDuplicateAssociationEndSignatureNames(
-		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder
-	)
+	private void reportDuplicateAssociationEndSignatureNames(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
 	{
 		ImmutableBag<String> duplicateMemberNames = this.getDuplicateMemberNames();
 

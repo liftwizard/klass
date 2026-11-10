@@ -66,9 +66,7 @@ public class GatherProjectionReferencesVisitor
 	}
 
 	@Override
-	public void visitProjectionProjectionReference(
-		@Nonnull ProjectionProjectionReference projectionProjectionReference
-	)
+	public void visitProjectionProjectionReference(@Nonnull ProjectionProjectionReference projectionProjectionReference)
 	{
 		projectionProjectionReference.getProjection().visit(this);
 	}

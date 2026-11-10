@@ -458,10 +458,7 @@ public class ReladomoObjectFileGenerator
 	}
 
 	@Nonnull
-	private AttributeType convertToAttributeType(
-		@Nonnull Klass owningClass,
-		@Nonnull DataTypeProperty dataTypeProperty
-	)
+	private AttributeType convertToAttributeType(@Nonnull Klass owningClass, @Nonnull DataTypeProperty dataTypeProperty)
 	{
 		var attributeType = new AttributeType();
 		this.convertToAttributeType(owningClass, dataTypeProperty, attributeType);

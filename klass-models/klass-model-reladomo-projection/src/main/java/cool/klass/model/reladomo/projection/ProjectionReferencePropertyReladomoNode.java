@@ -27,10 +27,7 @@ public class ProjectionReferencePropertyReladomoNode
 {
 	private final ProjectionReferenceProperty projectionReferenceProperty;
 
-	public ProjectionReferencePropertyReladomoNode(
-		String name,
-		ProjectionReferenceProperty projectionReferenceProperty
-	)
+	public ProjectionReferencePropertyReladomoNode(String name, ProjectionReferenceProperty projectionReferenceProperty)
 	{
 		super(name);
 		this.projectionReferenceProperty = Objects.requireNonNull(projectionReferenceProperty);

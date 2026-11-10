@@ -12,7 +12,7 @@ pre-commit = "4.6.2"
 rust = "1.98.1"
 "npm:markdownlint-cli2" = "0.23.3"
 "npm:prettier" = "3.9.10"
-"npm:prettier-java-next-line" = { version = "2.11.2", allow_low_downloads = true }
+"npm:prettier-java-next-line" = { version = "2.11.5", allow_low_downloads = true }
 "npm:strip-ansi-cli" = "4.0.0"
 "npm:oxfmt-next-line" = { version = "0.75.0", allow_low_downloads = true }
 

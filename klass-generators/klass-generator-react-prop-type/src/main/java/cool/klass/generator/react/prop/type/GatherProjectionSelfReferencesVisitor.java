@@ -81,9 +81,7 @@ public class GatherProjectionSelfReferencesVisitor
 	}
 
 	@Override
-	public void enterProjectionProjectionReference(
-		@Nonnull ProjectionProjectionReference projectionProjectionReference
-	)
+	public void enterProjectionProjectionReference(@Nonnull ProjectionProjectionReference projectionProjectionReference)
 	{
 		this.context.push(projectionProjectionReference.getName());
 		if (projectionProjectionReference.getProjection() != this.originalProjection)

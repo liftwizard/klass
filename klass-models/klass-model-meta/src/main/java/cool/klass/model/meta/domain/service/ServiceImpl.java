@@ -267,7 +267,8 @@ public final class ServiceImpl
 
 			switch (criteriaKeyword)
 			{
-				case "criteria": {
+				case "criteria":
+				{
 					if (this.criteria.isPresent())
 					{
 						throw new IllegalStateException();
@@ -275,7 +276,8 @@ public final class ServiceImpl
 					this.criteria = Optional.of(criteriaBuilder);
 					return;
 				}
-				case "authorize": {
+				case "authorize":
+				{
 					if (this.authorize.isPresent())
 					{
 						throw new IllegalStateException();
@@ -283,7 +285,8 @@ public final class ServiceImpl
 					this.authorize = Optional.of(criteriaBuilder);
 					return;
 				}
-				case "validate": {
+				case "validate":
+				{
 					if (this.validate.isPresent())
 					{
 						throw new IllegalStateException();
@@ -291,7 +294,8 @@ public final class ServiceImpl
 					this.validate = Optional.of(criteriaBuilder);
 					return;
 				}
-				case "conflict": {
+				case "conflict":
+				{
 					if (this.conflict.isPresent())
 					{
 						throw new IllegalStateException();
@@ -299,7 +303,8 @@ public final class ServiceImpl
 					this.conflict = Optional.of(criteriaBuilder);
 					return;
 				}
-				default: {
+				default:
+				{
 					throw new AssertionError();
 				}
 			}

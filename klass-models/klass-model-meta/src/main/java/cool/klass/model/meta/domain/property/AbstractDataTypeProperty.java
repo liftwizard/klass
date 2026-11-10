@@ -318,16 +318,12 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 			this.maxLengthPropertyValidationBuilder = Objects.requireNonNull(maxLengthPropertyValidationBuilder);
 		}
 
-		public void setMinPropertyValidationBuilder(
-			Optional<MinPropertyValidationBuilder> minPropertyValidationBuilder
-		)
+		public void setMinPropertyValidationBuilder(Optional<MinPropertyValidationBuilder> minPropertyValidationBuilder)
 		{
 			this.minPropertyValidationBuilder = Objects.requireNonNull(minPropertyValidationBuilder);
 		}
 
-		public void setMaxPropertyValidationBuilder(
-			Optional<MaxPropertyValidationBuilder> maxPropertyValidationBuilder
-		)
+		public void setMaxPropertyValidationBuilder(Optional<MaxPropertyValidationBuilder> maxPropertyValidationBuilder)
 		{
 			this.maxPropertyValidationBuilder = Objects.requireNonNull(maxPropertyValidationBuilder);
 		}
