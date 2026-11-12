@@ -391,7 +391,135 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-17-SHARED_NATURAL_MANY_TO_ONE_TARGET">
+    <changeSet author="Klass" id="initial-table-17-VERSIONED_OWNED_SOURCE">
+        <createTable tableName="VERSIONED_OWNED_SOURCE">
+            <column name="KEY" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_SOURCE_PK" />
+            </column>
+
+            <column name="SYSTEM_FROM" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="SYSTEM_TO" type="timestamp">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_SOURCE_PK" />
+            </column>
+
+            <column name="CREATED_BY_ID" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="CREATED_ON" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="LAST_UPDATED_BY_ID" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="VALUE" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-table-18-VERSIONED_OWNED_ONE_TO_ONE_TARGET">
+        <createTable tableName="VERSIONED_OWNED_ONE_TO_ONE_TARGET">
+            <column name="KEY" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_ONE_TO_ONE_TARGET_PK" />
+            </column>
+
+            <column name="SYSTEM_FROM" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="SYSTEM_TO" type="timestamp">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_ONE_TO_ONE_TARGET_PK" />
+            </column>
+
+            <column name="VALUE" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-table-19-VERSIONED_OWNED_ONE_TO_MANY_TARGET">
+        <createTable tableName="VERSIONED_OWNED_ONE_TO_MANY_TARGET">
+            <column name="SOURCE_KEY" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_ONE_TO_MANY_TARGET_PK" />
+            </column>
+
+            <column name="NAME" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_ONE_TO_MANY_TARGET_PK" />
+            </column>
+
+            <column name="SYSTEM_FROM" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="SYSTEM_TO" type="timestamp">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_ONE_TO_MANY_TARGET_PK" />
+            </column>
+
+            <column name="VALUE" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-table-20-VERSIONED_OWNED_ONE_TO_ONE_GRANDCHILD">
+        <createTable tableName="VERSIONED_OWNED_ONE_TO_ONE_GRANDCHILD">
+            <column name="SOURCE_KEY" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_ONE_TO_ONE_GRANDCHILD_PK" />
+            </column>
+
+            <column name="ITEM_NAME" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_ONE_TO_ONE_GRANDCHILD_PK" />
+            </column>
+
+            <column name="SYSTEM_FROM" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="SYSTEM_TO" type="timestamp">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_ONE_TO_ONE_GRANDCHILD_PK" />
+            </column>
+
+            <column name="VALUE" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-table-21-VERSIONED_OWNED_ONE_TO_MANY_GRANDCHILD">
+        <createTable tableName="VERSIONED_OWNED_ONE_TO_MANY_GRANDCHILD">
+            <column name="SOURCE_KEY" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_ONE_TO_MANY_GRANDCHILD_PK" />
+            </column>
+
+            <column name="ITEM_NAME" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_ONE_TO_MANY_GRANDCHILD_PK" />
+            </column>
+
+            <column name="NAME" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_ONE_TO_MANY_GRANDCHILD_PK" />
+            </column>
+
+            <column name="SYSTEM_FROM" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="SYSTEM_TO" type="timestamp">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_ONE_TO_MANY_GRANDCHILD_PK" />
+            </column>
+
+            <column name="VALUE" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-table-22-SHARED_NATURAL_MANY_TO_ONE_TARGET">
         <createTable tableName="SHARED_NATURAL_MANY_TO_ONE_TARGET">
             <column name="KEY" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="SHARED_NATURAL_MANY_TO_ONE_TARGET_PK" />
@@ -403,7 +531,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-18-SHARED_NATURAL_MANY_TO_ONE_SOURCE">
+    <changeSet author="Klass" id="initial-table-23-SHARED_NATURAL_MANY_TO_ONE_SOURCE">
         <createTable tableName="SHARED_NATURAL_MANY_TO_ONE_SOURCE">
             <column name="KEY" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="SHARED_NATURAL_MANY_TO_ONE_SOURCE_PK" />
@@ -419,7 +547,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-19-SHARED_NATURAL_ONE_TO_MANY_SOURCE">
+    <changeSet author="Klass" id="initial-table-24-SHARED_NATURAL_ONE_TO_MANY_SOURCE">
         <createTable tableName="SHARED_NATURAL_ONE_TO_MANY_SOURCE">
             <column name="KEY" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="SHARED_NATURAL_ONE_TO_MANY_SOURCE_PK" />
@@ -431,7 +559,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-20-SHARED_NATURAL_ONE_TO_MANY_TARGET">
+    <changeSet author="Klass" id="initial-table-25-SHARED_NATURAL_ONE_TO_MANY_TARGET">
         <createTable tableName="SHARED_NATURAL_ONE_TO_MANY_TARGET">
             <column name="KEY" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="SHARED_NATURAL_ONE_TO_MANY_TARGET_PK" />
@@ -447,7 +575,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-21-SHARED_NATURAL_ONE_TO_ONE_SOURCE">
+    <changeSet author="Klass" id="initial-table-26-SHARED_NATURAL_ONE_TO_ONE_SOURCE">
         <createTable tableName="SHARED_NATURAL_ONE_TO_ONE_SOURCE">
             <column name="KEY" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="SHARED_NATURAL_ONE_TO_ONE_SOURCE_PK" />
@@ -459,7 +587,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-22-SHARED_NATURAL_ONE_TO_ONE_TARGET">
+    <changeSet author="Klass" id="initial-table-27-SHARED_NATURAL_ONE_TO_ONE_TARGET">
         <createTable tableName="SHARED_NATURAL_ONE_TO_ONE_TARGET">
             <column name="KEY" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="SHARED_NATURAL_ONE_TO_ONE_TARGET_PK" />
@@ -475,7 +603,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-23-SHARED_NATURAL_ONE_TO_MANY_SELF">
+    <changeSet author="Klass" id="initial-table-28-SHARED_NATURAL_ONE_TO_MANY_SELF">
         <createTable tableName="SHARED_NATURAL_ONE_TO_MANY_SELF">
             <column name="KEY" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="SHARED_NATURAL_ONE_TO_MANY_SELF_PK" />
@@ -489,7 +617,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-24-SHARED_SYNTHETIC_ONE_TO_MANY_SOURCE">
+    <changeSet author="Klass" id="initial-table-29-SHARED_SYNTHETIC_ONE_TO_MANY_SOURCE">
         <createTable tableName="SHARED_SYNTHETIC_ONE_TO_MANY_SOURCE">
             <column name="ID" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="SHARED_SYNTHETIC_ONE_TO_MANY_SOURCE_PK" />
@@ -501,7 +629,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-25-SHARED_SYNTHETIC_ONE_TO_MANY_TARGET">
+    <changeSet author="Klass" id="initial-table-30-SHARED_SYNTHETIC_ONE_TO_MANY_TARGET">
         <createTable tableName="SHARED_SYNTHETIC_ONE_TO_MANY_TARGET">
             <column name="ID" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="SHARED_SYNTHETIC_ONE_TO_MANY_TARGET_PK" />
@@ -517,7 +645,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-26-SHARED_SYNTHETIC_ONE_TO_ONE_SOURCE">
+    <changeSet author="Klass" id="initial-table-31-SHARED_SYNTHETIC_ONE_TO_ONE_SOURCE">
         <createTable tableName="SHARED_SYNTHETIC_ONE_TO_ONE_SOURCE">
             <column name="ID" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="SHARED_SYNTHETIC_ONE_TO_ONE_SOURCE_PK" />
@@ -529,7 +657,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-27-SHARED_SYNTHETIC_ONE_TO_ONE_TARGET">
+    <changeSet author="Klass" id="initial-table-32-SHARED_SYNTHETIC_ONE_TO_ONE_TARGET">
         <createTable tableName="SHARED_SYNTHETIC_ONE_TO_ONE_TARGET">
             <column name="ID" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="SHARED_SYNTHETIC_ONE_TO_ONE_TARGET_PK" />
@@ -545,7 +673,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-28-SHARED_SYNTHETIC_ONE_TO_MANY_SELF">
+    <changeSet author="Klass" id="initial-table-33-SHARED_SYNTHETIC_ONE_TO_MANY_SELF">
         <createTable tableName="SHARED_SYNTHETIC_ONE_TO_MANY_SELF">
             <column name="ID" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="SHARED_SYNTHETIC_ONE_TO_MANY_SELF_PK" />
@@ -559,7 +687,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-29-CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY">
+    <changeSet author="Klass" id="initial-table-34-CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY">
         <createTable tableName="CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY">
             <column name="KEY" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY_PK" />
@@ -567,7 +695,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-30-CLASS_WITH_DERIVED_PROPERTY">
+    <changeSet author="Klass" id="initial-table-35-CLASS_WITH_DERIVED_PROPERTY">
         <createTable tableName="CLASS_WITH_DERIVED_PROPERTY">
             <column name="KEY" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="CLASS_WITH_DERIVED_PROPERTY_PK" />
@@ -579,7 +707,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-31-USER_VERSION">
+    <changeSet author="Klass" id="initial-table-36-USER_VERSION">
         <createTable tableName="USER_VERSION">
             <column name="USER_ID" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="USER_VERSION_PK" />
@@ -599,7 +727,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-32-PROPERTIES_REQUIRED_VERSION">
+    <changeSet author="Klass" id="initial-table-37-PROPERTIES_REQUIRED_VERSION">
         <createTable tableName="PROPERTIES_REQUIRED_VERSION">
             <column name="PROPERTIES_REQUIRED_ID" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PROPERTIES_REQUIRED_VERSION_PK" />
@@ -631,7 +759,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-33-PROPERTIES_OPTIONAL_VERSION">
+    <changeSet author="Klass" id="initial-table-38-PROPERTIES_OPTIONAL_VERSION">
         <createTable tableName="PROPERTIES_OPTIONAL_VERSION">
             <column name="PROPERTIES_OPTIONAL_ID" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PROPERTIES_OPTIONAL_VERSION_PK" />
@@ -663,7 +791,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-34-EVERY_TYPE_KEY_PROPERTY_VERSION">
+    <changeSet author="Klass" id="initial-table-39-EVERY_TYPE_KEY_PROPERTY_VERSION">
         <createTable tableName="EVERY_TYPE_KEY_PROPERTY_VERSION">
             <column name="KEY_STRING" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="EVERY_TYPE_KEY_PROPERTY_VERSION_PK" />
@@ -703,6 +831,38 @@
 
             <column name="SYSTEM_TO" type="timestamp">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="EVERY_TYPE_KEY_PROPERTY_VERSION_PK" />
+            </column>
+
+            <column name="CREATED_BY_ID" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="CREATED_ON" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="LAST_UPDATED_BY_ID" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="NUMBER" type="int">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-table-40-VERSIONED_OWNED_SOURCE_VERSION">
+        <createTable tableName="VERSIONED_OWNED_SOURCE_VERSION">
+            <column name="KEY" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_SOURCE_VERSION_PK" />
+            </column>
+
+            <column name="SYSTEM_FROM" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="SYSTEM_TO" type="timestamp">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_SOURCE_VERSION_PK" />
             </column>
 
             <column name="CREATED_BY_ID" type="varchar(255)">
@@ -763,7 +923,7 @@
         />
     </changeSet>
 
-    <changeSet author="Klass" id="initial-foreign-key-18-SHARED_NATURAL_MANY_TO_ONE_SOURCE_FK_TARGET">
+    <changeSet author="Klass" id="initial-foreign-key-23-SHARED_NATURAL_MANY_TO_ONE_SOURCE_FK_TARGET">
         <addForeignKeyConstraint
                 constraintName="SHARED_NATURAL_MANY_TO_ONE_SOURCE_FK_TARGET"
                 baseTableName="SHARED_NATURAL_MANY_TO_ONE_SOURCE"
@@ -773,7 +933,7 @@
         />
     </changeSet>
 
-    <changeSet author="Klass" id="initial-foreign-key-20-SHARED_NATURAL_ONE_TO_MANY_TARGET_FK_SOURCE">
+    <changeSet author="Klass" id="initial-foreign-key-25-SHARED_NATURAL_ONE_TO_MANY_TARGET_FK_SOURCE">
         <addForeignKeyConstraint
                 constraintName="SHARED_NATURAL_ONE_TO_MANY_TARGET_FK_SOURCE"
                 baseTableName="SHARED_NATURAL_ONE_TO_MANY_TARGET"
@@ -783,7 +943,7 @@
         />
     </changeSet>
 
-    <changeSet author="Klass" id="initial-foreign-key-22-SHARED_NATURAL_ONE_TO_ONE_TARGET_FK_SOURCE">
+    <changeSet author="Klass" id="initial-foreign-key-27-SHARED_NATURAL_ONE_TO_ONE_TARGET_FK_SOURCE">
         <addForeignKeyConstraint
                 constraintName="SHARED_NATURAL_ONE_TO_ONE_TARGET_FK_SOURCE"
                 baseTableName="SHARED_NATURAL_ONE_TO_ONE_TARGET"
@@ -793,7 +953,7 @@
         />
     </changeSet>
 
-    <changeSet author="Klass" id="initial-foreign-key-25-SHARED_SYNTHETIC_ONE_TO_MANY_TARGET_FK_SOURCE">
+    <changeSet author="Klass" id="initial-foreign-key-30-SHARED_SYNTHETIC_ONE_TO_MANY_TARGET_FK_SOURCE">
         <addForeignKeyConstraint
                 constraintName="SHARED_SYNTHETIC_ONE_TO_MANY_TARGET_FK_SOURCE"
                 baseTableName="SHARED_SYNTHETIC_ONE_TO_MANY_TARGET"
@@ -803,7 +963,7 @@
         />
     </changeSet>
 
-    <changeSet author="Klass" id="initial-foreign-key-27-SHARED_SYNTHETIC_ONE_TO_ONE_TARGET_FK_SOURCE">
+    <changeSet author="Klass" id="initial-foreign-key-32-SHARED_SYNTHETIC_ONE_TO_ONE_TARGET_FK_SOURCE">
         <addForeignKeyConstraint
                 constraintName="SHARED_SYNTHETIC_ONE_TO_ONE_TARGET_FK_SOURCE"
                 baseTableName="SHARED_SYNTHETIC_ONE_TO_ONE_TARGET"
@@ -813,7 +973,7 @@
         />
     </changeSet>
 
-    <changeSet author="Klass" id="initial-foreign-key-30-CLASS_WITH_DERIVED_PROPERTY_FK_CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY">
+    <changeSet author="Klass" id="initial-foreign-key-35-CLASS_WITH_DERIVED_PROPERTY_FK_CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY">
         <addForeignKeyConstraint
                 constraintName="CLASS_WITH_DERIVED_PROPERTY_FK_CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY"
                 baseTableName="CLASS_WITH_DERIVED_PROPERTY"
@@ -941,7 +1101,44 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-18-SHARED_NATURAL_MANY_TO_ONE_SOURCE_IDX_TARGET">
+    <changeSet author="Klass" id="initial-indices-17-VERSIONED_OWNED_SOURCE_IDX_CREATED_BY">
+        <createIndex
+                indexName="VERSIONED_OWNED_SOURCE_IDX_CREATED_BY"
+                tableName="VERSIONED_OWNED_SOURCE">
+            <column name="CREATED_BY_ID" />
+            <column name="SYSTEM_TO" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-indices-17-VERSIONED_OWNED_SOURCE_IDX_LAST_UPDATED_BY">
+        <createIndex
+                indexName="VERSIONED_OWNED_SOURCE_IDX_LAST_UPDATED_BY"
+                tableName="VERSIONED_OWNED_SOURCE">
+            <column name="LAST_UPDATED_BY_ID" />
+            <column name="SYSTEM_TO" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-indices-19-VERSIONED_OWNED_ONE_TO_MANY_TARGET_IDX_SOURCE">
+        <createIndex
+                indexName="VERSIONED_OWNED_ONE_TO_MANY_TARGET_IDX_SOURCE"
+                tableName="VERSIONED_OWNED_ONE_TO_MANY_TARGET">
+            <column name="SOURCE_KEY" />
+            <column name="SYSTEM_TO" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-indices-21-VERSIONED_OWNED_ONE_TO_MANY_GRANDCHILD_IDX_ITEM">
+        <createIndex
+                indexName="VERSIONED_OWNED_ONE_TO_MANY_GRANDCHILD_IDX_ITEM"
+                tableName="VERSIONED_OWNED_ONE_TO_MANY_GRANDCHILD">
+            <column name="SOURCE_KEY" />
+            <column name="ITEM_NAME" />
+            <column name="SYSTEM_TO" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-indices-23-SHARED_NATURAL_MANY_TO_ONE_SOURCE_IDX_TARGET">
         <createIndex
                 indexName="SHARED_NATURAL_MANY_TO_ONE_SOURCE_IDX_TARGET"
                 tableName="SHARED_NATURAL_MANY_TO_ONE_SOURCE">
@@ -949,7 +1146,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-20-SHARED_NATURAL_ONE_TO_MANY_TARGET_IDX_SOURCE">
+    <changeSet author="Klass" id="initial-indices-25-SHARED_NATURAL_ONE_TO_MANY_TARGET_IDX_SOURCE">
         <createIndex
                 indexName="SHARED_NATURAL_ONE_TO_MANY_TARGET_IDX_SOURCE"
                 tableName="SHARED_NATURAL_ONE_TO_MANY_TARGET">
@@ -957,7 +1154,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-22-SHARED_NATURAL_ONE_TO_ONE_TARGET_IDX_SOURCE">
+    <changeSet author="Klass" id="initial-indices-27-SHARED_NATURAL_ONE_TO_ONE_TARGET_IDX_SOURCE">
         <createIndex
                 indexName="SHARED_NATURAL_ONE_TO_ONE_TARGET_IDX_SOURCE"
                 tableName="SHARED_NATURAL_ONE_TO_ONE_TARGET">
@@ -965,7 +1162,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-23-SHARED_NATURAL_ONE_TO_MANY_SELF_IDX_SOURCE">
+    <changeSet author="Klass" id="initial-indices-28-SHARED_NATURAL_ONE_TO_MANY_SELF_IDX_SOURCE">
         <createIndex
                 indexName="SHARED_NATURAL_ONE_TO_MANY_SELF_IDX_SOURCE"
                 tableName="SHARED_NATURAL_ONE_TO_MANY_SELF">
@@ -973,7 +1170,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-25-SHARED_SYNTHETIC_ONE_TO_MANY_TARGET_IDX_SOURCE">
+    <changeSet author="Klass" id="initial-indices-30-SHARED_SYNTHETIC_ONE_TO_MANY_TARGET_IDX_SOURCE">
         <createIndex
                 indexName="SHARED_SYNTHETIC_ONE_TO_MANY_TARGET_IDX_SOURCE"
                 tableName="SHARED_SYNTHETIC_ONE_TO_MANY_TARGET">
@@ -981,7 +1178,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-27-SHARED_SYNTHETIC_ONE_TO_ONE_TARGET_IDX_SOURCE">
+    <changeSet author="Klass" id="initial-indices-32-SHARED_SYNTHETIC_ONE_TO_ONE_TARGET_IDX_SOURCE">
         <createIndex
                 indexName="SHARED_SYNTHETIC_ONE_TO_ONE_TARGET_IDX_SOURCE"
                 tableName="SHARED_SYNTHETIC_ONE_TO_ONE_TARGET">
@@ -989,7 +1186,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-28-SHARED_SYNTHETIC_ONE_TO_MANY_SELF_IDX_SOURCE">
+    <changeSet author="Klass" id="initial-indices-33-SHARED_SYNTHETIC_ONE_TO_MANY_SELF_IDX_SOURCE">
         <createIndex
                 indexName="SHARED_SYNTHETIC_ONE_TO_MANY_SELF_IDX_SOURCE"
                 tableName="SHARED_SYNTHETIC_ONE_TO_MANY_SELF">
@@ -997,7 +1194,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-30-CLASS_WITH_DERIVED_PROPERTY_IDX_CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY">
+    <changeSet author="Klass" id="initial-indices-35-CLASS_WITH_DERIVED_PROPERTY_IDX_CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY">
         <createIndex
                 indexName="CLASS_WITH_DERIVED_PROPERTY_IDX_CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY"
                 tableName="CLASS_WITH_DERIVED_PROPERTY">
@@ -1005,7 +1202,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-32-PROPERTIES_REQUIRED_VERSION_IDX_CREATED_BY">
+    <changeSet author="Klass" id="initial-indices-37-PROPERTIES_REQUIRED_VERSION_IDX_CREATED_BY">
         <createIndex
                 indexName="PROPERTIES_REQUIRED_VERSION_IDX_CREATED_BY"
                 tableName="PROPERTIES_REQUIRED_VERSION">
@@ -1014,7 +1211,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-32-PROPERTIES_REQUIRED_VERSION_IDX_LAST_UPDATED_BY">
+    <changeSet author="Klass" id="initial-indices-37-PROPERTIES_REQUIRED_VERSION_IDX_LAST_UPDATED_BY">
         <createIndex
                 indexName="PROPERTIES_REQUIRED_VERSION_IDX_LAST_UPDATED_BY"
                 tableName="PROPERTIES_REQUIRED_VERSION">
@@ -1023,7 +1220,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-33-PROPERTIES_OPTIONAL_VERSION_IDX_CREATED_BY">
+    <changeSet author="Klass" id="initial-indices-38-PROPERTIES_OPTIONAL_VERSION_IDX_CREATED_BY">
         <createIndex
                 indexName="PROPERTIES_OPTIONAL_VERSION_IDX_CREATED_BY"
                 tableName="PROPERTIES_OPTIONAL_VERSION">
@@ -1032,7 +1229,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-33-PROPERTIES_OPTIONAL_VERSION_IDX_LAST_UPDATED_BY">
+    <changeSet author="Klass" id="initial-indices-38-PROPERTIES_OPTIONAL_VERSION_IDX_LAST_UPDATED_BY">
         <createIndex
                 indexName="PROPERTIES_OPTIONAL_VERSION_IDX_LAST_UPDATED_BY"
                 tableName="PROPERTIES_OPTIONAL_VERSION">
@@ -1041,7 +1238,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-34-EVERY_TYPE_KEY_PROPERTY_VERSION_IDX_CREATED_BY">
+    <changeSet author="Klass" id="initial-indices-39-EVERY_TYPE_KEY_PROPERTY_VERSION_IDX_CREATED_BY">
         <createIndex
                 indexName="EVERY_TYPE_KEY_PROPERTY_VERSION_IDX_CREATED_BY"
                 tableName="EVERY_TYPE_KEY_PROPERTY_VERSION">
@@ -1050,10 +1247,28 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-34-EVERY_TYPE_KEY_PROPERTY_VERSION_IDX_LAST_UPDATED_BY">
+    <changeSet author="Klass" id="initial-indices-39-EVERY_TYPE_KEY_PROPERTY_VERSION_IDX_LAST_UPDATED_BY">
         <createIndex
                 indexName="EVERY_TYPE_KEY_PROPERTY_VERSION_IDX_LAST_UPDATED_BY"
                 tableName="EVERY_TYPE_KEY_PROPERTY_VERSION">
+            <column name="LAST_UPDATED_BY_ID" />
+            <column name="SYSTEM_TO" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-indices-40-VERSIONED_OWNED_SOURCE_VERSION_IDX_CREATED_BY">
+        <createIndex
+                indexName="VERSIONED_OWNED_SOURCE_VERSION_IDX_CREATED_BY"
+                tableName="VERSIONED_OWNED_SOURCE_VERSION">
+            <column name="CREATED_BY_ID" />
+            <column name="SYSTEM_TO" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-indices-40-VERSIONED_OWNED_SOURCE_VERSION_IDX_LAST_UPDATED_BY">
+        <createIndex
+                indexName="VERSIONED_OWNED_SOURCE_VERSION_IDX_LAST_UPDATED_BY"
+                tableName="VERSIONED_OWNED_SOURCE_VERSION">
             <column name="LAST_UPDATED_BY_ID" />
             <column name="SYSTEM_TO" />
         </createIndex>

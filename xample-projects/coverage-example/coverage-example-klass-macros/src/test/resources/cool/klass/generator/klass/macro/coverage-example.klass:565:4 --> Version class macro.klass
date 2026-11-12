@@ -1,0 +1,7 @@
+package cool.klass.xample.coverage
+
+class VersionedOwnedSourceVersion systemTemporal audited
+{
+    key: String key;
+    number: Integer version;
+}

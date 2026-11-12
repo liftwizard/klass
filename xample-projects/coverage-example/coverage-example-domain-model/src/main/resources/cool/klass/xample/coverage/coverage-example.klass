@@ -559,6 +559,80 @@ association SelfOwnedSyntheticOneToMany
     relationship this.id == OwnedSyntheticOneToManySelf.sourceId
 }
 
+// A versioned owner whose owned children bump its version when they change.
+class VersionedOwnedSource
+    systemTemporal
+    versioned
+    audited
+{
+    key: String key;
+    value: String;
+}
+
+class VersionedOwnedOneToOneTarget
+    systemTemporal
+{
+    key: String key private;
+    value: String;
+}
+
+class VersionedOwnedOneToManyTarget
+    systemTemporal
+{
+    sourceKey: String key private;
+    name: String key;
+    value: String;
+}
+
+class VersionedOwnedOneToOneGrandchild
+    systemTemporal
+{
+    sourceKey: String key private;
+    itemName: String key private;
+    value: String;
+}
+
+class VersionedOwnedOneToManyGrandchild
+    systemTemporal
+{
+    sourceKey: String key private;
+    itemName: String key private;
+    name: String key;
+    value: String;
+}
+
+association VersionedOwnedOneToOne
+{
+    source: VersionedOwnedSource[1..1];
+    detail: VersionedOwnedOneToOneTarget[1..1] owned;
+
+    relationship this.key == VersionedOwnedOneToOneTarget.key
+}
+
+association VersionedOwnedOneToMany
+{
+    source: VersionedOwnedSource[1..1];
+    items: VersionedOwnedOneToManyTarget[0..*] owned;
+
+    relationship this.key == VersionedOwnedOneToManyTarget.sourceKey
+}
+
+association VersionedOwnedOneToManyTargetHasGrandchild
+{
+    item: VersionedOwnedOneToManyTarget[1..1];
+    grandchild: VersionedOwnedOneToOneGrandchild[0..1] owned;
+
+    relationship this.sourceKey == VersionedOwnedOneToOneGrandchild.sourceKey && this.name == VersionedOwnedOneToOneGrandchild.itemName
+}
+
+association VersionedOwnedOneToManyTargetHasGrandchildren
+{
+    item: VersionedOwnedOneToManyTarget[1..1];
+    grandchildren: VersionedOwnedOneToManyGrandchild[0..*] owned;
+
+    relationship this.sourceKey == VersionedOwnedOneToManyGrandchild.sourceKey && this.name == VersionedOwnedOneToManyGrandchild.itemName
+}
+
 class SharedNaturalManyToOneTarget
 {
     key: String key;
