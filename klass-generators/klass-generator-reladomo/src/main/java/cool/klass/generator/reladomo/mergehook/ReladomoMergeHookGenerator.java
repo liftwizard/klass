@@ -60,7 +60,7 @@ public class ReladomoMergeHookGenerator
 	private void writeMergeHookFile(@Nonnull Klass klass, @Nonnull Path outputPath)
 	{
 		Path mergeHookOutputPath = this.getMergeHookOutputPath(outputPath, klass);
-		String classSourceCode = this.getMergeHookSourceCode(klass);
+		String classSourceCode = this.getSourceCode(klass);
 		this.printStringToFile(mergeHookOutputPath, classSourceCode);
 	}
 
@@ -91,7 +91,7 @@ public class ReladomoMergeHookGenerator
 	}
 
 	@Nonnull
-	private String getMergeHookSourceCode(@Nonnull Klass klass)
+	public String getSourceCode(@Nonnull Klass klass)
 	{
 		Klass versionClass = klass.getVersionProperty().get().getType();
 
@@ -159,8 +159,7 @@ public class ReladomoMergeHookGenerator
 				+ "        existing.getVersion().terminate();\n"
 				+ "        return super.beforeDeleteOrTerminate(existing, mergeBuffer);\n"
 				+ "    }\n"
-				+ "}\n"
-				+ "\n";
+				+ "}\n";
 		// @formatter:on
 
 		return sourceCode;

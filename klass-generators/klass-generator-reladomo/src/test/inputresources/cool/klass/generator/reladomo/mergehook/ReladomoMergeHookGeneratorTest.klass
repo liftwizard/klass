@@ -1,0 +1,48 @@
+package cool.klass.test
+
+user User
+    systemTemporal
+{
+    userId: String key userId;
+}
+
+class Owner
+    systemTemporal
+    versioned
+    audited
+{
+    key            : String key;
+    createdById    : String createdBy userId final private;
+    lastUpdatedById: String lastUpdatedBy userId private;
+    value          : String;
+}
+
+class OwnedOneToOne
+    systemTemporal
+{
+    key  : String key private;
+    value: String;
+}
+
+class OwnedOneToMany
+    systemTemporal
+{
+    ownerKey: String key private;
+    name    : String key;
+}
+
+association OwnerHasOwnedOneToOne
+{
+    owner : Owner[1..1];
+    detail: OwnedOneToOne[1..1] owned;
+
+    relationship this.key == OwnedOneToOne.key
+}
+
+association OwnerHasOwnedOneToMany
+{
+    owner: Owner[1..1];
+    items: OwnedOneToMany[0..*] owned;
+
+    relationship this.key == OwnedOneToMany.ownerKey
+}
