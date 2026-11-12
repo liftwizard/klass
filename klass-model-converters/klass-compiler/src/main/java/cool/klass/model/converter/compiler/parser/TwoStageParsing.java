@@ -39,9 +39,10 @@ import org.eclipse.collections.api.block.function.Function;
  * alternative, without full-context lookahead. Input with any syntax error, including the errors that grammar
  * actions report, is reparsed with LL prediction so error messages are unchanged.
  */
-public final class TwoStageParsing {
-
-	private TwoStageParsing() {
+public final class TwoStageParsing
+{
+	private TwoStageParsing()
+	{
 		throw new AssertionError("Suppress default constructor for noninstantiability");
 	}
 
@@ -50,14 +51,18 @@ public final class TwoStageParsing {
 		@Nonnull KlassParser parser,
 		@Nonnull ANTLRErrorListener errorListener,
 		@Nonnull Function<? super KlassParser, ? extends ParserRuleContext> parserRule
-	) {
+	)
+	{
 		parser.getInterpreter().setPredictionMode(PredictionMode.SLL);
 		parser.removeErrorListeners();
 		parser.addErrorListener(SllBailErrorListener.INSTANCE);
 		parser.setErrorHandler(new SllBailErrorStrategy());
-		try {
+		try
+		{
 			return parserRule.apply(parser);
-		} catch (SllParseFailure ignored) {
+		}
+		catch (SllParseFailure ignored)
+		{
 			parser.reset();
 			parser.getInterpreter().setPredictionMode(PredictionMode.LL);
 			parser.removeErrorListeners();
@@ -67,17 +72,20 @@ public final class TwoStageParsing {
 		}
 	}
 
-	private static final class SllParseFailure extends RuntimeException {
-
+	private static final class SllParseFailure
+		extends RuntimeException
+	{
 		private static final long serialVersionUID = 1L;
 
-		private SllParseFailure() {
+		private SllParseFailure()
+		{
 			super(null, null, false, false);
 		}
 	}
 
-	private static final class SllBailErrorListener extends BaseErrorListener {
-
+	private static final class SllBailErrorListener
+		extends BaseErrorListener
+	{
 		private static final SllBailErrorListener INSTANCE = new SllBailErrorListener();
 
 		@Override
@@ -88,30 +96,36 @@ public final class TwoStageParsing {
 			int charPositionInLine,
 			String msg,
 			RecognitionException e
-		) {
+		)
+		{
 			throw new SllParseFailure();
 		}
 	}
 
-	private static final class SllBailErrorStrategy extends DefaultErrorStrategy {
-
+	private static final class SllBailErrorStrategy
+		extends DefaultErrorStrategy
+	{
 		@Override
-		public void recover(Parser recognizer, RecognitionException e) {
+		public void recover(Parser recognizer, RecognitionException e)
+		{
 			throw new SllParseFailure();
 		}
 
 		@Override
-		public Token recoverInline(Parser recognizer) {
+		public Token recoverInline(Parser recognizer)
+		{
 			throw new SllParseFailure();
 		}
 
 		@Override
-		public void sync(Parser recognizer) {
+		public void sync(Parser recognizer)
+		{
 			// Don't attempt single-token recovery; any error falls back to LL prediction.
 		}
 
 		@Override
-		public void reportError(Parser recognizer, RecognitionException e) {
+		public void reportError(Parser recognizer, RecognitionException e)
+		{
 			throw new SllParseFailure();
 		}
 	}
