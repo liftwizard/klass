@@ -271,10 +271,6 @@ public final class DrizzleTableGenerator
 		return Optional.of(new IndexDefinition(tableName + "_idx_system_to_from", columns));
 	}
 
-	private record IndexDefinition(String name, ImmutableList<DataTypeProperty> columns)
-	{
-	}
-
 	private static boolean isPrefixList(ImmutableList<DataTypeProperty> list1, ImmutableList<DataTypeProperty> list2)
 	{
 		if (list1.size() > list2.size())
@@ -329,5 +325,9 @@ public final class DrizzleTableGenerator
 			referencedColumns +
 			")\n"
 		);
+	}
+
+	private record IndexDefinition(String name, ImmutableList<DataTypeProperty> columns)
+	{
 	}
 }
