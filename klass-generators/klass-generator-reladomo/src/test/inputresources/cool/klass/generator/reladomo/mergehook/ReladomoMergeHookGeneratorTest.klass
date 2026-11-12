@@ -31,6 +31,14 @@ class OwnedOneToMany
     name    : String key;
 }
 
+class OwnedGrandchild
+    systemTemporal
+{
+    ownerKey: String key private;
+    itemName: String key private;
+    name    : String key;
+}
+
 association OwnerHasOwnedOneToOne
 {
     owner : Owner[1..1];
@@ -45,4 +53,12 @@ association OwnerHasOwnedOneToMany
     items: OwnedOneToMany[0..*] owned;
 
     relationship this.key == OwnedOneToMany.ownerKey
+}
+
+association OwnedOneToManyHasGrandchildren
+{
+    item         : OwnedOneToMany[1..1];
+    grandchildren: OwnedGrandchild[0..*] owned;
+
+    relationship this.ownerKey == OwnedGrandchild.ownerKey && this.name == OwnedGrandchild.itemName
 }
