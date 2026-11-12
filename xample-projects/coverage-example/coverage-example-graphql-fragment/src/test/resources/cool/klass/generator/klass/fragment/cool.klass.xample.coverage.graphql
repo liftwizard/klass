@@ -209,6 +209,73 @@ fragment OwnedSyntheticOneToManySelfFragment on OwnedSyntheticOneToManySelf
 	}
 }
 
+fragment VersionedOwnedSourceFragment on VersionedOwnedSource
+{
+	key
+	systemFrom
+	systemTo
+	createdOn
+	value
+	detail
+	{
+		...VersionedOwnedOneToOneTargetFragment
+	}
+	items
+	{
+		...VersionedOwnedOneToManyTargetFragment
+	}
+	version
+	{
+		...VersionedOwnedSourceVersionFragment
+	}
+	createdBy
+	{
+		userId
+	}
+	lastUpdatedBy
+	{
+		userId
+	}
+}
+
+fragment VersionedOwnedOneToOneTargetFragment on VersionedOwnedOneToOneTarget
+{
+	systemFrom
+	systemTo
+	value
+}
+
+fragment VersionedOwnedOneToManyTargetFragment on VersionedOwnedOneToManyTarget
+{
+	name
+	systemFrom
+	systemTo
+	value
+	grandchild
+	{
+		...VersionedOwnedOneToOneGrandchildFragment
+	}
+	grandchildren
+	{
+		...VersionedOwnedOneToManyGrandchildFragment
+	}
+}
+
+fragment VersionedOwnedOneToOneGrandchildFragment on VersionedOwnedOneToOneGrandchild
+{
+	systemFrom
+	systemTo
+	value
+}
+
+fragment VersionedOwnedOneToManyGrandchildFragment on VersionedOwnedOneToManyGrandchild
+{
+	name
+	systemFrom
+	systemTo
+	value
+}
+
 fragment SharedNaturalManyToOneTargetFragment on SharedNaturalManyToOneTarget
 {
 	key
@@ -387,6 +454,22 @@ fragment PropertiesOptionalVersionFragment on PropertiesOptionalVersion
 }
 
 fragment EveryTypeKeyPropertyVersionFragment on EveryTypeKeyPropertyVersion
+{
+	systemFrom
+	systemTo
+	createdOn
+	number
+	createdBy
+	{
+		userId
+	}
+	lastUpdatedBy
+	{
+		userId
+	}
+}
+
+fragment VersionedOwnedSourceVersionFragment on VersionedOwnedSourceVersion
 {
 	systemFrom
 	systemTo

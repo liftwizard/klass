@@ -202,6 +202,24 @@ service OwnedSyntheticOneToManySelfResource on OwnedSyntheticOneToManySelf
         }
 }
 
+service VersionedOwnedSourceResource on VersionedOwnedSource
+{
+    /versionedOwnedSource/{key: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            projection  : VersionedOwnedSourceProjection;
+        }
+    /versionedOwnedSource
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : VersionedOwnedSourceProjection;
+        }
+}
+
 service SharedNaturalManyToOneTargetResource on SharedNaturalManyToOneTarget
 {
     /sharedNaturalManyToOneTarget/{key: String[1..1]}

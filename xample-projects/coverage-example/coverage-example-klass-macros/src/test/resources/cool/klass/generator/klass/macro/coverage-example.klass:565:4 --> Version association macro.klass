@@ -1,0 +1,9 @@
+package cool.klass.xample.coverage
+
+association VersionedOwnedSourceHasVersion
+{
+    versionedOwnedSource: VersionedOwnedSource[1..1];
+    version: VersionedOwnedSourceVersion[1..1] owned version;
+
+    relationship this.key == VersionedOwnedSourceVersion.key
+}

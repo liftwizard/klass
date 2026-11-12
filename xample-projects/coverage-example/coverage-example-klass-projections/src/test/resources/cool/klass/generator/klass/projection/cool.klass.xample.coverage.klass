@@ -172,6 +172,56 @@ projection OwnedSyntheticOneToManySelfProjection on OwnedSyntheticOneToManySelf
     },
 }
 
+projection VersionedOwnedSourceProjection on VersionedOwnedSource
+{
+    key: "VersionedOwnedSource key",
+    systemFrom: "VersionedOwnedSource systemFrom",
+    systemTo: "VersionedOwnedSource systemTo",
+    createdOn: "VersionedOwnedSource createdOn",
+    value: "VersionedOwnedSource value",
+    detail: VersionedOwnedOneToOneTargetProjection,
+    items: VersionedOwnedOneToManyTargetProjection,
+    version: VersionedOwnedSourceVersionProjection,
+    createdBy: {
+        userId: "User userId",
+    },
+    lastUpdatedBy: {
+        userId: "User userId",
+    },
+}
+
+projection VersionedOwnedOneToOneTargetProjection on VersionedOwnedOneToOneTarget
+{
+    systemFrom: "VersionedOwnedOneToOneTarget systemFrom",
+    systemTo: "VersionedOwnedOneToOneTarget systemTo",
+    value: "VersionedOwnedOneToOneTarget value",
+}
+
+projection VersionedOwnedOneToManyTargetProjection on VersionedOwnedOneToManyTarget
+{
+    name: "VersionedOwnedOneToManyTarget name",
+    systemFrom: "VersionedOwnedOneToManyTarget systemFrom",
+    systemTo: "VersionedOwnedOneToManyTarget systemTo",
+    value: "VersionedOwnedOneToManyTarget value",
+    grandchild: VersionedOwnedOneToOneGrandchildProjection,
+    grandchildren: VersionedOwnedOneToManyGrandchildProjection,
+}
+
+projection VersionedOwnedOneToOneGrandchildProjection on VersionedOwnedOneToOneGrandchild
+{
+    systemFrom: "VersionedOwnedOneToOneGrandchild systemFrom",
+    systemTo: "VersionedOwnedOneToOneGrandchild systemTo",
+    value: "VersionedOwnedOneToOneGrandchild value",
+}
+
+projection VersionedOwnedOneToManyGrandchildProjection on VersionedOwnedOneToManyGrandchild
+{
+    name: "VersionedOwnedOneToManyGrandchild name",
+    systemFrom: "VersionedOwnedOneToManyGrandchild systemFrom",
+    systemTo: "VersionedOwnedOneToManyGrandchild systemTo",
+    value: "VersionedOwnedOneToManyGrandchild value",
+}
+
 projection SharedNaturalManyToOneTargetProjection on SharedNaturalManyToOneTarget
 {
     key: "SharedNaturalManyToOneTarget key",
@@ -335,6 +385,20 @@ projection EveryTypeKeyPropertyVersionProjection on EveryTypeKeyPropertyVersion
     systemTo: "EveryTypeKeyPropertyVersion systemTo",
     createdOn: "EveryTypeKeyPropertyVersion createdOn",
     number: "EveryTypeKeyPropertyVersion number",
+    createdBy: {
+        userId: "User userId",
+    },
+    lastUpdatedBy: {
+        userId: "User userId",
+    },
+}
+
+projection VersionedOwnedSourceVersionProjection on VersionedOwnedSourceVersion
+{
+    systemFrom: "VersionedOwnedSourceVersion systemFrom",
+    systemTo: "VersionedOwnedSourceVersion systemTo",
+    createdOn: "VersionedOwnedSourceVersion createdOn",
+    number: "VersionedOwnedSourceVersion number",
     createdBy: {
         userId: "User userId",
     },

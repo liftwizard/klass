@@ -32,7 +32,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 387
+							"id": 409
 						}
 					}
 				]
@@ -113,7 +113,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 388
+							"id": 410
 						}
 					}
 				]
@@ -263,7 +263,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 389
+							"id": 411
 						}
 					}
 				]
@@ -482,7 +482,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 390
+							"id": 412
 						}
 					}
 				]
@@ -1035,7 +1035,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 391
+							"id": 413
 						}
 					}
 				]
@@ -1230,7 +1230,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 392
+							"id": 414
 						}
 					}
 				]
@@ -1449,7 +1449,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 393
+							"id": 415
 						}
 					}
 				]
@@ -2001,7 +2001,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 394
+							"id": 416
 						}
 					}
 				]
@@ -2456,7 +2456,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 395
+							"id": 417
 						}
 					}
 				]
@@ -2537,7 +2537,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 396
+							"id": 418
 						}
 					}
 				]
@@ -2801,7 +2801,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 397
+							"id": 419
 						}
 					}
 				]
@@ -2927,7 +2927,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 398
+							"id": 420
 						}
 					}
 				]
@@ -3126,7 +3126,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 399
+							"id": 421
 						}
 					}
 				]
@@ -3642,7 +3642,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 400
+							"id": 422
 						}
 					}
 				]
@@ -3841,7 +3841,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 401
+							"id": 423
 						}
 					}
 				]
@@ -3922,7 +3922,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 402
+							"id": 424
 						}
 					}
 				]
@@ -4409,7 +4409,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 403
+							"id": 425
 						}
 					}
 				]
@@ -5443,6 +5443,388 @@
 		}
 	},
 	{
+		"name": "VersionedOwnedOneToOne",
+		"packageName": "cool.klass.xample.coverage",
+		"associationEnds": [
+			{
+				"name": "source",
+				"direction": "source",
+				"multiplicity": "1..1",
+				"resultType":
+				{
+					"name": "VersionedOwnedSource"
+				},
+				"associationEndModifiers": [],
+				"orderBys": []
+			},
+			{
+				"name": "detail",
+				"direction": "target",
+				"multiplicity": "1..1",
+				"resultType":
+				{
+					"name": "VersionedOwnedOneToOneTarget"
+				},
+				"associationEndModifiers": [
+					{
+						"keyword": "owned"
+					}
+				],
+				"orderBys": []
+			}
+		],
+		"criteria":
+		{
+			"__typename": "klass.model.meta.domain.OperatorCriteria",
+			"operator": "==",
+			"sourceExpressionValue":
+			{
+				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+				"id": 167,
+				"klass":
+				{
+					"name": "VersionedOwnedSource"
+				},
+				"associationEnds": [],
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
+						"name": "VersionedOwnedSource"
+					},
+					"name": "key"
+				}
+			},
+			"targetExpressionValue":
+			{
+				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
+				"id": 168,
+				"klass":
+				{
+					"name": "VersionedOwnedOneToOneTarget"
+				},
+				"associationEnds": [],
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
+						"name": "VersionedOwnedOneToOneTarget"
+					},
+					"name": "key"
+				}
+			}
+		}
+	},
+	{
+		"name": "VersionedOwnedOneToMany",
+		"packageName": "cool.klass.xample.coverage",
+		"associationEnds": [
+			{
+				"name": "source",
+				"direction": "source",
+				"multiplicity": "1..1",
+				"resultType":
+				{
+					"name": "VersionedOwnedSource"
+				},
+				"associationEndModifiers": [],
+				"orderBys": []
+			},
+			{
+				"name": "items",
+				"direction": "target",
+				"multiplicity": "0..*",
+				"resultType":
+				{
+					"name": "VersionedOwnedOneToManyTarget"
+				},
+				"associationEndModifiers": [
+					{
+						"keyword": "owned"
+					}
+				],
+				"orderBys": []
+			}
+		],
+		"criteria":
+		{
+			"__typename": "klass.model.meta.domain.OperatorCriteria",
+			"operator": "==",
+			"sourceExpressionValue":
+			{
+				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+				"id": 169,
+				"klass":
+				{
+					"name": "VersionedOwnedSource"
+				},
+				"associationEnds": [],
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
+						"name": "VersionedOwnedSource"
+					},
+					"name": "key"
+				}
+			},
+			"targetExpressionValue":
+			{
+				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
+				"id": 170,
+				"klass":
+				{
+					"name": "VersionedOwnedOneToManyTarget"
+				},
+				"associationEnds": [],
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
+						"name": "VersionedOwnedOneToManyTarget"
+					},
+					"name": "sourceKey"
+				}
+			}
+		}
+	},
+	{
+		"name": "VersionedOwnedOneToManyTargetHasGrandchild",
+		"packageName": "cool.klass.xample.coverage",
+		"associationEnds": [
+			{
+				"name": "item",
+				"direction": "source",
+				"multiplicity": "1..1",
+				"resultType":
+				{
+					"name": "VersionedOwnedOneToManyTarget"
+				},
+				"associationEndModifiers": [],
+				"orderBys": []
+			},
+			{
+				"name": "grandchild",
+				"direction": "target",
+				"multiplicity": "0..1",
+				"resultType":
+				{
+					"name": "VersionedOwnedOneToOneGrandchild"
+				},
+				"associationEndModifiers": [
+					{
+						"keyword": "owned"
+					}
+				],
+				"orderBys": []
+			}
+		],
+		"criteria":
+		{
+			"__typename": "klass.model.meta.domain.AndCriteria",
+			"left":
+			{
+				"__typename": "klass.model.meta.domain.OperatorCriteria",
+				"operator": "==",
+				"sourceExpressionValue":
+				{
+					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+					"id": 171,
+					"klass":
+					{
+						"name": "VersionedOwnedOneToManyTarget"
+					},
+					"associationEnds": [],
+					"dataTypeProperty":
+					{
+						"owningClassifier":
+						{
+							"name": "VersionedOwnedOneToManyTarget"
+						},
+						"name": "sourceKey"
+					}
+				},
+				"targetExpressionValue":
+				{
+					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
+					"id": 172,
+					"klass":
+					{
+						"name": "VersionedOwnedOneToOneGrandchild"
+					},
+					"associationEnds": [],
+					"dataTypeProperty":
+					{
+						"owningClassifier":
+						{
+							"name": "VersionedOwnedOneToOneGrandchild"
+						},
+						"name": "sourceKey"
+					}
+				}
+			},
+			"right":
+			{
+				"__typename": "klass.model.meta.domain.OperatorCriteria",
+				"operator": "==",
+				"sourceExpressionValue":
+				{
+					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+					"id": 173,
+					"klass":
+					{
+						"name": "VersionedOwnedOneToManyTarget"
+					},
+					"associationEnds": [],
+					"dataTypeProperty":
+					{
+						"owningClassifier":
+						{
+							"name": "VersionedOwnedOneToManyTarget"
+						},
+						"name": "name"
+					}
+				},
+				"targetExpressionValue":
+				{
+					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
+					"id": 174,
+					"klass":
+					{
+						"name": "VersionedOwnedOneToOneGrandchild"
+					},
+					"associationEnds": [],
+					"dataTypeProperty":
+					{
+						"owningClassifier":
+						{
+							"name": "VersionedOwnedOneToOneGrandchild"
+						},
+						"name": "itemName"
+					}
+				}
+			}
+		}
+	},
+	{
+		"name": "VersionedOwnedOneToManyTargetHasGrandchildren",
+		"packageName": "cool.klass.xample.coverage",
+		"associationEnds": [
+			{
+				"name": "item",
+				"direction": "source",
+				"multiplicity": "1..1",
+				"resultType":
+				{
+					"name": "VersionedOwnedOneToManyTarget"
+				},
+				"associationEndModifiers": [],
+				"orderBys": []
+			},
+			{
+				"name": "grandchildren",
+				"direction": "target",
+				"multiplicity": "0..*",
+				"resultType":
+				{
+					"name": "VersionedOwnedOneToManyGrandchild"
+				},
+				"associationEndModifiers": [
+					{
+						"keyword": "owned"
+					}
+				],
+				"orderBys": []
+			}
+		],
+		"criteria":
+		{
+			"__typename": "klass.model.meta.domain.AndCriteria",
+			"left":
+			{
+				"__typename": "klass.model.meta.domain.OperatorCriteria",
+				"operator": "==",
+				"sourceExpressionValue":
+				{
+					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+					"id": 175,
+					"klass":
+					{
+						"name": "VersionedOwnedOneToManyTarget"
+					},
+					"associationEnds": [],
+					"dataTypeProperty":
+					{
+						"owningClassifier":
+						{
+							"name": "VersionedOwnedOneToManyTarget"
+						},
+						"name": "sourceKey"
+					}
+				},
+				"targetExpressionValue":
+				{
+					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
+					"id": 176,
+					"klass":
+					{
+						"name": "VersionedOwnedOneToManyGrandchild"
+					},
+					"associationEnds": [],
+					"dataTypeProperty":
+					{
+						"owningClassifier":
+						{
+							"name": "VersionedOwnedOneToManyGrandchild"
+						},
+						"name": "sourceKey"
+					}
+				}
+			},
+			"right":
+			{
+				"__typename": "klass.model.meta.domain.OperatorCriteria",
+				"operator": "==",
+				"sourceExpressionValue":
+				{
+					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+					"id": 177,
+					"klass":
+					{
+						"name": "VersionedOwnedOneToManyTarget"
+					},
+					"associationEnds": [],
+					"dataTypeProperty":
+					{
+						"owningClassifier":
+						{
+							"name": "VersionedOwnedOneToManyTarget"
+						},
+						"name": "name"
+					}
+				},
+				"targetExpressionValue":
+				{
+					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
+					"id": 178,
+					"klass":
+					{
+						"name": "VersionedOwnedOneToManyGrandchild"
+					},
+					"associationEnds": [],
+					"dataTypeProperty":
+					{
+						"owningClassifier":
+						{
+							"name": "VersionedOwnedOneToManyGrandchild"
+						},
+						"name": "itemName"
+					}
+				}
+			}
+		}
+	},
+	{
 		"name": "SharedNaturalManyToOne",
 		"packageName": "cool.klass.xample.coverage",
 		"associationEnds": [
@@ -5476,7 +5858,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 167,
+				"id": 179,
 				"klass":
 				{
 					"name": "SharedNaturalManyToOneSource"
@@ -5494,7 +5876,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 168,
+				"id": 180,
 				"klass":
 				{
 					"name": "SharedNaturalManyToOneTarget"
@@ -5545,7 +5927,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 169,
+				"id": 181,
 				"klass":
 				{
 					"name": "SharedNaturalOneToManySource"
@@ -5563,7 +5945,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 170,
+				"id": 182,
 				"klass":
 				{
 					"name": "SharedNaturalOneToManyTarget"
@@ -5614,7 +5996,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 171,
+				"id": 183,
 				"klass":
 				{
 					"name": "SharedNaturalOneToOneSource"
@@ -5632,7 +6014,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 172,
+				"id": 184,
 				"klass":
 				{
 					"name": "SharedNaturalOneToOneTarget"
@@ -5683,7 +6065,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 173,
+				"id": 185,
 				"klass":
 				{
 					"name": "SharedNaturalOneToManySelf"
@@ -5701,7 +6083,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 174,
+				"id": 186,
 				"klass":
 				{
 					"name": "SharedNaturalOneToManySelf"
@@ -5752,7 +6134,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 175,
+				"id": 187,
 				"klass":
 				{
 					"name": "SharedSyntheticOneToManySource"
@@ -5770,7 +6152,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 176,
+				"id": 188,
 				"klass":
 				{
 					"name": "SharedSyntheticOneToManyTarget"
@@ -5821,7 +6203,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 177,
+				"id": 189,
 				"klass":
 				{
 					"name": "SharedSyntheticOneToOneSource"
@@ -5839,7 +6221,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 178,
+				"id": 190,
 				"klass":
 				{
 					"name": "SharedSyntheticOneToOneTarget"
@@ -5890,7 +6272,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 179,
+				"id": 191,
 				"klass":
 				{
 					"name": "SharedSyntheticOneToManySelf"
@@ -5908,7 +6290,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 180,
+				"id": 192,
 				"klass":
 				{
 					"name": "SharedSyntheticOneToManySelf"
@@ -5958,112 +6340,112 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 404
+							"id": 426
 						}
 					},
 					{
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 405
+							"id": 427
 						}
 					},
 					{
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 406
+							"id": 428
 						}
 					},
 					{
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 407
+							"id": 429
 						}
 					},
 					{
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 408
+							"id": 430
 						}
 					},
 					{
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 409
+							"id": 431
 						}
 					},
 					{
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 410
+							"id": 432
 						}
 					},
 					{
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 411
+							"id": 433
 						}
 					},
 					{
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 412
+							"id": 434
 						}
 					},
 					{
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 413
+							"id": 435
 						}
 					},
 					{
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 414
+							"id": 436
 						}
 					},
 					{
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 415
+							"id": 437
 						}
 					},
 					{
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 416
+							"id": 438
 						}
 					},
 					{
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 417
+							"id": 439
 						}
 					},
 					{
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 418
+							"id": 440
 						}
 					},
 					{
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 419
+							"id": 441
 						}
 					}
 				]
@@ -6076,7 +6458,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 181,
+				"id": 193,
 				"klass":
 				{
 					"name": "ClassOwningClassWithDerivedProperty"
@@ -6094,7 +6476,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 182,
+				"id": 194,
 				"klass":
 				{
 					"name": "ClassWithDerivedProperty"
@@ -6152,7 +6534,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 183,
+				"id": 195,
 				"klass":
 				{
 					"name": "User"
@@ -6170,7 +6552,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 184,
+				"id": 196,
 				"klass":
 				{
 					"name": "UserVersion"
@@ -6228,7 +6610,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 185,
+				"id": 197,
 				"klass":
 				{
 					"name": "PropertiesRequired"
@@ -6246,7 +6628,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 186,
+				"id": 198,
 				"klass":
 				{
 					"name": "PropertiesRequiredVersion"
@@ -6304,7 +6686,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 187,
+				"id": 199,
 				"klass":
 				{
 					"name": "PropertiesOptional"
@@ -6322,7 +6704,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 188,
+				"id": 200,
 				"klass":
 				{
 					"name": "PropertiesOptionalVersion"
@@ -6401,7 +6783,7 @@
 										"sourceExpressionValue":
 										{
 											"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-											"id": 189,
+											"id": 201,
 											"klass":
 											{
 												"name": "EveryTypeKeyProperty"
@@ -6419,7 +6801,7 @@
 										"targetExpressionValue":
 										{
 											"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-											"id": 190,
+											"id": 202,
 											"klass":
 											{
 												"name": "EveryTypeKeyPropertyVersion"
@@ -6442,7 +6824,7 @@
 										"sourceExpressionValue":
 										{
 											"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-											"id": 191,
+											"id": 203,
 											"klass":
 											{
 												"name": "EveryTypeKeyProperty"
@@ -6460,7 +6842,7 @@
 										"targetExpressionValue":
 										{
 											"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-											"id": 192,
+											"id": 204,
 											"klass":
 											{
 												"name": "EveryTypeKeyPropertyVersion"
@@ -6484,7 +6866,7 @@
 									"sourceExpressionValue":
 									{
 										"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-										"id": 193,
+										"id": 205,
 										"klass":
 										{
 											"name": "EveryTypeKeyProperty"
@@ -6502,7 +6884,7 @@
 									"targetExpressionValue":
 									{
 										"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-										"id": 194,
+										"id": 206,
 										"klass":
 										{
 											"name": "EveryTypeKeyPropertyVersion"
@@ -6526,7 +6908,7 @@
 								"sourceExpressionValue":
 								{
 									"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-									"id": 195,
+									"id": 207,
 									"klass":
 									{
 										"name": "EveryTypeKeyProperty"
@@ -6544,7 +6926,7 @@
 								"targetExpressionValue":
 								{
 									"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-									"id": 196,
+									"id": 208,
 									"klass":
 									{
 										"name": "EveryTypeKeyPropertyVersion"
@@ -6568,7 +6950,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 197,
+								"id": 209,
 								"klass":
 								{
 									"name": "EveryTypeKeyProperty"
@@ -6586,7 +6968,7 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-								"id": 198,
+								"id": 210,
 								"klass":
 								{
 									"name": "EveryTypeKeyPropertyVersion"
@@ -6610,7 +6992,7 @@
 						"sourceExpressionValue":
 						{
 							"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-							"id": 199,
+							"id": 211,
 							"klass":
 							{
 								"name": "EveryTypeKeyProperty"
@@ -6628,7 +7010,7 @@
 						"targetExpressionValue":
 						{
 							"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-							"id": 200,
+							"id": 212,
 							"klass":
 							{
 								"name": "EveryTypeKeyPropertyVersion"
@@ -6652,7 +7034,7 @@
 					"sourceExpressionValue":
 					{
 						"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-						"id": 201,
+						"id": 213,
 						"klass":
 						{
 							"name": "EveryTypeKeyProperty"
@@ -6670,7 +7052,7 @@
 					"targetExpressionValue":
 					{
 						"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-						"id": 202,
+						"id": 214,
 						"klass":
 						{
 							"name": "EveryTypeKeyPropertyVersion"
@@ -6694,7 +7076,7 @@
 				"sourceExpressionValue":
 				{
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-					"id": 203,
+					"id": 215,
 					"klass":
 					{
 						"name": "EveryTypeKeyProperty"
@@ -6712,7 +7094,7 @@
 				"targetExpressionValue":
 				{
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-					"id": 204,
+					"id": 216,
 					"klass":
 					{
 						"name": "EveryTypeKeyPropertyVersion"
@@ -6726,6 +7108,82 @@
 						},
 						"name": "keyLocalDate"
 					}
+				}
+			}
+		}
+	},
+	{
+		"name": "VersionedOwnedSourceHasVersion",
+		"packageName": "cool.klass.xample.coverage",
+		"associationEnds": [
+			{
+				"name": "versionedOwnedSource",
+				"direction": "source",
+				"multiplicity": "1..1",
+				"resultType":
+				{
+					"name": "VersionedOwnedSource"
+				},
+				"associationEndModifiers": [],
+				"orderBys": []
+			},
+			{
+				"name": "version",
+				"direction": "target",
+				"multiplicity": "1..1",
+				"resultType":
+				{
+					"name": "VersionedOwnedSourceVersion"
+				},
+				"associationEndModifiers": [
+					{
+						"keyword": "owned"
+					},
+					{
+						"keyword": "version"
+					}
+				],
+				"orderBys": []
+			}
+		],
+		"criteria":
+		{
+			"__typename": "klass.model.meta.domain.OperatorCriteria",
+			"operator": "==",
+			"sourceExpressionValue":
+			{
+				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+				"id": 217,
+				"klass":
+				{
+					"name": "VersionedOwnedSource"
+				},
+				"associationEnds": [],
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
+						"name": "VersionedOwnedSource"
+					},
+					"name": "key"
+				}
+			},
+			"targetExpressionValue":
+			{
+				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
+				"id": 218,
+				"klass":
+				{
+					"name": "VersionedOwnedSourceVersion"
+				},
+				"associationEnds": [],
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
+						"name": "VersionedOwnedSourceVersion"
+					},
+					"name": "key"
 				}
 			}
 		}
@@ -6771,7 +7229,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 205,
+				"id": 219,
 				"klass":
 				{
 					"name": "PropertiesRequired"
@@ -6789,7 +7247,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 206,
+				"id": 220,
 				"klass":
 				{
 					"name": "User"
@@ -6844,7 +7302,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 207,
+				"id": 221,
 				"klass":
 				{
 					"name": "PropertiesRequired"
@@ -6862,7 +7320,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 208,
+				"id": 222,
 				"klass":
 				{
 					"name": "User"
@@ -6920,7 +7378,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 209,
+				"id": 223,
 				"klass":
 				{
 					"name": "PropertiesOptional"
@@ -6938,7 +7396,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 210,
+				"id": 224,
 				"klass":
 				{
 					"name": "User"
@@ -6993,7 +7451,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 211,
+				"id": 225,
 				"klass":
 				{
 					"name": "PropertiesOptional"
@@ -7011,7 +7469,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 212,
+				"id": 226,
 				"klass":
 				{
 					"name": "User"
@@ -7069,7 +7527,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 213,
+				"id": 227,
 				"klass":
 				{
 					"name": "EveryTypeKeyProperty"
@@ -7087,7 +7545,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 214,
+				"id": 228,
 				"klass":
 				{
 					"name": "User"
@@ -7142,7 +7600,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 215,
+				"id": 229,
 				"klass":
 				{
 					"name": "EveryTypeKeyProperty"
@@ -7160,7 +7618,156 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 216,
+				"id": 230,
+				"klass":
+				{
+					"name": "User"
+				},
+				"associationEnds": [],
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
+						"name": "User"
+					},
+					"name": "userId"
+				}
+			}
+		}
+	},
+	{
+		"name": "VersionedOwnedSourceHasCreatedBy",
+		"packageName": "cool.klass.xample.coverage",
+		"associationEnds": [
+			{
+				"name": "versionedOwnedSourceCreatedBy",
+				"direction": "source",
+				"multiplicity": "0..*",
+				"resultType":
+				{
+					"name": "VersionedOwnedSource"
+				},
+				"associationEndModifiers": [],
+				"orderBys": []
+			},
+			{
+				"name": "createdBy",
+				"direction": "target",
+				"multiplicity": "1..1",
+				"resultType":
+				{
+					"name": "User"
+				},
+				"associationEndModifiers": [
+					{
+						"keyword": "createdBy"
+					},
+					{
+						"keyword": "final"
+					}
+				],
+				"orderBys": []
+			}
+		],
+		"criteria":
+		{
+			"__typename": "klass.model.meta.domain.OperatorCriteria",
+			"operator": "==",
+			"sourceExpressionValue":
+			{
+				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+				"id": 231,
+				"klass":
+				{
+					"name": "VersionedOwnedSource"
+				},
+				"associationEnds": [],
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
+						"name": "VersionedOwnedSource"
+					},
+					"name": "createdById"
+				}
+			},
+			"targetExpressionValue":
+			{
+				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
+				"id": 232,
+				"klass":
+				{
+					"name": "User"
+				},
+				"associationEnds": [],
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
+						"name": "User"
+					},
+					"name": "userId"
+				}
+			}
+		}
+	},
+	{
+		"name": "VersionedOwnedSourceHasLastUpdatedBy",
+		"packageName": "cool.klass.xample.coverage",
+		"associationEnds": [
+			{
+				"name": "versionedOwnedSourceLastUpdatedBy",
+				"direction": "source",
+				"multiplicity": "0..*",
+				"resultType":
+				{
+					"name": "VersionedOwnedSource"
+				},
+				"associationEndModifiers": [],
+				"orderBys": []
+			},
+			{
+				"name": "lastUpdatedBy",
+				"direction": "target",
+				"multiplicity": "1..1",
+				"resultType":
+				{
+					"name": "User"
+				},
+				"associationEndModifiers": [
+					{
+						"keyword": "lastUpdatedBy"
+					}
+				],
+				"orderBys": []
+			}
+		],
+		"criteria":
+		{
+			"__typename": "klass.model.meta.domain.OperatorCriteria",
+			"operator": "==",
+			"sourceExpressionValue":
+			{
+				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+				"id": 233,
+				"klass":
+				{
+					"name": "VersionedOwnedSource"
+				},
+				"associationEnds": [],
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
+						"name": "VersionedOwnedSource"
+					},
+					"name": "lastUpdatedById"
+				}
+			},
+			"targetExpressionValue":
+			{
+				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
+				"id": 234,
 				"klass":
 				{
 					"name": "User"
@@ -7218,7 +7825,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 217,
+				"id": 235,
 				"klass":
 				{
 					"name": "PropertiesRequiredVersion"
@@ -7236,7 +7843,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 218,
+				"id": 236,
 				"klass":
 				{
 					"name": "User"
@@ -7291,7 +7898,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 219,
+				"id": 237,
 				"klass":
 				{
 					"name": "PropertiesRequiredVersion"
@@ -7309,7 +7916,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 220,
+				"id": 238,
 				"klass":
 				{
 					"name": "User"
@@ -7367,7 +7974,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 221,
+				"id": 239,
 				"klass":
 				{
 					"name": "PropertiesOptionalVersion"
@@ -7385,7 +7992,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 222,
+				"id": 240,
 				"klass":
 				{
 					"name": "User"
@@ -7440,7 +8047,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 223,
+				"id": 241,
 				"klass":
 				{
 					"name": "PropertiesOptionalVersion"
@@ -7458,7 +8065,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 224,
+				"id": 242,
 				"klass":
 				{
 					"name": "User"
@@ -7516,7 +8123,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 225,
+				"id": 243,
 				"klass":
 				{
 					"name": "EveryTypeKeyPropertyVersion"
@@ -7534,7 +8141,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 226,
+				"id": 244,
 				"klass":
 				{
 					"name": "User"
@@ -7589,7 +8196,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 227,
+				"id": 245,
 				"klass":
 				{
 					"name": "EveryTypeKeyPropertyVersion"
@@ -7607,7 +8214,156 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 228,
+				"id": 246,
+				"klass":
+				{
+					"name": "User"
+				},
+				"associationEnds": [],
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
+						"name": "User"
+					},
+					"name": "userId"
+				}
+			}
+		}
+	},
+	{
+		"name": "VersionedOwnedSourceVersionHasCreatedBy",
+		"packageName": "cool.klass.xample.coverage",
+		"associationEnds": [
+			{
+				"name": "versionedOwnedSourceVersionCreatedBy",
+				"direction": "source",
+				"multiplicity": "0..*",
+				"resultType":
+				{
+					"name": "VersionedOwnedSourceVersion"
+				},
+				"associationEndModifiers": [],
+				"orderBys": []
+			},
+			{
+				"name": "createdBy",
+				"direction": "target",
+				"multiplicity": "1..1",
+				"resultType":
+				{
+					"name": "User"
+				},
+				"associationEndModifiers": [
+					{
+						"keyword": "createdBy"
+					},
+					{
+						"keyword": "final"
+					}
+				],
+				"orderBys": []
+			}
+		],
+		"criteria":
+		{
+			"__typename": "klass.model.meta.domain.OperatorCriteria",
+			"operator": "==",
+			"sourceExpressionValue":
+			{
+				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+				"id": 247,
+				"klass":
+				{
+					"name": "VersionedOwnedSourceVersion"
+				},
+				"associationEnds": [],
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
+						"name": "VersionedOwnedSourceVersion"
+					},
+					"name": "createdById"
+				}
+			},
+			"targetExpressionValue":
+			{
+				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
+				"id": 248,
+				"klass":
+				{
+					"name": "User"
+				},
+				"associationEnds": [],
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
+						"name": "User"
+					},
+					"name": "userId"
+				}
+			}
+		}
+	},
+	{
+		"name": "VersionedOwnedSourceVersionHasLastUpdatedBy",
+		"packageName": "cool.klass.xample.coverage",
+		"associationEnds": [
+			{
+				"name": "versionedOwnedSourceVersionLastUpdatedBy",
+				"direction": "source",
+				"multiplicity": "0..*",
+				"resultType":
+				{
+					"name": "VersionedOwnedSourceVersion"
+				},
+				"associationEndModifiers": [],
+				"orderBys": []
+			},
+			{
+				"name": "lastUpdatedBy",
+				"direction": "target",
+				"multiplicity": "1..1",
+				"resultType":
+				{
+					"name": "User"
+				},
+				"associationEndModifiers": [
+					{
+						"keyword": "lastUpdatedBy"
+					}
+				],
+				"orderBys": []
+			}
+		],
+		"criteria":
+		{
+			"__typename": "klass.model.meta.domain.OperatorCriteria",
+			"operator": "==",
+			"sourceExpressionValue":
+			{
+				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+				"id": 249,
+				"klass":
+				{
+					"name": "VersionedOwnedSourceVersion"
+				},
+				"associationEnds": [],
+				"dataTypeProperty":
+				{
+					"owningClassifier":
+					{
+						"name": "VersionedOwnedSourceVersion"
+					},
+					"name": "lastUpdatedById"
+				}
+			},
+			"targetExpressionValue":
+			{
+				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
+				"id": 250,
 				"klass":
 				{
 					"name": "User"

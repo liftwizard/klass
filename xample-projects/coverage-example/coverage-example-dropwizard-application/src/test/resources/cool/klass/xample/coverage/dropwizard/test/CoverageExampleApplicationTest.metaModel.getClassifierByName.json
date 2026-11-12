@@ -143,6 +143,12 @@
 			"name": "everyTypeKeyPropertyLastUpdatedBy"
 		},
 		{
+			"name": "versionedOwnedSourceCreatedBy"
+		},
+		{
+			"name": "versionedOwnedSourceLastUpdatedBy"
+		},
+		{
 			"name": "propertiesRequiredVersionCreatedBy"
 		},
 		{
@@ -159,6 +165,12 @@
 		},
 		{
 			"name": "everyTypeKeyPropertyVersionLastUpdatedBy"
+		},
+		{
+			"name": "versionedOwnedSourceVersionCreatedBy"
+		},
+		{
+			"name": "versionedOwnedSourceVersionLastUpdatedBy"
 		}
 	],
 	"parameterizedProperties": []
