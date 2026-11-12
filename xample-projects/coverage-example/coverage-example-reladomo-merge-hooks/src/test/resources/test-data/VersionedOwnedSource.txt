@@ -1,0 +1,47 @@
+class cool.klass.xample.coverage.VersionedOwnedSource
+systemFrom             , systemTo               , key                 , value             , createdById  , createdOn              , lastUpdatedById
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "both-changed"      , "both value"      , "test user 1", "2000-01-01 00:00:00.0", "test user 1"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "child-changed"     , "child value"     , "test user 1", "2000-01-01 00:00:00.0", "test user 1"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "detail-missing"    , "no detail"       , "test user 1", "2000-01-01 00:00:00.0", "test user 1"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "grandchild-changed", "grandchild value", "test user 1", "2000-01-01 00:00:00.0", "test user 1"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "terminated"        , "gone"            , "test user 1", "2000-01-01 00:00:00.0", "test user 1"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "unchanged"         , "same"            , "test user 1", "2000-01-01 00:00:00.0", "test user 1"
+
+class cool.klass.xample.coverage.VersionedOwnedSourceVersion
+systemFrom             , systemTo               , key                 , number, createdById  , createdOn              , lastUpdatedById
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "both-changed"      ,      1, "test user 1", "2000-01-01 00:00:00.0", "test user 1"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "child-changed"     ,      1, "test user 1", "2000-01-01 00:00:00.0", "test user 1"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "detail-missing"    ,      1, "test user 1", "2000-01-01 00:00:00.0", "test user 1"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "grandchild-changed",      1, "test user 1", "2000-01-01 00:00:00.0", "test user 1"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "terminated"        ,      1, "test user 1", "2000-01-01 00:00:00.0", "test user 1"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "unchanged"         ,      1, "test user 1", "2000-01-01 00:00:00.0", "test user 1"
+
+class cool.klass.xample.coverage.VersionedOwnedOneToOneTarget
+systemFrom             , systemTo               , key                 , value
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "both-changed"      , "both detail"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "child-changed"     , "child detail"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "grandchild-changed", "grandchild detail"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "terminated"        , "gone detail"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "unchanged"         , "same detail"
+
+class cool.klass.xample.coverage.VersionedOwnedOneToManyTarget
+systemFrom             , systemTo               , sourceKey           , name, value
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "both-changed"      , "a" , "both a"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "child-changed"     , "a" , "child a"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "child-changed"     , "b" , "child b"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "grandchild-changed", "a" , "grandchild a"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "terminated"        , "a" , "gone a"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "unchanged"         , "a" , "same a"
+
+class cool.klass.xample.coverage.VersionedOwnedOneToOneGrandchild
+systemFrom             , systemTo               , sourceKey           , itemName, value
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "grandchild-changed", "a"     , "grandchild one"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "terminated"        , "a"     , "gone grandchild one"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "unchanged"         , "a"     , "same grandchild one"
+
+class cool.klass.xample.coverage.VersionedOwnedOneToManyGrandchild
+systemFrom             , systemTo               , sourceKey           , itemName, name, value
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "grandchild-changed", "a"     , "x" , "grandchild x"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "grandchild-changed", "a"     , "y" , "grandchild y"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "terminated"        , "a"     , "x" , "gone grandchild x"
+"2000-01-01 00:00:00.0", "9999-12-01 23:59:00.0", "unchanged"         , "a"     , "x" , "same grandchild x"
