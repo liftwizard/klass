@@ -75,7 +75,7 @@ public class DrizzleSchemaGenerator
 		ImmutableList<String> tables = classes.collect((klass) ->
 			DrizzleTableGenerator.getTable(klass, sqliteCoreImports)
 		);
-		boolean usesSql = tables.anySatisfy((table) -> table.contains("sql`"));
+		boolean usesSql = tables.anySatisfyWith(String::contains, "sql`");
 
 		String sqlImport = usesSql ? "import {sql} from \"drizzle-orm\";\n" : "";
 
