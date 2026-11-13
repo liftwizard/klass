@@ -359,9 +359,13 @@ public abstract class AbstractCompilerAnnotation
 
 	private String getSpaceOrUnderline(Token token, MutableSet<Token> underlinedTokens)
 	{
-		String character = underlinedTokens.contains(token) ? "^" : " ";
-		int length = token.getText().length();
-		return character.repeat(length);
+		String text = token.getText();
+		if (underlinedTokens.contains(token))
+		{
+			return "^".repeat(text.length());
+		}
+		// Keep tabs so the carets line up under source lines indented with tabs.
+		return text.replaceAll("[^\t]", " ");
 	}
 
 	private ImmutableList<Token> getUnderlinedTokenRange(@Nonnull ParserRuleContext ctx)
