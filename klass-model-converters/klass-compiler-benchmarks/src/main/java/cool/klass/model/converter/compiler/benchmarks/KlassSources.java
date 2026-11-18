@@ -24,8 +24,8 @@ import java.nio.charset.StandardCharsets;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 
-final class KlassSources {
-
+final class KlassSources
+{
 	static final String STACKOVERFLOW = "/com/stackoverflow/stackoverflow.klass";
 	static final String COVERAGE_EXAMPLE = "/cool/klass/xample/coverage/coverage-example.klass";
 	static final String META = "/klass/model/meta/domain/meta.klass";
@@ -45,17 +45,23 @@ final class KlassSources {
 		CORPUS + "reladomo-to-many-abstract.klass"
 	);
 
-	private KlassSources() {
+	private KlassSources()
+	{
 		throw new AssertionError("Suppress default constructor for noninstantiability");
 	}
 
-	static String read(String resourceName) {
-		try (InputStream inputStream = KlassSources.class.getResourceAsStream(resourceName)) {
-			if (inputStream == null) {
+	static String read(String resourceName)
+	{
+		try (InputStream inputStream = KlassSources.class.getResourceAsStream(resourceName))
+		{
+			if (inputStream == null)
+			{
 				throw new IllegalArgumentException("Klass source not found on the classpath: " + resourceName);
 			}
 			return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			throw new UncheckedIOException(e);
 		}
 	}

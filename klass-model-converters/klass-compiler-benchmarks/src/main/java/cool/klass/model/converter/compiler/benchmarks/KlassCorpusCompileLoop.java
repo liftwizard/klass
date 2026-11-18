@@ -25,13 +25,15 @@ import java.time.Duration;
  *
  * <p>Usage: {@code KlassCorpusCompileLoop [warmupSeconds] [runSeconds]}.
  */
-public final class KlassCorpusCompileLoop {
-
-	private KlassCorpusCompileLoop() {
+public final class KlassCorpusCompileLoop
+{
+	private KlassCorpusCompileLoop()
+	{
 		throw new AssertionError("Suppress default constructor for noninstantiability");
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		Duration warmup = Duration.ofSeconds(args.length > 0 ? Long.parseLong(args[0]) : 20);
 		Duration run = Duration.ofSeconds(args.length > 1 ? Long.parseLong(args[1]) : 60);
 
@@ -42,13 +44,15 @@ public final class KlassCorpusCompileLoop {
 		compileFor(corpusCompiler, run, "measured");
 	}
 
-	private static void compileFor(KlassCorpusCompiler corpusCompiler, Duration duration, String label) {
+	private static void compileFor(KlassCorpusCompiler corpusCompiler, Duration duration, String label)
+	{
 		ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
 		long startCpu = threadMXBean.getCurrentThreadCpuTime();
 		long start = System.nanoTime();
 		long end = start + duration.toNanos();
 		int iterations = 0;
-		while (System.nanoTime() < end) {
+		while (System.nanoTime() < end)
+		{
 			corpusCompiler.compileAll();
 			iterations++;
 		}

@@ -46,15 +46,16 @@ import org.openjdk.jmh.annotations.Warmup;
 @Warmup(iterations = 5, time = 1)
 @Measurement(iterations = 10, time = 1)
 @Fork(3)
-public class LexerTokenCategorizerBenchmark {
-
-	@Param({KlassSources.STACKOVERFLOW, KlassSources.COVERAGE_EXAMPLE})
+public class LexerTokenCategorizerBenchmark
+{
+	@Param({ KlassSources.STACKOVERFLOW, KlassSources.COVERAGE_EXAMPLE })
 	public String sourceName;
 
 	private CommonTokenStream tokenStream;
 
 	@Setup
-	public void setUp() {
+	public void setUp()
+	{
 		String sourceCodeText = KlassSources.read(this.sourceName);
 		var lexer = new KlassLexer(CharStreams.fromString(sourceCodeText, this.sourceName));
 		this.tokenStream = new CommonTokenStream(lexer);
@@ -62,7 +63,8 @@ public class LexerTokenCategorizerBenchmark {
 	}
 
 	@Benchmark
-	public MapIterable<Token, TokenCategory> categorizeTokens() {
+	public MapIterable<Token, TokenCategory> categorizeTokens()
+	{
 		return LexerBasedTokenCategorizer.findTokenCategoriesFromLexer(this.tokenStream);
 	}
 }

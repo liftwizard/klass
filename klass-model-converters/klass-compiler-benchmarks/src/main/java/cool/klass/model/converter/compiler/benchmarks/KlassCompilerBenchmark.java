@@ -45,22 +45,24 @@ import org.openjdk.jmh.annotations.Warmup;
 @Warmup(iterations = 5, time = 2)
 @Measurement(iterations = 10, time = 2)
 @Fork(3)
-public class KlassCompilerBenchmark {
-
-	@Param({KlassSources.STACKOVERFLOW, KlassSources.COVERAGE_EXAMPLE})
+public class KlassCompilerBenchmark
+{
+	@Param({ KlassSources.STACKOVERFLOW, KlassSources.COVERAGE_EXAMPLE })
 	public String sourceName;
 
 	private String sourceCodeText;
 	private AnsiColorScheme colorScheme;
 
 	@Setup
-	public void setUp() {
+	public void setUp()
+	{
 		this.sourceCodeText = KlassSources.read(this.sourceName);
 		this.colorScheme = ColorSchemeProvider.getByName("dark");
 	}
 
 	@Benchmark
-	public CompilationResult compile() {
+	public CompilationResult compile()
+	{
 		CompilationUnit compilationUnit = CompilationUnit.createFromText(
 			0,
 			Optional.empty(),
