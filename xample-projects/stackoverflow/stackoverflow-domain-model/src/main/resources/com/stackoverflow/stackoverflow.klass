@@ -87,6 +87,9 @@ class Question
     status                 : Status;
     deleted: Boolean;
 
+    // Derived properties with a derivation are computed by the database, so they can be used in orderBy and criteria
+    numberOfVotes          : Long derived = count(this.votes);
+
     // TODO: Consider type inference on paramterized property parameters based on usage in relationship
     // orderBy natural key ascending is the default
     answersWithSubstring(substring: String[1..1]): Answer[0..*]
@@ -108,15 +111,12 @@ class Question
         this.id == QuestionVote.questionId
     }
 
-    upvotes: Integer
-    {
-        count(this.votes.direction == VoteDirection.UP)
-    }
+    // TODO: Derivations with criteria
+    upvotes: Integer derived
+        = count(this.votes, QuestionVote.direction == VoteDirection.UP);
 
-    downvotes: Integer
-    {
-        count(this.votes.direction == VoteDirection.DOWN)
-    }
+    downvotes: Integer derived
+        = count(this.votes, QuestionVote.direction == VoteDirection.DOWN);
     */
 }
 
@@ -437,6 +437,13 @@ service TagResource on Tag
         }
 }
 
+projection QuestionVotesProjection on Question
+{
+    id           : "Question id",
+    title        : "Question title",
+    numberOfVotes: "Question number of votes",
+}
+
 // Just embed inside the Question class?
 service QuestionResource on Question
 {
@@ -531,6 +538,15 @@ service QuestionResource on Question
         projection  : QuestionReadProjection;
     }
     */
+
+    /questionsByVotes?{minimumVotes: Long[1..1]}
+        GET
+        {
+            multiplicity: many;
+            criteria    : this.numberOfVotes >= minimumVotes;
+            projection  : QuestionVotesProjection;
+            orderBy     : this.numberOfVotes descending;
+        }
 
     // TODO: Type inference on url parameters
     // TODO: Consider adding a primitive type UserId

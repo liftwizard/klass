@@ -23,6 +23,8 @@ public class QuestionDTO
     private StatusDTO status;
     @NotNull
     private Boolean deleted;
+    @NotNull
+    private Long numberOfVotes;
 
     private List<AnswerDTO> answers;
     private List<QuestionVoteDTO> votes;
@@ -109,6 +111,16 @@ public class QuestionDTO
     public void setDeleted(Boolean deleted)
     {
         this.deleted = deleted;
+    }
+
+    public Long getNumberOfVotes()
+    {
+        return this.numberOfVotes;
+    }
+
+    public void setNumberOfVotes(Long numberOfVotes)
+    {
+        this.numberOfVotes = numberOfVotes;
     }
 
     public List<AnswerDTO> getAnswers()

@@ -34,4 +34,12 @@ public class Question
 	{
 		this(UtcInfinityTimestamp.getDefaultInfinity());
 	}
+
+	public long getNumberOfVotes()
+	{
+		// The database computes this property in a view, so it is read from the database, not from Reladomo's cache.
+		// Objects that are not in the database yet have no row in the view.
+		QuestionDerived derived = QuestionDerivedFinder.findOneBypassCache(QuestionDerivedFinder.id().eq(this.getId()));
+		return derived == null ? 0 : derived.getNumberOfVotes();
+	}
 }

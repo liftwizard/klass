@@ -30,6 +30,7 @@ projection QuestionProjection on Question
     title: "Question title",
     status: "Question status",
     deleted: "Question deleted",
+    numberOfVotes: "Question numberOfVotes",
     answers: {
         id: "Answer id",
     },

@@ -453,4 +453,14 @@
         </createIndex>
     </changeSet>
 
+    <changeSet author="Klass" id="initial-view-2-QUESTION_DERIVED">
+        <createView viewName="QUESTION_DERIVED">
+            select
+                t."ID",
+                (select count(*) from "QUESTION_VOTE" c where c."QUESTION_ID" = t."ID" and c."SYSTEM_TO" = timestamp '9999-12-01 23:59:00') as "NUMBER_OF_VOTES"
+            from "QUESTION" t
+            where t."SYSTEM_TO" = timestamp '9999-12-01 23:59:00'
+        </createView>
+    </changeSet>
+
 </databaseChangeLog>

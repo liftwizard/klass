@@ -106,6 +106,9 @@
 </span><span class='klass-whitespace'>    </span><span class='klass-enumeration-property-name'><a id="Question.status" href="/api/meta/code/element/Question/status#Question.status">status</a></span><span class='klass-whitespace'>                 </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-enumeration-reference'><a href="/api/meta/code/element/Status#Status">Status</a></span><span class='klass-semicolon'>;</span><span class='klass-newline'>
 </span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Question.deleted" href="/api/meta/code/element/Question/deleted#Question.deleted">deleted</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>Boolean</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
 </span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// Derived properties with a derivation are computed by the database, so they can be used in orderBy and criteria</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-primitive-property-name'><a id="Question.numberOfVotes" href="/api/meta/code/element/Question/numberOfVotes#Question.numberOfVotes">numberOfVotes</a></span><span class='klass-whitespace'>          </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>Long</span><span class='klass-whitespace'> </span><span class='klass-data-type-property-modifier'>derived</span><span class='klass-whitespace'> </span><span class='klass-operator'>=</span><span class='klass-whitespace'> </span><span class='klass-keyword'>count</span><span class='klass-parenthesis-left'>(</span><span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-association-end-reference'>votes</span><span class='klass-parenthesis-right'>)</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-newline'>
 </span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// TODO: Consider type inference on paramterized property parameters based on usage in relationship</span><span class='klass-newline'>
 </span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// orderBy natural key ascending is the default</span><span class='klass-newline'>
 </span><span class='klass-whitespace'>    </span><span class='klass-parameterized-property-name'>answersWithSubstring</span><span class='klass-parenthesis-left'>(</span><span class='klass-parameter-name'>substring</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>String</span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>1</span><span class='klass-dotdot'>..</span><span class='klass-integer-literal'>1</span><span class='klass-square-bracket-right'>]</span><span class='klass-parenthesis-right'>)</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-class-reference'>Answer</span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>0</span><span class='klass-dotdot'>..</span><span class='klass-asterisk-literal'>*</span><span class='klass-square-bracket-right'>]</span><span class='klass-newline'>
@@ -127,15 +130,12 @@
         this.id == QuestionVote.questionId
     }
 
-    upvotes: Integer
-    {
-        count(this.votes.direction == VoteDirection.UP)
-    }
+    // TODO: Derivations with criteria
+    upvotes: Integer derived
+        = count(this.votes, QuestionVote.direction == VoteDirection.UP);
 
-    downvotes: Integer
-    {
-        count(this.votes.direction == VoteDirection.DOWN)
-    }
+    downvotes: Integer derived
+        = count(this.votes, QuestionVote.direction == VoteDirection.DOWN);
     */</span><span class='klass-newline'>
 </span><span class='klass-curly-right'>}</span><span class='klass-newline'>
 </span><span class='klass-newline'>
@@ -456,6 +456,13 @@ projection FilteredAnswersProjection(substring: String[1..1]) on Question
 </span><span class='klass-whitespace'>        </span><span class='klass-curly-right'>}</span><span class='klass-newline'>
 </span><span class='klass-curly-right'>}</span><span class='klass-newline'>
 </span><span class='klass-newline'>
+</span><span class='klass-keyword-projection'>projection</span><span class='klass-whitespace'> </span><span class='klass-projection-name'><a id="QuestionVotesProjection" href="/api/meta/code/element/QuestionVotesProjection#QuestionVotesProjection">QuestionVotesProjection</a></span><span class='klass-whitespace'> </span><span class='klass-keyword-on'>on</span><span class='klass-whitespace'> </span><span class='klass-classifier-reference'><a href="/api/meta/code/element/Question#Question">Question</a></span><span class='klass-newline'>
+</span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/id#Question.id">id</a></span><span class='klass-whitespace'>           </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Question id&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/title#Question.title">title</a></span><span class='klass-whitespace'>        </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Question title&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-data-type-property-reference'><a href="/api/meta/code/element/Question/numberOfVotes#Question.numberOfVotes">numberOfVotes</a></span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-string-literal'>&quot;Question number of votes&quot;</span><span class='klass-comma'>,</span><span class='klass-newline'>
+</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-newline'>
 </span><span class='klass-line-comment'>// Just embed inside the Question class?</span><span class='klass-newline'>
 </span><span class='klass-keyword-service'>service</span><span class='klass-whitespace'> </span><span class='klass-service-name'><a id="QuestionResource" href="/api/meta/code/element/QuestionResource#QuestionResource">QuestionResource</a></span><span class='klass-whitespace'> </span><span class='klass-keyword-on'>on</span><span class='klass-whitespace'> </span><span class='klass-class-reference'><a href="/api/meta/code/element/Question#Question">Question</a></span><span class='klass-newline'>
 </span><span class='klass-curly-left'>{</span><span class='klass-newline'>
@@ -550,6 +557,15 @@ projection FilteredAnswersProjection(substring: String[1..1]) on Question
         projection  : QuestionReadProjection;
     }
     */</span><span class='klass-newline'>
+</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>    </span><span class='klass-slash'>/</span><span class='klass-url-constant'>questionsByVotes</span><span class='klass-question'>?</span><span class='klass-curly-left'>{</span><span class='klass-parameter-name'>minimumVotes</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-primitive-type'>Long</span><span class='klass-square-bracket-left'>[</span><span class='klass-integer-literal'>1</span><span class='klass-dotdot'>..</span><span class='klass-integer-literal'>1</span><span class='klass-square-bracket-right'>]</span><span class='klass-curly-right'>}</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-verb-get'>GET</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-curly-left'>{</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-multiplicity'>multiplicity</span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-keyword-multiplicity-choice'>many</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-service-criteria'>criteria</span><span class='klass-whitespace'>    </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Question/numberOfVotes#Question.numberOfVotes">numberOfVotes</a></span><span class='klass-whitespace'> </span><span class='klass-operator-greater-than-or-equal'>&gt;=</span><span class='klass-whitespace'> </span><span class='klass-parameter-reference'>minimumVotes</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-projection'>projection</span><span class='klass-whitespace'>  </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-projection-reference'><a href="/api/meta/code/element/QuestionVotesProjection#QuestionVotesProjection">QuestionVotesProjection</a></span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>            </span><span class='klass-keyword-order-by'>orderBy</span><span class='klass-whitespace'>     </span><span class='klass-colon'>:</span><span class='klass-whitespace'> </span><span class='klass-literal-this'>this</span><span class='klass-dot'>.</span><span class='klass-property-reference'><a href="/api/meta/code/element/Question/numberOfVotes#Question.numberOfVotes">numberOfVotes</a></span><span class='klass-whitespace'> </span><span class='klass-keyword-order-by-direction'>descending</span><span class='klass-semicolon'>;</span><span class='klass-newline'>
+</span><span class='klass-whitespace'>        </span><span class='klass-curly-right'>}</span><span class='klass-newline'>
 </span><span class='klass-newline'>
 </span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// TODO: Type inference on url parameters</span><span class='klass-newline'>
 </span><span class='klass-whitespace'>    </span><span class='klass-line-comment'>// TODO: Consider adding a primitive type UserId</span><span class='klass-newline'>
