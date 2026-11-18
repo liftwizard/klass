@@ -230,7 +230,7 @@ class StackOverflowApplicationTest
 	{
 		Client client = this.getClient("put");
 
-		// <editor-fold desc="PUT id: 1, version: 2, status: NO_CONTENT">
+		// <editor-fold desc="PUT id: 1, version: 2, status: OK">
 		{
 			String validJson = FileSlurper.slurp(
 				this.getClass().getSimpleName() + ".valid_versioned_put_data.json5",
