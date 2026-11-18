@@ -156,15 +156,15 @@ class StackOverflowApplicationTest
 				this.getClass()
 			);
 
-			Response response = client
+			Response postResponse = client
 				.target("http://localhost:{port}/api/manual/question/")
 				.resolveTemplate("port", this.appExtension.getLocalPort())
 				.request()
 				.header("Authorization", "Impersonation test user 1")
 				.post(Entity.json(validJson));
 
-			this.assertResponse("post_valid_data", Status.CREATED, response);
-			assertThat(response.getLocation().getPath()).isEqualTo("/api/manual/question/2");
+			this.assertResponse("post_valid_data", Status.CREATED, postResponse);
+			assertThat(postResponse.getLocation().getPath()).isEqualTo("/api/manual/question/2");
 		}
 		// </editor-fold>
 
@@ -172,14 +172,14 @@ class StackOverflowApplicationTest
 
 		// <editor-fold desc="GET id: 2, status: ok">
 		{
-			Response response = client
+			Response getResponse = client
 				.target("http://localhost:{port}/api/manual/question/{id}")
 				.resolveTemplate("port", this.appExtension.getLocalPort())
 				.resolveTemplate("id", 2)
 				.request()
 				.get();
 
-			this.assertResponse("post_valid_data_get", Status.OK, response);
+			this.assertResponse("post_valid_data_get", Status.OK, getResponse);
 		}
 		// </editor-fold>
 	}
@@ -237,7 +237,7 @@ class StackOverflowApplicationTest
 				this.getClass()
 			);
 
-			Response response = client
+			Response putResponse = client
 				.target("http://localhost:{port}/api/manual/question/{id}")
 				.resolveTemplate("port", this.appExtension.getLocalPort())
 				.resolveTemplate("id", 1)
@@ -246,18 +246,18 @@ class StackOverflowApplicationTest
 				.header("Authorization", "Impersonation test user 1")
 				.put(Entity.json(validJson));
 
-			this.assertResponse("put", Status.OK, response);
+			this.assertResponse("put", Status.OK, putResponse);
 		}
 		// </editor-fold>
 
-		Response response = client
+		Response getResponse = client
 			.target("http://localhost:{port}/api/manual/question/{id}")
 			.resolveTemplate("port", this.appExtension.getLocalPort())
 			.resolveTemplate("id", 1)
 			.request()
 			.get();
 
-		this.assertResponse("put2", Status.OK, response);
+		this.assertResponse("put2", Status.OK, getResponse);
 		// TODO: PUT with owned children, with all four cases of unchanged, created, updated, deleted
 	}
 
@@ -287,23 +287,23 @@ class StackOverflowApplicationTest
 		Client client = this.getClient("restSet");
 
 		{
-			Response response = client
+			Response setResponse = client
 				.target("http://localhost:{port}/api/manual/set")
 				.resolveTemplate("port", this.appExtension.getLocalPort())
 				.request()
 				.get();
 
-			this.assertResponse("restSet", Status.OK, response);
+			this.assertResponse("restSet", Status.OK, setResponse);
 		}
 
 		{
-			Response response = client
+			Response mapResponse = client
 				.target("http://localhost:{port}/api/manual/map")
 				.resolveTemplate("port", this.appExtension.getLocalPort())
 				.request()
 				.get();
 
-			this.assertResponse("restMap", Status.OK, response);
+			this.assertResponse("restMap", Status.OK, mapResponse);
 		}
 	}
 
