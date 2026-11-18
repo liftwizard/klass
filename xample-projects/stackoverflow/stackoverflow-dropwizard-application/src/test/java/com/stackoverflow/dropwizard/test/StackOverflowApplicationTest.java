@@ -87,14 +87,14 @@ class StackOverflowApplicationTest
 
 		String json = FileSlurper.slurp(this.getClass().getSimpleName() + ".post_answer.json5", this.getClass());
 
-		Response response = client
+		Response postResponse = client
 			.target("http://localhost:{port}/api/answer")
 			.resolveTemplate("port", this.appExtension.getLocalPort())
 			.request()
 			.header("Authorization", "Impersonation test user 1")
 			.post(Entity.json(json));
 
-		this.assertEmptyResponse(Status.NO_CONTENT, response);
+		this.assertEmptyResponse(Status.NO_CONTENT, postResponse);
 
 		// Verify the answer was created by fetching answers for question 1
 		Response getResponse = client
