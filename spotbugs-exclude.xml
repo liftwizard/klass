@@ -18,4 +18,8 @@
     <Match>
         <Class name="~.*DatabaseObjectAbstract$" />
     </Match>
+    <!-- Code that the JMH annotation processor generates -->
+    <Match>
+        <Package name="~.*\.jmh_generated" />
+    </Match>
 </FindBugsFilter>
