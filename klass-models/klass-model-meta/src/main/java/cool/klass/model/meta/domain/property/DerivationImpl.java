@@ -52,7 +52,7 @@ public final class DerivationImpl
 	@Override
 	public AssociationEnd getAssociationEnd()
 	{
-		Klass owningClass = (Klass) this.owningProperty.getOwningClassifier();
+		var owningClass = (Klass) this.owningProperty.getOwningClassifier();
 		return owningClass.getAssociationEndByName(this.associationEndName);
 	}
 
