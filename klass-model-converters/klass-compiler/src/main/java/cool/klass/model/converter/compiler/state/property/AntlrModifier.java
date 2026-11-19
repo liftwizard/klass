@@ -188,6 +188,21 @@ public class AntlrModifier
 		return this.is("derived");
 	}
 
+	public boolean isDigest()
+	{
+		return this.is("digest");
+	}
+
+	public boolean isDigested()
+	{
+		return this.is("digested");
+	}
+
+	public boolean isObjectStorage()
+	{
+		return this.is("objectStorage");
+	}
+
 	public boolean isOwned()
 	{
 		return this.is("owned");

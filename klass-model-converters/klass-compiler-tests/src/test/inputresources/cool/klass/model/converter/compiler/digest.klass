@@ -1,0 +1,25 @@
+package com.digest
+
+// Content-addressed: sha is the SHA-256 of blueprintString, which lives in object storage
+class BlueprintString
+{
+    sha            : String key digest;
+    blueprintString: String objectStorage;
+    byteLength     : Long;
+}
+
+class Blueprint
+    systemTemporal
+{
+    key               : String key;
+    blueprintStringSha: String private digest;
+    title             : String;
+}
+
+association BlueprintHasString
+{
+    blueprints     : Blueprint[0..*];
+    blueprintString: BlueprintString[1..1];
+
+    relationship this.blueprintStringSha == BlueprintString.sha
+}

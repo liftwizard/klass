@@ -184,6 +184,31 @@ public interface DataTypeProperty
 		return this.getModifiers().anySatisfy(Modifier::isUserId);
 	}
 
+	/**
+	 * A SHA-256 hex digest. On a key, the class is content-addressed and the key is the digest of its
+	 * {@link #isDigested() digested} property. On a non-key, a foreign key to such a key.
+	 */
+	default boolean isDigest()
+	{
+		return this.getModifiers().anySatisfy(Modifier::isDigest);
+	}
+
+	/**
+	 * The property whose content the class's {@code key digest} property is the SHA-256 of.
+	 */
+	default boolean isDigested()
+	{
+		return this.getModifiers().anySatisfy(Modifier::isDigested);
+	}
+
+	/**
+	 * The content lives in object storage under its digest, so no generator emits a column for it.
+	 */
+	default boolean isObjectStorage()
+	{
+		return this.getModifiers().anySatisfy(Modifier::isObjectStorage);
+	}
+
 	default boolean isForeignKeyWithOpposite()
 	{
 		OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey = this.getKeysMatchingThisForeignKey();

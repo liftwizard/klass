@@ -116,6 +116,21 @@ public abstract class AntlrProperty
 		return this.getModifiers().anySatisfy(AntlrModifier::isDerived);
 	}
 
+	public boolean isDigest()
+	{
+		return this.getModifiers().anySatisfy(AntlrModifier::isDigest);
+	}
+
+	public boolean isDigested()
+	{
+		return this.getModifiers().anySatisfy(AntlrModifier::isDigested);
+	}
+
+	public boolean isObjectStorage()
+	{
+		return this.getModifiers().anySatisfy(AntlrModifier::isObjectStorage);
+	}
+
 	public int getNumModifiers()
 	{
 		return this.modifiers.size();
