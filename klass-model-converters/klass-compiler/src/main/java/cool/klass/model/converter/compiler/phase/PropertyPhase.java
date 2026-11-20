@@ -46,6 +46,7 @@ import cool.klass.model.meta.grammar.KlassParser.AssociationEndModifierContext;
 import cool.klass.model.meta.grammar.KlassParser.AssociationEndSignatureContext;
 import cool.klass.model.meta.grammar.KlassParser.ClassifierReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.DataTypePropertyModifierContext;
+import cool.klass.model.meta.grammar.KlassParser.DerivationContext;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationPropertyContext;
 import cool.klass.model.meta.grammar.KlassParser.IntegerLiteralContext;
 import cool.klass.model.meta.grammar.KlassParser.MaxLengthValidationContext;
@@ -188,6 +189,13 @@ public class PropertyPhase
 		this.dataTypeProperty = null;
 
 		super.exitEnumerationProperty(ctx);
+	}
+
+	@Override
+	public void enterDerivation(@Nonnull DerivationContext ctx)
+	{
+		super.enterDerivation(ctx);
+		this.dataTypeProperty.enterDerivation(ctx);
 	}
 
 	@Override

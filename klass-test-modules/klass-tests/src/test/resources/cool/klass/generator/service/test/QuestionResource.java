@@ -300,10 +300,31 @@ public class QuestionResource
     @Timed
     @ExceptionMetered
     @GET
+    @Path("/questionsByVotes") // ?{minimumVotes}
+    @Produces(MediaType.APPLICATION_JSON)
+    @JsonView(QuestionVotesProjection_JsonView.class)
+    public List<Question> method5(@QueryParam("minimumVotes") Long minimumVotes)
+    {
+        // Question
+
+        Operation queryOperation     = QuestionFinder.derived().numberOfVotes().greaterThanEquals(minimumVotes);
+
+        QuestionList result = QuestionFinder.findMany(queryOperation);
+        // Deep fetch using projection QuestionVotesProjection
+
+        result.setOrderBy(QuestionFinder.derived().numberOfVotes().descendingOrderBy());
+        result.setBypassCache(true);
+
+        return result;
+    }
+
+    @Timed
+    @ExceptionMetered
+    @GET
     @Path("/user/{userId}/questions")
     @Produces(MediaType.APPLICATION_JSON)
     @JsonView(QuestionReadProjection_JsonView.class)
-    public List<Question> method5(@PathParam("userId") String userId)
+    public List<Question> method6(@PathParam("userId") String userId)
     {
         // Question
 

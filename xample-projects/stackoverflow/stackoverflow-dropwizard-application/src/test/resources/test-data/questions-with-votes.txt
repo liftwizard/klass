@@ -1,0 +1,22 @@
+class com.stackoverflow.User
+systemFrom               , systemTo               , userId       , email
+"1999-12-31 23:59:59.999", "9999-12-01 23:59:00.0", "test user 1", "test user 1 email"
+"1999-12-31 23:59:59.999", "9999-12-01 23:59:00.0", "test user 2", "test user 2 email"
+"1999-12-31 23:59:59.999", "9999-12-01 23:59:00.0", "test user 3", "test user 3 email"
+"1999-12-31 23:59:59.999", "9999-12-01 23:59:00.0", "test user 4", "test user 4 email"
+
+class com.stackoverflow.Question
+id, title         , body         , status, deleted, createdById  , createdOn                , lastUpdatedById, systemFrom               , systemTo
+1 , "test title 1", "test body 1", "Open", false  , "test user 1", "1999-12-31 23:59:59.999", "test user 1"  , "1999-12-31 23:59:59.999", "9999-12-01 23:59:00.000"
+2 , "test title 2", "test body 2", "Open", false  , "test user 1", "1999-12-31 23:59:59.999", "test user 1"  , "1999-12-31 23:59:59.999", "9999-12-01 23:59:00.000"
+3 , "test title 3", "test body 3", "Open", false  , "test user 1", "1999-12-31 23:59:59.999", "test user 1"  , "1999-12-31 23:59:59.999", "9999-12-01 23:59:00.000"
+
+class com.stackoverflow.QuestionVote
+questionId, createdById  , createdOn                , lastUpdatedById, direction, systemFrom               , systemTo
+1         , "test user 1", "1999-12-31 23:59:59.999", "test user 1"  , "up"     , "1999-12-31 23:59:59.999", "9999-12-01 23:59:00.000"
+1         , "test user 2", "1999-12-31 23:59:59.999", "test user 2"  , "up"     , "1999-12-31 23:59:59.999", "2000-06-01 00:00:00.000"
+1         , "test user 3", "1999-12-31 23:59:59.999", "test user 3"  , "up"     , "1999-12-31 23:59:59.999", "2000-06-01 00:00:00.000"
+1         , "test user 4", "1999-12-31 23:59:59.999", "test user 4"  , "up"     , "1999-12-31 23:59:59.999", "2000-06-01 00:00:00.000"
+2         , "test user 1", "1999-12-31 23:59:59.999", "test user 1"  , "up"     , "1999-12-31 23:59:59.999", "9999-12-01 23:59:00.000"
+2         , "test user 2", "1999-12-31 23:59:59.999", "test user 2"  , "up"     , "1999-12-31 23:59:59.999", "9999-12-01 23:59:00.000"
+2         , "test user 3", "1999-12-31 23:59:59.999", "test user 3"  , "up"     , "1999-12-31 23:59:59.999", "9999-12-01 23:59:00.000"

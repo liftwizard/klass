@@ -1,0 +1,23 @@
+package cool.klass.model.converter.compiler.annotation.property
+
+class Question
+{
+    id: Long key;
+    notDerived: Long = count(this.votes);
+    wrongType: String derived = count(this.votes);
+    optional: Long? derived = count(this.votes);
+    missingEnd: Long derived = count(this.missing);
+}
+
+class Vote
+{
+    questionId: Long key;
+    userId: String key;
+    toOne: Long derived = count(this.question);
+}
+
+association QuestionHasVotes
+{
+    question: Question[1..1];
+    votes: Vote[0..*];
+}

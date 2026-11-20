@@ -103,13 +103,17 @@ verb: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 interfaceMember: dataTypeProperty | parameterizedPropertySignature | associationEndSignature;
 classMember: dataTypeProperty | parameterizedProperty | associationEndSignature;
 dataTypeProperty: primitiveProperty | enumerationProperty;
-primitiveProperty: identifier ':' primitiveType optionalMarker? dataTypePropertyModifier* dataTypePropertyValidation* ';'
-    | identifier ':' primitiveType optionalMarker? dataTypePropertyModifier* dataTypePropertyValidation* {notifyErrorListeners("Missing semi-colon after primitive property declaration.");};
-enumerationProperty: identifier ':' enumerationReference optionalMarker? dataTypePropertyModifier* dataTypePropertyValidation* ';'
-    | identifier ':' enumerationReference optionalMarker? dataTypePropertyModifier* dataTypePropertyValidation* {notifyErrorListeners("Missing semi-colon after enumeration property declaration.");};
+primitiveProperty: identifier ':' primitiveType optionalMarker? dataTypePropertyModifier* dataTypePropertyValidation* derivation? ';'
+    | identifier ':' primitiveType optionalMarker? dataTypePropertyModifier* dataTypePropertyValidation* derivation? {notifyErrorListeners("Missing semi-colon after primitive property declaration.");};
+enumerationProperty: identifier ':' enumerationReference optionalMarker? dataTypePropertyModifier* dataTypePropertyValidation* derivation? ';'
+    | identifier ':' enumerationReference optionalMarker? dataTypePropertyModifier* dataTypePropertyValidation* derivation? {notifyErrorListeners("Missing semi-colon after enumeration property declaration.");};
 parameterizedProperty: identifier '(' (parameterDeclaration (',' parameterDeclaration)*)? ')' ':' classReference multiplicity parameterizedPropertyModifier* orderByDeclaration? '{' criteriaExpression '}';
 parameterizedPropertySignature: identifier '(' (parameterDeclaration (',' parameterDeclaration)*)? ')' ':' classifierReference multiplicity parameterizedPropertyModifier* ';';
 optionalMarker: '?';
+
+// derivation of a derived property, computed by the database
+derivation: '=' derivationFunction '(' 'this' '.' associationEndReference ')';
+derivationFunction: 'count';
 
 dataTypePropertyValidation
     : minLengthValidation
@@ -226,6 +230,7 @@ keywordValidAsIdentifier
     | 'native'
     | 'relationship'
     | 'multiplicity' | 'orderBy'
+    | 'count'
     | 'criteria' | 'authorize' | 'validate' | 'conflict'
     // classifierModifier
     | 'systemTemporal' | 'validTemporal' | 'bitemporal' | 'versioned' | 'audited' | 'transient'

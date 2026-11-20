@@ -30,6 +30,7 @@ import cool.klass.model.meta.domain.api.Element;
 import cool.klass.model.meta.domain.api.modifier.Modifier;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import cool.klass.model.meta.domain.api.property.Derivation;
 import cool.klass.model.meta.domain.api.property.validation.MaxLengthPropertyValidation;
 import cool.klass.model.meta.domain.api.property.validation.MaxPropertyValidation;
 import cool.klass.model.meta.domain.api.property.validation.MinLengthPropertyValidation;
@@ -77,6 +78,9 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 	private Optional<MaxPropertyValidation> maxPropertyValidation = Optional.empty();
 
 	private ImmutableList<PropertyValidation> propertyValidations;
+
+	@Nonnull
+	private Optional<Derivation> derivation = Optional.empty();
 
 	protected AbstractDataTypeProperty(
 		@Nonnull ParserRuleContext elementContext,
@@ -167,6 +171,22 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 			throw new IllegalStateException();
 		}
 		this.maxPropertyValidation = Objects.requireNonNull(maxPropertyValidations);
+	}
+
+	@Nonnull
+	@Override
+	public Optional<Derivation> getDerivation()
+	{
+		return this.derivation;
+	}
+
+	private void setDerivation(@Nonnull Optional<Derivation> derivation)
+	{
+		if (this.derivation.isPresent())
+		{
+			throw new IllegalStateException();
+		}
+		this.derivation = Objects.requireNonNull(derivation);
 	}
 
 	private void setPropertyValidations(ImmutableList<PropertyValidation> propertyValidations)
@@ -267,6 +287,9 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 		private Optional<MaxPropertyValidationBuilder> maxPropertyValidationBuilder;
 		private ImmutableList<PropertyValidationBuilder<?>> propertyValidationBuilders;
 
+		@Nonnull
+		private Optional<String> derivationAssociationEndName = Optional.empty();
+
 		protected DataTypePropertyBuilder(
 			@Nonnull ParserRuleContext elementContext,
 			@Nonnull Optional<ElementBuilder<?>> macroElement,
@@ -335,6 +358,11 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 			this.propertyValidationBuilders = Objects.requireNonNull(propertyValidationBuilders);
 		}
 
+		public void setDerivationAssociationEndName(@Nonnull Optional<String> derivationAssociationEndName)
+		{
+			this.derivationAssociationEndName = Objects.requireNonNull(derivationAssociationEndName);
+		}
+
 		public void setModifierBuilders(ImmutableList<ModifierBuilder> modifierBuilders)
 		{
 			this.modifierBuilders = modifierBuilders;
@@ -368,6 +396,11 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 			property.setMinPropertyValidation(minPropertyValidation);
 			property.setMaxPropertyValidation(maxPropertyValidation);
 			property.setPropertyValidations(propertyValidations);
+			property.setDerivation(
+				this.derivationAssociationEndName.map((associationEndName) ->
+					new DerivationImpl(property, associationEndName)
+				)
+			);
 		}
 
 		public final void build2()

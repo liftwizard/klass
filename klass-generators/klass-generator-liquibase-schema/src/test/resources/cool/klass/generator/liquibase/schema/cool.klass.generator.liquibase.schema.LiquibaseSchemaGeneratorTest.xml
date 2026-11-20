@@ -13,4 +13,76 @@
         </createTable>
     </changeSet>
 
+    <changeSet author="Klass" id="initial-table-2-QUESTION">
+        <createTable tableName="QUESTION">
+            <column name="ID" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="QUESTION_PK" />
+            </column>
+
+            <column name="SYSTEM_FROM" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="SYSTEM_TO" type="timestamp">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="QUESTION_PK" />
+            </column>
+
+            <column name="TITLE" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-table-3-QUESTION_VOTE">
+        <createTable tableName="QUESTION_VOTE">
+            <column name="QUESTION_ID" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="QUESTION_VOTE_PK" />
+            </column>
+
+            <column name="USER_ID" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="QUESTION_VOTE_PK" />
+            </column>
+
+            <column name="SYSTEM_FROM" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="SYSTEM_TO" type="timestamp">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="QUESTION_VOTE_PK" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-table-4-QUESTION_TAG">
+        <createTable tableName="QUESTION_TAG">
+            <column name="QUESTION_ID" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="QUESTION_TAG_PK" />
+            </column>
+
+            <column name="NAME" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="QUESTION_TAG_PK" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-indices-3-QUESTION_VOTE_IDX_QUESTION">
+        <createIndex
+                indexName="QUESTION_VOTE_IDX_QUESTION"
+                tableName="QUESTION_VOTE">
+            <column name="QUESTION_ID" />
+            <column name="SYSTEM_TO" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-view-2-QUESTION_DERIVED">
+        <createView viewName="QUESTION_DERIVED">
+            select
+                t."ID",
+                (select count(*) from "QUESTION_VOTE" c where c."QUESTION_ID" = t."ID" and c."SYSTEM_TO" = timestamp '9999-12-01 23:59:00') as "NUMBER_OF_VOTES",
+                cast((select count(*) from "QUESTION_TAG" c where c."QUESTION_ID" = t."ID") as integer) as "NUMBER_OF_TAGS"
+            from "QUESTION" t
+            where t."SYSTEM_TO" = timestamp '9999-12-01 23:59:00'
+        </createView>
+    </changeSet>
+
 </databaseChangeLog>

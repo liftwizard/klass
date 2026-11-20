@@ -52,6 +52,8 @@ import cool.klass.model.meta.grammar.KlassParser.CriteriaOperatorContext;
 import cool.klass.model.meta.grammar.KlassParser.DataTypePropertyContext;
 import cool.klass.model.meta.grammar.KlassParser.DataTypePropertyModifierContext;
 import cool.klass.model.meta.grammar.KlassParser.DataTypePropertyValidationContext;
+import cool.klass.model.meta.grammar.KlassParser.DerivationContext;
+import cool.klass.model.meta.grammar.KlassParser.DerivationFunctionContext;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationBlockContext;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationBodyContext;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationDeclarationContext;
@@ -1098,6 +1100,34 @@ public class DelegatingKlassListener
 	public void exitDataTypePropertyValidation(DataTypePropertyValidationContext ctx)
 	{
 		this.getDelegate().exitDataTypePropertyValidation(ctx);
+	}
+
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void enterDerivation(DerivationContext ctx)
+	{
+		this.getDelegate().enterDerivation(ctx);
+	}
+
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void exitDerivation(DerivationContext ctx)
+	{
+		this.getDelegate().exitDerivation(ctx);
+	}
+
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void enterDerivationFunction(DerivationFunctionContext ctx)
+	{
+		this.getDelegate().enterDerivationFunction(ctx);
+	}
+
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void exitDerivationFunction(DerivationFunctionContext ctx)
+	{
+		this.getDelegate().exitDerivationFunction(ctx);
 	}
 
 	@Override

@@ -1,0 +1,1 @@
+alter table QUESTION_TAG add constraint QUESTION_TAG_PK primary key (question_id, name);

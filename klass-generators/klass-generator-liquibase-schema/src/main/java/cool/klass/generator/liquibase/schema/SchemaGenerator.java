@@ -37,6 +37,7 @@ public final class SchemaGenerator
 			SchemaGenerator::getForeignKeySourceCode
 		);
 		ImmutableList<String> indexSourceCodes = classes.collectWithIndex(SchemaGenerator::getIndexSourceCode);
+		ImmutableList<String> viewSourceCodes = classes.collectWithIndex(SchemaGenerator::getViewSourceCode);
 
 		// language=XML
 		return (
@@ -50,6 +51,7 @@ public final class SchemaGenerator
 			tableSourceCodes.makeString("") +
 			foreignKeySourceCodes.makeString("") +
 			indexSourceCodes.makeString("") +
+			viewSourceCodes.makeString("") +
 			"</databaseChangeLog>\n"
 		);
 	}
@@ -62,6 +64,11 @@ public final class SchemaGenerator
 	public static String getIndexSourceCode(Klass klass, int index)
 	{
 		return IndexGenerator.getIndex(klass, index + 1);
+	}
+
+	public static String getViewSourceCode(Klass klass, int index)
+	{
+		return ViewGenerator.getView(klass, index + 1);
 	}
 
 	public static String getForeignKeySourceCode(Klass klass, int index)

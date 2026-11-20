@@ -235,6 +235,13 @@ public class AntlrPrimitiveProperty
 		}
 	}
 
+	@Override
+	protected boolean isCountType()
+	{
+		PrimitiveType primitiveType = this.antlrPrimitiveType.getPrimitiveType();
+		return primitiveType == PrimitiveType.INTEGER || primitiveType == PrimitiveType.LONG;
+	}
+
 	private void reportInvalidTemporalMultiplicity(CompilerAnnotationHolder compilerAnnotationHolder)
 	{
 		PrimitiveType primitiveType = this.antlrPrimitiveType.getPrimitiveType();

@@ -73,6 +73,11 @@ public class RelationalSchemaGeneratorTest
 			maybeFkSourceCode.ifPresent((fkSourceCode) ->
 				this.fileMatchExtension.assertFileContents(tableName + ".fk", fkSourceCode)
 			);
+
+			Optional<String> maybeViewSourceCode = ViewGenerator.getView(klass);
+			maybeViewSourceCode.ifPresent((viewSourceCode) ->
+				this.fileMatchExtension.assertFileContents(ViewGenerator.getViewName(klass) + ".view", viewSourceCode)
+			);
 		}
 	}
 }

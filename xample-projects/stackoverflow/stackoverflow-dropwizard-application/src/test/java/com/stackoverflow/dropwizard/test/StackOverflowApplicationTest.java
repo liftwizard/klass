@@ -16,15 +16,25 @@
 
 package com.stackoverflow.dropwizard.test;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+
 import javax.annotation.Nonnull;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import com.gs.fw.common.mithra.MithraManagerProvider;
+import com.stackoverflow.Question;
+import com.stackoverflow.QuestionFinder;
+import com.stackoverflow.QuestionList;
+import com.stackoverflow.QuestionVote;
 import io.liftwizard.junit.extension.match.FileSlurper;
 import io.liftwizard.reladomo.test.extension.ReladomoTestFile;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.factory.Maps;
+import org.eclipse.collections.api.list.ImmutableList;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,6 +57,74 @@ class StackOverflowApplicationTest
 		this.put();
 		this.post_vote();
 		this.post_answer();
+	}
+
+	/**
+	 * Question.numberOfVotes is declared as {@code Long derived = count(this.votes)}.
+	 * It is not stored. The database computes it in a view, so the database can sort and filter by it.
+	 * Question 1 has one current vote and three terminated votes, question 2 has three current votes, question 3 has none.
+	 */
+	@Test
+	@ReladomoTestFile("test-data/questions-with-votes.txt")
+	void derivedCountIsSortedAndFilteredInTheDatabase()
+	{
+		// With a row limit, Reladomo cannot sort in memory, so the right answer proves the database sorted by the count
+		assertThat(this.findQuestionIdsByVotes(1)).containsExactly(2L);
+		assertThat(this.findQuestionIdsByVotes(3)).containsExactly(2L, 1L, 3L);
+
+		assertThat(QuestionFinder.findOne(QuestionFinder.id().eq(1L)).getNumberOfVotes()).isEqualTo(1L);
+		assertThat(
+			QuestionFinder.findMany(QuestionFinder.derived().numberOfVotes().greaterThanEquals(1L))
+				.asEcList()
+				.collect(Question::getId)
+		).containsExactlyInAnyOrder(1L, 2L);
+
+		Client client = this.getClient("derived_count");
+		this.assertQuestionsByVotes(client, 0, "derived_count_all");
+		this.assertQuestionsByVotes(client, 2, "derived_count_minimum_2");
+
+		// No code maintains a counter. New votes show up in the count, the sort order and the filter.
+		MithraManagerProvider.getMithraManager().executeTransactionalCommand((tx) ->
+		{
+			for (String userId : Lists.immutable.with("test user 1", "test user 2", "test user 3", "test user 4"))
+			{
+				var vote = new QuestionVote();
+				vote.setQuestionId(3L);
+				vote.setCreatedById(userId);
+				vote.setCreatedOn(Timestamp.from(Instant.parse("2001-01-01T00:00:00Z")));
+				vote.setLastUpdatedById(userId);
+				vote.setDirection("up");
+				vote.insert();
+			}
+			return null;
+		});
+
+		assertThat(this.findQuestionIdsByVotes(1)).containsExactly(3L);
+		assertThat(this.findQuestionIdsByVotes(3)).containsExactly(3L, 2L, 1L);
+		assertThat(QuestionFinder.findOne(QuestionFinder.id().eq(3L)).getNumberOfVotes()).isEqualTo(4L);
+		this.assertQuestionsByVotes(client, 2, "derived_count_after_votes");
+	}
+
+	private ImmutableList<Long> findQuestionIdsByVotes(int maxObjectsToRetrieve)
+	{
+		QuestionList questions = QuestionFinder.findMany(QuestionFinder.all());
+		questions.setOrderBy(QuestionFinder.derived().numberOfVotes().descendingOrderBy());
+		// Reladomo's query cache does not know when votes change, so queries on derived properties bypass it
+		questions.setBypassCache(true);
+		questions.setMaxObjectsToRetrieve(maxObjectsToRetrieve);
+		return questions.asEcList().collect(Question::getId).toImmutable();
+	}
+
+	private void assertQuestionsByVotes(Client client, long minimumVotes, String testName)
+	{
+		Response response = client
+			.target("http://localhost:{port}/api/questionsByVotes")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.queryParam("minimumVotes", minimumVotes)
+			.request()
+			.get();
+
+		this.assertResponse(testName, Status.OK, response);
 	}
 
 	private void smokeTest()

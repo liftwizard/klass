@@ -2,7 +2,7 @@
 	"Error at Question.title. Expected property with type 'Question.title: String' but got '1' with type 'number'.",
 	"Error at Question.status. Expected enumerated property with type 'Question.status: Status' but got \"Invalid Choice\" with type 'string'. Expected one of \"Open\", \"On hold\", \"Closed\".",
 	"Error at Question.deleted. Expected property with type 'Question.deleted: Boolean' but got '[]' with type 'array'.",
-	"Error at Question. No such property 'Question.extra' but got \"extra\". Expected properties: id, systemFrom, systemTo, createdOn, body, title, status, deleted, answers, votes, tags, version, createdBy, lastUpdatedBy.",
+	"Error at Question. No such property 'Question.extra' but got \"extra\". Expected properties: id, systemFrom, systemTo, createdOn, body, title, status, deleted, numberOfVotes, answers, votes, tags, version, createdBy, lastUpdatedBy.",
 	"Error at Question.answers[0].body. Expected property with type 'Document.body: String' but got '2' with type 'number'.",
 	"Error at Question.answers[0]. No such property 'Answer.nestedExtra' but got \"nestedExtra\". Expected properties: id, systemFrom, systemTo, createdOn, body, deleted, question, version, createdBy, lastUpdatedBy.",
 	"Error at Question.answers[0]. No such property 'Answer.nestedExtraNull' but got null. Expected properties: id, systemFrom, systemTo, createdOn, body, deleted, question, version, createdBy, lastUpdatedBy.",

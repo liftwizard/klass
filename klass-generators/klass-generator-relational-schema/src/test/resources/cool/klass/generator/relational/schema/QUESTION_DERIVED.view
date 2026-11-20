@@ -1,0 +1,9 @@
+drop view if exists QUESTION_DERIVED;
+
+create view QUESTION_DERIVED as
+select
+    t.id,
+    (select count(*) from QUESTION_VOTE c where c.question_id = t.id and c.system_to = timestamp '9999-12-01 23:59:00') as number_of_votes,
+    cast((select count(*) from QUESTION_TAG c where c.question_id = t.id) as integer) as number_of_tags
+from QUESTION t
+where t.system_to = timestamp '9999-12-01 23:59:00';

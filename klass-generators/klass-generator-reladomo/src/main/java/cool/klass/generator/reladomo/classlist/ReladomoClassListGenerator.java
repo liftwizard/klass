@@ -27,6 +27,7 @@ import com.gs.fw.common.mithra.generator.metamodel.MithraInterfaceResourceType;
 import com.gs.fw.common.mithra.generator.metamodel.MithraObjectResourceType;
 import com.gs.fw.common.mithra.generator.metamodel.MithraPureObjectResourceType;
 import cool.klass.generator.reladomo.AbstractReladomoGenerator;
+import cool.klass.generator.reladomo.objectfile.ReladomoObjectFileGenerator;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.NamedElement;
@@ -64,6 +65,12 @@ public class ReladomoClassListGenerator
 			.collect(NamedElement::getName)
 			.collect(this::getObjectResource);
 
+		ImmutableList<MithraObjectResourceType> derivedObjectResources = this.domainModel
+			.getClasses()
+			.select((klass) -> klass.getDatabaseDerivedProperties().notEmpty())
+			.collect(ReladomoObjectFileGenerator::getDerivedObjectName)
+			.collect(this::getObjectResource);
+
 		ImmutableList<MithraPureObjectResourceType> pureObjectResources = this.domainModel
 			.getClasses()
 			.select(Klass::isTransient)
@@ -76,7 +83,7 @@ public class ReladomoClassListGenerator
 			.collect(this::getInterfaceResource);
 
 		var mithra = new Mithra();
-		mithra.setMithraObjectResources(objectResources.castToList());
+		mithra.setMithraObjectResources(objectResources.newWithAll(derivedObjectResources).castToList());
 		mithra.setMithraPureObjectResources(pureObjectResources.castToList());
 		mithra.setMithraInterfaceResources(interfaceResources.castToList());
 		return mithra;

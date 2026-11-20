@@ -57,5 +57,14 @@ public class ReladomoConcreteClassGeneratorTest
 		String javaSourceCode = generator.getSourceCode(klass);
 		String resourceClassPathLocation = this.getClass().getSimpleName() + ".smokeTest.java";
 		this.fileMatchExtension.assertFileContents(resourceClassPathLocation, javaSourceCode);
+
+		generator
+			.getDerivedSourceCodes(klass)
+			.forEachKeyValue((suffix, derivedSourceCode) ->
+				this.fileMatchExtension.assertFileContents(
+					this.getClass().getSimpleName() + ".smokeTest.ClassWithDerivedPropertyDerived" + suffix + ".java",
+					derivedSourceCode
+				)
+			);
 	}
 }

@@ -21,4 +21,18 @@ class ClassWithDerivedProperty
     derivedOptionalBoolean     : Boolean   ? derived;
     derivedOptionalInstant     : Instant   ? derived;
     derivedOptionalLocalDate   : LocalDate ? derived;
+
+    derivedCount               : Long      derived = count(this.items);
+}
+
+class Item
+{
+    classWithDerivedPropertyKey: String key;
+    name                       : String key;
+}
+
+association ClassWithDerivedPropertyHasItems
+{
+    classWithDerivedProperty: ClassWithDerivedProperty[1..1];
+    items: Item[0..*];
 }

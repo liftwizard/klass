@@ -396,7 +396,9 @@ public class ServiceResourceGenerator
 			.collect((each) -> "        result.deepFetch(" + each + ");\n")
 			.makeString("");
 
-		String orderBySourceCode = service.getOrderBy().map(this::getOrderBysSourceCode).orElse("");
+		String orderBySourceCode =
+			service.getOrderBy().map(this::getOrderBysSourceCode).orElse("") +
+			this.getBypassCacheSourceCode(service, queryOperationSourceCode);
 
 		// @formatter:off
 		// language=JAVA
@@ -922,7 +924,9 @@ public class ServiceResourceGenerator
 			.collect((each) -> "        result.deepFetch(" + each + ");\n")
 			.makeString("");
 
-		String orderBySourceCode = service.getOrderBy().map(this::getOrderBysSourceCode).orElse("");
+		String orderBySourceCode =
+			service.getOrderBy().map(this::getOrderBysSourceCode).orElse("") +
+			this.getBypassCacheSourceCode(service, queryOperationSourceCode);
 
 		// @formatter:off
 		// language=JAVA
@@ -1074,7 +1078,9 @@ public class ServiceResourceGenerator
 			.collect((each) -> "        result.deepFetch(" + each + ");\n")
 			.makeString("");
 
-		String orderBySourceCode = service.getOrderBy().map(this::getOrderBysSourceCode).orElse("");
+		String orderBySourceCode =
+			service.getOrderBy().map(this::getOrderBysSourceCode).orElse("") +
+			this.getBypassCacheSourceCode(service, queryOperationSourceCode);
 
 		// @formatter:off
 		// language=JAVA
@@ -1309,12 +1315,31 @@ public class ServiceResourceGenerator
 		return MessageFormat.format("        {0}List result = {0}Finder.findMany(queryOperation);\n", klassName);
 	}
 
+	// Database-derived properties are computed by a view over other tables.
+	// Reladomo's query cache does not know when those tables change, so queries that sort or filter by them always go to the database.
+	@Nonnull
+	private String getBypassCacheSourceCode(@Nonnull Service service, @Nonnull String queryOperationSourceCode)
+	{
+		boolean ordersByDatabaseDerivedProperty = service
+			.getOrderBy()
+			.map(OrderBy::getOrderByMemberReferencePaths)
+			.orElseGet(Lists.immutable::empty)
+			.anySatisfy((each) -> each.getThisMemberReferencePath().getProperty().getDerivation().isPresent());
+		boolean filtersByDatabaseDerivedProperty = queryOperationSourceCode.contains(".derived().");
+
+		if (!ordersByDatabaseDerivedProperty && !filtersByDatabaseDerivedProperty)
+		{
+			return "";
+		}
+		return "        result.setBypassCache(true);\n";
+	}
+
 	@Nonnull
 	private String getOrderBysSourceCode(@Nonnull OrderBy orderBy)
 	{
 		ImmutableList<String> orderBySourceCodeClauses = orderBy
 			.getOrderByMemberReferencePaths()
-			.reject((each) -> each.getThisMemberReferencePath().getProperty().isDerived())
+			.reject((each) -> this.isDerivedByHand(each.getThisMemberReferencePath().getProperty()))
 			.collect(this::getOrderBySourceCode);
 
 		if (orderBySourceCodeClauses.isEmpty())
@@ -1363,8 +1388,22 @@ public class ServiceResourceGenerator
 		String superClassPathSourceCode = superClassPath
 			.collect((each) -> "." + UPPER_TO_LOWER_CAMEL.convert(each.getName()) + "SuperClass()")
 			.makeString("");
-		String result = String.format("%sFinder%s.%s()", klass.getName(), superClassPathSourceCode, property.getName());
+		// Database-derived properties are attributes of the read-only object that maps to the view of derived properties
+		String derivedSourceCode = property.getDerivation().isPresent() ? ".derived()" : "";
+		String result = String.format(
+			"%sFinder%s%s.%s()",
+			klass.getName(),
+			superClassPathSourceCode,
+			derivedSourceCode,
+			property.getName()
+		);
 		return result;
+	}
+
+	// Derived properties without a derivation are computed by hand-written getters, so the database cannot sort by them
+	private boolean isDerivedByHand(@Nonnull DataTypeProperty property)
+	{
+		return property.isDerived() && property.getDerivation().isEmpty();
 	}
 
 	private ImmutableList<Klass> getSuperClassPath(Klass klass, Classifier owningClassifier)

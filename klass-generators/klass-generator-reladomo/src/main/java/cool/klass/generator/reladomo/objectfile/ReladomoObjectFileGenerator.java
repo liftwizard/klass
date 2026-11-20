@@ -71,6 +71,10 @@ public class ReladomoObjectFileGenerator
 		CaseFormat.UPPER_UNDERSCORE
 	);
 
+	public static final String DERIVED_OBJECT_SUFFIX = "Derived";
+	public static final String DERIVED_TABLE_SUFFIX = "_DERIVED";
+	public static final String DERIVED_RELATIONSHIP_NAME = "derived";
+
 	public ReladomoObjectFileGenerator(@Nonnull DomainModel domainModel)
 	{
 		super(domainModel);
@@ -82,7 +86,118 @@ public class ReladomoObjectFileGenerator
 		for (Klass klass : this.domainModel.getClasses())
 		{
 			this.writeObjectFile(outputPath, klass);
+			if (klass.getDatabaseDerivedProperties().notEmpty())
+			{
+				this.writeDerivedObjectFile(outputPath, klass);
+			}
 		}
+	}
+
+	/**
+	 * The name of the read-only Reladomo object that maps to the view of a class's database-derived properties.
+	 */
+	public static String getDerivedObjectName(@Nonnull Klass klass)
+	{
+		return klass.getName() + DERIVED_OBJECT_SUFFIX;
+	}
+
+	private void writeDerivedObjectFile(@Nonnull Path outputPath, @Nonnull Klass klass)
+		throws IOException
+	{
+		var mithraGeneratorMarshaller = new MithraGeneratorMarshaller();
+		mithraGeneratorMarshaller.setIndent(true);
+		var stringBuilder = new StringBuilder();
+
+		mithraGeneratorMarshaller.marshall(stringBuilder, this.convertToDerivedMithraObject(klass));
+
+		String xmlString = this.sanitizeXmlString(stringBuilder);
+		Path fullPath = outputPath.resolve(getDerivedObjectName(klass) + ".xml");
+		this.printStringToFile(fullPath, xmlString);
+	}
+
+	// Database-derived properties are columns of a view, not of the class's table.
+	// A read-only object maps to the view, and the class reaches it through a one-to-one relationship.
+	@Nonnull
+	private MithraObject convertToDerivedMithraObject(@Nonnull Klass klass)
+	{
+		var mithraObject = new MithraObject();
+
+		var objectType = new ObjectType();
+		objectType.with("read-only", mithraObject);
+		mithraObject.setObjectType(objectType);
+
+		mithraObject.setPackageName(klass.getPackageName());
+		mithraObject.setClassName(getDerivedObjectName(klass));
+		mithraObject.setDefaultTable(quote(TABLE_NAME_CONVERTER.convert(klass.getName()) + DERIVED_TABLE_SUFFIX));
+
+		ImmutableList<AttributeType> attributeTypes = klass
+			.getKeyProperties()
+			.newWithAll(klass.getDatabaseDerivedProperties())
+			.collect(this::convertToDerivedObjectAttributeType);
+		mithraObject.setAttributes(attributeTypes.castToList());
+
+		return mithraObject;
+	}
+
+	@Nonnull
+	private AttributeType convertToDerivedObjectAttributeType(@Nonnull DataTypeProperty dataTypeProperty)
+	{
+		var attributeType = new AttributeType();
+		String propertyName = dataTypeProperty.getName();
+		attributeType.setName(propertyName);
+		attributeType.setColumnName(quote(COLUMN_NAME_CONVERTER.convert(propertyName)));
+		attributeType.setPrimaryKey(dataTypeProperty.isKey());
+		attributeType.setNullable(false);
+		attributeType.setJavaType(this.getDerivedObjectJavaType(dataTypeProperty));
+		if (attributeType.getJavaType().equals("String"))
+		{
+			attributeType.setTrim(false);
+		}
+		return attributeType;
+	}
+
+	// The view's rows are never inserted, so its key has no sequence, unlike the key of the class's own table.
+	private String getDerivedObjectJavaType(@Nonnull DataTypeProperty dataTypeProperty)
+	{
+		if (dataTypeProperty instanceof EnumerationProperty)
+		{
+			return "String";
+		}
+
+		PrimitiveType primitiveType = ((PrimitiveProperty) dataTypeProperty).getType();
+		return switch (primitiveType)
+		{
+			case STRING -> "String";
+			case INTEGER -> "int";
+			case LONG -> "long";
+			case DOUBLE -> "double";
+			case FLOAT -> "float";
+			case BOOLEAN -> "boolean";
+			case INSTANT -> "Timestamp";
+			case LOCAL_DATE -> "Date";
+			default -> throw new AssertionError(dataTypeProperty);
+		};
+	}
+
+	@Nonnull
+	private RelationshipType convertDerivedRelationship(@Nonnull Klass klass)
+	{
+		String derivedObjectName = getDerivedObjectName(klass);
+
+		var relationshipType = new RelationshipType();
+		relationshipType.setName(DERIVED_RELATIONSHIP_NAME);
+		relationshipType.setCardinality(this.getCardinalityType("one-to-one"));
+		relationshipType.setRelatedIsDependent(false);
+		relationshipType.setRelatedObject(derivedObjectName);
+
+		String relationshipString = klass
+			.getKeyProperties()
+			.collect((keyProperty) ->
+				"this.%s = %s.%s".formatted(keyProperty.getName(), derivedObjectName, keyProperty.getName())
+			)
+			.makeString(" and ");
+		relationshipType._setValue(relationshipString);
+		return relationshipType;
 	}
 
 	private void writeObjectFile(@Nonnull Path outputPath, @Nonnull Klass klass)
@@ -241,9 +356,14 @@ public class ReladomoObjectFileGenerator
 			.getSubClasses()
 			.collect(this::convertSubClassRelationship);
 
+		ImmutableList<RelationshipType> derivedRelationships = klass.getDatabaseDerivedProperties().isEmpty() ?
+			Lists.immutable.empty() :
+			Lists.immutable.with(this.convertDerivedRelationship(klass));
+
 		return relationshipTypes
 			.newWithAll(reverseAbstractRelationshipTypes)
 			.newWithAll(subClassRelationships)
+			.newWithAll(derivedRelationships)
 			.castToList();
 	}
 

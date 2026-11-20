@@ -1,0 +1,12 @@
+[
+	{
+		"id": 3,
+		"title": "test title 3",
+		"numberOfVotes": 4
+	},
+	{
+		"id": 2,
+		"title": "test title 2",
+		"numberOfVotes": 3
+	}
+]
