@@ -1,0 +1,8 @@
+package cool.klass.model.converter.compiler.annotation.temporal
+
+class Question
+    validTemporal
+{
+    id     : Long key;
+    validTo: String;
+}

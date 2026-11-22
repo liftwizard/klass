@@ -178,7 +178,10 @@ public class KlassCompiler
 
 		CompilerInputState compilerInputState = this.compilerState.getCompilerInput();
 		ImmutableList<CompilationUnit> compilationUnits = compilerInputState.getCompilationUnits().toImmutable();
-		MapIterable<Token, TokenCategory> tokenCategoriesFromLexer = this.getTokenCategoriesFromLexer(compilationUnits);
+		MapIterable<Token, TokenCategory> tokenCategoriesFromLexer = this.getTokenCategoriesFromLexer(
+			compilationUnits.newWithAll(compilerInputState.getInPlaceCompilationUnits())
+		);
+		// No in-place compilation units here: CompilerState.runInPlaceCompilerMacro grafts each macro's parse tree into its surrounding compilation unit, so walking that unit reaches the macro's rules too
 		MapIterable<Token, TokenCategory> tokenCategoriesFromParser = this.getTokenCategoriesFromParser(
 			compilationUnits
 		);
