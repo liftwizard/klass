@@ -1,0 +1,17 @@
+package cool.klass.model.converter.compiler.annotation.association
+
+class Question
+{
+    id: Long key;
+}
+
+class Answer
+{
+    id: Long key;
+}
+
+association QuestionHasAnswers
+{
+    question: Question[1..1];
+    answers: Answer[0..*];
+}

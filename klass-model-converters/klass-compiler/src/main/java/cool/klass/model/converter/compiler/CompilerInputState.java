@@ -24,6 +24,7 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.eclipse.collections.api.collection.ImmutableCollection;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableMap;
@@ -35,6 +36,8 @@ public class CompilerInputState
 	private final MutableList<CompilationUnit> compilationUnits;
 
 	private final MutableMap<ParserRuleContext, CompilationUnit> compilationUnitsByContext;
+
+	private final MutableList<CompilationUnit> inPlaceCompilationUnits = Lists.mutable.empty();
 
 	public CompilerInputState(@Nonnull ImmutableCollection<CompilationUnit> compilationUnits)
 	{
@@ -69,11 +72,17 @@ public class CompilerInputState
 		@Nonnull ImmutableList<ParseTreeListener> listeners
 	)
 	{
+		this.inPlaceCompilationUnits.add(compilationUnit);
 		var parseTreeWalker = new ParseTreeWalker();
 		for (ParseTreeListener listener : listeners)
 		{
 			parseTreeWalker.walk(listener, compilationUnit.getParserContext());
 		}
+	}
+
+	public MutableList<CompilationUnit> getInPlaceCompilationUnits()
+	{
+		return this.inPlaceCompilationUnits.asUnmodifiable();
 	}
 
 	public MutableList<CompilationUnit> getCompilationUnits()

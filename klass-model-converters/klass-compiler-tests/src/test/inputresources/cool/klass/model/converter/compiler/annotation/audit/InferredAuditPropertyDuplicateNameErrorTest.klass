@@ -1,0 +1,13 @@
+package cool.klass.model.converter.compiler.annotation.audit
+
+user User
+{
+    userId: String key userId;
+}
+
+class Question
+    audited
+{
+    id       : Long key;
+    createdOn: String;
+}
