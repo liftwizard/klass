@@ -633,6 +633,53 @@ association VersionedOwnedOneToManyTargetHasGrandchildren
     relationship this.sourceKey == VersionedOwnedOneToManyGrandchild.sourceKey && this.name == VersionedOwnedOneToManyGrandchild.itemName
 }
 
+projection VersionedOwnedSourceVersionProjection on VersionedOwnedSourceVersion
+{
+    number: "number",
+}
+
+projection VersionedOwnedOneToOneTargetProjection on VersionedOwnedOneToOneTarget
+{
+    value: "value",
+}
+
+projection VersionedOwnedOneToOneGrandchildProjection on VersionedOwnedOneToOneGrandchild
+{
+    value: "value",
+}
+
+projection VersionedOwnedOneToManyTargetProjection on VersionedOwnedOneToManyTarget
+{
+    name      : "name",
+    value     : "value",
+    grandchild: VersionedOwnedOneToOneGrandchildProjection,
+}
+
+projection VersionedOwnedSourceProjection on VersionedOwnedSource
+{
+    key    : "key",
+    value  : "value",
+    version: VersionedOwnedSourceVersionProjection,
+    detail : VersionedOwnedOneToOneTargetProjection,
+    items  : VersionedOwnedOneToManyTargetProjection,
+}
+
+service VersionedOwnedSourceResource on VersionedOwnedSource
+{
+    /versionedOwnedSource/{key: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            projection  : VersionedOwnedSourceProjection;
+        }
+        PUT
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+        }
+}
+
 class SharedNaturalManyToOneTarget
 {
     key: String key;

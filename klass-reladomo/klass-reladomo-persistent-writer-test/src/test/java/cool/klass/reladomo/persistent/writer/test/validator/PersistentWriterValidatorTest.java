@@ -36,6 +36,7 @@ import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.reladomo.persistent.writer.IncomingCreateDataModelValidator;
 import cool.klass.reladomo.persistent.writer.IncomingUpdateDataModelValidator;
 import cool.klass.reladomo.persistent.writer.MutationContext;
+import cool.klass.reladomo.persistent.writer.PersistentReplacer;
 import io.dropwizard.jackson.Jackson;
 import io.liftwizard.dropwizard.configuration.uuid.seed.SeedUUIDSupplier;
 import io.liftwizard.junit.extension.liquibase.migrations.LiquibaseTestExtension;
@@ -84,7 +85,11 @@ class PersistentWriterValidatorTest
 		"test-data/cool.klass.xample.coverage.PropertiesOptionalVersion.csv",
 		"test-data/cool.klass.xample.coverage.PropertiesRequired.csv",
 		"test-data/cool.klass.xample.coverage.PropertiesRequiredVersion.csv",
-		"test-data/cool.klass.xample.coverage.FinalProperties.csv"
+		"test-data/cool.klass.xample.coverage.FinalProperties.csv",
+		"test-data/cool.klass.xample.coverage.VersionedOwnedSource.csv",
+		"test-data/cool.klass.xample.coverage.VersionedOwnedSourceVersion.csv",
+		"test-data/cool.klass.xample.coverage.VersionedOwnedOneToOneTarget.csv",
+		"test-data/cool.klass.xample.coverage.VersionedOwnedOneToManyTarget.csv"
 	);
 
 	private final ReladomoDataStore reladomoDataStore = PersistentWriterValidatorTest.getReladomoDataStore();
@@ -187,6 +192,19 @@ class PersistentWriterValidatorTest
 		this.validate(updateFinalProperties, "validate_mutate_final");
 	}
 
+	@Test
+	void synchronizeAllCases()
+		throws JsonProcessingException
+	{
+		ValidationCase updateVersionedOwnedSource = this.updateCase(
+			"Update_VersionedOwnedSource",
+			"VersionedOwnedSource",
+			"key",
+			"source 1"
+		);
+		this.synchronize(updateVersionedOwnedSource, "synchronize_unstored_optional_owned_to_one_null");
+	}
+
 	@Nonnull
 	private ValidationCase createCase(String caseName, String className, String keyPropertyName)
 	{
@@ -198,9 +216,15 @@ class PersistentWriterValidatorTest
 	@Nonnull
 	private ValidationCase updateCase(String caseName, String className, String keyPropertyName)
 	{
+		return this.updateCase(caseName, className, keyPropertyName, 1L);
+	}
+
+	@Nonnull
+	private ValidationCase updateCase(String caseName, String className, String keyPropertyName, Object key)
+	{
 		Klass klass = this.domainModel.getClassByName(className);
 		DataTypeProperty keyProperty = klass.getDataTypePropertyByName(keyPropertyName);
-		ImmutableMap<DataTypeProperty, Object> keys = Maps.immutable.with(keyProperty, 1L);
+		ImmutableMap<DataTypeProperty, Object> keys = Maps.immutable.with(keyProperty, key);
 		Object persistentInstance = this.reladomoDataStore.findByKey(klass, keys);
 		return new ValidationCase(caseName, klass, OperationMode.REPLACE, keys, persistentInstance);
 	}
@@ -223,6 +247,31 @@ class PersistentWriterValidatorTest
 			prefix + ".warnings.json",
 			this.objectMapper.writeValueAsString(result.warnings())
 		);
+	}
+
+	private void synchronize(ValidationCase validationCase, String testName)
+		throws JsonProcessingException
+	{
+		String prefix = this.getClass().getSimpleName() + '.' + validationCase.name() + '.' + testName;
+		String incomingJson = FileSlurper.slurp(prefix + ".json5", this.getClass());
+		var incomingInstance = (ObjectNode) this.objectMapper.readTree(incomingJson);
+
+		var mutationContext = new MutationContext(
+			Optional.of("test user 1"),
+			Instant.parse("1999-12-31T23:59:59.999Z"),
+			validationCase.propertyDataFromUrl()
+		);
+		var persistentReplacer = new PersistentReplacer(mutationContext, this.reladomoDataStore);
+		Klass klass = validationCase.klass();
+		Object persistentInstance = validationCase.persistentInstance();
+		boolean mutationOccurred = this.reladomoDataStore.runInTransaction((transaction) ->
+			persistentReplacer.synchronize(klass, persistentInstance, incomingInstance)
+		);
+
+		ObjectNode result = this.objectMapper.createObjectNode();
+		result.put("mutationOccurred", mutationOccurred);
+
+		this.jsonMatchExtension.assertFileContents(prefix + ".json", this.objectMapper.writeValueAsString(result));
 	}
 
 	@Nonnull
