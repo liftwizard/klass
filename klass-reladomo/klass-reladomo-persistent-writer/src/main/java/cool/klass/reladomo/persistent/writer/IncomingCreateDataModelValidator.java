@@ -405,32 +405,32 @@ public class IncomingCreateDataModelValidator
 			return;
 		}
 
-		String associationEndName = associationEnd.getName();
-		this.contextStack.push(associationEndName);
-
 		Optional<String> userId = this.mutationContext.getUserId();
 		if (userId.isEmpty() || this.userKlass == null)
 		{
 			return;
 		}
 
-		DataTypeProperty userIdProperty = this.userKlass.getKeyProperties().getOnly();
-		ImmutableMap<DataTypeProperty, Object> userKeys = Maps.immutable.with(userIdProperty, userId.get());
-		Object userPersistentInstance = this.dataStore.findByKey(this.userKlass, userKeys);
-
-		if (userPersistentInstance == null)
-		{
-			String error = String.format(
-				"Error at %s. Couldn't find user with key %s.",
-				this.getContextString(),
-				userKeys
-			);
-			this.errors.add(error);
-			return;
-		}
+		String associationEndName = associationEnd.getName();
+		this.contextStack.push(associationEndName);
 
 		try
 		{
+			DataTypeProperty userIdProperty = this.userKlass.getKeyProperties().getOnly();
+			ImmutableMap<DataTypeProperty, Object> userKeys = Maps.immutable.with(userIdProperty, userId.get());
+			Object userPersistentInstance = this.dataStore.findByKey(this.userKlass, userKeys);
+
+			if (userPersistentInstance == null)
+			{
+				String error = String.format(
+					"Error at %s. Couldn't find user with key %s.",
+					this.getContextString(),
+					userKeys
+				);
+				this.errors.add(error);
+				return;
+			}
+
 			// TODO: Support a IncomingLastUpdatedByDataModelValidator which allows the current user to be substituted in for lastUpdatedBy.
 			var validator = new IncomingCreateDataModelValidator(
 				this.dataStore,
