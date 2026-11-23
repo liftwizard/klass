@@ -613,19 +613,18 @@ public class IncomingCreateDataModelValidator
 	{
 		JsonNode childJsonNode = this.objectNode.path(associationEnd.getName());
 
+		// RequiredPropertiesValidator reports a missing or null required association end.
+		if (childJsonNode.isMissingNode() || childJsonNode.isNull())
+		{
+			return;
+		}
+
 		String associationEndName = associationEnd.getName();
 		this.contextStack.push(associationEndName);
 
-		/*
-        MapIterable<DataTypeProperty, Object> keys = this.getKeysFromJsonNode(
-                childJsonNode,
-                associationEnd,
-                this.objectNode);
-        */
-
 		try
 		{
-			if (!(childJsonNode instanceof ObjectNode))
+			if (!(childJsonNode instanceof ObjectNode childObjectNode))
 			{
 				String error = String.format(
 					"Error at '%s'. Expected JSON object for owned association end '%s' but got %s.",
@@ -634,8 +633,8 @@ public class IncomingCreateDataModelValidator
 					childJsonNode.getNodeType().toString().toLowerCase(Locale.ROOT)
 				);
 				this.errors.add(error);
+				return;
 			}
-			var childObjectNode = (ObjectNode) childJsonNode;
 			var validator = new IncomingCreateDataModelValidator(
 				this.dataStore,
 				this.userKlass,

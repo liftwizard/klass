@@ -143,6 +143,15 @@ class PersistentWriterValidatorTest
 		this.validate(createOwnedNaturalOneToMany, "validate_expected_actual_null");
 		this.validate(createOwnedNaturalOneToMany, "validate_expected_actual_boolean");
 
+		var createVersionedOwnedSource = new ValidationCase(
+			"Create_VersionedOwnedSource",
+			this.domainModel.getClassByName("VersionedOwnedSource"),
+			OperationMode.CREATE,
+			Maps.immutable.empty(),
+			null
+		);
+		this.validate(createVersionedOwnedSource, "validate_optional_owned_to_one_missing");
+
 		ValidationCase updatePropertiesOptional = this.updateCase(
 			"Update_PropertiesOptional",
 			"PropertiesOptional",
