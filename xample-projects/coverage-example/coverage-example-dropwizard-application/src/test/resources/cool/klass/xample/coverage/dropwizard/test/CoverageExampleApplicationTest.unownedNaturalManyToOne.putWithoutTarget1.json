@@ -1,0 +1,9 @@
+{
+	"key": "UnownedNaturalManyToOneSource key 1 ☝",
+	"value": "UnownedNaturalManyToOneSource value 1 ☝",
+	"target":
+	{
+		"key": "UnownedNaturalManyToOneTarget key 1 ☝",
+		"value": "UnownedNaturalManyToOneTarget value 1 ☝"
+	}
+}

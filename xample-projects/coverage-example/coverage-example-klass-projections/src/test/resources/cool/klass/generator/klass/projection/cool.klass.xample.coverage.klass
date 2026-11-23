@@ -100,6 +100,21 @@ projection FinalPropertiesProjection on FinalProperties
     data: "FinalProperties data",
 }
 
+projection UnownedNaturalManyToOneTargetProjection on UnownedNaturalManyToOneTarget
+{
+    key: "UnownedNaturalManyToOneTarget key",
+    value: "UnownedNaturalManyToOneTarget value",
+}
+
+projection UnownedNaturalManyToOneSourceProjection on UnownedNaturalManyToOneSource
+{
+    key: "UnownedNaturalManyToOneSource key",
+    value: "UnownedNaturalManyToOneSource value",
+    target: {
+        key: "UnownedNaturalManyToOneTarget key",
+    },
+}
+
 projection OwnedNaturalOneToManySourceProjection on OwnedNaturalOneToManySource
 {
     key: "OwnedNaturalOneToManySource key",

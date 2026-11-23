@@ -687,11 +687,9 @@ public class ReladomoDataStore
 	public boolean setToOne(
 		@Nonnull Object persistentSourceInstance,
 		@Nonnull AssociationEnd associationEnd,
-		@Nonnull Object persistentTargetInstance
+		@Nullable Object persistentTargetInstance
 	)
 	{
-		Objects.requireNonNull(persistentTargetInstance);
-
 		var mutationOccurred = false;
 
 		// A Reladomo bug prevents just calling a method like setQuestion here. Instead we have to call foreign key setters like setQuestionId
@@ -712,7 +710,11 @@ public class ReladomoDataStore
 
 			DataTypeProperty foreignKey = targetDataTypeProperty;
 
-			Object keyValue = this.getDataTypeProperty(persistentTargetInstance, keyInRelatedObject);
+			// A null target clears the foreign key, which setDataTypeProperty rejects for required properties.
+			Object keyValue =
+				persistentTargetInstance == null ?
+					null :
+					this.getDataTypeProperty(persistentTargetInstance, keyInRelatedObject);
 
 			mutationOccurred |= this.setDataTypeProperty(persistentSourceInstance, foreignKey, keyValue);
 		}

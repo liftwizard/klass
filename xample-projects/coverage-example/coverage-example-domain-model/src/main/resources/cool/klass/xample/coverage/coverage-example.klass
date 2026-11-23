@@ -442,8 +442,53 @@ service FinalPropertiesResource on FinalProperties
         }
 }
 
-// TODO: unowned
-// TODO: many-to-one
+class UnownedNaturalManyToOneTarget
+{
+    key: String key;
+    value: String;
+}
+
+class UnownedNaturalManyToOneSource
+{
+    key: String key;
+    targetKey: String? private;
+    value: String;
+}
+
+// An optional unowned reference, so a PUT that omits the target clears the source's foreign key.
+association UnownedNaturalManyToOne
+{
+    sources: UnownedNaturalManyToOneSource[0..*];
+    target: UnownedNaturalManyToOneTarget[0..1];
+
+    relationship this.targetKey == UnownedNaturalManyToOneTarget.key
+}
+
+projection UnownedNaturalManyToOneSourceProjection on UnownedNaturalManyToOneSource
+{
+    key   : "UnownedNaturalManyToOneSource key",
+    value : "UnownedNaturalManyToOneSource value",
+    target:
+    {
+        key  : "UnownedNaturalManyToOneTarget key",
+        value: "UnownedNaturalManyToOneTarget value",
+    },
+}
+
+service UnownedNaturalManyToOneSourceResource on UnownedNaturalManyToOneSource
+{
+    /unownedNaturalManyToOneSource/{key: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            projection  : UnownedNaturalManyToOneSourceProjection;
+        }
+        PUT
+        {
+            criteria    : this.key == key;
+        }
+}
 
 class OwnedNaturalOneToManySource
 {
