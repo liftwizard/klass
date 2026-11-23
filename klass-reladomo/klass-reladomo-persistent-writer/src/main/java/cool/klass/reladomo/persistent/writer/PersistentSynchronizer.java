@@ -619,7 +619,7 @@ public abstract class PersistentSynchronizer
 			else
 			{
 				PersistentSynchronizer synchronizer = this.determineNextMode(OperationMode.REPLACE);
-				mutationOccurred = synchronizer.synchronizeInTransaction(
+				mutationOccurred |= synchronizer.synchronizeInTransaction(
 					associationEnd.getType(),
 					Optional.of(associationEnd),
 					persistentChildInstance,

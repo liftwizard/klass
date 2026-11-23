@@ -1,0 +1,75 @@
+{
+	id: 1,
+	systemFrom: "2001-02-01T23:59:59Z",
+	systemTo: null,
+	createdOn: "1999-12-31T23:59:59.999Z",
+	title: "edited title 1",
+	body: "edited body 1",
+	status: "On hold",
+	deleted: true,
+	answers: [
+		{
+			id: 1,
+			body: "edited answer 1",
+			deleted: false,
+		},
+		{
+			id: 2,
+			body: "This is a test answer",
+			deleted: false,
+		},
+	],
+	tags: [
+		{
+			systemFrom: "1999-12-31T23:59:59.999Z",
+			systemTo: null,
+			tag:
+			{
+				name: "test tag 1",
+				systemFrom: "1999-12-31T23:59:59.999Z",
+				systemTo: null,
+			},
+		},
+		{
+			systemFrom: "2001-02-01T23:59:59Z",
+			systemTo: null,
+			tag:
+			{
+				name: "test tag 3",
+				systemFrom: "1999-12-31T23:59:59.999Z",
+				systemTo: null,
+			},
+		},
+	],
+	version:
+	{
+		systemFrom: "2001-02-01T23:59:59Z",
+		systemTo: null,
+		createdOn: "1999-12-31T23:59:59.999Z",
+		number: 3,
+		createdBy:
+		{
+			userId: "test user 1",
+			systemFrom: "1999-12-31T23:59:59.999Z",
+			systemTo: null,
+		},
+		lastUpdatedBy:
+		{
+			userId: "test user 1",
+			systemFrom: "1999-12-31T23:59:59.999Z",
+			systemTo: null,
+		},
+	},
+	createdBy:
+	{
+		userId: "test user 1",
+		systemFrom: "1999-12-31T23:59:59.999Z",
+		systemTo: null,
+	},
+	lastUpdatedBy:
+	{
+		userId: "test user 1",
+		systemFrom: "1999-12-31T23:59:59.999Z",
+		systemTo: null,
+	},
+}
