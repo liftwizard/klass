@@ -319,7 +319,17 @@ public abstract class PersistentSynchronizer
 		return mutationOccurred;
 	}
 
-	protected abstract void handleVersion(AssociationEnd associationEnd, Object persistentInstance);
+	protected void handleVersion(@Nonnull AssociationEnd associationEnd, Object persistentInstance)
+	{
+		Object versionPersistentInstance = this.dataStore.getToOne(persistentInstance, associationEnd);
+		DataTypeProperty versionProperty = associationEnd
+			.getType()
+			.getDataTypeProperties()
+			.select(DataTypeProperty::isVersion)
+			.getOnly();
+		var versionNumber = (Integer) this.dataStore.getDataTypeProperty(versionPersistentInstance, versionProperty);
+		this.dataStore.setDataTypeProperty(versionPersistentInstance, versionProperty, versionNumber + 1);
+	}
 
 	private boolean handleToOne(
 		@Nonnull AssociationEnd associationEnd,

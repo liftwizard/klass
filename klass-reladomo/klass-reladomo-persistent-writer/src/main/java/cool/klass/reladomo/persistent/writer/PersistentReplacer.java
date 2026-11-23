@@ -82,19 +82,6 @@ public class PersistentReplacer
 	}
 
 	@Override
-	protected void handleVersion(@Nonnull AssociationEnd associationEnd, Object persistentInstance)
-	{
-		Object versionPersistentInstance = this.dataStore.getToOne(persistentInstance, associationEnd);
-		DataTypeProperty versionProperty = associationEnd
-			.getType()
-			.getDataTypeProperties()
-			.select(DataTypeProperty::isVersion)
-			.getOnly();
-		var versionNumber = (Integer) this.dataStore.getDataTypeProperty(versionPersistentInstance, versionProperty);
-		this.dataStore.setDataTypeProperty(versionPersistentInstance, versionProperty, versionNumber + 1);
-	}
-
-	@Override
 	protected boolean handleToOneOutsideProjection(
 		@Nonnull AssociationEnd associationEnd,
 		@Nonnull Object persistentParentInstance,
