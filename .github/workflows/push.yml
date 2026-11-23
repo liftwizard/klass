@@ -16,6 +16,7 @@ permissions:
   contents: read
 
 jobs:
+  # Saves the Maven cache that every pull request and merge group job except the rewrite jobs restores. Those runs can only restore caches saved on main, so they never save their own. On a cache miss, the warm-up step runs the goals and profiles that only those jobs use, so the cache holds every plugin and plugin dependency they need. twosigma/maven-cache-cleaner drops whatever these steps did not read before the cache is saved.
   maven:
     runs-on: ubuntu-latest
     steps:
@@ -23,12 +24,14 @@ jobs:
         with:
           persist-credentials: false
 
+      # push.yml is in the key so that changing the warm-up steps saves a new cache.
       - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: maven-cache
         with:
-          key: maven-${{ hashFiles('**/pom.xml') }}
+          key: maven-main-${{ hashFiles('**/pom.xml', '.github/workflows/push.yml') }}
           path: ~/.m2/repository
           restore-keys: |
-            maven-
+            maven-main-
 
       - uses: twosigma/maven-cache-cleaner@fbb04c12bb496d3c4f1818eb235dbb5114b227c6 # v2.4.0
 
@@ -36,13 +39,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
+      # Tests plus the spotless, enforcer, dependency, javadoc, and checkstyle profiles.
       - run: just mvn
+
+      # Loads the plugins of the errorprone, spotbugs, coverage, and reproducible jobs, which `just mvn` does not.
+      - name: Warm up the plugins of the other pull request and merge group jobs
+        if: steps.maven-cache.outputs.cache-hit != 'true'
+        run: just mvn --target "clean verify artifact:check-buildplan" --profiles "--activate-profiles errorprone,spotbugs-maven-plugin,jacoco-maven-plugin" -- -DskipTests
 
       # Remove any jars we may have created before actions/cache caches .m2
       - name: "Clean Maven cache"
         run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}
 
-  # Builds the source-available OpenRewrite recipes on main so that every branch can restore them from the cache.
+  # Saves the rewrite jobs' Maven cache on main, the only branch whose caches every pull request and merge group run can restore. When the cache already exists, this job only restores it.
   openrewrite-recipes:
     runs-on: ubuntu-latest
     steps:
@@ -50,11 +59,35 @@ jobs:
         with:
           persist-credentials: false
 
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        id: maven-cache
+        with:
+          # Not prefixed with maven-main- so that the other jobs' maven-main- fallback never restores artifacts cached as coming from codegenome, which Maven rechecks against Central in builds without that repository.
+          key: codegenome-maven-rewrite-main-${{ hashFiles('**/pom.xml', '.github/workflows/push.yml') }}
+          path: ~/.m2/repository
+          restore-keys: |
+            codegenome-maven-rewrite-main-
+            maven-main-
+
+      - uses: twosigma/maven-cache-cleaner@fbb04c12bb496d3c4f1818eb235dbb5114b227c6 # v2.4.0
+
       - uses: jdx/mise-action@924e7c586e33d7d4bae9c14e26c5d22e2beb6e78 # v5.3.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
+      # Builds the source-available OpenRewrite recipes and saves them in their own cache that every branch restores.
       - uses: liftwizard/liftwizard/.github/actions/openrewrite-recipes@afc6d6a5a60e4f841bc419b0f855d90614cbe86b # main
         with:
           codegenome-username: ${{ secrets.CODEGENOME_USERNAME }}
           codegenome-token: ${{ secrets.CODEGENOME_TOKEN }}
+
+      # The run and dryRun profiles have different plugin dependencies, so the warm-up runs both.
+      - name: Warm up the plugins of the rewrite jobs
+        if: steps.maven-cache.outputs.cache-hit != 'true'
+        run: |
+          just rewrite-run
+          just rewrite-dry-run
+
+      # Remove any jars we may have created before actions/cache caches .m2
+      - name: "Clean Maven cache"
+        run: rm -rf ~/.m2/repository/${{ env.GROUP_ID }}

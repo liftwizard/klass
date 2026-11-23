@@ -22,11 +22,15 @@ markdownlint:
     markdownlint-cli2 --fix
 
 # Run all formatting tools for pre-commit
-verify: mvn
+verify: test-workflows mvn
     uv tool run pre-commit run --all-files
 
 # Deprecated alias for `verify`
 precommit: verify
+
+# `node --test` for the GitHub workflows
+test-workflows:
+    node --test .github/*.test.mjs
 
 # mvn archetype
 [arg("MVN", long="mvn", help="Maven binary to use")]
