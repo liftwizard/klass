@@ -336,11 +336,15 @@ public abstract class PersistentSynchronizer
 	)
 	{
 		Object persistentChildInstance = this.dataStore.getToOne(persistentParentInstance, associationEnd);
+		boolean incomingIsAbsent = incomingChildInstance.isMissingNode() || incomingChildInstance.isNull();
 
-		if (
-			persistentChildInstance == null && !incomingChildInstance.isMissingNode() && !incomingChildInstance.isNull()
-		)
+		if (persistentChildInstance == null)
 		{
+			if (incomingIsAbsent)
+			{
+				return false;
+			}
+
 			MapIterable<DataTypeProperty, Object> keys = this.getKeysFromJsonNode(
 				incomingChildInstance,
 				associationEnd,
@@ -350,32 +354,23 @@ public abstract class PersistentSynchronizer
 			return true;
 		}
 
-		if (
-			(persistentChildInstance != null && incomingChildInstance.isMissingNode()) || incomingChildInstance.isNull()
-		)
+		if (incomingChildInstance.isMissingNode())
 		{
-			if (incomingChildInstance.isMissingNode())
-			{
-				return this.handleMissingToOne(associationEnd.getType(), persistentChildInstance);
-			}
-			if (incomingChildInstance.isNull())
-			{
-				return this.handleNullToOne(associationEnd.getType(), persistentChildInstance);
-			}
+			return this.handleMissingToOne(associationEnd.getType(), persistentChildInstance);
 		}
 
-		if (persistentChildInstance != null && incomingChildInstance != null)
+		if (incomingChildInstance.isNull())
 		{
-			PersistentSynchronizer synchronizer = this.determineNextMode(OperationMode.REPLACE);
-			return synchronizer.synchronizeInTransaction(
-				associationEnd.getType(),
-				Optional.of(associationEnd),
-				persistentChildInstance,
-				(ObjectNode) incomingChildInstance
-			);
+			return this.handleNullToOne(associationEnd.getType(), persistentChildInstance);
 		}
 
-		return false;
+		PersistentSynchronizer synchronizer = this.determineNextMode(OperationMode.REPLACE);
+		return synchronizer.synchronizeInTransaction(
+			associationEnd.getType(),
+			Optional.of(associationEnd),
+			persistentChildInstance,
+			(ObjectNode) incomingChildInstance
+		);
 	}
 
 	protected boolean handleMissingToOne(Klass klass, Object persistentChildInstance)

@@ -2040,7 +2040,7 @@
 						"parameter":
 						{
 							"__typename": "klass.model.meta.domain.PrimitiveParameter",
-							"id": 27,
+							"id": 28,
 							"name": "name",
 							"multiplicity": "1..1",
 							"primitiveType": "String"
@@ -2083,7 +2083,7 @@
 								"id": 318,
 								"parameter":
 								{
-									"id": 27,
+									"id": 28,
 									"name": "name"
 								}
 							}
@@ -3951,6 +3951,121 @@
 		]
 	},
 	{
+		"name": "VersionedOwnedSourceResource",
+		"packageName": "cool.klass.xample.coverage",
+		"owningClass":
+		{
+			"name": "VersionedOwnedSource"
+		},
+		"urls": [
+			{
+				"url": "/versionedOwnedSource/{key}",
+				"parameters": [
+					{
+						"type": "path",
+						"parameter":
+						{
+							"__typename": "klass.model.meta.domain.PrimitiveParameter",
+							"id": 22,
+							"name": "key",
+							"multiplicity": "1..1",
+							"primitiveType": "String"
+						}
+					}
+				],
+				"services": [
+					{
+						"verb": "GET",
+						"serviceMultiplicity": "one",
+						"projection":
+						{
+							"name": "VersionedOwnedSourceProjection"
+						},
+						"queryCriteria":
+						{
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 399,
+								"klass":
+								{
+									"name": "VersionedOwnedSource"
+								},
+								"associationEnds": [],
+								"dataTypeProperty":
+								{
+									"owningClassifier":
+									{
+										"name": "VersionedOwnedSource"
+									},
+									"name": "key"
+								}
+							},
+							"targetExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 400,
+								"parameter":
+								{
+									"id": 22,
+									"name": "key"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					},
+					{
+						"verb": "PUT",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria":
+						{
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 401,
+								"klass":
+								{
+									"name": "VersionedOwnedSource"
+								},
+								"associationEnds": [],
+								"dataTypeProperty":
+								{
+									"owningClassifier":
+									{
+										"name": "VersionedOwnedSource"
+									},
+									"name": "key"
+								}
+							},
+							"targetExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 402,
+								"parameter":
+								{
+									"id": 22,
+									"name": "key"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					}
+				]
+			}
+		]
+	},
+	{
 		"name": "SharedNaturalManyToOneSourceResource",
 		"packageName": "cool.klass.xample.coverage",
 		"owningClass":
@@ -3966,7 +4081,7 @@
 						"parameter":
 						{
 							"__typename": "klass.model.meta.domain.PrimitiveParameter",
-							"id": 22,
+							"id": 23,
 							"name": "key",
 							"multiplicity": "1..1",
 							"primitiveType": "String"
@@ -3985,7 +4100,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 399,
+								"id": 403,
 								"klass":
 								{
 									"name": "SharedNaturalManyToOneSource"
@@ -4003,10 +4118,10 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 400,
+								"id": 404,
 								"parameter":
 								{
-									"id": 22,
+									"id": 23,
 									"name": "key"
 								}
 							}
@@ -4036,7 +4151,7 @@
 						"parameter":
 						{
 							"__typename": "klass.model.meta.domain.PrimitiveParameter",
-							"id": 23,
+							"id": 24,
 							"name": "key",
 							"multiplicity": "1..1",
 							"primitiveType": "String"
@@ -4055,7 +4170,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 401,
+								"id": 405,
 								"klass":
 								{
 									"name": "SharedNaturalOneToManyTarget"
@@ -4073,10 +4188,10 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 402,
+								"id": 406,
 								"parameter":
 								{
-									"id": 23,
+									"id": 24,
 									"name": "key"
 								}
 							}
@@ -4106,7 +4221,7 @@
 						"parameter":
 						{
 							"__typename": "klass.model.meta.domain.PrimitiveParameter",
-							"id": 24,
+							"id": 25,
 							"name": "key",
 							"multiplicity": "1..1",
 							"primitiveType": "String"
@@ -4125,7 +4240,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 403,
+								"id": 407,
 								"klass":
 								{
 									"name": "SharedNaturalOneToManySelf"
@@ -4143,10 +4258,10 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 404,
+								"id": 408,
 								"parameter":
 								{
-									"id": 24,
+									"id": 25,
 									"name": "key"
 								}
 							}
@@ -4176,7 +4291,7 @@
 						"parameter":
 						{
 							"__typename": "klass.model.meta.domain.PrimitiveParameter",
-							"id": 25,
+							"id": 26,
 							"name": "id",
 							"multiplicity": "1..1",
 							"primitiveType": "Long"
@@ -4195,7 +4310,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 405,
+								"id": 409,
 								"klass":
 								{
 									"name": "SharedSyntheticOneToManyTarget"
@@ -4213,10 +4328,10 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 406,
+								"id": 410,
 								"parameter":
 								{
-									"id": 25,
+									"id": 26,
 									"name": "id"
 								}
 							}
@@ -4246,7 +4361,7 @@
 						"parameter":
 						{
 							"__typename": "klass.model.meta.domain.PrimitiveParameter",
-							"id": 26,
+							"id": 27,
 							"name": "id",
 							"multiplicity": "1..1",
 							"primitiveType": "Long"
@@ -4265,7 +4380,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 407,
+								"id": 411,
 								"klass":
 								{
 									"name": "SharedSyntheticOneToManySelf"
@@ -4283,10 +4398,10 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 408,
+								"id": 412,
 								"parameter":
 								{
-									"id": 26,
+									"id": 27,
 									"name": "id"
 								}
 							}

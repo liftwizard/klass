@@ -40,6 +40,9 @@ class CoverageExampleApplicationTest
 	private static final String EVERY_TYPE_KEY_PROPERTY_URL =
 		"http://localhost:{port}/api/everyTypeKeyProperty/EveryTypeKeyProperty keyString 1 ☝/1/1/1.0123456789/1.0123457/true/1999-12-31T23:59:00Z/1999-12-31";
 
+	private static final String VERSIONED_OWNED_SOURCE_URL =
+		"http://localhost:{port}/api/versionedOwnedSource/VersionedOwnedSource key 1 ☝";
+
 	@RegisterExtension
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
@@ -84,6 +87,7 @@ class CoverageExampleApplicationTest
 		this.everyTypeKeyPropertyPostWithoutBody("postMultiple", "multiple");
 		this.everyTypeKeyPropertyPostWithProjection("postMultipleWithProjection", "multipleWithProjection");
 		this.everyTypeKeyPropertyPostWithoutBody("postSingle", "single");
+		this.versionedOwnedSourcePutNullGrandchild();
 	}
 
 	private void swaggerSpecIsServed()
@@ -250,6 +254,34 @@ class CoverageExampleApplicationTest
 			.request()
 			.get();
 		this.assertResponse("everyTypeKeyProperty.put3", Status.OK, getAfterResponse);
+	}
+
+	private void versionedOwnedSourcePutNullGrandchild()
+	{
+		Client client = this.getClient("versionedOwnedSource.putNullGrandchild");
+
+		Response getBeforeResponse = client
+			.target(VERSIONED_OWNED_SOURCE_URL)
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.get();
+		this.assertResponse("versionedOwnedSource.putNullGrandchild1", Status.OK, getBeforeResponse);
+
+		// The stored item has no grandchild, so an explicit null grandchild changes nothing and leaves the version alone
+		Response putResponse = client
+			.target(VERSIONED_OWNED_SOURCE_URL)
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.header("Authorization", "Impersonation User userId 1")
+			.put(Entity.json(this.slurp("versionedOwnedSource.putNullGrandchild.json5")));
+		this.assertEmptyResponse(Status.NO_CONTENT, putResponse);
+
+		Response getAfterResponse = client
+			.target(VERSIONED_OWNED_SOURCE_URL)
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.get();
+		this.assertResponse("versionedOwnedSource.putNullGrandchild3", Status.OK, getAfterResponse);
 	}
 
 	private void everyTypeKeyPropertyPostWithProjection(String name, String path)

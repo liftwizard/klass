@@ -1,0 +1,18 @@
+{
+	value: "value 1",
+	version:
+	{
+		number: 1,
+	},
+	detail:
+	{
+		value: "detail 1",
+	},
+	items: [
+		{
+			name: "item 1",
+			value: "value 1",
+			grandchild: null,
+		},
+	],
+}
