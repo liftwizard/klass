@@ -67,6 +67,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.mattbertolini</groupId>
+            <artifactId>liquibase-slf4j</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>cool.klass</groupId>
             <artifactId>klass-generator-liquibase-schema</artifactId>
             <version>${project.version}</version>

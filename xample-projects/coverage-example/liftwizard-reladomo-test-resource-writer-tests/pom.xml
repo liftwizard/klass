@@ -105,6 +105,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.mattbertolini</groupId>
+            <artifactId>liquibase-slf4j</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>io.liftwizard</groupId>
             <artifactId>liftwizard-junit-extension-match-file</artifactId>
             <scope>test</scope>
