@@ -4289,6 +4289,107 @@
 	},
 	{
 		"__typename": "klass.model.meta.domain.Klass",
+		"name": "UnownedNaturalManyToOneTarget",
+		"packageName": "cool.klass.xample.coverage",
+		"superInterfaces": [],
+		"classifierModifiers": [],
+		"dataTypeProperties": [
+			{
+				"__typename": "klass.model.meta.domain.PrimitiveProperty",
+				"name": "key",
+				"optional": false,
+				"minLengthValidation": null,
+				"maxLengthValidation": null,
+				"propertyModifiers": [
+					{
+						"keyword": "key"
+					}
+				],
+				"primitiveType": "String",
+				"minValidation": null,
+				"maxValidation": null
+			},
+			{
+				"__typename": "klass.model.meta.domain.PrimitiveProperty",
+				"name": "value",
+				"optional": false,
+				"minLengthValidation": null,
+				"maxLengthValidation": null,
+				"propertyModifiers": [],
+				"primitiveType": "String",
+				"minValidation": null,
+				"maxValidation": null
+			}
+		],
+		"abstractClass": false,
+		"superClass": null,
+		"associationEnds": [
+			{
+				"name": "sources"
+			}
+		],
+		"parameterizedProperties": []
+	},
+	{
+		"__typename": "klass.model.meta.domain.Klass",
+		"name": "UnownedNaturalManyToOneSource",
+		"packageName": "cool.klass.xample.coverage",
+		"superInterfaces": [],
+		"classifierModifiers": [],
+		"dataTypeProperties": [
+			{
+				"__typename": "klass.model.meta.domain.PrimitiveProperty",
+				"name": "key",
+				"optional": false,
+				"minLengthValidation": null,
+				"maxLengthValidation": null,
+				"propertyModifiers": [
+					{
+						"keyword": "key"
+					}
+				],
+				"primitiveType": "String",
+				"minValidation": null,
+				"maxValidation": null
+			},
+			{
+				"__typename": "klass.model.meta.domain.PrimitiveProperty",
+				"name": "targetKey",
+				"optional": true,
+				"minLengthValidation": null,
+				"maxLengthValidation": null,
+				"propertyModifiers": [
+					{
+						"keyword": "private"
+					}
+				],
+				"primitiveType": "String",
+				"minValidation": null,
+				"maxValidation": null
+			},
+			{
+				"__typename": "klass.model.meta.domain.PrimitiveProperty",
+				"name": "value",
+				"optional": false,
+				"minLengthValidation": null,
+				"maxLengthValidation": null,
+				"propertyModifiers": [],
+				"primitiveType": "String",
+				"minValidation": null,
+				"maxValidation": null
+			}
+		],
+		"abstractClass": false,
+		"superClass": null,
+		"associationEnds": [
+			{
+				"name": "target"
+			}
+		],
+		"parameterizedProperties": []
+	},
+	{
+		"__typename": "klass.model.meta.domain.Klass",
 		"name": "OwnedNaturalOneToManySource",
 		"packageName": "cool.klass.xample.coverage",
 		"superInterfaces": [],

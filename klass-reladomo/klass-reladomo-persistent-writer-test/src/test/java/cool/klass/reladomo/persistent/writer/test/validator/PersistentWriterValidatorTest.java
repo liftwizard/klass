@@ -89,7 +89,9 @@ class PersistentWriterValidatorTest
 		"test-data/cool.klass.xample.coverage.VersionedOwnedSource.csv",
 		"test-data/cool.klass.xample.coverage.VersionedOwnedSourceVersion.csv",
 		"test-data/cool.klass.xample.coverage.VersionedOwnedOneToOneTarget.csv",
-		"test-data/cool.klass.xample.coverage.VersionedOwnedOneToManyTarget.csv"
+		"test-data/cool.klass.xample.coverage.VersionedOwnedOneToManyTarget.csv",
+		"test-data/cool.klass.xample.coverage.UnownedNaturalManyToOneTarget.csv",
+		"test-data/cool.klass.xample.coverage.UnownedNaturalManyToOneSource.csv"
 	);
 
 	private final ReladomoDataStore reladomoDataStore = PersistentWriterValidatorTest.getReladomoDataStore();
@@ -203,6 +205,14 @@ class PersistentWriterValidatorTest
 			"source 1"
 		);
 		this.synchronize(updateVersionedOwnedSource, "synchronize_unstored_optional_owned_to_one_null");
+
+		ValidationCase updateUnownedNaturalManyToOneSource = this.updateCase(
+			"Update_UnownedNaturalManyToOneSource",
+			"UnownedNaturalManyToOneSource",
+			"key",
+			"source 1"
+		);
+		this.synchronize(updateUnownedNaturalManyToOneSource, "synchronize_optional_unowned_to_one_missing");
 	}
 
 	@Nonnull

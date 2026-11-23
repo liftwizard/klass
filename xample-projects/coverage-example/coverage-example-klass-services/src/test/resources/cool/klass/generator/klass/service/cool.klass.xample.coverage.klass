@@ -94,6 +94,42 @@ service FinalPropertiesResource on FinalProperties
         }
 }
 
+service UnownedNaturalManyToOneTargetResource on UnownedNaturalManyToOneTarget
+{
+    /unownedNaturalManyToOneTarget/{key: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            projection  : UnownedNaturalManyToOneTargetProjection;
+        }
+    /unownedNaturalManyToOneTarget
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : UnownedNaturalManyToOneTargetProjection;
+        }
+}
+
+service UnownedNaturalManyToOneSourceResource on UnownedNaturalManyToOneSource
+{
+    /unownedNaturalManyToOneSource/{key: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            projection  : UnownedNaturalManyToOneSourceProjection;
+        }
+    /unownedNaturalManyToOneSource
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : UnownedNaturalManyToOneSourceProjection;
+        }
+}
+
 service OwnedNaturalOneToManySourceResource on OwnedNaturalOneToManySource
 {
     /ownedNaturalOneToManySource/{key: String[1..1]}

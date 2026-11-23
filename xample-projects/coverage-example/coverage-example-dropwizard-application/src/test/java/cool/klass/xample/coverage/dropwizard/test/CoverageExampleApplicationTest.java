@@ -43,6 +43,9 @@ class CoverageExampleApplicationTest
 	private static final String VERSIONED_OWNED_SOURCE_URL =
 		"http://localhost:{port}/api/versionedOwnedSource/VersionedOwnedSource key 1 ☝";
 
+	private static final String UNOWNED_NATURAL_MANY_TO_ONE_SOURCE_URL =
+		"http://localhost:{port}/api/unownedNaturalManyToOneSource/UnownedNaturalManyToOneSource key 1 ☝";
+
 	@RegisterExtension
 	final FileMatchExtension fileMatchExtension = new FileMatchExtension(this.getClass());
 
@@ -88,6 +91,7 @@ class CoverageExampleApplicationTest
 		this.everyTypeKeyPropertyPostWithProjection("postMultipleWithProjection", "multipleWithProjection");
 		this.everyTypeKeyPropertyPostWithoutBody("postSingle", "single");
 		this.versionedOwnedSourcePutNullGrandchild();
+		this.unownedNaturalManyToOnePutWithoutTarget();
 	}
 
 	private void swaggerSpecIsServed()
@@ -206,6 +210,35 @@ class CoverageExampleApplicationTest
 
 		Response getResponse = this.getPropertiesById(client, "propertiesRequired");
 		this.assertResponse("propertiesRequired.putFirst2", Status.OK, getResponse);
+	}
+
+	private void unownedNaturalManyToOnePutWithoutTarget()
+	{
+		Client client = this.getClient("unownedNaturalManyToOne.putWithoutTarget");
+
+		Response getBeforeResponse = this.getUnownedNaturalManyToOneSource(client);
+		this.assertResponse("unownedNaturalManyToOne.putWithoutTarget1", Status.OK, getBeforeResponse);
+
+		// Omitting the optional unowned target clears the source's foreign key
+		Response putResponse = client
+			.target(UNOWNED_NATURAL_MANY_TO_ONE_SOURCE_URL)
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.header("Authorization", "Impersonation User userId 1")
+			.put(Entity.json(this.slurp("unownedNaturalManyToOne.putWithoutTarget.json5")));
+		this.assertEmptyResponse(Status.NO_CONTENT, putResponse);
+
+		Response getAfterResponse = this.getUnownedNaturalManyToOneSource(client);
+		this.assertResponse("unownedNaturalManyToOne.putWithoutTarget2", Status.OK, getAfterResponse);
+	}
+
+	private Response getUnownedNaturalManyToOneSource(Client client)
+	{
+		return client
+			.target(UNOWNED_NATURAL_MANY_TO_ONE_SOURCE_URL)
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.get();
 	}
 
 	private Response putPropertiesById(Client client, String resource, String json)
