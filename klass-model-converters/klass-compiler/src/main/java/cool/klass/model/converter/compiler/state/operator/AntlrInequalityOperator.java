@@ -74,26 +74,12 @@ public class AntlrInequalityOperator
 		@Nonnull ListIterable<AntlrType> targetTypes
 	)
 	{
-		if (sourceTypes.isEmpty() || targetTypes.isEmpty())
+		if (AntlrOperator.areCompatible(sourceTypes, targetTypes))
 		{
 			return;
 		}
 
-		if (sourceTypes.equals(targetTypes))
-		{
-			return;
-		}
-
-		if (sourceTypes.size() == 1 && targetTypes.contains(sourceTypes.getOnly()))
-		{
-			return;
-		}
-
-		String message = String.format(
-			"Incompatible types: '%s' and '%s'.",
-			sourceTypes.getFirst(),
-			targetTypes.getFirst()
-		);
+		String message = AntlrOperator.getIncompatibleTypesMessage(sourceTypes, targetTypes);
 		// Cast is a deliberate assertion
 		var criteriaOperatorContext = (CriteriaOperatorContext) this.elementContext.getParent().getParent();
 		compilerAnnotationHolder.add("ERR_OPR_NEQ", message, this, criteriaOperatorContext);
