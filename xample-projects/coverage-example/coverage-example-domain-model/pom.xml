@@ -40,7 +40,6 @@
                         <klassSourcePackage>${app.rootPackageName}</klassSourcePackage>
                     </klassSourcePackages>
                     <logCompilerAnnotations>true</logCompilerAnnotations>
-                    <klass.logGitHubAnnotations>true</klass.logGitHubAnnotations>
                     <colorScheme>dark</colorScheme>
                 </configuration>
                 <executions>
