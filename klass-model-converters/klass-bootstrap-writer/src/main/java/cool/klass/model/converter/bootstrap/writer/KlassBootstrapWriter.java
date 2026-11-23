@@ -44,6 +44,7 @@ import cool.klass.model.meta.domain.api.projection.ProjectionElement;
 import cool.klass.model.meta.domain.api.projection.ProjectionProjectionReference;
 import cool.klass.model.meta.domain.api.projection.ProjectionReferenceProperty;
 import cool.klass.model.meta.domain.api.projection.ProjectionVisitor;
+import cool.klass.model.meta.domain.api.projection.ProjectionWithReferenceProperty;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.meta.domain.api.property.EnumerationProperty;
@@ -755,21 +756,11 @@ public class KlassBootstrapWriter
 					@Nonnull ProjectionReferenceProperty projectionReferenceProperty
 				)
 				{
-					var bootstrappedProjectionElement = new klass.model.meta.domain.ProjectionElement();
-					bootstrappedProjectionElement.setName(projectionReferenceProperty.getName());
-					bootstrappedProjectionElement.setOrdinal(projectionReferenceProperty.getOrdinal());
-					bootstrappedProjectionElement.setParentId(bootstrappedProjectionParent.getId());
-					bootstrappedProjectionElement.insert();
-
-					var bootstrappedProjectionWithAssociationEnd = new ProjectionWithAssociationEnd();
-					bootstrappedProjectionWithAssociationEnd.setId(bootstrappedProjectionElement.getId());
-					bootstrappedProjectionWithAssociationEnd.setAssociationEndClass(
-						projectionReferenceProperty.getProperty().getOwningClassifier().getName()
+					var bootstrappedProjectionElement = insertProjectionChildElement(
+						projectionReferenceProperty,
+						bootstrappedProjectionParent
 					);
-					bootstrappedProjectionWithAssociationEnd.setAssociationEndName(
-						projectionReferenceProperty.getProperty().getName()
-					);
-					bootstrappedProjectionWithAssociationEnd.insert();
+					insertProjectionWithAssociationEnd(projectionReferenceProperty, bootstrappedProjectionElement);
 
 					var bootstrappedProjectionReferenceProperty =
 						new klass.model.meta.domain.ProjectionReferenceProperty();
@@ -790,21 +781,11 @@ public class KlassBootstrapWriter
 					@Nonnull ProjectionProjectionReference projectionProjectionReference
 				)
 				{
-					var bootstrappedProjectionElement = new klass.model.meta.domain.ProjectionElement();
-					bootstrappedProjectionElement.setName(projectionProjectionReference.getName());
-					bootstrappedProjectionElement.setOrdinal(projectionProjectionReference.getOrdinal());
-					bootstrappedProjectionElement.setParentId(bootstrappedProjectionParent.getId());
-					bootstrappedProjectionElement.insert();
-
-					var bootstrappedProjectionWithAssociationEnd = new ProjectionWithAssociationEnd();
-					bootstrappedProjectionWithAssociationEnd.setId(bootstrappedProjectionElement.getId());
-					bootstrappedProjectionWithAssociationEnd.setAssociationEndClass(
-						projectionProjectionReference.getProperty().getOwningClassifier().getName()
+					var bootstrappedProjectionElement = insertProjectionChildElement(
+						projectionProjectionReference,
+						bootstrappedProjectionParent
 					);
-					bootstrappedProjectionWithAssociationEnd.setAssociationEndName(
-						projectionProjectionReference.getProperty().getName()
-					);
-					bootstrappedProjectionWithAssociationEnd.insert();
+					insertProjectionWithAssociationEnd(projectionProjectionReference, bootstrappedProjectionElement);
 
 					var bootstrappedProjectionProjectionReference =
 						new klass.model.meta.domain.ProjectionProjectionReference();
@@ -820,11 +801,10 @@ public class KlassBootstrapWriter
 					@Nonnull ProjectionDataTypeProperty projectionDataTypeProperty
 				)
 				{
-					var bootstrappedProjectionElement = new klass.model.meta.domain.ProjectionElement();
-					bootstrappedProjectionElement.setName(projectionDataTypeProperty.getName());
-					bootstrappedProjectionElement.setOrdinal(projectionDataTypeProperty.getOrdinal());
-					bootstrappedProjectionElement.setParentId(bootstrappedProjectionParent.getId());
-					bootstrappedProjectionElement.insert();
+					var bootstrappedProjectionElement = insertProjectionChildElement(
+						projectionDataTypeProperty,
+						bootstrappedProjectionParent
+					);
 
 					var bootstrappedProjectionDataTypeProperty =
 						new klass.model.meta.domain.ProjectionDataTypeProperty();
@@ -839,6 +819,36 @@ public class KlassBootstrapWriter
 				}
 			}
 		);
+	}
+
+	@Nonnull
+	private static klass.model.meta.domain.ProjectionElement insertProjectionChildElement(
+		@Nonnull ProjectionChild projectionChild,
+		@Nonnull klass.model.meta.domain.ProjectionElement bootstrappedProjectionParent
+	)
+	{
+		var bootstrappedProjectionElement = new klass.model.meta.domain.ProjectionElement();
+		bootstrappedProjectionElement.setName(projectionChild.getName());
+		bootstrappedProjectionElement.setOrdinal(projectionChild.getOrdinal());
+		bootstrappedProjectionElement.setParentId(bootstrappedProjectionParent.getId());
+		bootstrappedProjectionElement.insert();
+		return bootstrappedProjectionElement;
+	}
+
+	private static void insertProjectionWithAssociationEnd(
+		@Nonnull ProjectionWithReferenceProperty projectionWithReferenceProperty,
+		@Nonnull klass.model.meta.domain.ProjectionElement bootstrappedProjectionElement
+	)
+	{
+		var bootstrappedProjectionWithAssociationEnd = new ProjectionWithAssociationEnd();
+		bootstrappedProjectionWithAssociationEnd.setId(bootstrappedProjectionElement.getId());
+		bootstrappedProjectionWithAssociationEnd.setAssociationEndClass(
+			projectionWithReferenceProperty.getProperty().getOwningClassifier().getName()
+		);
+		bootstrappedProjectionWithAssociationEnd.setAssociationEndName(
+			projectionWithReferenceProperty.getProperty().getName()
+		);
+		bootstrappedProjectionWithAssociationEnd.insert();
 	}
 
 	private NamedProjection handleNamedProjection(@Nonnull Projection projection)
