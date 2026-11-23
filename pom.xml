@@ -297,6 +297,7 @@
                         <version>3.11.0</version>
                         <configuration>
                             <ignoredUnusedDeclaredDependencies combine.children="append">
+                                <ignoredUnusedDeclaredDependency>com.mattbertolini:liquibase-slf4j</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-domain-model</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-domain-model</ignoredUnusedDeclaredDependency>
                                 <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-graphql-reladomo-finder</ignoredUnusedDeclaredDependency>
