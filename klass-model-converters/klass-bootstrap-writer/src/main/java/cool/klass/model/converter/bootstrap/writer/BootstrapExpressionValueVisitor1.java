@@ -60,28 +60,29 @@ public class BootstrapExpressionValueVisitor1
 		return this.bootstrappedExpressionValues;
 	}
 
-	@Override
-	public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue)
+	private void addExpressionValue(@Nonnull cool.klass.model.meta.domain.api.value.ExpressionValue expressionValue)
 	{
 		var bootstrappedExpressionValue = new ExpressionValue();
 		this.bootstrappedExpressionValues.add(bootstrappedExpressionValue);
-		this.expressionValuesByExpressionValue.put(typeMemberExpressionValue, bootstrappedExpressionValue);
+		this.expressionValuesByExpressionValue.put(expressionValue, bootstrappedExpressionValue);
+	}
+
+	@Override
+	public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue)
+	{
+		this.addExpressionValue(typeMemberExpressionValue);
 	}
 
 	@Override
 	public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue)
 	{
-		var bootstrappedExpressionValue = new ExpressionValue();
-		this.bootstrappedExpressionValues.add(bootstrappedExpressionValue);
-		this.expressionValuesByExpressionValue.put(thisMemberExpressionValue, bootstrappedExpressionValue);
+		this.addExpressionValue(thisMemberExpressionValue);
 	}
 
 	@Override
 	public void visitParameterReference(@Nonnull ParameterReference parameterReference)
 	{
-		var bootstrappedExpressionValue = new ExpressionValue();
-		this.bootstrappedExpressionValues.add(bootstrappedExpressionValue);
-		this.expressionValuesByExpressionValue.put(parameterReference, bootstrappedExpressionValue);
+		this.addExpressionValue(parameterReference);
 	}
 
 	@Override
@@ -127,9 +128,7 @@ public class BootstrapExpressionValueVisitor1
 	@Override
 	public void visitUserLiteral(@Nonnull UserLiteral userLiteral)
 	{
-		var bootstrappedExpressionValue = new ExpressionValue();
-		this.bootstrappedExpressionValues.add(bootstrappedExpressionValue);
-		this.expressionValuesByExpressionValue.put(userLiteral, bootstrappedExpressionValue);
+		this.addExpressionValue(userLiteral);
 	}
 
 	@Override
