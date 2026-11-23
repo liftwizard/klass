@@ -26,18 +26,14 @@ import cool.klass.model.converter.compiler.state.AntlrClassifier;
 import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
 import cool.klass.model.converter.compiler.state.property.AntlrModifier;
 import cool.klass.model.converter.compiler.state.property.validation.AbstractAntlrPropertyValidation;
-import cool.klass.model.meta.grammar.KlassParser;
-import cool.klass.model.meta.grammar.KlassParser.ClassBodyContext;
-import cool.klass.model.meta.grammar.KlassParser.InterfaceBodyContext;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;
 import org.eclipse.collections.api.list.MutableList;
 
 // TODO: Only put audit properties onto version types
 public class AuditPropertyInferencePhase
-	extends AbstractCompilerPhase
+	extends AbstractClassifierPropertyMacroPhase
 {
 	public AuditPropertyInferencePhase(@Nonnull CompilerState compilerState)
 	{
@@ -52,20 +48,7 @@ public class AuditPropertyInferencePhase
 	}
 
 	@Override
-	public void exitInterfaceBody(InterfaceBodyContext ctx)
-	{
-		this.runCompilerMacro(ctx);
-		super.exitInterfaceBody(ctx);
-	}
-
-	@Override
-	public void exitClassBody(ClassBodyContext ctx)
-	{
-		this.runCompilerMacro(ctx);
-		super.exitClassBody(ctx);
-	}
-
-	private void runCompilerMacro(ParserRuleContext inPlaceContext)
+	protected void runCompilerMacro(ParserRuleContext inPlaceContext)
 	{
 		AntlrClassifier classifier = this.compilerState.getCompilerWalk().getClassifier();
 		MutableList<AntlrModifier> declaredModifiers = classifier.getDeclaredModifiers();
@@ -141,27 +124,5 @@ public class AuditPropertyInferencePhase
         */
 
 		this.runCompilerMacro(inPlaceContext, sourceCodeText.toString(), auditedModifier);
-	}
-
-	private void runCompilerMacro(
-		ParserRuleContext inPlaceContext,
-		@Nonnull String sourceCodeText,
-		AntlrModifier macroElement
-	)
-	{
-		if (sourceCodeText.isEmpty())
-		{
-			return;
-		}
-		ParseTreeListener compilerPhase = new PropertyPhase(this.compilerState);
-
-		this.compilerState.runInPlaceCompilerMacro(
-			macroElement,
-			this,
-			sourceCodeText,
-			KlassParser::classBody,
-			inPlaceContext,
-			compilerPhase
-		);
 	}
 }
