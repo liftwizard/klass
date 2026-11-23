@@ -830,15 +830,15 @@ public class ReladomoDataStore
 			throw new AssertionError(detailMessage);
 		}
 
-		ImmutableList<Klass> potentialSubClasses = klass.getSubClasses().select((subClass) ->
-		{
-			MithraObject subClassPersistentInstance = this.getSubClassPersistentInstance(
-				klass,
-				subClass,
-				(MithraObject) persistentInstance
-			);
-			return subClassPersistentInstance != null;
-		});
+		ImmutableList<Pair<Klass, MithraObject>> potentialSubClasses = klass
+			.getSubClasses()
+			.collect((subClass) ->
+				Tuples.pair(
+					subClass,
+					this.getSubClassPersistentInstance(klass, subClass, (MithraObject) persistentInstance)
+				)
+			)
+			.reject((pair) -> pair.getTwo() == null);
 
 		if (potentialSubClasses.isEmpty())
 		{
@@ -847,18 +847,11 @@ public class ReladomoDataStore
 
 		if (potentialSubClasses.size() == 1)
 		{
-			Klass onlySubClass = potentialSubClasses.getOnly();
-			MithraObject subClassPersistentInstance = this.getSubClassPersistentInstance(
-				klass,
-				onlySubClass,
-				(MithraObject) persistentInstance
-			);
-
-			Klass result = this.getMostSpecificSubclass(subClassPersistentInstance, onlySubClass);
-			return result;
+			Pair<Klass, MithraObject> onlySubClass = potentialSubClasses.getOnly();
+			return this.getMostSpecificSubclass(onlySubClass.getTwo(), onlySubClass.getOne());
 		}
 
-		String detailMessage = "Expected one subclass but got " + potentialSubClasses;
+		String detailMessage = "Expected one subclass but got " + potentialSubClasses.collect(Pair::getOne);
 		throw new AssertionError(detailMessage);
 	}
 
