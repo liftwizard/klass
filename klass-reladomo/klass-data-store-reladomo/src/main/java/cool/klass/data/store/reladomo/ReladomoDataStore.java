@@ -838,7 +838,7 @@ public class ReladomoDataStore
 					this.getSubClassPersistentInstance(klass, subClass, (MithraObject) persistentInstance)
 				)
 			)
-			.select((pair) -> pair.getTwo() != null);
+			.reject((pair) -> pair.getTwo() == null);
 
 		if (potentialSubClasses.isEmpty())
 		{
