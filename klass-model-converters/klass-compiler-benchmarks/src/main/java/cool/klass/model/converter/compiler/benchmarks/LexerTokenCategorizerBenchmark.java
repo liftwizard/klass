@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import cool.klass.model.converter.compiler.token.categorizing.lexer.LexerBasedTokenCategorizer;
 import cool.klass.model.meta.grammar.KlassLexer;
-import io.liftwizard.junit.extension.match.FileSlurper;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Token;
@@ -32,7 +31,6 @@ import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
@@ -49,21 +47,12 @@ import org.openjdk.jmh.annotations.Warmup;
 @Fork(3)
 public class LexerTokenCategorizerBenchmark
 {
-	@Param({
-		KlassSources.META,
-		KlassSources.STACKOVERFLOW,
-		KlassSources.COVERAGE_EXAMPLE,
-		KlassSources.RELADOMO_TO_MANY_ABSTRACT,
-	})
-	public String sourceName;
-
 	private CommonTokenStream tokenStream;
 
 	@Setup
-	public void setUp()
+	public void setUp(KlassSourceState source)
 	{
-		String sourceCodeText = FileSlurper.slurp(this.sourceName, this.getClass());
-		var lexer = new KlassLexer(CharStreams.fromString(sourceCodeText, this.sourceName));
+		var lexer = new KlassLexer(CharStreams.fromString(source.getSourceCodeText(), source.getSourceName()));
 		this.tokenStream = new CommonTokenStream(lexer);
 		this.tokenStream.fill();
 	}
