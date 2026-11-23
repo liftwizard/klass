@@ -24,7 +24,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -66,11 +65,11 @@ import cool.klass.model.meta.domain.api.property.ReferenceProperty;
 import cool.klass.model.meta.domain.api.visitor.AssertObjectMatchesDataTypePropertyVisitor;
 import cool.klass.reladomo.utc.infinity.timestamp.UtcInfinityTimestamp;
 import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.ConcurrentMutableMap;
 import org.eclipse.collections.api.map.MapIterable;
-import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.api.map.OrderedMap;
 import org.eclipse.collections.api.tuple.Pair;
-import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
+import org.eclipse.collections.impl.map.mutable.ConcurrentHashMap;
 import org.eclipse.collections.impl.tuple.Tuples;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,12 +95,12 @@ public class ReladomoDataStore
 	private final Supplier<UUID> uuidSupplier;
 	private final int retryCount;
 
-	private final MutableOrderedMap<Classifier, AbstractRelatedFinder> memoizedRelatedFinders = OrderedMapAdapter.adapt(
-		new LinkedHashMap<>()
-	);
-	private final MutableOrderedMap<Pair<Class<?>, PrimitiveProperty>, Method> memoizedGenerateAndSetIdMethods =
-		OrderedMapAdapter.adapt(new LinkedHashMap<>());
-	private final MutableOrderedMap<Property, Method> memoizedGetters = OrderedMapAdapter.adapt(new LinkedHashMap<>());
+	// The data store is a shared singleton, so these caches are read and written by concurrent request threads.
+	private final ConcurrentMutableMap<Classifier, AbstractRelatedFinder> memoizedRelatedFinders =
+		ConcurrentHashMap.newMap();
+	private final ConcurrentMutableMap<Pair<Class<?>, PrimitiveProperty>, Method> memoizedGenerateAndSetIdMethods =
+		ConcurrentHashMap.newMap();
+	private final ConcurrentMutableMap<Property, Method> memoizedGetters = ConcurrentHashMap.newMap();
 
 	public ReladomoDataStore(@Nonnull Supplier<UUID> uuidSupplier, int retryCount)
 	{
