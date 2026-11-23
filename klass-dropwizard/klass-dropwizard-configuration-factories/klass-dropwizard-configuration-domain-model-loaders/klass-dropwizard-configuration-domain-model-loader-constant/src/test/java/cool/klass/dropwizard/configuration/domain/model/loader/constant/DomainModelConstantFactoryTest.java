@@ -64,7 +64,9 @@ class DomainModelConstantFactoryTest
 			new ResourceConfigurationSourceProvider(),
 			"config-test.json5"
 		);
-		assertThat(domainModelFactory).isInstanceOf(DomainModelConstantFactory.class);
+		var expected = new DomainModelConstantFactory();
+		expected.setFullyQualifiedClassName("com.example.MyDomainModel");
+		assertThat(domainModelFactory).usingRecursiveComparison().withStrictTypeChecking().isEqualTo(expected);
 	}
 
 	private static ObjectMapper getObjectMapper()
