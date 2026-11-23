@@ -66,6 +66,28 @@ public abstract class AntlrOperator
 	@Nonnull
 	public abstract AbstractOperatorBuilder<?> getElementBuilder();
 
+	protected static boolean areCompatible(
+		@Nonnull ListIterable<AntlrType> sourceTypes,
+		@Nonnull ListIterable<AntlrType> targetTypes
+	)
+	{
+		return (
+			sourceTypes.isEmpty() ||
+			targetTypes.isEmpty() ||
+			sourceTypes.equals(targetTypes) ||
+			(sourceTypes.size() == 1 && targetTypes.contains(sourceTypes.getOnly()))
+		);
+	}
+
+	@Nonnull
+	protected static String getIncompatibleTypesMessage(
+		@Nonnull ListIterable<AntlrType> sourceTypes,
+		@Nonnull ListIterable<AntlrType> targetTypes
+	)
+	{
+		return String.format("Incompatible types: '%s' and '%s'.", sourceTypes.getFirst(), targetTypes.getFirst());
+	}
+
 	public abstract void checkTypes(
 		CompilerAnnotationHolder compilerAnnotationHolder,
 		ListIterable<AntlrType> sourceTypes,

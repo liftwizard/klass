@@ -73,26 +73,12 @@ public class AntlrInOperator
 		@Nonnull ListIterable<AntlrType> targetTypes
 	)
 	{
-		if (sourceTypes.isEmpty() || targetTypes.isEmpty())
+		if (AntlrOperator.areCompatible(sourceTypes, targetTypes))
 		{
 			return;
 		}
 
-		if (sourceTypes.equals(targetTypes))
-		{
-			return;
-		}
-
-		if (sourceTypes.size() == 1 && targetTypes.contains(sourceTypes.getOnly()))
-		{
-			return;
-		}
-
-		String message = String.format(
-			"Incompatible types: '%s' and '%s'.",
-			sourceTypes.getFirst(),
-			targetTypes.getFirst()
-		);
+		String message = AntlrOperator.getIncompatibleTypesMessage(sourceTypes, targetTypes);
 		compilerAnnotationHolder.add("ERR_OPR_IN", message, this);
 	}
 }
