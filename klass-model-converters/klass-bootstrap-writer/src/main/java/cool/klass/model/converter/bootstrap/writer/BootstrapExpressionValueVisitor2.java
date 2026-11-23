@@ -78,35 +78,37 @@ public class BootstrapExpressionValueVisitor2
 	@Override
 	public void visitTypeMember(@Nonnull TypeMemberReferencePath typeMemberExpressionValue)
 	{
-		var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(typeMemberExpressionValue);
-
-		Klass klass = typeMemberExpressionValue.getKlass();
-		DataTypeProperty property = typeMemberExpressionValue.getProperty();
-
-		var bootstrappedMemberReferencePath = new MemberReferencePath();
-		this.bootstrappedMemberReferencePaths.add(bootstrappedMemberReferencePath);
-		bootstrappedMemberReferencePath.setId(bootstrappedExpressionValue.getId());
-		bootstrappedMemberReferencePath.setClassName(klass.getName());
-		bootstrappedMemberReferencePath.setPropertyClassName(property.getOwningClassifier().getName());
-		bootstrappedMemberReferencePath.setPropertyName(property.getName());
+		var bootstrappedExpressionValue = this.addMemberReferencePath(typeMemberExpressionValue);
 
 		var bootstrappedTypeMemberReferencePath = new klass.model.meta.domain.TypeMemberReferencePath();
 		this.bootstrappedTypeMemberReferencePaths.add(bootstrappedTypeMemberReferencePath);
 		bootstrappedTypeMemberReferencePath.setId(bootstrappedExpressionValue.getId());
-
-		if (typeMemberExpressionValue.getAssociationEnds().notEmpty())
-		{
-			throw new AssertionError("TODO");
-		}
 	}
 
 	@Override
 	public void visitThisMember(@Nonnull ThisMemberReferencePath thisMemberExpressionValue)
 	{
-		var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(thisMemberExpressionValue);
+		var bootstrappedExpressionValue = this.addMemberReferencePath(thisMemberExpressionValue);
 
-		Klass klass = thisMemberExpressionValue.getKlass();
-		DataTypeProperty property = thisMemberExpressionValue.getProperty();
+		var bootstrappedThisMemberReferencePath = new klass.model.meta.domain.ThisMemberReferencePath();
+		this.bootstrappedThisMemberReferencePaths.add(bootstrappedThisMemberReferencePath);
+		bootstrappedThisMemberReferencePath.setId(bootstrappedExpressionValue.getId());
+	}
+
+	@Nonnull
+	private klass.model.meta.domain.ExpressionValue addMemberReferencePath(
+		@Nonnull cool.klass.model.meta.domain.api.value.MemberReferencePath memberReferencePath
+	)
+	{
+		if (memberReferencePath.getAssociationEnds().notEmpty())
+		{
+			throw new AssertionError("TODO");
+		}
+
+		var bootstrappedExpressionValue = this.expressionValuesByExpressionValue.get(memberReferencePath);
+
+		Klass klass = memberReferencePath.getKlass();
+		DataTypeProperty property = memberReferencePath.getProperty();
 
 		var bootstrappedMemberReferencePath = new MemberReferencePath();
 		this.bootstrappedMemberReferencePaths.add(bootstrappedMemberReferencePath);
@@ -114,15 +116,7 @@ public class BootstrapExpressionValueVisitor2
 		bootstrappedMemberReferencePath.setClassName(klass.getName());
 		bootstrappedMemberReferencePath.setPropertyClassName(property.getOwningClassifier().getName());
 		bootstrappedMemberReferencePath.setPropertyName(property.getName());
-
-		var bootstrappedThisMemberReferencePath = new klass.model.meta.domain.ThisMemberReferencePath();
-		this.bootstrappedThisMemberReferencePaths.add(bootstrappedThisMemberReferencePath);
-		bootstrappedThisMemberReferencePath.setId(bootstrappedExpressionValue.getId());
-
-		if (thisMemberExpressionValue.getAssociationEnds().notEmpty())
-		{
-			throw new AssertionError("TODO");
-		}
+		return bootstrappedExpressionValue;
 	}
 
 	@Override
