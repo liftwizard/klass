@@ -435,8 +435,20 @@ public class ReladomoDataStore
 			throw new IllegalStateException(message);
 		}
 
-		Object result = attribute.valueOf(persistentInstance);
+		return ReladomoDataStore.convertAttributeValue(
+			dataTypeProperty,
+			attribute,
+			attribute.valueOf(persistentInstance)
+		);
+	}
 
+	@Nullable
+	private static Object convertAttributeValue(
+		@Nonnull DataTypeProperty dataTypeProperty,
+		@Nonnull Attribute attribute,
+		@Nonnull Object result
+	)
+	{
 		if (dataTypeProperty.getType() == PrimitiveType.LOCAL_DATE)
 		{
 			return ((Date) result).toLocalDate();
@@ -514,44 +526,11 @@ public class ReladomoDataStore
 			return null;
 		}
 
-		Object result = attribute.valueOf(persistentInstance);
-
-		if (dataTypeProperty.getType() == PrimitiveType.LOCAL_DATE)
-		{
-			return ((Date) result).toLocalDate();
-		}
-
-		if (dataTypeProperty.getType() == PrimitiveType.INSTANT)
-		{
-			return ((Timestamp) result).toInstant();
-		}
-
-		boolean isTemporal = dataTypeProperty.isTemporal();
-		if (isTemporal)
-		{
-			Timestamp infinity = ((TimestampAttribute<?>) attribute).getAsOfAttributeInfinity();
-			if (infinity.equals(result))
-			{
-				return null;
-			}
-			// TODO: Consider handling here the case where validTo == systemTo + 1 day, but really means infinity
-			// TODO: Alternately, just enable future dated rows to turn off this optimization
-			return ((Timestamp) result).toInstant();
-		}
-
-		if (dataTypeProperty instanceof EnumerationProperty enumerationProperty)
-		{
-			var prettyName = (String) result;
-			Enumeration enumeration = enumerationProperty.getType();
-
-			Optional<EnumerationLiteral> enumerationLiteral = enumeration
-				.getEnumerationLiterals()
-				.detectOptional((each) -> each.getPrettyName().equals(prettyName));
-
-			return enumerationLiteral.orElseThrow(() -> new AssertionError(prettyName));
-		}
-
-		return result;
+		return ReladomoDataStore.convertAttributeValue(
+			dataTypeProperty,
+			attribute,
+			attribute.valueOf(persistentInstance)
+		);
 	}
 
 	private Object getPropertyReflectively(@Nonnull Object persistentInstance, @Nonnull Property property)
