@@ -1,0 +1,13 @@
+{
+	value: "value",
+	detail:
+	{
+		value: "detail value",
+	},
+	items: [
+		{
+			name: "item 1",
+			value: "item value 1",
+		},
+	],
+}
