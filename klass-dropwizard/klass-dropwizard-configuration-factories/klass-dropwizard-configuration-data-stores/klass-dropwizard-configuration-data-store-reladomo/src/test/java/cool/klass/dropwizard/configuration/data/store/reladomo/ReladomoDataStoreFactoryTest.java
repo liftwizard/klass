@@ -27,6 +27,7 @@ import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
 import io.dropwizard.jackson.DiscoverableSubtypeResolver;
 import io.dropwizard.jackson.Jackson;
 import io.dropwizard.jersey.validation.Validators;
+import io.liftwizard.dropwizard.configuration.uuid.seed.SeedUUIDSupplierFactory;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.serialization.jackson.config.ObjectMapperConfig;
 import org.junit.jupiter.api.Test;
@@ -64,7 +65,12 @@ class ReladomoDataStoreFactoryTest
 			new ResourceConfigurationSourceProvider(),
 			"config-test.json5"
 		);
-		assertThat(dataStoreFactory).isInstanceOf(ReladomoDataStoreFactory.class);
+		var expectedUuidFactory = new SeedUUIDSupplierFactory();
+		expectedUuidFactory.setSeed("example seed");
+		var expected = new ReladomoDataStoreFactory();
+		expected.setUuid(expectedUuidFactory);
+		expected.setRetryCount(1);
+		assertThat(dataStoreFactory).usingRecursiveComparison().withStrictTypeChecking().isEqualTo(expected);
 	}
 
 	private static ObjectMapper newObjectMapper()

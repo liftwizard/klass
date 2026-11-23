@@ -27,6 +27,7 @@ import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
 import io.dropwizard.jackson.DiscoverableSubtypeResolver;
 import io.dropwizard.jackson.Jackson;
 import io.dropwizard.jersey.validation.Validators;
+import io.liftwizard.dropwizard.configuration.enabled.EnabledFactory;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.serialization.jackson.config.ObjectMapperConfig;
 import org.junit.jupiter.api.Test;
@@ -64,7 +65,11 @@ class DomainModelCompilerFactoryTest
 			new ResourceConfigurationSourceProvider(),
 			"config-test.json5"
 		);
-		assertThat(domainModelFactory).isInstanceOf(DomainModelCompilerFactory.class);
+		var expected = new DomainModelCompilerFactory();
+		expected.setSourcePackages(List.of("com.example"));
+		expected.setColorScheme("dark");
+		expected.setIdeLinksFactory(new EnabledFactory(false));
+		assertThat(domainModelFactory).usingRecursiveComparison().withStrictTypeChecking().isEqualTo(expected);
 	}
 
 	private static ObjectMapper newObjectMapper()
