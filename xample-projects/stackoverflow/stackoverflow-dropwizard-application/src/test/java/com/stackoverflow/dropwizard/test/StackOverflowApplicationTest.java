@@ -47,6 +47,7 @@ class StackOverflowApplicationTest
 		this.put();
 		this.post_vote();
 		this.post_answer();
+		this.put_answers_outside_projection();
 	}
 
 	private void smokeTest()
@@ -105,6 +106,39 @@ class StackOverflowApplicationTest
 			.get();
 
 		this.assertResponse("post_answer_get", Status.OK, getResponse);
+	}
+
+	// The unowned answers array lists a changed answer before an unchanged one; the question's version must still bump
+	private void put_answers_outside_projection()
+	{
+		Client client = this.getClient("put_answers_outside_projection");
+
+		String answerJson = FileSlurper.slurp(this.getClass().getSimpleName() + ".post_answer.json5", this.getClass());
+
+		Response postResponse = client
+			.target("http://localhost:{port}/api/answer")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.header("Authorization", "Impersonation test user 1")
+			.post(Entity.json(answerJson));
+
+		this.assertEmptyResponse(Status.NO_CONTENT, postResponse);
+
+		String putJson = FileSlurper.slurp(
+			this.getClass().getSimpleName() + ".put_answers_outside_projection.json5",
+			this.getClass()
+		);
+
+		Response putResponse = client
+			.target("http://localhost:{port}/api/manual/question/{id}")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.resolveTemplate("id", 1)
+			.queryParam("version", "3")
+			.request()
+			.header("Authorization", "Impersonation test user 1")
+			.put(Entity.json(putJson));
+
+		this.assertResponse("put_answers_outside_projection", Status.OK, putResponse);
 	}
 
 	private void get_smoke_test()
