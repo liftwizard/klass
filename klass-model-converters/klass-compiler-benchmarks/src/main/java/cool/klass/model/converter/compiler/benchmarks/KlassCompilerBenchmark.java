@@ -24,14 +24,12 @@ import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.KlassCompiler;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
-import io.liftwizard.junit.extension.match.FileSlurper;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
-import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
@@ -48,32 +46,22 @@ import org.openjdk.jmh.annotations.Warmup;
 @Fork(3)
 public class KlassCompilerBenchmark
 {
-	@Param({
-		KlassSources.META,
-		KlassSources.STACKOVERFLOW,
-		KlassSources.COVERAGE_EXAMPLE,
-		KlassSources.RELADOMO_TO_MANY_ABSTRACT,
-	})
-	public String sourceName;
-
-	private String sourceCodeText;
 	private AnsiColorScheme colorScheme;
 
 	@Setup
 	public void setUp()
 	{
-		this.sourceCodeText = FileSlurper.slurp(this.sourceName, this.getClass());
 		this.colorScheme = ColorSchemeProvider.getByName("dark");
 	}
 
 	@Benchmark
-	public CompilationResult compile()
+	public CompilationResult compile(KlassSourceState source)
 	{
 		CompilationUnit compilationUnit = CompilationUnit.createFromText(
 			0,
 			Optional.empty(),
-			this.sourceName,
-			this.sourceCodeText
+			source.getSourceName(),
+			source.getSourceCodeText()
 		);
 		return new KlassCompiler(compilationUnit, this.colorScheme).compile();
 	}
