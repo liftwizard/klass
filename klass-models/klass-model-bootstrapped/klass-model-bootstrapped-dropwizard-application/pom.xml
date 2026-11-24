@@ -119,6 +119,11 @@
 
         <dependency>
             <groupId>io.liftwizard</groupId>
+            <artifactId>liftwizard-config-graphql-limits</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.liftwizard</groupId>
             <artifactId>liftwizard-config-single-page-redirect-filter</artifactId>
         </dependency>
         <!--endregion-->

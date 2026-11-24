@@ -23,15 +23,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.smoketurner.dropwizard.graphql.GraphQLFactory;
 import cool.klass.dropwizard.configuration.AbstractKlassConfiguration;
 import io.liftwizard.dropwizard.configuration.graphql.GraphQLFactoryProvider;
+import io.liftwizard.dropwizard.configuration.graphql.limits.GraphQLLimitsFactory;
+import io.liftwizard.dropwizard.configuration.graphql.limits.GraphQLLimitsFactoryProvider;
 import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactory;
 import io.liftwizard.servlet.config.singlepage.SinglePageRedirectFilterFactoryProvider;
 
 public class CoverageExampleConfiguration
 	extends AbstractKlassConfiguration
-	implements GraphQLFactoryProvider, SinglePageRedirectFilterFactoryProvider
+	implements GraphQLFactoryProvider, GraphQLLimitsFactoryProvider, SinglePageRedirectFilterFactoryProvider
 {
 	@Nonnull
 	private @Valid GraphQLFactory graphQL = new GraphQLFactory();
+
+	@Nonnull
+	private @Valid GraphQLLimitsFactory graphQLLimits = new GraphQLLimitsFactory();
 
 	private SinglePageRedirectFilterFactory singlePageRedirectFilterFactory = new SinglePageRedirectFilterFactory();
 
@@ -47,6 +52,20 @@ public class CoverageExampleConfiguration
 	public void setGraphQLFactory(@Nonnull GraphQLFactory factory)
 	{
 		this.graphQL = factory;
+	}
+
+	@Override
+	@Nonnull
+	@JsonProperty("graphQLLimits")
+	public GraphQLLimitsFactory getGraphQLLimitsFactory()
+	{
+		return this.graphQLLimits;
+	}
+
+	@JsonProperty("graphQLLimits")
+	public void setGraphQLLimitsFactory(@Nonnull GraphQLLimitsFactory graphQLLimits)
+	{
+		this.graphQLLimits = graphQLLimits;
 	}
 
 	@Override

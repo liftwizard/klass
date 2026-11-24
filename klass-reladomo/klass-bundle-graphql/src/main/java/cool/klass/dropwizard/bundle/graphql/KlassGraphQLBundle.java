@@ -17,7 +17,6 @@
 package cool.klass.dropwizard.bundle.graphql;
 
 import java.time.Clock;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.servlet.ServletRegistration.Dynamic;
@@ -49,12 +48,15 @@ import io.dropwizard.Configuration;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.liftwizard.dropwizard.configuration.clock.ClockFactoryProvider;
 import io.liftwizard.dropwizard.configuration.graphql.GraphQLFactoryProvider;
+import io.liftwizard.dropwizard.configuration.graphql.limits.GraphQLLimitsFactoryProvider;
 import io.liftwizard.graphql.instrumentation.logging.LiftwizardGraphQLLoggingInstrumentation;
 import io.liftwizard.graphql.instrumentation.metrics.LiftwizardGraphQLMetricsInstrumentation;
 import io.liftwizard.graphql.scalar.temporal.GraphQLLocalDateScalar;
 import io.liftwizard.graphql.scalar.temporal.GraphQLTemporalScalar;
 import org.atteo.evo.inflector.English;
+import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 import org.slf4j.MDC;
@@ -64,12 +66,17 @@ import org.slf4j.MDC.MDCCloseable;
  * The bundle registers the GraphIQL UI at /graphiql and the GraphQL Playground UI at /graphql-playground, by delegating to AssetsBundle. This overrides the behavior of the smoketurner bundle {@link GraphQLBundle}, which registers just one UI (graphiql in older versions, and graphql-playground in newer versions) and registers the UI at the root.
  *
  * <p>
- * The bundle also registers two instrumentations for logging and metrics.
+ * The bundle also registers two instrumentations for logging and metrics, followed by the configured GraphQL limits.
  *
  * @see <a href="https://liftwizard.io/docs/graphql/bundle#liftwizardgraphqlbundle">https://liftwizard.io/docs/graphql/bundle#liftwizardgraphqlbundle</a>
  */
 public class KlassGraphQLBundle<
-	T extends Configuration & GraphQLFactoryProvider & DomainModelFactoryProvider & DataStoreFactoryProvider
+	T extends Configuration
+		& GraphQLFactoryProvider
+		& GraphQLLimitsFactoryProvider
+		& ClockFactoryProvider
+		& DomainModelFactoryProvider
+		& DataStoreFactoryProvider
 >
 	extends GraphQLBundle<T>
 {
@@ -138,13 +145,17 @@ public class KlassGraphQLBundle<
 		// methods being called so the schema is connected properly.
 		GraphQLFactory factory = configuration.getGraphQLFactory();
 
-		// TODO: Move the Clock to Configuration
-		Clock clock = Clock.systemUTC();
+		Clock clock = configuration.getClockFactory().createClock();
 
 		var metricsInstrumentation = new LiftwizardGraphQLMetricsInstrumentation(this.metricRegistry, clock);
 		var loggingInstrumentation = new LiftwizardGraphQLLoggingInstrumentation();
 
-		List<Instrumentation> instrumentations = List.of(metricsInstrumentation, loggingInstrumentation);
+		MutableList<Instrumentation> instrumentations = Lists.mutable.with(
+			metricsInstrumentation,
+			loggingInstrumentation
+		);
+		// The limits come last so that rejected and timed-out queries are still logged and measured.
+		instrumentations.addAllIterable(configuration.getGraphQLLimitsFactory().createInstrumentations(clock));
 		factory.setInstrumentations(instrumentations);
 
 		ObjectMapper objectMapper = this.environment.getObjectMapper();

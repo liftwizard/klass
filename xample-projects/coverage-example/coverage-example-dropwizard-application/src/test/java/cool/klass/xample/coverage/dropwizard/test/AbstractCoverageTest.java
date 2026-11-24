@@ -22,9 +22,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import cool.klass.xample.coverage.dropwizard.application.CoverageExampleApplication;
+import io.dropwizard.testing.ConfigOverride;
 import io.dropwizard.testing.ResourceHelpers;
 import io.liftwizard.dropwizard.testing.junit.AbstractDropwizardAppTest;
 import io.liftwizard.junit.extension.app.LiftwizardAppExtension;
+import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.list.MutableList;
 
 public abstract class AbstractCoverageTest
 	extends AbstractDropwizardAppTest
@@ -35,8 +38,14 @@ public abstract class AbstractCoverageTest
 	{
 		return new LiftwizardAppExtension<>(
 			CoverageExampleApplication.class,
-			ResourceHelpers.resourceFilePath("config-test.json5")
+			ResourceHelpers.resourceFilePath("config-test.json5"),
+			this.getConfigOverrides().toArray(new ConfigOverride[0])
 		);
+	}
+
+	protected MutableList<ConfigOverride> getConfigOverrides()
+	{
+		return Lists.mutable.empty();
 	}
 
 	protected void assertUrlReturns(@Nonnull String testName, @Nonnull String url)
