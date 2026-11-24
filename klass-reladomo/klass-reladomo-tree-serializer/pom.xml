@@ -36,6 +36,12 @@
 
         <dependency>
             <groupId>cool.klass</groupId>
+            <artifactId>klass-reladomo-tree-serializer-state</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
             <artifactId>klass-data-store-reladomo</artifactId>
             <version>${project.version}</version>
         </dependency>
