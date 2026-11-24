@@ -44,7 +44,6 @@ import cool.klass.model.reladomo.tree.SubClassReladomoTreeNode;
 import cool.klass.model.reladomo.tree.SuperClassReladomoTreeNode;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.api.stack.ImmutableStack;
 import org.eclipse.collections.api.stack.MutableStack;
 import org.eclipse.collections.impl.stack.mutable.ArrayStack;
 
@@ -87,7 +86,7 @@ public class ReladomoTreeObjectToDTOSerializerListener
 	@Override
 	public Object getStateToAssertInvariants()
 	{
-		return new State(
+		return new StackState(
 			this.contextStack.toImmutable(),
 			this.finderStack.toImmutable(),
 			this.persistentInstanceStack.toImmutable(),
@@ -397,14 +396,5 @@ public class ReladomoTreeObjectToDTOSerializerListener
 		{
 			throw new RuntimeException("Could not construct " + dtoFQCN, e);
 		}
-	}
-
-	private record State(
-		ImmutableStack<Object> contextStack,
-		ImmutableStack<AbstractRelatedFinder> finderStack,
-		ImmutableStack<Object> persistentInstanceStack,
-		ImmutableStack<Object> resultNodeStack
-	)
-	{
 	}
 }

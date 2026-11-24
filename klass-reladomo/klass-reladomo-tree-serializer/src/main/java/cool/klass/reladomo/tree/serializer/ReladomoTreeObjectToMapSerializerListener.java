@@ -44,7 +44,6 @@ import cool.klass.model.reladomo.tree.SuperClassReladomoTreeNode;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableMap;
-import org.eclipse.collections.api.stack.ImmutableStack;
 import org.eclipse.collections.api.stack.MutableStack;
 import org.eclipse.collections.impl.map.mutable.MapAdapter;
 import org.eclipse.collections.impl.stack.mutable.ArrayStack;
@@ -82,7 +81,7 @@ public class ReladomoTreeObjectToMapSerializerListener
 	@Override
 	public Object getStateToAssertInvariants()
 	{
-		return new State(
+		return new StackState(
 			this.contextStack.toImmutable(),
 			this.finderStack.toImmutable(),
 			this.persistentInstanceStack.toImmutable(),
@@ -332,14 +331,5 @@ public class ReladomoTreeObjectToMapSerializerListener
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".exitReference() not implemented yet"
 		);
-	}
-
-	private record State(
-		ImmutableStack<Object> contextStack,
-		ImmutableStack<AbstractRelatedFinder> finderStack,
-		ImmutableStack<Object> persistentInstanceStack,
-		ImmutableStack<Object> resultNodeStack
-	)
-	{
 	}
 }
