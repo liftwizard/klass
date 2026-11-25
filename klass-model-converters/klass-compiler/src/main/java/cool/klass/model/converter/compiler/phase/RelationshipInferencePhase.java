@@ -123,7 +123,7 @@ public class RelationshipInferencePhase
 					each.getName()
 				)
 			)
-			.makeString("relationship ", " && ", "");
+			.makeString("    relationship ", " && ", "");
 
 		this.runInPlaceCompilerMacro(inPlaceContext, sourceCodeText);
 	}
@@ -147,7 +147,7 @@ public class RelationshipInferencePhase
 					LOWER_CAMEL_TO_UPPER_CAMEL.convert(each.getName())
 				)
 			)
-			.makeString("relationship ", " && ", "");
+			.makeString("    relationship ", " && ", "");
 
 		this.runInPlaceCompilerMacro(inPlaceContext, sourceCodeText);
 	}
