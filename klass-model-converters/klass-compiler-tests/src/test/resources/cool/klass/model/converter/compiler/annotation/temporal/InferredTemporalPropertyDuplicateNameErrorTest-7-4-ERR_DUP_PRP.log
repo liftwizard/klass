@@ -9,6 +9,8 @@ At (InferredTemporalPropertyDuplicateNameErrorTest.klass:7:5)
 [39m5║ [36m{
 [39m7║     [39mvalidTo[36m: [35mString[36m;
 [39m ║ [31m    ^^^^^^^
+[39m+║     [39mvalidTo  [36m: [35mTemporalInstant[36m? [32mvalid [32mto[36m;
+[39m ║ [31m    ^^^^^^^
 [39m8║ [36m}
 [m
 [36mLocation:  [mInferredTemporalPropertyDuplicateNameErrorTest.klass:7:5[m

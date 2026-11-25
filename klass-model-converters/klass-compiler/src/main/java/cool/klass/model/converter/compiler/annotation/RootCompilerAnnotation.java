@@ -22,7 +22,6 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -50,7 +49,7 @@ public class RootCompilerAnnotation
 	private final String message;
 
 	public RootCompilerAnnotation(
-		@Nonnull CompilationUnit compilationUnit,
+		@Nonnull SnippetSource snippetSource,
 		@Nonnull Optional<CauseCompilerAnnotation> macroCause,
 		@Nonnull ImmutableList<ParserRuleContext> offendingContexts,
 		@Nonnull ImmutableList<IAntlrElement> sourceContexts,
@@ -62,7 +61,7 @@ public class RootCompilerAnnotation
 	)
 	{
 		super(
-			compilationUnit,
+			snippetSource,
 			macroCause,
 			offendingContexts,
 			sourceContexts,
@@ -144,7 +143,7 @@ public class RootCompilerAnnotation
 		Token startToken = firstAndLastToken.getOne();
 		Token endToken = firstAndLastToken.getTwo();
 
-		String sourceName = this.compilationUnit.getSourceName();
+		String sourceName = this.getCompilationUnit().getSourceName();
 		return "::%s file=%s,line=%d,endLine=%d,col=%d,endColumn=%d,title=%s::%s".formatted(
 			this.getSeverityString(),
 			sourceName,
