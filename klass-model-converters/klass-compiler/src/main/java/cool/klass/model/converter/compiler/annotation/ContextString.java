@@ -21,15 +21,19 @@ import javax.annotation.Nonnull;
 public class ContextString
 	extends AbstractContextString
 {
-	public ContextString(int line, @Nonnull String string)
+	private final boolean generated;
+
+	public ContextString(int line, @Nonnull String string, boolean generated)
 	{
 		super(line, string);
+		this.generated = generated;
 	}
 
 	@Nonnull
 	@Override
 	protected String getLineNumberString(int line)
 	{
-		return String.valueOf(line);
+		// Generated lines come from in-place macro source, so their line numbers would not match the file around them.
+		return this.generated ? "+" : String.valueOf(line);
 	}
 }

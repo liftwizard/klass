@@ -47,6 +47,11 @@ public abstract class AbstractContextString
 		return this.line;
 	}
 
+	public int getLineNumberWidth()
+	{
+		return this.getLineNumberString(this.line).length();
+	}
+
 	public String toString(int lineNumberWidth)
 	{
 		MutableList<String> strings = ArrayAdapter.adapt(this.string.split("\n"));

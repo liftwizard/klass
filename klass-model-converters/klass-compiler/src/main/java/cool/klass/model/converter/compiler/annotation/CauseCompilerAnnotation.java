@@ -20,7 +20,6 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -31,7 +30,7 @@ public class CauseCompilerAnnotation
 	extends AbstractCompilerAnnotation
 {
 	public CauseCompilerAnnotation(
-		@Nonnull CompilationUnit compilationUnit,
+		@Nonnull SnippetSource snippetSource,
 		@Nonnull Optional<CauseCompilerAnnotation> macroCause,
 		@Nonnull ImmutableList<ParserRuleContext> offendingContexts,
 		@Nonnull ImmutableList<IAntlrElement> sourceContexts,
@@ -41,7 +40,7 @@ public class CauseCompilerAnnotation
 	)
 	{
 		super(
-			compilationUnit,
+			snippetSource,
 			macroCause,
 			offendingContexts,
 			sourceContexts,

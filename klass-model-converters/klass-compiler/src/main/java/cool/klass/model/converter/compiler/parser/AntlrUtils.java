@@ -44,4 +44,18 @@ public final class AntlrUtils
 
 		return getParentOfType(parent, aClass);
 	}
+
+	/**
+	 * {@return the root of the parse tree containing ctx, which is the surrounding file's root for an in-place macro grafted into it}
+	 */
+	@Nonnull
+	public static ParserRuleContext getRootContext(@Nonnull ParserRuleContext ctx)
+	{
+		ParserRuleContext result = ctx;
+		while (result.getParent() != null)
+		{
+			result = result.getParent();
+		}
+		return result;
+	}
 }
