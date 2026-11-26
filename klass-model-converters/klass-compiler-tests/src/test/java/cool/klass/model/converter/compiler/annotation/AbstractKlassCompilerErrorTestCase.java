@@ -77,11 +77,11 @@ public abstract class AbstractKlassCompilerErrorTestCase
 
 	private ImmutableList<String> assertCompilerAnnotationsExist(CompilationResult compilationResult, String testName)
 	{
-		ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
+		ImmutableList<CompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
 		CompilerAnnotationRenderer renderer = compilationResult.compilerAnnotationRenderer();
 		MutableList<String> expectedLogFileNames = Lists.mutable.empty();
 
-		for (RootCompilerAnnotation compilerAnnotation : compilerAnnotations)
+		for (CompilerAnnotation compilerAnnotation : compilerAnnotations)
 		{
 			String annotationSourceName = "%s-%s-%d-%s.log".formatted(
 				testName,
@@ -95,14 +95,14 @@ public abstract class AbstractKlassCompilerErrorTestCase
 			this.fileMatchExtension.assertFileContents(annotationSourceName, renderer.render(compilerAnnotation));
 		}
 
-		ImmutableListMultimap<Object, RootCompilerAnnotation> annotationsByKey = compilerAnnotations.groupBy(
+		ImmutableListMultimap<Object, CompilerAnnotation> annotationsByKey = compilerAnnotations.groupBy(
 			this::getAnnotationKey
 		);
 		annotationsByKey.forEachKeyMultiValues((key, compilerAnnotationsForKey) ->
 		{
 			if (compilerAnnotationsForKey.size() > 1)
 			{
-				for (RootCompilerAnnotation compilerAnnotation : compilerAnnotationsForKey)
+				for (CompilerAnnotation compilerAnnotation : compilerAnnotationsForKey)
 				{
 					LOGGER.warn("Found compiler annotation:\n{}", renderer.render(compilerAnnotation));
 				}
@@ -113,12 +113,12 @@ public abstract class AbstractKlassCompilerErrorTestCase
 		return expectedLogFileNames.toImmutable();
 	}
 
-	private ImmutableList<Object> getAnnotationKey(RootCompilerAnnotation rootCompilerAnnotation)
+	private ImmutableList<Object> getAnnotationKey(CompilerAnnotation compilerAnnotation)
 	{
-		String filenameWithoutDirectory = rootCompilerAnnotation.getFilenameWithoutDirectory();
-		int line = rootCompilerAnnotation.getLine();
-		int charPositionInLine = rootCompilerAnnotation.getCharPositionInLine();
-		String annotationCode = rootCompilerAnnotation.getAnnotationCode();
+		String filenameWithoutDirectory = compilerAnnotation.getFilenameWithoutDirectory();
+		int line = compilerAnnotation.getLine();
+		int charPositionInLine = compilerAnnotation.getCharPositionInLine();
+		String annotationCode = compilerAnnotation.getAnnotationCode();
 		return Lists.immutable.with(filenameWithoutDirectory, line, charPositionInLine, annotationCode);
 	}
 

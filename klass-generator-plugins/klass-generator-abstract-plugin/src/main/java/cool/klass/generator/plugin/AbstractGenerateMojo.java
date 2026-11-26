@@ -36,8 +36,8 @@ import javax.annotation.Nonnull;
 import cool.klass.model.converter.compiler.CompilationResult;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.KlassCompiler;
+import cool.klass.model.converter.compiler.annotation.CompilerAnnotation;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationRenderer;
-import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
@@ -236,7 +236,7 @@ public abstract class AbstractGenerateMojo
 	protected void handleErrorsCompilationResult(CompilationResult compilationResult)
 		throws MojoExecutionException
 	{
-		for (RootCompilerAnnotation compilerAnnotation : compilationResult.compilerAnnotations())
+		for (CompilerAnnotation compilerAnnotation : compilationResult.compilerAnnotations())
 		{
 			this.logCompilerAnnotation(compilerAnnotation, compilationResult.compilerAnnotationRenderer());
 		}
@@ -248,7 +248,7 @@ public abstract class AbstractGenerateMojo
 	}
 
 	private void logCompilerAnnotation(
-		RootCompilerAnnotation compilerAnnotation,
+		CompilerAnnotation compilerAnnotation,
 		CompilerAnnotationRenderer compilerAnnotationRenderer
 	)
 	{

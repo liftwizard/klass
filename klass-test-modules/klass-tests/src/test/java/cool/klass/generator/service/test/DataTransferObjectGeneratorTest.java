@@ -22,7 +22,7 @@ import cool.klass.generator.dto.DataTransferObjectsGenerator;
 import cool.klass.model.converter.compiler.CompilationResult;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.KlassCompiler;
-import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
+import cool.klass.model.converter.compiler.annotation.CompilerAnnotation;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
@@ -59,7 +59,7 @@ class DataTransferObjectGeneratorTest
 
 		if (compilationResult.domainModelWithSourceCode().isEmpty())
 		{
-			ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
+			ImmutableList<CompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
 			String message = compilerAnnotations
 				.collect(compilationResult.compilerAnnotationRenderer()::render)
 				.makeString("\n");

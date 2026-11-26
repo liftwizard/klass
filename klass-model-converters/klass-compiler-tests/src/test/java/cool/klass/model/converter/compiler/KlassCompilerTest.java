@@ -20,8 +20,7 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import cool.klass.model.converter.compiler.annotation.AbstractCompilerAnnotation;
-import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
+import cool.klass.model.converter.compiler.annotation.CompilerAnnotation;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
@@ -78,9 +77,9 @@ class KlassCompilerTest
 		AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
 		var compiler = new KlassCompiler(compilationUnit, colorScheme);
 		CompilationResult compilationResult = compiler.compile();
-		ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult
+		ImmutableList<CompilerAnnotation> compilerAnnotations = compilationResult
 			.compilerAnnotations()
-			.select(AbstractCompilerAnnotation::isError);
+			.select(CompilerAnnotation::isError);
 
 		String message = compilerAnnotations
 			.collect(compilationResult.compilerAnnotationRenderer()::render)

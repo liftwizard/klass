@@ -29,8 +29,8 @@ import javax.annotation.Nonnull;
 import cool.klass.model.converter.compiler.CompilationResult;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.KlassCompiler;
+import cool.klass.model.converter.compiler.annotation.CompilerAnnotation;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationRenderer;
-import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import cool.klass.model.meta.loader.DomainModelLoader;
@@ -58,7 +58,7 @@ public class DomainModelCompilerLoader
 	private final ClassLoader classLoader;
 
 	@Nonnull
-	private final BiConsumer<RootCompilerAnnotation, CompilerAnnotationRenderer> compilerAnnotationHandler;
+	private final BiConsumer<CompilerAnnotation, CompilerAnnotationRenderer> compilerAnnotationHandler;
 
 	@Nonnull
 	private final AnsiColorScheme colorScheme;
@@ -68,7 +68,7 @@ public class DomainModelCompilerLoader
 	public DomainModelCompilerLoader(
 		@Nonnull ImmutableList<String> klassSourcePackages,
 		@Nonnull ClassLoader classLoader,
-		@Nonnull BiConsumer<RootCompilerAnnotation, CompilerAnnotationRenderer> compilerAnnotationHandler,
+		@Nonnull BiConsumer<CompilerAnnotation, CompilerAnnotationRenderer> compilerAnnotationHandler,
 		AnsiColorScheme colorScheme,
 		boolean enableIdeLinks
 	)
@@ -81,7 +81,7 @@ public class DomainModelCompilerLoader
 	}
 
 	public static void logCompilerError(
-		RootCompilerAnnotation compilerAnnotation,
+		CompilerAnnotation compilerAnnotation,
 		CompilerAnnotationRenderer compilerAnnotationRenderer
 	)
 	{
@@ -92,7 +92,7 @@ public class DomainModelCompilerLoader
 	}
 
 	public static void logCompilerAnnotation(
-		RootCompilerAnnotation compilerAnnotation,
+		CompilerAnnotation compilerAnnotation,
 		CompilerAnnotationRenderer compilerAnnotationRenderer
 	)
 	{
@@ -164,8 +164,8 @@ public class DomainModelCompilerLoader
 	@Nonnull
 	private DomainModelWithSourceCode handleResult(@Nonnull CompilationResult compilationResult)
 	{
-		ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
-		for (RootCompilerAnnotation compilerAnnotation : compilerAnnotations)
+		ImmutableList<CompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
+		for (CompilerAnnotation compilerAnnotation : compilerAnnotations)
 		{
 			this.compilerAnnotationHandler.accept(compilerAnnotation, compilationResult.compilerAnnotationRenderer());
 		}

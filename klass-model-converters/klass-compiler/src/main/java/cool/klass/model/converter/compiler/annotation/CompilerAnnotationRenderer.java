@@ -65,12 +65,13 @@ public final class CompilerAnnotationRenderer
 	}
 
 	@Nonnull
-	public String render(@Nonnull RootCompilerAnnotation annotation)
+	public String render(@Nonnull CompilerAnnotation annotation)
 	{
+		Snippet snippet = annotation.getSnippet();
 		Color caretColor = getCaretColor(annotation.getSeverity());
-		String contextString = this.getContextString(annotation, caretColor);
-		String locationMessage = getOptionalLocationMessage(annotation);
-		String causeString = this.getCauseString(annotation);
+		String contextString = this.getContextString(snippet, caretColor);
+		String locationMessage = getOptionalLocationMessage(snippet);
+		String causeString = this.getCauseString(snippet);
 		String ideUrlMessage = this.getIdeUrlMessage(annotation);
 		String severityName = annotation.isError() ? "Error" : "Warning";
 
@@ -100,7 +101,7 @@ public final class CompilerAnnotationRenderer
 			format,
 			annotationCodeString,
 			headlineString,
-			getShortLocationString(annotation),
+			getShortLocationString(snippet),
 			contextString,
 			locationMessage,
 			causeString,
@@ -109,9 +110,9 @@ public final class CompilerAnnotationRenderer
 	}
 
 	@Nonnull
-	public String renderGitHubAnnotation(@Nonnull RootCompilerAnnotation annotation)
+	public String renderGitHubAnnotation(@Nonnull CompilerAnnotation annotation)
 	{
-		Pair<Token, Token> firstAndLastToken = getFirstAndLastToken(annotation);
+		Pair<Token, Token> firstAndLastToken = getFirstAndLastToken(annotation.getSnippet());
 		Token startToken = firstAndLastToken.getOne();
 		Token endToken = firstAndLastToken.getTwo();
 
@@ -129,7 +130,7 @@ public final class CompilerAnnotationRenderer
 	}
 
 	@Nonnull
-	private String renderCause(@Nonnull CauseCompilerAnnotation cause)
+	private String renderCause(@Nonnull Snippet cause)
 	{
 		String contextString = this.getContextString(cause, Color.GREEN);
 		String locationMessage = getOptionalLocationMessage(cause);
@@ -167,14 +168,14 @@ public final class CompilerAnnotationRenderer
 	}
 
 	@Nonnull
-	private String getCauseString(@Nonnull AbstractCompilerAnnotation annotation)
+	private String getCauseString(@Nonnull Snippet snippet)
 	{
-		return annotation.getMacroCause().map(this::renderCause).orElse("");
+		return snippet.getMacroCause().map(this::renderCause).orElse("");
 	}
 
-	private String getContextString(@Nonnull AbstractCompilerAnnotation annotation, @Nonnull Color caretColor)
+	private String getContextString(@Nonnull Snippet snippet, @Nonnull Color caretColor)
 	{
-		ImmutableList<AbstractContextString> contextStrings = this.getContextStrings(annotation, caretColor);
+		ImmutableList<AbstractContextString> contextStrings = this.getContextStrings(snippet, caretColor);
 
 		int lineNumberWidth = contextStrings.collectInt(AbstractContextString::getLineNumberWidth).max();
 
@@ -184,24 +185,21 @@ public final class CompilerAnnotationRenderer
 		return Ansi.ansi().a(entireContext).reset().toString();
 	}
 
-	private ImmutableList<AbstractContextString> getContextStrings(
-		@Nonnull AbstractCompilerAnnotation annotation,
-		@Nonnull Color caretColor
-	)
+	private ImmutableList<AbstractContextString> getContextStrings(@Nonnull Snippet snippet, @Nonnull Color caretColor)
 	{
-		SnippetSource snippetSource = annotation.getSnippetSource();
-		MutableSet<Token> contextTokens = getContextTokens(annotation);
+		SnippetSource snippetSource = snippet.snippetSource();
+		MutableSet<Token> contextTokens = getContextTokens(snippet);
 
-		MutableSet<Token> underlinedTokens = annotation
-			.getOffendingContexts()
+		MutableSet<Token> underlinedTokens = snippet
+			.offendingContexts()
 			.asLazy()
 			.flatCollect((offendingContext) -> getUnderlinedTokenRange(snippetSource, offendingContext))
 			.into(SetAdapter.adapt(new LinkedHashSet<>()));
 
 		if (!contextTokens.containsAll(underlinedTokens))
 		{
-			String message = annotation
-				.getOffendingContexts()
+			String message = snippet
+				.offendingContexts()
 				.asLazy()
 				.flatCollect((offendingContext) -> getUnderlinedTokenRange(snippetSource, offendingContext))
 				.collect(Token::getText)
@@ -237,30 +235,30 @@ public final class CompilerAnnotationRenderer
 		return contextStrings.toImmutable();
 	}
 
-	private static Pair<Token, Token> getFirstAndLastToken(@Nonnull AbstractCompilerAnnotation annotation)
+	private static Pair<Token, Token> getFirstAndLastToken(@Nonnull Snippet snippet)
 	{
 		MutableSet<Token> contextTokens = Sets.mutable.empty();
-		annotation.getOffendingContexts().asLazy().collect(ParserRuleContext::getStart).into(contextTokens);
-		annotation.getOffendingContexts().asLazy().collect(ParserRuleContext::getStop).into(contextTokens);
+		snippet.offendingContexts().asLazy().collect(ParserRuleContext::getStart).into(contextTokens);
+		snippet.offendingContexts().asLazy().collect(ParserRuleContext::getStop).into(contextTokens);
 
 		return Tuples.pair(contextTokens.min(TOKEN_COMPARATOR), contextTokens.max(TOKEN_COMPARATOR));
 	}
 
 	@Nonnull
-	private static MutableSet<Token> getContextTokens(@Nonnull AbstractCompilerAnnotation annotation)
+	private static MutableSet<Token> getContextTokens(@Nonnull Snippet snippet)
 	{
-		SnippetSource snippetSource = annotation.getSnippetSource();
+		SnippetSource snippetSource = snippet.snippetSource();
 		MutableSet<Token> contextTokens = SetAdapter.adapt(new LinkedHashSet<>());
 
-		annotation
-			.getSourceContexts()
+		snippet
+			.sourceContexts()
 			.asReversed()
 			.collect(IAntlrElement::getContextBefore)
 			.flatCollect((pair) -> getTokenRange(snippetSource, pair.getOne(), pair.getTwo()))
 			.into(contextTokens);
 
-		annotation
-			.getSourceContexts()
+		snippet
+			.sourceContexts()
 			.asLazy()
 			.collect(IAntlrElement::getContextAfter)
 			.reject(Objects::isNull)
@@ -318,40 +316,40 @@ public final class CompilerAnnotationRenderer
 		return Lists.immutable.withAll(tokens);
 	}
 
-	private static String getShortLocationString(@Nonnull AbstractCompilerAnnotation annotation)
+	private static String getShortLocationString(@Nonnull Snippet snippet)
 	{
-		if (annotation.getMacroCause().isPresent())
+		if (snippet.isGeneratedByMacro())
 		{
-			return String.format("(%s)", annotation.getCompilationUnit());
+			return String.format("(%s)", snippet.getCompilationUnit());
 		}
 		return String.format(
 			"(%s:%d:%d)",
 			// TODO: This should be part of the source information
-			annotation.getFilenameWithoutDirectory(),
-			annotation.getLine(),
-			annotation.getCharPositionInLine() + 1
+			snippet.getFilenameWithoutDirectory(),
+			snippet.getLine(),
+			snippet.getCharPositionInLine() + 1
 		);
 	}
 
 	@Nonnull
-	private static String getOptionalLocationMessage(@Nonnull AbstractCompilerAnnotation annotation)
+	private static String getOptionalLocationMessage(@Nonnull Snippet snippet)
 	{
-		if (annotation.getMacroCause().isPresent())
+		if (snippet.isGeneratedByMacro())
 		{
 			return "";
 		}
 		// @formatter:off
 		return Ansi.ansi().a("\n")
-				.fg(Color.CYAN).a("Location:  ").reset().a(annotation.getFilenameWithoutDirectory()).a(":").a(annotation.getLine()).a(":").a(annotation.getCharPositionInLine() + 1).reset().a("\n")
-				.fg(Color.CYAN).a("File:      ").reset().a(annotation.getCompilationUnit()).reset().a("\n")
-				.fg(Color.CYAN).a("Line:      ").reset().a(annotation.getLine()).reset().a("\n")
-				.fg(Color.CYAN).a("Character: ").reset().a(annotation.getCharPositionInLine() + 1)
+				.fg(Color.CYAN).a("Location:  ").reset().a(snippet.getFilenameWithoutDirectory()).a(":").a(snippet.getLine()).a(":").a(snippet.getCharPositionInLine() + 1).reset().a("\n")
+				.fg(Color.CYAN).a("File:      ").reset().a(snippet.getCompilationUnit()).reset().a("\n")
+				.fg(Color.CYAN).a("Line:      ").reset().a(snippet.getLine()).reset().a("\n")
+				.fg(Color.CYAN).a("Character: ").reset().a(snippet.getCharPositionInLine() + 1)
 				.toString();
 		// @formatter:on
 	}
 
 	@Nonnull
-	private String getIdeUrlMessage(@Nonnull RootCompilerAnnotation annotation)
+	private String getIdeUrlMessage(@Nonnull CompilerAnnotation annotation)
 	{
 		if (!this.enableIdeLinks)
 		{
