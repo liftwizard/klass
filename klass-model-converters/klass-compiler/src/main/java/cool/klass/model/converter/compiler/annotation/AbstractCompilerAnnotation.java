@@ -121,15 +121,6 @@ public abstract class AbstractCompilerAnnotation
 		return this.severity;
 	}
 
-	@Nonnull
-	protected String getFilenameWithoutDirectory()
-	{
-		String sourceName = this.getCompilationUnit().getSourceName();
-		return this.macroCause
-			.map((ignore) -> sourceName)
-			.orElseGet(() -> sourceName.substring(sourceName.lastIndexOf('/') + 1));
-	}
-
 	protected int getLine()
 	{
 		return this.getOffendingToken().getLine();

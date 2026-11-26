@@ -129,6 +129,19 @@ public final class CompilationUnit
 		return this.sourceName;
 	}
 
+	/**
+	 * {@return the file name shown in compiler annotation locations: the last path segment of a source file, or the whole synthetic name of a macro}
+	 */
+	@Nonnull
+	public String getFilenameWithoutDirectory()
+	{
+		if (this.macroElement.isPresent())
+		{
+			return this.sourceName;
+		}
+		return this.sourceName.substring(this.sourceName.lastIndexOf('/') + 1);
+	}
+
 	@Nonnull
 	public String getFullPathSourceName()
 	{

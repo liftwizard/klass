@@ -87,7 +87,7 @@ public class RootCompilerAnnotation
 			this.annotationCode,
 			this.getSeverity(),
 			this.message,
-			this.getFilenameWithoutDirectory(),
+			this.getCompilationUnit().getFilenameWithoutDirectory(),
 			this.getLine(),
 			this.getCharPositionInLine() + 1
 		);
