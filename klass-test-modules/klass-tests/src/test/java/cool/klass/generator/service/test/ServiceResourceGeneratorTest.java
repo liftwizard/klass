@@ -61,8 +61,7 @@ class ServiceResourceGeneratorTest
 		{
 			var compilerAnnotationRenderer = new CompilerAnnotationRenderer(
 				ColorSchemeProvider.getByName("dark"),
-				compilationResult.tokenCategoriesFromParser(),
-				compilationResult.tokenCategoriesFromLexer(),
+				compilationResult.tokenCategories(),
 				false
 			);
 			String message = compilationResult

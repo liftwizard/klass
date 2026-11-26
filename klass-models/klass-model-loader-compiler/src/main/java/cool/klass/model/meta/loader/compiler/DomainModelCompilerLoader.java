@@ -166,8 +166,7 @@ public class DomainModelCompilerLoader
 	{
 		var compilerAnnotationRenderer = new CompilerAnnotationRenderer(
 			this.colorScheme,
-			compilationResult.tokenCategoriesFromParser(),
-			compilationResult.tokenCategoriesFromLexer(),
+			compilationResult.tokenCategories(),
 			this.enableIdeLinks
 		);
 		ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();

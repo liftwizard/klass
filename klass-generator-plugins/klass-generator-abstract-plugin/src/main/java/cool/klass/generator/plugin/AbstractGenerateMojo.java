@@ -239,8 +239,7 @@ public abstract class AbstractGenerateMojo
 		}
 		var compilerAnnotationRenderer = new CompilerAnnotationRenderer(
 			ansiColorScheme,
-			compilationResult.tokenCategoriesFromParser(),
-			compilationResult.tokenCategoriesFromLexer(),
+			compilationResult.tokenCategories(),
 			false
 		);
 		for (RootCompilerAnnotation compilerAnnotation : compilationResult.compilerAnnotations())

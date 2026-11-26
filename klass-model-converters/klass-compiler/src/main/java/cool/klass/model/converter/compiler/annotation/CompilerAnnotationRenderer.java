@@ -26,13 +26,12 @@ import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
-import cool.klass.model.converter.compiler.token.categories.TokenCategory;
+import cool.klass.model.converter.compiler.token.categories.TokenCategories;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.api.map.MapIterable;
 import org.eclipse.collections.api.set.MutableSet;
 import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.set.mutable.SetAdapter;
@@ -44,7 +43,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Renders compiler annotations as text, with syntax-colored source snippets and optional IDE links.
- * Annotations are pure data, so the color scheme and the IDE-link setting live here instead, chosen by the caller and combined with the token categories of the CompilationResult.
+ * Annotations are pure data, so the color scheme and the IDE-link setting live here instead, chosen by the caller and combined with the TokenCategories of the CompilationResult.
  */
 public final class CompilerAnnotationRenderer
 {
@@ -57,16 +56,11 @@ public final class CompilerAnnotationRenderer
 
 	public CompilerAnnotationRenderer(
 		@Nonnull AnsiColorScheme colorScheme,
-		@Nonnull MapIterable<Token, TokenCategory> tokenCategoriesFromParser,
-		@Nonnull MapIterable<Token, TokenCategory> tokenCategoriesFromLexer,
+		@Nonnull TokenCategories tokenCategories,
 		boolean enableIdeLinks
 	)
 	{
-		this.ansiTokenColorizer = new AnsiTokenColorizer(
-			colorScheme,
-			tokenCategoriesFromParser,
-			tokenCategoriesFromLexer
-		);
+		this.ansiTokenColorizer = new AnsiTokenColorizer(colorScheme, tokenCategories);
 		this.enableIdeLinks = enableIdeLinks;
 	}
 

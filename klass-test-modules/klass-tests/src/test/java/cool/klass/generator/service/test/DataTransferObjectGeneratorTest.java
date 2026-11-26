@@ -63,8 +63,7 @@ class DataTransferObjectGeneratorTest
 			ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
 			var compilerAnnotationRenderer = new CompilerAnnotationRenderer(
 				ColorSchemeProvider.getByName("dark"),
-				compilationResult.tokenCategoriesFromParser(),
-				compilationResult.tokenCategoriesFromLexer(),
+				compilationResult.tokenCategories(),
 				false
 			);
 			String message = compilerAnnotations.collect(compilerAnnotationRenderer::render).makeString("\n");

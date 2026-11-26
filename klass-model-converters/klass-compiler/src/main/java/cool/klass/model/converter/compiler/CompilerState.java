@@ -29,7 +29,7 @@ import cool.klass.model.converter.compiler.parser.DelegatingKlassListener;
 import cool.klass.model.converter.compiler.phase.AbstractCompilerPhase;
 import cool.klass.model.converter.compiler.state.AntlrDomainModel;
 import cool.klass.model.converter.compiler.state.AntlrElement;
-import cool.klass.model.converter.compiler.token.categories.TokenCategory;
+import cool.klass.model.converter.compiler.token.categories.TokenCategories;
 import cool.klass.model.meta.domain.DomainModelImpl.DomainModelBuilder;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import cool.klass.model.meta.grammar.KlassListener;
@@ -37,12 +37,10 @@ import cool.klass.model.meta.grammar.KlassParser;
 import cool.klass.model.meta.grammar.KlassParser.CompilationUnitContext;
 import cool.klass.model.meta.grammar.KlassParser.TopLevelDeclarationContext;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.eclipse.collections.api.block.function.Function;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.map.MapIterable;
 
 public class CompilerState
 {
@@ -131,36 +129,19 @@ public class CompilerState
 	@Nonnull
 	public CompilationResult getCompilationResult(
 		ImmutableList<RootCompilerAnnotation> compilerAnnotations,
-		MapIterable<Token, TokenCategory> tokenCategoriesFromLexer,
-		MapIterable<Token, TokenCategory> tokenCategoriesFromParser
+		TokenCategories tokenCategories
 	)
 	{
 		if (compilerAnnotations.anySatisfy(AbstractCompilerAnnotation::isError))
 		{
-			return new CompilationResult(
-				compilerAnnotations,
-				tokenCategoriesFromLexer,
-				tokenCategoriesFromParser,
-				Optional.empty()
-			);
+			return new CompilationResult(compilerAnnotations, tokenCategories, Optional.empty());
 		}
-		DomainModelWithSourceCode domainModel = this.buildDomainModel(
-			tokenCategoriesFromLexer,
-			tokenCategoriesFromParser
-		);
-		return new CompilationResult(
-			compilerAnnotations,
-			tokenCategoriesFromLexer,
-			tokenCategoriesFromParser,
-			Optional.of(domainModel)
-		);
+		DomainModelWithSourceCode domainModel = this.buildDomainModel(tokenCategories);
+		return new CompilationResult(compilerAnnotations, tokenCategories, Optional.of(domainModel));
 	}
 
 	@Nonnull
-	private DomainModelWithSourceCode buildDomainModel(
-		MapIterable<Token, TokenCategory> tokenCategoriesFromLexer,
-		MapIterable<Token, TokenCategory> tokenCategoriesFromParser
-	)
+	private DomainModelWithSourceCode buildDomainModel(TokenCategories tokenCategories)
 	{
 		ImmutableList<RootCompilerAnnotation> compilerAnnotations =
 			this.compilerAnnotationHolder.getCompilerAnnotations();
@@ -171,11 +152,7 @@ public class CompilerState
 		}
 
 		ImmutableList<CompilationUnit> compilationUnits = this.compilerInput.getCompilationUnits().toImmutable();
-		DomainModelBuilder domainModelBuilder = this.domainModel.build(
-			compilationUnits,
-			tokenCategoriesFromLexer,
-			tokenCategoriesFromParser
-		);
+		DomainModelBuilder domainModelBuilder = this.domainModel.build(compilationUnits, tokenCategories);
 		return domainModelBuilder.build();
 	}
 
