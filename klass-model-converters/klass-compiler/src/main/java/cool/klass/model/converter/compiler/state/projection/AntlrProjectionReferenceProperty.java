@@ -174,7 +174,7 @@ public class AntlrProjectionReferenceProperty
 	public void reportDuplicateMemberName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
 	{
 		String message = String.format("Duplicate member: '%s'.", this.getName());
-		compilerAnnotationHolder.add("ERR_DUP_PRJ", message, this);
+		compilerAnnotationHolder.error("ERR_DUP_PRJ", message, this).add();
 	}
 
 	@Override
@@ -208,7 +208,7 @@ public class AntlrProjectionReferenceProperty
 					parentClassifier.getName(),
 					this.getName()
 				);
-				compilerAnnotationHolder.add("ERR_PRP_NFD", message, this);
+				compilerAnnotationHolder.error("ERR_PRP_NFD", message, this).add();
 			}
 			else
 			{
@@ -218,7 +218,7 @@ public class AntlrProjectionReferenceProperty
 						this.getName(),
 						dataTypeProperty.getTypeName()
 					);
-				compilerAnnotationHolder.add("ERR_PRP_TYP", message, this);
+				compilerAnnotationHolder.error("ERR_PRP_TYP", message, this).add();
 			}
 
 			return;
@@ -268,7 +268,10 @@ public class AntlrProjectionReferenceProperty
 			this.getCompilationUnit().get().getSourceName(),
 			this.referenceProperty.getElementContext().getStart().getLine()
 		);
-		compilerAnnotationHolder.add("ERR_FWD_REF", message, this, this.getElementContext().identifier());
+		compilerAnnotationHolder
+			.error("ERR_FWD_REF", message, this)
+			.offending(this.getElementContext().identifier())
+			.add();
 	}
 
 	@Override

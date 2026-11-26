@@ -490,7 +490,7 @@ public abstract class AntlrClassifier
 			{
 				InterfaceReferenceContext offendingToken = this.getOffendingInterfaceReference(i);
 				String message = String.format("Cannot find interface '%s'.", offendingToken.getText());
-				compilerAnnotationHolder.add("ERR_IMP_INT", message, this, offendingToken);
+				compilerAnnotationHolder.error("ERR_IMP_INT", message, this).offending(offendingToken).add();
 			}
 		}
 	}
@@ -511,14 +511,14 @@ public abstract class AntlrClassifier
 			{
 				InterfaceReferenceContext offendingToken = this.getOffendingInterfaceReference(i);
 				String message = String.format("Duplicate interface '%s'.", offendingToken.getText());
-				compilerAnnotationHolder.add("ERR_DUP_INT", message, this, offendingToken);
+				compilerAnnotationHolder.error("ERR_DUP_INT", message, this).offending(offendingToken).add();
 			}
 
 			if (this.isInterfaceRedundant(i, iface))
 			{
 				InterfaceReferenceContext offendingToken = this.getOffendingInterfaceReference(i);
 				String message = String.format("Redundant interface '%s'.", offendingToken.getText());
-				compilerAnnotationHolder.add("ERR_RED_INT", message, this, offendingToken);
+				compilerAnnotationHolder.error("ERR_RED_INT", message, this).offending(offendingToken).add();
 			}
 
 			visitedInterfaces.add(iface);
@@ -557,12 +557,10 @@ public abstract class AntlrClassifier
 			this.getName()
 		);
 
-		compilerAnnotationHolder.add(
-			"ERR_RED_TMP",
-			message,
-			this,
-			temporalModifiers.collect(AntlrModifier::getElementContext).toImmutable()
-		);
+		compilerAnnotationHolder
+			.error("ERR_RED_TMP", message, this)
+			.offending(temporalModifiers.collect(AntlrModifier::getElementContext).toImmutable())
+			.add();
 	}
 
 	protected void reportCircularInheritance(CompilerAnnotationHolder compilerAnnotationHolder)
@@ -672,7 +670,7 @@ public abstract class AntlrClassifier
 				dataTypeProperties.collect(AntlrNamedElement::getName),
 				allAdditionalContext
 			);
-			compilerAnnotationHolder.add("ERR_DTP_ORD", message, this);
+			compilerAnnotationHolder.error("ERR_DTP_ORD", message, this).add();
 		}
 	}
 
@@ -704,7 +702,10 @@ public abstract class AntlrClassifier
 					this.getCompilationUnit().get().getSourceName(),
 					iface.getElementContext().getStart().getLine()
 				);
-				compilerAnnotationHolder.add("ERR_FWD_REF", message, this, this.getOffendingInterfaceReference(i));
+				compilerAnnotationHolder
+					.error("ERR_FWD_REF", message, this)
+					.offending(this.getOffendingInterfaceReference(i))
+					.add();
 			}
 		}
 	}

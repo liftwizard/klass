@@ -147,12 +147,10 @@ public class AntlrServiceGroup
 		}
 
 		ClassReferenceContext reference = this.getElementContext().classReference();
-		compilerAnnotationHolder.add(
-			"ERR_SRG_TYP",
-			String.format("Cannot find class '%s'", reference.getText()),
-			this,
-			reference
-		);
+		compilerAnnotationHolder
+			.error("ERR_SRG_TYP", String.format("Cannot find class '%s'", reference.getText()), this)
+			.offending(reference)
+			.add();
 	}
 
 	private void reportDuplicateUrls(CompilerAnnotationHolder compilerAnnotationHolder)
@@ -178,7 +176,7 @@ public class AntlrServiceGroup
 				this.klass.getName()
 			);
 
-			compilerAnnotationHolder.add("ERR_DUP_URL", message, url, url.getElementContext().url());
+			compilerAnnotationHolder.error("ERR_DUP_URL", message, url).offending(url.getElementContext().url()).add();
 		}
 	}
 
@@ -191,7 +189,7 @@ public class AntlrServiceGroup
 				this.getElementContext().classReference().getText()
 			);
 
-			compilerAnnotationHolder.add("ERR_SER_EMP", message, this);
+			compilerAnnotationHolder.error("ERR_SER_EMP", message, this).add();
 		}
 	}
 
@@ -202,7 +200,7 @@ public class AntlrServiceGroup
 			this.klass.getPackageName(),
 			this.klass.getName()
 		);
-		compilerAnnotationHolder.add("ERR_DUP_SVC", message, this);
+		compilerAnnotationHolder.error("ERR_DUP_SVC", message, this).add();
 	}
 
 	private void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder)
@@ -220,7 +218,10 @@ public class AntlrServiceGroup
 			this.getCompilationUnit().get().getSourceName(),
 			this.klass.getElementContext().getStart().getLine()
 		);
-		compilerAnnotationHolder.add("ERR_FWD_REF", message, this, this.getElementContext().classReference());
+		compilerAnnotationHolder
+			.error("ERR_FWD_REF", message, this)
+			.offending(this.getElementContext().classReference())
+			.add();
 	}
 
 	// </editor-fold>

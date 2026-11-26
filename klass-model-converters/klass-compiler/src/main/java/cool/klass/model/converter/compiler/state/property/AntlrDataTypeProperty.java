@@ -24,7 +24,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
-import cool.klass.model.converter.compiler.annotation.AnnotationSeverity;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrAssociation;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
@@ -476,12 +475,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 		{
 			ParserRuleContext offendingToken = minLengthValidation.getElementContext();
 			String message = String.format("Duplicate validation '%s'.", offendingToken.getText());
-			compilerAnnotationHolder.add(
-				"ERR_DUP_VAL",
-				message,
-				minLengthValidation,
-				minLengthValidation.getKeywordToken()
-			);
+			compilerAnnotationHolder
+				.error("ERR_DUP_VAL", message, minLengthValidation)
+				.offending(minLengthValidation.getKeywordToken())
+				.add();
 		}
 	}
 
@@ -527,16 +524,16 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 			ParserRuleContext thisReferenceContext = associationEnd.getForeignKeyReferenceContext(this);
 			ParserRuleContext oppositeReferenceContext = oppositeEnd.getForeignKeyReferenceContext(oppositeForeignKey);
 			AntlrAssociation association = associationEnd.getOwningAssociation();
-			compilerAnnotationHolder.add(
-				"ERR_ASO_KEY",
-				message,
-				association,
-				Lists.immutable
-					.<IAntlrElement>with(association.getRelationship())
-					.newWithAll(association.getSurroundingElements())
-					.distinct(),
-				Lists.immutable.with(thisReferenceContext, oppositeReferenceContext)
-			);
+			compilerAnnotationHolder
+				.error("ERR_ASO_KEY", message, association)
+				.surrounding(
+					Lists.immutable
+						.<IAntlrElement>with(association.getRelationship())
+						.newWithAll(association.getSurroundingElements())
+						.distinct()
+				)
+				.offending(Lists.immutable.with(thisReferenceContext, oppositeReferenceContext))
+				.add();
 		}
 
 		if (this.isOptional && associationEnd.isToOneRequired())
@@ -549,8 +546,11 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 				this.owningClassifier.getName(),
 				this.getName()
 			);
-			compilerAnnotationHolder.add("ERR_FOR_MUL", message, this, this.getTypeParserRuleContext());
-			compilerAnnotationHolder.add("ERR_FOR_MUL", message, associationEnd.getMultiplicity());
+			compilerAnnotationHolder
+				.error("ERR_FOR_MUL", message, this)
+				.offending(this.getTypeParserRuleContext())
+				.add();
+			compilerAnnotationHolder.error("ERR_FOR_MUL", message, associationEnd.getMultiplicity()).add();
 		}
 
 		if (!this.isOptional && associationEnd.isToOneOptional())
@@ -563,13 +563,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 				this.owningClassifier.getName(),
 				this.getName()
 			);
-			compilerAnnotationHolder.add(
-				"ERR_FOR_MUL",
-				message,
-				this,
-				this.getTypeParserRuleContext(),
-				AnnotationSeverity.WARNING
-			);
+			compilerAnnotationHolder
+				.warning("ERR_FOR_MUL", message, this)
+				.offending(this.getTypeParserRuleContext())
+				.add();
 		}
 
 		if (this.isCreatedBy() || this.isLastUpdatedBy())
@@ -587,10 +584,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 				this.owningClassifier.getName(),
 				this.getName()
 			);
-			compilerAnnotationHolder.add("ERR_FOR_FIN", message, this);
+			compilerAnnotationHolder.error("ERR_FOR_FIN", message, this).add();
 			for (AntlrModifier modifier : associationEnd.getModifiersByName("final"))
 			{
-				compilerAnnotationHolder.add("ERR_FOR_FIN", message, modifier);
+				compilerAnnotationHolder.error("ERR_FOR_FIN", message, modifier).add();
 			}
 		}
 
@@ -607,9 +604,9 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 			ImmutableList<AntlrModifier> modifiers = this.getModifiersByName("final");
 			for (AntlrModifier modifier : modifiers)
 			{
-				compilerAnnotationHolder.add("ERR_FOR_FIN", message, modifier);
+				compilerAnnotationHolder.error("ERR_FOR_FIN", message, modifier).add();
 			}
-			compilerAnnotationHolder.add("ERR_FOR_FIN", message, associationEnd);
+			compilerAnnotationHolder.error("ERR_FOR_FIN", message, associationEnd).add();
 		}
 	}
 
@@ -637,12 +634,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 			modifier.getKeyword(),
 			this
 		);
-		compilerAnnotationHolder.add(
-			"ERR_USR_DTP",
-			message,
-			this,
-			Lists.immutable.with(modifier.getElementContext(), this.getTypeParserRuleContext())
-		);
+		compilerAnnotationHolder
+			.error("ERR_USR_DTP", message, this)
+			.offending(Lists.immutable.with(modifier.getElementContext(), this.getTypeParserRuleContext()))
+			.add();
 	}
 
 	private void reportInvalidVersionProperties(CompilerAnnotationHolder compilerAnnotationHolder)
@@ -670,12 +665,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 			modifier.getKeyword(),
 			this
 		);
-		compilerAnnotationHolder.add(
-			"ERR_VER_DTP",
-			message,
-			modifier,
-			Lists.immutable.with(offendingToken, modifier.getElementContext())
-		);
+		compilerAnnotationHolder
+			.error("ERR_VER_DTP", message, modifier)
+			.offending(Lists.immutable.with(offendingToken, modifier.getElementContext()))
+			.add();
 	}
 
 	private void reportInvalidTemporalProperties(CompilerAnnotationHolder compilerAnnotationHolder)
@@ -694,12 +687,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 					(antlrModifier) -> antlrModifier.isSystem() || antlrModifier.isVersion()
 				);
 				ListIterable<ParserRuleContext> modifierContexts = modifiers.collect(AntlrElement::getElementContext);
-				compilerAnnotationHolder.add(
-					"ERR_TMP_RNG",
-					message,
-					this,
-					Lists.immutable.with(offendingToken).newWithAll(modifierContexts)
-				);
+				compilerAnnotationHolder
+					.error("ERR_TMP_RNG", message, this)
+					.offending(Lists.immutable.with(offendingToken).newWithAll(modifierContexts))
+					.add();
 			}
 		}
 		else if (this.isFrom() || this.isTo())
@@ -714,12 +705,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 					this,
 					modifiers
 				);
-				compilerAnnotationHolder.add(
-					"ERR_TMP_SYS",
-					message,
-					this,
-					modifiers.collect(AntlrElement::getElementContext)
-				);
+				compilerAnnotationHolder
+					.error("ERR_TMP_SYS", message, this)
+					.offending(modifiers.collect(AntlrElement::getElementContext))
+					.add();
 			}
 			else if (this.getType() != AntlrPrimitiveType.TEMPORAL_INSTANT)
 			{
@@ -733,12 +722,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 					(modifier) -> modifier.isSystem() || modifier.isVersion() || modifier.isFrom() || modifier.isTo()
 				);
 				ListIterable<ParserRuleContext> modifierContexts = modifiers.collect(AntlrElement::getElementContext);
-				compilerAnnotationHolder.add(
-					"ERR_TMP_INS",
-					message,
-					this,
-					Lists.immutable.with(offendingToken).newWithAll(modifierContexts)
-				);
+				compilerAnnotationHolder
+					.error("ERR_TMP_INS", message, this)
+					.offending(Lists.immutable.with(offendingToken).newWithAll(modifierContexts))
+					.add();
 			}
 			else if (this.isFrom() && this.isTo())
 			{
@@ -747,7 +734,7 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 					.toImmutable();
 				ImmutableList<ParserRuleContext> modifierContexts = modifiers.collect(AntlrElement::getElementContext);
 				var message = "Property may not have both 'from' and to' modifiers.";
-				compilerAnnotationHolder.add("ERR_TMP_FTO", message, this, modifierContexts);
+				compilerAnnotationHolder.error("ERR_TMP_FTO", message, this).offending(modifierContexts).add();
 			}
 		}
 	}
@@ -767,12 +754,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 					this,
 					modifier.getKeyword()
 				);
-				compilerAnnotationHolder.add(
-					"ERR_AUD_KEY",
-					message,
-					this,
-					Lists.immutable.with(modifier.getElementContext())
-				);
+				compilerAnnotationHolder
+					.error("ERR_AUD_KEY", message, this)
+					.offending(Lists.immutable.with(modifier.getElementContext()))
+					.add();
 			}
 		}
 
@@ -794,12 +779,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 					modifier.getKeyword(),
 					this
 				);
-				compilerAnnotationHolder.add(
-					"ERR_AUD_DTP",
-					message,
-					this,
-					Lists.immutable.with(modifier.getElementContext(), this.getTypeParserRuleContext())
-				);
+				compilerAnnotationHolder
+					.error("ERR_AUD_DTP", message, this)
+					.offending(Lists.immutable.with(modifier.getElementContext(), this.getTypeParserRuleContext()))
+					.add();
 			}
 			else if (!this.isUserId())
 			{
@@ -811,12 +794,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 					this,
 					modifier.getKeyword()
 				);
-				compilerAnnotationHolder.add(
-					"ERR_AUD_UID",
-					message,
-					this,
-					Lists.immutable.with(modifier.getElementContext())
-				);
+				compilerAnnotationHolder
+					.error("ERR_AUD_UID", message, this)
+					.offending(Lists.immutable.with(modifier.getElementContext()))
+					.add();
 			}
 			else if (!this.isPrivate())
 			{
@@ -828,12 +809,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 					this,
 					modifier.getKeyword()
 				);
-				compilerAnnotationHolder.add(
-					"ERR_AUD_PRI",
-					message,
-					this,
-					Lists.immutable.with(modifier.getElementContext())
-				);
+				compilerAnnotationHolder
+					.error("ERR_AUD_PRI", message, this)
+					.offending(Lists.immutable.with(modifier.getElementContext()))
+					.add();
 			}
 		}
 
@@ -853,24 +832,20 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 					modifier.getKeyword(),
 					this
 				);
-				compilerAnnotationHolder.add(
-					"ERR_AUD_DTP",
-					message,
-					this,
-					Lists.immutable.with(modifier.getElementContext(), this.getTypeParserRuleContext())
-				);
+				compilerAnnotationHolder
+					.error("ERR_AUD_DTP", message, this)
+					.offending(Lists.immutable.with(modifier.getElementContext(), this.getTypeParserRuleContext()))
+					.add();
 			}
 			else if (!this.isFinal())
 			{
 				AntlrModifier modifier = this.getModifiers().detect(AntlrModifier::isCreatedOn);
 
 				String message = String.format("Expected createdOn property '%s' to be final.", this);
-				compilerAnnotationHolder.add(
-					"ERR_CON_FIN",
-					message,
-					this,
-					Lists.immutable.with(modifier.getElementContext())
-				);
+				compilerAnnotationHolder
+					.error("ERR_CON_FIN", message, this)
+					.offending(Lists.immutable.with(modifier.getElementContext()))
+					.add();
 			}
 		}
 
@@ -885,13 +860,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 			if (!this.getName().equals("createdById"))
 			{
 				String message = String.format("Expected createdBy property '%s' to be named 'createdById'.", this);
-				compilerAnnotationHolder.add(
-					"WRN_CRT_NAM",
-					message,
-					this,
-					Lists.immutable.with(this.getNameContext(), modifier.getElementContext()),
-					AnnotationSeverity.WARNING
-				);
+				compilerAnnotationHolder
+					.warning("WRN_CRT_NAM", message, this)
+					.offending(Lists.immutable.with(this.getNameContext(), modifier.getElementContext()))
+					.add();
 			}
 		}
 
@@ -904,13 +876,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 					"Expected lastUpdatedBy property '%s' to be named 'lastUpdatedById'.",
 					this
 				);
-				compilerAnnotationHolder.add(
-					"WRN_LUB_NAM",
-					message,
-					this,
-					Lists.immutable.with(this.getNameContext(), modifier.getElementContext()),
-					AnnotationSeverity.WARNING
-				);
+				compilerAnnotationHolder
+					.warning("WRN_LUB_NAM", message, this)
+					.offending(Lists.immutable.with(this.getNameContext(), modifier.getElementContext()))
+					.add();
 			}
 		}
 	}
@@ -922,7 +891,7 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 			this.owningClassifier.getName(),
 			this
 		);
-		compilerAnnotationHolder.add("ERR_KEY_IDS", message, this);
+		compilerAnnotationHolder.error("ERR_KEY_IDS", message, this).add();
 	}
 
 	public void reportKeyPropertyWithIdProperties(CompilerAnnotationHolder compilerAnnotationHolder)
@@ -932,7 +901,7 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 			this.owningClassifier.getName(),
 			this
 		);
-		compilerAnnotationHolder.add("ERR_KEY_IDS", message, this);
+		compilerAnnotationHolder.error("ERR_KEY_IDS", message, this).add();
 	}
 
 	public void reportTransientIdProperties(CompilerAnnotationHolder compilerAnnotationHolder)
@@ -947,12 +916,10 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 			"Transient class '%s' may not have id properties.",
 			this.owningClassifier.getName()
 		);
-		compilerAnnotationHolder.add(
-			"ERR_TNS_IDP",
-			message,
-			this,
-			idModifiers.collect(AntlrElement::getElementContext)
-		);
+		compilerAnnotationHolder
+			.error("ERR_TNS_IDP", message, this)
+			.offending(idModifiers.collect(AntlrElement::getElementContext))
+			.add();
 	}
 
 	// </editor-fold>

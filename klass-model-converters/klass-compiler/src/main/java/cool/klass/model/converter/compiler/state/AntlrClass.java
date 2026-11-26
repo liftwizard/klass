@@ -438,7 +438,7 @@ public class AntlrClass
 		if (RELADOMO_TYPES.contains(this.getName()))
 		{
 			String message = String.format("'%s' is a Reladomo type.", this.getName());
-			compilerAnnotationHolder.add("ERR_REL_NME", message, this);
+			compilerAnnotationHolder.error("ERR_REL_NME", message, this).add();
 		}
 
 		this.declaredDataTypeProperties.forEachWith(AntlrNamedElement::reportNameErrors, compilerAnnotationHolder);
@@ -505,7 +505,7 @@ public class AntlrClass
 		)
 		{
 			String message = String.format("Class '%s' is a version and has a version.", this.getName());
-			compilerAnnotationHolder.add("ERR_VER_VER", message, this);
+			compilerAnnotationHolder.error("ERR_VER_VER", message, this).add();
 		}
 	}
 
@@ -514,14 +514,14 @@ public class AntlrClass
 		if (!this.hasKeyProperty() && !this.hasIDProperty())
 		{
 			String message = String.format("Class '%s' must have at least one key property.", this.getName());
-			compilerAnnotationHolder.add("ERR_CLS_KEY", message, this);
+			compilerAnnotationHolder.error("ERR_CLS_KEY", message, this).add();
 		}
 	}
 
 	public void reportDuplicateUserClass(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
 	{
 		String message = String.format("Only one 'user' class is allowed. Found '%s'.", this.getName());
-		compilerAnnotationHolder.add("ERR_DUP_USR", message, this, this.nameContext);
+		compilerAnnotationHolder.error("ERR_DUP_USR", message, this).offending(this.nameContext).add();
 	}
 
 	private void reportSuperClassNotFound(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
@@ -533,7 +533,7 @@ public class AntlrClass
 				.extendsDeclaration()
 				.classReference();
 			String message = String.format("Cannot find class '%s'.", offendingToken.getText());
-			compilerAnnotationHolder.add("ERR_EXT_CLS", message, this, offendingToken);
+			compilerAnnotationHolder.error("ERR_EXT_CLS", message, this).offending(offendingToken).add();
 		}
 	}
 
@@ -555,7 +555,7 @@ public class AntlrClass
 				.extendsDeclaration()
 				.classReference();
 			String message = String.format("Superclass must be abstract '%s'.", offendingToken.getText());
-			compilerAnnotationHolder.add("ERR_EXT_CCT", message, this, offendingToken);
+			compilerAnnotationHolder.error("ERR_EXT_CCT", message, this).offending(offendingToken).add();
 		}
 	}
 
@@ -574,7 +574,7 @@ public class AntlrClass
 			"Must be transient to inherit from transient superclass '%s'.",
 			offendingToken.getText()
 		);
-		compilerAnnotationHolder.add("ERR_EXT_TNS", message, this, offendingToken);
+		compilerAnnotationHolder.error("ERR_EXT_TNS", message, this).offending(offendingToken).add();
 	}
 
 	private void reportTransientIdProperties(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
@@ -599,7 +599,7 @@ public class AntlrClass
 				.extendsDeclaration()
 				.classReference();
 			String message = String.format("Circular inheritance '%s'.", offendingToken.getText());
-			compilerAnnotationHolder.add("ERR_EXT_SLF", message, this, offendingToken);
+			compilerAnnotationHolder.error("ERR_EXT_SLF", message, this).offending(offendingToken).add();
 		}
 		else
 		{
@@ -627,12 +627,10 @@ public class AntlrClass
 				this.getCompilationUnit().get().getSourceName(),
 				klass.getElementContext().getStart().getLine()
 			);
-			compilerAnnotationHolder.add(
-				"ERR_FWD_REF",
-				message,
-				this,
-				this.getElementContext().classHeader().extendsDeclaration().classReference()
-			);
+			compilerAnnotationHolder
+				.error("ERR_FWD_REF", message, this)
+				.offending(this.getElementContext().classHeader().extendsDeclaration().classReference())
+				.add();
 		}
 	}
 

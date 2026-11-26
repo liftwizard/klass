@@ -102,7 +102,7 @@ public class AntlrTypeMemberReferencePath
 
 			String message = String.format("Cannot find class '%s'.", offendingToken.getText());
 
-			compilerAnnotationHolder.add("ERR_MEM_TYP", message, this, offendingToken);
+			compilerAnnotationHolder.error("ERR_MEM_TYP", message, this).offending(offendingToken).add();
 			return;
 		}
 
@@ -121,7 +121,7 @@ public class AntlrTypeMemberReferencePath
 		{
 			IdentifierContext identifier = this.getElementContext().memberReference().identifier();
 			String message = String.format("Cannot find member '%s.%s'.", currentClass.getName(), identifier.getText());
-			compilerAnnotationHolder.add("ERR_TYP_MEM", message, this, identifier);
+			compilerAnnotationHolder.error("ERR_TYP_MEM", message, this).offending(identifier).add();
 		}
 	}
 

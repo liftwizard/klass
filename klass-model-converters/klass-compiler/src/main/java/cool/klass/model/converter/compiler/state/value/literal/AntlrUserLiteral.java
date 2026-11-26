@@ -62,7 +62,7 @@ public class AntlrUserLiteral
 		}
 
 		var message = "'user' literal requires one 'user' class in the domain model.";
-		compilerAnnotationHolder.add("ERR_USR_LIT", message, this);
+		compilerAnnotationHolder.error("ERR_USR_LIT", message, this).add();
 	}
 
 	@Nonnull

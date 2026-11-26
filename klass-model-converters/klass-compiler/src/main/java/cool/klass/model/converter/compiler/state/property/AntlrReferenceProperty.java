@@ -258,7 +258,7 @@ public abstract class AntlrReferenceProperty<Type extends AntlrClassifier>
 				multiplicityChoices
 			);
 
-			compilerAnnotationHolder.add("ERR_ASO_MUL", message, this.multiplicity);
+			compilerAnnotationHolder.error("ERR_ASO_MUL", message, this.multiplicity).add();
 		}
 	}
 
@@ -312,7 +312,7 @@ public abstract class AntlrReferenceProperty<Type extends AntlrClassifier>
 
 		IdentifierContext offendingToken = this.getTypeIdentifier();
 		String message = String.format("Cannot find class '%s'.", offendingToken.getText());
-		compilerAnnotationHolder.add("ERR_REF_TYP", message, this, offendingToken);
+		compilerAnnotationHolder.error("ERR_REF_TYP", message, this).offending(offendingToken).add();
 	}
 
 	public void reportToOneOrderBy(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
@@ -333,7 +333,7 @@ public abstract class AntlrReferenceProperty<Type extends AntlrClassifier>
 			this.getOwningClassifier().getName(),
 			this.getName()
 		);
-		compilerAnnotationHolder.add("ERR_REF_ORD", message, this.orderBy.get());
+		compilerAnnotationHolder.error("ERR_REF_ORD", message, this.orderBy.get()).add();
 	}
 
 	// </editor-fold>

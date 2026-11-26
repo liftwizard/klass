@@ -79,6 +79,6 @@ public class AntlrInOperator
 		}
 
 		String message = AntlrOperator.getIncompatibleTypesMessage(sourceTypes, targetTypes);
-		compilerAnnotationHolder.add("ERR_OPR_IN", message, this);
+		compilerAnnotationHolder.error("ERR_OPR_IN", message, this).add();
 	}
 }

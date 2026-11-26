@@ -82,6 +82,6 @@ public class AntlrInequalityOperator
 		String message = AntlrOperator.getIncompatibleTypesMessage(sourceTypes, targetTypes);
 		// Cast is a deliberate assertion
 		var criteriaOperatorContext = (CriteriaOperatorContext) this.elementContext.getParent().getParent();
-		compilerAnnotationHolder.add("ERR_OPR_NEQ", message, this, criteriaOperatorContext);
+		compilerAnnotationHolder.error("ERR_OPR_NEQ", message, this).offending(criteriaOperatorContext).add();
 	}
 }

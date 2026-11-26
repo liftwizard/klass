@@ -143,7 +143,7 @@ public abstract class AntlrNamedElement
 				this.getNamePattern(),
 				this.getName()
 			);
-			compilerAnnotationHolder.add("ERR_NME_PAT", message, this);
+			compilerAnnotationHolder.error("ERR_NME_PAT", message, this).add();
 		}
 	}
 
@@ -155,19 +155,19 @@ public abstract class AntlrNamedElement
 		if (JAVA_KEYWORDS.contains(this.getName()))
 		{
 			String message = String.format("'%s' is a reserved Java keyword.", this.getName());
-			compilerAnnotationHolder.add("ERR_NME_KEY", message, this);
+			compilerAnnotationHolder.error("ERR_NME_KEY", message, this).add();
 		}
 
 		if (JAVA_LITERALS.contains(this.getName()))
 		{
 			String message = String.format("'%s' is a reserved Java literal.", this.getName());
-			compilerAnnotationHolder.add("ERR_NME_LIT", message, this);
+			compilerAnnotationHolder.error("ERR_NME_LIT", message, this).add();
 		}
 
 		if (SQL_KEYWORDS.contains(this.getName()))
 		{
 			String message = String.format("'%s' is a reserved SQL keyword.", this.getName());
-			compilerAnnotationHolder.add("ERR_SQL_KEY", message, this);
+			compilerAnnotationHolder.error("ERR_SQL_KEY", message, this).add();
 		}
 	}
 

@@ -105,7 +105,7 @@ public class AntlrThisMemberReferencePath
 		{
 			IdentifierContext identifier = this.getElementContext().memberReference().identifier();
 			String message = String.format("Cannot find member '%s.%s'.", currentClass.getName(), identifier.getText());
-			compilerAnnotationHolder.add("ERR_THS_MEM", message, this, identifier);
+			compilerAnnotationHolder.error("ERR_THS_MEM", message, this).offending(identifier).add();
 		}
 	}
 

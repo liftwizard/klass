@@ -220,7 +220,7 @@ public class AntlrUrl
 				this.getElementContext().url().getText()
 			);
 
-			compilerAnnotationHolder.add("ERR_URL_EMP", message, this);
+			compilerAnnotationHolder.error("ERR_URL_EMP", message, this).add();
 		}
 	}
 

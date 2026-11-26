@@ -165,7 +165,7 @@ public class AntlrService
 	{
 		String message = String.format("Duplicate verb: '%s'.", this.verb.getVerb());
 
-		compilerAnnotationHolder.add("ERR_DUP_VRB", message, this, this.verb.getElementContext());
+		compilerAnnotationHolder.error("ERR_DUP_VRB", message, this).offending(this.verb.getElementContext()).add();
 	}
 
 	public void enterServiceCriteriaDeclaration(@Nonnull AntlrServiceCriteria serviceCriteria)
@@ -237,7 +237,7 @@ public class AntlrService
 					"URL parameter '%s' is not referenced in any criteria or order by.",
 					parameter.getName()
 				);
-				compilerAnnotationHolder.add("ERR_URL_REF", message, parameter);
+				compilerAnnotationHolder.error("ERR_URL_REF", message, parameter).add();
 			}
 		}
 	}
@@ -284,7 +284,10 @@ public class AntlrService
 	{
 		ParserRuleContext verbContext = this.verb.getElementContext();
 
-		compilerAnnotationHolder.add("ERR_GET_PRJ", "GET services require a projection.", this, verbContext);
+		compilerAnnotationHolder
+			.error("ERR_GET_PRJ", "GET services require a projection.", this)
+			.offending(verbContext)
+			.add();
 	}
 
 	private void reportPresentProjection(
@@ -294,12 +297,14 @@ public class AntlrService
 	{
 		ServiceProjectionDispatchContext elementContext = projectionDispatch.getElementContext();
 
-		compilerAnnotationHolder.add(
-			"ERR_PUT_PRJ",
-			String.format("%s services must not have a projection.", this.verb.getVerb().name()),
-			projectionDispatch,
-			elementContext
-		);
+		compilerAnnotationHolder
+			.error(
+				"ERR_PUT_PRJ",
+				String.format("%s services must not have a projection.", this.verb.getVerb().name()),
+				projectionDispatch
+			)
+			.offending(elementContext)
+			.add();
 	}
 
 	// </editor-fold>

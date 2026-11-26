@@ -167,13 +167,13 @@ public class AntlrParameter
 			(EnumerationParameterDeclarationContext) this.getElementContext()
 		).enumerationReference();
 		String message = String.format("Cannot find enumeration '%s'.", offendingToken.getText());
-		compilerAnnotationHolder.add("ERR_ENM_PAR", message, this, offendingToken);
+		compilerAnnotationHolder.error("ERR_ENM_PAR", message, this).offending(offendingToken).add();
 	}
 
 	public void reportDuplicateParameterName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
 	{
 		String message = String.format("Duplicate parameter: '%s'.", this.getName());
-		compilerAnnotationHolder.add("ERR_DUP_PAR", message, this);
+		compilerAnnotationHolder.error("ERR_DUP_PAR", message, this).add();
 	}
 
 	// </editor-fold>

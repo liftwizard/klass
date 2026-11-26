@@ -93,7 +93,7 @@ public class AntlrLiteralListValue
 		{
 			// TODO: Cover this with a test
 
-			compilerAnnotationHolder.add("ERR_LIT_LST", "Literal list with heterogeneous values.", this);
+			compilerAnnotationHolder.error("ERR_LIT_LST", "Literal list with heterogeneous values.", this).add();
 		}
 	}
 

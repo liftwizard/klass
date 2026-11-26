@@ -71,7 +71,7 @@ public abstract class AbstractAntlrPropertyValidation
 			offendingToken.getText(),
 			primitiveType.getPrettyName()
 		);
-		compilerAnnotationHolder.add("ERR_VLD_TYP", message, this, offendingToken);
+		compilerAnnotationHolder.error("ERR_VLD_TYP", message, this).offending(offendingToken).add();
 	}
 
 	public abstract ParserRuleContext getKeywordToken();

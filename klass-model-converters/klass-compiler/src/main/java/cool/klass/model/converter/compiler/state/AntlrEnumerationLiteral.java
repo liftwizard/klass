@@ -128,13 +128,16 @@ public class AntlrEnumerationLiteral
 	public void reportDuplicateName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
 	{
 		String message = String.format("Duplicate enumeration literal: '%s'.", this.getName());
-		compilerAnnotationHolder.add("ERR_DUP_ENM", message, this);
+		compilerAnnotationHolder.error("ERR_DUP_ENM", message, this).add();
 	}
 
 	public void reportDuplicatePrettyName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
 	{
 		String message = String.format("Duplicate enumeration pretty name: '%s'.", this.prettyName.get());
-		compilerAnnotationHolder.add("ERR_DUP_LIT", message, this, this.getElementContext().enumerationPrettyName());
+		compilerAnnotationHolder
+			.error("ERR_DUP_LIT", message, this)
+			.offending(this.getElementContext().enumerationPrettyName())
+			.add();
 	}
 
 	@Override

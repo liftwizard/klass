@@ -227,7 +227,7 @@ public class AntlrAssociation
 				this.getName(),
 				numAssociationEnds
 			);
-			compilerAnnotationHolder.add("ERR_ASO_END", message, this);
+			compilerAnnotationHolder.error("ERR_ASO_END", message, this).add();
 			return;
 		}
 
@@ -240,16 +240,21 @@ public class AntlrAssociation
 			AntlrModifier sourceOwnedModifier = this.getSourceEnd().getModifiers().detect(AntlrModifier::isOwned);
 			AntlrModifier targetOwnedModifier = this.getTargetEnd().getModifiers().detect(AntlrModifier::isOwned);
 
-			compilerAnnotationHolder.add(
-				"ERR_ASO_OWN",
-				message,
-				this,
-				Lists.immutable
-					.<IAntlrElement>with(this.getTargetEnd())
-					.newWithAll(this.getSourceEnd().getSurroundingElements())
-					.distinct(),
-				Lists.immutable.with(sourceOwnedModifier.getElementContext(), targetOwnedModifier.getElementContext())
-			);
+			compilerAnnotationHolder
+				.error("ERR_ASO_OWN", message, this)
+				.surrounding(
+					Lists.immutable
+						.<IAntlrElement>with(this.getTargetEnd())
+						.newWithAll(this.getSourceEnd().getSurroundingElements())
+						.distinct()
+				)
+				.offending(
+					Lists.immutable.with(
+						sourceOwnedModifier.getElementContext(),
+						targetOwnedModifier.getElementContext()
+					)
+				)
+				.add();
 		}
 		else if (this.getSourceEnd().isToMany() && this.getTargetEnd().isToOne() && this.getTargetEnd().isOwned())
 		{
@@ -259,15 +264,15 @@ public class AntlrAssociation
 				this.getTargetEnd().getName()
 			);
 			AntlrModifier ownedModifier = this.getTargetEnd().getModifiers().detect(AntlrModifier::isOwned);
-			compilerAnnotationHolder.add(
-				"ERR_OWN_ONE",
-				message,
-				ownedModifier,
-				Lists.immutable.with(
-					ownedModifier.getElementContext(),
-					this.getElementContext().associationBlock().associationBody().associationEnd(1).multiplicity()
+			compilerAnnotationHolder
+				.error("ERR_OWN_ONE", message, ownedModifier)
+				.offending(
+					Lists.immutable.with(
+						ownedModifier.getElementContext(),
+						this.getElementContext().associationBlock().associationBody().associationEnd(1).multiplicity()
+					)
 				)
-			);
+				.add();
 		}
 		else if (this.getSourceEnd().isToOne() && this.getTargetEnd().isToMany() && this.getSourceEnd().isOwned())
 		{
@@ -277,15 +282,15 @@ public class AntlrAssociation
 				this.getSourceEnd().getName()
 			);
 			AntlrModifier ownedModifier = this.getSourceEnd().getModifiers().detect(AntlrModifier::isOwned);
-			compilerAnnotationHolder.add(
-				"ERR_OWN_ONE",
-				message,
-				ownedModifier,
-				Lists.immutable.with(
-					ownedModifier.getElementContext(),
-					this.getElementContext().associationBlock().associationBody().associationEnd(0).multiplicity()
+			compilerAnnotationHolder
+				.error("ERR_OWN_ONE", message, ownedModifier)
+				.offending(
+					Lists.immutable.with(
+						ownedModifier.getElementContext(),
+						this.getElementContext().associationBlock().associationBody().associationEnd(0).multiplicity()
+					)
 				)
-			);
+				.add();
 		}
 		else if (
 			this.getSourceEnd().isToOne() &&
@@ -299,19 +304,21 @@ public class AntlrAssociation
 				"Association '%s' is perfectly symmetrical, so foreign keys cannot be inferred. To break the symmetry, make one end owned, or make one end required and the other end optional.",
 				this.getName()
 			);
-			compilerAnnotationHolder.add(
-				"ERR_ASO_SYM",
-				message,
-				this,
-				Lists.immutable
-					.<IAntlrElement>with(this.getTargetEnd())
-					.newWithAll(this.getSourceEnd().getSurroundingElements())
-					.distinct(),
-				Lists.immutable.with(
-					this.getSourceEnd().getMultiplicity().getElementContext(),
-					this.getTargetEnd().getMultiplicity().getElementContext()
+			compilerAnnotationHolder
+				.error("ERR_ASO_SYM", message, this)
+				.surrounding(
+					Lists.immutable
+						.<IAntlrElement>with(this.getTargetEnd())
+						.newWithAll(this.getSourceEnd().getSurroundingElements())
+						.distinct()
 				)
-			);
+				.offending(
+					Lists.immutable.with(
+						this.getSourceEnd().getMultiplicity().getElementContext(),
+						this.getTargetEnd().getMultiplicity().getElementContext()
+					)
+				)
+				.add();
 		}
 
 		if (
@@ -336,7 +343,7 @@ public class AntlrAssociation
 		if (this.relationship == null)
 		{
 			String message = String.format("Association '%s' has no relationship", this.getName());
-			compilerAnnotationHolder.add("ERR_ASO_REL", message, this);
+			compilerAnnotationHolder.error("ERR_ASO_REL", message, this).add();
 		}
 		else
 		{

@@ -89,12 +89,10 @@ public class AntlrServiceProjectionDispatch
 		{
 			ProjectionReferenceContext reference = this.getElementContext().projectionReference();
 
-			compilerAnnotationHolder.add(
-				"ERR_SER_PRJ",
-				String.format("Cannot find projection '%s'", reference.getText()),
-				this,
-				reference
-			);
+			compilerAnnotationHolder
+				.error("ERR_SER_PRJ", String.format("Cannot find projection '%s'", reference.getText()), this)
+				.offending(reference)
+				.add();
 		}
 
 		AntlrClassifier projectionClassifier = this.projection.getClassifier();
@@ -127,7 +125,10 @@ public class AntlrServiceProjectionDispatch
 				this.projection.getName(),
 				projectionClassifier.getName()
 			);
-			compilerAnnotationHolder.add("ERR_SRV_PRJ", error, this, this.getElementContext().projectionReference());
+			compilerAnnotationHolder
+				.error("ERR_SRV_PRJ", error, this)
+				.offending(this.getElementContext().projectionReference())
+				.add();
 		}
 
 		this.reportForwardReference(compilerAnnotationHolder);
@@ -148,7 +149,10 @@ public class AntlrServiceProjectionDispatch
 			this.getCompilationUnit().get().getSourceName(),
 			this.projection.getElementContext().getStart().getLine()
 		);
-		compilerAnnotationHolder.add("ERR_FWD_REF", message, this, this.getElementContext().projectionReference());
+		compilerAnnotationHolder
+			.error("ERR_FWD_REF", message, this)
+			.offending(this.getElementContext().projectionReference())
+			.add();
 	}
 
 	// </editor-fold>

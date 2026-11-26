@@ -50,6 +50,6 @@ public interface AntlrProjectionChild
 			classifierReferenceContext.getText(),
 			this.getName()
 		);
-		compilerAnnotationHolder.add("ERR_PRJ_CRF", message, this, classifierReferenceContext);
+		compilerAnnotationHolder.error("ERR_PRJ_CRF", message, this).offending(classifierReferenceContext).add();
 	}
 }

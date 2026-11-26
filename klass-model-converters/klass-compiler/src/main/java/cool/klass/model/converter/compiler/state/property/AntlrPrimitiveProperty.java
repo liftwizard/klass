@@ -22,7 +22,6 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
-import cool.klass.model.converter.compiler.annotation.AnnotationSeverity;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrClass;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
@@ -168,7 +167,7 @@ public class AntlrPrimitiveProperty
 		for (AntlrModifier idModifier : idModifiers)
 		{
 			var message = "Properties with the 'id' modifier must also have the 'key' modifier.";
-			compilerAnnotationHolder.add("ERR_NKY_IDP", message, idModifier);
+			compilerAnnotationHolder.error("ERR_NKY_IDP", message, idModifier).add();
 		}
 	}
 
@@ -184,7 +183,7 @@ public class AntlrPrimitiveProperty
 				primitiveType.getPrettyName(),
 				PrimitiveType.ID_PRIMITIVE_TYPES
 			);
-			compilerAnnotationHolder.add("ERR_PRP_IDP", message, idModifier);
+			compilerAnnotationHolder.error("ERR_PRP_IDP", message, idModifier).add();
 		}
 	}
 
@@ -223,14 +222,14 @@ public class AntlrPrimitiveProperty
 		{
 			for (AntlrModifier idModifier : idModifiers)
 			{
-				compilerAnnotationHolder.add("ERR_OVR_IDP", message, idModifier);
+				compilerAnnotationHolder.error("ERR_OVR_IDP", message, idModifier).add();
 			}
 		}
 		else
 		{
 			if (overriddenProperty.isId())
 			{
-				compilerAnnotationHolder.add("ERR_OVR_IDP", message, this);
+				compilerAnnotationHolder.error("ERR_OVR_IDP", message, this).add();
 			}
 		}
 	}
@@ -252,7 +251,7 @@ public class AntlrPrimitiveProperty
 			"Primitive properties with type %s may not be required.",
 			primitiveType.getPrettyName()
 		);
-		compilerAnnotationHolder.add("ERR_REQ_TMP", message, this, this.getTypeParserRuleContext());
+		compilerAnnotationHolder.error("ERR_REQ_TMP", message, this).offending(this.getTypeParserRuleContext()).add();
 	}
 
 	private void reportInvalidTemporalVisibility(CompilerAnnotationHolder compilerAnnotationHolder)
@@ -272,7 +271,7 @@ public class AntlrPrimitiveProperty
 			"Primitive properties with type %s must be private.",
 			primitiveType.getPrettyName()
 		);
-		compilerAnnotationHolder.add("ERR_REQ_PRV", message, this, this.getTypeParserRuleContext());
+		compilerAnnotationHolder.error("ERR_REQ_PRV", message, this).offending(this.getTypeParserRuleContext()).add();
 	}
 
 	private void reportInvalidStringValidations(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
@@ -325,7 +324,7 @@ public class AntlrPrimitiveProperty
 			propertyName,
 			suggestedName
 		);
-		compilerAnnotationHolder.add("WRN_BOL_PFX", message, this, this.getNameContext(), AnnotationSeverity.WARNING);
+		compilerAnnotationHolder.warning("WRN_BOL_PFX", message, this).offending(this.getNameContext()).add();
 	}
 	// </editor-fold>
 }

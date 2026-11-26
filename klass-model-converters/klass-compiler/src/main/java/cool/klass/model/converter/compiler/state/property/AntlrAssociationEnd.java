@@ -190,7 +190,7 @@ public class AntlrAssociationEnd
 				this.getOwningClassifier().getName(),
 				this.getName()
 			);
-			compilerAnnotationHolder.add("ERR_VER_OWN", message, this, this.nameContext);
+			compilerAnnotationHolder.error("ERR_VER_OWN", message, this).offending(this.nameContext).add();
 		}
 	}
 
@@ -204,7 +204,7 @@ public class AntlrAssociationEnd
 				this.getName(),
 				this.getType().getName()
 			);
-			compilerAnnotationHolder.add("ERR_VER_END", message, this, this.nameContext);
+			compilerAnnotationHolder.error("ERR_VER_END", message, this).offending(this.nameContext).add();
 		}
 		if (
 			!this.getOwningClassifier().isUser() &&
@@ -220,12 +220,10 @@ public class AntlrAssociationEnd
 				this.getName(),
 				this.getType().getName()
 			);
-			compilerAnnotationHolder.add(
-				"ERR_VER_TYP",
-				message,
-				this,
-				Lists.immutable.with(this.nameContext, this.getElementContext().classReference())
-			);
+			compilerAnnotationHolder
+				.error("ERR_VER_TYP", message, this)
+				.offending(Lists.immutable.with(this.nameContext, this.getElementContext().classReference()))
+				.add();
 		}
 	}
 
@@ -240,13 +238,13 @@ public class AntlrAssociationEnd
 				this.getName(),
 				this.getType().getName()
 			);
-			compilerAnnotationHolder.add(
-				"ERR_AUD_END",
-				message,
-				modifier,
-				modifier.getSurroundingElements(),
-				Lists.immutable.with(this.getElementContext().classReference(), modifier.getElementContext())
-			);
+			compilerAnnotationHolder
+				.error("ERR_AUD_END", message, modifier)
+				.surrounding(modifier.getSurroundingElements())
+				.offending(
+					Lists.immutable.with(this.getElementContext().classReference(), modifier.getElementContext())
+				)
+				.add();
 		}
 		if (this.isLastUpdatedBy() && !this.getType().isUser())
 		{
@@ -258,13 +256,13 @@ public class AntlrAssociationEnd
 				this.getType().getName()
 			);
 
-			compilerAnnotationHolder.add(
-				"ERR_AUD_END",
-				message,
-				modifier,
-				modifier.getSurroundingElements(),
-				Lists.immutable.with(this.getElementContext().classReference(), modifier.getElementContext())
-			);
+			compilerAnnotationHolder
+				.error("ERR_AUD_END", message, modifier)
+				.surrounding(modifier.getSurroundingElements())
+				.offending(
+					Lists.immutable.with(this.getElementContext().classReference(), modifier.getElementContext())
+				)
+				.add();
 		}
 	}
 
@@ -281,7 +279,7 @@ public class AntlrAssociationEnd
 			modifierString,
 			classifier.getName()
 		);
-		compilerAnnotationHolder.add("ERR_DUP_END", message, modifier, severity);
+		compilerAnnotationHolder.report(severity, "ERR_DUP_END", message, modifier).add();
 	}
 
 	private void reportPluralName(CompilerAnnotationHolder compilerAnnotationHolder)
@@ -303,7 +301,7 @@ public class AntlrAssociationEnd
 						this.getName(),
 						this.classReference.getElementContext().identifier().getText()
 					);
-				compilerAnnotationHolder.add("ERR_ASS_PLU", message, this, this.nameContext);
+				compilerAnnotationHolder.error("ERR_ASS_PLU", message, this).offending(this.nameContext).add();
 			}
 		}
 	}
@@ -340,7 +338,10 @@ public class AntlrAssociationEnd
 				this.getType().getElementContext().getStart().getLine(),
 				this.getCompilationUnit().get().getSourceName()
 			);
-			compilerAnnotationHolder.add("ERR_ASO_ORD", message, this, this.getElementContext().classReference());
+			compilerAnnotationHolder
+				.error("ERR_ASO_ORD", message, this)
+				.offending(this.getElementContext().classReference())
+				.add();
 		}
 	}
 
@@ -359,7 +360,10 @@ public class AntlrAssociationEnd
 			this.getCompilationUnit().get().getSourceName(),
 			this.getType().getElementContext().getStart().getLine()
 		);
-		compilerAnnotationHolder.add("ERR_ASO_ORD", message, this, this.getElementContext().classReference());
+		compilerAnnotationHolder
+			.error("ERR_ASO_ORD", message, this)
+			.offending(this.getElementContext().classReference())
+			.add();
 	}
 
 	// </editor-fold>

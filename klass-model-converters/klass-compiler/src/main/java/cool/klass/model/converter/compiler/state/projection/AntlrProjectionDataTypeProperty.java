@@ -165,7 +165,10 @@ public class AntlrProjectionDataTypeProperty
 	{
 		if (this.headerText.trim().isEmpty())
 		{
-			compilerAnnotationHolder.add("ERR_PRJ_HDR", "Empty header string.", this, this.headerContext);
+			compilerAnnotationHolder
+				.error("ERR_PRJ_HDR", "Empty header string.", this)
+				.offending(this.headerContext)
+				.add();
 		}
 
 		AntlrClassifier parentClassifier = this.antlrProjectionParent.getClassifier();
@@ -189,7 +192,7 @@ public class AntlrProjectionDataTypeProperty
 					parentClassifier.getName(),
 					this.getName()
 				);
-				compilerAnnotationHolder.add("ERR_PRJ_DTP", message, this);
+				compilerAnnotationHolder.error("ERR_PRJ_DTP", message, this).add();
 			}
 			else
 			{
@@ -199,7 +202,7 @@ public class AntlrProjectionDataTypeProperty
 						referenceProperty.getName(),
 						referenceProperty.getTypeName()
 					);
-				compilerAnnotationHolder.add("ERR_PRJ_TYP", message, this);
+				compilerAnnotationHolder.error("ERR_PRJ_TYP", message, this).add();
 			}
 		}
 
@@ -228,7 +231,7 @@ public class AntlrProjectionDataTypeProperty
 				this.dataTypeProperty.getOwningClassifier().getName(),
 				this.getName()
 			);
-			compilerAnnotationHolder.add("ERR_PRJ_PRV", message, this);
+			compilerAnnotationHolder.error("ERR_PRJ_PRV", message, this).add();
 		}
 	}
 
@@ -247,14 +250,17 @@ public class AntlrProjectionDataTypeProperty
 			this.getCompilationUnit().get().getSourceName(),
 			this.dataTypeProperty.getElementContext().getStart().getLine()
 		);
-		compilerAnnotationHolder.add("ERR_FWD_REF", message, this, this.getElementContext().identifier());
+		compilerAnnotationHolder
+			.error("ERR_FWD_REF", message, this)
+			.offending(this.getElementContext().identifier())
+			.add();
 	}
 
 	@Override
 	public void reportDuplicateMemberName(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
 	{
 		String message = String.format("Duplicate member: '%s'.", this.getName());
-		compilerAnnotationHolder.add("ERR_DUP_PRJ", message, this);
+		compilerAnnotationHolder.error("ERR_DUP_PRJ", message, this).add();
 	}
 
 	@Override

@@ -80,11 +80,9 @@ public class AntlrEqualityOperator
 		}
 
 		String message = AntlrOperator.getIncompatibleTypesMessage(sourceTypes, targetTypes);
-		compilerAnnotationHolder.add(
-			"ERR_OPR_EQL",
-			message,
-			this,
-			this.owningOperatorAntlrCriteria.getElementContext()
-		);
+		compilerAnnotationHolder
+			.error("ERR_OPR_EQL", message, this)
+			.offending(this.owningOperatorAntlrCriteria.getElementContext())
+			.add();
 	}
 }

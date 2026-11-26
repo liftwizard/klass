@@ -23,7 +23,6 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
-import cool.klass.model.converter.compiler.annotation.AnnotationSeverity;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.parser.AntlrUtils;
 import cool.klass.model.converter.compiler.state.criteria.AntlrCriteria;
@@ -551,7 +550,7 @@ public class AntlrDomainModel
 			fkHolderClass.getName(),
 			fkTargetClass.getName()
 		);
-		compilerAnnotationHolder.add("WRN_ORP_CSC", message, oppositeEnd, AnnotationSeverity.WARNING);
+		compilerAnnotationHolder.warning("WRN_ORP_CSC", message, oppositeEnd).add();
 	}
 
 	private MutableSet<AntlrClass> getClassesWithDeleteService()

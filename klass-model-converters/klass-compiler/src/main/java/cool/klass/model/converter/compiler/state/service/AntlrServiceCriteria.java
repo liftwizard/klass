@@ -88,7 +88,10 @@ public class AntlrServiceCriteria
 	{
 		// TODO: Test coverage of duplicate service criteria
 		String message = String.format("Duplicate service criteria: '%s'.", this.serviceCriteriaKeyword);
-		compilerAnnotationHolder.add("ERR_DUP_CRI", message, this.antlrCriteria, this.getElementContext());
+		compilerAnnotationHolder
+			.error("ERR_DUP_CRI", message, this.antlrCriteria)
+			.offending(this.getElementContext())
+			.add();
 	}
 
 	@Nonnull
@@ -117,7 +120,10 @@ public class AntlrServiceCriteria
 				this.service.getVerb().getVerb(),
 				allowedCriteriaTypes
 			);
-			compilerAnnotationHolder.add("ERR_VRB_CRT", error, this, this.getElementContext().serviceCriteriaKeyword());
+			compilerAnnotationHolder
+				.error("ERR_VRB_CRT", error, this)
+				.offending(this.getElementContext().serviceCriteriaKeyword())
+				.add();
 		}
 	}
 }

@@ -1,0 +1,173 @@
+/*
+ * Copyright 2026 Craig Motlin
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package cool.klass.model.converter.compiler.annotation;
+
+import java.util.Objects;
+
+import javax.annotation.Nonnull;
+
+import cool.klass.model.converter.compiler.CompilationUnit;
+import cool.klass.model.converter.compiler.state.AntlrNamedElement;
+import cool.klass.model.converter.compiler.state.IAntlrElement;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.list.MutableList;
+
+/**
+ * Builds one compiler annotation on an element, then adds it to its holder.
+ * Every part the caller leaves out gets its default here: the element's name or element context to underline, its surrounding elements as context, and a snippet source inferred from its compilation unit.
+ */
+public final class CompilerAnnotationBuilder
+{
+	@Nonnull
+	private final CompilerAnnotationHolder compilerAnnotationHolder;
+
+	@Nonnull
+	private final AnnotationSeverity severity;
+
+	@Nonnull
+	private final String annotationCode;
+
+	@Nonnull
+	private final String message;
+
+	@Nonnull
+	private final IAntlrElement element;
+
+	private ImmutableList<ParserRuleContext> offendingContexts;
+
+	private ImmutableList<IAntlrElement> surroundingElements;
+
+	private SnippetSource snippetSource;
+
+	CompilerAnnotationBuilder(
+		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
+		@Nonnull AnnotationSeverity severity,
+		@Nonnull String annotationCode,
+		@Nonnull String message,
+		@Nonnull IAntlrElement element
+	)
+	{
+		this.compilerAnnotationHolder = Objects.requireNonNull(compilerAnnotationHolder);
+		this.severity = Objects.requireNonNull(severity);
+		this.annotationCode = Objects.requireNonNull(annotationCode);
+		this.message = Objects.requireNonNull(message);
+		this.element = Objects.requireNonNull(element);
+	}
+
+	/**
+	 * Underlines this context instead of the element's name or element context.
+	 */
+	@Nonnull
+	public CompilerAnnotationBuilder offending(@Nonnull ParserRuleContext offendingContext)
+	{
+		return this.offending(Lists.immutable.with(offendingContext));
+	}
+
+	/**
+	 * Underlines these contexts instead of the element's name or element context; the first one sets the annotation's location.
+	 */
+	@Nonnull
+	public CompilerAnnotationBuilder offending(@Nonnull ImmutableList<ParserRuleContext> offendingContexts)
+	{
+		this.offendingContexts = Objects.requireNonNull(offendingContexts);
+		return this;
+	}
+
+	/**
+	 * Shows these elements as context instead of the element's surrounding elements.
+	 */
+	@Nonnull
+	public CompilerAnnotationBuilder surrounding(@Nonnull ImmutableList<IAntlrElement> surroundingElements)
+	{
+		this.surroundingElements = Objects.requireNonNull(surroundingElements);
+		return this;
+	}
+
+	/**
+	 * Renders the snippet from this source instead of one inferred from the element's compilation unit, for errors the caller knows span a root compilation unit and an in-place macro.
+	 */
+	@Nonnull
+	public CompilerAnnotationBuilder source(@Nonnull SnippetSource snippetSource)
+	{
+		this.snippetSource = Objects.requireNonNull(snippetSource);
+		return this;
+	}
+
+	public void add()
+	{
+		ImmutableList<ParserRuleContext> offendingContexts =
+			this.offendingContexts == null ?
+				Lists.immutable.with(this.getDefaultOffendingContext()) :
+				this.offendingContexts;
+		ImmutableList<IAntlrElement> surroundingElements =
+			this.surroundingElements == null ? this.element.getSurroundingElements() : this.surroundingElements;
+		SnippetSource snippetSource =
+			this.snippetSource == null ? this.getDefaultSnippetSource(surroundingElements) : this.snippetSource;
+
+		if (snippetSource.annotatedCompilationUnit() != this.element.getCompilationUnit().get())
+		{
+			throw new AssertionError(
+				"Expected " + snippetSource + " to annotate the compilation unit of " + this.element
+			);
+		}
+
+		var snippet = new Snippet(snippetSource, offendingContexts, surroundingElements);
+		this.compilerAnnotationHolder.add(
+			new CompilerAnnotation(this.annotationCode, this.message, this.severity, snippet)
+		);
+	}
+
+	@Nonnull
+	private ParserRuleContext getDefaultOffendingContext()
+	{
+		if (this.element instanceof AntlrNamedElement namedElement)
+		{
+			return namedElement.getNameContext();
+		}
+		return this.element.getElementContext();
+	}
+
+	/**
+	 * {@return a single-file source, unless the element was generated by an in-place macro}
+	 * A generic error reporter cannot know statically whether it points into macro code, so this checks whether the element's compilation unit is grafted into the root compilation unit of its surrounding elements.
+	 */
+	@Nonnull
+	private SnippetSource getDefaultSnippetSource(@Nonnull ImmutableList<IAntlrElement> surroundingElements)
+	{
+		CompilationUnit compilationUnit = this.element.getCompilationUnit().get();
+		if (!compilationUnit.isGrafted())
+		{
+			return new SingleFileSource(compilationUnit);
+		}
+
+		MutableList<CompilationUnit> rootCompilationUnits = IAntlrElement.getCompilationUnits(
+			surroundingElements
+		).reject(CompilationUnit::isGrafted);
+		if (rootCompilationUnits.size() != 1)
+		{
+			throw new AssertionError(
+				"Expected the surrounding elements of " +
+					this.element +
+					" to have one root compilation unit, but got " +
+					rootCompilationUnits
+			);
+		}
+		return new GraftedCodeSource(rootCompilationUnits.getOnly(), compilationUnit);
+	}
+}

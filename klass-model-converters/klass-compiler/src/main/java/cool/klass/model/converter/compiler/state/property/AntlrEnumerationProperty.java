@@ -172,7 +172,7 @@ public class AntlrEnumerationProperty
 
 		EnumerationReferenceContext offendingToken = this.getElementContext().enumerationReference();
 		String message = String.format("Cannot find enumeration '%s'.", offendingToken.getText());
-		compilerAnnotationHolder.add("ERR_ENM_PRP", message, this, offendingToken);
+		compilerAnnotationHolder.error("ERR_ENM_PRP", message, this).offending(offendingToken).add();
 	}
 
 	private void reportForwardReference(CompilerAnnotationHolder compilerAnnotationHolder)
@@ -190,7 +190,10 @@ public class AntlrEnumerationProperty
 			this.getCompilationUnit().get().getSourceName(),
 			this.enumeration.getElementContext().getStart().getLine()
 		);
-		compilerAnnotationHolder.add("ERR_FWD_REF", message, this, this.getElementContext().enumerationReference());
+		compilerAnnotationHolder
+			.error("ERR_FWD_REF", message, this)
+			.offending(this.getElementContext().enumerationReference())
+			.add();
 	}
 
 	@Override
@@ -200,7 +203,10 @@ public class AntlrEnumerationProperty
 		for (AntlrModifier idModifier : idModifiers)
 		{
 			var message = "Enumeration properties may not be auto-generated ids.";
-			compilerAnnotationHolder.add("ERR_ENM_IDP", message, this, idModifier.getElementContext());
+			compilerAnnotationHolder
+				.error("ERR_ENM_IDP", message, this)
+				.offending(idModifier.getElementContext())
+				.add();
 		}
 	}
 

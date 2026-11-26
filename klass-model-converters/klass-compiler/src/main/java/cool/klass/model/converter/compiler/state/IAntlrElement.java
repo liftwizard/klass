@@ -130,11 +130,9 @@ public interface IAntlrElement
 			"Modifiers %s require one 'user' class in the domain model.",
 			offendingModifiers.collect(AntlrModifier::getKeyword)
 		);
-		compilerAnnotationHolder.add(
-			"ERR_ADT_MOD",
-			message,
-			element,
-			offendingModifiers.collect(AntlrElement::getElementContext)
-		);
+		compilerAnnotationHolder
+			.error("ERR_ADT_MOD", message, element)
+			.offending(offendingModifiers.collect(AntlrElement::getElementContext))
+			.add();
 	}
 }

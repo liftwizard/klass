@@ -102,7 +102,7 @@ public abstract class AntlrMemberReferencePath
 					currentClass.getName(),
 					identifier.getText()
 				);
-				compilerAnnotationHolder.add("ERR_MEM_EXP", message, this, identifier);
+				compilerAnnotationHolder.error("ERR_MEM_EXP", message, this).offending(identifier).add();
 				return null;
 			}
 			currentClass = associationEnd.getType();

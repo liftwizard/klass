@@ -181,7 +181,10 @@ public class AntlrProjection
 		)
 		{
 			String message = "Projection type not found " + this.getElementContext().classifierReference().getText();
-			compilerAnnotationHolder.add("ERR_PRJ_NFD", message, this, this.getElementContext().classifierReference());
+			compilerAnnotationHolder
+				.error("ERR_PRJ_NFD", message, this)
+				.offending(this.getElementContext().classifierReference())
+				.add();
 			return;
 		}
 
@@ -214,7 +217,10 @@ public class AntlrProjection
 				this.getCompilationUnit().get().getSourceName(),
 				this.classifier.getElementContext().getStart().getLine()
 			);
-			compilerAnnotationHolder.add("ERR_FWD_REF", message, this, this.getElementContext().classifierReference());
+			compilerAnnotationHolder
+				.error("ERR_FWD_REF", message, this)
+				.offending(this.getElementContext().classifierReference())
+				.add();
 		}
 	}
 	// </editor-fold>

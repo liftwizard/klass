@@ -97,7 +97,7 @@ public class AntlrParameterReference
 		if (this.antlrParameter == AntlrParameter.NOT_FOUND)
 		{
 			String message = String.format("Cannot find parameter '%s'.", this.elementContext.getText());
-			compilerAnnotationHolder.add("ERR_VAR_REF", message, this);
+			compilerAnnotationHolder.error("ERR_VAR_REF", message, this).add();
 		}
 	}
 

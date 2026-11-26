@@ -199,7 +199,7 @@ public class AntlrInterface
 		if (RELADOMO_TYPES.contains(this.getName()))
 		{
 			String message = String.format("'%s' is a Reladomo type.", this.getName());
-			compilerAnnotationHolder.add("ERR_REL_NME", message, this);
+			compilerAnnotationHolder.error("ERR_REL_NME", message, this).add();
 		}
 
 		this.declaredDataTypeProperties.forEachWith(AntlrNamedElement::reportNameErrors, compilerAnnotationHolder);
@@ -259,7 +259,7 @@ public class AntlrInterface
 
 		AntlrModifier transientModifier = maybeTransientModifier.get();
 		String message = String.format("'%s' keyword not applicable to interfaces.", transientModifier.getKeyword());
-		compilerAnnotationHolder.add("ERR_INT_TRN", message, transientModifier);
+		compilerAnnotationHolder.error("ERR_INT_TRN", message, transientModifier).add();
 	}
 
 	@Override
@@ -275,7 +275,7 @@ public class AntlrInterface
 			}
 			InterfaceReferenceContext offendingToken = this.getOffendingInterfaceReference(i);
 			String message = String.format("Circular inheritance '%s'.", offendingToken.getText());
-			compilerAnnotationHolder.add("ERR_IMP_SLF", message, this, offendingToken);
+			compilerAnnotationHolder.error("ERR_IMP_SLF", message, this).offending(offendingToken).add();
 			noCircularInheritance = false;
 		}
 
