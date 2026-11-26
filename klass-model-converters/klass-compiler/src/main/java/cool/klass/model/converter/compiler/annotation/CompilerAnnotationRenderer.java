@@ -166,9 +166,7 @@ public final class CompilerAnnotationRenderer
 		MutableSet<Token> underlinedTokens = annotation
 			.getOffendingContexts()
 			.asLazy()
-			.flatCollect((offendingContext) ->
-				CompilerAnnotationRenderer.getUnderlinedTokenRange(snippetSource, offendingContext)
-			)
+			.flatCollectWith(CompilerAnnotationRenderer::getUnderlinedTokenRange, snippetSource)
 			.into(SetAdapter.adapt(new LinkedHashSet<>()));
 
 		if (!contextTokens.containsAll(underlinedTokens))
@@ -176,9 +174,7 @@ public final class CompilerAnnotationRenderer
 			String message = annotation
 				.getOffendingContexts()
 				.asLazy()
-				.flatCollect((offendingContext) ->
-					CompilerAnnotationRenderer.getUnderlinedTokenRange(snippetSource, offendingContext)
-				)
+				.flatCollectWith(CompilerAnnotationRenderer::getUnderlinedTokenRange, snippetSource)
 				.collect(Token::getText)
 				.toList()
 				.makeString("");
@@ -222,7 +218,7 @@ public final class CompilerAnnotationRenderer
 			.getSourceContexts()
 			.asReversed()
 			.collect(IAntlrElement::getContextBefore)
-			.flatCollect((tokenRange) -> CompilerAnnotationRenderer.getTokens(snippetSource, tokenRange))
+			.flatCollectWith(CompilerAnnotationRenderer::getTokens, snippetSource)
 			.into(contextTokens);
 
 		annotation
@@ -231,7 +227,7 @@ public final class CompilerAnnotationRenderer
 			.collect(IAntlrElement::getContextAfter)
 			.select(Optional::isPresent)
 			.collect(Optional::get)
-			.flatCollect((tokenRange) -> CompilerAnnotationRenderer.getTokens(snippetSource, tokenRange))
+			.flatCollectWith(CompilerAnnotationRenderer::getTokens, snippetSource)
 			.into(contextTokens);
 		return contextTokens;
 	}
@@ -266,14 +262,14 @@ public final class CompilerAnnotationRenderer
 	}
 
 	private static ImmutableList<Token> getUnderlinedTokenRange(
-		@Nonnull SnippetSource snippetSource,
-		@Nonnull ParserRuleContext ctx
+		@Nonnull ParserRuleContext ctx,
+		@Nonnull SnippetSource snippetSource
 	)
 	{
-		return CompilerAnnotationRenderer.getTokens(snippetSource, new TokenRange(ctx.getStart(), ctx.getStop()));
+		return CompilerAnnotationRenderer.getTokens(new TokenRange(ctx.getStart(), ctx.getStop()), snippetSource);
 	}
 
-	private static ImmutableList<Token> getTokens(@Nonnull SnippetSource snippetSource, @Nonnull TokenRange tokenRange)
+	private static ImmutableList<Token> getTokens(@Nonnull TokenRange tokenRange, @Nonnull SnippetSource snippetSource)
 	{
 		List<Token> tokens = snippetSource
 			.getTokenStream(tokenRange.start())

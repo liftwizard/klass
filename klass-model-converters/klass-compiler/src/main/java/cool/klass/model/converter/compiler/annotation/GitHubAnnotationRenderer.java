@@ -43,7 +43,7 @@ public final class GitHubAnnotationRenderer
 	@Nonnull
 	public static String render(@Nonnull RootCompilerAnnotation annotation)
 	{
-		TokenRange tokenRange = GitHubAnnotationRenderer.getFirstAndLastToken(annotation);
+		TokenRange tokenRange = GitHubAnnotationRenderer.getTokenRange(annotation);
 		Token startToken = tokenRange.start();
 		Token endToken = tokenRange.stop();
 
@@ -70,7 +70,7 @@ public final class GitHubAnnotationRenderer
 		};
 	}
 
-	private static TokenRange getFirstAndLastToken(@Nonnull AbstractCompilerAnnotation annotation)
+	private static TokenRange getTokenRange(@Nonnull AbstractCompilerAnnotation annotation)
 	{
 		MutableSet<Token> contextTokens = Sets.mutable.empty();
 		annotation.getOffendingContexts().asLazy().collect(ParserRuleContext::getStart).into(contextTokens);
