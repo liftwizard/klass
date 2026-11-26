@@ -30,14 +30,12 @@ import cool.klass.model.converter.compiler.state.AntlrCompilationUnit;
 import cool.klass.model.converter.compiler.state.AntlrInterface;
 import cool.klass.model.converter.compiler.state.AntlrTopLevelElement;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
+import cool.klass.model.converter.compiler.state.TokenRange;
 import cool.klass.model.meta.domain.projection.AbstractProjectionElement.ProjectionChildBuilder;
 import cool.klass.model.meta.domain.projection.ProjectionImpl.ProjectionBuilder;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionDeclarationContext;
-import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.tuple.Pair;
-import org.eclipse.collections.impl.tuple.Tuples;
 
 public class AntlrProjection
 	extends AntlrProjectionParent
@@ -112,9 +110,12 @@ public class AntlrProjection
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore()
+	public TokenRange getContextBefore()
 	{
-		return Tuples.pair(this.getElementContext().getStart(), this.getElementContext().projectionBlock().getStart());
+		return new TokenRange(
+			this.getElementContext().getStart(),
+			this.getElementContext().projectionBlock().getStart()
+		);
 	}
 
 	@Nonnull

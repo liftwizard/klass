@@ -20,12 +20,11 @@ import java.util.Comparator;
 
 import javax.annotation.Nonnull;
 
+import cool.klass.model.converter.compiler.state.TokenRange;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.factory.Sets;
 import org.eclipse.collections.api.set.MutableSet;
-import org.eclipse.collections.api.tuple.Pair;
-import org.eclipse.collections.impl.tuple.Tuples;
 
 /**
  * Renders compiler annotations as GitHub Actions workflow commands, which GitHub shows inline on the pull request diff.
@@ -44,9 +43,9 @@ public final class GitHubAnnotationRenderer
 	@Nonnull
 	public static String render(@Nonnull RootCompilerAnnotation annotation)
 	{
-		Pair<Token, Token> firstAndLastToken = GitHubAnnotationRenderer.getFirstAndLastToken(annotation);
-		Token startToken = firstAndLastToken.getOne();
-		Token endToken = firstAndLastToken.getTwo();
+		TokenRange tokenRange = GitHubAnnotationRenderer.getFirstAndLastToken(annotation);
+		Token startToken = tokenRange.start();
+		Token endToken = tokenRange.stop();
 
 		String sourceName = annotation.getCompilationUnit().getSourceName();
 		return "::%s file=%s,line=%d,endLine=%d,col=%d,endColumn=%d,title=%s::%s".formatted(
@@ -71,12 +70,12 @@ public final class GitHubAnnotationRenderer
 		};
 	}
 
-	private static Pair<Token, Token> getFirstAndLastToken(@Nonnull AbstractCompilerAnnotation annotation)
+	private static TokenRange getFirstAndLastToken(@Nonnull AbstractCompilerAnnotation annotation)
 	{
 		MutableSet<Token> contextTokens = Sets.mutable.empty();
 		annotation.getOffendingContexts().asLazy().collect(ParserRuleContext::getStart).into(contextTokens);
 		annotation.getOffendingContexts().asLazy().collect(ParserRuleContext::getStop).into(contextTokens);
 
-		return Tuples.pair(contextTokens.min(TOKEN_COMPARATOR), contextTokens.max(TOKEN_COMPARATOR));
+		return new TokenRange(contextTokens.min(TOKEN_COMPARATOR), contextTokens.max(TOKEN_COMPARATOR));
 	}
 }

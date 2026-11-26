@@ -27,12 +27,11 @@ import cool.klass.model.converter.compiler.state.AntlrClass;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
 import cool.klass.model.converter.compiler.state.AntlrElement;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
+import cool.klass.model.converter.compiler.state.TokenRange;
 import cool.klass.model.converter.compiler.state.projection.AntlrProjection;
 import cool.klass.model.meta.domain.service.ServiceProjectionDispatchImpl.ServiceProjectionDispatchBuilder;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceProjectionDispatchContext;
-import org.antlr.v4.runtime.Token;
-import org.eclipse.collections.api.tuple.Pair;
 
 public class AntlrServiceProjectionDispatch
 	extends AntlrElement
@@ -71,7 +70,7 @@ public class AntlrServiceProjectionDispatch
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore()
+	public TokenRange getContextBefore()
 	{
 		return this.getEntireContext();
 	}

@@ -18,12 +18,13 @@ package cool.klass.model.converter.compiler.annotation;
 
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
+import cool.klass.model.converter.compiler.state.TokenRange;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.converter.compiler.token.categories.TokenCategories;
@@ -221,19 +222,16 @@ public final class CompilerAnnotationRenderer
 			.getSourceContexts()
 			.asReversed()
 			.collect(IAntlrElement::getContextBefore)
-			.flatCollect((pair) ->
-				CompilerAnnotationRenderer.getTokenRange(snippetSource, pair.getOne(), pair.getTwo())
-			)
+			.flatCollect((tokenRange) -> CompilerAnnotationRenderer.getTokens(snippetSource, tokenRange))
 			.into(contextTokens);
 
 		annotation
 			.getSourceContexts()
 			.asLazy()
 			.collect(IAntlrElement::getContextAfter)
-			.reject(Objects::isNull)
-			.flatCollect((pair) ->
-				CompilerAnnotationRenderer.getTokenRange(snippetSource, pair.getOne(), pair.getTwo())
-			)
+			.select(Optional::isPresent)
+			.collect(Optional::get)
+			.flatCollect((tokenRange) -> CompilerAnnotationRenderer.getTokens(snippetSource, tokenRange))
 			.into(contextTokens);
 		return contextTokens;
 	}
@@ -272,18 +270,14 @@ public final class CompilerAnnotationRenderer
 		@Nonnull ParserRuleContext ctx
 	)
 	{
-		return CompilerAnnotationRenderer.getTokenRange(snippetSource, ctx.getStart(), ctx.getStop());
+		return CompilerAnnotationRenderer.getTokens(snippetSource, new TokenRange(ctx.getStart(), ctx.getStop()));
 	}
 
-	private static ImmutableList<Token> getTokenRange(
-		@Nonnull SnippetSource snippetSource,
-		Token startToken,
-		Token stopToken
-	)
+	private static ImmutableList<Token> getTokens(@Nonnull SnippetSource snippetSource, @Nonnull TokenRange tokenRange)
 	{
 		List<Token> tokens = snippetSource
-			.getTokenStream(startToken)
-			.get(startToken.getTokenIndex(), stopToken.getTokenIndex());
+			.getTokenStream(tokenRange.start())
+			.get(tokenRange.start().getTokenIndex(), tokenRange.stop().getTokenIndex());
 		return Lists.immutable.withAll(tokens);
 	}
 

@@ -29,6 +29,7 @@ import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrElement;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
 import cool.klass.model.converter.compiler.state.ReferencedPropertiesCriteriaVisitor;
+import cool.klass.model.converter.compiler.state.TokenRange;
 import cool.klass.model.converter.compiler.state.criteria.AntlrCriteria;
 import cool.klass.model.converter.compiler.state.order.AntlrOrderBy;
 import cool.klass.model.converter.compiler.state.order.AntlrOrderByOwner;
@@ -44,7 +45,6 @@ import cool.klass.model.meta.grammar.KlassParser.ServiceCriteriaDeclarationConte
 import cool.klass.model.meta.grammar.KlassParser.ServiceDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceProjectionDispatchContext;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.bag.ImmutableBag;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.factory.Maps;
@@ -54,9 +54,7 @@ import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
 import org.eclipse.collections.api.map.MutableOrderedMap;
 import org.eclipse.collections.api.set.MutableSet;
-import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
-import org.eclipse.collections.impl.tuple.Tuples;
 
 public class AntlrService
 	extends AntlrElement
@@ -125,17 +123,19 @@ public class AntlrService
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore()
+	public TokenRange getContextBefore()
 	{
-		return Tuples.pair(this.getElementContext().getStart(), this.getElementContext().serviceBlock().getStart());
+		return new TokenRange(this.getElementContext().getStart(), this.getElementContext().serviceBlock().getStart());
 	}
 
 	@Override
-	public Pair<Token, Token> getContextAfter()
+	public Optional<TokenRange> getContextAfter()
 	{
-		return Tuples.pair(
-			this.getElementContext().serviceBlock().getStop(),
-			this.getElementContext().serviceBlock().getStop()
+		return Optional.of(
+			new TokenRange(
+				this.getElementContext().serviceBlock().getStop(),
+				this.getElementContext().serviceBlock().getStop()
+			)
 		);
 	}
 

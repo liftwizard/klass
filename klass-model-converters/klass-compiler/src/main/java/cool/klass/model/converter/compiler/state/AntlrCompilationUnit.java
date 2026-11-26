@@ -25,9 +25,6 @@ import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.meta.grammar.KlassParser.CompilationUnitContext;
 import cool.klass.model.meta.grammar.KlassParser.PackageDeclarationContext;
-import org.antlr.v4.runtime.Token;
-import org.eclipse.collections.api.tuple.Pair;
-import org.eclipse.collections.impl.tuple.Tuples;
 
 public class AntlrCompilationUnit
 	extends AntlrElement
@@ -73,10 +70,10 @@ public class AntlrCompilationUnit
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore()
+	public TokenRange getContextBefore()
 	{
 		PackageDeclarationContext context = this.getElementContext().packageDeclaration();
-		return Tuples.pair(context.getStart(), context.getStop());
+		return new TokenRange(context.getStart(), context.getStop());
 	}
 
 	public void enterPackageDeclaration(AntlrPackage pkg)

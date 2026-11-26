@@ -24,24 +24,22 @@ import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.meta.domain.api.TopLevelElement.TopLevelElementBuilder;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
-import org.eclipse.collections.api.tuple.Pair;
-import org.eclipse.collections.impl.tuple.Tuples;
 
 public interface AntlrTopLevelElement
 	extends IAntlrElement
 {
 	@Override
-	default Pair<Token, Token> getContextBefore()
+	default TokenRange getContextBefore()
 	{
-		return Tuples.pair(this.getElementContext().getStart(), this.getBlockContext().getStart());
+		return new TokenRange(this.getElementContext().getStart(), this.getBlockContext().getStart());
 	}
 
 	@Nonnull
 	@Override
-	default Pair<Token, Token> getContextAfter()
+	default Optional<TokenRange> getContextAfter()
 	{
 		Token token = this.getElementContext().getStop();
-		return Tuples.pair(token, token);
+		return Optional.of(new TokenRange(token, token));
 	}
 
 	/**
