@@ -19,9 +19,12 @@ package com.stackoverflow.dropwizard.test;
 import javax.annotation.Nonnull;
 
 import com.stackoverflow.dropwizard.application.StackOverflowApplication;
+import io.dropwizard.testing.ConfigOverride;
 import io.dropwizard.testing.ResourceHelpers;
 import io.liftwizard.dropwizard.testing.junit.AbstractDropwizardAppTest;
 import io.liftwizard.junit.extension.app.LiftwizardAppExtension;
+import org.eclipse.collections.api.factory.Lists;
+import org.eclipse.collections.api.list.MutableList;
 
 public abstract class AbstractStackOverflowApplicationTest
 	extends AbstractDropwizardAppTest
@@ -32,7 +35,13 @@ public abstract class AbstractStackOverflowApplicationTest
 	{
 		return new LiftwizardAppExtension<>(
 			StackOverflowApplication.class,
-			ResourceHelpers.resourceFilePath("config-test.json5")
+			ResourceHelpers.resourceFilePath("config-test.json5"),
+			this.getConfigOverrides().toArray(new ConfigOverride[0])
 		);
+	}
+
+	protected MutableList<ConfigOverride> getConfigOverrides()
+	{
+		return Lists.mutable.empty();
 	}
 }

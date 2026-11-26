@@ -110,6 +110,11 @@
 
         <dependency>
             <groupId>io.liftwizard</groupId>
+            <artifactId>liftwizard-config-graphql-limits</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.liftwizard</groupId>
             <artifactId>liftwizard-bundle-logging-http</artifactId>
         </dependency>
 

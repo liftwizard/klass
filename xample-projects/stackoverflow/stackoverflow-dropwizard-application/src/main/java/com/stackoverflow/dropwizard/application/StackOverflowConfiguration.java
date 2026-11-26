@@ -23,13 +23,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.smoketurner.dropwizard.graphql.GraphQLFactory;
 import cool.klass.dropwizard.configuration.AbstractKlassConfiguration;
 import io.liftwizard.dropwizard.configuration.graphql.GraphQLFactoryProvider;
+import io.liftwizard.dropwizard.configuration.graphql.limits.GraphQLLimitsFactory;
+import io.liftwizard.dropwizard.configuration.graphql.limits.GraphQLLimitsFactoryProvider;
 
 public class StackOverflowConfiguration
 	extends AbstractKlassConfiguration
-	implements GraphQLFactoryProvider
+	implements GraphQLFactoryProvider, GraphQLLimitsFactoryProvider
 {
 	@Nonnull
 	private @Valid GraphQLFactory graphQL = new GraphQLFactory();
+
+	@Nonnull
+	private @Valid GraphQLLimitsFactory graphQLLimits = new GraphQLLimitsFactory();
 
 	@Override
 	@Nonnull
@@ -43,6 +48,20 @@ public class StackOverflowConfiguration
 	public void setGraphQLFactory(@Nonnull GraphQLFactory factory)
 	{
 		this.graphQL = factory;
+	}
+
+	@Override
+	@Nonnull
+	@JsonProperty("graphQLLimits")
+	public GraphQLLimitsFactory getGraphQLLimitsFactory()
+	{
+		return this.graphQLLimits;
+	}
+
+	@JsonProperty("graphQLLimits")
+	public void setGraphQLLimitsFactory(@Nonnull GraphQLLimitsFactory graphQLLimits)
+	{
+		this.graphQLLimits = graphQLLimits;
 	}
 	// TODO: implement service configuration
 }

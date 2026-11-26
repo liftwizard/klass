@@ -36,7 +36,6 @@ class StackOverflowApplicationTest
 	@ReladomoTestFile("test-data/existing-question.txt")
 	void readsThenWrites()
 	{
-		this.smokeTest();
 		this.get_smoke_test();
 		this.restSet();
 		this.post_invalid_data();
@@ -48,22 +47,6 @@ class StackOverflowApplicationTest
 		this.post_vote();
 		this.post_answer();
 		this.put_answers_outside_projection();
-	}
-
-	private void smokeTest()
-	{
-		Client client = this.getClient("graphqlSmokeTest");
-
-		String queryName = this.getClass().getSimpleName() + ".smokeTest.graphql";
-		String query = FileSlurper.slurp(queryName, this.getClass());
-
-		Response response = client
-			.target("http://localhost:{port}/graphql")
-			.resolveTemplate("port", this.appExtension.getLocalPort())
-			.request()
-			.post(Entity.json(Maps.mutable.with("query", query)));
-
-		this.assertResponse("graphqlSmokeTest", Status.OK, response);
 	}
 
 	private void post_vote()

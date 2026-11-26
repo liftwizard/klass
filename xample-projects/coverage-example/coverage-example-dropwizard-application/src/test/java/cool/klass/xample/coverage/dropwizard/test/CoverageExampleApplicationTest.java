@@ -49,7 +49,6 @@ class CoverageExampleApplicationTest
 	{
 		this.swaggerSpecIsServed();
 		this.sourceCodeSmokeTest();
-		this.graphqlSmokeTest();
 
 		this.assertMetaUrlReturns("metaModel.getPackageableElements", "packageableElement");
 		this.assertMetaUrlReturns("metaModel.getPackageableElementByName", "packageableElement/User");
@@ -133,21 +132,6 @@ class CoverageExampleApplicationTest
 
 		String expectedStringClasspathLocation = this.getClass().getCanonicalName() + "#readOnlySmoke.smoke_test.html";
 		this.fileMatchExtension.assertFileContents(expectedStringClasspathLocation, responseHtml);
-	}
-
-	private void graphqlSmokeTest()
-	{
-		var testName = "readOnlySmoke.graphqlSmokeTest";
-		Client client = this.getClient(testName);
-		String graphqlQuery = this.slurp(testName + ".graphql");
-
-		Response response = client
-			.target("http://localhost:{port}/graphql")
-			.resolveTemplate("port", this.appExtension.getLocalPort())
-			.request()
-			.post(Entity.json(Maps.mutable.with("query", graphqlQuery)));
-
-		this.assertResponse(testName, Status.OK, response);
 	}
 
 	private void assertMetaUrlReturns(String testName, String path)

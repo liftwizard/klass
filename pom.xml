@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
   ~ Copyright 2026 Craig Motlin
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,334 +12,295 @@
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
-  -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-    <modelVersion>4.0.0</modelVersion>
-
-    <parent>
-        <groupId>io.liftwizard</groupId>
-        <artifactId>liftwizard-profile-parent</artifactId>
-        <version>2.1.53</version>
-    </parent>
-
-    <groupId>cool.klass</groupId>
-    <artifactId>klass</artifactId>
-    <version>0.8.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
-
-    <name>Klass (Root Module Group)</name>
-
-    <description>Klass is a rapid application development framework with full support for temporal data.</description>
-
+  --><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>io.liftwizard</groupId>
+    <artifactId>liftwizard-profile-parent</artifactId>
+    <version>2.1.54-SNAPSHOT</version>
+  </parent>
+  <groupId>cool.klass</groupId>
+  <artifactId>klass</artifactId>
+  <version>0.8.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>Klass (Root Module Group)</name>
+  <description>Klass is a rapid application development framework with full support for temporal data.</description>
+  <url>https://github.com/motlin/klass</url>
+  <inceptionYear>2024</inceptionYear>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>motlin</id>
+      <name>Craig Motlin</name>
+      <email>cmotlin@gmail.com</email>
+      <url>https://github.com/motlin</url>
+    </developer>
+  </developers>
+  <modules>
+    <module>docs</module>
+    <module>klass-bom</module>
+    <module>klass-data-store</module>
+    <module>klass-dropwizard</module>
+    <module>klass-generator-plugins</module>
+    <module>klass-generators</module>
+    <module>klass-graphql</module>
+    <module>klass-logging</module>
+    <module>klass-maven-archetype</module>
+    <module>klass-model-converters</module>
+    <module>klass-models</module>
+    <module>klass-reladomo</module>
+    <module>klass-serialization-jackson</module>
+    <module>klass-serializers</module>
+    <module>klass-syntax</module>
+    <module>klass-test-modules</module>
+    <module>xample-projects</module>
+    <module>limits-example</module>
+  </modules>
+  <scm>
+    <connection>scm:git:https://github.com/motlin/klass.git</connection>
+    <developerConnection>scm:git:https@github.com:motlin/klass.git</developerConnection>
+    <tag>HEAD</tag>
     <url>https://github.com/motlin/klass</url>
-
-    <inceptionYear>2024</inceptionYear>
-
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <id>motlin</id>
-            <name>Craig Motlin</name>
-            <email>cmotlin@gmail.com</email>
-            <url>https://github.com/motlin</url>
-        </developer>
-    </developers>
-
-    <modules>
-        <module>docs</module>
-        <module>klass-bom</module>
-        <module>klass-data-store</module>
-        <module>klass-dropwizard</module>
-        <module>klass-generator-plugins</module>
-        <module>klass-generators</module>
-        <module>klass-graphql</module>
-        <module>klass-logging</module>
-        <module>klass-maven-archetype</module>
-        <module>klass-model-converters</module>
-        <module>klass-models</module>
-        <module>klass-reladomo</module>
-        <module>klass-serialization-jackson</module>
-        <module>klass-serializers</module>
-        <module>klass-syntax</module>
-        <module>klass-test-modules</module>
-        <module>xample-projects</module>
-    </modules>
-
-    <scm>
-        <connection>scm:git:https://github.com/motlin/klass.git</connection>
-        <developerConnection>scm:git:https@github.com:motlin/klass.git</developerConnection>
-        <tag>HEAD</tag>
-        <url>https://github.com/motlin/klass</url>
-    </scm>
-
-    <issueManagement>
-        <system>GitHub Issues</system>
-        <url>https://github.com/motlin/klass/issues</url>
-    </issueManagement>
-
-    <ciManagement>
-        <system>GitHub</system>
-        <url>https://github.com/motlin/klass/actions</url>
-    </ciManagement>
-
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <maven.compiler.release>21</maven.compiler.release>
-        <maven.compiler.parameters>true</maven.compiler.parameters>
-
-        <checkstyle.configuration>${maven.multiModuleProjectDirectory}/checkstyle-configuration.xml</checkstyle.configuration>
-        <checkstyle.suppressions>${maven.multiModuleProjectDirectory}/checkstyle-suppressions.xml</checkstyle.suppressions>
-        <checkstyle.cache>${project.build.directory}/checkstyle-cache</checkstyle.cache>
-
-        <liftwizard.version>2.1.53</liftwizard.version>
-        <klass.version>${project.version}</klass.version>
-        <h2.version>2.5.252</h2.version>
-        <auto-service.version>1.0.1</auto-service.version>
-    </properties>
-
-    <dependencyManagement>
-        <dependencies>
-
-            <dependency>
-                <groupId>io.liftwizard</groupId>
-                <artifactId>liftwizard-dependencies</artifactId>
-                <version>${liftwizard.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>io.liftwizard</groupId>
-                <artifactId>liftwizard-bom</artifactId>
-                <version>${liftwizard.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2.version}</version>
-            </dependency>
-
-        </dependencies>
-    </dependencyManagement>
-
-    <build>
+  </scm>
+  <issueManagement>
+    <system>GitHub Issues</system>
+    <url>https://github.com/motlin/klass/issues</url>
+  </issueManagement>
+  <ciManagement>
+    <system>GitHub</system>
+    <url>https://github.com/motlin/klass/actions</url>
+  </ciManagement>
+  <properties>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    <maven.compiler.release>21</maven.compiler.release>
+    <maven.compiler.parameters>true</maven.compiler.parameters>
+    <checkstyle.configuration>${maven.multiModuleProjectDirectory}/checkstyle-configuration.xml</checkstyle.configuration>
+    <checkstyle.suppressions>${maven.multiModuleProjectDirectory}/checkstyle-suppressions.xml</checkstyle.suppressions>
+    <checkstyle.cache>${project.build.directory}/checkstyle-cache</checkstyle.cache>
+    <liftwizard.version>2.1.54-SNAPSHOT</liftwizard.version>
+    <klass.version>${project.version}</klass.version>
+    <h2.version>2.5.252</h2.version>
+    <auto-service.version>1.0.1</auto-service.version>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.liftwizard</groupId>
+        <artifactId>liftwizard-dependencies</artifactId>
+        <version>${liftwizard.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.liftwizard</groupId>
+        <artifactId>liftwizard-bom</artifactId>
+        <version>${liftwizard.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <version>${h2.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-archetype-plugin</artifactId>
+          <version>3.4.1</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <!--region Phase 7: compile-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.16.0</version>
+        <configuration>
+          <annotationProcessorPaths combine.children="append">
+            <path>
+              <groupId>com.google.auto.service</groupId>
+              <artifactId>auto-service</artifactId>
+              <version>1.0.1</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+      <!--endregion Phase 7: compile-->
+      <!--region Phase 15: test-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.6.1</version>
+        <configuration>
+          <argLine>-XX:-OmitStackTraceInFastThrow -XX:TieredStopAtLevel=1 @{argLine}</argLine>
+        </configuration>
+      </plugin>
+      <!--endregion Phase 15: test-->
+      <!--region Phase 23: deploy-->
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.12.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <waitUntil>uploaded</waitUntil>
+        </configuration>
+      </plugin>
+      <!--endregion Phase 23: deploy-->
+    </plugins>
+  </build>
+  <profiles>
+    <!--region No phase-->
+    <profile>
+      <!--Rules that are meant to always pass. They can run in CI with dryRun, or one-off for rewrites.-->
+      <id>rewrite-maven-plugin</id>
+      <build>
         <pluginManagement>
-            <plugins>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-archetype-plugin</artifactId>
-                    <version>3.4.1</version>
-                </plugin>
-
-            </plugins>
+          <plugins>
+            <plugin>
+              <groupId>org.openrewrite.maven</groupId>
+              <artifactId>rewrite-maven-plugin</artifactId>
+              <version>6.46.1</version>
+              <configuration>
+                <exclusions combine.children="append">
+                  <!-- Remove when rewrite-migrate-java includes https://github.com/openrewrite/rewrite-migrate-java/pull/1229. -->
+                  <exclusion>**/META-INF/archetype-post-generate.groovy</exclusion>
+                </exclusions>
+                <activeRecipes combine.children="append">
+                  <recipe>cool.klass.UpdateCopyrightYear</recipe>
+                </activeRecipes>
+                <activeStyles combine.children="append">
+                  <style>cool.klass.SpacesStyle</style>
+                </activeStyles>
+              </configuration>
+            </plugin>
+          </plugins>
         </pluginManagement>
-
+      </build>
+    </profile>
+    <!--endregion No phase-->
+    <profile>
+      <id>spotless-prettier-java-sort-imports</id>
+      <build>
         <plugins>
-            <!--region Phase 7: compile-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.16.0</version>
-                <configuration>
-                    <annotationProcessorPaths combine.children="append">
-                        <path>
-                            <groupId>com.google.auto.service</groupId>
-                            <artifactId>auto-service</artifactId>
-                            <version>1.0.1</version>
-                        </path>
-                    </annotationProcessorPaths>
-                </configuration>
-            </plugin>
-            <!--endregion Phase 7: compile-->
-
-            <!--region Phase 15: test-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.6.1</version>
-                <configuration>
-                    <argLine>-XX:-OmitStackTraceInFastThrow -XX:TieredStopAtLevel=1 @{argLine}</argLine>
-                </configuration>
-            </plugin>
-            <!--endregion Phase 15: test-->
-
-            <!--region Phase 23: deploy-->
-            <plugin>
-                <groupId>org.sonatype.central</groupId>
-                <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.12.0</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <waitUntil>uploaded</waitUntil>
-                </configuration>
-            </plugin>
-            <!--endregion Phase 23: deploy-->
+          <plugin>
+            <groupId>com.diffplug.spotless</groupId>
+            <artifactId>spotless-maven-plugin</artifactId>
+            <version>3.12.0</version>
+            <configuration>
+              <java>
+                <prettier combine.self="override">
+                  <devDependencies>
+                    <prettier>3.3.2</prettier>
+                    <prettier-plugin-java>2.7.4</prettier-plugin-java>
+                  </devDependencies>
+                  <configFile>.prettierrc.json5</configFile>
+                  <config>
+                    <parser>java</parser>
+                    <plugins>prettier-plugin-java</plugins>
+                  </config>
+                </prettier>
+              </java>
+            </configuration>
+          </plugin>
         </plugins>
-    </build>
-
-    <profiles>
-
-        <!--region No phase-->
-        <profile>
-            <!--Rules that are meant to always pass. They can run in CI with dryRun, or one-off for rewrites.-->
-            <id>rewrite-maven-plugin</id>
-
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.openrewrite.maven</groupId>
-                            <artifactId>rewrite-maven-plugin</artifactId>
-                            <version>6.46.1</version>
-                            <configuration>
-                                <exclusions combine.children="append">
-                                    <!-- Remove when rewrite-migrate-java includes https://github.com/openrewrite/rewrite-migrate-java/pull/1229. -->
-                                    <exclusion>**/META-INF/archetype-post-generate.groovy</exclusion>
-                                </exclusions>
-                                <activeRecipes combine.children="append">
-                                    <recipe>cool.klass.UpdateCopyrightYear</recipe>
-                                </activeRecipes>
-                                <activeStyles combine.children="append">
-                                    <style>cool.klass.SpacesStyle</style>
-                                </activeStyles>
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
-        <!--endregion No phase-->
-
-        <profile>
-            <id>spotless-prettier-java-sort-imports</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.diffplug.spotless</groupId>
-                        <artifactId>spotless-maven-plugin</artifactId>
-                        <version>3.12.0</version>
-                        <configuration>
-                            <java>
-                                <prettier combine.self="override">
-                                    <devDependencies>
-                                        <prettier>3.3.2</prettier>
-                                        <prettier-plugin-java>2.7.4</prettier-plugin-java>
-                                    </devDependencies>
-                                    <configFile>.prettierrc.json5</configFile>
-                                    <config>
-                                        <parser>java</parser>
-                                        <plugins>prettier-plugin-java</plugins>
-                                    </config>
-                                </prettier>
-                            </java>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <!--region Phase 1: validate-->
-        <profile>
-            <id>maven-enforcer-plugin</id>
-
-            <build>
-                <plugins>
-
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-enforcer-plugin</artifactId>
-                        <version>3.7.0</version>
-                        <configuration>
-                            <rules combine.children="append">
-                                <enforceBytecodeVersion>
-                                    <maxJdkVersion>21</maxJdkVersion>
-                                </enforceBytecodeVersion>
-                                <bannedDependencies>
-                                    <excludes>
-                                        <exclude>ch.qos.reload4j:reload4j</exclude>
-                                        <exclude>log4j:log4j</exclude>
-                                        <exclude>org.hamcrest:hamcrest-core</exclude>
-                                        <exclude>org.hamcrest:hamcrest</exclude>
-                                    </excludes>
-                                </bannedDependencies>
-                            </rules>
-                        </configuration>
-                    </plugin>
-
-                </plugins>
-            </build>
-        </profile>
-        <!--endregion-->
-
-        <!--region Phase 21: verify-->
-        <profile>
-            <id>maven-dependency-plugin</id>
-
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <version>3.11.0</version>
-                        <configuration>
-                            <ignoredUnusedDeclaredDependencies combine.children="append">
-                                <ignoredUnusedDeclaredDependency>com.mattbertolini:liquibase-slf4j</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-domain-model</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-domain-model</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-graphql-reladomo-finder</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-graphql-schema-query</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-graphql-schema</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-liquibase-schema</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-reladomo-runtime-configuration</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-relational-schema</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-bundle-bootstrap-writer</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-bundle-reladomo-jsonview</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-bundle-reladomo-response</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-bundle-sample-data</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-configuration-data-store-reladomo</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-configuration-domain-model-loader-compiler</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-configuration-domain-model-loader-constant</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-domain-model</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-graphql-reladomo-finder</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-graphql-schema</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-liquibase-schema</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-reladomo-pojos</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass:klass-reladomo-utc-infinity-timestamp</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>cool.klass:klass-syntax-css-class</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-auth-filter</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-connection-manager-holder</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-cors</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-ddl-executor</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-h2</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-liquibase-migration</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-logging-config</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-logging-http</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-logging-uncaught-exception-handler</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-object-mapper</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-reladomo</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-connection-manager-h2-memory</ignoredUnusedDeclaredDependency>
-                                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-liquibase-simulated-sequence</ignoredUnusedDeclaredDependency>
-                            </ignoredUnusedDeclaredDependencies>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <!--endregion-->
-
-    </profiles>
-
+      </build>
+    </profile>
+    <!--region Phase 1: validate-->
+    <profile>
+      <id>maven-enforcer-plugin</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <version>3.7.0</version>
+            <configuration>
+              <rules combine.children="append">
+                <enforceBytecodeVersion>
+                  <maxJdkVersion>21</maxJdkVersion>
+                </enforceBytecodeVersion>
+                <bannedDependencies>
+                  <excludes>
+                    <exclude>ch.qos.reload4j:reload4j</exclude>
+                    <exclude>log4j:log4j</exclude>
+                    <exclude>org.hamcrest:hamcrest-core</exclude>
+                    <exclude>org.hamcrest:hamcrest</exclude>
+                  </excludes>
+                </bannedDependencies>
+              </rules>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!--endregion-->
+    <!--region Phase 21: verify-->
+    <profile>
+      <id>maven-dependency-plugin</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>3.11.0</version>
+            <configuration>
+              <ignoredUnusedDeclaredDependencies combine.children="append">
+                <ignoredUnusedDeclaredDependency>com.mattbertolini:liquibase-slf4j</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>com.stackoverflow:stackoverflow-domain-model</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-domain-model</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-graphql-reladomo-finder</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-graphql-schema-query</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-graphql-schema</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-liquibase-schema</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-reladomo-runtime-configuration</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass.xample.coverage:coverage-example-relational-schema</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-bundle-bootstrap-writer</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-bundle-reladomo-jsonview</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-bundle-reladomo-response</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-bundle-sample-data</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-configuration-data-store-reladomo</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-configuration-domain-model-loader-compiler</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass:klass-dropwizard-configuration-domain-model-loader-constant</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-domain-model</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-graphql-reladomo-finder</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-graphql-schema</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-liquibase-schema</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass:klass-model-bootstrapped-reladomo-pojos</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass:klass-reladomo-utc-infinity-timestamp</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>cool.klass:klass-syntax-css-class</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-auth-filter</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-connection-manager-holder</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-cors</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-ddl-executor</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-h2</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-liquibase-migration</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-logging-config</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-logging-http</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-logging-uncaught-exception-handler</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-object-mapper</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-bundle-reladomo</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-connection-manager-h2-memory</ignoredUnusedDeclaredDependency>
+                <ignoredUnusedDeclaredDependency>io.liftwizard:liftwizard-liquibase-simulated-sequence</ignoredUnusedDeclaredDependency>
+              </ignoredUnusedDeclaredDependencies>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!--endregion-->
+  </profiles>
 </project>
