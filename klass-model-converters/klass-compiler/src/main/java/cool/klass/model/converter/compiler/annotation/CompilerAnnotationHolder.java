@@ -194,14 +194,9 @@ public class CompilerAnnotationHolder
 			return new SingleFileSource(compilationUnit);
 		}
 
-		MutableList<CompilationUnit> rootCompilationUnits = surroundingElements
-			.asLazy()
-			.collect(IAntlrElement::getCompilationUnit)
-			.select(Optional::isPresent)
-			.collect(Optional::get)
-			.reject(CompilationUnit::isGrafted)
-			.toList()
-			.distinct();
+		MutableList<CompilationUnit> rootCompilationUnits = IAntlrElement.getCompilationUnits(
+			surroundingElements
+		).reject(CompilationUnit::isGrafted);
 		if (rootCompilationUnits.size() != 1)
 		{
 			throw new AssertionError(
