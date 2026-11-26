@@ -52,6 +52,7 @@ import cool.klass.model.converter.compiler.phase.UrlParameterPhase;
 import cool.klass.model.converter.compiler.phase.VariableResolutionPhase;
 import cool.klass.model.converter.compiler.phase.VersionAssociationInferencePhase;
 import cool.klass.model.converter.compiler.phase.VersionClassInferencePhase;
+import cool.klass.model.converter.compiler.token.categories.TokenCategories;
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import cool.klass.model.converter.compiler.token.categorizing.lexer.LexerBasedTokenCategorizer;
 import cool.klass.model.converter.compiler.token.categorizing.parser.ParserBasedTokenCategorizer;
@@ -174,25 +175,14 @@ public class KlassCompiler
 			compilationUnits
 		);
 
-		ImmutableList<Token> duplicateTokens = tokenCategoriesFromLexer
-			.keysView()
-			.select(tokenCategoriesFromParser::containsKey)
-			.toImmutableList();
-		if (duplicateTokens.notEmpty())
-		{
-			throw new AssertionError(duplicateTokens);
-		}
+		var tokenCategories = new TokenCategories(tokenCategoriesFromLexer, tokenCategoriesFromParser);
 
 		this.compilerState.reportErrors();
 		ImmutableList<RootCompilerAnnotation> compilerAnnotations = this.compilerState
 			.getCompilerAnnotationHolder()
 			.getCompilerAnnotations();
 
-		return this.compilerState.getCompilationResult(
-			compilerAnnotations,
-			tokenCategoriesFromLexer,
-			tokenCategoriesFromParser
-		);
+		return this.compilerState.getCompilationResult(compilerAnnotations, tokenCategories);
 	}
 
 	private MapIterable<Token, TokenCategory> getTokenCategoriesFromLexer(

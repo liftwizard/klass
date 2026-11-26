@@ -23,6 +23,7 @@ import com.google.common.base.Stopwatch;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
+import cool.klass.model.converter.compiler.token.categories.TokenCategories;
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import cool.klass.model.converter.compiler.token.categorizing.lexer.LexerBasedTokenCategorizer;
 import cool.klass.model.converter.compiler.token.categorizing.parser.ParserBasedTokenCategorizer;
@@ -183,8 +184,7 @@ class SyntaxHighlighterListenerTest
 		Stopwatch rewriteStopwatch = Stopwatch.createStarted();
 		var ansiTokenColorizer = new AnsiTokenColorizer(
 			colorScheme,
-			tokenCategoriesFromParser,
-			tokenCategoriesFromLexer
+			new TokenCategories(tokenCategoriesFromLexer, tokenCategoriesFromParser)
 		);
 
 		Ansi ansi = Ansi.ansi();

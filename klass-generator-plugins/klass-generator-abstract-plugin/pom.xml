@@ -42,6 +42,12 @@
 
         <dependency>
             <groupId>cool.klass</groupId>
+            <artifactId>klass-token-categories</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cool.klass</groupId>
             <artifactId>klass-model-loader-compiler</artifactId>
             <version>${project.version}</version>
         </dependency>

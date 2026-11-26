@@ -85,8 +85,7 @@ class KlassCompilerTest
 
 		var compilerAnnotationRenderer = new CompilerAnnotationRenderer(
 			colorScheme,
-			compilationResult.tokenCategoriesFromParser(),
-			compilationResult.tokenCategoriesFromLexer(),
+			compilationResult.tokenCategories(),
 			false
 		);
 		String message = compilerAnnotations.collect(compilerAnnotationRenderer::render).makeString("\n");

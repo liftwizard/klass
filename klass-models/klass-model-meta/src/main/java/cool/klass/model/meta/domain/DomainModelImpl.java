@@ -21,6 +21,7 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
+import cool.klass.model.converter.compiler.token.categories.TokenCategories;
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import cool.klass.model.meta.domain.AbstractClassifier.ClassifierBuilder;
 import cool.klass.model.meta.domain.AssociationImpl.AssociationBuilder;
@@ -52,7 +53,6 @@ import cool.klass.model.meta.domain.service.ServiceGroupImpl.ServiceGroupBuilder
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.map.ImmutableMap;
-import org.eclipse.collections.api.map.MapIterable;
 
 public final class DomainModelImpl
 	implements DomainModelWithSourceCode
@@ -61,10 +61,7 @@ public final class DomainModelImpl
 	private final ImmutableList<SourceCode> sourceCodes;
 
 	@Nonnull
-	private final MapIterable<Token, TokenCategory> tokenCategoriesFromLexer;
-
-	@Nonnull
-	private final MapIterable<Token, TokenCategory> tokenCategoriesFromParser;
+	private final TokenCategories tokenCategories;
 
 	@Nonnull
 	private final DomainModelDeclarations domainModelDeclarations;
@@ -109,8 +106,7 @@ public final class DomainModelImpl
 
 	private DomainModelImpl(
 		@Nonnull ImmutableList<SourceCode> sourceCodes,
-		@Nonnull MapIterable<Token, TokenCategory> tokenCategoriesFromLexer,
-		@Nonnull MapIterable<Token, TokenCategory> tokenCategoriesFromParser,
+		@Nonnull TokenCategories tokenCategories,
 		@Nonnull DomainModelDeclarations domainModelDeclarations,
 		@Nonnull DomainModelReferences domainModelReferences,
 		@Nonnull ImmutableList<TopLevelElement> topLevelElements,
@@ -124,8 +120,7 @@ public final class DomainModelImpl
 	)
 	{
 		this.sourceCodes = Objects.requireNonNull(sourceCodes);
-		this.tokenCategoriesFromLexer = Objects.requireNonNull(tokenCategoriesFromLexer);
-		this.tokenCategoriesFromParser = Objects.requireNonNull(tokenCategoriesFromParser);
+		this.tokenCategories = Objects.requireNonNull(tokenCategories);
 		this.domainModelDeclarations = Objects.requireNonNull(domainModelDeclarations);
 		this.domainModelReferences = Objects.requireNonNull(domainModelReferences);
 		this.topLevelElements = Objects.requireNonNull(topLevelElements);
@@ -157,33 +152,7 @@ public final class DomainModelImpl
 	@Override
 	public Optional<TokenCategory> getTokenCategory(Token token)
 	{
-		TokenCategory lexerCategory = this.tokenCategoriesFromLexer.get(token);
-		TokenCategory parserCategory = this.tokenCategoriesFromParser.get(token);
-		if (lexerCategory != null && parserCategory != null)
-		{
-			throw new AssertionError(token);
-		}
-		if (lexerCategory != null)
-		{
-			return Optional.of(lexerCategory);
-		}
-		if (parserCategory != null)
-		{
-			return Optional.of(parserCategory);
-		}
-		return Optional.empty();
-	}
-
-	@Nonnull
-	public MapIterable<Token, TokenCategory> getTokenCategoriesFromLexer()
-	{
-		return this.tokenCategoriesFromLexer;
-	}
-
-	@Nonnull
-	public MapIterable<Token, TokenCategory> getTokenCategoriesFromParser()
-	{
-		return this.tokenCategoriesFromParser;
+		return this.tokenCategories.getTokenCategory(token);
 	}
 
 	@Override
@@ -417,10 +386,7 @@ public final class DomainModelImpl
 		private final ImmutableList<ServiceGroupBuilder> serviceGroupBuilders;
 
 		@Nonnull
-		private final MapIterable<Token, TokenCategory> tokenCategoriesFromLexer;
-
-		@Nonnull
-		private final MapIterable<Token, TokenCategory> tokenCategoriesFromParser;
+		private final TokenCategories tokenCategories;
 
 		public DomainModelBuilder(
 			@Nonnull ImmutableList<SourceCodeBuilderImpl> sourceCodeBuilders,
@@ -432,8 +398,7 @@ public final class DomainModelImpl
 			@Nonnull ImmutableList<AssociationBuilder> associationBuilders,
 			@Nonnull ImmutableList<ProjectionBuilder> projectionBuilders,
 			@Nonnull ImmutableList<ServiceGroupBuilder> serviceGroupBuilders,
-			@Nonnull MapIterable<Token, TokenCategory> tokenCategoriesFromLexer,
-			@Nonnull MapIterable<Token, TokenCategory> tokenCategoriesFromParser
+			@Nonnull TokenCategories tokenCategories
 		)
 		{
 			this.sourceCodeBuilders = Objects.requireNonNull(sourceCodeBuilders);
@@ -445,8 +410,7 @@ public final class DomainModelImpl
 			this.associationBuilders = Objects.requireNonNull(associationBuilders);
 			this.projectionBuilders = Objects.requireNonNull(projectionBuilders);
 			this.serviceGroupBuilders = Objects.requireNonNull(serviceGroupBuilders);
-			this.tokenCategoriesFromLexer = Objects.requireNonNull(tokenCategoriesFromLexer);
-			this.tokenCategoriesFromParser = Objects.requireNonNull(tokenCategoriesFromParser);
+			this.tokenCategories = Objects.requireNonNull(tokenCategories);
 		}
 
 		@Nonnull
@@ -489,8 +453,7 @@ public final class DomainModelImpl
 
 			return new DomainModelImpl(
 				sourceCodes,
-				this.tokenCategoriesFromLexer,
-				this.tokenCategoriesFromParser,
+				this.tokenCategories,
 				domainModelDeclarations,
 				domainModelReferences,
 				topLevelElements,
