@@ -137,13 +137,23 @@ public class CompilerState
 	{
 		if (compilerAnnotations.anySatisfy(AbstractCompilerAnnotation::isError))
 		{
-			return new CompilationResult(compilerAnnotations, Optional.empty());
+			return new CompilationResult(
+				compilerAnnotations,
+				tokenCategoriesFromLexer,
+				tokenCategoriesFromParser,
+				Optional.empty()
+			);
 		}
 		DomainModelWithSourceCode domainModel = this.buildDomainModel(
 			tokenCategoriesFromLexer,
 			tokenCategoriesFromParser
 		);
-		return new CompilationResult(compilerAnnotations, Optional.of(domainModel));
+		return new CompilationResult(
+			compilerAnnotations,
+			tokenCategoriesFromLexer,
+			tokenCategoriesFromParser,
+			Optional.of(domainModel)
+		);
 	}
 
 	@Nonnull

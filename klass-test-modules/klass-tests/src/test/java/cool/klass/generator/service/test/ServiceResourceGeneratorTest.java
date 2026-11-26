@@ -22,6 +22,7 @@ import cool.klass.generator.service.ServiceResourceGenerator;
 import cool.klass.model.converter.compiler.CompilationResult;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.KlassCompiler;
+import cool.klass.model.converter.compiler.annotation.CompilerAnnotationRenderer;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.meta.domain.api.service.ServiceGroup;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
@@ -53,12 +54,21 @@ class ServiceResourceGeneratorTest
 			"example.klass",
 			sourceCodeText
 		);
-		var compiler = new KlassCompiler(compilationUnit, ColorSchemeProvider.getByName("dark"));
+		var compiler = new KlassCompiler(compilationUnit);
 		CompilationResult compilationResult = compiler.compile();
 
 		if (compilationResult.domainModelWithSourceCode().isEmpty())
 		{
-			String message = compilationResult.compilerAnnotations().makeString("\n");
+			var compilerAnnotationRenderer = new CompilerAnnotationRenderer(
+				ColorSchemeProvider.getByName("dark"),
+				compilationResult.tokenCategoriesFromParser(),
+				compilationResult.tokenCategoriesFromLexer(),
+				false
+			);
+			String message = compilationResult
+				.compilerAnnotations()
+				.collect(compilerAnnotationRenderer::render)
+				.makeString("\n");
 			fail(message);
 		}
 		else

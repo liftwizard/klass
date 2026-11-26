@@ -21,6 +21,7 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.annotation.AbstractCompilerAnnotation;
+import cool.klass.model.converter.compiler.annotation.CompilerAnnotationRenderer;
 import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
@@ -76,13 +77,20 @@ class KlassCompilerTest
 			sourceCodeText
 		);
 		AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
-		var compiler = new KlassCompiler(compilationUnit, colorScheme);
+		var compiler = new KlassCompiler(compilationUnit);
 		CompilationResult compilationResult = compiler.compile();
 		ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult
 			.compilerAnnotations()
 			.select(AbstractCompilerAnnotation::isError);
 
-		assertThat(compilerAnnotations).as(compilerAnnotations.makeString("\n")).isEqualTo(Lists.immutable.empty());
+		var compilerAnnotationRenderer = new CompilerAnnotationRenderer(
+			colorScheme,
+			compilationResult.tokenCategoriesFromParser(),
+			compilationResult.tokenCategoriesFromLexer(),
+			false
+		);
+		String message = compilerAnnotations.collect(compilerAnnotationRenderer::render).makeString("\n");
+		assertThat(compilerAnnotations).as(message).isEqualTo(Lists.immutable.empty());
 
 		assertThat(compilationResult.domainModelWithSourceCode()).isPresent();
 	}

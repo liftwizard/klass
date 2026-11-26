@@ -23,13 +23,8 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.state.IAntlrElement;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.tuple.Pair;
-import org.fusesource.jansi.Ansi;
-import org.fusesource.jansi.Ansi.Color;
 
 public class RootCompilerAnnotation
 	extends AbstractCompilerAnnotation
@@ -55,20 +50,10 @@ public class RootCompilerAnnotation
 		@Nonnull ImmutableList<IAntlrElement> sourceContexts,
 		@Nonnull String annotationCode,
 		@Nonnull String message,
-		@Nonnull AnsiTokenColorizer ansiTokenColorizer,
-		@Nonnull AnnotationSeverity severity,
-		boolean enableIdeLinks
+		@Nonnull AnnotationSeverity severity
 	)
 	{
-		super(
-			snippetSource,
-			macroCause,
-			offendingContexts,
-			sourceContexts,
-			ansiTokenColorizer,
-			severity,
-			enableIdeLinks
-		);
+		super(snippetSource, macroCause, offendingContexts, sourceContexts, severity);
 		this.annotationCode = Objects.requireNonNull(annotationCode);
 		this.message = Objects.requireNonNull(message);
 	}
@@ -79,90 +64,32 @@ public class RootCompilerAnnotation
 		return this.annotationCode;
 	}
 
+	@Nonnull
+	public String getMessage()
+	{
+		return this.message;
+	}
+
 	@Override
 	public int compareTo(@Nonnull RootCompilerAnnotation other)
 	{
 		return COMPILER_ANNOTATION_COMPARATOR.compare(this, other);
 	}
 
+	/**
+	 * {@return a one-line summary for debugging; use {@link CompilerAnnotationRenderer} for the full message}
+	 */
 	@Nonnull
 	@Override
 	public String toString()
 	{
-		String contextString = this.getContextString();
-		String locationMessage = this.getOptionalLocationMessage();
-		String causeString = this.getCauseString();
-		String ideUrlMessage = this.getIdeUrlMessage();
-		String severityName = this.severity == AnnotationSeverity.ERROR ? "Error" : "Warning";
-
-		// Avoid Ansi.render(): Maven 3.10's org.fusesource.jansi compatibility shim ignores Ansi.isEnabled() there
-		String annotationCodeString = Ansi.ansi().fg(Color.MAGENTA).a(this.annotationCode).reset().toString();
-		String headlineString = Ansi.ansi()
-			.fg(this.getCaretColor())
-			.a(severityName + ": " + this.message)
-			.reset()
-			.toString();
-
-		var format = """
-			════════════════════════════════════════ %s ════════════════════════════════════════
-			%s
-
-			At %s
-
-			%s%s%s%s
-			═════════════════════════════════════════════════════════════════════════════════════════════
-			""";
-
-		return String.format(
-			format,
-			annotationCodeString,
-			headlineString,
-			this.getShortLocationString(),
-			contextString,
-			locationMessage,
-			causeString,
-			ideUrlMessage
-		);
-	}
-
-	@Nonnull
-	@Override
-	protected Color getCaretColor()
-	{
-		return switch (this.severity)
-		{
-			case ERROR -> Color.RED;
-			case WARNING -> Color.YELLOW;
-		};
-	}
-
-	@Override
-	public String toGitHubAnnotation()
-	{
-		Pair<Token, Token> firstAndLastToken = this.getFirstAndLastToken();
-		Token startToken = firstAndLastToken.getOne();
-		Token endToken = firstAndLastToken.getTwo();
-
-		String sourceName = this.getCompilationUnit().getSourceName();
-		return "::%s file=%s,line=%d,endLine=%d,col=%d,endColumn=%d,title=%s::%s".formatted(
-			this.getSeverityString(),
-			sourceName,
-			startToken.getLine(),
-			endToken.getLine(),
-			startToken.getCharPositionInLine(),
-			endToken.getCharPositionInLine(),
+		return "%s %s: %s (%s:%d:%d)".formatted(
 			this.annotationCode,
-			this.message
+			this.getSeverity(),
+			this.message,
+			this.getFilenameWithoutDirectory(),
+			this.getLine(),
+			this.getCharPositionInLine() + 1
 		);
-	}
-
-	@Nonnull
-	protected String getSeverityString()
-	{
-		return switch (this.severity)
-		{
-			case ERROR -> "error";
-			case WARNING -> "warning";
-		};
 	}
 }
