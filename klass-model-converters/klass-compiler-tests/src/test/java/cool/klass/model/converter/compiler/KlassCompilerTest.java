@@ -82,7 +82,10 @@ class KlassCompilerTest
 			.compilerAnnotations()
 			.select(AbstractCompilerAnnotation::isError);
 
-		assertThat(compilerAnnotations).as(compilerAnnotations.makeString("\n")).isEqualTo(Lists.immutable.empty());
+		String message = compilerAnnotations
+			.collect(compilationResult.compilerAnnotationRenderer()::render)
+			.makeString("\n");
+		assertThat(compilerAnnotations).as(message).isEqualTo(Lists.immutable.empty());
 
 		assertThat(compilationResult.domainModelWithSourceCode()).isPresent();
 	}

@@ -58,7 +58,10 @@ class ServiceResourceGeneratorTest
 
 		if (compilationResult.domainModelWithSourceCode().isEmpty())
 		{
-			String message = compilationResult.compilerAnnotations().makeString("\n");
+			String message = compilationResult
+				.compilerAnnotations()
+				.collect(compilationResult.compilerAnnotationRenderer()::render)
+				.makeString("\n");
 			fail(message);
 		}
 		else

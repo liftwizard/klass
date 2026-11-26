@@ -24,7 +24,7 @@ import java.util.function.Function;
 import javax.annotation.Nonnull;
 
 import com.google.common.base.Stopwatch;
-import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
+import cool.klass.model.converter.compiler.annotation.CompilerAnnotationRenderer;
 import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
 import cool.klass.model.converter.compiler.parser.RuleOnlyParseTreeWalker;
 import cool.klass.model.converter.compiler.phase.AssociationPhase;
@@ -195,21 +195,21 @@ public class KlassCompiler
 			throw new AssertionError(duplicateTokens);
 		}
 
-		CompilerAnnotationHolder compilerAnnotationHolder = this.compilerState.getCompilerAnnotationHolder();
-
 		var ansiTokenColorizer = new AnsiTokenColorizer(
 			this.colorScheme,
 			tokenCategoriesFromParser,
 			tokenCategoriesFromLexer
 		);
-		compilerAnnotationHolder.setAnsiTokenColorizer(ansiTokenColorizer);
-		compilerAnnotationHolder.setEnableIdeLinks(this.enableIdeLinks);
+		var compilerAnnotationRenderer = new CompilerAnnotationRenderer(ansiTokenColorizer, this.enableIdeLinks);
 
 		this.compilerState.reportErrors();
-		ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilerAnnotationHolder.getCompilerAnnotations();
+		ImmutableList<RootCompilerAnnotation> compilerAnnotations = this.compilerState
+			.getCompilerAnnotationHolder()
+			.getCompilerAnnotations();
 
 		return this.compilerState.getCompilationResult(
 			compilerAnnotations,
+			compilerAnnotationRenderer,
 			tokenCategoriesFromLexer,
 			tokenCategoriesFromParser
 		);

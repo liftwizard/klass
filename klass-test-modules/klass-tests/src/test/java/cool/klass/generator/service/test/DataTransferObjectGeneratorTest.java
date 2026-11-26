@@ -60,7 +60,9 @@ class DataTransferObjectGeneratorTest
 		if (compilationResult.domainModelWithSourceCode().isEmpty())
 		{
 			ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
-			String message = compilerAnnotations.makeString("\n");
+			String message = compilerAnnotations
+				.collect(compilationResult.compilerAnnotationRenderer()::render)
+				.makeString("\n");
 			fail(message);
 		}
 		else

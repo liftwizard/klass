@@ -36,6 +36,7 @@ import javax.annotation.Nonnull;
 import cool.klass.model.converter.compiler.CompilationResult;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.KlassCompiler;
+import cool.klass.model.converter.compiler.annotation.CompilerAnnotationRenderer;
 import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
@@ -237,7 +238,7 @@ public abstract class AbstractGenerateMojo
 	{
 		for (RootCompilerAnnotation compilerAnnotation : compilationResult.compilerAnnotations())
 		{
-			this.logCompilerAnnotation(compilerAnnotation);
+			this.logCompilerAnnotation(compilerAnnotation, compilationResult.compilerAnnotationRenderer());
 		}
 
 		if (compilationResult.domainModelWithSourceCode().isEmpty())
@@ -246,23 +247,26 @@ public abstract class AbstractGenerateMojo
 		}
 	}
 
-	private void logCompilerAnnotation(RootCompilerAnnotation compilerAnnotation)
+	private void logCompilerAnnotation(
+		RootCompilerAnnotation compilerAnnotation,
+		CompilerAnnotationRenderer compilerAnnotationRenderer
+	)
 	{
 		if (compilerAnnotation.isError())
 		{
 			if (this.logGitHubAnnotations)
 			{
-				this.getLog().info("\n" + compilerAnnotation.toGitHubAnnotation());
+				this.getLog().info("\n" + compilerAnnotationRenderer.renderGitHubAnnotation(compilerAnnotation));
 			}
-			this.getLog().error("\n" + compilerAnnotation);
+			this.getLog().error("\n" + compilerAnnotationRenderer.render(compilerAnnotation));
 		}
 		else if (compilerAnnotation.isWarning() && this.logCompilerAnnotations)
 		{
 			if (this.logGitHubAnnotations)
 			{
-				this.getLog().info("\n" + compilerAnnotation.toGitHubAnnotation());
+				this.getLog().info("\n" + compilerAnnotationRenderer.renderGitHubAnnotation(compilerAnnotation));
 			}
-			this.getLog().warn("\n" + compilerAnnotation);
+			this.getLog().warn("\n" + compilerAnnotationRenderer.render(compilerAnnotation));
 		}
 	}
 

@@ -21,7 +21,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
@@ -29,6 +29,7 @@ import javax.annotation.Nonnull;
 import cool.klass.model.converter.compiler.CompilationResult;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.KlassCompiler;
+import cool.klass.model.converter.compiler.annotation.CompilerAnnotationRenderer;
 import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
@@ -57,7 +58,7 @@ public class DomainModelCompilerLoader
 	private final ClassLoader classLoader;
 
 	@Nonnull
-	private final Consumer<RootCompilerAnnotation> compilerAnnotationHandler;
+	private final BiConsumer<RootCompilerAnnotation, CompilerAnnotationRenderer> compilerAnnotationHandler;
 
 	@Nonnull
 	private final AnsiColorScheme colorScheme;
@@ -67,7 +68,7 @@ public class DomainModelCompilerLoader
 	public DomainModelCompilerLoader(
 		@Nonnull ImmutableList<String> klassSourcePackages,
 		@Nonnull ClassLoader classLoader,
-		@Nonnull Consumer<RootCompilerAnnotation> compilerAnnotationHandler,
+		@Nonnull BiConsumer<RootCompilerAnnotation, CompilerAnnotationRenderer> compilerAnnotationHandler,
 		AnsiColorScheme colorScheme,
 		boolean enableIdeLinks
 	)
@@ -79,23 +80,29 @@ public class DomainModelCompilerLoader
 		this.enableIdeLinks = enableIdeLinks;
 	}
 
-	public static void logCompilerError(RootCompilerAnnotation compilerAnnotation)
+	public static void logCompilerError(
+		RootCompilerAnnotation compilerAnnotation,
+		CompilerAnnotationRenderer compilerAnnotationRenderer
+	)
 	{
 		if (compilerAnnotation.isError())
 		{
-			LOGGER.error("{}", compilerAnnotation);
+			LOGGER.error("{}", compilerAnnotationRenderer.render(compilerAnnotation));
 		}
 	}
 
-	public static void logCompilerAnnotation(RootCompilerAnnotation compilerAnnotation)
+	public static void logCompilerAnnotation(
+		RootCompilerAnnotation compilerAnnotation,
+		CompilerAnnotationRenderer compilerAnnotationRenderer
+	)
 	{
 		if (compilerAnnotation.isError())
 		{
-			LOGGER.error("{}", compilerAnnotation);
+			LOGGER.error("{}", compilerAnnotationRenderer.render(compilerAnnotation));
 		}
 		else
 		{
-			LOGGER.warn("{}", compilerAnnotation);
+			LOGGER.warn("{}", compilerAnnotationRenderer.render(compilerAnnotation));
 		}
 	}
 
@@ -160,7 +167,7 @@ public class DomainModelCompilerLoader
 		ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
 		for (RootCompilerAnnotation compilerAnnotation : compilerAnnotations)
 		{
-			this.compilerAnnotationHandler.accept(compilerAnnotation);
+			this.compilerAnnotationHandler.accept(compilerAnnotation, compilationResult.compilerAnnotationRenderer());
 		}
 
 		if (compilationResult.domainModelWithSourceCode().isEmpty())

@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.annotation.AbstractCompilerAnnotation;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
+import cool.klass.model.converter.compiler.annotation.CompilerAnnotationRenderer;
 import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
 import cool.klass.model.converter.compiler.parser.AntlrUtils;
 import cool.klass.model.converter.compiler.parser.DelegatingKlassListener;
@@ -131,19 +132,20 @@ public class CompilerState
 	@Nonnull
 	public CompilationResult getCompilationResult(
 		ImmutableList<RootCompilerAnnotation> compilerAnnotations,
+		CompilerAnnotationRenderer compilerAnnotationRenderer,
 		MapIterable<Token, TokenCategory> tokenCategoriesFromLexer,
 		MapIterable<Token, TokenCategory> tokenCategoriesFromParser
 	)
 	{
 		if (compilerAnnotations.anySatisfy(AbstractCompilerAnnotation::isError))
 		{
-			return new CompilationResult(compilerAnnotations, Optional.empty());
+			return new CompilationResult(compilerAnnotations, compilerAnnotationRenderer, Optional.empty());
 		}
 		DomainModelWithSourceCode domainModel = this.buildDomainModel(
 			tokenCategoriesFromLexer,
 			tokenCategoriesFromParser
 		);
-		return new CompilationResult(compilerAnnotations, Optional.of(domainModel));
+		return new CompilationResult(compilerAnnotations, compilerAnnotationRenderer, Optional.of(domainModel));
 	}
 
 	@Nonnull

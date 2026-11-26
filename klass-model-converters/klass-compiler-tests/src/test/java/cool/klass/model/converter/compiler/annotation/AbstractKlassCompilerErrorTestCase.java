@@ -78,6 +78,7 @@ public abstract class AbstractKlassCompilerErrorTestCase
 	private ImmutableList<String> assertCompilerAnnotationsExist(CompilationResult compilationResult, String testName)
 	{
 		ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
+		CompilerAnnotationRenderer renderer = compilationResult.compilerAnnotationRenderer();
 		MutableList<String> expectedLogFileNames = Lists.mutable.empty();
 
 		for (RootCompilerAnnotation compilerAnnotation : compilerAnnotations)
@@ -91,7 +92,7 @@ public abstract class AbstractKlassCompilerErrorTestCase
 
 			expectedLogFileNames.add(annotationSourceName);
 
-			this.fileMatchExtension.assertFileContents(annotationSourceName, compilerAnnotation.toString());
+			this.fileMatchExtension.assertFileContents(annotationSourceName, renderer.render(compilerAnnotation));
 		}
 
 		ImmutableListMultimap<Object, RootCompilerAnnotation> annotationsByKey = compilerAnnotations.groupBy(
@@ -103,7 +104,7 @@ public abstract class AbstractKlassCompilerErrorTestCase
 			{
 				for (RootCompilerAnnotation compilerAnnotation : compilerAnnotationsForKey)
 				{
-					LOGGER.warn("Found compiler annotation:\n{}", compilerAnnotation);
+					LOGGER.warn("Found compiler annotation:\n{}", renderer.render(compilerAnnotation));
 				}
 				fail("Found multiple compiler annotations for key: " + key);
 			}
