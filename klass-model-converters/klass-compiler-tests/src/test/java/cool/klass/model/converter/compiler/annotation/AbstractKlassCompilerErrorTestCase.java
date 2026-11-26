@@ -118,7 +118,7 @@ public abstract class AbstractKlassCompilerErrorTestCase
 
 	private ImmutableList<Object> getAnnotationKey(RootCompilerAnnotation rootCompilerAnnotation)
 	{
-		String filenameWithoutDirectory = rootCompilerAnnotation.getFilenameWithoutDirectory();
+		String filenameWithoutDirectory = rootCompilerAnnotation.getCompilationUnit().getFilenameWithoutDirectory();
 		int line = rootCompilerAnnotation.getLine();
 		int charPositionInLine = rootCompilerAnnotation.getCharPositionInLine();
 		String annotationCode = rootCompilerAnnotation.getAnnotationCode();

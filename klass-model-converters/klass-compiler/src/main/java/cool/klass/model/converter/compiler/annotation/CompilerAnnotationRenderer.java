@@ -289,8 +289,7 @@ public final class CompilerAnnotationRenderer
 		}
 		return String.format(
 			"(%s:%d:%d)",
-			// TODO: This should be part of the source information
-			annotation.getFilenameWithoutDirectory(),
+			annotation.getCompilationUnit().getFilenameWithoutDirectory(),
 			annotation.getLine(),
 			annotation.getCharPositionInLine() + 1
 		);
@@ -305,7 +304,7 @@ public final class CompilerAnnotationRenderer
 		}
 		// @formatter:off
 		return Ansi.ansi().a("\n")
-				.fg(Color.CYAN).a("Location:  ").reset().a(annotation.getFilenameWithoutDirectory()).a(":").a(annotation.getLine()).a(":").a(annotation.getCharPositionInLine() + 1).reset().a("\n")
+				.fg(Color.CYAN).a("Location:  ").reset().a(annotation.getCompilationUnit().getFilenameWithoutDirectory()).a(":").a(annotation.getLine()).a(":").a(annotation.getCharPositionInLine() + 1).reset().a("\n")
 				.fg(Color.CYAN).a("File:      ").reset().a(annotation.getCompilationUnit()).reset().a("\n")
 				.fg(Color.CYAN).a("Line:      ").reset().a(annotation.getLine()).reset().a("\n")
 				.fg(Color.CYAN).a("Character: ").reset().a(annotation.getCharPositionInLine() + 1)
