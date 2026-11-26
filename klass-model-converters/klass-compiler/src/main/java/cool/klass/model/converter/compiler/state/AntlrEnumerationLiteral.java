@@ -27,8 +27,6 @@ import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.meta.domain.EnumerationLiteralImpl.EnumerationLiteralBuilder;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationLiteralContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
-import org.antlr.v4.runtime.Token;
-import org.eclipse.collections.api.tuple.Pair;
 
 public class AntlrEnumerationLiteral
 	extends AntlrIdentifierElement
@@ -88,7 +86,7 @@ public class AntlrEnumerationLiteral
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore()
+	public TokenRange getContextBefore()
 	{
 		return this.getEntireContext();
 	}

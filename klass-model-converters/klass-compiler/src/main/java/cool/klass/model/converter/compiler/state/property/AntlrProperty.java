@@ -34,17 +34,16 @@ import cool.klass.model.converter.compiler.state.AntlrIdentifierElement;
 import cool.klass.model.converter.compiler.state.AntlrNamedElement;
 import cool.klass.model.converter.compiler.state.AntlrType;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
+import cool.klass.model.converter.compiler.state.TokenRange;
 import cool.klass.model.meta.domain.property.AbstractProperty.PropertyBuilder;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.bag.MutableBag;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableOrderedMap;
-import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
 public abstract class AntlrProperty
@@ -71,7 +70,7 @@ public abstract class AntlrProperty
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore()
+	public TokenRange getContextBefore()
 	{
 		return this.getEntireContext();
 	}

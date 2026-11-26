@@ -26,6 +26,7 @@ import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrClass;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
+import cool.klass.model.converter.compiler.state.TokenRange;
 import cool.klass.model.converter.compiler.state.property.AntlrAssociationEnd;
 import cool.klass.model.converter.compiler.state.property.AntlrAssociationEndSignature;
 import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
@@ -37,10 +38,7 @@ import cool.klass.model.meta.domain.projection.AbstractProjectionParent.Abstract
 import cool.klass.model.meta.domain.projection.ProjectionReferencePropertyImpl.ProjectionReferencePropertyBuilder;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionReferencePropertyContext;
-import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.list.ImmutableList;
-import org.eclipse.collections.api.tuple.Pair;
-import org.eclipse.collections.impl.tuple.Tuples;
 
 public class AntlrProjectionReferenceProperty
 	extends AntlrProjectionParent
@@ -94,17 +92,22 @@ public class AntlrProjectionReferenceProperty
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore()
+	public TokenRange getContextBefore()
 	{
-		return Tuples.pair(this.getElementContext().getStart(), this.getElementContext().projectionBlock().getStart());
+		return new TokenRange(
+			this.getElementContext().getStart(),
+			this.getElementContext().projectionBlock().getStart()
+		);
 	}
 
 	@Override
-	public Pair<Token, Token> getContextAfter()
+	public Optional<TokenRange> getContextAfter()
 	{
-		return Tuples.pair(
-			this.getElementContext().projectionBlock().getStop(),
-			this.getElementContext().PUNCTUATION_COMMA().getSymbol()
+		return Optional.of(
+			new TokenRange(
+				this.getElementContext().projectionBlock().getStop(),
+				this.getElementContext().PUNCTUATION_COMMA().getSymbol()
+			)
 		);
 	}
 

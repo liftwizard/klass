@@ -31,8 +31,6 @@ import cool.klass.model.converter.compiler.state.criteria.AntlrCriteria;
 import cool.klass.model.converter.compiler.state.property.AntlrAssociationEnd;
 import cool.klass.model.meta.grammar.KlassParser.CriteriaExpressionContext;
 import cool.klass.model.meta.grammar.KlassParser.RelationshipContext;
-import org.antlr.v4.runtime.Token;
-import org.eclipse.collections.api.tuple.Pair;
 
 public class AntlrRelationship
 	extends AntlrElement
@@ -94,7 +92,7 @@ public class AntlrRelationship
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore()
+	public TokenRange getContextBefore()
 	{
 		return this.getEntireContext();
 	}

@@ -24,14 +24,11 @@ import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.property.AntlrModifier;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.RichIterable;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;
 import org.eclipse.collections.api.list.MutableList;
-import org.eclipse.collections.api.tuple.Pair;
-import org.eclipse.collections.impl.tuple.Tuples;
 
 public interface IAntlrElement
 {
@@ -93,23 +90,23 @@ public interface IAntlrElement
 			.distinct();
 	}
 
-	default Pair<Token, Token> getContextBefore()
+	default TokenRange getContextBefore()
 	{
 		throw new UnsupportedOperationException(
 			this.getClass().getSimpleName() + ".getContextBefore() not implemented yet"
 		);
 	}
 
-	default Pair<Token, Token> getContextAfter()
+	default Optional<TokenRange> getContextAfter()
 	{
 		// This makes the default implementation throw, but still not need overrides just to return null
 		this.getContextBefore();
-		return null;
+		return Optional.empty();
 	}
 
-	default Pair<Token, Token> getEntireContext()
+	default TokenRange getEntireContext()
 	{
-		return Tuples.pair(this.getElementContext().getStart(), this.getElementContext().getStop());
+		return new TokenRange(this.getElementContext().getStart(), this.getElementContext().getStop());
 	}
 
 	default void reportAuditErrors(

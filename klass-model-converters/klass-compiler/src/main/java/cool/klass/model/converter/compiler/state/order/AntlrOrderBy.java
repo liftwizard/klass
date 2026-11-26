@@ -27,17 +27,16 @@ import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.AntlrClassifier;
 import cool.klass.model.converter.compiler.state.AntlrElement;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
+import cool.klass.model.converter.compiler.state.TokenRange;
 import cool.klass.model.converter.compiler.state.service.AntlrService;
 import cool.klass.model.meta.domain.order.OrderByImpl.OrderByBuilder;
 import cool.klass.model.meta.domain.order.OrderByMemberReferencePathImpl.OrderByMemberReferencePathBuilder;
 import cool.klass.model.meta.grammar.KlassParser.OrderByMemberReferencePathContext;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableOrderedMap;
-import org.eclipse.collections.api.tuple.Pair;
 import org.eclipse.collections.impl.map.ordered.mutable.OrderedMapAdapter;
 
 // TODO: Specific subclasses for the specific antlr context types
@@ -93,7 +92,7 @@ public class AntlrOrderBy
 	}
 
 	@Override
-	public Pair<Token, Token> getContextBefore()
+	public TokenRange getContextBefore()
 	{
 		return this.getEntireContext();
 	}
