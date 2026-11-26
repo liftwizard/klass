@@ -25,6 +25,7 @@ import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.property.AntlrModifier;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
+import org.eclipse.collections.api.RichIterable;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
 import org.eclipse.collections.api.list.ListIterable;
@@ -76,6 +77,21 @@ public interface IAntlrElement
 
 	@Nonnull
 	Optional<CompilationUnit> getCompilationUnit();
+
+	/**
+	 * {@return the distinct compilation units of the elements, in encounter order, skipping elements without one}
+	 */
+	@Nonnull
+	static MutableList<CompilationUnit> getCompilationUnits(@Nonnull RichIterable<? extends IAntlrElement> elements)
+	{
+		return elements
+			.asLazy()
+			.collect(IAntlrElement::getCompilationUnit)
+			.select(Optional::isPresent)
+			.collect(Optional::get)
+			.toList()
+			.distinct();
+	}
 
 	default Pair<Token, Token> getContextBefore()
 	{
