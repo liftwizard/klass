@@ -34,7 +34,7 @@ public record SingleFileSource(@Nonnull CompilationUnit compilationUnit)
 	public SingleFileSource
 	{
 		Objects.requireNonNull(compilationUnit);
-		if (compilationUnit.getParserContext().getParent() != null)
+		if (compilationUnit.isGrafted())
 		{
 			throw new AssertionError(
 				"Expected " + compilationUnit + " not to be grafted into another compilation unit"

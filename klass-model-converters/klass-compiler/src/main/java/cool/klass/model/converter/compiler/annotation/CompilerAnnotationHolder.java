@@ -189,7 +189,7 @@ public class CompilerAnnotationHolder
 	)
 	{
 		CompilationUnit compilationUnit = element.getCompilationUnit().get();
-		if (compilationUnit.getParserContext().getParent() == null)
+		if (!compilationUnit.isGrafted())
 		{
 			return new SingleFileSource(compilationUnit);
 		}
@@ -199,7 +199,7 @@ public class CompilerAnnotationHolder
 			.collect(IAntlrElement::getCompilationUnit)
 			.select(Optional::isPresent)
 			.collect(Optional::get)
-			.select((each) -> each.getParserContext().getParent() == null)
+			.reject(CompilationUnit::isGrafted)
 			.toList()
 			.distinct();
 		if (rootCompilationUnits.size() != 1)

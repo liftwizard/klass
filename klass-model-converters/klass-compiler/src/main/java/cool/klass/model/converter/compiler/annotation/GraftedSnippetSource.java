@@ -21,7 +21,6 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
-import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
@@ -50,17 +49,18 @@ sealed interface GraftedSnippetSource
 		{
 			throw new AssertionError("Expected two different compilation units, but got " + rootCompilationUnit);
 		}
-		if (rootCompilationUnit.getParserContext().getParent() != null)
+		if (rootCompilationUnit.isGrafted())
 		{
 			throw new AssertionError(
 				"Expected " + rootCompilationUnit + " not to be grafted into another compilation unit"
 			);
 		}
-		ParserRuleContext graftContext = graftedCompilationUnit.getParserContext().getParent();
-		if (
-			graftContext == null ||
-			graftContext.getStop().getTokenSource() != rootCompilationUnit.getTokenStream().getTokenSource()
-		)
+		boolean graftedIntoRoot = graftedCompilationUnit
+			.getGraftContext()
+			.map((graftContext) -> graftContext.getStop().getTokenSource())
+			.filter((tokenSource) -> tokenSource == rootCompilationUnit.getTokenStream().getTokenSource())
+			.isPresent();
+		if (!graftedIntoRoot)
 		{
 			throw new AssertionError(
 				"Expected " + graftedCompilationUnit + " to be grafted into " + rootCompilationUnit
@@ -108,7 +108,7 @@ sealed interface GraftedSnippetSource
 			true
 		);
 
-		int graftStopLine = this.graftedCompilationUnit().getParserContext().getParent().getStop().getLine();
+		int graftStopLine = this.graftedCompilationUnit().getGraftContext().orElseThrow().getStop().getLine();
 		int spliceIndex = rootTokenLines.detectLastIndex((each) -> each.getLine() <= graftStopLine) + 1;
 		return Lists.mutable
 			.withAll(rootTokenLines.take(spliceIndex))

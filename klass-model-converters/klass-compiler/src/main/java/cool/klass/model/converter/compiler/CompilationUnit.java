@@ -109,6 +109,20 @@ public final class CompilationUnit
 		return this.parserContext;
 	}
 
+	/**
+	 * {@return the context an in-place macro's parse tree was grafted under, or empty for a source file or a root macro}
+	 */
+	@Nonnull
+	public Optional<ParserRuleContext> getGraftContext()
+	{
+		return Optional.ofNullable(this.parserContext.getParent());
+	}
+
+	public boolean isGrafted()
+	{
+		return this.getGraftContext().isPresent();
+	}
+
 	@Nonnull
 	public String getSourceName()
 	{
