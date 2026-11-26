@@ -17,14 +17,12 @@
 package cool.klass.model.converter.compiler;
 
 import java.util.LinkedHashMap;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 
 import com.google.common.base.Stopwatch;
-import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
 import cool.klass.model.converter.compiler.parser.RuleOnlyParseTreeWalker;
 import cool.klass.model.converter.compiler.phase.AssociationPhase;
@@ -54,8 +52,6 @@ import cool.klass.model.converter.compiler.phase.UrlParameterPhase;
 import cool.klass.model.converter.compiler.phase.VariableResolutionPhase;
 import cool.klass.model.converter.compiler.phase.VersionAssociationInferencePhase;
 import cool.klass.model.converter.compiler.phase.VersionClassInferencePhase;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import cool.klass.model.converter.compiler.token.categorizing.lexer.LexerBasedTokenCategorizer;
 import cool.klass.model.converter.compiler.token.categorizing.parser.ParserBasedTokenCategorizer;
@@ -105,23 +101,15 @@ public class KlassCompiler
 	private static final Logger LOGGER = LoggerFactory.getLogger(KlassCompiler.class);
 
 	private final CompilerState compilerState;
-	private final AnsiColorScheme colorScheme;
-	private final boolean enableIdeLinks;
 
-	public KlassCompiler(CompilationUnit compilationUnit, AnsiColorScheme colorScheme)
+	public KlassCompiler(CompilationUnit compilationUnit)
 	{
-		this(Lists.immutable.with(compilationUnit), colorScheme, false);
+		this(Lists.immutable.with(compilationUnit));
 	}
 
-	public KlassCompiler(
-		ImmutableList<CompilationUnit> compilationUnits,
-		AnsiColorScheme colorScheme,
-		boolean enableIdeLinks
-	)
+	public KlassCompiler(ImmutableList<CompilationUnit> compilationUnits)
 	{
 		this.compilerState = new CompilerState(compilationUnits);
-		this.colorScheme = Objects.requireNonNull(colorScheme);
-		this.enableIdeLinks = enableIdeLinks;
 	}
 
 	private void executeCompilerPhase(KlassListener compilerPhase)
@@ -195,18 +183,10 @@ public class KlassCompiler
 			throw new AssertionError(duplicateTokens);
 		}
 
-		CompilerAnnotationHolder compilerAnnotationHolder = this.compilerState.getCompilerAnnotationHolder();
-
-		var ansiTokenColorizer = new AnsiTokenColorizer(
-			this.colorScheme,
-			tokenCategoriesFromParser,
-			tokenCategoriesFromLexer
-		);
-		compilerAnnotationHolder.setAnsiTokenColorizer(ansiTokenColorizer);
-		compilerAnnotationHolder.setEnableIdeLinks(this.enableIdeLinks);
-
 		this.compilerState.reportErrors();
-		ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilerAnnotationHolder.getCompilerAnnotations();
+		ImmutableList<RootCompilerAnnotation> compilerAnnotations = this.compilerState
+			.getCompilerAnnotationHolder()
+			.getCompilerAnnotations();
 
 		return this.compilerState.getCompilationResult(
 			compilerAnnotations,

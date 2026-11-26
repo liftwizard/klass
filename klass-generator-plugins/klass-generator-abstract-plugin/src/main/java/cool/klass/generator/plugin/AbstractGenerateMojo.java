@@ -36,6 +36,8 @@ import javax.annotation.Nonnull;
 import cool.klass.model.converter.compiler.CompilationResult;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.KlassCompiler;
+import cool.klass.model.converter.compiler.annotation.CompilerAnnotationRenderer;
+import cool.klass.model.converter.compiler.annotation.GitHubAnnotationRenderer;
 import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
@@ -129,17 +131,8 @@ public abstract class AbstractGenerateMojo
 
 		ImmutableList<CompilationUnit> compilationUnits = this.getCompilationUnits(klassLocations);
 
-		AnsiColorScheme ansiColorScheme = ColorSchemeProvider.getByName(this.colorScheme);
-		if (this.colorScheme != null)
-		{
-			this.getLog().info("Using configured color scheme: " + this.colorScheme);
-		}
-		else
-		{
-			this.getLog().info("No color scheme configured, using default");
-		}
 		// TODO: We should use an abstract DomainModelFactory here, not necessarily the compiler.
-		var klassCompiler = new KlassCompiler(compilationUnits, ansiColorScheme, false);
+		var klassCompiler = new KlassCompiler(compilationUnits);
 		return klassCompiler.compile();
 	}
 
@@ -235,9 +228,24 @@ public abstract class AbstractGenerateMojo
 	protected void handleErrorsCompilationResult(CompilationResult compilationResult)
 		throws MojoExecutionException
 	{
+		AnsiColorScheme ansiColorScheme = ColorSchemeProvider.getByName(this.colorScheme);
+		if (this.colorScheme != null)
+		{
+			this.getLog().info("Using configured color scheme: " + this.colorScheme);
+		}
+		else
+		{
+			this.getLog().info("No color scheme configured, using default");
+		}
+		var compilerAnnotationRenderer = new CompilerAnnotationRenderer(
+			ansiColorScheme,
+			compilationResult.tokenCategoriesFromParser(),
+			compilationResult.tokenCategoriesFromLexer(),
+			false
+		);
 		for (RootCompilerAnnotation compilerAnnotation : compilationResult.compilerAnnotations())
 		{
-			this.logCompilerAnnotation(compilerAnnotation);
+			this.logCompilerAnnotation(compilerAnnotation, compilerAnnotationRenderer);
 		}
 
 		if (compilationResult.domainModelWithSourceCode().isEmpty())
@@ -246,23 +254,26 @@ public abstract class AbstractGenerateMojo
 		}
 	}
 
-	private void logCompilerAnnotation(RootCompilerAnnotation compilerAnnotation)
+	private void logCompilerAnnotation(
+		RootCompilerAnnotation compilerAnnotation,
+		CompilerAnnotationRenderer compilerAnnotationRenderer
+	)
 	{
 		if (compilerAnnotation.isError())
 		{
 			if (this.logGitHubAnnotations)
 			{
-				this.getLog().info("\n" + compilerAnnotation.toGitHubAnnotation());
+				this.getLog().info("\n" + GitHubAnnotationRenderer.render(compilerAnnotation));
 			}
-			this.getLog().error("\n" + compilerAnnotation);
+			this.getLog().error("\n" + compilerAnnotationRenderer.render(compilerAnnotation));
 		}
 		else if (compilerAnnotation.isWarning() && this.logCompilerAnnotations)
 		{
 			if (this.logGitHubAnnotations)
 			{
-				this.getLog().info("\n" + compilerAnnotation.toGitHubAnnotation());
+				this.getLog().info("\n" + GitHubAnnotationRenderer.render(compilerAnnotation));
 			}
-			this.getLog().warn("\n" + compilerAnnotation);
+			this.getLog().warn("\n" + compilerAnnotationRenderer.render(compilerAnnotation));
 		}
 	}
 

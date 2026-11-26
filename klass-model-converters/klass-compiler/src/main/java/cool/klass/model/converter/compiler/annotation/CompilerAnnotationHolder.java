@@ -24,7 +24,6 @@ import javax.annotation.Nonnull;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.state.AntlrNamedElement;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.AnsiTokenColorizer;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
@@ -33,9 +32,6 @@ import org.eclipse.collections.api.list.MutableList;
 public class CompilerAnnotationHolder
 {
 	private final MutableList<RootCompilerAnnotation> compilerAnnotations = Lists.mutable.empty();
-
-	private AnsiTokenColorizer ansiTokenColorizer;
-	private boolean enableIdeLinks;
 
 	public void add(@Nonnull String annotationCode, @Nonnull String message, @Nonnull IAntlrElement element)
 	{
@@ -171,9 +167,7 @@ public class CompilerAnnotationHolder
 			surroundingElements,
 			annotationCode,
 			message,
-			this.ansiTokenColorizer,
-			severity,
-			this.enableIdeLinks
+			severity
 		);
 		this.compilerAnnotations.add(compilerAnnotation);
 	}
@@ -224,9 +218,7 @@ public class CompilerAnnotationHolder
 			macroCause,
 			offendingContexts,
 			surroundingElements,
-			this.ansiTokenColorizer,
-			severity,
-			this.enableIdeLinks
+			severity
 		);
 	}
 
@@ -255,15 +247,5 @@ public class CompilerAnnotationHolder
 	public boolean hasCompilerAnnotations()
 	{
 		return this.compilerAnnotations.notEmpty();
-	}
-
-	public void setAnsiTokenColorizer(@Nonnull AnsiTokenColorizer ansiTokenColorizer)
-	{
-		this.ansiTokenColorizer = Objects.requireNonNull(ansiTokenColorizer);
-	}
-
-	public void setEnableIdeLinks(boolean enableIdeLinks)
-	{
-		this.enableIdeLinks = enableIdeLinks;
 	}
 }

@@ -30,7 +30,6 @@ import com.google.common.collect.Comparators;
 import cool.klass.model.converter.compiler.CompilationResult;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.KlassCompiler;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
@@ -78,6 +77,12 @@ public abstract class AbstractKlassCompilerErrorTestCase
 	private ImmutableList<String> assertCompilerAnnotationsExist(CompilationResult compilationResult, String testName)
 	{
 		ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
+		var renderer = new CompilerAnnotationRenderer(
+			ColorSchemeProvider.getByName("dark"),
+			compilationResult.tokenCategoriesFromParser(),
+			compilationResult.tokenCategoriesFromLexer(),
+			false
+		);
 		MutableList<String> expectedLogFileNames = Lists.mutable.empty();
 
 		for (RootCompilerAnnotation compilerAnnotation : compilerAnnotations)
@@ -91,7 +96,7 @@ public abstract class AbstractKlassCompilerErrorTestCase
 
 			expectedLogFileNames.add(annotationSourceName);
 
-			this.fileMatchExtension.assertFileContents(annotationSourceName, compilerAnnotation.toString());
+			this.fileMatchExtension.assertFileContents(annotationSourceName, renderer.render(compilerAnnotation));
 		}
 
 		ImmutableListMultimap<Object, RootCompilerAnnotation> annotationsByKey = compilerAnnotations.groupBy(
@@ -103,7 +108,7 @@ public abstract class AbstractKlassCompilerErrorTestCase
 			{
 				for (RootCompilerAnnotation compilerAnnotation : compilerAnnotationsForKey)
 				{
-					LOGGER.warn("Found compiler annotation:\n{}", compilerAnnotation);
+					LOGGER.warn("Found compiler annotation:\n{}", renderer.render(compilerAnnotation));
 				}
 				fail("Found multiple compiler annotations for key: " + key);
 			}
@@ -160,8 +165,7 @@ public abstract class AbstractKlassCompilerErrorTestCase
 			sourceName,
 			sourceCodeText
 		);
-		AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
-		var compiler = new KlassCompiler(compilationUnit, colorScheme);
+		var compiler = new KlassCompiler(compilationUnit);
 		CompilationResult compilationResult = compiler.compile();
 
 		ImmutableList<String> expectedLogFileNames = this.assertCompilerAnnotationsExist(

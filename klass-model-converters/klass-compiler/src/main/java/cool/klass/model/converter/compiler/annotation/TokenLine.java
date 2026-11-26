@@ -77,12 +77,12 @@ public class TokenLine
 		{
 			if (currentLine.isEmpty())
 			{
-				startLine(currentLine, nextToken, tokenStream);
+				TokenLine.startLine(currentLine, nextToken, tokenStream);
 				currentToken = nextToken;
 			}
 			else if (currentToken.getLine() == nextToken.getLine())
 			{
-				endLine(currentLine, nextToken, tokenStream);
+				TokenLine.endLine(currentLine, nextToken, tokenStream);
 				currentToken = nextToken;
 			}
 			else
@@ -97,7 +97,7 @@ public class TokenLine
 				);
 				currentLine.clear();
 
-				startLine(currentLine, nextToken, tokenStream);
+				TokenLine.startLine(currentLine, nextToken, tokenStream);
 				currentToken = nextToken;
 			}
 		}
@@ -109,7 +109,7 @@ public class TokenLine
 
 	private static void startLine(Deque<Token> currentLine, Token nextToken, CommonTokenStream tokenStream)
 	{
-		int beginTokenIndex = getBeginTokenIndex(nextToken.getLine(), nextToken.getTokenIndex(), tokenStream);
+		int beginTokenIndex = TokenLine.getBeginTokenIndex(nextToken.getLine(), nextToken.getTokenIndex(), tokenStream);
 		List<Token> tokenRange = tokenStream.get(beginTokenIndex, nextToken.getTokenIndex() - 1);
 		MutableList<Token> tokens = tokenRange == null ? Lists.mutable.empty() : ListAdapter.adapt(tokenRange);
 		currentLine.addAll(tokens);
@@ -118,7 +118,7 @@ public class TokenLine
 
 	private static void endLine(Deque<Token> currentLine, Token nextToken, CommonTokenStream tokenStream)
 	{
-		int endTokenIndex = getEndTokenIndex(nextToken.getLine(), nextToken.getTokenIndex(), tokenStream);
+		int endTokenIndex = TokenLine.getEndTokenIndex(nextToken.getLine(), nextToken.getTokenIndex(), tokenStream);
 		List<Token> tokenRange = tokenStream.get(endTokenIndex, nextToken.getTokenIndex() - 1);
 		MutableList<Token> tokens = tokenRange == null ? Lists.mutable.empty() : ListAdapter.adapt(tokenRange);
 		currentLine.add(nextToken);

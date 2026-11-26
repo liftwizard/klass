@@ -22,8 +22,6 @@ import java.util.concurrent.TimeUnit;
 import cool.klass.model.converter.compiler.CompilationResult;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.KlassCompiler;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
-import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -31,7 +29,6 @@ import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
 
@@ -46,14 +43,6 @@ import org.openjdk.jmh.annotations.Warmup;
 @Fork(3)
 public class KlassCompilerBenchmark
 {
-	private AnsiColorScheme colorScheme;
-
-	@Setup
-	public void setUp()
-	{
-		this.colorScheme = ColorSchemeProvider.getByName("dark");
-	}
-
 	@Benchmark
 	public CompilationResult compile(KlassSourceState source)
 	{
@@ -63,6 +52,6 @@ public class KlassCompilerBenchmark
 			source.getSourceName(),
 			source.getSourceCodeText()
 		);
-		return new KlassCompiler(compilationUnit, this.colorScheme).compile();
+		return new KlassCompiler(compilationUnit).compile();
 	}
 }

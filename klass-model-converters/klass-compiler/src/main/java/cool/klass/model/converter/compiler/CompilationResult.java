@@ -19,11 +19,16 @@ package cool.klass.model.converter.compiler;
 import java.util.Optional;
 
 import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
+import cool.klass.model.converter.compiler.token.categories.TokenCategory;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
+import org.antlr.v4.runtime.Token;
 import org.eclipse.collections.api.list.ImmutableList;
+import org.eclipse.collections.api.map.MapIterable;
 
 public record CompilationResult(
 	ImmutableList<RootCompilerAnnotation> compilerAnnotations,
+	MapIterable<Token, TokenCategory> tokenCategoriesFromLexer,
+	MapIterable<Token, TokenCategory> tokenCategoriesFromParser,
 	Optional<DomainModelWithSourceCode> domainModelWithSourceCode
 )
 {
