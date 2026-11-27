@@ -23,7 +23,7 @@ import java.util.function.Function;
 import javax.annotation.Nonnull;
 
 import com.google.common.base.Stopwatch;
-import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
+import cool.klass.model.converter.compiler.annotation.CompilerAnnotation;
 import cool.klass.model.converter.compiler.parser.RuleOnlyParseTreeWalker;
 import cool.klass.model.converter.compiler.phase.AssociationPhase;
 import cool.klass.model.converter.compiler.phase.AuditAssociationInferencePhase;
@@ -178,7 +178,7 @@ public class KlassCompiler
 		var tokenCategories = new TokenCategories(tokenCategoriesFromLexer, tokenCategoriesFromParser);
 
 		this.compilerState.reportErrors();
-		ImmutableList<RootCompilerAnnotation> compilerAnnotations = this.compilerState
+		ImmutableList<CompilerAnnotation> compilerAnnotations = this.compilerState
 			.getCompilerAnnotationHolder()
 			.getCompilerAnnotations();
 

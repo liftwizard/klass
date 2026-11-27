@@ -21,9 +21,8 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import cool.klass.model.converter.compiler.annotation.AbstractCompilerAnnotation;
+import cool.klass.model.converter.compiler.annotation.CompilerAnnotation;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
-import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
 import cool.klass.model.converter.compiler.parser.AntlrUtils;
 import cool.klass.model.converter.compiler.parser.DelegatingKlassListener;
 import cool.klass.model.converter.compiler.phase.AbstractCompilerPhase;
@@ -128,11 +127,11 @@ public class CompilerState
 
 	@Nonnull
 	public CompilationResult getCompilationResult(
-		ImmutableList<RootCompilerAnnotation> compilerAnnotations,
+		ImmutableList<CompilerAnnotation> compilerAnnotations,
 		TokenCategories tokenCategories
 	)
 	{
-		if (compilerAnnotations.anySatisfy(AbstractCompilerAnnotation::isError))
+		if (compilerAnnotations.anySatisfy(CompilerAnnotation::isError))
 		{
 			return new CompilationResult(compilerAnnotations, tokenCategories, Optional.empty());
 		}
@@ -143,10 +142,9 @@ public class CompilerState
 	@Nonnull
 	private DomainModelWithSourceCode buildDomainModel(TokenCategories tokenCategories)
 	{
-		ImmutableList<RootCompilerAnnotation> compilerAnnotations =
-			this.compilerAnnotationHolder.getCompilerAnnotations();
+		ImmutableList<CompilerAnnotation> compilerAnnotations = this.compilerAnnotationHolder.getCompilerAnnotations();
 
-		if (compilerAnnotations.anySatisfy(AbstractCompilerAnnotation::isError))
+		if (compilerAnnotations.anySatisfy(CompilerAnnotation::isError))
 		{
 			throw new AssertionError(this.compilerAnnotationHolder.getCompilerAnnotations().makeString("\n"));
 		}
