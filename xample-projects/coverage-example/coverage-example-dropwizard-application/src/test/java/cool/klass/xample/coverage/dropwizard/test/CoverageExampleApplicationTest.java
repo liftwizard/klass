@@ -279,7 +279,7 @@ class CoverageExampleApplicationTest
 
 	private void compositeKeyReferenceSourcePost()
 	{
-		String testName = "compositeKeyReferenceSource.postExistingItem";
+		var testName = "compositeKeyReferenceSource.postExistingItem";
 		Response response = this.getClient(testName)
 			.target("http://localhost:{port}/api/compositeKeyReferenceSource")
 			.resolveTemplate("port", this.appExtension.getLocalPort())
