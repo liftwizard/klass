@@ -210,9 +210,8 @@ public abstract class PersistentSynchronizer
 	)
 	{
 		ImmutableList<DataTypeProperty> dataTypeProperties = klass.getDataTypeProperties();
-		ImmutableList<DataTypeProperty> simpleDataTypeProperties = dataTypeProperties.rejectWith(
-			this::shouldSkipDataTypeProperty,
-			klass
+		ImmutableList<DataTypeProperty> simpleDataTypeProperties = dataTypeProperties.reject(
+			this::shouldSkipDataTypeProperty
 		);
 
 		this.validateSetIdDataTypeProperties(klass, persistentInstance);
@@ -246,14 +245,13 @@ public abstract class PersistentSynchronizer
 		return this.dataStore.setDataTypeProperty(persistentInstance, dataTypeProperty, newValue);
 	}
 
-	private boolean shouldSkipDataTypeProperty(@Nonnull DataTypeProperty dataTypeProperty, @Nonnull Klass klass)
+	private boolean shouldSkipDataTypeProperty(@Nonnull DataTypeProperty dataTypeProperty)
 	{
 		return (
 			dataTypeProperty.isForeignKey() ||
 			dataTypeProperty.isAudit() ||
 			dataTypeProperty.isTemporal() ||
 			dataTypeProperty.isDerived() ||
-			this.hasReferencePropertyDependentOnDataTypeProperty(klass, dataTypeProperty) ||
 			(dataTypeProperty.isKey() && !this.shouldWriteKey()) ||
 			(dataTypeProperty.isID() && !this.shouldWriteId())
 		);
@@ -678,26 +676,6 @@ public abstract class PersistentSynchronizer
 
 	@Nonnull
 	protected abstract PersistentSynchronizer determineNextMode(OperationMode nextMode);
-
-	private boolean hasReferencePropertyDependentOnDataTypeProperty(Klass klass, DataTypeProperty dataTypeProperty)
-	{
-		return false;
-	}
-
-	private ImmutableList<DataTypeProperty> getNonDerivedDataTypeProperties(
-		ImmutableList<DataTypeProperty> dataTypeProperties
-	)
-	{
-		return dataTypeProperties;
-	}
-
-	private void handleForeignKeysForAssociationsOutsideProjection(
-		Object persistentInstance,
-		ObjectNode incomingJson,
-		Klass klass
-	)
-	{
-	}
 
 	// endregion
 
