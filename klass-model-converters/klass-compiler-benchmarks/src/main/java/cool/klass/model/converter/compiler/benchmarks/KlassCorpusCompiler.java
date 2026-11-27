@@ -29,32 +29,41 @@ import org.eclipse.collections.api.list.ImmutableList;
 /**
  * Compiles every model in {@link KlassSources#ALL}, each as its own domain model.
  */
-final class KlassCorpusCompiler {
-
+final class KlassCorpusCompiler
+{
 	private final ImmutableList<String> sourceNames;
 	private final ImmutableList<String> sourceCodeTexts;
 	private final AnsiColorScheme colorScheme = ColorSchemeProvider.getByName("dark");
 
-	KlassCorpusCompiler() {
+	KlassCorpusCompiler()
+	{
 		this.sourceNames = KlassSources.ALL;
 		this.sourceCodeTexts = this.sourceNames.collect(KlassSources::read);
 	}
 
-	int lineCount() {
-		return (int) this.sourceCodeTexts.sumOfInt(text -> text.split("\n", -1).length);
+	int lineCount()
+	{
+		return (int) this.sourceCodeTexts.sumOfInt((text) -> text.split("\n", -1).length);
 	}
 
-	ImmutableList<CompilationResult> compileAll() {
-		return this.sourceNames.collectWithIndex((sourceName, index) -> this.compile(
+	ImmutableList<CompilationResult> compileAll()
+	{
+		return this.sourceNames.collectWithIndex((sourceName, index) ->
+			this.compile(sourceName, this.sourceCodeTexts.get(index))
+		);
+	}
+
+	private CompilationResult compile(String sourceName, String sourceCodeText)
+	{
+		CompilationUnit compilationUnit = CompilationUnit.createFromText(
+			0,
+			Optional.empty(),
 			sourceName,
-			this.sourceCodeTexts.get(index)
-		));
-	}
-
-	private CompilationResult compile(String sourceName, String sourceCodeText) {
-		CompilationUnit compilationUnit = CompilationUnit.createFromText(0, Optional.empty(), sourceName, sourceCodeText);
+			sourceCodeText
+		);
 		CompilationResult result = new KlassCompiler(compilationUnit, this.colorScheme).compile();
-		if (result.compilerAnnotations().anySatisfy(AbstractCompilerAnnotation::isError)) {
+		if (result.compilerAnnotations().anySatisfy(AbstractCompilerAnnotation::isError))
+		{
 			throw new IllegalStateException("Expected " + sourceName + " to compile without errors");
 		}
 		return result;
