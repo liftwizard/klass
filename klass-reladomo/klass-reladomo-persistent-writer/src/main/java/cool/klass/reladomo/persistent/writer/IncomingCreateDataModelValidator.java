@@ -514,19 +514,6 @@ public class IncomingCreateDataModelValidator
 
 		try
 		{
-			if ((childJsonNode.isMissingNode() || childJsonNode.isNull()) && associationEnd.isRequired())
-			{
-				// TODO: Check for non-private foreign key properties
-				// TODO: Can we remove this?
-				return;
-			}
-
-			if (childJsonNode.isMissingNode() && !associationEnd.isRequired())
-			{
-				// TODO: Can we remove this?
-				return;
-			}
-
 			MapIterable<DataTypeProperty, Object> keys = this.getKeysFromJsonNode(
 				childJsonNode,
 				associationEnd,
