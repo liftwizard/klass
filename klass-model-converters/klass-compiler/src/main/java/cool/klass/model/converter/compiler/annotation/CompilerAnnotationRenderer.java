@@ -277,7 +277,7 @@ public final class CompilerAnnotationRenderer
 
 	private static String getShortLocationString(@Nonnull Snippet snippet)
 	{
-		if (snippet.isGeneratedByMacro())
+		if (snippet.getMacroCause().isPresent())
 		{
 			return String.format("(%s)", snippet.getCompilationUnit());
 		}
@@ -292,7 +292,7 @@ public final class CompilerAnnotationRenderer
 	@Nonnull
 	private static String getOptionalLocationMessage(@Nonnull Snippet snippet)
 	{
-		if (snippet.isGeneratedByMacro())
+		if (snippet.getMacroCause().isPresent())
 		{
 			return "";
 		}
