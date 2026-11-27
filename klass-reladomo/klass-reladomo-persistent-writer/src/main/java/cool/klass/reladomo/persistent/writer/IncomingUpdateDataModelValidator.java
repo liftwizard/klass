@@ -653,13 +653,6 @@ public class IncomingUpdateDataModelValidator
 			return;
 		}
 
-		/*
-        ImmutableList<JsonNode> incomingInstancesForInsert = this.filterIncomingInstancesForInsert(
-                incomingChildInstances,
-                associationEnd);
-        */
-
-		// TODO: Figure out how to recurse without checking key
 		ImmutableList<JsonNode> incomingInstancesForUpdate = this.filterIncomingInstancesForUpdate(
 			incomingChildInstances,
 			associationEnd
@@ -683,6 +676,13 @@ public class IncomingUpdateDataModelValidator
 				JsonNode childJsonNode = incomingChildInstances.path(index);
 				if (this.jsonNodeNeedsIdInferredOnInsert(childJsonNode, associationEnd))
 				{
+					// PersistentSynchronizer only updates the existing children of an unowned association end
+					String error = String.format(
+						"Error at %s. Expected an existing child for unowned association end '%s' but got one without a key.",
+						this.getContextString(),
+						associationEnd
+					);
+					this.errors.add(error);
 					continue;
 				}
 
@@ -694,20 +694,14 @@ public class IncomingUpdateDataModelValidator
 				Object childPersistentInstance = persistentChildInstancesByKey.get(keysFromJsonNode);
 				if (childPersistentInstance == null)
 				{
-					// recurse in create mode
-					var validator = new IncomingCreateDataModelValidator(
-						this.dataStore,
-						this.userKlass,
-						associationEnd.getType(),
-						this.mutationContext,
-						(ObjectNode) childJsonNode,
-						this.errors,
-						this.warnings,
-						this.contextStack,
-						Optional.of(associationEnd),
-						false
+					// PersistentSynchronizer only updates the existing children of an unowned association end
+					String error = String.format(
+						"Error at %s. Expected an existing child for unowned association end '%s' with key %s.",
+						this.getContextString(),
+						associationEnd,
+						keysFromJsonNode
 					);
-					validator.validate();
+					this.errors.add(error);
 				}
 				else
 				{
@@ -743,16 +737,6 @@ public class IncomingUpdateDataModelValidator
 		return Lists.immutable
 			.withAll(incomingChildInstances)
 			.rejectWith(this::jsonNodeNeedsIdInferredOnInsert, associationEnd);
-	}
-
-	private ImmutableList<JsonNode> filterIncomingInstancesForInsert(
-		JsonNode incomingChildInstances,
-		AssociationEnd associationEnd
-	)
-	{
-		return Lists.immutable
-			.withAll(incomingChildInstances)
-			.selectWith(this::jsonNodeNeedsIdInferredOnInsert, associationEnd);
 	}
 
 	private boolean needsTermination(

@@ -1,0 +1,3 @@
+[
+	"Error at SharedNaturalOneToManySource.targets[1]. Expected an existing child for unowned association end 'SharedNaturalOneToManySource.targets: SharedNaturalOneToManyTarget[1..*]' with key [target 2]."
+]

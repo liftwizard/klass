@@ -1,0 +1,4 @@
+[
+	"Error at SharedNaturalOneToManySource.targets[1].key. Expected value for key property 'SharedNaturalOneToManyTarget.key: String' but value was missing.",
+	"Error at SharedNaturalOneToManySource.targets[1]. Expected an existing child for unowned association end 'SharedNaturalOneToManySource.targets: SharedNaturalOneToManyTarget[1..*]' but got one without a key."
+]

@@ -48,6 +48,7 @@ class StackOverflowApplicationTest
 		this.post_vote();
 		this.post_answer();
 		this.put_answers_outside_projection();
+		this.put_new_answer_outside_projection();
 	}
 
 	private void smokeTest()
@@ -139,6 +140,27 @@ class StackOverflowApplicationTest
 			.put(Entity.json(putJson));
 
 		this.assertResponse("put_answers_outside_projection", Status.OK, putResponse);
+	}
+
+	private void put_new_answer_outside_projection()
+	{
+		Client client = this.getClient("put_new_answer_outside_projection");
+
+		String putJson = FileSlurper.slurp(
+			this.getClass().getSimpleName() + ".put_new_answer_outside_projection.json5",
+			this.getClass()
+		);
+
+		Response putResponse = client
+			.target("http://localhost:{port}/api/manual/question/{id}")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.resolveTemplate("id", 1)
+			.queryParam("version", "4")
+			.request()
+			.header("Authorization", "Impersonation test user 1")
+			.put(Entity.json(putJson));
+
+		this.assertResponse("put_new_answer_outside_projection", Status.BAD_REQUEST, putResponse);
 	}
 
 	private void get_smoke_test()
