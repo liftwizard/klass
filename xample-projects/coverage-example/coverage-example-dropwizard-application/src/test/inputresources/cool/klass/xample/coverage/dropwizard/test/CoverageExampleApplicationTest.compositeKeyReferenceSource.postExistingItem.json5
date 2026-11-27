@@ -1,0 +1,12 @@
+{
+	key: "CompositeKeyReferenceSource key 1",
+	value: "CompositeKeyReferenceSource value 1",
+	item:
+	{
+		name: "VersionedOwnedOneToManyTarget name 1 ☝",
+		source:
+		{
+			key: "VersionedOwnedSource key 1 ☝",
+		},
+	},
+}

@@ -84,6 +84,7 @@ class CoverageExampleApplicationTest
 		this.everyTypeKeyPropertyPostWithoutBody("postMultiple", "multiple");
 		this.everyTypeKeyPropertyPostWithProjection("postMultipleWithProjection", "multipleWithProjection");
 		this.everyTypeKeyPropertyPostWithoutBody("postSingle", "single");
+		this.compositeKeyReferenceSourcePost();
 	}
 
 	private void swaggerSpecIsServed()
@@ -274,6 +275,18 @@ class CoverageExampleApplicationTest
 			.request()
 			.header("Authorization", "Impersonation test-user")
 			.post(Entity.json(this.slurp(testName + ".json5")));
+	}
+
+	private void compositeKeyReferenceSourcePost()
+	{
+		String testName = "compositeKeyReferenceSource.postExistingItem";
+		Response response = this.getClient(testName)
+			.target("http://localhost:{port}/api/compositeKeyReferenceSource")
+			.resolveTemplate("port", this.appExtension.getLocalPort())
+			.request()
+			.header("Authorization", "Impersonation test-user")
+			.post(Entity.json(this.slurp(testName + ".json5")));
+		this.assertResponse(testName, Status.CREATED, response);
 	}
 
 	private String slurp(String suffix)

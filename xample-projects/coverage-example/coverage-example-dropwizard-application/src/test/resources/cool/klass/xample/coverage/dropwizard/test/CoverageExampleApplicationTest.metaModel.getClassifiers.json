@@ -5235,6 +5235,9 @@
 			},
 			{
 				"name": "grandchildren"
+			},
+			{
+				"name": "referencingSources"
 			}
 		],
 		"parameterizedProperties": []
@@ -5485,6 +5488,79 @@
 					}
 				],
 				"primitiveType": "TemporalInstant",
+				"minValidation": null,
+				"maxValidation": null
+			}
+		],
+		"abstractClass": false,
+		"superClass": null,
+		"associationEnds": [
+			{
+				"name": "item"
+			}
+		],
+		"parameterizedProperties": []
+	},
+	{
+		"__typename": "klass.model.meta.domain.Klass",
+		"name": "CompositeKeyReferenceSource",
+		"packageName": "cool.klass.xample.coverage",
+		"superInterfaces": [],
+		"classifierModifiers": [],
+		"dataTypeProperties": [
+			{
+				"__typename": "klass.model.meta.domain.PrimitiveProperty",
+				"name": "key",
+				"optional": false,
+				"minLengthValidation": null,
+				"maxLengthValidation": null,
+				"propertyModifiers": [
+					{
+						"keyword": "key"
+					}
+				],
+				"primitiveType": "String",
+				"minValidation": null,
+				"maxValidation": null
+			},
+			{
+				"__typename": "klass.model.meta.domain.PrimitiveProperty",
+				"name": "itemSourceKey",
+				"optional": true,
+				"minLengthValidation": null,
+				"maxLengthValidation": null,
+				"propertyModifiers": [
+					{
+						"keyword": "private"
+					}
+				],
+				"primitiveType": "String",
+				"minValidation": null,
+				"maxValidation": null
+			},
+			{
+				"__typename": "klass.model.meta.domain.PrimitiveProperty",
+				"name": "itemName",
+				"optional": true,
+				"minLengthValidation": null,
+				"maxLengthValidation": null,
+				"propertyModifiers": [
+					{
+						"keyword": "private"
+					}
+				],
+				"primitiveType": "String",
+				"minValidation": null,
+				"maxValidation": null
+			},
+			{
+				"__typename": "klass.model.meta.domain.PrimitiveProperty",
+				"name": "value",
+				"optional": false,
+				"minLengthValidation": null,
+				"maxLengthValidation": null,
+				"propertyModifiers": [],
+				"primitiveType": "String",
 				"minValidation": null,
 				"maxValidation": null
 			}

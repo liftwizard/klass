@@ -1,0 +1,12 @@
+{
+	key: "reference 1",
+	value: "value 1",
+	item:
+	{
+		name: "missing item",
+		source:
+		{
+			key: "source 1",
+		},
+	},
+}

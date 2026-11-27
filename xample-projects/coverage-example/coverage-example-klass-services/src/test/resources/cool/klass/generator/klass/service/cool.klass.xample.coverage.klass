@@ -220,6 +220,24 @@ service VersionedOwnedSourceResource on VersionedOwnedSource
         }
 }
 
+service CompositeKeyReferenceSourceResource on CompositeKeyReferenceSource
+{
+    /compositeKeyReferenceSource/{key: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            projection  : CompositeKeyReferenceSourceProjection;
+        }
+    /compositeKeyReferenceSource
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : CompositeKeyReferenceSourceProjection;
+        }
+}
+
 service SharedNaturalManyToOneTargetResource on SharedNaturalManyToOneTarget
 {
     /sharedNaturalManyToOneTarget/{key: String[1..1]}

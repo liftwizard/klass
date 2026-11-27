@@ -84,7 +84,10 @@ class PersistentWriterValidatorTest
 		"test-data/cool.klass.xample.coverage.PropertiesOptionalVersion.csv",
 		"test-data/cool.klass.xample.coverage.PropertiesRequired.csv",
 		"test-data/cool.klass.xample.coverage.PropertiesRequiredVersion.csv",
-		"test-data/cool.klass.xample.coverage.FinalProperties.csv"
+		"test-data/cool.klass.xample.coverage.FinalProperties.csv",
+		"test-data/cool.klass.xample.coverage.VersionedOwnedSource.csv",
+		"test-data/cool.klass.xample.coverage.VersionedOwnedSourceVersion.csv",
+		"test-data/cool.klass.xample.coverage.VersionedOwnedOneToManyTarget.csv"
 	);
 
 	private final ReladomoDataStore reladomoDataStore = PersistentWriterValidatorTest.getReladomoDataStore();
@@ -151,6 +154,17 @@ class PersistentWriterValidatorTest
 			null
 		);
 		this.validate(createVersionedOwnedSource, "validate_optional_owned_to_one_missing");
+
+		var createCompositeKeyReferenceSource = new ValidationCase(
+			"Create_CompositeKeyReferenceSource",
+			this.domainModel.getClassByName("CompositeKeyReferenceSource"),
+			OperationMode.CREATE,
+			Maps.immutable.empty(),
+			null
+		);
+		this.validate(createCompositeKeyReferenceSource, "validate_existing_item");
+		this.validate(createCompositeKeyReferenceSource, "validate_missing_item");
+		this.validate(createCompositeKeyReferenceSource, "validate_item_without_source");
 
 		ValidationCase updatePropertiesOptional = this.updateCase(
 			"Update_PropertiesOptional",

@@ -1,0 +1,12 @@
+{
+	key: "reference 1",
+	value: "value 1",
+	item:
+	{
+		name: "item 1",
+		source:
+		{
+			key: "source 1",
+		},
+	},
+}

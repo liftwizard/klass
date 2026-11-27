@@ -633,6 +633,51 @@ association VersionedOwnedOneToManyTargetHasGrandchildren
     relationship this.sourceKey == VersionedOwnedOneToManyGrandchild.sourceKey && this.name == VersionedOwnedOneToManyGrandchild.itemName
 }
 
+class CompositeKeyReferenceSource
+{
+    key: String key;
+    itemSourceKey: String? private;
+    itemName: String? private;
+    value: String;
+}
+
+// An optional unowned reference to a class whose key includes a foreign key, so writes must resolve that key from the nested reference.
+association CompositeKeyReference
+{
+    referencingSources: CompositeKeyReferenceSource[0..*];
+    item: VersionedOwnedOneToManyTarget[0..1];
+
+    relationship this.itemSourceKey == VersionedOwnedOneToManyTarget.sourceKey && this.itemName == VersionedOwnedOneToManyTarget.name
+}
+
+projection CompositeKeyReferenceSourceProjection on CompositeKeyReferenceSource
+{
+    key  : "CompositeKeyReferenceSource key",
+    value: "CompositeKeyReferenceSource value",
+    item:
+    {
+        name : "VersionedOwnedOneToManyTarget name",
+        value: "VersionedOwnedOneToManyTarget value",
+    },
+}
+
+service CompositeKeyReferenceSourceResource on CompositeKeyReferenceSource
+{
+    /compositeKeyReferenceSource
+        POST
+        {
+            multiplicity: one;
+            projection  : CompositeKeyReferenceSourceProjection;
+        }
+    /compositeKeyReferenceSource/{key: String[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.key == key;
+            projection  : CompositeKeyReferenceSourceProjection;
+        }
+}
+
 class SharedNaturalManyToOneTarget
 {
     key: String key;

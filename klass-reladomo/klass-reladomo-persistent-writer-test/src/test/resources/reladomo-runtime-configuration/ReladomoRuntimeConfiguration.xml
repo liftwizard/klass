@@ -20,6 +20,7 @@
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/goldmansachs/reladomo/master/reladomo/src/main/xsd/mithraruntime.xsd">
     <ConnectionManager className="io.liftwizard.reladomo.connectionmanager.h2.memory.H2InMemoryConnectionManager">
         <MithraObjectConfiguration className="io.liftwizard.reladomo.simseq.ObjectSequence" cacheType="none" offHeapReplicationExport="false" />
+        <MithraObjectConfiguration className="cool.klass.xample.coverage.CompositeKeyReferenceSource" cacheType="partial" offHeapReplicationExport="false" />
         <MithraObjectConfiguration className="cool.klass.xample.coverage.EveryTypeForeignKeyProperty" cacheType="partial" offHeapReplicationExport="false" />
         <MithraObjectConfiguration className="cool.klass.xample.coverage.EveryTypeKeyProperty" cacheType="partial" offHeapReplicationExport="false" />
         <MithraObjectConfiguration className="cool.klass.xample.coverage.EveryTypeKeyPropertyVersion" cacheType="partial" offHeapReplicationExport="false" />
@@ -51,6 +52,12 @@
         <MithraObjectConfiguration className="cool.klass.xample.coverage.SharedSyntheticOneToOneSource" cacheType="partial" offHeapReplicationExport="false" />
         <MithraObjectConfiguration className="cool.klass.xample.coverage.SharedSyntheticOneToOneTarget" cacheType="partial" offHeapReplicationExport="false" />
         <MithraObjectConfiguration className="cool.klass.xample.coverage.User" cacheType="partial" offHeapReplicationExport="false" />
+        <MithraObjectConfiguration className="cool.klass.xample.coverage.VersionedOwnedOneToManyGrandchild" cacheType="partial" offHeapReplicationExport="false" />
+        <MithraObjectConfiguration className="cool.klass.xample.coverage.VersionedOwnedOneToManyTarget" cacheType="partial" offHeapReplicationExport="false" />
+        <MithraObjectConfiguration className="cool.klass.xample.coverage.VersionedOwnedOneToOneGrandchild" cacheType="partial" offHeapReplicationExport="false" />
+        <MithraObjectConfiguration className="cool.klass.xample.coverage.VersionedOwnedOneToOneTarget" cacheType="partial" offHeapReplicationExport="false" />
+        <MithraObjectConfiguration className="cool.klass.xample.coverage.VersionedOwnedSource" cacheType="partial" offHeapReplicationExport="false" />
+        <MithraObjectConfiguration className="cool.klass.xample.coverage.VersionedOwnedSourceVersion" cacheType="partial" offHeapReplicationExport="false" />
     </ConnectionManager>
     <PureObjects notificationIdentifier="cool.klass.xample.coverage" />
 </MithraRuntime>

@@ -1,0 +1,3 @@
+[
+	"Error at 'CompositeKeyReferenceSource.item'. Could not find existing persistent instance for association end 'CompositeKeyReferenceSource.item: VersionedOwnedOneToManyTarget[0..1]' with key {sourceKey: source 1, name: missing item}."
+]
