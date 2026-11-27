@@ -1,0 +1,12 @@
+{
+	value: "value 1",
+	targets: [
+		{
+			key: "target 1",
+			value: "value 1",
+		},
+		{
+			value: "value 2",
+		},
+	],
+}

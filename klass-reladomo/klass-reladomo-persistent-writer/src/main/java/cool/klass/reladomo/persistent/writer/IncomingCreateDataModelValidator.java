@@ -34,7 +34,6 @@ import cool.klass.model.meta.domain.api.Multiplicity;
 import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.model.meta.domain.api.property.PropertyVisitor;
-import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.factory.Maps;
 import org.eclipse.collections.api.factory.Stacks;
 import org.eclipse.collections.api.list.ImmutableList;
@@ -514,56 +513,68 @@ public class IncomingCreateDataModelValidator
 
 		try
 		{
-			MapIterable<DataTypeProperty, Object> keys = this.getKeysFromJsonNode(
-				childJsonNode,
-				associationEnd,
-				parentJsonNode
-			);
-			if (keys.contains(null))
-			{
-				return;
-			}
-
-			Object childPersistentInstanceWithKey = this.findExistingChildPersistentInstance(associationEnd, keys);
-			if (childPersistentInstanceWithKey == null)
-			{
-				String keysString = keys
-					.keyValuesView()
-					.collect((keyValue) -> keyValue.getOne().getName() + ": " + keyValue.getTwo())
-					.makeString("{", ", ", "}");
-
-				String error = String.format(
-					"Error at '%s'. Could not find existing persistent instance for association end '%s' with key %s.",
-					this.getContextString(),
-					associationEnd,
-					keysString
-				);
-
-				this.errors.add(error);
-			}
-			else
-			{
-				// validate that present properties match, if they are temporal, version, created on, created by
-				var childObjectNode = (ObjectNode) childJsonNode;
-				// TODO: Add isInProject == false
-				var validator = new IncomingCreateDataModelValidator(
-					this.dataStore,
-					this.userKlass,
-					associationEnd.getType(),
-					this.mutationContext,
-					childObjectNode,
-					this.errors,
-					this.warnings,
-					this.contextStack,
-					Optional.of(associationEnd),
-					false
-				);
-				validator.validate();
-			}
+			this.validateExistingReference(associationEnd, childJsonNode, parentJsonNode);
 		}
 		finally
 		{
 			this.contextStack.pop();
+		}
+	}
+
+	/**
+	 * Validates that an unowned reference outside the projection points at an existing instance, then validates the reference's own properties.
+	 */
+	private void validateExistingReference(
+		@Nonnull AssociationEnd associationEnd,
+		@Nonnull JsonNode childJsonNode,
+		@Nonnull ObjectNode parentJsonNode
+	)
+	{
+		MapIterable<DataTypeProperty, Object> keys = this.getKeysFromJsonNode(
+			childJsonNode,
+			associationEnd,
+			parentJsonNode
+		);
+		if (keys.contains(null))
+		{
+			return;
+		}
+
+		Object childPersistentInstanceWithKey = this.findExistingChildPersistentInstance(associationEnd, keys);
+		if (childPersistentInstanceWithKey == null)
+		{
+			String keysString = keys
+				.keyValuesView()
+				.collect((keyValue) -> keyValue.getOne().getName() + ": " + keyValue.getTwo())
+				.makeString("{", ", ", "}");
+
+			String error = String.format(
+				"Error at '%s'. Could not find existing persistent instance for association end '%s' with key %s.",
+				this.getContextString(),
+				associationEnd,
+				keysString
+			);
+
+			this.errors.add(error);
+		}
+		else
+		{
+			// validate that present properties match, if they are temporal, version, created on, created by
+			var childObjectNode = (ObjectNode) childJsonNode;
+			// TODO: Add isInProject == false
+			var validator = new IncomingCreateDataModelValidator(
+				this.dataStore,
+				this.userKlass,
+				associationEnd.getType(),
+				this.mutationContext,
+				childObjectNode,
+				this.errors,
+				this.warnings,
+				this.contextStack,
+				Optional.of(associationEnd),
+				false
+			);
+			validator.validate();
 		}
 	}
 
@@ -585,14 +596,38 @@ public class IncomingCreateDataModelValidator
 	private void handleToManyOutsideProjection(
 		@Nonnull AssociationEnd associationEnd,
 		@Nonnull JsonNode childrenJsonNodes,
-		@Nonnull JsonNode parentJsonNode
+		@Nonnull ObjectNode parentJsonNode
 	)
 	{
-		for (JsonNode childJsonNode : childrenJsonNodes)
+		if (childrenJsonNodes.isMissingNode() || childrenJsonNodes.isNull())
 		{
-			this.getKeysFromJsonNode(childJsonNode, associationEnd, parentJsonNode);
+			return;
+		}
 
-			throw new AssertionError(associationEnd);
+		if (!childrenJsonNodes.isArray())
+		{
+			this.contextStack.push(associationEnd.getName());
+			String error = String.format(
+				"Error at %s. Expected json array but value was %s.",
+				this.getContextString(),
+				childrenJsonNodes.getNodeType().toString().toLowerCase(Locale.ROOT)
+			);
+			this.errors.add(error);
+			this.contextStack.pop();
+			return;
+		}
+
+		for (var index = 0; index < childrenJsonNodes.size(); index++)
+		{
+			this.contextStack.push(String.format("%s[%d]", associationEnd.getName(), index));
+			try
+			{
+				this.validateExistingReference(associationEnd, childrenJsonNodes.path(index), parentJsonNode);
+			}
+			finally
+			{
+				this.contextStack.pop();
+			}
 		}
 	}
 
@@ -646,22 +681,6 @@ public class IncomingCreateDataModelValidator
 	{
 		JsonNode incomingChildInstances = this.objectNode.path(associationEnd.getName());
 
-		// TODO: Figure out how to recurse without checking key
-		/*
-        ImmutableList<JsonNode> incomingInstancesForInsert = this.filterIncomingInstancesForInsert(
-                incomingChildInstances,
-                associationEnd);
-
-        ImmutableList<JsonNode> incomingInstancesForUpdate = this.filterIncomingInstancesForUpdate(
-                incomingChildInstances,
-                associationEnd);
-
-        MapIterable<ImmutableList<Object>, JsonNode> incomingChildInstancesByKey = this.indexIncomingJsonInstances(
-                incomingInstances,
-                associationEnd,
-                this.objectNode);
-        */
-
 		for (var index = 0; index < incomingChildInstances.size(); index++)
 		{
 			String contextString = String.format("%s[%d]", associationEnd.getName(), index);
@@ -671,13 +690,6 @@ public class IncomingCreateDataModelValidator
 			try
 			{
 				JsonNode childJsonNode = incomingChildInstances.path(index);
-
-				/*
-                if (this.jsonNodeNeedsIdInferredOnInsert(childJsonNode, associationEnd))
-                {
-                    continue;
-                }
-                */
 
 				var childObjectNode = (ObjectNode) childJsonNode;
 				var validator = new IncomingCreateDataModelValidator(
@@ -715,64 +727,7 @@ public class IncomingCreateDataModelValidator
 		}
 	}
 
-	private ImmutableList<JsonNode> filterIncomingInstancesForUpdate(
-		JsonNode incomingChildInstances,
-		AssociationEnd associationEnd
-	)
-	{
-		return Lists.immutable
-			.withAll(incomingChildInstances)
-			.rejectWith(this::jsonNodeNeedsIdInferredOnInsert, associationEnd);
-	}
-
-	private ImmutableList<JsonNode> filterIncomingInstancesForInsert(
-		JsonNode incomingChildInstances,
-		AssociationEnd associationEnd
-	)
-	{
-		return Lists.immutable
-			.withAll(incomingChildInstances)
-			.selectWith(this::jsonNodeNeedsIdInferredOnInsert, associationEnd);
-	}
-
 	// endregion
-
-	private boolean jsonNodeNeedsIdInferredOnInsert(JsonNode jsonNode, @Nonnull AssociationEnd associationEnd)
-	{
-		return associationEnd
-			.getType()
-			.getKeyProperties()
-			.allSatisfy((keyProperty) -> this.jsonNodeNeedsIdInferredOnInsert(keyProperty, jsonNode, associationEnd));
-	}
-
-	private boolean jsonNodeNeedsIdInferredOnInsert(
-		@Nonnull DataTypeProperty keyProperty,
-		JsonNode jsonNode,
-		@Nonnull AssociationEnd associationEnd
-	)
-	{
-		OrderedMap<AssociationEnd, DataTypeProperty> keyMatchingThisForeignKey =
-			keyProperty.getKeysMatchingThisForeignKey();
-
-		AssociationEnd opposite = associationEnd.getOpposite();
-
-		if (keyMatchingThisForeignKey.containsKey(opposite))
-		{
-			return false;
-		}
-
-		if (keyMatchingThisForeignKey.notEmpty())
-		{
-			if (keyMatchingThisForeignKey.size() != 1)
-			{
-				throw new AssertionError();
-			}
-
-			return false;
-		}
-
-		return JsonDataTypeValueVisitor.dataTypePropertyIsNullInJson(keyProperty, (ObjectNode) jsonNode);
-	}
 
 	private MapIterable<DataTypeProperty, Object> getKeysFromJsonNode(
 		@Nonnull JsonNode jsonNode,
@@ -783,9 +738,7 @@ public class IncomingCreateDataModelValidator
 		MutableMap<DataTypeProperty, Object> result = MapAdapter.adapt(new LinkedHashMap<>());
 
 		Klass type = associationEnd.getType();
-		ImmutableList<DataTypeProperty> keyProperties = type.getKeyProperties();
-		ImmutableList<DataTypeProperty> nonForeignKeyProperties = keyProperties.reject(DataTypeProperty::isForeignKey);
-		for (DataTypeProperty keyProperty : nonForeignKeyProperties)
+		for (DataTypeProperty keyProperty : type.getKeyProperties())
 		{
 			result.put(keyProperty, this.getKeyFromJsonNode(keyProperty, jsonNode, associationEnd, parentJsonNode));
 		}
@@ -799,57 +752,74 @@ public class IncomingCreateDataModelValidator
 		@Nonnull JsonNode parentJsonNode
 	)
 	{
+		if (!(jsonNode instanceof ObjectNode objectNode))
+		{
+			throw new AssertionError(jsonNode);
+		}
+
 		OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey =
 			keyProperty.getKeysMatchingThisForeignKey();
 
-		AssociationEnd opposite = associationEnd.getOpposite();
-
-		DataTypeProperty oppositeForeignKey = keysMatchingThisForeignKey.get(opposite);
-
+		DataTypeProperty oppositeForeignKey = keysMatchingThisForeignKey.get(associationEnd.getOpposite());
 		if (oppositeForeignKey != null)
 		{
-			String oppositeForeignKeyName = oppositeForeignKey.getName();
-			Object result = parentJsonNode.path(oppositeForeignKeyName);
-			return Objects.requireNonNull(result);
-		}
-
-		if (keysMatchingThisForeignKey.notEmpty())
-		{
-			if (keysMatchingThisForeignKey.size() != 1)
-			{
-				throw new AssertionError();
-			}
-
-			Pair<AssociationEnd, DataTypeProperty> pair = keysMatchingThisForeignKey.keyValuesView().getOnly();
-
-			JsonNode childNode = jsonNode.path(pair.getOne().getName());
-			Object result = JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(
-				pair.getTwo(),
-				(ObjectNode) childNode
-			);
-			return Objects.requireNonNull(result);
-		}
-
-		if (jsonNode instanceof ObjectNode objectNode)
-		{
-			Object result = JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(keyProperty, objectNode);
-
-			if (result == null)
-			{
-				String error = String.format(
-					"Error at %s. Expected value for key property '%s.%s: %s%s' but value was %s.",
-					this.getContextString(),
-					keyProperty.getOwningClassifier().getName(),
-					keyProperty.getName(),
-					keyProperty.getType(),
-					keyProperty.isOptional() ? "?" : "",
-					result
+			// The key is a foreign key back to the instance being validated, so its value comes from the url or the parent json
+			return this.mutationContext
+				.getPropertyDataFromUrl()
+				.getIfAbsent(oppositeForeignKey, () ->
+					this.getKeyValue(oppositeForeignKey, (ObjectNode) parentJsonNode)
 				);
-				this.errors.add(error);
-			}
-			return result;
 		}
 
-		throw new AssertionError(jsonNode);
+		if (keysMatchingThisForeignKey.isEmpty())
+		{
+			return this.getKeyValue(keyProperty, objectNode);
+		}
+
+		if (keysMatchingThisForeignKey.size() != 1)
+		{
+			throw new AssertionError(keysMatchingThisForeignKey);
+		}
+
+		// The key is a foreign key to another association, so its value is the key of the nested reference
+		Pair<AssociationEnd, DataTypeProperty> pair = keysMatchingThisForeignKey.keyValuesView().getOnly();
+		if (objectNode.path(pair.getOne().getName()) instanceof ObjectNode referencedObjectNode)
+		{
+			return this.getKeyValue(pair.getTwo(), referencedObjectNode);
+		}
+
+		// Leniently accept the foreign key itself instead of a nested object, like PersistentSynchronizer.extractKeyFromJson
+		if (objectNode.has(keyProperty.getName()) && !keyProperty.isPrivate())
+		{
+			return this.getKeyValue(keyProperty, objectNode);
+		}
+
+		this.reportMissingKey(keyProperty, null);
+		return null;
+	}
+
+	@Nullable
+	private Object getKeyValue(@Nonnull DataTypeProperty keyProperty, @Nonnull ObjectNode objectNode)
+	{
+		Object result = JsonDataTypeValueVisitor.extractDataTypePropertyFromJson(keyProperty, objectNode);
+		if (result == null)
+		{
+			this.reportMissingKey(keyProperty, result);
+		}
+		return result;
+	}
+
+	private void reportMissingKey(@Nonnull DataTypeProperty keyProperty, @Nullable Object result)
+	{
+		String error = String.format(
+			"Error at %s. Expected value for key property '%s.%s: %s%s' but value was %s.",
+			this.getContextString(),
+			keyProperty.getOwningClassifier().getName(),
+			keyProperty.getName(),
+			keyProperty.getType(),
+			keyProperty.isOptional() ? "?" : "",
+			result
+		);
+		this.errors.add(error);
 	}
 }

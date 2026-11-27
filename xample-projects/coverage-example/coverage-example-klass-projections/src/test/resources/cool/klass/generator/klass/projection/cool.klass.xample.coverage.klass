@@ -222,6 +222,15 @@ projection VersionedOwnedOneToManyGrandchildProjection on VersionedOwnedOneToMan
     value: "VersionedOwnedOneToManyGrandchild value",
 }
 
+projection CompositeKeyReferenceSourceProjection on CompositeKeyReferenceSource
+{
+    key: "CompositeKeyReferenceSource key",
+    value: "CompositeKeyReferenceSource value",
+    item: {
+        name: "VersionedOwnedOneToManyTarget name",
+    },
+}
+
 projection SharedNaturalManyToOneTargetProjection on SharedNaturalManyToOneTarget
 {
     key: "SharedNaturalManyToOneTarget key",
