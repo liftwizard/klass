@@ -1,0 +1,3 @@
+[
+	"Warning at CompositeKeyReferenceSource.key. Didn't expect to receive value for root key property 'CompositeKeyReferenceSource.key: String' but value was string: \"reference 1\"."
+]

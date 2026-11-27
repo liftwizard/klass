@@ -276,6 +276,16 @@ fragment VersionedOwnedOneToManyGrandchildFragment on VersionedOwnedOneToManyGra
 	value
 }
 
+fragment CompositeKeyReferenceSourceFragment on CompositeKeyReferenceSource
+{
+	key
+	value
+	item
+	{
+		name
+	}
+}
+
 fragment SharedNaturalManyToOneTargetFragment on SharedNaturalManyToOneTarget
 {
 	key
