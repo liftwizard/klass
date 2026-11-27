@@ -25,6 +25,7 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.atn.DecisionInfo;
 import org.antlr.v4.runtime.atn.PredictionMode;
+import org.eclipse.collections.impl.list.fixed.ArrayAdapter;
 
 /**
  * Parses the corpus with ANTLR's decision profiling on and prints the most expensive grammar decisions.
@@ -46,7 +47,7 @@ public final class KlassParserDecisionProfile
 		int top = args.length > 1 ? Integer.parseInt(args[1]) : 15;
 
 		DecisionInfo[] totals = null;
-		int syntaxErrors = 0;
+		var syntaxErrors = 0;
 		for (String sourceName : KlassSources.ALL)
 		{
 			var lexer = new KlassLexer(CharStreams.fromString(KlassSources.read(sourceName), sourceName));
@@ -62,7 +63,7 @@ public final class KlassParserDecisionProfile
 			}
 			else
 			{
-				for (int i = 0; i < decisions.length; i++)
+				for (var i = 0; i < decisions.length; i++)
 				{
 					add(totals[i], decisions[i]);
 				}
@@ -91,9 +92,9 @@ public final class KlassParserDecisionProfile
 			ambiguities
 		);
 
-		Arrays.stream(totals)
-			.sorted(Comparator.comparingLong((DecisionInfo d) -> d.SLL_TotalLook + d.LL_TotalLook).reversed())
-			.limit(top)
+		ArrayAdapter.adapt(totals)
+			.toSortedList(Comparator.comparingLong((DecisionInfo d) -> d.SLL_TotalLook + d.LL_TotalLook).reversed())
+			.take(top)
 			.forEach((d) ->
 				System.out.printf(
 					"  decision %3d %-32s invocations=%6d SLL_look=%7d (max %3d) LL_fallback=%5d LL_look=%7d (max %3d)%n",

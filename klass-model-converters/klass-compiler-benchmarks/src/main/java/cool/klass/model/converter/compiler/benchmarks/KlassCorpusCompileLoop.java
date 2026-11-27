@@ -50,7 +50,7 @@ public final class KlassCorpusCompileLoop
 		long startCpu = threadMXBean.getCurrentThreadCpuTime();
 		long start = System.nanoTime();
 		long end = start + duration.toNanos();
-		int iterations = 0;
+		var iterations = 0;
 		while (System.nanoTime() < end)
 		{
 			corpusCompiler.compileAll();
