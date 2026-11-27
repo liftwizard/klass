@@ -1,0 +1,4 @@
+[
+	"Error at CompositeKeyReferenceSource.item. Expected value for required property 'VersionedOwnedOneToManyTarget.source: VersionedOwnedSource[1..1]' but value was missing.",
+	"Error at CompositeKeyReferenceSource.item. Expected value for key property 'VersionedOwnedOneToManyTarget.sourceKey: String' but value was null."
+]

@@ -157,6 +157,17 @@ class PersistentWriterValidatorTest
 		);
 		this.validate(createVersionedOwnedSource, "validate_optional_owned_to_one_missing");
 
+		var createCompositeKeyReferenceSource = new ValidationCase(
+			"Create_CompositeKeyReferenceSource",
+			this.domainModel.getClassByName("CompositeKeyReferenceSource"),
+			OperationMode.CREATE,
+			Maps.immutable.empty(),
+			null
+		);
+		this.validate(createCompositeKeyReferenceSource, "validate_existing_item");
+		this.validate(createCompositeKeyReferenceSource, "validate_missing_item");
+		this.validate(createCompositeKeyReferenceSource, "validate_item_without_source");
+
 		ValidationCase updatePropertiesOptional = this.updateCase(
 			"Update_PropertiesOptional",
 			"PropertiesOptional",

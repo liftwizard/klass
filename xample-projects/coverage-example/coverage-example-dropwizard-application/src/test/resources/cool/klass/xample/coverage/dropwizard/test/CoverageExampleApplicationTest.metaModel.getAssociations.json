@@ -32,7 +32,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 413
+							"id": 419
 						}
 					}
 				]
@@ -113,7 +113,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 414
+							"id": 420
 						}
 					}
 				]
@@ -263,7 +263,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 415
+							"id": 421
 						}
 					}
 				]
@@ -482,7 +482,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 416
+							"id": 422
 						}
 					}
 				]
@@ -1035,7 +1035,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 417
+							"id": 423
 						}
 					}
 				]
@@ -1230,7 +1230,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 418
+							"id": 424
 						}
 					}
 				]
@@ -1449,7 +1449,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 419
+							"id": 425
 						}
 					}
 				]
@@ -2001,7 +2001,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 420
+							"id": 426
 						}
 					}
 				]
@@ -2456,7 +2456,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 421
+							"id": 427
 						}
 					}
 				]
@@ -2537,7 +2537,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 422
+							"id": 428
 						}
 					}
 				]
@@ -2801,7 +2801,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 423
+							"id": 429
 						}
 					}
 				]
@@ -2927,7 +2927,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 424
+							"id": 430
 						}
 					}
 				]
@@ -3126,7 +3126,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 425
+							"id": 431
 						}
 					}
 				]
@@ -3642,7 +3642,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 426
+							"id": 432
 						}
 					}
 				]
@@ -3841,7 +3841,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 427
+							"id": 433
 						}
 					}
 				]
@@ -3922,7 +3922,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 428
+							"id": 434
 						}
 					}
 				]
@@ -4409,7 +4409,7 @@
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
 						{
-							"id": 429
+							"id": 435
 						}
 					}
 				]
@@ -5825,6 +5825,120 @@
 		}
 	},
 	{
+		"name": "CompositeKeyReference",
+		"packageName": "cool.klass.xample.coverage",
+		"associationEnds": [
+			{
+				"name": "referencingSources",
+				"direction": "source",
+				"multiplicity": "0..*",
+				"resultType":
+				{
+					"name": "CompositeKeyReferenceSource"
+				},
+				"associationEndModifiers": [],
+				"orderBys": []
+			},
+			{
+				"name": "item",
+				"direction": "target",
+				"multiplicity": "0..1",
+				"resultType":
+				{
+					"name": "VersionedOwnedOneToManyTarget"
+				},
+				"associationEndModifiers": [],
+				"orderBys": []
+			}
+		],
+		"criteria":
+		{
+			"__typename": "klass.model.meta.domain.AndCriteria",
+			"left":
+			{
+				"__typename": "klass.model.meta.domain.OperatorCriteria",
+				"operator": "==",
+				"sourceExpressionValue":
+				{
+					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+					"id": 179,
+					"klass":
+					{
+						"name": "CompositeKeyReferenceSource"
+					},
+					"associationEnds": [],
+					"dataTypeProperty":
+					{
+						"owningClassifier":
+						{
+							"name": "CompositeKeyReferenceSource"
+						},
+						"name": "itemSourceKey"
+					}
+				},
+				"targetExpressionValue":
+				{
+					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
+					"id": 180,
+					"klass":
+					{
+						"name": "VersionedOwnedOneToManyTarget"
+					},
+					"associationEnds": [],
+					"dataTypeProperty":
+					{
+						"owningClassifier":
+						{
+							"name": "VersionedOwnedOneToManyTarget"
+						},
+						"name": "sourceKey"
+					}
+				}
+			},
+			"right":
+			{
+				"__typename": "klass.model.meta.domain.OperatorCriteria",
+				"operator": "==",
+				"sourceExpressionValue":
+				{
+					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+					"id": 181,
+					"klass":
+					{
+						"name": "CompositeKeyReferenceSource"
+					},
+					"associationEnds": [],
+					"dataTypeProperty":
+					{
+						"owningClassifier":
+						{
+							"name": "CompositeKeyReferenceSource"
+						},
+						"name": "itemName"
+					}
+				},
+				"targetExpressionValue":
+				{
+					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
+					"id": 182,
+					"klass":
+					{
+						"name": "VersionedOwnedOneToManyTarget"
+					},
+					"associationEnds": [],
+					"dataTypeProperty":
+					{
+						"owningClassifier":
+						{
+							"name": "VersionedOwnedOneToManyTarget"
+						},
+						"name": "name"
+					}
+				}
+			}
+		}
+	},
+	{
 		"name": "SharedNaturalManyToOne",
 		"packageName": "cool.klass.xample.coverage",
 		"associationEnds": [
@@ -5858,7 +5972,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 179,
+				"id": 183,
 				"klass":
 				{
 					"name": "SharedNaturalManyToOneSource"
@@ -5876,7 +5990,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 180,
+				"id": 184,
 				"klass":
 				{
 					"name": "SharedNaturalManyToOneTarget"
@@ -5927,7 +6041,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 181,
+				"id": 185,
 				"klass":
 				{
 					"name": "SharedNaturalOneToManySource"
@@ -5945,7 +6059,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 182,
+				"id": 186,
 				"klass":
 				{
 					"name": "SharedNaturalOneToManyTarget"
@@ -5996,7 +6110,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 183,
+				"id": 187,
 				"klass":
 				{
 					"name": "SharedNaturalOneToOneSource"
@@ -6014,7 +6128,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 184,
+				"id": 188,
 				"klass":
 				{
 					"name": "SharedNaturalOneToOneTarget"
@@ -6065,7 +6179,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 185,
+				"id": 189,
 				"klass":
 				{
 					"name": "SharedNaturalOneToManySelf"
@@ -6083,7 +6197,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 186,
+				"id": 190,
 				"klass":
 				{
 					"name": "SharedNaturalOneToManySelf"
@@ -6134,7 +6248,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 187,
+				"id": 191,
 				"klass":
 				{
 					"name": "SharedSyntheticOneToManySource"
@@ -6152,7 +6266,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 188,
+				"id": 192,
 				"klass":
 				{
 					"name": "SharedSyntheticOneToManyTarget"
@@ -6203,7 +6317,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 189,
+				"id": 193,
 				"klass":
 				{
 					"name": "SharedSyntheticOneToOneSource"
@@ -6221,7 +6335,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 190,
+				"id": 194,
 				"klass":
 				{
 					"name": "SharedSyntheticOneToOneTarget"
@@ -6272,7 +6386,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 191,
+				"id": 195,
 				"klass":
 				{
 					"name": "SharedSyntheticOneToManySelf"
@@ -6290,7 +6404,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 192,
+				"id": 196,
 				"klass":
 				{
 					"name": "SharedSyntheticOneToManySelf"
@@ -6336,48 +6450,6 @@
 					}
 				],
 				"orderBys": [
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
-							"id": 430
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
-							"id": 431
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
-							"id": 432
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
-							"id": 433
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
-							"id": 434
-						}
-					},
-					{
-						"orderByDirection": "ascending",
-						"thisMemberReferencePath":
-						{
-							"id": 435
-						}
-					},
 					{
 						"orderByDirection": "ascending",
 						"thisMemberReferencePath":
@@ -6447,6 +6519,48 @@
 						{
 							"id": 445
 						}
+					},
+					{
+						"orderByDirection": "ascending",
+						"thisMemberReferencePath":
+						{
+							"id": 446
+						}
+					},
+					{
+						"orderByDirection": "ascending",
+						"thisMemberReferencePath":
+						{
+							"id": 447
+						}
+					},
+					{
+						"orderByDirection": "ascending",
+						"thisMemberReferencePath":
+						{
+							"id": 448
+						}
+					},
+					{
+						"orderByDirection": "ascending",
+						"thisMemberReferencePath":
+						{
+							"id": 449
+						}
+					},
+					{
+						"orderByDirection": "ascending",
+						"thisMemberReferencePath":
+						{
+							"id": 450
+						}
+					},
+					{
+						"orderByDirection": "ascending",
+						"thisMemberReferencePath":
+						{
+							"id": 451
+						}
 					}
 				]
 			}
@@ -6458,7 +6572,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 193,
+				"id": 197,
 				"klass":
 				{
 					"name": "ClassOwningClassWithDerivedProperty"
@@ -6476,7 +6590,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 194,
+				"id": 198,
 				"klass":
 				{
 					"name": "ClassWithDerivedProperty"
@@ -6534,7 +6648,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 195,
+				"id": 199,
 				"klass":
 				{
 					"name": "User"
@@ -6552,7 +6666,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 196,
+				"id": 200,
 				"klass":
 				{
 					"name": "UserVersion"
@@ -6610,7 +6724,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 197,
+				"id": 201,
 				"klass":
 				{
 					"name": "PropertiesRequired"
@@ -6628,7 +6742,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 198,
+				"id": 202,
 				"klass":
 				{
 					"name": "PropertiesRequiredVersion"
@@ -6686,7 +6800,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 199,
+				"id": 203,
 				"klass":
 				{
 					"name": "PropertiesOptional"
@@ -6704,7 +6818,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 200,
+				"id": 204,
 				"klass":
 				{
 					"name": "PropertiesOptionalVersion"
@@ -6783,7 +6897,7 @@
 										"sourceExpressionValue":
 										{
 											"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-											"id": 201,
+											"id": 205,
 											"klass":
 											{
 												"name": "EveryTypeKeyProperty"
@@ -6801,7 +6915,7 @@
 										"targetExpressionValue":
 										{
 											"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-											"id": 202,
+											"id": 206,
 											"klass":
 											{
 												"name": "EveryTypeKeyPropertyVersion"
@@ -6824,7 +6938,7 @@
 										"sourceExpressionValue":
 										{
 											"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-											"id": 203,
+											"id": 207,
 											"klass":
 											{
 												"name": "EveryTypeKeyProperty"
@@ -6842,7 +6956,7 @@
 										"targetExpressionValue":
 										{
 											"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-											"id": 204,
+											"id": 208,
 											"klass":
 											{
 												"name": "EveryTypeKeyPropertyVersion"
@@ -6866,7 +6980,7 @@
 									"sourceExpressionValue":
 									{
 										"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-										"id": 205,
+										"id": 209,
 										"klass":
 										{
 											"name": "EveryTypeKeyProperty"
@@ -6884,7 +6998,7 @@
 									"targetExpressionValue":
 									{
 										"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-										"id": 206,
+										"id": 210,
 										"klass":
 										{
 											"name": "EveryTypeKeyPropertyVersion"
@@ -6908,7 +7022,7 @@
 								"sourceExpressionValue":
 								{
 									"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-									"id": 207,
+									"id": 211,
 									"klass":
 									{
 										"name": "EveryTypeKeyProperty"
@@ -6926,7 +7040,7 @@
 								"targetExpressionValue":
 								{
 									"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-									"id": 208,
+									"id": 212,
 									"klass":
 									{
 										"name": "EveryTypeKeyPropertyVersion"
@@ -6950,7 +7064,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 209,
+								"id": 213,
 								"klass":
 								{
 									"name": "EveryTypeKeyProperty"
@@ -6968,7 +7082,7 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-								"id": 210,
+								"id": 214,
 								"klass":
 								{
 									"name": "EveryTypeKeyPropertyVersion"
@@ -6992,7 +7106,7 @@
 						"sourceExpressionValue":
 						{
 							"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-							"id": 211,
+							"id": 215,
 							"klass":
 							{
 								"name": "EveryTypeKeyProperty"
@@ -7010,7 +7124,7 @@
 						"targetExpressionValue":
 						{
 							"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-							"id": 212,
+							"id": 216,
 							"klass":
 							{
 								"name": "EveryTypeKeyPropertyVersion"
@@ -7034,7 +7148,7 @@
 					"sourceExpressionValue":
 					{
 						"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-						"id": 213,
+						"id": 217,
 						"klass":
 						{
 							"name": "EveryTypeKeyProperty"
@@ -7052,7 +7166,7 @@
 					"targetExpressionValue":
 					{
 						"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-						"id": 214,
+						"id": 218,
 						"klass":
 						{
 							"name": "EveryTypeKeyPropertyVersion"
@@ -7076,7 +7190,7 @@
 				"sourceExpressionValue":
 				{
 					"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-					"id": 215,
+					"id": 219,
 					"klass":
 					{
 						"name": "EveryTypeKeyProperty"
@@ -7094,7 +7208,7 @@
 				"targetExpressionValue":
 				{
 					"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-					"id": 216,
+					"id": 220,
 					"klass":
 					{
 						"name": "EveryTypeKeyPropertyVersion"
@@ -7153,7 +7267,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 217,
+				"id": 221,
 				"klass":
 				{
 					"name": "VersionedOwnedSource"
@@ -7171,7 +7285,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 218,
+				"id": 222,
 				"klass":
 				{
 					"name": "VersionedOwnedSourceVersion"
@@ -7229,7 +7343,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 219,
+				"id": 223,
 				"klass":
 				{
 					"name": "PropertiesRequired"
@@ -7247,7 +7361,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 220,
+				"id": 224,
 				"klass":
 				{
 					"name": "User"
@@ -7302,7 +7416,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 221,
+				"id": 225,
 				"klass":
 				{
 					"name": "PropertiesRequired"
@@ -7320,7 +7434,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 222,
+				"id": 226,
 				"klass":
 				{
 					"name": "User"
@@ -7378,7 +7492,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 223,
+				"id": 227,
 				"klass":
 				{
 					"name": "PropertiesOptional"
@@ -7396,7 +7510,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 224,
+				"id": 228,
 				"klass":
 				{
 					"name": "User"
@@ -7451,7 +7565,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 225,
+				"id": 229,
 				"klass":
 				{
 					"name": "PropertiesOptional"
@@ -7469,7 +7583,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 226,
+				"id": 230,
 				"klass":
 				{
 					"name": "User"
@@ -7527,7 +7641,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 227,
+				"id": 231,
 				"klass":
 				{
 					"name": "EveryTypeKeyProperty"
@@ -7545,7 +7659,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 228,
+				"id": 232,
 				"klass":
 				{
 					"name": "User"
@@ -7600,7 +7714,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 229,
+				"id": 233,
 				"klass":
 				{
 					"name": "EveryTypeKeyProperty"
@@ -7618,7 +7732,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 230,
+				"id": 234,
 				"klass":
 				{
 					"name": "User"
@@ -7676,7 +7790,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 231,
+				"id": 235,
 				"klass":
 				{
 					"name": "VersionedOwnedSource"
@@ -7694,7 +7808,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 232,
+				"id": 236,
 				"klass":
 				{
 					"name": "User"
@@ -7749,7 +7863,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 233,
+				"id": 237,
 				"klass":
 				{
 					"name": "VersionedOwnedSource"
@@ -7767,7 +7881,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 234,
+				"id": 238,
 				"klass":
 				{
 					"name": "User"
@@ -7825,7 +7939,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 235,
+				"id": 239,
 				"klass":
 				{
 					"name": "PropertiesRequiredVersion"
@@ -7843,7 +7957,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 236,
+				"id": 240,
 				"klass":
 				{
 					"name": "User"
@@ -7898,7 +8012,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 237,
+				"id": 241,
 				"klass":
 				{
 					"name": "PropertiesRequiredVersion"
@@ -7916,7 +8030,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 238,
+				"id": 242,
 				"klass":
 				{
 					"name": "User"
@@ -7974,7 +8088,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 239,
+				"id": 243,
 				"klass":
 				{
 					"name": "PropertiesOptionalVersion"
@@ -7992,7 +8106,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 240,
+				"id": 244,
 				"klass":
 				{
 					"name": "User"
@@ -8047,7 +8161,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 241,
+				"id": 245,
 				"klass":
 				{
 					"name": "PropertiesOptionalVersion"
@@ -8065,7 +8179,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 242,
+				"id": 246,
 				"klass":
 				{
 					"name": "User"
@@ -8123,7 +8237,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 243,
+				"id": 247,
 				"klass":
 				{
 					"name": "EveryTypeKeyPropertyVersion"
@@ -8141,7 +8255,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 244,
+				"id": 248,
 				"klass":
 				{
 					"name": "User"
@@ -8196,7 +8310,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 245,
+				"id": 249,
 				"klass":
 				{
 					"name": "EveryTypeKeyPropertyVersion"
@@ -8214,7 +8328,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 246,
+				"id": 250,
 				"klass":
 				{
 					"name": "User"
@@ -8272,7 +8386,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 247,
+				"id": 251,
 				"klass":
 				{
 					"name": "VersionedOwnedSourceVersion"
@@ -8290,7 +8404,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 248,
+				"id": 252,
 				"klass":
 				{
 					"name": "User"
@@ -8345,7 +8459,7 @@
 			"sourceExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-				"id": 249,
+				"id": 253,
 				"klass":
 				{
 					"name": "VersionedOwnedSourceVersion"
@@ -8363,7 +8477,7 @@
 			"targetExpressionValue":
 			{
 				"__typename": "klass.model.meta.domain.TypeMemberReferencePath",
-				"id": 250,
+				"id": 254,
 				"klass":
 				{
 					"name": "User"
