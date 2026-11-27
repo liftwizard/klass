@@ -96,7 +96,7 @@ public final class LexerBasedTokenCategorizer
 	{
 		int maxTokenType = KlassLexer.VOCABULARY.getMaxTokenType();
 		TokenCategory[] result = new TokenCategory[maxTokenType + 1];
-		for (int tokenType = 0; tokenType <= maxTokenType; tokenType++)
+		for (var tokenType = 0; tokenType <= maxTokenType; tokenType++)
 		{
 			String symbolicName = KlassLexer.VOCABULARY.getSymbolicName(tokenType);
 			if (symbolicName != null)
