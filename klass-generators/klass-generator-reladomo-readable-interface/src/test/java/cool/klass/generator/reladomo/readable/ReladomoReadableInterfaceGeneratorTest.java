@@ -21,8 +21,8 @@ import java.util.Optional;
 import cool.klass.model.converter.compiler.CompilationResult;
 import cool.klass.model.converter.compiler.CompilationUnit;
 import cool.klass.model.converter.compiler.KlassCompiler;
+import cool.klass.model.converter.compiler.annotation.CompilerAnnotation;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationRenderer;
-import cool.klass.model.converter.compiler.annotation.RootCompilerAnnotation;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
 import cool.klass.model.meta.domain.api.Klass;
 import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
@@ -61,7 +61,7 @@ class ReladomoReadableInterfaceGeneratorTest
 
 		if (compilationResult.domainModelWithSourceCode().isEmpty())
 		{
-			ImmutableList<RootCompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
+			ImmutableList<CompilerAnnotation> compilerAnnotations = compilationResult.compilerAnnotations();
 			var compilerAnnotationRenderer = new CompilerAnnotationRenderer(
 				ColorSchemeProvider.getByName("dark"),
 				compilationResult.tokenCategories(),

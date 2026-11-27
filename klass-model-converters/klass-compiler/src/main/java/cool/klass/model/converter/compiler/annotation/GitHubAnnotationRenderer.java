@@ -41,9 +41,9 @@ public final class GitHubAnnotationRenderer
 	}
 
 	@Nonnull
-	public static String render(@Nonnull RootCompilerAnnotation annotation)
+	public static String render(@Nonnull CompilerAnnotation annotation)
 	{
-		TokenRange tokenRange = GitHubAnnotationRenderer.getTokenRange(annotation);
+		TokenRange tokenRange = GitHubAnnotationRenderer.getTokenRange(annotation.getSnippet());
 		Token startToken = tokenRange.start();
 		Token endToken = tokenRange.stop();
 
@@ -70,11 +70,11 @@ public final class GitHubAnnotationRenderer
 		};
 	}
 
-	private static TokenRange getTokenRange(@Nonnull AbstractCompilerAnnotation annotation)
+	private static TokenRange getTokenRange(@Nonnull Snippet snippet)
 	{
 		MutableSet<Token> contextTokens = Sets.mutable.empty();
-		annotation.getOffendingContexts().asLazy().collect(ParserRuleContext::getStart).into(contextTokens);
-		annotation.getOffendingContexts().asLazy().collect(ParserRuleContext::getStop).into(contextTokens);
+		snippet.offendingContexts().asLazy().collect(ParserRuleContext::getStart).into(contextTokens);
+		snippet.offendingContexts().asLazy().collect(ParserRuleContext::getStop).into(contextTokens);
 
 		return new TokenRange(contextTokens.min(TOKEN_COMPARATOR), contextTokens.max(TOKEN_COMPARATOR));
 	}

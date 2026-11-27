@@ -18,24 +18,25 @@ package cool.klass.model.converter.compiler.annotation;
 
 import java.util.Comparator;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
-import cool.klass.model.converter.compiler.state.IAntlrElement;
-import org.antlr.v4.runtime.ParserRuleContext;
+import cool.klass.model.converter.compiler.CompilationUnit;
 import org.eclipse.collections.api.list.ImmutableList;
 
-public class RootCompilerAnnotation
-	extends AbstractCompilerAnnotation
-	implements Comparable<RootCompilerAnnotation>
+/**
+ * A compiler error or warning: its code, message, and severity, and the snippet of source it points at.
+ * Rendering it as text is the job of {@link CompilerAnnotationRenderer}.
+ */
+public class CompilerAnnotation
+	implements Comparable<CompilerAnnotation>
 {
-	private static final Comparator<RootCompilerAnnotation> COMPILER_ANNOTATION_COMPARATOR = Comparator.comparing(
-		RootCompilerAnnotation::getSeverity
+	private static final Comparator<CompilerAnnotation> COMPILER_ANNOTATION_COMPARATOR = Comparator.comparing(
+		CompilerAnnotation::getSeverity
 	)
 		.thenComparingInt((each) -> each.getCompilationUnit().getOrdinal())
-		.thenComparingInt(RootCompilerAnnotation::getLine)
-		.thenComparingInt(RootCompilerAnnotation::getCharPositionInLine);
+		.thenComparingInt(CompilerAnnotation::getLine)
+		.thenComparingInt(CompilerAnnotation::getCharPositionInLine);
 
 	@Nonnull
 	private final String annotationCode;
@@ -43,19 +44,23 @@ public class RootCompilerAnnotation
 	@Nonnull
 	private final String message;
 
-	public RootCompilerAnnotation(
-		@Nonnull SnippetSource snippetSource,
-		@Nonnull Optional<CauseCompilerAnnotation> macroCause,
-		@Nonnull ImmutableList<ParserRuleContext> offendingContexts,
-		@Nonnull ImmutableList<IAntlrElement> sourceContexts,
+	@Nonnull
+	private final AnnotationSeverity severity;
+
+	@Nonnull
+	private final Snippet snippet;
+
+	CompilerAnnotation(
 		@Nonnull String annotationCode,
 		@Nonnull String message,
-		@Nonnull AnnotationSeverity severity
+		@Nonnull AnnotationSeverity severity,
+		@Nonnull Snippet snippet
 	)
 	{
-		super(snippetSource, macroCause, offendingContexts, sourceContexts, severity);
 		this.annotationCode = Objects.requireNonNull(annotationCode);
 		this.message = Objects.requireNonNull(message);
+		this.severity = Objects.requireNonNull(severity);
+		this.snippet = Objects.requireNonNull(snippet);
 	}
 
 	@Nonnull
@@ -70,8 +75,55 @@ public class RootCompilerAnnotation
 		return this.message;
 	}
 
+	@Nonnull
+	public AnnotationSeverity getSeverity()
+	{
+		return this.severity;
+	}
+
+	public boolean isError()
+	{
+		return this.severity == AnnotationSeverity.ERROR;
+	}
+
+	public boolean isWarning()
+	{
+		return this.severity == AnnotationSeverity.WARNING;
+	}
+
+	@Nonnull
+	Snippet getSnippet()
+	{
+		return this.snippet;
+	}
+
+	@Nonnull
+	protected CompilationUnit getCompilationUnit()
+	{
+		return this.snippet.getCompilationUnit();
+	}
+
+	protected int getLine()
+	{
+		return this.snippet.getLine();
+	}
+
+	protected int getCharPositionInLine()
+	{
+		return this.snippet.getCharPositionInLine();
+	}
+
+	/**
+	 * {@return the annotation's line followed by the lines of the macros that generated its code, innermost first}
+	 */
+	@Nonnull
+	public ImmutableList<Integer> getLines()
+	{
+		return this.snippet.getLines();
+	}
+
 	@Override
-	public int compareTo(@Nonnull RootCompilerAnnotation other)
+	public int compareTo(@Nonnull CompilerAnnotation other)
 	{
 		return COMPILER_ANNOTATION_COMPARATOR.compare(this, other);
 	}
@@ -85,7 +137,7 @@ public class RootCompilerAnnotation
 	{
 		return "%s %s: %s (%s:%d:%d)".formatted(
 			this.annotationCode,
-			this.getSeverity(),
+			this.severity,
 			this.message,
 			this.getCompilationUnit().getFilenameWithoutDirectory(),
 			this.getLine(),

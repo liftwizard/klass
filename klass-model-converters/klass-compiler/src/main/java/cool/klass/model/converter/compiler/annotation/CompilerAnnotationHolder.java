@@ -17,7 +17,6 @@
 package cool.klass.model.converter.compiler.annotation;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
@@ -31,7 +30,7 @@ import org.eclipse.collections.api.list.MutableList;
 
 public class CompilerAnnotationHolder
 {
-	private final MutableList<RootCompilerAnnotation> compilerAnnotations = Lists.mutable.empty();
+	private final MutableList<CompilerAnnotation> compilerAnnotations = Lists.mutable.empty();
 
 	public void add(@Nonnull String annotationCode, @Nonnull String message, @Nonnull IAntlrElement element)
 	{
@@ -159,17 +158,8 @@ public class CompilerAnnotationHolder
 		{
 			throw new AssertionError("Expected " + snippetSource + " to annotate the compilation unit of " + element);
 		}
-		Optional<CauseCompilerAnnotation> macroCause = this.getCauseCompilerAnnotation(element, severity);
-		RootCompilerAnnotation compilerAnnotation = new RootCompilerAnnotation(
-			snippetSource,
-			macroCause,
-			offendingContexts,
-			surroundingElements,
-			annotationCode,
-			message,
-			severity
-		);
-		this.compilerAnnotations.add(compilerAnnotation);
+		var snippet = new Snippet(snippetSource, offendingContexts, surroundingElements);
+		this.compilerAnnotations.add(new CompilerAnnotation(annotationCode, message, severity, snippet));
 	}
 
 	/**
@@ -203,43 +193,7 @@ public class CompilerAnnotationHolder
 		return new GraftedCodeSource(rootCompilationUnits.getOnly(), compilationUnit);
 	}
 
-	@Nonnull
-	private CauseCompilerAnnotation getCauseCompilerAnnotation(
-		@Nonnull IAntlrElement element,
-		@Nonnull ImmutableList<IAntlrElement> surroundingElements,
-		@Nonnull ImmutableList<ParserRuleContext> offendingContexts,
-		@Nonnull AnnotationSeverity severity
-	)
-	{
-		Optional<CauseCompilerAnnotation> macroCause = this.getCauseCompilerAnnotation(element, severity);
-
-		return new CauseCompilerAnnotation(
-			new SingleFileSource(element.getCompilationUnit().get()),
-			macroCause,
-			offendingContexts,
-			surroundingElements,
-			severity
-		);
-	}
-
-	private Optional<CauseCompilerAnnotation> getCauseCompilerAnnotation(
-		@Nonnull IAntlrElement element,
-		@Nonnull AnnotationSeverity severity
-	)
-	{
-		return element
-			.getMacroElement()
-			.map((macroElement) ->
-				this.getCauseCompilerAnnotation(
-					macroElement,
-					macroElement.getSurroundingElements(),
-					Lists.immutable.with(macroElement.getElementContext()),
-					severity
-				)
-			);
-	}
-
-	public ImmutableList<RootCompilerAnnotation> getCompilerAnnotations()
+	public ImmutableList<CompilerAnnotation> getCompilerAnnotations()
 	{
 		return this.compilerAnnotations.toSortedList().toImmutable();
 	}
