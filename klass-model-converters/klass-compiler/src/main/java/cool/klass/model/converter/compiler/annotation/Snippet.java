@@ -73,11 +73,6 @@ record Snippet(
 			);
 	}
 
-	boolean isGeneratedByMacro()
-	{
-		return this.getCompilationUnit().getMacroElement().isPresent();
-	}
-
 	@Nonnull
 	CompilationUnit getCompilationUnit()
 	{
