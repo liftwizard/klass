@@ -87,7 +87,9 @@ class PersistentWriterValidatorTest
 		"test-data/cool.klass.xample.coverage.FinalProperties.csv",
 		"test-data/cool.klass.xample.coverage.VersionedOwnedSource.csv",
 		"test-data/cool.klass.xample.coverage.VersionedOwnedSourceVersion.csv",
-		"test-data/cool.klass.xample.coverage.VersionedOwnedOneToManyTarget.csv"
+		"test-data/cool.klass.xample.coverage.VersionedOwnedOneToManyTarget.csv",
+		"test-data/cool.klass.xample.coverage.SharedNaturalOneToManySource.csv",
+		"test-data/cool.klass.xample.coverage.SharedNaturalOneToManyTarget.csv"
 	);
 
 	private final ReladomoDataStore reladomoDataStore = PersistentWriterValidatorTest.getReladomoDataStore();
@@ -199,6 +201,22 @@ class PersistentWriterValidatorTest
 
 		ValidationCase updateFinalProperties = this.updateCase("Update_FinalProperties", "FinalProperties", "id");
 		this.validate(updateFinalProperties, "validate_mutate_final");
+
+		Klass sharedNaturalOneToManySource = this.domainModel.getClassByName("SharedNaturalOneToManySource");
+		ImmutableMap<DataTypeProperty, Object> sharedNaturalOneToManySourceKeys = Maps.immutable.with(
+			sharedNaturalOneToManySource.getDataTypePropertyByName("key"),
+			"source 1"
+		);
+		var updateSharedNaturalOneToMany = new ValidationCase(
+			"Update_SharedNaturalOneToManySource",
+			sharedNaturalOneToManySource,
+			OperationMode.REPLACE,
+			sharedNaturalOneToManySourceKeys,
+			this.reladomoDataStore.findByKey(sharedNaturalOneToManySource, sharedNaturalOneToManySourceKeys)
+		);
+		this.validate(updateSharedNaturalOneToMany, "validate_existing_target");
+		this.validate(updateSharedNaturalOneToMany, "validate_new_target_with_key");
+		this.validate(updateSharedNaturalOneToMany, "validate_new_target_without_key");
 	}
 
 	@Nonnull

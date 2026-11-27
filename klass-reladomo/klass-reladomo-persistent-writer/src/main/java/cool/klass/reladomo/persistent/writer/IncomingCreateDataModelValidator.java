@@ -682,22 +682,6 @@ public class IncomingCreateDataModelValidator
 	{
 		JsonNode incomingChildInstances = this.objectNode.path(associationEnd.getName());
 
-		// TODO: Figure out how to recurse without checking key
-		/*
-        ImmutableList<JsonNode> incomingInstancesForInsert = this.filterIncomingInstancesForInsert(
-                incomingChildInstances,
-                associationEnd);
-
-        ImmutableList<JsonNode> incomingInstancesForUpdate = this.filterIncomingInstancesForUpdate(
-                incomingChildInstances,
-                associationEnd);
-
-        MapIterable<ImmutableList<Object>, JsonNode> incomingChildInstancesByKey = this.indexIncomingJsonInstances(
-                incomingInstances,
-                associationEnd,
-                this.objectNode);
-        */
-
 		for (var index = 0; index < incomingChildInstances.size(); index++)
 		{
 			String contextString = String.format("%s[%d]", associationEnd.getName(), index);
@@ -707,13 +691,6 @@ public class IncomingCreateDataModelValidator
 			try
 			{
 				JsonNode childJsonNode = incomingChildInstances.path(index);
-
-				/*
-                if (this.jsonNodeNeedsIdInferredOnInsert(childJsonNode, associationEnd))
-                {
-                    continue;
-                }
-                */
 
 				var childObjectNode = (ObjectNode) childJsonNode;
 				var validator = new IncomingCreateDataModelValidator(
@@ -751,64 +728,7 @@ public class IncomingCreateDataModelValidator
 		}
 	}
 
-	private ImmutableList<JsonNode> filterIncomingInstancesForUpdate(
-		JsonNode incomingChildInstances,
-		AssociationEnd associationEnd
-	)
-	{
-		return Lists.immutable
-			.withAll(incomingChildInstances)
-			.rejectWith(this::jsonNodeNeedsIdInferredOnInsert, associationEnd);
-	}
-
-	private ImmutableList<JsonNode> filterIncomingInstancesForInsert(
-		JsonNode incomingChildInstances,
-		AssociationEnd associationEnd
-	)
-	{
-		return Lists.immutable
-			.withAll(incomingChildInstances)
-			.selectWith(this::jsonNodeNeedsIdInferredOnInsert, associationEnd);
-	}
-
 	// endregion
-
-	private boolean jsonNodeNeedsIdInferredOnInsert(JsonNode jsonNode, @Nonnull AssociationEnd associationEnd)
-	{
-		return associationEnd
-			.getType()
-			.getKeyProperties()
-			.allSatisfy((keyProperty) -> this.jsonNodeNeedsIdInferredOnInsert(keyProperty, jsonNode, associationEnd));
-	}
-
-	private boolean jsonNodeNeedsIdInferredOnInsert(
-		@Nonnull DataTypeProperty keyProperty,
-		JsonNode jsonNode,
-		@Nonnull AssociationEnd associationEnd
-	)
-	{
-		OrderedMap<AssociationEnd, DataTypeProperty> keyMatchingThisForeignKey =
-			keyProperty.getKeysMatchingThisForeignKey();
-
-		AssociationEnd opposite = associationEnd.getOpposite();
-
-		if (keyMatchingThisForeignKey.containsKey(opposite))
-		{
-			return false;
-		}
-
-		if (keyMatchingThisForeignKey.notEmpty())
-		{
-			if (keyMatchingThisForeignKey.size() != 1)
-			{
-				throw new AssertionError();
-			}
-
-			return false;
-		}
-
-		return JsonDataTypeValueVisitor.dataTypePropertyIsNullInJson(keyProperty, (ObjectNode) jsonNode);
-	}
 
 	private MapIterable<DataTypeProperty, Object> getKeysFromJsonNode(
 		@Nonnull JsonNode jsonNode,
