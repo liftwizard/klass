@@ -37,48 +37,6 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 253,
-								"klass":
-								{
-									"name": "PackageableElement"
-								},
-								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
-										"name": "NamedElement"
-									},
-									"name": "name"
-								}
-							},
-							"targetExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 254,
-								"parameter":
-								{
-									"id": 1,
-									"name": "name"
-								}
-							}
-						},
-						"authorizeCriteria": null,
-						"validateCriteria": null,
-						"conflictCriteria": null,
-						"orderBys": []
-					},
-					{
-						"verb": "PUT",
-						"serviceMultiplicity": "one",
-						"projection": null,
-						"queryCriteria":
-						{
-							"__typename": "klass.model.meta.domain.OperatorCriteria",
-							"operator": "==",
-							"sourceExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 255,
 								"klass":
 								{
@@ -111,7 +69,7 @@
 						"orderBys": []
 					},
 					{
-						"verb": "DELETE",
+						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
 						"queryCriteria":
@@ -140,6 +98,48 @@
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 258,
+								"parameter":
+								{
+									"id": 1,
+									"name": "name"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					},
+					{
+						"verb": "DELETE",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria":
+						{
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 259,
+								"klass":
+								{
+									"name": "PackageableElement"
+								},
+								"associationEnds": [],
+								"dataTypeProperty":
+								{
+									"owningClassifier":
+									{
+										"name": "NamedElement"
+									},
+									"name": "name"
+								}
+							},
+							"targetExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 260,
 								"parameter":
 								{
 									"id": 1,
@@ -242,48 +242,6 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 259,
-								"klass":
-								{
-									"name": "Enumeration"
-								},
-								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
-										"name": "NamedElement"
-									},
-									"name": "name"
-								}
-							},
-							"targetExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 260,
-								"parameter":
-								{
-									"id": 2,
-									"name": "name"
-								}
-							}
-						},
-						"authorizeCriteria": null,
-						"validateCriteria": null,
-						"conflictCriteria": null,
-						"orderBys": []
-					},
-					{
-						"verb": "PUT",
-						"serviceMultiplicity": "one",
-						"projection": null,
-						"queryCriteria":
-						{
-							"__typename": "klass.model.meta.domain.OperatorCriteria",
-							"operator": "==",
-							"sourceExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 261,
 								"klass":
 								{
@@ -316,7 +274,7 @@
 						"orderBys": []
 					},
 					{
-						"verb": "DELETE",
+						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
 						"queryCriteria":
@@ -345,6 +303,48 @@
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 264,
+								"parameter":
+								{
+									"id": 2,
+									"name": "name"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					},
+					{
+						"verb": "DELETE",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria":
+						{
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 265,
+								"klass":
+								{
+									"name": "Enumeration"
+								},
+								"associationEnds": [],
+								"dataTypeProperty":
+								{
+									"owningClassifier":
+									{
+										"name": "NamedElement"
+									},
+									"name": "name"
+								}
+							},
+							"targetExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 266,
 								"parameter":
 								{
 									"id": 2,
@@ -447,48 +447,6 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 265,
-								"klass":
-								{
-									"name": "Interface"
-								},
-								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
-										"name": "NamedElement"
-									},
-									"name": "name"
-								}
-							},
-							"targetExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 266,
-								"parameter":
-								{
-									"id": 3,
-									"name": "name"
-								}
-							}
-						},
-						"authorizeCriteria": null,
-						"validateCriteria": null,
-						"conflictCriteria": null,
-						"orderBys": []
-					},
-					{
-						"verb": "PUT",
-						"serviceMultiplicity": "one",
-						"projection": null,
-						"queryCriteria":
-						{
-							"__typename": "klass.model.meta.domain.OperatorCriteria",
-							"operator": "==",
-							"sourceExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 267,
 								"klass":
 								{
@@ -521,7 +479,7 @@
 						"orderBys": []
 					},
 					{
-						"verb": "DELETE",
+						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
 						"queryCriteria":
@@ -550,6 +508,48 @@
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 270,
+								"parameter":
+								{
+									"id": 3,
+									"name": "name"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					},
+					{
+						"verb": "DELETE",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria":
+						{
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 271,
+								"klass":
+								{
+									"name": "Interface"
+								},
+								"associationEnds": [],
+								"dataTypeProperty":
+								{
+									"owningClassifier":
+									{
+										"name": "NamedElement"
+									},
+									"name": "name"
+								}
+							},
+							"targetExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 272,
 								"parameter":
 								{
 									"id": 3,
@@ -652,48 +652,6 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 271,
-								"klass":
-								{
-									"name": "Klass"
-								},
-								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
-										"name": "NamedElement"
-									},
-									"name": "name"
-								}
-							},
-							"targetExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 272,
-								"parameter":
-								{
-									"id": 4,
-									"name": "name"
-								}
-							}
-						},
-						"authorizeCriteria": null,
-						"validateCriteria": null,
-						"conflictCriteria": null,
-						"orderBys": []
-					},
-					{
-						"verb": "PUT",
-						"serviceMultiplicity": "one",
-						"projection": null,
-						"queryCriteria":
-						{
-							"__typename": "klass.model.meta.domain.OperatorCriteria",
-							"operator": "==",
-							"sourceExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 273,
 								"klass":
 								{
@@ -726,7 +684,7 @@
 						"orderBys": []
 					},
 					{
-						"verb": "DELETE",
+						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
 						"queryCriteria":
@@ -755,6 +713,48 @@
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 276,
+								"parameter":
+								{
+									"id": 4,
+									"name": "name"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					},
+					{
+						"verb": "DELETE",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria":
+						{
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 277,
+								"klass":
+								{
+									"name": "Klass"
+								},
+								"associationEnds": [],
+								"dataTypeProperty":
+								{
+									"owningClassifier":
+									{
+										"name": "NamedElement"
+									},
+									"name": "name"
+								}
+							},
+							"targetExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 278,
 								"parameter":
 								{
 									"id": 4,
@@ -857,48 +857,6 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 277,
-								"klass":
-								{
-									"name": "Classifier"
-								},
-								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
-										"name": "NamedElement"
-									},
-									"name": "name"
-								}
-							},
-							"targetExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 278,
-								"parameter":
-								{
-									"id": 5,
-									"name": "name"
-								}
-							}
-						},
-						"authorizeCriteria": null,
-						"validateCriteria": null,
-						"conflictCriteria": null,
-						"orderBys": []
-					},
-					{
-						"verb": "PUT",
-						"serviceMultiplicity": "one",
-						"projection": null,
-						"queryCriteria":
-						{
-							"__typename": "klass.model.meta.domain.OperatorCriteria",
-							"operator": "==",
-							"sourceExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 279,
 								"klass":
 								{
@@ -931,7 +889,7 @@
 						"orderBys": []
 					},
 					{
-						"verb": "DELETE",
+						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
 						"queryCriteria":
@@ -960,6 +918,48 @@
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 282,
+								"parameter":
+								{
+									"id": 5,
+									"name": "name"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					},
+					{
+						"verb": "DELETE",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria":
+						{
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 283,
+								"klass":
+								{
+									"name": "Classifier"
+								},
+								"associationEnds": [],
+								"dataTypeProperty":
+								{
+									"owningClassifier":
+									{
+										"name": "NamedElement"
+									},
+									"name": "name"
+								}
+							},
+							"targetExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 284,
 								"parameter":
 								{
 									"id": 5,
@@ -1062,48 +1062,6 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 283,
-								"klass":
-								{
-									"name": "Association"
-								},
-								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
-										"name": "NamedElement"
-									},
-									"name": "name"
-								}
-							},
-							"targetExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 284,
-								"parameter":
-								{
-									"id": 6,
-									"name": "name"
-								}
-							}
-						},
-						"authorizeCriteria": null,
-						"validateCriteria": null,
-						"conflictCriteria": null,
-						"orderBys": []
-					},
-					{
-						"verb": "PUT",
-						"serviceMultiplicity": "one",
-						"projection": null,
-						"queryCriteria":
-						{
-							"__typename": "klass.model.meta.domain.OperatorCriteria",
-							"operator": "==",
-							"sourceExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 285,
 								"klass":
 								{
@@ -1136,7 +1094,7 @@
 						"orderBys": []
 					},
 					{
-						"verb": "DELETE",
+						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
 						"queryCriteria":
@@ -1165,6 +1123,48 @@
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 288,
+								"parameter":
+								{
+									"id": 6,
+									"name": "name"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					},
+					{
+						"verb": "DELETE",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria":
+						{
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 289,
+								"klass":
+								{
+									"name": "Association"
+								},
+								"associationEnds": [],
+								"dataTypeProperty":
+								{
+									"owningClassifier":
+									{
+										"name": "NamedElement"
+									},
+									"name": "name"
+								}
+							},
+							"targetExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 290,
 								"parameter":
 								{
 									"id": 6,
@@ -1267,48 +1267,6 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 289,
-								"klass":
-								{
-									"name": "NamedProjection"
-								},
-								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
-										"name": "NamedElement"
-									},
-									"name": "name"
-								}
-							},
-							"targetExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 290,
-								"parameter":
-								{
-									"id": 7,
-									"name": "name"
-								}
-							}
-						},
-						"authorizeCriteria": null,
-						"validateCriteria": null,
-						"conflictCriteria": null,
-						"orderBys": []
-					},
-					{
-						"verb": "PUT",
-						"serviceMultiplicity": "one",
-						"projection": null,
-						"queryCriteria":
-						{
-							"__typename": "klass.model.meta.domain.OperatorCriteria",
-							"operator": "==",
-							"sourceExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 291,
 								"klass":
 								{
@@ -1341,7 +1299,7 @@
 						"orderBys": []
 					},
 					{
-						"verb": "DELETE",
+						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
 						"queryCriteria":
@@ -1370,6 +1328,48 @@
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 294,
+								"parameter":
+								{
+									"id": 7,
+									"name": "name"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					},
+					{
+						"verb": "DELETE",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria":
+						{
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 295,
+								"klass":
+								{
+									"name": "NamedProjection"
+								},
+								"associationEnds": [],
+								"dataTypeProperty":
+								{
+									"owningClassifier":
+									{
+										"name": "NamedElement"
+									},
+									"name": "name"
+								}
+							},
+							"targetExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 296,
 								"parameter":
 								{
 									"id": 7,
@@ -1472,48 +1472,6 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 295,
-								"klass":
-								{
-									"name": "ServiceGroup"
-								},
-								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
-										"name": "NamedElement"
-									},
-									"name": "name"
-								}
-							},
-							"targetExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 296,
-								"parameter":
-								{
-									"id": 8,
-									"name": "name"
-								}
-							}
-						},
-						"authorizeCriteria": null,
-						"validateCriteria": null,
-						"conflictCriteria": null,
-						"orderBys": []
-					},
-					{
-						"verb": "PUT",
-						"serviceMultiplicity": "one",
-						"projection": null,
-						"queryCriteria":
-						{
-							"__typename": "klass.model.meta.domain.OperatorCriteria",
-							"operator": "==",
-							"sourceExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 297,
 								"klass":
 								{
@@ -1546,7 +1504,7 @@
 						"orderBys": []
 					},
 					{
-						"verb": "DELETE",
+						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
 						"queryCriteria":
@@ -1575,6 +1533,48 @@
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 300,
+								"parameter":
+								{
+									"id": 8,
+									"name": "name"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					},
+					{
+						"verb": "DELETE",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria":
+						{
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 301,
+								"klass":
+								{
+									"name": "ServiceGroup"
+								},
+								"associationEnds": [],
+								"dataTypeProperty":
+								{
+									"owningClassifier":
+									{
+										"name": "NamedElement"
+									},
+									"name": "name"
+								}
+							},
+							"targetExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 302,
 								"parameter":
 								{
 									"id": 8,
@@ -1677,7 +1677,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 301,
+								"id": 303,
 								"klass":
 								{
 									"name": "User"
@@ -1695,7 +1695,7 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 302,
+								"id": 304,
 								"parameter":
 								{
 									"id": 9,
@@ -1788,48 +1788,6 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 303,
-								"klass":
-								{
-									"name": "PropertiesRequired"
-								},
-								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
-										"name": "PropertiesRequired"
-									},
-									"name": "propertiesRequiredId"
-								}
-							},
-							"targetExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 304,
-								"parameter":
-								{
-									"id": 10,
-									"name": "propertiesRequiredId"
-								}
-							}
-						},
-						"authorizeCriteria": null,
-						"validateCriteria": null,
-						"conflictCriteria": null,
-						"orderBys": []
-					},
-					{
-						"verb": "PUT",
-						"serviceMultiplicity": "one",
-						"projection": null,
-						"queryCriteria":
-						{
-							"__typename": "klass.model.meta.domain.OperatorCriteria",
-							"operator": "==",
-							"sourceExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 305,
 								"klass":
 								{
@@ -1862,7 +1820,7 @@
 						"orderBys": []
 					},
 					{
-						"verb": "PATCH",
+						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
 						"queryCriteria":
@@ -1872,7 +1830,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 309,
+								"id": 307,
 								"klass":
 								{
 									"name": "PropertiesRequired"
@@ -1890,7 +1848,49 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 310,
+								"id": 308,
+								"parameter":
+								{
+									"id": 10,
+									"name": "propertiesRequiredId"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					},
+					{
+						"verb": "PATCH",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria":
+						{
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 311,
+								"klass":
+								{
+									"name": "PropertiesRequired"
+								},
+								"associationEnds": [],
+								"dataTypeProperty":
+								{
+									"owningClassifier":
+									{
+										"name": "PropertiesRequired"
+									},
+									"name": "propertiesRequiredId"
+								}
+							},
+							"targetExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 312,
 								"parameter":
 								{
 									"id": 10,
@@ -1914,7 +1914,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 313,
+								"id": 315,
 								"klass":
 								{
 									"name": "PropertiesRequired"
@@ -1932,7 +1932,7 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 314,
+								"id": 316,
 								"parameter":
 								{
 									"id": 10,
@@ -1999,7 +1999,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 317,
+								"id": 319,
 								"klass":
 								{
 									"name": "PropertiesRequired"
@@ -2017,7 +2017,7 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 318,
+								"id": 320,
 								"parameter":
 								{
 									"id": 11,
@@ -2062,7 +2062,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 319,
+								"id": 321,
 								"klass":
 								{
 									"name": "PropertiesRequired"
@@ -2080,7 +2080,7 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 320,
+								"id": 322,
 								"parameter":
 								{
 									"id": 29,
@@ -2154,48 +2154,6 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 321,
-								"klass":
-								{
-									"name": "PropertiesOptional"
-								},
-								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
-										"name": "PropertiesOptional"
-									},
-									"name": "propertiesOptionalId"
-								}
-							},
-							"targetExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 322,
-								"parameter":
-								{
-									"id": 12,
-									"name": "propertiesOptionalId"
-								}
-							}
-						},
-						"authorizeCriteria": null,
-						"validateCriteria": null,
-						"conflictCriteria": null,
-						"orderBys": []
-					},
-					{
-						"verb": "PUT",
-						"serviceMultiplicity": "one",
-						"projection": null,
-						"queryCriteria":
-						{
-							"__typename": "klass.model.meta.domain.OperatorCriteria",
-							"operator": "==",
-							"sourceExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 323,
 								"klass":
 								{
@@ -2228,7 +2186,7 @@
 						"orderBys": []
 					},
 					{
-						"verb": "PATCH",
+						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
 						"queryCriteria":
@@ -2270,7 +2228,7 @@
 						"orderBys": []
 					},
 					{
-						"verb": "DELETE",
+						"verb": "PATCH",
 						"serviceMultiplicity": "one",
 						"projection": null,
 						"queryCriteria":
@@ -2299,6 +2257,48 @@
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 328,
+								"parameter":
+								{
+									"id": 12,
+									"name": "propertiesOptionalId"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					},
+					{
+						"verb": "DELETE",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria":
+						{
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 329,
+								"klass":
+								{
+									"name": "PropertiesOptional"
+								},
+								"associationEnds": [],
+								"dataTypeProperty":
+								{
+									"owningClassifier":
+									{
+										"name": "PropertiesOptional"
+									},
+									"name": "propertiesOptionalId"
+								}
+							},
+							"targetExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 330,
 								"parameter":
 								{
 									"id": 12,
@@ -2543,7 +2543,7 @@
 														"sourceExpressionValue":
 														{
 															"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-															"id": 329,
+															"id": 331,
 															"klass":
 															{
 																"name": "EveryTypeKeyProperty"
@@ -2561,7 +2561,7 @@
 														"targetExpressionValue":
 														{
 															"__typename": "klass.model.meta.domain.ParameterReference",
-															"id": 330,
+															"id": 332,
 															"parameter":
 															{
 																"id": 13,
@@ -2576,7 +2576,7 @@
 														"sourceExpressionValue":
 														{
 															"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-															"id": 331,
+															"id": 333,
 															"klass":
 															{
 																"name": "EveryTypeKeyProperty"
@@ -2594,7 +2594,7 @@
 														"targetExpressionValue":
 														{
 															"__typename": "klass.model.meta.domain.ParameterReference",
-															"id": 332,
+															"id": 334,
 															"parameter":
 															{
 																"id": 14,
@@ -2610,7 +2610,7 @@
 													"sourceExpressionValue":
 													{
 														"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-														"id": 333,
+														"id": 335,
 														"klass":
 														{
 															"name": "EveryTypeKeyProperty"
@@ -2628,7 +2628,7 @@
 													"targetExpressionValue":
 													{
 														"__typename": "klass.model.meta.domain.ParameterReference",
-														"id": 334,
+														"id": 336,
 														"parameter":
 														{
 															"id": 15,
@@ -2644,7 +2644,7 @@
 												"sourceExpressionValue":
 												{
 													"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-													"id": 335,
+													"id": 337,
 													"klass":
 													{
 														"name": "EveryTypeKeyProperty"
@@ -2662,7 +2662,7 @@
 												"targetExpressionValue":
 												{
 													"__typename": "klass.model.meta.domain.ParameterReference",
-													"id": 336,
+													"id": 338,
 													"parameter":
 													{
 														"id": 16,
@@ -2678,7 +2678,7 @@
 											"sourceExpressionValue":
 											{
 												"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-												"id": 337,
+												"id": 339,
 												"klass":
 												{
 													"name": "EveryTypeKeyProperty"
@@ -2696,7 +2696,7 @@
 											"targetExpressionValue":
 											{
 												"__typename": "klass.model.meta.domain.ParameterReference",
-												"id": 338,
+												"id": 340,
 												"parameter":
 												{
 													"id": 17,
@@ -2712,7 +2712,7 @@
 										"sourceExpressionValue":
 										{
 											"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-											"id": 339,
+											"id": 341,
 											"klass":
 											{
 												"name": "EveryTypeKeyProperty"
@@ -2730,7 +2730,7 @@
 										"targetExpressionValue":
 										{
 											"__typename": "klass.model.meta.domain.ParameterReference",
-											"id": 340,
+											"id": 342,
 											"parameter":
 											{
 												"id": 18,
@@ -2746,7 +2746,7 @@
 									"sourceExpressionValue":
 									{
 										"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-										"id": 341,
+										"id": 343,
 										"klass":
 										{
 											"name": "EveryTypeKeyProperty"
@@ -2764,7 +2764,7 @@
 									"targetExpressionValue":
 									{
 										"__typename": "klass.model.meta.domain.ParameterReference",
-										"id": 342,
+										"id": 344,
 										"parameter":
 										{
 											"id": 19,
@@ -2780,7 +2780,7 @@
 								"sourceExpressionValue":
 								{
 									"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-									"id": 343,
+									"id": 345,
 									"klass":
 									{
 										"name": "EveryTypeKeyProperty"
@@ -2798,7 +2798,7 @@
 								"targetExpressionValue":
 								{
 									"__typename": "klass.model.meta.domain.ParameterReference",
-									"id": 344,
+									"id": 346,
 									"parameter":
 									{
 										"id": 20,
@@ -2844,7 +2844,7 @@
 														"sourceExpressionValue":
 														{
 															"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-															"id": 345,
+															"id": 347,
 															"klass":
 															{
 																"name": "EveryTypeKeyProperty"
@@ -2862,7 +2862,7 @@
 														"targetExpressionValue":
 														{
 															"__typename": "klass.model.meta.domain.ParameterReference",
-															"id": 346,
+															"id": 348,
 															"parameter":
 															{
 																"id": 13,
@@ -2877,7 +2877,7 @@
 														"sourceExpressionValue":
 														{
 															"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-															"id": 347,
+															"id": 349,
 															"klass":
 															{
 																"name": "EveryTypeKeyProperty"
@@ -2895,7 +2895,7 @@
 														"targetExpressionValue":
 														{
 															"__typename": "klass.model.meta.domain.ParameterReference",
-															"id": 348,
+															"id": 350,
 															"parameter":
 															{
 																"id": 14,
@@ -2911,7 +2911,7 @@
 													"sourceExpressionValue":
 													{
 														"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-														"id": 349,
+														"id": 351,
 														"klass":
 														{
 															"name": "EveryTypeKeyProperty"
@@ -2929,7 +2929,7 @@
 													"targetExpressionValue":
 													{
 														"__typename": "klass.model.meta.domain.ParameterReference",
-														"id": 350,
+														"id": 352,
 														"parameter":
 														{
 															"id": 15,
@@ -2945,7 +2945,7 @@
 												"sourceExpressionValue":
 												{
 													"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-													"id": 351,
+													"id": 353,
 													"klass":
 													{
 														"name": "EveryTypeKeyProperty"
@@ -2963,7 +2963,7 @@
 												"targetExpressionValue":
 												{
 													"__typename": "klass.model.meta.domain.ParameterReference",
-													"id": 352,
+													"id": 354,
 													"parameter":
 													{
 														"id": 16,
@@ -2979,7 +2979,7 @@
 											"sourceExpressionValue":
 											{
 												"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-												"id": 353,
+												"id": 355,
 												"klass":
 												{
 													"name": "EveryTypeKeyProperty"
@@ -2997,7 +2997,7 @@
 											"targetExpressionValue":
 											{
 												"__typename": "klass.model.meta.domain.ParameterReference",
-												"id": 354,
+												"id": 356,
 												"parameter":
 												{
 													"id": 17,
@@ -3013,7 +3013,7 @@
 										"sourceExpressionValue":
 										{
 											"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-											"id": 355,
+											"id": 357,
 											"klass":
 											{
 												"name": "EveryTypeKeyProperty"
@@ -3031,7 +3031,7 @@
 										"targetExpressionValue":
 										{
 											"__typename": "klass.model.meta.domain.ParameterReference",
-											"id": 356,
+											"id": 358,
 											"parameter":
 											{
 												"id": 18,
@@ -3047,7 +3047,7 @@
 									"sourceExpressionValue":
 									{
 										"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-										"id": 357,
+										"id": 359,
 										"klass":
 										{
 											"name": "EveryTypeKeyProperty"
@@ -3065,7 +3065,7 @@
 									"targetExpressionValue":
 									{
 										"__typename": "klass.model.meta.domain.ParameterReference",
-										"id": 358,
+										"id": 360,
 										"parameter":
 										{
 											"id": 19,
@@ -3081,7 +3081,7 @@
 								"sourceExpressionValue":
 								{
 									"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-									"id": 359,
+									"id": 361,
 									"klass":
 									{
 										"name": "EveryTypeKeyProperty"
@@ -3099,7 +3099,7 @@
 								"targetExpressionValue":
 								{
 									"__typename": "klass.model.meta.domain.ParameterReference",
-									"id": 360,
+									"id": 362,
 									"parameter":
 									{
 										"id": 20,
@@ -3145,7 +3145,7 @@
 														"sourceExpressionValue":
 														{
 															"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-															"id": 361,
+															"id": 363,
 															"klass":
 															{
 																"name": "EveryTypeKeyProperty"
@@ -3163,7 +3163,7 @@
 														"targetExpressionValue":
 														{
 															"__typename": "klass.model.meta.domain.ParameterReference",
-															"id": 362,
+															"id": 364,
 															"parameter":
 															{
 																"id": 13,
@@ -3178,7 +3178,7 @@
 														"sourceExpressionValue":
 														{
 															"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-															"id": 363,
+															"id": 365,
 															"klass":
 															{
 																"name": "EveryTypeKeyProperty"
@@ -3196,7 +3196,7 @@
 														"targetExpressionValue":
 														{
 															"__typename": "klass.model.meta.domain.ParameterReference",
-															"id": 364,
+															"id": 366,
 															"parameter":
 															{
 																"id": 14,
@@ -3212,7 +3212,7 @@
 													"sourceExpressionValue":
 													{
 														"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-														"id": 365,
+														"id": 367,
 														"klass":
 														{
 															"name": "EveryTypeKeyProperty"
@@ -3230,7 +3230,7 @@
 													"targetExpressionValue":
 													{
 														"__typename": "klass.model.meta.domain.ParameterReference",
-														"id": 366,
+														"id": 368,
 														"parameter":
 														{
 															"id": 15,
@@ -3246,7 +3246,7 @@
 												"sourceExpressionValue":
 												{
 													"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-													"id": 367,
+													"id": 369,
 													"klass":
 													{
 														"name": "EveryTypeKeyProperty"
@@ -3264,7 +3264,7 @@
 												"targetExpressionValue":
 												{
 													"__typename": "klass.model.meta.domain.ParameterReference",
-													"id": 368,
+													"id": 370,
 													"parameter":
 													{
 														"id": 16,
@@ -3280,7 +3280,7 @@
 											"sourceExpressionValue":
 											{
 												"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-												"id": 369,
+												"id": 371,
 												"klass":
 												{
 													"name": "EveryTypeKeyProperty"
@@ -3298,7 +3298,7 @@
 											"targetExpressionValue":
 											{
 												"__typename": "klass.model.meta.domain.ParameterReference",
-												"id": 370,
+												"id": 372,
 												"parameter":
 												{
 													"id": 17,
@@ -3314,7 +3314,7 @@
 										"sourceExpressionValue":
 										{
 											"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-											"id": 371,
+											"id": 373,
 											"klass":
 											{
 												"name": "EveryTypeKeyProperty"
@@ -3332,7 +3332,7 @@
 										"targetExpressionValue":
 										{
 											"__typename": "klass.model.meta.domain.ParameterReference",
-											"id": 372,
+											"id": 374,
 											"parameter":
 											{
 												"id": 18,
@@ -3348,7 +3348,7 @@
 									"sourceExpressionValue":
 									{
 										"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-										"id": 373,
+										"id": 375,
 										"klass":
 										{
 											"name": "EveryTypeKeyProperty"
@@ -3366,7 +3366,7 @@
 									"targetExpressionValue":
 									{
 										"__typename": "klass.model.meta.domain.ParameterReference",
-										"id": 374,
+										"id": 376,
 										"parameter":
 										{
 											"id": 19,
@@ -3382,7 +3382,7 @@
 								"sourceExpressionValue":
 								{
 									"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-									"id": 375,
+									"id": 377,
 									"klass":
 									{
 										"name": "EveryTypeKeyProperty"
@@ -3400,7 +3400,7 @@
 								"targetExpressionValue":
 								{
 									"__typename": "klass.model.meta.domain.ParameterReference",
-									"id": 376,
+									"id": 378,
 									"parameter":
 									{
 										"id": 20,
@@ -3446,7 +3446,7 @@
 														"sourceExpressionValue":
 														{
 															"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-															"id": 377,
+															"id": 379,
 															"klass":
 															{
 																"name": "EveryTypeKeyProperty"
@@ -3464,7 +3464,7 @@
 														"targetExpressionValue":
 														{
 															"__typename": "klass.model.meta.domain.ParameterReference",
-															"id": 378,
+															"id": 380,
 															"parameter":
 															{
 																"id": 13,
@@ -3479,7 +3479,7 @@
 														"sourceExpressionValue":
 														{
 															"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-															"id": 379,
+															"id": 381,
 															"klass":
 															{
 																"name": "EveryTypeKeyProperty"
@@ -3497,7 +3497,7 @@
 														"targetExpressionValue":
 														{
 															"__typename": "klass.model.meta.domain.ParameterReference",
-															"id": 380,
+															"id": 382,
 															"parameter":
 															{
 																"id": 14,
@@ -3513,7 +3513,7 @@
 													"sourceExpressionValue":
 													{
 														"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-														"id": 381,
+														"id": 383,
 														"klass":
 														{
 															"name": "EveryTypeKeyProperty"
@@ -3531,7 +3531,7 @@
 													"targetExpressionValue":
 													{
 														"__typename": "klass.model.meta.domain.ParameterReference",
-														"id": 382,
+														"id": 384,
 														"parameter":
 														{
 															"id": 15,
@@ -3547,7 +3547,7 @@
 												"sourceExpressionValue":
 												{
 													"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-													"id": 383,
+													"id": 385,
 													"klass":
 													{
 														"name": "EveryTypeKeyProperty"
@@ -3565,7 +3565,7 @@
 												"targetExpressionValue":
 												{
 													"__typename": "klass.model.meta.domain.ParameterReference",
-													"id": 384,
+													"id": 386,
 													"parameter":
 													{
 														"id": 16,
@@ -3581,7 +3581,7 @@
 											"sourceExpressionValue":
 											{
 												"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-												"id": 385,
+												"id": 387,
 												"klass":
 												{
 													"name": "EveryTypeKeyProperty"
@@ -3599,7 +3599,7 @@
 											"targetExpressionValue":
 											{
 												"__typename": "klass.model.meta.domain.ParameterReference",
-												"id": 386,
+												"id": 388,
 												"parameter":
 												{
 													"id": 17,
@@ -3615,7 +3615,7 @@
 										"sourceExpressionValue":
 										{
 											"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-											"id": 387,
+											"id": 389,
 											"klass":
 											{
 												"name": "EveryTypeKeyProperty"
@@ -3633,7 +3633,7 @@
 										"targetExpressionValue":
 										{
 											"__typename": "klass.model.meta.domain.ParameterReference",
-											"id": 388,
+											"id": 390,
 											"parameter":
 											{
 												"id": 18,
@@ -3649,7 +3649,7 @@
 									"sourceExpressionValue":
 									{
 										"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-										"id": 389,
+										"id": 391,
 										"klass":
 										{
 											"name": "EveryTypeKeyProperty"
@@ -3667,7 +3667,7 @@
 									"targetExpressionValue":
 									{
 										"__typename": "klass.model.meta.domain.ParameterReference",
-										"id": 390,
+										"id": 392,
 										"parameter":
 										{
 											"id": 19,
@@ -3683,7 +3683,7 @@
 								"sourceExpressionValue":
 								{
 									"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-									"id": 391,
+									"id": 393,
 									"klass":
 									{
 										"name": "EveryTypeKeyProperty"
@@ -3701,7 +3701,7 @@
 								"targetExpressionValue":
 								{
 									"__typename": "klass.model.meta.domain.ParameterReference",
-									"id": 392,
+									"id": 394,
 									"parameter":
 									{
 										"id": 20,
@@ -3757,48 +3757,6 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 393,
-								"klass":
-								{
-									"name": "FinalProperties"
-								},
-								"associationEnds": [],
-								"dataTypeProperty":
-								{
-									"owningClassifier":
-									{
-										"name": "FinalProperties"
-									},
-									"name": "id"
-								}
-							},
-							"targetExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 394,
-								"parameter":
-								{
-									"id": 21,
-									"name": "id"
-								}
-							}
-						},
-						"authorizeCriteria": null,
-						"validateCriteria": null,
-						"conflictCriteria": null,
-						"orderBys": []
-					},
-					{
-						"verb": "PUT",
-						"serviceMultiplicity": "one",
-						"projection": null,
-						"queryCriteria":
-						{
-							"__typename": "klass.model.meta.domain.OperatorCriteria",
-							"operator": "==",
-							"sourceExpressionValue":
-							{
-								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
 								"id": 395,
 								"klass":
 								{
@@ -3831,7 +3789,7 @@
 						"orderBys": []
 					},
 					{
-						"verb": "PATCH",
+						"verb": "PUT",
 						"serviceMultiplicity": "one",
 						"projection": null,
 						"queryCriteria":
@@ -3873,7 +3831,7 @@
 						"orderBys": []
 					},
 					{
-						"verb": "DELETE",
+						"verb": "PATCH",
 						"serviceMultiplicity": "one",
 						"projection": null,
 						"queryCriteria":
@@ -3902,6 +3860,48 @@
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
 								"id": 400,
+								"parameter":
+								{
+									"id": 21,
+									"name": "id"
+								}
+							}
+						},
+						"authorizeCriteria": null,
+						"validateCriteria": null,
+						"conflictCriteria": null,
+						"orderBys": []
+					},
+					{
+						"verb": "DELETE",
+						"serviceMultiplicity": "one",
+						"projection": null,
+						"queryCriteria":
+						{
+							"__typename": "klass.model.meta.domain.OperatorCriteria",
+							"operator": "==",
+							"sourceExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
+								"id": 401,
+								"klass":
+								{
+									"name": "FinalProperties"
+								},
+								"associationEnds": [],
+								"dataTypeProperty":
+								{
+									"owningClassifier":
+									{
+										"name": "FinalProperties"
+									},
+									"name": "id"
+								}
+							},
+							"targetExpressionValue":
+							{
+								"__typename": "klass.model.meta.domain.ParameterReference",
+								"id": 402,
 								"parameter":
 								{
 									"id": 21,
@@ -3988,7 +3988,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 401,
+								"id": 403,
 								"klass":
 								{
 									"name": "UnownedNaturalManyToOneSource"
@@ -4006,7 +4006,7 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 402,
+								"id": 404,
 								"parameter":
 								{
 									"id": 22,
@@ -4030,7 +4030,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 403,
+								"id": 405,
 								"klass":
 								{
 									"name": "UnownedNaturalManyToOneSource"
@@ -4048,7 +4048,7 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 404,
+								"id": 406,
 								"parameter":
 								{
 									"id": 22,
@@ -4103,7 +4103,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 405,
+								"id": 407,
 								"klass":
 								{
 									"name": "VersionedOwnedSource"
@@ -4121,7 +4121,7 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 406,
+								"id": 408,
 								"parameter":
 								{
 									"id": 23,
@@ -4145,7 +4145,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 407,
+								"id": 409,
 								"klass":
 								{
 									"name": "VersionedOwnedSource"
@@ -4163,7 +4163,7 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 408,
+								"id": 410,
 								"parameter":
 								{
 									"id": 23,
@@ -4215,7 +4215,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 409,
+								"id": 411,
 								"klass":
 								{
 									"name": "SharedNaturalManyToOneSource"
@@ -4233,7 +4233,7 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 410,
+								"id": 412,
 								"parameter":
 								{
 									"id": 24,
@@ -4285,7 +4285,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 411,
+								"id": 413,
 								"klass":
 								{
 									"name": "SharedNaturalOneToManyTarget"
@@ -4303,7 +4303,7 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 412,
+								"id": 414,
 								"parameter":
 								{
 									"id": 25,
@@ -4355,7 +4355,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 413,
+								"id": 415,
 								"klass":
 								{
 									"name": "SharedNaturalOneToManySelf"
@@ -4373,7 +4373,7 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 414,
+								"id": 416,
 								"parameter":
 								{
 									"id": 26,
@@ -4425,7 +4425,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 415,
+								"id": 417,
 								"klass":
 								{
 									"name": "SharedSyntheticOneToManyTarget"
@@ -4443,7 +4443,7 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 416,
+								"id": 418,
 								"parameter":
 								{
 									"id": 27,
@@ -4495,7 +4495,7 @@
 							"sourceExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ThisMemberReferencePath",
-								"id": 417,
+								"id": 419,
 								"klass":
 								{
 									"name": "SharedSyntheticOneToManySelf"
@@ -4513,7 +4513,7 @@
 							"targetExpressionValue":
 							{
 								"__typename": "klass.model.meta.domain.ParameterReference",
-								"id": 418,
+								"id": 420,
 								"parameter":
 								{
 									"id": 28,

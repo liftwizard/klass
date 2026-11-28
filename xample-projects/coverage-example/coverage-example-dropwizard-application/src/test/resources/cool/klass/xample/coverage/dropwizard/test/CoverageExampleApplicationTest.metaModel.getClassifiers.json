@@ -6179,6 +6179,113 @@
 	},
 	{
 		"__typename": "klass.model.meta.domain.Klass",
+		"name": "UnownedSyntheticOneToOneSource",
+		"packageName": "cool.klass.xample.coverage",
+		"superInterfaces": [],
+		"classifierModifiers": [],
+		"dataTypeProperties": [
+			{
+				"__typename": "klass.model.meta.domain.PrimitiveProperty",
+				"name": "id",
+				"optional": false,
+				"minLengthValidation": null,
+				"maxLengthValidation": null,
+				"propertyModifiers": [
+					{
+						"keyword": "id"
+					},
+					{
+						"keyword": "key"
+					}
+				],
+				"primitiveType": "Long",
+				"minValidation": null,
+				"maxValidation": null
+			},
+			{
+				"__typename": "klass.model.meta.domain.PrimitiveProperty",
+				"name": "value",
+				"optional": false,
+				"minLengthValidation": null,
+				"maxLengthValidation": null,
+				"propertyModifiers": [],
+				"primitiveType": "String",
+				"minValidation": null,
+				"maxValidation": null
+			}
+		],
+		"abstractClass": false,
+		"superClass": null,
+		"associationEnds": [
+			{
+				"name": "target"
+			}
+		],
+		"parameterizedProperties": []
+	},
+	{
+		"__typename": "klass.model.meta.domain.Klass",
+		"name": "UnownedSyntheticOneToOneTarget",
+		"packageName": "cool.klass.xample.coverage",
+		"superInterfaces": [],
+		"classifierModifiers": [],
+		"dataTypeProperties": [
+			{
+				"__typename": "klass.model.meta.domain.PrimitiveProperty",
+				"name": "id",
+				"optional": false,
+				"minLengthValidation": null,
+				"maxLengthValidation": null,
+				"propertyModifiers": [
+					{
+						"keyword": "id"
+					},
+					{
+						"keyword": "key"
+					}
+				],
+				"primitiveType": "Long",
+				"minValidation": null,
+				"maxValidation": null
+			},
+			{
+				"__typename": "klass.model.meta.domain.PrimitiveProperty",
+				"name": "sourceId",
+				"optional": true,
+				"minLengthValidation": null,
+				"maxLengthValidation": null,
+				"propertyModifiers": [
+					{
+						"keyword": "private"
+					}
+				],
+				"primitiveType": "Long",
+				"minValidation": null,
+				"maxValidation": null
+			},
+			{
+				"__typename": "klass.model.meta.domain.PrimitiveProperty",
+				"name": "value",
+				"optional": false,
+				"minLengthValidation": null,
+				"maxLengthValidation": null,
+				"propertyModifiers": [],
+				"primitiveType": "String",
+				"minValidation": null,
+				"maxValidation": null
+			}
+		],
+		"abstractClass": false,
+		"superClass": null,
+		"associationEnds": [
+			{
+				"name": "source"
+			}
+		],
+		"parameterizedProperties": []
+	},
+	{
+		"__typename": "klass.model.meta.domain.Klass",
 		"name": "SharedSyntheticOneToManySelf",
 		"packageName": "cool.klass.xample.coverage",
 		"superInterfaces": [],

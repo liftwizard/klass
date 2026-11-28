@@ -52,6 +52,8 @@
         <MithraObjectConfiguration className="cool.klass.xample.coverage.SharedSyntheticOneToOneTarget" cacheType="partial" offHeapReplicationExport="false" />
         <MithraObjectConfiguration className="cool.klass.xample.coverage.UnownedNaturalManyToOneSource" cacheType="partial" offHeapReplicationExport="false" />
         <MithraObjectConfiguration className="cool.klass.xample.coverage.UnownedNaturalManyToOneTarget" cacheType="partial" offHeapReplicationExport="false" />
+        <MithraObjectConfiguration className="cool.klass.xample.coverage.UnownedSyntheticOneToOneSource" cacheType="partial" offHeapReplicationExport="false" />
+        <MithraObjectConfiguration className="cool.klass.xample.coverage.UnownedSyntheticOneToOneTarget" cacheType="partial" offHeapReplicationExport="false" />
         <MithraObjectConfiguration className="cool.klass.xample.coverage.User" cacheType="partial" offHeapReplicationExport="false" />
         <MithraObjectConfiguration className="cool.klass.xample.coverage.VersionedOwnedOneToManyGrandchild" cacheType="partial" offHeapReplicationExport="false" />
         <MithraObjectConfiguration className="cool.klass.xample.coverage.VersionedOwnedOneToManyTarget" cacheType="partial" offHeapReplicationExport="false" />

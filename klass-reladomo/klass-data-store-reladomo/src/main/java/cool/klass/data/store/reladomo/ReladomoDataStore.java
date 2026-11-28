@@ -719,6 +719,40 @@ public class ReladomoDataStore
 			mutationOccurred |= this.setDataTypeProperty(persistentSourceInstance, foreignKey, keyValue);
 		}
 
+		// The foreign key may instead live on the target side, like an owned child's non-key ownerId.
+		AssociationEnd oppositeAssociationEnd = associationEnd.getOpposite();
+		ImmutableList<DataTypeProperty> targetForeignKeys = associationEnd
+			.getType()
+			.getDataTypeProperties()
+			.select((foreignKey) -> foreignKey.getKeysMatchingThisForeignKey().containsKey(oppositeAssociationEnd));
+		if (targetForeignKeys.isEmpty())
+		{
+			return mutationOccurred;
+		}
+
+		// Read the old target before writing the new one, so a one-to-one never resolves to two targets.
+		Object oldPersistentTargetInstance = this.getToOne(persistentSourceInstance, associationEnd);
+		if (oldPersistentTargetInstance != null && oldPersistentTargetInstance != persistentTargetInstance)
+		{
+			// Detach the old target. A required foreign key makes setDataTypeProperty reject the orphan.
+			for (DataTypeProperty foreignKey : targetForeignKeys)
+			{
+				mutationOccurred |= this.setDataTypeProperty(oldPersistentTargetInstance, foreignKey, null);
+			}
+		}
+
+		if (persistentTargetInstance == null)
+		{
+			return mutationOccurred;
+		}
+
+		for (DataTypeProperty foreignKey : targetForeignKeys)
+		{
+			DataTypeProperty keyInSourceObject = foreignKey.getKeysMatchingThisForeignKey().get(oppositeAssociationEnd);
+			Object keyValue = this.getDataTypeProperty(persistentSourceInstance, keyInSourceObject);
+			mutationOccurred |= this.setDataTypeProperty(persistentTargetInstance, foreignKey, keyValue);
+		}
+
 		return mutationOccurred;
 	}
 

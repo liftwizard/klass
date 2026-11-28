@@ -847,6 +847,28 @@ association SharedSyntheticOneToOne
     relationship this.id == SharedSyntheticOneToOneTarget.sourceId
 }
 
+class UnownedSyntheticOneToOneSource
+{
+    id: Long id key;
+    value: String;
+}
+
+class UnownedSyntheticOneToOneTarget
+{
+    id: Long id key;
+    sourceId: Long? private;
+    value: String;
+}
+
+// The foreign key is on the target and optional, so reassigning or clearing a source's target nulls the old target's foreign key.
+association UnownedSyntheticOneToOne
+{
+    source: UnownedSyntheticOneToOneSource[0..1];
+    target: UnownedSyntheticOneToOneTarget[1..1];
+
+    relationship this.id == UnownedSyntheticOneToOneTarget.sourceId
+}
+
 class SharedSyntheticOneToManySelf
 {
     id: Long id key;

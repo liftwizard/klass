@@ -1,0 +1,32 @@
+{
+	"error": "May not set required property to null: 'SharedSyntheticOneToOneTarget.sourceId: Long private'",
+	"persisted":
+	{
+		"id": 3,
+		"value": "source value 3",
+		"target":
+		{
+			"id": 3
+		}
+	},
+	"SharedSyntheticOneToOneTarget": [
+		{
+			"id": 1,
+			"sourceId": 2,
+			"value": "target value 1",
+			"source":
+			{
+				"id": 2
+			}
+		},
+		{
+			"id": 3,
+			"sourceId": 3,
+			"value": "target value 3",
+			"source":
+			{
+				"id": 3
+			}
+		}
+	]
+}

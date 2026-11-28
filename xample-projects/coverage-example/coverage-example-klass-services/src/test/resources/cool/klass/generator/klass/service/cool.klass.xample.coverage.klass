@@ -454,6 +454,42 @@ service SharedSyntheticOneToOneTargetResource on SharedSyntheticOneToOneTarget
         }
 }
 
+service UnownedSyntheticOneToOneSourceResource on UnownedSyntheticOneToOneSource
+{
+    /unownedSyntheticOneToOneSource/{id: Long[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.id == id;
+            projection  : UnownedSyntheticOneToOneSourceProjection;
+        }
+    /unownedSyntheticOneToOneSource
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : UnownedSyntheticOneToOneSourceProjection;
+        }
+}
+
+service UnownedSyntheticOneToOneTargetResource on UnownedSyntheticOneToOneTarget
+{
+    /unownedSyntheticOneToOneTarget/{id: Long[1..1]}
+        GET
+        {
+            multiplicity: one;
+            criteria    : this.id == id;
+            projection  : UnownedSyntheticOneToOneTargetProjection;
+        }
+    /unownedSyntheticOneToOneTarget
+        GET
+        {
+            multiplicity: many;
+            criteria    : all;
+            projection  : UnownedSyntheticOneToOneTargetProjection;
+        }
+}
+
 service SharedSyntheticOneToManySelfResource on SharedSyntheticOneToManySelf
 {
     /sharedSyntheticOneToManySelf/{id: Long[1..1]}

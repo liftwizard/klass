@@ -1,0 +1,32 @@
+{
+	"mutationOccurred": true,
+	"persisted":
+	{
+		"id": 2,
+		"value": "source value 2",
+		"target":
+		{
+			"id": 1
+		}
+	},
+	"SharedSyntheticOneToOneTarget": [
+		{
+			"id": 1,
+			"sourceId": 2,
+			"value": "target value 1",
+			"source":
+			{
+				"id": 2
+			}
+		},
+		{
+			"id": 3,
+			"sourceId": 3,
+			"value": "target value 3",
+			"source":
+			{
+				"id": 3
+			}
+		}
+	]
+}
