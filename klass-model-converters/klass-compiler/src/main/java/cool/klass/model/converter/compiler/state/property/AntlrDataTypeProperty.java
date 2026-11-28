@@ -512,8 +512,7 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 	private void reportInvalidObjectStorage(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
 	{
 		AntlrModifier modifier = this.getModifiers()
-			.select((each) -> each.getElementContext().getChild(0) instanceof ObjectStorageModifierContext)
-			.getFirst();
+			.detect((each) -> each.getElementContext().getChild(0) instanceof ObjectStorageModifierContext);
 		if (modifier == null)
 		{
 			return;
