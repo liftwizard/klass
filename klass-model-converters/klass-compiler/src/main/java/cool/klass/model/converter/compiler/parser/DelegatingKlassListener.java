@@ -20,6 +20,8 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import cool.klass.model.meta.grammar.KlassListener;
 import cool.klass.model.meta.grammar.KlassParser.AbstractDeclarationContext;
+import cool.klass.model.meta.grammar.KlassParser.AggregateFunctionContext;
+import cool.klass.model.meta.grammar.KlassParser.AggregationContext;
 import cool.klass.model.meta.grammar.KlassParser.ArgumentContext;
 import cool.klass.model.meta.grammar.KlassParser.ArgumentListContext;
 import cool.klass.model.meta.grammar.KlassParser.AssociationBlockContext;
@@ -52,8 +54,6 @@ import cool.klass.model.meta.grammar.KlassParser.CriteriaOperatorContext;
 import cool.klass.model.meta.grammar.KlassParser.DataTypePropertyContext;
 import cool.klass.model.meta.grammar.KlassParser.DataTypePropertyModifierContext;
 import cool.klass.model.meta.grammar.KlassParser.DataTypePropertyValidationContext;
-import cool.klass.model.meta.grammar.KlassParser.AggregationContext;
-import cool.klass.model.meta.grammar.KlassParser.AggregateFunctionContext;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationBlockContext;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationBodyContext;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationDeclarationContext;
