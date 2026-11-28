@@ -633,15 +633,7 @@ public class AntlrDomainModel
 			criteriaVisitor.getDataTypePropertiesReferencedByCriteria(),
 			orderByVisitor.getDataTypePropertiesReferencedByOrderBy()
 		);
-		MutableSet<AntlrAssociationEnd> associationEndsReferenced = Sets.union(
-			criteriaVisitor.getAssociationEndsReferencedByCriteria(),
-			orderByVisitor.getAssociationEndsReferencedByOrderBy()
-		);
-		this.reportUnreferencedPrivateProperty(
-			compilerAnnotationHolder,
-			dataTypePropertiesReferenced,
-			associationEndsReferenced
-		);
+		this.reportUnreferencedPrivateProperty(compilerAnnotationHolder, dataTypePropertiesReferenced);
 	}
 
 	private void visitCriteria(AntlrCriteriaVisitor criteriaVisitor)
@@ -713,8 +705,7 @@ public class AntlrDomainModel
 
 	private void reportUnreferencedPrivateProperty(
 		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
-		@Nonnull Set<AntlrDataTypeProperty<?>> dataTypePropertiesReferenced,
-		@Nonnull Set<AntlrAssociationEnd> associationEndsReferenced
+		@Nonnull Set<AntlrDataTypeProperty<?>> dataTypePropertiesReferenced
 	)
 	{
 		for (AntlrClassifier classifier : this.classifiers)
@@ -730,21 +721,6 @@ public class AntlrDomainModel
 				)
 				{
 					dataTypeProperty.reportUnreferencedPrivateProperty(compilerAnnotationHolder);
-				}
-			}
-		}
-
-		for (AntlrClass klass : this.klasses)
-		{
-			for (AntlrAssociationEnd associationEnds : klass.getDeclaredAssociationEnds())
-			{
-				if (
-					associationEnds.isPrivate() &&
-					!associationEndsReferenced.contains(associationEnds) &&
-					!associationEndsReferenced.contains(associationEnds.getOpposite())
-				)
-				{
-					associationEnds.reportUnreferencedPrivateProperty(compilerAnnotationHolder);
 				}
 			}
 		}
