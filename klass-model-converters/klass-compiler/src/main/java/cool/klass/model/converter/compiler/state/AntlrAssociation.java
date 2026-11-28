@@ -18,9 +18,12 @@ package cool.klass.model.converter.compiler.state;
 
 import java.util.LinkedHashMap;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.base.CaseFormat;
+import com.google.common.base.Converter;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationHolder;
 import cool.klass.model.converter.compiler.state.criteria.AntlrCriteriaVisitor;
 import cool.klass.model.converter.compiler.state.property.AntlrAssociationEnd;
@@ -42,6 +45,14 @@ public class AntlrAssociation
 	extends AntlrPackageableElement
 	implements AntlrTopLevelElement
 {
+	private static final Converter<String, String> LOWER_CAMEL_TO_UPPER_CAMEL = CaseFormat.LOWER_CAMEL.converterTo(
+		CaseFormat.UPPER_CAMEL
+	);
+
+	private static final Converter<String, String> UPPER_TO_LOWER_CAMEL = CaseFormat.UPPER_CAMEL.converterTo(
+		CaseFormat.LOWER_CAMEL
+	);
+
 	// <editor-fold desc="AMBIGUOUS">
 	public static final AntlrAssociation AMBIGUOUS = new AntlrAssociation(
 		new AssociationDeclarationContext(AMBIGUOUS_PARENT, -1),
@@ -371,5 +382,79 @@ public class AntlrAssociation
 	public boolean isManyToMany()
 	{
 		return this.getSourceEnd().isToMany() && this.getTargetEnd().isToMany();
+	}
+
+	/**
+	 * The criteria text of the relationship inferred from the association ends, like
+	 * {@code this.id == Answer.questionId}, or empty when the ends don't determine a foreign key.
+	 */
+	public Optional<String> getInferredRelationshipText()
+	{
+		return this.getInferredForeignKeyEnd().flatMap(this::getRelationshipTextForForeignKeyEnd);
+	}
+
+	/**
+	 * The association end whose type holds the foreign key. Multiplicity decides first: the to-many end, or else the
+	 * end that requires its opposite. When both ends have the same to-one multiplicity, the owned end holds the
+	 * foreign key to its owner. Many-to-many, symmetrical, doubly-owned, and invalid multiplicities infer nothing.
+	 */
+	private Optional<AntlrAssociationEnd> getInferredForeignKeyEnd()
+	{
+		var sourceEnd = this.getSourceEnd();
+		var targetEnd = this.getTargetEnd();
+
+		// [_..*] --> [_..1]
+		if (sourceEnd.isToMany() && targetEnd.isToOne())
+		{
+			return Optional.of(sourceEnd);
+		}
+		// [_..1] --> [_..*]
+		if (sourceEnd.isToOne() && targetEnd.isToMany())
+		{
+			return Optional.of(targetEnd);
+		}
+		// [0..1] --> [1..1]
+		if (sourceEnd.isToOneOptional() && targetEnd.isToOneRequired())
+		{
+			return Optional.of(sourceEnd);
+		}
+		// [1..1] --> [0..1]
+		if (sourceEnd.isToOneRequired() && targetEnd.isToOneOptional())
+		{
+			return Optional.of(targetEnd);
+		}
+		// [1..1] owned --> [1..1], [0..1] --> [0..1] owned, etc.
+		if (sourceEnd.isToOne() && targetEnd.isToOne() && sourceEnd.isOwned() != targetEnd.isOwned())
+		{
+			return Optional.of(sourceEnd.isOwned() ? sourceEnd : targetEnd);
+		}
+		return Optional.empty();
+	}
+
+	// source: this.otherTypeKey == OtherType.key
+	// target: this.key == OtherType.thisTypeKey
+	private Optional<String> getRelationshipTextForForeignKeyEnd(AntlrAssociationEnd foreignKeyEnd)
+	{
+		var foreignKeyType = foreignKeyEnd.getType();
+		var referencedType = foreignKeyEnd.getOpposite().getType();
+		var keyProperties = referencedType.getAllKeyProperties();
+		if (keyProperties.isEmpty())
+		{
+			return Optional.empty();
+		}
+
+		var isSourceEnd = foreignKeyEnd == this.getSourceEnd();
+		var text = keyProperties
+			.collect((each) ->
+			{
+				var foreignKeyName =
+					UPPER_TO_LOWER_CAMEL.convert(referencedType.getName()) +
+					LOWER_CAMEL_TO_UPPER_CAMEL.convert(each.getName());
+				return isSourceEnd ?
+					"this.%s == %s.%s".formatted(foreignKeyName, referencedType.getName(), each.getName()) :
+					"this.%s == %s.%s".formatted(each.getName(), foreignKeyType.getName(), foreignKeyName);
+			})
+			.makeString(" && ");
+		return Optional.of(text);
 	}
 }

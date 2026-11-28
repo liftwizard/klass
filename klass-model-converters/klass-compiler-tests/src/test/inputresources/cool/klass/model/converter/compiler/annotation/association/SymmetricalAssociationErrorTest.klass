@@ -12,3 +12,9 @@ association DummyAssociation
 
     relationship this.id == DummyClass.id
 }
+
+association DummyAssociationWithoutRelationship
+{
+    optionalSource: DummyClass[0..1];
+    optionalTarget: DummyClass[0..1];
+}
