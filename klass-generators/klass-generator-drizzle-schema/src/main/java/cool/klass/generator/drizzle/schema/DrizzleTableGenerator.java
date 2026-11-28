@@ -115,7 +115,7 @@ public final class DrizzleTableGenerator
 		return klass
 			.getDataTypeProperties()
 			.select((each) -> each.isKey() || !superClassPropertyNames.contains(each.getName()))
-			.reject(DataTypeProperty::isDerived)
+			.reject(DataTypeProperty::isComputed)
 			.reject(DataTypeProperty::isTemporalRange);
 	}
 

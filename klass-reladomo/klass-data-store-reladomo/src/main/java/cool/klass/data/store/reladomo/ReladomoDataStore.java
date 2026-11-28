@@ -395,7 +395,7 @@ public class ReladomoDataStore
 		}
 
 		// TODO: Code generate accessors to avoid reflection
-		if (dataTypeProperty.isDerived())
+		if (dataTypeProperty.isComputed())
 		{
 			return this.getPropertyReflectively(persistentInstance, dataTypeProperty);
 		}
@@ -506,7 +506,7 @@ public class ReladomoDataStore
 		@Nonnull DataTypeProperty dataTypeProperty
 	)
 	{
-		if (dataTypeProperty.isDerived())
+		if (dataTypeProperty.isComputed())
 		{
 			return this.getPropertyReflectively(persistentInstance, dataTypeProperty);
 		}
@@ -578,7 +578,7 @@ public class ReladomoDataStore
 		@Nullable Object newValue
 	)
 	{
-		if (dataTypeProperty.isDerived())
+		if (dataTypeProperty.isComputed())
 		{
 			String detailMessage = "May not set derived property: " + dataTypeProperty;
 			throw new AssertionError(detailMessage);

@@ -1,0 +1,17 @@
+════════════════════════════════════════ [35mERR_AGG_FKY[m ════════════════════════════════════════
+[31mError: Aggregation 'count' joins 'PollVote' to 'Poll' on foreign keys, but the relationship of association end 'Poll.upVotes' has none. The relationship must only equate properties of the two classes.[m
+
+At (InvalidAggregationErrorTest.klass:66:40)
+
+[39m 1║ [35mpackage [39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mproperty
+[39m63║ [35mclass [39mPoll
+[39m64║ [36m{
+[39m66║     [39mnumberOfUpVotes[36m: [35mLong [36m{ [35mcount[36m([32mthis[36m.[39mupVotes[36m) [36m}
+[39m  ║ [31m                                       ^^^^^^^
+[39m67║ [36m}
+[m
+[36mLocation:  [mInvalidAggregationErrorTest.klass:66:40[m
+[36mFile:      [mInvalidAggregationErrorTest.klass[m
+[36mLine:      [m66[m
+[36mCharacter: [m40
+═════════════════════════════════════════════════════════════════════════════════════════════

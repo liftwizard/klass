@@ -235,6 +235,13 @@ public class AntlrPrimitiveProperty
 		}
 	}
 
+	@Nonnull
+	@Override
+	protected Optional<PrimitiveType> getPrimitiveType()
+	{
+		return Optional.of(this.antlrPrimitiveType.getPrimitiveType());
+	}
+
 	private void reportInvalidTemporalMultiplicity(CompilerAnnotationHolder compilerAnnotationHolder)
 	{
 		PrimitiveType primitiveType = this.antlrPrimitiveType.getPrimitiveType();
