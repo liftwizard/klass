@@ -84,7 +84,7 @@ public class CompilerWalkState
 	private AntlrTopLevelElement topLevelDeclaration;
 
 	@Nullable
-	private AntlrEnumeration enumeration;
+	private EnumerationDeclarationContext enumerationContext;
 
 	@Nullable
 	private AntlrClassifier classifier;
@@ -176,6 +176,16 @@ public class CompilerWalkState
 	public PackageNameContext getPackageNameContext()
 	{
 		return this.packageNameContext;
+	}
+
+	@Nullable
+	public AntlrEnumeration getEnumeration()
+	{
+		if (this.enumerationContext == null)
+		{
+			return null;
+		}
+		return Objects.requireNonNull(this.domainModel.getEnumerationByContext(this.enumerationContext));
 	}
 
 	@Nullable
@@ -331,7 +341,7 @@ public class CompilerWalkState
 		{
 			throw new AssertionError();
 		}
-		if (this.enumeration != null)
+		if (this.enumerationContext != null)
 		{
 			throw new AssertionError();
 		}
@@ -431,7 +441,7 @@ public class CompilerWalkState
 		{
 			throw new AssertionError();
 		}
-		if (this.enumeration != other.enumeration)
+		if (this.enumerationContext != other.enumerationContext)
 		{
 			throw new AssertionError();
 		}
@@ -610,14 +620,14 @@ public class CompilerWalkState
 		@Override
 		public void enterEnumerationDeclaration(@Nonnull EnumerationDeclarationContext ctx)
 		{
-			CompilerWalkState.assertNull(CompilerWalkState.this.enumeration);
-			CompilerWalkState.this.enumeration = CompilerWalkState.this.domainModel.getEnumerationByContext(ctx);
+			CompilerWalkState.assertNull(CompilerWalkState.this.enumerationContext);
+			CompilerWalkState.this.enumerationContext = ctx;
 		}
 
 		@Override
 		public void exitEnumerationDeclaration(@Nonnull EnumerationDeclarationContext ctx)
 		{
-			CompilerWalkState.this.enumeration = null;
+			CompilerWalkState.this.enumerationContext = null;
 		}
 
 		@Override
