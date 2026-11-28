@@ -1,0 +1,16 @@
+════════════════════════════════════════ [35mERR_ASO_REL[m ════════════════════════════════════════
+[31mError: Association 'DoubleOwnedAssociationWithoutRelationship' has no relationship[m
+
+At (DoubleOwnedAssociationErrorTest.klass:31:13)
+
+[39m 1║ [35mpackage [39mdummy
+[39m31║ [35massociation [39mDoubleOwnedAssociationWithoutRelationship
+[39m  ║ [31m            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[39m32║ [36m{
+[39m35║ [36m}
+[m
+[36mLocation:  [mDoubleOwnedAssociationErrorTest.klass:31:13[m
+[36mFile:      [mDoubleOwnedAssociationErrorTest.klass[m
+[36mLine:      [m31[m
+[36mCharacter: [m13
+═════════════════════════════════════════════════════════════════════════════════════════════

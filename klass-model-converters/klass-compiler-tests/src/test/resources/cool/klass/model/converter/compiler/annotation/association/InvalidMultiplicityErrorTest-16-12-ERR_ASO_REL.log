@@ -1,0 +1,16 @@
+════════════════════════════════════════ [35mERR_ASO_REL[m ════════════════════════════════════════
+[31mError: Association 'DummyAssociationWithoutRelationship' has no relationship[m
+
+At (InvalidMultiplicityErrorTest.klass:16:13)
+
+[39m 1║ [35mpackage [39mdummy
+[39m16║ [35massociation [39mDummyAssociationWithoutRelationship
+[39m  ║ [31m            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[39m17║ [36m{
+[39m20║ [36m}
+[m
+[36mLocation:  [mInvalidMultiplicityErrorTest.klass:16:13[m
+[36mFile:      [mInvalidMultiplicityErrorTest.klass[m
+[36mLine:      [m16[m
+[36mCharacter: [m13
+═════════════════════════════════════════════════════════════════════════════════════════════

@@ -17,3 +17,19 @@ association DoubleOwnedAssociation
 
     relationship this.id == ExampleClass2.id
 }
+
+class ExampleClass3
+{
+    id: Long key;
+}
+
+class ExampleClass4
+{
+    id: Long key;
+}
+
+association DoubleOwnedAssociationWithoutRelationship
+{
+    source: ExampleClass3[1..1] owned;
+    target: ExampleClass4[1..1] owned;
+}
