@@ -76,7 +76,7 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 
       # Builds the source-available OpenRewrite recipes and saves them in their own cache that every branch restores.
-      - uses: liftwizard/liftwizard/.github/actions/openrewrite-recipes@8e18d2746a48645e1f34b04175504998254cdab3 # main
+      - uses: liftwizard/liftwizard/.github/actions/openrewrite-recipes@d1ab361bda4ee23573be181539830835ca44fb9d # 2.1.54
         with:
           codegenome-username: ${{ secrets.CODEGENOME_USERNAME }}
           codegenome-token: ${{ secrets.CODEGENOME_TOKEN }}
