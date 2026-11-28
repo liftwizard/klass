@@ -17,11 +17,13 @@
 package cool.klass.model.converter.compiler.annotation.property;
 
 import cool.klass.model.converter.compiler.annotation.AbstractKlassCompilerErrorTestCase;
+import org.junit.jupiter.api.Test;
 
 public class UnreferencedPrivatePropertiesTest
 	extends AbstractKlassCompilerErrorTestCase
 {
 	@Override
+	@Test
 	public void smokeTest()
 	{
 		this.assertCompilationSucceeds(true);

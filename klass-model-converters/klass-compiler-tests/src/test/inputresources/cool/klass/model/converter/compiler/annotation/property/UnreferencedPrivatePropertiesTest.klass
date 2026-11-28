@@ -21,7 +21,7 @@ class ExampleClass
 association ExampleToRelated
 {
     example: ExampleClass[0..*] orderBy: this.privateUsedInAssociationOrderBy ascending;
-    related: RelatedClass[1..1];
+    related: RelatedClass[1..1] private;
 
     relationship this.relatedClassId == RelatedClass.id && this.privateUsedInAssociationCriteria == "test"
 }
