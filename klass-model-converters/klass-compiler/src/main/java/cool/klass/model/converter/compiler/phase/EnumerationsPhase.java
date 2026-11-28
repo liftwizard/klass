@@ -19,7 +19,6 @@ package cool.klass.model.converter.compiler.phase;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import cool.klass.model.converter.compiler.CompilerState;
 import cool.klass.model.converter.compiler.state.AntlrEnumeration;
@@ -33,9 +32,6 @@ import org.antlr.v4.runtime.RuleContext;
 public class EnumerationsPhase
 	extends AbstractCompilerPhase
 {
-	@Nullable
-	private AntlrEnumeration enumeration;
-
 	public EnumerationsPhase(@Nonnull CompilerState compilerState)
 	{
 		super(compilerState);
@@ -47,20 +43,13 @@ public class EnumerationsPhase
 		super.enterEnumerationDeclaration(ctx);
 
 		IdentifierContext identifier = ctx.identifier();
-		this.enumeration = new AntlrEnumeration(
+		var enumeration = new AntlrEnumeration(
 			ctx,
 			this.compilerState.getCompilerWalk().getCompilationUnit(),
 			this.compilerState.getOrdinal(ctx),
 			identifier
 		);
-	}
-
-	@Override
-	public void exitEnumerationDeclaration(@Nonnull EnumerationDeclarationContext ctx)
-	{
-		this.compilerState.getDomainModel().exitEnumerationDeclaration(this.enumeration);
-		this.enumeration = null;
-		super.exitEnumerationDeclaration(ctx);
+		this.compilerState.getDomainModel().enterEnumerationDeclaration(enumeration);
 	}
 
 	@Override
@@ -68,6 +57,7 @@ public class EnumerationsPhase
 	{
 		super.enterEnumerationLiteral(ctx);
 
+		AntlrEnumeration enumeration = this.compilerState.getCompilerWalk().getEnumeration();
 		Optional<EnumerationPrettyNameContext> prettyNameContext = Optional.ofNullable(ctx.enumerationPrettyName());
 
 		Optional<String> prettyName = prettyNameContext.map(RuleContext::getText).map(this::trimQuotes);
@@ -75,12 +65,12 @@ public class EnumerationsPhase
 		var enumerationLiteral = new AntlrEnumerationLiteral(
 			ctx,
 			Optional.of(this.compilerState.getCompilerWalk().getCurrentCompilationUnit()),
-			this.enumeration.getNumLiterals() + 1,
+			enumeration.getNumLiterals() + 1,
 			ctx.identifier(),
 			prettyName,
-			this.enumeration
+			enumeration
 		);
-		this.enumeration.enterEnumerationLiteral(enumerationLiteral);
+		enumeration.enterEnumerationLiteral(enumerationLiteral);
 	}
 
 	@Nonnull

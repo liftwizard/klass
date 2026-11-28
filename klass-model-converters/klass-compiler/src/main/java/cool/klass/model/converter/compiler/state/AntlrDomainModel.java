@@ -161,7 +161,7 @@ public class AntlrDomainModel
 		}
 	}
 
-	public void exitEnumerationDeclaration(@Nonnull AntlrEnumeration enumeration)
+	public void enterEnumerationDeclaration(@Nonnull AntlrEnumeration enumeration)
 	{
 		this.topLevelElements.add(enumeration);
 		this.enumerations.add(enumeration);
