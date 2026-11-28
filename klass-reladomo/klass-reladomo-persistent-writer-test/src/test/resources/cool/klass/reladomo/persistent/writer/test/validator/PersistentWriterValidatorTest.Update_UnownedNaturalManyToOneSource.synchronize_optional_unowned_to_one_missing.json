@@ -1,3 +1,10 @@
 {
-	"mutationOccurred": true
+	"mutationOccurred": true,
+	"persisted":
+	{
+		"key": "source 1",
+		"targetKey": null,
+		"value": "value 1",
+		"target": null
+	}
 }

@@ -386,6 +386,22 @@ fragment SharedSyntheticOneToOneTargetFragment on SharedSyntheticOneToOneTarget
 	value
 }
 
+fragment UnownedSyntheticOneToOneSourceFragment on UnownedSyntheticOneToOneSource
+{
+	id
+	value
+	target
+	{
+		id
+	}
+}
+
+fragment UnownedSyntheticOneToOneTargetFragment on UnownedSyntheticOneToOneTarget
+{
+	id
+	value
+}
+
 fragment SharedSyntheticOneToManySelfFragment on SharedSyntheticOneToManySelf
 {
 	id

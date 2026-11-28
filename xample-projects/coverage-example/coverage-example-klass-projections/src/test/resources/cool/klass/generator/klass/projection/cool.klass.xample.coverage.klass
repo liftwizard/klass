@@ -320,6 +320,21 @@ projection SharedSyntheticOneToOneTargetProjection on SharedSyntheticOneToOneTar
     value: "SharedSyntheticOneToOneTarget value",
 }
 
+projection UnownedSyntheticOneToOneSourceProjection on UnownedSyntheticOneToOneSource
+{
+    id: "UnownedSyntheticOneToOneSource id",
+    value: "UnownedSyntheticOneToOneSource value",
+    target: {
+        id: "UnownedSyntheticOneToOneTarget id",
+    },
+}
+
+projection UnownedSyntheticOneToOneTargetProjection on UnownedSyntheticOneToOneTarget
+{
+    id: "UnownedSyntheticOneToOneTarget id",
+    value: "UnownedSyntheticOneToOneTarget value",
+}
+
 projection SharedSyntheticOneToManySelfProjection on SharedSyntheticOneToManySelf
 {
     id: "SharedSyntheticOneToManySelf id",

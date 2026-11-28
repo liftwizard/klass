@@ -1,0 +1,47 @@
+{
+	"mutationOccurred": true,
+	"persisted":
+	{
+		"id": 2,
+		"value": "source value 2",
+		"target":
+		{
+			"id": 4
+		}
+	},
+	"UnownedSyntheticOneToOneTarget": [
+		{
+			"id": 1,
+			"sourceId": 1,
+			"value": "target value 1",
+			"source":
+			{
+				"id": 1
+			}
+		},
+		{
+			"id": 2,
+			"sourceId": null,
+			"value": "target value 2",
+			"source": null
+		},
+		{
+			"id": 3,
+			"sourceId": 3,
+			"value": "target value 3",
+			"source":
+			{
+				"id": 3
+			}
+		},
+		{
+			"id": 4,
+			"sourceId": 2,
+			"value": "target value 4",
+			"source":
+			{
+				"id": 2
+			}
+		}
+	]
+}

@@ -23,7 +23,10 @@ import java.util.Optional;
 import javax.annotation.Nonnull;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import cool.klass.data.store.reladomo.ReladomoDataStore;
 import cool.klass.deserializer.json.OperationMode;
@@ -32,6 +35,7 @@ import cool.klass.deserializer.json.type.ObjectNodeTypeCheckingValidator;
 import cool.klass.dropwizard.configuration.domain.model.loader.compiler.DomainModelCompilerFactory;
 import cool.klass.model.meta.domain.api.DomainModel;
 import cool.klass.model.meta.domain.api.Klass;
+import cool.klass.model.meta.domain.api.property.AssociationEnd;
 import cool.klass.model.meta.domain.api.property.DataTypeProperty;
 import cool.klass.reladomo.persistent.writer.IncomingCreateDataModelValidator;
 import cool.klass.reladomo.persistent.writer.IncomingUpdateDataModelValidator;
@@ -91,7 +95,11 @@ class PersistentWriterValidatorTest
 		"test-data/cool.klass.xample.coverage.VersionedOwnedOneToOneTarget.csv",
 		"test-data/cool.klass.xample.coverage.VersionedOwnedOneToManyTarget.csv",
 		"test-data/cool.klass.xample.coverage.UnownedNaturalManyToOneTarget.csv",
-		"test-data/cool.klass.xample.coverage.UnownedNaturalManyToOneSource.csv"
+		"test-data/cool.klass.xample.coverage.UnownedNaturalManyToOneSource.csv",
+		"test-data/cool.klass.xample.coverage.SharedSyntheticOneToOneSource.csv",
+		"test-data/cool.klass.xample.coverage.SharedSyntheticOneToOneTarget.csv",
+		"test-data/cool.klass.xample.coverage.UnownedSyntheticOneToOneSource.csv",
+		"test-data/cool.klass.xample.coverage.UnownedSyntheticOneToOneTarget.csv"
 	);
 
 	private final ReladomoDataStore reladomoDataStore = PersistentWriterValidatorTest.getReladomoDataStore();
@@ -213,6 +221,59 @@ class PersistentWriterValidatorTest
 			"source 1"
 		);
 		this.synchronize(updateUnownedNaturalManyToOneSource, "synchronize_optional_unowned_to_one_missing");
+
+		ValidationCase updateSharedSyntheticOneToOneSource = this.updateCase(
+			"Update_SharedSyntheticOneToOneSource",
+			"SharedSyntheticOneToOneSource",
+			"id",
+			2L
+		);
+		this.synchronize(
+			updateSharedSyntheticOneToOneSource,
+			"synchronize_unowned_to_one_target_foreign_key",
+			"SharedSyntheticOneToOneTarget"
+		);
+
+		ValidationCase updateSharedSyntheticOneToOneSourceWithTarget = this.updateCase(
+			"Update_SharedSyntheticOneToOneSource",
+			"SharedSyntheticOneToOneSource",
+			"id",
+			3L
+		);
+		this.synchronize(
+			updateSharedSyntheticOneToOneSourceWithTarget,
+			"synchronize_reassign_required_target_foreign_key",
+			"SharedSyntheticOneToOneTarget"
+		);
+		this.synchronize(
+			updateSharedSyntheticOneToOneSourceWithTarget,
+			"synchronize_clear_required_target_foreign_key",
+			"SharedSyntheticOneToOneTarget"
+		);
+
+		ValidationCase updateUnownedSyntheticOneToOneSource = this.updateCase(
+			"Update_UnownedSyntheticOneToOneSource",
+			"UnownedSyntheticOneToOneSource",
+			"id",
+			2L
+		);
+		this.synchronize(
+			updateUnownedSyntheticOneToOneSource,
+			"synchronize_reassign_optional_target_foreign_key",
+			"UnownedSyntheticOneToOneTarget"
+		);
+
+		ValidationCase updateUnownedSyntheticOneToOneSourceToClear = this.updateCase(
+			"Update_UnownedSyntheticOneToOneSource",
+			"UnownedSyntheticOneToOneSource",
+			"id",
+			3L
+		);
+		this.synchronize(
+			updateUnownedSyntheticOneToOneSourceToClear,
+			"synchronize_clear_optional_target_foreign_key",
+			"UnownedSyntheticOneToOneTarget"
+		);
 	}
 
 	@Nonnull
@@ -259,7 +320,7 @@ class PersistentWriterValidatorTest
 		);
 	}
 
-	private void synchronize(ValidationCase validationCase, String testName)
+	private void synchronize(ValidationCase validationCase, String testName, String... classNamesToReadBack)
 		throws JsonProcessingException
 	{
 		String prefix = this.getClass().getSimpleName() + '.' + validationCase.name() + '.' + testName;
@@ -274,14 +335,95 @@ class PersistentWriterValidatorTest
 		var persistentReplacer = new PersistentReplacer(mutationContext, this.reladomoDataStore);
 		Klass klass = validationCase.klass();
 		Object persistentInstance = validationCase.persistentInstance();
-		boolean mutationOccurred = this.reladomoDataStore.runInTransaction((transaction) ->
-			persistentReplacer.synchronize(klass, persistentInstance, incomingInstance)
-		);
-
 		ObjectNode result = this.objectMapper.createObjectNode();
-		result.put("mutationOccurred", mutationOccurred);
+		try
+		{
+			boolean mutationOccurred = this.reladomoDataStore.runInTransaction((transaction) ->
+				persistentReplacer.synchronize(klass, persistentInstance, incomingInstance)
+			);
+			result.put("mutationOccurred", mutationOccurred);
+		}
+		catch (IllegalStateException e)
+		{
+			result.put("error", e.getMessage());
+		}
+		result.set("persisted", this.readBack(klass, persistentInstance, Optional.empty()));
+		for (String className : classNamesToReadBack)
+		{
+			result.set(className, this.readBackAll(this.domainModel.getClassByName(className)));
+		}
 
 		this.jsonMatchExtension.assertFileContents(prefix + ".json", this.objectMapper.writeValueAsString(result));
+	}
+
+	private ArrayNode readBackAll(Klass klass)
+	{
+		DataTypeProperty keyProperty = klass.getKeyProperties().getOnly();
+		ArrayNode result = this.objectMapper.createArrayNode();
+		Lists.mutable
+			.withAll(this.reladomoDataStore.findAll(klass))
+			.sortThisBy(
+				(persistentInstance) ->
+					(Long) this.reladomoDataStore.getDataTypeProperty(persistentInstance, keyProperty)
+			)
+			.each((persistentInstance) -> result.add(this.readBack(klass, persistentInstance, Optional.empty())));
+		return result;
+	}
+
+	private ObjectNode readBack(Klass klass, Object persistentInstance, Optional<AssociationEnd> pathHere)
+	{
+		ObjectNode result = this.objectMapper.createObjectNode();
+		for (DataTypeProperty dataTypeProperty : klass.getDataTypeProperties())
+		{
+			Object value = this.reladomoDataStore.getDataTypeProperty(persistentInstance, dataTypeProperty);
+			result.set(dataTypeProperty.getName(), this.objectMapper.valueToTree(value));
+		}
+
+		for (AssociationEnd associationEnd : klass.getAssociationEnds())
+		{
+			if (pathHere.equals(Optional.of(associationEnd.getOpposite())))
+			{
+				continue;
+			}
+
+			if (associationEnd.getMultiplicity().isToOne())
+			{
+				Object child = this.reladomoDataStore.getToOne(persistentInstance, associationEnd);
+				result.set(associationEnd.getName(), this.readBackChild(associationEnd, child));
+			}
+			else
+			{
+				ArrayNode children = result.putArray(associationEnd.getName());
+				for (Object child : this.reladomoDataStore.getToMany(persistentInstance, associationEnd))
+				{
+					children.add(this.readBackChild(associationEnd, child));
+				}
+			}
+		}
+
+		return result;
+	}
+
+	private JsonNode readBackChild(AssociationEnd associationEnd, Object child)
+	{
+		if (child == null)
+		{
+			return NullNode.getInstance();
+		}
+
+		if (associationEnd.isOwned())
+		{
+			return this.readBack(associationEnd.getType(), child, Optional.of(associationEnd));
+		}
+
+		Klass childKlass = associationEnd.getType();
+		ObjectNode keys = this.objectMapper.createObjectNode();
+		for (DataTypeProperty keyProperty : childKlass.getKeyProperties())
+		{
+			Object value = this.reladomoDataStore.getDataTypeProperty(child, keyProperty);
+			keys.set(keyProperty.getName(), this.objectMapper.valueToTree(value));
+		}
+		return keys;
 	}
 
 	@Nonnull

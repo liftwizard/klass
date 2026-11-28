@@ -1,3 +1,61 @@
 {
-	"mutationOccurred": false
+	"mutationOccurred": false,
+	"persisted":
+	{
+		"key": "source 1",
+		"system": null,
+		"systemFrom": "1999-12-31T23:59:59.999Z",
+		"systemTo": null,
+		"createdById": "test user 1",
+		"createdOn": "1999-12-31T23:59:59.999Z",
+		"lastUpdatedById": "test user 1",
+		"value": "value 1",
+		"detail":
+		{
+			"key": "source 1",
+			"system": null,
+			"systemFrom": "1999-12-31T23:59:59.999Z",
+			"systemTo": null,
+			"value": "detail 1"
+		},
+		"items": [
+			{
+				"sourceKey": "source 1",
+				"name": "item 1",
+				"system": null,
+				"systemFrom": "1999-12-31T23:59:59.999Z",
+				"systemTo": null,
+				"value": "value 1",
+				"grandchild": null,
+				"grandchildren": []
+			}
+		],
+		"version":
+		{
+			"key": "source 1",
+			"system": null,
+			"systemFrom": "1999-12-31T23:59:59.999Z",
+			"systemTo": null,
+			"createdById": "test user 1",
+			"createdOn": "1999-12-31T23:59:59.999Z",
+			"lastUpdatedById": "test user 1",
+			"number": 1,
+			"createdBy":
+			{
+				"userId": "test user 1"
+			},
+			"lastUpdatedBy":
+			{
+				"userId": "test user 1"
+			}
+		},
+		"createdBy":
+		{
+			"userId": "test user 1"
+		},
+		"lastUpdatedBy":
+		{
+			"userId": "test user 1"
+		}
+	}
 }

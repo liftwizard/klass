@@ -699,7 +699,33 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-35-SHARED_SYNTHETIC_ONE_TO_MANY_SELF">
+    <changeSet author="Klass" id="initial-table-35-UNOWNED_SYNTHETIC_ONE_TO_ONE_SOURCE">
+        <createTable tableName="UNOWNED_SYNTHETIC_ONE_TO_ONE_SOURCE">
+            <column name="ID" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="UNOWNED_SYNTHETIC_ONE_TO_ONE_SOURCE_PK" />
+            </column>
+
+            <column name="VALUE" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-table-36-UNOWNED_SYNTHETIC_ONE_TO_ONE_TARGET">
+        <createTable tableName="UNOWNED_SYNTHETIC_ONE_TO_ONE_TARGET">
+            <column name="ID" type="bigint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="UNOWNED_SYNTHETIC_ONE_TO_ONE_TARGET_PK" />
+            </column>
+
+            <column name="SOURCE_ID" type="bigint" />
+
+            <column name="VALUE" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-table-37-SHARED_SYNTHETIC_ONE_TO_MANY_SELF">
         <createTable tableName="SHARED_SYNTHETIC_ONE_TO_MANY_SELF">
             <column name="ID" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="SHARED_SYNTHETIC_ONE_TO_MANY_SELF_PK" />
@@ -713,7 +739,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-36-CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY">
+    <changeSet author="Klass" id="initial-table-38-CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY">
         <createTable tableName="CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY">
             <column name="KEY" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY_PK" />
@@ -721,7 +747,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-37-CLASS_WITH_DERIVED_PROPERTY">
+    <changeSet author="Klass" id="initial-table-39-CLASS_WITH_DERIVED_PROPERTY">
         <createTable tableName="CLASS_WITH_DERIVED_PROPERTY">
             <column name="KEY" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="CLASS_WITH_DERIVED_PROPERTY_PK" />
@@ -733,7 +759,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-38-USER_VERSION">
+    <changeSet author="Klass" id="initial-table-40-USER_VERSION">
         <createTable tableName="USER_VERSION">
             <column name="USER_ID" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="USER_VERSION_PK" />
@@ -753,7 +779,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-39-PROPERTIES_REQUIRED_VERSION">
+    <changeSet author="Klass" id="initial-table-41-PROPERTIES_REQUIRED_VERSION">
         <createTable tableName="PROPERTIES_REQUIRED_VERSION">
             <column name="PROPERTIES_REQUIRED_ID" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PROPERTIES_REQUIRED_VERSION_PK" />
@@ -785,7 +811,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-40-PROPERTIES_OPTIONAL_VERSION">
+    <changeSet author="Klass" id="initial-table-42-PROPERTIES_OPTIONAL_VERSION">
         <createTable tableName="PROPERTIES_OPTIONAL_VERSION">
             <column name="PROPERTIES_OPTIONAL_ID" type="bigint">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PROPERTIES_OPTIONAL_VERSION_PK" />
@@ -817,7 +843,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-41-EVERY_TYPE_KEY_PROPERTY_VERSION">
+    <changeSet author="Klass" id="initial-table-43-EVERY_TYPE_KEY_PROPERTY_VERSION">
         <createTable tableName="EVERY_TYPE_KEY_PROPERTY_VERSION">
             <column name="KEY_STRING" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="EVERY_TYPE_KEY_PROPERTY_VERSION_PK" />
@@ -877,7 +903,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-table-42-VERSIONED_OWNED_SOURCE_VERSION">
+    <changeSet author="Klass" id="initial-table-44-VERSIONED_OWNED_SOURCE_VERSION">
         <createTable tableName="VERSIONED_OWNED_SOURCE_VERSION">
             <column name="KEY" type="varchar(255)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="VERSIONED_OWNED_SOURCE_VERSION_PK" />
@@ -1009,7 +1035,17 @@
         />
     </changeSet>
 
-    <changeSet author="Klass" id="initial-foreign-key-37-CLASS_WITH_DERIVED_PROPERTY_FK_CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY">
+    <changeSet author="Klass" id="initial-foreign-key-36-UNOWNED_SYNTHETIC_ONE_TO_ONE_TARGET_FK_SOURCE">
+        <addForeignKeyConstraint
+                constraintName="UNOWNED_SYNTHETIC_ONE_TO_ONE_TARGET_FK_SOURCE"
+                baseTableName="UNOWNED_SYNTHETIC_ONE_TO_ONE_TARGET"
+                baseColumnNames="SOURCE_ID"
+                referencedTableName="UNOWNED_SYNTHETIC_ONE_TO_ONE_SOURCE"
+                referencedColumnNames="ID"
+        />
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-foreign-key-39-CLASS_WITH_DERIVED_PROPERTY_FK_CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY">
         <addForeignKeyConstraint
                 constraintName="CLASS_WITH_DERIVED_PROPERTY_FK_CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY"
                 baseTableName="CLASS_WITH_DERIVED_PROPERTY"
@@ -1230,7 +1266,15 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-35-SHARED_SYNTHETIC_ONE_TO_MANY_SELF_IDX_SOURCE">
+    <changeSet author="Klass" id="initial-indices-36-UNOWNED_SYNTHETIC_ONE_TO_ONE_TARGET_IDX_SOURCE">
+        <createIndex
+                indexName="UNOWNED_SYNTHETIC_ONE_TO_ONE_TARGET_IDX_SOURCE"
+                tableName="UNOWNED_SYNTHETIC_ONE_TO_ONE_TARGET">
+            <column name="SOURCE_ID" />
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="Klass" id="initial-indices-37-SHARED_SYNTHETIC_ONE_TO_MANY_SELF_IDX_SOURCE">
         <createIndex
                 indexName="SHARED_SYNTHETIC_ONE_TO_MANY_SELF_IDX_SOURCE"
                 tableName="SHARED_SYNTHETIC_ONE_TO_MANY_SELF">
@@ -1238,7 +1282,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-37-CLASS_WITH_DERIVED_PROPERTY_IDX_CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY">
+    <changeSet author="Klass" id="initial-indices-39-CLASS_WITH_DERIVED_PROPERTY_IDX_CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY">
         <createIndex
                 indexName="CLASS_WITH_DERIVED_PROPERTY_IDX_CLASS_OWNING_CLASS_WITH_DERIVED_PROPERTY"
                 tableName="CLASS_WITH_DERIVED_PROPERTY">
@@ -1246,7 +1290,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-39-PROPERTIES_REQUIRED_VERSION_IDX_CREATED_BY">
+    <changeSet author="Klass" id="initial-indices-41-PROPERTIES_REQUIRED_VERSION_IDX_CREATED_BY">
         <createIndex
                 indexName="PROPERTIES_REQUIRED_VERSION_IDX_CREATED_BY"
                 tableName="PROPERTIES_REQUIRED_VERSION">
@@ -1255,7 +1299,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-39-PROPERTIES_REQUIRED_VERSION_IDX_LAST_UPDATED_BY">
+    <changeSet author="Klass" id="initial-indices-41-PROPERTIES_REQUIRED_VERSION_IDX_LAST_UPDATED_BY">
         <createIndex
                 indexName="PROPERTIES_REQUIRED_VERSION_IDX_LAST_UPDATED_BY"
                 tableName="PROPERTIES_REQUIRED_VERSION">
@@ -1264,7 +1308,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-40-PROPERTIES_OPTIONAL_VERSION_IDX_CREATED_BY">
+    <changeSet author="Klass" id="initial-indices-42-PROPERTIES_OPTIONAL_VERSION_IDX_CREATED_BY">
         <createIndex
                 indexName="PROPERTIES_OPTIONAL_VERSION_IDX_CREATED_BY"
                 tableName="PROPERTIES_OPTIONAL_VERSION">
@@ -1273,7 +1317,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-40-PROPERTIES_OPTIONAL_VERSION_IDX_LAST_UPDATED_BY">
+    <changeSet author="Klass" id="initial-indices-42-PROPERTIES_OPTIONAL_VERSION_IDX_LAST_UPDATED_BY">
         <createIndex
                 indexName="PROPERTIES_OPTIONAL_VERSION_IDX_LAST_UPDATED_BY"
                 tableName="PROPERTIES_OPTIONAL_VERSION">
@@ -1282,7 +1326,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-41-EVERY_TYPE_KEY_PROPERTY_VERSION_IDX_CREATED_BY">
+    <changeSet author="Klass" id="initial-indices-43-EVERY_TYPE_KEY_PROPERTY_VERSION_IDX_CREATED_BY">
         <createIndex
                 indexName="EVERY_TYPE_KEY_PROPERTY_VERSION_IDX_CREATED_BY"
                 tableName="EVERY_TYPE_KEY_PROPERTY_VERSION">
@@ -1291,7 +1335,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-41-EVERY_TYPE_KEY_PROPERTY_VERSION_IDX_LAST_UPDATED_BY">
+    <changeSet author="Klass" id="initial-indices-43-EVERY_TYPE_KEY_PROPERTY_VERSION_IDX_LAST_UPDATED_BY">
         <createIndex
                 indexName="EVERY_TYPE_KEY_PROPERTY_VERSION_IDX_LAST_UPDATED_BY"
                 tableName="EVERY_TYPE_KEY_PROPERTY_VERSION">
@@ -1300,7 +1344,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-42-VERSIONED_OWNED_SOURCE_VERSION_IDX_CREATED_BY">
+    <changeSet author="Klass" id="initial-indices-44-VERSIONED_OWNED_SOURCE_VERSION_IDX_CREATED_BY">
         <createIndex
                 indexName="VERSIONED_OWNED_SOURCE_VERSION_IDX_CREATED_BY"
                 tableName="VERSIONED_OWNED_SOURCE_VERSION">
@@ -1309,7 +1353,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet author="Klass" id="initial-indices-42-VERSIONED_OWNED_SOURCE_VERSION_IDX_LAST_UPDATED_BY">
+    <changeSet author="Klass" id="initial-indices-44-VERSIONED_OWNED_SOURCE_VERSION_IDX_LAST_UPDATED_BY">
         <createIndex
                 indexName="VERSIONED_OWNED_SOURCE_VERSION_IDX_LAST_UPDATED_BY"
                 tableName="VERSIONED_OWNED_SOURCE_VERSION">
