@@ -25,7 +25,6 @@ import cool.klass.model.converter.compiler.state.criteria.AntlrOrCriteria;
 import cool.klass.model.converter.compiler.state.criteria.EdgePointAntlrCriteria;
 import cool.klass.model.converter.compiler.state.criteria.OperatorAntlrCriteria;
 import cool.klass.model.converter.compiler.state.parameter.AntlrParameter;
-import cool.klass.model.converter.compiler.state.property.AntlrAssociationEnd;
 import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
 import cool.klass.model.converter.compiler.state.value.AntlrExpressionValue;
 import cool.klass.model.converter.compiler.state.value.AntlrMemberReferencePath;
@@ -35,11 +34,6 @@ public class ReferencedPropertiesCriteriaVisitor
 {
 	private final ReferencedPropertiesExpressionValueVisitor expressionValueVisitor =
 		new ReferencedPropertiesExpressionValueVisitor();
-
-	public Set<AntlrAssociationEnd> getAssociationEndsReferencedByCriteria()
-	{
-		return this.expressionValueVisitor.getAssociationEndsReferencedByCriteria();
-	}
 
 	public Set<AntlrDataTypeProperty<?>> getDataTypePropertiesReferencedByCriteria()
 	{

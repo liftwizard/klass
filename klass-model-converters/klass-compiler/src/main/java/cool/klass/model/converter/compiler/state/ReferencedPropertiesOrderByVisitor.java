@@ -24,22 +24,15 @@ import javax.annotation.Nonnull;
 import cool.klass.model.converter.compiler.state.order.AntlrOrderBy;
 import cool.klass.model.converter.compiler.state.order.AntlrOrderByMemberReferencePath;
 import cool.klass.model.converter.compiler.state.order.AntlrOrderByVisitor;
-import cool.klass.model.converter.compiler.state.property.AntlrAssociationEnd;
 import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
 import cool.klass.model.converter.compiler.state.value.AntlrThisMemberReferencePath;
 
 public class ReferencedPropertiesOrderByVisitor
 	implements AntlrOrderByVisitor
 {
-	private final Set<AntlrAssociationEnd> associationEndsReferencedByOrderBy = new LinkedHashSet<>();
 	private final Set<AntlrDataTypeProperty<?>> dataTypePropertiesReferencedByOrderBy = new LinkedHashSet<>();
 	private final ReferencedPropertiesExpressionValueVisitor expressionValueVisitor =
 		new ReferencedPropertiesExpressionValueVisitor();
-
-	public Set<AntlrAssociationEnd> getAssociationEndsReferencedByOrderBy()
-	{
-		return this.associationEndsReferencedByOrderBy;
-	}
 
 	public Set<AntlrDataTypeProperty<?>> getDataTypePropertiesReferencedByOrderBy()
 	{
@@ -60,9 +53,6 @@ public class ReferencedPropertiesOrderByVisitor
 		AntlrThisMemberReferencePath thisMemberReferencePath = memberReferencePath.getThisMemberReferencePath();
 		thisMemberReferencePath.visit(this.expressionValueVisitor);
 
-		this.associationEndsReferencedByOrderBy.addAll(
-			this.expressionValueVisitor.getAssociationEndsReferencedByCriteria()
-		);
 		this.dataTypePropertiesReferencedByOrderBy.addAll(
 			this.expressionValueVisitor.getDataTypePropertiesReferencedByCriteria()
 		);

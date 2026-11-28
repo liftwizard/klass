@@ -22,7 +22,6 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 
 import cool.klass.model.converter.compiler.state.parameter.AntlrParameter;
-import cool.klass.model.converter.compiler.state.property.AntlrAssociationEnd;
 import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
 import cool.klass.model.converter.compiler.state.value.AntlrExpressionValueVisitor;
 import cool.klass.model.converter.compiler.state.value.AntlrParameterReference;
@@ -35,19 +34,12 @@ import cool.klass.model.converter.compiler.state.value.literal.AntlrLiteralListV
 import cool.klass.model.converter.compiler.state.value.literal.AntlrNullLiteral;
 import cool.klass.model.converter.compiler.state.value.literal.AntlrStringLiteralValue;
 import cool.klass.model.converter.compiler.state.value.literal.AntlrUserLiteral;
-import org.eclipse.collections.api.list.ImmutableList;
 
 public class ReferencedPropertiesExpressionValueVisitor
 	implements AntlrExpressionValueVisitor
 {
-	private final Set<AntlrAssociationEnd> associationEndsReferencedByCriteria = new LinkedHashSet<>();
 	private final Set<AntlrDataTypeProperty<?>> dataTypePropertiesReferencedByCriteria = new LinkedHashSet<>();
 	private final Set<AntlrParameter> parametersReferencedByCriteria = new LinkedHashSet<>();
-
-	public Set<AntlrAssociationEnd> getAssociationEndsReferencedByCriteria()
-	{
-		return this.associationEndsReferencedByCriteria;
-	}
 
 	public Set<AntlrDataTypeProperty<?>> getDataTypePropertiesReferencedByCriteria()
 	{
@@ -62,8 +54,6 @@ public class ReferencedPropertiesExpressionValueVisitor
 	@Override
 	public void visitTypeMember(@Nonnull AntlrTypeMemberReferencePath typeMemberExpressionValue)
 	{
-		ImmutableList<AntlrAssociationEnd> associationEnds = typeMemberExpressionValue.getAssociationEnds();
-		this.associationEndsReferencedByCriteria.addAll(associationEnds.castToList());
 		AntlrDataTypeProperty<?> dataTypeProperty = typeMemberExpressionValue.getDataTypeProperty();
 		this.dataTypePropertiesReferencedByCriteria.add(dataTypeProperty);
 	}
@@ -71,8 +61,6 @@ public class ReferencedPropertiesExpressionValueVisitor
 	@Override
 	public void visitThisMember(@Nonnull AntlrThisMemberReferencePath thisMemberExpressionValue)
 	{
-		ImmutableList<AntlrAssociationEnd> associationEnds = thisMemberExpressionValue.getAssociationEnds();
-		this.associationEndsReferencedByCriteria.addAll(associationEnds.castToList());
 		AntlrDataTypeProperty<?> dataTypeProperty = thisMemberExpressionValue.getDataTypeProperty();
 		this.dataTypePropertiesReferencedByCriteria.add(dataTypeProperty);
 	}
