@@ -1,0 +1,19 @@
+════════════════════════════════════════ [35mERR_OBS_MOD[m ════════════════════════════════════════
+[31mError: Expected digest 'digest' of 'content' to be computed from the content, but it is computed as an aggregate.[m
+
+At (ObjectStorageErrorTest.klass:106:22)
+
+[39m  1║ [35mpackage [39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mproperty
+[39m102║ [35mclass [39mAggregateDigest
+[39m103║ [36m{
+[39m105║     [39mdigest [36m: [35mString[36m? [32mminLength[36m([34m64[36m) [32mmaxLength[36m([34m64[36m) [36m{ [35mmin[36m([32mthis[36m.[39mparts[36m.[39mname[36m) [36m}
+[39m   ║ [31m                                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+[39m106║     [39mcontent[36m: [35mString[36m? [32mobjectStorage[36m([32mthis[36m.[39mdigest[36m, [34m"sha256"[36m)[36m;
+[39m   ║ [31m                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[39m107║ [36m}
+[m
+[36mLocation:  [mObjectStorageErrorTest.klass:106:22[m
+[36mFile:      [mObjectStorageErrorTest.klass[m
+[36mLine:      [m106[m
+[36mCharacter: [m22
+═════════════════════════════════════════════════════════════════════════════════════════════

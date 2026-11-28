@@ -1,0 +1,19 @@
+════════════════════════════════════════ [35mERR_OBS_FIN[m ════════════════════════════════════════
+[31mError: Expected 'objectStorage' property 'content' and its key digest 'digest' to be final. A key never changes, so the content it digests can't either.[m
+
+At (ObjectStorageErrorTest.klass:166:5)
+
+[39m  1║ [35mpackage [39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mproperty
+[39m163║ [35mclass [39mNonFinalKeyDigest
+[39m164║ [36m{
+[39m165║     [39mdigest [36m: [35mString [32mkey [32mminLength[36m([34m64[36m) [32mmaxLength[36m([34m64[36m)[36m;
+[39m   ║ [31m    ^^^^^^
+[39m166║     [39mcontent[36m: [35mString [32mobjectStorage[36m([32mthis[36m.[39mdigest[36m, [34m"sha256"[36m)[36m;
+[39m   ║ [31m    ^^^^^^^
+[39m167║ [36m}
+[m
+[36mLocation:  [mObjectStorageErrorTest.klass:166:5[m
+[36mFile:      [mObjectStorageErrorTest.klass[m
+[36mLine:      [m166[m
+[36mCharacter: [m5
+═════════════════════════════════════════════════════════════════════════════════════════════

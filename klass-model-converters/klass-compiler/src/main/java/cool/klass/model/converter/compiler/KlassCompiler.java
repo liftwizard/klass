@@ -33,6 +33,7 @@ import cool.klass.model.converter.compiler.phase.ClassifierPhase;
 import cool.klass.model.converter.compiler.phase.CompilationUnitPhase;
 import cool.klass.model.converter.compiler.phase.EnumerationsPhase;
 import cool.klass.model.converter.compiler.phase.InheritancePhase;
+import cool.klass.model.converter.compiler.phase.ObjectStoragePhase;
 import cool.klass.model.converter.compiler.phase.OrderByDirectionInferencePhase;
 import cool.klass.model.converter.compiler.phase.OrderByDirectionPhase;
 import cool.klass.model.converter.compiler.phase.OrderByPhase;
@@ -85,6 +86,7 @@ public class KlassCompiler
 			AuditAssociationInferencePhase::new,
 			RelationshipPhase::new,
 			RelationshipInferencePhase::new,
+			ObjectStoragePhase::new,
 			ProjectionDeclarationPhase::new,
 			ProjectionPhase::new,
 			ServicePhase::new,

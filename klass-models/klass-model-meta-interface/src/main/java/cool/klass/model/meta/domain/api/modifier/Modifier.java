@@ -102,6 +102,11 @@ public interface Modifier
 		return this.is("version");
 	}
 
+	default boolean isObjectStorage()
+	{
+		return this.is("objectStorage");
+	}
+
 	default boolean isDerived()
 	{
 		return this.is("derived");

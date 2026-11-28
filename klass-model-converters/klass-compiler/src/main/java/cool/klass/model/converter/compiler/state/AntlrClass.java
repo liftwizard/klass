@@ -32,6 +32,7 @@ import cool.klass.model.converter.compiler.state.property.AntlrModifier;
 import cool.klass.model.converter.compiler.state.property.AntlrParameterizedProperty;
 import cool.klass.model.converter.compiler.state.property.AntlrProperty;
 import cool.klass.model.converter.compiler.state.property.AntlrReferenceProperty;
+import cool.klass.model.converter.compiler.state.value.AntlrThisMemberReferencePath;
 import cool.klass.model.meta.domain.InterfaceImpl.InterfaceBuilder;
 import cool.klass.model.meta.domain.KlassImpl.KlassBuilder;
 import cool.klass.model.meta.domain.property.AbstractDataTypeProperty.DataTypePropertyBuilder;
@@ -46,6 +47,7 @@ import cool.klass.model.meta.grammar.KlassParser.ClassReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
 import cool.klass.model.meta.grammar.KlassParser.InterfaceReferenceContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertyContext;
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.bag.ImmutableBag;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.factory.Sets;
@@ -472,7 +474,37 @@ public class AntlrClass
 		this.reportVersionErrors(compilerAnnotationHolder);
 		this.reportTransientInheritance(compilerAnnotationHolder);
 		this.reportTransientIdProperties(compilerAnnotationHolder);
+		this.reportDuplicateObjectStorageDigests(compilerAnnotationHolder);
 		// TODO: parameterized properties
+	}
+
+	private void reportDuplicateObjectStorageDigests(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		ImmutableList<AntlrThisMemberReferencePath> digestPaths = this.getAllDataTypeProperties()
+			.flatCollect((each) -> each.getObjectStorageDigestPath().stream().toList())
+			.reject((each) -> each.getAssociationEnds().notEmpty())
+			.reject((each) -> each.getDataTypeProperty() == AntlrEnumerationProperty.NOT_FOUND);
+		// One report per reused digest, underlining every reference to it, like ERR_DUP_PRP shows every duplicate
+		digestPaths.groupBy(AntlrThisMemberReferencePath::getDataTypeProperty).forEachKeyMultiValues((digest, paths) ->
+		{
+			ImmutableList<AntlrThisMemberReferencePath> reusing = paths.toList().toImmutable();
+			if (reusing.size() <= 1)
+			{
+				return;
+			}
+			String message = String.format(
+				"Expected property '%s' to be the digest of one 'objectStorage' property, but several name it.",
+				digest.getName()
+			);
+			AntlrThisMemberReferencePath first = reusing.getFirst();
+			compilerAnnotationHolder.add(
+				"ERR_OBS_DUP",
+				message,
+				first,
+				reusing.flatCollect(AntlrThisMemberReferencePath::getSurroundingElements).distinct(),
+				reusing.collect((each) -> (ParserRuleContext) each.getElementContext().memberReference())
+			);
+		});
 	}
 
 	private void reportMultipleOppositesWithModifier(

@@ -58,6 +58,20 @@ public class AntlrModifier
 		"lastUpdatedBy"
 	);
 
+	private static final ImmutableList<String> COMPUTED_BY_SYSTEM = Lists.immutable.with(
+		"derived",
+		"id",
+		"userId",
+		"createdBy",
+		"createdOn",
+		"lastUpdatedBy",
+		"version",
+		"system",
+		"valid",
+		"from",
+		"to"
+	);
+
 	private final AntlrNamedElement surroundingElement;
 	private ModifierBuilder elementBuilder;
 
@@ -188,6 +202,19 @@ public class AntlrModifier
 		return this.is("derived");
 	}
 
+	public boolean isObjectStorage()
+	{
+		return this.is("objectStorage");
+	}
+
+	/**
+	 * {@return whether the property's value is computed by the system rather than written, so it can't be a digest of content}
+	 */
+	public boolean isComputedBySystem()
+	{
+		return COMPUTED_BY_SYSTEM.contains(this.getKeyword());
+	}
+
 	public boolean isOwned()
 	{
 		return this.is("owned");
@@ -240,11 +267,5 @@ public class AntlrModifier
 	public ModifierBuilder getElementBuilder()
 	{
 		return Objects.requireNonNull(this.elementBuilder);
-	}
-
-	@Override
-	public String toString()
-	{
-		return this.getKeyword();
 	}
 }

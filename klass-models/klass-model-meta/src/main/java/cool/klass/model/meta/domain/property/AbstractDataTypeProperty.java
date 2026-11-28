@@ -63,6 +63,8 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 
 	private OrderedMap<AssociationEnd, DataTypeProperty> keysMatchingThisForeignKey;
 	private OrderedMap<AssociationEnd, DataTypeProperty> foreignKeysMatchingThisKey;
+	private Optional<DataTypeProperty> objectStorageDigestProperty;
+	private Optional<String> objectStorageAlgorithm;
 
 	@Nonnull
 	private Optional<MinLengthPropertyValidation> minLengthPropertyValidation = Optional.empty();
@@ -232,6 +234,36 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 	}
 
 	@Override
+	public Optional<DataTypeProperty> getObjectStorageDigestProperty()
+	{
+		return Objects.requireNonNull(this.objectStorageDigestProperty);
+	}
+
+	private void setObjectStorageDigestProperty(Optional<DataTypeProperty> objectStorageDigestProperty)
+	{
+		if (this.objectStorageDigestProperty != null)
+		{
+			throw new IllegalStateException();
+		}
+		this.objectStorageDigestProperty = Objects.requireNonNull(objectStorageDigestProperty);
+	}
+
+	@Override
+	public Optional<String> getObjectStorageAlgorithm()
+	{
+		return Objects.requireNonNull(this.objectStorageAlgorithm);
+	}
+
+	private void setObjectStorageAlgorithm(Optional<String> objectStorageAlgorithm)
+	{
+		if (this.objectStorageAlgorithm != null)
+		{
+			throw new IllegalStateException();
+		}
+		this.objectStorageAlgorithm = Objects.requireNonNull(objectStorageAlgorithm);
+	}
+
+	@Override
 	public String toString()
 	{
 		String isOptionalString = this.optional ? "?" : "";
@@ -260,6 +292,9 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 		> foreignKeyBuildersMatchingThisKey;
 
 		protected ImmutableList<ModifierBuilder> modifierBuilders;
+
+		private Optional<DataTypePropertyBuilder<?, ?, ?>> objectStorageDigestPropertyBuilder;
+		private Optional<String> objectStorageAlgorithm;
 
 		private Optional<MinLengthPropertyValidationBuilder> minLengthPropertyValidationBuilder;
 		private Optional<MaxLengthPropertyValidationBuilder> maxLengthPropertyValidationBuilder;
@@ -302,6 +337,26 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 				throw new IllegalStateException();
 			}
 			this.foreignKeyBuildersMatchingThisKey = Objects.requireNonNull(foreignKeyBuildersMatchingThisKey);
+		}
+
+		public void setObjectStorageDigestPropertyBuilder(
+			Optional<DataTypePropertyBuilder<?, ?, ?>> objectStorageDigestPropertyBuilder
+		)
+		{
+			if (this.objectStorageDigestPropertyBuilder != null)
+			{
+				throw new IllegalStateException();
+			}
+			this.objectStorageDigestPropertyBuilder = Objects.requireNonNull(objectStorageDigestPropertyBuilder);
+		}
+
+		public void setObjectStorageAlgorithm(Optional<String> objectStorageAlgorithm)
+		{
+			if (this.objectStorageAlgorithm != null)
+			{
+				throw new IllegalStateException();
+			}
+			this.objectStorageAlgorithm = Objects.requireNonNull(objectStorageAlgorithm);
 		}
 
 		public void setMinLengthPropertyValidationBuilder(
@@ -385,6 +440,10 @@ public abstract class AbstractDataTypeProperty<T extends DataType>
 			AbstractDataTypeProperty<T> property = this.getElement();
 			property.setKeysMatchingThisForeignKey(keysMatchingThisForeignKey.asUnmodifiable());
 			property.setForeignKeysMatchingThisKey(foreignKeysMatchingThisKey.asUnmodifiable());
+			property.setObjectStorageDigestProperty(
+				this.objectStorageDigestPropertyBuilder.<DataTypeProperty>map(DataTypePropertyBuilder::getElement)
+			);
+			property.setObjectStorageAlgorithm(this.objectStorageAlgorithm);
 		}
 	}
 }

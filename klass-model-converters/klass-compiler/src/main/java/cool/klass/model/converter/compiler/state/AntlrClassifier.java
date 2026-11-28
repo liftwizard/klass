@@ -123,6 +123,8 @@ public abstract class AntlrClassifier
 		OrderedMapAdapter.adapt(new LinkedHashMap<>());
 	protected final MutableOrderedMap<String, AntlrDataTypeProperty<?>> declaredDataTypePropertiesByName =
 		OrderedMapAdapter.adapt(new LinkedHashMap<>());
+	protected final MutableOrderedMap<ParserRuleContext, AntlrDataTypeProperty<?>> declaredDataTypePropertiesByContext =
+		OrderedMapAdapter.adapt(new LinkedHashMap<>());
 	protected final MutableOrderedMap<String, AntlrReferenceProperty<?>> declaredReferencePropertiesByName =
 		OrderedMapAdapter.adapt(new LinkedHashMap<>());
 	protected final MutableOrderedMap<
@@ -277,6 +279,20 @@ public abstract class AntlrClassifier
 		this.declaredDataTypePropertiesByName.compute(antlrDataTypeProperty.getName(), (name, builder) ->
 			builder == null ? antlrDataTypeProperty : AntlrDataTypeProperty.AMBIGUOUS
 		);
+		AntlrDataTypeProperty<?> duplicate = this.declaredDataTypePropertiesByContext.put(
+			antlrDataTypeProperty.getElementContext(),
+			antlrDataTypeProperty
+		);
+		if (duplicate != null)
+		{
+			throw new AssertionError();
+		}
+	}
+
+	public AntlrDataTypeProperty<?> getDeclaredDataTypePropertyByContext(@Nonnull ParserRuleContext ctx)
+	{
+		Objects.requireNonNull(ctx);
+		return this.declaredDataTypePropertiesByContext.get(ctx);
 	}
 
 	public AntlrAssociationEndSignature getDeclaredAssociationEndSignatureByContext(

@@ -142,6 +142,17 @@ public abstract class AntlrProperty
 		}
 	}
 
+	public boolean isObjectStorage()
+	{
+		return this.getModifiers().anySatisfy(AntlrModifier::isObjectStorage);
+	}
+
+	public AntlrModifier getModifierByContext(@Nonnull ParserRuleContext modifierContext)
+	{
+		Objects.requireNonNull(modifierContext);
+		return this.modifiersByContext.get(modifierContext);
+	}
+
 	public ImmutableList<AntlrModifier> getModifiersByName(String modifierName)
 	{
 		MutableList<AntlrModifier> result = this.modifiersByName.get(modifierName);

@@ -161,8 +161,11 @@ primitiveType: 'Boolean' | 'Integer' | 'Long' | 'Double' | 'Float' | 'String' | 
 // modifiers
 classifierModifier: 'systemTemporal' | 'validTemporal' | 'bitemporal' | 'versioned' | 'audited' | 'transient'
     | identifier {notifyErrorListeners("Unrecognized Classifier modifier: " + _input.LT(-1).getText());};
-dataTypePropertyModifier: 'key' | 'private' | 'userId' | 'id' | 'valid' | 'system' | 'from' | 'to' | 'createdBy' | 'createdOn' | 'lastUpdatedBy' | 'version' | 'derived' | 'final'
+dataTypePropertyModifier: 'key' | 'private' | 'userId' | 'id' | 'valid' | 'system' | 'from' | 'to' | 'createdBy' | 'createdOn' | 'lastUpdatedBy' | 'version' | 'derived' | 'final' | 'objectStorage' | objectStorageModifier
     | identifier {notifyErrorListeners("Unrecognized DataTypeProperty modifier: " + _input.LT(-1).getText());};
+// content stored outside the database under the digest held in another property of the same class
+objectStorageModifier: 'objectStorage' '(' thisMemberReferencePath ',' digestAlgorithm ')';
+digestAlgorithm: StringLiteral;
 associationEndModifier: 'owned' | 'final' | 'version' | 'private' | 'createdBy' | 'lastUpdatedBy'
     | identifier {notifyErrorListeners("Unrecognized AssociationEnd modifier: " + _input.LT(-1).getText());};
 parameterizedPropertyModifier: 'createdBy' | 'lastUpdatedBy'
@@ -237,7 +240,7 @@ keywordValidAsIdentifier
     // classifierModifier
     | 'systemTemporal' | 'validTemporal' | 'bitemporal' | 'versioned' | 'audited' | 'transient'
     // dataTypePropertyModifier
-    | 'key' | 'private' | 'userId' | 'id' | 'valid' | 'system' | 'from' | 'to' | 'createdBy' | 'createdOn' | 'lastUpdatedBy' | 'version' | 'derived'
+    | 'key' | 'private' | 'userId' | 'id' | 'valid' | 'system' | 'from' | 'to' | 'createdBy' | 'createdOn' | 'lastUpdatedBy' | 'version' | 'derived' | 'objectStorage'
     // associationEndModifier
     | 'owned' | 'final' | 'version'
     // parameterizedPropertyModifier
