@@ -1,0 +1,192 @@
+package cool.klass.model.converter.compiler.annotation.property
+
+// Valid
+
+class KeyDigest
+{
+    digest : String key final minLength(64) maxLength(64);
+    content: String objectStorage(this.digest, "sha256") final;
+}
+
+// A digest that isn't a key needs no final
+class NonKeyDigest
+{
+    id     : Long key id;
+    digest : String minLength(64) maxLength(64);
+    content: String objectStorage(this.digest, "sha256");
+}
+
+class OptionalDigestOptionalContent
+{
+    id     : Long key id;
+    digest : String? minLength(64) maxLength(64);
+    content: String? objectStorage(this.digest, "sha256");
+}
+
+class ObjectStorageUnderClassKey
+{
+    id     : Long key id;
+    content: String objectStorage;
+}
+
+class AbstractDigested
+    abstract
+{
+    digest: String key final minLength(64) maxLength(64);
+}
+
+class InheritedDigest
+    extends AbstractDigested
+{
+    content: String objectStorage(this.digest, "sha256") final;
+}
+
+// Invalid
+
+// An unresolved digest reports the general missing-member error
+class MissingDigest
+{
+    id     : Long key id;
+    content: String objectStorage(this.missing, "sha256");
+}
+
+class SelfDigest
+{
+    id     : Long key id;
+    content: String objectStorage(this.content, "sha256");
+}
+
+class ObjectStorageDigest
+{
+    id     : Long key id;
+    digest : String objectStorage minLength(64) maxLength(64);
+    content: String objectStorage(this.digest, "sha256");
+}
+
+class UnknownAlgorithm
+{
+    id     : Long key id;
+    digest : String minLength(64) maxLength(64);
+    content: String objectStorage(this.digest, "md5");
+}
+
+class NonStringContent
+{
+    id     : Long key id;
+    digest : String minLength(64) maxLength(64);
+    content: Long objectStorage(this.digest, "sha256");
+}
+
+class NonStringDigest
+{
+    id     : Long key id;
+    digest : Long;
+    content: String objectStorage(this.digest, "sha256");
+}
+
+class ReusedDigest
+{
+    id      : Long key id;
+    digest  : String minLength(64) maxLength(64);
+    content : String objectStorage(this.digest, "sha256");
+    content2: String objectStorage(this.digest, "sha256");
+}
+
+class DerivedDigest
+{
+    id     : Long key id;
+    digest : String derived minLength(64) maxLength(64);
+    content: String objectStorage(this.digest, "sha256");
+}
+
+class AggregateDigest
+{
+    id     : Long key id;
+    digest : String? minLength(64) maxLength(64) { min(this.parts.name) }
+    content: String? objectStorage(this.digest, "sha256");
+}
+
+class Part
+{
+    id               : Long key id;
+    aggregateDigestId: Long private;
+    name             : String;
+}
+
+association AggregateDigestHasParts
+{
+    aggregateDigest: AggregateDigest[1..1];
+    parts          : Part[0..*];
+}
+
+class ShortDigest
+{
+    id     : Long key id;
+    digest : String minLength(40) maxLength(40);
+    content: String objectStorage(this.digest, "sha256");
+}
+
+class NoLengthDigest
+{
+    id     : Long key id;
+    digest : String;
+    content: String objectStorage(this.digest, "sha256");
+}
+
+class MinLengthOnlyDigest
+{
+    id     : Long key id;
+    digest : String minLength(64);
+    content: String objectStorage(this.digest, "sha256");
+}
+
+class MaxLengthOnlyDigest
+{
+    id     : Long key id;
+    digest : String maxLength(64);
+    content: String objectStorage(this.digest, "sha256");
+}
+
+class OptionalDigestRequiredContent
+{
+    id     : Long key id;
+    digest : String? minLength(64) maxLength(64);
+    content: String objectStorage(this.digest, "sha256");
+}
+
+class RequiredDigestOptionalContent
+{
+    digest : String key final minLength(64) maxLength(64);
+    content: String? objectStorage(this.digest, "sha256") final;
+}
+
+class NonFinalKeyDigest
+{
+    digest : String key minLength(64) maxLength(64);
+    content: String objectStorage(this.digest, "sha256");
+}
+
+class OneToManyHopTarget
+{
+    id    : Long key id;
+    digest: String minLength(64) maxLength(64);
+}
+
+class OneToManyHopDigest
+{
+    id                  : Long key id;
+    oneToManyHopTargetId: Long private;
+    content             : String objectStorage(this.oneToManyHopTarget.digest, "sha256");
+}
+
+association OneToManyHopDigestHasTarget
+{
+    oneToManyHopDigests: OneToManyHopDigest[0..*];
+    oneToManyHopTarget : OneToManyHopTarget[1..1];
+}
+
+interface InterfaceObjectStorage
+{
+    digest : String minLength(64) maxLength(64);
+    content: String objectStorage(this.digest, "sha256");
+}

@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import cool.klass.model.converter.compiler.CompilationUnit;
@@ -33,11 +34,13 @@ import cool.klass.model.converter.compiler.state.AntlrEnumeration;
 import cool.klass.model.converter.compiler.state.AntlrPrimitiveType;
 import cool.klass.model.converter.compiler.state.AntlrType;
 import cool.klass.model.converter.compiler.state.IAntlrElement;
+import cool.klass.model.converter.compiler.state.property.validation.AbstractAntlrNumericPropertyValidation;
 import cool.klass.model.converter.compiler.state.property.validation.AbstractAntlrPropertyValidation;
 import cool.klass.model.converter.compiler.state.property.validation.AntlrMaxLengthPropertyValidation;
 import cool.klass.model.converter.compiler.state.property.validation.AntlrMaxPropertyValidation;
 import cool.klass.model.converter.compiler.state.property.validation.AntlrMinLengthPropertyValidation;
 import cool.klass.model.converter.compiler.state.property.validation.AntlrMinPropertyValidation;
+import cool.klass.model.converter.compiler.state.value.AntlrThisMemberReferencePath;
 import cool.klass.model.meta.domain.api.DataType;
 import cool.klass.model.meta.domain.api.PrimitiveType;
 import cool.klass.model.meta.domain.property.AbstractDataTypeProperty.DataTypePropertyBuilder;
@@ -48,7 +51,11 @@ import cool.klass.model.meta.domain.property.validation.MaxPropertyValidationImp
 import cool.klass.model.meta.domain.property.validation.MinLengthPropertyValidationImpl.MinLengthPropertyValidationBuilder;
 import cool.klass.model.meta.domain.property.validation.MinPropertyValidationImpl.MinPropertyValidationBuilder;
 import cool.klass.model.meta.grammar.KlassParser.ClassDeclarationContext;
+import cool.klass.model.meta.grammar.KlassParser.DigestAlgorithmContext;
+import cool.klass.model.meta.grammar.KlassParser.EnumerationPropertyContext;
 import cool.klass.model.meta.grammar.KlassParser.IdentifierContext;
+import cool.klass.model.meta.grammar.KlassParser.ObjectStorageModifierContext;
+import cool.klass.model.meta.grammar.KlassParser.PrimitivePropertyContext;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.eclipse.collections.api.factory.Lists;
 import org.eclipse.collections.api.list.ImmutableList;
@@ -180,6 +187,8 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 	};
 	// </editor-fold>
 
+	private static final ImmutableList<String> OBJECT_STORAGE_ALGORITHMS = Lists.immutable.with("sha256");
+
 	private static final ImmutableList<PrimitiveType> ALLOWED_VERSION_TYPES = Lists.immutable.with(
 		PrimitiveType.INTEGER,
 		PrimitiveType.LONG
@@ -205,6 +214,13 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 		MutableList<AntlrDataTypeProperty<?>>
 	> foreignKeysMatchingThisKey = OrderedMapAdapter.adapt(new LinkedHashMap<>());
 
+	// The digest named by objectStorage(this.digest, "algorithm"), resolved once the class's properties are known
+	@Nullable
+	private AntlrThisMemberReferencePath objectStorageDigestPath;
+
+	@Nullable
+	private DigestAlgorithmContext objectStorageAlgorithmContext;
+
 	protected AntlrDataTypeProperty(
 		@Nonnull ParserRuleContext elementContext,
 		@Nonnull Optional<CompilationUnit> compilationUnit,
@@ -227,6 +243,36 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 	}
 
 	protected abstract ParserRuleContext getTypeParserRuleContext();
+
+	public void setObjectStorage(
+		@Nonnull AntlrThisMemberReferencePath objectStorageDigestPath,
+		@Nonnull DigestAlgorithmContext objectStorageAlgorithmContext
+	)
+	{
+		if (this.objectStorageDigestPath != null)
+		{
+			throw new IllegalStateException();
+		}
+		this.objectStorageDigestPath = Objects.requireNonNull(objectStorageDigestPath);
+		this.objectStorageAlgorithmContext = Objects.requireNonNull(objectStorageAlgorithmContext);
+	}
+
+	public Optional<AntlrThisMemberReferencePath> getObjectStorageDigestPath()
+	{
+		return Optional.ofNullable(this.objectStorageDigestPath);
+	}
+
+	/**
+	 * {@return the algorithm named in {@code objectStorage(this.digest, "algorithm")}, without its quotes}
+	 */
+	public Optional<String> getObjectStorageAlgorithm()
+	{
+		return Optional.ofNullable(this.objectStorageAlgorithmContext).map((context) ->
+		{
+			String quoted = context.StringLiteral().getText();
+			return quoted.substring(1, quoted.length() - 1);
+		});
+	}
 
 	public boolean isKey()
 	{
@@ -434,6 +480,13 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 			);
 
 		this.getElementBuilder().setForeignKeyBuildersMatchingThisKey(foreignKeysMatchingThisKey.asUnmodifiable());
+
+		this.getElementBuilder().setObjectStorageDigestPropertyBuilder(
+			this.getObjectStorageDigestPath()
+				.map(AntlrThisMemberReferencePath::getDataTypeProperty)
+				.<DataTypePropertyBuilder<?, ?, ?>>map(AntlrDataTypeProperty::getElementBuilder)
+		);
+		this.getElementBuilder().setObjectStorageAlgorithm(this.getObjectStorageAlgorithm());
 	}
 
 	// </editor-fold>
@@ -451,7 +504,351 @@ public abstract class AntlrDataTypeProperty<T extends DataType>
 		this.reportInvalidUserIdProperties(compilerAnnotationHolder);
 		this.reportInvalidVersionProperties(compilerAnnotationHolder);
 		this.reportInvalidTemporalProperties(compilerAnnotationHolder);
+		this.reportInvalidObjectStorage(compilerAnnotationHolder);
 		// TODO: ☑ Check for nullable key properties
+	}
+
+	private void reportInvalidObjectStorage(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		AntlrModifier modifier = this.getModifiers().detect(
+			(each) -> each.getElementContext().getChild(0) instanceof ObjectStorageModifierContext
+		);
+		if (modifier == null)
+		{
+			return;
+		}
+
+		if (this.objectStorageDigestPath == null)
+		{
+			String message = String.format(
+				"Expected 'objectStorage' property '%s' to be declared in a class, not an interface.",
+				this.getName()
+			);
+			compilerAnnotationHolder.add("ERR_OBS_INT", message, this, modifier.getElementContext());
+			return;
+		}
+
+		AntlrThisMemberReferencePath path = this.objectStorageDigestPath;
+		if (path.getAssociationEnds().notEmpty())
+		{
+			String message = String.format(
+				"Expected the digest of '%s' to be a property of its own class, without association ends.",
+				this.getName()
+			);
+			compilerAnnotationHolder.add(
+				"ERR_OBS_HOP",
+				message,
+				path,
+				Lists.immutable.<ParserRuleContext>withAll(path.getElementContext().associationEndReference())
+			);
+			return;
+		}
+
+		path.reportErrors(compilerAnnotationHolder);
+
+		String algorithm = this.getObjectStorageAlgorithm().get();
+		if (!OBJECT_STORAGE_ALGORITHMS.contains(algorithm))
+		{
+			String message = String.format(
+				"Expected the algorithm of '%s' to be one of %s but found '%s'.",
+				this.getName(),
+				OBJECT_STORAGE_ALGORITHMS.collect((each) -> '"' + each + '"').makeString(", "),
+				algorithm
+			);
+			compilerAnnotationHolder.add("ERR_OBS_ALG", message, this, this.objectStorageAlgorithmContext);
+		}
+
+		if (!AntlrDataTypeProperty.isString(this))
+		{
+			String message = String.format(
+				"Expected 'objectStorage' property '%s' to have type '%s' but found '%s'.",
+				this.getName(),
+				PrimitiveType.STRING,
+				this.getType().getName()
+			);
+			compilerAnnotationHolder.add("ERR_OBS_CTY", message, this, this.getTypeParserRuleContext());
+		}
+
+		AntlrDataTypeProperty<?> digest = path.getDataTypeProperty();
+		if (digest == AntlrEnumerationProperty.NOT_FOUND)
+		{
+			// Covered by ERR_THS_MEM
+			return;
+		}
+
+		if (digest == this)
+		{
+			String message = String.format(
+				"Expected the digest of '%s' to be another property, not itself.",
+				this.getName()
+			);
+			compilerAnnotationHolder.add("ERR_OBS_SLF", message, path, path.getElementContext().memberReference());
+			return;
+		}
+
+		AntlrModifier digestObjectStorage = digest.getModifiers().detect(AntlrModifier::isObjectStorage);
+		if (digestObjectStorage != null)
+		{
+			String message = String.format(
+				"Expected digest '%s' of '%s' to be stored in the database, not in object storage.",
+				digest.getName(),
+				this.getName()
+			);
+			this.reportContentAndDigest(
+				compilerAnnotationHolder,
+				"ERR_OBS_OBS",
+				message,
+				digest,
+				Lists.immutable.with(modifier.getElementContext()),
+				Lists.immutable.with(digestObjectStorage.getElementContext())
+			);
+		}
+
+		if (!AntlrDataTypeProperty.isString(digest))
+		{
+			String message = String.format(
+				"Expected digest '%s' of '%s' to have type '%s' but found '%s'.",
+				digest.getName(),
+				this.getName(),
+				PrimitiveType.STRING,
+				digest.getType().getName()
+			);
+			this.reportContentAndDigest(
+				compilerAnnotationHolder,
+				"ERR_OBS_DTY",
+				message,
+				digest,
+				Lists.immutable.with(modifier.getElementContext()),
+				Lists.immutable.with(digest.getTypeParserRuleContext())
+			);
+		}
+
+		this.reportComputedDigest(compilerAnnotationHolder, digest, modifier);
+
+		// An unknown algorithm or a non-String digest is already reported
+		if (OBJECT_STORAGE_ALGORITHMS.contains(algorithm) && AntlrDataTypeProperty.isString(digest))
+		{
+			this.reportInvalidDigestLength(compilerAnnotationHolder, digest, algorithm, modifier);
+		}
+
+		if (digest.isOptional() != this.isOptional())
+		{
+			String message = digest.isKey() ?
+				String.format(
+					"Expected 'objectStorage' property '%s' to be required, because its digest '%s' is a key.",
+					this.getName(),
+					digest.getName()
+				) :
+				String.format(
+					"Expected 'objectStorage' property '%s' and its digest '%s' to be both optional or both required.",
+					this.getName(),
+					digest.getName()
+				);
+			// The optional side's '?', and the required side's type, or 'key' when that's why it's required
+			ParserRuleContext contentContext = this.isOptional() ?
+				this.getOptionalMarkerContext() :
+				this.getTypeParserRuleContext();
+			ParserRuleContext digestContext = digest.isOptional() ?
+				digest.getOptionalMarkerContext() :
+				digest.isKey() ?
+					digest.getModifiers().detect(AntlrModifier::isKey).getElementContext() :
+					digest.getTypeParserRuleContext();
+			this.reportContentAndDigest(
+				compilerAnnotationHolder,
+				"ERR_OBS_OPT",
+				message,
+				digest,
+				Lists.immutable.with(contentContext),
+				Lists.immutable.with(digestContext)
+			);
+		}
+
+		if (digest.isKey())
+		{
+			String message = String.format(
+				"Expected 'objectStorage' property '%s' and its key digest '%s' to be final. A key never changes, so the content it digests can't either.",
+				this.getName(),
+				digest.getName()
+			);
+			if (!this.isFinal() || !digest.isFinal())
+			{
+				this.reportContentAndDigest(
+					compilerAnnotationHolder,
+					"ERR_OBS_FIN",
+					message,
+					digest,
+					this.isFinal() ? Lists.immutable.empty() : Lists.immutable.with(this.getNameContext()),
+					digest.isFinal() ? Lists.immutable.empty() : Lists.immutable.with(digest.getNameContext())
+				);
+			}
+		}
+	}
+
+	/**
+	 * Reports one error that underlines both the content and its digest. Like ERR_DUP_PRP, it adds the digest to the surrounding elements, so the snippet shows both properties' lines. A digest from another compilation unit can't share the snippet, so then each side that has something to underline gets its own report.
+	 */
+	private void reportContentAndDigest(
+		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
+		@Nonnull String annotationCode,
+		@Nonnull String message,
+		@Nonnull AntlrDataTypeProperty<?> digest,
+		@Nonnull ImmutableList<ParserRuleContext> contentContexts,
+		@Nonnull ImmutableList<ParserRuleContext> digestContexts
+	)
+	{
+		if (digest.getCompilationUnit().equals(this.getCompilationUnit()))
+		{
+			compilerAnnotationHolder.add(
+				annotationCode,
+				message,
+				this,
+				this.getSurroundingElements().newWith(digest),
+				contentContexts.newWithAll(digestContexts)
+			);
+			return;
+		}
+		if (contentContexts.notEmpty())
+		{
+			compilerAnnotationHolder.add(annotationCode, message, this, contentContexts);
+		}
+		if (digestContexts.notEmpty())
+		{
+			compilerAnnotationHolder.add(annotationCode, message, digest, digestContexts);
+		}
+	}
+
+	private void reportComputedDigest(
+		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
+		@Nonnull AntlrDataTypeProperty<?> digest,
+		@Nonnull AntlrModifier objectStorage
+	)
+	{
+		ImmutableList<AntlrModifier> computedModifiers = digest
+			.getModifiers()
+			.select(AntlrModifier::isComputedBySystem)
+			.toImmutable();
+		if (computedModifiers.isEmpty() && !digest.isAggregate())
+		{
+			return;
+		}
+
+		String message = String.format(
+			"Expected digest '%s' of '%s' to be computed from the content, but it is computed as %s.",
+			digest.getName(),
+			this.getName(),
+			digest.isAggregate() ?
+				"an aggregate" :
+				computedModifiers.collect(AntlrModifier::getKeyword).makeString("'", "', '", "'")
+		);
+		ImmutableList<ParserRuleContext> computedContexts = digest.isAggregate() ?
+			Lists.immutable.with(digest.getAggregationContext()) :
+			computedModifiers.collect(AntlrModifier::getElementContext);
+		this.reportContentAndDigest(
+			compilerAnnotationHolder,
+			"ERR_OBS_MOD",
+			message,
+			digest,
+			Lists.immutable.with(objectStorage.getElementContext()),
+			computedContexts
+		);
+	}
+
+	private void reportInvalidDigestLength(
+		@Nonnull CompilerAnnotationHolder compilerAnnotationHolder,
+		@Nonnull AntlrDataTypeProperty<?> digest,
+		@Nonnull String algorithm,
+		@Nonnull AntlrModifier objectStorage
+	)
+	{
+		int length = AntlrDataTypeProperty.getHexDigestLength(algorithm);
+		MutableList<AbstractAntlrNumericPropertyValidation> lengthValidations = Lists.mutable
+			.<AbstractAntlrNumericPropertyValidation>withAll(digest.minLengthValidations)
+			.withAll(digest.maxLengthValidations);
+		boolean exact =
+			digest.minLengthValidations.notEmpty() &&
+			digest.maxLengthValidations.notEmpty() &&
+			lengthValidations.allSatisfy((each) -> each.getNumber() == length);
+		if (exact)
+		{
+			return;
+		}
+
+		String message = String.format(
+			"Expected digest '%s' of '%s' to declare minLength(%d) maxLength(%d), the length of a hex %s digest, but found %s.",
+			digest.getName(),
+			this.getName(),
+			length,
+			length,
+			algorithm,
+			lengthValidations.isEmpty() ?
+				"neither" :
+				lengthValidations.collect((each) -> each.getElementContext().getText()).makeString(" ")
+		);
+		// The algorithm in the content's objectStorage(...) sets the required length
+		ImmutableList<ParserRuleContext> digestContexts = lengthValidations.isEmpty() ?
+			Lists.immutable.with(digest.getNameContext()) :
+			lengthValidations
+				.<ParserRuleContext>collect(AbstractAntlrNumericPropertyValidation::getElementContext)
+				.toImmutable();
+		this.reportContentAndDigest(
+			compilerAnnotationHolder,
+			"ERR_OBS_LEN",
+			message,
+			digest,
+			Lists.immutable.with(objectStorage.getElementContext()),
+			digestContexts
+		);
+	}
+
+	/**
+	 * {@return the number of hex characters in a digest from {@code algorithm}}
+	 */
+	public static int getHexDigestLength(@Nonnull String algorithm)
+	{
+		return switch (algorithm)
+		{
+			// 32 bytes
+			case "sha256" -> 64;
+			default -> throw new AssertionError("Unknown digest algorithm: " + algorithm);
+		};
+	}
+
+	private static boolean isString(@Nonnull AntlrDataTypeProperty<?> property)
+	{
+		return (
+			property.getType() instanceof AntlrPrimitiveType primitiveType &&
+			primitiveType.getPrimitiveType() == PrimitiveType.STRING
+		);
+	}
+
+	/**
+	 * {@return whether this property is computed by an aggregate like {@code { count(this.associationEnd) }} instead of being stored}
+	 */
+	public boolean isAggregate()
+	{
+		ParserRuleContext context = this.getElementContext();
+		return (
+			(context instanceof PrimitivePropertyContext primitive && primitive.aggregation() != null) ||
+			(context instanceof EnumerationPropertyContext enumeration && enumeration.aggregation() != null)
+		);
+	}
+
+	@Nonnull
+	private ParserRuleContext getAggregationContext()
+	{
+		ParserRuleContext context = this.getElementContext();
+		return context instanceof PrimitivePropertyContext primitive ?
+			primitive.aggregation() :
+			((EnumerationPropertyContext) context).aggregation();
+	}
+
+	@Nonnull
+	private ParserRuleContext getOptionalMarkerContext()
+	{
+		ParserRuleContext context = this.getElementContext();
+		return context instanceof PrimitivePropertyContext primitive ?
+			primitive.optionalMarker() :
+			((EnumerationPropertyContext) context).optionalMarker();
 	}
 
 	private void reportDuplicateValidations(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)

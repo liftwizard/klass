@@ -1,0 +1,19 @@
+════════════════════════════════════════ [35mERR_OBS_OPT[m ════════════════════════════════════════
+[31mError: Expected 'objectStorage' property 'content' and its digest 'digest' to be both optional or both required.[m
+
+At (ObjectStorageErrorTest.klass:154:14)
+
+[39m  1║ [35mpackage [39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mproperty
+[39m150║ [35mclass [39mOptionalDigestRequiredContent
+[39m151║ [36m{
+[39m153║     [39mdigest [36m: [35mString[36m? [32mminLength[36m([34m64[36m) [32mmaxLength[36m([34m64[36m)[36m;
+[39m   ║ [31m                   ^
+[39m154║     [39mcontent[36m: [35mString [32mobjectStorage[36m([32mthis[36m.[39mdigest[36m, [34m"sha256"[36m)[36m;
+[39m   ║ [31m             ^^^^^^
+[39m155║ [36m}
+[m
+[36mLocation:  [mObjectStorageErrorTest.klass:154:14[m
+[36mFile:      [mObjectStorageErrorTest.klass[m
+[36mLine:      [m154[m
+[36mCharacter: [m14
+═════════════════════════════════════════════════════════════════════════════════════════════
