@@ -32,6 +32,7 @@ import cool.klass.model.converter.compiler.state.property.AntlrModifier;
 import cool.klass.model.converter.compiler.state.property.AntlrParameterizedProperty;
 import cool.klass.model.converter.compiler.state.property.AntlrProperty;
 import cool.klass.model.converter.compiler.state.property.AntlrReferenceProperty;
+import cool.klass.model.converter.compiler.state.value.AntlrThisMemberReferencePath;
 import cool.klass.model.meta.domain.InterfaceImpl.InterfaceBuilder;
 import cool.klass.model.meta.domain.KlassImpl.KlassBuilder;
 import cool.klass.model.meta.domain.property.AbstractDataTypeProperty.DataTypePropertyBuilder;
@@ -472,7 +473,29 @@ public class AntlrClass
 		this.reportVersionErrors(compilerAnnotationHolder);
 		this.reportTransientInheritance(compilerAnnotationHolder);
 		this.reportTransientIdProperties(compilerAnnotationHolder);
+		this.reportDuplicateObjectStorageDigests(compilerAnnotationHolder);
 		// TODO: parameterized properties
+	}
+
+	private void reportDuplicateObjectStorageDigests(@Nonnull CompilerAnnotationHolder compilerAnnotationHolder)
+	{
+		ImmutableList<AntlrThisMemberReferencePath> digestPaths = this.getAllDataTypeProperties()
+			.flatCollect((each) -> each.getObjectStorageDigestPath().stream().toList())
+			.reject((each) -> each.getAssociationEnds().notEmpty())
+			.reject((each) -> each.getDataTypeProperty() == AntlrEnumerationProperty.NOT_FOUND);
+		for (AntlrThisMemberReferencePath path : digestPaths)
+		{
+			AntlrDataTypeProperty<?> digest = path.getDataTypeProperty();
+			if (digestPaths.count((each) -> each.getDataTypeProperty() == digest) <= 1)
+			{
+				continue;
+			}
+			String message = String.format(
+				"Expected property '%s' to be the digest of one 'objectStorage' property, but several name it.",
+				digest.getName()
+			);
+			compilerAnnotationHolder.add("ERR_OBS_DUP", message, path, path.getElementContext().memberReference());
+		}
 	}
 
 	private void reportMultipleOppositesWithModifier(

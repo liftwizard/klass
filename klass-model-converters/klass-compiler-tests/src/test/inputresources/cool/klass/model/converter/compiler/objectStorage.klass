@@ -1,0 +1,24 @@
+package com.objectstorage
+
+// The content lives in object storage under its sha256 digest, which is the key
+class BlueprintString
+{
+    digest         : String key final;
+    blueprintString: String objectStorage(this.digest, "sha256") final;
+    byteLength     : Long;
+}
+
+// A non-key digest, stored next to its content
+class Screenshot
+{
+    id     : Long key id;
+    digest : String;
+    image  : String objectStorage(this.digest, "blake3");
+}
+
+// Plain objectStorage stores the content under the class's own key
+class Attachment
+{
+    id     : Long key id;
+    content: String objectStorage;
+}

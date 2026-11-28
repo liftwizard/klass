@@ -24,6 +24,9 @@ import cool.klass.model.converter.compiler.annotation.CompilerAnnotation;
 import cool.klass.model.converter.compiler.annotation.CompilerAnnotationRenderer;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.AnsiColorScheme;
 import cool.klass.model.converter.compiler.syntax.highlighter.ansi.scheme.ColorSchemeProvider;
+import cool.klass.model.meta.domain.api.Klass;
+import cool.klass.model.meta.domain.api.property.DataTypeProperty;
+import cool.klass.model.meta.domain.api.source.DomainModelWithSourceCode;
 import io.liftwizard.junit.extension.log.marker.LogMarkerTestExtension;
 import io.liftwizard.junit.extension.match.FileSlurper;
 import org.eclipse.collections.api.factory.Lists;
@@ -66,7 +69,31 @@ class KlassCompilerTest
 		this.assertNoCompilerErrors("/cool/klass/xample/coverage/coverage-example.klass");
 	}
 
-	private void assertNoCompilerErrors(@Nonnull String sourceCodeName)
+	@Test
+	void objectStorage()
+	{
+		DomainModelWithSourceCode domainModel = this.assertNoCompilerErrors("objectStorage.klass");
+
+		Klass blueprintString = domainModel.getClassByName("BlueprintString");
+		DataTypeProperty content = blueprintString.getDataTypePropertyByName("blueprintString");
+		assertThat(content.isObjectStorage()).isTrue();
+		assertThat(content.getObjectStorageDigestProperty()).hasValue(
+			blueprintString.getDataTypePropertyByName("digest")
+		);
+		assertThat(content.getObjectStorageAlgorithm()).hasValue("sha256");
+
+		Klass screenshot = domainModel.getClassByName("Screenshot");
+		DataTypeProperty image = screenshot.getDataTypePropertyByName("image");
+		assertThat(image.getObjectStorageDigestProperty()).hasValue(screenshot.getDataTypePropertyByName("digest"));
+		assertThat(image.getObjectStorageAlgorithm()).hasValue("blake3");
+
+		DataTypeProperty attachment = domainModel.getClassByName("Attachment").getDataTypePropertyByName("content");
+		assertThat(attachment.isObjectStorage()).isTrue();
+		assertThat(attachment.getObjectStorageDigestProperty()).isEmpty();
+		assertThat(attachment.getObjectStorageAlgorithm()).isEmpty();
+	}
+
+	private DomainModelWithSourceCode assertNoCompilerErrors(@Nonnull String sourceCodeName)
 	{
 		String sourceCodeText = FileSlurper.slurp(sourceCodeName, this.getClass());
 		CompilationUnit compilationUnit = CompilationUnit.createFromText(
@@ -91,5 +118,6 @@ class KlassCompilerTest
 		assertThat(compilerAnnotations).as(message).isEqualTo(Lists.immutable.empty());
 
 		assertThat(compilationResult.domainModelWithSourceCode()).isPresent();
+		return compilationResult.domainModelWithSourceCode().get();
 	}
 }

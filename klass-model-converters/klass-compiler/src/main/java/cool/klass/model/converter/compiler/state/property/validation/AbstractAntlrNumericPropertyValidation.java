@@ -41,6 +41,11 @@ public abstract class AbstractAntlrNumericPropertyValidation
 		this.number = number;
 	}
 
+	public int getNumber()
+	{
+		return this.number;
+	}
+
 	@Override
 	public abstract NumericPropertyValidationBuilder build();
 

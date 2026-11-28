@@ -1,0 +1,17 @@
+════════════════════════════════════════ [35mERR_OBS_FIN[m ════════════════════════════════════════
+[31mError: Expected 'objectStorage' property 'NonFinalKeyDigest.content: String objectStorage(this.digest, "sha256")' and its key digest 'digest' to be final. A key never changes, so the content it digests can't either.[m
+
+At (ObjectStorageErrorTest.klass:144:40)
+
+[39m  1║ [35mpackage [39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mproperty
+[39m141║ [35mclass [39mNonFinalKeyDigest
+[39m142║ [36m{
+[39m144║     [39mcontent[36m: [35mString [32mobjectStorage[36m([32mthis[36m.[39mdigest[36m, [34m"sha256"[36m)[36m;
+[39m   ║ [31m                                       ^^^^^^
+[39m145║ [36m}
+[m
+[36mLocation:  [mObjectStorageErrorTest.klass:144:40[m
+[36mFile:      [mObjectStorageErrorTest.klass[m
+[36mLine:      [m144[m
+[36mCharacter: [m40
+═════════════════════════════════════════════════════════════════════════════════════════════

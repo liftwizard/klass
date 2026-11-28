@@ -1,0 +1,17 @@
+════════════════════════════════════════ [35mERR_OBS_OPT[m ════════════════════════════════════════
+[31mError: Expected 'objectStorage' property 'OptionalContentForKeyDigest.content: String objectStorage(this.digest, "sha256") final' to be required, because its digest 'digest' is a key.[m
+
+At (ObjectStorageErrorTest.klass:138:41)
+
+[39m  1║ [35mpackage [39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mproperty
+[39m135║ [35mclass [39mOptionalContentForKeyDigest
+[39m136║ [36m{
+[39m138║     [39mcontent[36m: [35mString[36m? [32mobjectStorage[36m([32mthis[36m.[39mdigest[36m, [34m"sha256"[36m) [32mfinal[36m;
+[39m   ║ [31m                                        ^^^^^^
+[39m139║ [36m}
+[m
+[36mLocation:  [mObjectStorageErrorTest.klass:138:41[m
+[36mFile:      [mObjectStorageErrorTest.klass[m
+[36mLine:      [m138[m
+[36mCharacter: [m41
+═════════════════════════════════════════════════════════════════════════════════════════════

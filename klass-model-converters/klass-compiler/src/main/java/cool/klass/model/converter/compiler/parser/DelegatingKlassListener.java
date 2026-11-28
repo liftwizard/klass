@@ -54,6 +54,7 @@ import cool.klass.model.meta.grammar.KlassParser.CriteriaOperatorContext;
 import cool.klass.model.meta.grammar.KlassParser.DataTypePropertyContext;
 import cool.klass.model.meta.grammar.KlassParser.DataTypePropertyModifierContext;
 import cool.klass.model.meta.grammar.KlassParser.DataTypePropertyValidationContext;
+import cool.klass.model.meta.grammar.KlassParser.DigestAlgorithmContext;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationBlockContext;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationBodyContext;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationDeclarationContext;
@@ -97,6 +98,7 @@ import cool.klass.model.meta.grammar.KlassParser.MultiplicityBodyContext;
 import cool.klass.model.meta.grammar.KlassParser.MultiplicityContext;
 import cool.klass.model.meta.grammar.KlassParser.NativeLiteralContext;
 import cool.klass.model.meta.grammar.KlassParser.NullLiteralContext;
+import cool.klass.model.meta.grammar.KlassParser.ObjectStorageModifierContext;
 import cool.klass.model.meta.grammar.KlassParser.OperatorContext;
 import cool.klass.model.meta.grammar.KlassParser.OptionalMarkerContext;
 import cool.klass.model.meta.grammar.KlassParser.OrderByDeclarationContext;
@@ -1422,6 +1424,34 @@ public class DelegatingKlassListener
 	public void exitDataTypePropertyModifier(DataTypePropertyModifierContext ctx)
 	{
 		this.getDelegate().exitDataTypePropertyModifier(ctx);
+	}
+
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void enterObjectStorageModifier(ObjectStorageModifierContext ctx)
+	{
+		this.getDelegate().enterObjectStorageModifier(ctx);
+	}
+
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void exitObjectStorageModifier(ObjectStorageModifierContext ctx)
+	{
+		this.getDelegate().exitObjectStorageModifier(ctx);
+	}
+
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void enterDigestAlgorithm(DigestAlgorithmContext ctx)
+	{
+		this.getDelegate().enterDigestAlgorithm(ctx);
+	}
+
+	@Override
+	@OverridingMethodsMustInvokeSuper
+	public void exitDigestAlgorithm(DigestAlgorithmContext ctx)
+	{
+		this.getDelegate().exitDigestAlgorithm(ctx);
 	}
 
 	@Override

@@ -1,0 +1,17 @@
+════════════════════════════════════════ [35mERR_OBS_DTY[m ════════════════════════════════════════
+[31mError: Expected the digest of 'objectStorage' property 'NonStringDigest.content: String objectStorage(this.digest, "sha256")' to have type 'String' but 'digest' has type 'Long'.[m
+
+At (ObjectStorageErrorTest.klass:83:40)
+
+[39m 1║ [35mpackage [39mcool[36m.[39mklass[36m.[39mmodel[36m.[39mconverter[36m.[39mcompiler[36m.[39mannotation[36m.[39mproperty
+[39m79║ [35mclass [39mNonStringDigest
+[39m80║ [36m{
+[39m83║     [39mcontent[36m: [35mString [32mobjectStorage[36m([32mthis[36m.[39mdigest[36m, [34m"sha256"[36m)[36m;
+[39m  ║ [31m                                       ^^^^^^
+[39m84║ [36m}
+[m
+[36mLocation:  [mObjectStorageErrorTest.klass:83:40[m
+[36mFile:      [mObjectStorageErrorTest.klass[m
+[36mLine:      [m83[m
+[36mCharacter: [m40
+═════════════════════════════════════════════════════════════════════════════════════════════

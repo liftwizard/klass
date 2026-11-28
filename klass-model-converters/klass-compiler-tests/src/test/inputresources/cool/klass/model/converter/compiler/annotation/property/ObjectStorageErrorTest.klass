@@ -1,0 +1,170 @@
+package cool.klass.model.converter.compiler.annotation.property
+
+// Valid: a key digest, with final content and digest
+class KeyDigest
+{
+    digest : String key final;
+    content: String objectStorage(this.digest, "sha256") final;
+}
+
+// Valid: a non-key digest needs no final
+class NonKeyDigest
+{
+    id     : Long key id;
+    digest : String maxLength(64);
+    content: String objectStorage(this.digest, "blake3");
+}
+
+// Valid: optional content with an optional digest
+class OptionalDigest
+{
+    id     : Long key id;
+    digest : String?;
+    content: String? objectStorage(this.digest, "sha256");
+}
+
+// Valid: plain objectStorage stores content under the class's own key
+class PlainObjectStorage
+{
+    id     : Long key id;
+    content: String objectStorage;
+}
+
+// Valid: the digest may be inherited
+class AbstractDigested
+    abstract
+{
+    digest: String key final;
+}
+
+class InheritedDigest
+    extends AbstractDigested
+{
+    content: String objectStorage(this.digest, "sha256") final;
+}
+
+class MissingDigest
+{
+    id     : Long key id;
+    content: String objectStorage(this.missing, "sha256");
+}
+
+class SelfDigest
+{
+    id     : Long key id;
+    content: String objectStorage(this.content, "sha256");
+}
+
+class DigestInObjectStorage
+{
+    id     : Long key id;
+    digest : String objectStorage;
+    content: String objectStorage(this.digest, "sha256");
+}
+
+class UnknownAlgorithm
+{
+    id     : Long key id;
+    digest : String;
+    content: String objectStorage(this.digest, "md5");
+}
+
+class NonStringContent
+{
+    id     : Long key id;
+    digest : String;
+    content: Integer objectStorage(this.digest, "sha256");
+}
+
+class NonStringDigest
+{
+    id     : Long key id;
+    digest : Long;
+    content: String objectStorage(this.digest, "sha256");
+}
+
+class DuplicateDigest
+{
+    id      : Long key id;
+    digest  : String;
+    content : String objectStorage(this.digest, "sha256");
+    content2: String objectStorage(this.digest, "sha256");
+}
+
+class DerivedDigest
+{
+    id     : Long key id;
+    digest : String derived;
+    content: String objectStorage(this.digest, "sha256");
+}
+
+class AggregateDigest
+{
+    id     : Long key id;
+    digest : String? { min(this.parts.name) }
+    content: String? objectStorage(this.digest, "sha256");
+}
+
+class Part
+{
+    id               : Long key id;
+    aggregateDigestId: Long private;
+    name             : String;
+}
+
+association AggregateDigestHasParts
+{
+    aggregateDigest: AggregateDigest[1..1];
+    parts          : Part[0..*];
+}
+
+class ShortDigest
+{
+    id     : Long key id;
+    digest : String maxLength(40);
+    content: String objectStorage(this.digest, "sha256");
+}
+
+class OptionalityMismatch
+{
+    id     : Long key id;
+    digest : String?;
+    content: String objectStorage(this.digest, "sha256");
+}
+
+class OptionalContentForKeyDigest
+{
+    digest : String key final;
+    content: String? objectStorage(this.digest, "sha256") final;
+}
+
+class NonFinalKeyDigest
+{
+    digest : String key;
+    content: String objectStorage(this.digest, "sha256");
+}
+
+class HopTarget
+{
+    id    : Long key id;
+    digest: String;
+}
+
+class HopDigest
+{
+    id         : Long key id;
+    hopTargetId: Long private;
+    content    : String objectStorage(this.hopTarget.digest, "sha256");
+}
+
+association HopDigestHasTarget
+{
+    hopDigests: HopDigest[0..*];
+    hopTarget : HopTarget[1..1];
+}
+
+interface InterfaceObjectStorage
+{
+    digest : String;
+    content: String objectStorage(this.digest, "sha256");
+}

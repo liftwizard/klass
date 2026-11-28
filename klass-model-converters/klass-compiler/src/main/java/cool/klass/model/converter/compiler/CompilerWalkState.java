@@ -37,6 +37,7 @@ import cool.klass.model.converter.compiler.state.parameter.AntlrParameterOwner;
 import cool.klass.model.converter.compiler.state.projection.AntlrProjection;
 import cool.klass.model.converter.compiler.state.property.AntlrAssociationEnd;
 import cool.klass.model.converter.compiler.state.property.AntlrAssociationEndSignature;
+import cool.klass.model.converter.compiler.state.property.AntlrDataTypeProperty;
 import cool.klass.model.converter.compiler.state.property.AntlrModifier;
 import cool.klass.model.converter.compiler.state.property.AntlrParameterizedProperty;
 import cool.klass.model.converter.compiler.state.service.AntlrService;
@@ -51,7 +52,9 @@ import cool.klass.model.meta.grammar.KlassParser.ClassDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ClassMemberContext;
 import cool.klass.model.meta.grammar.KlassParser.ClassifierModifierContext;
 import cool.klass.model.meta.grammar.KlassParser.CompilationUnitContext;
+import cool.klass.model.meta.grammar.KlassParser.DataTypePropertyModifierContext;
 import cool.klass.model.meta.grammar.KlassParser.EnumerationDeclarationContext;
+import cool.klass.model.meta.grammar.KlassParser.EnumerationPropertyContext;
 import cool.klass.model.meta.grammar.KlassParser.InterfaceDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.InterfaceMemberContext;
 import cool.klass.model.meta.grammar.KlassParser.OrderByDeclarationContext;
@@ -60,12 +63,14 @@ import cool.klass.model.meta.grammar.KlassParser.PackageDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.PackageNameContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ParameterizedPropertyContext;
+import cool.klass.model.meta.grammar.KlassParser.PrimitivePropertyContext;
 import cool.klass.model.meta.grammar.KlassParser.ProjectionDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.RelationshipContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.ServiceGroupDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.TopLevelDeclarationContext;
 import cool.klass.model.meta.grammar.KlassParser.UrlDeclarationContext;
+import org.antlr.v4.runtime.ParserRuleContext;
 
 public class CompilerWalkState
 {
@@ -136,6 +141,12 @@ public class CompilerWalkState
 
 	@Nullable
 	private AntlrModifier classifierModifier;
+
+	@Nullable
+	private AntlrDataTypeProperty<?> dataTypeProperty;
+
+	@Nullable
+	private AntlrModifier dataTypePropertyModifier;
 
 	@Nullable
 	private PackageNameContext packageNameContext;
@@ -260,6 +271,18 @@ public class CompilerWalkState
 	public AntlrModifier getClassifierModifier()
 	{
 		return this.classifierModifier;
+	}
+
+	@Nullable
+	public AntlrDataTypeProperty<?> getDataTypeProperty()
+	{
+		return this.dataTypeProperty;
+	}
+
+	@Nullable
+	public AntlrModifier getDataTypePropertyModifier()
+	{
+		return this.dataTypePropertyModifier;
 	}
 
 	@Nullable
@@ -399,6 +422,14 @@ public class CompilerWalkState
 		{
 			throw new AssertionError();
 		}
+		if (this.dataTypeProperty != null)
+		{
+			throw new AssertionError();
+		}
+		if (this.dataTypePropertyModifier != null)
+		{
+			throw new AssertionError();
+		}
 		if (this.parameterOwner != null)
 		{
 			throw new AssertionError();
@@ -500,6 +531,14 @@ public class CompilerWalkState
 			throw new AssertionError();
 		}
 		if (this.classifierModifier != other.classifierModifier)
+		{
+			throw new AssertionError();
+		}
+		if (this.dataTypeProperty != other.dataTypeProperty)
+		{
+			throw new AssertionError();
+		}
+		if (this.dataTypePropertyModifier != other.dataTypePropertyModifier)
 		{
 			throw new AssertionError();
 		}
@@ -864,6 +903,63 @@ public class CompilerWalkState
 		public void exitClassifierModifier(@Nonnull ClassifierModifierContext ctx)
 		{
 			CompilerWalkState.this.classifierModifier = null;
+		}
+
+		@Override
+		public void enterPrimitiveProperty(@Nonnull PrimitivePropertyContext ctx)
+		{
+			this.enterDataTypeProperty(ctx);
+		}
+
+		@Override
+		public void exitPrimitiveProperty(@Nonnull PrimitivePropertyContext ctx)
+		{
+			CompilerWalkState.this.dataTypeProperty = null;
+		}
+
+		@Override
+		public void enterEnumerationProperty(@Nonnull EnumerationPropertyContext ctx)
+		{
+			this.enterDataTypeProperty(ctx);
+		}
+
+		@Override
+		public void exitEnumerationProperty(@Nonnull EnumerationPropertyContext ctx)
+		{
+			CompilerWalkState.this.dataTypeProperty = null;
+		}
+
+		private void enterDataTypeProperty(@Nonnull ParserRuleContext ctx)
+		{
+			CompilerWalkState.assertNull(CompilerWalkState.this.dataTypeProperty);
+
+			if (CompilerWalkState.this.classifier == null)
+			{
+				return;
+			}
+
+			CompilerWalkState.this.dataTypeProperty =
+				CompilerWalkState.this.classifier.getDeclaredDataTypePropertyByContext(ctx);
+		}
+
+		@Override
+		public void enterDataTypePropertyModifier(@Nonnull DataTypePropertyModifierContext ctx)
+		{
+			CompilerWalkState.assertNull(CompilerWalkState.this.dataTypePropertyModifier);
+
+			if (CompilerWalkState.this.dataTypeProperty == null)
+			{
+				return;
+			}
+
+			CompilerWalkState.this.dataTypePropertyModifier =
+				CompilerWalkState.this.dataTypeProperty.getModifierByContext(ctx);
+		}
+
+		@Override
+		public void exitDataTypePropertyModifier(@Nonnull DataTypePropertyModifierContext ctx)
+		{
+			CompilerWalkState.this.dataTypePropertyModifier = null;
 		}
 
 		@Override

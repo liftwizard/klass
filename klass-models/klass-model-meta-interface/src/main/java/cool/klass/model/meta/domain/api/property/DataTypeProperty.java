@@ -55,6 +55,24 @@ public interface DataTypeProperty
 
 	OrderedMap<AssociationEnd, DataTypeProperty> getForeignKeysMatchingThisKey();
 
+	/**
+	 * The content is stored outside the database. Plain {@code objectStorage} stores it under the class's key; {@code objectStorage(this.digest, "algorithm")} stores it under the digest held in {@link #getObjectStorageDigestProperty()}.
+	 */
+	default boolean isObjectStorage()
+	{
+		return this.getModifiers().anySatisfy(Modifier::isObjectStorage);
+	}
+
+	/**
+	 * The property named by {@code objectStorage(this.digest, "algorithm")}, which holds the digest of this property's content. Empty for every other property.
+	 */
+	Optional<DataTypeProperty> getObjectStorageDigestProperty();
+
+	/**
+	 * The algorithm named by {@code objectStorage(this.digest, "algorithm")}, such as {@code "sha256"} or {@code "blake3"}. Empty for every other property.
+	 */
+	Optional<String> getObjectStorageAlgorithm();
+
 	default boolean isKey()
 	{
 		return this.getModifiers().anySatisfy(Modifier::isKey);
